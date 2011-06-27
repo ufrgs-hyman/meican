@@ -1,0 +1,499 @@
+/* 
+    Document   : teste
+    Created on : 25/02/2011, 13:35:22
+    Author     : pfbiasuz
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+/* Tabela de disposição dos boxes iniciais */
+body {
+       background-color: #3a5879;
+       font-family: verdana, helvetica, arial, sans-serif;
+       font-size: 16px;
+       margin: 0px;
+}
+
+div#header {
+    width: 100%;
+    height: 110px;
+    min-width: 800px;
+    color: white;
+    clear: both;
+    float: left;
+  
+}
+#header a:link, #header a:visited {
+    color:white;
+    text-decoration: none;
+}
+
+#header a:hover{
+    text-decoration: underline;
+}
+
+div#logo_box {
+    width: 69%;
+    float: left;
+
+}
+div#info_box {
+    width: 27%;
+    float: left;
+    margin-top: 90px;
+    font-size: 0.8em;
+    text-align: right;
+}
+
+div#content {
+    width: 100%;
+    min-width: 950px;
+    clear: both;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    background-color: #FFF;
+    float: left;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+div#main a:link, div#main a:visited {
+        text-decoration: none;
+        color: #0000CC;
+}
+
+div#content a:hover {
+        text-decoration: underline;
+}
+
+
+div#flash_box {
+    min-width: 680px;
+    width: 67.5%;
+    float: left;
+    vertical-align: bottom;
+    margin: 10px 10px 5px 10px;
+    padding: 10px 10px 10px 10px;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #ffffff;
+    text-indent: 10px;
+    background-color: white;
+}
+div#menu {
+    width: 13%;
+    float: left;
+    background-color: #EEEEEE;
+    color: #000000;
+    margin: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    padding: 10px;
+}
+div#main {
+    width: 80%;
+    float: left;
+    background-color: #FFF;
+}
+div#load_img {
+    text-align: center;
+    margin: 150px auto;
+}
+
+div#footer {
+    color: #EEEEEE;
+    font-size: 0.75em;
+    text-align: center;
+    clear: both;
+    padding: 10px;
+
+}
+div#footer a:link, div#footer a:visited{
+    color: #EEEEEE;
+    font-size: 0.8em;
+}
+
+img.logo {
+    padding: 10px;
+    border: 1px;
+    margin: 0px;
+}
+
+table {
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+    min-width: 50%;
+    border-collapse: collapse;
+    padding: 3px 7px 2px 7px;
+    border-radius: 5px;
+}
+
+table td {
+    font-size:1em;
+    padding: 7px 7px 7px 7px;
+}
+
+table th {
+    font-size:1.1em;
+    text-align:left;
+    padding-top:5px;
+    padding-bottom:4px;
+    background-color:#3a5879;
+    color:#ffffff;
+    padding: 3px 7px 2px 7px;
+}
+
+table.list tr > td:first-child {
+    width: 10px;
+}
+
+table.list tfoot tr > td:last-child {
+    background-color: #ffffff;
+}
+
+table.list tbody tr:nth-child(odd)    {
+    background-color:#eee;
+}
+
+table.list tbody tr:nth-child(even)    {
+    background-color:#fff;
+}
+
+table.list tbody tr:hover {
+    background-color: #CCC;
+}
+
+table.list tbody tr:hover {
+   cursor: default;
+}
+
+
+table.flow tr > td:first-child {
+    width: 20px;
+}
+
+table.flow tr:nth-child(odd)    {
+    background-color:#eee;
+}
+
+table.flow tr:nth-child(even)    {
+    background-color:#fff;
+}
+
+table.flow tr:nth-child(odd)    {
+    background-color:#eee;
+}
+
+table.flow tr:nth-child(even)    {
+    background-color:#fff;
+}
+
+img.edit {
+    border: 0px;
+    cursor: pointer;
+}
+
+img.delete {
+    border: 0px;
+    cursor: pointer;
+}
+
+img.loading {
+    border: 0px;
+    padding: 7px;
+    float: right;
+}
+
+input[type='submit'], input[type='button'], input[type='checkbox'] {
+    text-align: center;
+    background-color: #3a5879;
+    color: #ffffff;
+    padding: 3px 3px 3px 3px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-indent: 18px;
+    cursor: pointer;
+    height: 25px;
+    border: 0px;
+    margin: 10px;
+}
+
+input.delete{
+    background-image:  url('img/remove.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+   /* figura tem 18px 18px*/
+   float: left;
+}
+
+input.add{
+    background-image:  url('img/add2_2.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+    float: right;
+}
+
+input.add_new{
+    background-image:  url('img/add2_2.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+    float: left;
+}
+
+input.update{
+    background-image:  url('img/update.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+}
+
+input.cancel{
+    background-image:  url('img/cancel.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+    float:left;
+    
+}
+
+input.refresh{
+    background-image:  url('img/refresh.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+}
+
+input.save{
+    background-image:  url('img/save_1.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+    float: right;
+}
+
+input.ok{
+    background-image:  url('img/ok.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+    float: right;
+}
+
+input.next{
+    background-image:  url('img/next.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+    float: right;
+}
+
+div.controls {
+    width: 100%;
+    min-width: 100%;
+}
+
+input.back{
+    background-image:  url('img/back.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+    float: right;
+}
+input.password{
+    background-image:  url('img/password_1.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+}
+input.answer{
+    background-image:  url('img/answer_1.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+}
+input.remove{
+    background-image:  url('img/remove.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+}
+input.zoom{
+    background-image:  url('img/zoom_fit.png') ;
+    background-repeat:  no-repeat;
+    background-position: 1px 1px;
+    /* figura tem 18px 18px*/
+}
+input.clear{
+    background-image:  url('img/clear.png') ;
+    background-repeat:  no-repeat;
+    background-position: 4px 3px;
+    /* figura tem 18px 18px*/
+}
+input.invert{
+    background-image:  url('img/switch.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+}
+input.mapview{
+    background-image:  url('img/map.png') ;
+    background-repeat:  no-repeat;
+    background-position: 2px -1px;
+    /* figura tem 18px 18px*/
+}
+input.advancedview{
+    background-image:  url('img/advanced_directory.png') ;
+    background-repeat:  no-repeat;
+    background-position: 2px 2px;
+    /* figura tem 18px 18px*/
+}
+
+div.topItem {
+    font-weight: bold;
+    text-indent: 5px;
+}
+
+div.subItem a:link, div.subItem a:visited {
+    text-decoration: none;
+    font-weight: lighter;
+    color: #000000;
+}
+
+div.subItem:hover{
+    background-color: #CCC;
+}
+
+div.subItem {
+    text-transform: none;
+    text-indent: 25px;
+}
+
+#flash_box div.success {
+    background-color: #A7C942;
+}
+#flash_box div.error {
+    background-color: #FF0033;
+}
+#flash_box div.fatal {
+    background-color: #FF0000;
+}
+#flash_box div.warning {
+    background-color: #FFCC00;
+}
+#flash_box div.info {
+    background-color: #3399FF;
+}
+
+#contextMenu {
+	position: absolute;
+	min-width: 100px;
+	z-index: 1000;
+	background: #fff;
+	border-top: solid 1px #CCC;
+	border-left: solid 1px #CCC;
+	border-bottom: solid 1px #676767;
+	border-right: solid 1px #676767;
+	padding: 0px;
+	margin: 0px;
+	display:none;
+}
+
+#contextMenu a {
+	color: #000;
+	text-decoration: none;
+	display: block;
+	line-height: 22px;
+	height: 22px;
+	padding: 1px 10px;
+}
+
+#contextMenu li {
+	list-style: none;
+	padding: 1px;
+	margin: 0px;
+}
+
+#contextMenu li.hover a {
+	background-color: #A7C4FA;
+}
+
+#contextMenu li.separator {
+	border-top: solid 1px #ccc;
+}
+
+table.icons tr.new_line > td {
+    padding-bottom: 2em;
+}
+
+img {
+    border: 0px;
+}
+table.icons {
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    left: 0%;
+    padding: 10px;
+    position: relative;
+    top: -10%;
+    width: 60%;
+}
+
+ul.tabs {
+margin: 0;
+padding: 0;
+float: left;
+list-style: none;
+height: 32px; /*--Define a altura das abas--*/
+border-bottom: 1px solid #999;
+border-left: 1px solid #999;
+width: 100%;
+}
+ul.tabs li {
+float: left;
+margin: 0;
+padding: 0;
+height: 31px; /*--diminui 1px da altura da lista nao ordenada--*/
+line-height: 31px; /*--Alinha o texto verticalmente na aba--*/
+border: 1px solid #999;
+border-left: none;
+margin-bottom: -1px; /*--“empurra” o item da lista 1px para baixo--*/
+overflow: hidden;
+position: relative;
+background: #e0e0e0;
+}
+ul.tabs li a {
+text-decoration: none;
+color: #000;
+display: block;
+font-size: 1.2em;
+padding: 0 20px;
+border: 1px solid #fff; /*--deixa um efeito de relevo com uma borda branca de 1px dentro do item da lista--*/
+outline: none;
+}
+ul.tabs li a:hover {
+background: #ccc;
+}
+html ul.tabs li.active, html ul.tabs li.active a:hover { /*--Faz a lista ativa nao obedecer as propriedades do hover--*/
+background: #fff;
+border-bottom: 1px solid #fff; /*--faz a aba ativa parecer conectada com seu conteudo--*/
+}
+.tab_container {
+border: 1px solid #999;
+border-top: none;
+overflow: hidden;
+clear: both;
+float: left; width: 100%;
+background: #fff;
+}
+.tab_content {
+padding: 20px;
+font-size: 1.2em;
+}

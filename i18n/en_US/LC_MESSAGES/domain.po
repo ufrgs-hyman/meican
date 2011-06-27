@@ -1,0 +1,356 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-06-13 14:22-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: views/networks_show.php:7 controllers/networks.php:56
+msgid "Networks"
+msgstr ""
+
+#: views/networks_show.php:16 views/domains_show.php:16
+#: views/elements/network_form.php:11 views/elements/domain_form.php:12
+#: views/elements/device_form.php:12 views/devices_show.php:12
+msgid "Name"
+msgstr ""
+
+#: views/networks_show.php:17 views/elements/network_form.php:20
+#: views/elements/device_form.php:57 views/devices_show.php:17
+msgid "Latitude"
+msgstr ""
+
+#: views/networks_show.php:18 views/elements/network_form.php:29
+#: views/elements/device_form.php:66 views/devices_show.php:18
+msgid "Longitude"
+msgstr ""
+
+#: views/networks_show.php:19 views/devices_show.php:3
+#: controllers/devices.php:58
+msgid "Devices"
+msgstr ""
+
+#: views/networks_show.php:50 views/urns_show.php:61 views/domains_show.php:46
+#: views/elements/empty_db.php:20 views/devices_show.php:70
+msgid "Add"
+msgstr ""
+
+#: views/networks_show.php:58 views/urns_show.php:72 views/domains_show.php:54
+#: views/devices_show.php:78
+msgid "Delete"
+msgstr ""
+
+#: views/networks_show.php:58
+msgid "The selected networks will be deleted."
+msgstr ""
+
+#: views/networks_show.php:58 views/urns_show.php:72 views/domains_show.php:54
+#: views/devices_show.php:78
+msgid "Do you confirm?"
+msgstr ""
+
+#: views/urns_show.php:7 controllers/urns.php:76
+msgid "URNs (Uniform Resource Name)"
+msgstr ""
+
+#: views/urns_show.php:16 views/devices_show.php:19 views/urns_import.php:14
+#: controllers/networks.php:91 controllers/networks.php:97
+#: controllers/networks.php:164 controllers/networks.php:184
+msgid "Network"
+msgstr ""
+
+#: views/urns_show.php:17 views/urns_import.php:15 controllers/devices.php:117
+#: controllers/devices.php:198 controllers/devices.php:216
+msgid "Device"
+msgstr ""
+
+#: views/urns_show.php:18 views/urns_import.php:16
+msgid "Port"
+msgstr ""
+
+#: views/urns_show.php:19 views/urns_import.php:17
+msgid "URN Value"
+msgstr ""
+
+#: views/urns_show.php:20 views/urns_import.php:18
+msgid "Link Settings"
+msgstr ""
+
+#: views/urns_show.php:24 views/urns_import.php:22
+msgid "VLAN Values"
+msgstr ""
+
+#: views/urns_show.php:25 views/urns_import.php:23
+msgid "Maximum Capacity"
+msgstr ""
+
+#: views/urns_show.php:26 views/urns_import.php:24
+msgid "Minimum Capacity"
+msgstr ""
+
+#: views/urns_show.php:27 views/urns_import.php:25
+msgid "Granularity"
+msgstr ""
+
+#: views/urns_show.php:69 views/networks_add.php:10 views/networks_edit.php:10
+#: views/domains_add.php:8 views/urns_import.php:61 views/devices_add.php:10
+msgid "Save"
+msgstr ""
+
+#: views/urns_show.php:70 views/networks_add.php:11 views/networks_edit.php:11
+#: views/domains_add.php:9 views/urns_import.php:62 views/domains_edit.php:15
+#: views/devices_edit.php:11 views/devices_add.php:11
+msgid "Cancel"
+msgstr ""
+
+#: views/urns_show.php:72
+msgid "The selected URNs will be deleted."
+msgstr ""
+
+#: views/networks_add.php:3
+msgid "Add Network"
+msgstr ""
+
+#: views/networks_edit.php:3
+msgid "Edit Network"
+msgstr ""
+
+#: views/domains_show.php:7 controllers/domains.php:41
+msgid "Domains"
+msgstr ""
+
+#: views/domains_show.php:17 views/elements/domain_form.php:20
+msgid "Domain IP"
+msgstr ""
+
+#: views/domains_show.php:18 views/elements/domain_form.php:28
+msgid "Topology Service IP"
+msgstr ""
+
+#: views/domains_show.php:54
+msgid "The selected domains will be deleted."
+msgstr ""
+
+#: views/elements/network_form.php:38
+msgid "Select a domain"
+msgstr ""
+
+#: views/elements/device_form.php:21 views/devices_show.php:13
+msgid "IP Address"
+msgstr ""
+
+#: views/elements/device_form.php:30 views/devices_show.php:14
+msgid "Trademark"
+msgstr ""
+
+#: views/elements/device_form.php:39 views/devices_show.php:15
+msgid "Model"
+msgstr ""
+
+#: views/elements/device_form.php:48
+msgid "Number of ports"
+msgstr ""
+
+#: views/elements/device_form.php:75
+msgid "Select a network"
+msgstr ""
+
+#: views/elements/device_form.php:95
+msgid "Add network"
+msgstr ""
+
+#: views/devices_show.php:16
+msgid "Number of Ports"
+msgstr ""
+
+#: views/devices_show.php:78
+msgid "The selected devices will be deleted."
+msgstr ""
+
+#: views/domains_add.php:1
+msgid "Add Domain"
+msgstr ""
+
+#: views/urns_import.php:6
+msgid "Importing Topology URNs (Uniform Resource Name)"
+msgstr ""
+
+#: views/domains_edit.php:7
+msgid "Edit Domain"
+msgstr ""
+
+#: views/domains_edit.php:14 views/devices_edit.php:10
+msgid "Update"
+msgstr ""
+
+#: views/devices_edit.php:3
+msgid "Edit Device"
+msgstr ""
+
+#: views/devices_add.php:3
+msgid "Add Device"
+msgstr ""
+
+#: controllers/networks.php:45
+msgid "No device added to this network"
+msgstr ""
+
+#: controllers/networks.php:57
+msgid "No network added, click the button below to add a new one"
+msgstr ""
+
+#: controllers/networks.php:91 controllers/domains.php:70
+#: controllers/devices.php:117
+msgid "added"
+msgstr ""
+
+#: controllers/networks.php:95
+msgid "Fail to create network"
+msgstr ""
+
+#: controllers/networks.php:97
+msgid "already exists"
+msgstr ""
+
+#: controllers/networks.php:99
+msgid "Missing argument"
+msgstr ""
+
+#: controllers/networks.php:109 controllers/networks.php:148
+#: controllers/domains.php:85 controllers/domains.php:110
+#: controllers/devices.php:130 controllers/devices.php:181
+msgid "Invalid index"
+msgstr ""
+
+#: controllers/networks.php:120
+msgid "Network not found"
+msgstr ""
+
+#: controllers/networks.php:164 controllers/domains.php:127
+#: controllers/devices.php:198
+msgid "updated"
+msgstr ""
+
+#: controllers/networks.php:167 controllers/domains.php:130
+#: controllers/devices.php:201
+msgid "No change has been made"
+msgstr ""
+
+#: controllers/networks.php:169 controllers/domains.php:75
+#: controllers/domains.php:132
+msgid "Missing arguments"
+msgstr ""
+
+#: controllers/networks.php:184 controllers/domains.php:147
+#: controllers/urns.php:203 controllers/devices.php:216
+msgid "deleted"
+msgstr ""
+
+#: controllers/domains.php:30
+msgid "No IP setted"
+msgstr ""
+
+#: controllers/domains.php:42
+msgid "No domain is registered, click the button below to register a new one"
+msgstr ""
+
+#: controllers/domains.php:70 controllers/domains.php:127
+#: controllers/domains.php:147
+msgid "Domain"
+msgstr ""
+
+#: controllers/domains.php:73
+msgid "Fail to create domain"
+msgstr ""
+
+#: controllers/domains.php:95
+msgid "Domain not found"
+msgstr ""
+
+#: controllers/urns.php:59 controllers/urns.php:103
+msgid "No new URN found in network topology, the system database is updated"
+msgstr ""
+
+#: controllers/urns.php:60
+msgid "An error has occurred while trying to import the topology"
+msgstr ""
+
+#: controllers/urns.php:61 controllers/urns.php:104
+msgid "Delete URN?"
+msgstr ""
+
+#: controllers/urns.php:62
+msgid "URN deleted"
+msgstr ""
+
+#: controllers/urns.php:63
+msgid "Fail to delete URN"
+msgstr ""
+
+#: controllers/urns.php:64 controllers/urns.php:105
+msgid "Please fill in all the fields"
+msgstr ""
+
+#: controllers/urns.php:65 controllers/urns.php:106
+msgid "Save modifications?"
+msgstr ""
+
+#: controllers/urns.php:66 controllers/urns.php:107
+msgid "A URN has been selected more than once"
+msgstr ""
+
+#: controllers/urns.php:77
+msgid "No URN added, click the button below to import from topology"
+msgstr ""
+
+#: controllers/urns.php:127
+msgid "URN updated"
+msgstr ""
+
+#: controllers/urns.php:203
+msgid "URN"
+msgstr ""
+
+#: controllers/devices.php:59
+msgid "No device added, click the button below to add a new one"
+msgstr ""
+
+#: controllers/devices.php:79 controllers/devices.php:164
+msgid "A name is required"
+msgstr ""
+
+#: controllers/devices.php:80 controllers/devices.php:165
+msgid "An IP address is required"
+msgstr ""
+
+#: controllers/devices.php:81 controllers/devices.php:166
+msgid "A network is required"
+msgstr ""
+
+#: controllers/devices.php:93
+msgid "No network added, you should first add a network before adding a device"
+msgstr ""
+
+#: controllers/devices.php:120
+msgid "Fail to create device"
+msgstr ""
+
+#: controllers/devices.php:140
+msgid "Device not found"
+msgstr ""
+
+#: controllers/devices.php:154
+msgid ""
+"No network added, you should first add a network before editing a device"
+msgstr ""

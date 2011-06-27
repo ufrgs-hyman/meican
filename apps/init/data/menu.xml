@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : menu.xml
+    Created on : 1 de Fevereiro de 2011, 10:45
+    Author     : pfbiasuz
+    Description:
+        Purpose of the document follows.
+-->
+<root>
+    <menu>
+        
+        <item>
+            <name>Circuits</name>
+            <subItem>
+                <name>Reservations</name>
+                <link>main.php?app=circuits&amp;controller=reservations&amp;action=show</link>
+                <right></right>
+            </subItem>
+        </item>
+
+        <item>
+            <name>Federation</name>
+            <subItem>
+                <name>Federations</name>
+                <link>main.php?app=domain&amp;controller=federations&amp;action=show</link>
+                <right></right>
+            </subItem>
+            <subItem>
+                <name>Domains</name>
+                <link>main.php?app=domain&amp;controller=domains&amp;action=show</link>
+                <right></right>
+            </subItem>
+            <subItem>
+                <name>Networks</name>
+                <link>main.php?app=domain&amp;controller=networks&amp;action=show</link>
+                <right></right>
+            </subItem>
+            <subItem>
+                <name>Devices</name>
+                <link>main.php?app=domain&amp;controller=devices&amp;action=show</link>
+                <right></right>
+            </subItem>
+            <subItem>
+                <name>URNs</name>
+                <link>main.php?app=domain&amp;controller=urns&amp;action=show</link>
+                <right></right>
+            </subItem>
+        </item>
+
+        <item>
+            <name>Users</name>
+            <subItem>
+                <name>Users</name>
+                <link>main.php?app=aaa&amp;controller=users&amp;action=show</link>
+                <right></right>
+            </subItem>
+            <subItem>
+                <name>Groups</name>
+                <link>main.php?app=aaa&amp;controller=groups&amp;action=show</link>
+                <right></right>
+            </subItem>
+            <subItem>
+                <name>Access Control List</name>
+                <link>main.php?app=aaa&amp;controller=acl&amp;action=show</link>
+                <right></right>
+            </subItem>
+        </item>
+
+         <item>
+            <name>BPM</name>
+             <subItem>
+                <name>Requests</name>
+                <link>main.php?app=bpm&amp;controller=requests&amp;action=show</link>
+                <right></right>
+            </subItem>
+            <subItem>
+                <name>ODE</name>
+                <link>main.php?app=bpm&amp;controller=ode&amp;action=show</link>
+                <right></right>
+            </subItem>
+        </item>
+
+    </menu>
+</root>

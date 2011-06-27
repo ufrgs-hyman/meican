@@ -1,0 +1,107 @@
+function refreshStatus(res_id) {
+    $('tbody img').show();
+    
+    var count = 0;
+    
+    if (res_id) {
+        count = 1;
+    } else {
+        $.each($("tbody tr"), function() {
+            count++;
+        });
+    }
+    
+    $.ajax ({
+        type: "POST",
+        url: "main.php?app=circuits&controller=reservations&action=refresh_status",
+        data: {
+            count: count, 
+            res_id: res_id
+        },
+        dataType: "json",
+        success: function(data) {
+            $('tbody img').hide();
+
+            var status_id = null;
+
+            for (var i=0; i < data.length; i++) {
+                status_id = '#status' + i;
+                
+                if (data[i].translate != $(status_id).html()) {
+                    $(status_id).empty();
+                    $(status_id).html(data[i].translate);
+                
+                    checkStatus(i, data[i].name);
+                }
+            }
+        },
+        error: function(jqXHR) {
+            if (jqXHR.status == 406)
+                location.href = 'main.php?app=init&controller=gui';
+        }
+    });
+}
+
+function checkStatus(index, status) {
+    switch (status) {
+        case "FAILED":
+            $('#line' + index).css( {
+                'background' : '#f99b9b'
+            });
+            break;
+        case "ACTIVE":
+            $('#line' + index).css( {
+                'background' : '#99ec99'
+            });
+            $('#cancel' + index).removeAttr("disabled");
+            break;
+        // do nothing in these cases
+        case "FINISHED":
+        case "CANCELLED":
+        case "INTEARDOWN":
+        case "INMODIFY":
+            break;
+        default:
+            $('#cancel' + index).removeAttr("disabled");
+            break;
+    }
+}
+
+function disabelCancelButton(elemId) {
+    if ($(elemId).attr("checked"))
+        cancelCont++;
+    else
+        cancelCont--;
+
+    if (cancelCont) {
+        $("#cancel_button").removeAttr("disabled");
+        $("#cancel_button").removeAttr("style");
+    } else {
+        $("#cancel_button").attr("disabled","disabled");
+        $("#cancel_button").css( {
+            'opacity' : '0.4'
+        });
+    }
+}
+
+function changeName(elem) {
+    $.post("main.php?app=circuits&controller=reservations&action=update_name", {
+        name: elem.value
+    });
+}
+
+function changeFlow(elem) {
+    $.post("main.php?app=circuits&controller=reservations&action=update_flow", {
+        flow: elem.value
+    }, function() {
+        $("#next_button").removeAttr("disabled");    
+    });
+}
+
+function changeTimer(elem) {
+    $.post("main.php?app=circuits&controller=reservations&action=update_timer", {
+        timer: elem.value
+    }, function() {
+        $("#next_button").removeAttr("disabled");
+    });
+}

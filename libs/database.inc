@@ -1,0 +1,155 @@
+<?php
+require_once 'MDB2.php';
+include_once 'libs/model.inc';
+
+class Database {
+    private $result;
+    private $classname;
+    private $position;
+    private $numRows;
+    private $mdb2;
+
+
+    function Database() {
+        $this->mdb2 = MDB2::connect(Framework::getDatabaseString());
+
+        if (MDB2::isError($this->mdb2)) {
+            Framework::debug($this->mdb2->getMessage() . ", " . $this->mdb2->getDebugInfo());
+            return FALSE;
+        } else return TRUE;
+    }
+
+    function query($sql, $classname='Model') {
+        $result = $this->mdb2->query($sql);
+
+        if (MDB2::isError($result)) {
+            Framework::debug($result->getMessage() . ", " . $result->getDebugInfo());
+            $this->mdb2->disconnect();
+            return FALSE;
+        } else {
+            $this->result = $result;
+            $this->classname = $classname;
+            if (method_exists ($this->result, "numRows")) {
+                $this->numRows = $this->result->numRows();
+            } else {
+                $this->numRows = 0;
+            }
+
+            $this->position = 0;
+            $this->mdb2->disconnect();
+            return TRUE;
+        }
+    }
+
+    function transactionSql($sql) {
+
+        //Verifica se o Banco suporta transações
+        if (!$this->mdb2->supports('transactions')) {
+            Framework::debug("Erro: Banco não suporta transações.");
+            return FALSE;
+        }
+
+        $sqlArray = explode(";", $sql);
+
+        //Inicia transação
+        $this->mdb2->beginTransaction();
+
+        foreach($sqlArray as $sqlQuery) {
+            if ($sqlQuery) {
+
+                $result = $this->mdb2->query($sqlQuery);
+
+                if (MDB2::isError($result)) {
+                    Framework::debug($result->getMessage() . ", " . $result->getDebugInfo());
+                    //Caso ocorra erro, alterações são desfeitas pelo comando rollback() e desconecta do Banco
+                    if ($this->mdb2->inTransaction()) {
+                        Framework::debug("Erro: Alterações serão desfeitas");
+                        $this->mdb2->rollback();
+                    }
+                    $this->mdb2->disconnect();
+                    return FALSE;
+                }
+            }
+        }
+        //Se a transação foi concluída com sucesso, executa Commit() e desconecta do Banco
+        if ($this->mdb2->inTransaction()) {
+            $this->mdb2->commit();
+            $this->mdb2->disconnect();
+            return TRUE;
+        }
+    }
+
+    function hasNext() {
+        if ($this->position < $this->numRows)
+            return TRUE;
+        else return FALSE;
+    }
+
+    function next() {
+        $row = $this->result->fetchRow(MDB2_FETCHMODE_ASSOC);
+        $obj = new $this->classname;
+        if ($this->classname == "Model") {
+            foreach ($row as $key => $value) {
+                $obj->$key = $value;
+            }
+        } else {
+            foreach ($obj->attributes as $attribute) {
+                $name = $attribute->name;
+                $obj->$name = $row[$name];
+            }
+        }
+        $this->position++;
+        return $obj;
+    }
+
+    function getNumRows() {
+        return $this->numRows;
+    }
+
+
+    static function mysql_replace($inp) {
+        if (is_array($inp))
+            return array_map(__METHOD__, $inp);
+
+        if (!empty($inp) && is_string($inp)) {
+            $inp = trim($inp);
+            $return = str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $inp, &$count);
+            if ($count > 0)
+                Framework::debug("trying sql injection");
+            return $return;
+        }
+
+
+        return $inp;
+    }
+//    function getNextId($table) {
+//        if (DatabaseObject::$mdb2 == null) {
+//            DatabaseObject::$mdb2 = MDB2::connect(Framework::getDatabaseString());
+//            if (MDB2::isError(DatabaseObject::$mdb2)) {
+//                die (DatabaseObject::$mdb2->getMessage() . ", " . DatabaseObject::$mdb2->getDebugInfo());
+//            }
+//        }
+//        return DatabaseObject::$mdb2->nextID($table);
+//    }
+
+//	static function translateFunction ($functionName, $args = null) {
+//		switch ($functionName) {
+//			case "CONDITION_DEV": {
+//				if (DigistarSystem::getDefaultDatabase() == 'mysql') {
+//					return "(A.dev_status_last_change > ".$args .") AS has_changed_status";
+//				} else if (DigistarSystem::getDefaultDatabase() == 'oracle') {
+//					return "CASE WHEN (A.dev_status_last_change > " . $args . ") THEN 1 ELSE 0 END AS has_changed_status";
+//				}
+//			}
+//			case "CONDITION_TOP": {
+//				if (DigistarSystem::getDefaultDatabase() == 'mysql') {
+//					return "(A.tpl_status_last_change > ".$args .") AS has_changed_status ";
+//				} else if (DigistarSystem::getDefaultDatabase() == 'oracle') {
+//					return "CASE WHEN (A.tpl_status_last_change > " . $args . ") THEN 1 ELSE 0 END AS has_changed_status";
+//				}
+//			}
+//		}
+//	}
+
+}
+?>

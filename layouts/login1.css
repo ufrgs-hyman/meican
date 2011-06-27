@@ -1,0 +1,158 @@
+/* 
+    Document   : login1
+    Created on : 23/05/2011, 12:53:19
+    Author     : pfbiasuz
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+/*
+    Document   : teste
+    Created on : 25/02/2011, 13:35:22
+    Author     : pfbiasuz
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+/* Tabela de disposição dos boxes iniciais */
+body {
+       background-color: #3a5879;
+       font-family: verdana, helvetica, arial, sans-serif;
+       font-size: 16px;
+       margin: 0px;
+}
+
+div#header {
+    width: 100%;
+    height: 110px;
+    min-width: 800px;
+    color: white;
+    clear: both;
+    float: left;
+
+}
+#header a:link, #header a:visited {
+    color:white;
+    text-decoration: none;
+}
+
+#header a:hover{
+    text-decoration: underline;
+}
+
+div#logo_box {
+    width: 69%;
+    float: left;
+
+}
+div#info_box {
+    width: 27%;
+    float: left;
+    margin-top: 90px;
+    font-size: 0.8em;
+    text-align: right;
+}
+
+div#content {
+    width: 100%;
+    min-width: 800px;
+    clear: both;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+    background-color: #FFF;
+    float: left;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+}
+
+div#content a:hover {
+        text-decoration: underline;
+}
+
+div#login_form {
+    width: 25%;
+    float: right;
+    background-color: #eee;
+    padding-left: 30px;
+    -moz-border-radius: 25px;
+    margin-top: 30px;
+    margin-right: 20px
+}
+
+div#login_form hr {
+}
+
+div#figure {
+    float: left;
+    width: 40%;
+    padding: 20px;
+}
+div#text_info{
+    float: left;
+    width: 25%;
+}
+div#message {
+    color:red;
+    text-align: center;
+    font-weight: bold;
+}
+
+div#footer {
+    color: #EEEEEE;
+    font-size: 0.75em;
+    text-align: center;
+    clear: both;
+    padding: 10px;
+
+}
+div#footer a:link, div#footer a:visited{
+    color: #EEEEEE;
+    font-size: 0.8em;
+}
+
+img.logo {
+    padding: 10px;
+    border: 1px;
+    margin: 0px;
+}
+
+
+
+input[type='submit'], input[type='button'], input[type='checkbox'] {
+    display: block;
+    text-align: center;
+    background-color: #3a5879;
+    color: #ffffff;
+    padding: 3px 3px 3px 3px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    height: 25px;
+    border: 0px;
+    margin: 10px;
+}
+
+input.delete{
+    background-image:  url('img/remove.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+   /* figura tem 18px 18px*/
+   position: relative;
+   left: 0%;
+}
+
+
+
+
+
