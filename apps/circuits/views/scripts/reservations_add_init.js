@@ -1,10 +1,6 @@
+$("ul.tabs li").addClass("inactive").hide();        //esconde as abas
 $(".cont_tab").hide();                              //esconde todo conteudo
-//$("ul.tabs li:first").addClass("active").show();    //ativa a primeira aba
-$("ul.tabs li:eq(0)").addClass("active").show();
-$("ul.tabs li:eq(1)").addClass("inactive").hide()
-$("ul.tabs li:eq(2)").addClass("inactive").hide()
-$("ul.tabs li:eq(3)").addClass("inactive").hide()
-$("ul.tabs li:eq(4)").addClass("inactive").hide()
+$("ul.tabs li:eq(0)").addClass("active").show();    //mostra primeira aba
 $(".cont_tab:eq(0)").show();                        //mostra o conteudo da primeira aba
   
 $("ul.tabs li").click(function() {

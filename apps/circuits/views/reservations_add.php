@@ -18,10 +18,10 @@ $name = $this->passedArgs->res_name;
 
     <ul class="tabs">
         <li><a href="#tab1"><?php echo _('Reservation Name'); ?></a></li>
-        <li><a href="#tab2"><?php echo _('Endpoints'); ?></a></li>
-        <li><a href="#tab3"><?php echo _('Bandwidth'); ?></a></li>
-        <li><a href="#tab4"><?php echo _('Timer'); ?></a></li>
-        <li><a href="#tab5"><?php echo _('Confirmation'); ?></a></li>      
+        <li style="display: none"><a href="#tab2"><?php echo _('Endpoints'); ?></a></li>
+        <li style="display: none"><a href="#tab3"><?php echo _('Bandwidth'); ?></a></li>
+        <li style="display: none"><a href="#tab4"><?php echo _('Timer'); ?></a></li>
+        <li style="display: none"><a href="#tab5"><?php echo _('Confirmation'); ?></a></li>      
     </ul>
 
     <div class="tab_container">

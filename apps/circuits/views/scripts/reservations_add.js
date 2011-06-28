@@ -1,13 +1,13 @@
 function nextTab(elem){
-    var activeTab;
-    if (elem.id == "bn1") {
-        $("ul.tabs li").removeClass("active");
-        $("ul.tabs li:eq(1)").addClass("active").show();            
-        $(".cont_tab").hide();
-        activeTab = $("ul.tabs li:eq(1)").find("a").attr("href");
-        $(activeTab).fadeIn();
-    } else if (elem.id == "bn2") {       
-        $("ul.tabs li:eq(1)").removeClass("active");
+    var activeTab;              
+    if (elem.id == "bn1") {                                         //botão NEXT 1
+        $("ul.tabs li").removeClass("active");                      //Desativa aba ativada
+        $("ul.tabs li:eq(1)").addClass("active").show();            //Exibe aba selecionada    
+        $(".cont_tab").hide();                                      //Esconde o conteúdo de todas as abas
+        activeTab = $("ul.tabs li:eq(1)").find("a").attr("href");   //Identifica ABA ativa pelo href
+        $(activeTab).fadeIn();                                      //Exibe somente o conteudo da aba ativa
+    } else if (elem.id == "bn2") {                  
+        $("ul.tabs li:eq(1)").removeClass("active");    
         $("ul.tabs li:eq(2)").addClass("active").show();            
         $(".cont_tab").hide();
         activeTab = $("ul.tabs li:eq(2)").find("a").attr("href");
