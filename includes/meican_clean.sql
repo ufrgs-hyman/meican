@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 23, 2011 at 01:48 PM
+-- Generation Time: Jun 13, 2011 at 05:32 PM
 -- Server version: 5.1.41
 -- PHP Version: 5.3.2-1ubuntu4.9
 
@@ -16,7 +16,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `framework`
+-- Database: `meican`
 --
 
 -- --------------------------------------------------------
@@ -25,7 +25,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `acos`
 --
 
-DROP TABLE IF EXISTS `acos`;
 CREATE TABLE IF NOT EXISTS `acos` (
   `aco_id` int(11) NOT NULL AUTO_INCREMENT,
   `obj_id` int(11) NOT NULL,
@@ -35,15 +34,18 @@ CREATE TABLE IF NOT EXISTS `acos` (
   `parent_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`aco_id`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `acos`
 --
 
 INSERT INTO `acos` (`aco_id`, `obj_id`, `model`, `lft`, `rgt`, `parent_id`) VALUES
-(1, 1, 'group_info', 1, 4, NULL),
-(2, 1, 'user_info', 2, 3, 1);
+(1, 1, 'root', 1, 10, NULL),
+(2, 1, 'topology', 2, 3, 1),
+(3, 1, 'aaa', 4, 9, 1),
+(4, 1, 'group_info', 5, 8, 3),
+(5, 1, 'user_info', 6, 7, 4);
 
 -- --------------------------------------------------------
 
@@ -51,7 +53,6 @@ INSERT INTO `acos` (`aco_id`, `obj_id`, `model`, `lft`, `rgt`, `parent_id`) VALU
 -- Table structure for table `aros`
 --
 
-DROP TABLE IF EXISTS `aros`;
 CREATE TABLE IF NOT EXISTS `aros` (
   `aro_id` int(11) NOT NULL AUTO_INCREMENT,
   `obj_id` int(11) NOT NULL,
@@ -77,7 +78,6 @@ INSERT INTO `aros` (`aro_id`, `obj_id`, `model`, `lft`, `rgt`, `parent_id`) VALU
 -- Table structure for table `aros_acos`
 --
 
-DROP TABLE IF EXISTS `aros_acos`;
 CREATE TABLE IF NOT EXISTS `aros_acos` (
   `perm_id` int(11) NOT NULL AUTO_INCREMENT,
   `aro_id` int(11) NOT NULL,
@@ -107,7 +107,6 @@ INSERT INTO `aros_acos` (`perm_id`, `aro_id`, `aco_id`, `model`, `create`, `read
 -- Table structure for table `device_info`
 --
 
-DROP TABLE IF EXISTS `device_info`;
 CREATE TABLE IF NOT EXISTS `device_info` (
   `dev_id` int(11) NOT NULL AUTO_INCREMENT,
   `dev_descr` char(30) NOT NULL,
@@ -133,7 +132,6 @@ CREATE TABLE IF NOT EXISTS `device_info` (
 -- Table structure for table `domain_info`
 --
 
-DROP TABLE IF EXISTS `domain_info`;
 CREATE TABLE IF NOT EXISTS `domain_info` (
   `dom_id` int(11) NOT NULL AUTO_INCREMENT,
   `dom_descr` varchar(30) NOT NULL,
@@ -141,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `domain_info` (
   `topo_ip` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`dom_ip`),
   UNIQUE KEY `dom_id` (`dom_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Dumping data for table `domain_info`
@@ -154,7 +152,6 @@ CREATE TABLE IF NOT EXISTS `domain_info` (
 -- Table structure for table `flow_info`
 --
 
-DROP TABLE IF EXISTS `flow_info`;
 CREATE TABLE IF NOT EXISTS `flow_info` (
   `flw_id` int(11) NOT NULL AUTO_INCREMENT,
   `flw_name` char(40) NOT NULL,
@@ -179,7 +176,6 @@ CREATE TABLE IF NOT EXISTS `flow_info` (
 -- Table structure for table `gri_info`
 --
 
-DROP TABLE IF EXISTS `gri_info`;
 CREATE TABLE IF NOT EXISTS `gri_info` (
   `gri_id` char(40) NOT NULL,
   `status` enum('ACTIVE','PENDING','FINISHED','CANCELLED','FAILED','ACCEPTED','SUBMITTED','INCREATE','INSETUP','INTEARDOWN','INMODIFY') NOT NULL,
@@ -201,7 +197,6 @@ CREATE TABLE IF NOT EXISTS `gri_info` (
 -- Table structure for table `group_info`
 --
 
-DROP TABLE IF EXISTS `group_info`;
 CREATE TABLE IF NOT EXISTS `group_info` (
   `grp_id` int(16) NOT NULL AUTO_INCREMENT,
   `grp_descr` char(60) NOT NULL,
@@ -221,7 +216,6 @@ INSERT INTO `group_info` (`grp_id`, `grp_descr`) VALUES
 -- Table structure for table `network_info`
 --
 
-DROP TABLE IF EXISTS `network_info`;
 CREATE TABLE IF NOT EXISTS `network_info` (
   `net_id` int(11) NOT NULL AUTO_INCREMENT,
   `net_descr` char(30) NOT NULL,
@@ -241,7 +235,6 @@ CREATE TABLE IF NOT EXISTS `network_info` (
 -- Table structure for table `request_info`
 --
 
-DROP TABLE IF EXISTS `request_info`;
 CREATE TABLE IF NOT EXISTS `request_info` (
   `loc_id` int(11) NOT NULL AUTO_INCREMENT,
   `req_id` int(11) NOT NULL,
@@ -255,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `request_info` (
   `response` enum('accept','reject') DEFAULT NULL,
   `message` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`loc_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Dumping data for table `request_info`
@@ -268,7 +261,6 @@ CREATE TABLE IF NOT EXISTS `request_info` (
 -- Table structure for table `reservation_info`
 --
 
-DROP TABLE IF EXISTS `reservation_info`;
 CREATE TABLE IF NOT EXISTS `reservation_info` (
   `res_id` int(11) NOT NULL AUTO_INCREMENT,
   `res_name` char(40) NOT NULL,
@@ -290,7 +282,6 @@ CREATE TABLE IF NOT EXISTS `reservation_info` (
 -- Table structure for table `timer_info`
 --
 
-DROP TABLE IF EXISTS `timer_info`;
 CREATE TABLE IF NOT EXISTS `timer_info` (
   `tmr_id` int(11) NOT NULL AUTO_INCREMENT,
   `tmr_name` char(40) NOT NULL,
@@ -316,7 +307,6 @@ CREATE TABLE IF NOT EXISTS `timer_info` (
 -- Table structure for table `urn_info`
 --
 
-DROP TABLE IF EXISTS `urn_info`;
 CREATE TABLE IF NOT EXISTS `urn_info` (
   `urn_id` int(11) NOT NULL AUTO_INCREMENT,
   `urn_string` char(128) NOT NULL,
@@ -344,7 +334,6 @@ CREATE TABLE IF NOT EXISTS `urn_info` (
 -- Table structure for table `user_group`
 --
 
-DROP TABLE IF EXISTS `user_group`;
 CREATE TABLE IF NOT EXISTS `user_group` (
   `usr_id` int(16) NOT NULL,
   `grp_id` int(16) NOT NULL,
@@ -366,7 +355,6 @@ INSERT INTO `user_group` (`usr_id`, `grp_id`) VALUES
 -- Table structure for table `user_info`
 --
 
-DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE IF NOT EXISTS `user_info` (
   `usr_id` int(16) NOT NULL AUTO_INCREMENT,
   `usr_login` char(30) NOT NULL,
@@ -383,4 +371,3 @@ CREATE TABLE IF NOT EXISTS `user_info` (
 
 INSERT INTO `user_info` (`usr_id`, `usr_login`, `usr_password`, `usr_name`, `usr_settings`) VALUES
 (1, 'master', '202cb962ac59075b964b07152d234b70', 'Master Administrator', 'date_format=dd/mm/yyyy;language=en_US.utf8');
-
