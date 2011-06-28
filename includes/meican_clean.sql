@@ -135,14 +135,33 @@ CREATE TABLE IF NOT EXISTS `device_info` (
 CREATE TABLE IF NOT EXISTS `domain_info` (
   `dom_id` int(11) NOT NULL AUTO_INCREMENT,
   `dom_descr` varchar(30) NOT NULL,
-  `dom_ip` varchar(64) NOT NULL,
-  `topo_ip` varchar(32) DEFAULT NULL,
-  PRIMARY KEY (`dom_ip`),
+  `oscars_ip` varchar(64) NOT NULL,
+  `topo_ip` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`oscars_ip`),
   UNIQUE KEY `dom_id` (`dom_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Dumping data for table `domain_info`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `federation_info`
+--
+
+CREATE TABLE IF NOT EXISTS `federation_info` (
+  `fed_id` int(11) NOT NULL AUTO_INCREMENT,
+  `fed_descr` varchar(30) NOT NULL,
+  `fed_ip` varchar(64) NOT NULL,
+  PRIMARY KEY (`fed_id`),
+  UNIQUE KEY `fed_ip` (`fed_ip`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `federation_info`
 --
 
 
