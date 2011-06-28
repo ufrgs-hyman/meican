@@ -15,6 +15,10 @@ include_once 'apps/circuits/models/timer_info.inc';
 include_once 'apps/bpm/models/request_info.inc';
 include_once 'apps/circuits/models/oscars.php';
 
+include_once 'apps/domain/models/domain_info.inc';
+include_once 'apps/domain/models/topology.inc';
+include_once 'includes/nuSOAP/lib/nusoap.php';
+
 class reservations extends Controller {
 
     public function reservations() {
@@ -157,12 +161,11 @@ class reservations extends Controller {
 
             $client = new SoapClient($endpoint, array('cache_wsdl' => 0));
             if ($result = $client->list($griList)) {
-                if (is_array($result->return)){
+                if (is_array($result->return)) {
                     $statusResult = $result->return;
                 } else {
                     $statusResult[0] = $result->return;
                 }
-                
             } else {
                 $this->setArgsToBody(_("Fail to get status"));
                 $this->render();
@@ -202,14 +205,14 @@ class reservations extends Controller {
                         $statusArray[$ind][$ind2] = $g->status;
                     }
 
-                    Framework::debug("array",$statusArray);
+                    Framework::debug("array", $statusArray);
 
                     if ($res_id) {
                         $stat = new stdClass();
                         //$statusArray[$ind][$ind2] = "PENDING";
                         $stat->name = $statusArray[$ind][$ind2];
                         $stat->translate = gri_info::translateStatus($statusArray[$ind][$ind2]);
-                        Framework::debug("array",$statusArray);
+                        Framework::debug("array", $statusArray);
                         $statusList[$ind2] = $stat;
                     } else {
                         $date = new DateTime($g->start);
@@ -260,16 +263,63 @@ class reservations extends Controller {
         $this->reservation_add();
     }
 
-    public function reservation_add(){
+    public function reservation_add() {
         $this->setInlineScript('reservations_add_init');
         $this->addScript('reservations_add');
-        $this->addScript('jquery-ui-1.8.13.custom.min');
-        $this->addScript('jquery-1.5.1.min');
+        $this->addScript('map');
         $this->setAction('add');
-        $this->render();        
 
+        $min = 100;
+        $max = 1000;
+        $div = 100;
+
+//        $domain = new domain_info();
+//        $domains = $domain->fetch(FALSE);
+//
+//        $domToMapArray = array();
+//        foreach ($domains as $d) {
+//            $domain = new stdClass();
+//            $domain->id = $d->dom_id;
+//            $domain->name = $d->dom_descr;
+//            $endpoint = "http://{$d->dom_ip}/" . Framework::$systemDirName . "/main.php?app=domain&services&wsdl";
+//            if ($ws = new nusoap_client($endpoint, array('cache_wsdl' => 0))) {
+//                if ($temp = $ws->call('getURNDetails', array())) {
+//                    $domain->networks = $temp;
+//                    $domToMapArray[] = $domain;
+//                }
+//            }
+//        }
+
+        //if ($domToMapArray) {
+            $this->setArgsToScript(array(
+                "band_min" => $min,
+                "band_max" => $max,
+                "band_div" => $div,
+                "flash_nameReq" => _("A name is required"),
+                "flash_bandInv" => _("Invalid value for bandwidth"),
+                "flash_sourceReq" => _("A source is required"),
+                "flash_srcVlanInv" => _("Invalid value for source VLAN"),
+                "flash_srcVlanReq" => _("Source VLAN type required"),
+                "flash_destReq" => _("A destination is required"),
+                "flash_dstVlanInv" => _("Invalid value for destination VLAN"),
+                "flash_dstVlanReq" => _("Destination VLAN type required"),
+                "domain_string" => _("Domain"),
+                "domains_string" => _("Domains"),
+                "network_string" => _("Network"),
+                "networks_string" => _("Networks"),
+                "device_string" => _("Device"),
+                "devices_string" => _("Devices"),
+                "from_here_string" => _("From Here"),
+                "to_here_string" => _("To Here"),
+                "cluster_information_string" => _("Information about cluster")
+            //    "domains" => $domToMapArray
+            ));
+        //}
+
+
+        $this->render();
     }
-    
+
     public function page1() {
         Common::setSessionVariable('res_wizard', TRUE);
 
@@ -319,7 +369,7 @@ class reservations extends Controller {
                 $domain = new domain_info();
                 $domain->dom_id = $dom_id;
                 $dom = $domain->fetch(FALSE);
-                $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=domain&services&wsdl";
+                $endpoint = "http://{$dom[0]->dom_ip}/" . Framework::$systemDirName . "/main.php?app=domain&services&wsdl";
 
                 $ws = new nusoap_client($endpoint, array('cache_wsdl' => 0));
                 $urnData[] = $ws->call('getURNsInfo', array('urn_string_list' => $urn_array));
@@ -586,7 +636,7 @@ class reservations extends Controller {
         $req->resource_type = 'reservation_info';
         $req->answerable = 'no';
         $result = $req->fetch();
-        
+
         $status = array();
         $gris = array();
 
@@ -628,21 +678,21 @@ class reservations extends Controller {
         $request->status = $result[0]->status;
 
         $this->setArgsToScript(array(
-                "reservation_id" => $reservation->res_id,
-                "status_array" => $status,
-                "src_lat_network" => $flow->source->latitude,
-                "src_lng_network" => $flow->source->longitude,
-                "dst_lat_network" => $flow->dest->latitude,
-                "dst_lng_network" => $flow->dest->longitude,
-                "domain_string" => _("Domain"),
-                "domains_string" => _("Domains"),
-                "network_string" => _("Network"),
-                "networks_string" => _("Networks"),
-                "device_string" => _("Device"),
-                "devices_string" => _("Devices"),
-                "from_here_string" => _("From Here"),
-                "to_here_string" => _("To Here"),
-                "cluster_information_string" => _("Information about cluster")
+            "reservation_id" => $reservation->res_id,
+            "status_array" => $status,
+            "src_lat_network" => $flow->source->latitude,
+            "src_lng_network" => $flow->source->longitude,
+            "dst_lat_network" => $flow->dest->latitude,
+            "dst_lng_network" => $flow->dest->longitude,
+            "domain_string" => _("Domain"),
+            "domains_string" => _("Domains"),
+            "network_string" => _("Network"),
+            "networks_string" => _("Networks"),
+            "device_string" => _("Device"),
+            "devices_string" => _("Devices"),
+            "from_here_string" => _("From Here"),
+            "to_here_string" => _("To Here"),
+            "cluster_information_string" => _("Information about cluster")
         ));
 
         $this->setInlineScript('reservations_view');
@@ -685,7 +735,7 @@ class reservations extends Controller {
         if ($cancel_reservations) {
 
             $cont = 0;
-            
+
             $endpoint = "http://" . Framework::$bridgeIp . "/axis2/services/BridgeOSCARS?wsdl";
             $client = new SoapClient($endpoint, array('cache_wsdl' => 0));
             if ($result = $client->cancel($cancel_reservations)) {

@@ -18,7 +18,24 @@ $('#slider').slider({
     max: 1000,
     step: 100,
     slide: function( event, ui ) {
-        $( "#amount" ).val( "$" + ui.value );
-    }
+        if (ui.value >= 600) {
+            $("#amount").animate({'color': '#FF0000'});
+            $( "#amount" ).val( ui.value + " Mbps. Será necessária a autorização do Administrador da Rede para efetuar reserva.");
+        } else {
+            $("#amount").animate({'color': '#00000000'});
+            $( "#amount" ).val( ui.value + " Mbps");
+        }
+    }    
 });
+$( "#amount" ).val( $( "#slider" ).slider( "value" ) + " Mbps");
                
+ var center = new google.maps.LatLng(-23.051931,-43.975511);
+ var myOptions = {
+   zoom: 3,
+   center: center,
+   streetViewControl: false,
+   navigationControlOptions: {style: google.maps.NavigationControlStyle.ZOOM_PAN},
+   mapTypeControl: false,
+   mapTypeId: google.maps.MapTypeId.TERRAIN
+ };
+ var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);

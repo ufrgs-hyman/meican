@@ -10,7 +10,7 @@ $flow = $this->passedArgs->flow;
 $timer = $this->passedArgs->timer;
 $name = $this->passedArgs->res_name;
 ?>
-<link type="text/css" href="../layouts/jquery-ui-1.8.13.custom.css" rel="stylesheet" />
+<link type="text/css" href="layouts/jquery-ui-1.8.13.custom.css" rel="stylesheet" />
 
 <h1><?php echo _("Reservation Creation Wizard"); ?></h1>
 
