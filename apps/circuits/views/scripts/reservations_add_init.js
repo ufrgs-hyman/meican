@@ -1,28 +1,33 @@
-$(".cont_tab").hide(); //esconde todo conteudo
-$("ul.tabs li:first").addClass("active").show(); //ativa a primeira aba
-$(".cont_tab:first").show(); //mostra o conteudo da primeira aba
+$(".cont_tab").hide();                              //esconde todo conteudo
+//$("ul.tabs li:first").addClass("active").show();    //ativa a primeira aba
+$("ul.tabs li:eq(0)").addClass("active").show();
+$("ul.tabs li:eq(1)").addClass("inactive").hide()
+$("ul.tabs li:eq(2)").addClass("inactive").hide()
+$("ul.tabs li:eq(3)").addClass("inactive").hide()
+$("ul.tabs li:eq(4)").addClass("inactive").hide()
+$(".cont_tab:eq(0)").show();                        //mostra o conteudo da primeira aba
   
 $("ul.tabs li").click(function() {
  
-    $("ul.tabs li").removeClass("active"); //remove qualquer classe “active”
-    $(this).addClass("active"); //Adiciona a classe “active” na aba selecionada
-    $(".cont_tab").hide(); //esconde o conteudo de todas as abas
+    $("ul.tabs li").removeClass("active");          //remove qualquer classe “active”
+    $(this).addClass("active");                     //Adiciona a classe “active” na aba selecionada
+    $(".cont_tab").hide();                          //esconde o conteudo de todas as abas
     var activeTab = $(this).find("a").attr("href"); //encontra o atributo href para identificar a aba ativa e seu conteudo
-    $(activeTab).fadeIn(); //Mostra o conteudo da aba ativa gradualmente
+    $(activeTab).fadeIn();                          //Mostra o conteudo da aba ativa gradualmente
     return false;
 });
 
 $('#slider').slider({
-    value:500,
-    min: 100,
-    max: 1000,
-    step: 100,
+    value:(band_max)/2,
+    min: band_min,
+    max: band_max,
+    step: band_div,
     slide: function( event, ui ) {
-        if (ui.value >= 600) {
-            $("#amount").animate({'color': '#FF0000'});
-            $( "#amount" ).val( ui.value + " Mbps. Será necessária a autorização do Administrador da Rede para efetuar reserva.");
+        if (ui.value >= (band_max*band_warning)) {
+            $("#amount").animate({'color': '#FF0000'},10);
+            $( "#amount" ).val( ui.value + " Mbps. " + warning_string);
         } else {
-            $("#amount").animate({'color': '#00000000'});
+            $("#amount").animate({'color': '#00000000'},10);
             $( "#amount" ).val( ui.value + " Mbps");
         }
     }    

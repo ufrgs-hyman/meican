@@ -272,6 +272,7 @@ class reservations extends Controller {
         $min = 100;
         $max = 1000;
         $div = 100;
+        $warn = 0.7;
 
 //        $domain = new domain_info();
 //        $domains = $domain->fetch(FALSE);
@@ -295,6 +296,7 @@ class reservations extends Controller {
                 "band_min" => $min,
                 "band_max" => $max,
                 "band_div" => $div,
+                "band_warning" => $warn,
                 "flash_nameReq" => _("A name is required"),
                 "flash_bandInv" => _("Invalid value for bandwidth"),
                 "flash_sourceReq" => _("A source is required"),
@@ -311,7 +313,8 @@ class reservations extends Controller {
                 "devices_string" => _("Devices"),
                 "from_here_string" => _("From Here"),
                 "to_here_string" => _("To Here"),
-                "cluster_information_string" => _("Information about cluster")
+                "cluster_information_string" => _("Information about cluster"),
+                "warning_string" => _("Authorization from Network Administrator will be required.")
             //    "domains" => $domToMapArray
             ));
         //}

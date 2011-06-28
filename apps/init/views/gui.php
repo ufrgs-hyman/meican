@@ -9,7 +9,7 @@
         <link rel="stylesheet" type="text/css" href="layouts/style1.css" />
         
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery.min.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery-ui-1.8.10.min.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery-ui-1.8.13.custom.min.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery_history.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery.crypt.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery.form.js"></script>

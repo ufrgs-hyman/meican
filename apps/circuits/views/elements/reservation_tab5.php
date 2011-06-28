@@ -1,4 +1,4 @@
-<h2><?php echo _("Step 4 - Confirmation"); ?></h2>
+<h2><?php echo _("Step 5 - Confirmation"); ?></h2>
 
 <br>
 
@@ -22,6 +22,6 @@
 
 <div class="controls">
     <input type="button" id="bc5" class="cancel" value="<?php echo _('Cancel'); ?>" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');"
-           <input type="button" id="bp5" class="back" value="<?php echo _('Previous'); ?>" onClick="previousTab(this);"
-           <input type="submit" id="bn5" class="ok" value="<?php echo _('Finished'); ?>">
+    <input type="button" id="bp5" class="back" value="<?php echo _('Previous'); ?>" onClick="previousTab(this);"
+    <input type="submit" id="bn5" class="ok" value="<?php echo _('Finished'); ?>">
 </div>
