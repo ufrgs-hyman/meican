@@ -7,103 +7,125 @@ include_once 'apps/domain/models/urn_info.inc';
 
 class Topology {
 
-    public static function getURNTopology() {
-        $domain = new domain_info();
-        //$ldom = $domain->getLocalDomain();
+    public static function getURNTopology($dom_id=NULL) {
 
-        // atribui variáveis para chamar o comando
-        $perfFile = '/opt/perfsonar_ps/topology_service/bin/client.pl';
-        //$perfServer = "http://$ldom->topo_ip:8012/perfSONAR_PS/services/topology";
-        $perfRequest = '/opt/perfsonar_ps/topology_service/doc/requests/TSQueryRequest-all.xml';
-        $xmlFile = '/var/www/topology/topology.xml';
+        $domain_info = new domain_info();
+        if ($dom_id)
+            $domain_info->dom_id = $dom_id;
 
-        // Executa comando para chamar o Perfsonar
-        //system("perl $perfFile $perfServer $perfRequest > $xmlFile", $retval);
-        $retval = 0;
-        if ($retval == 0) {
+        if ($domains = $domain_info->fetch()) {
 
-            if (!file_exists($xmlFile)) {
-                Framework::debug("Error: Topology file does not exist");
-                return FALSE;
-            }
+            $dom_urns = array();
 
-            $xml = new SimpleXmlElement($xmlFile, 0, true);
-            //        try {
-            //            $xml = new SimpleXmlElement($xmlFile, 0, true);
-            //        } catch (Exception e) {
-            //
-            //        }
+            foreach ($domains as $dom) {
 
-            if (!is_a($xml, "SimpleXmlElement")) {
-                Framework::debug("Error: Unable to read XML file");
-                return FALSE;
-            }
+                // atribui variáveis para chamar o comando
+                $perfFile = '/opt/perfsonar_ps/topology_service/bin/client.pl';
+                $perfServer = "http://$dom->topo_ip:8012/perfSONAR_PS/services/topology";
+                $perfRequest = '/opt/perfsonar_ps/topology_service/doc/requests/TSQueryRequest-all.xml';
+                $xmlFile = '/var/www/topology/topology.xml';
 
-            // lê as URNs do arquivo de topologia, preenche o vetor $urns_top
-            $nodes = $xml->children('SOAP-ENV', true)->Body->children('nmwg', true)->message->data->children('nmtopo', true)->topology->children('ns1', true)->domain->node;
+                // Executa comando para chamar o Perfsonar
+                //system("perl $perfFile $perfServer $perfRequest > $xmlFile", $retval);
+                $retval = 0;
+                if ($retval == 0) {
 
-            $urns_top = array();
-            $top = array();
-            $index = 0;
-            if ($nodes)
-                foreach ($nodes as $n) {
-                    $ports = $n->port;
+                    if (!file_exists($xmlFile)) {
+                        Framework::debug("Error: Topology file does not exist");
+                        $dom_urns[$dom->dom_id] = FALSE;
+                        continue;
+                    }
 
-                    if ($ports)
-                        foreach ($ports as $p) {
-                            $remoteLink = $p->link->remoteLinkId;
-                            if ($remoteLink == 'urn:ogf:network:domain=*:node=*:port=*:link=*') {
-                                $urn = new stdClass();
-                                $urn->id = $index++;
-                                $urn->name = (string) $p->link->attributes();
-                                $urn->vlan = (string) $p->link->SwitchingCapabilityDescriptors->switchingCapabilitySpecificInfo->vlanRangeAvailability;
-                                $urn->max_capacity = (integer) $p->link->maximumReservableCapacity;
-                                $urn->min_capacity = (integer) $p->link->minimumReservableCapacity;
-                                $urn->granularity = (integer) $p->link->granularity;
+                    $xml = new SimpleXmlElement($xmlFile, 0, true);
+                    //        try {
+                    //            $xml = new SimpleXmlElement($xmlFile, 0, true);
+                    //        } catch (Exception e) {
+                    //
+                    //        }
 
-                                // procura pela porta da URN
-                                $searchPort = $urn->name;
-                                // elimina string até achar o atributo 'port='
-                                while (substr($searchPort, 0, 5) != "port=")
-                                    $searchPort = substr($searchPort, 1, strlen($searchPort));
+                    if (!is_a($xml, "SimpleXmlElement")) {
+                        Framework::debug("Error: Unable to read XML file");
+                        $dom_urns[$dom->dom_id] = FALSE;
+                        continue;
+                    }
 
-                                $port = "";
-                                // atribui à porta o número da mesma
-                                for ($j = 0; $searchPort[$j + 5] != ':'; $j++)
-                                    $port .= $searchPort[$j + 5];
+                    // lê as URNs do arquivo de topologia, preenche o vetor $urns_top
+                    $nodes = $xml->children('SOAP-ENV', true)->Body->children('nmwg', true)->message->data->children('nmtopo', true)->topology->children('ns1', true)->domain->node;
 
-                                $urn->port = $port;
+                    $urns_top = array();
+                    $top = array();
+                    $index = 0;
+                    if ($nodes)
+                        foreach ($nodes as $n) {
+                            $ports = $n->port;
 
-                                $top[$urn->id] = $urn->name; // vetor para comparação com o banco
-                                $urns_top[] = $urn;
-                            }
+                            if ($ports)
+                                foreach ($ports as $p) {
+                                    $remoteLink = $p->link->remoteLinkId;
+                                    if ($remoteLink == 'urn:ogf:network:domain=*:node=*:port=*:link=*') {
+                                        $urn = new stdClass();
+                                        $urn->id = $index++;
+                                        $urn->name = (string) $p->link->attributes();
+                                        $urn->vlan = (string) $p->link->SwitchingCapabilityDescriptors->switchingCapabilitySpecificInfo->vlanRangeAvailability;
+                                        $urn->max_capacity = (integer) $p->link->maximumReservableCapacity;
+                                        $urn->min_capacity = (integer) $p->link->minimumReservableCapacity;
+                                        $urn->granularity = (integer) $p->link->granularity;
+
+                                        // procura pela porta da URN
+                                        $searchPort = $urn->name;
+                                        // elimina string até achar o atributo 'port='
+                                        while (substr($searchPort, 0, 5) != "port=")
+                                            $searchPort = substr($searchPort, 1, strlen($searchPort));
+
+                                        $port = "";
+                                        // atribui à porta o número da mesma
+                                        for ($j = 0; $searchPort[$j + 5] != ':'; $j++)
+                                            $port .= $searchPort[$j + 5];
+
+                                        $urn->port = $port;
+
+                                        $top[$urn->id] = $urn->name; // vetor para comparação com o banco
+                                        $urns_top[] = $urn;
+                                    }
+                                }
                         }
+
+                    // lê as URNs cadastradas no banco de dados do sistema, preenche o vetor $urns_db
+                    $urn = new urn_info();
+                    $allUrns = $urn->fetch(FALSE);
+
+                    $db = array();
+                    if ($allUrns)
+                        foreach ($allUrns as $u) {
+                            $db[$u->urn_id] = $u->urn_string; // vetor para comparação com a topologia
+                        }
+
+                    // calcula diferença entre os vetores da topologia e do banco, retorna apenas os novos
+                    // urn_diff = top - db
+                    $urn_diff = array_diff($top, $db);
+                    
+                    // calcula diferença entre os vetores do banco e da topologia, retorna os inválidos
+                    //$invalid = array_diff($db, $top);
+                    //Framework::debug("urn invalid",$invalid);
+                    
+                    // preenche vetor a ser retornado
+                    $urns = array();
+                    foreach ($urn_diff as $ind => $d) {
+                        $urns[] = $urns_top[$ind];
+                    }
+                    
+                    $dom_urns[$dom->dom_id] = $urns;
+                } else {
+                    Framework::debug("Error: failed to connect to PerfSONAR",$retval);
+                    $dom_urns[$dom->dom_id] = FALSE;
                 }
-
-            // lê as URNs cadastradas no banco de dados do sistema, preenche o vetor $urns_db
-            $urn = new urn_info();
-            $allUrns = $urn->fetch(FALSE);
-
-            $db = array();
-            if ($allUrns)
-                foreach ($allUrns as $u) {
-                    $db[$u->urn_id] = $u->urn_string; // vetor para comparação com a topologia
-                }
-
-            // calcula diferença entre os vetores da topologia e do banco, retorna apenas os novos
-            $urn_diff = array_diff($top, $db); // urn_diff = top - db
-            // calcula diferença entre os vetores do banco e da topologia, retorna os inválidos
-            //$invalid = array_diff($db, $top);
-            //Framework::debug("urn invalid",$invalid);
-            // preenche vetor a ser retornado
-            $urns = array();
-            foreach ($urn_diff as $ind => $d) {
-                $urns[] = $urns_top[$ind];
             }
+            
+            Framework::debug("dom urns",$dom_urns);
 
-            return ($urns);
+            return ($dom_urns);
         } else {
-            Framework::debug("Error: failed to connect to PerfSONAR");
+            Framework::debug("Warning: no domain found in getURNTopology");
             return FALSE;
         }
     }

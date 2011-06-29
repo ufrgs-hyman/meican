@@ -7,9 +7,14 @@ function newURN() {
             $('#loading').hide();
             
             if (data) {
+                
+                for (var i in data) {
+                    urns = data[i];
+                }
+                
                 // retornou dados, testa se vetor está vazio
                 if (data.length != 0) {
-                    urns = data;
+                    //urns = data;
                     fillURNLine();
                 } else {
                     // topologia atualizada
