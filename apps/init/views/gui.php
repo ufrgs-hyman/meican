@@ -164,6 +164,10 @@ function fillSelectBox(htmlId, fillerArray, current_val) {
                 $('#flash_box').append('<div class="' + status + '">' + message + '</div>');
                 window.scroll(0, 110);
             }
+            
+            function clearFlash(){
+                $('#flash_box').empty();
+            }
     
         </script>
 

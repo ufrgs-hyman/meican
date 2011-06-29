@@ -19,7 +19,7 @@ else
     <!--    <input class="next" type="button" id="bn4" disabled="disabled" value="<?php echo _("Next"); ?>"/> -->
     <?php //endif; ?>
     <input type="button" id="bc4" class="cancel" value="<?php echo _('Cancel'); ?>" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');"          
-    <input type="button" id="bp4" class="back" value="<?php echo _('Previous'); ?>" onClick="previousTab(this);"                  
+    <input type="button" id="bp4" class="back" value="<?php echo _('Previous'); ?>" onClick="prevTab(this);"                  
 
 
 
