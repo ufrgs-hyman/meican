@@ -6,6 +6,8 @@ function nextTab(elem){
         $(".cont_tab").hide();                                      //Esconde o conteúdo de todas as abas
         activeTab = $("ul.tabs li:eq(1)").find("a").attr("href");   //Identifica ABA ativa pelo href
         $(activeTab).fadeIn();                                      //Exibe somente o conteudo da aba ativa
+        google.maps.event.trigger(map, 'resize');
+        map.setZoom( map.getZoom() );
     } else if (elem.id == "bn2") {                  
         $("ul.tabs li:eq(1)").removeClass("active");    
         $("ul.tabs li:eq(2)").addClass("active").show();            
@@ -41,6 +43,8 @@ function previousTab(elem){
         $(".cont_tab").hide();
         activeTab = $("ul.tabs li:eq(1)").find("a").attr("href");
         $(activeTab).fadeIn();
+        google.maps.event.trigger(map, 'resize');
+        map.setZoom( map.getZoom() );
     } else if (elem.id == "bp4") {
         $("ul.tabs li").removeClass("active");
         $("ul.tabs li:eq(2)").addClass("active");            
