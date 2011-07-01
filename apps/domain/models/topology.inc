@@ -16,6 +16,7 @@ class Topology {
         if ($domains = $domain_info->fetch()) {
 
             $dom_urns = array();
+            $urns = array();
 
             foreach ($domains as $dom) {
 
@@ -23,7 +24,7 @@ class Topology {
                 $perfFile = '/opt/perfsonar_ps/topology_service/bin/client.pl';
                 $perfServer = "http://$dom->topo_ip:8012/perfSONAR_PS/services/topology";
                 $perfRequest = '/opt/perfsonar_ps/topology_service/doc/requests/TSQueryRequest-all.xml';
-                $xmlFile = '/var/www/topology/topology.xml';
+                $xmlFile = "/var/www/topology/topology$dom->dom_id.xml";
 
                 // Executa comando para chamar o Perfsonar
                 //system("perl $perfFile $perfServer $perfRequest > $xmlFile", $retval);
@@ -48,6 +49,13 @@ class Topology {
                         $dom_urns[$dom->dom_id] = FALSE;
                         continue;
                     }
+                    
+                    $topo_domains = $xml->children('SOAP-ENV', true)->Body->children('nmwg', true)->message->data->children('nmtopo', true)->topology->children('ns1', true)->domain;
+                    
+                    foreach ($topo_domains as $td) {
+                        $tmp = (string) $td->attributes();
+                        Framework::debug("domain",$tmp);
+                    }
 
                     // lê as URNs do arquivo de topologia, preenche o vetor $urns_top
                     $nodes = $xml->children('SOAP-ENV', true)->Body->children('nmwg', true)->message->data->children('nmtopo', true)->topology->children('ns1', true)->domain->node;
@@ -66,10 +74,14 @@ class Topology {
                                         $urn = new stdClass();
                                         $urn->id = $index++;
                                         $urn->name = (string) $p->link->attributes();
+                                        //Framework::debug("urn",$urn->name);
                                         $urn->vlan = (string) $p->link->SwitchingCapabilityDescriptors->switchingCapabilitySpecificInfo->vlanRangeAvailability;
                                         $urn->max_capacity = (integer) $p->link->maximumReservableCapacity;
                                         $urn->min_capacity = (integer) $p->link->minimumReservableCapacity;
                                         $urn->granularity = (integer) $p->link->granularity;
+                                        
+                                        $urn->dom_id = $dom->dom_id;
+                                        $urn->dom_descr = $dom->dom_descr;
 
                                         // procura pela porta da URN
                                         $searchPort = $urn->name;
@@ -109,21 +121,21 @@ class Topology {
                     //Framework::debug("urn invalid",$invalid);
                     
                     // preenche vetor a ser retornado
-                    $urns = array();
+                    //$urns = array();
                     foreach ($urn_diff as $ind => $d) {
                         $urns[] = $urns_top[$ind];
                     }
                     
-                    $dom_urns[$dom->dom_id] = $urns;
+                    //$dom_urns[$dom->dom_id] = $urns;
                 } else {
                     Framework::debug("Error: failed to connect to PerfSONAR",$retval);
                     $dom_urns[$dom->dom_id] = FALSE;
                 }
             }
             
-            Framework::debug("dom urns",$dom_urns);
+            //Framework::debug("dom urns",$urns);
 
-            return ($dom_urns);
+            return ($urns);
         } else {
             Framework::debug("Warning: no domain found in getURNTopology");
             return FALSE;

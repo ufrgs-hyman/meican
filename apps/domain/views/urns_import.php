@@ -1,6 +1,9 @@
 <?php
+
 $urns = $this->passedArgs->urns;
 $networks = $this->passedArgs->networks;
+//$domains = $this->passedArgs->domains;
+
 ?>
 
 <h1><?php echo _("Importing Topology URNs (Uniform Resource Name)"); ?></h1>
@@ -11,6 +14,7 @@ $networks = $this->passedArgs->networks;
     <thead>
         <tr>
             <th rowspan="2"></th>
+            <th rowspan="2"><?php echo _("Domain"); ?></th>
             <th rowspan="2"><?php echo _("Network"); ?></th>
             <th rowspan="2"><?php echo _("Device"); ?></th>
             <th rowspan="2"><?php echo _("Port"); ?></th>
@@ -31,6 +35,10 @@ $networks = $this->passedArgs->networks;
             <tr id="line<?php echo $index; ?>">
                 <td class="edit">
                     <img class="delete" src="layouts/img/delete.png" onclick="deleteURNLine('<?php echo $index; ?>');"/>
+                </td>
+                
+                <td>
+                    <?php echo $u->dom_descr; ?>
                 </td>
 
                 <td>
