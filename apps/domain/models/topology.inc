@@ -17,6 +17,7 @@ class Topology {
 
             $dom_urns = array();
             $urns = array();
+            $domains_found = array();
 
             foreach ($domains as $dom) {
 
@@ -53,8 +54,32 @@ class Topology {
                     $topo_domains = $xml->children('SOAP-ENV', true)->Body->children('nmwg', true)->message->data->children('nmtopo', true)->topology->children('ns1', true)->domain;
                     
                     foreach ($topo_domains as $td) {
-                        $tmp = (string) $td->attributes();
-                        Framework::debug("domain",$tmp);
+                        
+                        $domain = new stdClass();
+                        $domain->id = (string) $td->attributes();
+                        $domain->nodes = array();
+                        
+                        $topo_nodes = $td->node;
+                        
+                        foreach ($topo_nodes as $tn) {
+                            
+                            $node = new stdClass();
+                            $node->id = (string) $tn->attributes();
+                            $node->ports = array();
+                            
+                            $topo_ports = $tn->port;
+                            
+                            foreach ($topo_ports as $tp) {
+                                $port = new stdClass();
+                                $port->id = (string) $tp->attributes();
+                                
+                                $node->ports[] = $port;
+                            }
+                            
+                            $domain->nodes[] = $node;
+                        }
+                        
+                        $domains_found[] = $domain;
                     }
 
                     // lê as URNs do arquivo de topologia, preenche o vetor $urns_top
@@ -132,6 +157,8 @@ class Topology {
                     $dom_urns[$dom->dom_id] = FALSE;
                 }
             }
+            
+            Framework::debug("domains topo",$domains_found);
             
             //Framework::debug("dom urns",$urns);
 
