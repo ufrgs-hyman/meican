@@ -14,7 +14,7 @@ $name = $this->passedArgs->res_name;
 
 <h1><?php echo _("Reservation Creation Wizard"); ?></h1>
 
-<form method="POST" action="<?php echo $this->buildLink(array('action' => 'submit')); ?>">
+<form id="reservation_add" method="POST" action="<?php echo $this->buildLink(array('action' => 'submit')); ?>">
 
     <ul class="tabs">
         <li id="t1"><a href="#tab1"><?php echo _('Reservation Name'); ?></a></li>
@@ -29,16 +29,16 @@ $name = $this->passedArgs->res_name;
             <?php $this->addElement('reservation_tab1');?>
         </div>
         
-        <div id="tab2" class="cont_tab">
+        <div id="tab2" style="display: none" class="cont_tab">
             <?php $this->addElement('reservation_tab2');?>
         </div>
-        <div id="tab3" class="cont_tab">
+        <div id="tab3" style="display: none" class="cont_tab">
             <?php $this->addElement('reservation_tab3');?>            
         </div>
-        <div id="tab4" class="cont_tab">
+        <div id="tab4" style="display: none" class="cont_tab">
             <?php $this->addElement('reservation_tab4');?>            
         </div>       
-        <div id="tab5" class="cont_tab">
+        <div id="tab5" style="display: none" class="cont_tab">
             <?php $this->addElement('reservation_tab5');?>            
         </div>          
     </div>

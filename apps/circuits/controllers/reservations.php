@@ -305,6 +305,7 @@ class reservations extends Controller {
                 "flash_destReq" => _("A destination is required"),
                 "flash_dstVlanInv" => _("Invalid value for destination VLAN"),
                 "flash_dstVlanReq" => _("Destination VLAN type required"),
+                "flash_timerReq" => _("Timer is required"),
                 "domain_string" => _("Domain"),
                 "domains_string" => _("Domains"),
                 "network_string" => _("Network"),
@@ -569,7 +570,8 @@ class reservations extends Controller {
             $reservationName = Common::getSessionVariable('res_name');
         } else {
             $this->setFlash(_("Not enough arguments to reservation, going back to step 4..."), "warning");
-            $this->page3();
+            //$this->page3();
+            $this->add_form();
             return;
         }
 

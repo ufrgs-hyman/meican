@@ -23,5 +23,5 @@
 <div class="controls">
     <input type="button" id="bc5" class="cancel" value="<?php echo _('Cancel'); ?>" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');"
     <input type="button" id="bp5" class="back" value="<?php echo _('Previous'); ?>" onClick="prevTab(this);"
-    <input type="submit" id="bn5" class="ok" value="<?php echo _('Finished'); ?>">
+    <input type="button" id="bf"  class="ok" value="<?php echo _('Finished'); ?>" onClick="validateForm();">
 </div>

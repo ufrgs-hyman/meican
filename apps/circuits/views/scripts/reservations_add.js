@@ -8,7 +8,7 @@ var myOptions = {
     streetViewControl: false,
     navigationControlOptions: {
         style: google.maps.NavigationControlStyle.ZOOM_PAN
-        },
+    },
     backgroundColor: "white",
     mapTypeControl: false,
     mapTypeId: google.maps.MapTypeId.TERRAIN
@@ -24,16 +24,17 @@ function createTabs(){
     $(".cont_tab:eq(0)").show();                        //mostra o conteudo da primeira aba
 
     $("ul.tabs li").click(function() {
-            previousTab = currentTab;
-            currentTab = $(this).attr("id");
-            $("ul.tabs li").removeClass("active");          //remove qualquer classe “active”
-            $(this).addClass("active");                     //Adiciona a classe “active” na aba selecionada
-            $(".cont_tab").hide();                          //esconde o conteudo de todas as abas
-            var activeTab = $(this).find("a").attr("href"); //encontra o atributo href para identificar a aba ativa e seu conteudo
-            $(activeTab).fadeIn();                          //Mostra o conteudo da aba ativa gradualmente
-            google.maps.event.trigger(map, 'resize');
-            map.setZoom( map.getZoom() );    
-            return false;
+        clearFlash();
+        previousTab = currentTab;
+        currentTab = $(this).attr("id");
+        $("ul.tabs li").removeClass("active");          //remove qualquer classe “active”
+        $(this).addClass("active");                     //Adiciona a classe “active” na aba selecionada
+        $(".cont_tab").hide();                          //esconde o conteudo de todas as abas
+        var activeTab = $(this).find("a").attr("href"); //encontra o atributo href para identificar a aba ativa e seu conteudo
+        $(activeTab).fadeIn();                          //Mostra o conteudo da aba ativa gradualmente
+        google.maps.event.trigger(map, 'resize');
+        map.setZoom( map.getZoom() );    
+        return false;
     });    
 }
 
@@ -182,7 +183,7 @@ function validate(tab) {
             break;
         }
         case "t3": {
-            return validateReservationBandwidth();
+            return true;
             break;
         }
         case "t4": {
@@ -197,17 +198,85 @@ function validate(tab) {
 }
 
 function validateReservationName() {
-    return true;
+    if ($("#res_name").val() == "") {
+        return nameError();
+    } else
+        return true;
 }
 
-function validateReservationEndPoints() {
-    return true;    
+function nameError(){
+    setFlash(flash_nameReq);
+    $("ul.tabs li").removeClass("active");
+    $("ul.tabs li:eq(0)").addClass("active");            
+    $(".cont_tab").hide();
+    activeTab = $("ul.tabs li:eq(0)").find("a").attr("href");
+    $(activeTab).fadeIn();
+    previousTab = currentTab;
+    currentTab = "t1"; 
+    return false;
 }
 
-function validateReservationBandwidth() {
-    return true;    
+function validateReservationEndPoints() {   
+    return ((sourceError(false)) && (destinationError(false)));    
+    //return true
+}
+
+function sourceError(error){
+    if (error) {
+        setFlash(flash_sourceReq);
+        $("ul.tabs li").removeClass("active");
+        $("ul.tabs li:eq(1)").addClass("active");            
+        $(".cont_tab").hide();
+        activeTab = $("ul.tabs li:eq(1)").find("a").attr("href");
+        $(activeTab).fadeIn();
+        previousTab = currentTab;
+        currentTab = "t2"; 
+        return false;    
+    } else
+        return true;        
+}
+
+function destinationError(error){
+    if (error) {
+        setFlash(flash_destReq);
+        $("ul.tabs li").removeClass("active");
+        $("ul.tabs li:eq(1)").addClass("active");            
+        $(".cont_tab").hide();
+        activeTab = $("ul.tabs li:eq(1)").find("a").attr("href");
+        $(activeTab).fadeIn();
+        previousTab = currentTab;
+        currentTab = "t2"; 
+        return false;    
+    } else
+        return true;
 }
 
 function validateReservationTimer() {
-    return true;    
+    return timerError(false);
+    //return true;    
+}
+
+function timerError(error){
+    if (error) {
+        setFlash(flash_timerReq);
+        $("ul.tabs li").removeClass("active");
+        $("ul.tabs li:eq(3)").addClass("active");            
+        $(".cont_tab").hide();
+        activeTab = $("ul.tabs li:eq(3)").find("a").attr("href");
+        $(activeTab).fadeIn();
+        previousTab = currentTab;
+        currentTab = "t4"; 
+        return false;    
+    } else
+        return true;
+}
+
+function validateForm() {
+    if (validateReservationName()) {
+        if (validateReservationEndPoints()) {
+            if (validateReservationTimer()) {
+                $("#reservation_add").submit();                    
+            } 
+        }
+    }
 }
