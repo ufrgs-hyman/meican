@@ -32,8 +32,12 @@ function createTabs(){
         $(".cont_tab").hide();                          //esconde o conteudo de todas as abas
         var activeTab = $(this).find("a").attr("href"); //encontra o atributo href para identificar a aba ativa e seu conteudo
         $(activeTab).fadeIn();                          //Mostra o conteudo da aba ativa gradualmente
+        if (currentTab == "t5") {
+            changeBand();
+        }
         google.maps.event.trigger(map, 'resize');
-        map.setZoom( map.getZoom() );    
+        map.setZoom( map.getZoom() );
+        
         return false;
     });    
 }
@@ -56,9 +60,10 @@ function createSlider(){
                 },10);
                 $( "#amount" ).val( ui.value + " Mbps");
             }
-        }    
+        }
     });
     $( "#amount" ).val( $( "#slider" ).slider( "value" ) + " Mbps");    
+    $("#slider").bind("slidechange", changeBand());
 }
 
 function nextTab(elem){
@@ -115,6 +120,7 @@ function nextTab(elem){
                 $(activeTab).fadeIn();   
                 previousTab = currentTab;
                 currentTab = "t5";
+                changeBand();
             }
             break;            
         }        
@@ -187,7 +193,7 @@ function validate(tab) {
             break;
         }
         case "t4": {
-            return validateReservationTimer();
+            return true;// validateReservationTimer();
             break;            
         }        
         default: {
@@ -252,7 +258,7 @@ function destinationError(error){
 }
 
 function validateReservationTimer() {
-    return timerError(false);
+    return timerError(true);
     //return true;    
 }
 
@@ -278,5 +284,23 @@ function validateForm() {
                 $("#reservation_add").submit();                    
             } 
         }
+    }
+}
+
+function changeName(elem){
+    if (elem.id == "res_confirmation") {
+        $("#res_name").val(elem.value);
+    } else if (elem.id == "res_name") {
+        $("#res_confirmation").val(elem.value);
+    }
+}
+
+function changeBand(){
+    var value = $("#slider").slider("option","value");
+
+    if (value >= (band_max*band_warning)) {
+        $("#lb_bandwidth").html("<font color=#FF0000>  " + value + " Mbps.<br>" + warning_string + "</font>");    
+    } else {
+        $("#lb_bandwidth").html("  " + value + " Mbps.");    
     }
 }

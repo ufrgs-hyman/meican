@@ -3,7 +3,7 @@
 <!-- Slider -->
 <label style="left:25px" for="amount"></label>
 <input type="text" id="amount" style="left:25px; border:0; color:#0; font-weight:bold;" size="100"/>
-<div id="slider" style="left: 25px; width: 40%" ></div>
+<div id="slider" style="left: 25px; width: 40%"></div>
 
 
 <div class="controls">

@@ -8,7 +8,7 @@
             <?php echo _("Reservation name"); ?>
         </th>
         <th>
-            <input type="text" id="res_name" size="50" value="<?php echo $name; ?>">
+            <input type="text" id="res_name" size="50" value="<?php echo $name; ?>" onchange="changeName(this);">
         </th>
     </tr>
 </table>

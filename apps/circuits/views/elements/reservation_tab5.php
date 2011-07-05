@@ -8,13 +8,19 @@
             <?php echo _("Reservation name"); ?>
         </th>
         <td>
-            <input type="text" name="res_name" size="50" value="<?php echo $name; ?>" onchange="changeName(this);">
+            <input type="text" id="res_confirmation" name="res_name" size="50" onchange="changeName(this);">
         </td>
     </tr>
 </table>
 
-<h2><?php echo _('Flow'); ?></h2>
+<h2><?php echo _('Endpoints'); ?></h2>
 <?php $this->addElement('view_flow', $flow); ?>
+
+<br>
+
+<h2 style="display: inline"><?php echo _('Bandwidth'); ?>:</h2><label id="lb_bandwidth"></label>
+
+<br>
 
 <h2><?php echo _('Timer'); ?></h2>
 <?php $this->addElement('view_timer', $timer); ?>

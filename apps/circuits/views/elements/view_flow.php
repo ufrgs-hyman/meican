@@ -85,13 +85,4 @@ $flow = $argsToElement;
             ?>
         </td>
     </tr>
-
-    <tr>
-        <th>
-            <?php echo _("Bandwidth"); ?>
-        </th>
-        <td colspan="2">
-            <?php echo $flow->bandwidth; ?>
-        </td>
-    </tr>
 </table>
