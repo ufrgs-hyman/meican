@@ -4,12 +4,9 @@
     <div align="center" id="map_canvas" style="width: 400px; height: 300px;"></div>
 </div>
 <br>
-<div style="clear:both">        
+<div align="center" style="clear:both">        
     <?php
-//    if ($flows_exist)
-//        $this->addElement('list_flows', $args);
-//    else
-//        $this->addElement("empty_db", $args);
+        $this->addElement('source_dest', $args);
     ?>
 </div>
 

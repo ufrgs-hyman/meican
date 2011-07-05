@@ -264,16 +264,52 @@ class reservations extends Controller {
     }
 
     public function reservation_add() {
-        $this->setInlineScript('reservations_add_init');
-        $this->addScript('reservations_add');
-        $this->addScript('map');
-        $this->setAction('add');
 
-        $min = 100;
-        $max = 1000;
-        $div = 100;
-        $warn = 0.7;
+        // STEP 2 VARIABLES ---------------------
+        $domain = new domain_info();
+        $allDomains = $domain->fetch(FALSE);
 
+        $domains = array();
+        foreach ($allDomains as $d) {
+            $dom = new stdClass();
+            $dom->id = $d->dom_id;
+            $dom->name = $d->dom_descr;
+            $domains[] = $dom;
+        }
+        // --------------------------------------
+
+        // STEP 3 VARIABLES ---------------
+        $bmin = 100;
+        $bmax = 1000;
+        $bdiv = 100;
+        $bwarn = 0.7;
+        // --------------------------------
+         
+        // STEP 4 VARIABLES -------------------------- 
+        $dateFormat = "d/m/Y";
+        $js_dateFormat = "dd/mm/yy";
+        //$dateFormat = "M j, Y";
+        //$js_dateFormat = "M d, yy";
+
+        $hourFormat = "H:i";
+        //$hourFormat = "g:i a";
+
+        $hoursArray = array();
+        for ($h = 0; $h < 24; $h++) {
+            for ($m = 0; $m < 60; $m = $m + 5) {
+                $hour = ($h < 10) ? "0$h" : $h;
+                $min = ($m < 10) ? "0$m" : $m;
+                $hoursArray[] = "$hour:$min";
+            }
+        }
+
+        $today_check = DayofWeek();
+
+        $lang = explode(".", Language::getLang());
+        $js_lang = str_replace("_", "-", $lang[0]);
+        // --------------------------------------------
+  
+        
 //        $domain = new domain_info();
 //        $domains = $domain->fetch(FALSE);
 //
@@ -292,34 +328,88 @@ class reservations extends Controller {
 //        }
 
         //if ($domToMapArray) {
-            $this->setArgsToScript(array(
-                "band_min" => $min,
-                "band_max" => $max,
-                "band_div" => $div,
-                "band_warning" => $warn,
-                "flash_nameReq" => _("A name is required"),
-                "flash_bandInv" => _("Invalid value for bandwidth"),
-                "flash_sourceReq" => _("A source is required"),
-                "flash_srcVlanInv" => _("Invalid value for source VLAN"),
-                "flash_srcVlanReq" => _("Source VLAN type required"),
-                "flash_destReq" => _("A destination is required"),
-                "flash_dstVlanInv" => _("Invalid value for destination VLAN"),
-                "flash_dstVlanReq" => _("Destination VLAN type required"),
-                "flash_timerReq" => _("Timer is required"),
-                "domain_string" => _("Domain"),
-                "domains_string" => _("Domains"),
-                "network_string" => _("Network"),
-                "networks_string" => _("Networks"),
-                "device_string" => _("Device"),
-                "devices_string" => _("Devices"),
-                "from_here_string" => _("From Here"),
-                "to_here_string" => _("To Here"),
-                "cluster_information_string" => _("Information about cluster"),
-                "warning_string" => _("Authorization from Network Administrator will be required.")
-            //    "domains" => $domToMapArray
-            ));
+        
+        // Args to Script
+        $this->setArgsToScript(array(
+            // bandwidth
+            "band_min" => $bmin,
+            "band_max" => $bmax,
+            "band_div" => $bdiv,
+            "band_warning" => $bwarn,
+            "warning_string" => _("Authorization from Network Administrator will be required."),
+            // flash messages
+            "flash_nameReq" => _("A name is required"),
+            "flash_bandInv" => _("Invalid value for bandwidth"),
+            "flash_sourceReq" => _("A source is required"),
+            "flash_srcVlanInv" => _("Invalid value for source VLAN"),
+            "flash_srcVlanReq" => _("Source VLAN type required"),
+            "flash_destReq" => _("A destination is required"),
+            "flash_dstVlanInv" => _("Invalid value for destination VLAN"),
+            "flash_dstVlanReq" => _("Destination VLAN type required"),
+            "flash_timerReq" => _("Timer is required"),
+            // endpoints
+            "domain_string" => _("Domain"),
+            "domains_string" => _("Domains"),
+            "network_string" => _("Network"),
+            "networks_string" => _("Networks"),
+            "device_string" => _("Device"),
+            "devices_string" => _("Devices"),
+            "from_here_string" => _("From Here"),
+            "to_here_string" => _("To Here"),
+            "cluster_information_string" => _("Information about cluster"),
+            // timers
+            "date_format" => $js_dateFormat,
+            "language" => $js_lang,
+            "horas" => $hoursArray,
+            "today" => $today_check,
+            "repeat_every_string" => _("Repeat every"),
+            "day_string" => _("day"),
+            "days_string" => _("days"),
+            "week_string" => _("week"),
+            "weeks_string" => _("weeks"),
+            "on_string" => _("on"),
+            "month_string" => _("month"),
+            "months_string" => _("months"),
+            "until_string" => _("until"),
+            "times_string" => _("times"),
+            "time_string" => _("time"),
+            "end_rule_string" => _("Please set an end rule"),
+            "select_day_string" => _("Select at least one day"),
+            "set_name_string" => _("Set name"),
+            "invalid_time_string" => _("Invalid time")
+      //    "domains" => $domToMapArray
+        ));
         //}
+        
 
+        // ARGS to body ----------------------------------------------------------------
+        $args = new stdClass();
+        // arg endpoints
+        $args->domains = $domains;
+        // arg bandwidth
+        $args->bandwidthTip = "(" . $min . ", " . ($min + $div) . ", " . ($min + 2 * $div) . ", " . ($min + 3 * $div) . ", ... , " . $max . ")";                        
+        // arg timer
+        $args->start_date = date($dateFormat);
+        $args->finish_date = date($dateFormat);
+        $args->start_time = date($hourFormat, (time() + 5 * 60));
+        $args->finish_time = date($hourFormat, (time() + 10 * 60));
+        
+        $this->setArgsToBody($args);
+        // -----------------------------------------------------------------------------
+        
+        // SCRIPTS -----------------------------------------
+        $this->setInlineScript('reservations_add_init');
+        $this->addScript('reservations_add');
+        $this->addScript('map');
+        $this->addScript("flows");
+        $this->addScript('timers');
+        $this->addScript("jquery.ui.datepicker-$js_lang");
+        // -------------------------------------------------
+        
+        
+        // ACTION ---------------------
+        $this->setAction('add');
+        // ----------------------------
 
         $this->render();
     }

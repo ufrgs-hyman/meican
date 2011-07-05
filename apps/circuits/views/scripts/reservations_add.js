@@ -1,22 +1,3 @@
-var currentTab = "t1";
-var previousTab;
-
-var center = new google.maps.LatLng(-23.051931,-60.975511);
-var myOptions = {
-    zoom: 5,
-    center: center,
-    streetViewControl: false,
-    navigationControlOptions: {
-        style: google.maps.NavigationControlStyle.ZOOM_PAN
-    },
-    backgroundColor: "white",
-    mapTypeControl: false,
-    mapTypeId: google.maps.MapTypeId.TERRAIN
-};
-var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-google.maps.event.trigger(map, 'resize');
-map.setZoom( map.getZoom() );
-
 function createTabs(){
     $("ul.tabs li").addClass("inactive").hide();        //esconde as abas
     $(".cont_tab").hide();                              //esconde todo conteudo
@@ -43,6 +24,7 @@ function createTabs(){
 }
 
 function createSlider(){
+    alert(band_min);
     $('#slider').slider({
         value:(band_max)/2,
         min: band_min,
@@ -99,12 +81,16 @@ function nextTab(elem){
         }
         case "bn3": {
             if (validate(currentTab)) {
-                clearFlash();
+                clearFlash();                                
                 $("ul.tabs li:eq(2)").removeClass("active");
                 $("ul.tabs li:eq(3)").addClass("active").show();            
                 $(".cont_tab").hide();
                 activeTab = $("ul.tabs li:eq(3)").find("a").attr("href");
                 $(activeTab).fadeIn();  
+                if (firstTime) {
+                    initializeTimer();
+                    firstTime = false;
+                }
                 previousTab = currentTab;
                 currentTab = "t4";
             }                

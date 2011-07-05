@@ -2,7 +2,6 @@ function initializeTimer() {
     $(".hourPicker").autocomplete({
         source: horas
     });
-    //alert(language);
     $.datepicker.setDefaults($.datepicker.regional[language]);
 
     var dates = $("#initialDate, #finalDate").datepicker({

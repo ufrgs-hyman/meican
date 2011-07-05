@@ -1,14 +1,7 @@
 <h2><?php echo _("Step 4 - Defining the timer"); ?></h2>
 
 <br>
-
-<?php
-if ($timers_exist)
-    $this->addElement('list_timers', $args);
-else
-    $this->addElement("empty_db", $args);
-?>
-
+<?php $this->addElement('timer_form', $args); ?>
 <br/><br/>
 
 <div class="controls">
