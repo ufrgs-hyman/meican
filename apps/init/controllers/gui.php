@@ -61,7 +61,7 @@ class gui extends Controller {
         //checar se tem acesso o a novas reservas
         $icons[0]->name = _('New Reservation');
         $icons[0]->figure = 'layouts/img/new_reservation.png';
-        $icons[0]->link = array('app'=>'circuits', 'controller'=>'reservations','action'=>'page1');
+        $icons[0]->link = array('app'=>'circuits', 'controller'=>'reservations','action'=>'reservation_add');
 
         $icons[1]->name = _('Reservations');
         $icons[1]->figure = 'layouts/img/reservations_list.png';

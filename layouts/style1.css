@@ -468,6 +468,8 @@ margin-bottom: -1px; /*--“empurra” o item da lista 1px para baixo--*/
 overflow: hidden;
 position: relative;
 background: #e0e0e0;
+background-color: #3A5879;
+color: white;
 }
 ul.tabs li a {
 text-decoration: none;
@@ -479,10 +481,18 @@ border: 1px solid #fff; /*--deixa um efeito de relevo com uma borda branca de 1p
 outline: none;
 }
 ul.tabs li a:hover {
-background: #ccc;
+background: #fff;
+color: #3A5879;
 }
 html ul.tabs li.active, html ul.tabs li.active a:hover { /*--Faz a lista ativa nao obedecer as propriedades do hover--*/
 background: #fff;
+color: #3A5879;
+border-bottom: 1px solid #fff; /*--faz a aba ativa parecer conectada com seu conteudo--*/
+}
+
+html ul.tabs li.inactive a:hover { 
+background: #fff;
+color: #3A5879;
 border-bottom: 1px solid #fff; /*--faz a aba ativa parecer conectada com seu conteudo--*/
 }
 .tab_container {
@@ -496,4 +506,18 @@ background: #fff;
 .tab_content {
 padding: 20px;
 font-size: 1.2em;
+}
+
+div#main a.link_tab, div#main a.link_tab:visited {
+    color: #fff;
+    text-decoration: none;
+}
+div#main a.link_tab:hover, div#main a.link_tab:visited:hover {
+    color: #3A5879;
+    text-decoration: none;
+}
+div#main ul.tabs li.active a.link_tab, div#main ul.tabs li.active a.link_tab:visited {
+background: #3A5879;
+color: #fff;
+border-bottom: 1px solid #fff; 
 }

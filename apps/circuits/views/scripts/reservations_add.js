@@ -24,7 +24,6 @@ function createTabs(){
 }
 
 function createSlider(){
-    alert(band_min);
     $('#slider').slider({
         value:(band_max)/2,
         min: band_min,

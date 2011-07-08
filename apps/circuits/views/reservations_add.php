@@ -17,11 +17,11 @@ $name = $this->passedArgs->res_name;
 <form id="reservation_add" method="POST" action="<?php echo $this->buildLink(array('action' => 'submit')); ?>">
 
     <ul class="tabs">
-        <li id="t1"><a href="#tab1"><?php echo _('Reservation Name'); ?></a></li>
-        <li id="t2" style="display: none"><a href="#tab2"><?php echo _('Endpoints'); ?></a></li>
-        <li id="t3" style="display: none"><a href="#tab3"><?php echo _('Bandwidth'); ?></a></li>
-        <li id="t4" style="display: none"><a href="#tab4"><?php echo _('Timer'); ?></a></li>
-        <li id="t5" style="display: none"><a href="#tab5"><?php echo _('Confirmation'); ?></a></li>      
+        <li id="t1" ><a href="#tab1" class="link_tab"><?php echo _('Reservation Name'); ?></a></li>
+        <li id="t2" style="display: none"><a href="#tab2" class="link_tab"><?php echo _('Endpoints'); ?></a></li>
+        <li id="t3" style="display: none"><a href="#tab3" class="link_tab"><?php echo _('Bandwidth'); ?></a></li>
+        <li id="t4" style="display: none"><a href="#tab4" class="link_tab"><?php echo _('Timer'); ?></a></li>
+        <li id="t5" style="display: none"><a href="#tab5" class="link_tab"><?php echo _('Confirmation'); ?></a></li>      
     </ul>
 
     <div class="tab_container">
