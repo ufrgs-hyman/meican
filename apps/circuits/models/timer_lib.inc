@@ -1,5 +1,22 @@
 <?php
 
+/**
+ * @param string date
+ * @param string time
+ * @return string Formatted date in the right format to be inserted in database
+ * 
+ */
+function dateTimeToDatabaseFormat($date, $time) {
+    if ($date && $time) {
+        $dateFormat = "d/m/Y";
+        $timeFormat = "H:i";
+
+        $dateTime = DateTime::createFromFormat("$dateFormat $timeFormat", "$date $time");
+        return $dateTime->format("Y-m-d H:i:s");
+    } else
+        return NULL;
+}
+
 function getWeekTimestamp() {
     $begin = mktime(12, 00, 00, 1, 1);
     $end = mktime(12, 00, 00, 1, 8);

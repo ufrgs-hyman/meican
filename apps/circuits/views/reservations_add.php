@@ -1,4 +1,5 @@
 <?php
+
 $flow = $this->passedArgs->flow;
 $timer = $this->passedArgs->timer;
 $name = $this->passedArgs->res_name;
@@ -9,7 +10,9 @@ $timers_exist = isset($args->timers) ? TRUE : FALSE;
 $flow = $this->passedArgs->flow;
 $timer = $this->passedArgs->timer;
 $name = $this->passedArgs->res_name;
+
 ?>
+
 <link type="text/css" href="layouts/jquery-ui-1.8.13.custom.css" rel="stylesheet" />
 
 <h1><?php echo _("Reservation Creation Wizard"); ?></h1>
@@ -26,20 +29,20 @@ $name = $this->passedArgs->res_name;
 
     <div class="tab_container">
         <div id="tab1" class="cont_tab">
-            <?php $this->addElement('reservation_tab1');?>
+            <?php $this->addElement('reservation_tab1'); ?>
         </div>
-        
         <div id="tab2" style="display: none" class="cont_tab">
-            <?php $this->addElement('reservation_tab2');?>
+            <?php $this->addElement('reservation_tab2'); ?>
         </div>
         <div id="tab3" style="display: none" class="cont_tab">
-            <?php $this->addElement('reservation_tab3');?>            
+            <?php $this->addElement('reservation_tab3'); ?>            
         </div>
         <div id="tab4" style="display: none" class="cont_tab">
-            <?php $this->addElement('reservation_tab4');?>            
+            <?php $this->addElement('reservation_tab4'); ?>            
         </div>       
         <div id="tab5" style="display: none" class="cont_tab">
-            <?php $this->addElement('reservation_tab5');?>            
-        </div>          
+            <?php $this->addElement('reservation_tab5'); ?>            
+        </div>
     </div>
+    
 </form>

@@ -162,29 +162,21 @@ function checkWeekDay(day_name) {
     }
 }
 
-function getFormattedDate(where) {
-    var date_id = "#" + where + "Date";
+function validateTime(where) {
     var time_id = "#" + where + "Time";
 
-    var date_tmp = $(date_id).val();
-    date_tmp = $.datepicker.parseDate(date_format, date_tmp);
-
+    /** 
+     * @todo: melhorar regexpr, procurar internet
+     */
     var valid_time = /^[0-2][0-9]:[0-5][0-9]$/;
+    //var valid_time = /^([0-1][0-9])|([2][0-3]):[0-5][0-9]$/;
 
-    if (!valid_time.test($(time_id).val())) {
+    if (valid_time.test($(time_id).val())) {
+        return true;
+    } else {
         setFlash(invalid_time_string + ": " + $(time_id).val());
-        return NULL;
+        return false;
     }
-
-    $.datepicker.setDefaults( $.datepicker.regional[ "" ] );
-    var date_str = $.datepicker.formatDate('MM dd, yy', date_tmp);
-    $.datepicker.setDefaults( $.datepicker.regional[language] );
-
-    var time_str = $(time_id).val() + ":00";
-
-    var date = new Date(date_str + " " + time_str);
-
-    return date;
 }
 
 function getCheckedDays() {
@@ -211,18 +203,16 @@ function saveTimer(timer_id) {
         setFlash(set_name_string);
         return;
     }
-
-    var iniDate = getFormattedDate("initial");
-    var finDate = getFormattedDate("final");
-    if (!(iniDate && finDate))
+    
+    if (!(validateTime("initial") && validateTime("final"))) {
         return;
+    }
 
     if ($("#repeat_chkbox").attr("checked")) {
         var freq = $("#freq").val();
 
         if ($("#date_radio").attr("checked")) {
-            var until = getFormattedDate("until");
-            until = until.toLocaleFormat("%Y-%m-%d %R:%S");
+            var until = $("#untilDate").val();
         } else if ($("#recur_radio").attr("checked"))
             var count = $("#nr_occurr").val();
         else {
@@ -253,17 +243,16 @@ function saveTimer(timer_id) {
         sum_desc += week_str;
         sum_desc += $("#until_desc").html();
     }
-
-    /**
-     * @todo: tirar função toLocaleFormat e tratar a data no PHP
-     */
+    
     $.post("main.php?app=circuits&controller=timers&action=update", {
         tmr_id: timer_id,
         name: name,
-        start: iniDate.toLocaleFormat("%Y-%m-%d %R:%S"),
-        finish: finDate.toLocaleFormat("%Y-%m-%d %R:%S"),
+        start_date: $("#initialDate").val(),
+        start_time: $("#initialTime").val(),
+        finish_date: $("#finalDate").val(),
+        finish_time: $("#finalTime").val(),
         freq: freq,
-        until: until,
+        until_date: until,
         count: count,
         interval: interval,
         byday: byday,

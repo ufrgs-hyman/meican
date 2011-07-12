@@ -83,8 +83,11 @@ class timers extends Controller {
 
         $today_check = DayofWeek();
 
+        // @lang : pt_BR.utf8
         $lang = explode(".", Language::getLang());
         $js_lang = str_replace("_", "-", $lang[0]);
+        
+        // @js_lang : pt-BR
 
         $this->setArgsToScript(array(
                 "date_format" => $js_dateFormat,
@@ -139,8 +142,9 @@ class timers extends Controller {
 
     private function add() {
         $tmr_name = Common::POST('name');
-        $start = Common::POST('start');
-        $finish = Common::POST('finish');
+        
+        $start = dateTimeToDatabaseFormat(Common::POST("start_date"), Common::POST("start_time"));
+        $finish = dateTimeToDatabaseFormat(Common::POST("finish_date"), Common::POST("finish_time"));
 
         if ($tmr_name && $start && $finish) {
 
@@ -154,7 +158,7 @@ class timers extends Controller {
             // timer possui regras de recorrência
             if ($freq) {
                 $timer_info->freq = $freq;
-                $timer_info->until = Common::POST('until');
+                $timer_info->until = dateTimeToDatabaseFormat(Common::POST("until_date"), "23:59");
                 $timer_info->count = Common::POST('count');
                 $timer_info->interval = Common::POST('interval');
                 $timer_info->byday = Common::POST('byday');
@@ -183,8 +187,9 @@ class timers extends Controller {
 
     private function modify() {
         $tmr_name = Common::POST('name');
-        $start = Common::POST('start');
-        $finish = Common::POST('finish');
+        
+        $start = dateTimeToDatabaseFormat(Common::POST("start_date"), Common::POST("start_time"));
+        $finish = dateTimeToDatabaseFormat(Common::POST("finish_date"), Common::POST("finish_time"));
 
         if ($tmr_name && $start && $finish) {
 
@@ -200,7 +205,7 @@ class timers extends Controller {
             if ($freq) {
                 $timer_info->freq = $freq;
 
-                $until = Common::POST('until');
+                $until = dateTimeToDatabaseFormat(Common::POST("until_date"), "23:59");
                 $count = Common::POST('count');
                 if ($until) {
                     $timer_info->until = $until;
