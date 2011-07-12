@@ -43,9 +43,30 @@ function createSlider(){
             }
         }
     });
+    $('#slider').removeClass("ui-widget");
+    $('#slider').addClass("ui-widget-slider");
     $( "#amount" ).val( $( "#slider" ).slider( "value" ) + " Mbps");    
     $("#slider").bind("slidechange", changeBand());
 }
+
+function nextTabKey(elem, e) {
+    var keycode;
+    if (window.event) {
+        keycode = window.event.keyCode;
+    }
+        else if (e) {        
+            keycode = e.which;
+        }
+    if (keycode == 13) {
+        switch (elem.id){
+            case "res_name": {
+                $("#bn1").click();
+                break;
+            }
+        }
+    }
+}
+
 
 function nextTab(elem){
     var activeTab;
@@ -86,10 +107,6 @@ function nextTab(elem){
                 $(".cont_tab").hide();
                 activeTab = $("ul.tabs li:eq(3)").find("a").attr("href");
                 $(activeTab).fadeIn();  
-                if (firstTime) {
-                    initializeTimer();
-                    firstTime = false;
-                }
                 previousTab = currentTab;
                 currentTab = "t4";
             }                

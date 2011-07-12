@@ -453,8 +453,10 @@ float: left;
 list-style: none;
 height: 32px; /*--Define a altura das abas--*/
 border-bottom: 1px solid #999;
-border-left: 1px solid #999;
+border-left: 0.6px solid #999;
 width: 100%;
+-moz-border-radius-topleft: 10px;
+-moz-border-radius-topright: 10px;
 }
 ul.tabs li {
 float: left;
@@ -463,13 +465,14 @@ padding: 0;
 height: 31px; /*--diminui 1px da altura da lista nao ordenada--*/
 line-height: 31px; /*--Alinha o texto verticalmente na aba--*/
 border: 1px solid #999;
-border-left: none;
 margin-bottom: -1px; /*--“empurra” o item da lista 1px para baixo--*/
 overflow: hidden;
 position: relative;
 background: #e0e0e0;
 background-color: #3A5879;
-color: white;
+color: #ffffff;
+-moz-border-radius-topleft: 10px;
+-moz-border-radius-topright: 10px;
 }
 ul.tabs li a {
 text-decoration: none;
@@ -479,22 +482,27 @@ font-size: 1.2em;
 padding: 0 20px;
 border: 1px solid #fff; /*--deixa um efeito de relevo com uma borda branca de 1px dentro do item da lista--*/
 outline: none;
+-moz-border-radius-topleft: 10px;
+-moz-border-radius-topright: 10px;
 }
 ul.tabs li a:hover {
 background: #fff;
 color: #3A5879;
 }
-html ul.tabs li.active, html ul.tabs li.active a:hover { /*--Faz a lista ativa nao obedecer as propriedades do hover--*/
-background: #fff;
+html ul.tabs.active, html ul.tabs li.active, html ul.tabs li.active a, html ul.tabs li.active a:hover { /*--Faz a lista ativa nao obedecer as propriedades do hover--*/
+background-color: #fff;
 color: #3A5879;
 border-bottom: 1px solid #fff; /*--faz a aba ativa parecer conectada com seu conteudo--*/
+-moz-border-radius-topleft: 10px;
+-moz-border-radius-topright: 10px;
 }
 
-html ul.tabs li.inactive a:hover { 
-background: #fff;
+html ul.tabs.inactive a:hover { 
+background-color: #fff;
 color: #3A5879;
-border-bottom: 1px solid #fff; /*--faz a aba ativa parecer conectada com seu conteudo--*/
+border-bottom: 1px solid #fff;
 }
+
 .tab_container {
 border: 1px solid #999;
 border-top: none;
@@ -505,7 +513,7 @@ background: #fff;
 }
 .tab_content {
 padding: 20px;
-font-size: 1.2em;
+font-size: 1.1em;
 }
 
 div#main a.link_tab, div#main a.link_tab:visited {
@@ -513,11 +521,12 @@ div#main a.link_tab, div#main a.link_tab:visited {
     text-decoration: none;
 }
 div#main a.link_tab:hover, div#main a.link_tab:visited:hover {
+    background-color: #eeeeee;
     color: #3A5879;
     text-decoration: none;
 }
 div#main ul.tabs li.active a.link_tab, div#main ul.tabs li.active a.link_tab:visited {
-background: #3A5879;
-color: #fff;
-border-bottom: 1px solid #fff; 
+background-color: #fff;
+color: #3A5879;
+border-bottom: 1px solid #fff;
 }

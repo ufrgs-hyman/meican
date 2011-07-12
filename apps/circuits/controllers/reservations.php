@@ -403,7 +403,9 @@ class reservations extends Controller {
         $this->addScript('map');
         $this->addScript("flows");
         $this->addScript('timers');
-        $this->addScript("jquery.ui.datepicker-$js_lang");
+        if ($js_lang != "en-US") {
+            $this->addScript("jquery.ui.datepicker-$js_lang");
+        }
         // -------------------------------------------------
         
         

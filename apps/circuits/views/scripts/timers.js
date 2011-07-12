@@ -3,7 +3,6 @@ function initializeTimer() {
         source: horas
     });
     $.datepicker.setDefaults($.datepicker.regional[language]);
-
     var dates = $("#initialDate, #finalDate").datepicker({
         dateFormat: date_format,
         showWeek: false,
