@@ -57,15 +57,19 @@ function showRecurrenceBox() {
     });
 
     if ($("#repeat_chkbox").attr("checked")) {
-        $("#recurrence").slideDown();
+        $("#auxDiv").show();
+        $("#recurrence").show();
         setFreq();
         setUntilType();
     }
     else {
-        $("#recurrence").slideUp();
+        $("#auxDiv").hide();
+        $("#recurrence").hide();
+        $("#recurrence-edit").hide();
         $("#interval_type").empty();
         $("#short_desc").empty();
         $("#until_desc").empty();
+        $("#short_summary").empty();
         clearWeekConf();
     }
 }
@@ -241,6 +245,7 @@ function saveTimer(timer_id) {
         var sum_desc = $("#short_desc").html() + " ";
         sum_desc += week_str;
         sum_desc += $("#until_desc").html();
+        $("#short_summary").html(sum_desc);
     }
     
     $.post("main.php?app=circuits&controller=timers&action=update", {

@@ -264,7 +264,10 @@ class reservations extends Controller {
     }
 
     public function reservation_add() {
-
+        // STEP 1 VARIABLES ---------------------
+        $name = "Default_Reservation_Name";        
+        //---------------------------------------
+        
         // STEP 2 VARIABLES ---------------------
         $domain = new domain_info();
         $allDomains = $domain->fetch(FALSE);
@@ -357,6 +360,7 @@ class reservations extends Controller {
             "from_here_string" => _("From Here"),
             "to_here_string" => _("To Here"),
             "cluster_information_string" => _("Information about cluster"),
+            "coordinates_string" => _("Coordinates"),
             // timers
             "date_format" => $js_dateFormat,
             "language" => $js_lang,
@@ -384,6 +388,8 @@ class reservations extends Controller {
 
         // ARGS to body ----------------------------------------------------------------
         $args = new stdClass();
+        // arg name
+        $args->name = $name;        
         // arg endpoints
         $args->domains = $domains;
         // arg bandwidth
@@ -401,6 +407,7 @@ class reservations extends Controller {
         $this->setInlineScript('reservations_add_init');
         $this->addScript('reservations_add');
         $this->addScript('map');
+        $this->addScript('StyledMarker');
         $this->addScript("flows");
         $this->addScript('timers');
         if ($js_lang != "en-US") {

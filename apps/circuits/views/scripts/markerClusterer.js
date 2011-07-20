@@ -439,7 +439,7 @@ MarkerClusterer.prototype.pushMarkerTo_ = function(marker) {
  * @param {google.maps.Marker} marker The marker to add.
  * @param {boolean=} opt_nodraw Whether to redraw the clusters.
  */
-MarkerClusterer.prototype.addMarker = function(marker, opt_nodraw) {
+MarkerClusterer.prototype.edit_addMarker = function(marker, opt_nodraw) {
   this.pushMarkerTo_(marker);
   if (!opt_nodraw) {
     this.redraw();
@@ -759,10 +759,10 @@ MarkerClusterer.prototype.addToClosestCluster_ = function(marker) {
   }
 
   if (clusterToAddTo && clusterToAddTo.isMarkerInClusterBounds(marker)) {
-    clusterToAddTo.addMarker(marker);
+    clusterToAddTo.edit_addMarker(marker);
   } else {
     var cluster = new Cluster(this);
-    cluster.addMarker(marker);
+    cluster.edit_addMarker(marker);
     this.clusters_.push(cluster);
   }
 };
@@ -839,7 +839,7 @@ Cluster.prototype.isMarkerAlreadyAdded = function(marker) {
  * @param {google.maps.Marker} marker The marker to add.
  * @return {boolean} True if the marker was added.
  */
-Cluster.prototype.addMarker = function(marker) {
+Cluster.prototype.edit_addMarker = function(marker) {
   if (this.isMarkerAlreadyAdded(marker)) {
     return false;
   }
@@ -1287,7 +1287,7 @@ ClusterIcon.prototype.createCss = function(pos) {
 // If you are not going to compile with closure then you can remove the
 // code below.
 window['MarkerClusterer'] = MarkerClusterer;
-MarkerClusterer.prototype['addMarker'] = MarkerClusterer.prototype.addMarker;
+MarkerClusterer.prototype['addMarker'] = MarkerClusterer.prototype.edit_addMarker;
 MarkerClusterer.prototype['addMarkers'] = MarkerClusterer.prototype.addMarkers;
 MarkerClusterer.prototype['clearMarkers'] =
     MarkerClusterer.prototype.clearMarkers;

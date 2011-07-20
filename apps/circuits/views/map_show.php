@@ -38,7 +38,7 @@ $res_wizard = $args->res_wizard;
                 <input type="button" class="zoom" value="<?php echo _("Reset Zoom") ?>" onClick="resetZoom();">
             </td>
             <td align="center">
-                <input type="button" class="clear" value="<?php echo _("Clear") ?>" onClick="clearLines();">
+                <input type="button" class="clear" value="<?php echo _("Clear") ?>" onClick="edit_clearAll();">
             </td>
             <td align="right">
                 <input type="button" style="display: none" class="invert" value="<?php echo _(" Invert Route") ?>" onClick="invertPath();">

@@ -48,7 +48,8 @@
         <tfoot>
             <tr>
                 <td colspan="5">
-                    <input class="add" type="button" value="<?php echo _("Add"); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'page1')); ?>');"/>
+                    <!-- <input class="add" type="button" value="<?php // echo _("Add"); ?>" onclick="redir('<?php //echo $this->buildLink(array('action' => 'page1')); ?>');"/>  -->
+                    <input class="add" type="button" value="<?php echo _("Add"); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'add_form')); ?>');"/>  
                 </td>
             </tr>
         </tfoot>

@@ -175,6 +175,8 @@ function fillSelectBox(htmlId, fillerArray, current_val) {
 
     <body>
 
+        <div id="auxDiv">   
+        </div>
         <!-- joga dentro dessa tag o html a ser processado - o que retorna do ajax -->
         <div id="htmlToLoad" style="display: none"></div>
 

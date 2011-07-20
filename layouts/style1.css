@@ -446,7 +446,7 @@ table.icons {
     width: 60%;
 }
 
-ul.tabs {
+ul.tabs:not(.inactive) {
 margin: 0;
 padding: 0;
 float: left;
@@ -497,13 +497,7 @@ border-bottom: 1px solid #fff; /*--faz a aba ativa parecer conectada com seu con
 -moz-border-radius-topright: 10px;
 }
 
-html ul.tabs.inactive a:hover { 
-background-color: #fff;
-color: #3A5879;
-border-bottom: 1px solid #fff;
-}
-
-.tab_container {
+.tab_container:not(.inactive) {
 border: 1px solid #999;
 border-top: none;
 overflow: hidden;
@@ -511,6 +505,16 @@ clear: both;
 float: left; width: 100%;
 background: #fff;
 }
+
+.tab_container.inactive {
+border: 1px solid #999;
+border-top: none;
+overflow: hidden;
+clear: both;
+float: left; 
+background: #fff;
+}
+
 .tab_content {
 padding: 20px;
 font-size: 1.1em;
@@ -525,8 +529,82 @@ div#main a.link_tab:hover, div#main a.link_tab:visited:hover {
     color: #3A5879;
     text-decoration: none;
 }
+div#main .ui-state-disabled a.link_tab:hover, div#main .ui-state-disabled a.link_tab:visited:hover {
+    background-color: #3A5879;;
+    color: #ffffff;
+    text-decoration: none;
+}
 div#main ul.tabs li.active a.link_tab, div#main ul.tabs li.active a.link_tab:visited {
 background-color: #fff;
 color: #3A5879;
 border-bottom: 1px solid #fff;
+}
+
+ul.tabs.inactive {
+margin: 0;
+padding: 0;
+float: left;
+list-style: none;
+height: 32px; /*--Define a altura das abas--*/
+border-bottom: 1px solid #999;
+border-left: 0.6px solid #999;
+-moz-border-radius-topleft: 10px;
+-moz-border-radius-topright: 10px;
+}
+
+#auxDiv {
+    opacity: 0.5; 
+    display:none; 
+    width: 1345px; 
+    height: 756px; 
+    position: absolute; 
+    z-index: 1; 
+    background-color: #666666
+}
+
+#recurrence {
+    border: 2px solid #3A5879; 
+    top:200px; 
+    left: 50%; 
+    margin-left: -300px;
+    display:none; 
+    width: 600px; 
+    position: absolute; 
+    z-index: 2; 
+    background-color: white
+}
+
+#recurrence-footer{
+    background-color: #eeeeee;
+    width: 100%;
+    height: 55px;
+}
+
+#recurrence_cancel {
+    margin: 0;
+    top: 15px;
+    left: 10px;
+    position: relative;
+}
+
+#recurrence_ok {
+    margin: 0;
+    right: 10px;
+    top: 15px;
+    position: relative;
+}
+
+#recurrence-flash {
+    display: none;
+    width: 100%;
+    vertical-align: bottom;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #ffffff;
+    text-indent: 10px;
+    background-color: #FFCC00;;    
+}
+
+#recurrence-edit {
+    display:none;
 }

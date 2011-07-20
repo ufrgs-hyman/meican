@@ -8,14 +8,14 @@ function toggleTopology(){
     var coordinatesArray=[];
 
     var coord_src = new google.maps.LatLng(src_lat_network, src_lng_network);
-    addMarker(coord_src);
+    edit_addMarker(coord_src);
     bounds.push(coord_src);
 
     var waypoint = new google.maps.LatLng(-18,-54);    
     bounds.push(waypoint);
 
     var coord_dst = new google.maps.LatLng(dst_lat_network, dst_lng_network);
-    addMarker(coord_dst);
+    edit_addMarker(coord_dst);
     bounds.push(coord_dst);
 
     coordinatesArray.push(coord_src);
@@ -24,13 +24,13 @@ function toggleTopology(){
 
     if (topology) {
         topology = false;
-        addMarker(waypoint);
+        edit_addMarker(waypoint);
         drawTopology(coordinatesArray);
     } else {
         topology = true;
-        drawPath(coordinatesArray);
+        edit_drawPath(coordinatesArray);
     }
-    setBounds(bounds);
+    edit_setBounds(bounds);
 }
 
 function showCircuit(){
@@ -40,16 +40,16 @@ function showCircuit(){
         dst_lng_network = aux.toString();
     }
     var coord_src = new google.maps.LatLng(src_lat_network, src_lng_network);
-    addMarker(coord_src);
+    edit_addMarker(coord_src);
     bounds.push(coord_src);
     var coord_dst = new google.maps.LatLng(dst_lat_network, dst_lng_network);
-    addMarker(coord_dst);
+    edit_addMarker(coord_dst);
     bounds.push(coord_dst);
-    setBounds(bounds);
-    drawPath(coord_src, coord_dst);
+    edit_setBounds(bounds);
+    edit_drawPath(coord_src, coord_dst);
 }
 
-function addMarker(location) {
+function edit_addMarker(location) {
   marker = new google.maps.Marker({
     position: location,
     map:map
@@ -59,7 +59,7 @@ function addMarker(location) {
   marker.setMap(map);
 }
 
-function drawPath(coordinatesArray){
+function edit_drawPath(coordinatesArray){
         var origin = coordinatesArray[0];
         var destination = coordinatesArray[(coordinatesArray.length -1)];
         var flightPlanCoordinates = [origin, destination];
@@ -90,11 +90,11 @@ function drawTopology(coordinatesArray){
         lines.push(line);
 }
 
-function clearLines(){
+function edit_clearAll(){
     for (var i = 0; i < lines.length; i++) {
         lines[i].setMap(null);
     }    
-    setBounds(bounds);
+    edit_setBounds(bounds);
 }
 
 function clearMarkers(){
@@ -111,6 +111,6 @@ function clearBounds(){
 
 function clearAll(){
     clearMarkers();
-    clearLines();
+    edit_clearAll();
     clearBounds();
 }
