@@ -15,7 +15,7 @@ $domains = $this->passedArgs;
             <th></th>
             <th><?php echo _("Name"); ?></th>
             <th><?php echo _("OSCARS IP"); ?></th>
-            <th><?php echo _("Topology Service IP"); ?></th>
+            <th><?php echo _("Topology Domain ID"); ?></th>
         </tr>
         </thead>
 
@@ -34,7 +34,7 @@ $domains = $this->passedArgs;
                 <?php echo $d->oscars_ip; ?>
             </td>
             <td>
-                <?php echo $d->topo_ip; ?>
+                <?php echo $d->topo_domain_id; ?>
             </td>
         </tr>
         <?php endforeach; ?>

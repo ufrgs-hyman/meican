@@ -16,8 +16,9 @@ class device_info extends Resource_Model {
         $this->addAttribute("model","VARCHAR");
         $this->addAttribute("nr_ports","INTEGER");
         $this->addAttribute("net_id","INTEGER");
-        $this->addAttribute("dev_lat","FLOAT");
-        $this->addAttribute("dev_lng","FLOAT");
+        $this->addAttribute("dev_lat","VARCHAR");
+        $this->addAttribute("dev_lng","VARCHAR");
+        $this->addAttribute("topo_node_id","VARCHAR");
     }
 
 //    public function fetchNetwork() {

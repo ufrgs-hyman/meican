@@ -27,7 +27,7 @@ class domains extends Controller {
                 $domain->id = $d->dom_id;
                 $domain->descr = $d->dom_descr;
                 $domain->oscars_ip = $d->oscars_ip;
-                $domain->topo_ip = ($d->topo_ip) ? ($d->topo_ip) : _("No IP setted");
+                $domain->topo_domain_id = $d->topo_domain_id;
 
                 $domains[] = $domain;
             }
@@ -54,13 +54,13 @@ class domains extends Controller {
     public function add() {
         $dom_descr = Common::POST("dom_descr");
         $oscars_ip = Common::POST("oscars_ip");
-        $topo_ip = Common::POST("topo_ip");
+        $topo_domain_id = Common::POST("topo_domain_id");
 
         if ($dom_descr && $oscars_ip) {
             $domain = new domain_info();
             $domain->dom_descr = $dom_descr;
             $domain->oscars_ip = $oscars_ip;
-            $domain->topo_ip = $topo_ip;
+            $domain->topo_domain_id = $topo_domain_id;
 
             /** 
              * @todo:
@@ -114,14 +114,14 @@ class domains extends Controller {
         
         $dom_descr = Common::POST("dom_descr");
         $oscars_ip = Common::POST("oscars_ip");
-        $topo_ip = Common::POST("topo_ip");
+        $topo_domain_id = Common::POST("topo_domain_id");
 
         if ($dom_descr && $oscars_ip) {
             $domain = new domain_info();
             $domain->dom_id = $domId;
             $domain->dom_descr = $dom_descr;
             $domain->oscars_ip = $oscars_ip;
-            $domain->topo_ip = $topo_ip;
+            $domain->topo_domain_id = $topo_domain_id;
 
             if ($domain->update()) {
                 $this->setFlash(_("Domain")." '$domain->dom_descr' "._("updated"), "success");

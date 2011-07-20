@@ -12,7 +12,7 @@ class domain_info extends Resource_Model {
         $this->addAttribute("dom_id","INTEGER", TRUE, FALSE, FALSE);
         $this->addAttribute("dom_descr","VARCHAR");
         $this->addAttribute("oscars_ip","VARCHAR");
-        $this->addAttribute("topo_ip","VARCHAR");
+        $this->addAttribute("topo_domain_id","VARCHAR");
     }
 
 }

@@ -75,23 +75,65 @@ class urns extends Controller {
             $args = new stdClass();
             $args->title = _("URNs (Uniform Resource Name)");
             $args->message = _("No URN added, click the button bellow to import from topology");
+            $args->link = array("action" => "import_option");
             $this->setArgsToBody($args);
         }
 
         $this->render();
     }
     
-    public function add_form() {
-        $this->import();
+    public function import_option() {
+        $dom = new domain_info();
+        $allDomains = $dom->fetch();
+
+        if ($allDomains) {
+            $domains = array();
+
+            foreach ($allDomains as $d) {
+                $domain = new stdClass();
+                $domain->id = $d->dom_id;
+                $domain->descr = $d->dom_descr;
+                $domain->oscars_ip = $d->oscars_ip;
+                $domain->topo_domain_id = $d->topo_domain_id;
+
+                $domains[] = $domain;
+            }
+
+            $this->setArgsToBody($domains);
+        }
+        
+        $this->setAction('import_option');
+        $this->render();
     }
     
-    public function import() {
-        $urns = Topology::getURNTopology();
-        $networks = Topology::getNetworks();
+    public function import($dom_id_array) {
+        $domId = NULL;
+        if (array_key_exists('dom_id', $dom_id_array)) {
+            $domId = $dom_id_array['dom_id'];
+        } else {
+            $this->setFlash(_("Invalid index"), "fatal");
+            $this->show();
+            return;
+        }
+        
+        $dom = new domain_info();
+        $dom->dom_id = $domId;
+        $domain = $dom->fetch();
+        
+        $urns = Topology::getURNTopology($domId);
+        //Framework::debug("urns", $urns);
+        //$this->import_option();
+        //return false;
+        
+        $networks = Topology::getNetworks($domId);
+        //Framework::debug("net",$networks);
+        //$this->import_option();
+        //return false;
         
         $args = new stdClass();
         $args->urns = $urns;
         $args->networks = $networks;
+        $args->domain = $domain[0]->dom_descr;
         
         if ($urns)
             $this->setArgsToBody($args);

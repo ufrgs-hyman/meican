@@ -17,6 +17,7 @@
             <th><?php echo _("Latitude"); ?></th>
             <th><?php echo _("Longitude"); ?></th>
             <th><?php echo _("Network"); ?></th>
+            <th><?php echo _("Topology Node ID"); ?></th>
         </tr>
         </thead>
 
@@ -60,13 +61,16 @@
             <td>
                 <?php echo $d->network; ?>
             </td>
+            <td>
+                <?php echo $d->node_id; ?>
+            </td>
         </tr>
         <?php endforeach; ?>
         </tbody>
 
         <tfoot>
         <tr>
-            <td colspan="9">
+            <td colspan="10">
                 <input class="add" type="button" value="<?php echo _('Add'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'add_form')); ?>');">
             </td>
         </tr>

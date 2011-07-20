@@ -37,6 +37,7 @@ class devices extends Controller {
                 $device->nr_ports = $d->nr_ports;
                 $device->latitude = ($d->dev_lat) ? $d->dev_lat : "-";
                 $device->longitude = ($d->dev_lng) ? $d->dev_lng : "-";
+                $device->node_id = $d->topo_node_id;
 
                 $tmp = new network_info();
                 $tmp->net_id = $d->net_id;
@@ -102,6 +103,10 @@ class devices extends Controller {
         $model = Common::POST("model");
         $nr_ports = Common::POST("nr_ports");
         $network = Common::POST("network");
+        
+        $net = new network_info();
+        $net->net_id = $network;
+        $net_res = $net->fetch();
 
         $device = new device_info();
         $device->dev_descr = $dev_descr;
@@ -112,9 +117,10 @@ class devices extends Controller {
         $device->net_id = $network;
         $device->dev_lat = Common::POST("dev_lat");
         $device->dev_lng = Common::POST("dev_lng");
+        $device->topo_node_id = Common::POST("topo_node_id");
 
         if ($device->insert($network, "network_info")) {
-            $this->setFlash(_("Device")." '$device->dev_descr' "._("added"), "success");
+            $this->setFlash(_("Device")." '$device->dev_descr' "._("added in network")." '{$net_res[0]->net_descr}'", "success");
             $this->show();
             return;
         } else $this->setFlash(_("Fail to create device"), "error");
@@ -193,7 +199,8 @@ class devices extends Controller {
         $device->dev_lat = Common::POST("dev_lat");
         $device->dev_lng = Common::POST("dev_lng");
         $device->net_id = Common::POST("network");
-
+        $device->topo_node_id = Common::POST("topo_node_id");
+        
         if ($device->update()) {
             $this->setFlash(_("Device")." '$device->dev_descr' "._("updated"), "success");
             $this->show();

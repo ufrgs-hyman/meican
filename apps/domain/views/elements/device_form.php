@@ -69,6 +69,15 @@ $device = isset($argsToElement->device) ? $argsToElement->device : NULL;
             <input type="text" name="dev_lng" value="<?php if ($device) echo $device->dev_lng; ?>"/>
         </td>
     </tr>
+    
+    <tr>
+        <th>
+            <?php echo _("Topology Node ID"); ?>:
+        </th>
+        <td>
+            <input type="text" name="topo_node_id" value="<?php if ($device) echo $device->topo_node_id; ?>"/>
+        </td>
+    </tr>
 
     <tr>
         <th>

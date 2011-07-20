@@ -20,14 +20,14 @@
         </item>
 
         <item>
-            <name>Federation</name>
+            <name>Domains</name>
             <subItem>
-                <name>Federations</name>
+                <name>MEICAN Domains</name>
                 <link>main.php?app=domain&amp;controller=federations&amp;action=show</link>
                 <right></right>
             </subItem>
             <subItem>
-                <name>Domains</name>
+                <name>OSCARS</name>
                 <link>main.php?app=domain&amp;controller=domains&amp;action=show</link>
                 <right></right>
             </subItem>

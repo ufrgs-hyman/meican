@@ -6,7 +6,148 @@ include_once 'apps/domain/models/device_info.inc';
 include_once 'apps/domain/models/urn_info.inc';
 
 class Topology {
+    
+    public static function getURNTopology($dom_id) {
 
+        if (!$dom_id)
+            return FALSE;
+
+        $domain_info = new domain_info();
+        $domain_info->dom_id = $dom_id;
+
+        if ($domain = $domain_info->fetch()) {
+            $dom = $domain[0];
+
+            $urns = array();
+
+            $xmlFile = "/var/www/topology/topology$dom->dom_id.xml";
+
+            /**
+             * @todo chamar getTopology do cliente OSCARS
+             */
+            $retval = 0;
+            if ($retval == 0) {
+
+                if (!file_exists($xmlFile)) {
+                    Framework::debug("Error: Topology file does not exist", $xmlFile);
+                    return FALSE;
+                }
+
+                $xml = new SimpleXmlElement($xmlFile, 0, true);
+                //        try {
+                //            $xml = new SimpleXmlElement($xmlFile, 0, true);
+                //        } catch (Exception e) {
+                //
+                    //        }
+
+                if (!is_a($xml, "SimpleXmlElement")) {
+                    Framework::debug("Error: Unable to read XML file", $xml);
+                    return FALSE;
+                }
+
+                // lê as URNs do arquivo de topologia, preenche o vetor $urns_top
+                $topo_domains = $xml->children('SOAP-ENV', true)->Body->children('nmwg', true)->message->data->children('nmtopo', true)->topology->children('ns1', true)->domain;
+
+                $urns_top = array();
+                $top = array();
+                $index = 0;
+                
+                foreach ($topo_domains as $td) {
+
+                    $topo_domain_attr = (string) $td->attributes();
+                    
+                    $topo_attr_array = explode(":", $topo_domain_attr);
+                    $topo_attr = explode("=", $topo_attr_array[3]);
+                    
+                    if ($topo_attr[0] == "domain")
+                        $topo_domain_id = $topo_attr[1];
+                    else {
+                        Framework::debug("Could not find topology domain id", $topo_domain_attr);
+                        continue;
+                    }
+                    
+                    if ($dom->topo_domain_id == $topo_domain_id) {
+
+                        $topo_nodes = $td->node;
+
+                        if ($topo_nodes)
+                            foreach ($topo_nodes as $tn) {
+                                $topo_ports = $tn->port;
+
+                                if ($topo_ports)
+                                    foreach ($topo_ports as $tp) {
+                                        $remoteLink = (string) $tp->link->remoteLinkId;
+                                        if ($remoteLink == 'urn:ogf:network:domain=*:node=*:port=*:link=*') {
+                                            $urn = new stdClass();
+                                            $urn->id = $index++;
+                                            $urn->name = (string) $tp->link->attributes();
+                                            $urn->vlan = (string) $tp->link->SwitchingCapabilityDescriptors->switchingCapabilitySpecificInfo->vlanRangeAvailability;
+                                            $urn->max_capacity = (integer) $tp->link->maximumReservableCapacity;
+                                            $urn->min_capacity = (integer) $tp->link->minimumReservableCapacity;
+                                            $urn->granularity = (integer) $tp->link->granularity;
+
+                                            // procura pela porta da URN
+                                            $searchPort = $urn->name;
+                                            // elimina string até achar o atributo 'port='
+                                            while (substr($searchPort, 0, 5) != "port=")
+                                                $searchPort = substr($searchPort, 1, strlen($searchPort));
+
+                                            $port = "";
+                                            // atribui à porta o número da mesma
+                                            for ($j = 0; $searchPort[$j + 5] != ':'; $j++)
+                                                $port .= $searchPort[$j + 5];
+
+                                            $urn->port = $port;
+
+                                            $top[$urn->id] = $urn->name; // vetor para comparação com o banco
+                                            $urns_top[] = $urn;
+                                        }
+                                    }
+                            }
+
+                        break;
+                    }
+                }
+                
+                if (!$urns_top)
+                    return FALSE;
+
+                // lê as URNs cadastradas no banco de dados do sistema, preenche o vetor $urns_db
+                $urn = new urn_info();
+                $allUrns = $urn->fetch(FALSE);
+
+                $db = array();
+                if ($allUrns)
+                    foreach ($allUrns as $u) {
+                        $db[$u->urn_id] = $u->urn_string; // vetor para comparação com a topologia
+                    }
+
+                // calcula diferença entre os vetores da topologia e do banco, retorna apenas os novos
+                // urn_diff = top - db
+                $urn_diff = array_diff($top, $db);
+
+                // calcula diferença entre os vetores do banco e da topologia, retorna os inválidos
+                //$invalid = array_diff($db, $top);
+                //Framework::debug("urn invalid",$invalid);
+                // preenche vetor a ser retornado
+                $urns = array();
+                foreach ($urn_diff as $ind => $d) {
+                    $urns[] = $urns_top[$ind];
+                }
+
+                return ($urns);
+            } else {
+                Framework::debug("Error: failed to connect to OSCARS", $retval);
+                return FALSE;
+            }
+
+        } else {
+            Framework::debug("Warning: no domain found in getURNTopology");
+            return FALSE;
+        }
+    }
+    
+    /* DEPRECATED
     public static function getURNTopology($dom_id=NULL) {
 
         $domain_info = new domain_info();
@@ -167,7 +308,7 @@ class Topology {
             Framework::debug("Warning: no domain found in getURNTopology");
             return FALSE;
         }
-    }
+    }*/
 
     /**
      * @return <array> StdClass: returns the networks of the system along with the cointaining devices
@@ -179,20 +320,32 @@ class Topology {
      *              devices[ind]->name = <dev_descr>
      *
      */
-    public static function getNetworks() {
-        $net_info = new network_info();
-        $allNets = $net_info->fetch(FALSE);
-
+    public static function getNetworks($dom_id) {
+        $aco = new Acos($dom_id, "domain_info");
+        
+        if ($aco_dom = $aco->fetch(FALSE)) {
+            $children = $aco_dom[0]->findChildren();
+        }
+        
         $networks = array();
+        
+        foreach ($children as $child) {
+        
+//        $net_info = new network_info();
+//        $allNets = $net_info->fetch(FALSE);
+            
+        if ($child->model == "network_info") {
+            
+            $net_info = new network_info();
+            $net_info->net_id = $child->obj_id;
+            $net = $net_info->fetch();
 
-        if ($allNets)
-            foreach ($allNets as $net) {
                 $network = new stdClass();
-                $network->id = $net->net_id;
-                $network->name = $net->net_descr;
+                $network->id = $net[0]->net_id;
+                $network->name = $net[0]->net_descr;
 
                 $dev_info = new device_info();
-                $dev_info->net_id = $net->net_id;
+                $dev_info->net_id = $net[0]->net_id;
                 $allDevs = $dev_info->fetch(FALSE);
 
                 $devices = array();
@@ -210,6 +363,7 @@ class Topology {
 
                 $networks[] = $network;
             }
+        }
 
         return $networks;
     }
