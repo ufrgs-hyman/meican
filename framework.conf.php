@@ -112,7 +112,7 @@ class Framework {
                 Framework::$dbConfig ['mysql']->db_user = 'root';
                 Framework::$dbConfig ['mysql']->db_pass = 'futurarnp';
                 Framework::$dbConfig ['mysql']->db_host = 'localhost';
-                Framework::$dbConfig ['mysql']->db_name = 'new_meican';
+                Framework::$dbConfig ['mysql']->db_name = 'meican';
 
                 Framework::$dbConfig ['oracle'] = new DBConfig ();
                 Framework::$dbConfig ['oracle']->db_driver = 'oci8';
