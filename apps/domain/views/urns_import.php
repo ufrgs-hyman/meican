@@ -31,14 +31,14 @@ $domain = $this->passedArgs->domain;
     </thead>
 
     <tbody>
-        <?php foreach ($urns as $index => $u): ?>
-            <tr id="line<?php echo $index; ?>">
+        <?php foreach ($urns as $u): ?>
+            <tr id="line<?php echo $u->id; ?>">
                 <td class="edit">
-                    <img class="delete" src="layouts/img/delete.png" onclick="deleteURNLine('<?php echo $index; ?>');"/>
+                    <img class="delete" src="layouts/img/delete.png" onclick="deleteURNLine('<?php echo $u->id; ?>');"/>
                 </td>
 
                 <td>
-                    <select id="network<?php echo $index; ?>" onchange="changeNetworkURN(this);" >
+                    <select id="network<?php echo $u->id; ?>" onchange="changeNetworkURN(this);" >
                         <option value="-1"/>
                         <?php foreach ($networks as $n): ?>
                             <option value="<?php echo $n->id; ?>"><?php echo $n->name; ?></option>
@@ -46,7 +46,7 @@ $domain = $this->passedArgs->domain;
                     </select>
                 </td>
 
-                <td><select style="display:none" id="device<?php echo $index; ?>"/></td>
+                <td><select style="display:none" id="device<?php echo $u->id; ?>"/></td>
 
                 <td><?php echo $u->port; ?></td>
                 <td><?php echo $u->name; ?></td>

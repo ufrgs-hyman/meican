@@ -113,13 +113,15 @@ class Topology {
                     return FALSE;
 
                 // lê as URNs cadastradas no banco de dados do sistema, preenche o vetor $urns_db
-                $urn = new urn_info();
-                $allUrns = $urn->fetch(FALSE);
+                /**
+                 * @todo : implementar função para buscar do banco apenas URNs de um determinado domínio
+                 */
+                $allUrns = Topology::getURNs($dom_id);
 
                 $db = array();
                 if ($allUrns)
                     foreach ($allUrns as $u) {
-                        $db[$u->urn_id] = $u->urn_string; // vetor para comparação com a topologia
+                        $db[$u->id] = $u->string; // vetor para comparação com a topologia
                     }
 
                 // calcula diferença entre os vetores da topologia e do banco, retorna apenas os novos
@@ -309,7 +311,53 @@ class Topology {
             return FALSE;
         }
     }*/
+    
+    public static function getURNs($dom_id) {
+        $aco = new Acos($dom_id, "domain_info");
 
+        if ($aco_dom = $aco->fetch(FALSE)) {
+            $children = $aco_dom[0]->findChildren();
+        }
+
+        $urns = array();
+
+        foreach ($children as $child) {
+
+            if ($child->model == "urn_info") {
+                
+                $urn_info = new urn_info();
+                $urn_info->urn_id = $child->obj_id;
+                $urn_res = $urn_info->fetch();
+                
+                $urn = new stdClass();
+                $urn->id = $urn_res[0]->urn_id;
+                $urn->string = $urn_res[0]->urn_string;
+
+                $net = new network_info();
+                $net->net_id = $urn_res[0]->net_id;
+                $res = $net->fetch(FALSE);
+                $urn->net_id = $res[0]->net_id;
+                $urn->network = $res[0]->net_descr;
+
+                $dev = new device_info();
+                $dev->dev_id = $urn_res[0]->dev_id;
+                $res = $dev->fetch(FALSE);
+                $urn->dev_id = $res[0]->dev_id;
+                $urn->device = $res[0]->dev_descr;
+
+                $urn->port = $urn_res[0]->port;
+                $urn->vlan = $urn_res[0]->vlan;
+                $urn->max_capacity = $urn_res[0]->max_capacity;
+                $urn->min_capacity = $urn_res[0]->min_capacity;
+                $urn->granularity = $urn_res[0]->granularity;
+                
+                $urns[] = $urn;
+            }
+        }
+        
+        return $urns;
+    }
+    
     /**
      * @return <array> StdClass: returns the networks of the system along with the cointaining devices
      * Example:
@@ -322,23 +370,23 @@ class Topology {
      */
     public static function getNetworks($dom_id) {
         $aco = new Acos($dom_id, "domain_info");
-        
+
         if ($aco_dom = $aco->fetch(FALSE)) {
             $children = $aco_dom[0]->findChildren();
         }
-        
+
         $networks = array();
-        
+
         foreach ($children as $child) {
-        
+
 //        $net_info = new network_info();
 //        $allNets = $net_info->fetch(FALSE);
-            
-        if ($child->model == "network_info") {
-            
-            $net_info = new network_info();
-            $net_info->net_id = $child->obj_id;
-            $net = $net_info->fetch();
+
+            if ($child->model == "network_info") {
+
+                $net_info = new network_info();
+                $net_info->net_id = $child->obj_id;
+                $net = $net_info->fetch();
 
                 $network = new stdClass();
                 $network->id = $net[0]->net_id;

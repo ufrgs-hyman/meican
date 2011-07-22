@@ -18,42 +18,28 @@ class urns extends Controller {
     }
 
     public function show() {
+        
+        $dom = new domain_info();
+        if ($allDomains = $dom->fetch()) {
+        //if (false) {
+            $domains = array();
 
-        $urn_info = new urn_info();
-        $allUrns = $urn_info->fetch();
+            foreach ($allDomains as $d) {
+                $domain = new stdClass();
+                $domain->id = $d->dom_id;
+                $domain->descr = $d->dom_descr;
+                $domain->ip = $d->oscars_ip;
+                $domain->topo_id = $d->topo_domain_id;
+                
+                $domain->urns = Topology::getURNs($domain->id);
+                //$domain->networks = Topology::getNetworks($domain->id);
 
-        if ($allUrns) {
-            $urns = array();
-
-            foreach ($allUrns as $u) {
-                $urn = new stdClass();
-                $urn->id = $u->urn_id;
-                $urn->string = $u->urn_string;
-
-                $net = new network_info();
-                $net->net_id = $u->net_id;
-                $res = $net->fetch(FALSE);
-                $urn->net_id = $res[0]->net_id;
-                $urn->network = $res[0]->net_descr;
-
-                $dev = new device_info();
-                $dev->dev_id = $u->dev_id;
-                $res = $dev->fetch(FALSE);
-                $urn->dev_id = $res[0]->dev_id;
-                $urn->device = $res[0]->dev_descr;
-
-                $urn->port = $u->port;
-                $urn->vlan = $u->vlan;
-                $urn->max_capacity = $u->max_capacity;
-                $urn->min_capacity = $u->min_capacity;
-                $urn->granularity = $u->granularity;
-                $urns[] = $urn;
+                $domains[] = $domain;
             }
+
             $this->setAction('show');
 
-            $this->setArgsToBody($urns);
-
-            $networks = Topology::getNetworks();
+            $this->setArgsToBody($domains);
 
             $this->setArgsToScript(array(
                 "str_no_newUrn" => _("No new URN found in network topology, the system database is updated"),
@@ -63,8 +49,8 @@ class urns extends Controller {
                 "str_urn_not_deleted" => _("Fail to delete URN"),
                 "fillMessage" => _("Please fill in all the fields"),
                 "confirmMessage" => _("Save modifications?"),
-                "duplicateMessage" => _("A URN has been selected more than once"),
-                "networks" => $networks
+                "duplicateMessage" => _("A URN has been selected more than once")
+                //"networks" => $domains
             ));
 
             $this->addScript('urns');
@@ -74,8 +60,8 @@ class urns extends Controller {
 
             $args = new stdClass();
             $args->title = _("URNs (Uniform Resource Name)");
-            $args->message = _("No URN added, click the button bellow to import from topology");
-            $args->link = array("action" => "import_option");
+            $args->message = _("Before adding a URN, you need to register at least one OSCARS domain, click the button bellow to register a new one");
+            $args->link = array("controller" => "domains", "action" => "add_form");
             $this->setArgsToBody($args);
         }
 
@@ -142,11 +128,8 @@ class urns extends Controller {
         }
 
         $this->setArgsToScript(array(
-            "str_no_newUrn" => _("No new URN found in network topology, the system database is updated"),
-            "str_delete_urn" => _("Delete URN?"),
             "fillMessage" => _("Please fill in all the fields"),
             "confirmMessage" => _("Save modifications?"),
-            "duplicateMessage" => _("A URN has been selected more than once"),
             "networks" => $networks,
             "urns_to_import" => $urns
         ));
