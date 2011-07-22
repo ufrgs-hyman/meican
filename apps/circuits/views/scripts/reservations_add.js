@@ -29,9 +29,11 @@ function createTabs(){
             }
             google.maps.event.trigger(edit_map, 'resize');
             edit_map.setZoom( edit_map.getZoom() );
-            
+            edit_setBounds(edit_bounds);
+
             google.maps.event.trigger(view_map, 'resize');
-            view_map.setZoom( view_map.getZoom() );            
+            view_map.setZoom( view_map.getZoom() );
+            view_setBounds(view_bounds);
         }
         return false;
     });    
@@ -91,7 +93,7 @@ function nextTab(elem){
                 previousTab = currentTab;
                 currentTab = "t3";
                 google.maps.event.trigger(view_map, 'resize');
-                edit_setBounds(bounds);
+                view_setBounds(view_bounds);
                 view_map.setZoom( view_map.getZoom() );                 
             }                
             break;
@@ -114,7 +116,7 @@ function prevTab(elem){
             previousTab = currentTab;
             currentTab = "t1";                 
             google.maps.event.trigger(edit_map, 'resize');
-            edit_setBounds(bounds);
+            edit_setBounds(edit_bounds);
             edit_map.setZoom( edit_map.getZoom() );                            
             break;    
         }
@@ -201,11 +203,12 @@ function changeName(elem){
         
         google.maps.event.trigger(edit_map, 'resize');
         edit_map.setZoom( edit_map.getZoom() );                  
+        edit_setBounds(edit_bounds);        
         
         google.maps.event.trigger(view_map, 'resize');
         view_map.setZoom( view_map.getZoom() );  
+        view_setBounds(view_bounds);
         
-        edit_setBounds(bounds);        
     } else if ((elem.value == "")) {
         $("#t1").addClass("ui-state-disabled");
         $("#t2").addClass("ui-state-disabled");
@@ -344,17 +347,17 @@ function edit_initializeMap() {
     var rede3 = new google.maps.LatLng(latitudes[2], longitudes[2]);    
 
     edit_addMarker(rede1, "Rede 1");
-    bounds.push(rede1);
+    edit_bounds.push(rede1);
     edit_addMarker(rede2, "Rede 2");
-    bounds.push(rede2);
+    edit_bounds.push(rede2);
     edit_addMarker(rede3, "Rede 3");
-    bounds.push(rede3); 
+    edit_bounds.push(rede3); 
     
     google.maps.event.addListener(edit_map, 'click', function() {
         contextMenu.hide();        
     }); 
     
-    edit_setBounds(bounds);
+    edit_setBounds(edit_bounds);
 }
 
 //adiciona marcadores de endpoints no mapa 
@@ -443,7 +446,7 @@ function edit_addMarker(location, name) {
         }
     });  
 
-    markersArray.push(marker);
+    edit_markersArray.push(marker);
     marker.setMap(edit_map);
 }
 
@@ -460,9 +463,9 @@ function edit_markerClick(location, name){
         map:edit_map
     });   
     
-    for (var i = 0; i < markersArray.length; i++) {
-        if ((markersArray[i].id == name) && (markersArray[i].position == location)) {
-            markersArray[i].setClickable(false);
+    for (var i = 0; i < edit_markersArray.length; i++) {
+        if ((edit_markersArray[i].id == name) && (edit_markersArray[i].position == location)) {
+            edit_markersArray[i].setClickable(false);
         }
     }    
     
@@ -488,8 +491,8 @@ function edit_markerClick(location, name){
     selectedMarker.setMap(null);
     
     if (path.length == 2) {
-        for (i = 0; i < markersArray.length; i++) {
-            markersArray[i].setClickable(false);
+        for (i = 0; i < edit_markersArray.length; i++) {
+            edit_markersArray[i].setClickable(false);
         }         
         edit_drawPath(path);
         $("#slider").slider( "option", "disabled", false );
@@ -510,10 +513,10 @@ function edit_drawPath(flightPlanCoordinates) {
         strokeOpacity: 0.5,
         strokeWeight: 4
     });
-    path = [];
     line.setMap(edit_map);
-    lines.push(line);
-    edit_setBounds(flightPlanCoordinates);        
+    edit_lines.push(line);
+    edit_setBounds(flightPlanCoordinates);  
+    view_Circuit();
 }
 
 // reseta o mapa ao estado original e desabilita o slider
@@ -523,8 +526,10 @@ function edit_clearAll(){
     $("#amount").hide();
 
     edit_clearLines();
-    edit_clearMarkers();  
-    edit_setBounds(bounds); 
+    edit_clearMarkers();    
+    edit_setBounds(edit_bounds);
+    view_clearAll();
+     
     
     tab1_valid = false;
     if (tab2_valid) {
@@ -534,15 +539,16 @@ function edit_clearAll(){
 
 //limpa as linhas do mapa de edicao
 function edit_clearLines() {
-    for (var i = 0; i < lines.length; i++) {
-        lines[i].setMap(null);
+    for (var i = 0; i < edit_lines.length; i++) {
+        edit_lines[i].setMap(null);
     }  
+    path = [];
 }
 
 //limpa os marcadores do mapa de edicao
 function edit_clearMarkers() {
-    for (i = 0; i<markersArray.length; i++) {
-        markersArray[i].setClickable(true);
+    for (i = 0; i<edit_markersArray.length; i++) {
+        edit_markersArray[i].setClickable(true);
     }    
 }
 
@@ -607,19 +613,14 @@ function view_toggleTopology(){
 
 // inicializa o mapa para visualizacao do circuito
 function view_Circuit(){
-    if ((src_lat_network == dst_lat_network) && (src_lng_network == dst_lng_network)) {
-        var aux = parseFloat(dst_lng_network);
-        aux += 0.0005;
-        dst_lng_network = aux.toString();
-    }
-    var coord_src = new google.maps.LatLng(src_lat_network, src_lng_network);
-    edit_addMarker(coord_src);
-    bounds.push(coord_src);
-    var coord_dst = new google.maps.LatLng(dst_lat_network, dst_lng_network);
-    edit_addMarker(coord_dst);
-    bounds.push(coord_dst);
-    edit_setBounds(bounds);
-    edit_drawPath(coord_src, coord_dst);
+    var coord_src = path[0];
+    view_addMarker(coord_src);
+    view_bounds.push(coord_src);
+    var coord_dst = path[1];
+    view_addMarker(coord_dst);
+    view_bounds.push(coord_dst);
+    view_setBounds(view_bounds);
+    view_drawPath(path);
 }
 
 // adiciona marcadores no mapa para visualizacao do circuito
@@ -629,24 +630,21 @@ function view_addMarker(location) {
         map:view_map
     });
 
-    markersArray.push(marker);
+    view_markersArray.push(marker);
     marker.setMap(view_map);
 }
 
 // desenha linha entre endpoints para visualizacao do circuito
-function view_drawPath(coordinatesArray){
-    var origin = coordinatesArray[0];
-    var destination = coordinatesArray[(coordinatesArray.length -1)];
-    var flightPlanCoordinates = [origin, destination];
+function view_drawPath(flightPlanCoordinates) {
     var line = new google.maps.Polyline({
         path: flightPlanCoordinates,
         strokeColor: "#0000FF",
         strokeOpacity: 0.5,
         strokeWeight: 4
     });
-
     line.setMap(view_map);
-    lines.push(line);
+    view_lines.push(line);
+    view_setBounds(flightPlanCoordinates);        
 }
 
 // deseha topologia para a visao avancada
@@ -663,34 +661,51 @@ function view_drawTopology(coordinatesArray){
     });
 
     line.setMap(view_map);
-    lines.push(line);
+    view_lines.push(line);
 }
 
 // limpa as linhas do mapa da visualizacao
 function view_clearLines(){
-    for (var i = 0; i < lines.length; i++) {
-        lines[i].setMap(null);
+    for (var i = 0; i < view_lines.length; i++) {
+        view_lines[i].setMap(null);
     }    
-    edit_setBounds(bounds);
 }
 
 // limpa os marcadores do mapa de visualizacao
 function view_clearMarkers(){
-    for (var i=0; i<markersArray.length; i++){
-        markersArray[i].setMap(null);
+    var j = view_markersArray.length;
+    
+    for (var i=0; i < j; i++){
+        view_markersArray[i].setMap(null);        
     }
+    for (i=j; i>0; i--) {
+        view_markersArray.pop();
+    }
+    
 }
 
 //reseta os limites originais do mapa
 function view_clearBounds(){
-    for (var i=0; i<bounds.length; i++){
-        bounds.pop();
+    var j = view_bounds.length;
+    for (var i=j; i>0; i--){
+        view_bounds.pop();        
     }
+    view_setBounds(view_bounds);    
 }
 
 // reseta o mapa ao estado original
 function view_clearAll(){
-    clearMarkers();
-    edit_clearAll();
-    clearBounds();
+    view_clearMarkers();
+    view_clearLines();
+    view_clearBounds();
+}
+
+function view_setBounds(flightPlanCoordinates){
+    polylineBounds = new google.maps.LatLngBounds();
+
+    for (i=0; i<flightPlanCoordinates.length; i++) {
+        polylineBounds.extend(flightPlanCoordinates[i]);
+    }
+    view_map.fitBounds(polylineBounds);
+    view_map.setCenter(polylineBounds.getCenter());
 }

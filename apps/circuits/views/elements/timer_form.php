@@ -33,7 +33,7 @@
     <tr>
         <td colspan="5">
             <input type="checkbox" id="repeat_chkbox" onClick="showRecurrenceBox();"/>
-            <?php echo _("Repeat..."); ?> <a href="#" id="recurrence-edit"><?php echo _("Edit"); ?></a> 
+            <?php echo _("Repeat..."); ?> <a href="#" id="recurrence-edit" onclick="showRecurrenceBox();"><?php echo _("Edit"); ?></a> 
         </td>        
     </tr>
 </table>

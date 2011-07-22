@@ -3,10 +3,15 @@ $("#res_name").focus();
 createTabs();
 createSlider();
 
-var markersArray = [];
-var bounds = [];
-var lines =[];
+var edit_markersArray = [];
+var view_markersArray = [];
+var edit_bounds = [];
+var edit_lines = [];
+var view_bounds = [];
+var view_lines = [];
+
 var path = [];
+
 // MAPA PARA EDIÇÃO
 var edit_center = new google.maps.LatLng(-23.051931,-60.975511);
 var edit_myOptions = {
@@ -20,7 +25,7 @@ var edit_myOptions = {
     mapTypeControl: false,
     mapTypeId: google.maps.MapTypeId.TERRAIN
 };
-var edit_map = new google.maps.Map(document.getElementById("map_canvas"), edit_myOptions);
+var edit_map = new google.maps.Map(document.getElementById("edit_map_canvas"), edit_myOptions);
 google.maps.event.trigger(edit_map, 'resize');
 edit_map.setZoom( edit_map.getZoom() );
 
@@ -28,16 +33,21 @@ edit_map.setZoom( edit_map.getZoom() );
 var view_center = new google.maps.LatLng(-23.051931,-60.975511);
 var view_myOptions = {
     zoom: 5,
+    zoomControl: false,
     center: view_center,
     streetViewControl: false,
+    mapTypeControl: false,
     navigationControlOptions: {
         style: google.maps.NavigationControlStyle.ZOOM_PAN
     },
+    draggable: false,
+    disableDoubleClickZoom: true,
+    keyboardShortcuts: false,
+    scrollwheel: false,
     backgroundColor: "white",
-    mapTypeControl: false,
     mapTypeId: google.maps.MapTypeId.TERRAIN
 };
-var view_map = new google.maps.Map(document.getElementById("map_canvas"), view_myOptions);
+var view_map = new google.maps.Map(document.getElementById("view_map_canvas"), view_myOptions);
 google.maps.event.trigger(view_map, 'resize');
 view_map.setZoom( view_map.getZoom() );
 

@@ -1,7 +1,7 @@
 <!-- Endpoints -->
 <br/><br/><br/>
 <div align="center" style="width:100%;">
-    <div align="center" id="map_canvas" style="width: 50%; height: 300px;"></div>
+    <div align="center" id="edit_map_canvas"></div>
 </div>
 <br/>
 <!--

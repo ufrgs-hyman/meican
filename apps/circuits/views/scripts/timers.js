@@ -106,8 +106,11 @@ function clearWeekConf() {
  * Sets the frequency type - DAILY, WEEKLY, MONTHLY
  */
 function setFreq() {
-    var value = $("#freq").val();
-
+    var value = $("input[name='freq']:checked").val();
+    if (typeof value == 'undefined') {
+        value = "DAILY";
+        $("input[name='freq']").filter('[value=DAILY]').attr('checked', true);
+    }
     switch (value) {
         case "DAILY":
             clearWeekConf();

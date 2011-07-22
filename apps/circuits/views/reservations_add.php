@@ -58,11 +58,41 @@ $freq_types[] = $freq;
                 <input type="button" id="clearpath" class="clear" value="<?php echo _('Clear'); ?>" onClick="edit_clearAll();"/>
             </div>
             <br/><br/>
-            
-            <label id="amount_label" for="amount"></label>
-            <input type="text" id="amount" style="text-align: center; border:0; color:#0; font-weight:bold;" size="100"/>            
-            <br/><br/>
+                      
+            <table style="width: 100%"> 
+                <tr>
+                    <td style="width: 27.5%">                        
+                    </td>
+                    <td style ="width: 45.5%">
+                        <table style="width: 100%">
+                            <tr>
+                                <td style="width: 10%">100</td>
+                                <td style="width: 10%">200</td>
+                                <td style="width: 10%">300</td>
+                                <td style="width: 10%">400</td>
+                                <td style="width: 10%">500</td>                                                        
+                                <td style="width: 10%">600</td>
+                                <td style="width: 10%">700</td>
+                                <td style="width: 10%">800</td>
+                                <td style="width: 10%">900</td>
+                                <td style="width: 10%">1000</td>                                                                                        
+                            </tr>
+                        </table>
+                    </td>                    
+                    <td style="width: 27%">                        
+                    </td>                   
+                </tr>
+            </table>
+                
+              
             <?php $this->addElement('reservation_tab3'); ?>    
+            
+            <br/>
+            <div align="center" style="width:100%">
+                <label id="amount_label" for="amount"></label>
+                <input type="text" id="amount" style="text-align: center; border:0; color:#000; font-weight:bold;" size="100"/>            
+            </div>
+            <br/>
             
             <div class="controls">
                 <input type="button" id="bc1" class="cancel" value="<?php echo _('Cancel'); ?>" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');"/>
