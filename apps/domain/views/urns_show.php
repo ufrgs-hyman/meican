@@ -10,18 +10,17 @@ $domains = $this->passedArgs;
 
     <?php foreach ($domains as $dom): ?>
     <div id="domain<?php echo $dom->id; ?>">
-        <h2><?php echo _("Domain")." $dom->descr - $dom->ip - $dom->topo_id"; ?></h2>
+        <h2><?php echo _("Domain")." $dom->descr - $dom->topo_id"; ?></h2>
         
         <?php if ($dom->urns): ?>
-            <?php $this->addElement('list_urns',$dom->urns); ?>
-        <?php else: ?>
-            <?php
-                $args = new stdClass();
-                $args->message = _("No URN in this domain, click the button below to import");
-                $args->link = array("action" => "import", "param" => "dom_id:$dom->id");
+            <?php $this->addElement('list_urns',$dom); ?>
+        <?php else:
+            $args = new stdClass();
+            $args->message = _("No URN in this domain, click the button below to import topology from IP address")." $dom->ip";
+            $args->link = array("action" => "import", "param" => "dom_id:$dom->id");
             
-                $this->addElement("empty_db", $args);
-            ?>
+            $this->addElement("empty_db", $args);
+        ?>
             <br/>
             <br/>
             <br/>

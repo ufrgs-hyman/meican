@@ -8,7 +8,7 @@ $domain = $this->passedArgs->domain;
 
 <h1><?php echo _("Importing Topology URNs (Uniform Resource Name)"); ?></h1>
 
-<h2><?php echo _("Domain")." $domain"; ?></h2>
+<h2><?php echo _("Domain")." $domain->descr"; ?></h2>
 
 <table id="urn_table" class="list">
 
@@ -38,7 +38,7 @@ $domain = $this->passedArgs->domain;
                 </td>
 
                 <td>
-                    <select id="network<?php echo $u->id; ?>" onchange="changeNetworkURN(this);" >
+                    <select id="network<?php echo $u->id; ?>" onchange="changeNetworkURN('<?php echo $domain->id; ?>', this);" >
                         <option value="-1"/>
                         <?php foreach ($networks as $n): ?>
                             <option value="<?php echo $n->id; ?>"><?php echo $n->name; ?></option>

@@ -22,7 +22,8 @@ class urns extends Controller {
         $dom = new domain_info();
         if ($allDomains = $dom->fetch()) {
         //if (false) {
-            $domains = array();
+            $domains_to_body = array();
+            $domains_to_js = array();
 
             foreach ($allDomains as $d) {
                 $domain = new stdClass();
@@ -30,16 +31,20 @@ class urns extends Controller {
                 $domain->descr = $d->dom_descr;
                 $domain->ip = $d->oscars_ip;
                 $domain->topo_id = $d->topo_domain_id;
-                
-                $domain->urns = Topology::getURNs($domain->id);
-                //$domain->networks = Topology::getNetworks($domain->id);
+                $domain->urns = Topology::getURNs($d->dom_id);
 
-                $domains[] = $domain;
+                $domains_to_body[] = $domain;
+                
+                $dom_to_js = new stdClass();
+                $dom_to_js->id = $d->dom_id;
+                $dom_to_js->topo_urns = NULL;
+                $dom_to_js->networks = Topology::getNetworks($d->dom_id);
+                $domains_to_js[] = $dom_to_js;
             }
 
             $this->setAction('show');
 
-            $this->setArgsToBody($domains);
+            $this->setArgsToBody($domains_to_body);
 
             $this->setArgsToScript(array(
                 "str_no_newUrn" => _("No new URN found in network topology, the system database is updated"),
@@ -49,8 +54,8 @@ class urns extends Controller {
                 "str_urn_not_deleted" => _("Fail to delete URN"),
                 "fillMessage" => _("Please fill in all the fields"),
                 "confirmMessage" => _("Save modifications?"),
-                "duplicateMessage" => _("A URN has been selected more than once")
-                //"networks" => $domains
+                "duplicateMessage" => _("A URN has been selected more than once"),
+                "domains" => $domains_to_js
             ));
 
             $this->addScript('urns');
@@ -107,19 +112,24 @@ class urns extends Controller {
         $domain = $dom->fetch();
         
         $urns = Topology::getURNTopology($domId);
-        //Framework::debug("urns", $urns);
-        //$this->import_option();
-        //return false;
         
         $networks = Topology::getNetworks($domId);
-        //Framework::debug("net",$networks);
-        //$this->import_option();
-        //return false;
         
         $args = new stdClass();
         $args->urns = $urns;
         $args->networks = $networks;
-        $args->domain = $domain[0]->dom_descr;
+        
+        $dom = new stdClass();
+        $dom->id = $domain[0]->dom_id;
+        $dom->descr = $domain[0]->dom_descr;
+        $args->domain = $dom;
+        
+        $domains_to_js = array();
+        $dom_to_js = new stdClass();
+        $dom_to_js->id = $domId;
+        $dom_to_js->topo_urns = NULL;
+        $dom_to_js->networks = $networks;
+        $domains_to_js[] = $dom_to_js;
         
         if ($urns)
             $this->setArgsToBody($args);
@@ -130,7 +140,7 @@ class urns extends Controller {
         $this->setArgsToScript(array(
             "fillMessage" => _("Please fill in all the fields"),
             "confirmMessage" => _("Save modifications?"),
-            "networks" => $networks,
+            "domains" => $domains_to_js,
             "urns_to_import" => $urns
         ));
 
@@ -192,7 +202,7 @@ class urns extends Controller {
     }
 
     public function get_topology() {
-        $urns = Topology::getURNTopology();
+        $urns = Topology::getURNTopology(Common::POST('domain_id'));
         $this->setLayout('empty');
         $this->setAction('ajax');
         $this->setArgsToBody($urns);
