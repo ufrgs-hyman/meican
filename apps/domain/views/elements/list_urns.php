@@ -31,7 +31,7 @@ $domain = $argsToElement;
                     <input type="checkbox" name="del_checkbox[]" value="<?php echo $u->id; ?>">
                 </td>
                 <td class="edit">
-                    <img class="edit" src="layouts/img/edit_1.png" onclick="editURN('<?php echo $u->id; ?>');">
+                    <img class="edit" src="layouts/img/edit_1.png" onclick="editURN('<?php echo $domain->id; ?>', '<?php echo $u->id; ?>');">
                 </td>
                 <td class="edit">
                     <img class="delete" src="layouts/img/remove.png" onclick="deleteURN('<?php echo $u->id; ?>');">

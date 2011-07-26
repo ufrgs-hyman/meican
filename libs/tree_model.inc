@@ -121,10 +121,11 @@ class Tree_Model extends Model {
         $sqlQuery .= "UPDATE $tableName SET rgt = rgt - 2 WHERE rgt > $right;";
 
         if ($this->transactionSql($sqlQuery)){
+            Framework::debug("remove node");
             Common::apc_update();
             return TRUE;
         } else {
-                    return FALSE;
+            return FALSE;
         }
     }
     

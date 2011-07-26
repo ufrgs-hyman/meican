@@ -10,7 +10,7 @@ $domain = $this->passedArgs->domain;
 
 <h2><?php echo _("Domain")." $domain->descr"; ?></h2>
 
-<table id="urn_table" class="list">
+<table id="urn_table<?php echo $domain->id; ?>" class="list">
 
     <thead>
         <tr>
@@ -40,13 +40,47 @@ $domain = $this->passedArgs->domain;
                 <td>
                     <select id="network<?php echo $u->id; ?>" onchange="changeNetworkURN('<?php echo $domain->id; ?>', this);" >
                         <option value="-1"/>
-                        <?php foreach ($networks as $n): ?>
-                            <option value="<?php echo $n->id; ?>"><?php echo $n->name; ?></option>
+                        <?php
+                        $dev_found = FALSE;
+                        foreach ($networks as $n):
+                            // se não encontrou o dispositivo do URN, procura por ele
+                            if (!$dev_found) {
+                                foreach ($n->devices as $d) {
+                                    if ($d->node_id == $u->node_id) {
+                                        $net_id = $n->id;
+                                        $dev_id = $d->id;
+                                        $devices = $n->devices;
+                                        $dev_found = TRUE;
+                                        break;
+                                    }
+                                }
+                            }
+                            
+                            if ($dev_found && ($net_id == $n->id)): ?>
+                                <option selected="true" value="<?php echo $n->id; ?>"><?php echo $n->name; ?></option>
+                            <?php else: ?>
+                                <option value="<?php echo $n->id; ?>"><?php echo $n->name; ?></option>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     </select>
                 </td>
 
-                <td><select style="display:none" id="device<?php echo $u->id; ?>"/></td>
+                <td>
+                    <?php if ($dev_found): ?>
+                        <select id="device<?php echo $u->id; ?>">
+                            <option value="-1"/>
+                            <?php foreach ($devices as $d): ?>
+                                <?php if ($d->id == $dev_id): ?>
+                                    <option selected="true" value="<?php echo $d->id; ?>"><?php echo $d->name; ?></option>
+                                <?php else: ?>
+                                    <option value="<?php echo $d->id; ?>"><?php echo $d->name; ?></option>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </select>
+                    <?php else: ?>
+                        <select style="display:none" id="device<?php echo $u->id; ?>"/>
+                    <?php endif; ?>
+                </td>
 
                 <td><?php echo $u->port; ?></td>
                 <td><?php echo $u->name; ?></td>
@@ -54,7 +88,6 @@ $domain = $this->passedArgs->domain;
                 <td><?php echo $u->max_capacity; ?></td>
                 <td><?php echo $u->min_capacity; ?></td>
                 <td><?php echo $u->granularity; ?></td>
-
             </tr>
         <?php endforeach; ?>
     </tbody>

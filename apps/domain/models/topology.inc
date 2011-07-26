@@ -85,19 +85,22 @@ class Topology {
                                             $urn->max_capacity = (integer) $tp->link->maximumReservableCapacity;
                                             $urn->min_capacity = (integer) $tp->link->minimumReservableCapacity;
                                             $urn->granularity = (integer) $tp->link->granularity;
-
-                                            // procura pela porta da URN
-                                            $searchPort = $urn->name;
-                                            // elimina string até achar o atributo 'port='
-                                            while (substr($searchPort, 0, 5) != "port=")
-                                                $searchPort = substr($searchPort, 1, strlen($searchPort));
-
-                                            $port = "";
-                                            // atribui à porta o número da mesma
-                                            for ($j = 0; $searchPort[$j + 5] != ':'; $j++)
-                                                $port .= $searchPort[$j + 5];
-
-                                            $urn->port = $port;
+                                            
+                                            // pega todo string com ID da porta e separa pelos ":"
+                                            $topo_port_attr = (string) $tp->attributes();
+                                            $topo_attr_array = explode(":", $topo_port_attr);
+                                            
+                                            // procura pelo ID do nodo
+                                            $topo_attr = explode("=", $topo_attr_array[4]);
+                                            $urn->node_id = NULL;
+                                            if ($topo_attr[0] == "node")
+                                                $urn->node_id = $topo_attr[1];
+                                            
+                                            // procura pela porta
+                                            $topo_attr = explode("=", $topo_attr_array[5]);
+                                            $urn->port = NULL;
+                                            if ($topo_attr[0] == "port")
+                                                $urn->port = $topo_attr[1];
 
                                             $top[$urn->id] = $urn->name; // vetor para comparação com o banco
                                             $urns_top[] = $urn;
@@ -112,10 +115,7 @@ class Topology {
                 if (!$urns_top)
                     return FALSE;
 
-                // lê as URNs cadastradas no banco de dados do sistema, preenche o vetor $urns_db
-                /**
-                 * @todo : implementar função para buscar do banco apenas URNs de um determinado domínio
-                 */
+                // lê as URNs cadastradas no domínio, preenche o vetor $allUrns
                 $allUrns = Topology::getURNs($dom_id);
 
                 $db = array();
@@ -403,6 +403,7 @@ class Topology {
                         $device = new stdClass();
                         $device->id = $dev->dev_id;
                         $device->name = $dev->dev_descr;
+                        $device->node_id = $dev->topo_node_id;
 
                         $devices[] = $device;
                     }

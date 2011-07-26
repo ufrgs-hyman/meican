@@ -1,3 +1,12 @@
+function changeURNDomain(elem) {
+    for (var i in domains) {
+        if ((elem.value == -1) || (elem.value == domains[i].id))
+            $("#domain" + domains[i].id).show();
+        else
+            $("#domain" + domains[i].id).hide();
+    }
+}
+
 function newURN(domain_id) {
     var urns = getURNsFromDomain(domain_id);
     
@@ -13,8 +22,11 @@ function newURN(domain_id) {
             if (data) {
                 // retornou dados, testa se vetor está vazio
                 if (data.length != 0) {
-                    setURNsOfDomain(data, domain_id);
-                    fillURNLine(domain_id);
+                    setURNsOfDomain(domain_id, data);
+                    var urns_temp = getURNsFromDomain(domain_id);
+                    for (var i in urns_temp) {
+                        fillURNLine(domain_id, urns_temp[i].id);
+                    }
                 } else {
                     // topologia atualizada
                     setFlash(str_no_newUrn);
@@ -28,7 +40,7 @@ function newURN(domain_id) {
     }
 }
 
-function setURNsOfDomain(urns, domain_id) {
+function setURNsOfDomain(domain_id, urns) {
     for (var i in domains) {
         if (domains[i].id == domain_id) {
             domains[i].topo_urns = urns;
@@ -63,7 +75,7 @@ function getNetworksFromDomain(domain_id) {
     return networks;
 }
 
-function fillURNLine(dom_id) {
+function fillURNLine(dom_id, urn_id) {
     $('#urn_table' + dom_id + ' tbody tr:last').after('<tr id="newline' + pos + '"/>');
 
     var columns = '<td class="edit" colspan="3"><img class="edit" alt="clear" border="0" id="delete' + pos + '" src="layouts/img/clear.png"/></td>';
@@ -78,7 +90,11 @@ function fillURNLine(dom_id) {
     $('#newline' + pos).append(columns);
 
     fillSelectBox("#network" + pos, getNetworksFromDomain(dom_id));
-    fillSelectBox("#urn" + pos, getURNsFromDomain(dom_id));
+    if (urn_id) {
+        fillSelectBox("#urn" + pos, getURNsFromDomain(dom_id), urn_id);
+        changeURN(dom_id, "#urn" + pos);
+    } else
+        fillSelectBox("#urn" + pos, getURNsFromDomain(dom_id));
 
     $('#network' + pos).change(function() {
         changeNetworkURN(dom_id, this);
@@ -108,15 +124,16 @@ function fillURNLine(dom_id) {
     pos++;
 }
 
-function editURN(urnId) {
+function editURN(dom_id, urnId) {
     var old_net_id = $('#network_box' + urnId).attr("title");
     $('#network_box' + urnId).removeAttr("title");
     
     var old_dev_id = $('#device_box' + urnId).attr("title");
     $('#device_box' + urnId).removeAttr("title");
     
+    var networks = getNetworksFromDomain(dom_id);
     var devices = null;
-    for (var i=0; networks.length; i++) {
+    for (var i in networks) {
         if (networks[i].id == old_net_id) {
             devices = networks[i].devices;
             break;
@@ -133,7 +150,7 @@ function editURN(urnId) {
     fillSelectBox('#edit_device' + editpos, devices, old_dev_id);
 
     $('#edit_network' + editpos).change(function() {
-        changeNetworkURN(this);
+        changeNetworkURN(dom_id, this);
     });
     
     $('#save_button').show();
@@ -147,7 +164,7 @@ function getURN(domain_id, urn_id) {
     var urn = null;
     var urns = getURNsFromDomain(domain_id);
 
-    for (var i=0; urns.length; i++) {
+    for (var i in urns) {
         if (urns[i].id == urn_id) {
             urn = urns[i];
             break;
@@ -158,15 +175,42 @@ function getURN(domain_id, urn_id) {
 }
 
 function changeURN(domain_id, urn_select) {
-    var portId = "#" + urn_select.id.replace(/urn/, "port");
-    var vlanId = "#" + urn_select.id.replace(/urn/, "vlan");
-    var max_capacityId = "#" + urn_select.id.replace(/urn/, "max_capacity");
-    var min_capacityId = "#" + urn_select.id.replace(/urn/, "min_capacity");
-    var granularityId = "#" + urn_select.id.replace(/urn/, "granularity");
+    var portId = "#" + $(urn_select).attr("id").replace(/urn/, "port");
+    var vlanId = "#" + $(urn_select).attr("id").replace(/urn/, "vlan");
+    var max_capacityId = "#" + $(urn_select).attr("id").replace(/urn/, "max_capacity");
+    var min_capacityId = "#" + $(urn_select).attr("id").replace(/urn/, "min_capacity");
+    var granularityId = "#" + $(urn_select).attr("id").replace(/urn/, "granularity");
+    var html_networkId = "#" + $(urn_select).attr("id").replace(/urn/, "network");
+    var html_deviceId = "#" + $(urn_select).attr("id").replace(/urn/, "device");
     
-    var urn = getURN(domain_id, urn_select.value);
+    $(html_networkId + ' option[value="-1"]').attr("selected", true);
+    $(html_deviceId).slideUp();
+    
+    var urn = getURN(domain_id, $(urn_select).val());
 
     if (urn) {
+        var networks = getNetworksFromDomain(domain_id);
+        var dev_found = false;
+        for (var i in networks) {
+            for (var j in networks[i].devices) {
+                if (urn.node_id == networks[i].devices[j].node_id) {
+                    $(html_networkId + ' option[value="' + networks[i].id + '"]').attr("selected", true);
+//                    $.each($(html_networkId + " option"), function() {
+//                        if (this.value == networks[i].id) {
+//                            $(this).attr("selected",true);
+//                        }
+//                    });
+                
+                    fillSelectBox(html_deviceId, networks[i].devices, networks[i].devices[j].id);
+                    $(html_deviceId).slideDown();
+                    dev_found = true;
+                    break;
+                }
+            }
+            if (dev_found)
+                break;
+        }
+        
         $(vlanId).html(urn.vlan);
         $(max_capacityId).html(urn.max_capacity);
         $(min_capacityId).html(urn.min_capacity);
@@ -190,7 +234,7 @@ function changeNetworkURN(domain_id, network_select) {
 
     if (network_id != -1) {
         var devices = null;
-        for (var i=0; networks.length; i++) {
+        for (var i in networks) {
             if (networks[i].id == network_id) {
                 devices = networks[i].devices;
                 break;
@@ -213,6 +257,9 @@ function saveURN() {
 
     var i=0;
     
+    /**
+     * @todo : conferir parte de edição
+     */
     if (isEditingURN) {
 
         //VERIFICA SE TODOS OS CAMPOS ESTÃO PREENCHIDOS
@@ -257,14 +304,12 @@ function saveURN() {
             if (validArray[i]) {
                 urn_newArray[index] = new Array();
                 
-                var dom_id = $('#network' + i).parent().parent().parent().parent().attr("id").replace(/urn_table/, ""); // id do domínio
-                //alert(dom_id);
-                
                 var urn = null;
                 
                 if (isImporting) {
                     urn = urns_to_import[i];
                 } else {
+                    var dom_id = $('#network' + i).parent().parent().parent().parent().attr("id").replace(/urn_table/, ""); // id do domínio
                     urn = getURN(dom_id, $('#urn'+i).val());
                 }
 

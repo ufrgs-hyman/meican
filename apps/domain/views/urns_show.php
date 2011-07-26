@@ -6,6 +6,14 @@ $domains = $this->passedArgs;
 
 <h1><?php echo _("URNs (Uniform Resource Name)"); ?></h1>
 
+<?php echo _("Select the domain to view"); ?>:
+<select onchange="changeURNDomain(this);">
+    <option value="-1"><?php echo _("Show all"); ?></option>
+    <?php foreach ($domains as $dom): ?>
+        <option value="<?php echo $dom->id ?>"><?php echo $dom->descr ?></option>
+    <?php endforeach; ?>
+</select>
+
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
 
     <?php foreach ($domains as $dom): ?>
