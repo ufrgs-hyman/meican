@@ -374,6 +374,13 @@ class reservations extends Controller {
             "on_string" => _("on"),
             "month_string" => _("month"),
             "months_string" => _("months"),
+            "year_string" => _("year"),
+            "years_string" => _("years"),
+            "hour_string" => _("hour"),
+            "hours_string" => _("hours"),
+            "minute_string" => _("minute"),
+            "minutes_string" => _("minutes"),
+            "and_string" => _("and"),
             "until_string" => _("until"),
             "times_string" => _("times"),
             "time_string" => _("time"),
@@ -405,11 +412,7 @@ class reservations extends Controller {
         
         // SCRIPTS -----------------------------------------
         $this->setInlineScript('reservations_add_init');
-        $this->addScript('reservations_add');
-        $this->addScript('map');
-        $this->addScript('StyledMarker');
-        $this->addScript("flows");
-        $this->addScript('timers');
+
         if ($js_lang != "en-US") {
             $this->addScript("jquery.ui.datepicker-$js_lang");
         }

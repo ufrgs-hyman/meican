@@ -4,6 +4,7 @@ createTabs();
 createSlider();
 
 var edit_markersArray = [];
+var edit_selectedMarkers = [];
 var view_markersArray = [];
 var edit_bounds = [];
 var edit_lines = [];
@@ -37,9 +38,6 @@ var view_myOptions = {
     center: view_center,
     streetViewControl: false,
     mapTypeControl: false,
-    navigationControlOptions: {
-        style: google.maps.NavigationControlStyle.ZOOM_PAN
-    },
     draggable: false,
     disableDoubleClickZoom: true,
     keyboardShortcuts: false,

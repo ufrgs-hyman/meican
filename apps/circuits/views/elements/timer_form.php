@@ -1,3 +1,12 @@
+<?php 
+
+$start_date = $argsToElement->start_date;
+$finish_date = $argsToElement->finish_date;
+$start_time = $argsToElement->start_time;
+$finish_time = $argsToElement->finish_time;
+$timer = (isset($argsToElement->timer)) ? $argsToElement->timer : NULL;
+
+?>
 <table>
     <tr>
         <th colspan="2">
@@ -27,6 +36,9 @@
         </td>
         <td>
             <?php echo _("Time"); ?> <input type="text" size="7" value="<?php echo $finish_time; ?>" class="hourPicker" id="finalTime"/>
+        </td>
+        <td>
+            <label id="duration"></label>
         </td>
     </tr>
 

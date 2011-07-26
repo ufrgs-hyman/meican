@@ -1,7 +1,11 @@
 function initializeTimer() {
     $(".hourPicker").autocomplete({
-        source: horas
+        source: horas,
+        change: function(event, ui) {
+            calcDuration();
+        }
     });
+
     $.datepicker.setDefaults($.datepicker.regional[language]);
     var dates = $("#initialDate, #finalDate").datepicker({
         dateFormat: date_format,
@@ -18,8 +22,10 @@ function initializeTimer() {
                 $.datepicker._defaults.dateFormat,
                 selectedDate, instance.settings );
             dates.not( this ).datepicker( "option", option, date );
+            calcDuration();
         }
     });
+    calcDuration();
 }
 
 function showRecurrenceBox() {
@@ -61,6 +67,9 @@ function showRecurrenceBox() {
         $("#recurrence").show();
         setFreq();
         setUntilType();
+        $("#rec_initialTime").html($("#initialTime").val());
+        $("#rec_finalTime").html($("#finalTime").val());
+        $("#rec_duration").html($("#duration").html());        
     }
     else {
         $("#auxDiv").hide();
@@ -186,7 +195,7 @@ function validateTime(where) {
 }
 
 function getCheckedDays() {
-    var weekdays = ["#Sunday","#Monday","#Tuesday","#Wednesday","#Thursday","#Friday","#Saturday"];
+    var weekdays = ["#Sunday_desc","#Monday_desc","#Tuesday_desc","#Wednesday_desc","#Thursday_desc","#Friday_desc","#Saturday_desc"];
 
     var j=0;
     var checkedDays = new Array();
@@ -318,4 +327,99 @@ function fillRecurrenceBox() {
         $("#repeat_chkbox").attr("checked",true);
         showRecurrenceBox();
     }
+}
+
+function calcDuration(){
+    var duration = "";
+    var idate, fdate = [];
+    var itime, ftime = [];
+    
+    idate = $("#initialDate").val().split("/");
+    fdate = $("#finalDate").val().split("/");
+    
+    itime = $("#initialTime").val().split(":");
+    ftime = $("#finalTime").val().split(":");
+    
+
+    if ((($("#initialTime").val() != "") && ($("#finalTime").val() != "")) &&
+        ($("#initialDate").val() != "") && ($("#finalDate").val() != "")) {
+
+        var start = new Date(idate[2], idate[1], idate[0], itime[0], itime[1], 0, 0);
+        var end = new Date(fdate[2], fdate[1], fdate[0], ftime[0], ftime[1], 0, 0);
+
+        var difference = end - start;
+        
+        if (difference < 0) {
+            $("#duration").html("Data inicial maior que data final");
+            return;
+        }
+        
+        var total_minutes = Math.round(difference/(1000*60)); //diferenca em minutos
+        
+        var total_hours = parseInt((total_minutes/60));
+        var minutes = total_minutes - (total_hours*60);
+        
+        var total_days = parseInt((total_hours/24));
+        var hours = total_hours - (total_days*24);
+
+
+        if (total_days > 0) {
+            if (hours > 0) {
+                if (minutes > 0) {
+                    if (total_days == 1) {
+                        duration += total_days + " " + day_string + ", ";
+                    } else {
+                        duration += total_days + " " + days_string + ", ";
+                    }                    
+                } else {
+                    if (total_days == 1) {
+                        duration += total_days + " " + day_string + " " + and_string + " ";
+                    } else {
+                        duration += total_days + " " + days_string + " " + and_string + " ";
+                    }                    
+                }
+            } else {
+                if (minutes > 0) {
+                    if (total_days == 1) {
+                        duration += total_days + " " + day_string + " " + and_string + " ";
+                    } else {
+                        duration += total_days + " " + days_string + " " + and_string + " ";
+                    }                                        
+                } else {
+                    
+                    if (total_days == 1) {
+                        duration += total_days + " " + day_string;
+                    } else {
+                        duration += total_days + " " + days_string;
+                    }                
+                }
+            }
+        } 
+        
+        if (hours > 0) {
+            if (minutes > 0) {
+                if (hours == 1) {
+                    duration += hours + " " + hour_string + " " + and_string +" ";
+                } else {
+                    duration += hours + " " + hours_string + " " + and_string +" ";
+                }
+            } else {
+                if (hours == 1) {
+                    duration += hours + " " + hour_string;
+                } else {
+                    duration += hours + " " + hours_string;
+                }                
+            }
+        }        
+        
+        if (minutes > 0) {
+            if (minutes == 1) {
+                duration += minutes + " " + minute_string;
+            } else {
+                duration += minutes + " " + minutes_string;
+            }
+        }        
+    } 
+    
+    $("#duration").html(duration); 
 }

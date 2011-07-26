@@ -1,7 +1,9 @@
 <!-- CONFIRMATION -->
 <br/>
 
-<h2><?php echo _('Endpoints'); ?></h2>
+<div align="center">    
+    <h2><?php echo _('Endpoints'); ?></h2>
+</div>
 <table id="confirmation_endpoints">
     <tr>
         <td style="width: 15%">
@@ -18,15 +20,18 @@
     </tr>
 </table>
 
-<br/>
+<br/><br/>
 
-<h2 style="display: inline"><?php echo _('Bandwidth'); ?>:</h2><label id="lb_bandwidth"></label>
+<div align="center">
+    <h2 style="display: inline"><?php echo _('Bandwidth'); ?>:</h2><label id="lb_bandwidth"></label>
 
-<br/>
+    <br/><br/><br/>
 
-<h2><?php echo _('Timer'); ?></h2>
-<?php $this->addElement('view_timer', $timer); ?>
+    <h2><?php echo _('Timer'); ?></h2>
+    
+    <?php $this->addElement('view_timer', $timer); ?>
 
+</div>
 
 <div class="controls">
     <input type="button" id="bc3" class="cancel" value="<?php echo _('Cancel'); ?>" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');"/>

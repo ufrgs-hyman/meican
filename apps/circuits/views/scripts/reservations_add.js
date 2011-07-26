@@ -65,7 +65,7 @@ function createSlider(){
     $("#slider").bind("slidechange", changeBand());
     $("#slider").slider( "option", "disabled", true );
     $("#amount_label").hide();        
-    $("#amount").hide();    
+    $("#amount").hide();
 }
 
 function nextTab(elem){
@@ -267,7 +267,7 @@ function testTimer(){
 function cancelRecurrence(){
     $("#auxDiv").hide();
     $("#recurrence").hide(); 
-    $("#repeat_chkbox").removeAttr("checked") = false;
+    $("#repeat_chkbox").removeAttr("checked");
     $('#short_summary').html("");
 }
 
@@ -299,15 +299,17 @@ function saveRecurrence(){
             return;
         }
         byday = byday.toString();
-
+        alert(byday);
         var weekdays = ["#Sunday_desc","#Monday_desc","#Tuesday_desc","#Wednesday_desc","#Thursday_desc","#Friday_desc","#Saturday_desc"];
 
-        for (var i in weekdays) {
-            if ($(weekdays[i]).html())
+        for (var i in weekdays) {            
+            if ($(weekdays[i]).html()){               
                 week_str += $(weekdays[i]).html() + " ";
+            }
         }
     }
-
+    alert($("#short_desc").html());
+    
     var sum_desc = $("#short_desc").html() + " ";
     sum_desc += week_str;
     sum_desc += $("#until_desc").html();
@@ -316,6 +318,7 @@ function saveRecurrence(){
     $("#auxDiv").hide();
     $("#recurrence").hide();
     $("#recurrence-edit").show();
+    
 }
 
 /*----------------------------------------------------------------------------*/
@@ -462,12 +465,15 @@ function edit_markerClick(location, name){
         }),
         map:edit_map
     });   
-    
+        
     for (var i = 0; i < edit_markersArray.length; i++) {
         if ((edit_markersArray[i].id == name) && (edit_markersArray[i].position == location)) {
             edit_markersArray[i].setClickable(false);
         }
-    }    
+    }
+
+    selectedMarker.setMap(edit_map);
+    edit_selectedMarkers.push(selectedMarker);
     
     path.push(location);
     
@@ -486,15 +492,15 @@ function edit_markerClick(location, name){
             return false;
         });
         $(edit_map.getDiv()).append(contextMenu);
-    }
-    
-    selectedMarker.setMap(null);
+    }    
     
     if (path.length == 2) {
         for (i = 0; i < edit_markersArray.length; i++) {
-            edit_markersArray[i].setClickable(false);
+            if ((edit_markersArray[i].position != path[0]) && (edit_markersArray[i].position != path[1]))
+                edit_markersArray[i].setClickable(false);
         }         
         edit_drawPath(path);
+        $("#div-bandwidth").slideDown();
         $("#slider").slider( "option", "disabled", false );
         $("#amount_label").show();        
         $("#amount").show();
@@ -524,10 +530,19 @@ function edit_clearAll(){
     $("#slider").slider( "option", "disabled", true );
     $("#amount_label").hide();
     $("#amount").hide();
+    $("#div-bandwidth").slideUp();
 
     edit_clearLines();
     edit_clearMarkers();    
     edit_setBounds(edit_bounds);
+    
+    contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
+    contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
+    contextMenu.bind('contextmenu', function() {
+        return false;
+    });
+    $(edit_map.getDiv()).append(contextMenu);    
+    
     view_clearAll();
      
     
@@ -547,6 +562,9 @@ function edit_clearLines() {
 
 //limpa os marcadores do mapa de edicao
 function edit_clearMarkers() {
+    for (var i=0; i< edit_selectedMarkers.length; i++){
+        edit_selectedMarkers[i].setMap(null);
+    }
     for (i = 0; i<edit_markersArray.length; i++) {
         edit_markersArray[i].setClickable(true);
     }    

@@ -1,7 +1,7 @@
 <!-- TIMER -->
 <br/>
 <div align="center">
-    <?php $this->addElement('timer_form', $args); ?>
+    <?php $this->addElement('timer_form', $argsToElement); ?>
 </div>
 <br/>
 

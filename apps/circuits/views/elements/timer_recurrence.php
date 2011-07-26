@@ -1,11 +1,4 @@
 <?php
-
-$start_date = $argsToElement->start_date;
-$finish_date = $argsToElement->finish_date;
-$start_time = $argsToElement->start_time;
-$finish_time = $argsToElement->finish_time;
-$timer = (isset($argsToElement->timer)) ? $argsToElement->timer : NULL;
-
 $freq_types = array();
 unset($freq);
 $freq->value = "DAILY";
@@ -21,7 +14,6 @@ unset($freq);
 $freq->value = "MONTHLY";
 $freq->descr = _("Monthly");
 $freq_types[] = $freq;
-
 ?>
 
 <div id="recurrence">
@@ -37,12 +29,15 @@ $freq_types[] = $freq;
                     <tr style="width:100%">
                         <td>
                             <?php echo _("Start") ;?>:
+                            <label id="rec_initialTime"></label>
                         </td>
                         <td>
                             <?php echo _("End"); ?>:
+                            <label id="rec_finalTime"></label>
                         </td>
                         <td>
                             <?php echo _("Duration"); ?>:
+                            <label id="rec_duration"></label>
                         </td>
                     </tr>
                 </table>
@@ -107,7 +102,7 @@ $freq_types[] = $freq;
                                 <tr>
                                     <td>
                                         <div id="weekdays" style="display: none">
-                                            <table>
+                                            <table cellspacing="0" cellpadding="0" style="width: 100%">
                                                 <tr>
                                                     <td>
                                                         <input type="checkbox" value="SU" title="<?php echo _("Sunday"); ?>" id="Sunday" onclick="checkWeekDay(this.id);"><?php echo _("Sun"); ?>

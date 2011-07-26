@@ -24,6 +24,9 @@
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/StyledMarker.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/map.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/reservations.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/reservations_add.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/flows.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/timers.js"></script>
         
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <script type ="text/javascript">
