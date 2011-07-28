@@ -350,6 +350,8 @@ class reservations extends Controller {
             "flash_dstVlanInv" => _("Invalid value for destination VLAN"),
             "flash_dstVlanReq" => _("Destination VLAN type required"),
             "flash_timerReq" => _("Timer is required"),
+            "flash_timerInvalid" => _("The End Time occurs before the Start Time"),
+            "flash_invalidDuration" => _("Invalid Duration"),
             // endpoints
             "domain_string" => _("Domain"),
             "domains_string" => _("Domains"),
@@ -387,7 +389,9 @@ class reservations extends Controller {
             "end_rule_string" => _("Please set an end rule"),
             "select_day_string" => _("Select at least one day"),
             "set_name_string" => _("Set name"),
-            "invalid_time_string" => _("Invalid time")
+            "invalid_time_string" => _("Invalid time"),
+            "active_string" => _("Active from"),
+            "at_string" => _("at")
       //    "domains" => $domToMapArray
         ));
         //}

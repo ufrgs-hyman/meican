@@ -3,6 +3,16 @@ function initializeTimer() {
         source: horas,
         change: function(event, ui) {
             calcDuration();
+            if (!($("#repeat_chkbox").attr("checked"))) {
+                refreshSummary();
+            }
+            if (($("#initialTime").val()) < ($("#finalTime").val())) {
+                $("#confirmation_initialDate").html("Date: " + $("#initialDate").val());
+                $("#confirmation_initialTime").html("Time: " + $("#initialTime").val());
+                $("#confirmation_finalDate").html("Date: " + $("#finalDate").val());
+                $("#confirmation_finalTime").html("Time: " + $("#finalTime").val());
+                $("#confirmation_duration").html($("#duration").html());  
+            }
         }
     });
 
@@ -26,6 +36,24 @@ function initializeTimer() {
         }
     });
     calcDuration();
+    refreshSummary();
+    $("#confirmation_initialDate").html("Date: " + $("#initialDate").val());
+    $("#confirmation_initialTime").html("Time: " + $("#initialTime").val());
+    $("#confirmation_finalDate").html("Date: " + $("#finalDate").val());
+    $("#confirmation_finalTime").html("Time: " + $("#finalTime").val());
+    $("#confirmation_duration").html($("#duration").html());            
+}
+
+function refreshSummary() {
+    if ($("#initialTime").val() < ($("#finalTime").val())) {
+        var summary_string = active_string + " " + $("#initialDate").val() + " " + at_string + " " + $("#initialTime").val() + " " + until_string + 
+        " " + $("#finalDate").val() + " " + at_string + " " + $("#finalTime").val();
+                     
+        $("#summary").html(summary_string);
+        $("#confirmation_summary").html(summary_string);
+    } else {
+        $("#summary").html("");
+    }
 }
 
 function showRecurrenceBox() {
@@ -78,7 +106,8 @@ function showRecurrenceBox() {
         $("#interval_type").empty();
         $("#short_desc").empty();
         $("#until_desc").empty();
-        $("#short_summary").empty();
+        $("#recurrence_summary").empty();
+        refreshSummary();
         clearWeekConf();
     }
 }
@@ -195,7 +224,7 @@ function validateTime(where) {
 }
 
 function getCheckedDays() {
-    var weekdays = ["#Sunday_desc","#Monday_desc","#Tuesday_desc","#Wednesday_desc","#Thursday_desc","#Friday_desc","#Saturday_desc"];
+    var weekdays = ["#Sunday","#Monday","#Tuesday","#Wednesday","#Thursday","#Friday","#Saturday"];
 
     var j=0;
     var checkedDays = new Array();
@@ -257,7 +286,7 @@ function saveTimer(timer_id) {
         var sum_desc = $("#short_desc").html() + " ";
         sum_desc += week_str;
         sum_desc += $("#until_desc").html();
-        $("#short_summary").html(sum_desc);
+        $("#recurrence_summary").html(sum_desc);
     }
     
     $.post("main.php?app=circuits&controller=timers&action=update", {
@@ -350,10 +379,30 @@ function calcDuration(){
         var difference = end - start;
         
         if (difference < 0) {
-            $("#duration").html("Data inicial maior que data final");
+            setFlash(flash_timerInvalid);
+            tab2_valid = false;
+            validateTab3();
+            $("#confirmation_summary").html("");
+            $("#confirmation_initialTime").html("");
+            $("#confirmation_finalTime").html("");
+            $("#confirmation_duration").html("");
+            $("#duration").html("");
             return;
+        } else if (difference == 0){
+            setFlash(flash_invalidDuration);
+            tab2_valid = false;
+            validateTab3();
+            $("#confirmation_summary").html("");
+            $("#confirmation_initialTime").html("");
+            $("#confirmation_finalTime").html("");
+            $("#confirmation_duration").html("");          
+            $("#duration").html("");
+            return
         }
         
+        clearFlash();
+        tab2_valid = true;
+        validateTab3();
         var total_minutes = Math.round(difference/(1000*60)); //diferenca em minutos
         
         var total_hours = parseInt((total_minutes/60));

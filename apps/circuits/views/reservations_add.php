@@ -109,7 +109,6 @@ $freq_types[] = $freq;
             
         <div id="tab2" style="display: none" class="cont_tab">
             <?php $this->addElement('reservation_tab4', $this->passedArgs); ?>       
-            <input type ="button" id="validatimer" value="valida" onclick="testTimer()"/>
         </div>
         <div id="tab3" style="display: none" class="cont_tab">
             <?php $this->addElement('reservation_tab5'); ?>            

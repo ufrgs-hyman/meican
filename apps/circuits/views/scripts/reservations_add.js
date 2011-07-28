@@ -1,7 +1,7 @@
 var currentTab = "t1";
 var previousTab;
 var tab1_valid = false;
-var tab2_valid = false;
+var tab2_valid = true;
 
 var src_networks = null;
 var dst_networks = null;
@@ -250,25 +250,27 @@ function changeBand(){
     }
 }
 
-function testTimer(){
-    if (tab2_valid) {
-        tab2_valid = false;
-        if (tab1_valid) {
-            $("#t3").addClass("ui-state-disabled");
-        }                
-    } else {
-        tab2_valid = true;
-        if (tab1_valid) {
-            $("#t3").removeClass("ui-state-disabled");
-        }        
-    }
+function validateTab3(){
+    if ((tab2_valid) && (tab1_valid)) {
+        $("#t3").removeClass("ui-state-disabled");
+    }                
+    else {
+        
+        $("#t3").addClass("ui-state-disabled");        
+    }        
 }
 
 function cancelRecurrence(){
-    $("#auxDiv").hide();
-    $("#recurrence").hide(); 
-    $("#repeat_chkbox").removeAttr("checked");
-    $('#short_summary').html("");
+    if ($("#repeat_chkbox").attr("checked") && ($("#recurrence-edit").is(":visible"))) {
+        $("#auxDiv").hide();
+        $("#recurrence").hide(); 
+    } else {
+        $("#auxDiv").hide();
+        $("#recurrence").hide(); 
+        $("#repeat_chkbox").removeAttr("checked");
+        $('#recurrence_summary').html("");
+        refreshSummary();
+    }
 }
 
 function saveRecurrence(){
@@ -276,7 +278,7 @@ function saveRecurrence(){
     $("#recurrence-flash").hide();
     $("#recurrence-warning").html("");
     
-    var freq = $("#freq").val();
+    var freq = $('input[name="freq"]:checked').val();
 
     if ($("#date_radio").attr("checked")) {
         var until = $("#untilDate").val();
@@ -291,6 +293,7 @@ function saveRecurrence(){
     var interval = $("#interval").val();
 
     var week_str = "";
+    
     if (freq == "WEEKLY") {
         var byday = getCheckedDays();
         if (byday.length == 0) {
@@ -299,22 +302,21 @@ function saveRecurrence(){
             return;
         }
         byday = byday.toString();
-        alert(byday);
         var weekdays = ["#Sunday_desc","#Monday_desc","#Tuesday_desc","#Wednesday_desc","#Thursday_desc","#Friday_desc","#Saturday_desc"];
 
         for (var i in weekdays) {            
-            if ($(weekdays[i]).html()){               
+            if ($(weekdays[i]).html()){                      
                 week_str += $(weekdays[i]).html() + " ";
             }
         }
     }
-    alert($("#short_desc").html());
     
     var sum_desc = $("#short_desc").html() + " ";
     sum_desc += week_str;
     sum_desc += $("#until_desc").html();
-    $("#short_summary").html(sum_desc);
-
+    $("#recurrence_summary").html(sum_desc);
+    $("#confirmation_summary").html(sum_desc);
+    $("#summary").html("");
     $("#auxDiv").hide();
     $("#recurrence").hide();
     $("#recurrence-edit").show();

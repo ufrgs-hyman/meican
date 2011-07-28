@@ -7,10 +7,10 @@ $timer = $argsToElement;
 <table>
 
     <tr>
-        <th>
+        <th colspan="2">
             <?php echo _("Start") ?>
         </th>
-        <th>
+        <th colspan="2">
             <?php echo _("Finish") ?>
         </th>
         <th>
@@ -20,28 +20,32 @@ $timer = $argsToElement;
 
     <tr>
         <td>
-            <?php echo $timer->start; ?>
+            <label id="confirmation_initialDate"></label>
         </td>
         <td>
-            <?php echo $timer->finish; ?>
+            <label id="confirmation_initialTime"></label>
         </td>
         <td>
-            <?php echo $timer->duration; ?>
+            <label id="confirmation_finalDate"></label>
+        </td>
+        <td>            
+            <label id="confirmation_finalTime"></label>
+        </td>
+        <td>
+            <label id="confirmation_duration"></label>
         </td>
     </tr>
 
-    <?php if ($timer->summary != '-'): ?>
     <tr>
-        <th colspan="3">
-            <?php echo _("Recurrence") ?>
+        <th colspan="5">
+            <?php echo _("Summary") ?>
         </th>
     </tr>
 
     <tr>
         <td colspan="3">
-            <?php echo $timer->summary; ?>
+            <label id="confirmation_summary"></label>
         </td>
     </tr>
-    <?php endif; ?>
 
 </table>

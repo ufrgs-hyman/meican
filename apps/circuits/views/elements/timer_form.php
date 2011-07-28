@@ -50,5 +50,6 @@ $timer = (isset($argsToElement->timer)) ? $argsToElement->timer : NULL;
     </tr>
 </table>
 <div align="center">
-    <label id="short_summary"></label>
+    <label id="recurrence_summary"></label>
+    <label id="summary"></label>
 </div>
