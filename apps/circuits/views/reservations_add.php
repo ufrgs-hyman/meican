@@ -45,7 +45,7 @@ $freq_types[] = $freq;
     
     <div class="tab_container inactive" id="div-tabs">
         
-        <div id="tab1" class="cont_tab">
+        <div id="tab1" class="cont_tab" style="display: none">
             
             <br/><br/>
             <div align="center" style="font-weight: bold;">

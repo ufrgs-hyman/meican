@@ -89,6 +89,14 @@ function showRecurrenceBox() {
             $("#untilDate").datepicker("option", "minDate", date);
         }
     });
+    
+    if ($("#initialRecurrence").val() == "") {
+        $("#initialRecurrence").val($("#initialDate").val());
+    }
+    
+    if ($("#untilDate").val() == "") {
+        $("#untilDate").val($("#initialRecurrence").val());
+    }
 
     if ($("#repeat_chkbox").attr("checked")) {
         $("#auxDiv").show();
