@@ -1,20 +1,26 @@
 function initializeTimer() {
-    $(".hourPicker").autocomplete({
-        source: horas,
-        change: function(event, ui) {
-            calcDuration();
-            if (!($("#repeat_chkbox").attr("checked"))) {
-                refreshSummary();
-            }
-            if (($("#initialTime").val()) < ($("#finalTime").val())) {
-                $("#confirmation_initialDate").html("Date: " + $("#initialDate").val());
-                $("#confirmation_initialTime").html("Time: " + $("#initialTime").val());
-                $("#confirmation_finalDate").html("Date: " + $("#finalDate").val());
-                $("#confirmation_finalTime").html("Time: " + $("#finalTime").val());
-                $("#confirmation_duration").html($("#duration").html());  
-            }
-        }
+    $(".hourPicker").timePicker({
+        show24Hours: true,
+        separator: ':',
+        step: 30
     });
+   
+    $(".hourPicker").change(function() {
+        clearFlash();
+        validateTime($(this).attr("id"));
+        calcDuration();
+        if (!($("#repeat_chkbox").attr("checked"))) {
+            refreshSummary();
+        }
+        if (($("#initialTime").val()) < ($("#finalTime").val())) {
+            $("#confirmation_initialDate").html("Date: " + $("#initialDate").val());
+            $("#confirmation_initialTime").html("Time: " + $("#initialTime").val());
+            $("#confirmation_finalDate").html("Date: " + $("#finalDate").val());
+            $("#confirmation_finalTime").html("Time: " + $("#finalTime").val());
+            $("#confirmation_duration").html($("#duration").html());  
+        } else {
+        }
+    });        
 
     $.datepicker.setDefaults($.datepicker.regional[language]);
     var dates = $("#initialDate, #finalDate").datepicker({
@@ -28,9 +34,9 @@ function initializeTimer() {
             var option = this.id == "initialDate" ? "minDate" : "maxDate",
             instance = $( this ).data( "datepicker" ),
             date = $.datepicker.parseDate(
-                instance.settings.dateFormat ||
+            instance.settings.dateFormat ||
                 $.datepicker._defaults.dateFormat,
-                selectedDate, instance.settings );
+            selectedDate, instance.settings );
             dates.not( this ).datepicker( "option", option, date );
             calcDuration();
         }
@@ -47,7 +53,7 @@ function initializeTimer() {
 function refreshSummary() {
     if ($("#initialTime").val() < ($("#finalTime").val())) {
         var summary_string = active_string + " " + $("#initialDate").val() + " " + at_string + " " + $("#initialTime").val() + " " + until_string + 
-        " " + $("#finalDate").val() + " " + at_string + " " + $("#finalTime").val();
+            " " + $("#finalDate").val() + " " + at_string + " " + $("#finalTime").val();
                      
         $("#summary").html(summary_string);
         $("#confirmation_summary").html(summary_string);
@@ -67,9 +73,9 @@ function showRecurrenceBox() {
             setUntilType();
             instance = $( this ).data( "datepicker" ),
             date = $.datepicker.parseDate(
-                instance.settings.dateFormat ||
+            instance.settings.dateFormat ||
                 $.datepicker._defaults.dateFormat,
-                selectedDate, instance.settings );
+            selectedDate, instance.settings );
             $("#initialRecurrence").datepicker("option", "maxDate", date);
         }
     });
@@ -83,9 +89,9 @@ function showRecurrenceBox() {
         onSelect: function( selectedDate ) {
             instance = $( this ).data( "datepicker" ),
             date = $.datepicker.parseDate(
-                instance.settings.dateFormat ||
+            instance.settings.dateFormat ||
                 $.datepicker._defaults.dateFormat,
-                selectedDate, instance.settings );
+            selectedDate, instance.settings );
             $("#untilDate").datepicker("option", "minDate", date);
         }
     });
@@ -189,8 +195,8 @@ function setUntilType() {
         $("#untilDate").attr("disabled", "disabled");
         if ($("#nr_occurr").val() == 1) {
             $("#until_desc").html($("#nr_occurr").val() + ' ' + time_string);
-        //$("#short_desc").empty();
-        //$("#until_desc").html("Only once");
+            //$("#short_desc").empty();
+            //$("#until_desc").html("Only once");
         } else
             $("#until_desc").html($("#nr_occurr").val() + ' ' + times_string);
     }
@@ -215,14 +221,13 @@ function checkWeekDay(day_name) {
 }
 
 function validateTime(where) {
-    var time_id = "#" + where + "Time";
-
+    var time_id = "#" + where;
+    
     /** 
      * @todo: melhorar regexpr, procurar internet
      */
     var valid_time = /^[0-2][0-9]:[0-5][0-9]$/;
     //var valid_time = /^([0-1][0-9])|([2][0-3]):[0-5][0-9]$/;
-
     if (valid_time.test($(time_id).val())) {
         return true;
     } else {
@@ -407,7 +412,6 @@ function calcDuration(){
             $("#duration").html("");
             return
         }
-        
         clearFlash();
         tab2_valid = true;
         validateTab3();

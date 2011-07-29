@@ -299,7 +299,7 @@ class reservations extends Controller {
 
         $hoursArray = array();
         for ($h = 0; $h < 24; $h++) {
-            for ($m = 0; $m < 60; $m = $m + 5) {
+            for ($m = 0; $m < 60; $m = $m + 30) {
                 $hour = ($h < 10) ? "0$h" : $h;
                 $min = ($m < 10) ? "0$m" : $m;
                 $hoursArray[] = "$hour:$min";
@@ -352,6 +352,7 @@ class reservations extends Controller {
             "flash_timerReq" => _("Timer is required"),
             "flash_timerInvalid" => _("The End Time occurs before the Start Time"),
             "flash_invalidDuration" => _("Invalid Duration"),
+            "flash_missingEndpoints" => _("Missing Endpoints"),
             // endpoints
             "domain_string" => _("Domain"),
             "domains_string" => _("Domains"),
@@ -408,8 +409,8 @@ class reservations extends Controller {
         // arg timer
         $args->start_date = date($dateFormat);
         $args->finish_date = date($dateFormat);
-        $args->start_time = date($hourFormat, (time() + 5 * 60));
-        $args->finish_time = date($hourFormat, (time() + 10 * 60));
+        $args->start_time = date($hourFormat, (time() + 30 * 60));
+        $args->finish_time = date($hourFormat, (time() + 90 * 60));
         
         $this->setArgsToBody($args);
         // -----------------------------------------------------------------------------

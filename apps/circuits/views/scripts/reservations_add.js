@@ -161,12 +161,21 @@ function timerError(error){
 }
 
 function validateForm() {
-    if (validateReservationName()) {
-        if (validateReservationEndPoints()) {
-            if (validateReservationTimer()) {
-                $("#reservation_add").submit();                    
-            } 
+    if (tab1_valid) {
+        if (tab2_valid) {
+            $("#reservation_add").submit();
+        } else {
+            if ($("#finalTime").val() < $("#initialtime").val()) {
+                setFlash(flash_timerInvalid);
+                alert("a");
+            } else if ($("#finalTime").val() == $("#initialtime").val()) {
+                setFlash(flash_invalidDuration);
+            } else {
+                setFlash(flash_timerReq);
+            }
         }
+    } else {
+        setFlash(flash_missingEndpoints);
     }
 }
 
@@ -506,6 +515,7 @@ function edit_markerClick(location, name){
         $("#slider").slider( "option", "disabled", false );
         $("#amount_label").show();        
         $("#amount").show();
+        window.scroll(0, 650);
         tab1_valid = true;
         if (tab2_valid) {
             $("#t3").removeClass("ui-state-disabled");

@@ -7,12 +7,14 @@
 
         <!-- GLOBAL JS SCRIPTS AND IN-LINE FUNCTIONS -->
         <link rel="stylesheet" type="text/css" href="layouts/style1.css" />
+        <link rel="stylesheet" type="text/css" href="layouts/timePicker.css" />
         
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery.min.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery-ui-1.8.13.custom.min.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery_history.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery.crypt.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery.form.js"></script>
+        
         
         <!-- ESSE SCRIPT TÁ DANDO PROBLEMA
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/jquery-1.4.2.min.js"></script>
@@ -27,6 +29,7 @@
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/reservations_add.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/flows.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/timers.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/jquery.timePicker.js"></script>
         
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <script type ="text/javascript">
