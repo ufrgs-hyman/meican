@@ -1,4 +1,9 @@
 function changeURNDomain(elem) {
+    if (newCont || isEditingURN) {
+        setFlash("You are updating some table, all the modifications will be saved");
+    } else
+        clearFlash();
+    
     for (var i in domains) {
         if ((elem.value == -1) || (elem.value == domains[i].id))
             $("#domain" + domains[i].id).show();
@@ -257,9 +262,6 @@ function saveURN() {
 
     var i=0;
     
-    /**
-     * @todo : conferir parte de edição
-     */
     if (isEditingURN) {
 
         //VERIFICA SE TODOS OS CAMPOS ESTÃO PREENCHIDOS

@@ -270,14 +270,22 @@ class reservations extends Controller {
         
         // STEP 2 VARIABLES ---------------------
         $domain = new domain_info();
-        $allDomains = $domain->fetch(FALSE);
+        $allDomains = $domain->fetch();
 
+        $domToMapArray = array();
         $domains = array();
+        
         foreach ($allDomains as $d) {
             $dom = new stdClass();
             $dom->id = $d->dom_id;
             $dom->name = $d->dom_descr;
             $domains[] = $dom;
+            
+            $domain = new stdClass();
+            $domain->id = $d->dom_id;
+            $domain->name = $d->dom_descr;
+            $domain->networks = Topology::getURNDetails($d->dom_id);
+            $domToMapArray[] = $domain;
         }
         // --------------------------------------
 
@@ -311,24 +319,6 @@ class reservations extends Controller {
         $lang = explode(".", Language::getLang());
         $js_lang = str_replace("_", "-", $lang[0]);
         // --------------------------------------------
-  
-        
-//        $domain = new domain_info();
-//        $domains = $domain->fetch(FALSE);
-//
-//        $domToMapArray = array();
-//        foreach ($domains as $d) {
-//            $domain = new stdClass();
-//            $domain->id = $d->dom_id;
-//            $domain->name = $d->dom_descr;
-//            $endpoint = "http://{$d->dom_ip}/" . Framework::$systemDirName . "/main.php?app=domain&services&wsdl";
-//            if ($ws = new nusoap_client($endpoint, array('cache_wsdl' => 0))) {
-//                if ($temp = $ws->call('getURNDetails', array())) {
-//                    $domain->networks = $temp;
-//                    $domToMapArray[] = $domain;
-//                }
-//            }
-//        }
 
         //if ($domToMapArray) {
         
@@ -392,8 +382,8 @@ class reservations extends Controller {
             "set_name_string" => _("Set name"),
             "invalid_time_string" => _("Invalid time"),
             "active_string" => _("Active from"),
-            "at_string" => _("at")
-      //    "domains" => $domToMapArray
+            "at_string" => _("at"),
+            "domains" => $domToMapArray
         ));
         //}
         

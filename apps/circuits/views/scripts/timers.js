@@ -392,7 +392,7 @@ function calcDuration(){
         var difference = end - start;
         
         if (difference < 0) {
-            setFlash(flash_timerInvalid);
+            setFlash(flash_timerInvalid,"warning");
             tab2_valid = false;
             validateTab3();
             $("#confirmation_summary").html("");
@@ -402,7 +402,7 @@ function calcDuration(){
             $("#duration").html("");
             return;
         } else if (difference == 0){
-            setFlash(flash_invalidDuration);
+            setFlash(flash_invalidDuration,"warning");
             tab2_valid = false;
             validateTab3();
             $("#confirmation_summary").html("");

@@ -26,21 +26,21 @@ $domain = $argsToElement;
         
     <tbody>
         <?php foreach ($domain->urns as $u): ?>
-            <tr id="line<?php echo $u->id; ?>">
+            <tr id="line<?php echo $u->urn_id; ?>">
                 <td>
-                    <input type="checkbox" name="del_checkbox[]" value="<?php echo $u->id; ?>">
+                    <input type="checkbox" name="del_checkbox[]" value="<?php echo $u->urn_id; ?>">
                 </td>
                 <td class="edit">
-                    <img class="edit" src="layouts/img/edit_1.png" onclick="editURN('<?php echo $domain->id; ?>', '<?php echo $u->id; ?>');">
+                    <img class="edit" src="layouts/img/edit_1.png" onclick="editURN('<?php echo $domain->id; ?>', '<?php echo $u->urn_id; ?>');">
                 </td>
                 <td class="edit">
-                    <img class="delete" src="layouts/img/remove.png" onclick="deleteURN('<?php echo $u->id; ?>');">
+                    <img class="delete" src="layouts/img/remove.png" onclick="deleteURN('<?php echo $u->urn_id; ?>');">
                 </td>
                     
-                <td id="network_box<?php echo $u->id; ?>" title="<?php echo $u->net_id; ?>"><?php echo $u->network; ?></td>
-                <td id="device_box<?php echo $u->id; ?>" title="<?php echo $u->dev_id; ?>"><?php echo $u->device; ?></td>
+                <td id="network_box<?php echo $u->urn_id; ?>" title="<?php echo $u->net_id; ?>"><?php echo $u->network; ?></td>
+                <td id="device_box<?php echo $u->urn_id; ?>" title="<?php echo $u->dev_id; ?>"><?php echo $u->device; ?></td>
                 <td><?php echo $u->port; ?></td>
-                <td><?php echo $u->string; ?></td>
+                <td><?php echo $u->urn_string; ?></td>
                 <td><?php echo $u->vlan; ?></td>
                 <td><?php echo $u->max_capacity; ?></td>
                 <td><?php echo $u->min_capacity; ?></td>

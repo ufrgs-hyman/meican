@@ -23,13 +23,16 @@ class urn_info extends Resource_Model {
     public function update() {
         if (parent::update()) {
             $aco = new Acos($this->urn_id,"urn_info");
-            if ($acos = $aco->fetch()) {
+            if ($acos = $aco->fetch(FALSE)) {
                 foreach ($acos as $a) {
                     $a->removeNode();
                 }
             }
+            
             $parent = new Acos($this->dev_id,"device_info");
-            $parent->addChild2($aco);
+            if ($parent->addChild2($aco)) {
+                return TRUE;
+            }
         }
         
         return FALSE;

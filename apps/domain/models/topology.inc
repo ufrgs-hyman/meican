@@ -121,7 +121,7 @@ class Topology {
                 $db = array();
                 if ($allUrns)
                     foreach ($allUrns as $u) {
-                        $db[$u->id] = $u->string; // vetor para comparação com a topologia
+                        $db[$u->urn_id] = $u->urn_string; // vetor para comparação com a topologia
                     }
 
                 // calcula diferença entre os vetores da topologia e do banco, retorna apenas os novos
@@ -330,8 +330,8 @@ class Topology {
                 $urn_res = $urn_info->fetch();
                 
                 $urn = new stdClass();
-                $urn->id = $urn_res[0]->urn_id;
-                $urn->string = $urn_res[0]->urn_string;
+                $urn->urn_id = $urn_res[0]->urn_id;
+                $urn->urn_string = $urn_res[0]->urn_string;
 
                 $net = new network_info();
                 $net->net_id = $urn_res[0]->net_id;
@@ -542,15 +542,16 @@ class Topology {
      * utilizada para preencher um novo flow, busca direto na tabela urn_info
      * @return <type>
      */
-    static public function getURNDetails($urn_string = NULL) {
+    static public function getURNDetails($dom_id, $urn_string = NULL) {
 
         // lê todas as URNs do banco
-        $urn_info = new urn_info();
-
-        if ($urn_string)
-            $urn_info->urn_string = $urn_string;
-
-        $allUrns = $urn_info->fetch(FALSE);
+//        $urn_info = new urn_info();
+//
+//        if ($urn_string)
+//            $urn_info->urn_string = $urn_string;
+//
+//        $allUrns = $urn_info->fetch(FALSE);
+        $allUrns = Topology::getURNs($dom_id);
 
         $networks = array();
         if ($allUrns)
@@ -633,7 +634,7 @@ class Topology {
 
             }
 
-        //Framework::debug("net",$networks);
+        Framework::debug("net",$networks);
         return $networks;
 
     }

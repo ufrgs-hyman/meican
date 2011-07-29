@@ -40,6 +40,8 @@ function createTabs(){
 }
 
 function createSlider(){
+    $('#slider').slider("max",band_min);
+    
     $('#slider').slider({
         value:(band_max)/2,
         min: band_min,
@@ -66,6 +68,31 @@ function createSlider(){
     $("#slider").slider( "option", "disabled", true );
     $("#amount_label").hide();        
     $("#amount").hide();
+}
+
+function showSlider() {
+    var i=0;
+    var j=0;
+    var k=0;
+    var l=0;
+    band_max = domains[i].networks[j].devices[k].ports[l].max_capacity / 10000000;
+    band_max = 500;
+    band_min = domains[i].networks[j].devices[k].ports[l].min_capacity / 1000000;
+    band_div = domains[i].networks[j].devices[k].ports[l].granularity / 1000000;
+    
+    $("#slider").slider("option", {
+        "max": band_max,
+        "min": band_min,
+        "step": band_div,
+        "disabled": false
+    });
+//    $("#slider").slider("min", band_min);
+//    $("#slider").slider("step", band_div);
+//    $("#slider").slider( "option", "disabled", false );
+    
+    $("#div-bandwidth").slideDown();
+    $("#amount_label").show();        
+    $("#amount").show();
 }
 
 function nextTab(elem){
@@ -344,28 +371,29 @@ function saveRecurrence(){
 //inicializa mapa com redes marcadas para a definicao dos endpoints
 function edit_initializeMap() {
     contextMenu.hide();
-    var latitudes = [];
-    var longitudes = [];
-    
-    latitudes[0] = -23.051931;
-    longitudes[0] = -60.975511;
-    
-    latitudes[1] = -19.051931;
-    longitudes[1] = -58.975511;    
 
-    latitudes[2] = -20.051931;
-    longitudes[2] = -64.975511;    
+    for (var i in domains) {        
+        for (var j in domains[i].networks) {            
+            if (domains[i].networks[j].latitude) {
+                for (var k=0; k<i; k++){
+                    for (var l in domains[k].networks) {
+                        if (domains[k].networks[l].latitude) {
+                            if ((domains[i].networks[j].latitude == domains[k].networks[l].latitude) &&
+                                (domains[i].networks[j].longitude == domains[k].networks[l].longitude)) {
+                                    domains[i].networks[j].longitude -= -0.005;
+                            }
+                        }
+                    }
+                }
+                var coord = new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude);
+                //addMarker(coord, domains[i].id, domains[i].name, domains[i].networks[j].name, domains[i].networks[j].id);
+                edit_addMarker(coord, domains[i].networks[j].name);
+                edit_bounds.push(coord);
+            }
+        }
+    }
     
-    var rede1 = new google.maps.LatLng(latitudes[0], longitudes[0]);
-    var rede2 = new google.maps.LatLng(latitudes[1], longitudes[1]);
-    var rede3 = new google.maps.LatLng(latitudes[2], longitudes[2]);    
-
-    edit_addMarker(rede1, "Rede 1");
-    edit_bounds.push(rede1);
-    edit_addMarker(rede2, "Rede 2");
-    edit_bounds.push(rede2);
-    edit_addMarker(rede3, "Rede 3");
-    edit_bounds.push(rede3); 
+    //toggleCluster(true, markersArray);
     
     google.maps.event.addListener(edit_map, 'click', function() {
         contextMenu.hide();        
@@ -511,10 +539,9 @@ function edit_markerClick(location, name){
                 edit_markersArray[i].setClickable(false);
         }         
         edit_drawPath(path);
-        $("#div-bandwidth").slideDown();
-        $("#slider").slider( "option", "disabled", false );
-        $("#amount_label").show();        
-        $("#amount").show();
+        
+        showSlider();
+        
         window.scroll(0, 650);
         tab1_valid = true;
         if (tab2_valid) {
