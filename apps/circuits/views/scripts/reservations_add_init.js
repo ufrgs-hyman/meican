@@ -1,7 +1,7 @@
 $("#res_name").focus();
 
 createTabs();
-createSlider();
+createSlider();    
 
 var edit_markersArray = [];
 var edit_selectedMarkers = [];

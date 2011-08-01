@@ -76,7 +76,7 @@ function showSlider() {
     var k=0;
     var l=0;
     band_max = domains[i].networks[j].devices[k].ports[l].max_capacity / 10000000;
-    band_max = 500;
+    band_max = 1000;
     band_min = domains[i].networks[j].devices[k].ports[l].min_capacity / 1000000;
     band_div = domains[i].networks[j].devices[k].ports[l].granularity / 1000000;
     
@@ -359,6 +359,40 @@ function saveRecurrence(){
     
 }
 
+
+ 
+$.fn.extend({
+  slideRight: function() {
+    return this.each(function() {
+      $(this).animate({width: 'show'});
+    });
+  },
+  slideLeft: function() {
+    return this.each(function() {
+      $(this).animate({width: 'hide'});
+    });
+  },
+  slideToggleWidth: function() {
+    return this.each(function() {
+      var el = $(this);
+      if (el.css('display') == 'none') {
+        el.slideRight();
+      } else {
+        el.slideLeft();
+      }
+    });
+  }
+});
+
+function showVlanConf() {
+    if ($("#showVlan_chekbox").attr("checked")) {
+        $("#vlan_tr").slideDown();
+    } else {
+        $("#vlan_tr").slideUp();
+    }
+    
+}
+
 /*----------------------------------------------------------------------------*/
 // INICIO DAS FUNÇÕES DO MAPA                                                 //
 //                                                                            //
@@ -386,8 +420,7 @@ function edit_initializeMap() {
                     }
                 }
                 var coord = new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude);
-                //addMarker(coord, domains[i].id, domains[i].name, domains[i].networks[j].name, domains[i].networks[j].id);
-                edit_addMarker(coord, domains[i].networks[j].name);
+                edit_addMarker(coord, domains[i].id, domains[i].name, domains[i].networks[j].id, domains[i].networks[j].name);
                 edit_bounds.push(coord);
             }
         }
@@ -403,10 +436,13 @@ function edit_initializeMap() {
 }
 
 //adiciona marcadores de endpoints no mapa 
-function edit_addMarker(location, name) {
+function edit_addMarker(location, domain_id, domain_name, network_id, network_name) {
 
     marker = new StyledMarker({
-        id: name,
+        domain_id: domain_id,
+        domain_name: domain_name,
+        id: network_id,
+        label: network_name,
         position: location,
         styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
             color:"3A5879"
@@ -414,14 +450,17 @@ function edit_addMarker(location, name) {
         map:edit_map
     });
 
-    google.maps.event.addListener(marker, "click", function(marker) {
-        edit_markerClick(location, name);
+    google.maps.event.addListener(marker, "click", function() {
+        edit_markerClick(location, domain_id, domain_name, network_id, network_name);
     });
 
     google.maps.event.addListener(marker, "mouseover", function() {
 
         selectedMarker = new StyledMarker({
-            id: name,
+            domain_id: domain_id,
+            domain_name: domain_name,
+            id: network_id,
+            label: network_name,
             position: location,
             styleIcon: new StyledIcon(StyledIconTypes.MARKER,{
                 color:"3A5879"
@@ -430,9 +469,9 @@ function edit_addMarker(location, name) {
         });
 
         infowindow = new google.maps.InfoWindow({
-            content: //"<b>" + domain_string + "</b>: " + domain +
-            "<b>" + network_string + "</b>: " + name +
-            "<br><b>" + coordinates_string + "</b>: " + location,
+            content: "<b>" + domain_string + "</b>: " + domain_name + "<br/>" +
+            "<b>" + network_string + "</b>: " + network_name +
+            "<br/><b>" + coordinates_string + "</b>: " + location,
             disableAutoPan: true
         });
         selectedMarker.setMap(null);
@@ -457,10 +496,10 @@ function edit_addMarker(location, name) {
                 switch ( action )
                 {
                     case 'fromHere':
-                        edit_markerClick(location, name);
+                        edit_markerClick(location, domain_id, domain_name, network_id, network_name);
                         break;
                     case 'toHere':
-                        edit_markerClick(location, name);
+                        edit_markerClick(location, domain_id, domain_name, network_id, network_name);
                         break;
                 }
                 return false;
@@ -493,10 +532,14 @@ function edit_addMarker(location, name) {
 }
 
 //funcao que gerencia os "clicks" nos marcadores
-function edit_markerClick(location, name){
+function edit_markerClick(location, domain_id, domain_name, network_id, network_name){
     contextMenu.hide();
+  
     selectedMarker = new StyledMarker({
-        id: name,
+        domain_id: domain_id,
+        domain_name: domain_name,
+        id: network_id,
+        label: network_name,
         position: location,
         clickable: false,
         styleIcon: new StyledIcon(StyledIconTypes.MARKER,{
@@ -506,15 +549,15 @@ function edit_markerClick(location, name){
     });   
         
     for (var i = 0; i < edit_markersArray.length; i++) {
-        if ((edit_markersArray[i].id == name) && (edit_markersArray[i].position == location)) {
+        if ((edit_markersArray[i].id == network_id) && (edit_markersArray[i].position == location)) {
             edit_markersArray[i].setClickable(false);
         }
     }
-
+    
     selectedMarker.setMap(edit_map);
     edit_selectedMarkers.push(selectedMarker);
     
-    path.push(location);
+    path.push(location);                
     
     if (path.length == 1) {
         contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
@@ -533,7 +576,18 @@ function edit_markerClick(location, name){
         $(edit_map.getDiv()).append(contextMenu);
     }    
     
-    if (path.length == 2) {
+    if (path.length == 1 ) {
+        $("#src_domain").html(domain_name);
+        $("#src_network").html(network_name);
+        $("#confirmation_src_domain").html(domain_name);
+        $("#confirmation_src_network").html(network_name);        
+        map_changeNetwork("src", network_id, domain_id);
+    } else if (path.length == 2) {
+        $("#dst_domain").html(domain_name);
+        $("#dst_network").html(network_name);
+        $("#confirmation_dst_domain").html(domain_name);
+        $("#confirmation_dst_network").html(network_name);        
+        map_changeNetwork("dst", network_id, domain_id);
         for (i = 0; i < edit_markersArray.length; i++) {
             if ((edit_markersArray[i].position != path[0]) && (edit_markersArray[i].position != path[1]))
                 edit_markersArray[i].setClickable(false);
@@ -541,7 +595,7 @@ function edit_markerClick(location, name){
         edit_drawPath(path);
         
         showSlider();
-        
+        $('#advOptions').slideToggleWidth();  
         window.scroll(0, 650);
         tab1_valid = true;
         if (tab2_valid) {
@@ -570,7 +624,9 @@ function edit_clearAll(){
     $("#amount_label").hide();
     $("#amount").hide();
     $("#div-bandwidth").slideUp();
-
+    if (path.length != 0) {
+        $('#advOptions').slideToggleWidth();  
+    }
     edit_clearLines();
     edit_clearMarkers();    
     edit_setBounds(edit_bounds);
@@ -765,4 +821,367 @@ function view_setBounds(flightPlanCoordinates){
     }
     view_map.fitBounds(polylineBounds);
     view_map.setCenter(polylineBounds.getCenter());
+}
+
+
+
+/*----------------------------------------------------------------------------*/
+// INICIO DAS FUNÇÕES AVANÇADAS DE FLUXO                                      //
+//                                                                            //
+//                                                                            //
+//                                                                            //
+/*----------------------------------------------------------------------------*/
+
+
+
+function map_changeNetwork(where, network_id, domain_id) {
+    var network = "#" + where + "_network";
+    var device_id = "#" + where + "_device";
+    var port_id = "#" + where + "_port";
+
+    $(port_id).slideUp();
+    $(device_id).slideUp();
+
+    map_clearVlanConf(where);
+    clearSelectBox(device_id);
+
+    if ($(network).html() != "") {
+        var devices = [];
+        for (var i=0; i<domains.length; i++){
+            for (var j=0; j<domains[i].networks.length; j++){
+                for (var k=0; k<domains[i].networks[j].devices.length; k++){
+                    if ((domains[i].id == domain_id) && (domains[i].networks[j].id == network_id)) {
+                        devices.push(domains[i].networks[j].devices[k]);
+                    }
+                }
+            }
+        }
+        fillSelectBox(device_id, devices);
+        $(device_id).slideDown();
+    }
+}
+
+function map_changeDevice(where) {
+    var domain_id = "#" + where + "_domain";
+    var network_id = "#" + where + "_network";
+    var device_id    = "#" + where + "_device";
+    var port_id = "#" + where + "_port";
+
+    $(port_id).slideUp();
+    map_clearVlanConf(where);
+    clearSelectBox(port_id);
+    
+    if ($(device_id).val() != -1) {
+        var ports = map_getPorts($(domain_id).html() ,$(network_id).html(), $(device_id).val(), where);
+        map_fillPorts(port_id, ports);
+
+        if (ports.length == 1) {
+            var confirmation_port = "#confirmation_" + where + "_port";
+            $(confirmation_port).html(ports[0].port_number);
+            map_setEndpointConf(where);
+        }
+
+        $(port_id).slideDown();
+    }
+}
+
+function map_getPorts(domain_id, network_id, device_id, where) {
+    var devices = map_getDevices(domain_id, network_id);
+    var ports = null;
+    if (devices) {
+        for (var i=0; i<devices.length; i++) {
+            if (devices[i].id == device_id) {
+                var confirmation_device = "#confirmation_" + where + "_device";
+                $(confirmation_device).html(devices[i].name);
+                ports = devices[i].ports;
+                break;
+            }
+        }
+    }
+    return ports;
+}
+
+function map_getDevices(domain_id, network_id) {
+    var devices = null;
+    for (var i=0; i<domains.length; i++) {
+        if (domains[i].name == domain_id){
+            for (var j=0; j<domains[i].networks.length; j++) {
+                if (domains[i].networks[j].name == network_id) {
+                    devices = domains[i].networks[j].devices;
+                    break;
+                }
+            }
+        }
+    }
+    return devices;
+}
+
+function map_changePort(where) {
+    var port_id = "#" + where + "_port";
+    map_clearVlanConf(where);
+    if ($(port_id).val() != -1) {
+        var confirmation_port = "#confirmation_" + where + "_port";
+        $(confirmation_port).html($(port_id).val())
+        map_setEndpointConf(where);
+    }
+}
+
+function map_clearVlanConf(where) {
+    var untagged_htmlId = "#" + where + "_vlanUntagged";
+    var tagged_htmlId = "#" + where + "_vlanTagged";
+    var text_htmlId = "#" + where + "_vlanText";
+    var tip_htmlId = "#" + where + "_vlanTip";
+
+    $(tip_htmlId).html("");
+    $(text_htmlId).val("");
+    $(text_htmlId).attr('disabled','disabled');
+
+    $(untagged_htmlId).removeAttr('checked');
+    $(untagged_htmlId).attr('disabled','disabled');
+
+    $(tagged_htmlId).removeAttr('checked');
+    $(tagged_htmlId).attr('disabled','disabled');
+
+    if (where == "src") {
+        src_urn = null;
+        src_vlan_min = null;
+        src_vlan_max = null;
+        src_vlan_validValues = null;
+    } else if (where == "dst") {
+        dst_urn = null;
+        dst_vlan_min = null;
+        dst_vlan_max = null;
+        dst_vlan_validValues = null;
+    }
+}
+
+function map_fillPorts(htmlId, portsArray, current_port) {
+    clearSelectBox(htmlId);
+    for (var i=0; i < portsArray.length; i++) {
+        if ((portsArray[i].port_number == current_port) || (portsArray.length == 1))
+            $(htmlId).append('<option selected="true" value="' + portsArray[i].port_number + '">' + portsArray[i].port_number + '</option>');
+        else
+            $(htmlId).append('<option value="' + portsArray[i].port_number + '">' + portsArray[i].port_number + '</option>');
+    }
+}
+
+function map_setEndpointConf(where) {
+
+    var untagged_htmlId = "#" + where + "_vlanUntagged";
+    var tagged_htmlId = "#" + where + "_vlanTagged";
+    var text_htmlId = "#" + where + "_vlanText";
+    var tip_htmlId = "#" + where + "_vlanTip";
+
+    var urnData = map_getUrnData(where);
+
+    var temp = new Array();
+    var virgula = urnData.vlan.search(",");
+    var range = urnData.vlan.search("-");
+
+    var allowTag = true;
+    var allowUntag = true;
+
+    var vlan_min = null;
+    var vlan_max = null;
+    var vlan_validValues = null;
+
+    if (virgula != -1) {
+        temp = urnData.vlan.split(",");
+        if (range != -1) {
+            // possui virgula e range. Ex: "0,3000-3500"
+            if (temp[0] != 0)
+                allowUntag = false;
+            temp = temp[1].split("-");
+            vlan_min = temp[0];
+            vlan_max = temp[1];
+        } else {
+            // possui virgula, mas nao possui range. Ex: "3000,3001,3002" ou "0,3000,3001,3002"
+            if (temp[0] != 0) {
+                allowUntag = false;
+                vlan_validValues = urnData.vlan;
+            } else
+                vlan_validValues = urnData.vlan.substr(2);
+        }
+    } else {
+        if (range != -1) {
+            // nao possui virgula, mas possui range. Ex: "3000-3500"
+            temp = urnData.vlan.split("-");
+            vlan_min = temp[0];
+            vlan_max = temp[1];
+            allowUntag = false;
+        } else {
+            // nao possui virgula nem range. Ex: "0" ou "3000"
+            vlan_validValues = urnData.vlan;
+            if (vlan_validValues == 0) {
+                allowTag = false;
+            } else {
+                // um valor só para VLAN
+                $(text_htmlId).val(vlan_validValues);
+                allowUntag = false;
+            }
+        }
+    }
+
+    if (allowTag) {
+        // pode ser tagged
+        $(tagged_htmlId).removeAttr('disabled');
+
+        if (vlan_min && vlan_max)
+            $(tip_htmlId).html('Value: ' + vlan_min + ' - ' + vlan_max);
+        else if (vlan_validValues) {
+            $(tip_htmlId).html('Value: ' + vlan_validValues);
+        }
+
+        if (allowUntag) {
+            // pode ser untagged também
+            $(untagged_htmlId).removeAttr('disabled');
+            $(untagged_htmlId).attr('checked','yes');
+        } else {
+            $(tagged_htmlId).attr('checked','yes');
+            $(text_htmlId).removeAttr('disabled');
+        }
+    } else {
+        // não pode ser tagged, significa que só pode ser untagged
+        $(untagged_htmlId).removeAttr('disabled');
+        $(untagged_htmlId).attr('checked','yes');
+    }
+
+    if (where == "src") {
+        src_urn = urnData.urn_string;
+        src_vlan_min = vlan_min;
+        src_vlan_max = vlan_max;
+        src_vlan_validValues = vlan_validValues;
+    } else if (where == "dst") {
+        dst_urn = urnData.urn_string;
+        dst_vlan_min = vlan_min;
+        dst_vlan_max = vlan_max;
+        dst_vlan_validValues = vlan_validValues;
+    }
+}
+
+function map_getUrnData(where) {
+    var domain_id = "#" + where + "_domain";
+    var network_id = "#" + where + "_network";
+    var device_id = "#" + where + "_device";
+    var port_id = "#" + where + "_port";
+
+    var ports = map_getPorts($(domain_id).html(), $(network_id).html(), $(device_id).val());
+    var urnData = null;
+
+    for (var i=0; ports.length; i++) {
+        if (ports[i].port_number == $(port_id).val()) {
+            urnData = ports[i];
+            break;
+        }
+    }
+    return urnData;
+}
+
+function map_changeVlanType(elem, where) {
+    var text_htmlId = "#" + where + "_vlanText";
+
+    if (elem.value == "FALSE")
+        $(text_htmlId).attr('disabled','disabled');
+    else if (elem.value == "TRUE")
+        $(text_htmlId).removeAttr('disabled');
+}
+
+function map_saveFlow(flow_id) {
+    var flow_Array = new Array();
+
+    var action = "";
+    if (flow_id) {
+        action = "update";
+        flow_Array[0] = flow_id; // id do flow quando está editando
+    } else {
+        action = "add";
+        flow_Array[0] = 0;
+    }
+
+    flow_Array[1] = $('#name').val(); // name
+
+    if (!flow_Array[1]) {
+        setFlash(flash_nameReq, "warning");
+        return;
+    }
+
+    flow_Array[2] = validateBand($('#bandwidth').val()); // bandwidth
+    if (!flow_Array[2]) {
+        setFlash(flash_bandInv, "warning");
+        return;
+    }
+
+    if (src_urn) {
+        var src_domain_id;
+        for (var i=0; i<domains.length; i++){
+            if (domains[i].name == $("#src_domain").html()){
+                src_domain_id = domains[i].id;
+            }
+        }
+
+        flow_Array[3] = src_domain_id;// source domainId
+        flow_Array[4] = src_urn; // source URN
+    } else {
+        setFlash(flash_sourceReq, "warning");
+        return;
+    }
+
+    if ($("#src_vlanUntagged").attr("checked"))
+        flow_Array[5] = 0;
+    else if ($("#src_vlanTagged").attr("checked")) {
+        if (checkVLAN("src"))
+            flow_Array[5] = $('#src_vlanText').val(); // source VLAN
+        else {
+            setFlash(flash_srcVlanInv, "warning");
+            return;
+        }
+    } else {
+        setFlash(flash_srcVlanReq, "warning");
+        return;
+    }
+
+    if (dst_urn) {
+        var dst_domain_id;
+        for (i=0; i<domains.length; i++){
+            if (domains[i].name == $("#dst_domain").html()){
+                dst_domain_id = domains[i].id;
+            }
+        }
+        flow_Array[6] = dst_domain_id; // destination domainId
+        flow_Array[7] = dst_urn; // destination URN
+    } else {
+        setFlash(flash_destReq, "warning");
+        return;
+    }
+
+    if ($("#dst_vlanUntagged").attr("checked"))
+        flow_Array[8] = 0;
+    else if ($("#dst_vlanTagged").attr("checked")) {
+        if (checkVLAN("dst"))
+            flow_Array[8] = $('#dst_vlanText').val(); // destination VLAN
+        else {
+            setFlash(flash_dstVlanInv, "warning");
+            return;
+        }
+    } else {
+        setFlash(flash_dstVlanReq, "warning");
+        return;
+    }
+
+    $.post("main.php?app=circuits&controller=flows&action="+action, {
+        flowData: flow_Array
+    }, function(data) {
+        loadHtml(data);
+    });
+}
+
+function validateBand(band_value) {
+    var band = band_value.replace(/ /g, "");
+    if (band >= band_min && band <= band_max) {
+        if (band % band_div == 0) {
+            return band;
+        } else
+            return false;
+    } else
+        return false;
 }

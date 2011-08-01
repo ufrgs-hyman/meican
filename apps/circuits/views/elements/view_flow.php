@@ -21,10 +21,10 @@ $flow = $argsToElement;
             <?php echo _("Domain"); ?>
         </th>
         <td>
-            <?php echo $flow->source->domain; ?>
+            <label id="confirmation_src_domain"></label>
         </td>
         <td>
-            <?php echo $flow->dest->domain; ?>
+            <label id="confirmation_dst_domain"></label>
         </td>
     </tr>
 
@@ -33,10 +33,10 @@ $flow = $argsToElement;
             <?php echo _("Network"); ?>
         </th>
         <td>
-            <?php echo $flow->source->network; ?>
+            <label id="confirmation_src_network"></label>
         </td>
         <td>
-            <?php echo $flow->dest->network; ?>
+            <label id="confirmation_dst_network"></label>
         </td>
     </tr>
 
@@ -45,10 +45,10 @@ $flow = $argsToElement;
             <?php echo _("Device"); ?>
         </th>
         <td>
-            <?php echo $flow->source->device; ?>
+            <label id="confirmation_src_device"></label>
         </td>
         <td>
-            <?php echo $flow->dest->device; ?>
+            <label id="confirmation_dst_device"></label>
         </td>
     </tr>
 
@@ -57,10 +57,10 @@ $flow = $argsToElement;
             <?php echo _("Port"); ?>
         </th>
         <td>
-            <?php echo $flow->source->port; ?>
+            <label id="confirmation_src_port"></label>
         </td>
         <td>
-            <?php echo $flow->dest->port; ?>
+            <label id="confirmation_dst_port"></label>
         </td>
     </tr>
 
