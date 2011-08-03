@@ -677,8 +677,7 @@ class reservations extends Controller {
             $reservationName = Common::getSessionVariable('res_name');
         } else {
             $this->setFlash(_("Not enough arguments to reservation, going back to step 4..."), "warning");
-            //$this->page3();
-            $this->add_form();
+            $this->reservation_add();
             return;
         }
 

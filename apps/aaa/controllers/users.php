@@ -112,6 +112,7 @@ class users extends Controller {
                 if (!$user_info->fetch(FALSE)) { // verifica se o login está disponível
                     $user_info->usr_name = $usr_name;
                     $user_info->usr_password = $usr_password;
+                    $user_info->usr_email = Common::POST("usr_email");
 
                     $result = $user_info->insert($usedArray);
 
@@ -247,6 +248,7 @@ class users extends Controller {
 
             $usr_name = Common::POST('usr_name');
             $usr_password = Common::POST('usr_password');
+            $usr_email = Common::POST("usr_email");
 
             if ($usr_password) {
                 $usr_repassword = Common::POST('retype_password');
@@ -257,9 +259,9 @@ class users extends Controller {
                     return;
                 }
 
-                $result = $user->updateTo(array('usr_name' => $usr_name, 'usr_password' => $usr_password));
+                $result = $user->updateTo(array('usr_name' => $usr_name, 'usr_email' => $usr_email, 'usr_password' => $usr_password));
             } else
-                $result = $user->updateTo(array('usr_name' => $usr_name));
+                $result = $user->updateTo(array('usr_name' => $usr_name, 'usr_email' => $usr_email));
 
             if ($result) {
                 $res = $user->fetch();

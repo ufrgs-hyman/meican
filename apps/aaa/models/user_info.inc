@@ -14,6 +14,7 @@ class user_info extends Model {
         $this->addAttribute("usr_id", "INTEGER", true, false, false);
         $this->addAttribute("usr_login", "VARCHAR");
         $this->addAttribute("usr_name", "VARCHAR");
+        $this->addAttribute("usr_email", "VARCHAR");
         $this->addAttribute("usr_password", "VARCHAR", false, true, true, true);
         $this->addAttribute("usr_settings", "VARCHAR");
     }

@@ -25,6 +25,57 @@ class timers extends Controller {
     }
 
     public function show() {
+        
+        $tim_teste = new timer_info();
+        $tim_teste->start = dateTimeToDatabaseFormat("02/08/2011", "20:30");
+        $tim_teste->finish = dateTimeToDatabaseFormat("02/08/2011", "20:45");
+        
+//        $tim_teste->freq = "DAILY";
+//        $tim_teste->count = 2;
+//        $tim_teste->interval = 1;
+        
+        // Questão: Puxar reservas direto do OSCARS??? (ao invés da tabela de gris)
+        $gri = new gri_info();
+        $gris = $gri->fetch(FALSE);
+        
+        $recurr = $tim_teste->getRecurrences();
+        foreach ($recurr as $r) {
+
+            $capacity = 1000;
+            $linkUtilization = 0;
+
+            foreach ($gris as $g) {
+
+                if (($g->status != "FINISHED") && ($g->status != "CANCELLED") && ($g->status != "FAILED")) {
+
+                    $startDT = new DateTime($g->start);
+                    $finishDT = new DateTime($g->finish);
+
+                    $resStart = $startDT->getTimestamp();
+                    $resFinish = $finishDT->getTimestamp();
+
+                    if (!(($resFinish <= $r->start) || ($resStart >= $r->finish))) {
+
+                        /* if ( (($resStart <= $r->start) && ($resFinish >= $r->finish)) ||
+                          (($resStart >= $r->start) && ($resStart < $r->finish)) ||
+                          (($resFinish > $r->start) && ($resFinish <= $r->finish)) ) */
+
+                        $res_temp = new reservation_info();
+                        $res_temp->res_id = $g->res_id;
+                        $res_result = $res_temp->fetch(FALSE);
+
+                        $linkUtilization += $res_result[0]->bandwidth;
+                    }
+                }
+            }
+
+            Framework::debug("start", date("d/m/Y H:i:s", $r->start));
+            Framework::debug("finish", date("d/m/Y H:i:s", $r->finish));
+            Framework::debug("available band", $capacity - $linkUtilization);
+        }
+        
+        return;
+        
         // destrói variáveis, caso clicou em timers antes de passar por reservations
         Common::destroySessionVariable('res_name');
         Common::destroySessionVariable('sel_flow');
