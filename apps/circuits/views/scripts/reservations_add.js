@@ -1,14 +1,12 @@
 var previousTab;
 
-var edit_markersArray = [];
-var edit_selectedMarkers = [];
-var view_markersArray = [];
-var edit_bounds = [];
-var edit_lines = [];
-var view_bounds = [];
-var view_lines = [];
-
-var path = [];
+var edit_markersArray = new Array();
+var edit_selectedMarkers = new Array();
+var view_markersArray = new Array();
+var edit_bounds = new Array();
+var edit_lines = new Array();
+var view_bounds = new Array();
+var view_lines = new Array();
 
 var src_networks = null;
 var dst_networks = null;
@@ -93,9 +91,9 @@ function showSlider() {
         "step": band_div,
         "disabled": false
     });
-//    $("#slider").slider("min", band_min);
-//    $("#slider").slider("step", band_div);
-//    $("#slider").slider( "option", "disabled", false );
+    //    $("#slider").slider("min", band_min);
+    //    $("#slider").slider("step", band_div);
+    //    $("#slider").slider( "option", "disabled", false );
     
     $("#div-bandwidth").slideDown();
     $("#amount_label").show();        
@@ -302,7 +300,18 @@ function changeBand(){
     }
 }
 
-function validateTab3(){
+function validateTab1() {
+    if ( (path.length == 2) && ($("#src_device").val() != -1) && ($("#dst_device").val() != -1) &&
+        ($("#src_port").val() != -1) && ($("#dst_port").val() != -1) ) {
+          
+        tab1_valid = true;
+          
+    } else {
+        tab1_valid = false;
+    }
+}
+
+function validateTab3() {
     if ((tab2_valid) && (tab1_valid)) {
         $("#t3").removeClass("ui-state-disabled");
     }                
@@ -374,30 +383,32 @@ function saveRecurrence(){
     $("#recurrence-edit").show();
     
 }
-
-
  
 $.fn.extend({
-  slideRight: function() {
-    return this.each(function() {
-      $(this).animate({width: 'show'});
-    });
-  },
-  slideLeft: function() {
-    return this.each(function() {
-      $(this).animate({width: 'hide'});
-    });
-  },
-  slideToggleWidth: function() {
-    return this.each(function() {
-      var el = $(this);
-      if (el.css('display') == 'none') {
-        el.slideRight();
-      } else {
-        el.slideLeft();
-      }
-    });
-  }
+    slideRight: function() {
+        return this.each(function() {
+            $(this).animate({
+                width: 'show'
+            });
+        });
+    },
+    slideLeft: function() {
+        return this.each(function() {
+            $(this).animate({
+                width: 'hide'
+            });
+        });
+    },
+    slideToggleWidth: function() {
+        return this.each(function() {
+            var el = $(this);
+            if (el.css('display') == 'none') {
+                el.slideRight();
+            } else {
+                el.slideLeft();
+            }
+        });
+    }
 });
 
 function showVlanConf() {
@@ -408,6 +419,34 @@ function showVlanConf() {
     }
 }
 
+function genHex() {
+    colors = new Array(14);
+    colors[0]="0";
+    colors[1]="1";
+    colors[2]="2";
+    colors[3]="3";
+    colors[4]="4";
+    colors[5]="5";
+    colors[5]="6";
+    colors[6]="7";
+    colors[7]="8";
+    colors[8]="9";
+    colors[9]="a";
+    colors[10]="b";
+    colors[11]="c";
+    colors[12]="d";
+    colors[13]="e";
+    colors[14]="f";
+
+    digit = new Array(5);
+    color="";
+    for (i=0;i<6;i++){
+        digit[i]=colors[Math.round(Math.random()*14)];
+        color = color+digit[i];
+    }
+    
+    return color;
+}
 /*----------------------------------------------------------------------------*/
 // INICIO DAS FUNÇÕES DO MAPA                                                 //
 //                                                                            //
@@ -422,6 +461,7 @@ function edit_initializeMap() {
     contextMenu.hide();
 
     for (var i in domains) {        
+        var color = genHex();
         for (var j in domains[i].networks) {            
             if (domains[i].networks[j].latitude) {
                 for (var k=0; k<i; k++){
@@ -429,13 +469,13 @@ function edit_initializeMap() {
                         if (domains[k].networks[l].latitude) {
                             if ((domains[i].networks[j].latitude == domains[k].networks[l].latitude) &&
                                 (domains[i].networks[j].longitude == domains[k].networks[l].longitude)) {
-                                    domains[i].networks[j].longitude -= -0.005;
+                                domains[i].networks[j].longitude -= -0.005;
                             }
                         }
                     }
                 }
-                var coord = new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude);
-                edit_addMarker(coord, domains[i].id, domains[i].name, domains[i].networks[j].id, domains[i].networks[j].name);
+                var coord = new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude);                
+                edit_addMarker(coord, domains[i].id, domains[i].name, domains[i].networks[j].id, domains[i].networks[j].name, color);
                 edit_bounds.push(coord);
             }
         }
@@ -451,7 +491,7 @@ function edit_initializeMap() {
 }
 
 //adiciona marcadores de endpoints no mapa 
-function edit_addMarker(location, domain_id, domain_name, network_id, network_name) {
+function edit_addMarker(location, domain_id, domain_name, network_id, network_name, color) {
 
     marker = new StyledMarker({
         domain_id: domain_id,
@@ -460,7 +500,7 @@ function edit_addMarker(location, domain_id, domain_name, network_id, network_na
         label: network_name,
         position: location,
         styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
-            color:"3A5879"
+            color:color
         }),
         map:edit_map
     });
@@ -597,10 +637,11 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
         $("#confirmation_src_domain").html(domain_name);
         $("#confirmation_src_network").html(network_name);        
         map_changeNetwork("src", network_id, domain_id);
-    } else if (path.length == 2) {
+        
+    } else if (path.length == 2) {        
         for (i = 0; i < edit_markersArray.length; i++) {
             if ((edit_markersArray[i].position != path[0]) && (edit_markersArray[i].position != path[1]))
-                edit_markersArray[i].setClickable(false);
+                edit_markersArray[i].setMap(null);
         }         
         edit_drawPath(path);        
         showSlider();
@@ -611,7 +652,7 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
         map_changeNetwork("dst", network_id, domain_id);        
         $('#advOptions').slideToggleWidth();  
         window.scroll(0, 650);
-        tab1_valid = true;
+        validateTab1();
         if (tab2_valid) {
             $("#t3").removeClass("ui-state-disabled");
         }        
@@ -652,10 +693,12 @@ function edit_clearAll(){
     });
     $(edit_map.getDiv()).append(contextMenu);    
     
+    edit_initializeMap();
+    
     view_clearAll();
      
     
-    tab1_valid = false;
+    validateTab1();
     if (tab2_valid) {
         $("#t3").addClass("ui-state-disabled");
     }
@@ -891,6 +934,7 @@ function map_changeDevice(where) {
 
         if (ports.length == 1) {
             var confirmation_port = "#confirmation_" + where + "_port";
+            validateTab1();
             $(confirmation_port).html(ports[0].port_number);
             map_setEndpointConf(where);
         }
@@ -906,6 +950,7 @@ function map_getPorts(domain_id, network_id, device_id, where) {
         for (var i=0; i<devices.length; i++) {
             if (devices[i].id == device_id) {
                 var confirmation_device = "#confirmation_" + where + "_device";
+                validateTab1(); 
                 $(confirmation_device).html(devices[i].name);
                 ports = devices[i].ports;
                 break;
@@ -935,6 +980,7 @@ function map_changePort(where) {
     map_clearVlanConf(where);
     if ($(port_id).val() != -1) {
         var confirmation_port = "#confirmation_" + where + "_port";
+        validateTab1(); 
         $(confirmation_port).html($(port_id).val())
         map_setEndpointConf(where);
     }

@@ -2,7 +2,7 @@ $("#res_name").focus();
 var currentTab = "t1";
 var tab1_valid = false;
 var tab2_valid = true;
-
+var path = new Array();
 createTabs();
 createSlider();    
 
