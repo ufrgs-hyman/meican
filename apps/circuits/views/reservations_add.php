@@ -33,7 +33,7 @@ $freq_types[] = $freq;
 
 <h1><?php echo _("Reservation Creation Wizard"); ?></h1>
 
-<form id="reservation_add" method="POST" action="<?php echo $this->buildLink(array('action' => 'submit')); ?>">
+<form id="reservation_add" method="POST" action="<?php echo $this->buildLink(array('action' => 'submit')); ?>" onsubmit="validateReservationForm();">
     
     <?php $this->addElement('reservation_tab1'); ?>
          

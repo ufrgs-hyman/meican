@@ -187,22 +187,31 @@ function timerError(error){
         return true;
 }
 
-function validateForm() {
+function validateReservationForm() {
     if (tab1_valid) {
         if (tab2_valid) {
-            $("#reservation_add").submit();
+            //$("#reservation_add").submit();
+            return true;
         } else {
             if ($("#finalTime").val() < $("#initialtime").val()) {
                 setFlash(flash_timerInvalid);
+                js_submit_form = false;
+                return false;
                 alert("a");
             } else if ($("#finalTime").val() == $("#initialtime").val()) {
                 setFlash(flash_invalidDuration);
+                js_submit_form = false;
+                return false;
             } else {
                 setFlash(flash_timerReq);
+                js_submit_form = false;
+                return false;
             }
         }
     } else {
         setFlash(flash_missingEndpoints);
+        js_submit_form = false;
+        return false;
     }
 }
 

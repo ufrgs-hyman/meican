@@ -634,7 +634,7 @@ class Topology {
 
             }
 
-        Framework::debug("net",$networks);
+        //Framework::debug("net",$networks);
         return $networks;
 
     }

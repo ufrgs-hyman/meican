@@ -11,7 +11,6 @@ class flow_info extends Resource_Model {
         // Add all table attributes
         $this->addAttribute("flw_id", "INTEGER", true, false, false);
         $this->addAttribute("flw_name", "VARCHAR");
-        $this->addAttribute("bandwidth", "INTEGER");
 
         $this->addAttribute("src_dom", "INTEGER");
         $this->addAttribute("src_urn_string", "VARCHAR");
@@ -72,7 +71,6 @@ class flow_info extends Resource_Model {
                     $return->dst_urn_string = $flow->dst_urn_string;
                 }
 
-                $return->bandwidth = $flow->bandwidth;
                 return $return;
 
             } else return FALSE;
@@ -102,7 +100,6 @@ class flow_info extends Resource_Model {
 
             $flowData->id = $flow->flw_id;
             $flowData->name = $flow->flw_name;
-            $flowData->bandwidth = $flow->bandwidth;
 
             $flowData->source->domain = $dom[0]->dom_descr;
             $flowData->source->dom_id = $dom[0]->dom_id;

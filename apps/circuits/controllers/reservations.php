@@ -34,6 +34,7 @@ class reservations extends Controller {
         Common::destroySessionVariable('sel_flow');
         Common::destroySessionVariable('sel_timer');
         Common::destroySessionVariable('res_wizard');
+        Common::destroySessionVariable('res_begin_timestamp');
 
         $res_info = new reservation_info();
         $allReservations = $res_info->fetch();
@@ -71,6 +72,7 @@ class reservations extends Controller {
             $args = new stdClass();
             $args->title = _("Reservations");
             $args->message = _("You have no reservation, click the button below to create a new one");
+            $args->link = array("action" => "reservation_add");
             $this->setArgsToBody($args);
         }
 
@@ -258,14 +260,12 @@ class reservations extends Controller {
         $this->render();
     }
 
-    public function add_form() {
-        //$this->page1();
-        $this->reservation_add();
-    }
-
     public function reservation_add() {
+        // get Timestamp to calc reservation creation time by user
+        Common::setSessionVariable("res_begin_timestamp", microtime(true));
+        
         // STEP 1 VARIABLES ---------------------
-        $name = "Default_Reservation_Name";        
+        $name = "Default_Reservation_Name";
         //---------------------------------------
         
         // STEP 2 VARIABLES ---------------------
@@ -658,6 +658,16 @@ class reservations extends Controller {
     }
 
     public function submit() {
+        
+        $res_end_timestamp = microtime(true);
+        $res_begin_timestamp = Common::getSessionVariable("res_begin_timestamp");
+        $res_diff_timestamp = $res_end_timestamp - $res_begin_timestamp;
+        
+        Framework::debug("band",Common::POST("amount"));
+        Framework::debug("time", $res_diff_timestamp);
+        $this->show();
+        return;
+        
         $selectedTimer = NULL;
         $selectedFlow = NULL;
         $reservationName = NULL;
@@ -674,8 +684,10 @@ class reservations extends Controller {
 
         $reservation = new reservation_info();
         $reservation->res_name = $reservationName;
+        $reservation->bandwidth = Common::POST("bandwidth");
         $reservation->flw_id = $selectedFlow;
         $reservation->tmr_id = $selectedTimer;
+        $reservation->creation_time = $res_diff_timestamp;
 
         if ($res = $reservation->insert()) {
             $reservation->res_id = $res->res_id;

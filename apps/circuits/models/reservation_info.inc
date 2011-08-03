@@ -14,8 +14,12 @@ class reservation_info extends Resource_Model {
         // Add all table attributes
         $this->addAttribute("res_id", "INTEGER", true, false, false);
         $this->addAttribute("res_name", "VARCHAR");
+        
+        $this->addAttribute("bandwidth", "INTEGER");
         $this->addAttribute("flw_id", "INTEGER");
         $this->addAttribute("tmr_id", "INTEGER");
+        
+        $this->addAttribute("creation_time", "FLOAT");
     }
 
     public function getReservationDetails() {
@@ -44,7 +48,7 @@ class reservation_info extends Resource_Model {
                 'urn_src' => $flow_info->source->urn,
                 'dom_dst' => $flow_info->dest->dom_ip,
                 'urn_dst' => $flow_info->dest->urn,
-                'bandwidth' => $flow_info->bandwidth,
+                'bandwidth' => $this->bandwidth,
                 'timer_begin' => $timer_info->begin_timestamp,
                 'timer_end' => $timer_info->end_timestamp,
                 'timer_rec' => $timer_info->summary

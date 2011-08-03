@@ -49,7 +49,7 @@
             <tr>
                 <td colspan="5">
                     <!-- <input class="add" type="button" value="<?php // echo _("Add"); ?>" onclick="redir('<?php //echo $this->buildLink(array('action' => 'page1')); ?>');"/>  -->
-                    <input class="add" type="button" value="<?php echo _("Add"); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'add_form')); ?>');"/>  
+                    <input class="add" type="button" value="<?php echo _("Add"); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'reservation_add')); ?>');"/>  
                 </td>
             </tr>
         </tfoot>
