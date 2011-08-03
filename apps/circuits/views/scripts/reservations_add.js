@@ -1,18 +1,3 @@
-var previousTab;
-
-var edit_markersArray = new Array();
-var edit_selectedMarkers = new Array();
-var view_markersArray = new Array();
-var edit_bounds = new Array();
-var edit_lines = new Array();
-var view_bounds = new Array();
-var view_lines = new Array();
-
-var src_networks = null;
-var dst_networks = null;
-var src_urn = null;
-var dst_urn = null;
-
 function createTabs(){
     $(".cont_tab").hide();                              //esconde todo conteudo
 
@@ -306,7 +291,7 @@ function validateTab1() {
           
         tab1_valid = true;
           
-    } else {
+    }else {
         tab1_valid = false;
     }
 }
@@ -414,38 +399,20 @@ $.fn.extend({
 function showVlanConf() {
     if ($("#showVlan_chekbox").attr("checked")) {
         $("#div_vlan").slideDown();
-    } else {
+    }else {
         $("#div_vlan").slideUp();
     }
 }
 
-function genHex() {
-    colors = new Array(14);
-    colors[0]="0";
-    colors[1]="1";
-    colors[2]="2";
-    colors[3]="3";
-    colors[4]="4";
-    colors[5]="5";
-    colors[5]="6";
-    colors[6]="7";
-    colors[7]="8";
-    colors[8]="9";
-    colors[9]="a";
-    colors[10]="b";
-    colors[11]="c";
-    colors[12]="d";
-    colors[13]="e";
-    colors[14]="f";
-
-    digit = new Array(5);
-    color="";
-    for (i=0;i<6;i++){
-        digit[i]=colors[Math.round(Math.random()*14)];
-        color = color+digit[i];
+function genHex(domainId) {
+    if (domainId == 0) {
+        return firstColor;
+    } else {
+        var color = parseInt(firstColor,16);
+        color += (domainId * parseInt("001010", 16));
+        color = color.toString(16);
+        return color;
     }
-    
-    return color;
 }
 /*----------------------------------------------------------------------------*/
 // INICIO DAS FUNÇÕES DO MAPA                                                 //
@@ -461,7 +428,6 @@ function edit_initializeMap() {
     contextMenu.hide();
 
     for (var i in domains) {        
-        var color = genHex();
         for (var j in domains[i].networks) {            
             if (domains[i].networks[j].latitude) {
                 for (var k=0; k<i; k++){
@@ -475,7 +441,7 @@ function edit_initializeMap() {
                     }
                 }
                 var coord = new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude);                
-                edit_addMarker(coord, domains[i].id, domains[i].name, domains[i].networks[j].id, domains[i].networks[j].name, color);
+                edit_addMarker(coord, domains[i].id, domains[i].name, domains[i].networks[j].id, domains[i].networks[j].name, color[i]);
                 edit_bounds.push(coord);
             }
         }

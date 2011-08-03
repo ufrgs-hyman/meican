@@ -2,9 +2,33 @@ $("#res_name").focus();
 var currentTab = "t1";
 var tab1_valid = false;
 var tab2_valid = true;
+var previousTab;
+
+var edit_markersArray = new Array();
+var edit_selectedMarkers = new Array();
+var view_markersArray = new Array();
+var edit_bounds = new Array();
+var edit_lines = new Array();
+var view_bounds = new Array();
+var view_lines = new Array();
+
+var src_networks = null;
+var dst_networks = null;
+var src_urn = null;
+var dst_urn = null;
 var path = new Array();
 createTabs();
 createSlider();    
+
+var firstColor = "3a5879";
+var color = new Array();
+//for (var i in domains) {
+//    color[i] = genHex(domains[i].id);
+//}  
+
+for (var i=0; i<6; i++) {
+    color = genHex(i);
+}
 
 // MAPA PARA EDIÇÃO
 var edit_center = new google.maps.LatLng(-23.051931,-60.975511);
