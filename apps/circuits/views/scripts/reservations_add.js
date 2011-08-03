@@ -402,11 +402,10 @@ $.fn.extend({
 
 function showVlanConf() {
     if ($("#showVlan_chekbox").attr("checked")) {
-        $("#vlan_tr").slideDown();
+        $("#div_vlan").slideDown();
     } else {
-        $("#vlan_tr").slideUp();
+        $("#div_vlan").slideUp();
     }
-    
 }
 
 /*----------------------------------------------------------------------------*/

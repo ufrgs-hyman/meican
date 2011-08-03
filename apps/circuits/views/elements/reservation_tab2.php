@@ -63,9 +63,9 @@
                                 <select id="dst_port" style="display:none" onchange="map_changePort('dst');"></select>
                             </td>
                         </tr>
-                        <tr id="vlan_tr" style="display:none">
+                        <tr id="vlan_tr">
                             <td colspan="3" style="padding:0px">
-                                <div id="div_vlan">
+                                <div id="div_vlan" style="display:none">
                                     <?php $this->addElement('vlan'); ?>
                                 </div>
                             </td>
