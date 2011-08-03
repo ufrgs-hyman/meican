@@ -1,7 +1,14 @@
-var currentTab = "t1";
 var previousTab;
-var tab1_valid = false;
-var tab2_valid = true;
+
+var edit_markersArray = [];
+var edit_selectedMarkers = [];
+var view_markersArray = [];
+var edit_bounds = [];
+var edit_lines = [];
+var view_bounds = [];
+var view_lines = [];
+
+var path = [];
 
 var src_networks = null;
 var dst_networks = null;
@@ -10,7 +17,7 @@ var dst_urn = null;
 
 function createTabs(){
     $(".cont_tab").hide();                              //esconde todo conteudo
-    
+
     $("ul.tabs li").click(function() {
         if ($("#t1").attr("class") != "ui-state-disabled") {
             clearFlash();
@@ -197,7 +204,6 @@ function validateReservationForm() {
                 setFlash(flash_timerInvalid);
                 js_submit_form = false;
                 return false;
-                alert("a");
             } else if ($("#finalTime").val() == $("#initialtime").val()) {
                 setFlash(flash_invalidDuration);
                 js_submit_form = false;
@@ -213,6 +219,7 @@ function validateReservationForm() {
         js_submit_form = false;
         return false;
     }
+    return true;
 }
 
 function changeName(elem){
@@ -592,18 +599,17 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
         $("#confirmation_src_network").html(network_name);        
         map_changeNetwork("src", network_id, domain_id);
     } else if (path.length == 2) {
-        $("#dst_domain").html(domain_name);
-        $("#dst_network").html(network_name);
-        $("#confirmation_dst_domain").html(domain_name);
-        $("#confirmation_dst_network").html(network_name);        
-        map_changeNetwork("dst", network_id, domain_id);
         for (i = 0; i < edit_markersArray.length; i++) {
             if ((edit_markersArray[i].position != path[0]) && (edit_markersArray[i].position != path[1]))
                 edit_markersArray[i].setClickable(false);
         }         
-        edit_drawPath(path);
-        
+        edit_drawPath(path);        
         showSlider();
+        $("#dst_domain").html(domain_name);
+        $("#dst_network").html(network_name);
+        $("#confirmation_dst_domain").html(domain_name);
+        $("#confirmation_dst_network").html(network_name);        
+        map_changeNetwork("dst", network_id, domain_id);        
         $('#advOptions').slideToggleWidth();  
         window.scroll(0, 650);
         tab1_valid = true;

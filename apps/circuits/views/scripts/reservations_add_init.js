@@ -1,17 +1,10 @@
 $("#res_name").focus();
+var currentTab = "t1";
+var tab1_valid = false;
+var tab2_valid = true;
 
 createTabs();
 createSlider();    
-
-var edit_markersArray = [];
-var edit_selectedMarkers = [];
-var view_markersArray = [];
-var edit_bounds = [];
-var edit_lines = [];
-var view_bounds = [];
-var view_lines = [];
-
-var path = [];
 
 // MAPA PARA EDIÇÃO
 var edit_center = new google.maps.LatLng(-23.051931,-60.975511);
