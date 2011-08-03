@@ -26,8 +26,8 @@ var color = new Array();
 //    color[i] = genHex(domains[i].id);
 //}  
 
-for (var i=0; i<6; i++) {
-    color = genHex(i);
+for (var i=0; i<domains.length; i++) {
+    color[i] = genHex(i);
 }
 
 // MAPA PARA EDIÇÃO

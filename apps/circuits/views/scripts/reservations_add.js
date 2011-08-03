@@ -409,9 +409,14 @@ function genHex(domainId) {
         return firstColor;
     } else {
         var color = parseInt(firstColor,16);
-        color += (domainId * parseInt("001010", 16));
-        color = color.toString(16);
-        return color;
+        color += (domainId * parseInt("d19510", 16));
+        if (color > 0xFFFFFF) {
+            color = color.toString(16);
+            color = color.substring(1, color.length);
+        } else {
+            color = color.toString(16);
+        }
+        return color;            
     }
 }
 /*----------------------------------------------------------------------------*/
