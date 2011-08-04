@@ -8,7 +8,7 @@
 <div class="controls">
 
     <?php //if ($args->sel_timer): ?>
-        <input type="button" id="bn2" class="next" value="<?php echo _('Next'); ?>" onClick="nextTab(this);"/>
+        <input type="button" id="bn2" class="next ui-state-disabled" value="<?php echo _('Next'); ?>" onClick="nextTab(this);"/>
     <?php //else: ?>
     <!--    <input class="next" type="button" id="bn4" disabled="disabled" value="<?php echo _("Next"); ?>"/> -->
     <?php //endif; ?>

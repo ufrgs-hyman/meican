@@ -308,10 +308,12 @@ function validateTab1() {
 function validateTab3() {
     if ((tab2_valid) && (tab1_valid)) {
         $("#t3").removeClass("ui-state-disabled");
+        $("#bn2").removeClass("ui-state-disabled")
     }                
     else {
         
         $("#t3").addClass("ui-state-disabled");        
+        $("#bn2").addClass("ui-state-disabled")
     }        
 }
 
