@@ -18,10 +18,9 @@ function initializeTimer() {
             $("#confirmation_finalDate").html("Date: " + $("#finalDate").val());
             $("#confirmation_finalTime").html("Time: " + $("#finalTime").val());
             $("#confirmation_duration").html($("#duration").html());  
-        } else {
-        }
-    });        
-
+        } 
+    });   
+    
     $.datepicker.setDefaults($.datepicker.regional[language]);
     var dates = $("#initialDate, #finalDate").datepicker({
         dateFormat: date_format,

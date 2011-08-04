@@ -368,6 +368,7 @@ function saveRecurrence(){
         }
     }
     
+    
     var sum_desc = $("#short_desc").html() + " ";
     sum_desc += week_str;
     sum_desc += $("#until_desc").html();
