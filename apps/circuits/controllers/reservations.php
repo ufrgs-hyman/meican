@@ -28,7 +28,7 @@ class reservations extends Controller {
     }
 
     public function show() {
-
+        
         // inicializa variáveis da sessão do wizard
         Common::destroySessionVariable('res_name');
         Common::destroySessionVariable('sel_flow');
@@ -271,7 +271,7 @@ class reservations extends Controller {
         // STEP 2 VARIABLES ---------------------
         $domain = new domain_info();
         $allDomains = $domain->fetch();
-
+        $allUrns = array();
         $domToMapArray = array();
         $domains = array();
         
@@ -284,9 +284,14 @@ class reservations extends Controller {
             $domain = new stdClass();
             $domain->id = $d->dom_id;
             $domain->name = $d->dom_descr;
-            $domain->networks = Topology::getURNDetails($d->dom_id);
+            $domain->networks = Topology::getURNDetails($d->dom_id); 
+            $urn = Topology::getURNs($d->dom_id);
+            foreach ($urn as $u) {
+                $allUrns[] = $u->urn_string;
+            }
             $domToMapArray[] = $domain;
         }
+        
         // --------------------------------------
 
         // STEP 3 VARIABLES ---------------
@@ -383,7 +388,8 @@ class reservations extends Controller {
             "invalid_time_string" => _("Invalid time"),
             "active_string" => _("Active from"),
             "at_string" => _("at"),
-            "domains" => $domToMapArray
+            "domains" => $domToMapArray,            
+            "urn_string" => $allUrns
         ));
         //}
         

@@ -73,10 +73,26 @@
                         <tr>
                             <td colspan="3">
                                 <hr/>
-                                <input type="checkbox" id="showVlan_chekbox" onclick="showVlanConf()"/><?php echo _("Show Vlan Configuration"); ?>
+                                <input type="checkbox" id="showVlan_checkbox" onclick="showVlanConf()"/><?php echo _("Show Vlan Configuration"); ?>
                             </td>
                         </tr>
-                </table>                    
+                        <tr>
+                            <td colspan="3">
+                                <div id="addHops" style="display:none">
+                                    Select URN:
+                                    <select id="selectHops" style="width: 100%"></select><br />
+                                    <input type="button" class="remove" id="removeHop" value="Remove Hop" onclick="lessFields(this);"/>                                                                                                          
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <span id="writeHops"></span> 
+                                <hr/>
+                                <input type="button" class="add" id="addHopsButton" value="Add new Hop" onclick="moreFields();"/>                                    
+                            </td>
+                        </tr>
+                    </table>                    
                 </div>
             </td>
             <td style="width:10%"></td>

@@ -69,20 +69,10 @@ $flow = $argsToElement;
             <?php echo _("VLAN"); ?>
         </th>
         <td>
-            <?php
-            if ($flow->source->vlan)
-                echo _("Tagged")."<br>".$flow->source->vlan;
-            else
-                echo _("Untagged");
-            ?>
+            <label id="confirmation_src_vlan">Untagged</label>
         </td>
         <td>
-            <?php
-            if ($flow->dest->vlan)
-                echo _("Tagged")."<br>".$flow->dest->vlan;
-            else
-                echo _("Untagged");
-            ?>
+            <label id="confirmation_dst_vlan">Untagged</label>
         </td>
     </tr>
 </table>

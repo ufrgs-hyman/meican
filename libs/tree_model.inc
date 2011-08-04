@@ -192,8 +192,6 @@ class Tree_Model extends Model {
                     WHERE (node.lft BETWEEN (parent.lft +1) AND (parent.rgt-1)) $and";
 
 
-        Framework::debug('query children', $sqlQuery);
-
         return $this->fetchSql($sqlQuery, $tableName);
     }
     

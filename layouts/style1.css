@@ -634,3 +634,7 @@ border-left: 0.6px solid #999;
 #Sunday, #Monday, #Tuesday, #Wednesday, #Thursday, #Friday, #Saturday {
     margin: 0px;
 }
+
+h1 {
+    font-size: 1.3em;
+}

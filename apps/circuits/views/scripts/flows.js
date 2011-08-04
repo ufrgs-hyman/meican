@@ -282,10 +282,12 @@ function setEndpointConf(where) {
 function changeVlanType(elem, where) {
     var text_htmlId = "#" + where + "_vlanText";
 
-    if (elem.value == "FALSE")
+    if (elem.value == "FALSE") {
         $(text_htmlId).attr('disabled','disabled');
-    else if (elem.value == "TRUE")
+    }
+    else if (elem.value == "TRUE") {
         $(text_htmlId).removeAttr('disabled');
+    }
 }
 
 function validateBand(band_value) {

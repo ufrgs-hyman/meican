@@ -287,13 +287,22 @@ function changeBand(){
 
 function validateTab1() {
     if ( (path.length == 2) && ($("#src_device").val() != -1) && ($("#dst_device").val() != -1) &&
-        ($("#src_port").val() != -1) && ($("#dst_port").val() != -1) ) {
-          
-        tab1_valid = true;
-          
-    }else {
+        ($("#src_port").val() != -1) && ($("#dst_port").val() != -1) ) {         
+            if ($("#showVlan_checkbox").attr("checked")) {
+                if (($('input[name="sourceVLANType"]:checked').val() == "TRUE") && ($("#src_vlanText").val() == "")) {
+                    tab1_valid = false;
+                } else if (($('input[name="destVLANType"]:checked').val() == "TRUE") && ($("#dst_vlanText").val() == "")) {
+                    tab1_valid = false;
+                } else {
+                    tab1_valid = true;
+                }
+            } else {
+                tab1_valid = true;
+            }
+    } else {
         tab1_valid = false;
     }
+    validateTab3();  
 }
 
 function validateTab3() {
@@ -388,7 +397,7 @@ $.fn.extend({
         return this.each(function() {
             var el = $(this);
             if (el.css('display') == 'none') {
-                el.slideRight();
+                el.slideRight();                
             } else {
                 el.slideLeft();
             }
@@ -397,11 +406,12 @@ $.fn.extend({
 });
 
 function showVlanConf() {
-    if ($("#showVlan_chekbox").attr("checked")) {
+    if ($("#showVlan_checkbox").attr("checked")) {
         $("#div_vlan").slideDown();
     }else {
         $("#div_vlan").slideUp();
     }
+    validateTab1();
 }
 
 function genHex(domainId) {
@@ -410,7 +420,10 @@ function genHex(domainId) {
     } else {
         var color = parseInt(firstColor,16);
         color += (domainId * parseInt("d19510", 16));
-        if (color > 0xFFFFFF) {
+        if ((color == "eee") && (color == "eeeeee")) {
+            color = "dddddd";
+            color = color.toString(16);
+        } else if (color > 0xFFFFFF) {
             color = color.toString(16);
             color = color.substring(1, color.length);
         } else {
@@ -419,9 +432,52 @@ function genHex(domainId) {
         return color;            
     }
 }
+
+function moreFields() {
+        counter++;
+	var newFields = document.getElementById('addHops').cloneNode(true);
+	newFields.id = '';
+	newFields.style.display = 'block';
+	var newField = newFields.childNodes;
+	for (var i=0;i<newField.length;i++) {
+                var theId = newField[i].id;
+                if (theId) {
+                    newField[i].id = theId + counter;
+                }
+	}
+	var insertHere = document.getElementById('writeHops');
+	insertHere.parentNode.insertBefore(newFields,insertHere);
+        var selectId = "#selectHops" + counter;
+        fillUrnBox(selectId, urn_string);
+}
+
+function lessFields(elem) {
+    elem.parentNode.parentNode.removeChild(elem.parentNode);
+}
+
+function fillUrnBox(htmlId, fillerArray, current_val) {
+    clearSelectBox(htmlId);
+    for (var i=0; i < fillerArray.length; i++) {
+        if (fillerArray[i] == current_val)
+            $(htmlId).append('<option selected="true" value="' + fillerArray[i] + '">' + fillerArray[i] + '</option>');
+        else
+            $(htmlId).append('<option value="' + fillerArray[i] + '">' + fillerArray[i] + '</option>');
+    }
+}
+
+function changeTagValue(where) {
+    var text_htmlId = "#" + where + "_vlanText";
+    var vlan_htmlId = "#confirmation_" + where + "_vlan"
+
+    $(text_htmlId).removeAttr('disabled');
+    $(vlan_htmlId).html("Tagged: " + $(text_htmlId).val());
+    validateTab1();    
+}
+
 /*----------------------------------------------------------------------------*/
-// INICIO DAS FUNÇÕES DO MAPA                                                 //
-//                                                                            //
+// INICIO DAS FUNÇÕES DO MAPcounterA                                                 //
+//                                 
+                                                   //
 //  PREFIXO "edit_" INDICA USO DO SCRIPT NA TAB "Endpoints & Bandwidth"       //
 //  PREFIXO "view_" INDICA USO DO SCRIPT NA TAB "Confirmation"                //
 /*----------------------------------------------------------------------------*/
@@ -534,7 +590,7 @@ function edit_addMarker(location, domain_id, domain_name, network_id, network_na
             pos = projection.fromLatLngToContainerPixel(location),
             x = pos.x,
             y = pos.y;
-            selectedMarker.setMap(null);
+            selectedMarker.scounteretMap(null);
             
             // save the clicked location
 
@@ -623,10 +679,10 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
         map_changeNetwork("dst", network_id, domain_id);        
         $('#advOptions').slideToggleWidth();  
         window.scroll(0, 650);
-        validateTab1();
         if (tab2_valid) {
             $("#t3").removeClass("ui-state-disabled");
-        }        
+        } 
+        validateTab1();
     }
 }
 
@@ -651,6 +707,21 @@ function edit_clearAll(){
     $("#amount").hide();
     $("#div-bandwidth").slideUp();
     if (path.length != 0) {
+        $("#src_device").empty();
+        $("#src_device").slideUp();
+        $("#dst_device").empty();
+        $("#dst_device").slideUp();
+        $("#src_port").empty();
+        $("#src_port").slideUp();
+        $("#dst_port").empty();
+        $("#dst_port").slideUp();
+        var ctrl = counter;
+        for (var i=ctrl; i>0; i--) {
+            var removeHop = "#removeHop" + counter;
+            $(removeHop).click();
+            counter--;
+        }
+        counter = 0;
         $('#advOptions').slideToggleWidth();  
     }
     edit_clearLines();
@@ -904,14 +975,13 @@ function map_changeDevice(where) {
         map_fillPorts(port_id, ports);
 
         if (ports.length == 1) {
-            var confirmation_port = "#confirmation_" + where + "_port";
-            validateTab1();
+            var confirmation_port = "#confirmation_" + where + "_port";            
             $(confirmation_port).html(ports[0].port_number);
             map_setEndpointConf(where);
-        }
-
+        }        
         $(port_id).slideDown();
     }
+    validateTab1();
 }
 
 function map_getPorts(domain_id, network_id, device_id, where) {
@@ -920,14 +990,14 @@ function map_getPorts(domain_id, network_id, device_id, where) {
     if (devices) {
         for (var i=0; i<devices.length; i++) {
             if (devices[i].id == device_id) {
-                var confirmation_device = "#confirmation_" + where + "_device";
-                validateTab1(); 
+                var confirmation_device = "#confirmation_" + where + "_device";                
                 $(confirmation_device).html(devices[i].name);
                 ports = devices[i].ports;
                 break;
             }
         }
     }
+    validateTab1(); 
     return ports;
 }
 
@@ -950,11 +1020,11 @@ function map_changePort(where) {
     var port_id = "#" + where + "_port";
     map_clearVlanConf(where);
     if ($(port_id).val() != -1) {
-        var confirmation_port = "#confirmation_" + where + "_port";
-        validateTab1(); 
+        var confirmation_port = "#confirmation_" + where + "_port";        
         $(confirmation_port).html($(port_id).val())
         map_setEndpointConf(where);
     }
+    validateTab1(); 
 }
 
 function map_clearVlanConf(where) {
@@ -1110,11 +1180,17 @@ function map_getUrnData(where) {
 
 function map_changeVlanType(elem, where) {
     var text_htmlId = "#" + where + "_vlanText";
+    var vlan_htmlId = "#confirmation_" + where + "_vlan"
 
-    if (elem.value == "FALSE")
-        $(text_htmlId).attr('disabled','disabled');
-    else if (elem.value == "TRUE")
+    if (elem.value == "FALSE") {
+        $(text_htmlId).attr('disabled','disabled');        
+        $(vlan_htmlId).html("Untagged");
+    }
+    else if (elem.value == "TRUE") {
         $(text_htmlId).removeAttr('disabled');
+        $(vlan_htmlId).html("Tagged: " + $(text_htmlId).val());
+    }
+    validateTab1();
 }
 
 function map_saveFlow(flow_id) {

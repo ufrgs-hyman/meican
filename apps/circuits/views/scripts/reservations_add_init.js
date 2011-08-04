@@ -17,6 +17,9 @@ var dst_networks = null;
 var src_urn = null;
 var dst_urn = null;
 var path = new Array();
+
+var counter = 0;
+
 createTabs();
 createSlider();    
 
