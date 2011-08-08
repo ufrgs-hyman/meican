@@ -13,6 +13,7 @@ $federations = $this->passedArgs;
         <thead>
         <tr>
             <th></th>
+            <th></th>
             <th><?php echo _("Name"); ?></th>
             <th><?php echo _("Federation IP"); ?></th>
         </tr>
@@ -26,8 +27,11 @@ $federations = $this->passedArgs;
             </td>
             <td>
                 <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "fed_id:$f->id")); ?>">
+                    <img class="edit" src="layouts/img/edit_1.png"/>
+                </a>                    
+            </td>
+            <td>
                     <?php echo $f->descr; ?>
-                </a>
             </td>
             <td>
                     <?php echo $f->ip; ?>

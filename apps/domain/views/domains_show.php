@@ -13,6 +13,7 @@ $domains = $this->passedArgs;
         <thead>
         <tr>
             <th></th>
+            <th></th>
             <th><?php echo _("Name"); ?></th>
             <th><?php echo _("OSCARS IP"); ?></th>
             <th><?php echo _("Topology Domain ID"); ?></th>
@@ -27,8 +28,11 @@ $domains = $this->passedArgs;
             </td>
             <td>
                 <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "dom_id:$d->id")); ?>">
-                    <?php echo $d->descr; ?>
+                    <img class="edit" src="layouts/img/edit_1.png"/>
                 </a>
+            </td>                
+            <td>
+                    <?php echo $d->descr; ?>
             </td>
             <td>
                 <?php echo $d->oscars_ip; ?>

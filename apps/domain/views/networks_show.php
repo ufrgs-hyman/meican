@@ -13,6 +13,7 @@ $networks = $this->passedArgs;
         <thead>
         <tr>
             <th></th>
+            <th></th>
             <th><?php echo _("Name"); ?></th>
             <th><?php echo _("Latitude"); ?></th>
             <th><?php echo _("Longitude"); ?></th>
@@ -29,8 +30,11 @@ $networks = $this->passedArgs;
             </td>
             <td>
                 <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "net_id:$n->id")); ?>">
-                    <?php echo $n->descr; ?>
+                    <img class="edit" src="layouts/img/edit_1.png"/>
                 </a>
+            </td>                  
+            <td>
+                    <?php echo $n->descr; ?>
             </td>
             <td>
                 <?php echo $n->latitude; ?>

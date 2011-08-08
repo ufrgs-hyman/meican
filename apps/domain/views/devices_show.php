@@ -9,6 +9,7 @@
         <thead>
         <tr>
             <th></th>
+            <th></th>
             <th><?php echo _("Name"); ?></th>
             <th><?php echo _("IP Address"); ?></th>
             <th><?php echo _("Trademark"); ?></th>
@@ -31,14 +32,13 @@
             </td>
             <td>
                 <?php if ($d->editable): ?>
-                    <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "dev_id:$d->id")); ?>">
+                <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "dev_id:$d->id")); ?>">
+                    <img class="edit" src="layouts/img/edit_1.png"/>
+                </a>
                 <?php endif; ?>
-                        
+            </td>             
+            <td>
                 <?php echo $d->descr; ?>
-                        
-                <?php if ($d->editable): ?>
-                    </a>
-                <?php endif; ?>
             </td>
             <td>
                 <?php echo $d->ip; ?>

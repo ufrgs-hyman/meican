@@ -14,6 +14,7 @@
         <thead>
         <tr>
             <th></th>
+            <th></th>
             <th><?php echo _('User'); ?></th>
             <th><?php echo _('Name'); ?></th>
         </tr>
@@ -28,15 +29,15 @@
                     <input type="checkbox" name="del_checkbox[]" value="<?php echo $u->id; ?>" />
                     <?php endif; ?>
             </td>
-
+            <td>
+                <?php if ($u->editable): ?>
+                <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "usr_id:$u->id")); ?>">
+                    <img class="edit" src="layouts/img/edit_1.png"/>
+                </a>
+                <?php endif; ?>
+            </td>
             <td>       
-                    <?php if ($u->editable): ?>
-			<a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "usr_id:$u->id")); ?>">
-                    <?php endif; ?>
-                        <?php echo $u->login; ?>
-                    <?php if ($u->editable): ?>
-                        </a>
-                    <?php endif; ?>
+                <?php echo $u->login; ?>
             </td>
 
             <td>

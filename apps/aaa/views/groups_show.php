@@ -9,6 +9,7 @@
         <thead>
         <tr>
             <th></th>
+            <th></th>
             <th><?php echo _("Name"); ?></th>
             <th><?php echo _("Parent Groups"); ?></th>
         </tr>
@@ -23,13 +24,15 @@
                 <input type="checkbox" name="del_checkbox[]" value="<?php echo $g->id; ?>" >
                 <?php endif; ?>
             </td>
-
             <td>
                 <?php if ($g->editable): ?>
-                    <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "grp_id:$g->id")); ?>"><?php echo $g->descr; ?></a>
-                <?php else: ?>
-                    <?php echo $g->descr; ?>
+                    <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "grp_id:$g->id")); ?>">
+                        <img class="edit" src="layouts/img/edit_1.png"/>
+                    </a>
                 <?php endif; ?>
+            </td>
+            <td>
+                    <?php echo $g->descr; ?>
             </td>
             
             <td>
