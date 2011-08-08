@@ -12,6 +12,9 @@ var edit_lines = new Array();
 var view_bounds = new Array();
 var view_lines = new Array();
 
+var waypoints = new Array();
+var waypointsMarkers = new Array();
+
 var src_networks = null;
 var dst_networks = null;
 var src_urn = null;

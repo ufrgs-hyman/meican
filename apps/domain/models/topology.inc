@@ -576,6 +576,8 @@ class Topology {
                 $device->name = $res[0]->dev_descr;
                 $device->latitude = $res[0]->dev_lat;
                 $device->longitude = $res[0]->dev_lng;
+                $device->topology_node_id = $res[0]->topo_node_id;
+                $device->model = $res[0]->model;
 
                 $port = new stdClass();
                 $port->urn_string = $u->urn_string;

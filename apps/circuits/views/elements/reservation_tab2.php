@@ -80,8 +80,8 @@
                             <td colspan="3">
                                 <div id="addHops" style="display:none">
                                     Select URN:
-                                    <select id="selectHops" style="width: 100%"></select><br />
-                                    <input type="button" class="remove" id="removeHop" value="Remove Hop" onclick="lessFields(this);"/>                                                                                                          
+                                    <img class="delete" id="removeHop" onclick="lessFields(this);" src="layouts/img/remove.png"/>
+                                    <select id="selectHops" style="width: 100%" onchange="edit_mapPlaceDevice();"></select><br />
                                 </div>
                             </td>
                         </tr>

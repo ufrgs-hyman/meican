@@ -456,6 +456,7 @@ function moreFields() {
 
 function lessFields(elem) {
     elem.parentNode.parentNode.removeChild(elem.parentNode);
+    edit_mapPlaceDevice();
 }
 
 function fillUrnBox(htmlId, fillerArray, current_val) {
@@ -555,8 +556,7 @@ function edit_addMarker(location, domain_id, domain_name, network_id, network_na
 
         infowindow = new google.maps.InfoWindow({
             content: "<b>" + domain_string + "</b>: " + domain_name + "<br/>" +
-            "<b>" + network_string + "</b>: " + network_name +
-            "<br/><b>" + coordinates_string + "</b>: " + location,
+            "<b>" + network_string + "</b>: " + network_name,
             disableAutoPan: true
         });
         selectedMarker.setMap(null);
@@ -722,13 +722,13 @@ function edit_clearAll(){
         for (var i=ctrl; i>0; i--) {
             var removeHop = "#removeHop" + counter;
             $(removeHop).click();
-            counter--;
         }
         counter = 0;
         $('#advOptions').slideToggleWidth();  
     }
     edit_clearLines();
     edit_clearMarkers();    
+    edit_clearTopologyMarkers();
     edit_setBounds(edit_bounds);
     
     contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
@@ -787,6 +787,144 @@ function edit_setBounds(flightPlanCoordinates){
     edit_map.fitBounds(polylineBounds);
     edit_map.setCenter(polylineBounds.getCenter());
 }
+
+function decodeUrn(urn) {
+    
+    var string_aux = "domain=";
+    var domainTopology = urn.substring((urn.indexOf("domain=") + string_aux.length), urn.indexOf(":node="));    
+    string_aux = ":node=";
+    var deviceTopology = urn.substring((urn.indexOf(":node=") + string_aux.length), urn.indexOf(":port="));
+
+
+    for (var i in domains) {
+        if (domains[i].topology_id == domainTopology) {
+            for (var j in domains[i].networks) {
+                for (var k in domains[i].networks[j].devices) {                    
+                    if (domains[i].networks[j].devices[k].topology_node_id == deviceTopology) {
+                         var waypoint = ({
+                            location: new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude),
+                            domain_id: domains[i].id,
+                            domain_name: domains[i].name,
+                            network_id: domains[i].networks[j].id, 
+                            network_name: domains[i].networks[j].name, 
+                            device_id: domains[i].networks[j].devices[k].id,
+                            device_name: domains[i].networks[j].devices[k].name + " " + domains[i].networks[j].devices[k].model
+                         });
+                    }
+                }
+            }
+        }
+    }
+    return waypoint;
+}
+
+function edit_mapPlaceDevice() {
+
+    //var temp_src, temp_dst;
+    
+    //temp_src = path[0];
+    //temp_dst = path[1];
+
+    //edit_clearLines();
+    edit_clearTopologyMarkers();
+    
+    //path[0] = temp_src;
+    //path[1] = temp_dst;
+
+    for (i=1; i<=counter; i++) {
+        var selectId = "#selectHops" + counter;
+        if ($(selectId).val()) {
+            if ($(selectId).val() != -1) {
+                var waypoint = decodeUrn($(selectId).val())
+                edit_addTopologyMarker(waypoint);
+            }            
+        }
+
+    }
+    //edit_redrawPath();
+}
+
+function edit_addTopologyMarker(waypoint) {
+    
+    marker = new google.maps.Marker({
+        id : waypoint.device_id,
+        position: waypoint.location,
+        
+        map:edit_map
+    });
+
+    google.maps.event.addListener(marker, "mouseover", function(marker) {
+
+        infowindow = new google.maps.InfoWindow({
+            content: "<b>" + domain_string + "</b>: " + waypoint.domain_name + "<br/>" +
+            "<b>" + network_string + "</b>: " + waypoint.network_name + "<br/>" +
+            "<b>" + device_string + "</b>: " + waypoint.device_name,
+            disableAutoPan: true
+        });
+        infowindow.open(edit_map, marker);
+    });
+  
+    google.maps.event.addListener(marker, "mouseout", function() {
+        infowindow.close(edit_map);
+    });
+  
+    // Display and position the menu    
+    waypointsMarkers.push(marker);
+    marker.setMap(edit_map);
+}
+
+function edit_redrawPath() {
+
+    for (var i=0; i<waypointsMarkers.length; i++) {
+//        for (var j=1; j<=counter; j++) {
+//            var selectId = "#selectHops" + counter;
+//            var waypoint = decodeUrn($(selectId).val())
+//        }
+        
+        
+        waypoints.push(waypointsMarkers.location);
+    }
+    
+    var flightPlanCoordinates = new Array();
+    
+    flightPlanCoordinates[0] = path[0];
+    
+    for(i=0; i<waypoints.length; i++) {
+        flightPlanCoordinates[i+1] = waypoints[i];
+    }
+    
+    var length = flightPlanCoordinates.length;
+    
+    flightPlanCoordinates[length] = path[1];
+//   
+//    for (i=0; i<flightPlanCoordinates.length; i++) {
+//        var line = new google.maps.Polyline({
+//            path: flightPlanCoordinates,
+//            strokeColor: "#0000FF",
+//            strokeOpacity: 0.5,
+//            strokeWeight: 4
+//        });        
+//    }
+    var line = new google.maps.Polyline({
+        path: flightPlanCoordinates,
+        strokeColor: "#0000FF",
+        strokeOpacity: 0.5,
+        strokeWeight: 4
+    });
+    line.setMap(edit_map);
+    edit_lines.push(line);
+    edit_setBounds(flightPlanCoordinates);  
+    view_Circuit();    
+}
+
+function edit_clearTopologyMarkers() {
+    if (waypointsMarkers.length > 0) {
+        for (var i=0; i< waypointsMarkers.length; i++){
+            waypointsMarkers[i].setMap(null);
+        }
+    }
+}
+
 
 // VIEW FUNCTIONS
 

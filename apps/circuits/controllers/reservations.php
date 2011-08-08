@@ -279,11 +279,13 @@ class reservations extends Controller {
             $dom = new stdClass();
             $dom->id = $d->dom_id;
             $dom->name = $d->dom_descr;
+            $dom->topology_id = $d->topo_domain_id;
             $domains[] = $dom;
             
             $domain = new stdClass();
             $domain->id = $d->dom_id;
             $domain->name = $d->dom_descr;
+            $domain->topology_id = $d->topo_domain_id;
             $domain->networks = Topology::getURNDetails($d->dom_id); 
             $urn = Topology::getURNs($d->dom_id);
             foreach ($urn as $u) {
