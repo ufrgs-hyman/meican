@@ -21,7 +21,7 @@
         <tr>
             <td>
                 <?php if ($g->editable): ?>
-                <input type="checkbox" name="del_checkbox[]" value="<?php echo $g->id; ?>" >
+                <input type="checkbox" name="del_checkbox[]" value="<?php echo $g->id; ?>" />
                 <?php endif; ?>
             </td>
             <td>

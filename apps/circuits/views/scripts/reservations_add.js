@@ -593,7 +593,7 @@ function edit_addMarker(location, domain_id, domain_name, network_id, network_na
             pos = projection.fromLatLngToContainerPixel(location),
             x = pos.x,
             y = pos.y;
-            selectedMarker.scounteretMap(null);
+            selectedMarker.setMap(null);
             
             // save the clicked location
 
@@ -825,8 +825,8 @@ function edit_mapPlaceDevice() {
     //temp_src = path[0];
     //temp_dst = path[1];
 
-    //edit_clearLines();
-    edit_clearTopologyMarkers();
+    edit_clearLines();
+    //edit_clearTopologyMarkers();
     
     //path[0] = temp_src;
     //path[1] = temp_dst;
@@ -841,7 +841,7 @@ function edit_mapPlaceDevice() {
         }
 
     }
-    //edit_redrawPath();
+    edit_redrawPath();
 }
 
 function edit_addTopologyMarker(waypoint) {
@@ -875,14 +875,12 @@ function edit_addTopologyMarker(waypoint) {
 
 function edit_redrawPath() {
 
-    for (var i=0; i<waypointsMarkers.length; i++) {
-//        for (var j=1; j<=counter; j++) {
-//            var selectId = "#selectHops" + counter;
-//            var waypoint = decodeUrn($(selectId).val())
-//        }
-        
-        
-        waypoints.push(waypointsMarkers.location);
+    for (var i=0; i<waypoints.length; i++) {
+        for (var j=1; j<=counter; j++) {
+            var selectId = "#selectHops" + counter;
+            var waypoint = decodeUrn($(selectId).val())
+            waypoints.push(waypoint);
+        }
     }
     
     var flightPlanCoordinates = new Array();
