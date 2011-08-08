@@ -288,17 +288,17 @@ function changeBand(){
 function validateTab1() {
     if ( (path.length == 2) && ($("#src_device").val() != -1) && ($("#dst_device").val() != -1) &&
         ($("#src_port").val() != -1) && ($("#dst_port").val() != -1) ) {         
-            if ($("#showVlan_checkbox").attr("checked")) {
-                if (($('input[name="sourceVLANType"]:checked').val() == "TRUE") && ($("#src_vlanText").val() == "")) {
-                    tab1_valid = false;
-                } else if (($('input[name="destVLANType"]:checked').val() == "TRUE") && ($("#dst_vlanText").val() == "")) {
-                    tab1_valid = false;
-                } else {
-                    tab1_valid = true;
-                }
+        if ($("#showVlan_checkbox").attr("checked")) {
+            if (($('input[name="sourceVLANType"]:checked').val() == "TRUE") && ($("#src_vlanText").val() == "")) {
+                tab1_valid = false;
+            } else if (($('input[name="destVLANType"]:checked').val() == "TRUE") && ($("#dst_vlanText").val() == "")) {
+                tab1_valid = false;
             } else {
                 tab1_valid = true;
             }
+        } else {
+            tab1_valid = true;
+        }
     } else {
         tab1_valid = false;
     }
@@ -437,21 +437,21 @@ function genHex(domainId) {
 }
 
 function moreFields() {
-        counter++;
-	var newFields = document.getElementById('addHops').cloneNode(true);
-	newFields.id = '';
-	newFields.style.display = 'block';
-	var newField = newFields.childNodes;
-	for (var i=0;i<newField.length;i++) {
-                var theId = newField[i].id;
-                if (theId) {
-                    newField[i].id = theId + counter;
-                }
-	}
-	var insertHere = document.getElementById('writeHops');
-	insertHere.parentNode.insertBefore(newFields,insertHere);
-        var selectId = "#selectHops" + counter;
-        fillUrnBox(selectId, urn_string);
+    counter++;
+    var newFields = document.getElementById('addHops').cloneNode(true);
+    newFields.id = '';
+    newFields.style.display = 'block';
+    var newField = newFields.childNodes;
+    for (var i=0;i<newField.length;i++) {
+        var theId = newField[i].id;
+        if (theId) {
+            newField[i].id = theId + counter;
+        }
+    }
+    var insertHere = document.getElementById('writeHops');
+    insertHere.parentNode.insertBefore(newFields,insertHere);
+    var selectId = "#selectHops" + counter;
+    fillUrnBox(selectId, urn_string);
 }
 
 function lessFields(elem) {
@@ -481,7 +481,7 @@ function changeTagValue(where) {
 /*----------------------------------------------------------------------------*/
 // INICIO DAS FUNÇÕES DO MAPcounterA                                                 //
 //                                 
-                                                   //
+//
 //  PREFIXO "edit_" INDICA USO DO SCRIPT NA TAB "Endpoints & Bandwidth"       //
 //  PREFIXO "view_" INDICA USO DO SCRIPT NA TAB "Confirmation"                //
 /*----------------------------------------------------------------------------*/
@@ -801,7 +801,7 @@ function decodeUrn(urn) {
             for (var j in domains[i].networks) {
                 for (var k in domains[i].networks[j].devices) {                    
                     if (domains[i].networks[j].devices[k].topology_node_id == deviceTopology) {
-                         var waypoint = ({
+                        var waypoint = ({
                             location: new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude),
                             domain_id: domains[i].id,
                             domain_name: domains[i].name,
@@ -809,7 +809,7 @@ function decodeUrn(urn) {
                             network_name: domains[i].networks[j].name, 
                             device_id: domains[i].networks[j].devices[k].id,
                             device_name: domains[i].networks[j].devices[k].name + " " + domains[i].networks[j].devices[k].model
-                         });
+                        });
                     }
                 }
             }
@@ -820,16 +820,16 @@ function decodeUrn(urn) {
 
 function edit_mapPlaceDevice() {
 
-    //var temp_src, temp_dst;
+    var temp_src, temp_dst;
     
-    //temp_src = path[0];
-    //temp_dst = path[1];
+    temp_src = path[0];
+    temp_dst = path[1];
 
     edit_clearLines();
     //edit_clearTopologyMarkers();
     
-    //path[0] = temp_src;
-    //path[1] = temp_dst;
+    path[0] = temp_src;
+    path[1] = temp_dst;
 
     for (i=1; i<=counter; i++) {
         var selectId = "#selectHops" + counter;
@@ -875,12 +875,15 @@ function edit_addTopologyMarker(waypoint) {
 
 function edit_redrawPath() {
 
-    for (var i=0; i<waypoints.length; i++) {
-        for (var j=1; j<=counter; j++) {
-            var selectId = "#selectHops" + counter;
-            var waypoint = decodeUrn($(selectId).val())
-            waypoints.push(waypoint);
+    for (var i=1; i<=counter; i++) {
+        var selectId = "#selectHops" + counter;
+        if ($(selectId).val()) {
+            if ($(selectId).val() != -1) {
+                var waypoint = decodeUrn($(selectId).val());
+                waypoints.push(waypoint.location);
+            }
         }
+            
     }
     
     var flightPlanCoordinates = new Array();
@@ -894,15 +897,7 @@ function edit_redrawPath() {
     var length = flightPlanCoordinates.length;
     
     flightPlanCoordinates[length] = path[1];
-//   
-//    for (i=0; i<flightPlanCoordinates.length; i++) {
-//        var line = new google.maps.Polyline({
-//            path: flightPlanCoordinates,
-//            strokeColor: "#0000FF",
-//            strokeOpacity: 0.5,
-//            strokeWeight: 4
-//        });        
-//    }
+
     var line = new google.maps.Polyline({
         path: flightPlanCoordinates,
         strokeColor: "#0000FF",
