@@ -2,6 +2,7 @@
 include_once 'libs/controller.php';
 require_once 'includes/nuSOAP/lib/nusoap.php';
 include_once 'apps/domain/models/topology.inc';
+include_once 'apps/domain/models/meican_info.inc';
 
 class ws extends Controller {
 
@@ -10,10 +11,14 @@ class ws extends Controller {
         $this->controller = 'ws';
         $this->defaultAction = '';
 
-        $this_ip = Framework::$domIp;
-        $namespace = "http://localhost/qame";
+        $this_meican = new meican_info();
+        
+        $this_ip = $this_meican->getLocalMeicanIp();
+        $this_dir_name = $this_meican->getLocalMeicanDirName();
+        
+        $namespace = "http://MEICAN";
         $server = new nusoap_server();
-        $server->configureWSDL("Domain_Services", $namespace, "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services");
+        $server->configureWSDL("MEICAN_TOPOLOGY_SERVICES", $namespace, "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services");
         $server->wsdl->schemaTargetNamespace = $namespace;
 
         $server->wsdl->addComplexType('urnType','complexType','struct','all','',
@@ -68,7 +73,7 @@ class ws extends Controller {
                 array('urn_string_list'=>'tns:stringTypeList'),
                 array('urn_info_array'=>'tns:urnTypeList'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/getURNsInfo",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getURNsInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -78,7 +83,7 @@ class ws extends Controller {
                 array('urn_string'=>'xsd:string'),
                 array('urn_details'=>'tns:urnTypeList'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/getURNDetails",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getURNDetails",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');

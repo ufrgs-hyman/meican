@@ -1,5 +1,5 @@
 <?php
-
+$init_session = false;
 include_once 'framework.conf.php';
 
 defined ('__FRAMEWORK') or die ("Invalid access.");

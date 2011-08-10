@@ -10,10 +10,12 @@ class gri_info extends Model {
 
         // Add all table attributes
         $this->addAttribute("gri_id", "VARCHAR", TRUE, TRUE, FALSE);
+        $this->addAttribute("dom_id", "INTEGER");
         $this->addAttribute("status", "VARCHAR");
         $this->addAttribute("res_id", "INTEGER");
         $this->addAttribute("start", "VARCHAR");
         $this->addAttribute("finish", "VARCHAR");
+        $this->addAttribute("send", "INTEGER");
     }
     
     static public function translateStatus($newStatus) {

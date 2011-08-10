@@ -12,9 +12,9 @@ class request_info extends Resource_Model {
         // Add all table attributes
         $this->addAttribute('loc_id', "INTEGER", true, false, false);
         $this->addAttribute("req_id","INTEGER");
-        $this->addAttribute("dom_src","INTEGER");
-        $this->addAttribute("dom_dst","INTEGER");
-        $this->addAttribute("usr_src","INTEGER");
+        $this->addAttribute("src_dom","INTEGER");
+        $this->addAttribute("dst_dom","INTEGER");
+        $this->addAttribute("src_usr","INTEGER");
         $this->addAttribute("resource_type","VARCHAR");
         $this->addAttribute("resource_id","INTEGER");
         $this->addAttribute('answerable',"VARCHAR");

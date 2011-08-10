@@ -5,6 +5,7 @@ include_once 'libs/resource_model.inc';
 include_once 'apps/circuits/models/gri_info.inc';
 include_once 'apps/circuits/models/flow_info.inc';
 include_once 'apps/circuits/models/timer_info.inc';
+include_once 'apps/circuits/models/oscars_reservation.inc';
 
 class reservation_info extends Resource_Model {
 
@@ -14,16 +15,16 @@ class reservation_info extends Resource_Model {
         // Add all table attributes
         $this->addAttribute("res_id", "INTEGER", true, false, false);
         $this->addAttribute("res_name", "VARCHAR");
-        
+
         $this->addAttribute("bandwidth", "INTEGER");
         $this->addAttribute("flw_id", "INTEGER");
         $this->addAttribute("tmr_id", "INTEGER");
-        
+
         $this->addAttribute("creation_time", "FLOAT");
     }
 
     public function getReservationDetails() {
-        $res = $this->fetch();
+        $res = $this->fetch(FALSE);
 
         if (!$res) {
             Framework::debug('reservation not found');
@@ -32,7 +33,7 @@ class reservation_info extends Resource_Model {
 
         $flow = new flow_info();
         $flow->flw_id = $res[0]->flw_id;
-        $flow = $flow->fetch();
+        $flow = $flow->fetch(FALSE);
 
         $flow_info = $flow[0]->getFlowDetails();
 
@@ -44,17 +45,20 @@ class reservation_info extends Resource_Model {
         $return = array(
                 'res_id' => $this->res_id,
                 'res_name' => $res[0]->res_name,
-                'dom_src' => $flow_info->source->dom_ip,
+                'dom_src' => $flow_info->source->oscars_ip,
                 'urn_src' => $flow_info->source->urn,
-                'dom_dst' => $flow_info->dest->dom_ip,
+                'dom_dst' => $flow_info->dest->oscars_ip,
                 'urn_dst' => $flow_info->dest->urn,
-                'bandwidth' => $this->bandwidth,
+                'bandwidth' => $res[0]->bandwidth,
+                'path' => $flow_info->path,
                 'timer_begin' => $timer_info->begin_timestamp,
                 'timer_end' => $timer_info->end_timestamp,
                 'timer_rec' => $timer_info->summary
         );
 
-        return $return;
+        $object = (object) $return;
+
+        return $object;
     }
 
     public function sendForAuthorization() {
@@ -77,7 +81,7 @@ class reservation_info extends Resource_Model {
         $newReq->resource_type = 'reservation_info';
         $newReq->resource_id = $this->res_id;
         $newReq->answerable = 'no';
-        
+
         Framework::debug('dentro do sendauth');
         $endpoint = Framework::$odeWSDLToRequest;
         //$endpoint = "http://".Framework::$odeIp."/ode/deployment/bundles/v1_workflow_pietro/processes/v1_workflow_pietro/processes.ode/diagrama-v1-workflow_pietro.wsdl";
@@ -96,7 +100,7 @@ class reservation_info extends Resource_Model {
                 //insere a requisicao no banco local
                 if ($req = $newReq->insert())
                 //atualiza tabela da reserva com o id da requisicao
-                        return TRUE;
+                    return TRUE;
 
                 else {
                     Framework::debug('failed to insert request at local database');
@@ -113,38 +117,40 @@ class reservation_info extends Resource_Model {
         }
     }
 
-    function getGriDetails(){
+    function getGriDetails() {
         $gri_to_list = array('args0' => array('ufrgs.cipo.rnp.br-1259', 'ufrgs.cipo.rnp.br-1694'));
 
         $now = mktime()+5*60;
         $now_10 = mktime()+10*60;
 
         $array_to_create = array('args0' => array(
-            'urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFRGS-CIPO-RNP-001:port=5:link=*', // source
-            'urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFRGS-CIPO-RNP-002:port=5:link=*', // dest
-            '100', // banda
-            $now, // begin TS
-            $now_10, // end TS
+                        'urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFRGS-CIPO-RNP-001:port=5:link=*', // source
+                        'urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFRGS-CIPO-RNP-002:port=5:link=*', // dest
+                        '100', // banda
+                        $now, // begin TS
+                        $now_10, // end TS
 
-            'urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFRGS-CIPO-RNP-002:port=5:link=*', // source
-            'urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFRGS-CIPO-RNP-001:port=5:link=*', // dest
-            '100', // banda
-            $now, // begin TS
-            $now_10 // end TS
+                        'urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFRGS-CIPO-RNP-002:port=5:link=*', // source
+                        'urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFRGS-CIPO-RNP-001:port=5:link=*', // dest
+                        '100', // banda
+                        $now, // begin TS
+                        $now_10 // end TS
         ));
 
         $endpoint = "http://".Framework::$bridgeIp."/axis2/services/BridgeOSCARS?wsdl";
         if ($client = new SoapClient($endpoint, array('cache_wsdl' => 0))) {
             if ($result = $client->list($gri_to_list))
-                    Framework::debug('result list oscars', $result);
+                Framework::debug('result list oscars', $result);
 
             if ($result = $client->create($array_to_create))
-                    Framework::debug('result create oscars', $result);
+                Framework::debug('result create oscars', $result);
         }
-
-
     }
 
+    function getFlow(){
+        $tmp = $this->fetch();
+        return $tmp[0]->flw_id;
+    }
 }
 
 ?>

@@ -28,13 +28,27 @@ class reservations extends Controller {
     }
 
     public function show() {
-        
+
         // inicializa variáveis da sessão do wizard
         Common::destroySessionVariable('res_name');
         Common::destroySessionVariable('sel_flow');
         Common::destroySessionVariable('sel_timer');
         Common::destroySessionVariable('res_wizard');
         Common::destroySessionVariable('res_begin_timestamp');
+//
+        $teste = new reservation_info();
+        $teste->res_id = 1;
+//        $this->query($teste);
+        $this->send($teste);
+
+//        $grisArray[]="oscars5.ufrgs.br-65";
+//        $grisArray[]="oscars5.ufrgs.br-62";
+//        $grisArray[]="oscars5.ufrgs.br-52";
+//        $grisArray[]="oscars5.ufrgs.br-48";
+//        $grisArray[]="oscars2.ufrgs.br-18";
+//        $this->listStatus($grisArray);
+        //$this->getTopology();
+
 
         $res_info = new reservation_info();
         $allReservations = $res_info->fetch();
@@ -207,14 +221,12 @@ class reservations extends Controller {
                         $statusArray[$ind][$ind2] = $g->status;
                     }
 
-                    Framework::debug("array", $statusArray);
 
                     if ($res_id) {
                         $stat = new stdClass();
                         //$statusArray[$ind][$ind2] = "PENDING";
                         $stat->name = $statusArray[$ind][$ind2];
                         $stat->translate = gri_info::translateStatus($statusArray[$ind][$ind2]);
-                        Framework::debug("array", $statusArray);
                         $statusList[$ind2] = $stat;
                     } else {
                         $date = new DateTime($g->start);
@@ -263,37 +275,37 @@ class reservations extends Controller {
     public function reservation_add() {
         // get Timestamp to calc reservation creation time by user
         Common::setSessionVariable("res_begin_timestamp", microtime(true));
-        
+
         // STEP 1 VARIABLES ---------------------
         $name = "Default_Reservation_Name";
         //---------------------------------------
-        
+
         // STEP 2 VARIABLES ---------------------
         $domain = new domain_info();
         $allDomains = $domain->fetch();
         $allUrns = array();
         $domToMapArray = array();
         $domains = array();
-        
+
         foreach ($allDomains as $d) {
             $dom = new stdClass();
             $dom->id = $d->dom_id;
             $dom->name = $d->dom_descr;
             $dom->topology_id = $d->topo_domain_id;
             $domains[] = $dom;
-            
+
             $domain = new stdClass();
             $domain->id = $d->dom_id;
             $domain->name = $d->dom_descr;
             $domain->topology_id = $d->topo_domain_id;
-            $domain->networks = Topology::getURNDetails($d->dom_id); 
+            $domain->networks = Topology::getURNDetails($d->dom_id);
             $urn = Topology::getURNs($d->dom_id);
             foreach ($urn as $u) {
                 $allUrns[] = $u->urn_string;
             }
             $domToMapArray[] = $domain;
         }
-        
+
         // --------------------------------------
 
         // STEP 3 VARIABLES ---------------
@@ -302,8 +314,8 @@ class reservations extends Controller {
         $bdiv = 100;
         $bwarn = 0.7;
         // --------------------------------
-         
-        // STEP 4 VARIABLES -------------------------- 
+
+        // STEP 4 VARIABLES --------------------------
         $dateFormat = "d/m/Y";
         $js_dateFormat = "dd/mm/yy";
         //$dateFormat = "M j, Y";
@@ -328,91 +340,91 @@ class reservations extends Controller {
         // --------------------------------------------
 
         //if ($domToMapArray) {
-        
+
         // Args to Script
         $this->setArgsToScript(array(
-            // bandwidth
-            "band_min" => $bmin,
-            "band_max" => $bmax,
-            "band_div" => $bdiv,
-            "band_warning" => $bwarn,
-            "warning_string" => _("Authorization from Network Administrator will be required."),
-            // flash messages
-            "flash_nameReq" => _("A name is required"),
-            "flash_bandInv" => _("Invalid value for bandwidth"),
-            "flash_sourceReq" => _("A source is required"),
-            "flash_srcVlanInv" => _("Invalid value for source VLAN"),
-            "flash_srcVlanReq" => _("Source VLAN type required"),
-            "flash_destReq" => _("A destination is required"),
-            "flash_dstVlanInv" => _("Invalid value for destination VLAN"),
-            "flash_dstVlanReq" => _("Destination VLAN type required"),
-            "flash_timerReq" => _("Timer is required"),
-            "flash_timerInvalid" => _("The End Time occurs before the Start Time"),
-            "flash_invalidDuration" => _("Invalid Duration"),
-            "flash_missingEndpoints" => _("Missing Endpoints"),
-            // endpoints
-            "domain_string" => _("Domain"),
-            "domains_string" => _("Domains"),
-            "network_string" => _("Network"),
-            "networks_string" => _("Networks"),
-            "device_string" => _("Device"),
-            "devices_string" => _("Devices"),
-            "from_here_string" => _("From Here"),
-            "to_here_string" => _("To Here"),
-            "cluster_information_string" => _("Information about cluster"),
-            "coordinates_string" => _("Coordinates"),
-            // timers
-            "date_format" => $js_dateFormat,
-            "language" => $js_lang,
-            "horas" => $hoursArray,
-            "today" => $today_check,
-            "repeat_every_string" => _("Repeat every"),
-            "day_string" => _("day"),
-            "days_string" => _("days"),
-            "week_string" => _("week"),
-            "weeks_string" => _("weeks"),
-            "on_string" => _("on"),
-            "month_string" => _("month"),
-            "months_string" => _("months"),
-            "year_string" => _("year"),
-            "years_string" => _("years"),
-            "hour_string" => _("hour"),
-            "hours_string" => _("hours"),
-            "minute_string" => _("minute"),
-            "minutes_string" => _("minutes"),
-            "and_string" => _("and"),
-            "until_string" => _("until"),
-            "times_string" => _("times"),
-            "time_string" => _("time"),
-            "end_rule_string" => _("Please set an end rule"),
-            "select_day_string" => _("Select at least one day"),
-            "set_name_string" => _("Set name"),
-            "invalid_time_string" => _("Invalid time"),
-            "active_string" => _("Active from"),
-            "at_string" => _("at"),
-            "domains" => $domToMapArray,            
-            "urn_string" => $allUrns
+                // bandwidth
+                "band_min" => $bmin,
+                "band_max" => $bmax,
+                "band_div" => $bdiv,
+                "band_warning" => $bwarn,
+                "warning_string" => _("Authorization from Network Administrator will be required."),
+                // flash messages
+                "flash_nameReq" => _("A name is required"),
+                "flash_bandInv" => _("Invalid value for bandwidth"),
+                "flash_sourceReq" => _("A source is required"),
+                "flash_srcVlanInv" => _("Invalid value for source VLAN"),
+                "flash_srcVlanReq" => _("Source VLAN type required"),
+                "flash_destReq" => _("A destination is required"),
+                "flash_dstVlanInv" => _("Invalid value for destination VLAN"),
+                "flash_dstVlanReq" => _("Destination VLAN type required"),
+                "flash_timerReq" => _("Timer is required"),
+                "flash_timerInvalid" => _("The End Time occurs before the Start Time"),
+                "flash_invalidDuration" => _("Invalid Duration"),
+                "flash_missingEndpoints" => _("Missing Endpoints"),
+                // endpoints
+                "domain_string" => _("Domain"),
+                "domains_string" => _("Domains"),
+                "network_string" => _("Network"),
+                "networks_string" => _("Networks"),
+                "device_string" => _("Device"),
+                "devices_string" => _("Devices"),
+                "from_here_string" => _("From Here"),
+                "to_here_string" => _("To Here"),
+                "cluster_information_string" => _("Information about cluster"),
+                "coordinates_string" => _("Coordinates"),
+                // timers
+                "date_format" => $js_dateFormat,
+                "language" => $js_lang,
+                "horas" => $hoursArray,
+                "today" => $today_check,
+                "repeat_every_string" => _("Repeat every"),
+                "day_string" => _("day"),
+                "days_string" => _("days"),
+                "week_string" => _("week"),
+                "weeks_string" => _("weeks"),
+                "on_string" => _("on"),
+                "month_string" => _("month"),
+                "months_string" => _("months"),
+                "year_string" => _("year"),
+                "years_string" => _("years"),
+                "hour_string" => _("hour"),
+                "hours_string" => _("hours"),
+                "minute_string" => _("minute"),
+                "minutes_string" => _("minutes"),
+                "and_string" => _("and"),
+                "until_string" => _("until"),
+                "times_string" => _("times"),
+                "time_string" => _("time"),
+                "end_rule_string" => _("Please set an end rule"),
+                "select_day_string" => _("Select at least one day"),
+                "set_name_string" => _("Set name"),
+                "invalid_time_string" => _("Invalid time"),
+                "active_string" => _("Active from"),
+                "at_string" => _("at"),
+                "domains" => $domToMapArray,
+                "urn_string" => $allUrns
         ));
         //}
-        
+
 
         // ARGS to body ----------------------------------------------------------------
         $args = new stdClass();
         // arg name
-        $args->name = $name;        
+        $args->name = $name;
         // arg endpoints
         $args->domains = $domains;
         // arg bandwidth
-        $args->bandwidthTip = "(" . $min . ", " . ($min + $div) . ", " . ($min + 2 * $div) . ", " . ($min + 3 * $div) . ", ... , " . $max . ")";                        
+        $args->bandwidthTip = "(" . $min . ", " . ($min + $div) . ", " . ($min + 2 * $div) . ", " . ($min + 3 * $div) . ", ... , " . $max . ")";
         // arg timer
         $args->start_date = date($dateFormat);
         $args->finish_date = date($dateFormat);
         $args->start_time = date($hourFormat, (time() + 30 * 60));
         $args->finish_time = date($hourFormat, (time() + 90 * 60));
-        
+
         $this->setArgsToBody($args);
         // -----------------------------------------------------------------------------
-        
+
         // SCRIPTS -----------------------------------------
         $this->setInlineScript('reservations_add_init');
 
@@ -420,8 +432,8 @@ class reservations extends Controller {
             $this->addScript("jquery.ui.datepicker-$js_lang");
         }
         // -------------------------------------------------
-        
-        
+
+
         // ACTION ---------------------
         $this->setAction('add');
         // ----------------------------
@@ -666,16 +678,14 @@ class reservations extends Controller {
     }
 
     public function submit() {
-        
+
         $res_end_timestamp = microtime(true);
         $res_begin_timestamp = Common::getSessionVariable("res_begin_timestamp");
         $res_diff_timestamp = $res_end_timestamp - $res_begin_timestamp;
-        
-        Framework::debug("band",Common::POST("amount"));
-        Framework::debug("time", $res_diff_timestamp);
+
         $this->show();
         return;
-        
+
         $selectedTimer = NULL;
         $selectedFlow = NULL;
         $reservationName = NULL;
@@ -799,21 +809,21 @@ class reservations extends Controller {
         $request->status = $result[0]->status;
 
         $this->setArgsToScript(array(
-            "reservation_id" => $reservation->res_id,
-            "status_array" => $status,
-            "src_lat_network" => $flow->source->latitude,
-            "src_lng_network" => $flow->source->longitude,
-            "dst_lat_network" => $flow->dest->latitude,
-            "dst_lng_network" => $flow->dest->longitude,
-            "domain_string" => _("Domain"),
-            "domains_string" => _("Domains"),
-            "network_string" => _("Network"),
-            "networks_string" => _("Networks"),
-            "device_string" => _("Device"),
-            "devices_string" => _("Devices"),
-            "from_here_string" => _("From Here"),
-            "to_here_string" => _("To Here"),
-            "cluster_information_string" => _("Information about cluster")
+                "reservation_id" => $reservation->res_id,
+                "status_array" => $status,
+                "src_lat_network" => $flow->source->latitude,
+                "src_lng_network" => $flow->source->longitude,
+                "dst_lat_network" => $flow->dest->latitude,
+                "dst_lng_network" => $flow->dest->longitude,
+                "domain_string" => _("Domain"),
+                "domains_string" => _("Domains"),
+                "network_string" => _("Network"),
+                "networks_string" => _("Networks"),
+                "device_string" => _("Device"),
+                "devices_string" => _("Devices"),
+                "from_here_string" => _("From Here"),
+                "to_here_string" => _("To Here"),
+                "cluster_information_string" => _("Information about cluster")
         ));
 
         $this->setInlineScript('reservations_view');
@@ -850,39 +860,39 @@ class reservations extends Controller {
             Common::setSessionVariable('sel_timer', Common::POST('timer'));
     }
 
-    public function cancel($res_id_array) {
-        $cancel_reservations = Common::POST('cancel_checkbox');
-
-        if ($cancel_reservations) {
-
-            $cont = 0;
-
-            $endpoint = "http://" . Framework::$bridgeIp . "/axis2/services/BridgeOSCARS?wsdl";
-            $client = new SoapClient($endpoint, array('cache_wsdl' => 0));
-            if ($result = $client->cancel($cancel_reservations)) {
-                foreach ($result->return as $val) {
-                    if ($val == 0)
-                        $cont++;
-                }
-            }
-
-            sleep(3);
-
-            switch ($cont) {
-                case 0:
-                    $this->setFlash(_("No reservation was cancelled"), "warning");
-                    break;
-                case 1:
-                    $this->setFlash(_("One reservation was cancelled"), "success");
-                    break;
-                default:
-                    $this->setFlash("$cont " . _("reservations were cancelled"), "success");
-                    break;
-            }
-        }
-
-        $this->view($res_id_array);
-    }
+//    public function cancel($res_id_array) {
+//        $cancel_reservations = Common::POST('cancel_checkbox');
+//
+//        if ($cancel_reservations) {
+//
+//            $cont = 0;
+//
+//            $endpoint = "http://" . Framework::$bridgeIp . "/axis2/services/BridgeOSCARS?wsdl";
+//            $client = new SoapClient($endpoint, array('cache_wsdl' => 0));
+//            if ($result = $client->cancel($cancel_reservations)) {
+//                foreach ($result->return as $val) {
+//                    if ($val == 0)
+//                        $cont++;
+//                }
+//            }
+//
+//            sleep(3);
+//
+//            switch ($cont) {
+//                case 0:
+//                    $this->setFlash(_("No reservation was cancelled"), "warning");
+//                    break;
+//                case 1:
+//                    $this->setFlash(_("One reservation was cancelled"), "success");
+//                    break;
+//                default:
+//                    $this->setFlash("$cont " . _("reservations were cancelled"), "success");
+//                    break;
+//            }
+//        }
+//
+//        $this->view($res_id_array);
+//    }
 
     public function delete() {
         $del_reservations = Common::POST("del_checkbox");
@@ -919,6 +929,234 @@ class reservations extends Controller {
 
         $this->show();
     }
+    function create($reservation_info) {
+
+        $oscarsRes = new OSCARSReservation();
+        $res = $reservation_info->getReservationDetails();
+        $dom = new domain_info();
+        $dominio = $dom->getOSCARSDomain($res->urn_src);
+        $oscarsRes->setOscarsUrl($dominio->oscars_ip);
+        $oscarsRes->setDescription($res->res_name);
+        $oscarsRes->setBandwidth($res->bandwidth);
+        $oscarsRes->setSrcEndpoint($res->urn_src);
+        $oscarsRes->setDestEndpoint($res->urn_dst);
+        $oscarsRes->setPathSetupMode('signal-xml');
+        //$oscarsRes->setPath("urn:ogf:network:domain=oscars7.ufrgs.br:node=vlsr2;urn:ogf:network:domain=oscars7.ufrgs.br:node=vlsr1");
+        $oscarsRes->setVlan(true,198);
+        if ($oscarsRes->createReservation()) {
+
+            $new_gri = new gri_info();
+            $new_gri->gri_id = $oscarsRes->getGri();
+            $new_gri->res_id = $reservation_info->res_id;
+            $new_gri->dom_id = $dominio->dom_id;
+            $date = new DateTime();
+            $date->setTimestamp($oscarsRes->getStartTimestamp());
+            $new_gri->start = $date->format('Y-m-d H:i');
+            $date->setTimestamp($oscarsRes->getEndTimestamp());
+            $new_gri->finish = $date->format('Y-m-d H:i');
+            $new_gri->status = $oscarsRes->getStatus();
+            $new_gri->insert();
+        }
+    }
+
+    function query($reservation_info) {
+        //descobrir IP do dominio origem da reserva para enviar ao OSCARS adequado
+        $result = $reservation_info->fetch();
+        $res = $result[0];
+        $flow = new flow_info();
+        $flow->flw_id = $res->flw_id;
+        $flw = $flow->getFlowDetails();
+
+        $gri = new gri_info();
+        $gri->res_id = $reservation_info->res_id;
+        $gris = $gri->fetch();
+
+        foreach ($gris as $g) {
+            $oscarsRes = new OSCARSReservation();
+            $oscarsRes->setOscarsUrl($flw->source->oscars_ip);
+            $oscarsRes->setGri($g->gri_id);
+            $oscarsRes->queryReservation();
+            unset($oscarsRes);
+        }
+    }
+
+    function cancel($reservation_info) {
+        //descobrir IP do dominio origem da reserva para enviar ao OSCARS adequado
+        $result = $reservation_info->fetch();
+        $res = $result[0];
+        $flow = new flow_info();
+        $flow->flw_id = $res->flw_id;
+        $flw = $flow->getFlowDetails();
+
+        $gri = new gri_info();
+        $gri->res_id = $reservation_info->res_id;
+        $gris = $gri->fetch();
+
+        foreach ($gris as $g) {
+            if ($g->status == "ACTIVE" || $g->status == "PENDING" || $g->status == "ACCEPTED") {
+                $oscarsRes = new OSCARSReservation();
+                $oscarsRes->setOscarsUrl($flw->source->oscars_ip);
+                $oscarsRes->setGri($g->gri_id);
+                $oscarsRes->cancelReservation();
+                unset($oscarsRes);
+            }
+        }
+    }
+
+    function listStatus($grisArray) {
+        $oscarsRes = new OSCARSReservation();
+        $oscarsRes->setOscarsUrl("200.132.1.28:8080"); //oscars2
+        $oscarsRes->setGrisString($grisArray);
+        $result = $oscarsRes->listReservations();
+        Framework::debug("result do list", $result);
+    }
+
+    function getTopology() {
+        $oscarsRes = new OSCARSReservation();
+        $oscarsRes->setOscarsUrl("200.132.1.28:8080");
+        $result = $oscarsRes->getTopology();
+        Framework::debug("topology", $result);
+    }
+
+    function send($reservation_info) {
+
+        //configura o domínio origem como o domínio OSCARS origem da reserva
+        //a reserva tem como ponto de origem
+        $flw_id = $reservation_info->get('flw_id');
+        $flow = new flow_info();
+        $flow->flw_id = $flow_id;
+        $dom_src_id = $flow->get('src_dom');
+        $domain = new domain_info();
+        $domain->dom_id = $dom_src_id;
+        $src_dom = $domain->get();
+        //Framework::debug('domain',$dom_src);
+        //cria nova request com o domínio dom_src
+        $newReq = new request_info();
+        $newReq->src_dom = $src_dom->dom_id;
+        $newReq->req_id = $newReq->getNextId('req_id');
+
+        //para buscar o dom_dst_ip
+        $domain->dom_id = $flow->get('dst_dom');
+        $dst_dom = $domain->get();
+        $newReq->dst_dom = $dst_dom->dom_id;
+
+        $newReq->src_usr = AuthSystem::getUserId();
+
+        $newReq->resource_type = 'reservation_info';
+        $newReq->resource_id = $reservation_info->res_id;
+        $newReq->answerable = 'no';
+
+        /**
+         * PARA UM ÚNICO WSDL COM OPERAÇÕES SEPARADAS E PADRONIZADAS PARA ENVIAR
+         * REQUISIÇÃO E ENVIAR RESPOSTA
+         */
+
+        $businessEndpoint = "http://$src_dom->ode_ip/$src_dom->ode_wsdl_path";
+
+        $requestSOAP = array(
+                'req_id' => $newReq->req_id,
+                'dom_src_ip' => $src_dom->oscars_ip,
+                'dom_dst_ip' => $dst_dom->oscars_ip,
+                'usr_src' => $newReq->src_usr);
+
+        Framework::debug('ira enviar para autorizaçao...', $requestSOAP);
+        try {
+            $client = new SoapClient($endpoint, array('cache_wsdl' => 0));
+            $client->startWorkflow($requestSOAP);
+            $newReq->status = 'SENT FOR AUTHORIZATION';
+            $newReq->insert();
+            return true;
+
+        } catch (Exception $e) {
+            Framework::debug("Caught exception: ",  $e->getMessage());
+            $this->setFlash(_('Error at invoking business layer.'));
+            return false;
+        }
+    }
+
+    public function check() {
+        Framework::debug("chegou no controller");
+        $gris = new gri_info();
+        $all = $gris->fetch(FALSE);
+        Framework::debug("gris",$all);
+
+        foreach ($all as $g) {
+            if ($g->send)
+                if ($g->status == "PENDING") {
+                    $now = time();
+                    $start = new DateTime($g->start);
+                    if ($start->getTimestamp() >= $now) {
+                        $reservation_info = new reservation_info();
+                        $reservation_info->res_id = $g->res_id;
+                        $flw_id = $reservation_info->get('flw_id');
+                        $flow = new flow_info();
+                        $flow->flw_id = $flow_id;
+                        $dom_src_id = $flow->get('src_dom');
+                        $domain = new domain_info();
+                        $domain->dom_id = $dom_src_id;
+                        $src_dom = $domain->get();
+                        $oscars_reservation = new OSCARSReservation();
+                        $oscars_reservation->setOscarsUrl($src_dom->oscars_ip);
+
+                        $oscars_reservation->setGri($g->gri_id);
+                        if ($oscars_reservation->createPath()){
+                            $status = $oscars_reservation->getStatus();
+                            $g->updateTo(array("send" => "0", "status" => $status), FALSE);
+                        }
+                    }
+                }
+        }
+    }
+// try {
+//                    $reservation_info = new reservation_info();
+//                    $reservation_info->res_id = $req->get('resource_id');
+//                    $flw_id = $reservation_info->get('flw_id');
+//                    $flow = new flow_info();
+//                    $flow->flw_id = $flw_id;
+//
+//                    $oscarsRes = new OSCARSReservation();
+//
+//                    $oscarsRes->setOscarsUrl($domain->oscars_ip);
+//                    $oscarsRes->setDescription($reservation_info->get('res_name'));
+//                    $oscarsRes->setBandwidth($reservation_info->get('bandwidth'));
+//                    $oscarsRes->setSrcEndpoint($flow->get('urn_src_string'));
+//                    $oscarsRes->setDestEndpoint($flow->get('urn_dst_string'));
+//                    $oscarsRes->setPathSetupMode('signal-xml');
+//
+//                    if ($path = $flow->get('path'))
+//                        $oscarsRes->setPath($path);
+//
+//                    if ($vlan = $flow->get('src_vlan'))
+//                        if ($vlan == 0)
+//                            $oscarsRes->setVlan(false);
+//                        else $oscarsRes->setVlan(true,$vlan);
+//
+//                    if ($oscarsRes->createReservation()) {
+//
+//                        $new_gri = new gri_info();
+//                        $new_gri->gri_id = $oscarsRes->getGri();
+//                        $new_gri->res_id = $reservation_info->res_id;
+//                        $new_gri->dom_id = $dominio->dom_id;
+//                        $date = new DateTime();
+//                        $date->setTimestamp($oscarsRes->getStartTimestamp());
+//                        $new_gri->start = $date->format('Y-m-d H:i');
+//                        $date->setTimestamp($oscarsRes->getEndTimestamp());
+//                        $new_gri->finish = $date->format('Y-m-d H:i');
+//                        $new_gri->status = $oscarsRes->getStatus();
+//                        $new_gri->insert();
+//                        $req->updateTo(array('status' => 'SENT TO OSCARS'), FALSE);
+//                    }
+//
+//                } catch (Exception $e) {
+//                    $req->updateTo(array('status' => 'ERROR SENDING TO OSCARS'), FALSE);
+//
+//                }
+//
+//            } else {
+//                $req->updateTo(array('status' => 'FINISHED'), FALSE);
+//                Framework::debug('requisicao negada', $response['req_id']);
+//                return true;
+//            }
 
 }
 

@@ -10,7 +10,7 @@ include_once 'apps/circuits/models/reservation_info.inc';
 include_once 'apps/circuits/models/flow_info.inc';
 include_once 'apps/circuits/models/timer_info.inc';
 include_once 'apps/domain/models/topology.inc';
-
+include_once 'apps/domain/models/meican_info.inc';
 
 class ws extends Controller {
 
@@ -19,11 +19,14 @@ class ws extends Controller {
         $this->controller = 'ws';
         $this->defaultAction = '';
 
-        $this_ip = Framework::$domIp;
-        $namespace = "http://localhost/qame";
+        $this_meican = new meican_info();
+        $this_ip = $this_meican->getLocalMeicanIp();
+        $this_dir_name = $this_meican->getLocalMeicanDirName();
+
+        $namespace = "http://MEICAN";
         $server = new nusoap_server();
-        $server->configureWSDL("BPM_Strategy_Services", $namespace, "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services");
-        $server->wsdl->schemaTargetNamespace = $namespace;
+        $server->configureWSDL("MEICAN_BPM_SERVICES", $namespace, "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services");
+        //$server->wsdl->schemaTargetNamespace = $namespace;
 
         /**
          * Os tipos array abaixo definidos não funcionam adequadamente quando passados como parâmetro de entrada. No caso de
@@ -48,13 +51,13 @@ class ws extends Controller {
         $server->wsdl->addComplexType('groupTypeList','complexType','array','all','',
                 array('grp' => array('name' => 'grp','type' => 'tns:groupType')));
 
-         $server->wsdl->addComplexType('stringTypeList','complexType','array','all','',
+        $server->wsdl->addComplexType('stringTypeList','complexType','array','all','',
                 array('str' => array('name' => 'str','type' => 'xsd:string')));
 
         $server->wsdl->addComplexType('reqType','complexType','struct','all','',
                 array('resc_id' => array('name' => 'resc_id','type' => 'xsd:int'),
-                      'resc_descr' => array('name' => 'resc_descr','type' => 'xsd:string'),
-                      'resc_type' => array('name' => 'resc_type','type' => 'xsd:string')));
+                'resc_descr' => array('name' => 'resc_descr','type' => 'xsd:string'),
+                'resc_type' => array('name' => 'resc_type','type' => 'xsd:string')));
 
         $server->wsdl->addComplexType('flowType','complexType','struct','all','',
                 array(
@@ -125,7 +128,7 @@ class ws extends Controller {
                 array('usr' => 'tns:userType'),
                 array('usr_list'=> 'tns:userTypeList'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/getUsers",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getUsers",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -135,17 +138,17 @@ class ws extends Controller {
                 array('grp' => 'tns:groupType'),
                 array('grp_list'=> 'tns:groupTypeList'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/getGroups",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getGroups",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
 
         $server->register(
                 'getReqInfo',
-                array('req_id'=>'xsd:int'),
+                array('req_id'=>'xsd:int','dom_src_ip'=>'xsd:string'),
                 array('req_info'=>'tns:reqType'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/getReqInfo",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getReqInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -155,7 +158,7 @@ class ws extends Controller {
                 array('res_id'=>'xsd:int'),
                 array('flow_info'=>'tns:flowType'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/getFlowInfo",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getFlowInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -165,7 +168,7 @@ class ws extends Controller {
                 array('res_id'=>'xsd:int'),
                 array('timer_info'=>'tns:timerType'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/getTimerInfo",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getTimerInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -175,7 +178,7 @@ class ws extends Controller {
                 array('urn_string'=>'xsd:string'),
                 array('urn_info'=>'tns:urnType'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/getURNsInfo",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getURNsInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -185,17 +188,7 @@ class ws extends Controller {
                 array('urn_string'=>'xsd:string'),
                 array('urn_details'=>'tns:netTypeList'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/getURNDetails",
-                'rpc',
-                'encoded',
-                'Complex Hello World Method');
-
-        $server->register(
-                'notifyRequest',
-                array('name'=>'tns:requestType'),
-                array('return'=>'xsd:string'),
-                $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/notifyRequest",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getURNDetails",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -205,7 +198,7 @@ class ws extends Controller {
                 array('name'=>'tns:responseType'),
                 array('return'=>'xsd:string'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/notifyResponse",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/notifyResponse",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -215,7 +208,7 @@ class ws extends Controller {
                 array('usr_dst' => 'xsd:int', 'request' => 'tns:requestType'),
                 array('req_id' => 'xsd:int'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/requestUserAuthorization",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/requestUserAuthorization",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -225,7 +218,7 @@ class ws extends Controller {
                 array('grp_dst'=>'xsd:int', 'request' => 'tns:requestType'),
                 array('req_id'=>'xsd:int'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/requestGroupAuthorization",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/requestGroupAuthorization",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -235,7 +228,7 @@ class ws extends Controller {
                 array('req_id'=>'xsd:int', 'dom_src_ip' => 'xsd:string'),
                 array('path_array' => 'tns:stringTypeList'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/getRequestPath",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getRequestPath",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -245,7 +238,7 @@ class ws extends Controller {
                 array('req_id'=>'xsd:int', 'dom_src_ip' => 'xsd:string', 'new_status' => 'xsd:string'),
                 array('confirmation'=>'xsd:string'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/refreshRequestStatus",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/refreshRequestStatus",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -292,66 +285,74 @@ class ws extends Controller {
             else return NULL;
         }
 
-        function getReqInfo($req_id) {
+        function getReqInfo($req_id, $dom_src_ip) {
             Framework::debug('getreqinfo',$req_id);
-            if (isset($req_id) && is_int($req_id)) {
 
-                $req = new request_info();
-                $req->req_id = $req_id;
-                $req->setDom('dom_src', Framework::$domIp);
-                $req->answerable = 'no';
+            $req = new request_info();
+            $req->req_id = $req_id;
 
-                if ($result = $req->fetch(FALSE)){
-                    $rescTy = $result[0]->resource_type;
-                   
-                    $resource = new $rescTy();
-                    $pk = $resource->getPrimaryKey();
-                    $resource->{$pk} = $result[0]->resource_id;
-                    
-                if ($result2 = $resource->fetch(FALSE)){
+            $domain = new domain_info();
+            $domain->oscars_ip = $dom_src_ip;
+            $req->src_dom = $domain->get('dom_id');
+            $req->answerable = 'no';
+
+            if ($result = $req->fetch(FALSE)) {
+                $rescTy = $result[0]->resource_type;
+
+                $resource = new $rescTy();
+                $pk = $resource->getPrimaryKey();
+                $resource->{$pk} = $result[0]->resource_id;
+
+                if ($result2 = $resource->fetch(FALSE)) {
                     $return = array('resc_id' => $result[0]->resource_id,
-                                 'resc_descr' => $result2[0]->res_name,
-                                 'resc_type' => $rescTy);
+                            'resc_descr' => $result2[0]->res_name,
+                            'resc_type' => $rescTy);
+
                     Framework::debug('return', $return);
                     return $return;
                 }
-                
-                }
-        }
-        return NULL;
+            }
+            return NULL;
         }
 
         function getFlowInfo($res_id) {
             Framework::debug('getflowinfo',$res_id);
-            if (isset($res_id) && is_int($res_id)) {
-                $reservation = new reservation_info();
-                $reservation->res_id = $res_id;
 
-                $res = $reservation->fetch(FALSE);
+            $reservation = new reservation_info();
+            $reservation->res_id = $res_id;
 
-                if (!$res) {
-                    Framework::debug('reservation not found');
-                    return NULL;
-                } else {
+            $flw_id = $reservation->get('flw_id');
 
-                    $flow = new flow_info();
-                    $flow->flw_id = $res[0]->flw_id;
-                    $return = $flow->getFlowDetails2();
-
-                    if ($return) {
-                        return $return;
-
-                    } else {
-                        Framework::debug('flow not found');
-                        return NULL;
-                    }
-                }
-            } else {
-                Framework::debug('res_id not int');
+            if (!$flw_id) {
+                Framework::debug('reservation not found');
                 return NULL;
+            } else {
+
+                $flow = new flow_info();
+                $flow->flw_id = $flw_id;
+                $dom_src_id = $flow->get('src_dom');
+                $dom_dst_id = $flow->get('dst_dom');
+                $domain = new domain_info();
+                $domain->dom_id = $dom_src_id;
+                $dom_src = $domain->get();
+
+                $domain->dom_id = $dom_dst_id;
+                $dom_dst = $domain->get();
+
+                $return = array (
+                        'src_dom_ip' => $dom_src->oscars_ip,
+                        'dst_dom_ip' => $dom_dst->oscars_ip,
+                        'bandwidth' => $reservation->get('bandwidth'),
+                        'src_urn_string' =>  $flow->get('src_urn_string'),
+                        'dst_urn_string' =>  $flow->get('dst_urn_string'),
+                );
+                Framework::debug('return do reqflowinfo', $return);
+                return $return;
             }
         }
 
+
+        /** necessita modificacao **/
         function getTimerInfo($res_id) {
             Framework::debug('gettimerinfo',$res_id);
             if (isset($res_id) && is_int($res_id)) {
@@ -383,6 +384,7 @@ class ws extends Controller {
             } else return NULL;
         }
 
+        /** necessita modificacao **/
         function getURNInfo($urn_string) {
             Framework::debug('geturninfo',$urn_string);
 
@@ -414,6 +416,7 @@ class ws extends Controller {
             return $urn_info;
         }
 
+        /** necessita modificacao **/
         function getURNDetails($urn_string) {
             Framework::debug('geturndetails',$urn_string);
             if (!isset($urn_string)) {
@@ -424,23 +427,49 @@ class ws extends Controller {
             return NULL;
         }
 
-
-        function notifyRequest($request) {
-            Framework::debug('notifyrequest',$request);
-            $app = Framework::loadApp('bpm');
-            $requests = $app->loadController('requests');
-            $ret = $requests->notifyRequest($request);
-
-            return $ret;
-        }
-
         function notifyResponse($response) {
-            Framework::debug('notifyresponse',$response);
-            $app = Framework::loadApp('bpm');
-            $requests = $app->loadController('requests');
-            $ret = $requests->notifyResponse($response);
+            Framework::debug('acionando notify response', $response);
 
-            return $ret;
+            $req = new request_info();
+            $req->req_id = $response['req_id'];
+            $domain = new domain_info();
+            $domain->oscars_ip = $response['dom_src_ip'];
+            $req->src_dom = $domain->get('dom_id');
+            $req->answerable = 'no';
+
+            if (!$req->get('response')) {
+
+                $req->updateTo(array('message' => $response['message'], 'response' => $response['response']), FALSE);
+
+                if ($response['response']=='accept') {
+
+                    Framework::debug('setando campo send nos gris...');
+
+                    $req->updateTo(array("status"=>"AUTHORIZED"),false);
+                    $tmp = new gri_info();
+                    $tmp->res_id = $req->get('resource_id');
+                    $allgris = $tmp->fetch(FALSE);
+
+                    foreach ($allgris as $g) {
+                        $now = time();
+                        $start = new DateTime($g->start);
+                        if ($now < ($start->getTimestamp()-180)) //testa para ver se a reserva está NO MINIMO 3 minutos do tempo atual
+                            $g->updateTo(array("send"=>1));
+                        else  $g->updateTo(array("status"=>"TIMED OUT"));
+                    }
+
+                    
+                } else { //requisicao negada
+                    $req->updateTo(array("status"=>"DENIED"),false);
+                    //as reservas devem ser canceladas no OSCARS
+
+                }
+                return true;
+
+            } else {
+                Framework::debug("essa requisicao já havia sido respondida");
+                return null;
+            }
         }
 
         function requestUserAuthorization($usr_dst, $request) {
@@ -518,24 +547,24 @@ class ws extends Controller {
             }
         }
 
-        function getRequestPath($req_id, $dom_src_ip){
+        function getRequestPath($req_id, $dom_src_ip) {
 
             $path = array (
-                            0 => Framework::$domIp,
-                            1 => 'noc.inf.ufrgs.br:65502',
-                            2 => 'noc.inf.ufrgs.br:65503');
+                    0 => Framework::$domIp,
+                    1 => 'noc.inf.ufrgs.br:65502',
+                    2 => 'noc.inf.ufrgs.br:65503');
 
             return $path;
 
         }
 
-        function refreshRequestStatus($req_id, $dom_src_ip, $new_status){
+        function refreshRequestStatus($req_id, $dom_src_ip, $new_status) {
             Framework::debug('refreshreqstatus', $new_status);
             $req = new request_info();
             $req->req_id = $req_id;
             $req->setDom('dom_src', $dom_src_ip);
 
-            if ($result=$req->fetch(FALSE)){
+            if ($result=$req->fetch(FALSE)) {
                 if ($new_status)
                     if ($update=$req->updateTo(array('status'=>$new_status), FALSE))
                         return TRUE;

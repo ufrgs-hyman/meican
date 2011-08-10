@@ -1,4 +1,5 @@
 <?php
+$init_session = true;
 
 include_once 'framework.conf.php';
 include_once 'includes/auth.inc';

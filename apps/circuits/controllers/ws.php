@@ -4,6 +4,7 @@ require_once 'includes/nuSOAP/lib/nusoap.php';
 include_once 'apps/circuits/models/reservation_info.inc';
 include_once 'apps/circuits/models/flow_info.inc';
 include_once 'apps/circuits/models/timer_info.inc';
+include_once 'apps/domain/models/meican_info.inc';
 
 class ws extends Controller {
 
@@ -12,10 +13,13 @@ class ws extends Controller {
         $this->controller = 'ws';
         $this->defaultAction = '';
 
-        $this_ip = Framework::$domIp;
-        $namespace = "http://localhost/qame";
+        $this_meican = new meican_info();
+        $this_ip = $this_meican->getLocalMeicanIp();
+        $this_dir_name = $this_meican->getLocalMeicanDirName();
+
+        $namespace = "http://MEICAN";
         $server = new nusoap_server();
-        $server->configureWSDL("Circuits_Services", $namespace, "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services");
+        $server->configureWSDL("MEICAN_CIRCUITS_SERVICES", $namespace, "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services");
         $server->wsdl->schemaTargetNamespace = $namespace;
 
         $server->wsdl->addComplexType('resType','complexType','struct','all','',
@@ -48,7 +52,7 @@ class ws extends Controller {
                 array('res_id_list'=>'tns:intTypeList'),
                 array('res_info_list'=>'tns:resTypeList'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/getResInfo",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getResInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -58,7 +62,7 @@ class ws extends Controller {
                 array('res_id'=>'xsd:int'),
                 array('flow_info'=>'tns:flowType'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/getFlowInfo",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getFlowInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -68,7 +72,7 @@ class ws extends Controller {
                 array('res_id'=>'xsd:int'),
                 array('timer_info'=>'tns:timerType'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/getTimerInfo",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getTimerInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');

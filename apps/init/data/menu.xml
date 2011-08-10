@@ -22,8 +22,8 @@
         <item>
             <name>Domains</name>
             <subItem>
-                <name>MEICAN Domains</name>
-                <link>main.php?app=domain&amp;controller=federations&amp;action=show</link>
+                <name>MEICANs</name>
+                <link>main.php?app=domain&amp;controller=meicans&amp;action=show</link>
                 <right></right>
             </subItem>
             <subItem>
@@ -61,7 +61,7 @@
                 <right></right>
             </subItem>
             <subItem>
-                <name>Access Control List</name>
+                <name>Access Control</name>
                 <link>main.php?app=aaa&amp;controller=acl&amp;action=show</link>
                 <right></right>
             </subItem>

@@ -1,5 +1,6 @@
 <?php
-session_start();
+if ($init_session)
+    session_start();
 
 @define ('__FRAMEWORK', 1);
 
@@ -39,6 +40,7 @@ class Framework {
     private static $defaultLang = 'pt_BR.utf8';
 
     public static $debugMode = 1;
+    public static $useACL = false;
 
     /**
      * CUIDADO COM O ENDEREÇO PARA OS WEBSERVICES
@@ -60,7 +62,7 @@ class Framework {
     /**
      * NÃO ALTERAR
      */
-    public static $bridgeIp = '200.132.1.28:8081';
+    public static $OSCARSBridgeEPR = 'http://localhost:8080/axis2/services/OSCARSBridge?wsdl';
 
 
 

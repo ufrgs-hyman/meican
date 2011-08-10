@@ -186,255 +186,46 @@ class requests extends Controller {
         $this->show();
     }
 
-
-//    public function saveReply($rqt = NULL) {
-//        $request = new request_info();
+//    function notifyResponse($response) {
+//        Framework::debug('acionando notify response', $response);
 //
-//        //REPLY realizado localmente
-//        if (!$rqt) {
-//            $request->req_id = Common::POST('req_id');
-//            $request->dom_src = Common::POST('dom_src');
+//        if ($response) {
 //
-//            $response = Common::POST('response');
-//            $message = Common::POST('message');
+//            $req = new request_info();
+//            $req->req_id = $response['req_id'];
+//            $req->setDom('dom_src', $response['dom_src_ip']);
+//            $req->answerable = 'no';
 //
-//            $return = $request->updateTo(array('response' => $response, 'message' => $message), FALSE);
+//            if ($result = $req->updateTo(array('message' => $response['message'], 'response' => $response['response']), FALSE)) {
+//                    if ($response['response'] == 'accept') {
 //
-//            if ($return) {
-//
-//                $request->response = $response;
-//                $request->message = $message;
-//
-//
-//                // $remote = $request->dom_src;
-//                $client = new nusoap_client("http://localhost/Framework::$systemDirName/main.php?app=bpm&services&wsdl",array('cache_wsdl' => 0));
-//
-//                $requestSOAP = array(
-//                        'req_id' => $request->req_id,
-//                        'dom_src' => $request->dom_src,
-//                        'response' => $request->response,
-//                        'message' => $request->message);
-//
-//
-//                $result = $client->call('notifyResponse', array($requestSOAP));
-//
-//                if ($result) {
-//                    $this->setFlash( _('Solicitation successfully saved'), 'success');
-//                    $this->show();
-//                }
-//                else {
-//                    $this->setFlash( _("Fail to save the solicitation at ").$request->dom_dst, 'error');
-//
-//                    //rollback no banco local
-//                    $request->answer = 'None';
-//                    $request->status = 1;
-//
-//                    if ($request->update())
-//                        $this->show();
-//                    else {
-//                        Framework::debug('probleam with database consistency, please check the requests table');
-//                        $this->show();
-//                    }
-//                }
-////                }
-////                else { //pedido de requisição é para o mesmo domínio
-////                    $this->setFlash( _('Solicitation successfully saved'), 'success');
-////                    $this->show();
-////                }
-//            }
-//            else { //não conseguiu adicionar no banco local
-//                $this->setFlash( _("Fail to save at local database"), 'error');
-//                $this->show();
-//            }
-//        } else { //requisição remota, via Web Service
-//            $request->req_id = $rqt['req_id'];
-//            $request->dom_src = $rqt['dom_src'];
-//
-//            $response = $rqt['response'];
-//            $message = $rqt['message'];
-//
-//            if ($request->updateTo(array('response' => $response, 'message' => $message), FALSE))
-//                return TRUE;
-//            else return FALSE;
-//        }
-//    } //function saveReply
-//
-//
-//    function saveRequest($rqt = NULL) {
-//        //Teste se o $request está vindo a partir de um Serviço .wsdl ou do próprio formulário
-//        unset($request);
-//        $request = new request_info();
-//
-//        //Se a nova requisição é local, busca os dados do formulário preenchidos no new request
-//        if ($rqt == NULL) {
-//
-//            $request->dom_src = Framework::$domIp;
-//            $request->req_id = $request->getNextId('req_id');
-//            $request->usr_src = AuthSystem::getUserId();
-//            $request->dom_dst = $_POST['dom_dst'];
-//            $request->urn_src = $_POST['urn_src'];
-//            $request->urn_dst = $_POST['urn_dst'];
-//            $request->bandwidth = $_POST['bandwidth'];
-//
-//            //insere no banco local
-//            $return = $request->insert();
-//
-//            if ($return) {
-//                $request = $return[0];
-//
-//                if ($request->dom_dst != $request->dom_src) {
-//                    //$remote = $request->dom_dst;
-//                    $client = new nusoap_client("http://localhost/Framework::$systemDirName/main.php?app=bpm&services&wsdl",array('cache_wsdl' => 0));
-//
-//                    $requestSOAP = array(
-//                            'req_id' => $request->req_id ,
-//                            'dom_src' => $request->dom_src ,
-//                            'usr_src' => $request->usr_src,
-//                            'dom_dst' => $request->dom_dst,
-//                            'urn_src' => $request->urn_src,
-//                            'urn_dst' => $request->urn_dst,
-//                            'bandwidth' => $request->bandwidth);
-//
-//
-//                    $result = $client->call('', array($requestSOAP));
-//
-//                    if ($result) {
-//                        $this->setFlash( _('Solicitation successfully saved'), 'success');
-//                        $this->show();
-//                    }
-//                    else {
-//                        $this->setFlash( _("Fail to save the solicitation at").$request->dom_dst, 'error');
-//                        if ($request->delete())
-//                            $this->show();
-//                        else {
-//                            Framework::debug('probleam with database consistency, please check the requests table');
-//                            $this->show();
+//                        if ($req->updateTo(array('status' => 'SENT TO OSCARS'), FALSE)){
+//                            //requisicao aceita deve enviar ao OSCARS
+//                            Framework::debug('enviando ao OSCARS...');
+//                            $reservation = $req->fetch(FALSE);
+//                            $res = new oscars($reservation[0]->resource_id);
+//                            if ($res->createReservation())
+//                                return TRUE;
+//                            else {
+//                                Framework::debug('erro ao enviar ao oscars');
+//                                return NULL;
+//                            }
 //                        }
+//                    } else {
+//                        //requisicao negada, termina
+//                        Framework::debug('requisicao negada', $response['req_id']);
+//                        return TRUE;
 //                    }
-//                } else { //pedido de requisição é para o mesmo domínio
-//                    $this->setFlash( _('Solicitation successfully saved'), 'success');
-//                    $this->show();
-//                }
-//
-//            } else { //não conseguiu adicionar no banco local
-//                $this->setFlash( _("Fail to save at local database"), 'error');
-//                $this->show();
-//            }
-//        } else { //requisição remota, via Web Service
-//
-//            $request->req_id = $rqt['req_id'];
-//            $request->dom_src = $rqt['dom_src'];
-//            $request->usr_src = $rqt['usr_src'];
-//            $request->dom_dst = $rqt['dom_dst'];
-//
-//            $request->urn_src = $rqt['urn_src'];
-//            $request->urn_dst = $rqt['urn_dst'];
-//            $request->bandwidth = $rqt['bandwidth'];
-//
-//
-//            if ($request->insert())
-//                return TRUE;
-//            else return FALSE;
-//        }
-//
-//
-//    } //do saveRequest
-//    
-
-//    function sendRequest($request) {
-//
-//        if ($request) {
-//            //insere no banco local
-//            $toinsert = new request_info();
-//            $return = $request->insert();
-//
-//            $client = new nusoap_client("http://localhost:8080/services/ODE",array('cache_wsdl' => 0));
-//
-//            $requestSOAP = array(
-//                    'req_id' => $request->req_id ,
-//                    'dom_src' => $request->dom_src ,
-//                    'usr_src' => $request->usr_src,
-//                    'dom_dst' => $request->dom_dst,
-//                    'urn_src' => $request->urn_src,
-//                    'urn_dst' => $request->urn_dst,
-//                    'bandwidth' => $request->bandwidth);
-//
-//
-//            $result = $client->call('create_reservation', array($requestSOAP));
-//
-//        }
-//    }
-
-//    function notifyRequest($request) {
-//
-//        if ($request) {
-//            //insere no banco local se já nao foi inserido, i.e., se o dom_src != de dom_dst
-//            //if ($request->dom_dst != $request->dom_src)
-//            Framework::debug('request',$request);
-//            $new_request = new request_info();
-//            $new_request->dom_src = $request['dom_src'];
-//            $new_request->req_id = $request['req_id'];
-//            $new_request->usr_src = $request['usr_src'];
-//            $new_request->res_id = $request['res_id'];
-//            $new_request->dom_dst = Framework::$domIp;
-//            //expansao para algo tipo res_details
-//
-//            if ($new_request->insert()) {
-//                return TRUE;
-//
 //            } else {
-//                Framework::debug('fail to save the request by notifyrequest');
-//                return FALSE;
+//                //requisicao nao encontrada no banco local, requisicao nao enviada a este dominio
+//                Framework::debug('req nao encontrada', $response['req_id']);
+//                return NULL;
 //            }
 //        } else {
-//            Framework::debug('notifyrequest without request set');
-//            return FALSE;
-//
+//            Framework::debug('notifyresponse without response set');
+//            return NULL;
 //        }
 //    }
-
-
-
-    function notifyResponse($response) {
-        Framework::debug('acionando notify response', $response);
-
-        if ($response) {
-
-            $req = new request_info();
-            $req->req_id = $response['req_id'];
-            $req->setDom('dom_src', $response['dom_src_ip']);
-            $req->answerable = 'no';
-            
-            if ($result = $req->updateTo(array('message' => $response['message'], 'response' => $response['response']), FALSE)) {
-                    if ($response['response'] == 'accept') {
-                        
-                        if ($req->updateTo(array('status' => 'SENT TO OSCARS'), FALSE)){
-                            //requisicao aceita deve enviar ao OSCARS
-                            Framework::debug('enviando ao OSCARS...');
-                            $reservation = $req->fetch(FALSE);
-                            $res = new oscars($reservation[0]->resource_id);
-                            if ($res->createReservation())
-                                return TRUE;
-                            else {
-                                Framework::debug('erro ao enviar ao oscars');
-                                return NULL;
-                            }
-                        }
-                    } else {
-                        //requisicao negada, termina
-                        Framework::debug('requisicao negada', $response['req_id']);
-                        return TRUE;
-                    }
-            } else {
-                //requisicao nao encontrada no banco local, requisicao nao enviada a este dominio
-                Framework::debug('req nao encontrada', $response['req_id']);
-                return NULL;
-            }
-        } else {
-            Framework::debug('notifyresponse without response set');
-            return NULL;
-        }
-    }
 } //class requests
 
 ?>

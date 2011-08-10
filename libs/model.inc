@@ -75,30 +75,30 @@ class Model {
      * @return <boolean> FALSE: no object found
      * @return <array> Object Model: objects were found
      */
-    public function fetch($useACL=TRUE) {
+    public function fetch($useACL = false) {
         unset($allowPks);
         $tableName = $this->getTableName();
         $whereArgsString = $this->buildWhere();
 
-            if ($useACL) {
-                $acl = new AclLoader();
-                $allowPks = $acl->getAllowedPKey('read', $tableName);
-                
-                if ($allowPks){
-                    $inString = implode(',',$allowPks);
-                    $pk = $this->getPrimaryKey();
-                    if ($whereArgsString)
-                        $sql = "SELECT * FROM `$tableName` WHERE $whereArgsString AND $pk IN ($inString)";
-                    else $sql = "SELECT * FROM `$tableName` WHERE $pk IN ($inString)";
-                } else return FALSE; //sem acesso a nada
+        if ($useACL) {
+            $acl = new AclLoader();
+            $allowPks = $acl->getAllowedPKey('read', $tableName);
 
-            } else { //sem ACL
-                    if ($whereArgsString)
-                        $sql = "SELECT * FROM `$tableName` WHERE $whereArgsString";
-                    else $sql = "SELECT * FROM `$tableName`";
-            }
-            //Framework::debug("fetch",$sql);
-            return $this->fetchSql($sql,$tableName);
+            if ($allowPks) {
+                $inString = implode(',',$allowPks);
+                $pk = $this->getPrimaryKey();
+                if ($whereArgsString)
+                    $sql = "SELECT * FROM `$tableName` WHERE $whereArgsString AND $pk IN ($inString)";
+                else $sql = "SELECT * FROM `$tableName` WHERE $pk IN ($inString)";
+            } else return FALSE; //sem acesso a nada
+
+        } else { //sem ACL
+            if ($whereArgsString)
+                $sql = "SELECT * FROM `$tableName` WHERE $whereArgsString";
+            else $sql = "SELECT * FROM `$tableName`";
+        }
+        //Framework::debug("fetch",$sql);
+        return $this->fetchSql($sql,$tableName);
     }
 
     /**
@@ -212,66 +212,67 @@ class Model {
 
         if (!$alt)
             return FALSE;
-        
-           
+
+
         $tableName = $this->getTableName();
         $values = get_object_vars($this);
-    
+
         $validInds = $this->getValidInds();
         unset($setArgs);
-        foreach ($alt as $ind => $val){
-       
-                if ($val && array_search($ind, $validInds) !== FALSE){ //indice valido
+        foreach ($alt as $ind => $val) {
 
-                     if ($this->attributes[$ind]->type == "VARCHAR")
-                            $alt[$ind] = "\"".$alt[$ind]."\"";
+            if ($val && array_search($ind, $validInds) !== FALSE) { //indice valido
+
+                if ($this->attributes[$ind]->type == "VARCHAR")
+                    $alt[$ind] = "\"".$alt[$ind]."\"";
                 $setArgs[] = "$ind=$alt[$ind]";
-                }
+            }
         }
-        
+
         if (isset($setArgs))
             $setArgsString = implode(',',$setArgs);
         else return FALSE;
-        
+
         if (!$setArgsString)
             return FALSE;
-      
-       $whereArgsString = $this->buildWhere();
+
+        $whereArgsString = $this->buildWhere();
 
         if ($useACL) {
-           
-                $acl = new AclLoader();
-                $allowPks = $acl->getAllowedPKey('update', $tableName);
 
-                if ($allowPks){
-                    $inString = implode(',',$allowPks);
-                    $pk = $this->getPrimaryKey();
-                    if ($whereArgsString){
-                        $sql = "UPDATE $tableName SET $setArgsString WHERE $whereArgsString AND $pk IN ($inString)";
-                        $sqlfetch = "SELECT * FROM $tableName WHERE $whereArgsString AND $pk IN ($inString)";
-                    }
-                    else { $sql = "UPDATE $tableName WHERE $pk IN ($inString)";
-                            $sqlfetch = "SELECT * FROM $tableName WHERE $pk IN ($inString)";
-                    }
-                } else return FALSE; //sem acesso a nada
+            $acl = new AclLoader();
+            $allowPks = $acl->getAllowedPKey('update', $tableName);
 
-            } else { //sem ACL
-                
-                    if ($whereArgsString) {
-                        $sql = "UPDATE $tableName SET $setArgsString WHERE $whereArgsString";
-                        $sqlfetch = "SELECT * FROM $tableName WHERE $whereArgsString";
-                        }
-                    else $sql = "UPDATE $tableName SET $setArgsString";
+            if ($allowPks) {
+                $inString = implode(',',$allowPks);
+                $pk = $this->getPrimaryKey();
+                if ($whereArgsString) {
+                    $sql = "UPDATE $tableName SET $setArgsString WHERE $whereArgsString AND $pk IN ($inString)";
+                    $sqlfetch = "SELECT * FROM $tableName WHERE $whereArgsString AND $pk IN ($inString)";
+                }
+                else {
+                    $sql = "UPDATE $tableName WHERE $pk IN ($inString)";
+                    $sqlfetch = "SELECT * FROM $tableName WHERE $pk IN ($inString)";
+                }
+            } else return FALSE; //sem acesso a nada
+
+        } else { //sem ACL
+
+            if ($whereArgsString) {
+                $sql = "UPDATE $tableName SET $setArgsString WHERE $whereArgsString";
+                $sqlfetch = "SELECT * FROM $tableName WHERE $whereArgsString";
             }
-            
-            $resfetch = $this->fetchSql($sqlfetch, $tableName);
+            else $sql = "UPDATE $tableName SET $setArgsString";
+        }
 
-            Framework::debug('sql update',$sql);
+        $resfetch = $this->fetchSql($sqlfetch, $tableName);
 
-            if (!$resfetch)
-                return FALSE;
-            else return $this->querySql($sql);
-       
+        Framework::debug('sql update',$sql);
+
+        if (!$resfetch)
+            return FALSE;
+        else return $this->querySql($sql);
+
 
 
     } //do updateto
@@ -281,7 +282,7 @@ class Model {
      * @return <object> Object : the inserted object
      */
     public function insert() {
-    
+
         $classname = $this->getTableName();
         $values = get_object_vars($this);
         $isFirst = true;
@@ -323,14 +324,14 @@ class Model {
     public function delete($useACL = TRUE) {
         $tableName = $this->getTableName();
         $pk = $this->getPrimaryKey();
-        
+
         $fetch = $this->fetch(FALSE);
 
         if (!$fetch)
             return FALSE;
 
         $toDelete = array();
-        foreach ($fetch as $f){ //retorna todas as chaves primarias para deletar
+        foreach ($fetch as $f) { //retorna todas as chaves primarias para deletar
             $toDelete[] = $f->{$pk};
         }
 
@@ -344,26 +345,26 @@ class Model {
         if ($useACL) {
             $acl = new AclLoader();
             $restr = $acl->getAllowedPKey('delete',$tableName);
-          
+
             //delete nao permite where do tipo IN
-            foreach ($toDelete as $d){
+            foreach ($toDelete as $d) {
                 Framework::debug('fe',$d);
-                if (array_search($d, $restr) !== FALSE){ //verifica se a chave q quer deletar está dentro das permissoes
+                if (array_search($d, $restr) !== FALSE) { //verifica se a chave q quer deletar está dentro das permissoes
                     if ($this->attributes[$pk]->type == "VARCHAR")
-                             $whereArgs[] = "`$pk`='$d'";
-                     else $whereArgs[] = "`$pk`=$d";
+                        $whereArgs[] = "`$pk`='$d'";
+                    else $whereArgs[] = "`$pk`=$d";
                 }
-                }
-            
+            }
+
         } else {
-            foreach ($toDelete as $d){
-                    if ($this->attributes[$pk]->type == "VARCHAR")
-                             $whereArgs[] = "`$pk`='$d'";
-                     else $whereArgs[] = "`$pk`=$d";
+            foreach ($toDelete as $d) {
+                if ($this->attributes[$pk]->type == "VARCHAR")
+                    $whereArgs[] = "`$pk`='$d'";
+                else $whereArgs[] = "`$pk`=$d";
             }
         }
 
-      
+
         $sql = NULL;
         if ($whereArgs) {
             $whereArgsString = implode(' OR ', $whereArgs);
@@ -448,7 +449,7 @@ class Model {
         }
     }
 
-    function buildWhere($implode = TRUE){
+    function buildWhere($implode = TRUE) {
         $values = get_object_vars($this);
         $validInds = $this->getValidInds();
 
@@ -472,7 +473,7 @@ class Model {
 
     }
 
-    function getNextId($field){
+    function getNextId($field) {
         $tableName = $this->getTableName();
         $whereString = $this->buildWhere();
 
@@ -482,13 +483,19 @@ class Model {
 
         $result = $this->fetchSql($sql, $tableName);
 
-        if ($result){
+        if ($result) {
             $last = $result[0]->{$field};
             return $last + 1;
         }
         return FALSE;
 
-}
+    }
+    public function get($field=false) {
+        $tmp = $this->fetch();
+        if ($field)
+            return $tmp[0]->{$field};
+        else return $tmp[0];
+    }
 }
 
 ?>

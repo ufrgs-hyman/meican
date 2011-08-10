@@ -4,19 +4,19 @@ defined ('__FRAMEWORK') or die ("Invalid access.");
 
 include_once 'libs/controller.php';
 
-include_once 'apps/domain/models/federation_info.inc';
+include_once 'apps/domain/models/meican_info.inc';
 
-class federations extends Controller {
+class meicans extends Controller {
 
-    public function federations() {
+    public function meicans() {
         $this->app = 'domain';
-        $this->controller = 'federations';
+        $this->controller = 'meicans';
         $this->defaultAction = 'show';
     }
 
     public function show() {
 
-        $fed = new federation_info();
+        $fed = new meican_info();
         $allFederations = $fed->fetch(FALSE);
 
         if ($allFederations) {
@@ -24,12 +24,14 @@ class federations extends Controller {
 
             foreach ($allFederations as $f) {
                 $federation = new stdClass();
-                $federation->id = $f->fed_id;
-                $federation->descr = $f->fed_descr;
-                $federation->ip = $f->fed_ip;
+                $federation->id = $f->meican_id;
+                $federation->descr = $f->meican_descr;
+                $federation->ip = $f->meican_ip;
+                $federation->dir_name = $f->meican_dir_name;
 
                 $federations[] = $federation;
             }
+            Framework::debug("meicans",$federations);
             $this->setAction('show');
 
             $this->setArgsToBody($federations);
@@ -55,12 +57,12 @@ class federations extends Controller {
         $ip_addr = Common::POST("fed_ip");
 
         if ($fed_descr && $ip_addr) {
-            $federation = new federation_info();
-            $federation->fed_descr = $fed_descr;
-            $federation->fed_ip = $ip_addr;
+            $federation = new meican_info();
+            $federation->meican_descr = $fed_descr;
+            $federation->meican_ip = $ip_addr;
 
             if ($federation->insert()) {
-                $this->setFlash(_("Federation")." '$federation->fed_descr' "._("added"), "success");
+                $this->setFlash(_("Federation")." '$federation->meican_descr' "._("added"), "success");
                 $this->show();
                 return;
             } else $this->setFlash(_("Fail to create federation"), "error");
@@ -80,8 +82,8 @@ class federations extends Controller {
             return;
         }
 
-        $fed_info = new federation_info();
-        $fed_info->fed_id = $fedId;
+        $fed_info = new meican_info();
+        $fed_info->meican_id = $fedId;
         $federation = $fed_info->fetch(FALSE);
 
         if (!$federation) {
@@ -109,13 +111,13 @@ class federations extends Controller {
         $ip_addr = Common::POST("fed_ip");
 
         if ($fed_descr && $ip_addr) {
-            $federation = new federation_info();
-            $federation->fed_id = $fedId;
-            $federation->fed_descr = $fed_descr;
-            $federation->fed_ip = $ip_addr;
+            $federation = new meican_info();
+            $federation->meican_id = $fedId;
+            $federation->meican_descr = $fed_descr;
+            $federation->meican_ip = $ip_addr;
 
             if ($federation->update()) {
-                $this->setFlash(_("Federation")." '$federation->fed_descr' "._("updated"), "success");
+                $this->setFlash(_("Federation")." '$federation->meican_descr' "._("updated"), "success");
                 $this->show();
                 return;
             } else $this->setFlash(_("No change has been made"), "warning");
@@ -128,12 +130,12 @@ class federations extends Controller {
     public function delete() {
         if ($del_feds = Common::POST('del_checkbox')) {
             foreach ($del_feds as $fedId) {
-                $federation = new federation_info();
+                $federation = new meican_info();
                 $federation->fed_id = $fedId;
                 $tmp = $federation->fetch(FALSE);
                 $result = $tmp[0];
                 if ($federation->delete())
-                    $this->setFlash(_("Federation") . " '$result->fed_descr' " . _("deleted"), 'success');
+                    $this->setFlash(_("Federation") . " '$result->meican_descr' " . _("deleted"), 'success');
             }
         }
 

@@ -5,6 +5,7 @@ include_once 'apps/domain/models/topology.inc';
 
 include_once 'apps/aaa/models/user_info.inc';
 include_once 'apps/aaa/models/group_info.inc';
+include_once 'apps/domain/models/meican_info.inc';
 
 
 class ws extends Controller {
@@ -14,23 +15,26 @@ class ws extends Controller {
         $this->controller = 'ws';
         $this->defaultAction = '';
 
-        $this_ip = Framework::$domIp;
-        $namespace = "http://localhost/qame";
+        $this_meican = new meican_info();
+        $this_ip = $this_meican->getLocalMeicanIp();
+        $this_dir_name = $this_meican->getLocalMeicanDirName();
+
+        $namespace = "http://MEICAN";
         $server = new nusoap_server();
-        $server->configureWSDL("Circuits_Services", $namespace, "http://$this_ip/".Framework::$systemDirName."/main.php?app={$this->app}&amp;services");
-        $server->wsdl->schemaTargetNamespace = "http://schemas.xmlsoap.org/soap/encoding/";
+        $server->configureWSDL("MEICAN_AAA_SERVICES", $namespace, "http://$this_ip/$this_dir_name/main.php?app={$this->app}&amp;services");
+        //$server->wsdl->schemaTargetNamespace = "http://schemas.xmlsoap.org/soap/encoding/";
 
         $server->wsdl->addComplexType('userType','complexType','struct','all','',
                 array('usr_id' => array('name' => 'usr_id','type' => 'xsd:int'),
                 'usr_name' => array('name' => 'usr_name','type' => 'xsd:string')));
 
-        $server->wsdl->addComplexType('userTypeList','complexType','array','','SOAP-ENC:Array',array(),
+        $server->wsdl->addComplexType('userTypeList','complexType','array','','http://schemas.xmlsoap.org/soap/encoding/:Array',array(),
                 array( array('ref' => 'SOAP-ENC:arrayType','wsdl:arrayType' => 'tns:userType[]'),
                 'tns:userType'));
 
         $server->wsdl->addComplexType('groupType','complexType','struct','all','',
                 array('grp_id' => array('name' => 'grp_id','type' => 'xsd:int'),
-                      'grp_descr' => array('name' => 'grp_descr','type' => 'xsd:string')));
+                'grp_descr' => array('name' => 'grp_descr','type' => 'xsd:string')));
 
         $server->wsdl->addComplexType('groupTypeList','complexType','array','','SOAP-ENC:Array',array(),
                 array( array('ref' => 'SOAP-ENC:arrayType','wsdl:arrayType' => 'tns:groupType[]'),
@@ -41,11 +45,10 @@ class ws extends Controller {
                 array('usr' => 'tns:userType'),
                 array('usr_list'=> 'tns:userTypeList'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/getUsers",
+                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getUsers",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
-
         $server->register(
                 'getGroups',
                 array('grp' => 'tns:groupType'),
@@ -55,6 +58,7 @@ class ws extends Controller {
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
+
 
         function getUsers($usr) {
             Framework::debug('getusers',$usr);
@@ -76,7 +80,6 @@ class ws extends Controller {
                 return $return;
             else return NULL;
         }
-
         function getGroups($grp) {
             $group = new group_info();
 

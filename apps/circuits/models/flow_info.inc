@@ -19,6 +19,8 @@ class flow_info extends Resource_Model {
         $this->addAttribute("dst_dom", "INTEGER");
         $this->addAttribute("dst_urn_string", "VARCHAR");
         $this->addAttribute("dst_vlan", "INTEGER");
+
+        $this->addAttribute("path", "VARCHAR");
     }
 
 //    public function insert() {
@@ -82,7 +84,7 @@ class flow_info extends Resource_Model {
             return FALSE;
         } else {
 
-            $ret = $this->fetch();
+            $ret = $this->fetch(FALSE);
             if (!$ret) {
                 return FALSE;
             }
@@ -91,19 +93,22 @@ class flow_info extends Resource_Model {
             $domain = new domain_info();
             $domain->dom_id = $flow->src_dom;
             $dom = $domain->fetch(FALSE);
-            $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=domain&services&wsdl";
 
-            $ws = new nusoap_client($endpoint,array('cache_wsdl' => 0));
-            $urnDetailsRet = $ws->call('getURNDetails', array($flow->src_urn_string));
+//            //chamada de web service para buscar os dados completos da URN
+//            $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=domain&services&wsdl";
+//            $ws = new nusoap_client($endpoint,array('cache_wsdl' => 0));
+//            $urnDetailsRet = $ws->call('getURNDetails', array($flow->src_urn_string));
 
+            $urnDetailsRet = Topology::getURNDetails($dom[0]->dom_id, $src_urn_string);
             $flowData = new stdClass();
 
             $flowData->id = $flow->flw_id;
             $flowData->name = $flow->flw_name;
+            $flowData->path = $flow->path;
 
             $flowData->source->domain = $dom[0]->dom_descr;
             $flowData->source->dom_id = $dom[0]->dom_id;
-            $flowData->source->dom_ip = $dom[0]->dom_ip;
+            $flowData->source->oscars_ip = $dom[0]->oscars_ip;
             $flowData->source->vlan = $flow->src_vlan;
             $flowData->source->urn = $flow->src_urn_string;
 
@@ -121,14 +126,16 @@ class flow_info extends Resource_Model {
             $domain = new domain_info();
             $domain->dom_id = $flow->dst_dom;
             $dom = $domain->fetch(FALSE);
-            $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=domain&services&wsdl";
 
-            $ws = new nusoap_client($endpoint,array('cache_wsdl' => 0));
-            $urnDetailsRet = $ws->call('getURNDetails', array($flow->dst_urn_string));
+            //chamada de web service para buscar os dados completos da URN
+//            $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=domain&services&wsdl";
+//            $ws = new nusoap_client($endpoint,array('cache_wsdl' => 0));
+//            $urnDetailsRet = $ws->call('getURNDetails', array($flow->dst_urn_string));
 
+            $urnDetailsRet = Topology::getURNDetails($dom[0]->dom_id, $dst_urn_string);
             $flowData->dest->domain = $dom[0]->dom_descr;
             $flowData->dest->dom_id = $dom[0]->dom_id;
-            $flowData->dest->dom_ip = $dom[0]->dom_ip;
+            $flowData->dest->oscars_ip = $dom[0]->oscars_ip;
             $flowData->dest->vlan = $flow->dst_vlan;
             $flowData->dest->urn = $flow->dst_urn_string;
 
@@ -146,6 +153,11 @@ class flow_info extends Resource_Model {
             return $flowData;
         }
     }
+
+    
+  
+
+
 
 }
 

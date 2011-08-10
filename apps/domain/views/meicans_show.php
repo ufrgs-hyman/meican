@@ -4,7 +4,7 @@ $federations = $this->passedArgs;
 
 ?>
 
-<h1><?php echo _("Federations"); ?></h1>
+<h1><?php echo _("MEICANs"); ?></h1>
 
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
 
@@ -15,7 +15,7 @@ $federations = $this->passedArgs;
             <th></th>
             <th></th>
             <th><?php echo _("Name"); ?></th>
-            <th><?php echo _("Federation IP"); ?></th>
+            <th><?php echo _("MEICAN IP"); ?></th>
         </tr>
         </thead>
 
