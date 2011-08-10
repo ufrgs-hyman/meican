@@ -1,8 +1,13 @@
 <!-- TIMER -->
 <br/>
-<div align="center">
-    <?php $this->addElement('timer_form', $argsToElement); ?>
-</div>
+<table>
+    <tr>
+        <td style="width:1%"></td>
+        <td>
+            <?php $this->addElement('timer_form', $argsToElement); ?>
+        </td>
+    </tr>
+</table>
 <br/>
 
 <div class="controls">

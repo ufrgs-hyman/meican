@@ -40,22 +40,40 @@ $freq_types[] = $freq;
     <ul class="tabs inactive" id="ul-tabs">
         <li id="t1" class="ui-state-disabled"><a href="#tab1" class="link_tab"><?php echo _('Endpoints & Bandwidth'); ?></a></li>
         <li id="t2" class="ui-state-disabled"><a href="#tab2" class="link_tab"><?php echo _('Timer'); ?></a></li>
-        <li id="t3" class="ui-state-disabled"><a href="#tab3" class="link_tab"><?php echo _('Confirmation'); ?></a></li>
+        <li id="t3" class="ui-state-disabled confirm"><a href="#tab3" class="confirm"><?php echo _('Confirmation'); ?></a></li>
     </ul>
     
     <div class="tab_container inactive" id="div-tabs">
         
         <div id="tab1" class="cont_tab" style="display: none">
             
-            <br/><br/>
-            <div align="center" style="font-weight: bold;">
-                <?php echo _("Endpoints"); ?>
-            </div>            
+            <br/>         
+            <table style="width:100%">
+                <tr>
+                    <td style="width:1%"></td>
+                    <td>
+                        <?php echo _("<h1>Endpoints</h1>"); ?>
+                    </td>
+                    <td style="width:1%"></td>
+                </tr>
+                <tr>
+                    <td style="width:1%"></td>
+                    <td>
+                        <?php echo _("Select the Origin and Destination Networks by clicking on the Map Markers with any button and then choosing an option from the pop-up menu."); ?>
+                    </td>
+                    <td style="width:1%"></td>
+                </tr>
+                <tr>
+                    <td style="width:1%"></td>
+                    <td>
+                        <?php echo _("Once you select the Endpoints, choose the Device and Port settings on the right side."); ?>
+                    </td>
+                    <td style="width:1%"></td>
+                </tr>                
+            </table>
             
             <?php $this->addElement('reservation_tab2'); ?>
-            <div align="center">
-                <input type="button" id="clearpath" class="clear" value="<?php echo _('Clear'); ?>" onClick="edit_clearAll();"/>
-            </div>
+
             <br/><br/>
             
             <div id="div-bandwidth">

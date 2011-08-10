@@ -1,14 +1,13 @@
 <!-- Endpoints -->
-<br/><br/>
-<div align="center" style="width:100%;">
+<br/>
+<div style="width:100%;">
     <table style="width:100%">
         <tr style="width:100%">
-            <td style="width:10%"></td>
-            <td style="width:40%">
-                <div id="edit_map_canvas"></div>
+            <td style="width:50%">
+                <div id="edit_map_canvas" style="width:100%; min-width:200px"></div>
             </td>
-            <td style="width:40%">
-                <div id="advOptions" style="width: 100%; display:none">
+            <td style="width:45%">
+                <div id="advOptions" style="width: 100%">
                     <table style="width: 100%; border: 1px solid #3a5879">
                         <tr>
                             <th></th>
@@ -89,6 +88,7 @@
                             <td colspan="3">
                                 <span id="writeHops"></span> 
                                 <hr/>
+                                <input type="button" id="clearpath" class="clear" value="<?php echo _('Clear'); ?>" onClick="edit_clearAll();"/>
                                 <input type="button" class="add" id="addHopsButton" value="Add new Hop" onclick="moreFields();"/>                                    
                             </td>
                         </tr>

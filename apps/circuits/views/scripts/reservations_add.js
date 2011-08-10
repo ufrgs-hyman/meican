@@ -4,7 +4,10 @@ function createTabs(){
     $("ul.tabs li").click(function() {
         if ($("#t1").attr("class") != "ui-state-disabled") {
             clearFlash();
-            if (($(this).attr("id") == "t3") && ($("#t3").attr("class") == "ui-state-disabled")){
+            //            if (($(this).attr("id") == "t3") && ($("#t3").attr("class") == "ui-state-disabled confirm")){
+            //                return false;
+            //            }
+            if (($(this).attr("id") == "t3") && !validateReservationForm()) {
                 return false;
             }
             previousTab = currentTab;
@@ -536,9 +539,50 @@ function edit_addMarker(location, domain_id, domain_name, network_id, network_na
         map:edit_map
     });
 
-    google.maps.event.addListener(marker, "click", function() {
-        edit_markerClick(location, domain_id, domain_name, network_id, network_name);
-    });
+    //    google.maps.event.addListener(marker, "click", function() {
+    //        edit_markerClick(location, domain_id, domain_name, network_id, network_name);
+    //    });
+    
+    google.maps.event.addListener(marker, "click", function() {  
+        contextMenu.find('a').click( function() {
+            // fade out the menu
+            contextMenu.fadeOut(75);
+
+            // The link's href minus the #
+            var action = $(this).attr('href').substr(1);
+            switch ( action )
+            {
+                case 'fromHere':                  
+                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "src");
+                    break;
+                case 'toHere':               
+                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "dst");
+                    break;
+            }
+            return false;
+        });
+    
+        var projection = overlay.getProjection(),
+        pos = projection.fromLatLngToContainerPixel(location),
+        x = pos.x,
+        y = pos.y;
+        selectedMarker.setMap(null);
+            
+        // save the clicked location
+
+        // adjust if clicked to close to the edge of the map
+        if (x > mapDiv.width() - contextMenu.width())
+            x -= contextMenu.width();
+        
+        if (y > mapDiv.height() - contextMenu.height())
+            y -= contextMenu.height();
+
+        // Set the location and fade in the context menu
+        contextMenu.css({
+            top: y,
+            left: x
+        }).fadeIn(100);         
+    });    
 
     google.maps.event.addListener(marker, "mouseover", function() {
 
@@ -569,124 +613,108 @@ function edit_addMarker(location, domain_id, domain_name, network_id, network_na
   
     // Display and position the menu
     google.maps.event.addListener(marker, 'rightclick', function() {
-        if (path.length != 2) {
-            contextMenu.hide();
-            contextMenu.find('a').click( function() {
-                // fade out the menu
-                contextMenu.fadeOut(75);
+        contextMenu.find('a').click( function() {
+            // fade out the menu
+            contextMenu.fadeOut(75);
 
-                // The link's href minus the #
-                var action = $(this).attr('href').substr(1);
-
-                switch ( action )
-                {
-                    case 'fromHere':
-                        edit_markerClick(location, domain_id, domain_name, network_id, network_name);
-                        break;
-                    case 'toHere':
-                        edit_markerClick(location, domain_id, domain_name, network_id, network_name);
-                        break;
-                }
-                return false;
-            });
-            var projection = overlay.getProjection(),
-            pos = projection.fromLatLngToContainerPixel(location),
-            x = pos.x,
-            y = pos.y;
-            selectedMarker.setMap(null);
+            // The link's href minus the #
+            var action = $(this).attr('href').substr(1);
+            switch ( action )
+            {
+                case 'fromHere':
+                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "src");
+                    break;
+                case 'toHere':
+                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "dst");
+                    break;
+            }
+            return false;
+        });
+    
+        var projection = overlay.getProjection(),
+        pos = projection.fromLatLngToContainerPixel(location),
+        x = pos.x,
+        y = pos.y;
+        selectedMarker.setMap(null);
             
-            // save the clicked location
+        // save the clicked location
 
-            // adjust if clicked to close to the edge of the map
-            if (x > mapDiv.width() - contextMenu.width())
-                x -= contextMenu.width();
+        // adjust if clicked to close to the edge of the map
+        if (x > mapDiv.width() - contextMenu.width())
+            x -= contextMenu.width();
         
-            if (y > mapDiv.height() - contextMenu.height())
-                y -= contextMenu.height();
+        if (y > mapDiv.height() - contextMenu.height())
+            y -= contextMenu.height();
 
-            // Set the location and fade in the context menu
-            contextMenu.css({
-                top: y,
-                left: x
-            }).fadeIn(100);
-        }
-    });  
-
+        // Set the location and fade in the context menu
+        contextMenu.css({
+            top: y,
+            left: x
+        }).fadeIn(100);  
+    });
+ 
+    
     edit_markersArray.push(marker);
     marker.setMap(edit_map);
 }
 
 //funcao que gerencia os "clicks" nos marcadores
-function edit_markerClick(location, domain_id, domain_name, network_id, network_name){
-    contextMenu.hide();
-  
-    selectedMarker = new StyledMarker({
-        domain_id: domain_id,
-        domain_name: domain_name,
-        id: network_id,
-        label: network_name,
-        position: location,
-        clickable: false,
-        styleIcon: new StyledIcon(StyledIconTypes.MARKER,{
-            color:"eee"
-        }),
-        map:edit_map
-    });   
-        
-    for (var i = 0; i < edit_markersArray.length; i++) {
-        if ((edit_markersArray[i].id == network_id) && (edit_markersArray[i].position == location)) {
-            edit_markersArray[i].setClickable(false);
-        }
-    }
-    
-    selectedMarker.setMap(edit_map);
-    edit_selectedMarkers.push(selectedMarker);
-    
-    path.push(location);                
-    
-    if (path.length == 1) {
-        contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
-        contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
-        contextMenu.bind('contextmenu', function() {
-            return false;
-        });
-        $(edit_map.getDiv()).append(contextMenu);
+function edit_markerClick(location, domain_id, domain_name, network_id, network_name, where){
+    contextMenu.hide();      
 
-    } else if (path.length == 2) {
-        contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
-        contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
-        contextMenu.bind('contextmenu', function() {
-            return false;
-        });
-        $(edit_map.getDiv()).append(contextMenu);
-    }    
-    
-    if (path.length == 1 ) {
+    if (where == "src") {
         $("#src_domain").html(domain_name);
         $("#src_network").html(network_name);
         $("#confirmation_src_domain").html(domain_name);
         $("#confirmation_src_network").html(network_name);        
-        map_changeNetwork("src", network_id, domain_id);
-        
-    } else if (path.length == 2) {        
-        for (i = 0; i < edit_markersArray.length; i++) {
-            if ((edit_markersArray[i].position != path[0]) && (edit_markersArray[i].position != path[1]))
-                edit_markersArray[i].setMap(null);
-        }         
-        edit_drawPath(path);        
-        showSlider();
+        map_changeNetwork("src", network_id, domain_id);       
+        path[0] = {
+            domain_id: domain_id,
+            domain_name: domain_name,
+            network_id: network_id,
+            network_name: network_name,
+            position: location,
+            color: "eee"
+        };
+    } else if (where == "dst") {
         $("#dst_domain").html(domain_name);
         $("#dst_network").html(network_name);
         $("#confirmation_dst_domain").html(domain_name);
         $("#confirmation_dst_network").html(network_name);        
-        map_changeNetwork("dst", network_id, domain_id);        
-        $('#advOptions').slideToggleWidth();  
-        window.scroll(0, 650);
-        if (tab2_valid) {
-            $("#t3").removeClass("ui-state-disabled");
-        } 
-        validateTab1();
+        map_changeNetwork("dst", network_id, domain_id);  
+        path[1] = {
+            domain_id: domain_id,
+            domain_name: domain_name,
+            network_id: network_id,
+            network_name: network_name,
+            position: location,
+            color: "eee"
+        };
     }
+    
+    contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
+    contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
+    contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
+    contextMenu.bind('contextmenu', function() {
+        return false;
+    });
+    $(edit_map.getDiv()).append(contextMenu);
+    
+    if (path.length == 2) {  
+        edit_clearLines();
+        var lines = new Array();
+        lines.push(path[0].position);
+        lines.push(path[1].position);
+        edit_drawPath(lines);        
+        showSlider();        
+        window.scroll(0, 650);
+            
+    }
+    
+    if (tab2_valid) {
+        $("#t3").removeClass("ui-state-disabled");
+    } 
+    validateTab1();     
 }
 
 // desenha uma linha entre dois endpoints selecionados
@@ -727,12 +755,14 @@ function edit_clearAll(){
         $('#advOptions').slideToggleWidth();  
     }
     edit_clearLines();
+    path = [];
     edit_clearMarkers();    
     edit_clearTopologyMarkers();
     edit_setBounds(edit_bounds);
     
     contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
     contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
+    contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
     contextMenu.bind('contextmenu', function() {
         return false;
     });
@@ -741,7 +771,6 @@ function edit_clearAll(){
     edit_initializeMap();
     
     view_clearAll();
-     
     
     validateTab1();
     if (tab2_valid) {
@@ -754,7 +783,6 @@ function edit_clearLines() {
     for (var i = 0; i < edit_lines.length; i++) {
         edit_lines[i].setMap(null);
     }  
-    path = [];
 }
 
 //limpa os marcadores do mapa de edicao
@@ -766,6 +794,13 @@ function edit_clearMarkers() {
         edit_markersArray[i].setClickable(true);
     }    
 }
+
+function edit_clearSelectedMarkers() {
+    for (var i=0; i< edit_selectedMarkers.length; i++){
+        edit_selectedMarkers[i].setMap(null);
+    } 
+}
+
 
 //reseta o menu de pop-up
 function edit_resetContextMenu() {
@@ -820,16 +855,8 @@ function decodeUrn(urn) {
 
 function edit_mapPlaceDevice() {
 
-    var temp_src, temp_dst;
-    
-    temp_src = path[0];
-    temp_dst = path[1];
-
     edit_clearLines();
     //edit_clearTopologyMarkers();
-    
-    path[0] = temp_src;
-    path[1] = temp_dst;
 
     for (i=1; i<=counter; i++) {
         var selectId = "#selectHops" + counter;
@@ -888,7 +915,7 @@ function edit_redrawPath() {
     
     var flightPlanCoordinates = new Array();
     
-    flightPlanCoordinates[0] = path[0];
+    flightPlanCoordinates[0] = path[0].position;
     
     for(i=0; i<waypoints.length; i++) {
         flightPlanCoordinates[i+1] = waypoints[i];
@@ -896,7 +923,7 @@ function edit_redrawPath() {
     
     var length = flightPlanCoordinates.length;
     
-    flightPlanCoordinates[length] = path[1];
+    flightPlanCoordinates[length] = path[1].position;
 
     var line = new google.maps.Polyline({
         path: flightPlanCoordinates,

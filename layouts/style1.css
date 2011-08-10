@@ -469,8 +469,8 @@ margin-bottom: -1px; /*--“empurra” o item da lista 1px para baixo--*/
 overflow: hidden;
 position: relative;
 background: #e0e0e0;
-background-color: #3A5879;
-color: #ffffff;
+background-color: #ffffff;
+color: #3A5879;
 -moz-border-radius-topleft: 10px;
 -moz-border-radius-topright: 10px;
 }
@@ -485,6 +485,19 @@ outline: none;
 -moz-border-radius-topleft: 10px;
 -moz-border-radius-topright: 10px;
 }
+
+ul.tabs li a .confirm{
+text-decoration: none;
+color: #ffffff;
+display: block;
+font-size: 1.2em;
+padding: 0 20px;
+border: 1px solid #fff; /*--deixa um efeito de relevo com uma borda branca de 1px dentro do item da lista--*/
+outline: none;
+-moz-border-radius-topleft: 10px;
+-moz-border-radius-topright: 10px;
+}
+
 ul.tabs li a:hover {
 background: #fff;
 color: #3A5879;
@@ -518,10 +531,11 @@ background: #fff;
 .tab_content {
 padding: 20px;
 font-size: 1.1em;
+text-indent: 30pt;
 }
 
 div#main a.link_tab, div#main a.link_tab:visited {
-    color: #fff;
+    color: #3A5879;
     text-decoration: none;
 }
 div#main a.link_tab:hover, div#main a.link_tab:visited:hover {
@@ -529,9 +543,9 @@ div#main a.link_tab:hover, div#main a.link_tab:visited:hover {
     color: #3A5879;
     text-decoration: none;
 }
-div#main .ui-state-disabled a.link_tab:hover, div#main .ui-state-disabled a.link_tab:visited:hover {
-    background-color: #3A5879;;
-    color: #ffffff;
+div#main .ui-state-disabled a.link_tab:hover:not, div#main .ui-state-disabled a.link_tab:visited:hover {
+    background-color: #ffffff;
+    color: #3A5879;
     text-decoration: none;
 }
 div#main ul.tabs li.active a.link_tab, div#main ul.tabs li.active a.link_tab:visited {
@@ -645,4 +659,9 @@ h2 {
 
 h3 {
     font-size: 0.9em;
+}
+
+#t3 {
+    background-color: #228B22;
+    color: #ffffff;
 }

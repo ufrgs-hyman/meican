@@ -10,11 +10,11 @@
         <td style="width: 15%">
             
         </td>
-        <td style="width: 40%">
-            <?php $this->addElement('view_flow', $flow); ?>
-        </td>
         <td style="width: 30%">
-            <div id="view_map_canvas"></div>
+            <div id="view_map_canvas"></div>        
+        </td>
+        <td style="width: 40%">
+            <?php $this->addElement('view_flow', $flow); ?>        
         </td>
         <td style="width: 15%">      
         </td>

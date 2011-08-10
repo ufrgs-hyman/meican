@@ -75,6 +75,7 @@ view_map.setZoom( view_map.getZoom() );
 // Create the context menu element
 var contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
 contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
+contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
 contextMenu.bind('contextmenu', function() {
     return false;
 });

@@ -43,13 +43,20 @@ $timer = (isset($argsToElement->timer)) ? $argsToElement->timer : NULL;
     </tr>
 
     <tr>
-        <td colspan="5">
+        <td colspan="6">
             <input type="checkbox" id="repeat_chkbox" onClick="showRecurrenceBox();"/>
             <?php echo _("Repeat..."); ?> <a href="#" id="recurrence-edit" onclick="showRecurrenceBox();"><?php echo _("Edit"); ?></a> 
         </td>        
     </tr>
+    <tr>
+        <th colspan="6">
+            <?php echo _("Summary"); ?>
+        </th>
+    </tr>
+    <tr>
+        <td colspan="6">
+            <label id="recurrence_summary"></label>
+            <label id="summary"></label>
+        </td>
+    </tr>
 </table>
-<div align="center">
-    <label id="recurrence_summary"></label>
-    <label id="summary"></label>
-</div>
