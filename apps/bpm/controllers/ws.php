@@ -429,45 +429,73 @@ class ws extends Controller {
 
         function notifyResponse($response) {
             Framework::debug('acionando notify response', $response);
+            $validResponses = array ("accept","reject");
 
-            $req = new request_info();
-            $req->req_id = $response['req_id'];
-            $domain = new domain_info();
-            $domain->oscars_ip = $response['dom_src_ip'];
-            $req->src_dom = $domain->get('dom_id');
-            $req->answerable = 'no';
+            if (array_search($response['response'], $validResponses)) {
 
-            if (!$req->get('response')) {
+                $req = new request_info();
+                $req->req_id = $response['req_id'];
+                $domain = new domain_info();
+                //o id do dom src aqui é o ip do OSCARS, supondo que é uma chave
+                //única na tabela domain_info
+                $domain->oscars_ip = $response['dom_src_ip'];
 
-                $req->updateTo(array('message' => $response['message'], 'response' => $response['response']), FALSE);
+                $src_dom = $domain->get();
+                $req->src_dom = $src_dom->dom_id;
+                $req->answerable = 'no';
 
-                if ($response['response']=='accept') {
+                if (!$req->get('response')) {
 
-                    Framework::debug('setando campo send nos gris...');
+                    $req->updateTo(array('message' => $response['message'], 'response' => $response['response']), FALSE);
 
-                    $req->updateTo(array("status"=>"AUTHORIZED"),false);
-                    $tmp = new gri_info();
-                    $tmp->res_id = $req->get('resource_id');
-                    $allgris = $tmp->fetch(FALSE);
+                    if ($response['response']=='accept') {
 
-                    foreach ($allgris as $g) {
-                        $now = time();
-                        $start = new DateTime($g->start);
-                        if ($now < ($start->getTimestamp()-180)) //testa para ver se a reserva está NO MINIMO 3 minutos do tempo atual
-                            $g->updateTo(array("send"=>1));
-                        else  $g->updateTo(array("status"=>"TIMED OUT"));
+                        Framework::debug('setando campo send nos gris...');
+
+                        $req->updateTo(array("status"=>"AUTHORIZED"),false);
+                        $tmp = new gri_info();
+                        $tmp->res_id = $req->get('resource_id');
+                        $allgris = $tmp->fetch(FALSE);
+
+                        foreach ($allgris as $g) {
+                            $now = time();
+                            $start = new DateTime($g->start);
+                            if ($now < ($start->getTimestamp()-180)) //testa para ver se a reserva está NO MINIMO 3 minutos do tempo atual
+                                $g->updateTo(array("send"=>1));
+                            else  $g->updateTo(array("status"=>"TIMED OUT"));
+                        }
+
+
+                    } else { //requisicao negada
+                        $req->updateTo(array("status"=>"DENIED"),false);
+                        
+                        //as reservas devem ser canceladas no OSCARS
+                        $tmp = new gri_info();
+                        $tmp->res_id = $req->get('resource_id');
+                        $allgris = $tmp->fetch(FALSE);
+
+                        foreach ($allgris as $g) {
+                             $oscRes = new OSCARSReservation();
+                             $oscRes->setOscarsUrl($src_dom->oscars_ip);
+                             $oscRes->setGri($g->gri_id);
+                             if ($oscRes->cancelReservation()){
+                                 //apaga os gris negados do db MEICAN
+                                 $g->delete(FALSE);
+                             } else {
+                                 Framework::debug("error in cancel reservation gri ", $g->gri_id);
+                             }
+                            unset($oscRes);
+                        }
                     }
 
-                    
-                } else { //requisicao negada
-                    $req->updateTo(array("status"=>"DENIED"),false);
-                    //as reservas devem ser canceladas no OSCARS
+                    return true; //se a requisicao foi negada ou aceita retorna true
 
+                } else {
+                    Framework::debug("essa requisicao já havia sido respondida");
+                    return null;
                 }
-                return true;
-
             } else {
-                Framework::debug("essa requisicao já havia sido respondida");
+                Framework::debug("valor de response invalido");
                 return null;
             }
         }
@@ -478,11 +506,27 @@ class ws extends Controller {
             if ($usr_dst && $request) {
 
                 $new_request = new request_info();
-                $new_request->setDom('dom_src', $request['dom_src_ip']);
-                $new_request->setDom('dom_dst', $request['dom_dst_ip']);
+                //$new_request->setDom('dom_src', $request['dom_src_ip']);
+
+                $domain = new domain_info();
+
+                //o id do dom src aqui é o ip do OSCARS, supondo que é uma chave
+                //única na tabela domain_info
+                $domain->oscars_ip = $request['dom_src_ip'];
+                $src_dom = $domin->get();
+                $new_request->src_dom = $src_dom->dom_id;
+
+                //$new_request->setDom('dom_dst', $request['dom_dst_ip']);
+
+                //o id do dom src aqui é o ip do OSCARS, supondo que é uma chave
+                //única na tabela domain_info
+                $domain->oscars_ip = $request['dom_dst_ip'];
+                $dst_dom = $domin->get();
+                $new_request->src_dom = $dst_dom->dom_id;
+
                 $new_request->answerable = 'yes';
                 $new_request->req_id = $request['req_id'];
-                $new_request->usr_src = $request['usr_src'];
+                $new_request->src_usr = $request['usr_src'];
 
                 //insere embaixo do usuario passado como parametro
                 $user = new user_info();
@@ -517,10 +561,25 @@ class ws extends Controller {
             if ($grp_dst && $request) {
 
                 $new_request = new request_info();
-                $new_request->setDom('dom_src', $request['dom_src_ip']);
-                $new_request->setDom('dom_dst', $request['dom_dst_ip']);
+
+                $domain = new domain_info();
+
+                //o id do dom src aqui é o ip do OSCARS, supondo que é uma chave
+                //única na tabela domain_info
+                $domain->oscars_ip = $request['dom_src_ip'];
+                $src_dom = $domin->get();
+                $new_request->src_dom = $src_dom->dom_id;
+
+                //$new_request->setDom('dom_dst', $request['dom_dst_ip']);
+
+                //o id do dom src aqui é o ip do OSCARS, supondo que é uma chave
+                //única na tabela domain_info
+                $domain->oscars_ip = $request['dom_dst_ip'];
+                $dst_dom = $domin->get();
+                $new_request->src_dom = $dst_dom->dom_id;
+
                 $new_request->req_id = $request['req_id'];
-                $new_request->usr_src = $request['usr_src'];
+                $new_request->src_usr = $request['usr_src'];
                 $new_request->answerable = 'yes';
 
                 //insere embaixo do grupo passado como parametro

@@ -699,6 +699,18 @@ class reservations extends Controller {
             return;
         }
 
+        /**
+         * insere o flow
+         */
+        $flow_cont = new flows();
+        $flow_cont->add();
+
+
+
+        /**
+         * insere o timer
+         */
+
         $reservation = new reservation_info();
         $reservation->res_name = $reservationName;
         $reservation->bandwidth = Common::POST("bandwidth");
@@ -706,9 +718,27 @@ class reservations extends Controller {
         $reservation->tmr_id = $selectedTimer;
         $reservation->creation_time = $res_diff_timestamp;
 
+        /**
+         * 1- envia ao OSCARS como signal-xml todas as recorrências da reserva
+         * 2- insere a tabela gri_info com send=0
+         * 3- envia ao ode com o wsdl correspondente ao dominio origem
+         * 4- o workflow é executado
+         * 5- ao receber uma açao de notifyresponse, se for
+         *  5.1- accept: atualiza o campo send=1, atualiza o status da requisicao
+         *               em aceita.
+         *  5.2- No momento de início da reserva, o daemon executa a
+         *       função check e envia um createPath ao OSCARS.
+         *       Atualiza o status da requisição para SENT TO OSCARS.
+         *       O status dos gris agora correspondem o status da reserva no OSCARS
+         *  5.2- reject: cancela a reserva no oscars, coloca o status da
+         *       requisicao em denied e apaga os gris do banco do MEICAN.
+         *       A reserva é finalizada.
+         *
+         */
+
+
         if ($res = $reservation->insert()) {
-            $reservation->res_id = $res->res_id;
-            if ($reservation->sendForAuthorization()) {
+            if ($this->send($res)) {
                 $this->setFlash(_('Reservation submitted'), 'success');
             }
 
@@ -1020,8 +1050,6 @@ class reservations extends Controller {
 
     function send($reservation_info) {
 
-        //configura o domínio origem como o domínio OSCARS origem da reserva
-        //a reserva tem como ponto de origem
         $flw_id = $reservation_info->get('flw_id');
         $flow = new flow_info();
         $flow->flw_id = $flow_id;
@@ -1029,49 +1057,122 @@ class reservations extends Controller {
         $domain = new domain_info();
         $domain->dom_id = $dom_src_id;
         $src_dom = $domain->get();
-        //Framework::debug('domain',$dom_src);
-        //cria nova request com o domínio dom_src
-        $newReq = new request_info();
-        $newReq->src_dom = $src_dom->dom_id;
-        $newReq->req_id = $newReq->getNextId('req_id');
 
-        //para buscar o dom_dst_ip
-        $domain->dom_id = $flow->get('dst_dom');
-        $dst_dom = $domain->get();
-        $newReq->dst_dom = $dst_dom->dom_id;
 
-        $newReq->src_usr = AuthSystem::getUserId();
+        $oscarsRes = new OSCARSReservation();
+        $oscarsRes->setOscarsUrl($src_dom->oscars_ip);
+        $oscarsRes->setDescription($reservation_info->get('res_name'));
+        $oscarsRes->setBandwidth($reservation_info->get('bandwidth'));
+        $oscarsRes->setSrcEndpoint($flow->get('urn_src_string'));
+        $oscarsRes->setDestEndpoint($flow->get('urn_dst_string'));
 
-        $newReq->resource_type = 'reservation_info';
-        $newReq->resource_id = $reservation_info->res_id;
-        $newReq->answerable = 'no';
+        if ($path = $flow->get('path'))
+            $oscarsRes->setPath($path);
 
-        /**
-         * PARA UM ÚNICO WSDL COM OPERAÇÕES SEPARADAS E PADRONIZADAS PARA ENVIAR
-         * REQUISIÇÃO E ENVIAR RESPOSTA
-         */
+        if ($vsrc = $flow->get('src_vlan'))
+            if ($vsrc == 0)
+                $oscarsRes->setSrcIsTagged(false);
+            else {
+                $oscarsRes->setSrcIsTagged(true);
+                $oscarsRes->setSrcTag($vsrc);
+            }
 
-        $businessEndpoint = "http://$src_dom->ode_ip/$src_dom->ode_wsdl_path";
+        if ($vdst = $flow->get('dst_vlan'))
+            if ($vdst == 0)
+                $oscarsRes->setDestIsTagged(false);
+            else {
+                $oscarsRes->setDestIsTagged(true);
+                $oscarsRes->setDestTag($vdst);
+            }
 
-        $requestSOAP = array(
-                'req_id' => $newReq->req_id,
-                'dom_src_ip' => $src_dom->oscars_ip,
-                'dom_dst_ip' => $dst_dom->oscars_ip,
-                'usr_src' => $newReq->src_usr);
+        //precisa descobrir se deve ou não ser enviada para AUTORIZAÇÃO
+        if ($src_dom->ode_ip && $src_dom->ode_wsdl_path) {
+            //irá para autorização
+            //cria reserva do tipo signal-xml
+            $oscarsRes->setPathSetupMode('signal-xml');
+        } else $oscarsRes->setPathSetupMode('timer-automatic');
 
-        Framework::debug('ira enviar para autorizaçao...', $requestSOAP);
-        try {
-            $client = new SoapClient($endpoint, array('cache_wsdl' => 0));
-            $client->startWorkflow($requestSOAP);
-            $newReq->status = 'SENT FOR AUTHORIZATION';
-            $newReq->insert();
-            return true;
+        $tim = new timer_info();
+        $tim->tmr_id = $reservation_info->get("tmr_id");
+        $timer = $tim->get();
+        $arrayRec = $timer->getRecurrences();
 
-        } catch (Exception $e) {
-            Framework::debug("Caught exception: ",  $e->getMessage());
-            $this->setFlash(_('Error at invoking business layer.'));
-            return false;
+        foreach ($arrayRec as $t) {
+            $tmp = $oscarsRes;
+            $tmp->setStartTimestamp($t->start); //em timestamp
+            $tmp->setEndTimestamp($t->finish);
+
+            if ($tmp->createReservation()) {
+                $new_gri = new gri_info();
+                $new_gri->gri_id = $tmp->getGri();
+                $new_gri->res_id = $reservation_info->res_id;
+                $new_gri->dom_id = $src_dom->dom_id;
+                $new_gri->status = $tmp->getStatus();
+
+                $date = new DateTime();
+                $date->setTimestamp($t->start);
+                $new_gri->start = $date->format('Y-m-d H:i');
+                $date->setTimestamp($t->finish);
+                $new_gri->finish = $date->format('Y-m-d H:i');
+
+                $new_gri->send = 0; //para timer-automatic o daemon nao precisa enviar o createPath
+
+                $new_gri->insert();
+            }
+            unset($tmp);
         }
+
+        if ($src_dom->ode_ip && $src_dom->ode_wsdl_path) {
+            //cria nova request com o domínio dom_src
+            $newReq = new request_info();
+            $newReq->src_dom = $src_dom->dom_id;
+            $newReq->req_id = $newReq->getNextId('req_id');
+
+            //para buscar o dom_dst_ip
+            $domain->dom_id = $flow->get('dst_dom');
+            $dst_dom = $domain->get();
+            $newReq->dst_dom = $dst_dom->dom_id;
+
+            $newReq->src_usr = AuthSystem::getUserId();
+
+            $newReq->resource_type = 'reservation_info';
+            $newReq->resource_id = $reservation_info->res_id;
+            $newReq->answerable = 'no';
+
+            /**
+             * PARA UM ÚNICO WSDL COM OPERAÇÕES SEPARADAS E PADRONIZADAS PARA ENVIAR
+             * REQUISIÇÃO E ENVIAR RESPOSTA
+             */
+
+            $businessEndpoint = "http://$src_dom->ode_ip/$src_dom->ode_wsdl_path";
+
+            $requestSOAP = array(
+                    'req_id' => $newReq->req_id,
+                    'dom_src_ip' => $src_dom->oscars_ip,
+                    'dom_dst_ip' => $dst_dom->oscars_ip,
+                    'usr_src' => $newReq->src_usr);
+
+            Framework::debug('ira enviar para autorizaçao...', $requestSOAP);
+            try {
+                $client = new SoapClient($businessEndpoint, array('cache_wsdl' => 0));
+
+                $client->startWorkflow($requestSOAP);
+
+                $newReq->status = 'SENT FOR AUTHORIZATION';
+
+                $newReq->insert();
+
+                return true;
+            } catch (Exception $e) {
+                Framework::debug("Caught exception: ",  $e->getMessage());
+                $this->setFlash(_('Error at invoking business layer.'));
+                $newReq->status = 'SENT FOR AUTHORIZATION';
+
+                $newReq->insert();
+                return false;
+            }
+        }
+
     }
 
     public function check() {
@@ -1099,7 +1200,7 @@ class reservations extends Controller {
                         $oscars_reservation->setOscarsUrl($src_dom->oscars_ip);
 
                         $oscars_reservation->setGri($g->gri_id);
-                        if ($oscars_reservation->createPath()){
+                        if ($oscars_reservation->createPath()) {
                             $status = $oscars_reservation->getStatus();
                             $g->updateTo(array("send" => "0", "status" => $status), FALSE);
                         }
@@ -1108,6 +1209,7 @@ class reservations extends Controller {
         }
     }
 // try {
+
 //                    $reservation_info = new reservation_info();
 //                    $reservation_info->res_id = $req->get('resource_id');
 //                    $flw_id = $reservation_info->get('flw_id');
@@ -1157,7 +1259,7 @@ class reservations extends Controller {
 //                Framework::debug('requisicao negada', $response['req_id']);
 //                return true;
 //            }
-
+//
 }
 
 ?>

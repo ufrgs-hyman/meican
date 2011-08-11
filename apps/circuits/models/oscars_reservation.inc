@@ -96,15 +96,15 @@ class OSCARSReservation {
     private function setDestTag($vlan) {
         $this->destTag = $vlan;
     }
-    public function setVlan($isTagged, $vlan=null) {
-        $this->setSrcIsTagged($isTagged);
-        $this->setDestIsTagged($isTagged);
-
-        if ($vlan){
-        $this->setDestTag($vlan);
-        $this->setSrcTag($vlan);
-        }
-    }
+//    public function setVlan($isTagged, $vlan=null) {
+//        $this->setSrcIsTagged($isTagged);
+//        $this->setDestIsTagged($isTagged);
+//
+//        if ($vlan){
+//        $this->setDestTag($vlan);
+//        $this->setSrcTag($vlan);
+//        }
+//    }
     public function setStatus($status) {
         $this->status = $status;
     }
