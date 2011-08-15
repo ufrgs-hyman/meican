@@ -15,6 +15,13 @@ class meican_info extends Model {
         $this->addAttribute("meican_dir_name","VARCHAR");
         $this->addAttribute("local_domain","INTEGER");
     }
+    
+    function getLocalMeicanId() {
+        $this->local_domain = 1;
+        $result = $this->fetch(FALSE);
+
+        return $result[0]->meican_id;
+    }
 
     function getLocalMeicanIp() {
         $this->local_domain = 1;

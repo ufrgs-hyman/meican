@@ -7,6 +7,8 @@ include_once 'apps/circuits/models/timer_info.inc';
 include_once 'apps/circuits/models/timer_lib.inc';
 include_once 'apps/circuits/controllers/reservations.php';
 
+include_once 'libs/meican_mail.php';
+
 class timers extends Controller {
 
     public function timers() {
@@ -26,13 +28,17 @@ class timers extends Controller {
 
     public function show() {
         
-        $tim_teste = new timer_info();
-        $tim_teste->start = dateTimeToDatabaseFormat("02/08/2011", "20:30");
-        $tim_teste->finish = dateTimeToDatabaseFormat("02/08/2011", "20:45");
+//        $mail = new Meican_Mail();
+//        if ($mail)
+//            $mail->send("felipenesello@gmail.com", "corpo do e-mail", "assunto do e-mail");
         
-//        $tim_teste->freq = "DAILY";
-//        $tim_teste->count = 2;
-//        $tim_teste->interval = 1;
+        $tim_teste = new timer_info();
+        $tim_teste->start = dateTimeToDatabaseFormat("02/08/2011", "19:00");
+        $tim_teste->finish = dateTimeToDatabaseFormat("02/08/2011", "20:00");
+        
+        $tim_teste->freq = "DAILY";
+        $tim_teste->count = 2;
+        $tim_teste->interval = 1;
         
         // Questão: Puxar reservas direto do OSCARS??? (ao invés da tabela de gris)
         $gri = new gri_info();

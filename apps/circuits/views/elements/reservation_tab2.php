@@ -57,9 +57,11 @@
                             </th>
                             <td>
                                 <select id="src_port" style="display:none" onchange="map_changePort('src');"></select>
+                                <input type="hidden" id="src_urn" name="src_urn"/>
                             </td>
                             <td>
                                 <select id="dst_port" style="display:none" onchange="map_changePort('dst');"></select>
+                                <input type="hidden" id="dst_urn" name="dst_urn"/>
                             </td>
                         </tr>
                         <tr id="vlan_tr">
@@ -72,7 +74,7 @@
                         <tr>
                             <td colspan="3">
                                 <hr/>
-                                <input type="checkbox" id="showVlan_checkbox" onclick="showVlanConf()"/><?php echo _("Show Vlan Configuration"); ?>
+                                <input type="checkbox" name="vlan_options" id="showVlan_checkbox" onclick="showVlanConf()"/><?php echo _("Show Vlan Configuration"); ?>
                             </td>
                         </tr>
                         <tr>
@@ -84,12 +86,13 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+                        <tr id="hops_line">
                             <td colspan="3">
                                 <span id="writeHops"></span> 
                                 <hr/>
                                 <input type="button" id="clearpath" class="clear" value="<?php echo _('Clear'); ?>" onClick="edit_clearAll();"/>
                                 <input type="button" class="add" id="addHopsButton" value="Add new Hop" onclick="moreFields();"/>                                    
+                                <input type="hidden" id="path" name="path"/>
                             </td>
                         </tr>
                     </table>                    

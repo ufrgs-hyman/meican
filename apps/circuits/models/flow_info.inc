@@ -10,15 +10,14 @@ class flow_info extends Resource_Model {
 
         // Add all table attributes
         $this->addAttribute("flw_id", "INTEGER", true, false, false);
-        $this->addAttribute("flw_name", "VARCHAR");
 
-        $this->addAttribute("src_dom", "INTEGER");
+        $this->addAttribute("src_meican_id", "INTEGER");
         $this->addAttribute("src_urn_string", "VARCHAR");
-        $this->addAttribute("src_vlan", "INTEGER");
+        $this->addAttribute("src_vlan", "VARCHAR");
 
-        $this->addAttribute("dst_dom", "INTEGER");
+        $this->addAttribute("dst_meican_id", "INTEGER");
         $this->addAttribute("dst_urn_string", "VARCHAR");
-        $this->addAttribute("dst_vlan", "INTEGER");
+        $this->addAttribute("dst_vlan", "VARCHAR");
 
         $this->addAttribute("path", "VARCHAR");
     }

@@ -13,8 +13,6 @@ class Meican_Mail {
     
     public function Meican_Mail() {
         
-        echo 'teste e-mail\n\r';
-        
         $params = array();
         $params["host"] = "ssl://smtp.inf.ufrgs.br";
         $params["port"] = "465";
@@ -32,21 +30,17 @@ class Meican_Mail {
             return TRUE;
     }
     
-    public function send() {
-        $recipients = "felipenesello@gmail.com";
-        
-        $headers = array();
-        $headers["From"] = "Felipe Nesello <fanesello@inf.ufrgs.br>";
-        $headers["To"] = "Felipe <felipenesello@gmail.com>";
-        $headers["Reply-To"] = "fanesello@inf.ufrgs.br";
-        $headers["Subject"] = "testando from php";
-        
-        $mailmsg = "Teste\nCorpo do e-mail";
-        
-        Framework::debug("antes do send");
-        $ret = $this->mail->send($recipients, $headers, $mailmsg);
-        Framework::debug("depois do send");
-        
+    public function send($to, $body, $subject=NULL, $headers=NULL) {
+
+        if (!$headers) {
+            $headers = array();
+            $headers["From"] = "MEICAN <qame@inf.ufrgs.br>";
+            $headers["To"] = "$to <$to>";
+            $headers["Subject"] = ($subject) ? $subject : _("No subject");
+        }
+
+        $ret = $this->mail->send($to, $headers, $body);
+
         if (PEAR::isError($ret)) {
             Framework::debug($ret->getMessage() . ", " . $ret->getDebugInfo());
             return FALSE;

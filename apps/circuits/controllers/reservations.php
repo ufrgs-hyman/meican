@@ -35,20 +35,6 @@ class reservations extends Controller {
         Common::destroySessionVariable('sel_timer');
         Common::destroySessionVariable('res_wizard');
         Common::destroySessionVariable('res_begin_timestamp');
-//
-        $teste = new reservation_info();
-        $teste->res_id = 1;
-//        $this->query($teste);
-        $this->send($teste);
-
-//        $grisArray[]="oscars5.ufrgs.br-65";
-//        $grisArray[]="oscars5.ufrgs.br-62";
-//        $grisArray[]="oscars5.ufrgs.br-52";
-//        $grisArray[]="oscars5.ufrgs.br-48";
-//        $grisArray[]="oscars2.ufrgs.br-18";
-//        $this->listStatus($grisArray);
-        //$this->getTopology();
-
 
         $res_info = new reservation_info();
         $allReservations = $res_info->fetch();
@@ -683,36 +669,36 @@ class reservations extends Controller {
         $res_begin_timestamp = Common::getSessionVariable("res_begin_timestamp");
         $res_diff_timestamp = $res_end_timestamp - $res_begin_timestamp;
 
-        $this->show();
-        return;
-
-        $selectedTimer = NULL;
-        $selectedFlow = NULL;
-        $reservationName = NULL;
-        if (Common::hasSessionVariable('res_wizard') && Common::hasSessionVariable('sel_timer') && Common::hasSessionVariable('sel_flow') && Common::hasSessionVariable('res_name')) {
-            $selectedTimer = Common::getSessionVariable('sel_timer');
-            $selectedFlow = Common::getSessionVariable('sel_flow');
-            $reservationName = Common::getSessionVariable('res_name');
-        } else {
-            $this->setFlash(_("Not enough arguments to reservation, going back to step 4..."), "warning");
-            $this->reservation_add();
-            return;
-        }
+//        $selectedTimer = NULL;
+//        $selectedFlow = NULL;
+//        $reservationName = NULL;
+//        if (Common::hasSessionVariable('res_wizard') && Common::hasSessionVariable('sel_timer') && Common::hasSessionVariable('sel_flow') && Common::hasSessionVariable('res_name')) {
+//            $selectedTimer = Common::getSessionVariable('sel_timer');
+//            $selectedFlow = Common::getSessionVariable('sel_flow');
+//            $reservationName = Common::getSessionVariable('res_name');
+//        } else {
+//            $this->setFlash(_("Not enough arguments to reservation, going back to step 4..."), "warning");
+//            $this->reservation_add();
+//            return;
+//        }
 
         /**
          * insere o flow
          */
         $flow_cont = new flows();
         $flow_cont->add();
-
+        $this->show();
+        return;
 
 
         /**
          * insere o timer
          */
+        $timer_cont = new timers();
+        $timer_cont->add();
 
         $reservation = new reservation_info();
-        $reservation->res_name = $reservationName;
+        $reservation->res_name = Common::POST("res_name");
         $reservation->bandwidth = Common::POST("bandwidth");
         $reservation->flw_id = $selectedFlow;
         $reservation->tmr_id = $selectedTimer;

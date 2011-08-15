@@ -6,8 +6,11 @@ include_once 'libs/controller.php';
 
 include_once 'apps/circuits/models/flow_info.inc';
 include_once 'apps/circuits/controllers/reservations.php';
+
 include_once 'apps/domain/models/domain_info.inc';
 include_once 'apps/domain/models/topology.inc';
+include_once 'apps/domain/models/meican_info.inc';
+
 require_once 'includes/nuSOAP/lib/nusoap.php';
 
 class flows extends Controller {
@@ -191,51 +194,89 @@ class flows extends Controller {
 
         $this->render();
     }
-
+    
     public function add() {
-        $flowData = $_POST["flowData"];
-
-        /**
-         * @param $flowData
-         * 1 -> name
-         * 2 -> bandwidth
-         * 3 -> source domainId
-         * 4 -> source URN
-         * 5 -> source VLAN
-         * 6 -> destination domainId
-         * 7 -> destination URN
-         * 8 -> destination VLAN
-         */
-        $flow = new flow_info();
-
-        $flow->flw_name = $flowData[1];
-        $flow->bandwidth = $flowData[2];
-
-        $flow->src_dom = $flowData[3];
-        $flow->src_urn_string = $flowData[4];
-        $flow->src_vlan = $flowData[5];
-
-        $flow->dst_dom = $flowData[6];
-        $flow->dst_urn_string = $flowData[7];
-        $flow->dst_vlan = $flowData[8];
-
-        $result = $flow->insert();
-
-        if ($result) {
-            if (Common::hasSessionVariable('res_wizard')) {
-                $res = new reservations();
-                $res->update_flow($result->flw_id);
-                $res->setFlash(_("Flow") . " '$result->flw_name' " . _("added"), 'success');
-                $res->page1();
+        $new_flow = new flow_info();
+        
+        $meican = new meican_info();
+        
+        $new_flow->src_meican_id = $meican->getLocalMeicanId();
+        $new_flow->src_urn_string = Common::POST("src_urn");
+        
+        $new_flow->dst_meican_id = $meican->getLocalMeicanId();
+        $new_flow->dst_urn_string = Common::POST("dst_urn");
+        
+        $vlan_options = Common::POST("vlan_options");
+        if ($vlan_options) {
+            if (Common::POST("sourceVLANType") == "FALSE") {
+                // src VLAN untagged
+                $new_flow->src_vlan = 0;
             } else {
-                $this->setFlash(_("Flow") . " '$result->flw_name' " . _("added"), 'success');
-                $this->show();
+                // src VLAN tagged
+                $new_flow->src_vlan = (Common::POST("src_vlan")) ? (Common::POST("src_vlan")) : "any";
             }
-        } else {
-            $this->setFlash(_("Fail to create flow"), 'error');
-            $this->add_form();
+            
+            if (Common::POST("destVLANType") == "FALSE") {
+                // dst VLAN untagged
+                $new_flow->dst_vlan = 0;
+            } else {
+                // dst VLAN tagged
+                $new_flow->dst_vlan = (Common::POST("dst_vlan")) ? (Common::POST("dst_vlan")) : "any";
+            }
         }
+        if ($path = Common::POST("path")) {
+            $new_flow->path = $path;
+        }
+        
+        Framework::debug("flow",$new_flow);
+        
+        return $new_flow->insert();
     }
+
+//    public function add() {
+//        $flowData = $_POST["flowData"];
+//
+//        /**
+//         * @param $flowData
+//         * 1 -> name
+//         * 2 -> bandwidth
+//         * 3 -> source domainId
+//         * 4 -> source URN
+//         * 5 -> source VLAN
+//         * 6 -> destination domainId
+//         * 7 -> destination URN
+//         * 8 -> destination VLAN
+//         */
+//        $flow = new flow_info();
+//
+//        $flow->flw_name = $flowData[1];
+//        $flow->bandwidth = $flowData[2];
+//
+//        $flow->src_dom = $flowData[3];
+//        $flow->src_urn_string = $flowData[4];
+//        $flow->src_vlan = $flowData[5];
+//
+//        $flow->dst_dom = $flowData[6];
+//        $flow->dst_urn_string = $flowData[7];
+//        $flow->dst_vlan = $flowData[8];
+//
+//        $result = $flow->insert();
+//
+//        if ($result) {
+//            if (Common::hasSessionVariable('res_wizard')) {
+//                $res = new reservations();
+//                $res->update_flow($result->flw_id);
+//                $res->setFlash(_("Flow") . " '$result->flw_name' " . _("added"), 'success');
+//                $res->page1();
+//            } else {
+//                $this->setFlash(_("Flow") . " '$result->flw_name' " . _("added"), 'success');
+//                $this->show();
+//            }
+//        } else {
+//            $this->setFlash(_("Fail to create flow"), 'error');
+//            $this->add_form();
+//        }
+//    }
 
     public function edit($flow_id_array) {
         $min = 100;

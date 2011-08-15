@@ -20,7 +20,7 @@ class reservation_info extends Resource_Model {
         $this->addAttribute("flw_id", "INTEGER");
         $this->addAttribute("tmr_id", "INTEGER");
 
-        $this->addAttribute("creation_time", "FLOAT");
+        $this->addAttribute("creation_time", "VARCHAR");
     }
 
     public function getReservationDetails() {

@@ -28,13 +28,12 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 DROP TABLE IF EXISTS `flow_info`;
 CREATE TABLE IF NOT EXISTS `flow_info` (
   `flw_id` int(11) NOT NULL AUTO_INCREMENT,
-  `flw_name` char(40) NOT NULL,
-  `src_dom` int(11) NOT NULL,
+  `src_meican_id` int(11) NOT NULL,
   `src_urn_string` varchar(128) NOT NULL,
-  `src_vlan` int(11) NOT NULL,
-  `dst_dom` int(11) NOT NULL,
+  `src_vlan` varchar(11) DEFAULT NULL,
+  `dst_meican_id` int(11) NOT NULL,
   `dst_urn_string` varchar(128) NOT NULL,
-  `dst_vlan` int(11) NOT NULL,
+  `dst_vlan` varchar(11) DEFAULT NULL,
   `path` varchar(2056) DEFAULT NULL,
   PRIMARY KEY (`flw_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

@@ -20,11 +20,11 @@
             <?php echo _("VLAN"); ?>
         </th>
         <td>
-            <input type="text" id="src_vlanText" disabled="disabled" onkeyup="changeTagValue('src');"/>
+            <input type="text" id="src_vlanText" name="src_vlan" disabled="disabled" onkeyup="changeTagValue('src');"/>
             <div id="src_vlanTip"/>
         </td>
         <td>
-            <input type="text" id="dst_vlanText" disabled="disabled" onkeyup="changeTagValue('dst');"/>
+            <input type="text" id="dst_vlanText" name="dst_vlan" disabled="disabled" onkeyup="changeTagValue('dst');"/>
             <div id="dst_vlanTip"/>
         </td>
     </tr>

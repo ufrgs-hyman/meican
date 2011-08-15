@@ -24,6 +24,7 @@ var path = new Array();
 
 var counter = 0;
 
+
 createTabs();
 createSlider();    
 

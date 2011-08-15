@@ -182,6 +182,21 @@ function timerError(error){
 
 function validateReservationForm() {
     if (tab1_valid) {
+        
+        var hops = "";
+        $.each($("#hops_line select"), function() {
+            if (this.value != -1)
+                hops += this.value + ";";
+        });
+        if (hops) {
+            var path = src_urn + ";";
+            path += hops;
+            path += dst_urn;
+            $("#path").val(path);
+        } else {
+            $("#path").val("");
+        }
+
         if (tab2_valid) {
             //$("#reservation_add").submit();
             return true;
@@ -290,15 +305,58 @@ function changeBand(){
 
 function validateTab1() {
     if ( (path.length == 2) && ($("#src_device").val() != -1) && ($("#dst_device").val() != -1) &&
-        ($("#src_port").val() != -1) && ($("#dst_port").val() != -1) ) {         
-        if ($("#showVlan_checkbox").attr("checked")) {
-            if (($('input[name="sourceVLANType"]:checked').val() == "TRUE") && ($("#src_vlanText").val() == "")) {
-                tab1_valid = false;
-            } else if (($('input[name="destVLANType"]:checked').val() == "TRUE") && ($("#dst_vlanText").val() == "")) {
-                tab1_valid = false;
-            } else {
-                tab1_valid = true;
+        ($("#src_port").val() != -1) && ($("#dst_port").val() != -1) ) {
+        
+        tab1_valid = true;
+        $.each($("#hops_line select"), function() {
+            if (this.value == -1) {
+                tab1_valid &= false;
             }
+        });
+        if (!tab1_valid)
+            return;
+        
+        if ($("#showVlan_checkbox").attr("checked")) {
+            
+            if ($("#src_vlanUntagged").attr("checked"))
+                tab1_valid = true;
+            else if ($("#src_vlanTagged").attr("checked")) {
+                if (checkVLAN("src"))
+                    tab1_valid = true;
+                else {
+                    setFlash(flash_srcVlanInv, "warning");
+                    tab1_valid = false;
+                    return;
+                }
+            } else {
+                setFlash(flash_srcVlanReq, "warning");
+                tab1_valid = false;
+                return;
+            }
+        
+            if ($("#dst_vlanUntagged").attr("checked"))
+                tab1_valid = true;
+            else if ($("#dst_vlanTagged").attr("checked")) {
+                if (checkVLAN("dst"))
+                    tab1_valid = true;
+                else {
+                    setFlash(flash_dstVlanInv, "warning");
+                    tab1_valid = false;
+                    return;
+                }
+            } else {
+                setFlash(flash_dstVlanReq, "warning");
+                tab1_valid = false;
+                return;
+            }
+            
+//            if (($('input[name="sourceVLANType"]:checked').val() == "TRUE") && ($("#src_vlanText").val() == "")) {
+//                tab1_valid = false;
+//            } else if (($('input[name="destVLANType"]:checked').val() == "TRUE") && ($("#dst_vlanText").val() == "")) {
+//                tab1_valid = false;
+//            } else {
+//                tab1_valid = true;
+//            }
         } else {
             tab1_valid = true;
         }
@@ -474,7 +532,7 @@ function fillUrnBox(htmlId, fillerArray, current_val) {
 
 function changeTagValue(where) {
     var text_htmlId = "#" + where + "_vlanText";
-    var vlan_htmlId = "#confirmation_" + where + "_vlan"
+    var vlan_htmlId = "#confirmation_" + where + "_vlan";
 
     $(text_htmlId).removeAttr('disabled');
     $(vlan_htmlId).html("Tagged: " + $(text_htmlId).val());
@@ -1256,10 +1314,10 @@ function map_changePort(where) {
     map_clearVlanConf(where);
     if ($(port_id).val() != -1) {
         var confirmation_port = "#confirmation_" + where + "_port";        
-        $(confirmation_port).html($(port_id).val())
+        $(confirmation_port).html($(port_id).val());
         map_setEndpointConf(where);
     }
-    validateTab1(); 
+    validateTab1();
 }
 
 function map_clearVlanConf(where) {
@@ -1387,11 +1445,13 @@ function map_setEndpointConf(where) {
         src_vlan_min = vlan_min;
         src_vlan_max = vlan_max;
         src_vlan_validValues = vlan_validValues;
+        $("#src_urn").val(src_urn);
     } else if (where == "dst") {
         dst_urn = urnData.urn_string;
         dst_vlan_min = vlan_min;
         dst_vlan_max = vlan_max;
         dst_vlan_validValues = vlan_validValues;
+        $("#dst_urn").val(dst_urn);
     }
 }
 
