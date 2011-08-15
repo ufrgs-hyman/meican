@@ -11,6 +11,14 @@
     <menu>
         
         <item>
+                <name> </name>
+                <subItem>
+                    <name>Dashboard</name>
+                    <link>main.php?app=init&amp;controller=gui&amp;action=welcome</link>                
+                </subItem>
+        </item>
+        
+        <item>        
             <name>Circuits</name>
             <subItem>
                 <name>Reservations</name>

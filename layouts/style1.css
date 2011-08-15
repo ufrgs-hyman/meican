@@ -539,7 +539,7 @@ div#main a.link_tab, div#main a.link_tab:visited {
     text-decoration: none;
 }
 div#main a.link_tab:hover, div#main a.link_tab:visited:hover {
-    background-color: #eeeeee;
+    background-color: #ffffff;
     color: #3A5879;
     text-decoration: none;
 }
@@ -661,7 +661,17 @@ h3 {
     font-size: 0.9em;
 }
 
-#t3 {
-    background-color: #228B22;
+div#main #t3 {
+    background-color: #9ACD32;
     color: #ffffff;
+}
+
+div#main #l3:link, div#main #l3:visited, div#main #l3:hover, div#main #l3:visited:hover {
+    text-decoration: none;
+    background-color: #9ACD32;
+    color: #3A5879;    
+}
+
+.recurrence_table {
+    padding: 3px;
 }

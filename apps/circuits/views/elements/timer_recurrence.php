@@ -24,18 +24,18 @@ $freq_types[] = $freq;
             </th>
         </tr>
         <tr>
-            <td>                            
+            <td class="recurrence_table">                            
                 <table cellspacing="0" cellpadding="0" style="width:100%">
                     <tr style="width:100%">
-                        <td>
+                        <td class="recurrence_table">
                             <?php echo _("Start") ;?>:
                             <label id="rec_initialTime"></label>
                         </td>
-                        <td>
+                        <td class="recurrence_table">
                             <?php echo _("End"); ?>:
                             <label id="rec_finalTime"></label>
                         </td>
-                        <td>
+                        <td class="recurrence_table">
                             <?php echo _("Duration"); ?>:
                             <label id="rec_duration"></label>
                         </td>
@@ -49,13 +49,13 @@ $freq_types[] = $freq;
             </th>
         </tr>
         <tr>
-            <td>
+            <td class="recurrence_table">
                 <table cellspacing="0" cellpadding="0" style="width: 100%">
                     <tr>
-                        <td style="width:30%">
+                        <td class="recurrence_table" style="width:30%">
                             <table cellspacing="0" cellpadding="0" border="1" rules="cols" frame="rhs" style="width: 100%">
                                 <tr>
-                                    <td>
+                                    <td class="recurrence_table">
                                         <?php
                                             if ($timer) {
                                                 foreach ($freq_types as $f) {
@@ -72,13 +72,13 @@ $freq_types[] = $freq;
                                 </tr>
                             </table>
                         </td>
-                        <td>
+                        <td class="recurrence_table">
                             <table cellspacing="0" cellpadding="0" style="width: 100%">
                                 <tr>
-                                    <td>
+                                    <td class="recurrence_table">
                                         <table cellspacing="0" cellpadding="0" style="width: 100%">
                                             <tr>
-                                                <td>
+                                                <td class="recurrence_table">
                                                     <?php echo _("Repeats every "); ?>                                                    
                                                     <select id="interval" onchange="setFreq()">
                                                     <?php
@@ -100,31 +100,31 @@ $freq_types[] = $freq;
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td class="recurrence_table">
                                         <div id="weekdays" style="display: none">
                                             <table cellspacing="0" cellpadding="0" style="width: 100%">
                                                 <tr>
-                                                    <td>
+                                                    <td class="recurrence_table">
                                                         <input type="checkbox" value="SU" title="<?php echo _("Sunday"); ?>" id="Sunday" onclick="checkWeekDay(this.id);"><?php echo _("Sun"); ?>
                                                     </td>
-                                                    <td>
+                                                    <td class="recurrence_table">
                                                         <input type="checkbox" value="MO" title="<?php echo _("Monday"); ?>" id="Monday" onclick="checkWeekDay(this.id);"><?php echo _("Mon"); ?>
                                                     </td>
-                                                    <td>
+                                                    <td class="recurrence_table">
                                                         <input type="checkbox" value="TU" title="<?php echo _("Tuesday"); ?>" id="Tuesday" onclick="checkWeekDay(this.id);"><?php echo _("Tue"); ?>
                                                     </td>
-                                                    <td>
+                                                    <td class="recurrence_table">
                                                         <input type="checkbox" value="WE" title="<?php echo _("Wednesday"); ?>" id="Wednesday" onclick="checkWeekDay(this.id);"><?php echo _("Wed"); ?>
                                                     </td>                                                    
                                                 </tr>
                                                 <tr>
-                                                    <td>
+                                                    <td class="recurrence_table">
                                                         <input type="checkbox" value="TH" title="<?php echo _("Thursday"); ?>" id="Thursday" onclick="checkWeekDay(this.id);"><?php echo _("Thu"); ?>
                                                     </td>
-                                                    <td>
+                                                    <td class="recurrence_table">
                                                         <input type="checkbox" value="FR" title="<?php echo _("Friday"); ?>" id="Friday" onclick="checkWeekDay(this.id);"><?php echo _("Fri"); ?>
                                                     </td>
-                                                    <td>
+                                                    <td class="recurrence_table">
                                                         <input type="checkbox" value="SA" title="<?php echo _("Saturday"); ?>" id="Saturday" onclick="checkWeekDay(this.id);"><?php echo _("Sat"); ?>
                                                     </td>                                                    
                                                 </tr>
@@ -145,20 +145,20 @@ $freq_types[] = $freq;
             </th>
         </tr>        
         <tr>
-            <td>
+            <td class="recurrence_table">
                 <table cellspacing="0" cellpadding="0" style="width: 100%">
                     <tr>
-                        <td>
+                        <td class="recurrence_table">
                             <?php echo _("Starts on"); ?>
                             <input type="text" size="9" id="initialRecurrence" value="<?php echo $start_date; ?>">
                         </td>
-                        <td>
+                        <td class="recurrence_table">
                             <table cellspacing="0" cellpadding="0" style="width: 100%">
                                 <tr>
-                                    <td>
+                                    <td class="recurrence_table">
                                         <?php echo _("Ends:"); ?>
                                     </td>
-                                    <td>
+                                    <td class="recurrence_table">
                                         <input type="radio" name="until" id="recur_radio" checked="yes" value="NROCCURR" onchange="setUntilType(); ">
                                         <?php echo _("After"); ?>
                                         <!-- input type="text" size="4" id="nr_occurr" value="5" onchange="changeUntilType(recur_radio)" onblur="changeUntilType(recur_radio)" -->
@@ -197,10 +197,10 @@ $freq_types[] = $freq;
             </th>
         </tr>
         <tr>            
-            <td>
+            <td class="recurrence_table">
                 <table cellspacing="0" cellpadding="0" style="width: 100%">
                     <tr>
-                        <td>
+                        <td class="recurrence_table">
                             <label id="short_desc"></label>
                             <label id="Sunday_desc"></label>
                             <label id="Monday_desc"></label>

@@ -40,7 +40,7 @@ $freq_types[] = $freq;
     <ul class="tabs inactive" id="ul-tabs">
         <li id="t1" class="ui-state-disabled"><a href="#tab1" class="link_tab"><?php echo _('Endpoints & Bandwidth'); ?></a></li>
         <li id="t2" class="ui-state-disabled"><a href="#tab2" class="link_tab"><?php echo _('Timer'); ?></a></li>
-        <li id="t3" class="ui-state-disabled confirm"><a href="#tab3" class="confirm"><?php echo _('Confirmation'); ?></a></li>
+        <li id="t3" class="ui-state-disabled confirm"><a id="l3" href="#tab3" class="confirm"><?php echo _('Confirmation'); ?></a></li>
     </ul>
     
     <div class="tab_container inactive" id="div-tabs">
@@ -77,14 +77,19 @@ $freq_types[] = $freq;
             <br/><br/>
             
             <div id="div-bandwidth">
-                <div align="center" style="font-weight: bold;">
-                    <?php echo _("Bandwidth"); ?>
-                </div>
+                <table style="width:100%">
+                    <tr>
+                        <td style="width:1%"></td>
+                        <td>
+                            <?php echo _("<h1>Bandwidth</h1>"); ?>
+                        </td>
+                        <td style="width:1%"></td>
+                    </tr>                    
+                </table>
             
                 <table style="width: 100%"> 
                     <tr>
-                        <td style="width: 27.5%">                        
-                        </td>
+                        <td style="width:1%"></td>
                         <td style ="width: 45.5%">
                             <table style="width: 100%">
                                 <tr>
@@ -101,21 +106,31 @@ $freq_types[] = $freq;
                                 </tr>
                             </table>
                         </td>                    
-                        <td style="width: 27%">                        
+                        <td style="width: 54.5%">                        
                         </td>                   
                     </tr>
                 </table>
                 
-              
-                <?php $this->addElement('reservation_tab3'); ?>    
+                <table style="width:100%">
+                    <tr>
+                        <td style="width:4%"></td>
+                        <td>
+                            <?php $this->addElement('reservation_tab3'); ?> 
+                        </td>
+                    </tr>                    
+                </table>
                 
-                <br/>
-                <div align="center" style="width:100%">
-                    <label id="amount_label" for="amount"></label>
-                    <input type="text" id="amount" style="text-align: center; border:0; color:#000; font-weight:bold;" size="100"/>            
-                </div>
-                <br/>
-            </div>        
+                <table style="width:100%">
+                    <tr>
+                        <td style="width:1%"></td>
+                        <td>
+                            <label id="amount_label" for="amount"></label>
+                            <input type="text" id="amount" style="border:0; color:#000; font-weight:bold;" size="100"/>            
+                        </td>
+                    </tr>
+                </table>
+            </div>  
+            
             <div class="controls">
                 <input type="button" id="bc1" class="cancel" value="<?php echo _('Cancel'); ?>" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');"/>
                 <input type="button" id="bn1" class="next" value="<?php echo _('Next'); ?>" onClick="nextTab(this);"/>

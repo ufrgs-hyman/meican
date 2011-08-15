@@ -494,7 +494,7 @@ function changeTagValue(where) {
 //inicializa mapa com redes marcadas para a definicao dos endpoints
 function edit_initializeMap() {
     contextMenu.hide();
-
+    firstTime = true;
     for (var i in domains) {        
         for (var j in domains[i].networks) {            
             if (domains[i].networks[j].latitude) {
@@ -539,11 +539,20 @@ function edit_addMarker(location, domain_id, domain_name, network_id, network_na
         map:edit_map
     });
 
-    //    google.maps.event.addListener(marker, "click", function() {
-    //        edit_markerClick(location, domain_id, domain_name, network_id, network_name);
-    //    });
-    
-    google.maps.event.addListener(marker, "click", function() {  
+    google.maps.event.addListener(marker, "click", function() { 
+        
+        selectedMarker = new StyledMarker({
+            domain_id: domain_id,
+            domain_name: domain_name,
+            id: network_id,
+            label: network_name,
+            position: location,
+            styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
+                color:color
+            }),
+            map:edit_map
+        }); 
+        
         contextMenu.find('a').click( function() {
             // fade out the menu
             contextMenu.fadeOut(75);
@@ -552,10 +561,10 @@ function edit_addMarker(location, domain_id, domain_name, network_id, network_na
             var action = $(this).attr('href').substr(1);
             switch ( action )
             {
-                case 'fromHere':                  
+                case 'fromHere':
                     edit_markerClick(location, domain_id, domain_name, network_id, network_name, "src");
                     break;
-                case 'toHere':               
+                case 'toHere':
                     edit_markerClick(location, domain_id, domain_name, network_id, network_name, "dst");
                     break;
             }
@@ -613,6 +622,19 @@ function edit_addMarker(location, domain_id, domain_name, network_id, network_na
   
     // Display and position the menu
     google.maps.event.addListener(marker, 'rightclick', function() {
+        
+        selectedMarker = new StyledMarker({
+            domain_id: domain_id,
+            domain_name: domain_name,
+            id: network_id,
+            label: network_name,
+            position: location,
+            styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
+                color:color
+            }),
+            map:edit_map
+        }); 
+        
         contextMenu.find('a').click( function() {
             // fade out the menu
             contextMenu.fadeOut(75);
@@ -675,7 +697,7 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
             network_name: network_name,
             position: location,
             color: "eee"
-        };
+        };        
     } else if (where == "dst") {
         $("#dst_domain").html(domain_name);
         $("#dst_network").html(network_name);
@@ -700,6 +722,15 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
     });
     $(edit_map.getDiv()).append(contextMenu);
     
+    if (firstTime) {
+        firstTime = false;
+        if (where == "src") {
+            edit_addSelectedMarker(path[0].position, path[0].domain_id, path[0].domain_name, path[0].network_id, path[0].network_name, "src");
+        } else if (where == "dst") {
+            edit_addSelectedMarker(path[1].position, path[1].domain_id, path[1].domain_name, path[1].network_id, path[1].network_name, "dst");
+        }        
+    }
+    
     if (path.length == 2) {  
         edit_clearLines();
         var lines = new Array();
@@ -717,8 +748,44 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
     validateTab1();     
 }
 
+function edit_addSelectedMarker(location, domain_id, domain_name, network_id, network_name, where) {
+    var color;
+    
+    if (where == "src") {
+        color = "0000EE";
+    } else if (where == "dst") {
+        color = "FF0000";
+    }
+    
+    var selectedMarker = new StyledMarker({
+        domain_id: domain_id,
+        domain_name: domain_name,
+        id: network_id,
+        label: network_name,
+        position: location,
+        clickable: false,
+        styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
+            color:color
+        }),
+        map:edit_map
+    });
+    
+    edit_selectedMarkers.push(selectedMarker);
+    selectedMarker.setMap(edit_map);
+}
+
 // desenha uma linha entre dois endpoints selecionados
 function edit_drawPath(flightPlanCoordinates) {
+
+    edit_clearSelectedMarkers();
+
+    if (flightPlanCoordinates[0]) {
+        edit_addSelectedMarker(path[0].position, path[0].domain_id, path[0].domain_name, path[0].network_id, path[0].network_name, "src");
+    }
+    if (flightPlanCoordinates[1]) {
+        edit_addSelectedMarker(path[1].position, path[1].domain_id, path[1].domain_name, path[1].network_id, path[1].network_name, "dst");
+    }
+    
     var line = new google.maps.Polyline({
         path: flightPlanCoordinates,
         strokeColor: "#0000FF",
@@ -727,12 +794,15 @@ function edit_drawPath(flightPlanCoordinates) {
     });
     line.setMap(edit_map);
     edit_lines.push(line);
-    edit_setBounds(flightPlanCoordinates);  
+    if ( flightPlanCoordinates[0] != flightPlanCoordinates[1] ) {
+        edit_setBounds(flightPlanCoordinates);  
+    }
     view_Circuit();
 }
 
 // reseta o mapa ao estado original e desabilita o slider
 function edit_clearAll(){
+    firstTime = true;
     $("#slider").slider( "option", "disabled", true );
     $("#amount_label").hide();
     $("#amount").hide();
@@ -746,13 +816,14 @@ function edit_clearAll(){
         $("#src_port").slideUp();
         $("#dst_port").empty();
         $("#dst_port").slideUp();
-        var ctrl = counter;
-        for (var i=ctrl; i>0; i--) {
+        for (var i=counter; i>0; i--) {
+            alert(i);
             var removeHop = "#removeHop" + counter;
-            $(removeHop).click();
+            if ($(removeHop)) {
+                lessFields($(removeHop));
+            }
         }
         counter = 0;
-        $('#advOptions').slideToggleWidth();  
     }
     edit_clearLines();
     path = [];
@@ -986,14 +1057,17 @@ function view_toggleTopology(){
 
 // inicializa o mapa para visualizacao do circuito
 function view_Circuit(){
-    var coord_src = path[0];
+    var coord_src = path[0].position;
     view_addMarker(coord_src);
     view_bounds.push(coord_src);
-    var coord_dst = path[1];
+    var coord_dst = path[1].position;
     view_addMarker(coord_dst);
     view_bounds.push(coord_dst);
     view_setBounds(view_bounds);
-    view_drawPath(path);
+    var sourceDest = new Array();
+    sourceDest.push(path[0].position);
+    sourceDest.push(path[1].position);
+    view_drawPath(sourceDest);
 }
 
 // adiciona marcadores no mapa para visualizacao do circuito

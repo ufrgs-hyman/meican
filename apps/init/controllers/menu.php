@@ -28,6 +28,7 @@ class menu extends Controller {
      * this function is never called by the system
      */
     private function dummy() {
+        _("Dashboard");
         _("Circuits");
         _("Reservations");
         
