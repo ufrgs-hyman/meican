@@ -686,22 +686,21 @@ class reservations extends Controller {
          * insere o flow
          */
         $flow_cont = new flows();
-        $flow_cont->add();
+        $new_flow = $flow_cont->add();
         $this->show();
         return;
-
 
         /**
          * insere o timer
          */
         $timer_cont = new timers();
-        $timer_cont->add();
+        $new_timer = $timer_cont->add();
 
         $reservation = new reservation_info();
         $reservation->res_name = Common::POST("res_name");
         $reservation->bandwidth = Common::POST("bandwidth");
-        $reservation->flw_id = $selectedFlow;
-        $reservation->tmr_id = $selectedTimer;
+        $reservation->flw_id = $new_flow->flw_id;
+        $reservation->tmr_id = $new_timer->tmr_id;
         $reservation->creation_time = $res_diff_timestamp;
 
         /**

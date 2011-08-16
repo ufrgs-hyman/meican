@@ -61,11 +61,15 @@ class Common {
     }
 
     static function POST($var) {
-        if (array_key_exists($var, $_POST))
-            if (!empty($_POST[$var])) {
+        // variáveis que estão setadas, ou seja, o campo existe no formulário do HTML
+        if (array_key_exists($var, $_POST)) {
+            // variáveis que possuem conteúdo, pode ser zero
+            if ($_POST[$var] != "") {
                 $post = (is_array($_POST[$var]) || is_object($_POST[$var])) ? $_POST[$var] : trim($_POST[$var]);
                 return Database::mysql_replace($post);
             }
+        }
+        // variável não existe ou em branco
         return FALSE;
     }
 

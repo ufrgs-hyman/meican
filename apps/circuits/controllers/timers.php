@@ -198,28 +198,41 @@ class timers extends Controller {
     }
 
     private function add() {
-        $tmr_name = Common::POST('name');
         
         $start = dateTimeToDatabaseFormat(Common::POST("start_date"), Common::POST("start_time"));
         $finish = dateTimeToDatabaseFormat(Common::POST("finish_date"), Common::POST("finish_time"));
 
-        if ($tmr_name && $start && $finish) {
+        if ($start && $finish) {
 
             $timer_info = new timer_info();
-            $timer_info->tmr_name = $tmr_name;
             $timer_info->start = $start;
             $timer_info->finish = $finish;
-
-            $freq = Common::POST('freq');
-
+            
             // timer possui regras de recorrência
-            if ($freq) {
-                $timer_info->freq = $freq;
-                $timer_info->until = dateTimeToDatabaseFormat(Common::POST("until_date"), "23:59");
-                $timer_info->count = Common::POST('count');
-                $timer_info->interval = Common::POST('interval');
-                $timer_info->byday = Common::POST('byday');
-                $timer_info->summary = Common::POST('summary');
+            if (Common::POST("repeat_chkbox")) {
+                $timer_info->freq = Common::POST('freq'); //ok
+                
+                if (Common::POST('until') == "DATE") // ok
+                    $timer_info->until = dateTimeToDatabaseFormat(Common::POST("until_date"), "23:59"); //ok
+                elseif (Common::POST('until') == "NROCCURR")
+                    $timer_info->count = Common::POST('count'); //ok
+                else
+                    Framework::debug("warning on add timer, missing end recurr");
+                
+                $timer_info->interval = Common::POST('interval'); //ok
+                
+                if ($timer->freq == "WEEKLY") {
+                    $weekDays = array();
+                    $htmlElems = array("sun_chkbox","mon_chkbox","tue_chkbox","wed_chkbox","thu_chkbox","fri_chkbox","sat_chkbox");
+                    foreach ($htmlElems as $elem) {
+                        if (Common::POST($elem)) {
+                            $weekDays[] = Common::POST($elem); //ok
+                        }
+                    }
+                    $timer_info->byday = implode(',', $weekDays);
+                }
+                
+                $timer_info->summary = Common::POST('summary');// falta summary
             }
 
             if ($result = $timer_info->insert()) {

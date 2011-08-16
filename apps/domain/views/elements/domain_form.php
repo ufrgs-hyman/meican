@@ -2,7 +2,9 @@
 
 $dom_descr = isset($argsToElement->dom_descr) ? $argsToElement->dom_descr : NULL;
 $oscars_ip = isset($argsToElement->oscars_ip) ? $argsToElement->oscars_ip : NULL;
-$topo_domain_id = isset($argsToElement->topo_domain_id) ? $argsToElement->topo_domain_id : NULL;
+$topology_id = isset($argsToElement->topology_id) ? $argsToElement->topology_id : NULL;
+$ode_ip = isset($argsToElement->ode_ip) ? $argsToElement->ode_ip : NULL;
+$ode_wsdl_path = isset($argsToElement->ode_wsdl_path) ? $argsToElement->ode_wsdl_path : NULL;
 
 ?>
 
@@ -25,10 +27,26 @@ $topo_domain_id = isset($argsToElement->topo_domain_id) ? $argsToElement->topo_d
     </tr>
     <tr>
         <th>
-            <?php echo _("Topology Domain ID"); ?>:
+            <?php echo _("Topology ID"); ?>:
         </th>
         <td>
-            <input type="text" name="topo_domain_id" size="50" value="<?php echo $topo_domain_id; ?>"/>
+            <input type="text" name="topology_id" size="50" value="<?php echo $topology_id; ?>"/>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <?php echo _("ODE IP"); ?>:
+        </th>
+        <td>
+            <input type="text" name="ode_ip" size="50" value="<?php echo $ode_ip; ?>"/>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <?php echo _("ODE WSDL Path"); ?>:
+        </th>
+        <td>
+            <input type="text" name="ode_wsdl_path" size="50" value="<?php echo $ode_wsdl_path; ?>"/>
         </td>
     </tr>
 </table>

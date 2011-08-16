@@ -27,7 +27,8 @@ class domains extends Controller {
                 $domain->id = $d->dom_id;
                 $domain->descr = $d->dom_descr;
                 $domain->oscars_ip = $d->oscars_ip;
-                $domain->topo_domain_id = $d->topo_domain_id;
+                $domain->topology_id = $d->topology_id;
+                $domain->ode_ip = ($d->ode_ip) ? $d->ode_ip : _("No IP defined");
 
                 $domains[] = $domain;
             }
@@ -54,13 +55,15 @@ class domains extends Controller {
     public function add() {
         $dom_descr = Common::POST("dom_descr");
         $oscars_ip = Common::POST("oscars_ip");
-        $topo_domain_id = Common::POST("topo_domain_id");
+        $topology_id = Common::POST("topology_id");
 
-        if ($dom_descr && $oscars_ip) {
+        if ($dom_descr && $oscars_ip && $topology_id) {
             $domain = new domain_info();
             $domain->dom_descr = $dom_descr;
             $domain->oscars_ip = $oscars_ip;
-            $domain->topo_domain_id = $topo_domain_id;
+            $domain->topology_id = $topology_id;
+            $domain->ode_ip = Common::POST("ode_ip");
+            $domain->ode_wsdl_path = Common::POST("ode_wsdl_path");
 
             /** 
              * @todo:
@@ -114,14 +117,16 @@ class domains extends Controller {
         
         $dom_descr = Common::POST("dom_descr");
         $oscars_ip = Common::POST("oscars_ip");
-        $topo_domain_id = Common::POST("topo_domain_id");
+        $topology_id = Common::POST("topology_id");
 
-        if ($dom_descr && $oscars_ip) {
+        if ($dom_descr && $oscars_ip && $topology_id) {
             $domain = new domain_info();
             $domain->dom_id = $domId;
             $domain->dom_descr = $dom_descr;
             $domain->oscars_ip = $oscars_ip;
-            $domain->topo_domain_id = $topo_domain_id;
+            $domain->topology_id = $topology_id;
+            $domain->ode_ip = Common::POST("ode_ip");
+            $domain->ode_wsdl_path = Common::POST("ode_wsdl_path");
 
             if ($domain->update()) {
                 $this->setFlash(_("Domain")." '$domain->dom_descr' "._("updated"), "success");

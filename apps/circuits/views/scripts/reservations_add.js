@@ -41,6 +41,7 @@ function createSlider(){
         max: band_max,
         step: band_div,
         slide: function( event, ui ) {
+            $("#bandwidth").val(ui.value);
             if (ui.value >= (band_max*band_warning)) {
                 $("#amount").animate({
                     'color': '#FF0000'

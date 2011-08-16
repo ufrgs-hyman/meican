@@ -117,7 +117,7 @@ $freq_types[] = $freq;
                         <td>
                             <?php $this->addElement('reservation_tab3'); ?> 
                         </td>
-                    </tr>                    
+                    </tr>
                 </table>
                 
                 <table style="width:100%">
@@ -125,16 +125,17 @@ $freq_types[] = $freq;
                         <td style="width:1%"></td>
                         <td>
                             <label id="amount_label" for="amount"></label>
-                            <input type="text" id="amount" style="border:0; color:#000; font-weight:bold;" size="100"/>            
+                            <input type="text" readonly id="amount" style="border:0; color:#000; font-weight:bold;" size="100"/>
+                            <input type="hidden" name="bandwidth" id="bandwidth" value=""/>
                         </td>
                     </tr>
                 </table>
-            </div>  
+            </div>
             
             <div class="controls">
                 <input type="button" id="bc1" class="cancel" value="<?php echo _('Cancel'); ?>" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');"/>
                 <input type="button" id="bn1" class="next" value="<?php echo _('Next'); ?>" onClick="nextTab(this);"/>
-            </div>    
+            </div>
             
         </div>
         

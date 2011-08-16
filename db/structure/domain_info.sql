@@ -37,4 +37,4 @@ CREATE TABLE IF NOT EXISTS `domain_info` (
   UNIQUE KEY `dom_descr` (`dom_descr`),
   UNIQUE KEY `oscars_ip` (`oscars_ip`),
   UNIQUE KEY `topology_id` (`topology_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

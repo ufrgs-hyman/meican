@@ -16,7 +16,8 @@ $domains = $this->passedArgs;
             <th></th>
             <th><?php echo _("Name"); ?></th>
             <th><?php echo _("OSCARS IP"); ?></th>
-            <th><?php echo _("Topology Domain ID"); ?></th>
+            <th><?php echo _("Topology ID"); ?></th>
+            <th><?php echo _("ODE IP"); ?></th>
         </tr>
         </thead>
 
@@ -32,13 +33,16 @@ $domains = $this->passedArgs;
                 </a>
             </td>                
             <td>
-                    <?php echo $d->descr; ?>
+                <?php echo $d->descr; ?>
             </td>
             <td>
                 <?php echo $d->oscars_ip; ?>
             </td>
             <td>
-                <?php echo $d->topo_domain_id; ?>
+                <?php echo $d->topology_id; ?>
+            </td>
+            <td>
+                <?php echo $d->ode_ip; ?>
             </td>
         </tr>
         <?php endforeach; ?>
@@ -46,7 +50,7 @@ $domains = $this->passedArgs;
 
         <tfoot>
         <tr>
-            <td colspan="4">
+            <td colspan="6">
                 <input class="add" type="button" value="<?php echo _('Add'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'add_form')); ?>');"/>
             </td>
         </tr>

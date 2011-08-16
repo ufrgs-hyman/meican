@@ -10,7 +10,6 @@ class timer_info extends Resource_Model {
 
         // Add all table attributes
         $this->addAttribute("tmr_id", "INTEGER", TRUE, FALSE, FALSE);
-        $this->addAttribute("tmr_name", "VARCHAR");
         
         $this->addAttribute("start", "VARCHAR");
         $this->addAttribute("finish", "VARCHAR");

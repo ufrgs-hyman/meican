@@ -70,7 +70,7 @@
 
         <tfoot>
         <tr>
-            <td colspan="10">
+            <td colspan="11">
                 <input class="add" type="button" value="<?php echo _('Add'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'add_form')); ?>');">
             </td>
         </tr>

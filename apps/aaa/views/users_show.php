@@ -50,7 +50,7 @@
 
         <tfoot>
         <tr>
-            <td colspan="3">
+            <td colspan="4">
                 <input type="button" class="add" name="addButton" class="add" value="<?php echo _('Add'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'add_form')); ?>');">
             </td>
         </tr>

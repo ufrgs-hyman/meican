@@ -13,7 +13,6 @@ class Model {
 
     function Model() {
         $this->attributes = array();
-
     }
 
     public function getDatabaseString() {
@@ -24,6 +23,7 @@ class Model {
         $this->databaseString = $string;
         return true;
     }
+
     public function setAccessTableName($tableName) {
         $this->accessTableName = $tableName;
         return true;
@@ -65,8 +65,8 @@ class Model {
 
         if (!isset($validInd))
             return FALSE;
-        else return $validInd;
-
+        else
+            return $validInd;
     }
 
     /**
@@ -85,20 +85,22 @@ class Model {
             $allowPks = $acl->getAllowedPKey('read', $tableName);
 
             if ($allowPks) {
-                $inString = implode(',',$allowPks);
+                $inString = implode(',', $allowPks);
                 $pk = $this->getPrimaryKey();
                 if ($whereArgsString)
                     $sql = "SELECT * FROM `$tableName` WHERE $whereArgsString AND $pk IN ($inString)";
-                else $sql = "SELECT * FROM `$tableName` WHERE $pk IN ($inString)";
-            } else return FALSE; //sem acesso a nada
-
+                else
+                    $sql = "SELECT * FROM `$tableName` WHERE $pk IN ($inString)";
+            } else
+                return FALSE; //sem acesso a nada
         } else { //sem ACL
             if ($whereArgsString)
                 $sql = "SELECT * FROM `$tableName` WHERE $whereArgsString";
-            else $sql = "SELECT * FROM `$tableName`";
+            else
+                $sql = "SELECT * FROM `$tableName`";
         }
         //Framework::debug("fetch",$sql);
-        return $this->fetchSql($sql,$tableName);
+        return $this->fetchSql($sql, $tableName);
     }
 
     /**
@@ -115,7 +117,6 @@ class Model {
         //achar a chave primária
         //fazer um fetch com o valor da chave primária setado no controller
         //alterar SOMENTE os atributos que foram setados no controller e deixar os demais inalterados
-
         // inicia objeto temporário para manter as informações do objeto original
 
 
@@ -130,16 +131,15 @@ class Model {
         }
 
         // copia a chave primária (será usada na busca da linha a ser alterada no banco)
-
         //return "ERROR: database_object.inc -> UPDATE : PRIMARY KEY $primaryKey NÃO SETADA.";
         $fetchObj = new $this->tableName;
         foreach ($primaryKey as $pk) {
             if (!$this->$pk) {
-                Framework::debug('set all the primary keys to update.',$pk);
+                Framework::debug('set all the primary keys to update.', $pk);
                 return FALSE;
-
             }
-            else $fetchObj->$pk = $this->$pk;
+            else
+                $fetchObj->$pk = $this->$pk;
         }
 
         $result = $fetchObj->fetch(FALSE);
@@ -159,18 +159,16 @@ class Model {
                     }
                 }
             }
-
         } else
             return FALSE;
         /** @todo : log
-         //return "ERROR: database_object.inc -> UPDATE : PRIMARY KEY $primaryKey NÃO ENCONTRADA.";
+          //return "ERROR: database_object.inc -> UPDATE : PRIMARY KEY $primaryKey NÃO ENCONTRADA.";
          *
          */
-
         if (!$changed)
             return FALSE;
 
-        if (sizeof($this->attributes)==0)
+        if (sizeof($this->attributes) == 0)
         //return "Atributos invalidos";
             return FALSE;
 
@@ -183,7 +181,7 @@ class Model {
         foreach ($this->attributes as $attribute) {
             $name = $attribute->name;
             if ($attribute->type == "VARCHAR") {
-                $values[$name] = "'".$values[$name]."'";
+                $values[$name] = "'" . $values[$name] . "'";
             }
             if ($attribute->usedInUpdate) {
                 if ($isFirst) {
@@ -191,7 +189,7 @@ class Model {
                 } else {
                     $sql.=", ";
                 }
-                $sql .= "`$name`=".$values[$name];
+                $sql .= "`$name`=" . $values[$name];
             }
             if ($attribute->primaryKey) {
                 if ($isFirstWhere) {
@@ -199,14 +197,13 @@ class Model {
                 } else {
                     $where .= " AND ";
                 }
-                $where .= "`$name`=".$values[$name];
+                $where .= "`$name`=" . $values[$name];
             }
         }
         $sql .= $where;
         //Framework::debug('update',$sql);
         return $this->querySql($sql);
     }
-
 
     public function updateTo($alt = Array(), $useACL = TRUE) {
 
@@ -222,16 +219,16 @@ class Model {
         foreach ($alt as $ind => $val) {
 
             if ($val && array_search($ind, $validInds) !== FALSE) { //indice valido
-
                 if ($this->attributes[$ind]->type == "VARCHAR")
-                    $alt[$ind] = "\"".$alt[$ind]."\"";
+                    $alt[$ind] = "\"" . $alt[$ind] . "\"";
                 $setArgs[] = "$ind=$alt[$ind]";
             }
         }
 
         if (isset($setArgs))
-            $setArgsString = implode(',',$setArgs);
-        else return FALSE;
+            $setArgsString = implode(',', $setArgs);
+        else
+            return FALSE;
 
         if (!$setArgsString)
             return FALSE;
@@ -244,38 +241,37 @@ class Model {
             $allowPks = $acl->getAllowedPKey('update', $tableName);
 
             if ($allowPks) {
-                $inString = implode(',',$allowPks);
+                $inString = implode(',', $allowPks);
                 $pk = $this->getPrimaryKey();
                 if ($whereArgsString) {
                     $sql = "UPDATE $tableName SET $setArgsString WHERE $whereArgsString AND $pk IN ($inString)";
                     $sqlfetch = "SELECT * FROM $tableName WHERE $whereArgsString AND $pk IN ($inString)";
-                }
-                else {
+                } else {
                     $sql = "UPDATE $tableName WHERE $pk IN ($inString)";
                     $sqlfetch = "SELECT * FROM $tableName WHERE $pk IN ($inString)";
                 }
-            } else return FALSE; //sem acesso a nada
-
+            } else
+                return FALSE; //sem acesso a nada
         } else { //sem ACL
-
             if ($whereArgsString) {
                 $sql = "UPDATE $tableName SET $setArgsString WHERE $whereArgsString";
                 $sqlfetch = "SELECT * FROM $tableName WHERE $whereArgsString";
             }
-            else $sql = "UPDATE $tableName SET $setArgsString";
+            else
+                $sql = "UPDATE $tableName SET $setArgsString";
         }
 
         $resfetch = $this->fetchSql($sqlfetch, $tableName);
 
-        Framework::debug('sql update',$sql);
+        Framework::debug('sql update', $sql);
 
         if (!$resfetch)
             return FALSE;
-        else return $this->querySql($sql);
+        else
+            return $this->querySql($sql);
+    }
 
-
-
-    } //do updateto
+//do updateto
 
     /**
      * @return <boolean> FALSE : on failed insertion
@@ -291,22 +287,27 @@ class Model {
         foreach ($this->attributes as $attribute) {
             $name = $attribute->name;
             if ($attribute->type == "VARCHAR") {
-                $values[$name] = "'".$values[$name]."'";
+                $values[$name] = "'" . $values[$name] . "'";
             }
-            if ($values[$name] && $attribute->usedInInsert) {
+            if ($attribute->usedInInsert) {
                 if ($isFirst) {
                     $isFirst = false;
                 } else {
                     $sqlValues.=", ";
                     $sqlNames.=", ";
                 }
+                
                 $sqlNames .= "`$name`";
-                $sqlValues .= $values[$name];
+                
+                if ($values[$name] != "")
+                    $sqlValues .= $values[$name];
+                else
+                    $sqlValues .= "NULL";
             }
         }
         $sql = "INSERT INTO `$classname` ($sqlNames) values ($sqlValues)";
 
-        //Framework::debug('sql',$sql);
+        //Framework::debug('sql insert',$sql);
         //se inseriu com sucesso, retorna o objeto inserido
         if ($this->querySql($sql)) {
             if ($ret = $this->fetch(FALSE))
@@ -314,7 +315,8 @@ class Model {
             else
                 return FALSE;
         }
-        else return FALSE;
+        else
+            return FALSE;
     }
 
     /**
@@ -335,7 +337,7 @@ class Model {
             $toDelete[] = $f->{$pk};
         }
 
-        Framework::debug('todelete',$toDelete);
+        Framework::debug('todelete', $toDelete);
         if (!$toDelete) {
             return FALSE;
         }
@@ -344,23 +346,24 @@ class Model {
         $whereArgs = array();
         if ($useACL) {
             $acl = new AclLoader();
-            $restr = $acl->getAllowedPKey('delete',$tableName);
+            $restr = $acl->getAllowedPKey('delete', $tableName);
 
             //delete nao permite where do tipo IN
             foreach ($toDelete as $d) {
-                Framework::debug('fe',$d);
+                Framework::debug('fe', $d);
                 if (array_search($d, $restr) !== FALSE) { //verifica se a chave q quer deletar está dentro das permissoes
                     if ($this->attributes[$pk]->type == "VARCHAR")
                         $whereArgs[] = "`$pk`='$d'";
-                    else $whereArgs[] = "`$pk`=$d";
+                    else
+                        $whereArgs[] = "`$pk`=$d";
                 }
             }
-
         } else {
             foreach ($toDelete as $d) {
                 if ($this->attributes[$pk]->type == "VARCHAR")
                     $whereArgs[] = "`$pk`='$d'";
-                else $whereArgs[] = "`$pk`=$d";
+                else
+                    $whereArgs[] = "`$pk`=$d";
             }
         }
 
@@ -373,7 +376,7 @@ class Model {
             //fetch before update to return false if none results will be selected
             $sqlfetch = "SELECT * FROM $tableName WHERE $whereArgsString";
 
-            $result = $this->fetchSql($sqlfetch,$tableName);
+            $result = $this->fetchSql($sqlfetch, $tableName);
 
             if (!$result) //nao consigurira atualizar nada
                 return FALSE;
@@ -400,6 +403,7 @@ class Model {
             return FALSE;
         }
     }
+
     /**
      *
      * @param <string> $sql : SQL string using ';' as separator for the 'explode()' function.
@@ -460,7 +464,7 @@ class Model {
         foreach ($validInds as $vi) {
             if ($values[$vi]) {
                 if ($this->attributes[$vi]->type == "VARCHAR")
-                    $values[$vi] = "\"".$values[$vi]."\"";
+                    $values[$vi] = "\"" . $values[$vi] . "\"";
                 $whereArgs[] = "`$vi`=$values[$vi]";
             }
         }
@@ -468,9 +472,10 @@ class Model {
         if ($whereArgs)
             if ($implode)
                 return implode(' AND ', $whereArgs);
-            else return $whereArgs;
-        else return FALSE;
-
+            else
+                return $whereArgs;
+        else
+            return FALSE;
     }
 
     function getNextId($field) {
@@ -479,7 +484,8 @@ class Model {
 
         if ($whereString)
             $sql = "SELECT MAX($field) as $field from $tableName WHERE $whereString";
-        else $sql = "SELECT MAX($field) as $field from $tableName";
+        else
+            $sql = "SELECT MAX($field) as $field from $tableName";
 
         $result = $this->fetchSql($sql, $tableName);
 
@@ -488,14 +494,16 @@ class Model {
             return $last + 1;
         }
         return FALSE;
-
     }
+
     public function get($field=false) {
         $tmp = $this->fetch();
         if ($field)
             return $tmp[0]->{$field};
-        else return $tmp[0];
+        else
+            return $tmp[0];
     }
+
 }
 
 ?>

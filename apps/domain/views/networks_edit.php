@@ -2,7 +2,7 @@
 
 <h1><?php echo _("Edit Network"); ?></h1>
 
-<form method="POST" action="<?php echo $this->buildLink(array("action" => "update", "param" => "net_id:".$args->network->net_id)); ?>">
+<form method="POST" onsubmit="validateNetworkForm();" action="<?php echo $this->buildLink(array("action" => "update", "param" => "net_id:".$args->network->net_id)); ?>">
 
     <?php $this->addElement('network_form', $args); ?>
 

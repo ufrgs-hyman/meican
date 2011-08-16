@@ -16,31 +16,31 @@ class meicans extends Controller {
 
     public function show() {
 
-        $fed = new meican_info();
-        $allFederations = $fed->fetch(FALSE);
+        $mec = new meican_info();
+        $allMeicans = $mec->fetch(FALSE);
 
-        if ($allFederations) {
-            $federations = array();
+        if ($allMeicans) {
+            $meicans = array();
 
-            foreach ($allFederations as $f) {
-                $federation = new stdClass();
-                $federation->id = $f->meican_id;
-                $federation->descr = $f->meican_descr;
-                $federation->ip = $f->meican_ip;
-                $federation->dir_name = $f->meican_dir_name;
+            foreach ($allMeicans as $m) {
+                $meican = new stdClass();
+                $meican->id = $m->meican_id;
+                $meican->descr = $m->meican_descr;
+                $meican->ip = $m->meican_ip;
+                $meican->dir_name = $m->meican_dir_name;
+                $meican->local = ($m->local_domain) ? _("Yes") : _("No");
 
-                $federations[] = $federation;
+                $meicans[] = $meican;
             }
-            Framework::debug("meicans",$federations);
             $this->setAction('show');
 
-            $this->setArgsToBody($federations);
+            $this->setArgsToBody($meicans);
         } else {
             $this->setAction('empty');
 
             $args = new stdClass();
-            $args->title = _("Federations");
-            $args->message = _("No federation is registered, click the button below to register a new one");
+            $args->title = _("MEICANs");
+            $args->message = _("No MEICAN is registered, click the button below to register a new one");
             $this->setArgsToBody($args);
         }
 
@@ -53,89 +53,95 @@ class meicans extends Controller {
     }
     
     public function add() {
-        $fed_descr = Common::POST("fed_descr");
-        $ip_addr = Common::POST("fed_ip");
+        $meican_descr = Common::POST("meican_descr");
+        $meican_ip = Common::POST("meican_ip");
+        $meican_dir_name = Common::POST("meican_dir_name");
 
-        if ($fed_descr && $ip_addr) {
-            $federation = new meican_info();
-            $federation->meican_descr = $fed_descr;
-            $federation->meican_ip = $ip_addr;
+        if ($meican_descr && $meican_ip && $meican_dir_name) {
+            $meican = new meican_info();
+            $meican->meican_descr = $meican_descr;
+            $meican->meican_ip = $meican_ip;
+            $meican->meican_dir_name = $meican_dir_name;
+            $meican->local_domain = (Common::POST("local_domain")) ? 1 : 0;
 
-            if ($federation->insert()) {
-                $this->setFlash(_("Federation")." '$federation->meican_descr' "._("added"), "success");
+            if ($meican->insert()) {
+                $this->setFlash(_("MEICAN")." '$meican->meican_descr' "._("added"), "success");
                 $this->show();
                 return;
-            } else $this->setFlash(_("Fail to create federation"), "error");
+            } else $this->setFlash(_("Fail to create MEICAN"), "error");
 
         } else $this->setFlash(_("Missing arguments"), "error");
 
         $this->add_form();
     }
     
-    public function edit($fed_id_array) {
-        $fedId = NULL;
-        if (array_key_exists('fed_id', $fed_id_array)) {
-            $fedId = $fed_id_array['fed_id'];
+    public function edit($mec_id_array) {
+        $mecId = NULL;
+        if (array_key_exists('meican_id', $mec_id_array)) {
+            $mecId = $mec_id_array['meican_id'];
         } else {
             $this->setFlash(_("Invalid index"), "fatal");
             $this->show();
             return;
         }
 
-        $fed_info = new meican_info();
-        $fed_info->meican_id = $fedId;
-        $federation = $fed_info->fetch(FALSE);
+        $mec_info = new meican_info();
+        $mec_info->meican_id = $mecId;
+        $meican = $mec_info->fetch(FALSE);
 
-        if (!$federation) {
-            $this->setFlash(_("Federation not found"), "fatal");
+        if (!$meican) {
+            $this->setFlash(_("MEICAN not found"), "fatal");
             $this->show();
             return;
         }
         
-        $this->setArgsToBody($federation[0]);
+        $this->setArgsToBody($meican[0]);
         $this->setAction('edit');
         $this->render();
     }
     
-    public function update($fed_id_array) {
-        $fedId = NULL;
-        if (array_key_exists('fed_id', $fed_id_array)) {
-            $fedId = $fed_id_array['fed_id'];
+    public function update($mec_id_array) {
+        $mecId = NULL;
+        if (array_key_exists('meican_id', $mec_id_array)) {
+            $mecId = $mec_id_array['meican_id'];
         } else {
             $this->setFlash(_("Invalid index"), "fatal");
             $this->show();
             return;
         }
         
-        $fed_descr = Common::POST("fed_descr");
-        $ip_addr = Common::POST("fed_ip");
+        $meican_descr = Common::POST("meican_descr");
+        $meican_ip = Common::POST("meican_ip");
+        $meican_dir_name = Common::POST("meican_dir_name");
 
-        if ($fed_descr && $ip_addr) {
-            $federation = new meican_info();
-            $federation->meican_id = $fedId;
-            $federation->meican_descr = $fed_descr;
-            $federation->meican_ip = $ip_addr;
+        if ($meican_descr && $meican_ip && $meican_dir_name) {
+            $meican = new meican_info();
+            $meican->meican_id = $mecId;
+            $meican->meican_descr = $meican_descr;
+            $meican->meican_ip = $meican_ip;
+            $meican->meican_dir_name = $meican_dir_name;
+            $meican->local_domain = (Common::POST("local_domain")) ? 1 : 0;
 
-            if ($federation->update()) {
-                $this->setFlash(_("Federation")." '$federation->meican_descr' "._("updated"), "success");
+            if ($meican->update()) {
+                $this->setFlash(_("MEICAN")." '$meican->meican_descr' "._("updated"), "success");
                 $this->show();
                 return;
             } else $this->setFlash(_("No change has been made"), "warning");
 
         } else $this->setFlash(_("Missing arguments"), "error");
         
-        $this->edit($fed_id_array);
+        $this->edit($mec_id_array);
     }
     
     public function delete() {
-        if ($del_feds = Common::POST('del_checkbox')) {
-            foreach ($del_feds as $fedId) {
-                $federation = new meican_info();
-                $federation->fed_id = $fedId;
-                $tmp = $federation->fetch(FALSE);
+        if ($del_mecs = Common::POST('del_checkbox')) {
+            foreach ($del_mecs as $mecId) {
+                $meican = new meican_info();
+                $meican->meican_id = $mecId;
+                $tmp = $meican->fetch(FALSE);
                 $result = $tmp[0];
-                if ($federation->delete())
-                    $this->setFlash(_("Federation") . " '$result->meican_descr' " . _("deleted"), 'success');
+                if ($meican->delete())
+                    $this->setFlash(_("MEICAN") . " '$result->meican_descr' " . _("deleted"), 'success');
             }
         }
 

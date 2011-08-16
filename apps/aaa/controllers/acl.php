@@ -53,21 +53,26 @@ class acl extends Controller {
                 $result_mger = $grp_manager->fetch(FALSE);
                 
                 $aro = $result_mger[0];
-                $model = new $aro->model;
-                $pk = $model->getPrimaryKey();
                 
-                $model->$pk = $aro->obj_id;
-                $return = $model->fetch(FALSE);
-                $attr = $return[0]->getValidInds();
-                
-                $temp = array();
-                foreach ($attr as $at_name) {
-                    if (($return[0]->attributes[$at_name]->usedInInsert) && !($return[0]->attributes[$at_name]->forceUpdate))
-                        $temp[] = "$at_name: ".$return[0]->$at_name;
+                $aro_obj_descr = "-";
+                if (class_exists($aro->model)) {
+                    $model = new $aro->model;
+                    $pk = $model->getPrimaryKey();
+
+                    $model->$pk = $aro->obj_id;
+                    $return = $model->fetch(FALSE);
+                    $attr = $return[0]->getValidInds();
+
+                    $temp = array();
+                    foreach ($attr as $at_name) {
+                        if (($return[0]->attributes[$at_name]->usedInInsert) && !($return[0]->attributes[$at_name]->forceUpdate))
+                            $temp[] = "$at_name: " . $return[0]->$at_name;
+                    }
+                    $aro_obj_descr = implode("<br>", $temp);
                 }
                 
                 $right->aro_obj_id = $aro->obj_id;
-                $right->aro_obj = implode("<br>", $temp);
+                $right->aro_obj = $aro_obj_descr;
                 $right->aro_model = $aro->model;
                 
                 //Framework::debug("temp", implode("<br>", $temp));
@@ -88,21 +93,26 @@ class acl extends Controller {
                 $result_mged = $grp_managed->fetch(FALSE);
                 
                 $aco = $result_mged[0];
-                $model = new $aco->model;
-                $pk = $model->getPrimaryKey();
                 
-                $model->$pk = $aco->obj_id;
-                $return = $model->fetch(FALSE);
-                $attr = $return[0]->getValidInds();
-                
-                $temp = array();
-                foreach ($attr as $at_name) {
-                    if (($return[0]->attributes[$at_name]->usedInInsert) && !($return[0]->attributes[$at_name]->forceUpdate))
-                        $temp[] = "$at_name: ".$return[0]->$at_name;
+                $aco_obj_descr = "-";
+                if (class_exists($aco->model)) {
+                    $model = new $aco->model;
+                    $pk = $model->getPrimaryKey();
+
+                    $model->$pk = $aco->obj_id;
+                    $return = $model->fetch(FALSE);
+                    $attr = $return[0]->getValidInds();
+
+                    $temp = array();
+                    foreach ($attr as $at_name) {
+                        if (($return[0]->attributes[$at_name]->usedInInsert) && !($return[0]->attributes[$at_name]->forceUpdate))
+                            $temp[] = "$at_name: " . $return[0]->$at_name;
+                    }
+                    $aco_obj_descr = implode("<br>", $temp);
                 }
                 
                 $right->aco_model = $aco->model;
-                $right->aco_obj = implode("<br>", $temp);
+                $right->aco_obj = $aco_obj_descr;
                 $right->aco_obj_id = $aco->obj_id;
 
                 $right->editable = ($result_mger && $result_mged) ? TRUE : FALSE;
@@ -115,8 +125,8 @@ class acl extends Controller {
             
             $this->setArgsToBody($rights);
             
-            $aros = get_tree_models(new Aros());
-            $acos = get_tree_models(new Acos());
+            //$aros = get_tree_models(new Aros());
+            //$acos = get_tree_models(new Acos());
             
             $this->setArgsToScript(array(
                 "allow_desc_string" => _("Allow"),

@@ -1,14 +1,14 @@
 <?php
 
-$federation = $this->passedArgs;
+$meican = $this->passedArgs;
 
 ?>
 
-<h1><?php echo _("Edit Federation"); ?></h1>
+<h1><?php echo _("Edit MEICAN"); ?></h1>
 
-<form method="POST" action="<?php echo $this->buildLink(array("action" => "update", "param" => "fed_id:$federation->meican_id")); ?>">
+<form method="POST" action="<?php echo $this->buildLink(array("action" => "update", "param" => "meican_id:$meican->meican_id")); ?>">
 
-    <?php $this->addElement('meican_form', $federation); ?>
+    <?php $this->addElement('meican_form', $meican); ?>
 
     <div class="controls">
         <input class="save" type="submit" value="<?php echo _('Update'); ?>"/>

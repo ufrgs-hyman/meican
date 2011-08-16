@@ -54,7 +54,7 @@ $networks = $this->passedArgs;
 
         <tfoot>
         <tr>
-            <td colspan="6">
+            <td colspan="7">
                 <input class="add" type="button" value="<?php echo _('Add'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'add_form')); ?>');">
             </td>
         </tr>

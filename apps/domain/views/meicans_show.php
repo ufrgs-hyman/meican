@@ -1,6 +1,6 @@
 <?php
 
-$federations = $this->passedArgs;
+$meicans = $this->passedArgs;
 
 ?>
 
@@ -14,27 +14,35 @@ $federations = $this->passedArgs;
         <tr>
             <th></th>
             <th></th>
+            <th><?php echo _("Local?"); ?></th>
             <th><?php echo _("Name"); ?></th>
             <th><?php echo _("MEICAN IP"); ?></th>
+            <th><?php echo _("Directory Name"); ?></th>
         </tr>
         </thead>
 
         <tbody>
-        <?php foreach ($federations as $f): ?>
+        <?php foreach ($meicans as $m): ?>
         <tr>
             <td>
-                <input type="checkbox" name="del_checkbox[]" value="<?php echo $f->id; ?>">
+                <input type="checkbox" name="del_checkbox[]" value="<?php echo $m->id; ?>">
             </td>
             <td>
-                <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "fed_id:$f->id")); ?>">
+                <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "meican_id:$m->id")); ?>">
                     <img class="edit" src="layouts/img/edit_1.png"/>
-                </a>                    
+                </a>
             </td>
             <td>
-                    <?php echo $f->descr; ?>
+                    <?php echo $m->local; ?>
             </td>
             <td>
-                    <?php echo $f->ip; ?>
+                    <?php echo $m->descr; ?>
+            </td>
+            <td>
+                    <?php echo $m->ip; ?>
+            </td>
+            <td>
+                    <?php echo $m->dir_name; ?>
             </td>
         </tr>
         <?php endforeach; ?>
@@ -42,7 +50,7 @@ $federations = $this->passedArgs;
 
         <tfoot>
         <tr>
-            <td colspan="3">
+            <td colspan="6">
                 <input class="add" type="button" value="<?php echo _('Add'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'add_form')); ?>');">
             </td>
         </tr>
@@ -51,7 +59,7 @@ $federations = $this->passedArgs;
     </table>
     
     <div class="controls">
-        <input class="delete" type="submit" value="<?php echo _('Delete'); ?>" onClick="return confirm('<?php echo _('The selected federations will be deleted.'); echo '\n'; echo _('Do you confirm?'); ?>')">
+        <input class="delete" type="submit" value="<?php echo _('Delete'); ?>" onClick="return confirm('<?php echo _('The selected MEICANs will be deleted.'); echo '\n'; echo _('Do you confirm?'); ?>')">
     </div>
     
 </form>

@@ -80,7 +80,7 @@ $freq_types[] = $freq;
                                             <tr>
                                                 <td class="recurrence_table">
                                                     <?php echo _("Repeats every "); ?>                                                    
-                                                    <select id="interval" onchange="setFreq()">
+                                                    <select id="interval" name="interval" onchange="setFreq()">
                                                     <?php
                                                         if ($timer) {
                                                             for ($i=1; $i < 8; $i++)
@@ -105,27 +105,27 @@ $freq_types[] = $freq;
                                             <table cellspacing="0" cellpadding="0" style="width: 100%">
                                                 <tr>
                                                     <td class="recurrence_table">
-                                                        <input type="checkbox" value="SU" title="<?php echo _("Sunday"); ?>" id="Sunday" onclick="checkWeekDay(this.id);"><?php echo _("Sun"); ?>
+                                                        <input type="checkbox" name="sun_chkbox" value="SU" title="<?php echo _("Sunday"); ?>" id="Sunday" onclick="checkWeekDay(this.id);"><?php echo _("Sun"); ?>
                                                     </td>
                                                     <td class="recurrence_table">
-                                                        <input type="checkbox" value="MO" title="<?php echo _("Monday"); ?>" id="Monday" onclick="checkWeekDay(this.id);"><?php echo _("Mon"); ?>
+                                                        <input type="checkbox" name="mon_chkbox" value="MO" title="<?php echo _("Monday"); ?>" id="Monday" onclick="checkWeekDay(this.id);"><?php echo _("Mon"); ?>
                                                     </td>
                                                     <td class="recurrence_table">
-                                                        <input type="checkbox" value="TU" title="<?php echo _("Tuesday"); ?>" id="Tuesday" onclick="checkWeekDay(this.id);"><?php echo _("Tue"); ?>
+                                                        <input type="checkbox" name="tue_chkbox" value="TU" title="<?php echo _("Tuesday"); ?>" id="Tuesday" onclick="checkWeekDay(this.id);"><?php echo _("Tue"); ?>
                                                     </td>
                                                     <td class="recurrence_table">
-                                                        <input type="checkbox" value="WE" title="<?php echo _("Wednesday"); ?>" id="Wednesday" onclick="checkWeekDay(this.id);"><?php echo _("Wed"); ?>
-                                                    </td>                                                    
+                                                        <input type="checkbox" name="wed_chkbox" value="WE" title="<?php echo _("Wednesday"); ?>" id="Wednesday" onclick="checkWeekDay(this.id);"><?php echo _("Wed"); ?>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="recurrence_table">
-                                                        <input type="checkbox" value="TH" title="<?php echo _("Thursday"); ?>" id="Thursday" onclick="checkWeekDay(this.id);"><?php echo _("Thu"); ?>
+                                                        <input type="checkbox" name="thu_chkbox" value="TH" title="<?php echo _("Thursday"); ?>" id="Thursday" onclick="checkWeekDay(this.id);"><?php echo _("Thu"); ?>
                                                     </td>
                                                     <td class="recurrence_table">
-                                                        <input type="checkbox" value="FR" title="<?php echo _("Friday"); ?>" id="Friday" onclick="checkWeekDay(this.id);"><?php echo _("Fri"); ?>
+                                                        <input type="checkbox" name="fri_chkbox" value="FR" title="<?php echo _("Friday"); ?>" id="Friday" onclick="checkWeekDay(this.id);"><?php echo _("Fri"); ?>
                                                     </td>
                                                     <td class="recurrence_table">
-                                                        <input type="checkbox" value="SA" title="<?php echo _("Saturday"); ?>" id="Saturday" onclick="checkWeekDay(this.id);"><?php echo _("Sat"); ?>
+                                                        <input type="checkbox" name="sat_chkbox" value="SA" title="<?php echo _("Saturday"); ?>" id="Saturday" onclick="checkWeekDay(this.id);"><?php echo _("Sat"); ?>
                                                     </td>                                                    
                                                 </tr>
                                             </table>
@@ -162,7 +162,7 @@ $freq_types[] = $freq;
                                         <input type="radio" name="until" id="recur_radio" checked="yes" value="NROCCURR" onchange="setUntilType(); ">
                                         <?php echo _("After"); ?>
                                         <!-- input type="text" size="4" id="nr_occurr" value="5" onchange="changeUntilType(recur_radio)" onblur="changeUntilType(recur_radio)" -->
-                                        <select id="nr_occurr" onchange="setUntilType()">
+                                        <select id="nr_occurr" name="count" onchange="setUntilType()">
                                         <?php
                                             if ($timer && $timer->count) {
                                                 for ($i=1; $i < 30; $i++)
@@ -181,8 +181,7 @@ $freq_types[] = $freq;
                                         
                                         <input type="radio" name="until" id="date_radio" value="DATE" onchange="setUntilType();">
                                         <?php echo _("On"); ?>
-                                        <input type="text" size="9" readonly disabled class="datePicker" id="untilDate" value="<?php if ($timer && $timer->until) echo $timer->until; else echo $finish_date; ?>" onchange="setUntilType()">
-                                        <input type="hidden" id="untilTime" value="23:59">
+                                        <input type="text" name="until_date" size="9" readonly disabled class="datePicker" id="untilDate" value="<?php if ($timer && $timer->until) echo $timer->until; else echo $finish_date; ?>" onchange="setUntilType()">
                                     </td>
                                 </tr>
                             </table>

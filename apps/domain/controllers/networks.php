@@ -19,6 +19,9 @@ class networks extends Controller {
     }
 
     public function show() {
+//        echo 0;
+//        echo "zeros";
+//        echo "0";
 
         $net = new network_info();
         $allNets = $net->fetch();
@@ -79,6 +82,15 @@ class networks extends Controller {
         $args = new stdClass();
         $args->domains = ($domains) ? $domains : NULL;
         
+        $argsToSpt = array(
+            "flash_nameReq" => _("A name is required"),
+            "flash_setLatLng" => _("Set coordinates"),
+            "flash_setDomain" => _("Select a domain")
+        );
+        
+        $this->addScript("networks");
+        $this->setArgsToScript($argsToSpt);
+        
         $this->setArgsToBody($args);
         $this->setAction('add');
         $this->render();
@@ -90,7 +102,8 @@ class networks extends Controller {
         $net_lat = Common::POST("net_lat");
         $net_lng = Common::POST("net_lng");
         
-        if ($net_descr && $net_lat && $net_lng && ($parent_domain != -1)) {
+        
+        if ($net_descr && ($parent_domain != -1)) {
             $network = new network_info();
             $network->net_descr = $net_descr;
 

@@ -2,7 +2,7 @@
 
 <h1><?php echo _("Add Network"); ?></h1>
 
-<form method="POST" action="<?php echo $this->buildLink(array("action" => "add")); ?>">
+<form method="POST" onsubmit="validateNetworkForm();" action="<?php echo $this->buildLink(array("action" => "add")); ?>">
 
     <?php $this->addElement('network_form', $args); ?>
 
