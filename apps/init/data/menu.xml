@@ -11,14 +11,11 @@
     <menu>
         
         <item>
-                <name> </name>
-                <subItem>
-                    <name>Dashboard</name>
-                    <link>main.php?app=init&amp;controller=gui&amp;action=welcome</link>                
-                </subItem>
+            <name>Dashboard</name>
+            <link>main.php?app=init&amp;controller=gui&amp;action=welcome</link>                
         </item>
         
-        <item>        
+        <item>
             <name>Circuits</name>
             <subItem>
                 <name>Reservations</name>
@@ -28,14 +25,14 @@
         </item>
 
         <item>
-            <name>Domains</name>
+            <name>Topologies</name>
             <subItem>
                 <name>MEICANs</name>
                 <link>main.php?app=domain&amp;controller=meicans&amp;action=show</link>
                 <right></right>
             </subItem>
             <subItem>
-                <name>OSCARS</name>
+                <name>Domains</name>
                 <link>main.php?app=domain&amp;controller=domains&amp;action=show</link>
                 <right></right>
             </subItem>
