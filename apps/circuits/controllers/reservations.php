@@ -948,35 +948,7 @@ class reservations extends Controller {
 
         $this->show();
     }
-    function create($reservation_info) {
 
-        $oscarsRes = new OSCARSReservation();
-        $res = $reservation_info->getReservationDetails();
-        $dom = new domain_info();
-        $dominio = $dom->getOSCARSDomain($res->urn_src);
-        $oscarsRes->setOscarsUrl($dominio->oscars_ip);
-        $oscarsRes->setDescription($res->res_name);
-        $oscarsRes->setBandwidth($res->bandwidth);
-        $oscarsRes->setSrcEndpoint($res->urn_src);
-        $oscarsRes->setDestEndpoint($res->urn_dst);
-        $oscarsRes->setPathSetupMode('signal-xml');
-        //$oscarsRes->setPath("urn:ogf:network:domain=oscars7.ufrgs.br:node=vlsr2;urn:ogf:network:domain=oscars7.ufrgs.br:node=vlsr1");
-        $oscarsRes->setVlan(true,198);
-        if ($oscarsRes->createReservation()) {
-
-            $new_gri = new gri_info();
-            $new_gri->gri_id = $oscarsRes->getGri();
-            $new_gri->res_id = $reservation_info->res_id;
-            $new_gri->dom_id = $dominio->dom_id;
-            $date = new DateTime();
-            $date->setTimestamp($oscarsRes->getStartTimestamp());
-            $new_gri->start = $date->format('Y-m-d H:i');
-            $date->setTimestamp($oscarsRes->getEndTimestamp());
-            $new_gri->finish = $date->format('Y-m-d H:i');
-            $new_gri->status = $oscarsRes->getStatus();
-            $new_gri->insert();
-        }
-    }
 
     function query($reservation_info) {
         //descobrir IP do dominio origem da reserva para enviar ao OSCARS adequado
@@ -1028,33 +1000,6 @@ class reservations extends Controller {
         $oscarsRes->setGrisString($grisArray);
         $result = $oscarsRes->listReservations();
         Framework::debug("result do list", $result);
-    }
-
-    function getTopology() {
-        $oscarsRes = new OSCARSReservation();
-        $oscarsRes->setOscarsUrl("200.132.1.28:8080");
-        $oscarsRes->getTopology();
-
-        $topo = $oscarsRes->topology;
-
-        foreach($topo as $t) {
-            $pieces = explode(' ',$t);
-
-            switch ($pieces[0]) {
-                case '#':
-                    $domain = new domain();
-                    $domain->setId($pieces[1]);
-                    $domain->getDomainId();
-                    $last_domain = $domain;
-                    break;
-                case '##':
-                    break;
-                case '###':
-                    break;
-                case "####":
-                    break;
-            }
-        }
     }
 
     function send($reservation_info) {
@@ -1218,59 +1163,6 @@ class reservations extends Controller {
                 }
         }
     }
-// try {
-
-//                    $reservation_info = new reservation_info();
-//                    $reservation_info->res_id = $req->get('resource_id');
-//                    $flw_id = $reservation_info->get('flw_id');
-//                    $flow = new flow_info();
-//                    $flow->flw_id = $flw_id;
-//
-//                    $oscarsRes = new OSCARSReservation();
-//
-//                    $oscarsRes->setOscarsUrl($domain->oscars_ip);
-//                    $oscarsRes->setDescription($reservation_info->get('res_name'));
-//                    $oscarsRes->setBandwidth($reservation_info->get('bandwidth'));
-//                    $oscarsRes->setSrcEndpoint($flow->get('urn_src_string'));
-//                    $oscarsRes->setDestEndpoint($flow->get('urn_dst_string'));
-//                    $oscarsRes->setPathSetupMode('signal-xml');
-//
-//                    if ($path = $flow->get('path'))
-//                        $oscarsRes->setPath($path);
-//
-//                    if ($vlan = $flow->get('src_vlan'))
-//                        if ($vlan == 0)
-//                            $oscarsRes->setVlan(false);
-//                        else $oscarsRes->setVlan(true,$vlan);
-//
-//                    if ($oscarsRes->createReservation()) {
-//
-//                        $new_gri = new gri_info();
-//                        $new_gri->gri_id = $oscarsRes->getGri();
-//                        $new_gri->res_id = $reservation_info->res_id;
-//                        $new_gri->dom_id = $dominio->dom_id;
-//                        $date = new DateTime();
-//                        $date->setTimestamp($oscarsRes->getStartTimestamp());
-//                        $new_gri->start = $date->format('Y-m-d H:i');
-//                        $date->setTimestamp($oscarsRes->getEndTimestamp());
-//                        $new_gri->finish = $date->format('Y-m-d H:i');
-//                        $new_gri->status = $oscarsRes->getStatus();
-//                        $new_gri->insert();
-//                        $req->updateTo(array('status' => 'SENT TO OSCARS'), FALSE);
-//                    }
-//
-//                } catch (Exception $e) {
-//                    $req->updateTo(array('status' => 'ERROR SENDING TO OSCARS'), FALSE);
-//
-//                }
-//
-//            } else {
-//                $req->updateTo(array('status' => 'FINISHED'), FALSE);
-//                Framework::debug('requisicao negada', $response['req_id']);
-//                return true;
-//            }
-//
-
 }
 
 ?>
