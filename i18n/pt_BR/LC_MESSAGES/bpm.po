@@ -7,69 +7,90 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-13 14:22-0300\n"
-"PO-Revision-Date: 2011-05-30 17:49-0400\n"
+"POT-Creation-Date: 2011-08-15 14:14-0300\n"
+"PO-Revision-Date: 2011-08-15 14:28-0300\n"
 "Last-Translator: Pietro Biasuz <pfbiasuz@inf.ufrgs.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views/ode_show.php:8
-msgid "Process"
-msgstr "Processo"
+#: controllers/requests.php:105
+#: controllers/requests.php:114
+msgid "Unknown"
+msgstr "Desconhecido"
 
-#: views/ode_show.php:9
-msgid "Version"
-msgstr "Versão"
+#: controllers/requests.php:134
+msgid "Response saved"
+msgstr "Resposta salva"
 
-#: views/ode_show.php:10
-msgid "PID"
-msgstr "PID"
+#: controllers/requests.php:139
+msgid "Response NOT saved"
+msgstr "Resposta não salva"
 
-#: views/ode_show.php:11
-msgid "Status"
-msgstr "Status"
+#: controllers/requests.php:175
+msgid "No request was deleted"
+msgstr "Nenhuma requisição foi excluída"
 
-#: views/ode_show.php:12
-msgid "In Progress"
-msgstr "Em Andamento"
+#: controllers/requests.php:178
+msgid "One request was deleted"
+msgstr "Uma requisição foi excluída"
 
-#: views/ode_show.php:13
-msgid "Completed"
-msgstr "Concluído"
+#: controllers/requests.php:181
+msgid "requests were deleted"
+msgstr "requisições foram excluídas"
 
-#: views/ode_show.php:14
-msgid "Error"
-msgstr "Erro"
+#: controllers/ode.php:42
+msgid "Error on upload file"
+msgstr "Erro ao enviar arquivo"
 
-#: views/ode_show.php:15
-msgid "Failed"
-msgstr "Falha"
+#: controllers/ode.php:63
+msgid "Process deployed successfully "
+msgstr "Deploy de processo realizado com sucesso"
 
-#: views/ode_show.php:16
-msgid "Suspended"
-msgstr "Suspenso"
+#: controllers/ode.php:68
+msgid "Fail to deploy process: "
+msgstr "Falha ao realizar deploy do processo:"
 
-#: views/ode_show.php:23
-msgid "Undeploy"
-msgstr ""
+#: controllers/ode.php:72
+msgid "invalid name for the process"
+msgstr "nome inválido para o processo"
 
-#: views/ode_show.php:39
-msgid "Deploy process"
-msgstr "Deploy de Processo"
+#: controllers/ode.php:87
+msgid "Process undeployed successfully"
+msgstr "Undeploy de processo realizado com sucesso"
 
-#: views/ode_show.php:45
-msgid "Name"
-msgstr "Nome"
+#: controllers/ode.php:88
+msgid "Fail to undeploy process"
+msgstr "Falha ao realizar undeploy do processo"
 
-#: views/ode_show.php:53
-msgid "File"
-msgstr "Arquivo"
+#: views/elements/requests_table.php:8
+#: views/requests_show.php:41
+msgid "Domain Source"
+msgstr "Domínio de Origem"
 
-#: views/ode_show.php:61
-msgid "Ok"
-msgstr "OK"
+#: views/elements/requests_table.php:9
+#: views/requests_show.php:13
+#: views/requests_show.php:43
+msgid "Requester"
+msgstr "Solicitante"
+
+#: views/elements/requests_table.php:10
+#: views/requests_show.php:46
+#: views/requests_replyRequest.php:91
+msgid "Response"
+msgstr "Resposta"
+
+#: views/elements/requests_table.php:11
+#: views/requests_show.php:47
+#: views/requests_replyRequest.php:101
+msgid "Message"
+msgstr "Mensagem"
+
+#: views/elements/requests_table.php:20
+#: views/requests_show.php:30
+msgid "Answer"
+msgstr "Responder"
 
 #: views/requests_createRequest.php:12
 msgid "Destination Domain"
@@ -87,28 +108,47 @@ msgstr "Pergunta"
 msgid "Create"
 msgstr "Criar"
 
-#: views/elements/requests_table.php:8 views/requests_show.php:41
-msgid "Domain Source"
-msgstr "Domínio de Origem"
+#: views/requests_show.php:6
+msgid "Pending incoming requests"
+msgstr "Requisições Pendentes"
 
-#: views/elements/requests_table.php:9 views/requests_show.php:13
-#: views/requests_show.php:43
-msgid "Requester"
-msgstr "Solicitante"
+#: views/requests_show.php:11
+msgid "Domain source"
+msgstr "Domínio de origem"
 
-#: views/elements/requests_table.php:10 views/requests_replyRequest.php:91
-#: views/requests_show.php:46
-msgid "Response"
-msgstr "Resposta"
+#: views/requests_show.php:12
+msgid "Domain destination"
+msgstr "Domínio de destino"
 
-#: views/elements/requests_table.php:11 views/requests_replyRequest.php:101
-#: views/requests_show.php:47
-msgid "Message"
-msgstr "Mensagem"
+#: views/requests_show.php:14
+#: views/requests_show.php:44
+msgid "Resource type"
+msgstr "Tipo de recurso"
 
-#: views/elements/requests_table.php:20 views/requests_show.php:30
-msgid "Answer"
-msgstr "Responder"
+#: views/requests_show.php:15
+#: views/requests_show.php:45
+msgid "Resource description"
+msgstr "Descrição do recurso"
+
+#: views/requests_show.php:36
+msgid "Finished incoming requests"
+msgstr "Requisições Concluídas"
+
+#: views/requests_show.php:42
+msgid "Domain Destination"
+msgstr "Domínio de Destino"
+
+#: views/requests_show.php:67
+msgid "Delete"
+msgstr "Excluir"
+
+#: views/requests_show.php:67
+msgid "The selected requests will be deleted."
+msgstr "As requisições selecionadas serão excluídas."
+
+#: views/requests_show.php:67
+msgid "Do you confirm?"
+msgstr "Confirma?"
 
 #: views/requests_replyRequest.php:12
 msgid "Request domain"
@@ -170,82 +210,62 @@ msgstr "ACEITAR"
 msgid "REJECT"
 msgstr "REJEITAR"
 
-#: views/requests_show.php:6
-msgid "Pending incoming requests"
-msgstr "Requisições Pendentes"
+#: views/ode_show.php:8
+msgid "Process"
+msgstr "Processo"
 
-#: views/requests_show.php:11
-msgid "Domain source"
-msgstr "Domínio de origem"
+#: views/ode_show.php:9
+msgid "Version"
+msgstr "Versão"
 
-#: views/requests_show.php:12
-msgid "Domain destination"
-msgstr "Domínio de destino"
+#: views/ode_show.php:10
+msgid "PID"
+msgstr "PID"
 
-#: views/requests_show.php:14 views/requests_show.php:44
-msgid "Resource type"
-msgstr "Tipo de recurso"
+#: views/ode_show.php:11
+msgid "Status"
+msgstr "Status"
 
-#: views/requests_show.php:15 views/requests_show.php:45
-msgid "Resource description"
-msgstr "Descrição do recurso"
+#: views/ode_show.php:12
+msgid "In Progress"
+msgstr "Em Andamento"
 
-#: views/requests_show.php:36
-msgid "Finished incoming requests"
-msgstr "Requisições Concluídas"
+#: views/ode_show.php:13
+msgid "Completed"
+msgstr "Concluído"
 
-#: views/requests_show.php:42
-msgid "Domain Destination"
-msgstr "Domínio de Destino"
+#: views/ode_show.php:14
+msgid "Error"
+msgstr "Erro"
 
-#: views/requests_show.php:67
-msgid "Delete"
-msgstr "Excluir"
+#: views/ode_show.php:15
+msgid "Failed"
+msgstr "Falha"
 
-#: views/requests_show.php:67
-msgid "The selected requests will be deleted."
-msgstr "As requisições selecionadas serão excluídas."
+#: views/ode_show.php:16
+msgid "Suspended"
+msgstr "Suspenso"
 
-#: views/requests_show.php:67
-msgid "Do you confirm?"
-msgstr "Confirma?"
+#: views/ode_show.php:23
+msgid "Undeploy"
+msgstr "Undeploy"
 
-#: controllers/ode.php:42
-msgid "Error on upload file"
-msgstr "Erro ao enviar arquivo"
+#: views/ode_show.php:39
+msgid "Deploy process"
+msgstr "Deploy de Processo"
 
-#: controllers/ode.php:63
-msgid "Process deployed successfully "
-msgstr "Deploy de processo realizado com sucesso"
+#: views/ode_show.php:45
+msgid "Name"
+msgstr "Nome"
 
-#: controllers/ode.php:68
-msgid "Fail to deploy process: "
-msgstr "Falha ao realizar deploy do processo:"
+#: views/ode_show.php:53
+msgid "File"
+msgstr "Arquivo"
 
-#: controllers/ode.php:72
-msgid "invalid name for the process"
-msgstr "nome inválido para o processo"
+#: views/ode_show.php:61
+msgid "Ok"
+msgstr "OK"
 
-#: controllers/ode.php:87
-msgid "Process undeployed successfully"
-msgstr "Undeploy de processo realizado com sucesso"
+#~ msgid "Request deleted"
+#~ msgstr "Requisição excluída"
 
-#: controllers/ode.php:88
-msgid "Fail to undeploy process"
-msgstr "Falha ao realizar undeploy do processo"
-
-#: controllers/requests.php:105 controllers/requests.php:114
-msgid "Unknown"
-msgstr "Desconhecido"
-
-#: controllers/requests.php:134
-msgid "Response saved"
-msgstr "Resposta salva"
-
-#: controllers/requests.php:139
-msgid "Response NOT saved"
-msgstr "Resposta não salva"
-
-#: controllers/requests.php:155
-msgid "Request deleted"
-msgstr "Requisição excluída"

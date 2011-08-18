@@ -14,8 +14,8 @@
 /* Tabela de disposição dos boxes iniciais */
 body {
        background-color: #3a5879;
-       font-family: verdana, helvetica, arial, sans-serif;
-       font-size: 16px;
+       font-family: helvetica, arial;
+       font-size: 14px;
        margin: 0px;
 }
 
@@ -26,7 +26,7 @@ div#header {
     color: white;
     clear: both;
     float: left;
-  
+    font-size: 14px;
 }
 #header a:link, #header a:visited {
     color:white;
@@ -59,8 +59,10 @@ div#content {
     padding-left: 5px;
     background-color: #FFF;
     float: left;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
+}
+
+div#main {
+    margin-left: 7px;
 }
 
 div#main a:link, div#main a:visited {
@@ -87,13 +89,10 @@ div#flash_box {
     background-color: white;
 }
 div#menu {
-    width: 13%;
+    width: 10%;
     float: left;
     background-color: #EEEEEE;
     color: #000000;
-    margin: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
     padding: 10px;
 }
 div#main {
@@ -125,16 +124,19 @@ img.logo {
     margin: 0px;
 }
 
+.icons td {
+    font-size: 16px;
+}
+
 table {
-    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-family: Helvetica, Arial;
     min-width: 50%;
     border-collapse: collapse;
     padding: 3px 7px 2px 7px;
-    border-radius: 5px;
 }
 
 table td {
-    font-size:1em;
+    font-size:14px;
     padding: 7px 7px 7px 7px;
 }
 
@@ -211,10 +213,7 @@ img.loading {
 
 input[type='submit'], input[type='button'], input[type='checkbox'] {
     text-align: center;
-    background-color: #3a5879;
-    color: #ffffff;
-    padding: 3px 3px 3px 3px;
-    text-transform: uppercase;
+    color: #000000;
     font-weight: bold;
     text-indent: 18px;
     cursor: pointer;
@@ -357,7 +356,19 @@ input.advancedview{
 
 div.topItem {
     font-weight: bold;
-    text-indent: 5px;
+    border-bottom-style: solid;
+    border-bottom-width: thin;    
+    text-decoration: none;
+}
+
+div.topItem a:link, div.topItem a:visited  {
+    font-weight: bold;   
+    text-decoration: none;    
+    color: #000000;
+}
+
+div.topItem:hover{
+    background-color: #CCC;
 }
 
 div.subItem a:link, div.subItem a:visited {
@@ -372,7 +383,7 @@ div.subItem:hover{
 
 div.subItem {
     text-transform: none;
-    text-indent: 25px;
+    text-indent: 15px;
 }
 
 #flash_box div.success {
@@ -478,8 +489,8 @@ ul.tabs li a {
 text-decoration: none;
 color: #000;
 display: block;
-font-size: 1.2em;
-padding: 0 20px;
+font-size: 14px;
+padding: 0 10px;
 border: 1px solid #fff; /*--deixa um efeito de relevo com uma borda branca de 1px dentro do item da lista--*/
 outline: none;
 -moz-border-radius-topleft: 10px;

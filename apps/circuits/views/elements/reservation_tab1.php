@@ -2,12 +2,10 @@
 
 <table>
     <tr>
-        <th>
-            <?php echo _("Reservation name"); ?>
-        </th>
-        <th>
+        <td>
+            <?php echo _("Reservation name:"); ?>
             <input type="text" name="res_name" id="res_name" size="50" value="<?php echo $name; ?>" onkeyup="changeName(this);"/>
-        </th>
+        </td>
     </tr>
 </table>
-<br/><br/>
+<br/>

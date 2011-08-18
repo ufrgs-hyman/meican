@@ -210,20 +210,20 @@ function fillSelectBox(htmlId, fillerArray, current_val) {
             </div>
             </div>
         <div id="footer">
-            <a href="#">
-                        <?php echo _('About us'); ?>
+<!--            <a href="#">
+                        <?php //echo _('About us'); ?>
             </a> |
             <a href="#">
-                        <?php echo _('Developers'); ?>
+                        <?php //echo _('Developers'); ?>
             </a> |
             <a href="#">
-                        <?php echo _('Terms of service'); ?>
+                        <?php //echo _('Terms of service'); ?>
             </a> |
             <a href="#">
-                        <?php echo _('Privacy policy'); ?>
+                        <?php //echo _('Privacy policy'); ?>
             </a>
-            <br>
-            2011        
+            <br> 
+            2011      -->       
         </div>
     </body>
 

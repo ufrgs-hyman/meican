@@ -20,7 +20,7 @@ $freq_types[] = $freq;
     <table cellspacing="0" cellpadding="0" style="width:100%">
         <tr style="width:100%">
             <th style="width:100%">
-                <?php echo _("Reservation Time"); ?>
+                <?php echo _("Reservation time"); ?>
             </th>
         </tr>
         <tr>
@@ -45,7 +45,7 @@ $freq_types[] = $freq;
         </tr>
         <tr style="width:100%">
             <th>
-                <?php echo _("Recurrence Pattern"); ?>
+                <?php echo _("Recurrence pattern"); ?>
             </th>
         </tr>
         <tr>
@@ -141,7 +141,7 @@ $freq_types[] = $freq;
 
         <tr style="width:100%">
             <th>
-                <?php echo _("Range of Recurrence"); ?>
+                <?php echo _("Range of recurrence"); ?>
             </th>
         </tr>        
         <tr>
@@ -221,7 +221,7 @@ $freq_types[] = $freq;
     </div>
     <div id="recurrence-footer">
         <input id="recurrence_cancel" type="button" class="cancel" value="<?php echo _("Cancel")?>" onclick="cancelRecurrence()"/>
-        <input id="recurrence_ok" type="button" class="ok" value="<?php echo _("Save Recurrence")?>" onclick="saveRecurrence()"/>
+        <input id="recurrence_ok" type="button" class="ok" value="<?php echo _("Save recurrence")?>" onclick="saveRecurrence()"/>
     </div>    
     
 </div>

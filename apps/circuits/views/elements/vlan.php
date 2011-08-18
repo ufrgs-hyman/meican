@@ -1,8 +1,8 @@
 <table>
     <tr>
-        <th>
+        <td>
             <?php echo _("VLAN Type"); ?>
-        </th>
+        </td>
         <td align="left">
             <input type="radio" name="sourceVLANType" id="src_vlanUntagged" value="FALSE" disabled="disabled" onchange="map_changeVlanType(this,'src');"/><?php echo _("Untagged"); ?>
             <br>
@@ -16,15 +16,15 @@
     </tr>
 
     <tr>
-        <th>
-            <?php echo _("VLAN"); ?>
-        </th>
         <td>
-            <input type="text" id="src_vlanText" name="src_vlan" disabled="disabled" onkeyup="changeTagValue('src');"/>
+            <?php echo _("VLAN"); ?>
+        </td>
+        <td>
+            <input type="text" id="src_vlanText" size="14" name="src_vlan" disabled="disabled" onkeyup="changeTagValue('src');"/>
             <div id="src_vlanTip"/>
         </td>
         <td>
-            <input type="text" id="dst_vlanText" name="dst_vlan" disabled="disabled" onkeyup="changeTagValue('dst');"/>
+            <input type="text" id="dst_vlanText" size="14" name="dst_vlan" disabled="disabled" onkeyup="changeTagValue('dst');"/>
             <div id="dst_vlanTip"/>
         </td>
     </tr>

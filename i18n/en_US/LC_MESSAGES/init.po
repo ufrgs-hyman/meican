@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-13 14:22-0300\n"
+"POT-Creation-Date: 2011-08-15 14:14-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Felipe <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: \n"
@@ -10,44 +10,88 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views/info_box.php:5
-msgid "Help"
+#: controllers/login.php:44
+msgid "Failed on authentication"
 msgstr ""
 
-#: views/info_box.php:7
-msgid "My Settings"
+#: controllers/gui.php:49
+msgid "You have one new request to be authorized"
 msgstr ""
 
-#: views/info_box.php:9
-msgid "Sign Out"
+#: controllers/gui.php:52
+msgid "You have"
 msgstr ""
 
-#: views/gui.php:136
-msgid "Not logged in"
+#: controllers/gui.php:54
+msgid "new requests to be authorized"
 msgstr ""
 
-#: views/gui.php:139
-msgid "Session Expired"
+#: controllers/gui.php:62
+msgid "New Reservation"
 msgstr ""
 
-#: views/gui.php:194
-msgid "Loading"
+#: controllers/gui.php:66 controllers/menu.php:33
+msgid "Reservations"
 msgstr ""
 
-#: views/gui.php:202 views/login.php:100
-msgid "About us"
+#: controllers/gui.php:70 controllers/menu.php:47
+msgid "Requests"
 msgstr ""
 
-#: views/gui.php:205 views/login.php:103
-msgid "Developers"
+#: controllers/gui.php:74
+msgid "Management"
 msgstr ""
 
-#: views/gui.php:208 views/login.php:106
-msgid "Terms of service"
+#: controllers/menu.php:31
+msgid "Dashboard"
 msgstr ""
 
-#: views/gui.php:211 views/login.php:109
-msgid "Privacy policy"
+#: controllers/menu.php:32
+msgid "Circuits"
+msgstr ""
+
+#: controllers/menu.php:35
+msgid "Domain"
+msgstr ""
+
+#: controllers/menu.php:36
+msgid "Domains"
+msgstr ""
+
+#: controllers/menu.php:37
+msgid "Networks"
+msgstr ""
+
+#: controllers/menu.php:38
+msgid "Devices"
+msgstr ""
+
+#: controllers/menu.php:39
+msgid "URNs"
+msgstr ""
+
+#: controllers/menu.php:41
+msgid "Users"
+msgstr ""
+
+#: controllers/menu.php:42
+msgid "My Account"
+msgstr ""
+
+#: controllers/menu.php:43
+msgid "Groups"
+msgstr ""
+
+#: controllers/menu.php:44
+msgid "Access Control List"
+msgstr ""
+
+#: controllers/menu.php:46
+msgid "BPM"
+msgstr ""
+
+#: controllers/menu.php:48
+msgid "ODE"
 msgstr ""
 
 #: views/login.php:35
@@ -82,90 +126,42 @@ msgstr ""
 msgid "Sign in"
 msgstr ""
 
-#: controllers/menu.php:31
-msgid "Circuits"
+#: views/login.php:100 views/gui.php:214
+msgid "About us"
 msgstr ""
 
-#: controllers/menu.php:32 controllers/gui.php:66
-msgid "Reservations"
+#: views/login.php:103 views/gui.php:217
+msgid "Developers"
 msgstr ""
 
-#: controllers/menu.php:33
-msgid "Flows"
+#: views/login.php:106 views/gui.php:220
+msgid "Terms of service"
 msgstr ""
 
-#: controllers/menu.php:34
-msgid "Timers"
+#: views/login.php:109 views/gui.php:223
+msgid "Privacy policy"
 msgstr ""
 
-#: controllers/menu.php:36
-msgid "Domain"
+#: views/gui.php:142
+msgid "Not logged in"
 msgstr ""
 
-#: controllers/menu.php:37
-msgid "Domains"
+#: views/gui.php:145
+msgid "Session Expired"
 msgstr ""
 
-#: controllers/menu.php:38
-msgid "Networks"
+#: views/gui.php:206
+msgid "Loading"
 msgstr ""
 
-#: controllers/menu.php:39
-msgid "Devices"
+#: views/info_box.php:5
+msgid "Help"
 msgstr ""
 
-#: controllers/menu.php:40
-msgid "URNs"
+#: views/info_box.php:7
+msgid "My Settings"
 msgstr ""
 
-#: controllers/menu.php:42
-msgid "Users"
-msgstr ""
-
-#: controllers/menu.php:43
-msgid "My Account"
-msgstr ""
-
-#: controllers/menu.php:44
-msgid "Groups"
-msgstr ""
-
-#: controllers/menu.php:45
-msgid "Access Control List"
-msgstr ""
-
-#: controllers/menu.php:47
-msgid "BPM"
-msgstr ""
-
-#: controllers/menu.php:48 controllers/gui.php:70
-msgid "Requests"
-msgstr ""
-
-#: controllers/menu.php:49
-msgid "ODE"
-msgstr ""
-
-#: controllers/gui.php:49
-msgid "You have one new request to be authorized"
-msgstr ""
-
-#: controllers/gui.php:52
-msgid "You have"
-msgstr ""
-
-#: controllers/gui.php:54
-msgid "new requests to be authorized"
-msgstr ""
-
-#: controllers/gui.php:62
-msgid "New Reservation"
-msgstr ""
-
-#: controllers/gui.php:74
-msgid "Management"
-msgstr ""
-
-#: controllers/login.php:44
-msgid "Failed on authentication"
+#: views/info_box.php:9
+msgid "Sign Out"
 msgstr ""

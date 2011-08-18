@@ -31,7 +31,7 @@ $freq_types[] = $freq;
 
 <link type="text/css" href="layouts/jquery-ui-1.8.13.custom.css" rel="stylesheet" />
 
-<h1><?php echo _("Reservation Creation Wizard"); ?></h1>
+<h1><?php echo _("Circuit reservation wizard"); ?></h1>
 
 <form id="reservation_add" method="POST" action="<?php echo $this->buildLink(array('action' => 'submit')); ?>" onsubmit="validateReservationForm();">
     
@@ -52,21 +52,7 @@ $freq_types[] = $freq;
                 <tr>
                     <td style="width:1%"></td>
                     <td>
-                        <?php echo _("<h1>Endpoints</h1>"); ?>
-                    </td>
-                    <td style="width:1%"></td>
-                </tr>
-                <tr>
-                    <td style="width:1%"></td>
-                    <td>
-                        <?php echo _("Select the Origin and Destination Networks by clicking on the Map Markers with any button and then choosing an option from the pop-up menu."); ?>
-                    </td>
-                    <td style="width:1%"></td>
-                </tr>
-                <tr>
-                    <td style="width:1%"></td>
-                    <td>
-                        <?php echo _("Once you select the Endpoints, choose the Device and Port settings on the right side."); ?>
+                        <?php echo _("Select source and destination networks by clicking on the map markers with any button and then choosing an option from the pop-up menu. After selecting the endpoints, choose the device and port on the right pane."); ?>
                     </td>
                     <td style="width:1%"></td>
                 </tr>                
@@ -133,8 +119,9 @@ $freq_types[] = $freq;
             </div>
             
             <div class="controls">
-                <input type="button" id="bc1" class="cancel" value="<?php echo _('Cancel'); ?>" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');"/>
                 <input type="button" id="bn1" class="next" value="<?php echo _('Next'); ?>" onClick="nextTab(this);"/>
+                <input type="button" style="float:right" id="clearpath" class="clear" value="<?php echo _('Clear'); ?>" onClick="edit_clearAll();"/>
+                <input type="button" style="float:right" id="bc1" class="cancel" value="<?php echo _('Cancel'); ?>" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');"/>
             </div>
             
         </div>

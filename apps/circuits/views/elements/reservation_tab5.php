@@ -34,8 +34,8 @@
 
 </div>
 
-<div class="controls">
-    <input type="button" id="bc3" class="cancel" value="<?php echo _('Cancel'); ?>" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');"/>
-    <input type="button" id="bp3" class="back" value="<?php echo _('Previous'); ?>" onClick="prevTab(this);"/>
+<div class="controls">    
     <input type="submit" id="bf"  class="ok" value="<?php echo _('Finished'); ?>"/>
+    <input type="button" id="bp3" class="back" value="<?php echo _('Previous'); ?>" onClick="prevTab(this);"/>
+    <input type="button" id="bc3" style="float: right" class="cancel" value="<?php echo _('Cancel'); ?>" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');"/>
 </div>

@@ -865,7 +865,12 @@ function edit_clearAll(){
     $("#slider").slider( "option", "disabled", true );
     $("#amount_label").hide();
     $("#amount").hide();
-    $("#div-bandwidth").slideUp();
+    $("#div-bandwidth").slideUp();unr   
+    $("#src_domain").empty();
+    $("#dst_domain").empty();
+    $("#src_network").empty();
+    $("#dst_network").empty();
+    
     if (path.length != 0) {
         $("#src_device").empty();
         $("#src_device").slideUp();

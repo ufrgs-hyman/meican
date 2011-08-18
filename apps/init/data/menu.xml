@@ -18,6 +18,11 @@
         <item>
             <name>Circuits</name>
             <subItem>
+                <name>New reservation</name>
+                <link>main.php?app=circuits&amp;controller=reservations&amp;action=reservation_add</link>
+                <right></right>
+            </subItem>
+            <subItem>
                 <name>Reservations</name>
                 <link>main.php?app=circuits&amp;controller=reservations&amp;action=show</link>
                 <right></right>
@@ -66,7 +71,7 @@
                 <right></right>
             </subItem>
             <subItem>
-                <name>Access Control</name>
+                <name>Access control</name>
                 <link>main.php?app=aaa&amp;controller=acl&amp;action=show</link>
                 <right></right>
             </subItem>
