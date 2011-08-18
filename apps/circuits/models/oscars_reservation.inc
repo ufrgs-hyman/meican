@@ -23,16 +23,10 @@ class OSCARSReservation {
     private $grisString;
     private $statusArray = Array();
 
-    function OSCARSReservation() {
+    public $urns = Array();
 
-//        $this->setOscarsUrl($oscars_ip);
-//        $this->setDescription($reservation_info->res_name);
-//        $this->setSrcEndpoint($reservation_info->urn_src);
-//        $this->setDestEndpont($reservation_info->urn_dst);
-//        $this->setBandwidth($resDetails->bandwidth);
-//        $this->setStartTimestamp($resDetails->begin_timestamp);
-//        $this->setEndTimestamp($resDetails->end_timestamp);
-//        $this->setPath($resDetails->path);
+
+    function OSCARSReservation() {
         $this->path = "null";
         $this->startTimestamp = 132412312;
         $this->endTimestamp = 1232131322;
@@ -96,15 +90,6 @@ class OSCARSReservation {
     private function setDestTag($vlan) {
         $this->destTag = $vlan;
     }
-//    public function setVlan($isTagged, $vlan=null) {
-//        $this->setSrcIsTagged($isTagged);
-//        $this->setDestIsTagged($isTagged);
-//
-//        if ($vlan){
-//        $this->setDestTag($vlan);
-//        $this->setSrcTag($vlan);
-//        }
-//    }
     public function setStatus($status) {
         $this->status = $status;
     }
@@ -129,16 +114,6 @@ class OSCARSReservation {
     public function setGrisString($gris) {
         $this->grisString = implode(";",$gris);
     }
-
-
-//    //concatena o endpointsrc no inicio do path e o endpointdst no fim
-//    public function buildPath() {
-//        $path[]=$this->srcEndpoint;
-//        $path[]=$this->path;
-//        $path[]=$this->destEndpoint;
-//        $this->path = implode(";", $path);
-//    }
-
     function createReservation() {
 
         if (!(isset($this->srcEndpoint) && isset($this->destEndpoint) && 
@@ -337,6 +312,8 @@ class OSCARSReservation {
 
             if (!$err = array_shift($result->return)){ //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
                 //precisa tratar
+                //Framework::debug("top", $result->return);
+                $this->topology = $result->return;
                 return true;
             } else {
                 Framework::debug("OSCARS Bridge Error: ", $err);
@@ -347,6 +324,57 @@ class OSCARSReservation {
             Framework::debug("Caught exception: ",  $e->getMessage());
             return false;
         }
+    }
+
+    function getUrns(){
+        if (!isset($this->oscarsUrl)) {
+            Framework::debug("oscarsUrl not set in get topology");
+            return false;
+        }
+
+        $envelope = array (
+                "oscars_url" => $this->oscarsUrl,
+        );
+
+        try {
+            $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
+            $result = $client->getTopology($envelope);
+
+            if (!$err = array_shift($result->return)){ //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
+                foreach ($result->return as $i){
+                    if ($array = explode(" ", $i)){
+                        //0- linkId
+                        //1- remoteLinkId
+                        //2- capacidade
+                        //3- granularidade
+                        //4- capacidade mínima reservável
+                        //5- capacidade máxima reservável
+                        //6- vlan range
+                        if ($array[1] == "urn:ogf:network:domain=*:node=*:port=*:link=*") {
+                            //é urn de ponto final
+                            $urn = new Urn();
+                            $urn->id = $array[0];
+                            $urn->capacity = $array[2];
+                            $urn->granularity = $array[3];
+                            $urn->minimumReservable = $array[4];
+                            $urn->maximumReservable = $array[5];
+                            $urn->vlanRange = $array[6];
+                            $this->urns[] = $urn;
+                            }
+                    }
+
+                }
+                return true;
+            } else {
+                Framework::debug("OSCARS Bridge Error: ", $err);
+                return false;
+            }
+
+        } catch (Exception $e) {
+            Framework::debug("Caught exception: ",  $e->getMessage());
+            return false;
+        }
+
     }
 
     function createPath(){

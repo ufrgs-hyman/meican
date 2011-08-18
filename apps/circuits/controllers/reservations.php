@@ -29,6 +29,10 @@ class reservations extends Controller {
 
     public function show() {
 
+//        $os = new OSCARSReservation();
+//        $os->setOscarsUrl("200.132.1.28:8085");
+//        $os->getUrns();
+//        Framework::debug("urns", $os->urns);
         // inicializa variáveis da sessão do wizard
         Common::destroySessionVariable('res_name');
         Common::destroySessionVariable('sel_flow');
@@ -1029,8 +1033,28 @@ class reservations extends Controller {
     function getTopology() {
         $oscarsRes = new OSCARSReservation();
         $oscarsRes->setOscarsUrl("200.132.1.28:8080");
-        $result = $oscarsRes->getTopology();
-        Framework::debug("topology", $result);
+        $oscarsRes->getTopology();
+
+        $topo = $oscarsRes->topology;
+
+        foreach($topo as $t) {
+            $pieces = explode(' ',$t);
+
+            switch ($pieces[0]) {
+                case '#':
+                    $domain = new domain();
+                    $domain->setId($pieces[1]);
+                    $domain->getDomainId();
+                    $last_domain = $domain;
+                    break;
+                case '##':
+                    break;
+                case '###':
+                    break;
+                case "####":
+                    break;
+            }
+        }
     }
 
     function send($reservation_info) {
@@ -1070,7 +1094,7 @@ class reservations extends Controller {
                 $oscarsRes->setDestTag($vdst);
             }
 
-        //precisa descobrir se deve ou não ser enviada para AUTORIZAÇÃO
+        //precisa descobrir se a reserva deve ou não ser enviada para AUTORIZAÇÃO
         if ($src_dom->ode_ip && $src_dom->ode_wsdl_path) {
             //irá para autorização
             //cria reserva do tipo signal-xml
@@ -1100,7 +1124,8 @@ class reservations extends Controller {
                 $date->setTimestamp($t->finish);
                 $new_gri->finish = $date->format('Y-m-d H:i');
 
-                $new_gri->send = 0; //para timer-automatic o daemon nao precisa enviar o createPath
+                $new_gri->send = 0; //para as reservas sem autorização do tipo
+                //timer-automatic o daemon nao precisa enviar o createPath
 
                 $new_gri->insert();
             }
@@ -1245,6 +1270,7 @@ class reservations extends Controller {
 //                return true;
 //            }
 //
+
 }
 
 ?>
