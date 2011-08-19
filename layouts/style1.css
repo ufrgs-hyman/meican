@@ -38,13 +38,13 @@ div#header {
 }
 
 div#logo_box {
-    width: 69%;
+    width: 24%;
     float: left;
 
 }
 div#info_box {
     width: 27%;
-    float: left;
+    float: right;
     margin-top: 90px;
     font-size: 12px;
     text-align: right;

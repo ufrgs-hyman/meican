@@ -303,6 +303,7 @@ function changeBand(){
     } else {
         $("#lb_bandwidth").html("  " + value + " Mbps.");    
     }
+    
 }
 
 function validateTab1() {
