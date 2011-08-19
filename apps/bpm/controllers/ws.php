@@ -9,8 +9,8 @@ include_once 'apps/bpm/models/request_info.inc';
 include_once 'apps/circuits/models/reservation_info.inc';
 include_once 'apps/circuits/models/flow_info.inc';
 include_once 'apps/circuits/models/timer_info.inc';
-include_once 'apps/domain/models/topology.inc';
-include_once 'apps/domain/models/meican_info.inc';
+include_once 'apps/topology/models/topology.inc';
+include_once 'apps/topology/models/meican_info.inc';
 
 class ws extends Controller {
 
@@ -420,9 +420,9 @@ class ws extends Controller {
         function getURNDetails($urn_string) {
             Framework::debug('geturndetails',$urn_string);
             if (!isset($urn_string)) {
-                return Topology::getURNDetails();
+                return MeicanTopology::getURNDetails();
             } elseif (is_string($urn_string)) {
-                return Topology::getURNDetails($urn_string);
+                return MeicanTopology::getURNDetails($urn_string);
             }
             return NULL;
         }

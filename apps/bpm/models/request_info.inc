@@ -181,13 +181,13 @@ class request_info extends Resource_Model {
                         $t->flow_info = $ws_client_circuits->call('getFlowInfo',array('res_id' => $t->resc_id));
 
                         if ($getEndpointsInfo) { //busca net_descr, dev_descr e port_number
-                            $endpoint3 =  "http://{$t->flow_info['src_dom_ip']}/".Framework::$systemDirName."/main.php?app=domain&services&wsdl";
+                            $endpoint3 =  "http://{$t->flow_info['src_dom_ip']}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
                             $urn_array = array($t->flow_info['src_urn_string']);
                             if ($ws_client3 = new nusoap_client($endpoint3, array('cache_wsdl' => 0)))
                                 if ($u_src = $ws_client3->call('getURNsInfo', array('urn_string_list' => $urn_array)))
                                     $t->src_endpoint = $u_src[0];
 
-                            $endpoint4 =  "http://{$t->flow_info['dst_dom_ip']}./".Framework::$systemDirName."/main.php?app=domain&services&wsdl";
+                            $endpoint4 =  "http://{$t->flow_info['dst_dom_ip']}./".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
                             $urn_array = array($t->flow_info['dst_urn_string']);
                             if ($ws_client4 = new nusoap_client($endpoint4, array('cache_wsdl' => 0)))
                                 if ($u_dst = $ws_client3->call('getURNsInfo', array('urn_string_list' => $urn_array)))
