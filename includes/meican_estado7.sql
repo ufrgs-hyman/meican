@@ -186,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `device_info` (
   `net_id` int(11) NOT NULL,
   `dev_lat` char(10) DEFAULT NULL,
   `dev_lng` char(11) DEFAULT NULL,
-  `topo_node_id` varchar(30) NOT NULL,
+  `node_id` varchar(30) NOT NULL,
   PRIMARY KEY (`dev_id`),
   KEY `net_id` (`net_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
@@ -195,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `device_info` (
 -- Dumping data for table `device_info`
 --
 
-INSERT INTO `device_info` (`dev_id`, `dev_descr`, `dev_ip`, `trademark`, `model`, `nr_ports`, `net_id`, `dev_lat`, `dev_lng`, `topo_node_id`) VALUES
+INSERT INTO `device_info` (`dev_id`, `dev_descr`, `dev_ip`, `trademark`, `model`, `nr_ports`, `net_id`, `dev_lat`, `dev_lng`, `node_id`) VALUES
 (1, 'Switch Cisco', '172.16.5.2', 'Cisco', 'Catalyst 3560e', 24, 1, '', '', 'UFRGS-CIPO-RNP-002'),
 (2, 'Switch Extreme', '172.16.5.1', 'Extreme', 'Summit X450', 24, 1, '', '', 'UFRGS-CIPO-RNP-001'),
 (3, 'Switch Cisco', '172.16.6.1', 'Cisco', 'Catalyst 3560e', 24, 2, '', '', 'UFSC-CIPO-RNP-001'),
