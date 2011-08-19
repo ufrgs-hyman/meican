@@ -196,41 +196,46 @@ class flows extends Controller {
     }
     
     public function add() {
-        $new_flow = new flow_info();
-        
-        $meican = new meican_info();
-        
-        $new_flow->src_meican_id = $meican->getLocalMeicanId();
-        $new_flow->src_urn_string = Common::POST("src_urn");
-        
-        $new_flow->dst_meican_id = $meican->getLocalMeicanId();
-        $new_flow->dst_urn_string = Common::POST("dst_urn");
-        
-        $vlan_options = Common::POST("vlan_options");
-        if ($vlan_options) {
-            if (Common::POST("sourceVLANType") == "FALSE") {
-                // src VLAN untagged
-                $new_flow->src_vlan = 0;
-            } else {
-                // src VLAN tagged
-                $new_flow->src_vlan = (Common::POST("src_vlan")) ? (Common::POST("src_vlan")) : "any";
+
+        $src_urn = Common::POST("src_urn");
+        $dst_urn = Common::POST("dst_urn");
+
+        if ($src_urn && $dst_urn) {
+
+            $new_flow = new flow_info();
+
+            $meican = new meican_info();
+
+            $new_flow->src_meican_id = $meican->getLocalMeicanId();
+            $new_flow->src_urn_string = $src_urn;
+
+            $new_flow->dst_meican_id = $meican->getLocalMeicanId();
+            $new_flow->dst_urn_string = $dst_urn;
+
+            if (Common::POST("vlan_options")) {
+                if (Common::POST("sourceVLANType") == "FALSE") {
+                    // src VLAN untagged
+                    $new_flow->src_vlan = 0;
+                } else {
+                    // src VLAN tagged
+                    $new_flow->src_vlan = (Common::POST("src_vlan")) ? (Common::POST("src_vlan")) : "any";
+                }
+
+                if (Common::POST("destVLANType") == "FALSE") {
+                    // dst VLAN untagged
+                    $new_flow->dst_vlan = 0;
+                } else {
+                    // dst VLAN tagged
+                    $new_flow->dst_vlan = (Common::POST("dst_vlan")) ? (Common::POST("dst_vlan")) : "any";
+                }
             }
-            
-            if (Common::POST("destVLANType") == "FALSE") {
-                // dst VLAN untagged
-                $new_flow->dst_vlan = 0;
-            } else {
-                // dst VLAN tagged
-                $new_flow->dst_vlan = (Common::POST("dst_vlan")) ? (Common::POST("dst_vlan")) : "any";
+            if ($path = Common::POST("path")) {
+                $new_flow->path = $path;
             }
-        }
-        if ($path = Common::POST("path")) {
-            $new_flow->path = $path;
-        }
-        
-        Framework::debug("flow",$new_flow);
-        
-        return $new_flow->insert();
+
+            return $new_flow->insert();
+        } else
+            return FALSE;
     }
 
 //    public function add() {

@@ -120,6 +120,7 @@ function showRecurrenceBox() {
         $("#short_desc").empty();
         $("#until_desc").empty();
         $("#recurrence_summary").empty();
+        $("#summary_input").val("");
         refreshSummary();
         clearWeekConf();
     }
@@ -299,6 +300,7 @@ function saveTimer(timer_id) {
         sum_desc += week_str;
         sum_desc += $("#until_desc").html();
         $("#recurrence_summary").html(sum_desc);
+        $("#summary_input").val(sum_desc);
     }
     
     $.post("main.php?app=circuits&controller=timers&action=update", {

@@ -248,12 +248,12 @@ class Framework {
         return FALSE;
     }
 
-    static function debug($msg, $var=null) {
+    static function debug($msg, $var=NULL) {
 
         if (Framework::$debugMode) {
             $fileName = '/var/www/meican/log/log.txt';
 
-            if ($var) {
+            if (isset($var)) {
                 ob_start();
                 print_r($var);
                 $result = ob_get_clean();

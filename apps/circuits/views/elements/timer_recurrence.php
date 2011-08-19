@@ -143,7 +143,7 @@ $freq_types[] = $freq;
             <th>
                 <?php echo _("Range of recurrence"); ?>
             </th>
-        </tr>        
+        </tr>
         <tr>
             <td class="recurrence_table">
                 <table cellspacing="0" cellpadding="0" style="width: 100%">
@@ -222,6 +222,6 @@ $freq_types[] = $freq;
     <div id="recurrence-footer">
         <input id="recurrence_cancel" type="button" class="cancel" value="<?php echo _("Cancel")?>" onclick="cancelRecurrence()"/>
         <input id="recurrence_ok" type="button" class="ok" value="<?php echo _("Save recurrence")?>" onclick="saveRecurrence()"/>
-    </div>    
+    </div>
     
 </div>

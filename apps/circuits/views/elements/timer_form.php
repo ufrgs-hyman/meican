@@ -57,6 +57,7 @@ $timer = (isset($argsToElement->timer)) ? $argsToElement->timer : NULL;
         <td colspan="6">
             <label id="recurrence_summary"></label>
             <label id="summary"></label>
+            <input type="hidden" id="summary_input" name="summary" value=""/>
         </td>
     </tr>
 </table>

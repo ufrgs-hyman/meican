@@ -7,8 +7,6 @@ include_once 'apps/circuits/models/timer_info.inc';
 include_once 'apps/circuits/models/timer_lib.inc';
 include_once 'apps/circuits/controllers/reservations.php';
 
-include_once 'libs/meican_mail.php';
-
 class timers extends Controller {
 
     public function timers() {
@@ -197,7 +195,7 @@ class timers extends Controller {
             $this->add();
     }
 
-    private function add() {
+    public function add() {
         
         $start = dateTimeToDatabaseFormat(Common::POST("start_date"), Common::POST("start_time"));
         $finish = dateTimeToDatabaseFormat(Common::POST("finish_date"), Common::POST("finish_time"));
@@ -221,12 +219,12 @@ class timers extends Controller {
                 
                 $timer_info->interval = Common::POST('interval'); //ok
                 
-                if ($timer->freq == "WEEKLY") {
+                if ($timer_info->freq == "WEEKLY") {
                     $weekDays = array();
                     $htmlElems = array("sun_chkbox","mon_chkbox","tue_chkbox","wed_chkbox","thu_chkbox","fri_chkbox","sat_chkbox");
                     foreach ($htmlElems as $elem) {
                         if (Common::POST($elem)) {
-                            $weekDays[] = Common::POST($elem); //ok
+                            $weekDays[] = Common::POST($elem); // ok
                         }
                     }
                     $timer_info->byday = implode(',', $weekDays);
@@ -234,25 +232,10 @@ class timers extends Controller {
                 
                 $timer_info->summary = Common::POST('summary');// falta summary
             }
-
-            if ($result = $timer_info->insert()) {
-                if (Common::hasSessionVariable('res_wizard')) {
-                    $res = new reservations();
-                    $res->update_timer($result->tmr_id);
-                    $res->setFlash(_("Timer")." '$timer_info->tmr_name' "._("added"), "success");
-                    $res->page2();
-                } else {
-                    $this->setFlash(_("Timer")." '$timer_info->tmr_name' "._("added"), "success");
-                    $this->show();
-                }
-                return;
-            } else
-                $this->setFlash(_("Fail to create timer"), "error");
-
+            
+            return $timer_info->insert();
         } else
-            $this->setFlash(_("Missing arguments"), "error");
-
-        $this->add_form();
+            return FALSE;
     }
 
     private function modify() {

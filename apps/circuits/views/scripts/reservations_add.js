@@ -389,7 +389,8 @@ function cancelRecurrence(){
         $("#auxDiv").hide();
         $("#recurrence").hide(); 
         $("#repeat_chkbox").removeAttr("checked");
-        $('#recurrence_summary').html("");
+        $('#recurrence_summary').empty();
+        $('#summary_input').val("");
         refreshSummary();
     }
 }
@@ -437,6 +438,7 @@ function saveRecurrence(){
     sum_desc += week_str;
     sum_desc += $("#until_desc").html();
     $("#recurrence_summary").html(sum_desc);
+    $("#summary_input").val(sum_desc);
     $("#confirmation_summary").html(sum_desc);
     $("#summary").html("");
     $("#auxDiv").hide();

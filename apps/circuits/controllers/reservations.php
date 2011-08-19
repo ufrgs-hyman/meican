@@ -7,6 +7,7 @@ include_once 'libs/controller.php';
 include_once 'includes/common.inc';
 
 include_once 'apps/circuits/controllers/flows.php';
+include_once 'apps/circuits/controllers/timers.php';
 
 include_once 'apps/circuits/models/reservation_info.inc';
 include_once 'apps/circuits/models/gri_info.inc';
@@ -686,13 +687,13 @@ class reservations extends Controller {
 //            return;
 //        }
 
+        Framework::debug("post", $_POST);
+        
         /**
          * insere o flow
          */
         $flow_cont = new flows();
         $new_flow = $flow_cont->add();
-        $this->show();
-        return;
 
         /**
          * insere o timer
@@ -727,9 +728,9 @@ class reservations extends Controller {
 
 
         if ($res = $reservation->insert()) {
-            if ($this->send($res)) {
-                $this->setFlash(_('Reservation submitted'), 'success');
-            }
+//            if ($this->send($res)) {
+//                $this->setFlash(_('Reservation submitted'), 'success');
+//            }
 
             $this->view(array("res_id" => $res->res_id));
         } else {
