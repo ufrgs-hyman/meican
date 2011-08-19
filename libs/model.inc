@@ -99,7 +99,7 @@ class Model {
             else
                 $sql = "SELECT * FROM `$tableName`";
         }
-        //Framework::debug("fetch",$sql);
+        Framework::debug("fetch",$sql);
         return $this->fetchSql($sql, $tableName);
     }
 
