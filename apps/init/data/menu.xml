@@ -33,27 +33,27 @@
             <name>Topologies</name>
             <subItem>
                 <name>MEICANs</name>
-                <link>main.php?app=domain&amp;controller=meicans&amp;action=show</link>
+                <link>main.php?app=topology&amp;controller=meicans&amp;action=show</link>
                 <right></right>
             </subItem>
             <subItem>
                 <name>Domains</name>
-                <link>main.php?app=domain&amp;controller=domains&amp;action=show</link>
+                <link>main.php?app=topology&amp;controller=domains&amp;action=show</link>
                 <right></right>
             </subItem>
             <subItem>
                 <name>Networks</name>
-                <link>main.php?app=domain&amp;controller=networks&amp;action=show</link>
+                <link>main.php?app=topology&amp;controller=networks&amp;action=show</link>
                 <right></right>
             </subItem>
             <subItem>
                 <name>Devices</name>
-                <link>main.php?app=domain&amp;controller=devices&amp;action=show</link>
+                <link>main.php?app=topology&amp;controller=devices&amp;action=show</link>
                 <right></right>
             </subItem>
             <subItem>
                 <name>URNs</name>
-                <link>main.php?app=domain&amp;controller=urns&amp;action=show</link>
+                <link>main.php?app=topology&amp;controller=urns&amp;action=show</link>
                 <right></right>
             </subItem>
         </item>
