@@ -12,14 +12,14 @@ $domain = $argsToElement;
             <th rowspan="2"><?php echo _("Network"); ?></th>
             <th rowspan="2"><?php echo _("Device"); ?></th>
             <th rowspan="2"><?php echo _("Port"); ?></th>
-            <th rowspan="2"><?php echo _("URN Value"); ?></th>
-            <th colspan="4"><?php echo _("Link Settings"); ?></th>
+            <th rowspan="2"><?php echo _("URN value"); ?></th>
+            <th colspan="4"><?php echo _("Link settings"); ?></th>
         </tr>
             
         <tr>
-            <th><?php echo _("VLAN Values"); ?></th>
-            <th><?php echo _("Maximum Capacity (bps)"); ?></th>
-            <th><?php echo _("Minimum Capacity (bps)"); ?></th>
+            <th><?php echo _("VLAN values"); ?></th>
+            <th><?php echo _("Maximum capacity (bps)"); ?></th>
+            <th><?php echo _("Minimum capacity (bps)"); ?></th>
             <th><?php echo _("Granularity (bps)"); ?></th>
         </tr>
     </thead>

@@ -9,7 +9,7 @@
 
         <tr>
             <td>
-                <label for='domainDst'><?php echo _('Destination Domain'); ?></label>
+                <label for='domainDst'><?php echo _('Destination domain'); ?></label>
             </td>
             <td>
                 <select name='domainDst' onChange='updateUsers(this,"userDst")' >
@@ -24,7 +24,7 @@
 
         <tr>
             <td>
-                <label for='userDst'><?php echo _('Destination User'); ?></label>
+                <label for='userDst'><?php echo _('Destination user'); ?></label>
             </td>
             <td>
                 <select name='userDst' id='userDst' disabled="disabled" style="display: none">

@@ -1,7 +1,7 @@
 
 <?php $args = $this->passedArgs; ?>
 
-<h1><?php echo _('Add New User')?></h1>
+<h1><?php echo _('Add new user')?></h1>
 
 <form onSubmit="selectAll('used');" method="POST" action="<?php echo $this->buildLink(array('action' => 'add')); ?>">
 

@@ -1,6 +1,6 @@
 <?php $args = $this->passedArgs; ?>
 
-<h1><?php echo _("Edit Device"); ?></h1>
+<h1><?php echo _("Edit device"); ?></h1>
 
 <form method="POST" action="<?php echo $this->buildLink(array("action" => "update", "param" => "dev_id:".$args->device->dev_id)); ?>" onsubmit="validateDeviceForm();">
 

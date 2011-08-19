@@ -60,63 +60,7 @@ $freq_types[] = $freq;
             
             <?php $this->addElement('reservation_tab2'); ?>
 
-            <br/><br/>
-            
-            <div id="div-bandwidth">
-                <table style="width:100%">
-                    <tr>
-                        <td style="width:1%"></td>
-                        <td>
-                            <?php echo _("<h1>Bandwidth</h1>"); ?>
-                        </td>
-                        <td style="width:1%"></td>
-                    </tr>                    
-                </table>
-            
-                <table style="width: 100%"> 
-                    <tr>
-                        <td style="width:1%"></td>
-                        <td style ="width: 45.5%">
-                            <table style="width: 100%">
-                                <tr>
-                                    <td style="width: 10%">100</td>
-                                    <td style="width: 10%">200</td>
-                                    <td style="width: 10%">300</td>
-                                    <td style="width: 10%">400</td>
-                                    <td style="width: 10%">500</td>                                                        
-                                    <td style="width: 10%">600</td>
-                                    <td style="width: 10%">700</td>
-                                    <td style="width: 10%">800</td>
-                                    <td style="width: 10%">900</td>
-                                    <td style="width: 10%">1000</td>                                                                                        
-                                </tr>
-                            </table>
-                        </td>                    
-                        <td style="width: 54.5%">                        
-                        </td>                   
-                    </tr>
-                </table>
-                
-                <table style="width:100%">
-                    <tr>
-                        <td style="width:4%"></td>
-                        <td>
-                            <?php $this->addElement('reservation_tab3'); ?> 
-                        </td>
-                    </tr>
-                </table>
-                
-                <table style="width:100%">
-                    <tr>
-                        <td style="width:1%"></td>
-                        <td>
-                            <label id="amount_label" for="amount"></label>
-                            <input type="text" readonly id="amount" style="border:0; color:#000; font-weight:bold;" size="100"/>
-                            <input type="hidden" name="bandwidth" id="bandwidth" value=""/>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <br/><br/>            
             
             <div class="controls">
                 <input type="button" id="bn1" class="next" value="<?php echo _('Next'); ?>" onClick="nextTab(this);"/>

@@ -9,7 +9,7 @@
         <th><?php echo _('Version'); ?></th>
         <th><?php echo _('PID'); ?></th>
         <th><?php echo _('Status'); ?></th>
-        <th><?php echo _('In Progress'); ?></th>
+        <th><?php echo _('In progress'); ?></th>
         <th><?php echo _('Completed'); ?></th>
         <th><?php echo _('Error'); ?></th>
         <th><?php echo _('Failed'); ?></th>

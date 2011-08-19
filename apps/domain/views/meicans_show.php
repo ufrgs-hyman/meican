@@ -17,7 +17,7 @@ $meicans = $this->passedArgs;
             <th><?php echo _("Local?"); ?></th>
             <th><?php echo _("Name"); ?></th>
             <th><?php echo _("MEICAN IP"); ?></th>
-            <th><?php echo _("Directory Name"); ?></th>
+            <th><?php echo _("Directory name"); ?></th>
         </tr>
         </thead>
 

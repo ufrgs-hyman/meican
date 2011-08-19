@@ -38,8 +38,8 @@ $finished = $args->finished; ?>
     <table class="list">
     <tr>
         <th></th>
-        <th><?php echo _('Domain Source') ?></th>
-        <th><?php echo _('Domain Destination') ?></th>
+        <th><?php echo _('Domain source') ?></th>
+        <th><?php echo _('Domain destination') ?></th>
         <th><?php echo _('Requester') ?></th>
         <th><?php echo _('Resource type') ?></th>
         <th><?php echo _('Resource description') ?></th>

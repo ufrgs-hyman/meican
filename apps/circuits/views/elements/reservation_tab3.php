@@ -1,4 +1,5 @@
 <!-- Slider -->
 <div style="width: 100%;">
-    <div id="slider"></div>
+    <b>Bandwidth</b>
+    <div id="slider" style="width: 100%; margin-top: 5px"></div>
 </div>    

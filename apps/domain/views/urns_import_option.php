@@ -2,7 +2,7 @@
 $domains = $this->passedArgs;
 ?>
 
-<h1><?php echo _("Importing Topology URNs (Uniform Resource Name)"); ?></h1>
+<h1><?php echo _("Importing topology URNs (Uniform Resource Name)"); ?></h1>
 <h2><?php echo _("Select a domain to import from"); ?></h2>
 
 <table class="list">
@@ -11,7 +11,7 @@ $domains = $this->passedArgs;
         <tr>
             <th><?php echo _("Name"); ?></th>
             <th><?php echo _("OSCARS IP"); ?></th>
-            <th><?php echo _("Topology Domain ID"); ?></th>
+            <th><?php echo _("Topology domain ID"); ?></th>
         </tr>
     </thead>
 

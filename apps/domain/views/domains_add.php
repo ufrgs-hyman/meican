@@ -1,4 +1,4 @@
-<h1><?php echo _("Add Domain"); ?></h1>
+<h1><?php echo _("Add domain"); ?></h1>
 
 <form method="POST" action="<?php echo $this->buildLink(array("action" => "add")); ?>">
     

@@ -4,7 +4,7 @@ $domain = $this->passedArgs;
 
 ?>
 
-<h1><?php echo _("Edit Domain"); ?></h1>
+<h1><?php echo _("Edit domain"); ?></h1>
 
 <form method="POST" action="<?php echo $this->buildLink(array("action" => "update", "param" => "dom_id:$domain->dom_id")); ?>">
 

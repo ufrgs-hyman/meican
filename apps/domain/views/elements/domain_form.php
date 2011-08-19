@@ -43,7 +43,7 @@ $ode_wsdl_path = isset($argsToElement->ode_wsdl_path) ? $argsToElement->ode_wsdl
     </tr>
     <tr>
         <th>
-            <?php echo _("ODE WSDL Path"); ?>:
+            <?php echo _("ODE WSDL path"); ?>:
         </th>
         <td>
             <input type="text" name="ode_wsdl_path" size="50" value="<?php echo $ode_wsdl_path; ?>"/>

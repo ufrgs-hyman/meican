@@ -1,6 +1,6 @@
 <?php $args = $this->passedArgs; ?>
 
-<h1><?php echo _("Edit Network"); ?></h1>
+<h1><?php echo _("Edit network"); ?></h1>
 
 <form method="POST" onsubmit="validateNetworkForm();" action="<?php echo $this->buildLink(array("action" => "update", "param" => "net_id:".$args->network->net_id)); ?>">
 

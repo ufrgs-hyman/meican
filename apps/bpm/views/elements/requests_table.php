@@ -5,7 +5,7 @@ $requests = $argsToElement;
 
     <tr>
         
-        <td><?php echo _('Domain Source') ?></td>
+        <td><?php echo _('Domain source') ?></td>
         <td><?php echo _('Requester') ?></td>
         <td><?php echo _('Response') ?></td>
         <td><?php echo _('Message') ?></td>

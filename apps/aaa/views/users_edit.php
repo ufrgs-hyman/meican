@@ -1,6 +1,6 @@
 <?php $args = $this->passedArgs; ?>
 
-<h1><?php echo _('Edit User')?></h1>
+<h1><?php echo _('Edit user')?></h1>
 
 <form onSubmit="selectAll('used');" method="POST" action="<?php echo $this->buildLink(array('action' => 'update', 'param' => 'usr_id:'.$args->user->usr_id)); ?>">
 

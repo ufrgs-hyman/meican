@@ -18,7 +18,7 @@ $device = isset($argsToElement->device) ? $argsToElement->device : NULL;
 
     <tr>
         <th>
-            <?php echo _("IP Address"); ?>:
+            <?php echo _("IP address"); ?>:
         </th>
         <td>
             <input type="text" id="dev_ip" name="ip_addr" value="<?php if ($device) echo $device->dev_ip; ?>"/>
@@ -72,7 +72,7 @@ $device = isset($argsToElement->device) ? $argsToElement->device : NULL;
     
     <tr>
         <th>
-            <?php echo _("Topology Node ID"); ?>:
+            <?php echo _("Topology node ID"); ?>:
         </th>
         <td>
             <input type="text" name="topo_node_id" value="<?php if ($device) echo $device->topo_node_id; ?>"/>

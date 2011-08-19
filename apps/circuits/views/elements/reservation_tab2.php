@@ -4,7 +4,7 @@
     <table style="width:100%">
         <tr style="width:100%">
             <td style="width:68%">
-                <div id="edit_map_canvas" style="width:100%; height: 400px; min-width:200px"></div>
+                <div id="edit_map_canvas" style="width:100%; height: 400px; min-width:300px"></div>
             </td>
             <td style="width:32%">
                 <div id="advOptions" style="width: 100%">
@@ -94,6 +94,20 @@
                                 <input type="hidden" id="path" name="path"/>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="3">                                
+                                <div id="div-bandwidth" style="width:100%">
+                                    <hr></hr>
+                                    <?php $this->addElement('reservation_tab3'); ?>
+                                    <div style="width: 100%; margin-top: 5px">
+                                        <label id="amount_label" for="amount"></label>
+                                        <input type="text" readonly id="amount" style="border:0; color:#000; font-weight:bold; width:100%"/>
+                                        <input type="hidden" name="bandwidth" id="bandwidth" value=""/>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr> 
+                            
                     </table>                    
                 </div>
             </td>

@@ -267,7 +267,7 @@ class reservations extends Controller {
         Common::setSessionVariable("res_begin_timestamp", microtime(true));
 
         // STEP 1 VARIABLES ---------------------
-        $name = "Default_Reservation_Name";
+        $name = "Default_reservation_name";
         //---------------------------------------
 
         // STEP 2 VARIABLES ---------------------

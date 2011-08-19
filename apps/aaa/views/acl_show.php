@@ -1,6 +1,6 @@
 <?php $rights = $this->passedArgs; ?>
 
-<h1><?php echo _("Access Control List"); ?></h1>
+<h1><?php echo _("Access control"); ?></h1>
 
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
 
@@ -9,9 +9,9 @@
         <thead>
             <tr>
                 <th rowspan="2" colspan="3"/>
-                <th colspan="2"><?php echo _("Access Request Object"); ?></th>
-                <th colspan="2"><?php echo _("Access Control Object"); ?></th>
-                <th rowspan="2"><?php echo _("Object Type"); ?></th>
+                <th colspan="2"><?php echo _("Access request object"); ?></th>
+                <th colspan="2"><?php echo _("Access control object"); ?></th>
+                <th rowspan="2"><?php echo _("Object type"); ?></th>
                 <th colspan="4"><?php echo _("Operations"); ?></th>
             </tr>
                 

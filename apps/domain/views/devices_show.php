@@ -11,14 +11,14 @@
             <th></th>
             <th></th>
             <th><?php echo _("Name"); ?></th>
-            <th><?php echo _("IP Address"); ?></th>
+            <th><?php echo _("IP address"); ?></th>
             <th><?php echo _("Trademark"); ?></th>
             <th><?php echo _("Model"); ?></th>
-            <th><?php echo _("Number of Ports"); ?></th>
+            <th><?php echo _("Number of ports"); ?></th>
             <th><?php echo _("Latitude"); ?></th>
             <th><?php echo _("Longitude"); ?></th>
             <th><?php echo _("Network"); ?></th>
-            <th><?php echo _("Topology Node ID"); ?></th>
+            <th><?php echo _("Topology node ID"); ?></th>
         </tr>
         </thead>
 

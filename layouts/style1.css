@@ -61,10 +61,6 @@ div#content {
     float: left;
 }
 
-div#main {
-    margin-left: 7px;
-}
-
 div#main a:link, div#main a:visited {
         text-decoration: none;
         color: #0000CC;
@@ -99,6 +95,7 @@ div#main {
     width: 80%;
     float: left;
     background-color: #FFF;
+    margin-left: 12px;        
 }
 div#load_img {
     text-align: center;
@@ -547,6 +544,7 @@ text-indent: 30pt;
 
 div#main a.link_tab, div#main a.link_tab:visited {
     color: #3A5879;
+    font-weight: bold;
     text-decoration: none;
 }
 div#main a.link_tab:hover, div#main a.link_tab:visited:hover {
@@ -560,9 +558,10 @@ div#main .ui-state-disabled a.link_tab:hover:not, div#main .ui-state-disabled a.
     text-decoration: none;
 }
 div#main ul.tabs li.active a.link_tab, div#main ul.tabs li.active a.link_tab:visited {
-background-color: #fff;
-color: #3A5879;
-border-bottom: 1px solid #fff;
+    background-color: #fff;
+    color: #3A5879;
+    font-weight: bold;
+    border-bottom: 1px solid #fff;
 }
 
 ul.tabs.inactive {
@@ -679,6 +678,7 @@ div#main #t3 {
 
 div#main #l3:link, div#main #l3:visited, div#main #l3:hover, div#main #l3:visited:hover {
     text-decoration: none;
+    font-weight: bold;
     background-color: #9ACD32;
     color: #3A5879;    
 }

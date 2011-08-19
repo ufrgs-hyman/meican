@@ -1,6 +1,6 @@
 <?php $groups = $this->passedArgs; ?>
 
-<h1><?php echo _("User Groups"); ?></h1>
+<h1><?php echo _("User groups"); ?></h1>
 
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
 
@@ -11,7 +11,7 @@
             <th></th>
             <th></th>
             <th><?php echo _("Name"); ?></th>
-            <th><?php echo _("Parent Groups"); ?></th>
+            <th><?php echo _("Parent groups"); ?></th>
         </tr>
         </thead>
 

@@ -6,7 +6,7 @@ $domain = $this->passedArgs->domain;
 
 ?>
 
-<h1><?php echo _("Importing Topology URNs (Uniform Resource Name)"); ?></h1>
+<h1><?php echo _("Importing topology URNs (Uniform Resource Name)"); ?></h1>
 
 <h2><?php echo _("Domain")." $domain->descr"; ?></h2>
 
@@ -18,14 +18,14 @@ $domain = $this->passedArgs->domain;
             <th rowspan="2"><?php echo _("Network"); ?></th>
             <th rowspan="2"><?php echo _("Device"); ?></th>
             <th rowspan="2"><?php echo _("Port"); ?></th>
-            <th rowspan="2"><?php echo _("URN Value"); ?></th>
-            <th colspan="4"><?php echo _("Link Settings"); ?></th>
+            <th rowspan="2"><?php echo _("URN value"); ?></th>
+            <th colspan="4"><?php echo _("Link settings"); ?></th>
         </tr>
         
         <tr>
-            <th><?php echo _("VLAN Values"); ?></th>
-            <th><?php echo _("Maximum Capacity"); ?></th>
-            <th><?php echo _("Minimum Capacity"); ?></th>
+            <th><?php echo _("VLAN values"); ?></th>
+            <th><?php echo _("Maximum capacity"); ?></th>
+            <th><?php echo _("Minimum capacity"); ?></th>
             <th><?php echo _("Granularity"); ?></th>
         </tr>
     </thead>

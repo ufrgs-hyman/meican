@@ -1,7 +1,7 @@
 
 <?php $args = $this->passedArgs; ?>
 
-<h1><?php echo _('Edit Group')?></h1>
+<h1><?php echo _('Edit group')?></h1>
 
 <form onSubmit="selectAll('used');" method="POST" action="<?php echo $this->buildLink(array('action' => 'update', 'param' => 'grp_id:'.$args->group->grp_id)); ?>">
 
