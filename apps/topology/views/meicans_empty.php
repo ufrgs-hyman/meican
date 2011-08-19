@@ -1,0 +1,1 @@
+<?php $this->addElement("empty_db", $this->passedArgs); ?>
