@@ -1,11 +1,11 @@
 <?php
 include_once 'libs/controller.php';
 require_once 'includes/nuSOAP/lib/nusoap.php';
-include_once 'apps/domain/models/topology.inc';
+include_once 'apps/topology/models/topology.inc';
 
 include_once 'apps/aaa/models/user_info.inc';
 include_once 'apps/aaa/models/group_info.inc';
-include_once 'apps/domain/models/meican_info.inc';
+include_once 'apps/topology/models/meican_info.inc';
 
 
 class ws extends Controller {

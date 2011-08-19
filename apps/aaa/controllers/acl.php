@@ -17,10 +17,10 @@ include_once 'apps/circuits/models/flow_info.inc';
 include_once 'apps/circuits/models/reservation_info.inc';
 include_once 'apps/circuits/models/timer_info.inc';
 
-include_once 'apps/domain/models/device_info.inc';
-include_once 'apps/domain/models/domain_info.inc';
-include_once 'apps/domain/models/network_info.inc';
-include_once 'apps/domain/models/urn_info.inc';
+include_once 'apps/topology/models/device_info.inc';
+include_once 'apps/topology/models/domain_info.inc';
+include_once 'apps/topology/models/network_info.inc';
+include_once 'apps/topology/models/urn_info.inc';
 
 
 class acl extends Controller {
