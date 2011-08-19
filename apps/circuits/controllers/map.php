@@ -3,9 +3,9 @@ defined ('__FRAMEWORK') or die ("Invalid access.");
 
 include_once 'libs/controller.php';
 include_once 'apps/circuits/models/flow_info.inc';
-include_once 'apps/domain/models/domain_info.inc';
+include_once 'apps/topology/models/domain_info.inc';
 include_once 'apps/circuits/controllers/reservations.php';
-include_once 'apps/domain/models/topology.inc';
+include_once 'apps/topology/models/topology.inc';
 include_once 'includes/nuSOAP/lib/nusoap.php';
 
 class map extends Controller {
@@ -32,7 +32,7 @@ class map extends Controller {
             $domain = new stdClass();
             $domain->id = $d->dom_id;
             $domain->name = $d->dom_descr;
-            $endpoint = "http://{$d->dom_ip}/" . Framework::$systemDirName . "/main.php?app=domain&services&wsdl";
+            $endpoint = "http://{$d->dom_ip}/" . Framework::$systemDirName . "/main.php?app=topology&services&wsdl";
             if ($ws = new nusoap_client($endpoint, array('cache_wsdl' => 0))) {
                 if ($temp = $ws->call('getURNDetails', array())) {
                     //Framework::debug("$d->dom_descr networks",$temp);

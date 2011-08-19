@@ -102,11 +102,11 @@
                                     <div style="width: 100%; margin-top: 5px">
                                         <label id="amount_label" for="amount"></label>
                                         <label id="amount" style="border:0; color:#000; font-weight:bold; width:100%"></label>
-                                        <input type="hidden" name="bandwidth" id="bandwidth" value=""/>
+                                        <input type="hidden" name="bandwidth" id="bandwidth" value="500"/>
                                     </div>
                                 </div>
                             </td>
-                        </tr> 
+                        </tr>
                             
                     </table>                    
                 </div>

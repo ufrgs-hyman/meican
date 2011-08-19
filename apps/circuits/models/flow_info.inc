@@ -1,7 +1,7 @@
 <?php
 
 include_once 'libs/resource_model.inc';
-include_once 'apps/domain/models/topology.inc';
+include_once 'apps/topology/models/topology.inc';
 
 class flow_info extends Resource_Model {
 
@@ -94,11 +94,11 @@ class flow_info extends Resource_Model {
             $dom = $domain->fetch(FALSE);
 
 //            //chamada de web service para buscar os dados completos da URN
-//            $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=domain&services&wsdl";
+//            $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
 //            $ws = new nusoap_client($endpoint,array('cache_wsdl' => 0));
 //            $urnDetailsRet = $ws->call('getURNDetails', array($flow->src_urn_string));
 
-            $urnDetailsRet = Topology::getURNDetails($dom[0]->dom_id, $src_urn_string);
+            $urnDetailsRet = MeicanTopology::getURNDetails($dom[0]->dom_id, $src_urn_string);
             $flowData = new stdClass();
 
             $flowData->id = $flow->flw_id;
@@ -127,11 +127,11 @@ class flow_info extends Resource_Model {
             $dom = $domain->fetch(FALSE);
 
             //chamada de web service para buscar os dados completos da URN
-//            $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=domain&services&wsdl";
+//            $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
 //            $ws = new nusoap_client($endpoint,array('cache_wsdl' => 0));
 //            $urnDetailsRet = $ws->call('getURNDetails', array($flow->dst_urn_string));
 
-            $urnDetailsRet = Topology::getURNDetails($dom[0]->dom_id, $dst_urn_string);
+            $urnDetailsRet = MeicanTopology::getURNDetails($dom[0]->dom_id, $dst_urn_string);
             $flowData->dest->domain = $dom[0]->dom_descr;
             $flowData->dest->dom_id = $dom[0]->dom_id;
             $flowData->dest->oscars_ip = $dom[0]->oscars_ip;

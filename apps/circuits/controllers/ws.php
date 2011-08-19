@@ -4,7 +4,7 @@ require_once 'includes/nuSOAP/lib/nusoap.php';
 include_once 'apps/circuits/models/reservation_info.inc';
 include_once 'apps/circuits/models/flow_info.inc';
 include_once 'apps/circuits/models/timer_info.inc';
-include_once 'apps/domain/models/meican_info.inc';
+include_once 'apps/topology/models/meican_info.inc';
 
 class ws extends Controller {
 

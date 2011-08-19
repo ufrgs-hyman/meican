@@ -7,9 +7,9 @@ include_once 'libs/controller.php';
 include_once 'apps/circuits/models/flow_info.inc';
 include_once 'apps/circuits/controllers/reservations.php';
 
-include_once 'apps/domain/models/domain_info.inc';
-include_once 'apps/domain/models/topology.inc';
-include_once 'apps/domain/models/meican_info.inc';
+include_once 'apps/topology/models/domain_info.inc';
+include_once 'apps/topology/models/topology.inc';
+include_once 'apps/topology/models/meican_info.inc';
 
 require_once 'includes/nuSOAP/lib/nusoap.php';
 
@@ -59,7 +59,7 @@ class flows extends Controller {
                 $domain = new domain_info();
                 $domain->dom_id = $dom_id;
                 $dom = $domain->fetch(FALSE);
-                $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=domain&services&wsdl";
+                $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
 
                 if ($ws = new nusoap_client($endpoint, array('cache_wsdl' => 0))) {
                     if ($temp = $ws->call('getURNsInfo', array('urn_string_list' => $urn_array))) {
@@ -307,7 +307,7 @@ class flows extends Controller {
             return;
         }
 
-        $endpoint = "http://{$flow->source->dom_ip}/".Framework::$systemDirName."/main.php?app=domain&services&wsdl";
+        $endpoint = "http://{$flow->source->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
         $ws = new nusoap_client($endpoint, array('cache_wsdl' => 0));
         $src_networks = $ws->call('getURNDetails', array());
 
@@ -321,7 +321,7 @@ class flows extends Controller {
         if ($flow->source->dom_id == $flow->dest->dom_id) {
             $dst_networks = $src_networks;
         } else {
-            $endpoint = "http://{$flow->dest->dom_ip}/".Framework::$systemDirName."/main.php?app=domain&services&wsdl";
+            $endpoint = "http://{$flow->dest->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
             $ws = new nusoap_client($endpoint, array('cache_wsdl' => 0));
             $dst_networks = $ws->call('getURNDetails', array());
 
@@ -453,7 +453,7 @@ class flows extends Controller {
         $domain = new domain_info();
         $domain->dom_id = $domain_id;
         $dom = $domain->fetch(FALSE);
-        $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=domain&services&wsdl";
+        $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
 
         $networks = FALSE;
         if ($ws = new nusoap_client($endpoint, array('cache_wsdl' => 0)))
@@ -475,7 +475,7 @@ class flows extends Controller {
 //        $device = $info[1];
 //        $port = $info[2];
 //
-//        $res = Topology::getURN($info[0], $device, $port);
+//        $res = MeicanTopology::getURN($info[0], $device, $port);
 //
 //        $this->setLayout('empty');
 //        $this->setAction('ajax');

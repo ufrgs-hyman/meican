@@ -16,8 +16,8 @@ include_once 'apps/circuits/models/timer_info.inc';
 include_once 'apps/bpm/models/request_info.inc';
 include_once 'apps/circuits/models/oscars.php';
 
-include_once 'apps/domain/models/domain_info.inc';
-include_once 'apps/domain/models/topology.inc';
+include_once 'apps/topology/models/domain_info.inc';
+include_once 'apps/topology/models/topology.inc';
 include_once 'includes/nuSOAP/lib/nusoap.php';
 
 class reservations extends Controller {
@@ -30,10 +30,12 @@ class reservations extends Controller {
 
     public function show() {
 
-//        $os = new OSCARSReservation();
-//        $os->setOscarsUrl("200.132.1.28:8085");
-//        $os->getUrns();
-//        Framework::debug("urns", $os->urns);
+        $os = new OSCARSReservation();
+        $os->setOscarsUrl("200.132.1.28:8085");
+        $os->getUrns();
+        Framework::debug("urns", $os->urns);
+
+        
         // inicializa variáveis da sessão do wizard
         Common::destroySessionVariable('res_name');
         Common::destroySessionVariable('sel_flow');
@@ -289,8 +291,8 @@ class reservations extends Controller {
             $domain->id = $d->dom_id;
             $domain->name = $d->dom_descr;
             $domain->topology_id = $d->topo_domain_id;
-            $domain->networks = Topology::getURNDetails($d->dom_id);
-            $urn = Topology::getURNs($d->dom_id);
+            $domain->networks = MeicanTopology::getURNDetails($d->dom_id);
+            $urn = MeicanTopology::getURNs($d->dom_id);
             foreach ($urn as $u) {
                 $allUrns[] = $u->urn_string;
             }
@@ -481,7 +483,7 @@ class reservations extends Controller {
                 $domain = new domain_info();
                 $domain->dom_id = $dom_id;
                 $dom = $domain->fetch(FALSE);
-                $endpoint = "http://{$dom[0]->dom_ip}/" . Framework::$systemDirName . "/main.php?app=domain&services&wsdl";
+                $endpoint = "http://{$dom[0]->dom_ip}/" . Framework::$systemDirName . "/main.php?app=topology&services&wsdl";
 
                 $ws = new nusoap_client($endpoint, array('cache_wsdl' => 0));
                 $urnData[] = $ws->call('getURNsInfo', array('urn_string_list' => $urn_array));
@@ -674,19 +676,6 @@ class reservations extends Controller {
         $res_begin_timestamp = Common::getSessionVariable("res_begin_timestamp");
         $res_diff_timestamp = $res_end_timestamp - $res_begin_timestamp;
 
-//        $selectedTimer = NULL;
-//        $selectedFlow = NULL;
-//        $reservationName = NULL;
-//        if (Common::hasSessionVariable('res_wizard') && Common::hasSessionVariable('sel_timer') && Common::hasSessionVariable('sel_flow') && Common::hasSessionVariable('res_name')) {
-//            $selectedTimer = Common::getSessionVariable('sel_timer');
-//            $selectedFlow = Common::getSessionVariable('sel_flow');
-//            $reservationName = Common::getSessionVariable('res_name');
-//        } else {
-//            $this->setFlash(_("Not enough arguments to reservation, going back to step 4..."), "warning");
-//            $this->reservation_add();
-//            return;
-//        }
-
         Framework::debug("post", $_POST);
         
         /**
@@ -700,6 +689,8 @@ class reservations extends Controller {
          */
         $timer_cont = new timers();
         $new_timer = $timer_cont->add();
+
+        Framework::debug("new flow", $new_flow);
 
         $reservation = new reservation_info();
         $reservation->res_name = Common::POST("res_name");
@@ -726,16 +717,24 @@ class reservations extends Controller {
          *
          */
 
+         //buscar urn source para adicionar a reserva embaixo
+         $urn = new urn_info();
+         $urn->urn_string = $new_flow->src_urn_string;
+         $src_urn = $urn->fetch(FALSE);
 
-        if ($res = $reservation->insert()) {
-//            if ($this->send($res)) {
-//                $this->setFlash(_('Reservation submitted'), 'success');
-//            }
+         //buscar urn destino para adicionar a reserva embaixo
 
-            $this->view(array("res_id" => $res->res_id));
+        if ($res = $reservation->insert($src_urn[0]->urn_id, 'urn_info')) {
+            if ($this->send($res)) {
+                $this->setFlash(_('Reservation submitted'), 'success');
+                $this->view(array("res_id" => $res->res_id));
+            } else {
+                $this->setFlash(_('Error to send'), 'error');
+                $this->show();
+            }
         } else {
             $this->setFlash(_('Fail to save reservation on database'), 'error');
-            $this->page3();
+            $this->show();
         }
     }
 
@@ -1006,20 +1005,20 @@ class reservations extends Controller {
     function send($reservation_info) {
 
         $flw_id = $reservation_info->get('flw_id');
+
         $flow = new flow_info();
         $flow->flw_id = $flow_id;
-        $dom_src_id = $flow->get('src_dom');
-        $domain = new domain_info();
-        $domain->dom_id = $dom_src_id;
-        $src_dom = $domain->get();
+        $src_urn_string = $flow->get('src_urn_string');
 
+        $domain = new domain_info();
+        $src_dom = $domain->getOSCARSDomain($src_urn_string);
 
         $oscarsRes = new OSCARSReservation();
         $oscarsRes->setOscarsUrl($src_dom->oscars_ip);
         $oscarsRes->setDescription($reservation_info->get('res_name'));
         $oscarsRes->setBandwidth($reservation_info->get('bandwidth'));
-        $oscarsRes->setSrcEndpoint($flow->get('urn_src_string'));
-        $oscarsRes->setDestEndpoint($flow->get('urn_dst_string'));
+        $oscarsRes->setSrcEndpoint($flow->get('src_urn_string'));
+        $oscarsRes->setDestEndpoint($flow->get('dst_urn_string'));
 
         if ($path = $flow->get('path'))
             $oscarsRes->setPath($path);
@@ -1057,6 +1056,8 @@ class reservations extends Controller {
             $tmp->setStartTimestamp($t->start); //em timestamp
             $tmp->setEndTimestamp($t->finish);
 
+            Framework::debug("tmp", $tmp);
+
             if ($tmp->createReservation()) {
                 $new_gri = new gri_info();
                 $new_gri->gri_id = $tmp->getGri();
@@ -1070,7 +1071,7 @@ class reservations extends Controller {
                 $date->setTimestamp($t->finish);
                 $new_gri->finish = $date->format('Y-m-d H:i');
 
-                $new_gri->send = 0; //para as reservas sem autorização do tipo
+                $new_gri->send = "0"; //para as reservas sem autorização do tipo
                 //timer-automatic o daemon nao precisa enviar o createPath
 
                 $new_gri->insert();
