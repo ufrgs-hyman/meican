@@ -29,7 +29,7 @@
     <body>
         <div id="header" class="header">
             <div id="logo_box">
-                <img src="layouts/img/meican_white2.png" class="logo" alt="MEICAN">
+                <img src="layouts/img/meican_white.png" class="logo" alt="MEICAN">
             </div>
             <div id="info_box">
                 <a href="#"><?php echo _('About MEICAN');?></a> |
@@ -96,20 +96,21 @@
             </div>
         </div>
              <div id="footer">
-            <a href="#">
-                        <?php echo _('About us'); ?>
+<!--            <a href="#">
+                        <?php //echo _('About us'); ?>
             </a> |
             <a href="#">
-                        <?php echo _('Developers'); ?>
+                        <?php //echo _('Developers'); ?>
             </a> |
             <a href="#">
-                        <?php echo _('Terms of service'); ?>
+                        <?php //echo _('Terms of service'); ?>
             </a> |
             <a href="#">
-                        <?php echo _('Privacy policy'); ?>
+                        <?php //echo _('Privacy policy'); ?>
             </a>
             <br>
             2011
+-->
         </div>
     </body>
 </html>

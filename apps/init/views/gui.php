@@ -188,7 +188,7 @@ function fillSelectBox(htmlId, fillerArray, current_val) {
 
         <div id="header" class="header">&nbsp;
             <div id="logo_box"> &nbsp;
-                   <a href="<?php echo $this->buildLink(array('action' => 'welcome')); ?>"><img src="layouts/img/meican_white2.png" class="logo" alt="MEICAN"/></a>
+                   <a href="<?php echo $this->buildLink(array('action' => 'welcome')); ?>"><img src="layouts/img/meican_white.png" class="logo" alt="MEICAN"/></a>
             </div>
            
             <div id="info_box">

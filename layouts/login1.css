@@ -27,8 +27,8 @@
 /* Tabela de disposição dos boxes iniciais */
 body {
        background-color: #3a5879;
-       font-family: verdana, helvetica, arial, sans-serif;
-       font-size: 16px;
+       font-family: helvetica, arial, sans-serif;
+       font-size: 14px;
        margin: 0px;
 }
 
@@ -59,7 +59,7 @@ div#info_box {
     width: 27%;
     float: left;
     margin-top: 90px;
-    font-size: 0.8em;
+    font-size: 12px;
     text-align: right;
 }
 
@@ -72,8 +72,6 @@ div#content {
     padding-left: 0px;
     background-color: #FFF;
     float: left;
-    -moz-border-radius: 50px;
-    border-radius: 50px;
 }
 
 div#content a:hover {
@@ -85,7 +83,6 @@ div#login_form {
     float: right;
     background-color: #eee;
     padding-left: 30px;
-    -moz-border-radius: 25px;
     margin-top: 30px;
     margin-right: 20px
 }

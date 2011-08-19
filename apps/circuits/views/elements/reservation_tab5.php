@@ -11,7 +11,7 @@
             
         </td>
         <td style="width: 30%">
-            <div id="view_map_canvas"></div>        
+            <div id="view_map_canvas" style="height:224px;"></div>        
         </td>
         <td style="width: 40%">
             <?php $this->addElement('view_flow', $flow); ?>        
@@ -24,9 +24,6 @@
 <br/><br/>
 
 <div align="center">
-    <h2 style="display: inline"><?php echo _('Bandwidth'); ?>:</h2><label id="lb_bandwidth"></label>
-
-    <br/><br/><br/>
 
     <h2><?php echo _('Timer'); ?></h2>
     

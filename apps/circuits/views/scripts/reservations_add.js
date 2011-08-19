@@ -46,18 +46,19 @@ function createSlider(){
                 $("#amount").animate({
                     'color': '#FF0000'
                 },10);
-                $( "#amount" ).val( ui.value + " Mbps. " + warning_string);
+                //$( "#amount" ).val( ui.value + " Mbps.<br> " + warning_string);
+                $( "#amount" ).html( ui.value + " Mbps.<br> " + warning_string);
             } else {
                 $("#amount").animate({
                     'color': '#00000000'
                 },10);
-                $( "#amount" ).val( ui.value + " Mbps");
+                $( "#amount" ).html( ui.value + " Mbps");
             }
         }
     });
     $('#slider').removeClass("ui-widget");
     $('#slider').addClass("ui-widget-slider");
-    $( "#amount" ).val( $( "#slider" ).slider( "value" ) + " Mbps");    
+    $( "#amount" ).html( $( "#slider" ).slider( "value" ) + " Mbps");    
     $("#slider").bind("slidechange", changeBand());
     $("#slider").slider( "option", "disabled", true );
     $("#amount_label").hide();        
@@ -856,6 +857,7 @@ function edit_drawPath(flightPlanCoordinates) {
     if ( flightPlanCoordinates[0] != flightPlanCoordinates[1] ) {
         edit_setBounds(flightPlanCoordinates);  
     }
+    view_clearAll();
     view_Circuit();
 }
 

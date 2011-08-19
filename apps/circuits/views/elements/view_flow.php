@@ -4,10 +4,10 @@ $flow = $argsToElement;
 
 ?>
 
-<table class="flow">
+<table class="flow" style="border:#3A5879 1px solid">
 
     <tr>
-        <td></td>
+        <th></th>
         <th>
             <?php echo _("Source"); ?>
         </th>
@@ -73,6 +73,15 @@ $flow = $argsToElement;
         </td>
         <td>
             <label id="confirmation_dst_vlan">Untagged</label>
+        </td>
+    </tr>
+    
+    <tr>
+        <th>
+            <?php echo _("Bandwidth"); ?>
+        </th>
+        <td colspan="2">
+            <label id="lb_bandwidth"></label>
         </td>
     </tr>
 </table>

@@ -349,9 +349,9 @@ class reservations extends Controller {
                 "flash_dstVlanInv" => _("Invalid value for destination VLAN"),
                 "flash_dstVlanReq" => _("Destination VLAN type required"),
                 "flash_timerReq" => _("Timer is required"),
-                "flash_timerInvalid" => _("The End Time occurs before the Start Time"),
-                "flash_invalidDuration" => _("Invalid Duration"),
-                "flash_missingEndpoints" => _("Missing Endpoints"),
+                "flash_timerInvalid" => _("The end time occurs before the start time"),
+                "flash_invalidDuration" => _("Invalid duration"),
+                "flash_missingEndpoints" => _("Missing endpoints"),
                 // endpoints
                 "domain_string" => _("Domain"),
                 "domains_string" => _("Domains"),
@@ -359,8 +359,8 @@ class reservations extends Controller {
                 "networks_string" => _("Networks"),
                 "device_string" => _("Device"),
                 "devices_string" => _("Devices"),
-                "from_here_string" => _("From Here"),
-                "to_here_string" => _("To Here"),
+                "from_here_string" => _("From here"),
+                "to_here_string" => _("To here"),
                 "cluster_information_string" => _("Information about cluster"),
                 "coordinates_string" => _("Coordinates"),
                 // timers
