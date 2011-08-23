@@ -38,16 +38,19 @@ div#header {
 }
 
 div#logo_box {
-    width: 24%;
+    width: 10%;
     float: left;
 
 }
 div#info_box {
+    min-width: 500px;
     width: 27%;
-    float: right;
+    margin-right: 15px;
     margin-top: 90px;
     font-size: 12px;
     text-align: right;
+    overflow: auto;
+    float: right;
 }
 
 div#content {
@@ -86,6 +89,7 @@ div#flash_box {
 }
 div#menu {
     width: 10%;
+    min-width: 120px;
     float: left;
     background-color: #EEEEEE;
     color: #000000;

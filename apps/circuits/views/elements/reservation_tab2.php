@@ -98,7 +98,9 @@
                             <td colspan="3">                                
                                 <div id="div-bandwidth" style="width:100%">
                                     <hr></hr>
-                                    <?php $this->addElement('reservation_tab3'); ?>
+                                    <div align="center">
+                                        <?php $this->addElement('reservation_tab3'); ?>
+                                    </div>                                        
                                     <div style="width: 100%; margin-top: 5px">
                                         <label id="amount_label" for="amount"></label>
                                         <label id="amount" style="border:0; color:#000; font-weight:bold; width:100%"></label>

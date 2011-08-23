@@ -8,18 +8,18 @@
         <!-- GLOBAL JS SCRIPTS AND IN-LINE FUNCTIONS -->
         <link rel="stylesheet" type="text/css" href="layouts/style1.css" />
         <link rel="stylesheet" type="text/css" href="layouts/timePicker.css" />
-        
+
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery.min.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery-ui-1.8.13.custom.min.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery_history.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery.crypt.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery.form.js"></script>
-        
-        
+
+
         <!-- ESSE SCRIPT TÁ DANDO PROBLEMA
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/jquery-1.4.2.min.js"></script>
         -->
-        
+
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/jquery-ui.min.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/googlemaps.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/markerClusterer.js"></script>
@@ -30,7 +30,7 @@
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/flows.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/timers.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/jquery.timePicker.js"></script>
-        
+
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <script type ="text/javascript">
 
@@ -88,26 +88,26 @@
             }); //do ready
 
             function clearSelectBox(htmlId) {
-    $(htmlId).empty();
-    $(htmlId).append('<option value="-1"></option>');
-}
+                $(htmlId).empty();
+                $(htmlId).append('<option value="-1"></option>');
+            }
 
-function fillSelectBox(htmlId, fillerArray, current_val) {
-    clearSelectBox(htmlId);
-    for (var i=0; i < fillerArray.length; i++) {
-        if (fillerArray[i].id == current_val)
-            $(htmlId).append('<option selected="true" value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
-        else
-            $(htmlId).append('<option value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
-    }
-}
+            function fillSelectBox(htmlId, fillerArray, current_val) {
+                clearSelectBox(htmlId);
+                for (var i=0; i < fillerArray.length; i++) {
+                    if (fillerArray[i].id == current_val)
+                        $(htmlId).append('<option selected="true" value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
+                    else
+                        $(htmlId).append('<option value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
+                }
+            }
 
             function loadHtml(htmlData) {
                 clearInterval(js_function_interval);
                 
                 // carrega temporariamente a página para processá-la
                 $('#htmlToLoad').html(htmlData);
-                 $('#load_img').hide();
+                $('#load_img').hide();
                 // faz o redirecionamento das tags
 
                 var flash = $('.flash_box').html();
@@ -131,49 +131,49 @@ function fillSelectBox(htmlId, fillerArray, current_val) {
                 $('#load_img').show();
                 
                 //if (url) {
-                    $.ajax ({
-                        type: "POST",
-                        url: url,
-                        data: param,
-                        success: loadHtml,
-                        error: function(jqXHR) {
-                            switch (jqXHR.status) {
-                                case 401:
-                                    top.location.href = 'index.php?message=<?php echo _("Not logged in"); ?>';
-                                    break;
-                                case 402:
-                                    top.location.href = 'index.php?message=<?php echo _("Session Expired"); ?>';
-                                    break;
-                                case 404:
-                                    $('#main').html("Page not found");
-                                    break;
-                                case 405:
-                                    //change lang
-                                    top.location.href = 'main.php?app=init&controller=gui';
-                                    break;
-                                case 406:
-                                    //force refresh
-                                    location.href = 'main.php?app=init&controller=gui';
-                                    break;
-                                default:
-                                    $('#main').html("Unexpected error");
+                $.ajax ({
+                    type: "POST",
+                    url: url,
+                    data: param,
+                    success: loadHtml,
+                    error: function(jqXHR) {
+                        switch (jqXHR.status) {
+                            case 401:
+                                top.location.href = 'index.php?message=<?php echo _("Not logged in"); ?>';
+                                break;
+                            case 402:
+                                top.location.href = 'index.php?message=<?php echo _("Session Expired"); ?>';
+                                break;
+                            case 404:
+                                $('#main').html("Page not found");
+                                break;
+                            case 405:
+                                //change lang
+                                top.location.href = 'main.php?app=init&controller=gui';
+                                break;
+                            case 406:
+                                //force refresh
+                                location.href = 'main.php?app=init&controller=gui';
+                                break;
+                            default:
+                                $('#main').html("Unexpected error");
                             }
                         }
-                     });
-                 //}
-            }
+                    });
+                    //}
+                }
 
-            function setFlash(message, status) {
-                $('#flash_box').empty();
-                if (!status)
-                    status = "info";
-                $('#flash_box').append('<div class="' + status + '">' + message + '</div>');
-                window.scroll(0, 110);
-            }
+                function setFlash(message, status) {
+                    $('#flash_box').empty();
+                    if (!status)
+                        status = "info";
+                    $('#flash_box').append('<div class="' + status + '">' + message + '</div>');
+                    window.scroll(0, 110);
+                }
             
-            function clearFlash(){
-                $('#flash_box').empty();
-            }
+                function clearFlash(){
+                    $('#flash_box').empty();
+                }
     
         </script>
 
@@ -186,13 +186,12 @@ function fillSelectBox(htmlId, fillerArray, current_val) {
         <!-- joga dentro dessa tag o html a ser processado - o que retorna do ajax -->
         <div id="htmlToLoad" style="display: none"></div>
 
-        <div id="header" class="header">&nbsp;
-            <div id="logo_box"> &nbsp;
-                   <a href="<?php echo $this->buildLink(array('action' => 'welcome')); ?>"><img src="layouts/img/meican_white.png" class="logo" alt="MEICAN"/></a>
+        <div id="header" class="header">
+            <div id="logo_box"> 
+                <a href="<?php echo $this->buildLink(array('action' => 'welcome')); ?>"><img class="logo" alt="MEICAN" src="layouts/img/meican_white.png"/></a>
             </div>
-           
-            <div id="info_box">
 
+            <div id="info_box">
             </div>
         </div>
         <div id="content">
@@ -203,27 +202,27 @@ function fillSelectBox(htmlId, fillerArray, current_val) {
 
             </div>
             <div id="load_img" style="display: none">
-                    <img src="layouts/img/ajax-loader.gif" alt="<?php echo _('Loading'); ?>"/>
+                <img src="layouts/img/ajax-loader.gif" alt="<?php echo _('Loading'); ?>"/>
             </div>
             <div id="main">
-                
+
             </div>
-            </div>
+        </div>
         <div id="footer">
-<!--            <a href="#">
-                        <?php //echo _('About us'); ?>
-            </a> |
-            <a href="#">
-                        <?php //echo _('Developers'); ?>
-            </a> |
-            <a href="#">
-                        <?php //echo _('Terms of service'); ?>
-            </a> |
-            <a href="#">
-                        <?php //echo _('Privacy policy'); ?>
-            </a>
-            <br> 
-            2011      -->       
+            <!--            <a href="#">
+            <?php //echo _('About us'); ?>
+                        </a> |
+                        <a href="#">
+            <?php //echo _('Developers'); ?>
+                        </a> |
+                        <a href="#">
+            <?php //echo _('Terms of service'); ?>
+                        </a> |
+                        <a href="#">
+            <?php //echo _('Privacy policy'); ?>
+                        </a>
+                        <br> 
+                        2011      -->       
         </div>
     </body>
 

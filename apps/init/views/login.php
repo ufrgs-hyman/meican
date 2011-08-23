@@ -29,7 +29,7 @@
     <body>
         <div id="header" class="header">
             <div id="logo_box">
-                <img src="layouts/img/meican_white.png" class="logo" alt="MEICAN">
+                <img src="layouts/img/meican_white.png" class="logo" alt="MEICAN"/>
             </div>
             <div id="info_box">
                 <a href="#"><?php echo _('About MEICAN');?></a> |

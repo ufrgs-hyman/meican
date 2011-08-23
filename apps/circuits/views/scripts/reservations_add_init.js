@@ -4,7 +4,8 @@ var tab1_valid = false;
 var tab2_valid = true;
 var previousTab;
 
-var firstTime;
+var srcSet = false;
+var dstSet = false;
 var edit_markersArray = new Array();
 var edit_selectedMarkers = new Array();
 var view_markersArray = new Array();
