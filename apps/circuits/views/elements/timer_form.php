@@ -9,14 +9,14 @@ $timer = (isset($argsToElement->timer)) ? $argsToElement->timer : NULL;
 ?>
 <table>
     <tr>
-        <th colspan="2">
+        <th class="left" colspan="2">
             <?php echo _("Start") ?>
         </th>
         <th></th>
-        <th colspan="2">
+        <th class="left" colspan="2">
             <?php echo _("Finish") ?>
         </th>
-        <th>
+        <th class="left">
             <?php echo _("Duration") ?>
         </th>
     </tr>

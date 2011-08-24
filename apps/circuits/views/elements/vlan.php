@@ -1,6 +1,6 @@
-<table>
+<table class="withoutBorder">
     <tr>
-        <td>
+        <td class="left">
             <?php echo _("VLAN Type"); ?>
         </td>
         <td align="left">
@@ -16,7 +16,7 @@
     </tr>
 
     <tr>
-        <td>
+        <td class="left">
             <?php echo _("VLAN"); ?>
         </td>
         <td>

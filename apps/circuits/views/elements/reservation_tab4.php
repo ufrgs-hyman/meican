@@ -1,6 +1,6 @@
 <!-- TIMER -->
 <br/>
-<table>
+<table class="withoutBorder">
     <tr>
         <td style="width:1%"></td>
         <td>

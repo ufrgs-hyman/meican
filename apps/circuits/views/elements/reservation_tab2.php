@@ -1,8 +1,8 @@
 <!-- Endpoints -->
 <br/>
 <div style="width:100%;">
-    <table style="width:100%">
-        <tr style="width:100%">
+    <table class="withoutBorder" style="width:100%">
+        <tr align="top" style="width:100%">
             <td style="width:68%">
                 <div id="edit_map_canvas" style="width:100%; height: 400px; min-width:300px"></div>
             </td>
@@ -19,7 +19,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="left">
                                 <?php echo _(Domain);?>
                             </td>
                             <td>
@@ -30,7 +30,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="left">
                                 <?php echo _(Network);?>
                             </td>
                             <td>
@@ -41,7 +41,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="left">
                                 <?php echo _(Device);?>
                             </td>
                             <td>
@@ -52,7 +52,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="left">
                                 <?php echo _(Port);?>
                             </td>
                             <td>
@@ -72,9 +72,9 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">
+                            <td class="left" colspan="3">
                                 <hr/>
-                                <input type="checkbox" name="vlan_options" id="showVlan_checkbox" onclick="showVlanConf()"/><?php echo _("Show Vlan configuration"); ?>
+                                <input type="checkbox" name="vlan_options" id="showVlan_checkbox" onclick="showVlanConf()"/><?php echo _("Show VLAN configuration"); ?>
                             </td>
                         </tr>
                         <tr>
@@ -87,7 +87,7 @@
                             </td>
                         </tr>
                         <tr id="hops_line">
-                            <td colspan="3">
+                            <td class="left" colspan="3">
                                 <span id="writeHops"></span> 
                                 <hr/>                                
                                 <input type="button" class="add" id="addHopsButton" value="Add new hop" onclick="moreFields();"/>                                    

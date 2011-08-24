@@ -48,10 +48,10 @@ $freq_types[] = $freq;
         <div id="tab1" class="cont_tab" style="display: none">
             
             <br/>         
-            <table style="width:100%">
+            <table class="withoutBorder" style="width:100%">
                 <tr>
                     <td style="width:1%"></td>
-                    <td>
+                    <td class="left">
                         <?php echo _("Select source and destination networks by clicking on the map markers with any button and then choosing an option from the pop-up menu. After selecting the endpoints, choose the device and port on the right pane."); ?>
                     </td>
                     <td style="width:1%"></td>

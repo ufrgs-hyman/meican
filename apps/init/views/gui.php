@@ -167,12 +167,28 @@
                     $('#flash_box').empty();
                     if (!status)
                         status = "info";
-                    $('#flash_box').append('<div class="' + status + '">' + message + '</div>');
-                    window.scroll(0, 110);
+                    $('#flash_box').append('<div class="' + status + '">' + message + 
+                        '<input type="button" class="closeFlash" onclick="clearFlash()"/>' +
+                        '</div> ');
+                    window.scroll(0, 0);
                 }
             
                 function clearFlash(){
                     $('#flash_box').empty();
+                }
+                
+                function WPToggle(divId, imageId) {
+
+                    if ($(divId).css("display") == "none") {
+                        $(divId).slideDown();
+                        $(imageId).attr("src","layouts/img/minus.gif" );
+                    }
+    
+                    else {
+                        $(divId).slideUp();
+                        $(imageId).attr("src","layouts/img/plus.gif");
+                    }
+    
                 }
     
         </script>
@@ -194,13 +210,13 @@
             <div id="info_box">
             </div>
         </div>
+        <div id="flash_box">
+
+        </div>
         <div id="content">
             <div id="menu">
 
-            </div>
-            <div id="flash_box">
-
-            </div>
+            </div>            
             <div id="load_img" style="display: none">
                 <img src="layouts/img/ajax-loader.gif" alt="<?php echo _('Loading'); ?>"/>
             </div>

@@ -7,32 +7,30 @@ $hasUrn = FALSE;
 
 <h1><?php echo _("URNs (Uniform Resource Name)"); ?></h1>
 
-<?php echo _("Select the domain to view"); ?>:
-<select onchange="changeURNDomain(this);">
-    <option value="-1"><?php echo _("Show all"); ?></option>
-    <?php foreach ($domains as $dom): ?>
-        <option value="<?php echo $dom->id ?>"><?php echo $dom->descr ?></option>
-    <?php endforeach; ?>
-</select>
-
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
 
     <?php foreach ($domains as $dom): ?>
-    <div id="domain<?php echo $dom->id; ?>">
-        <h2><?php echo _("Domain")." $dom->descr - $dom->topo_id"; ?></h2>
+    <div id="domain<?php echo $dom->id; ?>">                
         
         <?php if ($dom->urns): ?>
-            <?php
-                $hasUrn = TRUE;
-                $this->addElement('list_urns',$dom);
-            ?>
-        <?php else:
+            <h2><img id="collapseExpand<?php echo $dom->id ?>" src="layouts/img/minus.gif" onclick="WPToggle('#collapsableUrns<?php echo $dom->id ?>', '#collapseExpand<?php echo $dom->id ?>')"/>
+                &nbsp;
+            <?php echo _("Domain")." $dom->descr $dom->topo_id"; ?></h2>
+            <div id="collapsableUrns<?php echo $dom->id ?>">                
+                <?php 
+                    $hasUrn = TRUE;
+                    $this->addElement('list_urns',$dom); 
+                 ?>
+            </div>
+                 
+        <?php else: ?>
+            <h2><?php echo _("Domain")." $dom->descr $dom->topo_id"; ?></h2>
+            <?php     
             $args = new stdClass();
             $args->message = _("No URN in this domain, click the button below to import topology from IP address")." $dom->ip";
             $args->link = array("action" => "import", "param" => "dom_id:$dom->id");
-            
             $this->addElement("empty_db", $args);
-        ?>
+            ?>
             <br/>
             <br/>
             <br/>

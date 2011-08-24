@@ -1,17 +1,3 @@
-function changeURNDomain(elem) {
-    if (newCont || isEditingURN) {
-        setFlash("You are updating some table, all the modifications will be saved");
-    } else
-        clearFlash();
-    
-    for (var i in domains) {
-        if ((elem.value == -1) || (elem.value == domains[i].id))
-            $("#domain" + domains[i].id).show();
-        else
-            $("#domain" + domains[i].id).hide();
-    }
-}
-
 function newURN(domain_id) {
     var urns = getURNsFromDomain(domain_id);
     

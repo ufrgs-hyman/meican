@@ -57,9 +57,7 @@ div#content {
     width: 100%;
     min-width: 950px;
     clear: both;
-    padding-top: 5px;
     padding-bottom: 5px;
-    padding-left: 5px;
     background-color: #FFF;
     float: left;
 }
@@ -76,16 +74,15 @@ div#content a:hover {
 
 div#flash_box {
     min-width: 680px;
-    width: 67.5%;
+    width: 100%;
     float: left;
-    vertical-align: bottom;
-    margin: 10px 10px 5px 10px;
-    padding: 10px 10px 10px 10px;
+    vertical-align: bottom;        
     font-weight: bold;
     font-size: 1.1em;
     color: #ffffff;
     text-indent: 10px;
-    background-color: white;
+    text-align: center;
+    background-color: #3A5879;
 }
 div#menu {
     width: 10%;
@@ -133,22 +130,48 @@ table {
     font-family: Helvetica, Arial;
     min-width: 50%;
     border-collapse: collapse;
+    padding: 0px;
+    border: 1px solid #000000
+}
+
+table.withoutBorder{
+    font-family: Helvetica, Arial;
+    min-width: 50%;
+    border: 0px none;
+    border-collapse: collapse;
+    padding: 0px;
+}
+
+table td.left {
+    font-size:12px;
+    text-align: left;
     padding: 3px 7px 2px 7px;
 }
 
 table td {
-    font-size:14px;
-    padding: 7px 7px 7px 7px;
+    font-size:12px;
+    padding: 0px;
+    text-align: center;
+    padding: 3px 7px 2px 7px;
 }
 
 table th {
-    font-size:1.1em;
+    border-bottom: 1px solid black;
+    font-size:12px;
+    text-align:center;
+    color:#3a5879;
+}
+
+table th.left {
+    border-bottom: 1px solid black;
+    font-size:12px;
     text-align:left;
-    padding-top:5px;
-    padding-bottom:4px;
-    background-color:#3a5879;
-    color:#ffffff;
-    padding: 3px 7px 2px 7px;
+    margin-left: 5px;
+    color:#3a5879;
+}
+
+table .list th .urn_show {
+    border-right: 1px solid black;
 }
 
 table.list tr > td:first-child {
@@ -389,18 +412,23 @@ div.subItem {
 
 #flash_box div.success {
     background-color: #A7C942;
+    padding-bottom: 5px;
 }
 #flash_box div.error {
     background-color: #FF0033;
+    padding-bottom: 5px;
 }
 #flash_box div.fatal {
     background-color: #FF0000;
+    padding-bottom: 5px;
 }
 #flash_box div.warning {
     background-color: #FFCC00;
+    padding-bottom: 5px;
 }
 #flash_box div.info {
     background-color: #3399FF;
+    padding-bottom: 5px;
 }
 
 #contextMenu {
@@ -456,6 +484,7 @@ table.icons {
     position: relative;
     top: -10%;
     width: 60%;
+    border: 0px none;
 }
 
 ul.tabs:not(.inactive) {
@@ -467,10 +496,8 @@ height: 32px; /*--Define a altura das abas--*/
 border-bottom: 1px solid #999;
 border-left: 0.6px solid #999;
 width: 100%;
--moz-border-radius-topleft: 10px;
-border-radius-topleft: 10px;
-border-radius-topright: 10px;
--moz-border-radius-topright: 10px;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
 }
 ul.tabs li {
 float: left;
@@ -485,8 +512,8 @@ position: relative;
 background: #e0e0e0;
 background-color: #ffffff;
 color: #3A5879;
--moz-border-radius-topleft: 10px;
--moz-border-radius-topright: 10px;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
 }
 ul.tabs li a {
 text-decoration: none;
@@ -496,8 +523,8 @@ font-size: 14px;
 padding: 0 10px;
 border: 1px solid #fff; /*--deixa um efeito de relevo com uma borda branca de 1px dentro do item da lista--*/
 outline: none;
--moz-border-radius-topleft: 10px;
--moz-border-radius-topright: 10px;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
 }
 
 ul.tabs li a .confirm{
@@ -508,8 +535,8 @@ font-size: 1.2em;
 padding: 0 20px;
 border: 1px solid #fff; /*--deixa um efeito de relevo com uma borda branca de 1px dentro do item da lista--*/
 outline: none;
--moz-border-radius-topleft: 10px;
--moz-border-radius-topright: 10px;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
 }
 
 ul.tabs li a:hover {
@@ -520,8 +547,8 @@ html ul.tabs.active, html ul.tabs li.active, html ul.tabs li.active a, html ul.t
 background-color: #fff;
 color: #3A5879;
 border-bottom: 1px solid #fff; /*--faz a aba ativa parecer conectada com seu conteudo--*/
--moz-border-radius-topleft: 10px;
--moz-border-radius-topright: 10px;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
 }
 
 .tab_container:not(.inactive) {
@@ -578,8 +605,8 @@ list-style: none;
 height: 32px; /*--Define a altura das abas--*/
 border-bottom: 1px solid #999;
 border-left: 0.6px solid #999;
--moz-border-radius-topleft: 10px;
--moz-border-radius-topright: 10px;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
 }
 
 #auxDiv {
@@ -695,4 +722,14 @@ div#main #l3:link, div#main #l3:visited, div#main #l3:hover, div#main #l3:visite
 
 table .reservation_name {
     padding: 0px;
+}
+
+div#flash_box .closeFlash {
+    background-image:  url('img/delete_2.png') ;
+    background-color: transparent;
+    background-repeat:  no-repeat;
+    background-position: center;  
+    height: auto;
+    margin: 3px;
+    float: right;
 }

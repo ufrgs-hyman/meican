@@ -1,6 +1,6 @@
 <br/>
 
-<table>
+<table class="withoutBorder">
     <tr>
         <td class="reservation_name">
             <?php echo _("Reservation name:"); ?>
