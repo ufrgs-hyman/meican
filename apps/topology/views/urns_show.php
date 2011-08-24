@@ -25,15 +25,14 @@ $hasUrn = FALSE;
                  
         <?php else: ?>
             <h2><?php echo _("Domain")." $dom->descr $dom->topo_id"; ?></h2>
-            <?php     
-            $args = new stdClass();
-            $args->message = _("No URN in this domain, click the button below to import topology from IP address")." $dom->ip";
-            $args->link = array("action" => "import", "param" => "dom_id:$dom->id");
-            $this->addElement("empty_db", $args);
-            ?>
-            <br/>
-            <br/>
-            <br/>
+            <div style="border: 1px solid black; margin-bottom: 15px">
+                <?php     
+                    $args = new stdClass();
+                    $args->message = _("No URN in this domain, click the button below to import topology from IP address")." $dom->ip";
+                    $args->link = array("action" => "import", "param" => "dom_id:$dom->id");
+                    $this->addElement("empty_db", $args);
+                ?>
+            </div>
         <?php endif; ?>
     </div>
     <?php endforeach; ?>
