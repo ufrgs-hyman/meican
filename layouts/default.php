@@ -11,7 +11,9 @@
             $status = $ar[0];
             $message = $ar[1];
             ?>
-            <div class="<?php echo $status; ?>"><?php echo $message; ?></div>
+            <div class="<?php echo $status; ?>"><?php echo $message; ?>
+                <input type="button" class="closeFlash" onclick="clearFlash();"/>
+            </div>
         <?php endforeach; ?>
         </div>
 <?php endif; ?>

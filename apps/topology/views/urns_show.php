@@ -12,7 +12,7 @@ $hasUrn = FALSE;
     <?php foreach ($domains as $dom): ?>
     <div id="domain<?php echo $dom->id; ?>">                
         
-        <?php if ($dom->urns): ?>
+        <?php if ($dom->id==1): ?>
             <h2><img id="collapseExpand<?php echo $dom->id ?>" src="layouts/img/minus.gif" onclick="WPToggle('#collapsableUrns<?php echo $dom->id ?>', '#collapseExpand<?php echo $dom->id ?>')"/>
                 &nbsp;
             <?php echo _("Domain")." $dom->descr $dom->topo_id"; ?></h2>
@@ -25,12 +25,12 @@ $hasUrn = FALSE;
                  
         <?php else: ?>
             <h2><?php echo _("Domain")." $dom->descr $dom->topo_id"; ?></h2>
-            <div style="border: 1px solid black; margin-bottom: 15px">
+            <div style="border: 1px solid black; padding-bottom: 50px; text-indent: 10px">
                 <?php     
                     $args = new stdClass();
                     $args->message = _("No URN in this domain, click the button below to import topology from IP address")." $dom->ip";
                     $args->link = array("action" => "import", "param" => "dom_id:$dom->id");
-                    $this->addElement("empty_db", $args);
+                    $this->addElement("empty_urn", $args);
                 ?>
             </div>
         <?php endif; ?>
