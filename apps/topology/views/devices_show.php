@@ -19,6 +19,7 @@
             <th><?php echo _("Longitude"); ?></th>
             <th><?php echo _("Network"); ?></th>
             <th><?php echo _("Topology node ID"); ?></th>
+            <th><?php echo _("#Endpoints"); ?></th>
         </tr>
         </thead>
 
@@ -63,6 +64,9 @@
             </td>
             <td>
                 <?php echo $d->node_id; ?>
+            </td>
+            <td>
+                <?php echo $d->nr_endpoints; ?>
             </td>
         </tr>
         <?php endforeach; ?>

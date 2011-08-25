@@ -1,6 +1,6 @@
 <?php
 
-defined ('__FRAMEWORK') or die ("Invalid access.");
+defined ('__MEICAN') or die ("Invalid access.");
 
 include_once 'libs/controller.php';
 include_once 'apps/circuits/models/timer_info.inc';

@@ -1,6 +1,6 @@
 <?php
 
-defined ('__FRAMEWORK') or die ("Invalid access.");
+defined ('__MEICAN') or die ("Invalid access.");
 
 include_once 'libs/controller.php';
 
@@ -23,7 +23,6 @@ class urns extends Controller {
         
         $dom = new domain_info();
         if ($allDomains = $dom->fetch()) {
-        //if (false) {
             $domains_to_body = array();
             $domains_to_js = array();
 
@@ -32,7 +31,7 @@ class urns extends Controller {
                 $domain->id = $d->dom_id;
                 $domain->descr = $d->dom_descr;
                 $domain->ip = $d->oscars_ip;
-                $domain->topo_id = $d->topo_domain_id;
+                $domain->topo_id = $d->topology_id;
                 $domain->urns = MeicanTopology::getURNs($d->dom_id);
 
                 $domains_to_body[] = $domain;
@@ -75,27 +74,44 @@ class urns extends Controller {
         $this->render();
     }
     
-    public function import_option() {
-        $dom = new domain_info();
-        $allDomains = $dom->fetch();
-
-        if ($allDomains) {
-            $domains = array();
-
-            foreach ($allDomains as $d) {
-                $domain = new stdClass();
-                $domain->id = $d->dom_id;
-                $domain->descr = $d->dom_descr;
-                $domain->oscars_ip = $d->oscars_ip;
-                $domain->topo_domain_id = $d->topo_domain_id;
-
-                $domains[] = $domain;
-            }
-
-            $this->setArgsToBody($domains);
+    public function add_manual($dom_id_array) {
+        $domId = NULL;
+        if (array_key_exists('dom_id', $dom_id_array)) {
+            $domId = $dom_id_array['dom_id'];
+        } else {
+            $this->setFlash(_("Invalid index"), "fatal");
+            $this->show();
+            return;
         }
         
-        $this->setAction('import_option');
+        $dom = new domain_info();
+        $dom->dom_id = $domId;
+        $domain = $dom->fetch();
+
+        $networks = MeicanTopology::getNetworks($domId);
+        
+        $args = new stdClass();
+        $args->networks = $networks;
+        $args->domain = $domain[0];
+        $this->setArgsToBody($args);
+        
+        $domains_to_js = array();
+        $dom_to_js = new stdClass();
+        $dom_to_js->id = $domId;
+        $dom_to_js->topo_urns = NULL;
+        $dom_to_js->networks = $networks;
+        $domains_to_js[] = $dom_to_js;
+
+        $this->setArgsToScript(array(
+            "fillMessage" => _("Please fill in all the fields"),
+            "confirmMessage" => _("Save modifications?"),
+            "domains" => $domains_to_js
+        ));
+        
+        $this->addScript('urns');
+        $this->setInlineScript('urns_add_manual');
+        
+        $this->setAction('add_manual');
         $this->render();
     }
     
@@ -112,19 +128,21 @@ class urns extends Controller {
         $dom = new domain_info();
         $dom->dom_id = $domId;
         $domain = $dom->fetch();
-
+        
         $urns = MeicanTopology::getURNTopology($domId);
+        if (!$urns) {
+            $this->setFlash(_("Error to import topology"), "error");
+            $this->show();
+            return;
+        }
 
         $networks = MeicanTopology::getNetworks($domId);
         
         $args = new stdClass();
         $args->urns = $urns;
         $args->networks = $networks;
-        
-        $dom = new stdClass();
-        $dom->id = $domain[0]->dom_id;
-        $dom->descr = $domain[0]->dom_descr;
-        $args->domain = $dom;
+        $args->domain = $domain[0];
+        $this->setArgsToBody($args);
         
         $domains_to_js = array();
         $dom_to_js = new stdClass();
@@ -132,12 +150,6 @@ class urns extends Controller {
         $dom_to_js->topo_urns = NULL;
         $dom_to_js->networks = $networks;
         $domains_to_js[] = $dom_to_js;
-        
-        if ($urns)
-            $this->setArgsToBody($args);
-        else {
-            $this->setFlash("deu pau");
-        }
 
         $this->setArgsToScript(array(
             "fillMessage" => _("Please fill in all the fields"),

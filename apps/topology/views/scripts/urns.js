@@ -66,6 +66,45 @@ function getNetworksFromDomain(domain_id) {
     return networks;
 }
 
+function newURNLine(dom_id) {
+    $('#urn_table' + dom_id + ' tbody tr:last').after('<tr id="newline' + pos + '"/>');
+
+    var columns = '<td class="edit"><img class="edit" alt="clear" border="0" id="delete' + pos + '" src="layouts/img/clear.png"/></td>';
+    columns += '<td><select id="network' + pos + '"/></td>';
+    columns += '<td><select id="device' + pos + '" style="display:none"/></td>';
+    columns += '<td><input type="text" size="3" id="port' + pos + '"/></td>';
+    columns += '<td><input type="text" size="50" id="name' + pos + '"/></td>';
+    columns += '<td><input type="text" size="10" id="vlan' + pos + '"/></td>';
+    columns += '<td><input type="text" size="10" id="max_capacity' + pos + '"/></td>';
+    columns += '<td><input type="text" size="10" id="min_capacity' + pos + '"/></td>';
+    columns += '<td><input type="text" size="10" id="granularity' + pos + '"/></td>';
+    $('#newline' + pos).append(columns);
+    
+    fillSelectBox("#network" + pos, getNetworksFromDomain(dom_id));
+    $('#network' + pos).change(function() {
+        changeNetworkURN(dom_id, this);
+    });
+    
+    $("#delete" + pos).click(function() {
+        var replaceId = this.id.replace(/delete/, "");
+        validArray[replaceId] = false;
+        newCont--;
+        if (!newCont && !isEditingURN) {
+            $('#save_button').hide();
+            $('#cancel_button').hide();
+        }
+        replaceId = "#" + this.id.replace(/delete/, "newline");
+        $(replaceId).remove();
+    });
+
+    $('#save_button').show();
+    $('#cancel_button').show();
+    
+    validArray[pos] = true;
+    newCont++;
+    pos++;
+}
+
 function fillURNLine(dom_id, urn_id) {
     $('#urn_table' + dom_id + ' tbody tr:last').after('<tr id="newline' + pos + '"/>');
 
@@ -270,7 +309,7 @@ function saveURN() {
     if (newCont) {
         // verifica se todos os select box estao preenchidos
         for (i=0; i < pos; i++) {
-            if ( (validArray[i]) && ((!isImporting && ($('#urn'+i).val() == -1)) || ($('#network'+i).val() == -1) || ($('#device'+i).val() == -1)) ) {
+            if ( (validArray[i]) && ((!(isImporting || isManual) && ($('#urn'+i).val() == -1)) || ($('#network'+i).val() == -1) || ($('#device'+i).val() == -1)) ) {
                 setFlash(fillMessage, "warning");
                 return;
             }
@@ -279,7 +318,7 @@ function saveURN() {
         // verifica se nenhum URN foi selecionado mais de uma vez
         for (i=0; i < pos; i++) {
             for (var j=0; j < pos; j++) {
-                if (!isImporting && validArray[i] && (i != j) && ($("#urn"+i).val() == $("#urn"+j).val()) ) {
+                if (!(isImporting || isManual) && validArray[i] && (i != j) && ($("#urn"+i).val() == $("#urn"+j).val()) ) {
                     setFlash(duplicateMessage, "error");
                     return;
                 }
@@ -295,8 +334,19 @@ function saveURN() {
                 var urn = null;
                 
                 if (isImporting) {
+                    // se estiver importando, puxa informações do vetor urns_to_import (variável vem do PHP)
                     urn = urns_to_import[i];
+                } else if (isManual) {
+                    // se estiver adicionando manualmente, puxa informações dos inputs (informado pelo usuário)
+                    urn = new Object();
+                    urn.port = $("#port"+i).val();
+                    urn.vlan = $("#vlan"+i).val();
+                    urn.name = $("#name"+i).val();
+                    urn.max_capacity = $("#max_capacity"+i).val();
+                    urn.min_capacity = $("#min_capacity"+i).val();
+                    urn.granularity = $("#granularity"+i).val();
                 } else {
+                    // senão, puxa informações do vetor lido (variável carregada por ajax)
                     var dom_id = $('#network' + i).parent().parent().parent().parent().attr("id").replace(/urn_table/, ""); // id do domínio
                     urn = getURN(dom_id, $('#urn'+i).val());
                 }
@@ -346,5 +396,5 @@ function deleteURN(urnId) {
 function deleteURNLine(lineNr) {
     validArray[lineNr] = false;
     newCont--;
-    $("#line" + lineNr).remove();
+    $("#newline" + lineNr).remove();
 }

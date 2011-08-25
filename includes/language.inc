@@ -1,5 +1,5 @@
 <?php
-include_once 'framework.conf.php';
+include_once 'meican.conf.php';
 include_once 'includes/cookies.inc';
 include_once 'includes/common.inc';
 

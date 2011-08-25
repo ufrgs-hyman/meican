@@ -1,6 +1,6 @@
 <?php
 
-defined ('__FRAMEWORK') or die ("Invalid access.");
+defined ('__MEICAN') or die ("Invalid access.");
 
 include_once 'libs/controller.php';
 
@@ -54,14 +54,12 @@ class domains extends Controller {
 
     public function add() {
         $dom_descr = Common::POST("dom_descr");
-        $oscars_ip = Common::POST("oscars_ip");
-        $topology_id = Common::POST("topology_id");
 
-        if ($dom_descr && $oscars_ip && $topology_id) {
+        if ($dom_descr) {
             $domain = new domain_info();
             $domain->dom_descr = $dom_descr;
-            $domain->oscars_ip = $oscars_ip;
-            $domain->topology_id = $topology_id;
+            $domain->oscars_ip = Common::POST("oscars_ip");
+            $domain->topology_id = Common::POST("topology_id");
             $domain->ode_ip = Common::POST("ode_ip");
             $domain->ode_wsdl_path = Common::POST("ode_wsdl_path");
 

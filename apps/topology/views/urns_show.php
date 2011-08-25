@@ -12,10 +12,15 @@ $hasUrn = FALSE;
     <?php foreach ($domains as $dom): ?>
     <div id="domain<?php echo $dom->id; ?>">                
         
-        <?php if ($dom->id==1): ?>
+        <?php if ($dom->urns): ?>
             <h2><img id="collapseExpand<?php echo $dom->id ?>" src="layouts/img/minus.gif" onclick="WPToggle('#collapsableUrns<?php echo $dom->id ?>', '#collapseExpand<?php echo $dom->id ?>')"/>
                 &nbsp;
-            <?php echo _("Domain")." $dom->descr $dom->topo_id"; ?></h2>
+            <?php
+                $text = _("Domain");
+                $text .= ($dom->topo_id) ? " $dom->descr - $dom->topo_id" : " $dom->descr";
+                echo $text;
+            ?>
+            </h2>
             <div id="collapsableUrns<?php echo $dom->id ?>">                
                 <?php 
                     $hasUrn = TRUE;
@@ -24,12 +29,19 @@ $hasUrn = FALSE;
             </div>
                  
         <?php else: ?>
-            <h2><?php echo _("Domain")." $dom->descr $dom->topo_id"; ?></h2>
+            <h2>
+            <?php
+                $text = _("Domain");
+                $text .= ($dom->topo_id) ? " $dom->descr - $dom->topo_id" : " $dom->descr";
+                echo $text;
+            ?>
+            </h2>
             <div style="border: 1px solid black; padding-bottom: 50px; text-indent: 10px">
                 <?php     
                     $args = new stdClass();
                     $args->message = _("No URN in this domain, click the button below to import topology from IP address")." $dom->ip";
-                    $args->link = array("action" => "import", "param" => "dom_id:$dom->id");
+                    $args->import_link = array("action" => "import", "param" => "dom_id:$dom->id");
+                    $args->add_link = array("action" => "add_manual", "param" => "dom_id:$dom->id");
                     $this->addElement("empty_urn", $args);
                 ?>
             </div>

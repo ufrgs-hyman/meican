@@ -1,12 +1,16 @@
 <?php
 
-defined ('__FRAMEWORK') or die ("Invalid access.");
+defined ('__MEICAN') or die ("Invalid access.");
 
 include_once 'libs/controller.php';
 
+include_once 'apps/topology/models/topology.inc';
+include_once 'apps/topology/models/domain_info.inc';
 include_once 'apps/topology/models/device_info.inc';
 include_once 'apps/topology/models/network_info.inc';
+
 include_once 'apps/topology/controllers/networks.php';
+include_once 'apps/topology/controllers/domains.php';
 
 include_once 'libs/acl_loader.inc';
 
@@ -38,6 +42,16 @@ class devices extends Controller {
                 $device->latitude = ($d->dev_lat) ? $d->dev_lat : "-";
                 $device->longitude = ($d->dev_lng) ? $d->dev_lng : "-";
                 $device->node_id = $d->node_id;
+                
+                $device->nr_endpoints = 0;
+                $aco = new Acos($d->dev_id,"device_info");
+                if ($aco_obj = $aco->fetch(FALSE)) {
+                    $children = $aco_obj[0]->findChildren();
+                    foreach ($children as $child) {
+                        if ($child->model == "urn_info")
+                            $device->nr_endpoints++;
+                    }
+                }
 
                 $tmp = new network_info();
                 $tmp->net_id = $d->net_id;
@@ -65,34 +79,56 @@ class devices extends Controller {
     }
 
     public function add_form() {
-        $net_info = new network_info();
-        $networks = $net_info->fetch();
+        $dom_info = new domain_info();
 
-        if ($networks) {
-            $this->setAction('add');
-            
-            $args = new stdClass();
-            $args->networks = $networks;
-            
-            $this->setArgsToBody($args);
-            
-            $this->setArgsToScript(array(
-                "flash_nameReq" => _("A name is required"),
-                "flash_ipAddrReq" => _("An IP address is required"),
-                "flash_networkReq" => _("A network is required"),
-            ));
-            
-            $this->addScript('devices');
-            
-            $this->render();
+        if ($allDomains = $dom_info->fetch()) {
+            $domains = array();
+
+            foreach ($allDomains as $dom) {
+                $domain = new stdClass();
+                $domain->id = $dom->dom_id;
+                $domain->descr = $dom->dom_descr;
+                $domain->networks = MeicanTopology::getNetworks($dom->dom_id);
+
+                if ($domain->networks)
+                    $domains[] = $domain;
+            }
+
+            if ($domains) {
+                $this->setAction('add');
+
+                $args = new stdClass();
+                $args->domains = $domains;
+
+                $this->setArgsToBody($args);
+
+                $this->setArgsToScript(array(
+                    "flash_nameReq" => _("A name is required"),
+                    "flash_ipAddrReq" => _("An IP address is required"),
+                    "flash_networkReq" => _("A network is required"),
+                    "domains" => $domains
+                ));
+
+                $this->addScript('devices');
+
+                $this->render();
+            } else {
+                /**
+                 * @todo
+                 * ao invés de redirecionar e mostrar mensagem, criar link para adicionar a rede e voltar para este form
+                 */
+                $net_cont = new networks();
+                $net_cont->setFlash(_("No network added, you should first add a network before adding a device"), "warning");
+                $net_cont->add_form();
+            }
         } else {
             /**
              * @todo
-             * ao invés de redirecionar e mostrar mensagem, criar link para adicionar a rede e voltar para este form
+             * ao invés de redirecionar e mostrar mensagem, criar link para adicionar o domínio e voltar para este form
              */
-            $net_cont = new networks();
-            $net_cont->setFlash(_("No network added, you should first add a network before adding a device"), "warning");
-            $net_cont->add_form();
+            $dom_cont = new domains();
+            $dom_cont->setFlash(_("No domain added, you should first add a domain and network before adding a device"), "warning");
+            $dom_cont->add_form();
         }
     }
 
@@ -147,29 +183,41 @@ class devices extends Controller {
             $this->show();
             return;
         }
+        
+        $dom_info = new domain_info();
 
-        $net_info = new network_info();
-        $networks = $net_info->fetch();
+        $domains = array();
+        if ($allDomains = $dom_info->fetch()) {
+            foreach ($allDomains as $dom) {
+                $domain = new stdClass();
+                $domain->id = $dom->dom_id;
+                $domain->descr = $dom->dom_descr;
+                $domain->networks = MeicanTopology::getNetworks($dom->dom_id);
 
-        if (!$networks) {
+                if ($domain->networks)
+                    $domains[] = $domain;
+            }
+        }
+
+        if (!$domains) {
             /**
              * @todo
-             * ao invés de redirecionar e mostrar mensagem, criar link para adicionar a rede e voltar para este form
+             * ao invés de redirecionar e mostrar mensagem, criar link para adicionar o domínio e voltar para este form
              */
-            $net_cont = new networks();
-            $net_cont->setFlash(_("No network added, you should first add a network before editing a device"), "warning");
-            $net_cont->add_form();
-            return;
+            $dom_cont = new domains();
+            $dom_cont->setFlash(_("No domain added, you should first add a domain and network before adding a device"), "warning");
+            $dom_cont->add_form();
         }
 
         $args = new stdClass();
         $args->device = $device[0];
-        $args->networks = $networks;
+        $args->domains = $domains;
 
         $this->setArgsToScript(array(
             "flash_nameReq" => _("A name is required"),
             "flash_ipAddrReq" => _("An IP address is required"),
             "flash_networkReq" => _("A network is required"),
+            "domains" => $domains
         ));
 
         $this->addScript('devices');

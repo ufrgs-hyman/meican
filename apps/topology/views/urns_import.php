@@ -8,9 +8,15 @@ $domain = $this->passedArgs->domain;
 
 <h1><?php echo _("Importing topology URNs (Uniform Resource Name)"); ?></h1>
 
-<h2><?php echo _("Domain")." $domain->descr"; ?></h2>
+<h2>
+    <?php
+    $text = _("Domain");
+    $text .= ($domain->topology_id) ? " $domain->dom_descr - $domain->topology_id" : " $domain->dom_descr";
+    echo $text;
+    ?>
+</h2>
 
-<table id="urn_table<?php echo $domain->id; ?>" class="list">
+<table id="urn_table<?php echo $domain->dom_id; ?>" class="list">
 
     <thead>
         <tr>
@@ -18,7 +24,7 @@ $domain = $this->passedArgs->domain;
             <th rowspan="2"><?php echo _("Network"); ?></th>
             <th rowspan="2"><?php echo _("Device"); ?></th>
             <th rowspan="2"><?php echo _("Port"); ?></th>
-            <th rowspan="2"><?php echo _("URN value"); ?></th>
+            <th rowspan="2" style="border-right: 1px solid black"><?php echo _("URN value"); ?></th>
             <th colspan="4"><?php echo _("Link settings"); ?></th>
         </tr>
         
@@ -32,13 +38,13 @@ $domain = $this->passedArgs->domain;
 
     <tbody>
         <?php foreach ($urns as $u): ?>
-            <tr id="line<?php echo $u->id; ?>">
+            <tr id="newline<?php echo $u->id; ?>">
                 <td class="edit">
                     <img class="delete" src="layouts/img/delete.png" onclick="deleteURNLine('<?php echo $u->id; ?>');"/>
                 </td>
 
                 <td>
-                    <select id="network<?php echo $u->id; ?>" onchange="changeNetworkURN('<?php echo $domain->id; ?>', this);" >
+                    <select id="network<?php echo $u->id; ?>" onchange="changeNetworkURN('<?php echo $domain->dom_id; ?>', this);" >
                         <option value="-1"/>
                         <?php
                         $dev_found = FALSE;

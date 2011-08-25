@@ -6,3 +6,4 @@ var newCont = 0;  // contagem das URNs válidas a serem adicionadas, é o mesmo 
 var validArray = new Array(); // var que contém quais posições estão válidas, das novas URNs a serem adicionadas (se a linha foi excluída, então é inválida)
 
 var isImporting = false;  // var que informa se a topologia está sendo importada do zero (quando não há nenhuma URN no BD)
+var isManual = false;

@@ -1,8 +1,8 @@
 <?php
 $init_session = false;
-include_once 'framework.conf.php';
+include_once 'meican.conf.php';
 
-defined ('__FRAMEWORK') or die ("Invalid access.");
+defined ('__MEICAN') or die ("Invalid access.");
 
 include_once 'apps/init/controllers/login.php';
 include_once 'includes/language.inc';

@@ -19,7 +19,7 @@ class Meican_Mail {
         $params["auth"] = true;
         $params["username"] = "fanesello";
         $params["password"] = "Hookton06/10";
-        $params["debug"] = true;
+        $params["debug"] = false;
         
         $this->mail = Mail::factory("smtp", $params);
         
@@ -30,16 +30,14 @@ class Meican_Mail {
             return TRUE;
     }
     
-    public function send($to, $body, $subject=NULL, $headers=NULL) {
+    public function send($to, $body, $subject=NULL, $headers=array()) {
 
-        if (!$headers) {
-            $headers = array();
-            $headers["From"] = "MEICAN <qame@inf.ufrgs.br>";
-            $headers["To"] = "$to <$to>";
-            $headers["Subject"] = ($subject) ? $subject : _("No subject");
-        }
+        $tmp_headers = array();
+        $tmp_headers["From"] = isset($headers["From"]) ? $headers["From"] : "MEICAN <qame@inf.ufrgs.br>";
+        $tmp_headers["To"] = isset($headers["To"]) ? $headers["To"] : "$to <$to>";
+        $tmp_headers["Subject"] = isset($headers["Subject"]) ? $headers["Subject"] : ($subject) ? $subject : _("No subject");
 
-        $ret = $this->mail->send($to, $headers, $body);
+        $ret = $this->mail->send($to, $tmp_headers, $body);
 
         if (PEAR::isError($ret)) {
             Framework::debug($ret->getMessage() . ", " . $ret->getDebugInfo());

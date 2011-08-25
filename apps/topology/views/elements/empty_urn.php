@@ -2,7 +2,8 @@
 
 $title = isset($argsToElement->title) ? $argsToElement->title : NULL;
 $message = isset($argsToElement->message) ? $argsToElement->message : NULL;
-$link = isset($argsToElement->link) ? $this->buildLink($argsToElement->link) : $this->buildLink(array('action' => 'add_form'));
+$import_link = isset($argsToElement->import_link) ? $this->buildLink($argsToElement->import_link) : $this->buildLink(array('action' => 'add_form'));
+$add_link = $this->buildLink($argsToElement->add_link);
 
 ?>
 
@@ -17,5 +18,6 @@ $link = isset($argsToElement->link) ? $this->buildLink($argsToElement->link) : $
 <br/>
 
 <div class="controls">
-    <input class="add_new" type="button" style="float:right" value="<?php echo _('Add'); ?>" onclick="redir('<?php echo $link; ?>');"/>
+    <input class="add_new" type="button" style="float:right" value="<?php echo _('Add manual'); ?>" onclick="redir('<?php echo $add_link; ?>');"/>
+    <input class="add_new" type="button" style="float:right" value="<?php echo _('Import topology'); ?>" onclick="redir('<?php echo $import_link; ?>');"/>
 </div>

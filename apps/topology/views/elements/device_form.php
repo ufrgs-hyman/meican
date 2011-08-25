@@ -1,6 +1,6 @@
 <?php
 
-$networks = isset($argsToElement->networks) ? $argsToElement->networks : NULL;
+$domains = isset($argsToElement->domains) ? $argsToElement->domains : NULL;
 $device = isset($argsToElement->device) ? $argsToElement->device : NULL;
 
 ?>
@@ -78,27 +78,68 @@ $device = isset($argsToElement->device) ? $argsToElement->device : NULL;
             <input type="text" name="node_id" value="<?php if ($device) echo $device->node_id; ?>"/>
         </td>
     </tr>
+    
+    <tr>
+        <th>
+            <?php echo _("Select a domain"); ?>:
+        </th>
+        <td>
+            <select id="dev_domain" onchange="dev_changeDomain(this)">
+                <option value="-1"/>
+                <?php
+                if ($device) {
+                    $net_found = FALSE;
+                    foreach ($domains as $d) {
+                        // se não encontrou a rede do dispositivo, procura por ela
+                        if (!$net_found) {
+                            foreach ($d->networks as $n) {
+                                if ($n->id == $device->net_id) {
+                                    $dom_id = $d->id;
+                                    $net_id = $n->id;
+                                    $networks = $d->networks;
+                                    $net_found = TRUE;
+                                    break;
+                                }
+                            }
+                        }
+                            
+                        if ($net_found && ($dom_id == $d->id)): ?>
+                            <option selected="true" value="<?php echo $d->id; ?>"><?php echo $d->descr; ?></option>
+                        <?php else: ?>
+                            <option value="<?php echo $d->id; ?>"><?php echo $d->descr; ?></option>
+                        <?php endif;
+                    }
+                } else
+                    foreach ($domains as $d)
+                        echo "<option value='$d->id'>$d->descr</option>";
+                ?>
+            </select>
+
+            <a href="<?php echo $this->buildLink(array("controller" => "domains", "action" => "add_form")); ?>">
+                <?php echo _("Add domain"); ?>
+            </a>
+        </td>
+    </tr>
 
     <tr>
         <th>
             <?php echo _("Select a network"); ?>:
         </th>
         <td>
-            <select name="network" id="dev_network">
-                <option value="-1"></option>
-                <?php
-                if ($device) {
-                    foreach ($networks as $n) {
-                        if ($device->net_id == $n->net_id)
-                            echo "<option selected='true' value='$n->net_id'>$n->net_descr</option>";
-                        else
-                            echo "<option value='$n->net_id'>$n->net_descr</option>";
-                    }
-                } else
-                    foreach ($networks as $n)
-                        echo "<option value='$n->net_id'>$n->net_descr</option>";
-                ?>
-            </select>
+            <?php if ($device && $net_found): ?>
+                <select name="network" id="dev_network">
+                    <option value="-1"/>
+                    <?php foreach ($networks as $n): ?>
+                        <?php if ($n->id == $net_id): ?>
+                            <option selected="true" value="<?php echo $n->id; ?>"><?php echo $n->name; ?></option>
+                        <?php else: ?>
+                            <option value="<?php echo $n->id; ?>"><?php echo $n->name; ?></option>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </select>
+            <?php else: ?>
+                <select name="network" id="dev_network" style="display: none"/>
+            <?php endif; ?>
 
             <a href="<?php echo $this->buildLink(array("controller" => "networks", "action" => "add_form")); ?>">
                 <?php echo _("Add network"); ?>

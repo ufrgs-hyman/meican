@@ -2,7 +2,7 @@
 if ($init_session)
     session_start();
 
-@define ('__FRAMEWORK', 1);
+@define ('__MEICAN', 1);
 
 
 class DBConfig {
@@ -62,7 +62,7 @@ class Framework {
     /**
      * NÃO ALTERAR
      */
-    public static $OSCARSBridgeEPR = 'http://localhost:9090/axis2/services/OSCARSBridge?wsdl';
+    public static $OSCARSBridgeEPR = 'http://localhost::9090/axis2/services/OSCARSBridge?wsdl';
 
 
 
@@ -251,7 +251,7 @@ class Framework {
     static function debug($msg, $var=NULL) {
 
         if (Framework::$debugMode) {
-            $fileName = '/var/www/meican/log/log.txt';
+            $fileName = '/var/www/'.Framework::$systemDirName.'/log/log.txt';
 
             if (isset($var)) {
                 ob_start();

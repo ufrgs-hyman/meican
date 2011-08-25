@@ -3,7 +3,7 @@
 <?php
     echo date("Y M j - H:i:s");
     $init_session = false;
-    include_once 'framework.conf.php';
+    include_once 'meican.conf.php';
     include_once 'libs/database.inc';
 
     $appClass = $argv[1];
