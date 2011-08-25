@@ -1,11 +1,16 @@
 #!/bin/bash
+host="localhost"
+password="futurarnp"
+user="root"
+database="meican";
+
 case "$1" in
   data)
     cd data
     for arq in *.sql
     do
       echo "Populating table $arq";
-      mysql --user=root --password="futurarnp" --host=localhost -Dmeican < $arq;
+      mysql --user=$user --password=$password --host=$host -D$database < $arq;
     done
     cd ..
     ;;
@@ -14,25 +19,25 @@ case "$1" in
     for arq in *.sql
     do
       echo "Creating table $arq";
-      mysql --user=root --password="futurarnp" --host=localhost -Dmeican < $arq;
+      mysql --user=$user --password=$password --host=$host -D$database < $arq;
     done
     cd ..
     ;;
   *)
     echo "Deleting current database...";
-    mysql --user=root --password="futurarnp" --host=localhost -Dmeican < meican.sql;
+    mysql --user=$user --password=$password --host=$host -D$database < $database.sql;
     cd structure
     for arq in *.sql
     do
       echo "Creating table $arq";
-      mysql --user=root --password="futurarnp" --host=localhost -Dmeican < $arq;
+      mysql --user=$user --password=$password --host=$host -D$database < $arq;
     done
     cd ..
     cd data
     for arq in *.sql
     do
       echo "Populating table $arq";
-      mysql --user=root --password="futurarnp" --host=localhost -Dmeican < $arq;
+      mysql --user=$user --password=$password --host=$host -D$database < $arq;
     done
     cd ..
     ;;
