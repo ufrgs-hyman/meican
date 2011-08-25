@@ -32,6 +32,7 @@ class flows extends Controller {
         $os = new OSCARSReservation();
         $os->setOscarsUrl("200.132.1.28:8085");
         $os->getUrns();
+        
         Framework::debug("urns", $os->urns);
 
         $flow_info = new flow_info();

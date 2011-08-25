@@ -29,12 +29,6 @@ class reservations extends Controller {
     }
 
     public function show() {
-
-        $os = new OSCARSReservation();
-        $os->setOscarsUrl("200.132.1.28:8085");
-        $os->getUrns();
-        Framework::debug("urns", $os->urns);
-
         
         // inicializa variáveis da sessão do wizard
         Common::destroySessionVariable('res_name');

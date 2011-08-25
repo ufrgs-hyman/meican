@@ -31,6 +31,7 @@ class AclLoader extends Tree_Model {
         if (!$acl_ses || $reload) {
             $this->acl = $this->reloadACL();
             Common::setSessionVariable('acl', $this->acl);
+            Framework::debug("acl tree",$this->acl);
             
         }
         else $this->acl = $acl_ses;
@@ -203,7 +204,7 @@ class AclLoader extends Tree_Model {
 
     }
     function getAllowedPKey($right, $model) {
-
+        //vetor de acos do modelo que o usuario tem acesso
         $acos = $this->acl->{$right};
        
 
@@ -211,6 +212,7 @@ class AclLoader extends Tree_Model {
             $strAcos = implode(',', $acos);
 
             $acos = new acos();
+            //retorna os objetos (obj_id) que o usuário possui acesso
             $result = $acos->getAcoGroupByModel($strAcos, $model);
 
             unset($obj); //array com os ids do modelo que o usuário
@@ -228,7 +230,7 @@ class AclLoader extends Tree_Model {
 
     public function checkACL($right, $model, $id = NULL) {
 
-        $acos = $this->acl->$right;
+        $acos = $this->acl->{$right};
 
         $recurso = new $model;
         $pk = $recurso->getPrimaryKey();
@@ -238,17 +240,33 @@ class AclLoader extends Tree_Model {
 
         //debug($restr);
 
-        if ($restr) { //se não retornar nada, não possui acesso a nada
+        if ($restr) { //se não retornar nada, não possui acesso a nenhum ente já instanciado
 
-            if ($id) {
-                if (array_search($id, $restr) === FALSE)
-                    return FALSE;
-                else return TRUE;
+            if ($id) { //se tem o id especificado, deve estar especificado
+                
+                if (array_search($id, $restr)) //olhar esse retorno do array search
+                    return true;
+                else return false;
 
             } else return TRUE;
-        } else return FALSE;
-    } // da checkACL
 
+        } else { // NÃO possui right a nenhum ente já instanciado do model especificado
+
+            if ($id) //se possui $id especificado não procura pelo VOID, retorna falso direto
+                return FALSE;
+            
+            else { //id nao especificado, irá procurar pelo VOID
+
+                    //entes voids: obj_id = NULL, a presença de um ente void
+                    //em determinado modelo discrimina os direitos default do usuário
+                    //sobre aquele modelo (sem especificar o id)
+                    $void = $this->getVoid($right, $model);
+                    if ($void) //possui acesso ao ente void, logo possui right sobre aquele model
+                        return TRUE;
+                    else return FALSE;
+        }
+    } // da checkACL
+    }
 } // da classe
 
 ?>
