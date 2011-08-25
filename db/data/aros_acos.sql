@@ -22,7 +22,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Extraindo dados da tabela `aros_acos`
 --
-
+truncate TABLE `aros_acos`;
 INSERT INTO `aros_acos` (`perm_id`, `aro_id`, `aco_id`, `model`, `create`, `read`, `update`, `delete`) VALUES
 (1, 1, 1, NULL, 'deny', 'deny', 'deny', 'deny'),
-(2, 1, 1, NULL, 'allow', 'allow', 'allow', 'allow');
+(2, 2, 1, NULL, 'allow', 'allow', 'allow', 'allow');

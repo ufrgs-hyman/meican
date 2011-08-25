@@ -22,6 +22,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Extraindo dados da tabela `group_info`
 --
-
+truncate TABLE `group_info`;
 INSERT INTO `group_info` (`grp_id`, `grp_descr`) VALUES
 (1, 'Master Group');

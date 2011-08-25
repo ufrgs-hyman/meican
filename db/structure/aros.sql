@@ -28,11 +28,11 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 DROP TABLE IF EXISTS `aros`;
 CREATE TABLE IF NOT EXISTS `aros` (
   `aro_id` int(11) NOT NULL AUTO_INCREMENT,
-  `obj_id` int(11) NOT NULL,
+  `obj_id` int(11) DEFAULT NULL,
   `model` char(16) NOT NULL,
   `lft` int(11) NOT NULL,
   `rgt` int(11) NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`aro_id`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

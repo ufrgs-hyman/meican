@@ -22,6 +22,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Extraindo dados da tabela `meican_info`
 --
-
+truncate TABLE `meican_info`;
 INSERT INTO `meican_info` (`local_domain`, `meican_id`, `meican_descr`, `meican_ip`, `meican_dir_name`) VALUES
 (1, 1, 'MEICAN Local', 'localhost', 'meican');

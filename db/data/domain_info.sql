@@ -22,7 +22,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Extraindo dados da tabela `domain_info`
 --
-
+truncate TABLE `domain_info`;
 INSERT INTO `domain_info` (`dom_id`, `dom_descr`, `oscars_ip`, `topology_id`, `ode_ip`, `ode_wsdl_path`) VALUES
 (1, 'UFRGS', '200.132.1.28:8085', 'oscars5.ufrgs.br', '', ''),
 (2, 'INF', '200.132.1.28:8080', 'oscars2.cipo.rnp.br', '', ''),

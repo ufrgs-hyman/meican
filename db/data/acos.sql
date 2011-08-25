@@ -22,7 +22,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Extraindo dados da tabela `acos`
 --
-
+truncate TABLE `acos`;
 INSERT INTO `acos` (`aco_id`, `obj_id`, `model`, `lft`, `rgt`, `parent_id`) VALUES
 (1, NULL, 'root', 1, 24, NULL),
 (2, NULL, 'topology', 2, 13, 1),
@@ -35,4 +35,4 @@ INSERT INTO `acos` (`aco_id`, `obj_id`, `model`, `lft`, `rgt`, `parent_id`) VALU
 (9, NULL, 'group_info', 15, 18, 8),
 (10, NULL, 'user_info', 16, 17, 9),
 (11, 1, 'group_info', 19, 22, 8),
-(12, 1, 'user_info', 20, 21, 11),
+(12, 1, 'user_info', 20, 21, 11);

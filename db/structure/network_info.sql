@@ -32,4 +32,4 @@ CREATE TABLE IF NOT EXISTS `network_info` (
   `net_lat` char(10) NOT NULL,
   `net_lng` char(11) NOT NULL,
   PRIMARY KEY (`net_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;

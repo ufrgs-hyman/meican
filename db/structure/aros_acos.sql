@@ -39,4 +39,4 @@ CREATE TABLE IF NOT EXISTS `aros_acos` (
   UNIQUE KEY `aro_id` (`aro_id`,`aco_id`),
   KEY `aro_id_2` (`aro_id`),
   KEY `aco_id` (`aco_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

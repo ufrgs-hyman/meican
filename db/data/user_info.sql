@@ -22,6 +22,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Extraindo dados da tabela `user_info`
 --
-
+truncate TABLE `user_info`;
 INSERT INTO `user_info` (`usr_id`, `usr_login`, `usr_password`, `usr_name`, `usr_email`, `usr_settings`) VALUES
 (1, 'master', '202cb962ac59075b964b07152d234b70', 'Master Administrator', NULL, 'date_format=dd/mm/yyyy;language=en_US.utf8');

@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS `meican`;
+CREATE DATABASE `meican`;
+USE meican;

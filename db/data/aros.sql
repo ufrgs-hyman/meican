@@ -22,7 +22,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Extraindo dados da tabela `aros`
 --
-
+truncate TABLE `aros`;
 INSERT INTO `aros` (`aro_id`, `obj_id`, `model`, `lft`, `rgt`, `parent_id`) VALUES
-(1, 1, 'group_info', 1, 4, NULL),
-(2, 1, 'user_info', 2, 3, 1);
+(1, NULL, 'root', 1, 6, NULL),
+(2, 1, 'group_info', 2, 5, 1),
+(3, 1, 'user_info', 3, 4, 2);
