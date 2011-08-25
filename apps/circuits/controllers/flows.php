@@ -22,138 +22,132 @@ class flows extends Controller {
         $this->defaultAction = 'show';
     }
 
-    public function show() {
-        // destrói variáveis, caso clicou em flows antes de passar por reservations
-        Common::destroySessionVariable('res_name');
-        Common::destroySessionVariable('sel_flow');
-        Common::destroySessionVariable('sel_timer');
-        Common::destroySessionVariable('res_wizard');
-
-        $os = new OSCARSReservation();
-        $os->setOscarsUrl("200.132.1.28:8085");
-        $os->getUrns();
-        
-        Framework::debug("urns", $os->urns);
-
-        $flow_info = new flow_info();
-        $allFlows = $flow_info->fetch();
-
-        if ($allFlows) {
-
-            $domains = array();
-            foreach ($allFlows as $f) {
-                if (array_search($f->src_dom, $domains) === FALSE)
-                    $domains[] = $f->src_dom;
-                if (array_search($f->dst_dom, $domains) === FALSE)
-                    $domains[] = $f->dst_dom;
-            }
-
-            $urn_string_array = array();
-
-            foreach ($domains as $d) {
-                $ind = 0;
-                $urn_string_array[$d] = array();
-                foreach ($allFlows as $f) {
-                    $urn_string_array[$d][$ind] = ($d == $f->src_dom) ? $f->src_urn_string : NULL;
-                    $ind++;
-                    $urn_string_array[$d][$ind] = ($d == $f->dst_dom) ? $f->dst_urn_string : NULL;
-                    $ind++;
-                }
-            }
-
-            $urnData = array();
-            foreach ($urn_string_array as $dom_id => $urn_array) {
-                $domain = new domain_info();
-                $domain->dom_id = $dom_id;
-                $dom = $domain->fetch(FALSE);
-                $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
-
-                if ($ws = new nusoap_client($endpoint, array('cache_wsdl' => 0))) {
-                    if ($temp = $ws->call('getURNsInfo', array('urn_string_list' => $urn_array))) {
-                            $urnData[] = $temp;
-                            continue;
-                    }
-                }
-                $urnData[] = NULL;
-            }
-                
-
-            $urnInfoMerge = array();
-            foreach ($urnData as $uD) {
-                if ($uD) {
-                foreach ($uD as $ind => $urn_str) {
-                    if ($urn_str)
-                        $urnInfoMerge[$ind] = $urn_str;
-                    elseif (!isset($urnInfoMerge[$ind]))
-                        $urnInfoMerge[$ind] = NULL;
-                }
-                }
-            }
-
-            //Framework::debug("urn data",$urnInfoMerge);
-
-            $flows = array();
-            $ind = 0;
-
-            foreach ($allFlows as $f) {
-                $flow = new stdClass();
-                $flow->id = $f->flw_id;
-                $flow->name = $f->flw_name;
-                $flow->bandwidth = $f->bandwidth;
-
-                $domain = new domain_info();
-                $domain->dom_id = $f->src_dom;
-                $res_dom = $domain->fetch(FALSE);
-
-                $flow->source->domain = $res_dom[0]->dom_descr;
-                $flow->source->vlan = $f->src_vlan;
-
-                if ($urnInfoMerge[$ind]) {
-                    $flow->source->network = $urnInfoMerge[$ind]['net_descr'];
-                    $flow->source->device = $urnInfoMerge[$ind]['dev_descr'];
-                    $flow->source->port = $urnInfoMerge[$ind]['port_number'];
-                } else
-                    $flow->source->urn_string = $f->src_urn_string;
-
-                $ind++;
-
-                $domain = new domain_info();
-                $domain->dom_id = $f->dst_dom;
-                $res_dom = $domain->fetch(FALSE);
-
-                $flow->dest->domain = $res_dom[0]->dom_descr;
-                $flow->dest->vlan = $f->dst_vlan;
-
-                if ($urnInfoMerge[$ind]) {
-                    $flow->dest->network = $urnInfoMerge[$ind]['net_descr'];
-                    $flow->dest->device = $urnInfoMerge[$ind]['dev_descr'];
-                    $flow->dest->port = $urnInfoMerge[$ind]['port_number'];
-                } else
-                    $flow->dest->urn_string = $f->dst_urn_string;
-
-                $ind++;
-
-                $flow->editable = TRUE;
-                $flow->deletable = TRUE;
-                $flow->selectable = FALSE;
-
-                $flows[] = $flow;
-            }
-            $this->setAction('show');
-
-            $this->setArgsToBody($flows);
-        } else {
-            $this->setAction('empty');
-
-            $args = new stdClass();
-            $args->title = _("Flows");
-            $args->message = _("You have no flow, click the button below to create a new one");
-            $args->link = array('app' => 'circuits', 'controller' => 'flows', 'action' => 'add_options');
-            $this->setArgsToBody($args);
-        }
-
-        $this->render();
-    }
+//    public function show() {
+//        // destrói variáveis, caso clicou em flows antes de passar por reservations
+//        Common::destroySessionVariable('res_name');
+//        Common::destroySessionVariable('sel_flow');
+//        Common::destroySessionVariable('sel_timer');
+//        Common::destroySessionVariable('res_wizard');
+//
+//        $flow_info = new flow_info();
+//        $allFlows = $flow_info->fetch();
+//
+//        if ($allFlows) {
+//
+//            $domains = array();
+//            foreach ($allFlows as $f) {
+//                if (array_search($f->src_dom, $domains) === FALSE)
+//                    $domains[] = $f->src_dom;
+//                if (array_search($f->dst_dom, $domains) === FALSE)
+//                    $domains[] = $f->dst_dom;
+//            }
+//
+//            $urn_string_array = array();
+//
+//            foreach ($domains as $d) {
+//                $ind = 0;
+//                $urn_string_array[$d] = array();
+//                foreach ($allFlows as $f) {
+//                    $urn_string_array[$d][$ind] = ($d == $f->src_dom) ? $f->src_urn_string : NULL;
+//                    $ind++;
+//                    $urn_string_array[$d][$ind] = ($d == $f->dst_dom) ? $f->dst_urn_string : NULL;
+//                    $ind++;
+//                }
+//            }
+//
+//            $urnData = array();
+//            foreach ($urn_string_array as $dom_id => $urn_array) {
+//                $domain = new domain_info();
+//                $domain->dom_id = $dom_id;
+//                $dom = $domain->fetch(FALSE);
+//                $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
+//
+//                if ($ws = new nusoap_client($endpoint, array('cache_wsdl' => 0))) {
+//                    if ($temp = $ws->call('getURNsInfo', array('urn_string_list' => $urn_array))) {
+//                            $urnData[] = $temp;
+//                            continue;
+//                    }
+//                }
+//                $urnData[] = NULL;
+//            }
+//
+//
+//            $urnInfoMerge = array();
+//            foreach ($urnData as $uD) {
+//                if ($uD) {
+//                foreach ($uD as $ind => $urn_str) {
+//                    if ($urn_str)
+//                        $urnInfoMerge[$ind] = $urn_str;
+//                    elseif (!isset($urnInfoMerge[$ind]))
+//                        $urnInfoMerge[$ind] = NULL;
+//                }
+//                }
+//            }
+//
+//            //Framework::debug("urn data",$urnInfoMerge);
+//
+//            $flows = array();
+//            $ind = 0;
+//
+//            foreach ($allFlows as $f) {
+//                $flow = new stdClass();
+//                $flow->id = $f->flw_id;
+//                $flow->name = $f->flw_name;
+//                $flow->bandwidth = $f->bandwidth;
+//
+//                $domain = new domain_info();
+//                $domain->dom_id = $f->src_dom;
+//                $res_dom = $domain->fetch(FALSE);
+//
+//                $flow->source->domain = $res_dom[0]->dom_descr;
+//                $flow->source->vlan = $f->src_vlan;
+//
+//                if ($urnInfoMerge[$ind]) {
+//                    $flow->source->network = $urnInfoMerge[$ind]['net_descr'];
+//                    $flow->source->device = $urnInfoMerge[$ind]['dev_descr'];
+//                    $flow->source->port = $urnInfoMerge[$ind]['port_number'];
+//                } else
+//                    $flow->source->urn_string = $f->src_urn_string;
+//
+//                $ind++;
+//
+//                $domain = new domain_info();
+//                $domain->dom_id = $f->dst_dom;
+//                $res_dom = $domain->fetch(FALSE);
+//
+//                $flow->dest->domain = $res_dom[0]->dom_descr;
+//                $flow->dest->vlan = $f->dst_vlan;
+//
+//                if ($urnInfoMerge[$ind]) {
+//                    $flow->dest->network = $urnInfoMerge[$ind]['net_descr'];
+//                    $flow->dest->device = $urnInfoMerge[$ind]['dev_descr'];
+//                    $flow->dest->port = $urnInfoMerge[$ind]['port_number'];
+//                } else
+//                    $flow->dest->urn_string = $f->dst_urn_string;
+//
+//                $ind++;
+//
+//                $flow->editable = TRUE;
+//                $flow->deletable = TRUE;
+//                $flow->selectable = FALSE;
+//
+//                $flows[] = $flow;
+//            }
+//            $this->setAction('show');
+//
+//            $this->setArgsToBody($flows);
+//        } else {
+//            $this->setAction('empty');
+//
+//            $args = new stdClass();
+//            $args->title = _("Flows");
+//            $args->message = _("You have no flow, click the button below to create a new one");
+//            $args->link = array('app' => 'circuits', 'controller' => 'flows', 'action' => 'add_options');
+//            $this->setArgsToBody($args);
+//        }
+//
+//        $this->render();
+//    }
 
     public function add_form() {
         $min = 100;

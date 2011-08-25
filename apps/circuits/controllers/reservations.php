@@ -37,6 +37,12 @@ class reservations extends Controller {
         Common::destroySessionVariable('res_wizard');
         Common::destroySessionVariable('res_begin_timestamp');
 
+         $os = new OSCARSReservation();
+        $os->setOscarsUrl("200.132.1.28:8085");
+        $os->getUrns();
+
+        Framework::debug("urns", $os->urns);
+
         $res_info = new reservation_info();
         $allReservations = $res_info->fetch();
 
