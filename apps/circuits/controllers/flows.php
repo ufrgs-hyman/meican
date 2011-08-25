@@ -12,6 +12,7 @@ include_once 'apps/topology/models/topology.inc';
 include_once 'apps/topology/models/meican_info.inc';
 
 require_once 'includes/nuSOAP/lib/nusoap.php';
+include_once 'apps/circuits/models/oscars_reservation.inc';
 
 class flows extends Controller {
 
@@ -27,6 +28,11 @@ class flows extends Controller {
         Common::destroySessionVariable('sel_flow');
         Common::destroySessionVariable('sel_timer');
         Common::destroySessionVariable('res_wizard');
+
+        $os = new OSCARSReservation();
+        $os->setOscarsUrl("200.132.1.28:8085");
+        $os->getUrns();
+        Framework::debug("urns", $os->urns);
 
         $flow_info = new flow_info();
         $allFlows = $flow_info->fetch();
