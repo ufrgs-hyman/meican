@@ -4,7 +4,7 @@ include_once 'libs/tree_model.inc';
 
 class Aros extends Tree_Model {
 
-     function Aros($obj_id=NULL, $model=NULL, $parent_id = NULL) {
+     function Aros($obj_id="", $model="", $parent_id = "") {
         $this->setTableName("aros");
         $this->addAttribute("aro_id","INTEGER",true,false,false);
         $this->addAttribute("obj_id","INTEGER");

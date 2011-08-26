@@ -70,7 +70,7 @@ class Common {
             }
         }
         // variável não existe ou em branco
-        return FALSE;
+        return NULL;
     }
 
     static function apc_update(){

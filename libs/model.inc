@@ -99,6 +99,7 @@ class Model {
             else
                 $sql = "SELECT * FROM `$tableName`";
         }
+        Framework::debug("fetch",$sql);
         return $this->fetchSql($sql, $tableName);
     }
 
@@ -284,11 +285,9 @@ class Model {
         $sqlNames = "";
         $sqlValues = "";
         foreach ($this->attributes as $attribute) {
-            $name = $attribute->name;
-            if ($attribute->type == "VARCHAR") {
-                $values[$name] = "'" . $values[$name] . "'";
-            }
             if ($attribute->usedInInsert) {
+                $name = $attribute->name;
+                
                 if ($isFirst) {
                     $isFirst = false;
                 } else {
@@ -298,15 +297,19 @@ class Model {
                 
                 $sqlNames .= "`$name`";
                 
-                if ($values[$name] != "")
-                    $sqlValues .= $values[$name];
-                else
+                if ($values[$name] === NULL)
                     $sqlValues .= "NULL";
+                else {
+                    if ($attribute->type == "VARCHAR")
+                        $sqlValues .= "'".$values[$name]."'";
+                    else
+                        $sqlValues .= $values[$name];
+                }
             }
         }
         $sql = "INSERT INTO `$classname` ($sqlNames) values ($sqlValues)";
 
-        //Framework::debug('sql insert',$sql);
+        Framework::debug('sql insert',$sql);
         //se inseriu com sucesso, retorna o objeto inserido
         if ($this->querySql($sql)) {
             if ($ret = $this->fetch(FALSE))
@@ -452,16 +455,28 @@ class Model {
         }
     }
 
-    function buildWhere($implode = TRUE) {
+    function buildWhere($fields=array()) {
         $values = get_object_vars($this);
         $validInds = $this->getValidInds();
 
         if (!$validInds)
             return FALSE;
+        
+        $newValidInds = array();
+        if ($fields) {
+            foreach ($validInds as $vi) {
+                if (array_search($vi, $fields) !== FALSE) {
+                    $newValidInds[] = $vi;
+                }
+            }
+        } else
+            $newValidInds = $validInds;
 
         $whereArgs = array();
-        foreach ($validInds as $vi) {
-            if ($values[$vi]) {
+        foreach ($newValidInds as $vi) {
+            if ($values[$vi] === NULL) {
+                $whereArgs[] = "`$vi` IS NULL";
+            } elseif ($values[$vi]) {
                 if ($this->attributes[$vi]->type == "VARCHAR")
                     $values[$vi] = "\"" . $values[$vi] . "\"";
                 $whereArgs[] = "`$vi`=$values[$vi]";
@@ -469,10 +484,7 @@ class Model {
         }
 
         if ($whereArgs)
-            if ($implode)
-                return implode(' AND ', $whereArgs);
-            else
-                return $whereArgs;
+            return implode(' AND ', $whereArgs);
         else
             return FALSE;
     }

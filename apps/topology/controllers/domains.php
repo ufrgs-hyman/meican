@@ -62,12 +62,19 @@ class domains extends Controller {
             $domain->topology_id = Common::POST("topology_id");
             $domain->ode_ip = Common::POST("ode_ip");
             $domain->ode_wsdl_path = Common::POST("ode_wsdl_path");
+            
+            if ($domain->ode_ip === NULL) 
+                Framework::debug("ode null");
+            else
+                Framework::debug("ode not null");
+            
+            Framework::debug("dom",$domain);
 
             /** 
              * @todo:
              *   pesquisar embaixo de qual nodo na ACO?
              */
-            if ($domain->insert(1, "topology")) {
+            if ($domain->insert(NULL, "topology")) {
                 $this->setFlash(_("Domain")." '$domain->dom_descr' "._("added"), "success");
                 $this->show();
                 return;

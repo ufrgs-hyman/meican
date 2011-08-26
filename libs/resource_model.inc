@@ -10,12 +10,17 @@ class Resource_Model extends Model {
         $inserted_obj = parent::insert();
         
         if ($inserted_obj) {
-            //arvore de acos, nodo vai para embaixo do usuário
-            if (!$parent_id) {
+            if (($parent_id === NULL) && ($model === NULL)) {
+                //arvore de acos, nodo vai para embaixo do usuário
                 $p_id = AuthSystem::getUserId();
                 $p_aco = new Acos($p_id, 'user_info');
-            } else
+            } elseif ($model)
+                //arvore de acos, nodo vai embaixo do objeto (ou void) e modelo especificado
                 $p_aco = new Acos($parent_id, $model);
+            else {
+                Framework::debug("not enough arguments in tree model insert");
+                return FALSE;
+            }
 
             $obj = $inserted_obj;
             $pk = $obj->getPrimaryKey();

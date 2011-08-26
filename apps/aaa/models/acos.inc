@@ -4,7 +4,7 @@ include_once 'libs/tree_model.inc';
 
 class Acos extends Tree_Model {
 
-     function Acos($obj_id=NULL, $model=NULL,$parent_id=NULL) {
+     function Acos($obj_id="", $model="",$parent_id="") {
         $this->setTableName("acos");
         $this->addAttribute("aco_id","INTEGER",true,false,false);
         $this->addAttribute("obj_id","INTEGER");

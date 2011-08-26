@@ -62,8 +62,7 @@ class Framework {
     /**
      * NÃO ALTERAR
      */
-    public static $OSCARSBridgeEPR = 'http://localhost::9090/axis2/services/OSCARSBridge?wsdl';
-
+    public static $OSCARSBridgeEPR = 'http://localhost:9090/axis2/services/OSCARSBridge?wsdl';
 
 
     static function init () {

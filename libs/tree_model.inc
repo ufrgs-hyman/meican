@@ -19,10 +19,13 @@ class Tree_Model extends Model {
 
         $pk = $this->getPrimaryKey();
 
-        if ($this->{$pk})
-            $sqlQuery = "SELECT $pk,rgt FROM $tableName WHERE $pk=".$this->{$pk};
-        elseif ($this->obj_id && $this->model) {
-            $sqlQuery = "SELECT $pk,rgt FROM $tableName WHERE obj_id=$this->obj_id AND model='$this->model'";
+        $sqlQuery = "";
+        if ($this->{$pk}) {
+            $whereString = $this->buildWhere(array($pk));
+            $sqlQuery = "SELECT $pk,rgt FROM $tableName WHERE $whereString";
+        } elseif (($this->obj_id || $this->obj_id === NULL) && $this->model) {
+            $whereString = $this->buildWhere(array('obj_id','model'));
+            $sqlQuery = "SELECT $pk,rgt FROM $tableName WHERE $whereString";
         } else {
             Framework::debug('parent node param not set', $this);
             return FALSE;
@@ -30,7 +33,7 @@ class Tree_Model extends Model {
 
         $result = $this->fetchSql($sqlQuery);
 
-        unset($sqlQuery);
+        $sqlQuery = "";
         foreach ($result as $r) {
             //testa para ver se não vai ser adicionado duplicado : abaixo de determinado pai (parent_id), o conjunto de obj_id e model torna-se único
             $testeFetch = "SELECT * FROM $tableName WHERE obj_id=$child->obj_id AND model='$child->model' AND parent_id=".$r->{$pk};
