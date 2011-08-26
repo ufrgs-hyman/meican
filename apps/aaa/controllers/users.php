@@ -23,6 +23,9 @@ class users extends Controller {
         /** @todo
          *  transformar essas consultas em uma função
          */
+        $acl = new AclLoader();
+         $ok = $acl->checkACL("delete",'urn_info');
+         Framework::debug('retorno check',$ok);
 
         $usr_info = new user_info();
         $allUsers = $usr_info->fetch();

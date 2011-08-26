@@ -156,8 +156,11 @@ class Tree_Model extends Model {
         $tableName = $this->getTableName();
 
         $pk = $this->getPrimaryKey();
-        $sql = "SELECT * FROM $tableName WHERE parent_id=".$this->{$pk};
 
+        if ($this->model)
+            $sql = "SELECT * FROM $tableName WHERE parent_id=".$this->{$pk}." and model='$this->model'";
+        else $sql = "SELECT * FROM $tableName WHERE parent_id=".$this->{$pk};
+       
         return $this->fetchSql($sql, $tableName);
 
     }

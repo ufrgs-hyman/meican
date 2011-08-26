@@ -75,7 +75,7 @@ class Model {
      * @return <boolean> FALSE: no object found
      * @return <array> Object Model: objects were found
      */
-    public function fetch($useACL = false) {
+    public function fetch($useACL = true) {
         unset($allowPks);
         $tableName = $this->getTableName();
         $whereArgsString = $this->buildWhere();
@@ -99,7 +99,6 @@ class Model {
             else
                 $sql = "SELECT * FROM `$tableName`";
         }
-        Framework::debug("fetch",$sql);
         return $this->fetchSql($sql, $tableName);
     }
 

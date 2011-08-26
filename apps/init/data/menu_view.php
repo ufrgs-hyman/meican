@@ -1,5 +1,5 @@
 <?php
-include_once('includes/auth.inc');
+include_once('libs/acl_loader.inc');
 
 
 class MenuView {
@@ -61,7 +61,7 @@ class MenuView {
 //                    foreach ($right as $r)
 //                        $ok |= AuthSystem::userAbleToAccess($r);
                     }
-
+                   
                     if (!($s->right) || $ok) {
 
                         $temp->subItem[$ind2] = new SubItem();

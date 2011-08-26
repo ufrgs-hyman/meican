@@ -24,6 +24,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 truncate TABLE `aros`;
 INSERT INTO `aros` (`aro_id`, `obj_id`, `model`, `lft`, `rgt`, `parent_id`) VALUES
-(1, NULL, 'root', 1, 6, NULL),
-(2, 1, 'group_info', 2, 5, 1),
+(1, 1, 'group_info', 1, 6, NULL),
+(2, 2, 'group_info', 2, 5, 1),
 (3, 1, 'user_info', 3, 4, 2);
