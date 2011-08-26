@@ -102,7 +102,7 @@ class AclLoader extends Tree_Model {
      */
     function analisaPrioridadeIgual($listaros, $old) {
         Framework::debug("analise prioridade igual aros: ",$listaros);
-        
+
         $new = array();
         //procura na tabela aros_acos os respectivos aros
         foreach ($listaros as $a) {
@@ -139,6 +139,7 @@ class AclLoader extends Tree_Model {
 
                                 $new[$perTy][$aco_id]->model = $perm->model;
 
+
                             } else { //caso esse aco_id já tenha sido analisado nessa interação
                                 //se a permissao seja deny e aquela que estava era allow
                                 if ($perm->{$perTy} == 'deny' && $new[$perTy][$aco_id]->value == 'allow')
@@ -147,8 +148,15 @@ class AclLoader extends Tree_Model {
                             }
                         } else {  //model nao conferiu, ira procurar descendo pela arvore, mas nao adiciona no vetor new
                             //tosearch precisa ser em ordem a avaliacao
-                            $toSearch[$perTy][$level][$aco_id]->value = $perm->{$perTy};
-                            $toSearch[$perTy][$level][$aco_id]->model = $perm->model;
+
+                            if (isset($toSearch[$perTy][$level][$aco_id])){
+                                $level++;
+                                Framework::debug("vai incrementar a porquera",$level);
+                            }
+                                $toSearch[$perTy][$level][$aco_id]->value = $perm->{$perTy};
+                                $toSearch[$perTy][$level][$aco_id]->model = $perm->model;
+                                Framework::debug("models diferentes ira analisar filhos", $toSearch);
+
                         }
 
                     } else { //nao tem model definido
@@ -167,9 +175,10 @@ class AclLoader extends Tree_Model {
                                 $new[$perTy][$aco_id]->value = 'deny';
                         }
                     }
+                   
                 }  //foreach lines_aros_acos
 
-                Framework::debug("array new ",$new);
+                //Framework::debug("array new ",$new);
                 //colapsar array velho old com novo new, só vai atribuir se o novo nao estiver no velho
                 foreach ($new[$perTy] as $aco_id => $perm) {
 
@@ -178,6 +187,11 @@ class AclLoader extends Tree_Model {
                         Framework::debug("vai atribuir ao aco ",$aco_id);
                         Framework::debug("permissao ",$perm->value);
                         $old[$perTy][$aco_id] = $perm->value;
+
+                         if (isset($toSearch[$perTy][$level][$aco_id])){
+                                $level++;
+                                Framework::debug("vai incrementar a porquera",$level);
+                         }
                         $toSearch[$perTy][$level][$aco_id]->value = $perm->value;
                         //array com os nodos que forma atribuídos permissoes nessa interação
                         //e a permissao que deve ser atribuída a tais nodos
@@ -185,7 +199,7 @@ class AclLoader extends Tree_Model {
                             $toSearch[$perTy][$level][$aco_id]->model = $perm->model;
                     }
                 }
-
+                
                 $level++;
 
                 //vai atribuir aos proximos nodos filhos
@@ -203,14 +217,23 @@ class AclLoader extends Tree_Model {
 
                     foreach ($children as $c) {
                         Framework::debug("analisando filhos do aco_id ", $c->parent_id);
-                        if (!array_key_exists($c->aco_id, $new[$perTy])) {
-                            if ($toSearch[$perTy][$ind][$c->parent_id]->value == 'deny')
-                                $new[$perTy][$c->aco_id]->value = 'deny';
-                            elseif ($toSearch[$perTy][$ind][$c->parent_id]->value == 'allow')
-                                $new[$perTy][$c->aco_id]->value = 'allow';
 
-                            $tmp = $new[$perTy][$c->aco_id]->value;
-                            Framework::debug("aco_id $c->aco_id", $tmp);
+                        if (!array_key_exists($c->aco_id, $new[$perTy])) {
+
+                              if ((!$toSearch[$perTy][$ind][$c->parent_id]->model) || ($toSearch[$perTy][$ind][$c->parent_id]->model == $c->model)) {
+
+                                if ($toSearch[$perTy][$ind][$c->parent_id]->value == 'deny')
+                                    $new[$perTy][$c->aco_id]->value = 'deny';
+                                elseif ($toSearch[$perTy][$ind][$c->parent_id]->value == 'allow')
+                                    $new[$perTy][$c->aco_id]->value = 'allow';
+                            }
+                                $toSearch[$perTy][$level][$c->aco_id]->value = $toSearch[$perTy][$ind][$c->parent_id]->value;
+                                
+                                if ($toSearch[$perTy][$ind][$c->parent_id]->model)
+                                    $toSearch[$perTy][$level][$c->aco_id]->model = $toSearch[$perTy][$ind][$c->parent_id]->model;
+
+
+
                         } else {
                             if ($toSearch[$perTy][$ind][$c->parent_id]->value == 'deny' && $new[$perTy][$c->aco_id]->value == 'allow') {
                                 $new[$perTy][$c->aco_id]->value = 'deny';
@@ -225,16 +248,17 @@ class AclLoader extends Tree_Model {
                             Framework::debug("vai atribuir ao aco ",$aco_id);
                             Framework::debug("permissao ",$perm->value);
 
-
-                            $toSearch[$perTy][$level][$aco_id]->value= $perm->value;
-
-                            if ($toSearch[$perTy][$level][$c->parent_id]->model)
-                                $toSearch[$perTy][$level][$aco_id]->model = $toSearch[$perTy][$level][$c->parent_id]->model;
+                            
+//                            $toSearch[$perTy][$level][$aco_id]->value= $perm->value;
+//
+//                            if ($toSearch[$perTy][$level][$c->parent_id]->model)
+//                                $toSearch[$perTy][$level][$aco_id]->model = $toSearch[$perTy][$level][$c->parent_id]->model;
 
                             //limpa vetor do level já analisado
-                            unset($toSearch[$perTy][$ind]);
+
                         }
                     }
+                    unset($toSearch[$perTy][$ind]);
                     $level++;
 
                 } //for level
@@ -259,13 +283,13 @@ class AclLoader extends Tree_Model {
 
             $aco = new Acos();
             $aco->aco_id = $aco_id;
-            if ($val->model)
-                $aco->model = $val->model;
+
 
             $result = $aco->getImmediateNodes();
 
             foreach ($result as $val) {
                 $children[$ind]->aco_id = $val->aco_id;
+                $children[$ind]->model = $val->model;
                 $children[$ind]->parent_id = $val->parent_id;
                 $ind++;
             }
