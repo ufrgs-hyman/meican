@@ -13,10 +13,15 @@
 
 /* Tabela de disposição dos boxes iniciais */
 body {
-       background-color: #3a5879;
+       background-color: white;
+       background-image: url('img/footer.png');
+       background-position: bottom;
+       background-repeat: repeat-x;
        font-family: helvetica, arial;
-       font-size: 14px;
+       font-size: 12px;
        margin: 0px;
+       min-height: 100%;
+       height: 100%;
 }
 
 div#header {
@@ -27,6 +32,7 @@ div#header {
     clear: both;
     float: left;
     font-size: 14px;
+    background-color: #3a5879;
 }
 #header a:link, #header a:visited {
     color:white;
@@ -60,6 +66,11 @@ div#content {
     padding-bottom: 5px;
     background-color: #FFF;
     float: left;
+    margin-bottom: 25px;
+}
+
+div#footer {
+    clear: both;
 }
 
 div#main a:link, div#main a:visited {
@@ -70,7 +81,6 @@ div#main a:link, div#main a:visited {
 div#content a:hover {
         text-decoration: underline;
 }
-
 
 div#flash_box {
     min-width: 680px;
@@ -96,24 +106,12 @@ div#main {
     width: 80%;
     float: left;
     background-color: #FFF;
-    margin-left: 12px;        
+    margin-left: 12px;  
 }
+
 div#load_img {
     text-align: center;
     margin: 150px auto;
-}
-
-div#footer {
-    color: #EEEEEE;
-    font-size: 0.75em;
-    text-align: center;
-    clear: both;
-    padding: 10px;
-
-}
-div#footer a:link, div#footer a:visited{
-    color: #EEEEEE;
-    font-size: 0.8em;
 }
 
 img.logo {
@@ -246,6 +244,10 @@ input[type='submit'], input[type='button'], input[type='checkbox'] {
     margin: 10px;
 }
 
+input[type='checkbox'] {
+    vertical-align: middle;
+}
+
 input.delete{
     background-image:  url('img/remove.png') ;
     background-repeat:  no-repeat;
@@ -320,6 +322,14 @@ input.next{
 div.controls {
     width: 100%;
     min-width: 100%;
+}
+
+div.control_tab {
+    width: 100%;
+    min-width: 100%;
+    bottom: 0;
+    margin-bottom: 15px;
+    height: 40px;
 }
 
 input.back{
@@ -511,7 +521,7 @@ overflow: hidden;
 position: relative;
 background: #e0e0e0;
 background-color: #ffffff;
-color: #3A5879;
+color: #000000;
 border-top-left-radius: 10px;
 border-top-right-radius: 10px;
 }
@@ -545,7 +555,7 @@ color: #3A5879;
 }
 html ul.tabs.active, html ul.tabs li.active, html ul.tabs li.active a, html ul.tabs li.active a:hover { /*--Faz a lista ativa nao obedecer as propriedades do hover--*/
 background-color: #fff;
-color: #3A5879;
+color: #000000;
 border-bottom: 1px solid #fff; /*--faz a aba ativa parecer conectada com seu conteudo--*/
 border-top-left-radius: 10px;
 border-top-right-radius: 10px;
@@ -558,11 +568,11 @@ overflow: hidden;
 clear: both;
 float: left; width: 100%;
 background: #fff;
+min-height: 500px;
+margin-bottom: 15px;
 }
 
 .tab_container.inactive {
-border: 1px solid #999;
-border-top: none;
 overflow: hidden;
 clear: both;
 float: left; 
@@ -576,24 +586,26 @@ text-indent: 30pt;
 }
 
 div#main a.link_tab, div#main a.link_tab:visited {
-    color: #3A5879;
-    font-weight: bold;
+    color: #000000;
+    font-size: 12px;
     text-decoration: none;
 }
 div#main a.link_tab:hover, div#main a.link_tab:visited:hover {
     background-color: #ffffff;
-    color: #3A5879;
+    color: #000000;
+    font-size: 12px;
     text-decoration: none;
 }
 div#main .ui-state-disabled a.link_tab:hover:not, div#main .ui-state-disabled a.link_tab:visited:hover {
     background-color: #ffffff;
-    color: #3A5879;
+    color: #000000;
+    font-size: 12px;
     text-decoration: none;
 }
 div#main ul.tabs li.active a.link_tab, div#main ul.tabs li.active a.link_tab:visited {
     background-color: #fff;
-    color: #3A5879;
-    font-weight: bold;
+    color: #000000;
+    font-size: 12px;
     border-bottom: 1px solid #fff;
 }
 
@@ -604,7 +616,6 @@ float: left;
 list-style: none;
 height: 32px; /*--Define a altura das abas--*/
 border-bottom: 1px solid #999;
-border-left: 0.6px solid #999;
 border-top-left-radius: 10px;
 border-top-right-radius: 10px;
 }
@@ -620,14 +631,7 @@ border-top-right-radius: 10px;
 }
 
 #recurrence {
-    border: 2px solid #3A5879; 
-    top:100px; 
-    left: 50%; 
-    margin-left: -300px;
     display:none; 
-    width: 600px; 
-    position: absolute; 
-    z-index: 2; 
     background-color: white
 }
 
@@ -693,11 +697,11 @@ border-top-right-radius: 10px;
 }
 
 h1 {
-    font-size: 1.3em;
+    font-size: 14px;
 }
 
 h2 {
-    font-size: 1.1em;
+    font-size: 12px;
 }
 
 h3 {
@@ -709,11 +713,16 @@ div#main #t3 {
     color: #ffffff;
 }
 
+div#main #t1.active {
+    border-left: 1px solid #FFFFFF;
+}
+
 div#main #l3:link, div#main #l3:visited, div#main #l3:hover, div#main #l3:visited:hover {
     text-decoration: none;
-    font-weight: bold;
-    background-color: #9ACD32;
-    color: #3A5879;    
+    font-size: 12px;
+    background-color: #8FBC8F;
+    border: #8FBC8F;
+    color: #000000;    
 }
 
 .recurrence_table {

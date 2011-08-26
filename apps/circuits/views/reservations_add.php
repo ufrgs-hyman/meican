@@ -52,7 +52,7 @@ $freq_types[] = $freq;
                 <tr>
                     <td style="width:1%"></td>
                     <td class="left">
-                        <?php echo _("Select source and destination networks by clicking on the map markers with any button and then choosing an option from the pop-up menu. After selecting the endpoints, choose the device and port on the right pane."); ?>
+                        <?php echo _("<p style='text-indent: 15px'>Select source and destination networks by clicking on the map markers with any button and then choosing an option from the pop-up menu. After selecting the endpoints, choose the device and port on the right pane."); ?>
                     </td>
                     <td style="width:1%"></td>
                 </tr>                
@@ -62,7 +62,7 @@ $freq_types[] = $freq;
 
             <br/><br/>            
             
-            <div class="controls">
+            <div class="control_tab">
                 <input type="button" id="bn1" class="next" value="<?php echo _('Next'); ?>" onClick="nextTab(this);"/>
                 <input type="button" style="float:right" id="clearpath" class="clear" value="<?php echo _('Clear'); ?>" onClick="edit_clearAll();"/>
                 <input type="button" style="float:right" id="bc1" class="cancel" value="<?php echo _('Cancel'); ?>" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');"/>
@@ -70,7 +70,7 @@ $freq_types[] = $freq;
             
         </div>
         
-        <?php $this->addElement('timer_recurrence'); ?>
+        <?php //$this->addElement('timer_recurrence'); ?>
             
         <div id="tab2" style="display: none" class="cont_tab">
             <?php $this->addElement('reservation_tab4', $this->passedArgs); ?>       

@@ -2,11 +2,11 @@
 <br/>
 <div style="width:100%;">
     <table class="withoutBorder" style="width:100%">
-        <tr align="top" style="width:100%">
-            <td style="width:68%">
+        <tr style="width:100%">
+            <td style="vertical-align: top; width:68%">
                 <div id="edit_map_canvas" style="width:100%; height: 400px; min-width:300px"></div>
             </td>
-            <td style="width:32%">
+            <td style="vertical-align: top; width:32%">
                 <div id="advOptions" style="width: 100%">
                     <table style="width: 100%; border: 1px solid #3a5879">
                         <tr>
@@ -64,6 +64,12 @@
                                 <input type="hidden" id="dst_urn" name="dst_urn"/>
                             </td>
                         </tr>
+                        <tr>
+                            <td class="left" colspan="3">
+                                <hr/>
+                                <input type="checkbox" name="vlan_options" id="showVlan_checkbox" onclick="showVlanConf()"/><p style="vertical-align: middle; display:inline"><?php echo _("Show VLAN configuration"); ?></p>
+                            </td>
+                        </tr>
                         <tr id="vlan_tr">
                             <td colspan="3" style="padding:0px">
                                 <div id="div_vlan" style="display:none">
@@ -71,12 +77,15 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="left" colspan="3">
-                                <hr/>
-                                <input type="checkbox" name="vlan_options" id="showVlan_checkbox" onclick="showVlanConf()"/><?php echo _("Show VLAN configuration"); ?>
+                        <tr id="hops_line">
+                            <td class="left" colspan="3">                                
+                                <hr/>                                
+                                <input type="button" class="add" id="addHopsButton" value="Add new hop" onclick="moreFields();" style="clear: both"/>                                    
+                                <br/><br/>
+                                <input type="hidden" id="path" name="path"/>
+                                <span id="writeHops"></span> 
                             </td>
-                        </tr>
+                        </tr>                        
                         <tr>
                             <td colspan="3">
                                 <div id="addHops" style="display:none">
@@ -84,14 +93,6 @@
                                     <img class="delete" id="removeHop" onclick="lessFields(this);" src="layouts/img/remove.png"/>
                                     <select id="selectHops" style="width: 100%" onchange="edit_mapPlaceDevice();"></select><br />
                                 </div>
-                            </td>
-                        </tr>
-                        <tr id="hops_line">
-                            <td class="left" colspan="3">
-                                <span id="writeHops"></span> 
-                                <hr/>                                
-                                <input type="button" class="add" id="addHopsButton" value="Add new hop" onclick="moreFields();"/>                                    
-                                <input type="hidden" id="path" name="path"/>
                             </td>
                         </tr>
                         <tr>

@@ -104,8 +104,8 @@ function showRecurrenceBox() {
     }
 
     if ($("#repeat_chkbox").attr("checked")) {
-        $("#auxDiv").show();
-        $("#recurrence").show();
+        //$("#auxDiv").show();
+        $("#recurrence").slideDown();
         setFreq();
         setUntilType();
         $("#rec_initialTime").html($("#initialTime").val());
@@ -113,9 +113,9 @@ function showRecurrenceBox() {
         $("#rec_duration").html($("#duration").html());        
     }
     else {
-        $("#auxDiv").hide();
-        $("#recurrence").hide();
-        $("#recurrence-edit").hide();
+        //$("#auxDiv").hide();
+        $("#recurrence").slideUp();
+        //$("#recurrence-edit").hide();
         $("#interval_type").empty();
         $("#short_desc").empty();
         $("#until_desc").empty();

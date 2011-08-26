@@ -40,7 +40,7 @@ $domain = $argsToElement;
                 <td id="network_box<?php echo $u->urn_id; ?>" title="<?php echo $u->net_id; ?>"><?php echo $u->network; ?></td>
                 <td id="device_box<?php echo $u->urn_id; ?>" title="<?php echo $u->dev_id; ?>"><?php echo $u->device; ?></td>
                 <td><?php echo $u->port; ?></td>
-                <td><?php echo $u->urn_string; ?></td>
+                <td class="left"><?php echo $u->urn_string; ?></td>
                 <td><?php echo $u->vlan; ?></td>
                 <td><?php echo $u->max_capacity; ?></td>
                 <td><?php echo $u->min_capacity; ?></td>

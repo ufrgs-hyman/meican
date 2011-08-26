@@ -43,19 +43,18 @@ $timer = (isset($argsToElement->timer)) ? $argsToElement->timer : NULL;
     </tr>
 
     <tr>
-        <td colspan="6">
-            <input type="checkbox" name="repeat_chkbox" id="repeat_chkbox" onClick="showRecurrenceBox();"/>
-            <?php echo _("Repeat..."); ?> <a href="#" id="recurrence-edit" onclick="showRecurrenceBox();"><?php echo _("Edit"); ?></a> 
+        <td class="left" colspan="6">
+            <input type="checkbox" name="repeat_chkbox" id="repeat_chkbox" onClick="showRecurrenceBox();" />
+            <p style="display: inline; vertical-align: middle"> <?php echo _("Repeat..."); ?> <a href="#" id="recurrence-edit" onclick="showRecurrenceBox();"><?php echo _("Edit"); ?></a> </p>
+            <?php $this->addElement('timer_recurrence'); ?>
         </td>
     </tr>
     <tr>
-        <th colspan="6">
-            <?php echo _("Summary"); ?>
-        </th>
+        <th style="text-align: left;" colspan="6"></th>
     </tr>
     <tr>
-        <td colspan="6">
-            <label id="recurrence_summary"></label>
+        <td class="left" colspan="6">
+            <p style="display:inline; color:#3a5879; font-weight: bold"><?php echo _("Summary"); ?></p>:&nbsp;<label id="recurrence_summary"></label>
             <label id="summary"></label>
             <input type="hidden" id="summary_input" name="summary" value=""/>
         </td>

@@ -201,45 +201,31 @@
         </div>
         <!-- joga dentro dessa tag o html a ser processado - o que retorna do ajax -->
         <div id="htmlToLoad" style="display: none"></div>
+            <div id="header" class="header">
+                <div id="logo_box"> 
+                    <a href="<?php echo $this->buildLink(array('action' => 'welcome')); ?>"><img class="logo" alt="MEICAN" src="layouts/img/meican_white.png"/></a>
+                </div>
 
-        <div id="header" class="header">
-            <div id="logo_box"> 
-                <a href="<?php echo $this->buildLink(array('action' => 'welcome')); ?>"><img class="logo" alt="MEICAN" src="layouts/img/meican_white.png"/></a>
+                <div id="info_box">
+                </div>
             </div>
-
-            <div id="info_box">
-            </div>
-        </div>
-        <div id="flash_box">
-
-        </div>
-        <div id="content">
-            <div id="menu">
-
-            </div>            
-            <div id="load_img" style="display: none">
-                <img src="layouts/img/ajax-loader.gif" alt="<?php echo _('Loading'); ?>"/>
-            </div>
-            <div id="main">
+            <div id="flash_box">
 
             </div>
-        </div>
-        <div id="footer">
-            <!--            <a href="#">
-            <?php //echo _('About us'); ?>
-                        </a> |
-                        <a href="#">
-            <?php //echo _('Developers'); ?>
-                        </a> |
-                        <a href="#">
-            <?php //echo _('Terms of service'); ?>
-                        </a> |
-                        <a href="#">
-            <?php //echo _('Privacy policy'); ?>
-                        </a>
-                        <br> 
-                        2011      -->       
-        </div>
+            <div id="content">
+                <div id="menu">
+
+                </div>            
+                <div id="load_img" style="display: none">
+                    <img src="layouts/img/ajax-loader.gif" alt="<?php echo _('Loading'); ?>"/>
+                </div>
+                <div id="main">
+
+                </div>
+            </div>
+           <!-- <div id="footer">  
+                <img src="layouts/img/footer.png" style="width:100%; position: absolute; height: 25px;"></img> 
+            </div>-->
     </body>
 
 
