@@ -128,6 +128,7 @@
 
             function redir(url, param) {
                 $('#main').empty();
+                clearFlash();
                 $('#load_img').show();
                 
                 //if (url) {

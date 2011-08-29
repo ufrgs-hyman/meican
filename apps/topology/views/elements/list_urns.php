@@ -7,21 +7,7 @@ $domain = $argsToElement;
 <table id="urn_table<?php echo $domain->id; ?>" class="list">
     
     <thead>
-        <tr>
-            <th rowspan="2" colspan="3"></th>
-            <th rowspan="2"><?php echo _("Network"); ?></th>
-            <th rowspan="2"><?php echo _("Device"); ?></th>
-            <th rowspan="2"><?php echo _("Port"); ?></th>
-            <th rowspan="2" style="border-right: 1px solid black"><?php echo _("URN value"); ?></th>
-            <th colspan="4"><?php echo _("Link settings"); ?></th>
-        </tr>
-            
-        <tr>
-            <th><?php echo _("VLAN values"); ?></th>
-            <th><?php echo _("Maximum capacity (bps)"); ?></th>
-            <th><?php echo _("Minimum capacity (bps)"); ?></th>
-            <th><?php echo _("Granularity (bps)"); ?></th>
-        </tr>
+        <?php $this->addElement('urn_header'); ?>
     </thead>
         
     <tbody>
@@ -45,7 +31,6 @@ $domain = $argsToElement;
                 <td><?php echo $u->max_capacity; ?></td>
                 <td><?php echo $u->min_capacity; ?></td>
                 <td><?php echo $u->granularity; ?></td>
-                    
             </tr>
         <?php endforeach; ?>
     </tbody>
@@ -54,7 +39,8 @@ $domain = $argsToElement;
         <tr>
             <td colspan="11">
                 <img class="loading" style="display:none" id="loading<?php echo $domain->id; ?>" src="includes/images/ajax-loader.gif" />
-                <input class="add" type="button" id="new_button" value="<?php echo _("Add"); ?>" onclick="newURN('<?php echo $domain->id; ?>');" />
+                <input class="add" type="button" id="add_button<?php echo $domain->id; ?>" value="<?php echo _("Add from topology"); ?>" onclick="newURN('<?php echo $domain->id; ?>');" />
+                <input class="add" type="button" id="add_man_button<?php echo $domain->id; ?>" value="<?php echo _("Add manual"); ?>" onclick="newURNLine('<?php echo $domain->id; ?>');" />
             </td>
         </tr>
     </tfoot>

@@ -67,9 +67,11 @@ function getNetworksFromDomain(domain_id) {
 }
 
 function newURNLine(dom_id) {
+    isManual = true;
+    
     $('#urn_table' + dom_id + ' tbody tr:last').after('<tr id="newline' + pos + '"/>');
 
-    var columns = '<td class="edit"><img class="edit" alt="clear" border="0" id="delete' + pos + '" src="layouts/img/clear.png"/></td>';
+    var columns = '<td class="edit" colspan="3"><img class="edit" alt="clear" border="0" id="delete' + pos + '" src="layouts/img/clear.png"/></td>';
     columns += '<td><select id="network' + pos + '"/></td>';
     columns += '<td><select id="device' + pos + '" style="display:none"/></td>';
     columns += '<td><input type="text" size="3" id="port' + pos + '"/></td>';
@@ -90,13 +92,21 @@ function newURNLine(dom_id) {
         validArray[replaceId] = false;
         newCont--;
         if (!newCont && !isEditingURN) {
+            isManual = false;
             $('#save_button').hide();
             $('#cancel_button').hide();
+            for (var i in domains) {
+                $('#add_button' + domains[i].id).show();
+            }
         }
         replaceId = "#" + this.id.replace(/delete/, "newline");
         $(replaceId).remove();
     });
-
+    
+    for (var i in domains) {
+        $('#add_button' + domains[i].id).hide();
+    }
+    
     $('#save_button').show();
     $('#cancel_button').show();
     
@@ -141,11 +151,17 @@ function fillURNLine(dom_id, urn_id) {
         if (!newCont && !isEditingURN) {
             $('#save_button').hide();
             $('#cancel_button').hide();
+            for (var i in domains) {
+                $('#add_man_button' + domains[i].id).show();
+            }
         }
         replaceId = "#" + this.id.replace(/delete/, "newline");
         $(replaceId).remove();
     });
 
+    for (var i in domains) {
+        $('#add_man_button' + domains[i].id).hide();
+    }
     $('#save_button').show();
     $('#cancel_button').show();
     

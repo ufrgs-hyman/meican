@@ -25,7 +25,7 @@ class MeicanTopology {
 
             if ($os->getUrns()) {
 
-                $urn_db = MeicanTopology::getURNs($domId);
+                $urn_db = MeicanTopology::getURNs($dom_id);
                 $db = array();
                 if ($urn_db)
                     foreach ($urn_db as $u) {

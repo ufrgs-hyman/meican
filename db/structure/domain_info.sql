@@ -29,8 +29,8 @@ DROP TABLE IF EXISTS `domain_info`;
 CREATE TABLE IF NOT EXISTS `domain_info` (
   `dom_id` int(11) NOT NULL AUTO_INCREMENT,
   `dom_descr` varchar(30) NOT NULL,
-  `oscars_ip` varchar(64) NOT NULL,
-  `topology_id` varchar(30) NOT NULL,
+  `oscars_ip` varchar(64) DEFAULT NULL,
+  `topology_id` varchar(30) DEFAULT NULL,
   `ode_ip` varchar(128) DEFAULT NULL,
   `ode_wsdl_path` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`dom_id`),

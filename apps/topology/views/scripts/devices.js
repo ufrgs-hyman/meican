@@ -5,11 +5,11 @@ function validateDeviceForm() {
         return false;
     }
 
-    if ($("#dev_ip").val() == "") {
-        setFlash(flash_ipAddrReq);
-        js_submit_form = false;
-        return false;
-    }
+//    if ($("#dev_ip").val() == "") {
+//        setFlash(flash_ipAddrReq);
+//        js_submit_form = false;
+//        return false;
+//    }
 
     if (($("#dev_domain").val() == -1) || ($("#dev_network").val() == -1)) {
         setFlash(flash_networkReq);

@@ -18,6 +18,6 @@ $add_link = $this->buildLink($argsToElement->add_link);
 <br/>
 
 <div class="controls">
-    <input class="add_new" type="button" style="float:right" value="<?php echo _('Add manual'); ?>" onclick="redir('<?php echo $add_link; ?>');"/>
-    <input class="add_new" type="button" style="float:right" value="<?php echo _('Import topology'); ?>" onclick="redir('<?php echo $import_link; ?>');"/>
+    <input class="add_new" type="button" style="float:right" value="<?php echo _('Populate from topology'); ?>" onclick="redir('<?php echo $import_link; ?>');"/>
+    <input class="add_new" type="button" style="float:right" value="<?php echo _('Populate manual'); ?>" onclick="redir('<?php echo $add_link; ?>');"/>
 </div>

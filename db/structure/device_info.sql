@@ -29,14 +29,14 @@ DROP TABLE IF EXISTS `device_info`;
 CREATE TABLE IF NOT EXISTS `device_info` (
   `dev_id` int(11) NOT NULL AUTO_INCREMENT,
   `dev_descr` char(30) NOT NULL,
-  `dev_ip` char(16) NOT NULL,
+  `dev_ip` char(16) DEFAULT NULL,
   `trademark` char(16) DEFAULT NULL,
   `model` char(16) DEFAULT NULL,
   `nr_ports` int(11) DEFAULT NULL,
   `net_id` int(11) NOT NULL,
   `dev_lat` char(10) DEFAULT NULL,
   `dev_lng` char(11) DEFAULT NULL,
-  `node_id` varchar(30) NOT NULL,
+  `node_id` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`dev_id`),
   KEY `net_id` (`net_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

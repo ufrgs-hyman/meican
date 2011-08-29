@@ -19,27 +19,13 @@ $domain = $this->passedArgs->domain;
 <table id="urn_table<?php echo $domain->dom_id; ?>" class="list">
 
     <thead>
-        <tr>
-            <th rowspan="2"></th>
-            <th rowspan="2"><?php echo _("Network"); ?></th>
-            <th rowspan="2"><?php echo _("Device"); ?></th>
-            <th rowspan="2"><?php echo _("Port"); ?></th>
-            <th rowspan="2" style="border-right: 1px solid black"><?php echo _("URN value"); ?></th>
-            <th colspan="4"><?php echo _("Link settings"); ?></th>
-        </tr>
-        
-        <tr>
-            <th><?php echo _("VLAN values"); ?></th>
-            <th><?php echo _("Maximum capacity"); ?></th>
-            <th><?php echo _("Minimum capacity"); ?></th>
-            <th><?php echo _("Granularity"); ?></th>
-        </tr>
+        <?php $this->addElement('urn_header'); ?>
     </thead>
 
     <tbody>
         <?php foreach ($urns as $u): ?>
             <tr id="newline<?php echo $u->id; ?>">
-                <td class="edit">
+                <td class="edit" colspan="3">
                     <img class="delete" src="layouts/img/delete.png" onclick="deleteURNLine('<?php echo $u->id; ?>');"/>
                 </td>
 

@@ -48,7 +48,7 @@ class urns extends Controller {
             $this->setArgsToBody($domains_to_body);
 
             $this->setArgsToScript(array(
-                "str_no_newUrn" => _("No new URN found in network topology, the system database is updated"),
+                "str_no_newUrn" => _("No new URN found in the network topology, this domain is updated"),
                 "str_error_import" => _("An error has occurred while trying to import the topology"),
                 "str_delete_urn" => _("Delete URN?"),
                 "str_urn_deleted" => _("URN deleted"),
