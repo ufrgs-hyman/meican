@@ -10,16 +10,16 @@
                 <div id="advOptions" style="width: 100%">
                     <table style="width: 100%; border: 1px solid #3a5879">
                         <tr>
-                            <td></td>
-                            <td>
-                                <label id="src"><b><?php echo _(Source);?></b></label>
-                            </td>
-                            <td>
-                                <label id="dst"><b><?php echo _(Destination);?></b></label>
-                            </td>
+                            <th style="border:none"></th>
+                            <th style="border:none">
+                                <label id="src"><?php echo _(Source);?></label>
+                            </th>
+                            <th style="border:none">
+                                <label id="dst"><?php echo _(Destination);?></label>
+                            </th>
                         </tr>
                         <tr>
-                            <td class="left">
+                            <td style="color:black; font-weight: bold">
                                 <?php echo _(Domain);?>
                             </td>
                             <td>
@@ -30,7 +30,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="left">
+                            <td style="color:black; font-weight: bold">
                                 <?php echo _(Network);?>
                             </td>
                             <td>
@@ -41,7 +41,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="left">
+                            <td style="color:black; font-weight: bold">
                                 <?php echo _(Device);?>
                             </td>
                             <td>
@@ -52,7 +52,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="left">
+                            <td style="color:black; font-weight: bold">
                                 <?php echo _(Port);?>
                             </td>
                             <td>
@@ -65,7 +65,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="left" colspan="3">
+                            <td class="left" colspan="3" style="color: black">
                                 <hr/>
                                 <input type="checkbox" name="vlan_options" id="showVlan_checkbox" onclick="showVlanConf()"/><p style="vertical-align: middle; display:inline"><?php echo _("Show VLAN configuration"); ?></p>
                             </td>

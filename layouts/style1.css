@@ -132,6 +132,15 @@ table {
     border: 1px solid #000000
 }
 
+table.add {
+    font-family: Helvetica, Arial;
+    border-collapse: collapse;
+    padding: 0px;
+    min-width: 0;
+    width: auto;
+    border: 1px solid #000000
+}
+
 table.withoutBorder{
     font-family: Helvetica, Arial;
     min-width: 50%;
@@ -149,6 +158,7 @@ table td.left {
 table td {
     font-size:12px;
     padding: 0px;
+    color: #3a5879;
     text-align: center;
     padding: 3px 7px 2px 7px;
 }
@@ -157,15 +167,20 @@ table th {
     border-bottom: 1px solid black;
     font-size:12px;
     text-align:center;
-    color:#3a5879;
+    color:#000000;
+    min-width: 70px;
 }
 
 table th.left {
-    border-bottom: 1px solid black;
-    font-size:12px;
     text-align:left;
     margin-left: 5px;
-    color:#3a5879;
+}
+
+table th.right {
+    border-bottom: none;
+    text-align:right;
+    padding: 1px;
+    padding-left: 2px;
 }
 
 table .list th .urn_show {
@@ -422,23 +437,23 @@ div.subItem {
 
 #flash_box div.success {
     background-color: #A7C942;
-    padding-bottom: 5px;
+    padding-bottom: 7px;
 }
 #flash_box div.error {
     background-color: #FF0033;
-    padding-bottom: 5px;
+    padding-bottom: 7px;
 }
 #flash_box div.fatal {
     background-color: #FF0000;
-    padding-bottom: 5px;
+    padding-bottom: 7px;
 }
 #flash_box div.warning {
     background-color: #FFCC00;
-    padding-bottom: 5px;
+    padding-bottom: 7px;
 }
 #flash_box div.info {
     background-color: #3399FF;
-    padding-bottom: 5px;
+    padding-bottom: 7px;
 }
 
 #contextMenu {
@@ -494,7 +509,11 @@ table.icons {
     position: relative;
     top: -10%;
     width: 60%;
-    border: 0px none;
+    border: 0px none;    
+}
+
+table.icons td {
+    color: #000000;
 }
 
 ul.tabs:not(.inactive) {

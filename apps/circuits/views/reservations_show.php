@@ -13,6 +13,7 @@
         <thead>
             <tr>
                 <th class="checkbox"></th>
+                <th></th>
                 <th><?php echo _("Name"); ?></th>
                 <th><?php echo _("Status"); ?></th>
                 <th><?php echo _("Flow"); ?></th>
@@ -26,14 +27,19 @@
                     <td>
                         <input type="checkbox" name="del_checkbox[]" value="<?php echo $r->id; ?>"/>
                     </td>
+                    <td>
+                        <a href="<?php echo $this->buildLink(array('action' => 'view', 'param' => "res_id:$r->id")); ?>">
+             oh                <img src="layouts/img/eye.png"/>
+                        </a>
+                    </td>
 
                     <td>
-                        <a href="<?php echo $this->buildLink(array('action' => 'view', 'param' => "res_id:$r->id")); ?>"><?php echo $r->name; ?></a>
+                        <?php echo $r->name; ?>
                     </td>
 
                     <td>
                         <label id="status<?php echo $i; ?>"></label>
-                        <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading" src="includes/images/ajax-loader.gif"/>
+                        <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading" class="load" src="includes/images/ajax-loader.gif"/>
                     </td>
                     <td>
                         <?php echo $r->flow; ?>

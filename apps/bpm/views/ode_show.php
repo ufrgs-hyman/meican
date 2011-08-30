@@ -39,20 +39,20 @@
 <h1><?php echo _('Deploy process'); ?></h1>
 
 <form action="" method="post" id="upload_form" enctype="multipart/form-data">
-    <table>
+    <table class="withoutBorder add">
         <tr>
-            <td>
-                <label for='name_process'><?php echo _('Name'); ?></label>
-            </td>
-            <td>
+            <th class="right">
+                <label for='name_process'><?php echo _('Name'); ?>:</label>
+            </th>
+            <td class="left">
                 <input type='text' name='name_process'/>
             </td>
         </tr>
         <tr>
-            <td>
-                <label for='file_to_deploy'><?php echo _('File'); ?></label>
-            </td>
-            <td>
+            <th class="right">
+                <label for='file_to_deploy'><?php echo _('File'); ?>:</label>
+            </th>
+            <td class="left">
 		<input type="file" name="upload" id="upload" />
             </td>
         </tr>

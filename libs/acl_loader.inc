@@ -28,7 +28,7 @@ class AclLoader extends Tree_Model {
             else $reload = FALSE;
         } else $reload = TRUE;
 
-        if (!$acl_ses || $reload || true) {
+        if (!$acl_ses || $reload) {
             $this->acl = $this->reloadACL();
             Common::setSessionVariable('acl', $this->acl);
 

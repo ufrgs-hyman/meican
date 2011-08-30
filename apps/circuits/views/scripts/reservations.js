@@ -1,5 +1,5 @@
 function refreshStatus(res_id) {
-    $('tbody img').show();
+    $('.load').show();
     
     var count = 0;
     
@@ -19,8 +19,8 @@ function refreshStatus(res_id) {
             res_id: res_id
         },
         dataType: "json",
-        success: function(data) {
-            $('tbody img').hide();
+        success: function(data) {            
+            $('.load').hide();
 
             var status_id = null;
 

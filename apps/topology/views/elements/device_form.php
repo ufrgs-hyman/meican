@@ -4,86 +4,85 @@ $domains = isset($argsToElement->domains) ? $argsToElement->domains : NULL;
 $device = isset($argsToElement->device) ? $argsToElement->device : NULL;
 
 ?>
-
-<table>
+<table class="withoutBorder add">
 
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Name"); ?>:
         </th>
-        <td>
+        <td class="left">
             <input type="text" id="dev_descr" name="dev_descr" value="<?php if ($device) echo $device->dev_descr; ?>"/>
         </td>
     </tr>
 
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("IP address"); ?>:
         </th>
-        <td>
+        <td class="left">
             <input type="text" id="dev_ip" name="ip_addr" value="<?php if ($device) echo $device->dev_ip; ?>"/>
         </td>
     </tr>
 
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Trademark"); ?>:
         </th>
-        <td>
+        <td class="left">
             <input type="text" name="trademark" value="<?php if ($device) echo $device->trademark; ?>"/>
         </td>
     </tr>
 
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Model"); ?>:
         </th>
-        <td>
+        <td class="left">
             <input type="text" name="model" value="<?php if ($device) echo $device->model; ?>"/>
         </td>
     </tr>
 
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Number of ports"); ?>:
         </th>
-        <td>
+        <td class="left">
             <input type="text" name="nr_ports" value="<?php if ($device) echo $device->nr_ports; ?>"/>
         </td>
     </tr>
     
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Latitude"); ?>:
         </th>
-        <td>
+        <td class="left">
             <input type="text" name="dev_lat" value="<?php if ($device) echo $device->dev_lat; ?>"/>
         </td>
     </tr>
     
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Longitude"); ?>:
         </th>
-        <td>
+        <td class="left">
             <input type="text" name="dev_lng" value="<?php if ($device) echo $device->dev_lng; ?>"/>
         </td>
     </tr>
     
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Topology node ID"); ?>:
         </th>
-        <td>
+        <td class="left">
             <input type="text" name="node_id" value="<?php if ($device) echo $device->node_id; ?>"/>
         </td>
     </tr>
     
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Select a domain"); ?>:
         </th>
-        <td>
+        <td class="left">
             <select id="dev_domain" onchange="dev_changeDomain(this)">
                 <option value="-1"/>
                 <?php
@@ -122,10 +121,10 @@ $device = isset($argsToElement->device) ? $argsToElement->device : NULL;
     </tr>
 
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Select a network"); ?>:
         </th>
-        <td>
+        <td class="left">
             <?php if ($device && $net_found): ?>
                 <select name="network" id="dev_network">
                     <option value="-1"/>

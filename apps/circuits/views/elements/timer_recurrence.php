@@ -25,17 +25,17 @@ $freq_types[] = $freq;
         </tr>
         <tr>
             <td class="recurrence_table">                            
-                <table cellspacing="0" cellpadding="0" style="width:100%">
+                <table cellspacing="0" cellpadding="0" style="width:100%" class="withoutBorder">
                     <tr style="width:100%">
-                        <td class="recurrence_table">
+                        <td class="recurrence_table left">
                             <?php echo _("Start") ;?>:
                             <label id="rec_initialTime"></label>
                         </td>
-                        <td class="recurrence_table">
+                        <td class="recurrence_table left">
                             <?php echo _("End"); ?>:
                             <label id="rec_finalTime"></label>
                         </td>
-                        <td class="recurrence_table">
+                        <td class="recurrence_table left">
                             <?php echo _("Duration"); ?>:
                             <label id="rec_duration"></label>
                         </td>
@@ -44,18 +44,18 @@ $freq_types[] = $freq;
             </td>
         </tr>
         <tr style="width:100%">
-            <th>
+            <th style="border-top:1px solid black">
                 <?php echo _("Recurrence pattern"); ?>
             </th>
         </tr>
         <tr>
             <td class="recurrence_table">
-                <table cellspacing="0" cellpadding="0" style="width: 100%">
+                <table cellspacing="0" cellpadding="0" style="width: 100%" class="withoutBorder">
                     <tr>
                         <td class="recurrence_table" style="width:30%">
-                            <table cellspacing="0" cellpadding="0" border="1" rules="cols" frame="rhs" style="width: 100%">
+                            <table cellspacing="0" cellpadding="0" border="1" rules="cols" frame="rhs" style="border:none; margin-left: 15%" class="withoutBorder">
                                 <tr>
-                                    <td class="recurrence_table">
+                                    <td class="recurrence_table" style="text-align: left;">
                                         <?php
                                             if ($timer) {
                                                 foreach ($freq_types as $f) {
@@ -73,10 +73,10 @@ $freq_types[] = $freq;
                             </table>
                         </td>
                         <td class="recurrence_table">
-                            <table cellspacing="0" cellpadding="0" style="width: 100%">
+                            <table cellspacing="0" cellpadding="0" style="width: 100%" class="withoutBorder">
                                 <tr>
                                     <td class="recurrence_table">
-                                        <table cellspacing="0" cellpadding="0" style="width: 100%">
+                                        <table cellspacing="0" cellpadding="0" style="width: 100%" class="withoutBorder">
                                             <tr>
                                                 <td class="recurrence_table">
                                                     <?php echo _("Repeats every "); ?>                                                    
@@ -102,7 +102,7 @@ $freq_types[] = $freq;
                                 <tr>
                                     <td class="recurrence_table">
                                         <div id="weekdays" style="display: none">
-                                            <table cellspacing="0" cellpadding="0" style="width: 100%">
+                                            <table cellspacing="0" cellpadding="0" style="width: 100%" class="withoutBorder">
                                                 <tr>
                                                     <td class="recurrence_table">
                                                         <input type="checkbox" name="sun_chkbox" value="SU" title="<?php echo _("Sunday"); ?>" id="Sunday" onclick="checkWeekDay(this.id);"><?php echo _("Sun"); ?>
@@ -139,26 +139,26 @@ $freq_types[] = $freq;
             </td>
         </tr>
 
-        <tr style="width:100%">
+        <tr style="width:100%; border-top: 1px solid black ">
             <th>
                 <?php echo _("Range of recurrence"); ?>
             </th>
         </tr>
         <tr>
             <td class="recurrence_table">
-                <table cellspacing="0" cellpadding="0" style="width: 100%">
+                <table cellspacing="0" cellpadding="0" style="width: 100%" class="withoutBorder">
                     <tr>
                         <td class="recurrence_table">
-                            <?php echo _("Starts on"); ?>
+                            <?php echo _("Starts on"); ?>:
                             <input type="text" size="9" id="initialRecurrence" value="<?php echo $start_date; ?>">
                         </td>
                         <td class="recurrence_table">
-                            <table cellspacing="0" cellpadding="0" style="width: 100%">
+                            <table cellspacing="0" cellpadding="0" style="width: 100%" class="withoutBorder">
                                 <tr>
-                                    <td class="recurrence_table">
+                                    <td class="recurrence_table" style="text-align: right">
                                         <?php echo _("Ends:"); ?>
                                     </td>
-                                    <td class="recurrence_table">
+                                    <td class="recurrence_table" style="text-align: left">
                                         <input type="radio" name="until" id="recur_radio" checked="yes" value="NROCCURR" onchange="setUntilType(); ">
                                         <?php echo _("After"); ?>
                                         <!-- input type="text" size="4" id="nr_occurr" value="5" onchange="changeUntilType(recur_radio)" onblur="changeUntilType(recur_radio)" -->
@@ -191,15 +191,15 @@ $freq_types[] = $freq;
             </td>
         </tr>
         <tr>
-            <th>
+            <th style="border-top:1px solid black">
                 <?php echo _("Summary"); ?>
             </th>
         </tr>
         <tr>            
             <td class="recurrence_table">
-                <table cellspacing="0" cellpadding="0" style="width: 100%">
+                <table cellspacing="0" cellpadding="0" style="width: 100%" class="withoutBorder">
                     <tr>
-                        <td class="recurrence_table">
+                        <td class="recurrence_table left">
                             <label id="short_desc"></label>
                             <label id="Sunday_desc"></label>
                             <label id="Monday_desc"></label>

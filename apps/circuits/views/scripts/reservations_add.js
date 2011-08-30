@@ -671,9 +671,10 @@ function edit_addMarker(location, domain_id, domain_name, network_id, network_na
         });
 
         infowindow = new google.maps.InfoWindow({
-            content: "<b>" + domain_string + "</b>: " + domain_name + "<br/>" +
-            "<b>" + network_string + "</b>: " + network_name,
-            disableAutoPan: true
+            content:    "<b>" + domain_string + "</b>: " + domain_name + "<br/>" +
+                        "<b>" + network_string + "</b>: " + network_name,
+            disableAutoPan: true,
+            size: new google.maps.Size(150,150)
         });
         selectedMarker.setMap(null);
         infowindow.open(edit_map, selectedMarker);

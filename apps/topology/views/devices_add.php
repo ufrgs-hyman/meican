@@ -4,11 +4,20 @@
 
 <form method="POST" action="<?php echo $this->buildLink(array("action" => "add")); ?>" onsubmit="validateDeviceForm();">
 
-    <?php $this->addElement('device_form', $args); ?>
-    
-    <div class="controls">
-        <input type="submit" class="save" value="<?php echo _('Save'); ?>"/>
-        <input type="button" class="cancel" value="<?php echo _('Cancel'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'show')); ?>');"/>
-    </div>
-    
+    <table style="min-width: 0">
+        <tr>
+            <td>
+                <?php $this->addElement('device_form', $args); ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+        <div class="controls">
+            <input type="submit" class="save" value="<?php echo _('Save'); ?>"/>
+            <input type="button" class="cancel" value="<?php echo _('Cancel'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'show')); ?>');"/>
+        </div>
+                
+            </td>
+        </tr>
+    </table>    
 </form>

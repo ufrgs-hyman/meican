@@ -7,36 +7,36 @@ $is_local_domain = isset($argsToElement->local_domain) ? $argsToElement->local_d
 
 ?>
 
-<table>
+<table class="withoutBorder add">
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Name"); ?>:
         </th>
-        <td>
-            <input type="text" name="meican_descr" size="50" value="<?php echo $meican_descr; ?>"/>
+        <td class="left">
+            <input type="text" name="meican_descr" size="30" value="<?php echo $meican_descr; ?>"/>
         </td>
     </tr>
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("MEICAN IP"); ?>:
         </th>
-        <td>
-            <input type="text" name="meican_ip" size="50" value="<?php echo $meican_ip; ?>"/>
+        <td class="left">
+            <input type="text" name="meican_ip" size="30" value="<?php echo $meican_ip; ?>"/>
         </td>
     </tr>
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Directory name"); ?>:
         </th>
-        <td>
-            <input type="text" name="meican_dir_name" size="50" value="<?php echo $meican_dir_name; ?>"/>
+        <td class="left">
+            <input type="text" name="meican_dir_name" size="30" value="<?php echo $meican_dir_name; ?>"/>
         </td>
     </tr>
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Is local domain?"); ?>
         </th>
-        <td>
+        <td class="left">
             <input type="checkbox" name="local_domain" <?php if ($is_local_domain) echo 'checked="true"'; ?>/>
         </td>
     </tr>

@@ -5,39 +5,39 @@ $domains = isset($argsToElement->domains) ? $argsToElement->domains : NULL;
 
 ?>
 
-<table>
+<table class="withoutBorder add">
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Name"); ?>:
         </th>
-        <td>
+        <td class="left">
             <input type="text" size="50" id="net_descr" name="net_descr" value="<?php if ($network) echo $network->net_descr; ?>"/>
         </td>
     </tr>
     
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Latitude"); ?>:
         </th>
-        <td>
+        <td class="left">
             <input type="text" size="50" id="net_lat" name="net_lat" value="<?php if ($network) echo $network->net_lat; ?>"/>
         </td>
     </tr>
     
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Longitude"); ?>:
         </th>
-        <td>
+        <td class="left">
             <input type="text" size="50" id="net_lng" name="net_lng" value="<?php if ($network) echo $network->net_lng; ?>"/>
         </td>
     </tr>
     
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Select a domain"); ?>:
         </th>
-        <td>
+        <td class="left">
             <select id="domain_select" name="domain">
                 <option value="-1"></option>
                 <?php

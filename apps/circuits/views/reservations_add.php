@@ -52,7 +52,7 @@ $freq_types[] = $freq;
                 <tr>
                     <td style="width:1%"></td>
                     <td class="left">
-                        <?php echo _("<p style='text-indent: 15px'>Select source and destination networks by clicking on the map markers with any button and then choosing an option from the pop-up menu. After selecting the endpoints, choose the device and port on the right pane."); ?>
+                        <?php echo _("<p style='color:black; text-indent: 15px'>Select source and destination networks by clicking on the map markers with any button and then choosing an option from the pop-up menu. After selecting the endpoints, choose the device and port on the right pane."); ?>
                     </td>
                     <td style="width:1%"></td>
                 </tr>                

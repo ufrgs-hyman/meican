@@ -8,45 +8,45 @@ $ode_wsdl_path = isset($argsToElement->ode_wsdl_path) ? $argsToElement->ode_wsdl
 
 ?>
 
-<table>
+<table class="withoutBorder add">
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Name"); ?>:
         </th>
-        <td>
-            <input type="text" name="dom_descr" size="50" value="<?php echo $dom_descr; ?>"/>
+        <td class="left">
+            <input type="text" name="dom_descr" size="30" value="<?php echo $dom_descr; ?>"/>
         </td>
     </tr>
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("OSCARS IP"); ?>:
         </th>
-        <td>
-            <input type="text" name="oscars_ip" size="50" value="<?php echo $oscars_ip; ?>"/>
+        <td class="left">
+            <input type="text" name="oscars_ip" size="30" value="<?php echo $oscars_ip; ?>"/>
         </td>
     </tr>
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("Topology ID"); ?>:
         </th>
-        <td>
-            <input type="text" name="topology_id" size="50" value="<?php echo $topology_id; ?>"/>
+        <td class="left">
+            <input type="text" name="topology_id" size="30" value="<?php echo $topology_id; ?>"/>
         </td>
     </tr>
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("ODE IP"); ?>:
         </th>
-        <td>
-            <input type="text" name="ode_ip" size="50" value="<?php echo $ode_ip; ?>"/>
+        <td class="left">
+            <input type="text" name="ode_ip" size="30" value="<?php echo $ode_ip; ?>"/>
         </td>
     </tr>
     <tr>
-        <th>
+        <th class="right">
             <?php echo _("ODE WSDL path"); ?>:
         </th>
-        <td>
-            <input type="text" name="ode_wsdl_path" size="50" value="<?php echo $ode_wsdl_path; ?>"/>
+        <td class="left">
+            <input type="text" name="ode_wsdl_path" size="30" value="<?php echo $ode_wsdl_path; ?>"/>
         </td>
     </tr>
 </table>

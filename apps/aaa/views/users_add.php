@@ -5,9 +5,9 @@
 
 <form onSubmit="selectAll('used');" method="POST" action="<?php echo $this->buildLink(array('action' => 'add')); ?>">
 
-    <table>
+    <table class="withoutBorder add">
         <tr>
-            <th>
+            <th class="right">
                 <?php echo _('Login'); ?>:
             </th>
             <td>
@@ -15,7 +15,7 @@
             </td>
         </tr>
          <tr>
-                <th>
+                <th class="right">
                     <?php echo _('New password'); ?>:
                 </th>
                 <td>
@@ -24,22 +24,25 @@
             </tr>
 
             <tr>
-                <th>
+                <th class="right">
                     <?php echo _('Retype new password'); ?>:
                 </th>
                 <td>
                     <input type="password" size="50" name="retype_password" value="">
                 </td>
             </tr>
-    </table>
-
+    </table> <br/><br/>
+    
     <?php $this->addElement('identification'); ?>
 
-    <?php $this->addElement('associative_table', $args); ?>
+    <br/><br/>
+    <table style="min-width: 0">
+        <?php $this->addElement('associative_table', $args); ?>
             
-    <div class="controls">
-        <input class="save" type="submit" value="<?php echo _('Save'); ?>">
-        <input class="cancel" type="button" value="<?php echo _('Cancel'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'show')); ?>');">
-    </div>
+        <div class="controls">
+            <input class="save" type="submit" value="<?php echo _('Save'); ?>">
+            <input class="cancel" type="button" value="<?php echo _('Cancel'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'show')); ?>');">
+        </div>
+    </table>
 
 </form>

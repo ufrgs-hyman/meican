@@ -6,9 +6,9 @@ $title = $argsToElement->title;
 
 ?>
 
-<h2>
+<h1>
     <?php echo $title; ?>
-</h2>
+</h1>
 
 <table>
    
