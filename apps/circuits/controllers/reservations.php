@@ -722,9 +722,6 @@ class reservations extends Controller {
          //buscar urn destino para adicionar a reserva embaixo
 
         if ($res = $reservation->insert($src_urn[0]->urn_id, 'urn_info')) {
-            $this->setFlash(_('Reservation submitted'), 'success');
-                $this->view(array("res_id" => $res->res_id));
-                return;
             if ($this->send($res)) {
                 $this->setFlash(_('Reservation submitted'), 'success');
                 $this->view(array("res_id" => $res->res_id));
@@ -773,13 +770,15 @@ class reservations extends Controller {
         $timer_info = new timer_info();
         $timer_info->tmr_id = $reservation->tmr_id;
         $timer = $timer_info->getTimerDetails();
+        
+        Framework::debug("flow",$flow);
+        Framework::debug("timer",$timer);
 
         if (!$timer) {
             $this->setFlash(_("Timer not found"), "fatal");
             $this->show();
             return;
         }
-
 
         $req = new request_info();
         $req->resource_id = $reservation->res_id;
@@ -1007,7 +1006,7 @@ class reservations extends Controller {
         $flw_id = $reservation_info->get('flw_id');
 
         $flow = new flow_info();
-        $flow->flw_id = $flow_id;
+        $flow->flw_id = $flw_id;
         $src_urn_string = $flow->get('src_urn_string');
 
         $domain = new domain_info();
@@ -1119,17 +1118,17 @@ class reservations extends Controller {
 
                 $newReq->insert();
 
-                return true;
+                return TRUE;
             } catch (Exception $e) {
                 Framework::debug("Caught exception: ",  $e->getMessage());
                 $this->setFlash(_('Error at invoking business layer.'));
                 $newReq->status = 'SENT FOR AUTHORIZATION';
 
                 $newReq->insert();
-                return false;
+                return FALSE;
             }
-        }
-
+        } else
+            return TRUE;
     }
 
     public function check() {
