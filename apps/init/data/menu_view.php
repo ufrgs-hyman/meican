@@ -29,6 +29,7 @@ class MenuView {
                     $menu->item[$ind]->subItem[$ind2]->name = (string) $s->name;
                     $menu->item[$ind]->subItem[$ind2]->link = (string) $s->link;
                     $menu->item[$ind]->subItem[$ind2]->right = ($s->right) ? (string) $s->right : NULL;
+                    $menu->item[$ind]->subItem[$ind2]->model = ($s->model) ? (string) $s->model : NULL;
                     $ind2++;
                 }
             }
@@ -50,33 +51,34 @@ class MenuView {
             $temp->link = $i->link;
 
             if ($i->subItem) {
-                $ableTo = false;
+                $showItem = FALSE;
                 $ind2 = 0;
                 foreach ($i->subItem as $s) {
 
-                    $ok = TRUE;
-                    if ($s->right) {
-//                    $right = explode('|',$s->right);
-//                    $ok = FALSE;
-//                    foreach ($right as $r)
-//                        $ok |= AuthSystem::userAbleToAccess($r);
+                    $showSubItem = TRUE;
+                    if ($s->right && $s->model) {
+                        $rights = explode(',',$s->right);
+                        $showSubItem = FALSE;
+                        $acl = new AclLoader();
+                        foreach ($rights as $r) {
+                            $showSubItem |= $acl->checkACL($r, $s->model);
+                        }
                     }
                    
-                    if (!($s->right) || $ok) {
-
+                    if ($showSubItem) {
                         $temp->subItem[$ind2] = new SubItem();
                         $temp->subItem[$ind2]->name = $s->name;
                         $temp->subItem[$ind2]->link = $s->link;
 
-                        $ableTo = TRUE;
+                        $showItem = TRUE;
                         $ind2++;
                     }
                 }
             } else {
-                $ableTo = TRUE;
+                $showItem = TRUE;
             }
 
-            if ($ableTo) {
+            if ($showItem) {
                 $menuView->item[$ind] = $temp;
                 $ind++;
             }
@@ -97,6 +99,7 @@ class SubItem {
     public $name;
     public $link;
     public $right;
+    public $model;
 }
 
 

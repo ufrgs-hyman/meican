@@ -20,12 +20,14 @@
             <subItem>
                 <name>New reservation</name>
                 <link>main.php?app=circuits&amp;controller=reservations&amp;action=reservation_add</link>
-                <right></right>
+                <right>create</right>
+                <model>urn_info</model>
             </subItem>
             <subItem>
                 <name>Reservations</name>
                 <link>main.php?app=circuits&amp;controller=reservations&amp;action=show</link>
-                <right></right>
+                <right>read</right>
+                <model>reservation_info</model>
             </subItem>
         </item>
 
@@ -39,36 +41,42 @@
             <subItem>
                 <name>Domains</name>
                 <link>main.php?app=topology&amp;controller=domains&amp;action=show</link>
-                <right></right>
+                <right>read</right>
+                <model>domain_info</model>
             </subItem>
             <subItem>
                 <name>Networks</name>
                 <link>main.php?app=topology&amp;controller=networks&amp;action=show</link>
-                <right></right>
+                <right>read</right>
+                <model>network_info</model>
             </subItem>
             <subItem>
                 <name>Devices</name>
                 <link>main.php?app=topology&amp;controller=devices&amp;action=show</link>
-                <right></right>
+                <right>read</right>
+                <model>device_info</model>
             </subItem>
             <subItem>
                 <name>URNs</name>
                 <link>main.php?app=topology&amp;controller=urns&amp;action=show</link>
-                <right></right>
+                <right>read</right>
+                <model>urn_info</model>
             </subItem>
         </item>
 
         <item>
             <name>Users</name>
             <subItem>
-                <name>Users</name>
+                <name>Users</name><model>user_info</model>
                 <link>main.php?app=aaa&amp;controller=users&amp;action=show</link>
-                <right></right>
+                <right>read</right>
+                <model>user_info</model>
             </subItem>
             <subItem>
                 <name>Groups</name>
                 <link>main.php?app=aaa&amp;controller=groups&amp;action=show</link>
-                <right></right>
+                <right>read</right>
+                <model>group_info</model>
             </subItem>
             <subItem>
                 <name>Access control</name>

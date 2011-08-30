@@ -28,7 +28,7 @@ class AclLoader extends Tree_Model {
             else $reload = FALSE;
         } else $reload = TRUE;
 
-        if (!$acl_ses || $reload) {
+        if (!$acl_ses || $reload ||true) {
             $this->acl = $this->reloadACL();
             Common::setSessionVariable('acl', $this->acl);
 
@@ -149,13 +149,13 @@ class AclLoader extends Tree_Model {
                         } else {  //model nao conferiu, ira procurar descendo pela arvore, mas nao adiciona no vetor new
                             //tosearch precisa ser em ordem a avaliacao
 
-                            if (isset($toSearch[$perTy][$level][$aco_id])){
+                            if (isset($toSearch[$perTy][$level][$aco_id])) {
                                 $level++;
                                 Framework::debug("vai incrementar a porquera",$level);
                             }
-                                $toSearch[$perTy][$level][$aco_id]->value = $perm->{$perTy};
-                                $toSearch[$perTy][$level][$aco_id]->model = $perm->model;
-                                Framework::debug("models diferentes ira analisar filhos", $toSearch);
+                            $toSearch[$perTy][$level][$aco_id]->value = $perm->{$perTy};
+                            $toSearch[$perTy][$level][$aco_id]->model = $perm->model;
+                            Framework::debug("models diferentes ira analisar filhos", $toSearch);
 
                         }
 
@@ -175,7 +175,7 @@ class AclLoader extends Tree_Model {
                                 $new[$perTy][$aco_id]->value = 'deny';
                         }
                     }
-                   
+
                 }  //foreach lines_aros_acos
 
                 //Framework::debug("array new ",$new);
@@ -188,10 +188,10 @@ class AclLoader extends Tree_Model {
                         Framework::debug("permissao ",$perm->value);
                         $old[$perTy][$aco_id] = $perm->value;
 
-                         if (isset($toSearch[$perTy][$level][$aco_id])){
-                                $level++;
-                                Framework::debug("vai incrementar a porquera",$level);
-                         }
+                        if (isset($toSearch[$perTy][$level][$aco_id])) {
+                            $level++;
+                            Framework::debug("vai incrementar a porquera",$level);
+                        }
                         $toSearch[$perTy][$level][$aco_id]->value = $perm->value;
                         //array com os nodos que forma atribuídos permissoes nessa interação
                         //e a permissao que deve ser atribuída a tais nodos
@@ -199,7 +199,7 @@ class AclLoader extends Tree_Model {
                             $toSearch[$perTy][$level][$aco_id]->model = $perm->model;
                     }
                 }
-                
+
                 $level++;
 
                 //vai atribuir aos proximos nodos filhos
@@ -220,17 +220,17 @@ class AclLoader extends Tree_Model {
 
                         if (!array_key_exists($c->aco_id, $new[$perTy])) {
 
-                              if ((!$toSearch[$perTy][$ind][$c->parent_id]->model) || ($toSearch[$perTy][$ind][$c->parent_id]->model == $c->model)) {
+                            if ((!$toSearch[$perTy][$ind][$c->parent_id]->model) || ($toSearch[$perTy][$ind][$c->parent_id]->model == $c->model)) {
 
                                 if ($toSearch[$perTy][$ind][$c->parent_id]->value == 'deny')
                                     $new[$perTy][$c->aco_id]->value = 'deny';
                                 elseif ($toSearch[$perTy][$ind][$c->parent_id]->value == 'allow')
                                     $new[$perTy][$c->aco_id]->value = 'allow';
                             }
-                                $toSearch[$perTy][$level][$c->aco_id]->value = $toSearch[$perTy][$ind][$c->parent_id]->value;
-                                
-                                if ($toSearch[$perTy][$ind][$c->parent_id]->model)
-                                    $toSearch[$perTy][$level][$c->aco_id]->model = $toSearch[$perTy][$ind][$c->parent_id]->model;
+                            $toSearch[$perTy][$level][$c->aco_id]->value = $toSearch[$perTy][$ind][$c->parent_id]->value;
+
+                            if ($toSearch[$perTy][$ind][$c->parent_id]->model)
+                                $toSearch[$perTy][$level][$c->aco_id]->model = $toSearch[$perTy][$ind][$c->parent_id]->model;
 
 
 
@@ -248,7 +248,7 @@ class AclLoader extends Tree_Model {
                             Framework::debug("vai atribuir ao aco ",$aco_id);
                             Framework::debug("permissao ",$perm->value);
 
-                            
+
 //                            $toSearch[$perTy][$level][$aco_id]->value= $perm->value;
 //
 //                            if ($toSearch[$perTy][$level][$c->parent_id]->model)
@@ -312,7 +312,7 @@ class AclLoader extends Tree_Model {
             //retorna os objetos (obj_id) que o usuário possui acesso
             $result = $acos->getAcoGroupByModel($strAcos, $model);
 
-            unset($obj); //array com os ids do modelo que o usuário
+            $obj = array(); //array com os ids do modelo que o usuário
             foreach ($result as $r) {
                 $obj[] = $r->obj_id;
             }
@@ -328,32 +328,31 @@ class AclLoader extends Tree_Model {
     public function checkACL($right, $model, $id = NULL) {
 
         $acos = $this->acl->{$right};
-        Framework::debug('acos',$acos);
+        //Framework::debug('acos',$acos);
         if ($acos) {
 
             $restr = $this->getAllowedPKey($right, $model);
 
             if ($restr) {
                 if ($id) { //se tem o id especificado, deve estar especificado
-                    if (array_search($id, $restr) !== false)
-                        return true;
-                    else
-                        return false;
-                } else
-                    return true;
-
-            } else { //nao especificou id, procura pelo void
-                //entes voids: obj_id = NULL, a presença de um ente void
-                //em determinado modelo discrimina os direitos default do usuário
-                //sobre aquele modelo (sem especificar o id)
-                $aco = new Acos();
-                $strAcos = implode(',', $acos);
-                $void = $aco->getVoid($strAcos, $model);
-                if ($void) //possui acesso ao ente void, logo possui right sobre aquele model
-                    return TRUE;
-                else return FALSE;
+                    if (array_search($id, $restr) !== FALSE)
+                        return TRUE;
+                } else { //possui acesso a algum nodo!!! nao precisa necessariamente ser o VOID
+                //pode ser qualquer UM. função getvoid parece inútil
+                //
+                    //nao especificou id, procura pelo void
+                    //entes voids: obj_id = NULL, a presença de um ente void
+                    //em determinado modelo discrimina os direitos default do usuário
+                    //sobre aquele modelo (sem especificar o id)
+                    //$aco = new Acos();
+                    //$strAcos = implode(',', $acos);
+                    //$void = $aco->getVoid($strAcos, $model);
+                    //if ($void) //possui acesso ao ente void, logo possui right sobre aquele model
+                        return TRUE;
+                }
             }
-        } else return false;
+        }
+        return FALSE;
     }
 } // da classe
 

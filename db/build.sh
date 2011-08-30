@@ -4,6 +4,10 @@ password="futurarnp"
 user="root"
 database="meican";
 
+#agora=time;
+#mysqldump -user=$user --password=$password --host=$host -D$database > dump_$agora.sql
+
+
 case "$1" in
   data)
     cd data
