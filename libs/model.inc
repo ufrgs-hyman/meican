@@ -46,7 +46,7 @@ class Model {
     }
 
     public function getPrimaryKey() {
-        unset($primaryKey);
+        $primaryKey = NULL;
 
         foreach ($this->attributes as $attribute) {
             if ($attribute->primaryKey) {
@@ -100,7 +100,7 @@ class Model {
                 $sql = "SELECT * FROM `$tableName`";
         }
         Framework::debug("fetch",$sql);
-        return $this->fetchSql($sql, $tableName);
+        return $this->querySql($sql, $tableName);
     }
 
     /**
@@ -202,7 +202,7 @@ class Model {
         }
         $sql .= $where;
         //Framework::debug('update',$sql);
-        return $this->querySql($sql);
+        return $this->execSql($sql);
     }
 
     public function updateTo($alt = Array(), $useACL = TRUE) {
@@ -261,21 +261,22 @@ class Model {
                 $sql = "UPDATE $tableName SET $setArgsString";
         }
 
-        $resfetch = $this->fetchSql($sqlfetch, $tableName);
+        $resfetch = $this->querySql($sqlfetch, $tableName);
 
         Framework::debug('sql update', $sql);
 
         if (!$resfetch)
             return FALSE;
         else
-            return $this->querySql($sql);
+            return $this->execSql($sql);
     }
 
 //do updateto
 
     /**
-     * @return <boolean> FALSE : on failed insertion
-     * @return <object> Object : the inserted object
+     * @return <boolean> FALSE : on failed insertion (FAILED)
+     * @return <object> Object : the inserted object if it was possible to find it (SUCCESS)
+     * @return <boolean> TRUE : the object was inserted, but it was not possible to find it (SUCCESS)
      */
     public function insert() {
 
@@ -310,14 +311,27 @@ class Model {
         $sql = "INSERT INTO `$classname` ($sqlNames) values ($sqlValues)";
 
         Framework::debug('sql insert',$sql);
-        //se inseriu com sucesso, retorna o objeto inserido
-        if ($this->querySql($sql)) {
-            if ($ret = $this->fetch(FALSE))
-                return $ret[0];
-            else
-                return FALSE;
-        }
-        else
+        
+        $id = $this->insertSql($sql);
+        if ($id !== FALSE) {
+            // se ID não for idêntico a FALSE, é porque foi inserido
+            // agora TENTA buscar objeto inserido para retornar
+            $pk = $this->getPrimaryKey();
+            if ($id && $pk) {
+                // se retornou um ID válido, busca por ele como PK
+                $object = new $classname;
+                $object->$pk = $id;
+                if ($ret = $object->fetch(FALSE))
+                    return $ret[0];
+            } else {
+                // se não retornou ID válido, busca pelos atributos utilizados na inserção
+                if ($ret = $this->fetch(FALSE))
+                    return $ret[0];
+            }
+            // se não conseguiu buscar objeto, apenas retorna TRUE
+            return TRUE;
+        } else
+            // objeto não inserido, retorna FALSE
             return FALSE;
     }
 
@@ -378,35 +392,44 @@ class Model {
             //fetch before update to return false if none results will be selected
             $sqlfetch = "SELECT * FROM $tableName WHERE $whereArgsString";
 
-            $result = $this->fetchSql($sqlfetch, $tableName);
+            $result = $this->querySql($sqlfetch, $tableName);
 
             if (!$result) //nao consigurira atualizar nada
                 return FALSE;
         }
 
-        return $this->querySql($sql);
+        return $this->execSql($sql);
     }
-
-    /**
+    
+   /**
      *
      * @param <string> $sql : well-formatted SQL string
-     * @param <string> $tableName : name of class or table model
-     * @return <boolean> TRUE if query was success, FALSE otherwise
+     * @return <boolean> Object ID if insert was successful, FALSE otherwise
      */
-    protected function querySql($sql) {
+    protected function insertSql($sql) {
         $db = new Database();
 
         if (!($db && $sql))
             return FALSE;
 
-        if ($db->query($sql))
-            return TRUE;
-        else {
-            return FALSE;
-        }
+        return $db->insert($sql);
     }
 
-    /**
+   /**
+     *
+     * @param <string> $sql : well-formatted SQL string
+     * @return <boolean> TRUE if exec was successful, FALSE otherwise
+     */
+    protected function execSql($sql) {
+        $db = new Database();
+
+        if (!($db && $sql))
+            return FALSE;
+
+        return $db->exec($sql);
+    }
+
+   /**
      *
      * @param <string> $sql : SQL string using ';' as separator for the 'explode()' function.
      *                  Ex:  "DELETE FROM $tableName WHERE lft BETWEEN $left AND $right;
@@ -421,21 +444,17 @@ class Model {
         if (!($db && $sql))
             return FALSE;
 
-        if ($db->transactionSql($sql))
-            return TRUE;
-        else {
-            return FALSE;
-        }
+        return $db->transactionExec($sql);
     }
 
-    /**
+   /**
      *
      * @param <string> $sql : well-formatted SQL string
      * @param <string> $tableName : name of class or table model
      * @return <boolean> FALSE: no object found
      * @return <array> Object Model: objects were found
      */
-    protected function fetchSql($sql, $tableName = 'Model') {
+    protected function querySql($sql, $tableName = 'Model') {
         $db = new Database();
 
         if (!($db && $sql))
@@ -498,7 +517,7 @@ class Model {
         else
             $sql = "SELECT MAX($field) as $field from $tableName";
 
-        $result = $this->fetchSql($sql, $tableName);
+        $result = $this->querySql($sql, $tableName);
 
         if ($result) {
             $last = $result[0]->{$field};

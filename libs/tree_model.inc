@@ -31,13 +31,13 @@ class Tree_Model extends Model {
             return FALSE;
         }
 
-        $result = $this->fetchSql($sqlQuery);
+        $result = $this->querySql($sqlQuery);
 
         $sqlQuery = "";
         foreach ($result as $r) {
             //testa para ver se não vai ser adicionado duplicado : abaixo de determinado pai (parent_id), o conjunto de obj_id e model torna-se único
             $testeFetch = "SELECT * FROM $tableName WHERE obj_id=$child->obj_id AND model='$child->model' AND parent_id=".$r->{$pk};
-            if (!($this->fetchSql($testeFetch)))
+            if (!($this->querySql($testeFetch)))
                 $sqlQuery .= "UPDATE $tableName SET rgt = rgt + 2 WHERE rgt >= $r->rgt;
                          UPDATE $tableName SET lft = lft + 2 WHERE lft > $r->rgt;
                          INSERT INTO $tableName(obj_id, model, lft, rgt, parent_id) VALUES($child->obj_id, '$child->model',  $r->rgt,  $r->rgt + 1,".$r->{$pk}.");";
@@ -56,7 +56,7 @@ class Tree_Model extends Model {
 
             //verificar se é utilizado
             $sql = "SELECT * from $tableName WHERE obj_id=$child->obj_id AND model='$child->model' AND parent_id in ($parent_str)";
-            return $this->fetchSql($sql, $tableName);
+            return $this->querySql($sql, $tableName);
             
         } else return FALSE;
     }
@@ -74,7 +74,7 @@ class Tree_Model extends Model {
         }
 
         $sqlQuery = "SELECT lft, rgt, (rgt - lft + 1) as width FROM $tableName WHERE $pk=".$this->{$pk};
-        $result = $this->fetchSql($sqlQuery);
+        $result = $this->querySql($sqlQuery);
 
         $sqlQuery = "LOCK TABLE $tableName WRITE;";
         foreach ($result as $res) {
@@ -107,7 +107,7 @@ class Tree_Model extends Model {
         }
 
         $sqlQuery = "SELECT lft, rgt FROM $tableName WHERE $pk=".$this->{$pk};
-        $result = $this->fetchSql($sqlQuery);
+        $result = $this->querySql($sqlQuery);
 
         $res = $result[0];
         $right = $res->rgt;
@@ -136,7 +136,7 @@ class Tree_Model extends Model {
         $tableName = $this->getTableName();
         $sql = "SELECT MAX(rgt) as rgt FROM $tableName";
 
-        $result = $this->fetchSql($sql);
+        $result = $this->querySql($sql);
         if ($result) {
 
 
@@ -147,7 +147,7 @@ class Tree_Model extends Model {
 
             $sql = "INSERT INTO $tableName(obj_id, model, lft, rgt, parent_id) VALUES($this->obj_id, '$this->model',  $left,  $right, NULL)";
 
-            if ($this->querySql($sql)){
+            if ($this->execSql($sql)) {
                 Common::apc_update();
                 return TRUE;
             }
@@ -164,7 +164,7 @@ class Tree_Model extends Model {
             $sql = "SELECT * FROM $tableName WHERE parent_id=".$this->{$pk}." and model='$this->model'";
         else $sql = "SELECT * FROM $tableName WHERE parent_id=".$this->{$pk};
        
-        return $this->fetchSql($sql, $tableName);
+        return $this->querySql($sql, $tableName);
 
     }
 
@@ -174,7 +174,7 @@ class Tree_Model extends Model {
 
          $sql = "SELECT * FROM $tableName WHERE parent_id IS NULL";
 
-         return $this->fetchSql($sql, $tableName);
+         return $this->querySql($sql, $tableName);
     }
 
     //busca filhos e também o próprio nodo
@@ -198,7 +198,7 @@ class Tree_Model extends Model {
                     WHERE (node.lft BETWEEN (parent.lft +1) AND (parent.rgt-1)) $and";
 
 
-        return $this->fetchSql($sqlQuery, $tableName);
+        return $this->querySql($sqlQuery, $tableName);
     }
     
     public function getParentNodes() {
@@ -253,7 +253,7 @@ class Tree_Model extends Model {
 //        $pk = $this->getPrimaryKey();
 //
 //        $sqlQuery = "SELECT $pk,rgt FROM $tableName WHERE $pk=$parent_pk";
-//        $result = $this->fetchSql($sqlQuery);
+//        $result = $this->querySql($sqlQuery);
 //
 //
 //        unset($sqlQuery);
@@ -321,7 +321,7 @@ class Tree_Model extends Model {
 //                AND parent.model='group_info'
 //                ORDER BY parent.lft DESC";
 //
-//        $tmp = $this->fetchSql($sql, $tableName);
+//        $tmp = $this->querySql($sql, $tableName);
 //        return $tmp;
 //    }
 

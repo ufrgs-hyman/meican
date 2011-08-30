@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS `network_info`;
 CREATE TABLE IF NOT EXISTS `network_info` (
   `net_id` int(11) NOT NULL AUTO_INCREMENT,
   `net_descr` char(30) NOT NULL,
-  `net_lat` char(10) NOT NULL,
-  `net_lng` char(11) NOT NULL,
+  `net_lat` float DEFAULT NULL,
+  `net_lng` float DEFAULT NULL,
   PRIMARY KEY (`net_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;

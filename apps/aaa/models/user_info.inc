@@ -23,7 +23,7 @@ class user_info extends Model {
         $tableName = $this->getTableName();
         $sql = "SELECT * FROM $tableName WHERE usr_login='$this->usr_login' AND usr_password='$this->usr_password'";
 
-        return $this->fetchSql($sql, $tableName);
+        return $this->querySql($sql, $tableName);
     }
 
     /**
@@ -41,7 +41,7 @@ class user_info extends Model {
                 LEFT JOIN user_group ug ON g.grp_id = ug.grp_id AND usr_id = $this->usr_id
                 WHERE usr_id IS $equal NULL ";
 
-        return $this->fetchSql($sql);
+        return $this->querySql($sql);
     }
 
     public function updateGroups($groups_array = array()) {
@@ -64,7 +64,7 @@ class user_info extends Model {
             // deleta grupos
             $strGrp = implode(',', $toDelete);
             $sql = "DELETE FROM user_group WHERE usr_id=$this->usr_id AND grp_id IN ($strGrp)";
-            $resDel = $this->querySql($sql);
+            $resDel = $this->execSql($sql);
 
             if ($resDel) {
                 foreach ($toDelete as $d) {
@@ -104,7 +104,7 @@ class user_info extends Model {
             }
 
             $sql = "INSERT INTO user_group $values";
-            $resAdd = $this->querySql($sql);
+            $resAdd = $this->execSql($sql);
 
             if ($resAdd) {
                 foreach ($toAdd as $grp_id) {

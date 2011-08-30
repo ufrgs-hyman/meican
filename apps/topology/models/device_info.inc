@@ -30,7 +30,7 @@ class device_info extends Resource_Model {
 //        $sql = "SELECT ni.* FROM network_info AS ni
 //                LEFT JOIN network_device AS nd ON ni.net_id = nd.net_id AND nd.dev_id = $this->dev_id";
 //
-//        $result = $this->fetchSql($sql);
+//        $result = $this->querySql($sql);
 //        if ($result)
 //            return $result[0]->net_descr;
 //    }

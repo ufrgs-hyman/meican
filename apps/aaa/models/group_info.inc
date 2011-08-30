@@ -24,7 +24,7 @@ class group_info extends Model {
                                     ON u.usr_id = ug.usr_id AND grp_id = $this->grp_id
                              WHERE grp_id IS $equal NULL";
 
-        return $this->fetchSql($sql);
+        return $this->querySql($sql);
     }
 
     public function updateUsers($users_array = array()) {
@@ -64,7 +64,7 @@ class group_info extends Model {
                 // deleta usuários
                 $strUsr = implode(',', $delArray);
                 $sql = "DELETE FROM user_group WHERE grp_id=$this->grp_id AND usr_id IN ($strUsr)";
-                $resDel = $this->querySql($sql);
+                $resDel = $this->execSql($sql);
                 if ($resDel) {
                     foreach ($delArray as $d) {
                         // remove da ARO
@@ -105,7 +105,7 @@ class group_info extends Model {
             }
 
             $sql = "INSERT INTO user_group $values";
-            $resAdd = $this->querySql($sql);
+            $resAdd = $this->execSql($sql);
 
             if ($resAdd) {
                 foreach ($toAdd as $usr_id) {
@@ -260,7 +260,7 @@ class group_info extends Model {
                 Framework::debug("delete ok");
 
                 $sql = "SELECT * FROM group_info";
-                $res = $this->fetchSql($sql);
+                $res = $this->querySql($sql);
                 //Framework::debug('teste',$res);
                 return TRUE;
             } else

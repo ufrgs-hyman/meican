@@ -29,7 +29,6 @@ class reservations extends Controller {
     }
 
     public function show() {
-        
         // inicializa variáveis da sessão do wizard
         Common::destroySessionVariable('res_name');
         Common::destroySessionVariable('sel_flow');
@@ -719,6 +718,9 @@ class reservations extends Controller {
          //buscar urn destino para adicionar a reserva embaixo
 
         if ($res = $reservation->insert($src_urn[0]->urn_id, 'urn_info')) {
+            $this->setFlash(_('Reservation submitted'), 'success');
+                $this->view(array("res_id" => $res->res_id));
+                return;
             if ($this->send($res)) {
                 $this->setFlash(_('Reservation submitted'), 'success');
                 $this->view(array("res_id" => $res->res_id));

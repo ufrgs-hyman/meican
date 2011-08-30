@@ -39,7 +39,7 @@ class AclLoader extends Tree_Model {
     }
 
     public function reloadACL($options = array()) {
-        Framework::$debugMode = 1;
+        Framework::$debugMode = 0;
 
         $time = mktime();
         Framework::debug('reloading ACL...');

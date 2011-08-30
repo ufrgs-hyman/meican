@@ -8,14 +8,20 @@ include_once 'includes/language.inc';
 include_once 'includes/common.inc';
 include_once 'libs/database.inc';
 
-defined ('__MEICAN') or die ("Invalid access.");
+defined('__MEICAN') or die("Invalid access.");
 
 Framework::initWebRoot();
 
+$mdb2 = MDB2::singleton(Framework::getDatabaseString());
+if (MDB2::isError($mdb2)) {
+    Framework::debug($mdb2->getMessage() . ", " . $mdb2->getDebugInfo());
+    die($mdb2->getMessage());
+}
+
 if (array_key_exists('app', $_GET) && array_key_exists('services', $_GET)) {
-       $appClass = Common::GET('app');
-       $app = Framework::loadApp($appClass);
-       $controller = $app->loadController('ws');
+    $appClass = Common::GET('app');
+    $app = Framework::loadApp($appClass);
+    $controller = $app->loadController('ws');
 } else {
 
     if (AuthSystem::userTryToLogin() || AuthSystem::isUserLoggedIn()) {
@@ -23,8 +29,8 @@ if (array_key_exists('app', $_GET) && array_key_exists('services', $_GET)) {
         if (array_key_exists('app', $_GET)) {
             $appClass = Common::GET('app');
             $app = Framework::loadApp($appClass);
-        } else $app = FALSE;
-
+        } else
+            $app = FALSE;
 
         if (!$app) {
             $appClass = Framework::getMainApp();
@@ -55,31 +61,30 @@ if (array_key_exists('app', $_GET) && array_key_exists('services', $_GET)) {
                 $controller->$action();
             } else {
 
-                    $action = Common::GET('action');
-                    if ($action && method_exists($controller, $action)){
+                $action = Common::GET('action');
+                if ($action && method_exists($controller, $action)) {
 
-                        $param = Controller::getParam(Common::GET('param'));
-                        $controller->$action($param);
-                    } else {
+                    $param = Controller::getParam(Common::GET('param'));
+                    $controller->$action($param);
+                } else {
 
                     $action = $controller->getDefaultAction();
                     $controller->$action();
-
-                    }
-
                 }
             }
-        } else {
-            $appClass = Common::GET('app');
-            $controllerClass = Common::GET('controller');
-            if (($appClass == "init") && ($controllerClass == "gui")) {
-                // user has expired the session and is trying to reload the gui - refresh or F5
-                // redirect to login
-                header('Location: index.php?message=Session Expired');
-                
-            } else header('HTTP/1.1 402 Timeout');
         }
-
+    } else {
+        $appClass = Common::GET('app');
+        $controllerClass = Common::GET('controller');
+        if (($appClass == "init") && ($controllerClass == "gui")) {
+            // user has expired the session and is trying to reload the gui - refresh or F5
+            // redirect to login
+            header('Location: index.php?message=Session Expired');
+        } else
+            header('HTTP/1.1 402 Timeout');
     }
+}
+
+$mdb2->disconnect();
 
 ?>

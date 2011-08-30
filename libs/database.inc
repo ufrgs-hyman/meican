@@ -10,22 +10,40 @@ class Database {
     private $numRows;
     private $mdb2;
 
-
-    function Database() {
-        $this->mdb2 = MDB2::connect(Framework::getDatabaseString());
+    public function Database() {
+        $this->mdb2 = MDB2::singleton();
 
         if (MDB2::isError($this->mdb2)) {
             Framework::debug($this->mdb2->getMessage() . ", " . $this->mdb2->getDebugInfo());
             return FALSE;
         } else return TRUE;
     }
+    
+    public function insert($sql) {
+        $result = $this->mdb2->exec($sql);
+        if (MDB2::isError($result)) {
+            Framework::debug($result->getMessage() . ", " . $result->getDebugInfo());
+            return FALSE;
+        } else {
+            return $this->mdb2->lastInsertId();
+        }
+    }
+    
+    public function exec($sql) {
+        $result = $this->mdb2->exec($sql);
+        if (MDB2::isError($result)) {
+            Framework::debug($result->getMessage() . ", " . $result->getDebugInfo());
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
 
-    function query($sql, $classname='Model') {
+    public function query($sql, $classname='Model') {
         $result = $this->mdb2->query($sql);
 
         if (MDB2::isError($result)) {
             Framework::debug($result->getMessage() . ", " . $result->getDebugInfo());
-            $this->mdb2->disconnect();
             return FALSE;
         } else {
             $this->result = $result;
@@ -37,12 +55,11 @@ class Database {
             }
 
             $this->position = 0;
-            $this->mdb2->disconnect();
             return TRUE;
         }
     }
 
-    function transactionSql($sql) {
+    public function transactionExec($sql) {
 
         //Verifica se o Banco suporta transações
         if (!$this->mdb2->supports('transactions')) {
@@ -58,7 +75,7 @@ class Database {
         foreach($sqlArray as $sqlQuery) {
             if ($sqlQuery) {
 
-                $result = $this->mdb2->query($sqlQuery);
+                $result = $this->mdb2->exec($sqlQuery);
 
                 if (MDB2::isError($result)) {
                     Framework::debug($result->getMessage() . ", " . $result->getDebugInfo());
@@ -67,7 +84,6 @@ class Database {
                         Framework::debug("Erro: Alterações serão desfeitas");
                         $this->mdb2->rollback();
                     }
-                    $this->mdb2->disconnect();
                     return FALSE;
                 }
             }
@@ -75,18 +91,17 @@ class Database {
         //Se a transação foi concluída com sucesso, executa Commit() e desconecta do Banco
         if ($this->mdb2->inTransaction()) {
             $this->mdb2->commit();
-            $this->mdb2->disconnect();
             return TRUE;
         }
     }
 
-    function hasNext() {
+    public function hasNext() {
         if ($this->position < $this->numRows)
             return TRUE;
         else return FALSE;
     }
 
-    function next() {
+    public function next() {
         $row = $this->result->fetchRow(MDB2_FETCHMODE_ASSOC);
         $obj = new $this->classname;
         if ($this->classname == "Model") {
@@ -103,10 +118,9 @@ class Database {
         return $obj;
     }
 
-    function getNumRows() {
+    public function getNumRows() {
         return $this->numRows;
     }
-
 
     static function mysql_replace($inp) {
         if (is_array($inp))
@@ -120,9 +134,9 @@ class Database {
             return $return;
         }
 
-
         return $inp;
     }
+    
 //    function getNextId($table) {
 //        if (DatabaseObject::$mdb2 == null) {
 //            DatabaseObject::$mdb2 = MDB2::connect(Framework::getDatabaseString());

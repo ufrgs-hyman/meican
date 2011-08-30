@@ -206,6 +206,13 @@ class timers extends Controller {
             $timer_info->start = $start;
             $timer_info->finish = $finish;
             
+            $timer_info->freq = NULL;
+            $timer_info->until = NULL;
+            $timer_info->count = NULL;
+            $timer_info->interval = NULL;
+            $timer_info->byday = NULL;
+            $timer_info->summary = NULL;
+            
             // timer possui regras de recorrência
             if (Common::POST("repeat_chkbox")) {
                 $timer_info->freq = Common::POST('freq'); //ok

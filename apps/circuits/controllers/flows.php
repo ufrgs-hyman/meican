@@ -209,9 +209,13 @@ class flows extends Controller {
 
             $new_flow->src_meican_id = $meican->getLocalMeicanId();
             $new_flow->src_urn_string = $src_urn;
+            $new_flow->src_vlan = NULL;
 
             $new_flow->dst_meican_id = $meican->getLocalMeicanId();
             $new_flow->dst_urn_string = $dst_urn;
+            $new_flow->dst_vlan = NULL;
+            
+            $new_flow->path = NULL;
 
             if (Common::POST("vlan_options")) {
                 if (Common::POST("sourceVLANType") == "FALSE") {

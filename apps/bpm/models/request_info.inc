@@ -72,7 +72,7 @@ class request_info extends Resource_Model {
 //            elseif ($this->dom_dst)
 //                $sql .= "AND d2.dom_ip = '$this->dom_dst'";//dom_dst_ip
 //
-//            return $this->fetchSql($sql);
+//            return $this->querySql($sql);
 //        } else return FALSE; //sem acesso a nada
 //
 //    }
