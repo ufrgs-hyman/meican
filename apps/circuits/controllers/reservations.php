@@ -284,8 +284,12 @@ class reservations extends Controller {
             $domain->id = $d->dom_id;
             $domain->name = $d->dom_descr;
             $domain->topology_id = $d->topo_domain_id;
+            $before = microtime(true);
+            
             $domain->networks = MeicanTopology::getURNDetails($d->dom_id);
             $urn = MeicanTopology::getURNs($d->dom_id);
+            Framework::debug("tempo",(microtime(true)-$before));
+            
             foreach ($urn as $u) {
                 $allUrns[] = $u->urn_string;
             }
