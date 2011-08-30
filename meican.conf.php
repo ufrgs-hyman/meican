@@ -29,7 +29,7 @@ class Framework {
 
     /* system profile */
     private static $systemName = 'MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks';
-    private static $systemNameShort = 'framework';
+    private static $systemNameShort = 'MEICAN';
     private static $systemVer = '';
     private static $mainApp = 'aaa';
     public static $systemDirName = 'meican';
@@ -247,7 +247,7 @@ class Framework {
         return FALSE;
     }
 
-    static function debug($msg, $var=NULL) {
+    static function debug($msg, $var) {
 
         if (Framework::$debugMode) {
             $fileName = '/var/www/'.Framework::$systemDirName.'/log/log.txt';
