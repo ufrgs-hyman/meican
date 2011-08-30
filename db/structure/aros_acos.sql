@@ -35,5 +35,5 @@ CREATE TABLE IF NOT EXISTS `aros_acos` (
   `read` enum('allow','deny') DEFAULT NULL,
   `update` enum('allow','deny') DEFAULT NULL,
   `delete` enum('allow','deny') DEFAULT NULL,
-  PRIMARY KEY (`perm_id`),
+  PRIMARY KEY (`perm_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

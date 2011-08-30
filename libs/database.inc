@@ -11,6 +11,10 @@ class Database {
     private $mdb2;
 
     public function Database() {
+        /**
+         * a conexão com o banco acontece na main
+         * chama o método singleton apenas para obter a instância do MDB2
+         */
         $this->mdb2 = MDB2::singleton();
 
         if (MDB2::isError($this->mdb2)) {

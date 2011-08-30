@@ -74,14 +74,47 @@ class MeicanTopology {
             return FALSE;
     }
     
-    public static function getURNs($dom_id) {
+    public static function getURNs($dom_id, $urn_string=NULL) {
+        
+        $urns = array();
+        
+        if ($urn_string) {
+            $urn_info = new urn_info();
+            $urn_info->urn_string = $urn_string;
+            $urn_res = $urn_info->fetch();
+
+            $urn = new stdClass();
+            $urn->urn_id = $urn_res[0]->urn_id;
+            $urn->urn_string = $urn_res[0]->urn_string;
+
+            $net = new network_info();
+            $net->net_id = $urn_res[0]->net_id;
+            $res = $net->fetch(FALSE);
+            $urn->net_id = $res[0]->net_id;
+            $urn->network = $res[0]->net_descr;
+
+            $dev = new device_info();
+            $dev->dev_id = $urn_res[0]->dev_id;
+            $res = $dev->fetch(FALSE);
+            $urn->dev_id = $res[0]->dev_id;
+            $urn->device = $res[0]->dev_descr;
+
+            $urn->port = $urn_res[0]->port;
+            $urn->vlan = $urn_res[0]->vlan;
+            $urn->max_capacity = $urn_res[0]->max_capacity;
+            $urn->min_capacity = $urn_res[0]->min_capacity;
+            $urn->granularity = $urn_res[0]->granularity;
+
+            $urns[] = $urn;
+            
+            return $urns;
+        }
+        
         $aco = new Acos($dom_id, "domain_info");
 
         if ($aco_dom = $aco->fetch(FALSE)) {
             $children = $aco_dom[0]->findChildren();
         }
-
-        $urns = array();
 
         foreach ($children as $child) {
 
@@ -232,7 +265,8 @@ class MeicanTopology {
 //            $urn_info->urn_string = $urn_string;
 //
 //        $allUrns = $urn_info->fetch(FALSE);
-        $allUrns = MeicanTopology::getURNs($dom_id);
+        
+        $allUrns = MeicanTopology::getURNs($dom_id, $urn_string);
 
         $networks = array();
         if ($allUrns)

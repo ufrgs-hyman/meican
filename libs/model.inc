@@ -99,7 +99,7 @@ class Model {
             else
                 $sql = "SELECT * FROM `$tableName`";
         }
-        Framework::debug("fetch",$sql);
+        //Framework::debug("fetch",$sql);
         return $this->querySql($sql, $tableName);
     }
 
@@ -310,7 +310,7 @@ class Model {
         }
         $sql = "INSERT INTO `$classname` ($sqlNames) values ($sqlValues)";
 
-        Framework::debug('sql insert',$sql);
+        //Framework::debug('sql insert',$sql);
         
         $id = $this->insertSql($sql);
         if ($id !== FALSE) {
@@ -329,6 +329,7 @@ class Model {
                     return $ret[0];
             }
             // se não conseguiu buscar objeto, apenas retorna TRUE
+            Framework::debug("objeto inserido mas não encontrado");
             return TRUE;
         } else
             // objeto não inserido, retorna FALSE

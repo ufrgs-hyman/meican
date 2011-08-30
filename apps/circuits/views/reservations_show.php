@@ -29,7 +29,7 @@
                     </td>
                     <td>
                         <a href="<?php echo $this->buildLink(array('action' => 'view', 'param' => "res_id:$r->id")); ?>">
-             oh                <img src="layouts/img/eye.png"/>
+                             <img src="layouts/img/eye.png"/>
                         </a>
                     </td>
 
