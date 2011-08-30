@@ -4,7 +4,7 @@ $domain = $argsToElement;
 
 ?>
 
-<table id="urn_table<?php echo $domain->id; ?>" class="list">
+<table id="urn_table<?php echo $domain->id; ?>" class="list" style="width:100%">
     
     <thead>
         <?php $this->addElement('urn_header'); ?>

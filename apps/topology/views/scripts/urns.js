@@ -67,6 +67,8 @@ function getNetworksFromDomain(domain_id) {
 }
 
 function newURNLine(dom_id) {
+    $("#header").css("width","108%");
+    
     isManual = true;
     
     $('#urn_table' + dom_id + ' tbody tr:last').after('<tr id="newline' + pos + '"/>');
@@ -101,6 +103,7 @@ function newURNLine(dom_id) {
         }
         replaceId = "#" + this.id.replace(/delete/, "newline");
         $(replaceId).remove();
+        $("#header").css("width","100%");
     });
     
     for (var i in domains) {
