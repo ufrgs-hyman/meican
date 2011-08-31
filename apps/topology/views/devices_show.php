@@ -10,16 +10,16 @@
         <tr>
             <th></th>
             <th></th>
-            <th><?php echo _("Name"); ?></th>
-            <th><?php echo _("IP address"); ?></th>
-            <th><?php echo _("Trademark"); ?></th>
-            <th><?php echo _("Model"); ?></th>
-            <th><?php echo _("Number of ports"); ?></th>
-            <th><?php echo _("Latitude"); ?></th>
-            <th><?php echo _("Longitude"); ?></th>
-            <th><?php echo _("Network"); ?></th>
-            <th><?php echo _("Topology node ID"); ?></th>
-            <th><?php echo _("#Endpoints"); ?></th>
+            <th class="large"><?php echo _("Name"); ?></th>
+            <th class="large"><?php echo _("IP address"); ?></th>
+            <th class="large"><?php echo _("Trademark"); ?></th>
+            <th class="large"><?php echo _("Model"); ?></th>
+            <th class="large"><?php echo _("Number of ports"); ?></th>
+            <th class="large"><?php echo _("Latitude"); ?></th>
+            <th class="large"><?php echo _("Longitude"); ?></th>
+            <th class="large"><?php echo _("Network"); ?></th>
+            <th class="large"><?php echo _("Topology node ID"); ?></th>
+            <th class="large"><?php echo _("#Endpoints"); ?></th>
         </tr>
         </thead>
 

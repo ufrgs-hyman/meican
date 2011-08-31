@@ -160,7 +160,6 @@ table td {
     padding: 0px;
     color: #3a5879;
     text-align: center;
-    padding: 3px 7px 2px 7px;
 }
 
 table th {
@@ -168,7 +167,6 @@ table th {
     font-size:12px;
     text-align:center;
     color:#000000;
-    min-width: 70px;
 }
 
 table th.left {
@@ -181,6 +179,11 @@ table th.right {
     text-align:right;
     padding: 1px;
     padding-left: 2px;
+}
+
+table th.large {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 table .list th .urn_show {

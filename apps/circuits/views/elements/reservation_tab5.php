@@ -5,15 +5,15 @@
     <h2><?php echo _('Endpoints'); ?></h2>
 </div>
 
-<table id="confirmation_endpoints">
+<table id="confirmation_endpoints" class="withoutBorder">
     <tr>
         <td style="width: 15%">
             
         </td>
-        <td style="width: 30%">
-            <div id="view_map_canvas" style="height:224px;"></div>        
+        <td style="width: 30%; padding-right: 15px">
+            <div id="view_map_canvas" style="width:330px; height:224px;"></div>        
         </td>
-        <td style="width: 40%">
+        <td style="width: 40%; padding-left: 15px">
             <?php $this->addElement('view_flow', $flow); ?>        
         </td>
         <td style="width: 15%">      

@@ -21,8 +21,8 @@ function createTabs(){
                 changeBand();
             }
             google.maps.event.trigger(edit_map, 'resize');
-            edit_map.setZoom( edit_map.getZoom() );
-            edit_setBounds(edit_bounds);
+            //edit_map.setZoom( edit_map.getZoom() );
+            //edit_setBounds(edit_bounds);
 
             google.maps.event.trigger(view_map, 'resize');
             view_map.setZoom( view_map.getZoom() );
@@ -577,7 +577,6 @@ function edit_initializeMap() {
             }
         }
     }
-    
     toggleCluster(true, edit_markersArray);
     
     google.maps.event.addListener(edit_map, 'click', function() {
@@ -904,13 +903,12 @@ function edit_clearAll(){
         }
         counter = 0;
     }
-    toggleCluster(false, edit_selectedMarkers);
+    
     edit_clearLines();
-    toggleCluster(true, edit_markersArray);
+    edit_clearSelectedMarkers();
     path = [];
-    edit_clearMarkers();    
     edit_clearTopologyMarkers();
-    edit_setBounds(edit_bounds);
+    edit_setBounds(edit_bounds);    
     
     contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
     contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
@@ -919,8 +917,6 @@ function edit_clearAll(){
         return false;
     });
     $(edit_map.getDiv()).append(contextMenu);    
-    
-    edit_initializeMap();
     
     view_clearAll();
     
@@ -942,9 +938,6 @@ function edit_clearMarkers() {
     for (var i=0; i< edit_selectedMarkers.length; i++){
         edit_selectedMarkers[i].setMap(null);
     }
-    for (i = 0; i<edit_markersArray.length; i++) {
-        edit_markersArray[i].setClickable(true);
-    }    
 }
 
 function edit_clearSelectedMarkers(callback) {
@@ -976,6 +969,10 @@ function edit_setBounds(flightPlanCoordinates){
     }
     edit_map.fitBounds(polylineBounds);
     edit_map.setCenter(polylineBounds.getCenter());
+}
+
+function edit_resetZoom() {
+    edit_setBounds(edit_bounds);
 }
 
 function decodeUrn(urn) {
@@ -1103,7 +1100,7 @@ function edit_clearTopologyMarkers() {
 function toggleCluster(toggle, arrayMarkers){
 
 if (toggle) {
-        markerCluster = new MarkerClusterer(edit_map, arrayMarkers);
+        markerCluster = new MarkerClusterer(edit_map, arrayMarkers);      
         google.maps.event.addListener(markerCluster, 'clustermouseover',function(markerCluster) {
                 var stringInfo = "<h4>&nbsp;&nbsp;" + cluster_information_string + "</h4>&nbsp;&nbsp;";
                 stringInfo += " <b>" + networks_string + "</b>: <br>&nbsp;&nbsp;";
@@ -1130,6 +1127,7 @@ if (toggle) {
                     disableAutoPan: true
                 });
                 infowindow.open(edit_map, selectedMarker);
+
         });
         google.maps.event.addListener(markerCluster, 'clustermouseout',function() {
                 infowindow.close(edit_map);

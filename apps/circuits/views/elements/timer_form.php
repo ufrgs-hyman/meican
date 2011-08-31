@@ -9,35 +9,35 @@ $timer = (isset($argsToElement->timer)) ? $argsToElement->timer : NULL;
 ?>
 <table>
     <tr>
-        <th class="left" colspan="2">
+        <th class="left large" colspan="2">
             <?php echo _("Start") ?>
         </th>
-        <th></th>
-        <th class="left" colspan="2">
+        <th>&nbsp;</th>
+        <th class="left large" colspan="2">
             <?php echo _("Finish") ?>
         </th>
-        <th class="left">
+        <th class="left large">
             <?php echo _("Duration") ?>
         </th>
     </tr>
 
     <tr>
-        <td>
+        <td class="left">
             <?php echo _("Date"); ?> <input type="text" name="start_date" size="9" value="<?php echo $start_date; ?>" readonly class="datePicker" id="initialDate"/>
         </td>
-        <td>
+        <td class="left">
             <?php echo _("Time"); ?> <input type="text" name="start_time" size="7" value="<?php echo $start_time; ?>" class="hourPicker" id="initialTime"/>
         </td>
-        <td>
+        <td class="left">
             <?php echo _("until"); ?>
         </td>
-        <td>
+        <td class="left">
             <?php echo _("Date"); ?> <input type="text" name="finish_date" size="9" value="<?php echo $finish_date; ?>" readonly class="datePicker" id="finalDate"/>
         </td>
-        <td>
+        <td class="left">
             <?php echo _("Time"); ?> <input type="text" name="finish_time" size="7" value="<?php echo $finish_time; ?>" class="hourPicker" id="finalTime"/>
         </td>
-        <td>
+        <td class="left">
             <label id="duration"></label>
         </td>
     </tr>

@@ -55,6 +55,12 @@ var edit_myOptions = {
 var edit_map = new google.maps.Map(document.getElementById("edit_map_canvas"), edit_myOptions);
 google.maps.event.trigger(edit_map, 'resize');
 edit_map.setZoom( edit_map.getZoom() );
+infowindow = new google.maps.InfoWindow();
+google.maps.event.addListener(edit_map, 'zoom_changed', function() {
+   if (infowindow) {
+       infowindow.close(edit_map);
+   }
+});
 
 // MAPA PARA VISUALIZAÇÃO
 var view_center = new google.maps.LatLng(-23.051931,-60.975511);

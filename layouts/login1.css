@@ -58,6 +58,7 @@ div#logo_box {
 div#info_box {
     width: 27%;
     float: right;
+    margin-right: 15px;
     margin-top: 90px;
     font-size: 12px;
     text-align: right;
