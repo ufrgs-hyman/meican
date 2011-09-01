@@ -7,7 +7,7 @@ $flow = $argsToElement;
 <table class="flow">
 
     <tr>
-        <th class="large"></th>
+        <th class="large" style="width:30%"></th>
         <th class="large">
             <?php echo _("Source"); ?>
         </th>
@@ -17,7 +17,7 @@ $flow = $argsToElement;
     </tr>
 
     <tr>
-        <th style="border:none">
+        <th style="width: 30%; border:none">
             <?php echo _("Domain"); ?>
         </th>
         <td>
@@ -29,7 +29,7 @@ $flow = $argsToElement;
     </tr>
 
     <tr>
-        <th style="border:none">
+        <th style="width: 30%; border:none">
             <?php echo _("Network"); ?>
         </th>
         <td>
@@ -41,7 +41,7 @@ $flow = $argsToElement;
     </tr>
 
     <tr>
-        <th style="border:none">
+        <th style="width: 30%; border:none">
             <?php echo _("Device"); ?>
         </th>
         <td>
@@ -53,7 +53,7 @@ $flow = $argsToElement;
     </tr>
 
     <tr>
-        <th style="border:none">
+        <th style="width: 30%; border:none">
             <?php echo _("Port"); ?>
         </th>
         <td>
@@ -65,7 +65,7 @@ $flow = $argsToElement;
     </tr>
 
     <tr>
-        <th style="border:none">
+        <th style="width: 30%; border:none">
             <?php echo _("VLAN"); ?>
         </th>
         <td>
@@ -74,14 +74,5 @@ $flow = $argsToElement;
         <td>
             <label id="confirmation_dst_vlan">Untagged</label>
         </td>
-    </tr>
-    
-    <tr>
-        <th style="border:none">
-            <?php echo _("Bandwidth"); ?>
-        </th>
-        <td colspan="2">
-            <label id="lb_bandwidth"></label>
-        </td>
-    </tr>
+    </tr>    
 </table>

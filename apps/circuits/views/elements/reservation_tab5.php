@@ -14,7 +14,9 @@
             <div id="view_map_canvas" style="width:330px; height:224px;"></div>        
         </td>
         <td style="width: 40%; padding-left: 15px">
-            <?php $this->addElement('view_flow', $flow); ?>        
+            <?php $this->addElement('view_flow', $flow); ?>
+            <br/>
+            <?php $this->addElement('view_bandwidth'); ?>
         </td>
         <td style="width: 15%">      
         </td>

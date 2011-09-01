@@ -6,13 +6,13 @@ if (status_array) {
     }
 }
 
- var markersArray = [];
- var topology = false;
- var center = new google.maps.LatLng(0,0);
- var bounds = [];
- var myOptions = {
+ var ReservationMarkers = [];
+
+ var res_center = new google.maps.LatLng(0,0);
+ var res_bounds = [];
+ var res_myOptions = {
    zoom: 3,
-   center: center,
+   center: res_center,
    draggable: false,
    disableDoubleClickZoom: true,
    scrollwheel: false,
@@ -23,5 +23,6 @@ if (status_array) {
    mapTypeControl: false,
    mapTypeId: google.maps.MapTypeId.TERRAIN
  };
- var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
- toggleTopology();
+ var res_map = new google.maps.Map(document.getElementById("res_mapCanvas"), res_myOptions);
+ 
+ //toggleTopology();

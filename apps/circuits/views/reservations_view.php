@@ -25,7 +25,7 @@ $request = $this->passedArgs->request;
     <div style="margin-left: 10px">
         <input type="button" class="clear" value="<?php echo _("Clear") ?>" onClick="clearAll();">
         <input type="button" class="clear" value="<?php echo _("Toggle") ?>" onClick="toggleTopology();">
-        <div id="map_canvas" style="width:300px;height:235px;"></div>
+        <div id="res_mapCanvas" style="width:300px;height:235px;"></div> 
     </div>
 
     <?php $this->addElement('view_timer', $timer); ?>

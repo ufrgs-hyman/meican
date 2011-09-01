@@ -42,18 +42,7 @@ function createSlider(){
         step: band_div,
         slide: function( event, ui ) {
             $("#bandwidth").val(ui.value);
-            if (ui.value >= (band_max*band_warning)) {
-                $("#amount").animate({
-                    'color': '#FF0000'
-                },10);
-                //$( "#amount" ).val( ui.value + " Mbps.<br> " + warning_string);
-                $( "#amount" ).html( ui.value + " Mbps.<br> " + warning_string);
-            } else {
-                $("#amount").animate({
-                    'color': '#00000000'
-                },10);
-                $( "#amount" ).html( ui.value + " Mbps");
-            }
+            $( "#amount" ).html( ui.value + " Mbps");
         }
     });
     $('#slider').removeClass("ui-widget");
@@ -124,6 +113,7 @@ function nextTab(elem){
             break;
         }
     }
+    changeBand();
 }
 
 function prevTab(elem){
@@ -297,13 +287,7 @@ function changeName(elem){
 
 function changeBand(){
     var value = $("#slider").slider("option","value");
-
-    if (value >= (band_max*band_warning)) {
-        $("#lb_bandwidth").html("<font color=#FF0000>  " + value + " Mbps.<br>" + warning_string + "</font>");    
-    } else {
-        $("#lb_bandwidth").html("  " + value + " Mbps.");    
-    }
-    
+    $("#lb_bandwidth").html("  " + value + " Mbps");    
 }
 
 function validateTab1() {
@@ -1183,10 +1167,10 @@ function view_toggleTopology(){
 // inicializa o mapa para visualizacao do circuito
 function view_Circuit(){
     var coord_src = path[0].position;
-    view_addMarker(coord_src);
+    view_addMarker(coord_src, "src");
     view_bounds.push(coord_src);
     var coord_dst = path[1].position;
-    view_addMarker(coord_dst);
+    view_addMarker(coord_dst, "dst");
     view_bounds.push(coord_dst);
     view_setBounds(view_bounds);
     var sourceDest = new Array();
@@ -1196,11 +1180,22 @@ function view_Circuit(){
 }
 
 // adiciona marcadores no mapa para visualizacao do circuito
-function view_addMarker(location) {
-    marker = new google.maps.Marker({
+function view_addMarker(location, where) {
+    var color;
+    
+    if (where == "src") {
+        color = "0000EE";
+    } else if (where == "dst") {
+        color = "FF0000";
+    }
+    
+    marker = new StyledMarker({
         position: location,
+        styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
+            color:color
+        }),
         map:view_map
-    });
+    });    
 
     view_markersArray.push(marker);
     marker.setMap(view_map);

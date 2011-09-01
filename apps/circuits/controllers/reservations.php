@@ -862,8 +862,8 @@ class reservations extends Controller {
                 "cluster_information_string" => _("Information about cluster")
         ));
 
-        $this->setInlineScript('reservations_view');
-        $this->addScript('reservation_map');
+//        $this->setInlineScript('reservations_view');
+//        $this->addScript('reservation_map');
 
         $args = new stdClass();
         $args->gris = $gris;
