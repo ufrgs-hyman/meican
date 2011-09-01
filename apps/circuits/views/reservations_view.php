@@ -6,10 +6,11 @@ $timer = $this->passedArgs->timer;
 $name = $this->passedArgs->res_name;
 $res_id = $this->passedArgs->res_id;
 $request = $this->passedArgs->request;
+$bandwith = $this->passedArgs->bandwidth;
 
 ?>
 
-<h1><?php echo _("Reservation Details"); ?></h1>
+<h1><?php echo _("Reservation details"); ?></h1>
 
 <table>
     <tr>
@@ -32,9 +33,10 @@ $request = $this->passedArgs->request;
 
 <h3><?php echo _('Request'); ?></h3>
 
-<?php $this->addElement('view_request', $request); ?>
+<?php if ($request) $this->addElement('view_request', $request); ?>
 
-<?php if ($gris) :?>
+<?php if ($gris): ?>
+
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'cancel', 'param' => "res_id:$res_id")); ?>">
 
     <table class="list">
@@ -82,18 +84,19 @@ $request = $this->passedArgs->request;
             <?php endforeach; ?>
         </tbody>
 
-    </table>    
+    </table>
 
     <div style="clear: both" class="controls">
         <input class="back" type="button" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');" value="<?php echo _("Back to reservations"); ?>"/>
         <input class="cancel" type="submit" disabled id="cancel_button" style="opacity:0.4" value="<?php echo _("Cancel reservations"); ?>" onClick="return confirm('<?php echo _('Cancel the selected reservations?'); ?>')"/>
     </div>
 
-
-
 </form>
+
 <?php else : ?>
+
 <div class="controls">
-        <input class="back" type="button" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');" value="<?php echo _("Back to reservations"); ?>"/>
+    <input class="back" type="button" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');" value="<?php echo _("Back to reservations"); ?>"/>
 </div>
+
 <?php endif; ?>

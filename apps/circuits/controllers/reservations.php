@@ -778,6 +778,13 @@ class reservations extends Controller {
         $flow_info = new flow_info();
         $flow_info->flw_id = $reservation->flw_id;
         $flow = $flow_info->getFlowDetails();
+        
+//        $urn = new urn_info();
+//        $urn->urn_string = $flow->source->urn;
+//        $urn_id = $urn->get('urn_id');
+//        
+//        $aco = new Acos($urn_id,"urn_info");
+//        $aco->getParentNodes();
 
         if (!$flow) {
             $this->setFlash(_("Flow not found or could not get endpoints information"), "fatal");
@@ -789,60 +796,59 @@ class reservations extends Controller {
         $timer_info->tmr_id = $reservation->tmr_id;
         $timer = $timer_info->getTimerDetails();
         
-        Framework::debug("flow",$flow);
-        Framework::debug("timer",$timer);
-
         if (!$timer) {
             $this->setFlash(_("Timer not found"), "fatal");
             $this->show();
             return;
         }
+        
+        Framework::debug("flow",$flow);
+        Framework::debug("timer",$timer);
 
         $req = new request_info();
         $req->resource_id = $reservation->res_id;
         $req->resource_type = 'reservation_info';
         $req->answerable = 'no';
-        $result = $req->fetch();
-
+        
+        $request = NULL;
+        if ($result = $req->fetch()) {
+            // a reserva possui requisição
+            $request = new stdClass();
+            $request->response = $result[0]->response;
+            $request->message = $result[0]->message;
+            $request->status = $result[0]->status;
+        }
+        
         $status = array();
         $gris = array();
+        
+        $gri = new gri_info();
+        $gri->res_id = $reservation->res_id;
+        $allGris = $gri->fetch(FALSE);
 
-        if ($result[0]->response == 'accept') {
-            $request->response = 'accept';
-            $request->message = $result[0]->message;
+        $dateFormat = "d/m/Y";
+        //$dateFormat = "M j, Y";
 
-            $gri = new gri_info();
-            $gri->res_id = $reservation->res_id;
-            $allGris = $gri->fetch(FALSE);
+        $hourFormat = "H:i";
+        //$hourFormat = "g:i a";
 
-            $dateFormat = "d/m/Y";
-            //$dateFormat = "M j, Y";
+        if ($allGris) {
+            foreach ($allGris as $g) {
+                $gri = new stdClass();
+                $gri->id = $g->gri_id;
+                $gri->status = gri_info::translateStatus($g->status);
 
-            $hourFormat = "H:i";
-            //$hourFormat = "g:i a";
+                $status[] = $g->status;
 
-            if ($allGris) {
-                foreach ($allGris as $g) {
-                    $gri = new stdClass();
-                    $gri->id = $g->gri_id;
-                    $gri->status = gri_info::translateStatus($g->status);
+                $start = new DateTime($g->start);
+                $finish = new DateTime($g->finish);
 
-                    $status[] = $g->status;
+                $gri->start = $start->format("$dateFormat $hourFormat");
+                $gri->finish = $finish->format("$dateFormat $hourFormat");
 
-                    $start = new DateTime($g->start);
-                    $finish = new DateTime($g->finish);
-
-                    $gri->start = $start->format("$dateFormat $hourFormat");
-                    $gri->finish = $finish->format("$dateFormat $hourFormat");
-
-                    $gris[] = $gri;
-                }
+                $gris[] = $gri;
             }
-        } elseif ($result[0]->response == 'reject') {
-            $request->response = 'reject';
-            $request->message = $result[0]->message;
         }
-        $request->status = $result[0]->status;
 
         $this->setArgsToScript(array(
                 "reservation_id" => $reservation->res_id,
@@ -870,6 +876,7 @@ class reservations extends Controller {
         $args->flow = $flow;
         $args->timer = $timer;
         $args->res_name = $reservation->res_name;
+        $args->bandwidth = $reservation->bandwidth;
         $args->res_id = $reservation->res_id;
         $args->request = $request;
 
