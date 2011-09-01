@@ -188,9 +188,9 @@ class urns extends Controller {
                 $urn->port = $ud[2];
                 $urn->vlan = $ud[3];
                 $urn->urn_string = $ud[4];
-                $urn->max_capacity = $ud[5];
-                $urn->min_capacity = $ud[6];
-                $urn->granularity = $ud[7];
+                $urn->max_capacity = ($ud[5]) ? $ud[5] : NULL;
+                $urn->min_capacity = ($ud[6]) ? $ud[6] : NULL;
+                $urn->granularity = ($ud[7]) ? $ud[7] : NULL;
 
                 if ($urn->insert($urn->dev_id, "device_info"))
                     $cont++;

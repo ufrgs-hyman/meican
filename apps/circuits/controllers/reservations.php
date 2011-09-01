@@ -686,15 +686,19 @@ class reservations extends Controller {
          */
         $timer_cont = new timers();
         $new_timer = $timer_cont->add();
-
-        Framework::debug("new flow", $new_flow);
-
-        $reservation = new reservation_info();
-        $reservation->res_name = Common::POST("res_name");
-        $reservation->bandwidth = Common::POST("bandwidth");
-        $reservation->flw_id = $new_flow->flw_id;
-        $reservation->tmr_id = $new_timer->tmr_id;
-        $reservation->creation_time = $res_diff_timestamp;
+        
+        if ($new_flow && $new_timer) {
+            $reservation = new reservation_info();
+            $reservation->res_name = Common::POST("res_name");
+            $reservation->bandwidth = Common::POST("bandwidth");
+            $reservation->flw_id = $new_flow->flw_id;
+            $reservation->tmr_id = $new_timer->tmr_id;
+            $reservation->creation_time = $res_diff_timestamp;
+        } else {
+            $this->setFlash(_('Fail to save endpoints or timer on database'), 'error');
+            $this->show();
+            return;
+        }
 
         /**
          * 1- envia ao OSCARS como signal-xml todas as recorrências da reserva
@@ -722,14 +726,28 @@ class reservations extends Controller {
          //buscar urn destino para adicionar a reserva embaixo
 
         if ($res = $reservation->insert($src_urn[0]->urn_id, 'urn_info')) {
-            if ($this->send($res)) {
-                $this->setFlash(_('Reservation submitted'), 'success');
-                $this->view(array("res_id" => $res->res_id));
-            } else {
-                $this->setFlash(_('Error to send'), 'error');
-                $this->show();
+            $result = $this->send($res);
+            switch ($result) {
+                case 0:
+                    $reservation->delete();
+                    $new_flow->delete();
+                    $new_timer->delete();
+                    $this->setFlash(_('Error to send reservation to OSCARS'), 'error');
+                    $this->show();
+                    return;
+                    break;
+                case 1:
+                    $this->setFlash(_('Reservation submitted'), 'success');
+                    break;
+                default:
+                    $this->setFlash("$result "._('reservations submitted'), 'success');
+                    break;
             }
+
+            $this->view(array("res_id" => $res->res_id));
         } else {
+            $new_flow->delete();
+            $new_timer->delete();
             $this->setFlash(_('Fail to save reservation on database'), 'error');
             $this->show();
         }
@@ -1050,6 +1068,7 @@ class reservations extends Controller {
         $timer = $tim->get();
         $arrayRec = $timer->getRecurrences();
 
+        $resSent = 0;
         foreach ($arrayRec as $t) {
             $tmp = $oscarsRes;
             $tmp->setStartTimestamp($t->start); //em timestamp
@@ -1058,6 +1077,8 @@ class reservations extends Controller {
             Framework::debug("tmp", $tmp);
 
             if ($tmp->createReservation()) {
+                $resSent++;
+                
                 $new_gri = new gri_info();
                 $new_gri->gri_id = $tmp->getGri();
                 $new_gri->res_id = $reservation_info->res_id;
@@ -1128,7 +1149,7 @@ class reservations extends Controller {
                 return FALSE;
             }
         } else
-            return TRUE;
+            return $resSent;
     }
 
     public function check() {

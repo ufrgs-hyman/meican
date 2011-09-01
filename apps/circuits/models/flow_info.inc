@@ -89,25 +89,24 @@ class flow_info extends Resource_Model {
             }
             $flow = $ret[0];
 
-            $domain = new domain_info();
-            $domain->dom_id = $flow->src_dom;
-            $dom = $domain->fetch(FALSE);
+//            $domain = new domain_info();
+//            $domain->dom_id = $flow->src_dom;
+//            $dom = $domain->fetch(FALSE);
 
 //            //chamada de web service para buscar os dados completos da URN
 //            $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
 //            $ws = new nusoap_client($endpoint,array('cache_wsdl' => 0));
 //            $urnDetailsRet = $ws->call('getURNDetails', array($flow->src_urn_string));
 
-            $urnDetailsRet = MeicanTopology::getURNDetails($dom[0]->dom_id, $flow->src_urn_string);
+            $urnDetailsRet = MeicanTopology::getURNDetails(NULL, $flow->src_urn_string);
             $flowData = new stdClass();
 
             $flowData->id = $flow->flw_id;
-            $flowData->name = $flow->flw_name;
             $flowData->path = $flow->path;
 
-            $flowData->source->domain = $dom[0]->dom_descr;
-            $flowData->source->dom_id = $dom[0]->dom_id;
-            $flowData->source->oscars_ip = $dom[0]->oscars_ip;
+//            $flowData->source->domain = $dom[0]->dom_descr;
+//            $flowData->source->dom_id = $dom[0]->dom_id;
+//            $flowData->source->oscars_ip = $dom[0]->oscars_ip;
             $flowData->source->vlan = $flow->src_vlan;
             $flowData->source->urn = $flow->src_urn_string;
 
@@ -122,19 +121,19 @@ class flow_info extends Resource_Model {
             } else
                 return FALSE;
 
-            $domain = new domain_info();
-            $domain->dom_id = $flow->dst_dom;
-            $dom = $domain->fetch(FALSE);
+//            $domain = new domain_info();
+//            $domain->dom_id = $flow->dst_dom;
+//            $dom = $domain->fetch(FALSE);
 
             //chamada de web service para buscar os dados completos da URN
 //            $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
 //            $ws = new nusoap_client($endpoint,array('cache_wsdl' => 0));
 //            $urnDetailsRet = $ws->call('getURNDetails', array($flow->dst_urn_string));
 
-            $urnDetailsRet = MeicanTopology::getURNDetails($dom[0]->dom_id, $flow->dst_urn_string);
-            $flowData->dest->domain = $dom[0]->dom_descr;
-            $flowData->dest->dom_id = $dom[0]->dom_id;
-            $flowData->dest->oscars_ip = $dom[0]->oscars_ip;
+            $urnDetailsRet = MeicanTopology::getURNDetails(NULL, $flow->dst_urn_string);
+//            $flowData->dest->domain = $dom[0]->dom_descr;
+//            $flowData->dest->dom_id = $dom[0]->dom_id;
+//            $flowData->dest->oscars_ip = $dom[0]->oscars_ip;
             $flowData->dest->vlan = $flow->dst_vlan;
             $flowData->dest->urn = $flow->dst_urn_string;
 

@@ -71,7 +71,7 @@ class timer_info extends Resource_Model {
 
             $timerData->duration = ($dur_array) ? implode(", ", $dur_array) : "0 "._("minute");
 
-            $timerData->summary = ($timer->freq && $timer->summary) ? $timer->summary : "-";
+            $timerData->summary = ($timer->freq && $timer->summary) ? $timer->summary : NULL;
 
             return $timerData;
         }

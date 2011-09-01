@@ -8,6 +8,7 @@ $res_id = $this->passedArgs->res_id;
 $request = $this->passedArgs->request;
 
 ?>
+
 <h1><?php echo _("Reservation Details"); ?></h1>
 
 <table>
@@ -16,15 +17,19 @@ $request = $this->passedArgs->request;
         <th><?php echo $name; ?></th>
     </tr>
 </table>
+
     <div style="float:inherit">
-    <?php $this->addElement('view_flow', $flow); ?>
+        <?php $this->addElement('view_flow', $flow); ?>
     </div>
+
     <div style="margin-left: 10px">
         <input type="button" class="clear" value="<?php echo _("Clear") ?>" onClick="clearAll();">
         <input type="button" class="clear" value="<?php echo _("Toggle") ?>" onClick="toggleTopology();">
         <div id="map_canvas" style="width:300px;height:235px;"></div>
     </div>
+
     <?php $this->addElement('view_timer', $timer); ?>
+
 <h3><?php echo _('Request'); ?></h3>
 
 <?php $this->addElement('view_request', $request); ?>

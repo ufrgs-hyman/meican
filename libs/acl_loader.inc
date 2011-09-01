@@ -28,21 +28,22 @@ class AclLoader extends Tree_Model {
             else $reload = FALSE;
         } else $reload = TRUE;
 
-        if (!$acl_ses || $reload ||true) {
+        if (!$acl_ses || $reload) {
             $this->acl = $this->reloadACL();
             Common::setSessionVariable('acl', $this->acl);
 
-            Framework::debug("acl tree",$this->acl);
+            //Framework::debug("acl tree",$this->acl);
 
         }
         else $this->acl = $acl_ses;
     }
 
     public function reloadACL($options = array()) {
+        Framework::debug('reloading ACL...');
+        
         Framework::$debugMode = 0;
 
         $time = mktime();
-        Framework::debug('reloading ACL...');
 
         //procura pelos aro_id do user (pode ser mais de um)
         $aro = new aros();
