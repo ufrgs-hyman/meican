@@ -6,85 +6,95 @@ $timer = $this->passedArgs->timer;
 $name = $this->passedArgs->res_name;
 $res_id = $this->passedArgs->res_id;
 $request = $this->passedArgs->request;
-$bandwith = $this->passedArgs->bandwidth;
+$bandwidth = $this->passedArgs->bandwidth;
 
 ?>
-
+<br/>
 <h1><?php echo _("Reservation details"); ?></h1>
 
-<table>
+<table class="withoutBorder" style="width: 100%">
     <tr>
-        <th><?php echo _("Reservation name"); ?></th>
-        <th><?php echo $name; ?></th>
+        <td style="width: 48%; vertical-align: top">
+            <div id="res_mapCanvas" style="width:100%; height:365px;"></div>        
+        </td>
+        <td style="width: 48%; padding-left: 15px; vertical-align: top">
+            <table style="min-width: 30%" class="withoutBorder">
+                <tr>
+                    <th style="border-bottom:none; padding-right: 5px"><?php echo _("Reservation name"); ?>:</th>
+                    <th style="border-bottom:none; padding-left: 5px"><?php echo $name; ?></th>
+                </tr>
+            </table>
+            
+            <br/>
+            <?php $this->addElement('view_flow', $flow); ?>
+            
+            <br/>
+            <?php $this->addElement('view_bandwidth', $bandwidth); ?>
+            
+            <br/><br/>           
+            <?php $this->addElement('view_timer', $timer); ?>
+            <br/>
+            
+            <h2 style="text-align: left; color:black"><?php echo _('Request'); ?></h2>
+
+            <?php if ($request) $this->addElement('view_request', $request); ?>
+
+            <?php if ($gris): ?>
+            
+            <table class="list" style="width: 100%">
+
+            <thead>
+                <tr>
+                    <th class="listHeader"></th>
+                    <th class="listHeader"><?php echo _("Tool"); ?></th>
+                    <th class="listHeader"><?php echo _("Reservation ID"); ?></th>
+                    <th class="listHeader" align="center">
+                        <?php echo _("Status"); ?>
+                        <img alt="<?php echo _("loading"); ?>" style="display:none" id="load_dynamic" src="includes/images/ajax-loader.gif">
+                        <a href="#" onclick="return false;">
+                            <img alt="<?php echo _("refresh"); ?>" border="0" id="load_static" class="refreshTable" src="includes/images/ajax-refresh.gif" onClick="refreshStatus(<?php echo $res_id; ?>);">
+                        </a>
+                    </th>
+                    <th class="listHeader"><?php echo _("Initial Date/Time"); ?></th>
+                    <th class="listHeader"><?php echo _("Final Date/Time"); ?></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php foreach ($gris as $i => $g): ?>
+                    <tr id="line<?php echo $i; ?>">
+                        <td>
+                            <input type="checkbox" id="cancel<?php echo $i; ?>" disabled name="cancel_checkbox[]" value="<?php echo $g->id; ?>" onClick="disabelCancelButton(this);"/>
+                        </td>
+                        <td>
+                            OSCARS
+                        </td>
+                        <td>
+                            <?php echo $g->id; ?>
+                        </td>
+                        <td>
+                            <label id="status<?php echo $i; ?>"><?php echo $g->status; ?></label>
+                            <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading" src="includes/images/ajax-loader.gif"/>
+                        </td>
+                        <td>
+                            <?php echo $g->start; ?>
+                        </td>
+                        <td>
+                            <?php echo $g->finish; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        </td>
     </tr>
 </table>
 
-    <div style="float:inherit">
-        <?php $this->addElement('view_flow', $flow); ?>
-    </div>
 
-    <div style="margin-left: 10px">
-        <input type="button" class="clear" value="<?php echo _("Clear") ?>" onClick="clearAll();">
-        <input type="button" class="clear" value="<?php echo _("Toggle") ?>" onClick="toggleTopology();">
-        <div id="res_mapCanvas" style="width:300px;height:235px;"></div> 
-    </div>
 
-    <?php $this->addElement('view_timer', $timer); ?>
+<br/><br/>
 
-<h3><?php echo _('Request'); ?></h3>
-
-<?php if ($request) $this->addElement('view_request', $request); ?>
-
-<?php if ($gris): ?>
-
-<form method="POST" action="<?php echo $this->buildLink(array('action' => 'cancel', 'param' => "res_id:$res_id")); ?>">
-
-    <table class="list">
-
-        <thead>
-            <tr>
-                <th></th>
-                <th><?php echo _("Tool"); ?></th>
-                <th><?php echo _("Reservation ID"); ?></th>
-                <th align="center">
-                    <?php echo _("Status"); ?>
-                    <img alt="<?php echo _("loading"); ?>" style="display:none" id="load_dynamic" src="includes/images/ajax-loader.gif">
-                    <a href="#" onclick="return false;">
-                        <img alt="<?php echo _("refresh"); ?>" border="0" id="load_static" src="includes/images/ajax-refresh.gif" onClick="refreshStatus(<?php echo $res_id; ?>);">
-                    </a>
-                </th>
-                <th><?php echo _("Initial Date/Time"); ?></th>
-                <th><?php echo _("Final Date/Time"); ?></th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <?php foreach ($gris as $i => $g): ?>
-                <tr id="line<?php echo $i; ?>">
-                    <td>
-                        <input type="checkbox" id="cancel<?php echo $i; ?>" disabled name="cancel_checkbox[]" value="<?php echo $g->id; ?>" onClick="disabelCancelButton(this);"/>
-                    </td>
-                    <td>
-                        OSCARS
-                    </td>
-                    <td>
-                        <?php echo $g->id; ?>
-                    </td>
-                    <td>
-                        <label id="status<?php echo $i; ?>"><?php echo $g->status; ?></label>
-                        <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading" src="includes/images/ajax-loader.gif"/>
-                    </td>
-                    <td>
-                        <?php echo $g->start; ?>
-                    </td>
-                    <td>
-                        <?php echo $g->finish; ?>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-
-    </table>
+<form method="POST" action="<?php echo $this->buildLink(array('action' => 'cancel', 'param' => "res_id:$res_id")); ?>">    
 
     <div style="clear: both" class="controls">
         <input class="back" type="button" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');" value="<?php echo _("Back to reservations"); ?>"/>

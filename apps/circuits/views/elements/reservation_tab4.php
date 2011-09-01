@@ -9,6 +9,9 @@
     </tr>
 </table>
 <br/>
+
+<div id="fillSpace" style="height: 49%"></div>
+
 <div class="control_tab">
 
     <input type="button" id="bn2" class="next ui-state-disabled" value="<?php echo _('Next'); ?>" onClick="nextTab(this);"/>

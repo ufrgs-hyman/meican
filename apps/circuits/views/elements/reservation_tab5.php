@@ -7,31 +7,25 @@
 
 <table id="confirmation_endpoints" class="withoutBorder">
     <tr>
-        <td style="width: 15%">
+        <td style="width: 5%; vertical-align: top">
             
         </td>
-        <td style="width: 30%; padding-right: 15px">
-            <div id="view_map_canvas" style="width:330px; height:224px;"></div>        
+        <td style="width: 45%; padding-right: 15px; vertical-align: top">
+            <div id="view_map_canvas" style="width:100%; height:235px;"></div>        
         </td>
-        <td style="width: 40%; padding-left: 15px">
+        <td style="width: 45%; padding-left: 15px; vertical-align: top">
             <?php $this->addElement('view_flow', $flow); ?>
             <br/>
             <?php $this->addElement('view_bandwidth'); ?>
+            <br/>
+            <?php $this->addElement('view_timer', $timer); ?>
         </td>
-        <td style="width: 15%">      
+        <td style="width: 5%; vertical-align: top">      
         </td>
     </tr>
 </table>
 
-<br/><br/>
-
-<div align="center">
-
-    <h2><?php echo _('Timer'); ?></h2>
-    
-    <?php $this->addElement('view_timer', $timer); ?>
-
-</div>
+<div style="height: 25%"></div>
 
 <div class="control_tab">    
     <input type="submit" id="bf"  class="ok" value="<?php echo _('Finished'); ?>"/>

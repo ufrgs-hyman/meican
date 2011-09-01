@@ -13,11 +13,9 @@ function initializeTimer() {
             refreshSummary();
         }
         if (($("#initialTime").val()) < ($("#finalTime").val())) {
-            $("#confirmation_initialDate").html("Date: " + $("#initialDate").val());
-            $("#confirmation_initialTime").html("Time: " + $("#initialTime").val());
-            $("#confirmation_finalDate").html("Date: " + $("#finalDate").val());
-            $("#confirmation_finalTime").html("Time: " + $("#finalTime").val());
-            $("#confirmation_duration").html($("#duration").html());  
+            $("#view_startTimer").html($("#initialDate").val() +" "+ $("#initialTime").val());
+            $("#view_finishTimer").html($("#finalDate").val() + " " + $("#finalTime").val());
+            $("#view_durationTimer").html($("#duration").html()); 
         } 
     });   
     
@@ -42,11 +40,9 @@ function initializeTimer() {
     });
     calcDuration();
     refreshSummary();
-    $("#confirmation_initialDate").html("Date: " + $("#initialDate").val());
-    $("#confirmation_initialTime").html("Time: " + $("#initialTime").val());
-    $("#confirmation_finalDate").html("Date: " + $("#finalDate").val());
-    $("#confirmation_finalTime").html("Time: " + $("#finalTime").val());
-    $("#confirmation_duration").html($("#duration").html());            
+    $("#view_startTimer").html($("#initialDate").val() +" "+ $("#initialTime").val());
+    $("#view_finishTimer").html($("#finalDate").val() + " " + $("#finalTime").val());
+    $("#view_durationTimer").html($("#duration").html());            
 }
 
 function refreshSummary() {
@@ -61,7 +57,7 @@ function refreshSummary() {
     }
 }
 
-function showRecurrenceBox() {
+function showRecurrenceBox() {    
     $("#untilDate").datepicker({
         dateFormat: date_format,
         showWeek: false,
@@ -105,16 +101,18 @@ function showRecurrenceBox() {
 
     if ($("#repeat_chkbox").attr("checked")) {
         //$("#auxDiv").show();
-        $("#recurrence").slideDown();
+        $("#recurrence").slideDown(0);        
         setFreq();
         setUntilType();
         $("#rec_initialTime").html($("#initialTime").val());
         $("#rec_finalTime").html($("#finalTime").val());
         $("#rec_duration").html($("#duration").html());        
+        $("#fillSpace").hide();
     }
     else {
         //$("#auxDiv").hide();
-        $("#recurrence").slideUp();
+        $("#fillSpace").show();
+        $("#recurrence").slideUp(0);
         //$("#recurrence-edit").hide();
         $("#interval_type").empty();
         $("#short_desc").empty();

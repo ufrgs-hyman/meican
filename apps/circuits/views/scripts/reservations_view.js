@@ -6,10 +6,11 @@ if (status_array) {
     }
 }
 
- var ReservationMarkers = [];
+ var res_markersArray = [];
 
  var res_center = new google.maps.LatLng(0,0);
  var res_bounds = [];
+ var res_lines = [];
  var res_myOptions = {
    zoom: 3,
    center: res_center,
@@ -25,4 +26,4 @@ if (status_array) {
  };
  var res_map = new google.maps.Map(document.getElementById("res_mapCanvas"), res_myOptions);
  
- //toggleTopology();
+res_showCircuit();

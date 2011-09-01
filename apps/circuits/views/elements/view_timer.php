@@ -4,13 +4,13 @@ $timer = $argsToElement;
 
 ?>
 
-<table>
+<table style="width: 100%">
 
     <tr>
-        <th colspan="2">
+        <th>
             <?php echo _("Start") ?>
         </th>
-        <th colspan="2">
+        <th>
             <?php echo _("Finish") ?>
         </th>
         <th>
@@ -20,19 +20,15 @@ $timer = $argsToElement;
 
     <tr>
         <td>
-            <label id="confirmation_initialDate"><?php if ($timer) echo $timer->start; ?></label>
+            <label id="view_startTimer"><?php if ($timer) echo $timer->start; ?></label>
         </td>
+
         <td>
-            <label id="confirmation_initialTime"></label>
+            <label id="view_finishTimer"><?php if ($timer) echo $timer->finish; ?></label>
         </td>
+
         <td>
-            <label id="confirmation_finalDate"><?php if ($timer) echo $timer->finish; ?></label>
-        </td>
-        <td>            
-            <label id="confirmation_finalTime"></label>
-        </td>
-        <td>
-            <label id="confirmation_duration"><?php if ($timer) echo $timer->duration; ?></label>
+            <label id="view_durationTimer"><?php if ($timer) echo $timer->duration; ?></label>
         </td>
     </tr>
 

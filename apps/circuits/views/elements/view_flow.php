@@ -4,7 +4,7 @@ $flow = $argsToElement;
 
 ?>
 
-<table class="flow">
+<table class="flow" style="width: 100%">
 
     <tr>
         <th class="large" style="width:30%"></th>

@@ -186,6 +186,10 @@ table th.large {
     padding-right: 10px;
 }
 
+table th.listHeader {
+    line-height: 2;
+}
+
 table .list th .urn_show {
     border-right: 1px solid black;
 }
@@ -311,6 +315,12 @@ input.refresh{
     background-repeat:  no-repeat;
     background-position: 3px 2px;
     /* figura tem 18px 18px*/
+}
+
+.refreshTable{
+    height: 15px;
+    margin-left: 2px;
+    vertical-align: text-bottom;
 }
 
 input.save{
