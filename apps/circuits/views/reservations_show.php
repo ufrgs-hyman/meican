@@ -22,8 +22,8 @@
         </thead>
 
         <tbody>
-            <?php foreach ($reservations as $i => $r): ?>
-                <tr id="line<?php echo $i; ?>">
+            <?php foreach ($reservations as $r): ?>
+                <tr id="line<?php echo $r->id; ?>">
                     <td>
                         <input type="checkbox" name="del_checkbox[]" value="<?php echo $r->id; ?>"/>
                     </td>
@@ -38,7 +38,7 @@
                     </td>
 
                     <td>
-                        <label id="status<?php echo $i; ?>"></label>
+                        <label id="status<?php echo $r->id; ?>"></label>
                         <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading" class="load" src="includes/images/ajax-loader.gif"/>
                     </td>
                     <td>

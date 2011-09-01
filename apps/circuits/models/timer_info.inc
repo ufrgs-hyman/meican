@@ -41,7 +41,6 @@ class timer_info extends Resource_Model {
             $timerData = new stdClass();
 
             $timerData->id = $timer->tmr_id;
-            $timerData->name = $timer->tmr_name;
 
             $start = new DateTime($timer->start);
             $finish = new DateTime($timer->finish);

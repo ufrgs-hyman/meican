@@ -62,6 +62,23 @@ class reservations extends Controller {
                 $reservations[] = $res;
             }
             $this->setAction('show');
+            
+            $dom = new domain_info();
+            $domains = $dom->fetch(FALSE);
+            $domains_to_js = array();
+            foreach ($domains as $d) {
+                $has_reservations = FALSE;
+                $aco = new Acos($d->dom_id,"domain_info");
+                if ($aco_obj = $aco->fetch(FALSE)) {
+                    if ($aco_obj[0]->findChildren('reservation_info'))
+                        $has_reservations = TRUE;
+                }
+                if ($has_reservations) {
+                    $domains_to_js[] = $d->dom_id;
+                }
+            }
+            
+            $this->setArgsToScript(array('domains' => $domains_to_js));
 
             $this->setInlineScript('reservations_init');
 
@@ -85,10 +102,20 @@ class reservations extends Controller {
 
         $res_number = Common::POST("count"); // quantidade de reservas listadas
         $res_id = Common::POST("res_id");
+        $dom_id = Common::POST('dom_id');
+        
+        $aco = new Acos($dom_id,'domain_info');
+        $children = $aco->findChildren('reservation_info');
+        
+        $reservations = array();
+        foreach ($children as $child) {
+            $res_info = new reservation_info();
+            $res_info->res_id = $child->obj_id;
+            if ($result = $res_info->fetch())
+                $reservations[] = $result[0];
+        }
 
-        $res_info = new reservation_info();
-        $res_info->res_id = ($res_id) ? $res_id : "";
-        $reservations = $res_info->fetch();
+        
 
         // testa se a quantidade de reservas na página é diferente da quantidade de reservas no banco
         if (count($reservations) != $res_number) {
@@ -109,43 +136,25 @@ class reservations extends Controller {
             foreach ($reservations as $res) {
                 $statusArray[$ind] = array();
                 $control[$ind] = array();
+                
+                $gri = new gri_info();
+                $gri->res_id = $res->res_id;
+                $gris = $gri->fetch(FALSE);
 
-                $req = new request_info();
-                $req->resource_id = $res->res_id;
-                $req->resource_type = 'reservation_info';
-
-                if ($result = $req->fetch()) {
-                    switch ($result[0]->response) {
-                        case 'accept': //FINALIZADA NO ODE E já foi enviada ao OSCARS
-                            $gri = new gri_info();
-                            $gri->res_id = $res->res_id;
-                            $gris = $gri->fetch(FALSE);
-
-                            $ind2 = 0;
-                            if ($gris) {
-                                foreach ($gris as $g) {
-                                    switch ($g->status) {
-                                        case "FINISHED":
-                                        case "CANCELLED":
-                                        case "FAILED":
-                                            $control[$ind][$ind2] = FALSE;
-                                            break;
-                                        default:
-                                            $griList[] = $g->gri_id;
-                                            $control[$ind][$ind2] = TRUE;
-                                    }
-                                    $ind2++;
-                                }
-                            }
-
-                            break;
-                        case 'reject':
-                            $control[$ind][0] = FALSE;
-                            $statusArray[$ind][0] = 'REJECTED';
-                            break;
-                        default: //ESTÁ SENDO EXECUTADA NO ODE
-                            $control[$ind][0] = FALSE;
-                            $statusArray[$ind][0] = $result[0]->status;
+                $ind2 = 0;
+                if ($gris) {
+                    foreach ($gris as $g) {
+                        switch ($g->status) {
+                            case "FINISHED":
+                            case "CANCELLED":
+                            case "FAILED":
+                                $control[$ind][$ind2] = FALSE;
+                                break;
+                            default:
+                                $griList[] = $g->gri_id;
+                                $control[$ind][$ind2] = TRUE;
+                        }
+                        $ind2++;
                     }
                 }
 
@@ -159,6 +168,11 @@ class reservations extends Controller {
 
         $statusResult = array();
         if ($griList) {
+            $oscarsRes = new OSCARSReservation();
+            $oscarsRes->setOscarsUrl("200.132.1.28:8080"); //oscars2
+            $oscarsRes->setGrisString($griList);
+            $result = $oscarsRes->listReservations();
+            
             $endpoint = "http://" . Framework::$bridgeIp . "/axis2/services/BridgeOSCARS?wsdl";
 
             $client = new SoapClient($endpoint, array('cache_wsdl' => 0));
@@ -186,6 +200,26 @@ class reservations extends Controller {
             $gri = new gri_info();
             $gri->res_id = $res->res_id;
             $gris = $gri->fetch(FALSE);
+            
+            $req = new request_info();
+                $req->resource_id = $res->res_id;
+                $req->resource_type = 'reservation_info';
+                if ($result = $req->fetch()) {
+                    // a reserva possui requisição
+                    switch ($result[0]->response) {
+                        case 'accept': //FINALIZADA NO ODE E já foi enviada ao OSCARS
+                            
+
+                            break;
+                        case 'reject':
+                            $control[$ind][0] = FALSE;
+                            $statusArray[$ind][0] = 'REJECTED';
+                            break;
+                        default: //ESTÁ SENDO EXECUTADA NO ODE
+                            $control[$ind][0] = FALSE;
+                            $statusArray[$ind][0] = $result[0]->status;
+                    }
+                }
 
             if ($gris) {
                 $ind2 = 0;
@@ -779,13 +813,42 @@ class reservations extends Controller {
         $flow_info->flw_id = $reservation->flw_id;
         $flow = $flow_info->getFlowDetails();
         
-//        $urn = new urn_info();
-//        $urn->urn_string = $flow->source->urn;
-//        $urn_id = $urn->get('urn_id');
-//        
-//        $aco = new Acos($urn_id,"urn_info");
-//        $aco->getParentNodes();
+        $dom = new domain_info();
+        if ($domain = $dom->getOSCARSDomain($flow->source->urn)) {
+            $flow->source->domain = $domain->dom_descr;
+        } else {
+            $urn = new urn_info();
+            $urn->urn_string = $flow->source->urn;
+            $urn_id = $urn->get('urn_id');
 
+            $urn_aco = new Acos($urn_id, "urn_info");
+            $dev_aco = $urn_aco->getParentNodes();
+            $net_aco = $dev_aco[0]->getParentNodes();
+            $dom_aco = $net_aco[0]->getParentNodes();
+            
+            $dom = new domain_info();
+            $dom->dom_id = $dom_aco[0]->obj_id;
+            $flow->source->domain = $dom->get('dom_descr');
+        }
+        
+        $dom = new domain_info();
+        if ($domain = $dom->getOSCARSDomain($flow->dest->urn)) {
+            $flow->dest->domain = $domain->dom_descr;
+        } else {
+            $urn = new urn_info();
+            $urn->urn_string = $flow->dest->urn;
+            $urn_id = $urn->get('urn_id');
+
+            $urn_aco = new Acos($urn_id, "urn_info");
+            $dev_aco = $urn_aco->getParentNodes();
+            $net_aco = $dev_aco[0]->getParentNodes();
+            $dom_aco = $net_aco[0]->getParentNodes();
+            
+            $dom = new domain_info();
+            $dom->dom_id = $dom_aco[0]->obj_id;
+            $flow->dest->domain = $dom->get('dom_descr');
+        }
+        
         if (!$flow) {
             $this->setFlash(_("Flow not found or could not get endpoints information"), "fatal");
             $this->show();

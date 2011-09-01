@@ -21,10 +21,10 @@ $flow = $argsToElement;
             <?php echo _("Domain"); ?>
         </th>
         <td>
-            <label id="confirmation_src_domain"></label>
+            <label id="confirmation_src_domain"><?php if ($flow) echo $flow->source->domain; ?></label>
         </td>
         <td>
-            <label id="confirmation_dst_domain"></label>
+            <label id="confirmation_dst_domain"><?php if ($flow) echo $flow->dest->domain; ?></label>
         </td>
     </tr>
 
@@ -33,10 +33,10 @@ $flow = $argsToElement;
             <?php echo _("Network"); ?>
         </th>
         <td>
-            <label id="confirmation_src_network"><?php echo $flow->source->network; ?></label>
+            <label id="confirmation_src_network"><?php if ($flow) echo $flow->source->network; ?></label>
         </td>
         <td>
-            <label id="confirmation_dst_network"><?php echo $flow->dest->network; ?></label>
+            <label id="confirmation_dst_network"><?php if ($flow) echo $flow->dest->network; ?></label>
         </td>
     </tr>
 
@@ -45,10 +45,10 @@ $flow = $argsToElement;
             <?php echo _("Device"); ?>
         </th>
         <td>
-            <label id="confirmation_src_device"><?php echo $flow->source->device; ?></label>
+            <label id="confirmation_src_device"><?php if ($flow) echo $flow->source->device; ?></label>
         </td>
         <td>
-            <label id="confirmation_dst_device"><?php echo $flow->dest->device; ?></label>
+            <label id="confirmation_dst_device"><?php if ($flow) echo $flow->dest->device; ?></label>
         </td>
     </tr>
 
@@ -57,10 +57,10 @@ $flow = $argsToElement;
             <?php echo _("Port"); ?>
         </th>
         <td>
-            <label id="confirmation_src_port"><?php echo $flow->source->port; ?></label>
+            <label id="confirmation_src_port"><?php if ($flow) echo $flow->source->port; ?></label>
         </td>
         <td>
-            <label id="confirmation_dst_port"><?php echo $flow->dest->port; ?></label>
+            <label id="confirmation_dst_port"><?php if ($flow) echo $flow->dest->port; ?></label>
         </td>
     </tr>
 
