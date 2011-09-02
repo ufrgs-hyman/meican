@@ -178,10 +178,10 @@ class Tree_Model extends Model {
     }
 
     //busca filhos e também o próprio nodo
-    function findChildren($options=NULL) {
+    function findChildren($model=NULL) {
         $tableName = $this->getTableName();
 
-        unset($and);
+        $and="";
         $pk = $this->getPrimaryKey();
 
         if (!$this->{$pk}) {
@@ -190,13 +190,13 @@ class Tree_Model extends Model {
         } else {
             $and = " AND parent.$pk=".$this->{$pk};
         }
-
+        
+        $restrModel = ($model) ? "AND node.model='$model'" : "";
 
         $sqlQuery = "SELECT DISTINCT node.*
                     FROM $tableName AS node,
                 $tableName AS parent
-                    WHERE (node.lft BETWEEN (parent.lft +1) AND (parent.rgt-1)) $and";
-
+                    WHERE (node.lft BETWEEN (parent.lft +1) AND (parent.rgt-1)) $and $restrModel";
 
         return $this->querySql($sqlQuery, $tableName);
     }
