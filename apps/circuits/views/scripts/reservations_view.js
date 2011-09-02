@@ -1,4 +1,4 @@
-js_function_interval = setInterval("refreshStatus(" + reservation_id + ")", 30000);
+js_function_interval = setInterval("griRefreshStatus(" + reservation_id + ")", 30000);
 var cancelCont = 0;
 if (status_array) {
     for (var index in status_array) {

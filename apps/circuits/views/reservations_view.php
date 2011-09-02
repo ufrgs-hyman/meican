@@ -9,7 +9,7 @@ $request = $this->passedArgs->request;
 $bandwidth = $this->passedArgs->bandwidth;
 
 ?>
-<br/>
+
 <h1><?php echo _("Reservation details"); ?></h1>
 
 <table class="withoutBorder" style="width: 100%">
@@ -50,7 +50,7 @@ $bandwidth = $this->passedArgs->bandwidth;
                         <?php echo _("Status"); ?>
                         <img alt="<?php echo _("loading"); ?>" style="display:none" id="load_dynamic" src="includes/images/ajax-loader.gif">
                         <a href="#" onclick="return false;">
-                            <img alt="<?php echo _("refresh"); ?>" border="0" id="load_static" class="refreshTable" src="includes/images/ajax-refresh.gif" onClick="refreshStatus(<?php echo $res_id; ?>);">
+                            <img alt="<?php echo _("refresh"); ?>" border="0" id="load_static" class="refreshTable" src="includes/images/ajax-refresh.gif" onClick="griRefreshStatus(<?php echo $res_id; ?>);">
                         </a>
                     </th>
                     <th class="listHeader"><?php echo _("Initial Date/Time"); ?></th>

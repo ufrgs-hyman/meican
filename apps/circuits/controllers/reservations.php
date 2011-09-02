@@ -51,13 +51,13 @@ class reservations extends Controller {
                 $flow->flw_id = $r->flw_id;
                 $result = $flow->fetch();
                 $f = $result[0];
-                $res->flow = $f->flw_name;
+                $res->flow = "colocar endpoints";
 
                 $timer = new timer_info();
                 $timer->tmr_id = $r->tmr_id;
                 $result = $timer->fetch();
                 $t = $result[0];
-                $res->timer = $t->tmr_name;
+                $res->timer = "colocar horários";
 
                 $reservations[] = $res;
             }
@@ -276,7 +276,7 @@ class reservations extends Controller {
             $ind++;
         }
 
-        Framework::debug('status', $statusList);
+        //Framework::debug('status', $statusList);
         $this->setArgsToBody($statusList);
         $this->render();
     }
@@ -337,7 +337,7 @@ class reservations extends Controller {
                         // se posição no control for TRUE, é porque atualizou o status
                         $newStatus = $statusResult[$cont];
                         $cont++;
-
+                        
                         // testa se status atual da GRI é diferente do status que retornou do OSCARS
                         if ($g->status != $newStatus) {
                             $g->status = $newStatus;
@@ -345,11 +345,12 @@ class reservations extends Controller {
                             // atualiza o banco de dados com o novo status (retornado do OSCARS)
                             $gri_tmp = new gri_info();
                             $gri_tmp->gri_id = $g->gri_id;
-                            $gri_tmp->updateTo(array('status' => $newStatus));
+                            $gri_tmp->updateTo(array('status' => $newStatus), FALSE);
                         }
                     }
 
                     $status_obj = new stdClass();
+                    $status_obj->id = $ind;
                     $status_obj->name = $g->status;
                     $status_obj->translate = gri_info::translateStatus($g->status);
                     $statusList[] = $status_obj;
