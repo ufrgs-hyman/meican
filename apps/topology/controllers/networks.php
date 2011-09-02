@@ -19,10 +19,6 @@ class networks extends Controller {
     }
 
     public function show() {
-//        echo 0;
-//        echo "zeros";
-//        echo "0";
-
         $net = new network_info();
         $allNets = $net->fetch();
 

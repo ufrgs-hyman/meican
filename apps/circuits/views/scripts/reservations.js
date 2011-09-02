@@ -84,6 +84,8 @@ function griRefreshStatus(res_id) {
 function checkStatus(index, status) {
     switch (status) {
         case "FAILED":
+        case "UNKNOWN":
+        case "NO_GRI":
             $('#line' + index).css( {
                 'background' : '#f99b9b'
             });

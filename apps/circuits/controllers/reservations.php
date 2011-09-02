@@ -46,6 +46,7 @@ class reservations extends Controller {
                 $res = new stdClass();
                 $res->id = $r->res_id;
                 $res->name = $r->res_name;
+                $res->bandwidth = $r->bandwidth;
 
                 $flow = new flow_info();
                 $flow->flw_id = $r->flw_id;

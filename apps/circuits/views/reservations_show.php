@@ -15,6 +15,7 @@
                 <th class="checkbox"></th>
                 <th></th>
                 <th><?php echo _("Name"); ?></th>
+                <th><?php echo _("Bandwidth (Mbps)"); ?></th>
                 <th><?php echo _("Status"); ?></th>
                 <th><?php echo _("Flow"); ?></th>
                 <th><?php echo _("Timer"); ?></th>
@@ -35,6 +36,10 @@
 
                     <td>
                         <?php echo $r->name; ?>
+                    </td>
+                    
+                    <td>
+                        <?php echo $r->bandwidth; ?>
                     </td>
 
                     <td>
