@@ -566,7 +566,9 @@ function edit_initializeMap() {
         contextMenu.hide();        
     }); 
     
-    edit_setBounds(edit_bounds);
+    if ( !(dstSet) && !(srcSet)) {       
+        edit_setBounds(edit_bounds);
+    }
 }
 
 //adiciona marcadores de endpoints no mapa 
@@ -728,8 +730,7 @@ function edit_addMapMarker(location, domain_id, domain_name, network_id, network
 
 //funcao que gerencia os "clicks" nos marcadores
 function edit_markerClick(location, domain_id, domain_name, network_id, network_name, where){
-    contextMenu.hide();  
-    edit_initializeMap();
+    contextMenu.hide();     
 
     if (where == "src") {
         srcSet = true;
@@ -762,6 +763,8 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
             color: "eee"
         };
     }
+    
+    edit_initializeMap();
     
     contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
     contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
