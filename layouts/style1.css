@@ -789,3 +789,7 @@ div.shadow {
     -moz-box-shadow: 2px 5px 6px rgba(0, 0, 0, 0.7);
     -webkit-box-shadow: 2px 5px 6px rgba(0, 0, 0, 0.7);
 }
+
+#cancel_button {
+    float:right;
+}
