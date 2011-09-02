@@ -23,18 +23,21 @@ function refreshStatus(res_id) {
             dataType: "json",
             success: function(data) {
                 //$('.load').hide();
+                if (data) {
+                    var status_id = null;
 
-                var status_id = null;
-
-                for (var i=0; i < data.length; i++) {
-                    status_id = '#status' + data[i].id;
+                    for (var i=0; i < data.length; i++) {
+                        status_id = '#status' + data[i].id;
                 
-                    if (data[i].translate != $(status_id).html()) {
-                        $(status_id).empty();
-                        $(status_id).html(data[i].translate);
+                        if (data[i].translate != $(status_id).html()) {
+                            $(status_id).empty();
+                            $(status_id).html(data[i].translate);
                 
-                        checkStatus(data[i].id, data[i].name);
+                            checkStatus(data[i].id, data[i].name);
+                        }
                     }
+                } else {
+                    setFlash(str_error_refresh_status,"error");
                 }
             },
             error: function(jqXHR) {

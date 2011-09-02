@@ -4,6 +4,8 @@ $request = $argsToElement;
 
 ?>
 
+<h2 style="text-align: left; color:black"><?php echo _('Request'); ?></h2>
+
 <table class="list">
      <tr>
         <th>

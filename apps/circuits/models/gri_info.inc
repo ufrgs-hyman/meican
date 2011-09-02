@@ -43,19 +43,25 @@ class gri_info extends Model {
                 $status = _("Submitted");
                 break;
             case "INCREATE":
-                $status = _("In Create");
+                $status = _("In create");
                 break;
             case "INSETUP":
-                $status = _("In Setup");
+                $status = _("In setup");
                 break;
             case "INTEARDOWN":
-                $status = _("In Tear Down");
+                $status = _("In tear down");
                 break;
             case "INMODIFY":
-                $status = _("In Modify");
+                $status = _("In modify");
                 break;
-            case "MULTIPLE":
-                $status = _("Multiple Status");
+            case "REJECTED":
+                $status = _("Rejected");
+                break;
+            case "UNKNOWN":
+                $status = _("Unknown status");
+                break;
+            case "NO_GRI":
+                $status = _("Reservation has no GRI");
                 break;
             default:
                 $status = $newStatus;

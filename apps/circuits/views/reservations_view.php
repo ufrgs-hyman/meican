@@ -31,12 +31,10 @@ $bandwidth = $this->passedArgs->bandwidth;
             <br/>
             <?php $this->addElement('view_bandwidth', $bandwidth); ?>
             
-            <br/><br/>           
+            <br/><br/>
             <?php $this->addElement('view_timer', $timer); ?>
             <br/>
             
-            <h2 style="text-align: left; color:black"><?php echo _('Request'); ?></h2>
-
             <?php if ($request) $this->addElement('view_request', $request); ?>
 
             <?php if ($gris): ?>
