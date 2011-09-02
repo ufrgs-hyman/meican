@@ -41,7 +41,7 @@
             </td>
 
             <td>
-                    <?php echo $u->name; ?>
+                <?php echo htmlentities($u->name); ?>
             </td>
            
         </tr>

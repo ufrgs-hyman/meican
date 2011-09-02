@@ -38,8 +38,8 @@ class Common {
 
         $result = Common::getSessionVariable($var);
 
-        if (!$result)
-            $result = CookiesSystem::getCookie($var);
+//        if (!$result)
+//            $result = CookiesSystem::getCookie($var);
 
         return $result;
     }
@@ -47,7 +47,7 @@ class Common {
     static function recordVar($var, $value) {
 
         Common::setSessionVariable($var, $value);
-        CookiesSystem::setCookie($var, $value);
+        //CookiesSystem::setCookie($var, $value);
     }
 
 

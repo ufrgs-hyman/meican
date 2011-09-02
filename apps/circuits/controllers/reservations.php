@@ -195,7 +195,7 @@ class reservations extends Controller {
             return;
         }
 
-        Framework::debug("result list", $statusResult);
+        //Framework::debug("result list", $statusResult);
 
         $cont = 0;
 

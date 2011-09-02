@@ -4,29 +4,29 @@ include_once 'includes/common.inc';
 
 class AuthSystem {
 
-    static function userAbleToAccess($resource) {
-        AuthSystem::isUserLoggedIn();
+//    static function userAbleToAccess($resource) {
+//        AuthSystem::isUserLoggedIn();
+//
+//        if (!Common::hasSessionVariable('user_rights')) {
+//            AuthSystem::reloadRights();
+//        }
+//        $user_rights = Common::getSessionVariable('user_rights');
+//        return (isset ($user_rights[$resource]));
+//    }
 
-        if (!Common::hasSessionVariable('user_rights')) {
-            AuthSystem::reloadRights();
-        }
-        $user_rights = Common::getSessionVariable('user_rights');
-        return (isset ($user_rights[$resource]));
-    }
 
-
-    static function reloadRights() {
-        $rights = Access::getAccessRules();
-
-        Common::destroySessionVariable('user_rights');
-
-        if ($rights) {
-            $user_rights = array();
-            foreach ($rights as $r)
-                $user_rights[$r->rsc_id] = TRUE;
-            Common::setSessionVariable('user_rights', $user_rights);
-        }
-    }
+//    static function reloadRights() {
+//        $rights = Access::getAccessRules();
+//
+//        Common::destroySessionVariable('user_rights');
+//
+//        if ($rights) {
+//            $user_rights = array();
+//            foreach ($rights as $r)
+//                $user_rights[$r->rsc_id] = TRUE;
+//            Common::setSessionVariable('user_rights', $user_rights);
+//        }
+//    }
 
     static function setAuthUser($user) {
         Common::setSessionVariable('usr_login', $user->usr_login);
@@ -53,7 +53,10 @@ class AuthSystem {
     
     static function userLogout () {
         if (AuthSystem::isUserLoggedIn()) {
-            session_unset();
+            Common::destroySessionVariable('usr_login');
+            Common::destroySessionVariable('usr_id');
+            Common::destroySessionVariable('usr_password');
+            Common::destroySessionVariable('welcome_loaded');
         }
     }
 
