@@ -128,8 +128,7 @@ function prevTab(elem){
             previousTab = currentTab;
             currentTab = "t1";                 
             google.maps.event.trigger(edit_map, 'resize');
-            edit_setBounds(edit_bounds);
-            edit_map.setZoom( edit_map.getZoom() );                            
+            edit_setBounds(lines);
             break;    
         }
         case "bp3": {
@@ -556,7 +555,7 @@ function edit_initializeMap() {
                     }
                 }
                 var coord = new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude);                
-                edit_addMarker(coord, domains[i].id, domains[i].name, domains[i].networks[j].id, domains[i].networks[j].name, color[i]);
+                edit_addMapMarker(coord, domains[i].id, domains[i].name, domains[i].networks[j].id, domains[i].networks[j].name, color[i]);
                 edit_bounds.push(coord);
             }
         }
@@ -571,8 +570,8 @@ function edit_initializeMap() {
 }
 
 //adiciona marcadores de endpoints no mapa 
-function edit_addMarker(location, domain_id, domain_name, network_id, network_name, color) {
-
+function edit_addMapMarker(location, domain_id, domain_name, network_id, network_name, color) {
+    
     marker = new StyledMarker({
         domain_id: domain_id,
         domain_name: domain_name,
@@ -729,7 +728,8 @@ function edit_addMarker(location, domain_id, domain_name, network_id, network_na
 
 //funcao que gerencia os "clicks" nos marcadores
 function edit_markerClick(location, domain_id, domain_name, network_id, network_name, where){
-    contextMenu.hide();      
+    contextMenu.hide();  
+    edit_initializeMap();
 
     if (where == "src") {
         srcSet = true;
@@ -769,12 +769,22 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
     contextMenu.bind('contextmenu', function() {
         return false;
     });
-    $(edit_map.getDiv()).append(contextMenu);
+    $(edit_map.getDiv()).append(contextMenu);    
     
     if ((srcSet) && !(dstSet)) {
+        for (var i=0; i<edit_markersArray.length; i++) {
+            if ((edit_markersArray[i].id == path[0].network_id) && (edit_markersArray[i].domain_id == path[0].domain_id)) {
+                edit_markersArray[i].setMap(null);
+            }
+        }
         edit_clearSelectedMarkers();
         edit_addSelectedMarker(path[0].position, path[0].domain_id, path[0].domain_name, path[0].network_id, path[0].network_name, "src");
     } else if (!(srcSet) && (dstSet)){
+        for (var i=0; i<edit_markersArray.length; i++) {
+            if ((edit_markersArray[i].id == path[1].network_id) && (edit_markersArray[i].domain_id == path[1].domain_id)) {
+                edit_markersArray[i].setMap(null);
+            }
+        }
         edit_clearSelectedMarkers();
         edit_addSelectedMarker(path[1].position, path[1].domain_id, path[1].domain_name, path[1].network_id, path[1].network_name, "dst");
     }
@@ -787,8 +797,7 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
         edit_drawPath(lines);        
         showSlider();        
         window.scroll(0, 650);
-            
-    }
+    } 
     
     if (tab2_valid) {
         $("#t3").removeClass("ui-state-disabled");
@@ -828,6 +837,13 @@ function callback_markers() {
     }
     if (dstSet) {
         edit_addSelectedMarker(path[1].position, path[1].domain_id, path[1].domain_name, path[1].network_id, path[1].network_name, "dst");
+    }
+    
+    for (var i=0; i<edit_markersArray.length; i++) {
+        if ( ((edit_markersArray[i].id == path[0].network_id) && (edit_markersArray[i].domain_id == path[0].domain_id)) ||
+             ((edit_markersArray[i].id == path[1].network_id) && (edit_markersArray[i].domain_id == path[1].domain_id)) ) {
+            edit_markersArray[i].setMap(null);
+        } 
     }
 }
 
@@ -919,8 +935,9 @@ function edit_clearLines() {
 
 //limpa os marcadores do mapa de edicao
 function edit_clearMarkers() {
-    for (var i=0; i< edit_selectedMarkers.length; i++){
-        edit_selectedMarkers[i].setMap(null);
+    toggleCluster(false, edit_markersArray);
+    for (var i=0; i< edit_markersArray.length; i++){
+        edit_markersArray[i].setMap(null);
     }
 }
 
@@ -1082,48 +1099,48 @@ function edit_clearTopologyMarkers() {
 }
 
 function toggleCluster(toggle, arrayMarkers){
-
-if (toggle) {
-        markerCluster = new MarkerClusterer(edit_map, arrayMarkers);      
-        google.maps.event.addListener(markerCluster, 'clustermouseover',function(markerCluster) {
-                var stringInfo = "<h4>&nbsp;&nbsp;" + cluster_information_string + "</h4>&nbsp;&nbsp;";
-                stringInfo += " <b>" + networks_string + "</b>: <br>&nbsp;&nbsp;";
-                clusterContent = markerCluster.getMarkers();
-                selectedMarker = new StyledMarker({
-                    domain_id: clusterContent[0].domain_id,
-                    domain_name: clusterContent[0].domain_name,
-                    id: clusterContent[0].network_id,
-                    label: clusterContent[0].label,
-                    position: clusterContent[0].position,
-                    styleIcon: new StyledIcon(StyledIconTypes.MARKER,{
-                        color:clusterContent[0].styleIcon.color
-                    }),
-                    map:edit_map
-                });
-                for (var i=0; i<clusterContent.length;i++){
-                        stringInfo+= " " + clusterContent[i].label +"&nbsp;&nbsp;";
-                        stringInfo+= " (" + clusterContent[i].domain_name +")<br>&nbsp;&nbsp;";
-                }
-
-                selectedMarker.setMap(null);
-                infowindow = new google.maps.InfoWindow({
-                    content: stringInfo,
-                    disableAutoPan: true
-                });
-                infowindow.open(edit_map, selectedMarker);
-
-        });
-        google.maps.event.addListener(markerCluster, 'clustermouseout',function() {
-                infowindow.close(edit_map);
-        });
-        google.maps.event.addListener(markerCluster, 'clusterclick',function() {
-                if (infowindow) {
-                    infowindow.close(edit_map);
-                }
-        });
-    } else {
-        markerCluster.clearMarkers(arrayMarkers);
-    }
+//
+//if (toggle) {
+//        markerCluster = new MarkerClusterer(edit_map, arrayMarkers);      
+//        google.maps.event.addListener(markerCluster, 'clustermouseover',function(markerCluster) {
+//                var stringInfo = "<h4>&nbsp;&nbsp;" + cluster_information_string + "</h4>&nbsp;&nbsp;";
+//                stringInfo += " <b>" + networks_string + "</b>: <br>&nbsp;&nbsp;";
+//                clusterContent = markerCluster.getMarkers();
+//                selectedMarker = new StyledMarker({
+//                    domain_id: clusterContent[0].domain_id,
+//                    domain_name: clusterContent[0].domain_name,
+//                    id: clusterContent[0].network_id,
+//                    label: clusterContent[0].label,
+//                    position: clusterContent[0].position,
+//                    styleIcon: new StyledIcon(StyledIconTypes.MARKER,{
+//                        color:clusterContent[0].styleIcon.color
+//                    }),
+//                    map:edit_map
+//                });
+//                for (var i=0; i<clusterContent.length;i++){
+//                        stringInfo+= " " + clusterContent[i].label +"&nbsp;&nbsp;";
+//                        stringInfo+= " (" + clusterContent[i].domain_name +")<br>&nbsp;&nbsp;";
+//                }
+//
+//                selectedMarker.setMap(null);
+//                infowindow = new google.maps.InfoWindow({
+//                    content: stringInfo,
+//                    disableAutoPan: true
+//                });
+//                infowindow.open(edit_map, selectedMarker);
+//
+//        });
+//        google.maps.event.addListener(markerCluster, 'clustermouseout',function() {
+//                infowindow.close(edit_map);
+//        });
+//        google.maps.event.addListener(markerCluster, 'clusterclick',function() {
+//                if (infowindow) {
+//                    infowindow.close(edit_map);
+//                }
+//        });
+//    } else {
+//        markerCluster.clearMarkers(arrayMarkers);
+//    }
 }
 
 // VIEW FUNCTIONS

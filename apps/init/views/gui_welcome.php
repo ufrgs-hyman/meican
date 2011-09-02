@@ -1,5 +1,5 @@
 <?php $icons = $this->passedArgs; ?>
-
+<br/>
 <table class="icons">
 <?php
 $ind = 0;

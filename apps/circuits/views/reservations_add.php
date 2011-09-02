@@ -64,7 +64,7 @@ $freq_types[] = $freq;
             
             <div class="control_tab">
                 <input type="button" id="bn1" class="next" value="<?php echo _('Next'); ?>" onClick="nextTab(this);"/>
-                <input type="button" style="float:right" id="resetZoom" class="zoom" value="<?php echo _('Reset Zoom'); ?>" onClick="edit_resetZoom();"/>
+                <input type="button" style="float:right" id="resetZoom" class="zoom" value="<?php echo _('Reset Zoom'); ?>" onClick="edit_resetZoom();"/>                
                 <input type="button" style="float:right" id="clearpath" class="clear" value="<?php echo _('Clear'); ?>" onClick="edit_clearAll();"/>
                 <input type="button" style="float:right" id="bc1" class="cancel" value="<?php echo _('Cancel'); ?>" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');"/>
             </div>

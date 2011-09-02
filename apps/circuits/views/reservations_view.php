@@ -21,7 +21,7 @@ $bandwidth = $this->passedArgs->bandwidth;
             <table style="min-width: 30%" class="withoutBorder">
                 <tr>
                     <th style="border-bottom:none; padding-right: 5px"><?php echo _("Reservation name"); ?>:</th>
-                    <th style="border-bottom:none; padding-left: 5px"><?php echo $name; ?></th>
+                    <th style="border-bottom:none; padding-left: 5px; color: #3a5879"><?php echo $name; ?></th>
                 </tr>
             </table>
             

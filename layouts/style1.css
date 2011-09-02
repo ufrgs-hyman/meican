@@ -155,6 +155,10 @@ table td.left {
     padding: 3px 7px 2px 7px;
 }
 
+.pad {
+    padding: 6px;
+}
+
 table td {
     font-size:12px;
     padding: 0px;
@@ -778,4 +782,10 @@ div#flash_box .closeFlash {
 .fixed {
     position: fixed;
     z-index: 5;
+}
+
+div.shadow {
+    box-shadow: 2px 5px 6px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 2px 5px 6px rgba(0, 0, 0, 0.7);
+    -webkit-box-shadow: 2px 5px 6px rgba(0, 0, 0, 0.7);
 }

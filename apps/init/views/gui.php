@@ -221,7 +221,7 @@
                 <div id="info_box">
                 </div>
             </div>
-            <div id="flash_box">
+            <div id="flash_box" class="shadow">
 
             </div>
             <div id="content">

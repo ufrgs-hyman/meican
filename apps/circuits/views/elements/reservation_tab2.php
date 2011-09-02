@@ -19,47 +19,47 @@
                             </th>
                         </tr>
                         <tr>
-                            <td style="color:black; font-weight: bold">
+                            <td  class="pad" style="color:black; font-weight: bold">
                                 <?php echo _(Domain);?>
                             </td>
-                            <td>
+                            <td class="pad">
                                 <label id="src_domain"></label>
                             </td>
-                            <td>
+                            <td class="pad">
                                 <label id="dst_domain"></label>
                             </td>
                         </tr>
                         <tr>
-                            <td style="color:black; font-weight: bold">
+                            <td class="pad" style="color:black; font-weight: bold">
                                 <?php echo _(Network);?>
                             </td>
-                            <td>
+                            <td class="pad">
                                 <label id="src_network"></label>
                             </td>
-                            <td>
+                            <td class="pad">
                                 <label id="dst_network"></label>
                             </td>
                         </tr>
                         <tr>
-                            <td style="color:black; font-weight: bold">
+                            <td class="pad" style="color:black; font-weight: bold">
                                 <?php echo _(Device);?>
                             </td>
-                            <td>
+                            <td class="pad">
                                 <select id="src_device" style="display:none" onchange="map_changeDevice('src');"></select>
                             </td>
-                            <td>
+                            <td class="pad">
                                 <select id="dst_device" style="display:none" onchange="map_changeDevice('dst');"></select>
                             </td>
                         </tr>
                         <tr>
-                            <td style="color:black; font-weight: bold">
+                            <td class="pad" style="color:black; font-weight: bold">
                                 <?php echo _(Port);?>
                             </td>
-                            <td>
+                            <td class="pad">
                                 <select id="src_port" style="display:none" onchange="map_changePort('src');"></select>
                                 <input type="hidden" id="src_urn" name="src_urn"/>
                             </td>
-                            <td>
+                            <td class="pad">
                                 <select id="dst_port" style="display:none" onchange="map_changePort('dst');"></select>
                                 <input type="hidden" id="dst_urn" name="dst_urn"/>
                             </td>
