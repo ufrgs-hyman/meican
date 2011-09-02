@@ -40,28 +40,12 @@ $domain = $this->passedArgs->domain;
                 <select style="display:none" id="device0"/>
             </td>
                     
-            <td colspan="2">
-                <label>
-                    <?php echo _("urn:ogf:network:domain="); ?>:
-                </label>
-                <input type="text" size="10" id="domain_id0" value="<?php if ($domain->topology_id) echo $domain->topology_id; ?>"/>
-                
-                <label>
-                    <?php echo _("node="); ?>:
-                </label>
-                <input type="text" size="10" id="node0"/>
-                
-                <label>
-                    <?php echo _("port="); ?>:
-                </label>
+            <td>
                 <input type="text" size="3" id="port0"/>
-                
-                <label>
-                    <?php echo _("link="); ?>:
-                </label>
-                <input type="text" size="10" id="link0"/>
             </td>
-            
+            <td>
+                <input type="text" size="50" id="name0" value="urn:ogf:network:domain=<?php if ($domain->topology_id) echo $domain->topology_id; else echo "<domain>" ?>:node=<node>:port=<port>:link=<link>"/>
+            </td>
             <td>
                 <input type="text" size="10" id="vlan0"/>
             </td>

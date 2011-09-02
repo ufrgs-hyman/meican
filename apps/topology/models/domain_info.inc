@@ -22,15 +22,17 @@ class domain_info extends Resource_Model {
         return $tmp[0];
     }
 
-    public function getOSCARSDomain($urn_string){
+    public function getOSCARSDomain($urn_string) {
         $parts = explode(":", $urn_string);
         $domain = $parts[3];
         $topologyId = str_replace("domain=", "", $domain);
         $this->topology_id = $topologyId;
 
-        $result = $this->fetch(FALSE);
+        if ($result = $this->fetch(FALSE))
+            return $result[0];
+        else
+            return FALSE;
         //$this = $result[0];
-        return $result[0];
     }
 
 }
