@@ -96,6 +96,9 @@ class OSCARSReservation {
     public function getStatus() {
         return $this->status;
     }
+    public function getStatusArray() {
+        return $this->statusArray;
+    }
     public function getStartTimestamp() {
         return $this->startTimestamp;
     }
