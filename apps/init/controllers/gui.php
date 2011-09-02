@@ -5,6 +5,7 @@ defined ('__MEICAN') or die ("Invalid access.");
 include_once 'libs/controller.php';
 include_once 'includes/common.inc';
 include_once 'apps/bpm/models/request_info.inc';
+include_once 'libs/acl_loader.inc';
 
 class gui extends Controller {
 
@@ -36,7 +37,7 @@ class gui extends Controller {
         $this->render();
     }
 
-    public function welcome(){
+    public function welcome() {
         $this->setAction('welcome');
         $this->setLayout('default');
 
@@ -58,22 +59,36 @@ class gui extends Controller {
             $this->setFlash($msg, 'warning');
         }
 
-        //checar se tem acesso o a novas reservas
-        $icons[0]->name = _('New reservation');
-        $icons[0]->figure = 'layouts/img/new_reservation.png';
-        $icons[0]->link = array('app'=>'circuits', 'controller'=>'reservations','action'=>'reservation_add');
+        //checar se tem acesso a novas reservas
+        $acl = new AclLoader();
+        
+        $ind=0;
+        
+        if ($acl->checkACL("create", 'urn_info')) {
+            $icons[$ind]->name = _('New reservation');
+            $icons[$ind]->figure = 'layouts/img/new_reservation.png';
+            $icons[$ind]->link = array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'reservation_add');
+            $ind++;
+        }
 
-        $icons[1]->name = _('Reservations');
-        $icons[1]->figure = 'layouts/img/reservations_list.png';
-        $icons[1]->link = array('app'=>'circuits', 'controller'=>'reservations','action'=>'show');
+        if ($acl->checkACL("read", 'reservation_info')) {
+            $icons[$ind]->name = _('Reservations');
+            $icons[$ind]->figure = 'layouts/img/reservations_list.png';
+            $icons[$ind]->link = array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'show');
+            $ind++;
+        }
 
-        $icons[2]->name = _('Requests');
-        $icons[2]->figure = 'layouts/img/requests_1.png';
-        $icons[2]->link = array('app'=>'bpm', 'controller'=>'requests','action'=>'show');
+        $icons[$ind]->name = _('Requests');
+        $icons[$ind]->figure = 'layouts/img/requests_1.png';
+        $icons[$ind]->link = array('app' => 'bpm', 'controller' => 'requests', 'action' => 'show');
+        $ind++;
 
-        $icons[3]->name = _('Management');
-        $icons[3]->figure = 'layouts/img/management.png';
-        $icons[3]->link = array('app'=>'aaa', 'controller'=>'users','action'=>'show');
+        if ($acl->checkACL("read", 'user_info')) {
+            $icons[$ind]->name = _('Management');
+            $icons[$ind]->figure = 'layouts/img/management.png';
+            $icons[$ind]->link = array('app' => 'aaa', 'controller' => 'users', 'action' => 'show');
+            $ind++;
+        }
 
         $this->setArgsToBody($icons);
         $this->render();
