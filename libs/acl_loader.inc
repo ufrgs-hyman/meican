@@ -312,6 +312,7 @@ class AclLoader extends Tree_Model {
             $acos = new acos();
             //retorna os objetos (obj_id) que o usuário possui acesso
             $result = $acos->getAcoGroupByModel($strAcos, $model);
+            Framework::debug("allowed pky",$result);
 
             $obj = array(); //array com os ids do modelo que o usuário
             foreach ($result as $r) {
@@ -334,6 +335,7 @@ class AclLoader extends Tree_Model {
 
             $restr = $this->getAllowedPKey($right, $model);
             Framework::debug("pkeys",$restr);
+            Framework::debug("model",$model);
 
             if ($restr) {
                 if ($id) { //se tem o id especificado, deve estar especificado
