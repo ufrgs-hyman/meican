@@ -32,7 +32,7 @@ class AclLoader extends Tree_Model {
             $this->acl = $this->reloadACL();
             Common::setSessionVariable('acl', $this->acl);
 
-            //Framework::debug("acl tree",$this->acl);
+            Framework::debug("acl tree",$this->acl);
 
         }
         else $this->acl = $acl_ses;
