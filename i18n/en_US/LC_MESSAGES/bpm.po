@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-15 14:14-0300\n"
+"POT-Creation-Date: 2011-09-02 15:55-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,8 +64,9 @@ msgstr ""
 msgid "Fail to undeploy process"
 msgstr ""
 
-#: views/elements/requests_table.php:8 views/requests_show.php:41
-msgid "Domain Source"
+#: views/elements/requests_table.php:8 views/requests_show.php:11
+#: views/requests_show.php:41
+msgid "Domain source"
 msgstr ""
 
 #: views/elements/requests_table.php:9 views/requests_show.php:13
@@ -88,11 +89,11 @@ msgid "Answer"
 msgstr ""
 
 #: views/requests_createRequest.php:12
-msgid "Destination Domain"
+msgid "Destination domain"
 msgstr ""
 
 #: views/requests_createRequest.php:27
-msgid "Destination User"
+msgid "Destination user"
 msgstr ""
 
 #: views/requests_createRequest.php:42
@@ -107,11 +108,7 @@ msgstr ""
 msgid "Pending incoming requests"
 msgstr ""
 
-#: views/requests_show.php:11
-msgid "Domain source"
-msgstr ""
-
-#: views/requests_show.php:12
+#: views/requests_show.php:12 views/requests_show.php:42
 msgid "Domain destination"
 msgstr ""
 
@@ -125,10 +122,6 @@ msgstr ""
 
 #: views/requests_show.php:36
 msgid "Finished incoming requests"
-msgstr ""
-
-#: views/requests_show.php:42
-msgid "Domain Destination"
 msgstr ""
 
 #: views/requests_show.php:67
@@ -220,7 +213,7 @@ msgid "Status"
 msgstr ""
 
 #: views/ode_show.php:12
-msgid "In Progress"
+msgid "In progress"
 msgstr ""
 
 #: views/ode_show.php:13

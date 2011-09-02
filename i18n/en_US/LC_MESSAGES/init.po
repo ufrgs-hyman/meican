@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-15 14:14-0300\n"
+"POT-Creation-Date: 2011-09-02 15:55-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Felipe <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: \n"
@@ -14,31 +14,31 @@ msgstr ""
 msgid "Failed on authentication"
 msgstr ""
 
-#: controllers/gui.php:49
+#: controllers/gui.php:50
 msgid "You have one new request to be authorized"
 msgstr ""
 
-#: controllers/gui.php:52
+#: controllers/gui.php:53
 msgid "You have"
 msgstr ""
 
-#: controllers/gui.php:54
+#: controllers/gui.php:55
 msgid "new requests to be authorized"
 msgstr ""
 
-#: controllers/gui.php:62
-msgid "New Reservation"
+#: controllers/gui.php:68
+msgid "New reservation"
 msgstr ""
 
-#: controllers/gui.php:66 controllers/menu.php:33
+#: controllers/gui.php:75 controllers/menu.php:33
 msgid "Reservations"
 msgstr ""
 
-#: controllers/gui.php:70 controllers/menu.php:47
+#: controllers/gui.php:81 controllers/menu.php:47
 msgid "Requests"
 msgstr ""
 
-#: controllers/gui.php:74
+#: controllers/gui.php:87
 msgid "Management"
 msgstr ""
 
@@ -126,42 +126,30 @@ msgstr ""
 msgid "Sign in"
 msgstr ""
 
-#: views/login.php:100 views/gui.php:214
-msgid "About us"
-msgstr ""
-
-#: views/login.php:103 views/gui.php:217
-msgid "Developers"
-msgstr ""
-
-#: views/login.php:106 views/gui.php:220
-msgid "Terms of service"
-msgstr ""
-
-#: views/login.php:109 views/gui.php:223
-msgid "Privacy policy"
-msgstr ""
-
-#: views/gui.php:142
+#: views/gui.php:143
 msgid "Not logged in"
 msgstr ""
 
-#: views/gui.php:145
+#: views/gui.php:146
 msgid "Session Expired"
 msgstr ""
 
-#: views/gui.php:206
+#: views/gui.php:232
 msgid "Loading"
 msgstr ""
 
-#: views/info_box.php:5
-msgid "Help"
-msgstr ""
-
-#: views/info_box.php:7
-msgid "My Settings"
+#: views/info_box.php:6
+msgid "My settings"
 msgstr ""
 
 #: views/info_box.php:9
-msgid "Sign Out"
+msgid "Help"
+msgstr ""
+
+#: views/info_box.php:12
+msgid "About"
+msgstr ""
+
+#: views/info_box.php:15
+msgid "Sign out"
 msgstr ""

@@ -7,174 +7,162 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-15 14:14-0300\n"
-"PO-Revision-Date: 2011-08-15 14:27-0300\n"
+"POT-Creation-Date: 2011-09-02 15:55-0300\n"
+"PO-Revision-Date: 2011-09-02 15:31-0300\n"
 "Last-Translator: Pietro Biasuz <pfbiasuz@inf.ufrgs.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: controllers/acl.php:110
-#: controllers/acl.php:127
+#: controllers/acl.php:120 controllers/acl.php:137
 msgid "All"
 msgstr "Todos"
 
-#: controllers/acl.php:122
+#: controllers/acl.php:132
 msgid "Allow"
 msgstr "Permitir"
 
-#: controllers/acl.php:123
+#: controllers/acl.php:133
 msgid "Deny"
 msgstr "Negar"
 
-#: controllers/acl.php:124
+#: controllers/acl.php:134
 msgid "Delete ACL?"
 msgstr "Excluir ACL?"
 
-#: controllers/acl.php:125
+#: controllers/acl.php:135
 msgid "ACL deleted"
 msgstr "ACL excluído"
 
-#: controllers/acl.php:126
+#: controllers/acl.php:136
 msgid "Fail to delete ACL"
 msgstr "Falha ao excluir ACL"
 
-#: controllers/acl.php:128
+#: controllers/acl.php:138
 msgid "Save modifications?"
 msgstr "Salvar modificações?"
 
-#: controllers/acl.php:129
+#: controllers/acl.php:139
 msgid "Please fill in all the fields"
 msgstr "Por favor, preencha todos os campos"
 
-#: controllers/acl.php:140
-#: views/acl_show.php:3
+#: controllers/acl.php:150
 msgid "Access Control List"
 msgstr "Lista de Controle de Acesso"
 
-#: controllers/acl.php:141
+#: controllers/acl.php:151
 msgid "You can't see any access control, click the button below to add one"
-msgstr "Você não tem permissão para visualizar nenhum controle de acesso, clique no botão abaixo para adicionar um novo"
+msgstr ""
+"Você não tem permissão para visualizar nenhum controle de acesso, clique no "
+"botão abaixo para adicionar um novo"
 
-#: controllers/acl.php:193
+#: controllers/acl.php:203
 msgid "No access control was deleted"
 msgstr "Nenhum controle de acesso foi excluído"
 
-#: controllers/acl.php:196
+#: controllers/acl.php:206
 msgid "One access control was deleted"
 msgstr "Um controle de acesso foi excluído"
 
-#: controllers/acl.php:199
+#: controllers/acl.php:209
 msgid "access controls were cancelled"
 msgstr "controles de acesso foram excluídos"
 
-#: controllers/acl.php:215
+#: controllers/acl.php:225
 msgid "ACL updated"
 msgstr "ACL atualizado"
 
-#: controllers/users.php:57
-#: controllers/groups.php:99
-#: controllers/groups.php:210
-#: views/users_show.php:3
+#: controllers/users.php:60 controllers/groups.php:99
+#: controllers/groups.php:210 views/users_show.php:3
 msgid "Users"
 msgstr "Usuários"
 
-#: controllers/users.php:58
+#: controllers/users.php:61
 msgid "You can't see any user, click the button below to add one"
-msgstr "Você não tem permissão para visualizar nenhum usuário, clique no botão abaixo para adicionar um novo"
+msgstr ""
+"Você não tem permissão para visualizar nenhum usuário, clique no botão "
+"abaixo para adicionar um novo"
 
-#: controllers/users.php:84
-#: controllers/users.php:205
+#: controllers/users.php:87 controllers/users.php:208
 msgid "Groups"
 msgstr "Grupos"
 
-#: controllers/users.php:93
+#: controllers/users.php:96
 msgid "You don't have permission to view groups, so you can't add users"
-msgstr "Você não tem permissão para visualizar nenhum grupo, portanto você não tem permissão para adicionar usuários"
+msgstr ""
+"Você não tem permissão para visualizar nenhum grupo, portanto você não tem "
+"permissão para adicionar usuários"
 
-#: controllers/users.php:120
-#: controllers/users.php:126
-#: controllers/users.php:269
-#: controllers/users.php:393
-#: views/users_show.php:18
+#: controllers/users.php:123 controllers/users.php:129
+#: controllers/users.php:272 controllers/users.php:396 views/users_show.php:18
 msgid "User"
 msgstr "Usuário"
 
-#: controllers/users.php:120
-#: controllers/groups.php:124
+#: controllers/users.php:123 controllers/groups.php:124
 msgid "added"
 msgstr "adicionado"
 
-#: controllers/users.php:124
+#: controllers/users.php:127
 msgid "Fail to create user"
 msgstr "Falha ao criar usuário"
 
-#: controllers/users.php:126
-#: controllers/groups.php:133
+#: controllers/users.php:129 controllers/groups.php:133
 #: controllers/groups.php:259
 msgid "already exists"
 msgstr "já existe"
 
-#: controllers/users.php:128
-#: controllers/users.php:257
-#: controllers/users.php:347
+#: controllers/users.php:131 controllers/users.php:260
+#: controllers/users.php:350
 msgid "Passwords mismatch"
 msgstr "Senhas não conferem"
 
-#: controllers/users.php:130
-#: controllers/groups.php:135
+#: controllers/users.php:133 controllers/groups.php:135
 msgid "Missing argument"
 msgstr "Faltam parâmetros"
 
-#: controllers/users.php:140
-#: controllers/users.php:229
-#: controllers/groups.php:146
-#: controllers/groups.php:228
+#: controllers/users.php:143 controllers/users.php:232
+#: controllers/groups.php:146 controllers/groups.php:228
 msgid "Invalid index"
 msgstr "Índice inválido"
 
-#: controllers/users.php:155
-#: controllers/users.php:292
+#: controllers/users.php:158 controllers/users.php:295
 msgid "User not found"
 msgstr "Usuário não encontrado"
 
-#: controllers/users.php:219
-#: controllers/users.php:276
+#: controllers/users.php:222 controllers/users.php:279
 msgid "You don't have permission to edit this user"
 msgstr "Você não tem permissão para editar este usuário"
 
-#: controllers/users.php:243
+#: controllers/users.php:246
 msgid "Select at least 1 group for the user"
 msgstr "Selecione pelo menos 1 grupo para o usuário"
 
-#: controllers/users.php:269
+#: controllers/users.php:272
 msgid "updated"
 msgstr "atualizado"
 
-#: controllers/users.php:272
-#: controllers/users.php:374
+#: controllers/users.php:275 controllers/users.php:377
 msgid "No change has been made"
 msgstr "Nenhuma mudança realizada"
 
-#: controllers/users.php:328
+#: controllers/users.php:331
 msgid "Missing required argument"
 msgstr "Falta de parâmetros obrigatórios"
 
-#: controllers/users.php:352
+#: controllers/users.php:355
 msgid "Type the new password"
 msgstr "Digite nova senha"
 
-#: controllers/users.php:357
+#: controllers/users.php:360
 msgid "Current password does not match"
 msgstr "Senha atual não confere"
 
-#: controllers/users.php:372
+#: controllers/users.php:375
 msgid "User settings updated successfully"
 msgstr "Configurações do usuário atualizadas com sucesso"
 
-#: controllers/users.php:393
-#: controllers/groups.php:288
+#: controllers/users.php:396 controllers/groups.php:288
 msgid "deleted"
 msgstr "excluído"
 
@@ -183,18 +171,17 @@ msgid "Group is root"
 msgstr "Grupo é raiz"
 
 #: controllers/groups.php:63
-#: views/groups_show.php:3
 msgid "User Groups"
 msgstr "Grupos do usuário"
 
 #: controllers/groups.php:64
 msgid "You can't see any group, click the button below to add one"
-msgstr "Você não tem permissão para visualizar nenhum grupo, clique no botão abaixo para adicionar um novo"
+msgstr ""
+"Você não tem permissão para visualizar nenhum grupo, clique no botão abaixo "
+"para adicionar um novo"
 
-#: controllers/groups.php:124
-#: controllers/groups.php:133
-#: controllers/groups.php:259
-#: controllers/groups.php:288
+#: controllers/groups.php:124 controllers/groups.php:133
+#: controllers/groups.php:259 controllers/groups.php:288
 msgid "Group"
 msgstr "Grupo"
 
@@ -230,8 +217,7 @@ msgstr "Nenhuma modificação nas informações do grupo"
 msgid "Information"
 msgstr "Informações"
 
-#: views/elements/identification.php:8
-#: views/users_show.php:19
+#: views/elements/identification.php:8 views/users_show.php:19
 #: views/groups_show.php:13
 msgid "Name"
 msgstr "Nome"
@@ -240,10 +226,8 @@ msgstr "Nome"
 msgid "E-mail"
 msgstr "E-mail"
 
-#: views/elements/empty_db.php:20
-#: views/elements/associative_table.php:30
-#: views/users_show.php:54
-#: views/groups_show.php:48
+#: views/elements/empty_db.php:20 views/elements/associative_table.php:30
+#: views/users_show.php:54 views/groups_show.php:48
 msgid "Add"
 msgstr "Adicionar"
 
@@ -259,13 +243,11 @@ msgstr "Remover"
 msgid "Used"
 msgstr "Utilizados"
 
-#: views/users_edit_settings.php:8
-#: views/users_add.php:11
+#: views/users_edit_settings.php:8 views/users_add.php:11
 msgid "Login"
 msgstr "Login"
 
-#: views/users_edit_settings.php:16
-#: views/users_edit.php:18
+#: views/users_edit_settings.php:16 views/users_edit.php:18
 msgid "Change password"
 msgstr "Trocar senha"
 
@@ -273,14 +255,12 @@ msgstr "Trocar senha"
 msgid "Current password"
 msgstr "Senha atual"
 
-#: views/users_edit_settings.php:34
-#: views/users_edit.php:27
+#: views/users_edit_settings.php:34 views/users_edit.php:27
 #: views/users_add.php:19
 msgid "New password"
 msgstr "Nova senha"
 
-#: views/users_edit_settings.php:43
-#: views/users_edit.php:36
+#: views/users_edit_settings.php:43 views/users_edit.php:36
 #: views/users_add.php:28
 msgid "Retype new password"
 msgstr "Redigite nova senha"
@@ -313,27 +293,19 @@ msgstr "mm / dd / aaaa"
 msgid "yyyy / mm / dd"
 msgstr "aaaa / mm / dd"
 
-#: views/users_edit_settings.php:84
-#: views/groups_add.php:36
-#: views/users_edit.php:50
-#: views/groups_edit.php:22
-#: views/acl_show.php:85
-#: views/users_add.php:41
+#: views/users_edit_settings.php:84 views/groups_add.php:38
+#: views/users_edit.php:50 views/groups_edit.php:22 views/acl_show.php:85
+#: views/users_add.php:43
 msgid "Save"
 msgstr "Salvar"
 
-#: views/users_edit_settings.php:85
-#: views/groups_add.php:37
-#: views/users_edit.php:51
-#: views/groups_edit.php:23
-#: views/acl_show.php:86
-#: views/users_add.php:42
+#: views/users_edit_settings.php:85 views/groups_add.php:39
+#: views/users_edit.php:51 views/groups_edit.php:23 views/acl_show.php:86
+#: views/users_add.php:44
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: views/users_show.php:62
-#: views/groups_show.php:56
-#: views/acl_show.php:26
+#: views/users_show.php:62 views/groups_show.php:56 views/acl_show.php:26
 #: views/acl_show.php:88
 msgid "Delete"
 msgstr "Excluir"
@@ -342,68 +314,71 @@ msgstr "Excluir"
 msgid "The selected users will be deleted."
 msgstr "Os usuários selecionados serão excluídos."
 
-#: views/users_show.php:62
-#: views/groups_show.php:56
-#: views/acl_show.php:88
+#: views/users_show.php:62 views/groups_show.php:56 views/acl_show.php:88
 msgid "Do you confirm?"
 msgstr "Confirma?"
 
 #: views/groups_add.php:4
-msgid "Add New Group"
-msgstr "Adicionar Novo Grupo"
+msgid "Add new group"
+msgstr "Adicionar novo grupo"
 
-#: views/groups_add.php:11
-#: views/groups_edit.php:11
+#: views/groups_add.php:13 views/groups_edit.php:11
 msgid "Group name"
 msgstr "Nome do grupo"
 
-#: views/groups_add.php:24
+#: views/groups_add.php:26
 msgid "Select the parent groups"
 msgstr "Selecione os grupos pais"
 
 #: views/users_edit.php:3
-msgid "Edit User"
-msgstr "Editar Usuário"
+msgid "Edit user"
+msgstr "Editar usuário"
 
 #: views/users_edit.php:10
 msgid "User login"
 msgstr "Login"
 
+#: views/groups_show.php:3
+msgid "User groups"
+msgstr "Grupos do usuário"
+
 #: views/groups_show.php:14
-msgid "Parent Groups"
-msgstr "Grupos Pai"
+msgid "Parent groups"
+msgstr "Grupos pais"
 
 #: views/groups_show.php:56
 msgid "The selected groups will be deleted."
 msgstr "Os grupos selecionados serão excluídos."
 
 #: views/groups_edit.php:4
-msgid "Edit Group"
-msgstr "Editar Grupo"
+msgid "Edit group"
+msgstr "Editar grupo"
+
+#: views/acl_show.php:3
+msgid "Access control"
+msgstr "Controle de Acesso"
 
 #: views/acl_show.php:12
-msgid "Access Request Object"
-msgstr "Acesso de Requisição de Objetos"
+msgid "Access request object"
+msgstr "Acesso de requisição de objeto"
 
 #: views/acl_show.php:13
-msgid "Access Control Object"
-msgstr "Controle de Acesso a Objetos"
+msgid "Access control object"
+msgstr "Controle de acesso ao objeto"
 
 #: views/acl_show.php:14
-msgid "Object Type"
-msgstr "Tipo do Objeto"
+msgid "Object type"
+msgstr "Tipo do objeto"
 
 #: views/acl_show.php:15
 msgid "Operations"
 msgstr "Operações"
 
-#: views/acl_show.php:19
-#: views/acl_show.php:21
+#: views/acl_show.php:19 views/acl_show.php:21
 msgid "Model"
 msgstr "Modelo"
 
-#: views/acl_show.php:20
-#: views/acl_show.php:22
+#: views/acl_show.php:20 views/acl_show.php:22
 msgid "Object"
 msgstr "Objeto"
 
@@ -428,68 +403,120 @@ msgid "The selected access controls will be deleted."
 msgstr "Os controles de acesso selecionados serão excluídos."
 
 #: views/users_add.php:4
-msgid "Add New User"
-msgstr "Adicionar Novo Usuário"
+msgid "Add new user"
+msgstr "Adicionar novo usuário"
+
+#~ msgid "Add New Group"
+#~ msgstr "Adicionar Novo Grupo"
+
+#~ msgid "Edit User"
+#~ msgstr "Editar Usuário"
+
+#~ msgid "Parent Groups"
+#~ msgstr "Grupos Pai"
+
+#~ msgid "Edit Group"
+#~ msgstr "Editar Grupo"
+
+#~ msgid "Access Request Object"
+#~ msgstr "Acesso de Requisição de Objetos"
+
+#~ msgid "Access Control Object"
+#~ msgstr "Controle de Acesso a Objetos"
+
+#~ msgid "Object Type"
+#~ msgstr "Tipo do Objeto"
+
+#~ msgid "Add New User"
+#~ msgstr "Adicionar Novo Usuário"
 
 #~ msgid "User already exists"
 #~ msgstr "Usuário já existente"
+
 #~ msgid "Access denied."
 #~ msgstr "Acesso negado."
+
 #~ msgid "User updated successfully"
 #~ msgstr "Usuário atualizado com sucesso"
+
 #~ msgid "Delete rule?"
 #~ msgstr "Excluir regra?"
+
 #~ msgid "Please fill up all the fields"
 #~ msgstr "Preencha todos os campos"
+
 #~ msgid "delete"
 #~ msgstr "excluir"
+
 #~ msgid "Access rules deleted"
 #~ msgstr "Regras de acesso excluídas"
+
 #~ msgid "Group added successfully"
 #~ msgstr "Grupo adicionado com sucesso"
+
 #~ msgid "Group already exists"
 #~ msgstr "Grupo já existente"
+
 #~ msgid "Access denied to delete group"
 #~ msgstr "Acesso negado para deletar grupo"
+
 #~ msgid "Access Rules"
 #~ msgstr "Regras de Acesso"
+
 #~ msgid "Manager Group"
 #~ msgstr "Grupo Gerente"
+
 #~ msgid "Resource"
 #~ msgstr "Recurso"
+
 #~ msgid "Managed Group"
 #~ msgstr "Grupo Gerenciado"
+
 #~ msgid "edit"
 #~ msgstr "editar"
+
 #~ msgid "New access rule"
 #~ msgstr "Nova regra de acesso"
+
 #~ msgid "The selected access rules will be deleted."
 #~ msgstr "As regras de acesso selecionadas serão excluídas."
+
 #~ msgid "New Group"
 #~ msgstr "Novo Grupo"
+
 #~ msgid "Select a group to have all permissions over the new group"
 #~ msgstr ""
 #~ "Selecione um grupo para possuir todas as permissões sobre o novo grupo"
+
 #~ msgid "User added successfully"
 #~ msgstr "Usuário adicionado com sucesso"
+
 #~ msgid "Fail to add user"
 #~ msgstr "Falha ao adicionar usuário"
+
 #~ msgid "to selected groups"
 #~ msgstr "aos grupos selecionados"
+
 #~ msgid "New User"
 #~ msgstr "Novo Usuário"
+
 #~ msgid "OK"
 #~ msgstr "OK"
+
 #~ msgid "Required fields"
 #~ msgstr "Campos necessários"
+
 #~ msgid "Users Groups"
 #~ msgstr "Grupos de Usuários"
+
 #~ msgid "Available groups"
 #~ msgstr "Grupos disponíveis"
+
 #~ msgid "Used groups"
 #~ msgstr "Grupos usados"
+
 #~ msgid "Avaliable groups"
 #~ msgstr "Grupos disponíveis"
+
 #~ msgid "new password"
 #~ msgstr "Nova senha"
-
