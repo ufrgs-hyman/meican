@@ -172,10 +172,12 @@
                         '<input type="button" class="closeFlash" onclick="clearFlash()"/>' +
                         '</div> ');
                     window.scroll(0, 0);
+                    window.onscroll = window_scroll;
                 }
             
                 function clearFlash(){
                     $('#flash_box').empty();
+                    window.onscroll = null;
                 }
                 
                 function WPToggle(divId, imageId) {
@@ -192,6 +194,15 @@
     
                 }
     
+                function window_scroll() {
+                    var top = $(window).scrollTop(); 
+                    if (top >= 110) {
+                        $("#flash_box").addClass("fixed");
+                    } else {
+                        $("#flash_box").removeClass("fixed");
+                    }
+                }
+                                    
         </script>
 
     </head>

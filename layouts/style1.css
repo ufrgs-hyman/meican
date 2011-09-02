@@ -774,3 +774,8 @@ div#flash_box .closeFlash {
     margin: 3px;
     float: right;
 }
+
+.fixed {
+    position: fixed;
+    z-index: 5;
+}

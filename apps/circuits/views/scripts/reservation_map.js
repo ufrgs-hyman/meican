@@ -1,5 +1,5 @@
 function toggleTopology(){
-    clearAll();
+    res_clearAll();
     if ((src_lat_network == dst_lat_network) && (src_lng_network == dst_lng_network)) {
         var aux = parseFloat(dst_lng_network);
         aux += 0.0005;
@@ -39,6 +39,7 @@ function res_showCircuit(){
 //        aux += 0.0005;
 //        dst_lng_network = aux.toString();
 //    }
+
     var coord_src = new google.maps.LatLng(src_lat_network, src_lng_network);
     res_addMarker(coord_src, "src");
     res_bounds.push(coord_src);
@@ -48,6 +49,7 @@ function res_showCircuit(){
     
     res_bounds.push(coord_dst);
     res_setBounds(res_bounds);
+    
     res_drawPath(coord_src, coord_dst);
 }
 

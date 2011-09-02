@@ -119,7 +119,7 @@ class reservations extends Controller {
 
         // testa se a quantidade de reservas na página é diferente da quantidade de reservas no banco
         if (count($reservations) != $res_number) {
-            header('HTTP/1.1 406 Refresh reservations');
+            //header('HTTP/1.1 406 Refresh reservations');
             return;
         }
 

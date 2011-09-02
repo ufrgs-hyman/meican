@@ -92,13 +92,13 @@ $bandwidth = $this->passedArgs->bandwidth;
 
 
 
-<br/><br/>
+<br/>
 
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'cancel', 'param' => "res_id:$res_id")); ?>">    
 
     <div style="clear: both" class="controls">
-        <input class="back" type="button" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');" value="<?php echo _("Back to reservations"); ?>"/>
-        <input class="cancel" type="submit" disabled id="cancel_button" style="opacity:0.4" value="<?php echo _("Cancel reservations"); ?>" onClick="return confirm('<?php echo _('Cancel the selected reservations?'); ?>')"/>
+        <input class="back" type="button" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');" value="<?php echo _("Back to reservations"); ?>" style="float: left"/>
+        <input class="cancel" type="submit" disabled id="cancel_button" style="opacity:0.4; float: right;" value="<?php echo _("Cancel reservations"); ?>" onClick="return confirm('<?php echo _('Cancel the selected reservations?'); ?>')"/>
     </div>
 
 </form>
