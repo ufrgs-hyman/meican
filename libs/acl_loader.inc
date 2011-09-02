@@ -329,10 +329,11 @@ class AclLoader extends Tree_Model {
     public function checkACL($right, $model, $id = NULL) {
 
         $acos = $this->acl->{$right};
-        //Framework::debug('acos',$acos);
+        Framework::debug('acos',$acos);
         if ($acos) {
 
             $restr = $this->getAllowedPKey($right, $model);
+            Framework::debug("pkeys",$restr);
 
             if ($restr) {
                 if ($id) { //se tem o id especificado, deve estar especificado
