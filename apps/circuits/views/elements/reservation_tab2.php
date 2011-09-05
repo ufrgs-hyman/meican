@@ -3,10 +3,11 @@
 <div style="width:100%;">
     <table class="withoutBorder" style="width:100%">
         <tr style="width:100%">
-            <td style="vertical-align: top; width:68%">
+            <td style="width: 1%; vertical-align: top"></td>
+            <td style="vertical-align: top; width:60%; padding-right: 5px">
                 <div id="edit_map_canvas" style="width:100%; height: 400px; min-width:300px"></div>
             </td>
-            <td style="vertical-align: top; width:32%">
+            <td style="vertical-align: top; width:38%; padding-left: 5px">
                 <div id="advOptions" style="width: 100%">
                     <table style="width: 100%; border: 1px solid #3a5879">
                         <tr>
@@ -114,7 +115,7 @@
                     </table>                    
                 </div>
             </td>
-            <td style="width:10%"></td>
+            <td style="width:1%"></td>
         </tr>
     </table>
     

@@ -21,11 +21,8 @@ function createTabs(){
                 changeBand();
             }
             google.maps.event.trigger(edit_map, 'resize');
-            //edit_map.setZoom( edit_map.getZoom() );
-            //edit_setBounds(edit_bounds);
 
             google.maps.event.trigger(view_map, 'resize');
-            view_map.setZoom( view_map.getZoom() );
             view_setBounds(view_bounds);
         }
         return false;
@@ -105,7 +102,6 @@ function nextTab(elem){
                 currentTab = "t3";
                 google.maps.event.trigger(view_map, 'resize');
                 view_setBounds(view_bounds);
-                view_map.setZoom( view_map.getZoom() );                 
             }                
             break;
         }
@@ -246,11 +242,9 @@ function changeName(elem){
         $("#ul-tabs").removeClass("inactive");        
         
         google.maps.event.trigger(edit_map, 'resize');
-        edit_map.setZoom( edit_map.getZoom() );                  
         edit_setBounds(edit_bounds);        
         
         google.maps.event.trigger(view_map, 'resize');
-        view_map.setZoom( view_map.getZoom() );  
         view_setBounds(view_bounds);
         
     } else if ((elem.value == "")) {
@@ -540,7 +534,6 @@ function changeTagValue(where) {
 //inicializa mapa com redes marcadas para a definicao dos endpoints
 function edit_initializeMap() {
     contextMenu.hide();
-    firstTime = true;
     for (var i in domains) {        
         for (var j in domains[i].networks) {            
             if (domains[i].networks[j].latitude) {
@@ -549,7 +542,7 @@ function edit_initializeMap() {
                         if (domains[k].networks[l].latitude) {
                             if ((domains[i].networks[j].latitude == domains[k].networks[l].latitude) &&
                                 (domains[i].networks[j].longitude == domains[k].networks[l].longitude)) {
-                                domains[i].networks[j].longitude -= -0.005;
+                                domains[i].networks[j].longitude -= -0.015;
                             }
                         }
                     }
@@ -609,10 +602,10 @@ function edit_addMapMarker(location, domain_id, domain_name, network_id, network
             switch ( action )
             {
                 case 'fromHere':
-                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "src");
+                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "src", function(){edit_initializeMap()});
                     break;
                 case 'toHere':
-                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "dst");
+                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "dst", function(){edit_initializeMap()});
                     break;
             }
             return false;
@@ -692,10 +685,10 @@ function edit_addMapMarker(location, domain_id, domain_name, network_id, network
             switch ( action )
             {
                 case 'fromHere':
-                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "src");
+                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "src", function(){edit_initializeMap()});
                     break;
                 case 'toHere':
-                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "dst");
+                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "dst", function(){edit_initializeMap()});
                     break;
             }
             return false;
@@ -729,7 +722,7 @@ function edit_addMapMarker(location, domain_id, domain_name, network_id, network
 }
 
 //funcao que gerencia os "clicks" nos marcadores
-function edit_markerClick(location, domain_id, domain_name, network_id, network_name, where){
+function edit_markerClick(location, domain_id, domain_name, network_id, network_name, where, callback_initializeMap){
     contextMenu.hide();     
 
     if (where == "src") {
@@ -764,7 +757,10 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
         };
     }
     
-    edit_initializeMap();
+    if (callback_initializeMap) {
+        callback_initializeMap();
+    }
+    
     
     contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
     contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
@@ -909,6 +905,7 @@ function edit_clearAll(){
     
     edit_clearLines();
     edit_clearSelectedMarkers();
+    edit_clearMarkers();
     path = [];
     edit_clearTopologyMarkers();
     edit_setBounds(edit_bounds);    
@@ -921,12 +918,14 @@ function edit_clearAll(){
     });
     $(edit_map.getDiv()).append(contextMenu);    
     
-    view_clearAll();
+    view_clearAll();    
     
     validateTab1();
     if (tab2_valid) {
         $("#t3").addClass("ui-state-disabled");
     }
+    
+    edit_initializeMap();
 }
 
 //limpa as linhas do mapa de edicao
@@ -938,7 +937,6 @@ function edit_clearLines() {
 
 //limpa os marcadores do mapa de edicao
 function edit_clearMarkers() {
-    toggleCluster(false, edit_markersArray);
     for (var i=0; i< edit_markersArray.length; i++){
         edit_markersArray[i].setMap(null);
     }

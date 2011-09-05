@@ -47,6 +47,9 @@ $timer = $argsToElement;
         <?php endif; ?>
     <?php else: ?>
         <tr>
+            <td colspan="5">&nbsp;</td>
+        </tr>
+        <tr>
             <th colspan="5">
                 <?php echo _("Summary") ?>
             </th>
