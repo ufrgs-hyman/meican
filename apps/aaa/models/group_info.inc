@@ -155,6 +155,7 @@ class group_info extends Model {
                                 $aros_acos = new aros_acos();
                                 $aros_acos->aro_id = $aro_node->aro_id;
                                 $aros_acos->aco_id = $aco_node->aco_id;
+                                $aros_acos->model = NULL;
                                 $aros_acos->create = "allow";
                                 $aros_acos->read = "allow";
                                 $aros_acos->update = "allow";

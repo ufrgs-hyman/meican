@@ -18,21 +18,27 @@ class Acos extends Tree_Model {
         $this->parent_id = $parent_id;
     }
 
-
     public function getAcoGroupByModel($strAcos, $model) {
-
         $sql = "SELECT DISTINCT obj_id FROM acos WHERE aco_id IN ($strAcos) AND model='$model' AND obj_id IS NOT NULL";
         Framework::debug("aco grp",$sql);
         $result = $this->querySql($sql, $this->getTableName());
         return $result;
     }
+    
+    public function hasAnyAcoOfModel($strAcos, $model) {
+        $sql = "SELECT DISTINCT aco_id FROM acos WHERE aco_id IN ($strAcos) AND model='$model'";
+        if ($this->querySql($sql, $this->getTableName()))
+            return TRUE;
+        else
+            return FALSE;
+    }
 
     public function getVoid($strAcos, $model) {
-
         $sql = "SELECT DISTINCT * FROM acos WHERE aco_id IN ($strAcos) AND model='$model' AND obj_id IS NULL";
         $result = $this->querySql($sql, $this->getTableName());
         return $result;
     }
+    
 }
 
 ?>

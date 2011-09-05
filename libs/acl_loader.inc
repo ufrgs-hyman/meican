@@ -328,20 +328,31 @@ class AclLoader extends Tree_Model {
 
 
     public function checkACL($right, $model, $id = NULL) {
-
+        
         $acos = $this->acl->{$right};
         Framework::debug('acos',$acos);
         if ($acos) {
-
-            $restr = $this->getAllowedPKey($right, $model);
-            Framework::debug("pkeys",$restr);
-            Framework::debug("model",$model);
-
-            if ($restr) {
-                if ($id) { //se tem o id especificado, deve estar especificado
-                    if (array_search($id, $restr) !== FALSE)
-                        return TRUE;
-                } else { //possui acesso a algum nodo!!! nao precisa necessariamente ser o VOID
+            
+            // primeiro pesquisa se possui acesso a um determinado modelo
+            // por exemplo, testa se o modelo recebido como parâmetro está na lista de acos lida das rights
+            // se possuir pelo menos uma linha no retorno, é porque possui permissão
+            // se passou um ID como parâmetro, tem que testar se o ID está na lista dos 'objs' retornados de 'getAllowedPKey'
+            
+            $aco = new Acos();
+            $strAcos = implode(',', $acos);
+            
+            if ($aco->hasAnyAcoOfModel($strAcos, $model)) {
+                if ($id) {
+                    if ($restr = $this->getAllowedPKey($right, $model)) {
+                        Framework::debug("pkeys", $restr);
+                        //se tem o id especificado, deve estar especificado
+                        if (array_search($id, $restr) !== FALSE)
+                            return TRUE;
+                    }
+                } else
+                    return TRUE;
+            }
+            //} else { //possui acesso a algum nodo!!! nao precisa necessariamente ser o VOID
                 //pode ser qualquer UM. função getvoid parece inútil
                 //
                     //nao especificou id, procura pelo void
@@ -352,12 +363,12 @@ class AclLoader extends Tree_Model {
                     //$strAcos = implode(',', $acos);
                     //$void = $aco->getVoid($strAcos, $model);
                     //if ($void) //possui acesso ao ente void, logo possui right sobre aquele model
-                        return TRUE;
-                }
-            }
+                        //return TRUE;
+            //}
         }
         return FALSE;
     }
+    
 } // da classe
 
 ?>
