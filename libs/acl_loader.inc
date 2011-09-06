@@ -301,7 +301,6 @@ class AclLoader extends Tree_Model {
             $acos = new acos();
             //retorna os objetos (obj_id) que o usuário possui acesso
             $result = $acos->getAcoGroupByModel($strAcos, $model);
-            Framework::debug("allowed pky", $result);
 
             $obj = array(); //array com os ids do modelo que o usuário
             foreach ($result as $r) {
@@ -318,7 +317,7 @@ class AclLoader extends Tree_Model {
     public function checkACL($right, $model, $id = NULL) {
 
         $acos = $this->acl->{$right};
-        Framework::debug('acos', $acos);
+        //Framework::debug('acos', $acos);
         if ($acos) {
 
             // primeiro pesquisa se possui acesso a um determinado modelo
@@ -332,7 +331,6 @@ class AclLoader extends Tree_Model {
             if ($aco->hasAnyAcoOfModel($strAcos, $model)) {
                 if ($id) {
                     if ($restr = $this->getAllowedPKey($right, $model)) {
-                        Framework::debug("pkeys", $restr);
                         //se tem o id especificado, deve estar especificado
                         if (array_search($id, $restr) !== FALSE)
                             return TRUE;

@@ -1,32 +1,38 @@
 <?php $icons = $this->passedArgs; ?>
+
 <br/>
-<table class="icons">
-<?php
-$ind = 0;
-        while ($ind < count($icons)) :
 
-     ?>
+<?php if ($icons): ?>
 
-    <tr>
-        <td>
-            <?php echo $icons[$ind]->name; ?>
-        </td>
-        <td>
-            <?php echo $icons[$ind+1]->name; ?>
-        </td>
-    </tr>
-    <tr class="new_line">
-        <td>
-            <a href="<?php echo $this->buildLink($icons[$ind]->link); ?>">
-                <img src="<?php echo $icons[$ind]->figure; ?>" alt="<?php echo $icons[0]->name; ?>">
-            </a>
-        </td>
-        <td>
-            <a href="<?php echo $this->buildLink($icons[$ind+1]->link); ?>">
-                <img src="<?php echo $icons[$ind+1]->figure; ?>" alt="<?php echo $icons[1]->name; ?>">
-            </a>
-        </td>
-    </tr>
-    <?php $ind = $ind + 2;
-    endwhile; ?>
-</table>
+    <table class="icons">
+
+        <?php for ($ind = 0; $ind < count($icons); $ind = $ind + 2): ?>
+            <tr>
+                <td>
+                    <?php echo $icons[$ind]->name; ?>
+                </td>
+                <td>
+                    <?php if ($icons[$ind + 1])
+                        echo $icons[$ind + 1]->name; ?>
+                </td>
+            </tr>
+
+            <tr class="new_line">
+                <td>
+                    <a href="<?php echo $this->buildLink($icons[$ind]->link); ?>">
+                        <img src="<?php echo $icons[$ind]->figure; ?>" alt="<?php echo $icons[$ind]->name; ?>"/>
+                    </a>
+                </td>
+                <td>
+                    <?php if ($icons[$ind + 1]): ?>
+                        <a href="<?php echo $this->buildLink($icons[$ind + 1]->link); ?>">
+                            <img src="<?php echo $icons[$ind + 1]->figure; ?>" alt="<?php echo $icons[$ind + 1]->name; ?>"/>
+                        </a>
+                    <?php endif; ?>
+                </td>
+            </tr>
+    <?php endfor; ?>
+
+    </table>
+
+<?php endif; ?>

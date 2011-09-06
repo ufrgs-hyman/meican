@@ -62,32 +62,36 @@ class gui extends Controller {
         //checar se tem acesso a novas reservas
         $acl = new AclLoader();
         
-        $ind=0;
+        $icons = array();
         
         if ($acl->checkACL("create", 'urn_info')) {
-            $icons[$ind]->name = _('New reservation');
-            $icons[$ind]->figure = 'layouts/img/new_reservation.png';
-            $icons[$ind]->link = array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'add');
-            $ind++;
+            $icon = new stdClass();
+            $icon->name = _('New reservation');
+            $icon->figure = 'layouts/img/new_reservation.png';
+            $icon->link = array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'add');
+            $icons[] = $icon;
         }
 
         if ($acl->checkACL("read", 'reservation_info')) {
-            $icons[$ind]->name = _('Reservations');
-            $icons[$ind]->figure = 'layouts/img/reservations_list.png';
-            $icons[$ind]->link = array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'show');
-            $ind++;
+            $icon = new stdClass();
+            $icon->name = _('Reservations');
+            $icon->figure = 'layouts/img/reservations_list.png';
+            $icon->link = array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'show');
+            $icons[] = $icon;
         }
 
-        $icons[$ind]->name = _('Requests');
-        $icons[$ind]->figure = 'layouts/img/requests_1.png';
-        $icons[$ind]->link = array('app' => 'bpm', 'controller' => 'requests', 'action' => 'show');
-        $ind++;
+        $icon = new stdClass();
+        $icon->name = _('Requests');
+        $icon->figure = 'layouts/img/requests_1.png';
+        $icon->link = array('app' => 'bpm', 'controller' => 'requests', 'action' => 'show');
+        $icons[] = $icon;
 
         if ($acl->checkACL("read", 'user_info')) {
-            $icons[$ind]->name = _('Management');
-            $icons[$ind]->figure = 'layouts/img/management.png';
-            $icons[$ind]->link = array('app' => 'aaa', 'controller' => 'users', 'action' => 'show');
-            $ind++;
+            $icon = new stdClass();
+            $icon->name = _('Management');
+            $icon->figure = 'layouts/img/management.png';
+            $icon->link = array('app' => 'aaa', 'controller' => 'users', 'action' => 'show');
+            $icons[] = $icon;
         }
 
         $this->setArgsToBody($icons);
