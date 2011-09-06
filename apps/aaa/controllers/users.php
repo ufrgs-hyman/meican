@@ -309,8 +309,15 @@ class users extends Controller {
         $tmp2 = explode('=', $tmp1[0]);
 
         $user->dateformat = $tmp2[1];
-
-        $this->addScript('password');
+        
+        $lang = explode(".", Language::getLang());
+        $js_lang = str_replace("_", "-", $lang[0]);
+        
+        $this->setArgsToScript(array(
+           "language" => $js_lang
+        ));        
+        
+        $this->setInlineScript('password');
         $this->setArgsToBody($user);
         $this->setAction('edit_settings');
         $this->render();

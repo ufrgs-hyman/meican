@@ -4,7 +4,7 @@
     
     <?php $this->addElement('identification_settings', $user); ?>
 
-    <table class="withoutBorder" style="margin-left: 19px; min-width: 0;">
+    <table id="userInfo" class="withoutBorder" style="margin-left: 19px; min-width: 0;">
         <tr>
             <th class="right">
                 <?php echo _("Language"); ?>:
