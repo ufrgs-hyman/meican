@@ -67,7 +67,7 @@ class gui extends Controller {
         if ($acl->checkACL("create", 'urn_info')) {
             $icons[$ind]->name = _('New reservation');
             $icons[$ind]->figure = 'layouts/img/new_reservation.png';
-            $icons[$ind]->link = array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'reservation_add');
+            $icons[$ind]->link = array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'add');
             $ind++;
         }
 

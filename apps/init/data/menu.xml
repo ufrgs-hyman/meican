@@ -19,7 +19,7 @@
             <name>Circuits</name>
             <subItem>
                 <name>New reservation</name>
-                <link>main.php?app=circuits&amp;controller=reservations&amp;action=reservation_add</link>
+                <link>main.php?app=circuits&amp;controller=reservations&amp;action=add</link>
                 <right>create</right>
                 <model>urn_info</model>
             </subItem>

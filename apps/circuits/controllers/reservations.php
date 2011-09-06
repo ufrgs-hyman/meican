@@ -369,7 +369,7 @@ class reservations extends Controller {
         }
     }
 
-    public function reservation_add() {
+    public function add() {
         // get Timestamp to calc reservation creation time by user
         Common::setSessionVariable("res_begin_timestamp", microtime(true));
 
