@@ -4,45 +4,31 @@
 
 <form onSubmit="selectAll('used');" method="POST" action="<?php echo $this->buildLink(array('action' => 'update', 'param' => 'usr_id:'.$args->user->usr_id)); ?>">
 
-    <table>
-        <tr>
-            <th>
-                <?php echo _('User login'); ?>:
-            </th>
-            <td>
-                <?php echo $args->user->usr_login; ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input id="changePassword" type="button" value="<?php echo _('Change password'); ?>" onclick="showPasswdBox();">
-            </td>
-        </tr>
-    </table>
-
+    <?php $this->addElement('identification_settings', $args->user); ?>
+    
+    <input id="changePassword" type="button" value="<?php echo _('Change password'); ?>" onclick="showPasswdBox();"/>
+    
     <div id="tpassword" style="display: none">
-        <table>
+        <table class="withoutBorder" style="min-width: 0">
             <tr>
-                <td>
+                <th class="right">
                     <?php echo _('New password'); ?>
-                </td>
-                <td>
-                    <input type="password" size="50" name="usr_password" value="">
+                </th>
+                <td class="left">
+                    <input type="password" size="20" name="usr_password" value=""/>
                 </td>
             </tr>
 
             <tr>
-                <td>
+                <th class="right">
                     <?php echo _('Retype new password'); ?>
-                </td>
-                <td>
-                    <input type="password" size="50" name="retype_password" value="">
+                </th>
+                <td class="left">
+                    <input type="password" size="20" name="retype_password" value=""/>
                 </td>
             </tr>
         </table>
-    </div>
-
-    <?php $this->addElement('identification', $args->user); ?>
+    </div>    
 
     <?php $this->addElement('associative_table', $args); ?>
 

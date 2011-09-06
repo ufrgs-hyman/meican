@@ -10,7 +10,7 @@ $title = $argsToElement->title;
     <?php echo $title; ?>
 </h1>
 
-<table>
+<table class="withoutBorder">
    
     <tr>
         <td>
@@ -24,15 +24,19 @@ $title = $argsToElement->title;
         </td>
 
         <td>
-            <table>
+            <table class="withoutBorder">
                 <tr>
                     <td>
-                        <input class="add" type="button" onclick="moveOption('unused', 'used');" value="<?php echo _('Add'); ?>">
+                        <div align="center">
+                            <input class="add" type="button" onclick="moveOption('unused', 'used');" value="<?php echo _('Add'); ?>" style="float: none"/>
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input class="remove" type="button" onclick="moveOption('used', 'unused');" value="<?php echo _('Remove'); ?>">
+                        <div align="center">
+                            <input class="remove" type="button" onclick="moveOption('used', 'unused');" value="<?php echo _('Remove'); ?>" style="float: none"/>
+                        </div>
                     </td>
                 </tr>
             </table>

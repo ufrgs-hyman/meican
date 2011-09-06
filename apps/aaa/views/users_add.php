@@ -5,21 +5,21 @@
 
 <form onSubmit="selectAll('used');" method="POST" action="<?php echo $this->buildLink(array('action' => 'add')); ?>">
 
-    <table class="withoutBorder add">
+    <table class="withoutBorder add" style="min-width: 30%">
         <tr>
             <th class="right">
                 <?php echo _('Login'); ?>:
             </th>
-            <td>
-                <input type="text" size="50" name="usr_login" value="">
+            <td class="left">
+                <input type="text" size="20" name="usr_login" value="">
             </td>
         </tr>
          <tr>
                 <th class="right">
                     <?php echo _('New password'); ?>:
                 </th>
-                <td>
-                    <input type="password" size="50" name="usr_password" value="">
+                <td class="left">
+                    <input type="password" size="20" name="usr_password" value="">
                 </td>
             </tr>
 
@@ -27,13 +27,13 @@
                 <th class="right">
                     <?php echo _('Retype new password'); ?>:
                 </th>
-                <td>
-                    <input type="password" size="50" name="retype_password" value="">
+                <td class="left">
+                    <input type="password" size="20" name="retype_password" value="">
                 </td>
             </tr>
     </table> <br/><br/>
     
-    <?php $this->addElement('identification'); ?>
+    <?php $this->addElement('identification_userAdd'); ?>
 
     <br/><br/>
     <table style="min-width: 0">

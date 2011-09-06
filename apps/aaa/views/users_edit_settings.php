@@ -1,62 +1,15 @@
 <?php $user = $this->passedArgs; ?>
 
-<form method="POST" action="<?php echo $this->buildLink(array('action' => 'update_settings', 'param' => 'usr_id:' . $user->usr_id)); ?>">
-    <table>
+<form method="POST" action="<?php echo $this->buildLink(array('action' => 'update_settings', 'param' => 'usr_id:' . $user->usr_id)); ?>">        
+    
+    <?php $this->addElement('identification_settings', $user); ?>
 
+    <table class="withoutBorder" style="margin-left: 4px; min-width: 0">
         <tr>
-            <th>
-                <?php echo _('Login'); ?>
+            <th class="right">
+                <?php echo _("Language"); ?>:
             </th>
-            <td>
-                <?php echo $user->usr_login; ?>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input class="password" id="changePassword" type="button" value="<?php echo _('Change password'); ?>" onclick="showPasswdBox();">
-            </td>
-        </tr>
-    </table>
-
-    <div id="tpassword" style="display: none">
-        <table>
-            <tr>
-                <th>
-                    <?php echo _('Current password'); ?>
-                </th>
-                <td>
-                    <input type="password" size="50" name="old_usr_password" value="">
-                </td>
-
-            </tr>
-            <tr>
-                <th>
-                    <?php echo _('New password'); ?>
-                </th>
-                <td>
-                    <input  size="50" type="password" name="usr_password" value="">
-                </td>
-            </tr>
-
-            <tr>
-                <th>
-                    <?php echo _('Retype new password'); ?>
-                </th>
-                <td>
-                    <input size="50" type="password" name="retype_password" value="">
-                </td>
-            </tr>
-        </table>
-    </div>
-
-    <?php $this->addElement('identification', $user); ?>
-
-    <table>
-        <tr>
-            <th>
-                <?php echo _("Language"); ?>
-            </th>
-            <td>
+            <td class="left">
                 <select name="lang">
                     <option <?php if ($user->lang == "en_US.utf8") echo 'selected="true"'; ?> value="en_US.utf8"><?php echo _("English"); ?></option>
                     <option <?php if ($user->lang == "pt_BR.utf8") echo 'selected="true"'; ?> value="pt_BR.utf8"><?php echo _("Portuguese"); ?></option>
@@ -67,10 +20,10 @@
 
     
         <tr>
-            <th>
-                <?php echo _("Date Format"); ?>
+            <th class="right">
+                <?php echo _("Date Format"); ?>:
             </th>
-            <td>
+            <td class="left">
                 <select name ="dateformat">
                     <option <?php if ($user->dateformat == "dd/mm/yyyy") echo 'selected="true"'; ?> value = "dd/mm/yyyy"><?php echo _("dd / mm / yyyy"); ?></option>
                     <option <?php if ($user->dateformat == "mm/dd/yyyy") echo 'selected="true"'; ?> value = "mm/dd/yyyy"><?php echo _("mm / dd / yyyy"); ?></option>
@@ -79,7 +32,40 @@
             </td>
         </tr>
     </table>
+    
+    <input class="password" id="changePassword" type="button" value="<?php echo _('Change password'); ?>" onclick="showPasswdBox();"/>
+    
+    <div id="tpassword" style="display: none">
+        <table class="withoutBorder" style="min-width: 0;">
+            <tr>
+                <th class="right">
+                    <?php echo _('Current password'); ?>
+                </th>
+                <td class="left">
+                    <input type="password" size="20" name="old_usr_password" value=""/>
+                </td>
 
+            </tr>
+            <tr>
+                <th class="right">
+                    <?php echo _('New password'); ?>
+                </th>
+                <td class="left">
+                    <input  size="20" type="password" name="usr_password" value=""/>
+                </td>
+            </tr>
+
+            <tr>
+                <th class="right">
+                    <?php echo _('Retype new password'); ?>
+                </th>
+                <td class="left">
+                    <input size="20" type="password" name="retype_password" value=""/>
+                </td>
+            </tr>
+        </table>
+    </div>    
+    <br/>
     <div class="controls">
         <input type="submit" class="save" value="<?php echo _('Save'); ?>">
         <input type="button" class="cancel" value="<?php echo _('Cancel'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'edit_settings')); ?>');">
