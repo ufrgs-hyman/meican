@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-02 15:55-0300\n"
+"POT-Creation-Date: 2011-09-06 12:35-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -370,7 +370,7 @@ msgid "Missing arguments"
 msgstr ""
 
 #: views/elements/empty_db.php:20 views/elements/list_flows.php:120
-#: views/elements/list_timers.php:66 views/reservations_show.php:63
+#: views/elements/list_timers.php:66 views/reservations_show.php:62
 msgid "Add"
 msgstr ""
 
@@ -448,7 +448,7 @@ msgid "Edit"
 msgstr ""
 
 #: views/elements/timer_form.php:57 views/elements/view_timer.php:39
-#: views/elements/view_timer.php:51 views/elements/timer_recurrence.php:195
+#: views/elements/view_timer.php:54 views/elements/timer_recurrence.php:195
 msgid "Summary"
 msgstr ""
 
@@ -467,7 +467,7 @@ msgstr ""
 msgid "Untagged"
 msgstr ""
 
-#: views/elements/reservation_tab2.php:70
+#: views/elements/reservation_tab2.php:71
 msgid "Show VLAN configuration"
 msgstr ""
 
@@ -487,21 +487,21 @@ msgstr ""
 msgid "VLAN Type"
 msgstr ""
 
-#: views/elements/reservation_tab5.php:5
-msgid "Endpoints"
-msgstr ""
-
-#: views/elements/reservation_tab5.php:31
-msgid "Finished"
+#: views/elements/reservation_tab5.php:7 views/reservations_add.php:43
+msgid "Confirmation"
 msgstr ""
 
 #: views/elements/reservation_tab5.php:32
+msgid "Finished"
+msgstr ""
+
+#: views/elements/reservation_tab5.php:33
 #: views/elements/reservation_tab4.php:18 views/reservations_page3.php:38
 #: views/reservations_page2.php:33
 msgid "Previous"
 msgstr ""
 
-#: views/elements/reservation_tab5.php:33
+#: views/elements/reservation_tab5.php:34
 #: views/elements/timer_recurrence.php:223
 #: views/elements/reservation_tab4.php:19 views/flows_add.php:52
 #: views/flows_add.php:54 views/reservations_add.php:69
@@ -669,7 +669,7 @@ msgstr ""
 msgid "Flows"
 msgstr ""
 
-#: views/flows_show.php:10 views/reservations_show.php:71
+#: views/flows_show.php:10 views/reservations_show.php:70
 #: views/timers_show.php:10
 msgid "Delete"
 msgstr ""
@@ -678,7 +678,7 @@ msgstr ""
 msgid "The selected flows will be deleted."
 msgstr ""
 
-#: views/flows_show.php:10 views/reservations_show.php:73
+#: views/flows_show.php:10 views/reservations_show.php:72
 #: views/timers_show.php:10
 msgid "Do you confirm?"
 msgstr ""
@@ -737,16 +737,11 @@ msgstr ""
 msgid "Endpoints & Bandwidth"
 msgstr ""
 
-#: views/reservations_add.php:43
-msgid "Confirmation"
-msgstr ""
-
 #: views/reservations_add.php:55
 msgid ""
-"<p style='color:black; text-indent: 15px'>Select source and destination "
-"networks by clicking on the map markers with any button and then choosing an "
-"option from the pop-up menu. After selecting the endpoints, choose the "
-"device and port on the right pane."
+"Select source and destination networks by clicking on the map markers with "
+"any button and then choosing an option from the pop-up menu. After selecting "
+"the endpoints, choose the device and port on the right pane."
 msgstr ""
 
 #: views/reservations_add.php:67 views/map_show.php:38
@@ -769,7 +764,7 @@ msgstr ""
 msgid "Bandwidth (Mbps)"
 msgstr ""
 
-#: views/reservations_show.php:71
+#: views/reservations_show.php:70
 msgid "The selected reservations will be deleted."
 msgstr ""
 

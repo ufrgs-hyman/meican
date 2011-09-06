@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-02 15:55-0300\n"
-"PO-Revision-Date: 2011-09-02 15:55-0300\n"
+"POT-Creation-Date: 2011-09-06 12:35-0300\n"
+"PO-Revision-Date: 2011-09-06 12:36-0300\n"
 "Last-Translator: Pietro Biasuz <pfbiasuz@inf.ufrgs.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -440,7 +440,7 @@ msgstr "Falta de parâmetros"
 #: views/elements/empty_db.php:20
 #: views/elements/list_flows.php:120
 #: views/elements/list_timers.php:66
-#: views/reservations_show.php:63
+#: views/reservations_show.php:62
 msgid "Add"
 msgstr "Adicionar"
 
@@ -534,7 +534,7 @@ msgstr "Editar"
 
 #: views/elements/timer_form.php:57
 #: views/elements/view_timer.php:39
-#: views/elements/view_timer.php:51
+#: views/elements/view_timer.php:54
 #: views/elements/timer_recurrence.php:195
 msgid "Summary"
 msgstr "Resumo"
@@ -559,7 +559,7 @@ msgstr "Tagged"
 msgid "Untagged"
 msgstr "Untagged"
 
-#: views/elements/reservation_tab2.php:70
+#: views/elements/reservation_tab2.php:71
 msgid "Show VLAN configuration"
 msgstr "Mostrar configurações de VLAN"
 
@@ -579,22 +579,23 @@ msgstr "Recorrência"
 msgid "VLAN Type"
 msgstr "Tipo de VLAN"
 
-#: views/elements/reservation_tab5.php:5
-msgid "Endpoints"
-msgstr "Pontos de Origem/Destino"
+#: views/elements/reservation_tab5.php:7
+#: views/reservations_add.php:43
+msgid "Confirmation"
+msgstr "Confirmação"
 
-#: views/elements/reservation_tab5.php:31
+#: views/elements/reservation_tab5.php:32
 msgid "Finished"
 msgstr "Concluído"
 
-#: views/elements/reservation_tab5.php:32
+#: views/elements/reservation_tab5.php:33
 #: views/elements/reservation_tab4.php:18
 #: views/reservations_page3.php:38
 #: views/reservations_page2.php:33
 msgid "Previous"
 msgstr "Anterior"
 
-#: views/elements/reservation_tab5.php:33
+#: views/elements/reservation_tab5.php:34
 #: views/elements/timer_recurrence.php:223
 #: views/elements/reservation_tab4.php:19
 #: views/flows_add.php:52
@@ -788,7 +789,7 @@ msgid "Flows"
 msgstr "Fluxos"
 
 #: views/flows_show.php:10
-#: views/reservations_show.php:71
+#: views/reservations_show.php:70
 #: views/timers_show.php:10
 msgid "Delete"
 msgstr "Excluir"
@@ -798,7 +799,7 @@ msgid "The selected flows will be deleted."
 msgstr "Os fluxos selecionados serão excluídos."
 
 #: views/flows_show.php:10
-#: views/reservations_show.php:73
+#: views/reservations_show.php:72
 #: views/timers_show.php:10
 msgid "Do you confirm?"
 msgstr "Confirma?"
@@ -860,13 +861,9 @@ msgstr "Assistente de reserva de circuitos"
 msgid "Endpoints & Bandwidth"
 msgstr "Origem/Destino e Largura de Banda"
 
-#: views/reservations_add.php:43
-msgid "Confirmation"
-msgstr "Confirmação"
-
 #: views/reservations_add.php:55
-msgid "<p style='color:black; text-indent: 15px'>Select source and destination networks by clicking on the map markers with any button and then choosing an option from the pop-up menu. After selecting the endpoints, choose the device and port on the right pane."
-msgstr "<p style='color:black; text-indent: 15px'>Selecione os pontos de origem e destino clicando nos marcadores do mapa com qualquer botão e escolhendo uma opção do menu pop-up. Após escolher os pontos, escolha os dispositivos e portas no painel à direita."
+msgid "Select source and destination networks by clicking on the map markers with any button and then choosing an option from the pop-up menu. After selecting the endpoints, choose the device and port on the right pane."
+msgstr "Selecione as redes de origem e destino clicando nos marcadores do mapa com qualquer botão e escolhendo uma opção do menu pop-up. Após selecionados os pontos de origem e destino, escolha o dispositivo e a porta no painel à direita."
 
 #: views/reservations_add.php:67
 #: views/map_show.php:38
@@ -890,7 +887,7 @@ msgstr "Atualizar"
 msgid "Bandwidth (Mbps)"
 msgstr "Largura de banda (Mbps)"
 
-#: views/reservations_show.php:71
+#: views/reservations_show.php:70
 msgid "The selected reservations will be deleted."
 msgstr "As reservas selecionadas serão excluídas."
 
@@ -949,6 +946,18 @@ msgstr "Etapa 1 - Definindo o nome da reserva"
 msgid "Step 2 - Defining the flow"
 msgstr "Etapa 2 - Definindo o fluxo"
 
+#~ msgid "Endpoints"
+#~ msgstr "Pontos de Origem/Destino"
+#~ msgid ""
+#~ "<p style='color:black; text-indent: 15px'>Select source and destination "
+#~ "networks by clicking on the map markers with any button and then choosing "
+#~ "an option from the pop-up menu. After selecting the endpoints, choose the "
+#~ "device and port on the right pane."
+#~ msgstr ""
+#~ "<p style='color:black; text-indent: 15px'>Selecione os pontos de origem e "
+#~ "destino clicando nos marcadores do mapa com qualquer botão e escolhendo "
+#~ "uma opção do menu pop-up. Após escolher os pontos, escolha os "
+#~ "dispositivos e portas no painel à direita."
 #~ msgid "Fail to get reservations"
 #~ msgstr "Falha ao buscar reservas"
 #~ msgid "Fail to get status"

@@ -4,7 +4,7 @@
     
     <?php $this->addElement('identification_settings', $user); ?>
 
-    <table class="withoutBorder" style="margin-left: 4px; min-width: 0">
+    <table class="withoutBorder" style="margin-left: 19px; min-width: 0;">
         <tr>
             <th class="right">
                 <?php echo _("Language"); ?>:
@@ -19,7 +19,7 @@
     
 
     
-        <tr>
+        <tr style="display:none">
             <th class="right">
                 <?php echo _("Date Format"); ?>:
             </th>

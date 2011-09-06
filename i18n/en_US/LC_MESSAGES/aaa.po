@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-02 15:55-0300\n"
+"POT-Creation-Date: 2011-09-06 12:35-0300\n"
 "PO-Revision-Date: 2011-03-11 13:33-0300\n"
 "Last-Translator: Felipe <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -205,20 +205,27 @@ msgstr ""
 msgid "No change in group information"
 msgstr ""
 
-#: views/elements/identification.php:3
+#: views/elements/identification_settings.php:3
+#: views/elements/identification_userAdd.php:3
 msgid "Information"
 msgstr ""
 
-#: views/elements/identification.php:8 views/users_show.php:19
+#: views/elements/identification_settings.php:8 views/users_add.php:11
+msgid "Login"
+msgstr ""
+
+#: views/elements/identification_settings.php:16
+#: views/elements/identification_userAdd.php:8 views/users_show.php:19
 #: views/groups_show.php:13
 msgid "Name"
 msgstr ""
 
-#: views/elements/identification.php:17
+#: views/elements/identification_settings.php:25
+#: views/elements/identification_userAdd.php:17
 msgid "E-mail"
 msgstr ""
 
-#: views/elements/empty_db.php:20 views/elements/associative_table.php:30
+#: views/elements/empty_db.php:20 views/elements/associative_table.php:31
 #: views/users_show.php:54 views/groups_show.php:48
 msgid "Add"
 msgstr ""
@@ -227,72 +234,68 @@ msgstr ""
 msgid "Available"
 msgstr ""
 
-#: views/elements/associative_table.php:35
+#: views/elements/associative_table.php:38
 msgid "Remove"
 msgstr ""
 
-#: views/elements/associative_table.php:43
+#: views/elements/associative_table.php:47
 msgid "Used"
 msgstr ""
 
-#: views/users_edit_settings.php:8 views/users_add.php:11
-msgid "Login"
+#: views/users_edit_settings.php:10
+msgid "Language"
 msgstr ""
 
-#: views/users_edit_settings.php:16 views/users_edit.php:18
+#: views/users_edit_settings.php:14
+msgid "English"
+msgstr ""
+
+#: views/users_edit_settings.php:15
+msgid "Portuguese"
+msgstr ""
+
+#: views/users_edit_settings.php:24
+msgid "Date Format"
+msgstr ""
+
+#: views/users_edit_settings.php:28
+msgid "dd / mm / yyyy"
+msgstr ""
+
+#: views/users_edit_settings.php:29
+msgid "mm / dd / yyyy"
+msgstr ""
+
+#: views/users_edit_settings.php:30
+msgid "yyyy / mm / dd"
+msgstr ""
+
+#: views/users_edit_settings.php:36 views/users_edit.php:9
 msgid "Change password"
 msgstr ""
 
-#: views/users_edit_settings.php:25
+#: views/users_edit_settings.php:42
 msgid "Current password"
 msgstr ""
 
-#: views/users_edit_settings.php:34 views/users_edit.php:27
+#: views/users_edit_settings.php:51 views/users_edit.php:15
 #: views/users_add.php:19
 msgid "New password"
 msgstr ""
 
-#: views/users_edit_settings.php:43 views/users_edit.php:36
+#: views/users_edit_settings.php:60 views/users_edit.php:24
 #: views/users_add.php:28
 msgid "Retype new password"
 msgstr ""
 
-#: views/users_edit_settings.php:57
-msgid "Language"
-msgstr ""
-
-#: views/users_edit_settings.php:61
-msgid "English"
-msgstr ""
-
-#: views/users_edit_settings.php:62
-msgid "Portuguese"
-msgstr ""
-
-#: views/users_edit_settings.php:71
-msgid "Date Format"
-msgstr ""
-
-#: views/users_edit_settings.php:75
-msgid "dd / mm / yyyy"
-msgstr ""
-
-#: views/users_edit_settings.php:76
-msgid "mm / dd / yyyy"
-msgstr ""
-
-#: views/users_edit_settings.php:77
-msgid "yyyy / mm / dd"
-msgstr ""
-
-#: views/users_edit_settings.php:84 views/groups_add.php:38
-#: views/users_edit.php:50 views/groups_edit.php:22 views/acl_show.php:85
+#: views/users_edit_settings.php:70 views/groups_add.php:38
+#: views/users_edit.php:36 views/groups_edit.php:22 views/acl_show.php:85
 #: views/users_add.php:43
 msgid "Save"
 msgstr ""
 
-#: views/users_edit_settings.php:85 views/groups_add.php:39
-#: views/users_edit.php:51 views/groups_edit.php:23 views/acl_show.php:86
+#: views/users_edit_settings.php:71 views/groups_add.php:39
+#: views/users_edit.php:37 views/groups_edit.php:23 views/acl_show.php:86
 #: views/users_add.php:44
 msgid "Cancel"
 msgstr ""
@@ -324,10 +327,6 @@ msgstr ""
 
 #: views/users_edit.php:3
 msgid "Edit user"
-msgstr ""
-
-#: views/users_edit.php:10
-msgid "User login"
 msgstr ""
 
 #: views/groups_show.php:3

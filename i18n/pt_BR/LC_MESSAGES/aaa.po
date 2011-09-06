@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-02 15:55-0300\n"
+"POT-Creation-Date: 2011-09-06 12:35-0300\n"
 "PO-Revision-Date: 2011-09-02 15:31-0300\n"
 "Last-Translator: Pietro Biasuz <pfbiasuz@inf.ufrgs.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -213,20 +213,27 @@ msgstr "Informações do grupo atualizadas"
 msgid "No change in group information"
 msgstr "Nenhuma modificação nas informações do grupo"
 
-#: views/elements/identification.php:3
+#: views/elements/identification_settings.php:3
+#: views/elements/identification_userAdd.php:3
 msgid "Information"
 msgstr "Informações"
 
-#: views/elements/identification.php:8 views/users_show.php:19
+#: views/elements/identification_settings.php:8 views/users_add.php:11
+msgid "Login"
+msgstr "Login"
+
+#: views/elements/identification_settings.php:16
+#: views/elements/identification_userAdd.php:8 views/users_show.php:19
 #: views/groups_show.php:13
 msgid "Name"
 msgstr "Nome"
 
-#: views/elements/identification.php:17
+#: views/elements/identification_settings.php:25
+#: views/elements/identification_userAdd.php:17
 msgid "E-mail"
 msgstr "E-mail"
 
-#: views/elements/empty_db.php:20 views/elements/associative_table.php:30
+#: views/elements/empty_db.php:20 views/elements/associative_table.php:31
 #: views/users_show.php:54 views/groups_show.php:48
 msgid "Add"
 msgstr "Adicionar"
@@ -235,72 +242,68 @@ msgstr "Adicionar"
 msgid "Available"
 msgstr "Disponíveis"
 
-#: views/elements/associative_table.php:35
+#: views/elements/associative_table.php:38
 msgid "Remove"
 msgstr "Remover"
 
-#: views/elements/associative_table.php:43
+#: views/elements/associative_table.php:47
 msgid "Used"
 msgstr "Utilizados"
 
-#: views/users_edit_settings.php:8 views/users_add.php:11
-msgid "Login"
-msgstr "Login"
+#: views/users_edit_settings.php:10
+msgid "Language"
+msgstr "Idioma"
 
-#: views/users_edit_settings.php:16 views/users_edit.php:18
+#: views/users_edit_settings.php:14
+msgid "English"
+msgstr "Inglês"
+
+#: views/users_edit_settings.php:15
+msgid "Portuguese"
+msgstr "Português"
+
+#: views/users_edit_settings.php:24
+msgid "Date Format"
+msgstr "Formato de data"
+
+#: views/users_edit_settings.php:28
+msgid "dd / mm / yyyy"
+msgstr "dd / mm / aaaa"
+
+#: views/users_edit_settings.php:29
+msgid "mm / dd / yyyy"
+msgstr "mm / dd / aaaa"
+
+#: views/users_edit_settings.php:30
+msgid "yyyy / mm / dd"
+msgstr "aaaa / mm / dd"
+
+#: views/users_edit_settings.php:36 views/users_edit.php:9
 msgid "Change password"
 msgstr "Trocar senha"
 
-#: views/users_edit_settings.php:25
+#: views/users_edit_settings.php:42
 msgid "Current password"
 msgstr "Senha atual"
 
-#: views/users_edit_settings.php:34 views/users_edit.php:27
+#: views/users_edit_settings.php:51 views/users_edit.php:15
 #: views/users_add.php:19
 msgid "New password"
 msgstr "Nova senha"
 
-#: views/users_edit_settings.php:43 views/users_edit.php:36
+#: views/users_edit_settings.php:60 views/users_edit.php:24
 #: views/users_add.php:28
 msgid "Retype new password"
 msgstr "Redigite nova senha"
 
-#: views/users_edit_settings.php:57
-msgid "Language"
-msgstr "Idioma"
-
-#: views/users_edit_settings.php:61
-msgid "English"
-msgstr "Inglês"
-
-#: views/users_edit_settings.php:62
-msgid "Portuguese"
-msgstr "Português"
-
-#: views/users_edit_settings.php:71
-msgid "Date Format"
-msgstr "Formato de data"
-
-#: views/users_edit_settings.php:75
-msgid "dd / mm / yyyy"
-msgstr "dd / mm / aaaa"
-
-#: views/users_edit_settings.php:76
-msgid "mm / dd / yyyy"
-msgstr "mm / dd / aaaa"
-
-#: views/users_edit_settings.php:77
-msgid "yyyy / mm / dd"
-msgstr "aaaa / mm / dd"
-
-#: views/users_edit_settings.php:84 views/groups_add.php:38
-#: views/users_edit.php:50 views/groups_edit.php:22 views/acl_show.php:85
+#: views/users_edit_settings.php:70 views/groups_add.php:38
+#: views/users_edit.php:36 views/groups_edit.php:22 views/acl_show.php:85
 #: views/users_add.php:43
 msgid "Save"
 msgstr "Salvar"
 
-#: views/users_edit_settings.php:85 views/groups_add.php:39
-#: views/users_edit.php:51 views/groups_edit.php:23 views/acl_show.php:86
+#: views/users_edit_settings.php:71 views/groups_add.php:39
+#: views/users_edit.php:37 views/groups_edit.php:23 views/acl_show.php:86
 #: views/users_add.php:44
 msgid "Cancel"
 msgstr "Cancelar"
@@ -333,10 +336,6 @@ msgstr "Selecione os grupos pais"
 #: views/users_edit.php:3
 msgid "Edit user"
 msgstr "Editar usuário"
-
-#: views/users_edit.php:10
-msgid "User login"
-msgstr "Login"
 
 #: views/groups_show.php:3
 msgid "User groups"
@@ -405,6 +404,9 @@ msgstr "Os controles de acesso selecionados serão excluídos."
 #: views/users_add.php:4
 msgid "Add new user"
 msgstr "Adicionar novo usuário"
+
+#~ msgid "User login"
+#~ msgstr "Login"
 
 #~ msgid "Add New Group"
 #~ msgstr "Adicionar Novo Grupo"
