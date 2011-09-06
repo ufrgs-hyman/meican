@@ -78,7 +78,6 @@ class Common {
         apc_store('last_update',$now);
     }
 
-
     static function getLastUpdate(){
         date_default_timezone_set("America/Sao_Paulo");
         $now = mktime();
@@ -94,6 +93,7 @@ class Common {
              return $now;
         }
     }
+    
 }
 
 ?>

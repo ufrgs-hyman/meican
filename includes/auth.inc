@@ -53,10 +53,15 @@ class AuthSystem {
     
     static function userLogout () {
         if (AuthSystem::isUserLoggedIn()) {
+            /**
+             * @todo: criar um array com as informações da sessão
+             */
             Common::destroySessionVariable('usr_login');
             Common::destroySessionVariable('usr_id');
             Common::destroySessionVariable('usr_password');
             Common::destroySessionVariable('welcome_loaded');
+            Common::destroySessionVariable('acl');
+            Common::destroySessionVariable('last_update');
         }
     }
 
