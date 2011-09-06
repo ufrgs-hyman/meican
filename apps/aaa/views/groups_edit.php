@@ -5,12 +5,12 @@
 
 <form onSubmit="selectAll('used');" method="POST" action="<?php echo $this->buildLink(array('action' => 'update', 'param' => 'grp_id:'.$args->group->grp_id)); ?>">
 
-    <table>
+    <table class="withoutBorder" style="min-width: 0">
         <tr>
-            <th>
+            <th class="right">
                 <?php echo _("Group name"); ?>:
             </th>
-            <td>
+            <td class="left">
                 <input type="text" name="group" value="<?php echo $args->group->grp_descr; ?>">
             </td>
         </tr>

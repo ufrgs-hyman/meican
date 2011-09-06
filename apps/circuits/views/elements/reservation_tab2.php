@@ -81,7 +81,7 @@
                         <tr id="hops_line">
                             <td class="left" colspan="3">                                
                                 <hr/>                                
-                                <input type="button" class="add" id="addHopsButton" value="Add new hop" onclick="moreFields();" style="clear: both"/>                                    
+                                <input type="button" class="add" id="addHopsButton" value="<?php echo _('Add new hop'); ?>" onclick="moreFields();" style="clear: both"/>                                    
                                 <br/><br/>
                                 <input type="hidden" id="path" name="path"/>
                                 <span id="writeHops"></span> 

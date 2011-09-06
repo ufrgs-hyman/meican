@@ -2,7 +2,7 @@
 
 <table class="withoutBorder">
     <tr>
-        <td class="reservation_name">
+        <td class="reservation_name" style="text-align: left">
             <?php echo _("Reservation name:"); ?>
             <input type="text" name="res_name" id="res_name" size="50" value="<?php echo $name; ?>" onkeyup="changeName(this);"/>
         </td>

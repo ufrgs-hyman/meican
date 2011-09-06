@@ -4,26 +4,26 @@
 
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
 
-    <table id="acl_table" class="list">
+    <table id="acl_table" class="list" style="width: 100%">
 
         <thead>
             <tr>
-                <th rowspan="2" colspan="3"/>
-                <th colspan="2"><?php echo _("Access request object"); ?></th>
-                <th colspan="2"><?php echo _("Access control object"); ?></th>
-                <th rowspan="2"><?php echo _("Object type"); ?></th>
-                <th colspan="4"><?php echo _("Operations"); ?></th>
+                <th class="large" rowspan="2" colspan="3"/>
+                <th class="large" colspan="2" style="border: 1px solid black"><?php echo _("Access request object"); ?></th>
+                <th class="large" colspan="2" style="border: 1px solid black"><?php echo _("Access control object"); ?></th>
+                <th class="large" rowspan="2"><?php echo _("Object type"); ?></th>
+                <th class="large" colspan="4" style="border: 1px solid black"><?php echo _("Operations"); ?></th>
             </tr>
                 
             <tr>
-                <th><?php echo _("Model"); ?></th>
-                <th><?php echo _("Object"); ?></th>
-                <th><?php echo _("Model"); ?></th>
-                <th><?php echo _("Object"); ?></th>
-                <th><?php echo _("Create"); ?></th>
-                <th><?php echo _("Read"); ?></th>
-                <th><?php echo _("Update"); ?></th>
-                <th><?php echo _("Delete"); ?></th>
+                <th class="large" style="border-left: 1px solid black"><?php echo _("Model"); ?></th>
+                <th class="large" style="border-right: 1px solid black"><?php echo _("Object"); ?></th>
+                <th class="large"><?php echo _("Model"); ?></th>
+                <th class="large" style="border-right: 1px solid black"><?php echo _("Object"); ?></th>
+                <th class="large" style="border-left: 1px solid black"><?php echo _("Create"); ?></th>
+                <th class="large"><?php echo _("Read"); ?></th>
+                <th class="large"><?php echo _("Update"); ?></th>
+                <th class="large"><?php echo _("Delete"); ?></th>
             </tr>
         </thead>
         
