@@ -8,17 +8,34 @@
     
     <br>
 
-    <table class="list" style="min-width: 60%">
+    <table class="list" style="min-width: 100%">
 
         <thead>
             <tr>
-                <th class="checkbox"></th>
-                <th></th>
-                <th><?php echo _("Name"); ?></th>
-                <th><?php echo _("Bandwidth (Mbps)"); ?></th>
-                <th><?php echo _("Status"); ?></th>
-                <th><?php echo _("Flow"); ?></th>
-                <th><?php echo _("Timer"); ?></th>
+                <th rowspan="2" class="checkbox"></th>
+                <th rowspan="2"></th>
+                <th rowspan="2"><?php echo _("Name"); ?></th>
+                <th rowspan="2"><?php echo _("Bandwidth (Mbps)"); ?></th>
+                <th rowspan="2" style="border-right: 1px solid black"><?php echo _("Status"); ?></th>                
+                
+                <th style="border-right: 1px solid black" colspan="4"><?php echo _("Source"); ?></th>
+                <th style="border-right: 1px solid black" colspan="4"><?php echo _("Destination"); ?></th>
+                <th colspan="3"><?php echo _("Timer"); ?></th>
+            </tr>
+            <tr>
+                <th><?php echo _("Domain"); ?></th>
+                <th><?php echo _("Network"); ?></th>
+                <th><?php echo _("Device"); ?></th>
+                <th style="border-right: 1px solid black"><?php echo _("Port"); ?></th>
+                
+                <th><?php echo _("Domain"); ?></th>
+                <th><?php echo _("Network"); ?></th>
+                <th><?php echo _("Device"); ?></th>
+                <th style="border-right: 1px solid black"><?php echo _("Port"); ?></th>                
+                
+                <th><?php echo _("Start"); ?></th>
+                <th><?php echo _("Finish"); ?></th>
+                <th><?php echo _("Recurrence"); ?></th>
             </tr>
         </thead>
 
@@ -47,10 +64,37 @@
                         <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading" class="load" src="includes/images/ajax-loader.gif"/>
                     </td>
                     <td>
-                        <?php echo $r->flow; ?>
+                        <?php  ?>
                     </td>
                     <td>
-                        <?php echo $r->timer; ?>
+                        <?php echo $r->flow->source->network; ?>
+                    </td>
+                    <td>
+                        <?php echo $r->flow->source->device; ?>
+                    </td>
+                    <td>
+                        <?php echo $r->flow->source->port; ?>
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <?php echo $r->flow->dest->network; ?>
+                    </td>
+                    <td>
+                        <?php echo $r->flow->dest->device; ?>
+                    </td>
+                    <td>
+                        <?php echo $r->flow->dest->port; ?>
+                    </td>
+                    <td>
+                        <?php echo $r->timer->start; ?>
+                    </td>
+                    <td>
+                        <?php echo $r->timer->finish; ?>
+                    </td>
+                    <td>
+                        <?php if ($r->timer->summary) { echo $r->timer->summary; } ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -58,7 +102,7 @@
 
         <tfoot>
             <tr>
-                <td colspan="7">
+                <td colspan="16">
                     <input class="add" type="button" value="<?php echo _("Add"); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'add')); ?>');"/>  
                 </td>
             </tr>

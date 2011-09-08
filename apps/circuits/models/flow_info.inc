@@ -83,11 +83,13 @@ class flow_info extends Resource_Model {
             return FALSE;
         } else {
 
-            $ret = $this->fetch(FALSE);
+            $ret = $this->fetch(FALSE);            
             if (!$ret) {
                 return FALSE;
             }
             $flow = $ret[0];
+            
+            
 
 //            $domain = new domain_info();
 //            $domain->dom_id = $flow->src_dom;

@@ -38,10 +38,10 @@ class reservations extends Controller {
 
         $res_info = new reservation_info();
         $allReservations = $res_info->fetch();
-
+        Framework::debug('RESERVATION', $allReservations);
         if ($allReservations) {
             $reservations = array();
-
+            
             foreach ($allReservations as $r) {
                 $res = new stdClass();
                 $res->id = $r->res_id;
@@ -50,18 +50,15 @@ class reservations extends Controller {
 
                 $flow = new flow_info();
                 $flow->flw_id = $r->flw_id;
-                $result = $flow->fetch();
-                $f = $result[0];
-                $res->flow = "colocar endpoints";
-
+                $res->flow = $flow->getFlowDetails();                              
+                
                 $timer = new timer_info();
                 $timer->tmr_id = $r->tmr_id;
-                $result = $timer->fetch();
-                $t = $result[0];
-                $res->timer = "colocar horários";
+                $res->timer = $timer->getTimerDetails();                
 
                 $reservations[] = $res;
             }
+            
             $this->setAction('show');
             
             $dom = new domain_info();
@@ -77,7 +74,8 @@ class reservations extends Controller {
                 if ($has_reservations) {
                     $domains_to_js[] = $d->dom_id;
                 }
-            }
+            }                    
+            
             
             $this->setArgsToScript(array(
                 'domains' => $domains_to_js,
@@ -87,6 +85,7 @@ class reservations extends Controller {
             $this->setInlineScript('reservations_init');
 
             $this->setArgsToBody($reservations);
+            
         } else {
             $this->setAction('empty');
 
@@ -96,7 +95,7 @@ class reservations extends Controller {
             $args->link = array("action" => "reservation_add");
             $this->setArgsToBody($args);
         }
-
+        
         $this->render();
     }
 
