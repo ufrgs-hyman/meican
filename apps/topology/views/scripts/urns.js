@@ -300,7 +300,7 @@ function changeNetworkURN(domain_id, network_select) {
 
 function saveURN() {
 
-    var urnRegex = /urn:ogf:network:domain=[-_.a-zA-Z0-9]+:node=[-_.a-zA-Z0-9]+:port=[0-9]+:link=((([1-9][0-9]?|1[0-9][0-9]?|2[0-4][0-9]|25[0-4])\.(1?[0-9][0-9]?|2[0-4][0-9]|25[0-4])\.(1?[0-9][0-9]?|2[0-4][0-9]|25[0-4])\.([1-9][0-9]?|1[0-9][0-9]?|2[0-4][0-9]|25[0-4]))|[*])/;
+    //var urnRegex = /urn:ogf:network:domain=[-_.a-zA-Z0-9]+:node=[-_.a-zA-Z0-9]+:port=[/-_.a-zA-Z0-9]+:link=[*-_.a-zA-Z0-9]+/;
     
     var urn_editArray = new Array();
     var urn_newArray = new Array();
@@ -357,7 +357,7 @@ function saveURN() {
                     // se estiver importando, puxa informações do vetor urns_to_import (variável vem do PHP)
                     urn = urns_to_import[i];
                 } else if (isManual) {
-                    if (urnRegex.test($("#name"+i).val())) {
+                    //if (urnRegex.test($("#name"+i).val())) {
                         // se estiver adicionando manualmente, puxa informações dos inputs (informado pelo usuário)
                         urn = new Object();
                         urn.port = $("#port"+i).val();
@@ -366,10 +366,10 @@ function saveURN() {
                         urn.max_capacity = $("#max_capacity"+i).val();
                         urn.min_capacity = $("#min_capacity"+i).val();
                         urn.granularity = $("#granularity"+i).val();
-                    } else {
-                        setFlash("Invalid URN: " + $("#name"+i).val(), "error");
-                        return;
-                    }
+//                    } else {
+//                        setFlash("Invalid URN: " + $("#name"+i).val(), "error");
+//                        return;
+//                    }
                 } else {
                     // senão, puxa informações do vetor lido (variável carregada por ajax)
                     var dom_id = $('#network' + i).parent().parent().parent().parent().attr("id").replace(/urn_table/, ""); // id do domínio
