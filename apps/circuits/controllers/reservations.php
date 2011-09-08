@@ -38,10 +38,9 @@ class reservations extends Controller {
 
         $res_info = new reservation_info();
         $allReservations = $res_info->fetch();
-        Framework::debug('RESERVATION', $allReservations);
         if ($allReservations) {
             $reservations = array();
-            
+
             foreach ($allReservations as $r) {
                 $res = new stdClass();
                 $res->id = $r->res_id;
@@ -50,23 +49,59 @@ class reservations extends Controller {
 
                 $flow = new flow_info();
                 $flow->flw_id = $r->flw_id;
-                $res->flow = $flow->getFlowDetails();                              
-                
+                $res->flow = $flow->getFlowDetails();
+
                 $timer = new timer_info();
                 $timer->tmr_id = $r->tmr_id;
-                $res->timer = $timer->getTimerDetails();                
+                $res->timer = $timer->getTimerDetails();
+
+                $dom = new domain_info();
+                if ($domain = $dom->getOSCARSDomain($res->flow->source->urn)) {
+                    $res->flow->source->domain = $domain->dom_descr;
+                } else {
+                    $urn = new urn_info();
+                    $urn->urn_string = $res->flow->source->urn;
+                    $urn_id = $urn->get('urn_id');
+
+                    $urn_aco = new Acos($urn_id, "urn_info");
+                    $dev_aco = $urn_aco->getParentNodes();
+                    $net_aco = $dev_aco[0]->getParentNodes();
+                    $dom_aco = $net_aco[0]->getParentNodes();
+
+                    $dom = new domain_info();
+                    $dom->dom_id = $dom_aco[0]->obj_id;
+                    $res->flow->source->domain = $dom->get('dom_descr');
+                }
+
+                $dom = new domain_info();
+                if ($domain = $dom->getOSCARSDomain($res->flow->dest->urn)) {
+                    $res->flow->dest->domain = $domain->dom_descr;
+                } else {
+                    $urn = new urn_info();
+                    $urn->urn_string = $res->flow->dest->urn;
+                    $urn_id = $urn->get('urn_id');
+
+                    $urn_aco = new Acos($urn_id, "urn_info");
+                    $dev_aco = $urn_aco->getParentNodes();
+                    $net_aco = $dev_aco[0]->getParentNodes();
+                    $dom_aco = $net_aco[0]->getParentNodes();
+
+                    $dom = new domain_info();
+                    $dom->dom_id = $dom_aco[0]->obj_id;
+                    $res->flow->dest->domain = $dom->get('dom_descr');
+                }
 
                 $reservations[] = $res;
             }
-            
+
             $this->setAction('show');
-            
+
             $dom = new domain_info();
             $domains = $dom->fetch(FALSE);
             $domains_to_js = array();
             foreach ($domains as $d) {
                 $has_reservations = FALSE;
-                $aco = new Acos($d->dom_id,"domain_info");
+                $aco = new Acos($d->dom_id, "domain_info");
                 if ($aco_obj = $aco->fetch(FALSE)) {
                     if ($aco_obj[0]->findChildren('reservation_info'))
                         $has_reservations = TRUE;
@@ -74,18 +109,16 @@ class reservations extends Controller {
                 if ($has_reservations) {
                     $domains_to_js[] = $d->dom_id;
                 }
-            }                    
-            
-            
+            }
+
             $this->setArgsToScript(array(
                 'domains' => $domains_to_js,
                 'str_error_refresh_status' => _("Error to get status")
-                ));
+            ));
 
             $this->setInlineScript('reservations_init');
 
             $this->setArgsToBody($reservations);
-            
         } else {
             $this->setAction('empty');
 
@@ -95,7 +128,7 @@ class reservations extends Controller {
             $args->link = array("action" => "reservation_add");
             $this->setArgsToBody($args);
         }
-        
+
         $this->render();
     }
 
@@ -280,7 +313,7 @@ class reservations extends Controller {
         $this->setArgsToBody($statusList);
         $this->render();
     }
-    
+
     public function gri_refresh_status() {
         $this->setAction("ajax");
         $this->setLayout("empty");
@@ -337,7 +370,7 @@ class reservations extends Controller {
                         // se posição no control for TRUE, é porque atualizou o status
                         $newStatus = $statusResult[$cont];
                         $cont++;
-                        
+
                         // testa se status atual da GRI é diferente do status que retornou do OSCARS
                         if ($g->status != $newStatus) {
                             $g->status = $newStatus;
@@ -375,7 +408,6 @@ class reservations extends Controller {
         // STEP 1 VARIABLES ---------------------
         $name = "Default_reservation_name";
         //---------------------------------------
-
         // STEP 2 VARIABLES ---------------------
         $domain = new domain_info();
         $allDomains = $domain->fetch();
@@ -395,11 +427,11 @@ class reservations extends Controller {
             $domain->name = $d->dom_descr;
             $domain->topology_id = $d->topo_domain_id;
             $before = microtime(true);
-            
+
             $domain->networks = MeicanTopology::getURNDetails($d->dom_id);
             $urn = MeicanTopology::getURNs($d->dom_id);
-            Framework::debug("tempo",(microtime(true)-$before));
-            
+            Framework::debug("tempo", (microtime(true) - $before));
+
             foreach ($urn as $u) {
                 $allUrns[] = $u->urn_string;
             }
@@ -407,14 +439,12 @@ class reservations extends Controller {
         }
 
         // --------------------------------------
-
         // STEP 3 VARIABLES ---------------
         $bmin = 100;
         $bmax = 1000;
         $bdiv = 100;
         $bwarn = 0.7;
         // --------------------------------
-
         // STEP 4 VARIABLES --------------------------
         $dateFormat = "d/m/Y";
         $js_dateFormat = "dd/mm/yy";
@@ -438,76 +468,72 @@ class reservations extends Controller {
         $lang = explode(".", Language::getLang());
         $js_lang = str_replace("_", "-", $lang[0]);
         // --------------------------------------------
-
         //if ($domToMapArray) {
-
         // Args to Script
         $this->setArgsToScript(array(
-                // bandwidth
-                "band_min" => $bmin,
-                "band_max" => $bmax,
-                "band_div" => $bdiv,
-                "band_warning" => $bwarn,
-                "warning_string" => _("Authorization from Network Administrator will be required."),
-                // flash messages
-                "flash_nameReq" => _("A name is required"),
-                "flash_bandInv" => _("Invalid value for bandwidth"),
-                "flash_sourceReq" => _("A source is required"),
-                "flash_srcVlanInv" => _("Invalid value for source VLAN"),
-                "flash_srcVlanReq" => _("Source VLAN type required"),
-                "flash_destReq" => _("A destination is required"),
-                "flash_dstVlanInv" => _("Invalid value for destination VLAN"),
-                "flash_dstVlanReq" => _("Destination VLAN type required"),
-                "flash_timerReq" => _("Timer is required"),
-                "flash_timerInvalid" => _("The end time occurs before the start time"),
-                "flash_invalidDuration" => _("Invalid duration"),
-                "flash_missingEndpoints" => _("Missing endpoints"),
-                // endpoints
-                "domain_string" => _("Domain"),
-                "domains_string" => _("Domains"),
-                "network_string" => _("Network"),
-                "networks_string" => _("Networks"),
-                "device_string" => _("Device"),
-                "devices_string" => _("Devices"),
-                "from_here_string" => _("From here"),
-                "to_here_string" => _("To here"),
-                "cluster_information_string" => _("Information about cluster"),
-                "coordinates_string" => _("Coordinates"),
-                // timers
-                "date_format" => $js_dateFormat,
-                "language" => $js_lang,
-                "horas" => $hoursArray,
-                "today" => $today_check,
-                "repeat_every_string" => _("Repeat every"),
-                "day_string" => _("day"),
-                "days_string" => _("days"),
-                "week_string" => _("week"),
-                "weeks_string" => _("weeks"),
-                "on_string" => _("on"),
-                "month_string" => _("month"),
-                "months_string" => _("months"),
-                "year_string" => _("year"),
-                "years_string" => _("years"),
-                "hour_string" => _("hour"),
-                "hours_string" => _("hours"),
-                "minute_string" => _("minute"),
-                "minutes_string" => _("minutes"),
-                "and_string" => _("and"),
-                "until_string" => _("until"),
-                "times_string" => _("times"),
-                "time_string" => _("time"),
-                "end_rule_string" => _("Please set an end rule"),
-                "select_day_string" => _("Select at least one day"),
-                "set_name_string" => _("Set name"),
-                "invalid_time_string" => _("Invalid time"),
-                "active_string" => _("Active from"),
-                "at_string" => _("at"),
-                "domains" => $domToMapArray,
-                "urn_string" => $allUrns
+            // bandwidth
+            "band_min" => $bmin,
+            "band_max" => $bmax,
+            "band_div" => $bdiv,
+            "band_warning" => $bwarn,
+            "warning_string" => _("Authorization from Network Administrator will be required."),
+            // flash messages
+            "flash_nameReq" => _("A name is required"),
+            "flash_bandInv" => _("Invalid value for bandwidth"),
+            "flash_sourceReq" => _("A source is required"),
+            "flash_srcVlanInv" => _("Invalid value for source VLAN"),
+            "flash_srcVlanReq" => _("Source VLAN type required"),
+            "flash_destReq" => _("A destination is required"),
+            "flash_dstVlanInv" => _("Invalid value for destination VLAN"),
+            "flash_dstVlanReq" => _("Destination VLAN type required"),
+            "flash_timerReq" => _("Timer is required"),
+            "flash_timerInvalid" => _("The end time occurs before the start time"),
+            "flash_invalidDuration" => _("Invalid duration"),
+            "flash_missingEndpoints" => _("Missing endpoints"),
+            // endpoints
+            "domain_string" => _("Domain"),
+            "domains_string" => _("Domains"),
+            "network_string" => _("Network"),
+            "networks_string" => _("Networks"),
+            "device_string" => _("Device"),
+            "devices_string" => _("Devices"),
+            "from_here_string" => _("From here"),
+            "to_here_string" => _("To here"),
+            "cluster_information_string" => _("Information about cluster"),
+            "coordinates_string" => _("Coordinates"),
+            // timers
+            "date_format" => $js_dateFormat,
+            "language" => $js_lang,
+            "horas" => $hoursArray,
+            "today" => $today_check,
+            "repeat_every_string" => _("Repeat every"),
+            "day_string" => _("day"),
+            "days_string" => _("days"),
+            "week_string" => _("week"),
+            "weeks_string" => _("weeks"),
+            "on_string" => _("on"),
+            "month_string" => _("month"),
+            "months_string" => _("months"),
+            "year_string" => _("year"),
+            "years_string" => _("years"),
+            "hour_string" => _("hour"),
+            "hours_string" => _("hours"),
+            "minute_string" => _("minute"),
+            "minutes_string" => _("minutes"),
+            "and_string" => _("and"),
+            "until_string" => _("until"),
+            "times_string" => _("times"),
+            "time_string" => _("time"),
+            "end_rule_string" => _("Please set an end rule"),
+            "select_day_string" => _("Select at least one day"),
+            "set_name_string" => _("Set name"),
+            "invalid_time_string" => _("Invalid time"),
+            "active_string" => _("Active from"),
+            "at_string" => _("at"),
+            "domains" => $domToMapArray,
+            "urn_string" => $allUrns
         ));
         //}
-
-
         // ARGS to body ----------------------------------------------------------------
         $args = new stdClass();
         // arg name
@@ -524,7 +550,6 @@ class reservations extends Controller {
 
         $this->setArgsToBody($args);
         // -----------------------------------------------------------------------------
-
         // SCRIPTS -----------------------------------------
         $this->setInlineScript('reservations_add_init');
 
@@ -532,8 +557,6 @@ class reservations extends Controller {
             $this->addScript("jquery.ui.datepicker-$js_lang");
         }
         // -------------------------------------------------
-
-
         // ACTION ---------------------
         $this->setAction('add');
         // ----------------------------
@@ -784,7 +807,7 @@ class reservations extends Controller {
         $res_diff_timestamp = $res_end_timestamp - $res_begin_timestamp;
 
         Framework::debug("post", $_POST);
-        
+
         /**
          * insere o flow
          */
@@ -796,7 +819,7 @@ class reservations extends Controller {
          */
         $timer_cont = new timers();
         $new_timer = $timer_cont->add();
-        
+
         if ($new_flow && $new_timer) {
             $reservation = new reservation_info();
             $reservation->res_name = Common::POST("res_name");
@@ -827,13 +850,12 @@ class reservations extends Controller {
          *       A reserva é finalizada.
          *
          */
+        //buscar urn source para adicionar a reserva embaixo
+        $urn = new urn_info();
+        $urn->urn_string = $new_flow->src_urn_string;
+        $src_urn = $urn->fetch(FALSE);
 
-         //buscar urn source para adicionar a reserva embaixo
-         $urn = new urn_info();
-         $urn->urn_string = $new_flow->src_urn_string;
-         $src_urn = $urn->fetch(FALSE);
-
-         //buscar urn destino para adicionar a reserva embaixo
+        //buscar urn destino para adicionar a reserva embaixo
 
         if ($res = $reservation->insert($src_urn[0]->urn_id, 'urn_info')) {
             $result = $this->send($res);
@@ -850,7 +872,7 @@ class reservations extends Controller {
                     $this->setFlash(_('Reservation submitted'), 'success');
                     break;
                 default:
-                    $this->setFlash("$result "._('reservations submitted'), 'success');
+                    $this->setFlash("$result " . _('reservations submitted'), 'success');
                     break;
             }
 
@@ -888,7 +910,7 @@ class reservations extends Controller {
         $flow_info = new flow_info();
         $flow_info->flw_id = $reservation->flw_id;
         $flow = $flow_info->getFlowDetails();
-        
+
         $dom = new domain_info();
         if ($domain = $dom->getOSCARSDomain($flow->source->urn)) {
             $flow->source->domain = $domain->dom_descr;
@@ -901,12 +923,12 @@ class reservations extends Controller {
             $dev_aco = $urn_aco->getParentNodes();
             $net_aco = $dev_aco[0]->getParentNodes();
             $dom_aco = $net_aco[0]->getParentNodes();
-            
+
             $dom = new domain_info();
             $dom->dom_id = $dom_aco[0]->obj_id;
             $flow->source->domain = $dom->get('dom_descr');
         }
-        
+
         $dom = new domain_info();
         if ($domain = $dom->getOSCARSDomain($flow->dest->urn)) {
             $flow->dest->domain = $domain->dom_descr;
@@ -919,12 +941,12 @@ class reservations extends Controller {
             $dev_aco = $urn_aco->getParentNodes();
             $net_aco = $dev_aco[0]->getParentNodes();
             $dom_aco = $net_aco[0]->getParentNodes();
-            
+
             $dom = new domain_info();
             $dom->dom_id = $dom_aco[0]->obj_id;
             $flow->dest->domain = $dom->get('dom_descr');
         }
-        
+
         if (!$flow) {
             $this->setFlash(_("Flow not found or could not get endpoints information"), "fatal");
             $this->show();
@@ -934,21 +956,21 @@ class reservations extends Controller {
         $timer_info = new timer_info();
         $timer_info->tmr_id = $reservation->tmr_id;
         $timer = $timer_info->getTimerDetails();
-        
+
         if (!$timer) {
             $this->setFlash(_("Timer not found"), "fatal");
             $this->show();
             return;
         }
-        
-        Framework::debug("flow",$flow);
-        Framework::debug("timer",$timer);
+
+        Framework::debug("flow", $flow);
+        Framework::debug("timer", $timer);
 
         $req = new request_info();
         $req->resource_id = $reservation->res_id;
         $req->resource_type = 'reservation_info';
         $req->answerable = 'no';
-        
+
         $request = NULL;
         if ($result = $req->fetch()) {
             // a reserva possui requisição
@@ -957,10 +979,10 @@ class reservations extends Controller {
             $request->message = $result[0]->message;
             $request->status = $result[0]->status;
         }
-        
+
         $status = array();
         $gris = array();
-        
+
         $gri = new gri_info();
         $gri->res_id = $reservation->res_id;
         $allGris = $gri->fetch(FALSE);
@@ -990,21 +1012,21 @@ class reservations extends Controller {
         }
 
         $this->setArgsToScript(array(
-                "reservation_id" => $reservation->res_id,
-                "status_array" => $status,
-                "src_lat_network" => $flow->source->latitude,
-                "src_lng_network" => $flow->source->longitude,
-                "dst_lat_network" => $flow->dest->latitude,
-                "dst_lng_network" => $flow->dest->longitude,
-                "domain_string" => _("Domain"),
-                "domains_string" => _("Domains"),
-                "network_string" => _("Network"),
-                "networks_string" => _("Networks"),
-                "device_string" => _("Device"),
-                "devices_string" => _("Devices"),
-                "from_here_string" => _("From Here"),
-                "to_here_string" => _("To Here"),
-                "cluster_information_string" => _("Information about cluster")
+            "reservation_id" => $reservation->res_id,
+            "status_array" => $status,
+            "src_lat_network" => $flow->source->latitude,
+            "src_lng_network" => $flow->source->longitude,
+            "dst_lat_network" => $flow->dest->latitude,
+            "dst_lng_network" => $flow->dest->longitude,
+            "domain_string" => _("Domain"),
+            "domains_string" => _("Domains"),
+            "network_string" => _("Network"),
+            "networks_string" => _("Networks"),
+            "device_string" => _("Device"),
+            "devices_string" => _("Devices"),
+            "from_here_string" => _("From Here"),
+            "to_here_string" => _("To Here"),
+            "cluster_information_string" => _("Information about cluster")
         ));
 
         $this->setInlineScript('reservations_view');
@@ -1112,7 +1134,6 @@ class reservations extends Controller {
         $this->show();
     }
 
-
     function query($reservation_info) {
         //descobrir IP do dominio origem da reserva para enviar ao OSCARS adequado
         $result = $reservation_info->fetch();
@@ -1207,7 +1228,8 @@ class reservations extends Controller {
             //irá para autorização
             //cria reserva do tipo signal-xml
             $oscarsRes->setPathSetupMode('signal-xml');
-        } else $oscarsRes->setPathSetupMode('timer-automatic');
+        } else
+            $oscarsRes->setPathSetupMode('timer-automatic');
 
         $tim = new timer_info();
         $tim->tmr_id = $reservation_info->get("tmr_id");
@@ -1224,7 +1246,7 @@ class reservations extends Controller {
 
             if ($tmp->createReservation()) {
                 $resSent++;
-                
+
                 $new_gri = new gri_info();
                 $new_gri->gri_id = $tmp->getGri();
                 $new_gri->res_id = $reservation_info->res_id;
@@ -1266,14 +1288,13 @@ class reservations extends Controller {
              * PARA UM ÚNICO WSDL COM OPERAÇÕES SEPARADAS E PADRONIZADAS PARA ENVIAR
              * REQUISIÇÃO E ENVIAR RESPOSTA
              */
-
             $businessEndpoint = "http://$src_dom->ode_ip/$src_dom->ode_wsdl_path";
 
             $requestSOAP = array(
-                    'req_id' => $newReq->req_id,
-                    'dom_src_ip' => $src_dom->oscars_ip,
-                    'dom_dst_ip' => $dst_dom->oscars_ip,
-                    'usr_src' => $newReq->src_usr);
+                'req_id' => $newReq->req_id,
+                'dom_src_ip' => $src_dom->oscars_ip,
+                'dom_dst_ip' => $dst_dom->oscars_ip,
+                'usr_src' => $newReq->src_usr);
 
             Framework::debug('ira enviar para autorizaçao...', $requestSOAP);
             try {
@@ -1287,7 +1308,7 @@ class reservations extends Controller {
 
                 return TRUE;
             } catch (Exception $e) {
-                Framework::debug("Caught exception: ",  $e->getMessage());
+                Framework::debug("Caught exception: ", $e->getMessage());
                 $this->setFlash(_('Error at invoking business layer.'));
                 $newReq->status = 'SENT FOR AUTHORIZATION';
 
@@ -1302,7 +1323,7 @@ class reservations extends Controller {
         Framework::debug("chegou no controller");
         $gris = new gri_info();
         $all = $gris->fetch(FALSE);
-        Framework::debug("gris",$all);
+        Framework::debug("gris", $all);
 
         foreach ($all as $g) {
             if ($g->send)
@@ -1331,6 +1352,7 @@ class reservations extends Controller {
                 }
         }
     }
+
 }
 
 ?>

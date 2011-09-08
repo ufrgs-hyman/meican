@@ -13,29 +13,27 @@
         <thead>
             <tr>
                 <th rowspan="2" class="checkbox"></th>
-                <th rowspan="2"></th>
-                <th rowspan="2"><?php echo _("Name"); ?></th>
-                <th rowspan="2"><?php echo _("Bandwidth (Mbps)"); ?></th>
-                <th rowspan="2" style="border-right: 1px solid black"><?php echo _("Status"); ?></th>                
+                <th rowspan="2" class="large"></th>
+                <th rowspan="2" class="large"><?php echo _("Name"); ?></th>
+                <th rowspan="2" class="large"><?php echo _("Bandwidth (Mbps)"); ?></th>
+                <th rowspan="2" style="border-right: 1px solid black; min-width: 60px;" class="large"><?php echo _("Status"); ?></th>                
                 
-                <th style="border-right: 1px solid black" colspan="4"><?php echo _("Source"); ?></th>
-                <th style="border-right: 1px solid black" colspan="4"><?php echo _("Destination"); ?></th>
+                <th style="border-right: 1px solid black" colspan="3"><?php echo _("Source"); ?></th>
+                <th style="border-right: 1px solid black" colspan="3"><?php echo _("Destination"); ?></th>
                 <th colspan="3"><?php echo _("Timer"); ?></th>
             </tr>
             <tr>
-                <th><?php echo _("Domain"); ?></th>
-                <th><?php echo _("Network"); ?></th>
-                <th><?php echo _("Device"); ?></th>
-                <th style="border-right: 1px solid black"><?php echo _("Port"); ?></th>
+                <th class="large"><?php echo _("Domain"); ?></th>
+                <th class="large"><?php echo _("Network"); ?></th>
+                <th class="large" style="border-right: 1px solid black"><?php echo _("Device"); ?></th>
                 
-                <th><?php echo _("Domain"); ?></th>
-                <th><?php echo _("Network"); ?></th>
-                <th><?php echo _("Device"); ?></th>
-                <th style="border-right: 1px solid black"><?php echo _("Port"); ?></th>                
+                <th class="large"><?php echo _("Domain"); ?></th>
+                <th class="large"><?php echo _("Network"); ?></th>
+                <th class="large" style="border-right: 1px solid black"><?php echo _("Device"); ?></th>
                 
-                <th><?php echo _("Start"); ?></th>
-                <th><?php echo _("Finish"); ?></th>
-                <th><?php echo _("Recurrence"); ?></th>
+                <th class="large"><?php echo _("Start"); ?></th>
+                <th class="large"><?php echo _("Finish"); ?></th>
+                <th class="large"><?php echo _("Recurrence"); ?></th>
             </tr>
         </thead>
 
@@ -64,7 +62,7 @@
                         <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading" class="load" src="includes/images/ajax-loader.gif"/>
                     </td>
                     <td>
-                        <?php  ?>
+                        <?php echo $r->flow->source->domain; ?>
                     </td>
                     <td>
                         <?php echo $r->flow->source->network; ?>
@@ -73,19 +71,13 @@
                         <?php echo $r->flow->source->device; ?>
                     </td>
                     <td>
-                        <?php echo $r->flow->source->port; ?>
-                    </td>
-                    <td>
-                        
+                        <?php echo $r->flow->dest->domain; ?>
                     </td>
                     <td>
                         <?php echo $r->flow->dest->network; ?>
                     </td>
                     <td>
                         <?php echo $r->flow->dest->device; ?>
-                    </td>
-                    <td>
-                        <?php echo $r->flow->dest->port; ?>
                     </td>
                     <td>
                         <?php echo $r->timer->start; ?>
