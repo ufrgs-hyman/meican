@@ -788,7 +788,8 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
         edit_addSelectedMarker(path[1].position, path[1].domain_id, path[1].domain_name, path[1].network_id, path[1].network_name, "dst");
     }
     
-    if (path.length == 2) {  
+    if (path.length == 2) { 
+        $("#showVlan_checkbox").removeAttr("disabled");
         edit_clearLines();
         var lines = new Array();
         lines.push(path[0].position);
@@ -924,7 +925,7 @@ function edit_clearAll(){
     if (tab2_valid) {
         $("#t3").addClass("ui-state-disabled");
     }
-    
+    $("#showVlan_checkbox").attr("disabled", "disabled");
     edit_initializeMap();
 }
 
@@ -1282,7 +1283,7 @@ function view_clearBounds(){
 function view_clearAll(){
     view_clearMarkers();
     view_clearLines();
-    view_clearBounds();
+    view_clearBounds();       
 }
 
 function view_setBounds(flightPlanCoordinates){

@@ -68,17 +68,19 @@
                         <tr>
                             <td class="left" colspan="3" style="color: black">
                                 <hr/>
-                                <input type="checkbox" name="vlan_options" id="showVlan_checkbox" onclick="showVlanConf()"/><p style="vertical-align: middle; display:inline"><?php echo _("Show VLAN configuration"); ?></p>
+                                <input disabled="disabled" type="checkbox" name="vlan_options" id="showVlan_checkbox" onclick="showVlanConf()"/><p style="vertical-align: middle; display:inline"><?php echo _("Show VLAN configuration"); ?></p>
                             </td>
                         </tr>
                         <tr id="vlan_tr">
                             <td colspan="3" style="padding:0px">
                                 <div id="div_vlan" style="display:none">
+                                    <br/>
                                     <?php $this->addElement('vlan'); ?>
+                                    <br/><br/>
                                 </div>
                             </td>
                         </tr>
-                        <tr id="hops_line">
+                        <tr id="hops_line" style="display:none">
                             <td class="left" colspan="3">                                
                                 <hr/>                                
                                 <input type="button" class="add" id="addHopsButton" value="<?php echo _('Add new hop'); ?>" onclick="moreFields();" style="clear: both"/>                                    

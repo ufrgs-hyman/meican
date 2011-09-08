@@ -32,7 +32,7 @@ class Framework {
     private static $systemNameShort = 'MEICAN';
     private static $systemVer = '';
     private static $mainApp = 'aaa';
-    public static $systemDirName = 'meican';
+    public static $systemDirName = 'new_meican';
 
     /* database settings */
     private static $defaultDatabase = 'mysql';
@@ -62,7 +62,7 @@ class Framework {
     /**
      * NÃO ALTERAR
      */
-    public static $OSCARSBridgeEPR = 'http://localhost:9090/axis2/services/OSCARSBridge?wsdl';
+    public static $OSCARSBridgeEPR = 'http://143.54.12.123:8080/axis2/services/OSCARSBridge?wsdl';
 
 
     static function init () {
