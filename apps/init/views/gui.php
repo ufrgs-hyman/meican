@@ -14,6 +14,7 @@
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery_history.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery.crypt.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery.form.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/info_box.js"></script>
 
 
         <!-- ESSE SCRIPT TÁ DANDO PROBLEMA
@@ -41,13 +42,16 @@
             // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate
             var js_submit_form = true;
 
-            $(document).ready(function(){                
+            $(document).ready(function() {
 
-                $("#info_box").load("main.php?app=init&controller=info_box");
+                $("#info_box").load("main.php?app=init&controller=info_box", function() {
+                    // chamada para atualizar a hora
+                    setInterval("updateSystemTime()", 60000);
+                });
                 $("#menu").load("main.php?app=init&controller=menu");
 
                 redir("main.php?<?php echo $args->last_view; ?>");
-
+                
                 $("body").delegate("a","click",function() {
                     if ($(this).attr("target") != "top") {
                         var content_show = $(this).attr("href");

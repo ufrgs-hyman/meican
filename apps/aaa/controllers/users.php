@@ -122,6 +122,29 @@ class users extends Controller {
                     if ($result) {
                         $this->setFlash(_("User") . " '$user_info->usr_login' " . _("added"), "success");
                         $this->show();
+                        
+                        /*if (Common::POST("usr_email")) {
+                            $to = $user_info->usr_email;
+                            $subject = _("User Created Successfully");
+                            
+                            $meican = new meican_info();
+                            $ipaddr = $meican->getLocalMeicanIp();
+                            $ipaddr = $meican->getLocalMeicanIp();
+                            
+                            $text = "Seu usuário foi criado com sucesso!\n\n";
+                            
+                            $text .= "Login: $user_info->usr_login\n";
+                            $text .= "Senha: 123\n";
+                            $text .= "Domínio: $ldom->dom_descr\n";
+                            $text .= "URL: http://$ipaddr/".Framework::$systemDirName."\n\n";
+                            
+                            $header = array();
+                            $header["To"] = "$user_info->usr_name <$user_info->usr_email>";
+                            
+                            $mail = new Meican_Mail();
+                            $mail->send($to, $text, $subject, $header);
+                        }*/
+                        
                         return;
                     } else
                         $this->setFlash(_("Fail to create user"), "error");

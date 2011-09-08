@@ -15,8 +15,18 @@ class info_box extends Controller {
     }
 
     public function show() {
-        $userLogin = AuthSystem::getUserLogin();
-        $this->setArgsToBody($userLogin);
+        $args = new stdClass();
+        $args->usr_login = AuthSystem::getUserLogin();
+        $args->system_time = date("d/m/Y H:i");
+        
+        $this->setArgsToBody($args);
+        $this->render();
+    }
+    
+    public function get_time() {
+        $this->setLayout('empty');
+        $this->setArgsToBody(date("d/m/Y H:i"));
+        $this->setAction('ajax');
         $this->render();
     }
 
