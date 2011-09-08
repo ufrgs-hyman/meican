@@ -13,7 +13,7 @@ class urn_info extends Resource_Model {
         $this->addAttribute("urn_string","VARCHAR");
         $this->addAttribute("net_id","INTEGER");
         $this->addAttribute("dev_id","INTEGER");
-        $this->addAttribute("port","INTEGER");
+        $this->addAttribute("port","VARCHAR");
         $this->addAttribute("vlan","VARCHAR");
         $this->addAttribute("max_capacity","INTEGER");
         $this->addAttribute("min_capacity","INTEGER");

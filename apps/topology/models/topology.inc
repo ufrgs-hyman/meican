@@ -53,13 +53,13 @@ class MeicanTopology {
                         // procura pelo ID do nodo
                         $topo_attr = explode("=", $topo_attr_array[4]);
                         $new_urn->node_id = NULL;
-                        if ($topo_attr[0] == "node")
+                        if (strtoupper($topo_attr[0]) == "NODE")
                             $new_urn->node_id = $topo_attr[1];
 
                         // procura pela porta
                         $topo_attr = explode("=", $topo_attr_array[5]);
                         $new_urn->port = NULL;
-                        if ($topo_attr[0] == "port")
+                        if (strtoupper($topo_attr[0]) == "PORT")
                             $new_urn->port = $topo_attr[1];
 
 
