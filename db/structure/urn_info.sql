@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `urn_info` (
   `urn_string` char(128) NOT NULL,
   `net_id` int(11) NOT NULL,
   `dev_id` int(11) NOT NULL,
-  `port` int(11) NOT NULL,
+  `port` char(20) NOT NULL,
   `vlan` char(32) NOT NULL,
   `max_capacity` bigint(20) NOT NULL,
   `min_capacity` bigint(20) NOT NULL,

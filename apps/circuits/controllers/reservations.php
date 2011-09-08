@@ -265,7 +265,7 @@ class reservations extends Controller {
                             // atualiza o banco de dados com o novo status (retornado do OSCARS)
                             $gri_tmp = new gri_info();
                             $gri_tmp->gri_id = $g->gri_id;
-                            $gri_tmp->updateTo(array('status' => $newStatus));
+                            $gri_tmp->updateTo(array('status' => $newStatus), FALSE);
                         }
                     }
 
