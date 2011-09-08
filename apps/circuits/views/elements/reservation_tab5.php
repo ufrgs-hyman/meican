@@ -26,7 +26,7 @@
     </tr>
 </table>
 
-<div style="height: 25%"></div>
+<div style="height: 6%"></div>
 
 <div class="control_tab">    
     <input type="submit" id="bf"  class="ok" value="<?php echo _('Finished'); ?>"/>

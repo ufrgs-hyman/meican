@@ -35,6 +35,11 @@ function initializeTimer() {
                 $.datepicker._defaults.dateFormat,
             selectedDate, instance.settings );
             dates.not( this ).datepicker( "option", option, date );
+//            if (this.id = "initialDate") {
+//                if ($("#repeat_chkbox").attr("checked")) {
+//                    $("#initialRecurrence").datepicker("setDate", date);
+//                }
+//            }
             calcDuration();
         }
     });
@@ -100,20 +105,11 @@ function showRecurrenceBox() {
     }
 
     if ($("#repeat_chkbox").attr("checked")) {
-        //$("#auxDiv").show();
-        $("#recurrence").slideDown(0);        
-        setFreq();
-        setUntilType();
-        $("#rec_initialTime").html($("#initialTime").val());
-        $("#rec_finalTime").html($("#finalTime").val());
-        $("#rec_duration").html($("#duration").html());        
-        $("#fillSpace").hide();
+        initializeRecurrence();
     }
     else {
-        //$("#auxDiv").hide();
-        $("#fillSpace").show();
+        $("#fillSpace").css("height", "49%");
         $("#recurrence").slideUp(0);
-        //$("#recurrence-edit").hide();
         $("#interval_type").empty();
         $("#short_desc").empty();
         $("#until_desc").empty();
@@ -122,6 +118,19 @@ function showRecurrenceBox() {
         refreshSummary();
         clearWeekConf();
     }
+}
+
+function initializeRecurrence() {
+        $("#recurrence").slideDown(0);        
+        $("#summary").empty();
+        setFreq(true);
+        $("#interval").val(1);
+        //$("#initialRecurrence").setDate($("initialDate").getDate());
+//        setUntilType();
+//        $("#rec_initialTime").html($("#initialTime").val());
+//        $("#rec_finalTime").html($("#finalTime").val());
+//        $("#rec_duration").html($("#duration").html());        
+        $("#fillSpace").css("height", "18%");    
 }
 
 function setSummary(sing_string, plural_string, opt_string) {
@@ -155,9 +164,10 @@ function clearWeekConf() {
 /**
  * Sets the frequency type - DAILY, WEEKLY, MONTHLY
  */
-function setFreq() {
+
+function setFreq(blank) {
     var value = $("input[name='freq']:checked").val();
-    if (typeof value == 'undefined') {
+    if ((typeof value == 'undefined') || (blank)) {
         value = "DAILY";
         $("input[name='freq']").filter('[value=DAILY]').attr('checked', true);
     }

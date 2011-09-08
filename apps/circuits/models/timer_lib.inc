@@ -30,9 +30,13 @@ function getDayTimestamp() {
 }
 
 function DayofWeek($date=NULL, $short=FALSE) {
-
-    $dw = date("w", $date);
-
+    if ($date) {
+        $dw = date("w", $date);
+    } else {
+        $dw = date("w");
+    }
+    Framework::debug("day", $dw);
+    
     switch($dw) {
         case "0":
             $dayweek = ($short) ? "SU" : "Sunday";

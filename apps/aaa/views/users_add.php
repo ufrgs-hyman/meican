@@ -36,13 +36,13 @@
     <?php $this->addElement('identification_userAdd'); ?>
 
     <br/><br/>
-    <table style="min-width: 0">
+    <div style="width: 79%">
         <?php $this->addElement('associative_table', $args); ?>
-            
+        <br/>
         <div class="controls">
             <input class="save" type="submit" value="<?php echo _('Save'); ?>">
             <input class="cancel" type="button" value="<?php echo _('Cancel'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'show')); ?>');">
         </div>
-    </table>
+    </div>
 
 </form>

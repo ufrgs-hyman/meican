@@ -18,31 +18,34 @@ $freq_types[] = $freq;
 
 <div id="recurrence">
     <table cellspacing="0" cellpadding="0" style="width:100%">
+<!--
         <tr style="width:100%">
             <th style="width:100%">
-                <?php echo _("Reservation time"); ?>
+                <?php //echo _("Reservation time"); ?>
             </th>
         </tr>
+        
         <tr>
             <td class="recurrence_table">                            
                 <table cellspacing="0" cellpadding="0" style="width:100%" class="withoutBorder">
                     <tr style="width:100%">
                         <td class="recurrence_table left">
-                            <?php echo _("Start") ;?>:
+                            <?php //echo _("Start") ;?>:
                             <label id="rec_initialTime"></label>
                         </td>
                         <td class="recurrence_table left">
-                            <?php echo _("End"); ?>:
+                            <?php //echo _("End"); ?>:
                             <label id="rec_finalTime"></label>
                         </td>
                         <td class="recurrence_table left">
-                            <?php echo _("Duration"); ?>:
+                            <?php //echo _("Duration"); ?>:
                             <label id="rec_duration"></label>
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
+-->
         <tr style="width:100%">
             <th style="border-top:1px solid black">
                 <?php echo _("Recurrence pattern"); ?>
@@ -190,9 +193,10 @@ $freq_types[] = $freq;
                 </table> 
             </td>
         </tr>
+<!--        
         <tr>
             <th style="border-top:1px solid black">
-                <?php echo _("Summary"); ?>
+                <?php //echo _("Summary"); ?>
             </th>
         </tr>
         <tr>            
@@ -214,14 +218,11 @@ $freq_types[] = $freq;
                 </table>
             </td>
         </tr>
+-->
     </table>
     
     <div id="recurrence-flash">
         <label id="recurrence-warning"></label>
-    </div>
-    <div id="recurrence-footer">
-        <input id="recurrence_cancel" type="button" class="cancel" value="<?php echo _("Cancel")?>" onclick="cancelRecurrence()"/>
-        <input id="recurrence_ok" type="button" class="ok" value="<?php echo _("Save recurrence")?>" onclick="saveRecurrence()"/>
     </div>
     
 </div>

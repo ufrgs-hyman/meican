@@ -464,6 +464,7 @@ class reservations extends Controller {
         }
 
         $today_check = DayofWeek();
+        Framework::debug("TODAY", $today_check);
 
         $lang = explode(".", Language::getLang());
         $js_lang = str_replace("_", "-", $lang[0]);

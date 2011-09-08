@@ -43,7 +43,7 @@
                     <td>
                         <input type="checkbox" name="del_checkbox[]" value="<?php echo $r->id; ?>"/>
                     </td>
-                    <td>
+                    <td style="padding-right: 5px; min-width: 20px">
                         <a href="<?php echo $this->buildLink(array('action' => 'view', 'param' => "res_id:$r->id")); ?>">
                              <img src="layouts/img/eye.png"/>
                         </a>
