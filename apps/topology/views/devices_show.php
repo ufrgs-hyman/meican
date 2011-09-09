@@ -4,7 +4,7 @@
 
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
 
-    <table class="list">
+    <table class="list" style="width: 100%">
         
         <thead>
         <tr>
@@ -74,7 +74,7 @@
 
         <tfoot>
         <tr>
-            <td colspan="11">
+            <td colspan="12">
                 <input class="add" type="button" value="<?php echo _('Add'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'add_form')); ?>');">
             </td>
         </tr>

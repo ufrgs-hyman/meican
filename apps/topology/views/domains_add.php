@@ -2,7 +2,7 @@
 
 <form method="POST" action="<?php echo $this->buildLink(array("action" => "add")); ?>">
 
-    <table style="min-width: 0">
+    <table style="min-width: 0; width: 41%">
         <tr>
             <td>
                 <?php $this->addElement('domain_form'); ?>

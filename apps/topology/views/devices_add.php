@@ -4,7 +4,7 @@
 
 <form method="POST" action="<?php echo $this->buildLink(array("action" => "add")); ?>" onsubmit="validateDeviceForm();">
 
-    <table style="min-width: 0">
+    <table style="min-width: 0; width: 37%">
         <tr>
             <td>
                 <?php $this->addElement('device_form', $args); ?>
