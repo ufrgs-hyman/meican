@@ -125,7 +125,7 @@ class reservations extends Controller {
             $args = new stdClass();
             $args->title = _("Reservations");
             $args->message = _("You have no reservation, click the button below to create a new one");
-            $args->link = array("action" => "add");
+            $args->link = array("action" => "reservation_add");
             $this->setArgsToBody($args);
         }
 

@@ -116,15 +116,14 @@ function showRecurrenceBox() {
         $("#recurrence_summary").empty();
         $("#summary_input").val("");
         refreshSummary();
-        clearWeekConf();
+        //clearWeekConf();
     }
 }
 
 function initializeRecurrence() {
         $("#recurrence").slideDown(0);        
         $("#summary").empty();
-        setFreq(true);
-        $("#interval").val(1);
+        setFreq();
         //$("#initialRecurrence").setDate($("initialDate").getDate());
 //        setUntilType();
 //        $("#rec_initialTime").html($("#initialTime").val());
@@ -148,6 +147,7 @@ function setSummary(sing_string, plural_string, opt_string) {
         $("#interval_type").html(plural_string);
         $("#short_desc").html(repeat_every_string + ' ' + $("#interval").val() + ' ' + plural_string + aditional_string);
     }
+    setUntilType();
 }
 
 function clearWeekConf() {
@@ -165,9 +165,9 @@ function clearWeekConf() {
  * Sets the frequency type - DAILY, WEEKLY, MONTHLY
  */
 
-function setFreq(blank) {
+function setFreq() {
     var value = $("input[name='freq']:checked").val();
-    if ((typeof value == 'undefined') || (blank)) {
+    if ((typeof value == 'undefined')) {
         value = "DAILY";
         $("input[name='freq']").filter('[value=DAILY]').attr('checked', true);
     }
