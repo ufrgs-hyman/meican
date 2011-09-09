@@ -74,20 +74,20 @@ class OSCARSReservation {
     public function setPath($path) {
         $this->path = $path;
     }
-    private function setSrcIsTagged($isTagged) {
+    public function setSrcIsTagged($isTagged) {
         if ($isTagged)
             $this->srcIsTagged = "true";
         else $this->srcIsTagged = "false";
     }
-    private function setSrcTag($vlan) {
+    public function setSrcTag($vlan) {
         $this->srcTag = $vlan;
     }
-    private function setDestIsTagged($isTagged) {
+    public function setDestIsTagged($isTagged) {
         if ($isTagged)
             $this->destIsTagged = "true";
         else $this->destIsTagged = "false";
     }
-    private function setDestTag($vlan) {
+    public function setDestTag($vlan) {
         $this->destTag = $vlan;
     }
     public function setStatus($status) {
