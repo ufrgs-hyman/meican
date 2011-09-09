@@ -101,9 +101,9 @@ class MeicanTopology {
 
             $urn->port = $urn_res[0]->port;
             $urn->vlan = $urn_res[0]->vlan;
-            $urn->max_capacity = $urn_res[0]->max_capacity;
-            $urn->min_capacity = $urn_res[0]->min_capacity;
-            $urn->granularity = $urn_res[0]->granularity;
+            $urn->max_capacity = ($urn_res[0]->max_capacity) ? ($urn_res[0]->max_capacity) : "null";
+            $urn->min_capacity = ($urn_res[0]->min_capacity) ? ($urn_res[0]->min_capacity) : "null";
+            $urn->granularity = ($urn_res[0]->granularity) ? ($urn_res[0]->granularity) : "null";
 
             $urns[] = $urn;
             

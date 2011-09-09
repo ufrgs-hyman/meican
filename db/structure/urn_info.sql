@@ -33,11 +33,11 @@ CREATE TABLE IF NOT EXISTS `urn_info` (
   `dev_id` int(11) NOT NULL,
   `port` char(20) NOT NULL,
   `vlan` char(32) NOT NULL,
-  `max_capacity` bigint(20) NOT NULL,
-  `min_capacity` bigint(20) NOT NULL,
-  `granularity` bigint(20) NOT NULL,
+  `max_capacity` bigint(20) DEFAULT NULL,
+  `min_capacity` bigint(20) DEFAULT NULL,
+  `granularity` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`urn_id`),
   UNIQUE KEY `urn_string` (`urn_string`),
   UNIQUE KEY `device_id` (`dev_id`,`port`),
   KEY `network_id` (`net_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
