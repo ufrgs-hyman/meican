@@ -36,7 +36,7 @@
     <?php $this->addElement('identification_userAdd'); ?>
 
     <br/><br/>
-    <div style="width: 79%">
+    <div style="width: 85%">
         <?php $this->addElement('associative_table', $args); ?>
         <br/>
         <div class="controls">

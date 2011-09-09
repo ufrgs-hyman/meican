@@ -15,12 +15,12 @@
             </td>
         </tr>
     </table>
+    <div style="width:85%">
+        <?php $this->addElement('associative_table', $args); ?>
 
-    <?php $this->addElement('associative_table', $args); ?>
-
-    <div class="controls">
-        <input class="save" type="submit" value="<?php echo _('Save'); ?>">
-        <input class="cancel" type="button" value="<?php echo _("Cancel"); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'show')); ?>')">
+        <div class="controls">
+            <input class="save" type="submit" value="<?php echo _('Save'); ?>">
+            <input class="cancel" type="button" value="<?php echo _("Cancel"); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'show')); ?>')">
+        </div>
     </div>
-
 </form>
