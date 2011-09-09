@@ -35,7 +35,10 @@ $timer = $argsToElement;
     <?php if ($timer): ?>
         <?php if($timer->summary): ?>
         <tr>
-            <th colspan="5">
+            <td colspan="3">&nbsp;</td>
+        </tr>
+        <tr>
+            <th colspan="3">
                 <?php echo _("Summary") ?>
             </th>
         </tr>
@@ -47,10 +50,10 @@ $timer = $argsToElement;
         <?php endif; ?>
     <?php else: ?>
         <tr>
-            <td colspan="5">&nbsp;</td>
+            <td colspan="3">&nbsp;</td>
         </tr>
         <tr>
-            <th colspan="5">
+            <th colspan="3">
                 <?php echo _("Summary") ?>
             </th>
         </tr>
