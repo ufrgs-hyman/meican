@@ -11,7 +11,7 @@ $domains = isset($argsToElement->domains) ? $argsToElement->domains : NULL;
             <?php echo _("Name"); ?>:
         </th>
         <td class="left">
-            <input type="text" size="50" id="net_descr" name="net_descr" value="<?php if ($network) echo $network->net_descr; ?>"/>
+            <input type="text" size="30" id="net_descr" name="net_descr" value="<?php if ($network) echo $network->net_descr; ?>"/>
         </td>
     </tr>
     
@@ -20,7 +20,7 @@ $domains = isset($argsToElement->domains) ? $argsToElement->domains : NULL;
             <?php echo _("Latitude"); ?>:
         </th>
         <td class="left">
-            <input type="text" size="50" id="net_lat" name="net_lat" value="<?php if ($network) echo $network->net_lat; ?>"/>
+            <input type="text" size="30" id="net_lat" name="net_lat" value="<?php if ($network) echo $network->net_lat; ?>"/>
         </td>
     </tr>
     
@@ -29,7 +29,7 @@ $domains = isset($argsToElement->domains) ? $argsToElement->domains : NULL;
             <?php echo _("Longitude"); ?>:
         </th>
         <td class="left">
-            <input type="text" size="50" id="net_lng" name="net_lng" value="<?php if ($network) echo $network->net_lng; ?>"/>
+            <input type="text" size="30" id="net_lng" name="net_lng" value="<?php if ($network) echo $network->net_lng; ?>"/>
         </td>
     </tr>
     
