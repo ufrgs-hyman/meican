@@ -126,7 +126,8 @@ img.logo {
 
 table {
     font-family: Helvetica, Arial;
-    min-width: 50%;
+    min-width: 70%;
+    width: 70%;
     border-collapse: collapse;
     padding: 0px;
     border: 1px solid #000000

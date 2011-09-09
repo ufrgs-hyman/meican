@@ -8,7 +8,7 @@
     
     <br>
 
-    <table class="list" style="min-width: 100%">
+    <table class="list" style="min-width: 105%">
 
         <thead>
             <tr>

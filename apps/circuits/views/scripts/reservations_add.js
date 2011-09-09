@@ -18,6 +18,7 @@ function createTabs(){
             var activeTab = $(this).find("a").attr("href"); //encontra o atributo href para identificar a aba ativa e seu conteudo
             $(activeTab).fadeIn();                          //Mostra o conteudo da aba ativa gradualmente
             if (currentTab == "t3") {
+                $("#summary_input").val($("#confirmation_summary").html());
                 changeBand();
             }
             google.maps.event.trigger(edit_map, 'resize');
@@ -102,6 +103,7 @@ function nextTab(elem){
                 currentTab = "t3";
                 google.maps.event.trigger(view_map, 'resize');
                 view_setBounds(view_bounds);
+                $("#summary_input").val($("#confirmation_summary").html());
             }                
             break;
         }

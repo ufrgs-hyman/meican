@@ -41,6 +41,7 @@ function initializeTimer() {
 //                }
 //            }
             calcDuration();
+            refreshSummary();
         }
     });
     calcDuration();
@@ -57,6 +58,7 @@ function refreshSummary() {
                      
         $("#summary").html(summary_string);
         $("#confirmation_summary").html(summary_string);
+        $("#summary_input").val($("#confirmation_summary").html());
     } else {
         $("#summary").html("");
     }
@@ -148,6 +150,7 @@ function setSummary(sing_string, plural_string, opt_string) {
         $("#short_desc").html(repeat_every_string + ' ' + $("#interval").val() + ' ' + plural_string + aditional_string);
     }
     setUntilType();
+    
 }
 
 function clearWeekConf() {
@@ -216,6 +219,16 @@ function setUntilType() {
         $("#untilDate").attr("disabled", "disabled");
         $("#nr_occurr").attr("disabled", "disabled");
     }
+    $("#confirmation_summary").html($("#short_desc").html() + ' '
+                                  + $("#Sunday_desc").html() + ' '
+                                  + $("#Monday_desc").html() + ' '
+                                  + $("#Tuesday_desc").html() + ' '
+                                  + $("#Wednesday_desc").html() + ' '
+                                  + $("#Thursday_desc").html() + ' '
+                                  + $("#Friday_desc").html() + ' '
+                                  + $("#Saturday_desc").html() + ' '
+                                  + $("#until_desc").html());
+    $("#summary_input").val($("#confirmation_summary").html());
 }
 
 function checkWeekDay(day_name) {
@@ -226,6 +239,7 @@ function checkWeekDay(day_name) {
     } else {
         $(desc_id).empty();
     }
+    setUntilType();
 }
 
 function validateTime(where) {
