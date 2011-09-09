@@ -1,5 +1,5 @@
 function refreshStatus() {
-    //$('.load').show();
+    $('.load').show();
     
     var count = 0;
 
@@ -17,7 +17,7 @@ function refreshStatus() {
             },
             dataType: "json",
             success: function(data) {
-                //$('.load').hide();
+                $('.load').hide();
                 if (data) {
                     var status_id = null;
 

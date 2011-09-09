@@ -46,8 +46,8 @@ class Framework {
      * CUIDADO COM O ENDEREÇO PARA OS WEBSERVICES
      * ALTERAR DE ACORDO COM A PORTA FORNECIDA PELA NOC
      */
-    public static $fedIp = 'noc.inf.ufrgs.br:65504'; // route to 143.54.12.123:80
-    public static $odeIp = 'noc.inf.ufrgs.br:65404'; // route to 143.54.12.123:8080
+    public static $fedIp = 'noc.inf.ufrgs.br:65501'; // route to 143.54.12.123:80
+    public static $odeIp = 'noc.inf.ufrgs.br:65401'; // route to 143.54.12.123:8080
 
     /**
      *
@@ -55,8 +55,8 @@ class Framework {
      * @var $odeWSDLToRequest: reservation_info > sendForAuthorization
      * @var $odeWSDLToResponse: request_info > response
      */
-    public static $odeWSDLToRequest = "http://noc.inf.ufrgs.br:65404/ode/deployment/bundles/v4_felipe_workflow/processes/v4_felipe_workflow/processes.ode/diagrama-ODE_Workflow_Felipe.wsdl";
-    public static $odeWSDLToResponse = "http://noc.inf.ufrgs.br:65404/ode/deployment/bundles/v4_felipe_workflow/processes/v4_felipe_workflow/processes.ode/diagrama-ODE_Workflow_Felipe.wsdl";
+    public static $odeWSDLToRequest = "http://noc.inf.ufrgs.br:65401/ode/deployment/bundles/v4_felipe_workflow/processes/v4_felipe_workflow/processes.ode/diagrama-ODE_Workflow_Felipe.wsdl";
+    public static $odeWSDLToResponse = "http://noc.inf.ufrgs.br:65401/ode/deployment/bundles/v4_felipe_workflow/processes/v4_felipe_workflow/processes.ode/diagrama-ODE_Workflow_Felipe.wsdl";
 
 
     /**
