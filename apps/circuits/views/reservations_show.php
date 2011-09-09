@@ -94,7 +94,7 @@
 
         <tfoot>
             <tr>
-                <td colspan="16">
+                <td colspan="14">
                     <input class="add" type="button" value="<?php echo _("Add"); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'add')); ?>');"/>  
                 </td>
             </tr>
