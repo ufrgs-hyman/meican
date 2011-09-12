@@ -282,6 +282,8 @@ class OSCARSReservation {
             $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
             $result = $client->listReservations($envelope);
 
+            Framework::debug("result list", $result);
+
             if (!$err = array_shift($result->return)){ //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
                 foreach ($result->return as $r)
                         $this->statusArray[] = $r;
