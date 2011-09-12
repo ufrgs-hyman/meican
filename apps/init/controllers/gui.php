@@ -80,13 +80,15 @@ class gui extends Controller {
             $icons[] = $icon;
         }
 
-        $icon = new stdClass();
-        $icon->name = _('Requests');
-        $icon->figure = 'layouts/img/requests_1.png';
-        $icon->link = array('app' => 'bpm', 'controller' => 'requests', 'action' => 'show');
-        $icons[] = $icon;
+        if ($acl->checkACL("read", 'request_info')) {
+            $icon = new stdClass();
+            $icon->name = _('Requests');
+            $icon->figure = 'layouts/img/requests_1.png';
+            $icon->link = array('app' => 'bpm', 'controller' => 'requests', 'action' => 'show');
+            $icons[] = $icon;
+        }
 
-        if ($acl->checkACL("read", 'user_info')) {
+        if ($acl->checkACL("read", 'group_info')) {
             $icon = new stdClass();
             $icon->name = _('Management');
             $icon->figure = 'layouts/img/management.png';

@@ -26,7 +26,7 @@ class timer_info extends Resource_Model {
         if (!isset ($this->tmr_id)) {
             return FALSE;
         } else {
-            $ret = $this->fetch();
+            $ret = $this->fetch(FALSE);
             if (!$ret) {
                 return FALSE;
             }
