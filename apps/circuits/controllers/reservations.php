@@ -503,6 +503,7 @@ class reservations extends Controller {
             "cluster_information_string" => _("Information about cluster"),
             "coordinates_string" => _("Coordinates"),
             "any_string" => _("any"),
+            "value_string" => _("Value"),
             // timers
             "date_format" => $js_dateFormat,
             "language" => $js_lang,

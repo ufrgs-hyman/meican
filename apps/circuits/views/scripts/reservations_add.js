@@ -1545,9 +1545,9 @@ function map_setEndpointConf(where) {
         $(tagged_htmlId).removeAttr('disabled');
 
         if (vlan_min && vlan_max)
-            $(tip_htmlId).html('Value: ' + vlan_min + ' - ' + vlan_max);
+            $(tip_htmlId).html(value_string + ': ' + vlan_min + ' - ' + vlan_max);
         else if (vlan_validValues) {
-            $(tip_htmlId).html('Value: ' + vlan_validValues);
+            $(tip_htmlId).html(value_string + ': ' + vlan_validValues);
         }
 
         if (allowUntag) {

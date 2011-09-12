@@ -32,8 +32,8 @@ class acl extends Controller {
     }
 
     public function show() {
-        $acc = new aros_acos();
-        $allRights = $acc->fetch(FALSE);
+        $aros_acos = new aros_acos();
+        $allRights = $aros_acos->fetch(FALSE);
 
         if ($allRights) {
             $rights = array();
@@ -55,20 +55,23 @@ class acl extends Controller {
                 $aro = $result_mger[0];
                 
                 $aro_obj_descr = "-";
-                if (class_exists($aro->model)) {
+                if (($aro->obj_id) && class_exists($aro->model)) {
                     $model = new $aro->model;
-                    $pk = $model->getPrimaryKey();
 
-                    $model->$pk = $aro->obj_id;
-                    $return = $model->fetch(FALSE);
-                    $attr = $return[0]->getValidInds();
+                    if (method_exists($model, "getPrimaryKey")) {
+                        $pk = $model->getPrimaryKey();
 
-                    $temp = array();
-                    foreach ($attr as $at_name) {
-                        if (($return[0]->attributes[$at_name]->usedInInsert) && !($return[0]->attributes[$at_name]->forceUpdate))
-                            $temp[] = "$at_name: " . $return[0]->$at_name;
+                        $model->$pk = $aro->obj_id;
+                        $return = $model->fetch(FALSE);
+                        $attr = $return[0]->getValidInds();
+
+                        $temp = array();
+                        foreach ($attr as $at_name) {
+                            if (($return[0]->attributes[$at_name]->usedInInsert) && !($return[0]->attributes[$at_name]->forceUpdate))
+                                $temp[] = "$at_name: " . $return[0]->$at_name;
+                        }
+                        $aro_obj_descr = implode("<br>", $temp);
                     }
-                    $aro_obj_descr = implode("<br>", $temp);
                 }
                 
                 $right->aro_obj_id = $aro->obj_id;
@@ -94,21 +97,24 @@ class acl extends Controller {
                 
                 $aco = $result_mged[0];
                 
-                $aco_obj_descr = "-";
-                if (class_exists($aco->model)) {
+                $aco_obj_descr = ($aco->obj_id) ? "-" : "void";
+                if (($aco->obj_id) && class_exists($aco->model)) {
                     $model = new $aco->model;
-                    $pk = $model->getPrimaryKey();
 
-                    $model->$pk = $aco->obj_id;
-                    $return = $model->fetch(FALSE);
-                    $attr = $return[0]->getValidInds();
+                    if (method_exists($model, "getPrimaryKey")) {
+                        $pk = $model->getPrimaryKey();
 
-                    $temp = array();
-                    foreach ($attr as $at_name) {
-                        if (($return[0]->attributes[$at_name]->usedInInsert) && !($return[0]->attributes[$at_name]->forceUpdate))
-                            $temp[] = "$at_name: " . $return[0]->$at_name;
+                        $model->$pk = $aco->obj_id;
+                        $return = $model->fetch(FALSE);
+                        $attr = $return[0]->getValidInds();
+
+                        $temp = array();
+                        foreach ($attr as $at_name) {
+                            if (($return[0]->attributes[$at_name]->usedInInsert) && !($return[0]->attributes[$at_name]->forceUpdate))
+                                $temp[] = "$at_name: " . $return[0]->$at_name;
+                        }
+                        $aco_obj_descr = implode("<br>", $temp);
                     }
-                    $aco_obj_descr = implode("<br>", $temp);
                 }
                 
                 $right->aco_model = $aco->model;

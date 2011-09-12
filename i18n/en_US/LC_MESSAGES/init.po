@@ -2,44 +2,81 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-06 12:35-0300\n"
+"POT-Creation-Date: 2011-09-12 14:42-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Felipe <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: views/login.php:35
+msgid "About MEICAN"
+msgstr ""
+
+#: views/login.php:36
+msgid "Create an account"
+msgstr ""
+
+#: views/login.php:37
+msgid "Support"
+msgstr ""
+
+#: views/login.php:50
+msgid "Sign in to MEICAN"
+msgstr ""
+
+#: views/login.php:56
+msgid "Login"
+msgstr ""
+
+#: views/login.php:64
+msgid "Password"
+msgstr ""
+
+#: views/login.php:75
+msgid "Forgot your password?"
+msgstr ""
+
+#: views/login.php:90
+msgid "Sign in"
+msgstr ""
+
+#: views/gui.php:149
+msgid "Not logged in"
+msgstr ""
+
+#: views/gui.php:152
+msgid "Session Expired"
+msgstr ""
+
+#: views/gui.php:238
+msgid "Loading"
+msgstr ""
+
+#: views/info_box.php:7
+msgid "My settings"
+msgstr ""
+
+#: views/info_box.php:10
+msgid "Help"
+msgstr ""
+
+#: views/info_box.php:13
+msgid "About"
+msgstr ""
+
+#: views/info_box.php:16
+msgid "Sign out"
+msgstr ""
+
+#: views/info_box.php:19
+msgid "Server time"
+msgstr ""
+
 #: controllers/login.php:44
 msgid "Failed on authentication"
-msgstr ""
-
-#: controllers/gui.php:50
-msgid "You have one new request to be authorized"
-msgstr ""
-
-#: controllers/gui.php:53
-msgid "You have"
-msgstr ""
-
-#: controllers/gui.php:55
-msgid "new requests to be authorized"
-msgstr ""
-
-#: controllers/gui.php:68
-msgid "New reservation"
-msgstr ""
-
-#: controllers/gui.php:75 controllers/menu.php:33
-msgid "Reservations"
-msgstr ""
-
-#: controllers/gui.php:81 controllers/menu.php:47
-msgid "Requests"
-msgstr ""
-
-#: controllers/gui.php:87
-msgid "Management"
 msgstr ""
 
 #: controllers/menu.php:31
@@ -48,6 +85,10 @@ msgstr ""
 
 #: controllers/menu.php:32
 msgid "Circuits"
+msgstr ""
+
+#: controllers/menu.php:33 controllers/gui.php:77
+msgid "Reservations"
 msgstr ""
 
 #: controllers/menu.php:35
@@ -90,66 +131,30 @@ msgstr ""
 msgid "BPM"
 msgstr ""
 
+#: controllers/menu.php:47 controllers/gui.php:85
+msgid "Requests"
+msgstr ""
+
 #: controllers/menu.php:48
 msgid "ODE"
 msgstr ""
 
-#: views/login.php:35
-msgid "About MEICAN"
+#: controllers/gui.php:50
+msgid "You have one new request to be authorized"
 msgstr ""
 
-#: views/login.php:36
-msgid "Create an account"
+#: controllers/gui.php:53
+msgid "You have"
 msgstr ""
 
-#: views/login.php:37
-msgid "Support"
+#: controllers/gui.php:55
+msgid "new requests to be authorized"
 msgstr ""
 
-#: views/login.php:50
-msgid "Sign in to MEICAN"
+#: controllers/gui.php:69
+msgid "New reservation"
 msgstr ""
 
-#: views/login.php:56
-msgid "Login"
-msgstr ""
-
-#: views/login.php:64
-msgid "Password"
-msgstr ""
-
-#: views/login.php:75
-msgid "Forgot your password?"
-msgstr ""
-
-#: views/login.php:90
-msgid "Sign in"
-msgstr ""
-
-#: views/gui.php:143
-msgid "Not logged in"
-msgstr ""
-
-#: views/gui.php:146
-msgid "Session Expired"
-msgstr ""
-
-#: views/gui.php:232
-msgid "Loading"
-msgstr ""
-
-#: views/info_box.php:6
-msgid "My settings"
-msgstr ""
-
-#: views/info_box.php:9
-msgid "Help"
-msgstr ""
-
-#: views/info_box.php:12
-msgid "About"
-msgstr ""
-
-#: views/info_box.php:15
-msgid "Sign out"
+#: controllers/gui.php:93
+msgid "Management"
 msgstr ""
