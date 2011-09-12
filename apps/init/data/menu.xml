@@ -68,7 +68,7 @@
         <item>
             <name>Users</name>
             <subItem>
-                <name>Users</name><model>user_info</model>
+                <name>Users</name>
                 <link>main.php?app=aaa&amp;controller=users&amp;action=show</link>
                 <right>read</right>
                 <model>group_info</model>
