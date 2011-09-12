@@ -109,8 +109,6 @@ class devices extends Controller {
                     "domains" => $domains
                 ));
 
-                $this->addScript('devices');
-
                 $this->render();
             } else {
                 /**
@@ -219,8 +217,6 @@ class devices extends Controller {
             "flash_networkReq" => _("A network is required"),
             "domains" => $domains
         ));
-
-        $this->addScript('devices');
 
         $this->setArgsToBody($args);
         $this->setAction('edit');

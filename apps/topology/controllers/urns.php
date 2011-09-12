@@ -59,7 +59,6 @@ class urns extends Controller {
                 "domains" => $domains_to_js
             ));
 
-            $this->addScript('urns');
             $this->setInlineScript('urns_init');
         } else {
             $this->setAction('empty');
@@ -108,7 +107,6 @@ class urns extends Controller {
             "domains" => $domains_to_js
         ));
         
-        $this->addScript('urns');
         $this->setInlineScript('urns_add_manual');
         
         $this->setAction('add_manual');
@@ -158,7 +156,6 @@ class urns extends Controller {
             "urns_to_import" => $urns
         ));
 
-        $this->addScript('urns');
         $this->setInlineScript('urns_import');
         
         $this->setAction('import');

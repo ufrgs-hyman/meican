@@ -84,7 +84,6 @@ class networks extends Controller {
             "flash_setDomain" => _("Select a domain")
         );
         
-        $this->addScript("networks");
         $this->setArgsToScript($argsToSpt);
         
         $this->setArgsToBody($args);

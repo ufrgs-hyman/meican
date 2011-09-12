@@ -100,8 +100,6 @@ class groups extends Controller {
         $args->users->left = $usersLeftArray;
         $args->users->right = array();
 
-        $this->addScript('select');
-
         $this->setArgsToBody($args);
 
         $this->render();
@@ -214,8 +212,6 @@ class groups extends Controller {
         $args->group = $group;
 
         $this->setArgsToBody($args);
-
-        $this->addScript("select");
 
         $this->render();
     } // edit

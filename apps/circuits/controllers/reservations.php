@@ -1033,7 +1033,6 @@ class reservations extends Controller {
         ));
 
         $this->setInlineScript('reservations_view');
-        $this->addScript('reservation_map');
 
         $args = new stdClass();
         $args->gris = $gris;

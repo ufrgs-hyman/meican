@@ -90,7 +90,6 @@ class users extends Controller {
 
             $this->setArgsToBody($args);
 
-            $this->addScript('select');
             $this->render();
         } else {
             $this->setFlash(_("You don't have permission to view groups, so you can't add users"), "warning");
@@ -235,10 +234,6 @@ class users extends Controller {
             $args->user = $user;
 
             $this->setArgsToBody($args);
-
-            $this->addScript("password");
-            $this->addScript("select");
-            //$this->setArgsToScript(array("nome" => $args));
 
             $this->render();
         } else {

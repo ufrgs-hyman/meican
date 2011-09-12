@@ -21,12 +21,19 @@
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/jquery-1.4.2.min.js"></script>
         -->
 
+        <script type ="text/javascript" language="JavaScript1.2" src="apps/topology/views/scripts/devices.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="apps/topology/views/scripts/networks.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="apps/topology/views/scripts/urns.js"></script>
+
+        <script type ="text/javascript" language="JavaScript1.2" src="apps/aaa/views/scripts/password.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="apps/aaa/views/scripts/select.js"></script>
+
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/jquery-ui.min.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/googlemaps.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/markerClusterer.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/StyledMarker.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/map.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/reservations.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/reservation_map.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/reservations_add.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/flows.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/timers.js"></script>
