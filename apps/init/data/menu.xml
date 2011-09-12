@@ -36,7 +36,8 @@
             <subItem>
                 <name>MEICANs</name>
                 <link>main.php?app=topology&amp;controller=meicans&amp;action=show</link>
-                <right></right>
+                <right>read</right>
+                <model>topology</model>
             </subItem>
             <subItem>
                 <name>Domains</name>
@@ -59,7 +60,7 @@
             <subItem>
                 <name>URNs</name>
                 <link>main.php?app=topology&amp;controller=urns&amp;action=show</link>
-                <right>read</right>
+                <right>update</right>
                 <model>urn_info</model>
             </subItem>
         </item>
@@ -70,7 +71,7 @@
                 <name>Users</name><model>user_info</model>
                 <link>main.php?app=aaa&amp;controller=users&amp;action=show</link>
                 <right>read</right>
-                <model>user_info</model>
+                <model>group_info</model>
             </subItem>
             <subItem>
                 <name>Groups</name>
@@ -81,7 +82,8 @@
             <subItem>
                 <name>Access control</name>
                 <link>main.php?app=aaa&amp;controller=acl&amp;action=show</link>
-                <right></right>
+                <right>read</right>
+                <model>group_info</model>
             </subItem>
         </item>
 
@@ -90,12 +92,14 @@
              <subItem>
                 <name>Requests</name>
                 <link>main.php?app=bpm&amp;controller=requests&amp;action=show</link>
-                <right></right>
+                <right>read</right>
+                <model>request_info</model>
             </subItem>
             <subItem>
                 <name>ODE</name>
                 <link>main.php?app=bpm&amp;controller=ode&amp;action=show</link>
-                <right></right>
+                <right>read</right>
+                <model>request_info</model>
             </subItem>
         </item>
 
