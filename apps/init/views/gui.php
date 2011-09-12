@@ -108,7 +108,7 @@
 
             function loadHtml(htmlData) {
                 clearInterval(js_function_interval);
-                
+
                 // carrega temporariamente a página para processá-la
                 $('#htmlToLoad').html(htmlData);
                 $('#load_img').hide();
@@ -134,6 +134,8 @@
                 $('#main').empty();
                 clearFlash();
                 $('#load_img').show();
+
+                clearInterval(js_function_interval);
                 
                 //if (url) {
                 $.ajax ({

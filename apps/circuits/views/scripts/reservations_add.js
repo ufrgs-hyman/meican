@@ -16,18 +16,24 @@ function createTabs(){
             $(this).addClass("active");                     //Adiciona a classe “active” na aba selecionada
             $(".cont_tab").hide();                          //esconde o conteudo de todas as abas
             var activeTab = $(this).find("a").attr("href"); //encontra o atributo href para identificar a aba ativa e seu conteudo
-            $(activeTab).fadeIn();                          //Mostra o conteudo da aba ativa gradualmente
-            if (currentTab == "t3") {
-                $("#summary_input").val($("#confirmation_summary").html());
-                changeBand();
-            }
-            google.maps.event.trigger(edit_map, 'resize');
 
-            google.maps.event.trigger(view_map, 'resize');
-            view_setBounds(view_bounds);
+            if (currentTab == "t3") {
+                // preenche o conteudo da aba 3
+                fillConfirmationTab();
+            }
+
+            $(activeTab).fadeIn();                          //Mostra o conteudo da aba ativa gradualmente
+
+            if (currentTab == "t3") {
+                google.maps.event.trigger(view_map, 'resize');
+                view_setBounds(view_bounds);
+            }
+
+            if (currentTab == "t1")
+                google.maps.event.trigger(edit_map, 'resize');
         }
         return false;
-    });    
+    });
 }
 
 function createSlider(){
@@ -45,8 +51,8 @@ function createSlider(){
     });
     $('#slider').removeClass("ui-widget");
     $('#slider').addClass("ui-widget-slider");
-    $( "#amount" ).html( $( "#slider" ).slider( "value" ) + " Mbps");    
-    $("#slider").bind("slidechange", changeBand());
+    $( "#amount" ).html( $( "#slider" ).slider( "value" ) + " Mbps");
+
     $("#slider").slider( "option", "disabled", true );
     $("#amount_label").hide();        
     $("#amount").hide();
@@ -92,18 +98,23 @@ function nextTab(elem){
             break;
         }
         case "bn2": {
+            // clicou em next e vai para aba 3
             if ((tab1_valid) && (tab2_valid)) {
                 clearFlash();
                 $("ul.tabs li").removeClass("active");    
                 $("ul.tabs li:eq(2)").addClass("active").show();            
                 $(".cont_tab").hide();
                 activeTab = $("ul.tabs li:eq(2)").find("a").attr("href");
+
+                // antes de mostrar a aba, copia conteudo dos campos
+                fillConfirmationTab();
+
                 $(activeTab).fadeIn();  
                 previousTab = currentTab;
                 currentTab = "t3";
                 google.maps.event.trigger(view_map, 'resize');
                 view_setBounds(view_bounds);
-                $("#summary_input").val($("#confirmation_summary").html());
+                
             }                
             break;
         }
@@ -111,7 +122,6 @@ function nextTab(elem){
             break;
         }
     }
-    changeBand();
 }
 
 function prevTab(elem){
@@ -187,7 +197,6 @@ function validateReservationForm() {
         }
 
         if (tab2_valid) {
-            //$("#reservation_add").submit();
             return true;
         } else {
             if ($("#finalTime").val() < $("#initialtime").val()) {
@@ -280,11 +289,6 @@ function changeName(elem){
     }
 }
 
-function changeBand(){
-    var value = $("#slider").slider("option","value");
-    $("#lb_bandwidth").html("  " + value + " Mbps");    
-}
-
 function validateTab1() {
     if ( (path.length == 2) && ($("#src_device").val() != -1) && ($("#dst_device").val() != -1) &&
         ($("#src_port").val() != -1) && ($("#dst_port").val() != -1) ) {
@@ -299,7 +303,7 @@ function validateTab1() {
             return;
         
         if ($("#showVlan_checkbox").attr("checked")) {
-            
+
             if ($("#src_vlanUntagged").attr("checked"))
                 tab1_valid = true;
             else if ($("#src_vlanTagged").attr("checked")) {
@@ -310,11 +314,12 @@ function validateTab1() {
                     tab1_valid = false;
                     return;
                 }
-            } else {
-                setFlash(flash_srcVlanReq, "warning");
-                tab1_valid = false;
-                return;
             }
+//            else {
+//                setFlash(flash_srcVlanReq, "warning");
+//                tab1_valid = false;
+//                return;
+//            }
         
             if ($("#dst_vlanUntagged").attr("checked"))
                 tab1_valid = true;
@@ -326,11 +331,12 @@ function validateTab1() {
                     tab1_valid = false;
                     return;
                 }
-            } else {
-                setFlash(flash_dstVlanReq, "warning");
-                tab1_valid = false;
-                return;
             }
+//            else {
+//                setFlash(flash_dstVlanReq, "warning");
+//                tab1_valid = false;
+//                return;
+//            }
             
 //            if (($('input[name="sourceVLANType"]:checked').val() == "TRUE") && ($("#src_vlanText").val() == "")) {
 //                tab1_valid = false;
@@ -345,7 +351,7 @@ function validateTab1() {
     } else {
         tab1_valid = false;
     }
-    validateTab3();  
+    validateTab3();
 }
 
 function validateTab3() {
@@ -514,14 +520,56 @@ function fillUrnBox(htmlId, fillerArray, current_val) {
     }
 }
 
-function changeTagValue(where) {
-    var text_htmlId = "#" + where + "_vlanText";
-    var vlan_htmlId = "#confirmation_" + where + "_vlan";
+function fillConfirmationTab() {
+    // preenche informacões dos endpoints
+    $("#confirmation_src_domain").html($("#src_domain").html());
+    $("#confirmation_src_network").html($("#src_network").html());
+    $("#confirmation_src_device ").html($("#src_device option:selected").html());
+    $("#confirmation_src_port").html($("#src_port option:selected").html());
 
-    $(text_htmlId).removeAttr('disabled');
-    $(vlan_htmlId).html("Tagged: " + $(text_htmlId).val());
-    validateTab1();    
+    $("#confirmation_dst_domain").html($("#dst_domain").html());
+    $("#confirmation_dst_network").html($("#dst_network").html());
+    $("#confirmation_dst_device").html($("#dst_device option:selected").html());
+    $("#confirmation_dst_port").html($("#dst_port option:selected").html());
+
+    // preenche info das VLANs
+    if ($("#showVlan_checkbox").attr("checked")) {
+
+        if ($("#src_vlanUntagged").attr("checked"))
+            $("#confirmation_src_vlan").html("Untagged");
+
+        else if ($("#src_vlanTagged").attr("checked")) {
+            if ($("#src_vlanText").val()) {
+                $("#confirmation_src_vlan").html("Tagged: " + $("#src_vlanText").val());
+            } else {
+                $("#confirmation_src_vlan").html("Tagged: " + any_string);
+            }
+        }
+
+        if ($("#dst_vlanUntagged").attr("checked"))
+            $("#confirmation_dst_vlan").html("Untagged");
+            
+        else if ($("#dst_vlanTagged").attr("checked")) {
+            if ($("#dst_vlanText").val()) {
+                $("#confirmation_dst_vlan").html("Tagged: " + $("#dst_vlanText").val());
+            } else {
+                $("#confirmation_dst_vlan").html("Tagged: " + any_string);
+            }
+        }
+
+    } else {
+        $("#confirmation_src_vlan").html("Tagged: " + any_string);
+        $("#confirmation_dst_vlan").html("Tagged: " + any_string);
+    }
+
+    // preenche info da banda
+    var value = $("#slider").slider("option","value");
+    $("#lb_bandwidth").html(value + " Mbps");
+
+    // preenche informacões do timer
+    $("#summary_input").val($("#confirmation_summary").html());
 }
+
 
 /*----------------------------------------------------------------------------*/
 // INICIO DAS FUNÇÕES DO MAPcounterA                                                 //
@@ -731,8 +779,6 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
         srcSet = true;
         $("#src_domain").html(domain_name);
         $("#src_network").html(network_name);
-        $("#confirmation_src_domain").html(domain_name);
-        $("#confirmation_src_network").html(network_name);        
         map_changeNetwork("src", network_id, domain_id);       
         path[0] = {
             domain_id: domain_id,
@@ -745,9 +791,7 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
     } else if (where == "dst") {
         dstSet = true;
         $("#dst_domain").html(domain_name);
-        $("#dst_network").html(network_name);
-        $("#confirmation_dst_domain").html(domain_name);
-        $("#confirmation_dst_network").html(network_name);        
+        $("#dst_network").html(network_name);        
         map_changeNetwork("dst", network_id, domain_id);  
         path[1] = {
             domain_id: domain_id,
@@ -1351,13 +1395,12 @@ function map_changeDevice(where) {
         map_fillPorts(port_id, ports);
 
         if (ports.length == 1) {
-            var confirmation_port = "#confirmation_" + where + "_port";            
-            $(confirmation_port).html(ports[0].port_number);
             map_setEndpointConf(where);
         }        
         $(port_id).slideDown();
-    }
-    validateTab1();
+    } else
+        tab1_valid = false;
+    validateTab3();
 }
 
 function map_getPorts(domain_id, network_id, device_id, where) {
@@ -1373,7 +1416,6 @@ function map_getPorts(domain_id, network_id, device_id, where) {
             }
         }
     }
-    validateTab1(); 
     return ports;
 }
 
@@ -1396,11 +1438,10 @@ function map_changePort(where) {
     var port_id = "#" + where + "_port";
     map_clearVlanConf(where);
     if ($(port_id).val() != -1) {
-        var confirmation_port = "#confirmation_" + where + "_port";        
-        $(confirmation_port).html($(port_id).val());
         map_setEndpointConf(where);
-    }
-    validateTab1();
+    } else
+        tab1_valid = false
+    validateTab3();
 }
 
 function map_clearVlanConf(where) {
@@ -1536,6 +1577,8 @@ function map_setEndpointConf(where) {
         dst_vlan_validValues = vlan_validValues;
         $("#dst_urn").val(dst_urn);
     }
+
+    validateTab1();
 }
 
 function map_getUrnData(where) {
