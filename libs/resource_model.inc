@@ -42,6 +42,10 @@ class Resource_Model extends Model {
     public function delete() {
         $model = $this->getTableName();
         $pk = $this->getPrimaryKey();
+
+        if (!$this->{$pk} && !$model)
+            return FALSE;
+
         $aco = new Acos($this->{$pk}, $model);
         $result = $aco->fetch(FALSE);
 

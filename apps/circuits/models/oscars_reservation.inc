@@ -30,14 +30,13 @@ class OSCARSReservation {
         $this->path = "null";
         $this->startTimestamp = 132412312;
         $this->endTimestamp = 1232131322;
-        $this->srcIsTagged = "null";
-        $this->srcTag = "null";
-        $this->destIsTagged = "null";
-        $this->destTag = "null";
+        $this->srcIsTagged = "true";
+        $this->srcTag = "any";
+        $this->destIsTagged = "true";
+        $this->destTag = "any";
         $this->pathSetupMode = "xml-signal";
         $this->description = "Reservation from MEICAN";
         $this->bandwidth = 100;
-
     }
 
     public function setOscarsUrl($oscars_ip) {
@@ -145,13 +144,15 @@ class OSCARSReservation {
             $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
             $result = $client->createReservation($envelope);
 
-            if (!$err = array_shift($result->return)){
+            $returnMessage = array_shift($result->return);
+
+            if ($returnMessage == 'ok') {
                  $this->setGri($result->return[0]);
                  $this->setStatus($result->return[1]);
                  Framework::debug("retorno do create reservation", $result->return);
                  return true;
             } else {
-                Framework::debug("OSCARS Bridge Error: ",$err);
+                Framework::debug("OSCARS Bridge Error: ", $returnMessage);
                 return false;
             }
            
@@ -281,8 +282,6 @@ class OSCARSReservation {
         try {
             $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
             $result = $client->listReservations($envelope);
-
-            Framework::debug("result list", $result);
 
             if (!$err = array_shift($result->return)){ //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
                 foreach ($result->return as $r)

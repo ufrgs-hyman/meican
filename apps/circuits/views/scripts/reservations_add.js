@@ -40,7 +40,7 @@ function createSlider(){
     $('#slider').slider("max",band_min);
     
     $('#slider').slider({
-        value:(band_max)/2,
+        value:(band_max)/5,
         min: band_min,
         max: band_max,
         step: band_div,

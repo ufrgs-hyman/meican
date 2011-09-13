@@ -864,7 +864,7 @@ class reservations extends Controller {
             $result = $this->send($res);
             switch ($result) {
                 case 0:
-                    $reservation->delete();
+                    $res->delete();
                     $new_flow->delete();
                     $new_timer->delete();
                     $this->setFlash(_('Error to send reservation to OSCARS'), 'error');
@@ -1103,9 +1103,6 @@ class reservations extends Controller {
     public function delete() {
         $del_reservations = Common::POST("del_checkbox");
 
-        $endpoint = "http://" . Framework::$bridgeIp . "/axis2/services/BridgeOSCARS?wsdl";
-        $client = new SoapClient($endpoint, array('cache_wsdl' => 0));
-
         if ($del_reservations) {
             foreach ($del_reservations as $resId) {
                 $gris_to_cancel = array();
@@ -1117,18 +1114,27 @@ class reservations extends Controller {
                 $gri->res_id = $resId;
                 if ($gris = $gri->fetch(FALSE)) {
                     foreach ($gris as $g) {
-                        $gris_to_cancel[] = $g->gri_id;
+                        $g->delete();
+                        //$gris_to_cancel[] = $g->gri_id;
                     }
                 }
 
                 if ($tmp = $reservation->fetch()) {
                     $result = $tmp[0];
 
-                    if ($client->cancel($gris_to_cancel)) {
+                    $flow = new flow_info();
+                    $flow->flw_id = $result->flw_id;
+                    $flow->delete();
+
+                    $timer = new timer_info();
+                    $timer->tmr_id = $result->tmr_id;
+                    $timer->delete();
+
+                    //if ($client->cancel($gris_to_cancel)) {
                         if ($reservation->delete())
                             $this->setFlash(_("Reservation") . " '$result->res_name' " . _("deleted"), 'success');
-                    } else
-                        $this->setFlash(_("Reservation") . " '$result->res_name' " . _("could not be cancelled"), 'error');
+                    //} else
+                        //$this->setFlash(_("Reservation") . " '$result->res_name' " . _("could not be cancelled"), 'error');
                 }
             }
         }
