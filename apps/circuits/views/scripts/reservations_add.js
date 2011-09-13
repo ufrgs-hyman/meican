@@ -563,7 +563,7 @@ function fillConfirmationTab() {
     }
 
     // preenche info da banda
-    var value = $("#slider").slider("option","value");
+    var value = $("#bandwidth").val();
     $("#lb_bandwidth").html(value + " Mbps");
 
     // preenche informacões do timer

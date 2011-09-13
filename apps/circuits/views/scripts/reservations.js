@@ -124,25 +124,3 @@ function disabelCancelButton(elemId) {
         });
     }
 }
-
-function changeName(elem) {
-    $.post("main.php?app=circuits&controller=reservations&action=update_name", {
-        name: elem.value
-    });
-}
-
-function changeFlow(elem) {
-    $.post("main.php?app=circuits&controller=reservations&action=update_flow", {
-        flow: elem.value
-    }, function() {
-        $("#next_button").removeAttr("disabled");    
-    });
-}
-
-function changeTimer(elem) {
-    $.post("main.php?app=circuits&controller=reservations&action=update_timer", {
-        timer: elem.value
-    }, function() {
-        $("#next_button").removeAttr("disabled");
-    });
-}
