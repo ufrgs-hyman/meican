@@ -1512,6 +1512,7 @@ function map_setEndpointConf(where) {
             temp = temp[1].split("-");
             vlan_min = temp[0];
             vlan_max = temp[1];
+            $(text_htmlId).val(vlan_min);
         } else {
             // possui virgula, mas nao possui range. Ex: "3000,3001,3002" ou "0,3000,3001,3002"
             if (temp[0] != 0) {
@@ -1527,6 +1528,7 @@ function map_setEndpointConf(where) {
             vlan_min = temp[0];
             vlan_max = temp[1];
             allowUntag = false;
+            $(text_htmlId).val(vlan_min);
         } else {
             // nao possui virgula nem range. Ex: "0" ou "3000"
             vlan_validValues = urnData.vlan;
