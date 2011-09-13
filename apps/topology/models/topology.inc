@@ -83,6 +83,8 @@ class MeicanTopology {
             $urn_info->urn_string = $urn_string;
             $urn_res = $urn_info->fetch();
 
+            Framework::debug("urn fetch",$urn_res);
+
             $urn = new stdClass();
             $urn->urn_id = $urn_res[0]->urn_id;
             $urn->urn_string = $urn_res[0]->urn_string;
