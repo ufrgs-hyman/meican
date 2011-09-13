@@ -31,9 +31,9 @@ class OSCARSReservation {
         $this->startTimestamp = 132412312;
         $this->endTimestamp = 1232131322;
         $this->srcIsTagged = "true";
-        $this->srcTag = "any";
+        $this->srcTag = "null";
         $this->destIsTagged = "true";
-        $this->destTag = "any";
+        $this->destTag = "null";
         $this->pathSetupMode = "xml-signal";
         $this->description = "Reservation from MEICAN";
         $this->bandwidth = 100;
