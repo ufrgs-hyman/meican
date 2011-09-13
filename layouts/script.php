@@ -1,9 +1,10 @@
+<?php if ($this->jsFiles): ?>
 <div class="scripts">
     <?php foreach ($this->jsFiles as $f) {
         echo "<i>$f</i>";
     } ?>
 </div>
-
+<?php endif; ?>
 
 <script>
 <?php
@@ -18,6 +19,6 @@ if ($this->scriptArgs) {
             echo "var $name = $val;";
     }
 }
-?>
 
+?>
 </script>

@@ -33,7 +33,7 @@ class View {
     public function build() {
         $this->buildBody();
 
-        if ($this->script->jsFiles)
+        if ($this->script->jsFiles || $this->script->scriptArgs)
             $this->script->build();
     }
 

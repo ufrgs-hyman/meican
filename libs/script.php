@@ -3,8 +3,8 @@ include_once 'includes/common.inc';
 
 class Script {
 
-    public $jsFiles = NULL;
-    private $scriptArgs;
+    public $jsFiles = array();
+    public $scriptArgs = array();
     public $content = NULL;
 
     function Script() {
