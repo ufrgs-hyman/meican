@@ -84,6 +84,9 @@ class Model {
             $acl = new AclLoader();
             $allowPks = $acl->getAllowedPKey('read', $tableName);
 
+            Framework::debug("pkeys",$allowPks);
+            Framework::debug("model",$tableName);
+
             if ($allowPks) {
                 $inString = implode(',', $allowPks);
                 $pk = $this->getPrimaryKey();
