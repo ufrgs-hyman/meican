@@ -1114,7 +1114,7 @@ class reservations extends Controller {
                 $gri->res_id = $resId;
                 if ($gris = $gri->fetch(FALSE)) {
                     foreach ($gris as $g) {
-                        $g->delete();
+                        $g->delete(FALSE);
                         //$gris_to_cancel[] = $g->gri_id;
                     }
                 }
