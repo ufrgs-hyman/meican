@@ -62,7 +62,7 @@ $bandwidth = $this->passedArgs->bandwidth;
                 <?php foreach ($gris as $i => $g): ?>
                     <tr id="line<?php echo $i; ?>">
                         <td>
-                            <input type="checkbox" id="cancel<?php echo $i; ?>" disabled name="cancel_checkbox[]" value="<?php echo $g->id; ?>" onClick="disabelCancelButton(this);"/>
+                            <input style="display: none" type="checkbox" id="cancel<?php echo $i; ?>" disabled name="cancel_checkbox[]" value="<?php echo $g->id; ?>" onClick="disabelCancelButton(this);"/>
                         </td>
                         <td>
                             OSCARS
@@ -96,7 +96,7 @@ $bandwidth = $this->passedArgs->bandwidth;
 
     <div style="clear: both" class="controls">
         <input class="back" type="button" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');" value="<?php echo _("Back to reservations"); ?>" style="float: left"/>
-        <input class="cancel" type="submit" disabled id="cancel_button" style="opacity:0.4; float: right;" value="<?php echo _("Cancel reservations"); ?>" onClick="return confirm('<?php echo _('Cancel the selected reservations?'); ?>')"/>
+        <input class="cancel" type="submit" disabled id="cancel_button" style="display: none; opacity:0.4; float: right;" value="<?php echo _("Cancel reservations"); ?>" onClick="return confirm('<?php echo _('Cancel the selected reservations?'); ?>')"/>
     </div>
 
 </form>
