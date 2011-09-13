@@ -146,7 +146,7 @@ class OSCARSReservation {
 
             $returnMessage = array_shift($result->return);
 
-            if ($returnMessage == 'ok') {
+            if ($returnMessage == '') {
                  $this->setGri($result->return[0]);
                  $this->setStatus($result->return[1]);
                  Framework::debug("retorno do create reservation", $result->return);
