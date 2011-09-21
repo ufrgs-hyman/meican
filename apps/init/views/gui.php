@@ -61,10 +61,54 @@
 
                 redir("<?php echo $base; ?>main.php?<?php echo $args->last_view; ?>");
                 
-                $('a').pjax('#main')
+                $('a').pjax('#main', {
+                    error: function(jqXHR) {
+                        switch (jqXHR.status) {
+                            case 401:
+                                top.location.href = '<?php echo $base; ?>index.php?message=<?php echo _("Not logged in"); ?>';
+                                break;
+                            case 402:
+                                top.location.href = '<?php echo $base; ?>index.php?message=<?php echo _("Session Expired"); ?>';
+                                break;
+                            case 404:
+                                $('#main').html("Page not found");
+                                break;
+                            case 405:
+                                //change lang
+                                top.location.href = '<?php echo $base; ?>init/gui';
+                                break;
+                            case 406:
+                                //force refresh
+                                location.href = '<?php echo $base; ?>init/gui';
+                                break;
+                            default:
+                                $('#main').html("Unexpected error");
+                            }
+                        }
+                });
                 $('#main')
-                  .bind('start.pjax', function() { $('#load_img').show() })
-                  .bind('end.pjax',   function() { $('#load_img').hide() })/*
+                  .bind('start.pjax', function() { 
+                    clearFlash();
+                    $('#load_img').show();
+
+                    clearInterval(js_function_interval);
+                    })
+                  .bind('end.pjax',   function() { 
+                        clearInterval(js_function_interval);
+
+                        $('#load_img').hide();
+                        // faz o redirecionamento das tags
+
+                        var flash = $('.flash_box').html();
+                        $('#flash_box').html(flash);
+
+                        $.each($(".scripts i"), function() {
+                            $.getScript($(this).html());
+                        });
+
+                        window.scroll(0, 0);
+
+                  });/*
                 $("body").delegate("a","click",function() {
                     if ($(this).attr("target") != "top") {
                         var content_show = $(this).attr("href");
