@@ -49,17 +49,8 @@
             <?php // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate?>
             var js_submit_form = true;
             <?php //url base para geração de url, é o diretório onde o sistema está instalado no servidor ?>
-            var baseUrl = <?php echo $this->url(''); ?>
-
-            $(document).ready(function() {
-
-               /* $("#info_box").load("<?php echo $this->url(array("app" => "init", "controller" => "info_box")); ?>", function() {
-                    
-                   
-                });*/
-                 setInterval("updateSystemTime()", 60000);<?php // chamada para atualizar a hora?>
-                //$("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
-                var errorFunc = function(jqXHR) {
+            var baseUrl = '<?php echo $this->url(''); ?>';
+            var errorFunc = function(jqXHR) {
                         switch (jqXHR.status) {
                             case 401:
                                 top.location.href = baseUrl+'<?php //index.php?message=<?php echo _("Not logged in"); ?>';
@@ -82,6 +73,16 @@
                                 $('#main').html("Unexpected error");
                             }
                         };
+
+            $(document).ready(function() {
+
+               /* $("#info_box").load("<?php echo $this->url(array("app" => "init", "controller" => "info_box")); ?>", function() {
+                    
+                   
+                });*/
+                 setInterval("updateSystemTime()", 60000);<?php // chamada para atualizar a hora?>
+                //$("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
+                
                 $('a').pjax('#main', {error: errorFunc});
                 $('#main')
                   .bind('start.pjax', function() {
@@ -133,11 +134,21 @@
                         });
                     return false;
                 });
-
                 // analisar a real necessidade disso
                 //setTimeout(refresh, 10*60*1000); // carrega a página a cada 10 min., para não sobrecarregar scripts
 
             }); //do ready
+
+            function redir(url, data){
+                $.pjax({
+                            type: "POST",
+                            url: url,
+                            data: data,
+                            error: errorFunc,
+                            container: '#main'
+                        });
+                return False;
+            }
 
             function clearSelectBox(htmlId) {
                 $(htmlId).empty();
