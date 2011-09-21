@@ -2,7 +2,7 @@
 $menus = array(
     "Dashboard" => $this->url(array('app' => 'init', 'controller' => 'gui', 'action' => 'welcome')),
     _("Circuits") => array(
-        _("New reservation") => $this->url(array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'reservation_add')),
+        _("New reservation") => $this->url(array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'add')),
         _("Reservations") => $this->url(array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'show')),
     ),
     _("Topologies") => array(

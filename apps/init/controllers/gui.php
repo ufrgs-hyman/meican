@@ -12,8 +12,8 @@ class gui extends Controller {
     public function gui() {
         $this->app = 'init';
         $this->controller = 'gui';
-        $this->defaultAction = 'show';
-        $this->setLayout('empty');
+        $this->defaultAction = 'welcome';
+        $this->setLayout('default');
     }
 
     public function show() {
@@ -95,7 +95,6 @@ class gui extends Controller {
             $icon->link = array('app' => 'aaa', 'controller' => 'users', 'action' => 'show');
             $icons[] = $icon;
         }
-
         $this->setArgsToBody($icons);
         $this->render();
 

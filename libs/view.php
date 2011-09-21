@@ -120,6 +120,17 @@ class View {
         }
     }
 
+    public function element($element, $args=null) {
+        if (!empty($args['app']))
+            $app = $args['app'];
+        else
+            $app = $this->app;
+        $element = "apps/$app/views/elements/$element";
+        if (strstr('.', $element) === false)
+            $element .= ".php";
+        return $this->buildView($element, $args);
+    }
+
     /**
  * Allows a template or element to set a variable that will be available in
  * a layout or other element. Analagous to Controller::set.

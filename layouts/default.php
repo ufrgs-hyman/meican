@@ -53,11 +53,11 @@
 
             $(document).ready(function() {
 
-                $("#info_box").load("<?php echo $this->url(array("app" => "init", "controller" => "info_box")); ?>", function() {
+               /* $("#info_box").load("<?php echo $this->url(array("app" => "init", "controller" => "info_box")); ?>", function() {
                     // chamada para atualizar a hora
                     setInterval("updateSystemTime()", 60000);
-                });
-                $("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
+                });*/
+                //$("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
 
                 $('a').pjax('#main', {
                     error: function(jqXHR) {
@@ -87,20 +87,21 @@
                 $('#main')
                   .bind('start.pjax', function() {
                     clearFlash();
+                    $('#main').empty();
                     $('#load_img').show();
 
                     clearInterval(js_function_interval);
                     })
-                  .bind('end.pjax',   function() {
+                  .bind('end.pjax',   function(xhr) {
                         clearInterval(js_function_interval);
 
                         $('#load_img').hide();
                         // faz o redirecionamento das tags
-
-                        var flash = $('.flash_box').html();
-                        $('#flash_box').html(flash);
-
+                        
+                        $('#flash_box').html($('.flash_box').html());
+                        
                         $.each($(".scripts i"), function() {
+                            alert($(this));
                             $.getScript($(this).html());
                         });
 
@@ -283,6 +284,7 @@
                 </div>
 
                 <div id="info_box">
+                    <?php echo $this->element('info_box', array('app' => 'init'));?>
                 </div>
             </div>
             <div id="flash_box" class="shadow">
@@ -302,7 +304,7 @@
             </div>
             <div id="content">
                 <div id="menu">
-
+                    <?php echo $this->element('menu', array('app' => 'init'));?>
                 </div>
                 <div id="load_img" style="display: none">
                     <img src="<?php echo $base; ?>layouts/img/ajax-loader.gif" alt="<?php echo _('Loading'); ?>"/>
