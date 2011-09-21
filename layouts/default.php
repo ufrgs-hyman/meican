@@ -55,8 +55,9 @@
 
                /* $("#info_box").load("<?php echo $this->url(array("app" => "init", "controller" => "info_box")); ?>", function() {
                     // chamada para atualizar a hora
-                    setInterval("updateSystemTime()", 60000);
+                   
                 });*/
+                 setInterval("updateSystemTime()", 60000);
                 //$("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
 
                 $('a').pjax('#main', {
@@ -101,6 +102,7 @@
                         $('#flash_box').html($('.flash_box').html());
                         
                         $.each($(".scripts i"), function() {
+                            console.debug($(this));
                             $.getScript($(this).html());
                         });
 
