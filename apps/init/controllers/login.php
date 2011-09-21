@@ -38,7 +38,7 @@ class login extends Controller {
         if ($result) {
             $user = $result[0];
             AuthSystem::setAuthUser($user);
-            header('Location: main.php?app=init&controller=gui');
+            header('Location: '.Dispatcher::getInstance()->url(array('app' => 'init', 'controller' => 'gui')));
         }
 
         $this->show(_("Failed on authentication"));

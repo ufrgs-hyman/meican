@@ -1,4 +1,3 @@
-<?php $menu = $this->passedArgs; ?>
 <?php
 $menus = array(
     "Dashboard" => $this->url(array('app' => 'init', 'controller' => 'gui', 'action' => 'welcome')),

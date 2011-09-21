@@ -15,10 +15,6 @@ class menu extends Controller {
     }
 
     public function show() {
-        $menu = MenuView::readMenuXML();
-        $menuView = MenuView::buildViewMenu($menu);
-
-        $this->setArgsToBody($menuView);
         $this->render();
     }
 

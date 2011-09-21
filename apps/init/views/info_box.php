@@ -12,7 +12,7 @@
 <a href="#">
     <?php echo _('About'); ?> </a> |    
     
-<a href="main.php?app=init&controller=login&action=logout">
+<a href="<?php echo $this->url(array('app' => 'init', 'controller' => 'login', 'action' => 'logout'));?>">
     <?php echo _('Sign out'); ?>
 </a> (<?php echo $userLogin; ?>) |
 

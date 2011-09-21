@@ -3,7 +3,7 @@
 class Dispatcher {
 
     public function __construct($defaults = array()) {
-        $this->defaults = array_merge(array('app' => 'init', 'controller' => '', 'action' => '', 'params' => array()));
+        $this->defaults = array_merge(array('app' => 'init', 'controller' => '', 'action' => '', 'param' => array()));
         $this->base = dirname($_SERVER['PHP_SELF']);
     }
 
@@ -16,8 +16,10 @@ class Dispatcher {
             $url = null;
         if (empty($url))
             return $this->legacyDispatch();
-        $route = $this->parse($url);
-        extract($route);
+        $this->params = $this->parse($url);
+        extract($this->params);
+        if (empty($app))
+            $app = Framework::getMainApp();
         if (!empty($app)) {
             Language::setLang($app);
             $app = Framework::loadApp($app);
@@ -25,28 +27,17 @@ class Dispatcher {
             if (!empty($controller)) {
                 $controller = $app->loadController($controller);
                 if (!empty($action) && method_exists($controller, $action)) {
-                    $controller->$action(Controller::getParam($params));
+                    $controller->$action($param);
                 } else {
                     $action = $controller->getDefaultAction();
-                    $controller->$action();
+                    $controller->$action($param);
                 }
             } else {
                 $controller = $app->loadController($app->getDefaultController());
 
                 $action = $controller->getDefaultAction();
-                $controller->$action();
+                $controller->$action($param);
             }
-        } else {
-            $appClass = Framework::getMainApp();
-            $app = Framework::loadApp($appClass);
-
-            Language::setLang($appClass);
-
-            $controllerClass = $app->getDefaultController();
-            $controller = $app->loadController($controllerClass);
-
-            $action = $controller->getDefaultAction();
-            $controller->$action();
         }
     }
 
@@ -73,13 +64,13 @@ class Dispatcher {
             $route = array('app' => $val[0], 'controller' => $val[1], 'action' => $val[2]);
             $params = array();
             foreach (array_slice($val, 3) as $par)
-                $params[] = explode(',', $par);
+                $params += explode(',', $par);
             foreach ($params as $par) {
                 $p = explode(':', $par);
-                if (count($p) == 1)
+                if (count($p) === 1)
                     $route['param'][] = $p[0];
                 else
-                    $route['param'][0] = $p[1];
+                    $route['param'][$p[0]] = $p[1];
             }
         } else if (count($val) == 2)
             $route = array('app' => $val[0], 'controller' => $val[1]);
@@ -90,20 +81,22 @@ class Dispatcher {
     }
 
     public function url($params) {
-        if (is_string($params))
+        if (!is_array($params))
             return $this->base . '/' . $params;
         $url = $this->base . '/' . $params['app'] . '/' . $params['controller'];
         if (!empty($params['action']))
             $url .= '/' . $params['action'];
-        if (!empty($params['param'])) {
-            $str = array();
-            foreach ($params['param'] as $k => $v)
-                if (is_int($k))
-                    $str[] = $v;
-                else
-                    $str[] = $k . ':' . $v;
-            $url = '/' . implode(',', $str);
-        }
+        if (!empty($params['param']))
+            if (is_array($params['param'])) {
+                $str = array();
+                foreach ($params['param'] as $k => $v)
+                    if (is_int($k))
+                        $str[] = $v;
+                    else
+                        $str[] = $k . ':' . $v;
+                $url .= '/' . implode(',', $str);
+            } else
+                $url .= '/' . $params['param'];
         return $url;
     }
 
