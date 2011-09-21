@@ -7,7 +7,7 @@ function updateUsers(domainSelected, userSelected){
 
     $.ajax({
         type: 'POST',
-        url: 'main.php?app=bpm&controller=requests&action=getUsers',
+        url: baseUrl+'bpm/request/getUsers',
         data: {
             dom_ip : $(domainSelected).val()
         },

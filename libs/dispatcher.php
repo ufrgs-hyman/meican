@@ -14,38 +14,27 @@ class Dispatcher {
             $url = null;
         if ($url == 'login')
             $this->login();
-        else if (!$this->checkLogin())
-            return;
         if (empty($url))
             return $this->legacyDispatch();
         $this->params = $this->parse($url);
         extract($this->params);
+        if ($controller !== 'ws' && !$this->checkLogin()) //TODO: authetication for webservices
+            return;
         try {
             if (empty($app))
                 $app = Framework::getMainApp();
-            if (!empty($app)) {
-                Language::setLang($app);
-                $app = Framework::loadApp($app);
-                if (!$app)
-                    throw new Exception(_("Invalid path"));
-
-                if (!empty($controller)) {
-                    $controller = $app->loadController($controller);
-                    if (!$controller)
-                        throw new Exception(_("Invalid path"));
-                    if (!empty($action) && method_exists($controller, $action)) {
-                        $controller->$action($param);
-                    } else {
-                        $action = $controller->getDefaultAction();
-                        $controller->$action($param);
-                    }
-                } else {
-                    $controller = $app->loadController($app->getDefaultController());
-
-                    $action = $controller->getDefaultAction();
-                    $controller->$action($param);
-                }
-            }
+            if (!($app = Framework::loadApp($app)))
+                throw new Exception(_("Invalid app"));
+            Language::setLang(get_class($app));
+            if (empty($controller))
+                $controller = $app->getDefaultController();
+            if (!($controller = $app->loadController($controller)))
+                throw new Exception(_("Invalid controller"));
+            if (empty($action))
+                $action = $controller->getDefaultAction();
+            if (!$action || !method_exists($controller, $action))
+                throw new Exception(_("Invalid action"));
+            $controller->$action($param);
         } catch (Exception $e) {
             echo $e->getMessage();
         }

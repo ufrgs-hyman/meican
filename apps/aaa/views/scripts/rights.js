@@ -108,13 +108,13 @@ function saveACL() {
     // mostra mensagem de confirmação para o usuário
     if (confirm(confirmMessage)) {
         rights_initVars();
-        $.post("main.php?app=aaa&controller=rights&action=update",
+        $.post(baseUrl+"aaa/rights/update",
             {
                 rule_newArray: rule_newArray,
                 rule_editArray: rule_editArray
             },
             function(data) {
-                $("#menu").load("main.php?app=init&controller=menu");
+                $("#menu").load(baseUrl+"init/menu");//TODO: rever isso. é realmente necessário?
                 loadHtml(data);
             }
         );
@@ -167,10 +167,10 @@ function editar(ruleId) {
 
 function deletar(ruleId) {
     if (confirm(str_delete_rule)) {
-        $.post("main.php?app=aaa&controller=rights&action=singleDelete", {
+        $.post(baseUrl+"aaa/rights/singleDelete", {
             ruleId: ruleId
         }, function() {
-            $("#menu").load("main.php?app=init&controller=menu");
+            $("#menu").load(baseUrl+"init/menu");//TODO: rever isso. é realmente necessário?
             $('#line' + ruleId).remove();
         });
     } else return;

@@ -18,6 +18,10 @@ class App {
         }
         return FALSE;
     }
+
+    public function getAppName(){
+        return $this->appName;
+    }
     
 }
 

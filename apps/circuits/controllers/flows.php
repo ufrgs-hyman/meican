@@ -60,7 +60,7 @@ class flows extends Controller {
 //                $domain = new domain_info();
 //                $domain->dom_id = $dom_id;
 //                $dom = $domain->fetch(FALSE);
-//                $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
+//                $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl"; //TODO: lembrar que a estrutura das urls mudou
 //
 //                if ($ws = new nusoap_client($endpoint, array('cache_wsdl' => 0))) {
 //                    if ($temp = $ws->call('getURNsInfo', array('urn_string_list' => $urn_array))) {

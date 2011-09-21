@@ -90,7 +90,7 @@ function changeDomain(elem, where) {
         } else {
             $(load_id).show();
 
-            $.post("main.php?app=circuits&controller=flows&action=get_domain", {
+            $.post(baseUrl+'circuits/flows/get_domain', {
                 domain_id: elem.value
             }, function(data) {
                 $(load_id).hide();
@@ -413,7 +413,7 @@ function saveFlow(flow_id) {
         return;
     }
 
-    $.post("main.php?app=circuits&controller=flows&action="+action, {
+    $.post(baseUrl+'circuits/flows/'+action, {
         flowData: flow_Array
     }, function(data) {
         loadHtml(data);

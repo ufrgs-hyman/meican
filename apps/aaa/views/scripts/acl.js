@@ -3,7 +3,7 @@ function newACL() {
         fillACLNewLine();
     } else {
         $('#loading').show();
-        $.post("main.php?app=aaa&controller=acl&action=get_aros_acos", function(data) {
+        $.post(baseUrl+"aaa/acl/get_aros_acos", function(data) {
             $('#loading').hide();
             
             if (data) {
@@ -180,7 +180,7 @@ function saveACL() {
 
     // mostra mensagem de confirmação para o usuário
     if (confirm(confirmMessage)) {
-        $.post("main.php?app=aaa&controller=acl&action=update",
+        $.post(baseUrl+"aaa/acl/update",
             {
                 acl_newArray: acl_newArray,
                 acl_editArray: acl_editArray
@@ -295,7 +295,7 @@ function editACL(perm_id) {
 
 function deleteACL(perm_id) {
     if (confirm(str_delete_acl)) {
-        $.post("main.php?app=aaa&controller=acl&action=singleDelete", {
+        $.post(baseUrl+"aaa/acl/singleDelete", {
             perm_id: perm_id
         }, function(data) {
             if (data) {

@@ -1698,7 +1698,7 @@ function map_saveFlow(flow_id) {
         return;
     }
 
-    $.post("main.php?app=circuits&controller=flows&action="+action, {
+    $.post(baseUrl+'circuits/flows/'+action, {
         flowData: flow_Array
     }, function(data) {
         loadHtml(data);

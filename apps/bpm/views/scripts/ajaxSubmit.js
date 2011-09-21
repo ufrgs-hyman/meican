@@ -1,6 +1,6 @@
     function deploy() {
         $('#upload_form').ajaxSubmit({
-             url: "main.php?app=bpm&controller=ode&action=deployProcess",
+             url: baseUrl+"bpm/ode/deployProcess",
              success: function(data){
                 loadHtml(data);
              }

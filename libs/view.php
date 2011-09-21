@@ -71,7 +71,7 @@ class View {
      * @param <array> valid indexes (all optional - default values are the application values): app, controller, action, param
      * Example:
      * @param <array> $argsArray : $argsArray[app] = appName, $argsArray[controller] = controllerName, $argsArray[action] = actionName, $argsArray[param] = paramVal
-     * @return <string> $url : "main.php?app=appName&controller=controllerName&action=actionName&param=paramVal"
+     * @return <string> $url : "{base}/{appName}/{controllerName}/{actionName}/{paramVal}"
      * <string> paramVal valid sintax: "ind1:val1/ind2:val2"
      */
     public function buildLink($argsArray=array()) {

@@ -10,7 +10,7 @@ function refreshStatus() {
     for (var i in domains) {
         $.ajax ({
             type: "POST",
-            url: "main.php?app=circuits&controller=reservations&action=refresh_status",
+            url: baseUrl+'circuits/reservations/refresh_status',
             data: {
                 count: count,
                 dom_id: domains[i]
@@ -37,7 +37,7 @@ function refreshStatus() {
             },
             error: function(jqXHR) {
                 if (jqXHR.status == 406)
-                    location.href = 'main.php?app=init&controller=gui';
+                    location.href = baseUrl+'init/gui';
             }
         });
     }
@@ -48,7 +48,7 @@ function griRefreshStatus(res_id) {
     
     $.ajax ({
         type: "POST",
-        url: "main.php?app=circuits&controller=reservations&action=gri_refresh_status",
+        url: baseUrl+'circuits/reservations/gri_refresh_status',
         data: {
             res_id: res_id
         },
@@ -76,7 +76,7 @@ function griRefreshStatus(res_id) {
         },
         error: function(jqXHR) {
             if (jqXHR.status == 406)
-                location.href = 'main.php?app=init&controller=gui';
+                location.href = baseUrl+'init/gui';
         }
     });
 }

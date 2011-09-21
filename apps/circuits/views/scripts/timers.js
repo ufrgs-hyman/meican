@@ -325,7 +325,7 @@ function saveTimer(timer_id) {
         $("#summary_input").val(sum_desc);
     }
     
-    $.post("main.php?app=circuits&controller=timers&action=update", {
+    $.post(baseUrl+"circuits/timers/update", {
         tmr_id: timer_id,
         name: name,
         start_date: $("#initialDate").val(),

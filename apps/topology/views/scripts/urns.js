@@ -5,7 +5,7 @@ function newURN(domain_id) {
         fillURNLine(domain_id);
     } else {
         $('#loading' + domain_id).show();
-        $.post("main.php?app=topology&controller=urns&action=ajax_get_topology", {
+        $.post(baseUrl+"topology/urns/ajax_get_topology", {
             domain_id: domain_id
         }, function(data) {
             $('#loading' + domain_id).hide();
@@ -391,7 +391,7 @@ function saveURN() {
 
     // mostra mensagem de confirmação para o usuário
     if (confirm(confirmMessage)) {
-        $.post("main.php?app=topology&controller=urns&action=update",
+        $.post(baseUrl+"topology/urns/update",
             {
                 urn_newArray: urn_newArray,
                 urn_editArray: urn_editArray
@@ -405,7 +405,7 @@ function saveURN() {
 
 function deleteURN(urnId) {
     if (confirm(str_delete_urn)) {
-        $.post("main.php?app=topology&controller=urns&action=singleDelete", {
+        $.post(baseUrl+"topology/urns/singleDelete", {
             urnId: urnId
         }, function(data) {
             if (data) {
