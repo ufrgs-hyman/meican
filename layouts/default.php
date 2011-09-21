@@ -51,6 +51,8 @@
             // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate
             var js_submit_form = true;
 
+            var baseUrl = <?php echo $this->url('');?>
+
             $(document).ready(function() {
 
                /* $("#info_box").load("<?php echo $this->url(array("app" => "init", "controller" => "info_box")); ?>", function() {
@@ -102,7 +104,6 @@
                         $('#flash_box').html($('.flash_box').html());
                         
                         $.each($(".scripts i"), function() {
-                            console.debug($(this));
                             $.getScript($(this).html());
                         });
 
