@@ -76,6 +76,7 @@ class Dispatcher {
         $val = explode('/', $url);
         if (empty($val[0]))
             array_shift($val);
+        $route = array();
         if (count($val) >= 3) {
             $route = array('app' => $val[0], 'controller' => $val[1], 'action' => $val[2]);
             $params = array();
