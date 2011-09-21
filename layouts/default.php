@@ -44,49 +44,47 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <script type ="text/javascript">
 
-            // variavel para armazenar o ID quando a função setInterval() é usada
-            // cada vez que um link é carregado, é feito um clear na variável, para não carregar em páginas erradas
+            <?php // variavel para armazenar o ID quando a função setInterval() é usada
+            // cada vez que um link é carregado, é feito um clear na variável, para não carregar em páginas erradas?>
             var js_function_interval = null;
 
-            // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate
+            <?php // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate?>
             var js_submit_form = true;
-            <?php // ?>
+            <?php //url base para geração de url, é o diretório onde o sistema está instalado no servidor ?>
             var baseUrl = <?php echo $this->url(''); ?>
 
             $(document).ready(function() {
 
                /* $("#info_box").load("<?php echo $this->url(array("app" => "init", "controller" => "info_box")); ?>", function() {
-                    // chamada para atualizar a hora
+                    
                    
                 });*/
-                 setInterval("updateSystemTime()", 60000);
+                 setInterval("updateSystemTime()", 60000);<?php // chamada para atualizar a hora?>
                 //$("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
                 var errorFunc = function(jqXHR) {
                         switch (jqXHR.status) {
                             case 401:
-                                top.location.href = '<?php echo $base; //index.php?message=<?php echo _("Not logged in"); ?>';
+                                top.location.href = baseUrl+'<?php //index.php?message=<?php echo _("Not logged in"); ?>';
                                 break;
                             case 402:
-                                top.location.href = '<?php echo $base; //index.php?message=<?php echo _("Session Expired"); ?>';
+                                top.location.href = baseUrl+'<?php //index.php?message=<?php echo _("Session Expired"); ?>';
                                 break;
                             case 404:
                                 $('#main').html("Page not found");
                                 break;
                             case 405:
                                 //change lang
-                                top.location.href = '<?php echo $base; ?>init/gui';
+                                top.location.href = baseUrl+'init/gui';
                                 break;
                             case 406:
                                 //force refresh
-                                location.href = '<?php echo $base; ?>init/gui';
+                                location.href = baseUrl+'init/gui';
                                 break;
                             default:
                                 $('#main').html("Unexpected error");
                             }
                         };
-                $('a').pjax('#main', {
-                    error: errorFunc
-                });
+                $('a').pjax('#main', {error: errorFunc});
                 $('#main')
                   .bind('start.pjax', function() {
                     clearFlash();
@@ -94,34 +92,22 @@
                     $('#load_img').show();
 
                     clearInterval(js_function_interval);
-                    })
+                  })
                   .bind('end.pjax',   function(xhr) {
                         clearInterval(js_function_interval);
-
-                        $('#load_img').hide();
-                        // faz o redirecionamento das tags
                         
                         $('#flash_box').html($('.flash_box').html());
                         
                         $.each($(".scripts i"), function() {
                             $.getScript($(this).html());
                         });
+                        $('#load_img').hide();
+                        $('#main').html($('.content').html());
 
                         window.scroll(0, 0);
 
-                  });/*
-                $("body").delegate("a","click",function() {
-                    if ($(this).attr("target") != "top") {
-                        var content_show = $(this).attr("href");
-                        if (content_show && (content_show[0] != "#")){
-                            redir(content_show);
-                        }
-                    } else {
-                        return true;
-                    }
-                    return false;
-                }); //do delegate
-*/
+                  });
+
                 $("body").delegate("form","submit",function() {
                     if (!js_submit_form) {
                         js_submit_form = true;
@@ -140,7 +126,13 @@
                     var param = $('form').serialize();
 
                     if (content_show && param)
-                        redir(content_show, param);
+                        $.pjax({
+                            type: "POST",
+                            url: content_show,
+                            data: param,
+                            error: errorFunc,
+                            container: '#main'
+                        });
                     return false;
                 });
 
@@ -163,90 +155,45 @@
                         $(htmlId).append('<option value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
                 }
             }
-
-            function loadHtml(htmlData) {
-                clearInterval(js_function_interval);
-
-                // carrega temporariamente a página para processá-la
-                $('#htmlToLoad').html(htmlData);
-                $('#load_img').hide();
-                // faz o redirecionamento das tags
-
-                var flash = $('.flash_box').html();
-                $('#flash_box').html(flash);
-
-                var body = $('.content').html();
-                $('#main').html(body);
-
-                $.each($(".scripts i"), function() {
-                    $.getScript($(this).html());
-                });
-
+            
+            function setFlash(message, status) {
+                $('#flash_box').empty();
+                if (!status)
+                    status = "info";
+                $('#flash_box').append('<div class="' + status + '">' + message +
+                    '<input type="button" class="closeFlash" onclick="clearFlash()"/>' +
+                    '</div> ');
                 window.scroll(0, 0);
-
-                // limpa a tag
-                $('#htmlToLoad').empty();
+                window.onscroll = window_scroll;
             }
 
-            function redir(url, param) {
-                $('#main').empty();
-                clearFlash();
-                $('#load_img').show();
+            function clearFlash(){
+                $('#flash_box').empty();
+                window.onscroll = null;
+            }
 
-                clearInterval(js_function_interval);
+            function WPToggle(divId, imageId) {
 
-                //if (url) {
-                $.ajax ({
-                    type: "POST",
-                    url: url,
-                    data: param,
-                    success: function(data){
-                        loadHtml(data);
-                        history.pushState(null, $(data).filter('title').text(), url);
-                    },
-                    error: errorFunc
-                    });
-                    //}
+                if ($(divId).css("display") == "none") {
+                    $(divId).slideDown();
+                    $(imageId).attr("src", baseUrl+"layouts/img/minus.gif" );
                 }
 
-                function setFlash(message, status) {
-                    $('#flash_box').empty();
-                    if (!status)
-                        status = "info";
-                    $('#flash_box').append('<div class="' + status + '">' + message +
-                        '<input type="button" class="closeFlash" onclick="clearFlash()"/>' +
-                        '</div> ');
-                    window.scroll(0, 0);
-                    window.onscroll = window_scroll;
+                else {
+                    $(divId).slideUp();
+                    $(imageId).attr("src", baseUrl+"layouts/img/plus.gif");
                 }
 
-                function clearFlash(){
-                    $('#flash_box').empty();
-                    window.onscroll = null;
+            }
+
+            function window_scroll() {
+                var top = $(window).scrollTop();
+                if (top >= 110) {
+                    $("#flash_box").addClass("fixed");
+                } else {
+                    $("#flash_box").removeClass("fixed");
                 }
-
-                function WPToggle(divId, imageId) {
-
-                    if ($(divId).css("display") == "none") {
-                        $(divId).slideDown();
-                        $(imageId).attr("src","<?php echo $base; ?>layouts/img/minus.gif" );
-                    }
-
-                    else {
-                        $(divId).slideUp();
-                        $(imageId).attr("src","<?php echo $base; ?>layouts/img/plus.gif");
-                    }
-
-                }
-
-                function window_scroll() {
-                    var top = $(window).scrollTop();
-                    if (top >= 110) {
-                        $("#flash_box").addClass("fixed");
-                    } else {
-                        $("#flash_box").removeClass("fixed");
-                    }
-                }
+            }
 
         </script>
 
