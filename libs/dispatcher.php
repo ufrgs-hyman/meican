@@ -20,26 +20,34 @@ class Dispatcher {
             return $this->legacyDispatch();
         $this->params = $this->parse($url);
         extract($this->params);
-        if (empty($app))
-            $app = Framework::getMainApp();
-        if (!empty($app)) {
-            Language::setLang($app);
-            $app = Framework::loadApp($app);
+        try {
+            if (empty($app))
+                $app = Framework::getMainApp();
+            if (!empty($app)) {
+                Language::setLang($app);
+                $app = Framework::loadApp($app);
+                if (!$app)
+                    throw new Exception(_("Invalid path"));
 
-            if (!empty($controller)) {
-                $controller = $app->loadController($controller);
-                if (!empty($action) && method_exists($controller, $action)) {
-                    $controller->$action($param);
+                if (!empty($controller)) {
+                    $controller = $app->loadController($controller);
+                    if (!$controller)
+                        throw new Exception(_("Invalid path"));
+                    if (!empty($action) && method_exists($controller, $action)) {
+                        $controller->$action($param);
+                    } else {
+                        $action = $controller->getDefaultAction();
+                        $controller->$action($param);
+                    }
                 } else {
+                    $controller = $app->loadController($app->getDefaultController());
+
                     $action = $controller->getDefaultAction();
                     $controller->$action($param);
                 }
-            } else {
-                $controller = $app->loadController($app->getDefaultController());
-
-                $action = $controller->getDefaultAction();
-                $controller->$action($param);
             }
+        } catch (Exception $e) {
+            echo $e->getMessage();
         }
     }
 
