@@ -17,6 +17,7 @@ class View {
     private $bodyArgs;
     //private $scriptArgs;
     public $script;
+    public $viewVars = array();
 
 
     public function View($app, $controller, $action) {
@@ -28,10 +29,12 @@ class View {
     }
 
     public function build() {
-        $this->buildBody();
-
         if ($this->script->jsFiles || $this->script->scriptArgs)
             $this->script->build();
+        return $this->bodyContent = $this->buildView("layouts/$this->layout.php", array(
+            'content_for_body' => $this->buildView($this->setView()),
+            'content_for_script' => $this->script->content,
+        ));
     }
 
     public function setArgs($args) {
@@ -43,24 +46,20 @@ class View {
             $this->view = "apps/$this->app/views/$this->controller" . '_' . "$this->action.php";
         else
             $this->view = "apps/$this->app/views/$this->controller.php";
+        return $this->view;
     }
 
-    public function buildBody() {
-        $this->setView();
-        $this->passedArgs = $this->bodyArgs;
-
-        if (file_exists($this->view)) {
+    public function buildView($view=null, $vars=array()){
+        if (file_exists($view)) {
             ob_start();
-            include($this->view);
-            $this->bodyContent = ob_get_contents();
+            extract(array_merge($this->viewVars, $vars), EXTR_SKIP);
+            $this->passedArgs = $this->bodyArgs;
+            include($view);
+            $return = ob_get_contents();
             ob_end_clean();
         } else
-            $this->bodyContent = NULL;
-
-        if ($this->bodyContent)
-            return TRUE;
-        else
-            return FALSE;
+            $return = NULL; //TODO: trigger error
+        return $return;
     }
 
     public function url($url = array()){
@@ -119,6 +118,33 @@ class View {
             printf("SET APP CONF");
             return false;
         }
+    }
+
+    /**
+ * Allows a template or element to set a variable that will be available in
+ * a layout or other element. Analagous to Controller::set.
+ *
+ * @param mixed $one A string or an array of data.
+ * @param mixed $two Value in case $one is a string (which then works as the key).
+ *    Unused if $one is an associative array, otherwise serves as the values to $one's keys.
+ * @return void
+ * @access public
+ */
+    public function set($one, $two = null) {
+            $data = null;
+            if (is_array($one)) {
+                    if (is_array($two)) {
+                            $data = array_combine($one, $two);
+                    } else {
+                            $data = $one;
+                    }
+            } else {
+                    $data = array($one => $two);
+            }
+            if ($data == null) {
+                    return false;
+            }
+            $this->viewVars = $data + $this->viewVars;
     }
 
 }

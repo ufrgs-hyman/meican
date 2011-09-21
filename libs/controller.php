@@ -3,17 +3,14 @@
 include_once 'libs/view.php';
 
 class Controller {
-    
+
     private $layout = "default";
     private $flash = array();
-
     private $argsToBody = NULL;
     private $argsToScript = NULL;
     //private $argsToHeader = NULL;
-
     private $scripts = array();
     private $inlineScript = NULL;
-
     public $app;
     public $controller = NULL;
     public $action = NULL;
@@ -22,7 +19,7 @@ class Controller {
     public function render() {
         //modificar para referenciar direto controller, nao passando os parametros para o construtor
         $view = new View($this->app, $this->controller, $this->action);
-        
+
         if ($this->app != 'init') {
             Common::recordVar('last_view', "app=$this->app&controller=$this->controller&action=$this->action");
             Common::setSessionVariable('welcome_loaded', 1);
@@ -33,19 +30,20 @@ class Controller {
 //            $teste = "app=$app";
 //        }
 //        debug("last view", $teste);
-        
+
         $view->setArgs($this->argsToBody);
         $view->script->setArgs($this->argsToScript);
         $view->script->setScriptFiles($this->scripts);
         $view->script->setInlineScript($this->inlineScript);
-        $view->build();
-        $content_for_script = $view->script->content;
-        $content_for_body = $view->bodyContent;
-        $content_for_flash = ($this->flash) ? $this->flash : "";
+        if ($this->layout === 'default' && $this->isAjax())
+            $this->layout .= '_ajax';
+        $view->set('content_for_flash', $this->flash? $this->flash : '');
+        $view->layout = $this->layout;
+        echo $view->build();
+    }
 
-         if (file_exists("layouts/$this->layout.php"))
-               include("layouts/$this->layout.php");
-         else echo "NO LAYOUT FOUND.";
+    public function isAjax() {
+        return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
     }
 
     protected function addScript($script) {
@@ -120,9 +118,10 @@ class Controller {
                 if (array_key_exists(0, $item) && array_key_exists(1, $item))
                     $paramArray[$item[0]] = $item[1];
             }
-           
+
             return $paramArray;
-        } else return FALSE;
+        } else
+            return FALSE;
     }
 
 }
