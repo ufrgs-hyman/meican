@@ -3,7 +3,7 @@
 class Dispatcher {
 
     public function __construct($defaults = array()) {
-        $this->defaults = array_merge(array('app' => 'init', 'controller' => '', 'action' => '', 'param' => array()));
+        $this->defaults = array_merge(array('app' => 'init', 'controller' => 'gui', 'action' => '', 'param' => array()));
         $this->base = dirname($_SERVER['PHP_SELF']);
     }
 
@@ -12,10 +12,10 @@ class Dispatcher {
             $url = Common::GET('url');
         else
             $url = null;
-        if ($url == 'login')
-            $this->login();
-        if (empty($url))
-            return $this->legacyDispatch();
+        if ($url === 'login')
+            return $this->login();
+        /*if (empty($url)&&!(Common::GET('app')))
+            return $this->legacyDispatch();*/
         $this->params = $this->parse($url);
         extract($this->params);
         if ($controller !== 'ws' && !$this->checkLogin()) //TODO: authetication for webservices
@@ -53,7 +53,7 @@ class Dispatcher {
               header('Location: index.php?message=Session Expired');
 
               } else header('HTTP/1.1 402 Timeout'); */
-            //header('Location: '.$this->url('login'));
+            header('Location: '.$this->url('login'));
             return false;
         }
     }

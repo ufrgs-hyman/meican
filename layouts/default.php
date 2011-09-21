@@ -61,15 +61,13 @@
                 });*/
                  setInterval("updateSystemTime()", 60000);
                 //$("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
-
-                $('a').pjax('#main', {
-                    error: function(jqXHR) {
+                var errorFunc = function(jqXHR) {
                         switch (jqXHR.status) {
                             case 401:
-                                top.location.href = '<?php echo $base; ?>index.php?message=<?php echo _("Not logged in"); ?>';
+                                top.location.href = '<?php echo $base; //index.php?message=<?php echo _("Not logged in"); ?>';
                                 break;
                             case 402:
-                                top.location.href = '<?php echo $base; ?>index.php?message=<?php echo _("Session Expired"); ?>';
+                                top.location.href = '<?php echo $base; //index.php?message=<?php echo _("Session Expired"); ?>';
                                 break;
                             case 404:
                                 $('#main').html("Page not found");
@@ -85,7 +83,9 @@
                             default:
                                 $('#main').html("Unexpected error");
                             }
-                        }
+                        };
+                $('a').pjax('#main', {
+                    error: errorFunc
                 });
                 $('#main')
                   .bind('start.pjax', function() {
@@ -204,29 +204,7 @@
                         loadHtml(data);
                         history.pushState(null, $(data).filter('title').text(), url);
                     },
-                    error: function(jqXHR) {
-                        switch (jqXHR.status) {
-                            case 401:
-                                top.location.href = '<?php echo $base; ?>index.php?message=<?php echo _("Not logged in"); ?>';
-                                break;
-                            case 402:
-                                top.location.href = '<?php echo $base; ?>index.php?message=<?php echo _("Session Expired"); ?>';
-                                break;
-                            case 404:
-                                $('#main').html("Page not found");
-                                break;
-                            case 405:
-                                //change lang
-                                top.location.href = '<?php echo $base; ?>init/gui';
-                                break;
-                            case 406:
-                                //force refresh
-                                location.href = '<?php echo $base; ?>init/gui';
-                                break;
-                            default:
-                                $('#main').html("Unexpected error");
-                            }
-                        }
+                    error: errorFunc
                     });
                     //}
                 }
