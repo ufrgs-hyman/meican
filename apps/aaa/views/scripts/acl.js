@@ -26,7 +26,7 @@ function newACL() {
 function fillACLNewLine() {
     $('#acl_table tbody tr:last').after('<tr id="newline' + pos + '"/>');
 
-    var columns = '<td colspan="3"><img class="edit" alt="clear" border="0" id="delete' + pos + '" src="layouts/img/clear.png"/></td>'; //TODO: baseUrl missing
+    var columns = '<td colspan="3"><img class="edit" alt="clear" border="0" id="delete' + pos + '" src="'+baseUrl+'layouts/img/clear.png"/></td>';
     
     columns += '<td><select id="aro_model_select' + pos + '"/></td>';
     columns += '<td><select id="aro_obj_select' + pos + '" style="display:none"/></td>';

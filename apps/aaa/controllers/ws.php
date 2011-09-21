@@ -45,7 +45,7 @@ class ws extends Controller {
                 array('usr' => 'tns:userType'),
                 array('usr_list'=> 'tns:userTypeList'),
                 $namespace,
-                "http://$this_ip/$this_dir_name$this->app/ws/getUsers", //TODO:&amp;services/getUsers??
+                "http://$this_ip/$this_dir_name$this->app/ws/getUsers",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
