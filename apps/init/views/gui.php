@@ -60,6 +60,11 @@
                 $("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
 
                 redir("<?php echo $base; ?>main.php?<?php echo $args->last_view; ?>");
+                
+                $('a').pjax('#main')
+                $('#main')
+                  .bind('start.pjax', function() { $('#load_img').show() })
+                  .bind('end.pjax',   function() { $('#load_img').hide() })/*
                 $("body").delegate("a","click",function() {
                     if ($(this).attr("target") != "top") {
                         var content_show = $(this).attr("href");
@@ -71,7 +76,7 @@
                     }
                     return false;
                 }); //do delegate
-
+*/
                 $("body").delegate("form","submit",function() {
                     if (!js_submit_form) {
                         js_submit_form = true;
@@ -150,7 +155,10 @@
                     type: "POST",
                     url: url,
                     data: param,
-                    success: loadHtml,
+                    success: function(data){
+                        loadHtml(data);
+                        history.pushState(null, $(data).filter('title').text(), url);
+                    },
                     error: function(jqXHR) {
                         switch (jqXHR.status) {
                             case 401:
