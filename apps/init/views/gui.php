@@ -39,6 +39,7 @@
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/timers.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/jquery.timePicker.js"></script>
 
+	<script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/jquery.pjax.js"></script>
 
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <script type ="text/javascript">
