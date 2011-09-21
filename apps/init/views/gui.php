@@ -53,11 +53,13 @@
 
             $(document).ready(function() {
 
-                $("#info_box").load("<?php echo $this->url(array("app" => "init", "controller" => "info_box")); ?>");
+                $("#info_box").load("<?php echo $this->url(array("app" => "init", "controller" => "info_box")); ?>", function() {
+                    // chamada para atualizar a hora
+                    setInterval("updateSystemTime()", 60000);
+                });
                 $("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
 
                 redir("<?php echo $base; ?>main.php?<?php echo $args->last_view; ?>");
-
                 $("body").delegate("a","click",function() {
                     if ($(this).attr("target") != "top") {
                         var content_show = $(this).attr("href");
