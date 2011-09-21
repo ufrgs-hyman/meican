@@ -50,8 +50,8 @@
 
             // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate
             var js_submit_form = true;
-
-            var baseUrl = <?php echo $this->url('');?>
+            <?php // ?>
+            var baseUrl = <?php echo $this->url(''); ?>
 
             $(document).ready(function() {
 

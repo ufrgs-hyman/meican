@@ -18,7 +18,7 @@ class ws extends Controller {
         
         $namespace = "http://MEICAN";
         $server = new nusoap_server();
-        $server->configureWSDL("MEICAN_TOPOLOGY_SERVICES", $namespace, "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services");
+        $server->configureWSDL("MEICAN_TOPOLOGY_SERVICES", $namespace, "http://$this_ip/$this_dir_name$this->app/ws/");
         $server->wsdl->schemaTargetNamespace = $namespace;
 
         $server->wsdl->addComplexType('urnType','complexType','struct','all','',
@@ -73,7 +73,7 @@ class ws extends Controller {
                 array('urn_string_list'=>'tns:stringTypeList'),
                 array('urn_info_array'=>'tns:urnTypeList'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getURNsInfo",
+                "http://$this_ip/$this_dir_name$this->app/ws/getURNsInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -83,7 +83,7 @@ class ws extends Controller {
                 array('urn_string'=>'xsd:string'),
                 array('urn_details'=>'tns:urnTypeList'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getURNDetails",
+                "http://$this_ip/$this_dir_name$this->app/ws/getURNDetails",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');

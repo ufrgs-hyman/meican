@@ -60,7 +60,7 @@ class flows extends Controller {
 //                $domain = new domain_info();
 //                $domain->dom_id = $dom_id;
 //                $dom = $domain->fetch(FALSE);
-//                $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl"; //TODO: lembrar que a estrutura das urls mudou
+//                $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."topology/ws";
 //
 //                if ($ws = new nusoap_client($endpoint, array('cache_wsdl' => 0))) {
 //                    if ($temp = $ws->call('getURNsInfo', array('urn_string_list' => $urn_array))) {
@@ -312,7 +312,7 @@ class flows extends Controller {
             return;
         }
 
-        $endpoint = "http://{$flow->source->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
+        $endpoint = "http://{$flow->source->dom_ip}/".Framework::$systemDirName."topology/ws";
         $ws = new nusoap_client($endpoint, array('cache_wsdl' => 0));
         $src_networks = $ws->call('getURNDetails', array());
 
@@ -326,7 +326,7 @@ class flows extends Controller {
         if ($flow->source->dom_id == $flow->dest->dom_id) {
             $dst_networks = $src_networks;
         } else {
-            $endpoint = "http://{$flow->dest->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
+            $endpoint = "http://{$flow->dest->dom_ip}/".Framework::$systemDirName."topology/ws";
             $ws = new nusoap_client($endpoint, array('cache_wsdl' => 0));
             $dst_networks = $ws->call('getURNDetails', array());
 
@@ -458,7 +458,7 @@ class flows extends Controller {
         $domain = new domain_info();
         $domain->dom_id = $domain_id;
         $dom = $domain->fetch(FALSE);
-        $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
+        $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."topology/ws";
 
         $networks = FALSE;
         if ($ws = new nusoap_client($endpoint, array('cache_wsdl' => 0)))

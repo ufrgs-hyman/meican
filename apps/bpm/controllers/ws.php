@@ -25,7 +25,7 @@ class ws extends Controller {
 
         $namespace = "http://MEICAN";
         $server = new nusoap_server();
-        $server->configureWSDL("MEICAN_BPM_SERVICES", $namespace, "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services");
+        $server->configureWSDL("MEICAN_BPM_SERVICES", $namespace, "http://$this_ip/$this_dir_name$this->app/ws");
         //$server->wsdl->schemaTargetNamespace = $namespace;
 
         /**
@@ -128,7 +128,7 @@ class ws extends Controller {
                 array('usr' => 'tns:userType'),
                 array('usr_list'=> 'tns:userTypeList'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getUsers",
+                "http://$this_ip/$this_dir_name$this->app/ws/getUsers",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -138,7 +138,7 @@ class ws extends Controller {
                 array('grp' => 'tns:groupType'),
                 array('grp_list'=> 'tns:groupTypeList'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getGroups",
+                "http://$this_ip/$this_dir_name$this->app/ws/getGroups",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -148,7 +148,7 @@ class ws extends Controller {
                 array('req_id'=>'xsd:int','dom_src_ip'=>'xsd:string'),
                 array('req_info'=>'tns:reqType'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getReqInfo",
+                "http://$this_ip/$this_dir_name$this->app/ws/getReqInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -158,7 +158,7 @@ class ws extends Controller {
                 array('res_id'=>'xsd:int'),
                 array('flow_info'=>'tns:flowType'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getFlowInfo",
+                "http://$this_ip/$this_dir_name$this->app/ws/getFlowInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -168,7 +168,7 @@ class ws extends Controller {
                 array('res_id'=>'xsd:int'),
                 array('timer_info'=>'tns:timerType'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getTimerInfo",
+                "http://$this_ip/$this_dir_name$this->app/ws/getTimerInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -178,7 +178,7 @@ class ws extends Controller {
                 array('urn_string'=>'xsd:string'),
                 array('urn_info'=>'tns:urnType'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getURNsInfo",
+                "http://$this_ip/$this_dir_name$this->app/ws/getURNsInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -188,7 +188,7 @@ class ws extends Controller {
                 array('urn_string'=>'xsd:string'),
                 array('urn_details'=>'tns:netTypeList'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getURNDetails",
+                "http://$this_ip/$this_dir_name$this->app/ws/getURNDetails",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -198,7 +198,7 @@ class ws extends Controller {
                 array('name'=>'tns:responseType'),
                 array('return'=>'xsd:string'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/notifyResponse",
+                "http://$this_ip/$this_dir_name$this->app/ws/notifyResponse",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -208,7 +208,7 @@ class ws extends Controller {
                 array('usr_dst' => 'xsd:int', 'request' => 'tns:requestType'),
                 array('req_id' => 'xsd:int'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/requestUserAuthorization",
+                "http://$this_ip/$this_dir_name$this->app/ws/requestUserAuthorization",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -218,7 +218,7 @@ class ws extends Controller {
                 array('grp_dst'=>'xsd:int', 'request' => 'tns:requestType'),
                 array('req_id'=>'xsd:int'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/requestGroupAuthorization",
+                "http://$this_ip/$this_dir_name$this->app/ws/requestGroupAuthorization",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -228,7 +228,7 @@ class ws extends Controller {
                 array('req_id'=>'xsd:int', 'dom_src_ip' => 'xsd:string'),
                 array('path_array' => 'tns:stringTypeList'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getRequestPath",
+                "http://$this_ip/$this_dir_name$this->app/ws/getRequestPath",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -238,7 +238,7 @@ class ws extends Controller {
                 array('req_id'=>'xsd:int', 'dom_src_ip' => 'xsd:string', 'new_status' => 'xsd:string'),
                 array('confirmation'=>'xsd:string'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/refreshRequestStatus",
+                "http://$this_ip/$this_dir_name$this->app/ws/refreshRequestStatus",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');

@@ -19,7 +19,7 @@ class ws extends Controller {
 
         $namespace = "http://MEICAN";
         $server = new nusoap_server();
-        $server->configureWSDL("MEICAN_CIRCUITS_SERVICES", $namespace, "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services");
+        $server->configureWSDL("MEICAN_CIRCUITS_SERVICES", $namespace, "http://$this_ip/$this_dir_name$this->app/ws/");
         $server->wsdl->schemaTargetNamespace = $namespace;
 
         $server->wsdl->addComplexType('resType','complexType','struct','all','',
@@ -52,7 +52,7 @@ class ws extends Controller {
                 array('res_id_list'=>'tns:intTypeList'),
                 array('res_info_list'=>'tns:resTypeList'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getResInfo",
+                "http://$this_ip/$this_dir_name$this->app/ws/getResInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -62,7 +62,7 @@ class ws extends Controller {
                 array('res_id'=>'xsd:int'),
                 array('flow_info'=>'tns:flowType'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getFlowInfo",
+                "http://$this_ip/$this_dir_name$this->app/ws/getFlowInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -72,7 +72,7 @@ class ws extends Controller {
                 array('res_id'=>'xsd:int'),
                 array('timer_info'=>'tns:timerType'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getTimerInfo",
+                "http://$this_ip/$this_dir_name$this->app/ws/getTimerInfo",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');

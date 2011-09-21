@@ -145,7 +145,7 @@ class request_info extends Resource_Model {
                     $t->dom_dst = $result3[0]->dom_descr;
                 else  $t->dom_dst = $result3[0]->dom_ip;
 
-                $endpoint =  "http://{$result2[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=aaa&services&wsdl";
+                $endpoint =  "http://{$result2[0]->dom_ip}/".Framework::$systemDirName."topology/ws";
                 $ws_client = new nusoap_client($endpoint, array('cache_wsdl' => 0));
 
                 $usr = array('usr_id' => $t->usr_src);
@@ -154,7 +154,7 @@ class request_info extends Resource_Model {
                     $t->usr_src = $result[0]['usr_name'];
 
                 if ($getResInfo) { //busca nome da reserva
-                    $endpoint2 =  "http://{$result2[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=bpm&services&wsdl";
+                    $endpoint2 =  "http://{$result2[0]->dom_ip}/".Framework::$systemDirName."bpm/ws";
                     $ws_client2 = new nusoap_client($endpoint2, array('cache_wsdl' => 0));
 
                     if ($result = $ws_client2->call('getReqInfo',array('req_id' => $t->req_id))){
@@ -166,7 +166,7 @@ class request_info extends Resource_Model {
                           $t->resc_type = _('Unknown');
                     }
 
-                 $endpoint_circuits =  "http://{$result2[0]->dom_ip}/".Framework::$systemDirName."/main.php?app=circuits&services&wsdl";
+                 $endpoint_circuits =  "http://{$result2[0]->dom_ip}/".Framework::$systemDirName."circuits/ws";
                  $ws_client_circuits = new nusoap_client($endpoint_circuits, array('cache_wsdl' => 0));
 
                     if ($getTimerInfo) { //busca informacoes de timer
@@ -181,13 +181,13 @@ class request_info extends Resource_Model {
                         $t->flow_info = $ws_client_circuits->call('getFlowInfo',array('res_id' => $t->resc_id));
 
                         if ($getEndpointsInfo) { //busca net_descr, dev_descr e port_number
-                            $endpoint3 =  "http://{$t->flow_info['src_dom_ip']}/".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
+                            $endpoint3 =  "http://{$t->flow_info['src_dom_ip']}/".Framework::$systemDirName."topology/ws";
                             $urn_array = array($t->flow_info['src_urn_string']);
                             if ($ws_client3 = new nusoap_client($endpoint3, array('cache_wsdl' => 0)))
                                 if ($u_src = $ws_client3->call('getURNsInfo', array('urn_string_list' => $urn_array)))
                                     $t->src_endpoint = $u_src[0];
 
-                            $endpoint4 =  "http://{$t->flow_info['dst_dom_ip']}./".Framework::$systemDirName."/main.php?app=topology&services&wsdl";
+                            $endpoint4 =  "http://{$t->flow_info['dst_dom_ip']}./".Framework::$systemDirName."topology/ws";
                             $urn_array = array($t->flow_info['dst_urn_string']);
                             if ($ws_client4 = new nusoap_client($endpoint4, array('cache_wsdl' => 0)))
                                 if ($u_dst = $ws_client3->call('getURNsInfo', array('urn_string_list' => $urn_array)))

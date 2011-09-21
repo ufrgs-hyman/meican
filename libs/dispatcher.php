@@ -33,8 +33,9 @@ class Dispatcher {
             if (empty($action))
                 $action = $controller->getDefaultAction();
             if (!$action || !method_exists($controller, $action))
-                throw new Exception(_("Invalid action"));
-            $controller->$action($param);
+                ;//throw new Exception(_("Invalid action"));
+            else
+                $controller->$action($param);
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -52,7 +53,7 @@ class Dispatcher {
               header('Location: index.php?message=Session Expired');
 
               } else header('HTTP/1.1 402 Timeout'); */
-            header('Location: '.$this->url('login'));
+            //header('Location: '.$this->url('login'));
             return false;
         }
     }
@@ -92,7 +93,7 @@ class Dispatcher {
         $route = array_merge($this->defaults, $route);
         return $route;
     }
-
+    
     public function url($params) {
         if (!is_array($params))
             return $this->base . '/' . $params;

@@ -32,7 +32,7 @@ class Framework {
     private static $systemNameShort = 'MEICAN';
     private static $systemVer = '';
     private static $mainApp = 'aaa';
-    public static $systemDirName = 'new_meican';
+    public static $systemDirName = 'new_meican/';
 
     /* database settings */
     private static $defaultDatabase = 'mysql';

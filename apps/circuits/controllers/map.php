@@ -32,7 +32,7 @@ class map extends Controller {
             $domain = new stdClass();
             $domain->id = $d->dom_id;
             $domain->name = $d->dom_descr;
-            $endpoint = "http://{$d->dom_ip}/" . Framework::$systemDirName . "/main.php?app=topology&services&wsdl";
+            $endpoint = "http://{$d->dom_ip}/" . Framework::$systemDirName . "topology/ws";
             if ($ws = new nusoap_client($endpoint, array('cache_wsdl' => 0))) {
                 if ($temp = $ws->call('getURNDetails', array())) {
                     //Framework::debug("$d->dom_descr networks",$temp);

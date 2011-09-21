@@ -20,8 +20,8 @@ class ws extends Controller {
         $this_dir_name = $this_meican->getLocalMeicanDirName();
 
         $namespace = "http://MEICAN";
-        $server = new nusoap_server();
-        $server->configureWSDL("MEICAN_AAA_SERVICES", $namespace, "http://$this_ip/$this_dir_name/main.php?app={$this->app}&amp;services");
+        $server = new nusoap_server();//TODO: verificar o $this_dir_name
+        $server->configureWSDL("MEICAN_AAA_SERVICES", $namespace, "http://$this_ip/$this_dir_name{$this->app}/ws");
         //$server->wsdl->schemaTargetNamespace = "http://schemas.xmlsoap.org/soap/encoding/";
 
         $server->wsdl->addComplexType('userType','complexType','struct','all','',
@@ -45,7 +45,7 @@ class ws extends Controller {
                 array('usr' => 'tns:userType'),
                 array('usr_list'=> 'tns:userTypeList'),
                 $namespace,
-                "http://$this_ip/$this_dir_name/main.php?app=$this->app&amp;services/getUsers",
+                "http://$this_ip/$this_dir_name$this->app/ws/getUsers", //TODO:&amp;services/getUsers??
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -54,7 +54,7 @@ class ws extends Controller {
                 array('grp' => 'tns:groupType'),
                 array('grp_list'=> 'tns:groupTypeList'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."/main.php?app=$this->app&amp;services/getGroups",
+                "http://$this_ip/".Framework::$systemDirName."$this->app/ws/getGroups",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
