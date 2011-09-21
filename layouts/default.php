@@ -101,7 +101,6 @@
                         $('#flash_box').html($('.flash_box').html());
                         
                         $.each($(".scripts i"), function() {
-                            alert($(this));
                             $.getScript($(this).html());
                         });
 

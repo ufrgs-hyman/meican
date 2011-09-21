@@ -8,12 +8,14 @@ class Dispatcher {
     }
 
     function dispatch() {
-        if (!$this->login())
-            return;
         if (array_key_exists('url', $_GET))
             $url = Common::GET('url');
         else
             $url = null;
+        if ($url == 'login')
+            $this->login();
+        else if (!$this->checkLogin())
+            return;
         if (empty($url))
             return $this->legacyDispatch();
         $this->params = $this->parse($url);
@@ -41,7 +43,7 @@ class Dispatcher {
         }
     }
 
-    function login() {
+    function checkLogin() {
         if (AuthSystem::userTryToLogin() || AuthSystem::isUserLoggedIn()) {
             return true;
         } else {
@@ -53,9 +55,23 @@ class Dispatcher {
               header('Location: index.php?message=Session Expired');
 
               } else header('HTTP/1.1 402 Timeout'); */
-            header('Location: index.php?message=Session Expired');
+            header('Location: '.$this->url('login'));
             return false;
         }
+    }
+
+    function login(){
+        include_once 'apps/init/controllers/login.php';
+        Language::setLang('init');
+
+        $login = new Login();
+
+        if (key_exists('message', $_GET))
+            $message = $_GET['message'];
+        else
+            $message = NULL;
+
+        $login->show($message);
     }
 
     public function parse($url) {

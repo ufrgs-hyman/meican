@@ -1,23 +1,27 @@
 <?php
 
-$init_session = false;
+$init_session = true;
+
 include_once 'meican.conf.php';
+include_once 'includes/auth.inc';
+include_once 'includes/language.inc';
+include_once 'includes/common.inc';
+include_once 'libs/database.inc';
+include_once 'libs/dispatcher.php';
+
 
 defined('__MEICAN') or die("Invalid access.");
 
-include_once 'apps/init/controllers/login.php';
-include_once 'includes/language.inc';
-include_once 'libs/dispatcher.php';
 
-Language::setLang('init');
+Framework::initWebRoot();
 
-$login = new Login();
 
-if (key_exists('message', $_GET))
-    $message = $_GET['message'];
-else
-    $message = NULL;
-
-$login->show($message);
+$mdb2 = MDB2::singleton(Framework::getDatabaseString());
+if (MDB2::isError($mdb2)) {
+    Framework::debug($mdb2->getMessage() . ", " . $mdb2->getDebugInfo());
+    die($mdb2->getMessage());
+}
+Dispatcher::getInstance()->dispatch();
+$mdb2->disconnect();
 
 ?>
