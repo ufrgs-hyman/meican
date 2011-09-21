@@ -1,36 +1,37 @@
 <?php
+
 include_once 'includes/cookies.inc';
 include_once 'libs/database.inc';
 
 class Common {
 
-    static function getSessionVariable ($variable) {
-        if(!session_id()) {
+    static function getSessionVariable($variable) {
+        if (!session_id()) {
             session_start();
         }
-        return (isset ($_SESSION [$variable]) ? $_SESSION [$variable] : "");
+        return (isset($_SESSION [$variable]) ? $_SESSION [$variable] : "");
     }
 
-    static function setSessionVariable ($variable, $value) {
-        if(!session_id()) {
+    static function setSessionVariable($variable, $value) {
+        if (!session_id()) {
             session_start();
         }
         $_SESSION [$variable] = $value;
         return $_SESSION [$variable];
     }
 
-    static function destroySessionVariable ($variable) {
-        if(!session_id()) {
+    static function destroySessionVariable($variable) {
+        if (!session_id()) {
             session_start();
         }
-        unset ($_SESSION [$variable]);
+        unset($_SESSION [$variable]);
     }
 
-    static function hasSessionVariable ($variable) {
-        if(!session_id()) {
+    static function hasSessionVariable($variable) {
+        if (!session_id()) {
             session_start();
         }
-        return isset ($_SESSION [$variable]);
+        return isset($_SESSION [$variable]);
     }
 
     static function rescueVar($var) {
@@ -49,7 +50,6 @@ class Common {
         Common::setSessionVariable($var, $value);
         //CookiesSystem::setCookie($var, $value);
     }
-
 
     static function GET($var) {
         if (array_key_exists($var, $_GET))
@@ -73,9 +73,9 @@ class Common {
         return NULL;
     }
 
-    static function apc_update(){
+    static function apc_update() {
         $now = mktime();
-        apc_store('last_update',$now);
+        apc_store('last_update', $now);
     }
 
     static function getLastUpdate(){
@@ -84,14 +84,44 @@ class Common {
         $last_update_server = apc_fetch('last_update');
         if ($last_update_server) {
             $timepout_1_week = 604800;
-            if (($now - $last_update_server) > $timepout_1_week){
+            if (($now - $last_update_server) > $timepout_1_week) {
                 apc_store('last_update', $now);
                 return $now;
-            } else return $last_update_server;
+            } else
+                return $last_update_server;
         } else { //nao encontrou nos servidor. inicializacao da variavel
-             apc_store('last_update', $now);
-             return $now;
+            apc_store('last_update', $now);
+            return $now;
         }
+    }
+
+}
+
+/**
+ * Prints out debug information about given variable.
+ *
+ * Only runs if debug level is greater than zero.
+ *
+ * @param boolean $var Variable to show debug information for.
+ * @param boolean $showHtml If set to true, the method prints the debug data in a screen-friendly way.
+ * @param boolean $showFrom If set to true, the method prints from where the function was called.
+ * @link http://book.cakephp.org/view/1190/Basic-Debugging
+ * @link http://book.cakephp.org/view/1128/debug
+ */
+function debug($var = false, $showHtml = false, $showFrom = true) {
+    if (Framework::$debugMode > 1) {
+        if ($showFrom) {
+            $calledFrom = debug_backtrace();
+            echo '<strong>' . substr(str_replace(ROOT, '', $calledFrom[0]['file']), 1) . '</strong>';
+            echo ' (line <strong>' . $calledFrom[0]['line'] . '</strong>)';
+        }
+        echo "\n<pre class=\"cake-debug\">\n";
+
+        $var = print_r($var, true);
+        if ($showHtml) {
+            $var = str_replace('<', '&lt;', str_replace('>', '&gt;', $var));
+        }
+        echo $var . "\n</pre>\n";
     }
     
 }

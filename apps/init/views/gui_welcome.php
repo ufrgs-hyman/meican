@@ -20,13 +20,13 @@
             <tr class="new_line">
                 <td>
                     <a href="<?php echo $this->buildLink($icons[$ind]->link); ?>">
-                        <img src="<?php echo $icons[$ind]->figure; ?>" alt="<?php echo $icons[$ind]->name; ?>"/>
+                        <img src="<?php echo $this->url($icons[$ind]->figure); ?>" alt="<?php echo $icons[$ind]->name; ?>"/>
                     </a>
                 </td>
                 <td>
                     <?php if ($icons[$ind + 1]): ?>
                         <a href="<?php echo $this->buildLink($icons[$ind + 1]->link); ?>">
-                            <img src="<?php echo $icons[$ind + 1]->figure; ?>" alt="<?php echo $icons[$ind + 1]->name; ?>"/>
+                            <img src="<?php echo $this->url($icons[$ind + 1]->figure); ?>" alt="<?php echo $icons[$ind + 1]->name; ?>"/>
                         </a>
                     <?php endif; ?>
                 </td>

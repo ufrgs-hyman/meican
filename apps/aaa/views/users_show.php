@@ -7,7 +7,7 @@
     <table class="list">
         <!-- tr>
             <td colspan="3" align="right">
-                <a href="modules/export/xls/users.php"><img src="img/excel.png" border="0" width="26px" height="26px" /></a>
+                <a href="modules/export/xls/users.php"> src="<?php echo $this->url(''); ?>img/excel.png" border="0" width="26px" height="26px" /></a>
             </td>
         </tr -->
 
@@ -32,7 +32,7 @@
             <td>
                 <?php if ($u->editable): ?>
                 <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "usr_id:$u->id")); ?>">
-                    <img class="edit" src="layouts/img/edit_1.png"/>
+                    <img class="edit" src="<?php echo $this->url(''); ?>layouts/img/edit_1.png"/>
                 </a>
                 <?php endif; ?>
             </td>

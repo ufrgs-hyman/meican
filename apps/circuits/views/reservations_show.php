@@ -59,7 +59,7 @@
 
                     <td>
                         <label id="status<?php echo $r->id; ?>"></label>
-                        <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading" class="load" src="includes/images/ajax-loader.gif"/>
+                        <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading" class="load" src="<?php echo $this->url(''); ?>includes/images/ajax-loader.gif"/>
                     </td>
                     <td>
                         <?php echo $r->flow->source->domain; ?>

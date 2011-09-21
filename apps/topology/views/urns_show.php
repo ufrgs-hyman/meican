@@ -13,7 +13,7 @@ $hasUrn = FALSE;
     <div id="domain<?php echo $dom->id; ?>">                
         
         <?php if ($dom->urns): ?>
-            <h2><img id="collapseExpand<?php echo $dom->id ?>" src="layouts/img/minus.gif" onclick="WPToggle('#collapsableUrns<?php echo $dom->id ?>', '#collapseExpand<?php echo $dom->id ?>')"/>
+            <h2><img id="collapseExpand<?php echo $dom->id ?>" src="<?php echo $this->url(''); ?>layouts/img/minus.gif" onclick="WPToggle('#collapsableUrns<?php echo $dom->id ?>', '#collapseExpand<?php echo $dom->id ?>')"/>
                 &nbsp;
             <?php
                 $text = _("Domain");

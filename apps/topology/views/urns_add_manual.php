@@ -24,7 +24,7 @@ $domain = $this->passedArgs->domain;
     <tbody>
         <tr id="newline0">
             <td class="edit" colspan="3">
-                <img class="edit" alt="clear" border="0" src="layouts/img/clear.png" onclick="deleteURNLine('0');"/>
+                <img class="edit" alt="clear" border="0" src="<?php echo $this->url(''); ?>layouts/img/clear.png" onclick="deleteURNLine('0');"/>
             </td>
                     
             <td>

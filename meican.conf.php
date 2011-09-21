@@ -39,7 +39,7 @@ class Framework {
     private static $dbConfig = null;
     private static $defaultLang = 'pt_BR.utf8';
 
-    public static $debugMode = 1;
+    public static $debugMode = 2;
     public static $useACL = false;
 
     /**

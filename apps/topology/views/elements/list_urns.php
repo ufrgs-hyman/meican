@@ -17,10 +17,10 @@ $domain = $argsToElement;
                     <input type="checkbox" name="del_checkbox[]" value="<?php echo $u->urn_id; ?>">
                 </td>
                 <td class="edit">
-                    <img class="edit" src="layouts/img/edit_1.png" onclick="editURN('<?php echo $domain->id; ?>', '<?php echo $u->urn_id; ?>');">
+                    <img class="edit" src="<?php echo $this->url(''); ?>layouts/img/edit_1.png" onclick="editURN('<?php echo $domain->id; ?>', '<?php echo $u->urn_id; ?>');">
                 </td>
                 <td class="edit">
-                    <img class="delete" src="layouts/img/remove.png" onclick="deleteURN('<?php echo $u->urn_id; ?>');">
+                    <img class="delete" src="<?php echo $this->url(''); ?>layouts/img/remove.png" onclick="deleteURN('<?php echo $u->urn_id; ?>');">
                 </td>
                     
                 <td id="network_box<?php echo $u->urn_id; ?>" title="<?php echo $u->net_id; ?>"><?php echo $u->network; ?></td>
@@ -38,7 +38,7 @@ $domain = $argsToElement;
     <tfoot>
         <tr>
             <td colspan="11">
-                <img class="loading" style="display:none" id="loading<?php echo $domain->id; ?>" src="includes/images/ajax-loader.gif" />
+                <img class="loading" style="display:none" id="loading<?php echo $domain->id; ?>" src="<?php echo $this->url(''); ?>includes/images/ajax-loader.gif" />
                 <input class="add" type="button" id="add_button<?php echo $domain->id; ?>" value="<?php echo _("Add from topology"); ?>" onclick="newURN('<?php echo $domain->id; ?>');" />
                 <input class="add" type="button" id="add_man_button<?php echo $domain->id; ?>" value="<?php echo _("Add manual"); ?>" onclick="newURNLine('<?php echo $domain->id; ?>');" />
             </td>

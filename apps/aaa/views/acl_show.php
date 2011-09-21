@@ -36,10 +36,10 @@
                 <input type="checkbox" name="del_checkbox[]" value="<?php echo $r->id; ?>">
             </td>
             <td class="edit">
-                <img class="edit" src="layouts/img/edit_1.png" onclick="editACL('<?php echo $r->id; ?>');">
+                <img class="edit" src="<?php echo $this->url(''); ?>layouts/img/edit_1.png" onclick="editACL('<?php echo $r->id; ?>');">
             </td>
             <td class="edit">
-                <img class="delete" src="layouts/img/remove.png" onclick="deleteACL('<?php echo $r->id; ?>');">
+                <img class="delete" src="<?php echo $this->url(''); ?>layouts/img/remove.png" onclick="deleteACL('<?php echo $r->id; ?>');">
             </td>
             <?php else: ?>
             <td colspan="3"/>
@@ -73,7 +73,7 @@
         <tfoot>
         <tr>
             <td colspan="12">
-                <img class="loading" style="display:none" id="loading" src="includes/images/ajax-loader.gif" />
+                <img class="loading" style="display:none" id="loading" src="<?php echo $this->url(''); ?>includes/images/ajax-loader.gif" />
                 <input class="add" type="button" id="new_button" value="<?php echo _("New access control"); ?>" onclick="newACL();" />
             </td>
         </tr>

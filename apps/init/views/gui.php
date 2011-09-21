@@ -1,43 +1,44 @@
 <?php $args = $this->passedArgs ?>
-
+<?php $base = Dispatcher::getInstance()->base.'/'; ?>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><?php echo Framework::getSystemName(); ?></title>
 
         <!-- GLOBAL JS SCRIPTS AND IN-LINE FUNCTIONS -->
-        <link rel="stylesheet" type="text/css" href="layouts/style1.css" />
-        <link rel="stylesheet" type="text/css" href="layouts/timePicker.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>layouts/style1.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>layouts/timePicker.css" />
 
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery.min.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery-ui-1.8.16.custom.min.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery_history.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery.crypt.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/jquery.form.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/init/views/scripts/info_box.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/jquery.min.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/jquery-ui-1.8.13.custom.min.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/jquery_history.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/jquery.crypt.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/jquery.form.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/info_box.js"></script>
 
 
         <!-- ESSE SCRIPT TÁ DANDO PROBLEMA
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/jquery-1.4.2.min.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/jquery-1.4.2.min.js"></script>
         -->
 
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/topology/views/scripts/devices.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/topology/views/scripts/networks.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/topology/views/scripts/urns.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/topology/views/scripts/devices.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/topology/views/scripts/networks.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/topology/views/scripts/urns.js"></script>
 
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/aaa/views/scripts/password.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/aaa/views/scripts/select.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/aaa/views/scripts/password.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/aaa/views/scripts/select.js"></script>
 
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/jquery-ui.min.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/googlemaps.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/markerClusterer.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/StyledMarker.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/reservations.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/reservation_map.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/reservations_add.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/flows.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/timers.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="apps/circuits/views/scripts/jquery.timePicker.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/jquery-ui.min.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/googlemaps.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/markerClusterer.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/StyledMarker.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/reservations.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/reservation_map.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/reservations_add.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/flows.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/timers.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/jquery.timePicker.js"></script>
+
 
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <script type ="text/javascript">
@@ -51,14 +52,11 @@
 
             $(document).ready(function() {
 
-                $("#info_box").load("main.php?app=init&controller=info_box", function() {
-                    // chamada para atualizar a hora
-                    setInterval("updateSystemTime()", 60000);
-                });
-                $("#menu").load("main.php?app=init&controller=menu");
+                $("#info_box").load("<?php echo $this->url(array("app" => "init", "controller" => "info_box")); ?>");
+                $("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
 
-                redir("main.php?<?php echo $args->last_view; ?>");
-                
+                redir("<?php echo $base; ?>main.php?<?php echo $args->last_view; ?>");
+
                 $("body").delegate("a","click",function() {
                     if ($(this).attr("target") != "top") {
                         var content_show = $(this).attr("href");
@@ -153,21 +151,21 @@
                     error: function(jqXHR) {
                         switch (jqXHR.status) {
                             case 401:
-                                top.location.href = 'index.php?message=<?php echo _("Not logged in"); ?>';
+                                top.location.href = '<?php echo $base; ?>index.php?message=<?php echo _("Not logged in"); ?>';
                                 break;
                             case 402:
-                                top.location.href = 'index.php?message=<?php echo _("Session Expired"); ?>';
+                                top.location.href = '<?php echo $base; ?>index.php?message=<?php echo _("Session Expired"); ?>';
                                 break;
                             case 404:
                                 $('#main').html("Page not found");
                                 break;
                             case 405:
                                 //change lang
-                                top.location.href = 'main.php?app=init&controller=gui';
+                                top.location.href = '<?php echo $base; ?>init/gui';
                                 break;
                             case 406:
                                 //force refresh
-                                location.href = 'main.php?app=init&controller=gui';
+                                location.href = '<?php echo $base; ?>init/gui';
                                 break;
                             default:
                                 $('#main').html("Unexpected error");
@@ -197,12 +195,12 @@
 
                     if ($(divId).css("display") == "none") {
                         $(divId).slideDown();
-                        $(imageId).attr("src","layouts/img/minus.gif" );
+                        $(imageId).attr("src","<?php echo $base; ?>layouts/img/minus.gif" );
                     }
     
                     else {
                         $(divId).slideUp();
-                        $(imageId).attr("src","layouts/img/plus.gif");
+                        $(imageId).attr("src","<?php echo $base; ?>layouts/img/plus.gif");
                     }
     
                 }
@@ -228,7 +226,7 @@
         <div id="htmlToLoad" style="display: none"></div>
             <div id="header" class="header">
                 <div id="logo_box"> 
-                    <a href="<?php echo $this->buildLink(array('action' => 'welcome')); ?>"><img class="logo" alt="MEICAN" src="layouts/img/meican_white.png"/></a>
+                    <a href="<?php echo $this->buildLink(array('action' => 'welcome')); ?>"><img class="logo" alt="MEICAN" src="<?php echo $this->url(''); ?>layouts/img/meican_white.png"/></a>
                 </div>
 
                 <div id="info_box">
@@ -242,14 +240,14 @@
 
                 </div>            
                 <div id="load_img" style="display: none">
-                    <img src="layouts/img/ajax-loader.gif" alt="<?php echo _('Loading'); ?>"/>
+                    <img src="<?php echo $base; ?>layouts/img/ajax-loader.gif" alt="<?php echo _('Loading'); ?>"/>
                 </div>
                 <div id="main">
 
                 </div>
             </div>
            <!-- <div id="footer">  
-                <img src="layouts/img/footer.png" style="width:100%; position: absolute; height: 25px;"></img> 
+                <img src="<?php echo $this->url(''); ?>layouts/img/footer.png" style="width:100%; position: absolute; height: 25px;"></img>
             </div>-->
     </body>
 

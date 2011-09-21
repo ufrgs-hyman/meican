@@ -4,8 +4,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="layouts/login1.css" />
         <title><?php echo Framework::getSystemName(); ?></title>
-        <script language="JavaScript1.2" src="apps/init/views/scripts/jquery.min.js"></script>
-        <script language="JavaScript1.2" src="apps/init/views/scripts/jquery.crypt.js"></script>
+        <script language="JavaScript1.2" src="<?php echo $this->url(''); ?>apps/init/views/scripts/jquery.min.js"></script>
+        <script language="JavaScript1.2" src="<?php echo $this->url(''); ?>apps/init/views/scripts/jquery.crypt.js"></script>
         <script language="JavaScript">
 
             $(document).ready(function(){
@@ -29,7 +29,7 @@
     <body>
         <div id="header" class="header">
             <div id="logo_box">
-                <img src="layouts/img/meican_white.png" class="logo" alt="MEICAN"/>
+                <img src="<?php echo $this->url(''); ?>layouts/img/meican_white.png" class="logo" alt="MEICAN"/>
             </div>
             <div id="info_box">
                 <a href="#"><?php echo _('About MEICAN');?></a> |
@@ -39,7 +39,7 @@
         </div>
         <div id="content">
             <div id="figure">
-                <img src="layouts/img/logo_login.png" alt="MEICAN">
+                <img src="<?php echo $this->url(''); ?>layouts/img/logo_login.png" alt="MEICAN">
             </div>
             <div id="text_info">
                 
