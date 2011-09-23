@@ -96,7 +96,7 @@
                             error: errorFunc,
                             container: '#main'
                         });
-                return False;
+                return false;
             }
 
             function clearSelectBox(htmlId) {
