@@ -1,6 +1,25 @@
 <!-- LAYOUT DEFAULT -->
 
-<?php echo $content_for_script; ?>
+<?php if ($this->script->jsFiles): ?>
+<div class="scripts">
+    <?php foreach ($this->script->jsFiles as $f) {
+        echo "<i>".Dispatcher::getInstance()->url('').$f."</i>";
+    } ?>
+</div>
+<?php endif; ?>
+<?php if ($this->script->scriptArgs): ?>
+<script>
+<?php
+    foreach ($this->script->scriptArgs as $name => $val) {
+        if (is_string($val))
+            echo "var $name = '$val';";
+        elseif (is_array($val) || is_object($val))
+            echo "var $name = ".json_encode($val).";";
+        else
+            echo "var $name = $val;";
+    }?>
+</script>
+<?php endif; ?>
 
 
 <?php if ($content_for_flash): ?>

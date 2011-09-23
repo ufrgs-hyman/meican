@@ -28,12 +28,12 @@ class View {
         $this->script = new Script();
     }
 
-    public function build() {
+    public function build() {/*
         if ($this->script->jsFiles || $this->script->scriptArgs)
-            $this->script->build();
+            $this->script->build();*/
         return $this->bodyContent = $this->buildView("layouts/$this->layout.php", array(
             'content_for_body' => $this->buildView($this->setView()),
-            'content_for_script' => $this->script->content,
+            //'content_for_script' => $this->script->content,
         ));
     }
 

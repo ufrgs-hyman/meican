@@ -16,7 +16,7 @@ class Script {
 
             $loadedVars = Common::getSessionVariable('script_vars');
 
-            if ($loadedVars) {
+            if (false && $loadedVars) {
 
                 foreach ($args as $ind => $val) {
                     if (isset($loadedVars[$ind])) {

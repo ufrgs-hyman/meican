@@ -1,7 +1,7 @@
 <?php if ($this->jsFiles): ?>
 <div class="scripts">
     <?php foreach ($this->jsFiles as $f) {
-        echo "<i>".Dispatcher::getInstance()->url('/').$f."</i>";
+        echo "<i>".Dispatcher::getInstance()->url('').$f."</i>";
     } ?>
 </div>
 <?php endif; ?>
