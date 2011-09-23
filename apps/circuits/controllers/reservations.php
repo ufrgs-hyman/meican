@@ -310,6 +310,7 @@ class reservations extends Controller {
         }
 
         //Framework::debug('status', $statusList);
+        //echo json_encode($statusList);
         $this->setArgsToBody($statusList);
         $this->render();
     }
@@ -1194,8 +1195,10 @@ class reservations extends Controller {
     }
 
     function send($reservation_info) {
+        
+        Framework::debug("res send",$reservation_info);
 
-        $flw_id = $reservation_info->get('flw_id');
+        $flw_id = $reservation_info->flw_id;
 
         $flow = new flow_info();
         $flow->flw_id = $flw_id;
@@ -1206,8 +1209,8 @@ class reservations extends Controller {
 
         $oscarsRes = new OSCARSReservation();
         $oscarsRes->setOscarsUrl($src_dom->oscars_ip);
-        $oscarsRes->setDescription($reservation_info->get('res_name'));
-        $oscarsRes->setBandwidth($reservation_info->get('bandwidth'));
+        $oscarsRes->setDescription($reservation_info->res_name);
+        $oscarsRes->setBandwidth($reservation_info->bandwidth);
         $oscarsRes->setSrcEndpoint($flow->get('src_urn_string'));
         $oscarsRes->setDestEndpoint($flow->get('dst_urn_string'));
 
@@ -1239,7 +1242,7 @@ class reservations extends Controller {
             $oscarsRes->setPathSetupMode('timer-automatic');
 
         $tim = new timer_info();
-        $tim->tmr_id = $reservation_info->get("tmr_id");
+        $tim->tmr_id = $reservation_info->tmr_id;
         $timer = $tim->get();
         $arrayRec = $timer->getRecurrences();
 

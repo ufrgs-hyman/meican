@@ -115,7 +115,8 @@ class Database {
         } else {
             foreach ($obj->attributes as $attribute) {
                 $name = $attribute->name;
-                $obj->$name = $row[$name];
+                if (array_key_exists($name, $row))
+                    $obj->$name = $row[$name];
             }
         }
         $this->position++;

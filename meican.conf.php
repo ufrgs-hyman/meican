@@ -32,7 +32,7 @@ class Framework {
     private static $systemNameShort = 'MEICAN';
     private static $systemVer = '';
     private static $mainApp = 'aaa';
-    public static $systemDirName = 'new_meican/';
+    public static $systemDirName = 'meican/';
 
     /* database settings */
     private static $defaultDatabase = 'mysql';
@@ -62,7 +62,7 @@ class Framework {
     /**
      * NÃO ALTERAR
      */
-    public static $OSCARSBridgeEPR = 'http://143.54.12.123:8080/axis2/services/OSCARSBridge?wsdl';
+    public static $OSCARSBridgeEPR = 'http://localhost:8080/axis2/services/OSCARSBridge?wsdl';
 
 
     static function init () {
@@ -247,12 +247,12 @@ class Framework {
         return FALSE;
     }
 
-    static function debug($msg, $var) {
+    static function debug($msg, $var=NULL) {
 
         if (Framework::$debugMode) {
             $fileName = '/var/www/'.Framework::$systemDirName.'/log/log.txt';
 
-            if (isset($var)) {
+            if ($var !== NULL) {
                 ob_start();
                 print_r($var);
                 $result = ob_get_clean();

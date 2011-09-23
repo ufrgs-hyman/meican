@@ -34,7 +34,7 @@ class AclLoader extends Tree_Model {
             $this->acl = $this->reloadACL();
             Common::setSessionVariable('acl', $this->acl);
 
-            Framework::debug("acl tree", $this->acl);
+            //Framework::debug("acl tree", $this->acl);
         }
         else
             $this->acl = $acl_ses;
@@ -55,6 +55,8 @@ class AclLoader extends Tree_Model {
 
         //array com os aros já analisados
         $old = array();
+        
+        $listaros = array();
 
         //preenche array listaros com os aros que devem ser analisados (todos possuem mesma prioridade)
         foreach ($result as $r) {
@@ -62,12 +64,11 @@ class AclLoader extends Tree_Model {
         }
 
         //array listaros possui nodos de mesma prioridade
-        while (isset($listaros)) {
-            unset($parentlist);
+        while (!empty($listaros)) {
+            $parentlist = array();
 
             //preenche array parentList possui os nodos pai da listaros
             foreach ($listaros as $la) {
-                unset($aro);
                 $aro = new aros();
                 $aro->aro_id = $la;
                 $result = $aro->fetch(FALSE);
@@ -80,14 +81,14 @@ class AclLoader extends Tree_Model {
             $old = $this->analisaPrioridadeIgual($listaros, $old);
 
             //passa para listaros os pais e assim sucessivamente até chegar a raiz
-            if (isset($parentlist)) {
+            if (!empty($parentlist)) {
                 $listaros = $parentlist;
             } else
-                unset($listaros);
+                $listaros = array();
         }
 
         //passa do vetor old para um vetor intermediario para ser passado as variaveis de sessao
-        unset($acl);
+        $acl = new stdClass();
         foreach ($this->perTyArray as $perTy) {
             ${$perTy} = array_keys($old[$perTy], 'allow');
             $acl->{$perTy} = ${$perTy};
@@ -175,23 +176,25 @@ class AclLoader extends Tree_Model {
                 }  //foreach lines_aros_acos
                 //Framework::debug("array new ",$new);
                 //colapsar array velho old com novo new, só vai atribuir se o novo nao estiver no velho
-                foreach ($new[$perTy] as $aco_id => $perm) {
+                if (array_key_exists($perTy, $new) && is_array($new[$perTy])) {
+                    foreach ($new[$perTy] as $aco_id => $perm) {
 
-                    //caso o aco_id não exista no array velho
-                    if (!array_key_exists($aco_id, $old[$perTy])) {
-                        Framework::debug("vai atribuir ao aco ", $aco_id);
-                        Framework::debug("permissao ", $perm->value);
-                        $old[$perTy][$aco_id] = $perm->value;
+                        //caso o aco_id não exista no array velho
+                        if (!array_key_exists($aco_id, $old[$perTy])) {
+                            Framework::debug("vai atribuir ao aco ", $aco_id);
+                            Framework::debug("permissao ", $perm->value);
+                            $old[$perTy][$aco_id] = $perm->value;
 
-                        if (isset($toSearch[$perTy][$level][$aco_id])) {
-                            $level++;
-                            Framework::debug("vai incrementar a porquera", $level);
+                            if (isset($toSearch[$perTy][$level][$aco_id])) {
+                                $level++;
+                                Framework::debug("vai incrementar a porquera", $level);
+                            }
+                            $toSearch[$perTy][$level][$aco_id]->value = $perm->value;
+                            //array com os nodos que forma atribuídos permissoes nessa interação
+                            //e a permissao que deve ser atribuída a tais nodos
+                            if (isset($perm->model))
+                                $toSearch[$perTy][$level][$aco_id]->model = $perm->model;
                         }
-                        $toSearch[$perTy][$level][$aco_id]->value = $perm->value;
-                        //array com os nodos que forma atribuídos permissoes nessa interação
-                        //e a permissao que deve ser atribuída a tais nodos
-                        if ($perm->model)
-                            $toSearch[$perTy][$level][$aco_id]->model = $perm->model;
                     }
                 }
 
@@ -203,10 +206,14 @@ class AclLoader extends Tree_Model {
                     unset($acos);
                     $new = array();
 
-                    //retorna os aco_id dos nodos a serem analisados
-                    Framework::debug("tosearch", $toSearch);
-                    $children = $this->getacosmesmonivel($toSearch[$perTy][$ind]);
-                    Framework::debug("children", $children);
+                    $children = array();
+                    if (isset($toSearch) && array_key_exists($perTy, $toSearch) && is_array($toSearch[$perTy][$ind])) {
+                        //retorna os aco_id dos nodos a serem analisados
+                        Framework::debug("tosearch", $toSearch);
+                        $children = $this->getacosmesmonivel($toSearch[$perTy][$ind]);
+                        Framework::debug("children", $children);
+                    }
+                    
                     if (!$children)
                         break;
 
@@ -224,7 +231,7 @@ class AclLoader extends Tree_Model {
                             }
                             $toSearch[$perTy][$level][$c->aco_id]->value = $toSearch[$perTy][$ind][$c->parent_id]->value;
 
-                            if ($toSearch[$perTy][$ind][$c->parent_id]->model)
+                            if (isset($toSearch[$perTy][$ind][$c->parent_id]->model))
                                 $toSearch[$perTy][$level][$c->aco_id]->model = $toSearch[$perTy][$ind][$c->parent_id]->model;
                         } else {
                             if ($toSearch[$perTy][$ind][$c->parent_id]->value == 'deny' && $new[$perTy][$c->aco_id]->value == 'allow') {
@@ -268,8 +275,6 @@ class AclLoader extends Tree_Model {
         $ind = 0;
 
         foreach ($parentlist as $aco_id => $val) {
-            unset($aco);
-
             $aco = new Acos();
             $aco->aco_id = $aco_id;
 

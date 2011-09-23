@@ -9,7 +9,7 @@ include_once 'includes/auth.inc';
 include_once 'apps/aaa/models/group_info.inc';
 include_once 'apps/aaa/models/user_info.inc';
 include_once 'apps/aaa/models/aros.inc';
-include_once 'libs/acl_loader';
+include_once 'libs/acl_loader.inc';
 
 class groups extends Controller {
 

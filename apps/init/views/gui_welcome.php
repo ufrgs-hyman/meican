@@ -12,7 +12,7 @@
                     <?php echo $icons[$ind]->name; ?>
                 </td>
                 <td>
-                    <?php if ($icons[$ind + 1])
+                    <?php if (array_key_exists($ind + 1, $icons))
                         echo $icons[$ind + 1]->name; ?>
                 </td>
             </tr>
@@ -24,7 +24,7 @@
                     </a>
                 </td>
                 <td>
-                    <?php if ($icons[$ind + 1]): ?>
+                    <?php if (array_key_exists($ind + 1, $icons)): ?>
                         <a href="<?php echo $this->buildLink($icons[$ind + 1]->link); ?>">
                             <img src="<?php echo $this->url($icons[$ind + 1]->figure); ?>" alt="<?php echo $icons[$ind + 1]->name; ?>"/>
                         </a>

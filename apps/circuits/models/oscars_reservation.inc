@@ -31,9 +31,9 @@ class OSCARSReservation {
         $this->startTimestamp = 132412312;
         $this->endTimestamp = 1232131322;
         $this->srcIsTagged = "true";
-        $this->srcTag = "null";
+        $this->srcTag = "any";
         $this->destIsTagged = "true";
-        $this->destTag = "null";
+        $this->destTag = "any";
         $this->pathSetupMode = "xml-signal";
         $this->description = "Reservation from MEICAN";
         $this->bandwidth = 100;
@@ -146,7 +146,7 @@ class OSCARSReservation {
 
             $returnMessage = array_shift($result->return);
 
-            if ($returnMessage == '') {
+            if ($returnMessage == 'ok') {
                  $this->setGri($result->return[0]);
                  $this->setStatus($result->return[1]);
                  Framework::debug("retorno do create reservation", $result->return);

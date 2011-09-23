@@ -94,8 +94,10 @@ class Model {
                     $sql = "SELECT * FROM `$tableName` WHERE $whereArgsString AND $pk IN ($inString)";
                 else
                     $sql = "SELECT * FROM `$tableName` WHERE $pk IN ($inString)";
-            } else
-                return FALSE; //sem acesso a nada
+            } else {
+                $empty = array();
+                return $empty; //sem acesso a nada
+            }
         } else { //sem ACL
             if ($whereArgsString)
                 $sql = "SELECT * FROM `$tableName` WHERE $whereArgsString";
@@ -465,14 +467,14 @@ class Model {
             return FALSE;
 
         if ($db->query($sql, $tableName)) {
+            $result_obj = array();
             if ($db->hasNext()) {
-                $result_obj = array();
                 while ($db->hasNext()) {
                     $result_obj[] = $db->next();
                 }
                 return $result_obj;
             } else
-                return FALSE;
+                return $result_obj;
         } else {
             return FALSE;
         }
