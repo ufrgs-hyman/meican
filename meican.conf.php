@@ -250,7 +250,7 @@ class Framework {
     static function debug($msg, $var=NULL) {
 
         if (Framework::$debugMode) {
-            $fileName = '/var/www/'.Framework::$systemDirName.'/log/log.txt';
+            $fileName = '/var/www/'.Framework::$systemDirName.'log/log.txt';
 
             if ($var !== NULL) {
                 ob_start();
