@@ -144,15 +144,16 @@ class OSCARSReservation {
             $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
             $result = $client->createReservation($envelope);
 
-            $returnMessage = array_shift($result->return);
-
-            if ($returnMessage == 'ok') {
+            if (is_string($result->return)) {
+                Framework::debug("OSCARS Bridge Error: ", $result->return);
+                return false;
+            } elseif (!$err = array_shift($result->return)) {
                  $this->setGri($result->return[0]);
                  $this->setStatus($result->return[1]);
                  Framework::debug("retorno do create reservation", $result->return);
                  return true;
             } else {
-                Framework::debug("OSCARS Bridge Error: ", $returnMessage);
+                Framework::debug("OSCARS Bridge Error: ", $err);
                 return false;
             }
            
@@ -343,10 +344,13 @@ class OSCARSReservation {
         try {
             $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
             $result = $client->getTopology($envelope);
-
-            if (!$err = array_shift($result->return)){ //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
-                foreach ($result->return as $i){
-                    if ($array = explode(" ", $i)){
+            
+            if (is_string($result->return)) {
+                Framework::debug("OSCARS Bridge Error: ", $result->return);
+                return false;
+            } elseif (!$err = array_shift($result->return)) { //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
+                foreach ($result->return as $i) {
+                    if ($array = explode(" ", $i)) {
                         //0- linkId
                         //1- remoteLinkId
                         //2- capacidade
@@ -364,7 +368,7 @@ class OSCARSReservation {
                             $urn->maximumReservable = $array[5];
                             $urn->vlanRange = $array[6];
                             $this->urns[] = $urn;
-                            }
+                        }
                     }
 
                 }
