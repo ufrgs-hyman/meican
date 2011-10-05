@@ -132,7 +132,7 @@ class Dispatcher {
         return $route;
     }
     
-    public function url($params) {
+    public function url($params=null) {
         if (!is_array($params))
             return $this->base . '/' . $params;
         $url = $this->base . '/' . $params['app'] . '/' . $params['controller'];

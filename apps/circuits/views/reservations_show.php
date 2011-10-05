@@ -45,7 +45,7 @@
                     </td>
                     <td style="padding-right: 5px; min-width: 20px">
                         <a href="<?php echo $this->buildLink(array('action' => 'view', 'param' => "res_id:$r->id")); ?>">
-                             <img src="layouts/img/eye.png"/>
+                             <img src="<?php echo $this->url()?>layouts/img/eye.png"/>
                         </a>
                     </td>
 

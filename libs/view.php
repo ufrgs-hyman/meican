@@ -62,7 +62,7 @@ class View {
         return $return;
     }
 
-    public function url($url = array()){
+    public function url($url = ''){
         return $this->buildLink($url);
     }
 
@@ -74,8 +74,8 @@ class View {
      * @return <string> $url : "{base}/{appName}/{controllerName}/{actionName}/{paramVal}"
      * <string> paramVal valid sintax: "ind1:val1/ind2:val2"
      */
-    public function buildLink($argsArray=array()) {
-        if (is_string($argsArray))
+    public function buildLink($argsArray='') {
+        if (!is_array($argsArray))
             return Dispatcher::getInstance()->url($argsArray);
         else
             return $url = Dispatcher::getInstance()->url(array_merge(

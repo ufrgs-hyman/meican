@@ -72,7 +72,7 @@ function newURNLine(dom_id) {
     
     $('#urn_table' + dom_id + ' tbody tr:last').after('<tr id="newline' + pos + '"/>');
 
-    var columns = '<td class="edit" colspan="3"><img class="edit" alt="clear" border="0" id="delete' + pos + '" src="layouts/img/clear.png"/></td>';
+    var columns = '<td class="edit" colspan="3"><img class="edit" alt="clear" border="0" id="delete' + pos + '" src="'+baseUrl+'layouts/img/clear.png"/></td>';
     columns += '<td><select id="network' + pos + '"/></td>';
     columns += '<td><select id="device' + pos + '" style="display:none"/></td>';
     columns += '<td><input type="text" size="3" id="port' + pos + '"/></td>';
@@ -119,7 +119,7 @@ function newURNLine(dom_id) {
 function fillURNLine(dom_id, urn_id) {
     $('#urn_table' + dom_id + ' tbody tr:last').after('<tr id="newline' + pos + '"/>');
 
-    var columns = '<td class="edit" colspan="3"><img class="edit" alt="clear" border="0" id="delete' + pos + '" src="layouts/img/clear.png"/></td>';
+    var columns = '<td class="edit" colspan="3"><img class="edit" alt="clear" border="0" id="delete' + pos + '" src="'+baseUrl+'layouts/img/clear.png"/></td>';
     columns += '<td><select id="network' + pos + '"/></td>';
     columns += '<td><select id="device' + pos + '" style="display:none"/></td>';
     columns += '<td id="port' + pos + '"/>';
