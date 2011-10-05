@@ -112,7 +112,7 @@ function debug($var = false, $showHtml = false, $showFrom = true) {
     if (Framework::$debugMode > 1) {
         if ($showFrom) {
             $calledFrom = debug_backtrace();
-            echo '<strong>' . substr(str_replace(ROOT, '', $calledFrom[0]['file']), 1) . '</strong>';
+            echo '<strong>' . substr(str_replace('', '', $calledFrom[0]['file']), 1) . '</strong>';
             echo ' (line <strong>' . $calledFrom[0]['line'] . '</strong>)';
         }
         echo "\n<pre class=\"cake-debug\">\n";

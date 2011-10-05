@@ -1,5 +1,6 @@
 
             var errorFunc = function(jqXHR) {
+                        setFlash("Poooooo", 'error');
                         switch (jqXHR.status) {
                             case 401:
                                 top.location.href = baseUrl;
@@ -8,7 +9,7 @@
                                 top.location.href = baseUrl;
                                 break;
                             case 404:
-                                $('#main').html("Page not found");
+                                setFlash("Page not found", 'error');
                                 break;
                             case 405:
                                 //change lang
@@ -19,7 +20,7 @@
                                 location.href = baseUrl+'init/gui';
                                 break;
                             default:
-                                $('#main').html("Unexpected error");
+                                setFlash("Unexpected error "+jqXHR.status, 'error');
                             }
                         };
 

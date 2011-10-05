@@ -84,9 +84,6 @@ class Model {
             $acl = new AclLoader();
             $allowPks = $acl->getAllowedPKey('read', $tableName);
 
-            Framework::debug("pkeys",$allowPks);
-            Framework::debug("model",$tableName);
-
             if ($allowPks) {
                 $inString = implode(',', $allowPks);
                 $pk = $this->getPrimaryKey();
@@ -104,7 +101,7 @@ class Model {
             else
                 $sql = "SELECT * FROM `$tableName`";
         }
-        Framework::debug("fetch",$sql);
+        //Framework::debug("fetch",$sql);
         return $this->querySql($sql, $tableName);
     }
 

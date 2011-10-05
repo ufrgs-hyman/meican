@@ -23,6 +23,8 @@ class devices extends Controller {
     }
 
     public function show() {
+        
+        Framework::debug("dev show");
 
         $dev = new device_info();
         $allDevices = $dev->fetch();
@@ -75,6 +77,7 @@ class devices extends Controller {
             $this->setArgsToBody($args);
         }
         
+        Framework::debug("dev show render");
         $this->render();
     }
 
@@ -152,10 +155,15 @@ class devices extends Controller {
         $device->dev_lat = Common::POST("dev_lat");
         $device->dev_lng = Common::POST("dev_lng");
         $device->node_id = Common::POST("node_id");
+        
+        Framework::debug("dev insert1");
 
         if ($device->insert($network, "network_info")) {
+            Framework::debug("dev insert2");
             $this->setFlash(_("Device")." '$device->dev_descr' "._("added in network")." '{$net_res[0]->net_descr}'", "success");
+            Framework::debug("dev insert3");
             $this->show();
+            Framework::debug("dev insert4");
             return;
         } else $this->setFlash(_("Fail to create device"), "error");
 
