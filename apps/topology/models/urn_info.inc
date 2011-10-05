@@ -1,6 +1,6 @@
 <?php
 
-include_once 'libs/resource_model.inc';
+include_once 'libs/resource_model.php';
 
 class urn_info extends Resource_Model {
 

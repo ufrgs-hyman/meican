@@ -1,6 +1,6 @@
 <?php
 
-include_once 'libs/model.inc';
+include_once 'libs/model.php';
 include_once 'apps/aaa/models/aros.inc';
 include_once 'apps/aaa/models/acos.inc';
 

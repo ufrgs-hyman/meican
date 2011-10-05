@@ -1,7 +1,7 @@
 <?php
 
-include_once 'includes/cookies.inc';
-include_once 'libs/database.inc';
+include_once 'libs/cookies.php';
+include_once 'libs/database.php';
 
 class Common {
 

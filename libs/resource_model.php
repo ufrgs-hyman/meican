@@ -1,8 +1,8 @@
 <?php
 
-include_once 'includes/auth.inc';
+include_once 'libs/auth.php';
 include_once 'apps/aaa/models/acos.inc';
-include_once 'libs/model.inc';
+include_once 'libs/model.php';
 
 class Resource_Model extends Model {
 

@@ -1,7 +1,7 @@
 <?php
 include_once 'meican.conf.php';
-include_once 'includes/cookies.inc';
-include_once 'includes/common.inc';
+include_once 'libs/cookies.php';
+include_once 'libs/common.php';
 
 class Language {
 

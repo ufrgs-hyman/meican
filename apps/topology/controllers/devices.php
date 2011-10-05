@@ -12,7 +12,7 @@ include_once 'apps/topology/models/network_info.inc';
 include_once 'apps/topology/controllers/networks.php';
 include_once 'apps/topology/controllers/domains.php';
 
-include_once 'libs/acl_loader.inc';
+include_once 'libs/acl_loader.php';
 
 class devices extends Controller {
 

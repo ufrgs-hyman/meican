@@ -3,9 +3,9 @@
 defined ('__MEICAN') or die ("Invalid access.");
 
 include_once 'libs/controller.php';
-include_once 'includes/common.inc';
+include_once 'libs/common.php';
 include_once 'apps/bpm/models/request_info.inc';
-include_once 'libs/acl_loader.inc';
+include_once 'libs/acl_loader.php';
 
 class gui extends Controller {
 

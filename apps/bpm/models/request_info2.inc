@@ -1,6 +1,6 @@
 <?php
-include_once 'libs/model.inc';
-include_once 'includes/auth.inc';
+include_once 'libs/model.php';
+include_once 'libs/auth.php';
 
 class request_info2 extends Model {
 

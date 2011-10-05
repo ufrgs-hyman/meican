@@ -1,6 +1,6 @@
 <?php
 
-include_once 'libs/model.inc';
+include_once 'libs/model.php';
 
 class Tree_Model extends Model {
 

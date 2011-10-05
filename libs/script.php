@@ -1,5 +1,5 @@
 <?php
-include_once 'includes/common.inc';
+include_once 'libs/common.php';
 
 class Script {
 

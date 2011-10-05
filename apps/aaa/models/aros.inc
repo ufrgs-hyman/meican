@@ -1,6 +1,6 @@
 <?php
 
-include_once 'libs/tree_model.inc';
+include_once 'libs/tree_model.php';
 
 class Aros extends Tree_Model {
 

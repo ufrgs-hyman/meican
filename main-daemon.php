@@ -5,7 +5,7 @@
 echo date("Y M j - H:i:s");
 $init_session = false;
 include_once 'meican.conf.php';
-include_once 'libs/database.inc';
+include_once 'libs/database.php';
 
 $mdb2 = MDB2::singleton(Framework::getDatabaseString());
 if (MDB2::isError($mdb2)) {

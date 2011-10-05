@@ -1,7 +1,7 @@
 <?php
 
-include_once 'libs/resource_model.inc';
-include_once 'includes/auth.inc';
+include_once 'libs/resource_model.php';
+include_once 'libs/auth.php';
 
 class request_info extends Resource_Model {
 

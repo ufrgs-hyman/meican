@@ -1,6 +1,6 @@
 <?php
 
-include_once 'libs/resource_model.inc';
+include_once 'libs/resource_model.php';
 include_once 'apps/circuits/models/timer_lib.inc';
 
 class timer_info extends Resource_Model {

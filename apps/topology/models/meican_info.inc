@@ -1,6 +1,6 @@
 <?php
 
-include_once 'libs/model.inc';
+include_once 'libs/model.php';
 
 class meican_info extends Model {
     

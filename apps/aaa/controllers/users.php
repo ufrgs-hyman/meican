@@ -3,13 +3,13 @@
 defined ('__MEICAN') or die ("Invalid access.");
 
 include_once 'libs/controller.php';
-include_once 'includes/auth.inc';
-include_once 'includes/language.inc';
+include_once 'libs/auth.php';
+include_once 'libs/language.php';
 include_once 'apps/aaa/models/user_info.inc';
 include_once 'apps/aaa/models/group_info.inc';
 include_once 'apps/aaa/models/aros.inc';
 include_once 'apps/aaa/models/acos.inc';
-include_once 'libs/acl_loader.inc';
+include_once 'libs/acl_loader.php';
 
 class users extends Controller {
 

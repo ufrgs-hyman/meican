@@ -1,7 +1,7 @@
 <?php
 
 require_once 'MDB2.php';
-include_once 'libs/model.inc';
+include_once 'libs/model.php';
 
 class Database {
     private $result;

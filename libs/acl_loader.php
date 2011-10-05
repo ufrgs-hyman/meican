@@ -1,11 +1,11 @@
 <?php
 
-include_once 'libs/tree_model.inc';
-include_once 'includes/auth.inc';
+include_once 'libs/tree_model.php';
+include_once 'libs/auth.php';
 include_once 'apps/aaa/models/aros.inc';
 include_once 'apps/aaa/models/acos.inc';
 include_once 'apps/aaa/models/aros_acos.inc';
-include_once 'includes/common.inc';
+include_once 'libs/common.php';
 
 class AclLoader extends Tree_Model {
 

@@ -1,6 +1,6 @@
 <?php
 
-include_once("libs/domain.inc");
+include_once("libs/domain.php");
 
 class OSCARSReservation {
     private $oscarsUrl;

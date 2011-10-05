@@ -1,5 +1,5 @@
 <?php
-include_once('libs/acl_loader.inc');
+include_once('libs/acl_loader.php');
 
 
 class MenuView {

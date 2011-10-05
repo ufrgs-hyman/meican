@@ -4,7 +4,7 @@ defined('__MEICAN') or die("Invalid access.");
 
 include_once 'libs/controller.php';
 
-include_once 'includes/common.inc';
+include_once 'libs/common.php';
 
 include_once 'apps/circuits/controllers/flows.php';
 include_once 'apps/circuits/controllers/timers.php';

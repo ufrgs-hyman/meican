@@ -3,7 +3,7 @@
 defined ('__MEICAN') or die ("Invalid access.");
 
 include_once 'libs/controller.php';
-include_once 'includes/auth.inc';
+include_once 'libs/auth.php';
 
 class info_box extends Controller {
 

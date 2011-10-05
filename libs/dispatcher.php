@@ -42,8 +42,9 @@ class Dispatcher {
 
     function dispatch() {
         //set_error_handler('myErrorHandler');
-        
-        if (array_key_exists('url', $_GET))
+        if (!empty($_SERVER['PATH_INFO']))
+            $url = $_SERVER['PATH_INFO'];
+        else if (array_key_exists('url', $_GET))
             $url = Common::GET('url');
         else
             $url = null;
