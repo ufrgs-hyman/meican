@@ -135,12 +135,12 @@
 
                 if ($(divId).css("display") == "none") {
                     $(divId).slideDown();
-                    $(imageId).attr("src", baseUrl+"layouts/img/minus.gif" );
+                    $(imageId).attr("src", baseUrl+"webroot/img/minus.gif" );
                 }
 
                 else {
                     $(divId).slideUp();
-                    $(imageId).attr("src", baseUrl+"layouts/img/plus.gif");
+                    $(imageId).attr("src", baseUrl+"webroot/img/plus.gif");
                 }
 
             }

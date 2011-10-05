@@ -32,7 +32,7 @@
             <td>
                 <?php if ($u->editable): ?>
                 <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "usr_id:$u->id")); ?>">
-                    <img class="edit" src="<?php echo $this->url(''); ?>layouts/img/edit_1.png"/>
+                    <img class="edit" src="<?php echo $this->url(''); ?>webroot/img/edit_1.png"/>
                 </a>
                 <?php endif; ?>
             </td>

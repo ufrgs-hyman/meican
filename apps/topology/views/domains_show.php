@@ -29,7 +29,7 @@ $domains = $this->passedArgs;
             </td>
             <td>
                 <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "dom_id:$d->id")); ?>">
-                    <img class="edit" src="<?php echo $this->url(''); ?>layouts/img/edit_1.png"/>
+                    <img class="edit" src="<?php echo $this->url(''); ?>webroot/img/edit_1.png"/>
                 </a>
             </td>                
             <td>

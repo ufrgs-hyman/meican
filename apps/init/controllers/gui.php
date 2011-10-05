@@ -67,7 +67,7 @@ class gui extends Controller {
         if ($acl->checkACL("create", 'urn_info')) {
             $icon = new stdClass();
             $icon->name = _('New reservation');
-            $icon->figure = 'layouts/img/new_reservation.png';
+            $icon->figure = 'webroot/img/new_reservation.png';
             $icon->link = array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'add');
             $icons[] = $icon;
         }
@@ -75,7 +75,7 @@ class gui extends Controller {
         if ($acl->checkACL("read", 'reservation_info')) {
             $icon = new stdClass();
             $icon->name = _('Reservations');
-            $icon->figure = 'layouts/img/reservations_list.png';
+            $icon->figure = 'webroot/img/reservations_list.png';
             $icon->link = array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'show');
             $icons[] = $icon;
         }
@@ -83,7 +83,7 @@ class gui extends Controller {
         if ($acl->checkACL("read", 'request_info')) {
             $icon = new stdClass();
             $icon->name = _('Requests');
-            $icon->figure = 'layouts/img/requests_1.png';
+            $icon->figure = 'webroot/img/requests_1.png';
             $icon->link = array('app' => 'bpm', 'controller' => 'requests', 'action' => 'show');
             $icons[] = $icon;
         }
@@ -91,7 +91,7 @@ class gui extends Controller {
         if ($acl->checkACL("read", 'group_info')) {
             $icon = new stdClass();
             $icon->name = _('Management');
-            $icon->figure = 'layouts/img/management.png';
+            $icon->figure = 'webroot/img/management.png';
             $icon->link = array('app' => 'aaa', 'controller' => 'users', 'action' => 'show');
             $icons[] = $icon;
         }

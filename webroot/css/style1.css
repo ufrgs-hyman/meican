@@ -14,7 +14,7 @@
 /* Tabela de disposição dos boxes iniciais */
 body {
        background-color: white;
-       background-image: url('img/footer.png');
+       background-image: url('../img/footer.png');
        background-position: bottom;
        background-repeat: repeat-x;
        font-family: helvetica, arial;
@@ -276,7 +276,7 @@ input[type='checkbox'] {
 }
 
 input.delete{
-    background-image:  url('img/remove.png') ;
+    background-image:  url('../img/remove.png') ;
     background-repeat:  no-repeat;
     background-position: 3px 2px;
    /* figura tem 18px 18px*/
@@ -284,7 +284,7 @@ input.delete{
 }
 
 input.add{
-    background-image:  url('img/add2_2.png') ;
+    background-image:  url('../img/add2_2.png') ;
     background-repeat:  no-repeat;
     background-position: 3px 2px;
     /* figura tem 18px 18px*/
@@ -292,7 +292,7 @@ input.add{
 }
 
 input.add_new{
-    background-image:  url('img/add2_2.png') ;
+    background-image:  url('../img/add2_2.png') ;
     background-repeat:  no-repeat;
     background-position: 3px 2px;
     /* figura tem 18px 18px*/
@@ -300,14 +300,14 @@ input.add_new{
 }
 
 input.update{
-    background-image:  url('img/update.png') ;
+    background-image:  url('../img/update.png') ;
     background-repeat:  no-repeat;
     background-position: 3px 2px;
     /* figura tem 18px 18px*/
 }
 
 input.cancel{
-    background-image:  url('img/cancel.png') ;
+    background-image:  url('../img/cancel.png') ;
     background-repeat:  no-repeat;
     background-position: 3px 2px;
     /* figura tem 18px 18px*/
@@ -316,7 +316,7 @@ input.cancel{
 }
 
 input.refresh{
-    background-image:  url('img/refresh.png') ;
+    background-image:  url('../img/refresh.png') ;
     background-repeat:  no-repeat;
     background-position: 3px 2px;
     /* figura tem 18px 18px*/
@@ -329,7 +329,7 @@ input.refresh{
 }
 
 input.save{
-    background-image:  url('img/save_1.png') ;
+    background-image:  url('../img/save_1.png') ;
     background-repeat:  no-repeat;
     background-position: 3px 2px;
     /* figura tem 18px 18px*/
@@ -337,7 +337,7 @@ input.save{
 }
 
 input.ok{
-    background-image:  url('img/ok.png') ;
+    background-image:  url('../img/ok.png') ;
     background-repeat:  no-repeat;
     background-position: 3px 2px;
     /* figura tem 18px 18px*/
@@ -345,7 +345,7 @@ input.ok{
 }
 
 input.next{
-    background-image:  url('img/next.png') ;
+    background-image:  url('../img/next.png') ;
     background-repeat:  no-repeat;
     background-position: 3px 2px;
     /* figura tem 18px 18px*/
@@ -366,56 +366,56 @@ div.control_tab {
 }
 
 input.back{
-    background-image:  url('img/back.png') ;
+    background-image:  url('../img/back.png') ;
     background-repeat:  no-repeat;
     background-position: 3px 2px;
     /* figura tem 18px 18px*/
     float: right;
 }
 input.password{
-    background-image:  url('img/password_1.png') ;
+    background-image:  url('../img/password_1.png') ;
     background-repeat:  no-repeat;
     background-position: 3px 2px;
     /* figura tem 18px 18px*/
 }
 input.answer{
-    background-image:  url('img/answer_1.png') ;
+    background-image:  url('../img/answer_1.png') ;
     background-repeat:  no-repeat;
     background-position: 3px 2px;
     /* figura tem 18px 18px*/
 }
 input.remove{
-    background-image:  url('img/remove.png') ;
+    background-image:  url('../img/remove.png') ;
     background-repeat:  no-repeat;
     background-position: 3px 2px;
     /* figura tem 18px 18px*/
 }
 input.zoom{
-    background-image:  url('img/zoom_fit.png') ;
+    background-image:  url('../img/zoom_fit.png') ;
     background-repeat:  no-repeat;
     background-position: 1px 1px;
     /* figura tem 18px 18px*/
 }
 input.clear{
-    background-image:  url('img/clear.png') ;
+    background-image:  url('../img/clear.png') ;
     background-repeat:  no-repeat;
     background-position: 4px 3px;
     /* figura tem 18px 18px*/
 }
 input.invert{
-    background-image:  url('img/switch.png') ;
+    background-image:  url('../img/switch.png') ;
     background-repeat:  no-repeat;
     background-position: 3px 2px;
     /* figura tem 18px 18px*/
 }
 input.mapview{
-    background-image:  url('img/map.png') ;
+    background-image:  url('../img/map.png') ;
     background-repeat:  no-repeat;
     background-position: 2px -1px;
     /* figura tem 18px 18px*/
 }
 input.advancedview{
-    background-image:  url('img/advanced_directory.png') ;
+    background-image:  url('../img/advanced_directory.png') ;
     background-repeat:  no-repeat;
     background-position: 2px 2px;
     /* figura tem 18px 18px*/
@@ -767,7 +767,7 @@ table .reservation_name {
 }
 
 div#flash_box .closeFlash {
-    background-image:  url('img/delete_2.png') ;
+    background-image:  url('../img/delete_2.png') ;
     background-color: transparent;
     background-repeat:  no-repeat;
     background-position: center;  

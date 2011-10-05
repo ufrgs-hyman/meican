@@ -93,7 +93,7 @@
                             <td colspan="3">
                                 <div id="addHops" style="display:none">
                                     Select URN:
-                                    <img class="delete" id="removeHop" onclick="lessFields(this);" src="<?php echo $this->url(''); ?>layouts/img/remove.png"/>
+                                    <img class="delete" id="removeHop" onclick="lessFields(this);" src="<?php echo $this->url(''); ?>webroot/img/remove.png"/>
                                     <select id="selectHops" style="width: 100%" onchange="edit_mapPlaceDevice();"></select><br />
                                 </div>
                             </td>

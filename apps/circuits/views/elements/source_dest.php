@@ -37,7 +37,7 @@ $domains = $argsToElement->domains;
                         echo "<option value='$d->id'>$d->name</option>";
                 ?>
             </select>
-            <img style="display:none" id="src_loading" src="<?php echo $this->url(''); ?>includes/images/ajax-loader.gif">
+            <img style="display:none" id="src_loading" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif">
         </td>
 
         <td>
@@ -56,7 +56,7 @@ $domains = $argsToElement->domains;
                         echo "<option value='$d->id'>$d->name</option>";
                 ?>
             </select>
-            <img style="display:none" id="dst_loading" src="<?php echo $this->url(''); ?>includes/images/ajax-loader.gif">
+            <img style="display:none" id="dst_loading" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif">
         </td>
     </tr>
 

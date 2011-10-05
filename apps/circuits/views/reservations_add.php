@@ -29,7 +29,7 @@ $freq_types[] = $freq;
 
 ?>
 
-<link type="text/css" href="layouts/jquery-ui-1.8.13.custom.css" rel="stylesheet" />
+<link type="text/css" href="webroot/css/jquery-ui-1.8.13.custom.css" rel="stylesheet" />
 
 <h1><?php echo _("Circuit reservation wizard"); ?></h1>
 

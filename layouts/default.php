@@ -6,8 +6,8 @@
         <title><?php echo Framework::getSystemName(); ?></title>
 
         <!-- GLOBAL JS SCRIPTS AND IN-LINE FUNCTIONS -->
-        <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>layouts/style1.css" />
-        <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>layouts/timePicker.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/style1.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/timePicker.css" />
 
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/jquery.min.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/jquery-ui-1.8.16.custom.min.js"></script>
@@ -81,7 +81,7 @@
         <div id="htmlToLoad" style="display: none"></div>
             <div id="header" class="header">
                 <div id="logo_box">
-                    <a href="<?php echo $this->buildLink(array('action' => 'welcome')); ?>"><img class="logo" alt="MEICAN" src="<?php echo $this->url(''); ?>layouts/img/meican_white.png"/></a>
+                    <a href="<?php echo $this->buildLink(array('action' => 'welcome')); ?>"><img class="logo" alt="MEICAN" src="<?php echo $this->url(''); ?>webroot/img/meican_white.png"/></a>
                 </div>
 
                 <div id="info_box">
@@ -108,14 +108,14 @@
                     <?php echo $this->element('menu', array('app' => 'init'));?>
                 </div>
                 <div id="load_img" style="display: none">
-                    <img src="<?php echo $base; ?>layouts/img/ajax-loader.gif" alt="<?php echo _('Loading'); ?>"/>
+                    <img src="<?php echo $base; ?>webroot/img/ajax-loader.gif" alt="<?php echo _('Loading'); ?>"/>
                 </div>
                 <div id="main">
                     <?php echo $content_for_body; //debug($this->script->jsFiles);?>
                 </div>
             </div>
            <!-- <div id="footer">
-                <img src="<?php echo $this->url(''); ?>layouts/img/footer.png" style="width:100%; position: absolute; height: 25px;"></img>
+                <img src="<?php echo $this->url(''); ?>webroot/img/footer.png" style="width:100%; position: absolute; height: 25px;"></img>
             </div>-->
     </body>
 

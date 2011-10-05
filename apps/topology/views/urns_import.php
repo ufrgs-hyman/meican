@@ -26,7 +26,7 @@ $domain = $this->passedArgs->domain;
         <?php foreach ($urns as $u): ?>
             <tr id="newline<?php echo $u->id; ?>">
                 <td class="edit" colspan="3">
-                    <img class="delete" src="<?php echo $this->url(''); ?>layouts/img/delete.png" onclick="deleteURNLine('<?php echo $u->id; ?>');"/>
+                    <img class="delete" src="<?php echo $this->url(''); ?>webroot/img/delete.png" onclick="deleteURNLine('<?php echo $u->id; ?>');"/>
                 </td>
 
                 <td>
