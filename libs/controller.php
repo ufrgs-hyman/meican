@@ -47,11 +47,11 @@ class Controller {
     }
 
     protected function addScript($script) {
-        $this->scripts[] = "apps/$this->app/views/scripts/$script.js?1";
+        $this->scripts[] = "apps/$this->app/webroot/js/$script.js?1";
     }
 
     protected function setInlineScript($script) {
-        $this->inlineScript = "apps/$this->app/views/scripts/$script.js?1";
+        $this->inlineScript = "apps/$this->app/webroot/js/$script.js?1";
     }
 
     public function setFlash($message, $status='info') {

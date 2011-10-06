@@ -9,37 +9,37 @@
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/style1.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/timePicker.css" />
 
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/jquery.min.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/jquery-ui-1.8.16.custom.min.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/jquery_history.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/jquery.crypt.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/jquery.form.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/info_box.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/webroot/js/jquery.min.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/webroot/js/jquery-ui-1.8.16.custom.min.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/webroot/js/jquery_history.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/webroot/js/jquery.crypt.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/webroot/js/jquery.form.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/webroot/js/info_box.js"></script>
 
 
         <!-- ESSE SCRIPT TÁ DANDO PROBLEMA
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/jquery-1.4.2.min.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/jquery-1.4.2.min.js"></script>
         -->
 
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/topology/views/scripts/devices.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/topology/views/scripts/networks.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/topology/views/scripts/urns.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/topology/webroot/js/devices.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/topology/webroot/js/networks.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/topology/webroot/js/urns.js"></script>
 
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/aaa/views/scripts/password.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/aaa/views/scripts/select.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/aaa/webroot/js/password.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/aaa/webroot/js/select.js"></script>
 
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/jquery-ui.min.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/googlemaps.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/markerClusterer.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/StyledMarker.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/map.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/reservations.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/reservations_add.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/flows.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/timers.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/views/scripts/jquery.timePicker.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/jquery-ui.min.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/googlemaps.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/markerClusterer.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/StyledMarker.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/map.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/reservations.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/reservations_add.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/flows.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/timers.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/jquery.timePicker.js"></script>
 
-	<script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/views/scripts/jquery.pjax.js"></script>
+	<script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/webroot/js/jquery.pjax.js"></script>
 
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <script type ="text/javascript">
