@@ -1,5 +1,5 @@
 <?php $args = $this->passedArgs ?>
-<?php $base = Dispatcher::getInstance()->base.'/'; ?>
+<?php $base = Dispatcher::getInstance()->url(); ?>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -9,12 +9,12 @@
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/style1.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/timePicker.css" />
 
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/webroot/js/jquery.min.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/webroot/js/jquery-ui-1.8.16.custom.min.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/webroot/js/jquery_history.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/webroot/js/jquery.crypt.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/webroot/js/jquery.form.js"></script>
-        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/webroot/js/info_box.js"></script>
+        <script type="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>webroot/js/jquery.min.js"></script>
+        <script type="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>webroot/js/jquery-ui-1.8.16.custom.min.js"></script>
+        <script type="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>webroot/js/jquery.crypt.js"></script>
+        <script type="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>webroot/js/jquery.form.js"></script>
+        <script type="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/webroot/js/info_box.js"></script>
+        <script type="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>webroot/js/jquery.pjax.js"></script>
 
 
         <!-- ESSE SCRIPT TÁ DANDO PROBLEMA
@@ -38,8 +38,6 @@
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/flows.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/timers.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/jquery.timePicker.js"></script>
-
-	<script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/init/webroot/js/jquery.pjax.js"></script>
 
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <script type ="text/javascript">
