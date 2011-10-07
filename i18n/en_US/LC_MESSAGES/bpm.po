@@ -8,69 +8,69 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-12 14:42-0300\n"
+"POT-Creation-Date: 2011-10-07 15:22-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
-#: views/elements/requests_table.php:8 views/requests_show.php:11
-#: views/requests_show.php:41
-msgid "Domain source"
+#: views/ode_show.php:8
+msgid "Process"
 msgstr ""
 
-#: views/elements/requests_table.php:9 views/requests_show.php:13
-#: views/requests_show.php:43
-msgid "Requester"
+#: views/ode_show.php:9
+msgid "Version"
 msgstr ""
 
-#: views/elements/requests_table.php:10 views/requests_show.php:46
-#: views/requests_replyRequest.php:91
-msgid "Response"
+#: views/ode_show.php:10
+msgid "PID"
 msgstr ""
 
-#: views/elements/requests_table.php:11 views/requests_show.php:47
-#: views/requests_replyRequest.php:101
-msgid "Message"
+#: views/ode_show.php:11
+msgid "Status"
 msgstr ""
 
-#: views/elements/requests_table.php:20 views/requests_show.php:30
-msgid "Answer"
+#: views/ode_show.php:12
+msgid "In progress"
 msgstr ""
 
-#: views/requests_show.php:6
-msgid "Pending incoming requests"
+#: views/ode_show.php:13
+msgid "Completed"
 msgstr ""
 
-#: views/requests_show.php:12 views/requests_show.php:42
-msgid "Domain destination"
+#: views/ode_show.php:14
+msgid "Error"
 msgstr ""
 
-#: views/requests_show.php:14 views/requests_show.php:44
-msgid "Resource type"
+#: views/ode_show.php:15
+msgid "Failed"
 msgstr ""
 
-#: views/requests_show.php:15 views/requests_show.php:45
-msgid "Resource description"
+#: views/ode_show.php:16
+msgid "Suspended"
 msgstr ""
 
-#: views/requests_show.php:36
-msgid "Finished incoming requests"
+#: views/ode_show.php:23
+msgid "Undeploy"
 msgstr ""
 
-#: views/requests_show.php:67
-msgid "Delete"
+#: views/ode_show.php:39
+msgid "Deploy process"
 msgstr ""
 
-#: views/requests_show.php:67
-msgid "The selected requests will be deleted."
+#: views/ode_show.php:45
+msgid "Name"
 msgstr ""
 
-#: views/requests_show.php:67
-msgid "Do you confirm?"
+#: views/ode_show.php:53
+msgid "File"
+msgstr ""
+
+#: views/ode_show.php:61
+msgid "Ok"
 msgstr ""
 
 #: views/requests_createRequest.php:12
@@ -87,6 +87,30 @@ msgstr ""
 
 #: views/requests_createRequest.php:50
 msgid "Create"
+msgstr ""
+
+#: views/elements/requests_table.php:8 views/requests_show.php:11
+#: views/requests_show.php:41
+msgid "Domain source"
+msgstr ""
+
+#: views/elements/requests_table.php:9 views/requests_show.php:13
+#: views/requests_show.php:43
+msgid "Requester"
+msgstr ""
+
+#: views/elements/requests_table.php:10 views/requests_replyRequest.php:91
+#: views/requests_show.php:46
+msgid "Response"
+msgstr ""
+
+#: views/elements/requests_table.php:11 views/requests_replyRequest.php:101
+#: views/requests_show.php:47
+msgid "Message"
+msgstr ""
+
+#: views/elements/requests_table.php:20 views/requests_show.php:30
+msgid "Answer"
 msgstr ""
 
 #: views/requests_replyRequest.php:12
@@ -149,60 +173,36 @@ msgstr ""
 msgid "REJECT"
 msgstr ""
 
-#: views/ode_show.php:8
-msgid "Process"
+#: views/requests_show.php:6
+msgid "Pending incoming requests"
 msgstr ""
 
-#: views/ode_show.php:9
-msgid "Version"
+#: views/requests_show.php:12 views/requests_show.php:42
+msgid "Domain destination"
 msgstr ""
 
-#: views/ode_show.php:10
-msgid "PID"
+#: views/requests_show.php:14 views/requests_show.php:44
+msgid "Resource type"
 msgstr ""
 
-#: views/ode_show.php:11
-msgid "Status"
+#: views/requests_show.php:15 views/requests_show.php:45
+msgid "Resource description"
 msgstr ""
 
-#: views/ode_show.php:12
-msgid "In progress"
+#: views/requests_show.php:36
+msgid "Finished incoming requests"
 msgstr ""
 
-#: views/ode_show.php:13
-msgid "Completed"
+#: views/requests_show.php:67
+msgid "Delete"
 msgstr ""
 
-#: views/ode_show.php:14
-msgid "Error"
+#: views/requests_show.php:67
+msgid "The selected requests will be deleted."
 msgstr ""
 
-#: views/ode_show.php:15
-msgid "Failed"
-msgstr ""
-
-#: views/ode_show.php:16
-msgid "Suspended"
-msgstr ""
-
-#: views/ode_show.php:23
-msgid "Undeploy"
-msgstr ""
-
-#: views/ode_show.php:39
-msgid "Deploy process"
-msgstr ""
-
-#: views/ode_show.php:45
-msgid "Name"
-msgstr ""
-
-#: views/ode_show.php:53
-msgid "File"
-msgstr ""
-
-#: views/ode_show.php:61
-msgid "Ok"
+#: views/requests_show.php:67
+msgid "Do you confirm?"
 msgstr ""
 
 #: controllers/ode.php:42

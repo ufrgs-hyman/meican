@@ -2,14 +2,95 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-12 14:42-0300\n"
+"POT-Creation-Date: 2011-10-07 15:22-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Felipe <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+
+#: views/elements/menu.php:4 controllers/menu.php:28
+msgid "Circuits"
+msgstr ""
+
+#: views/elements/menu.php:5 controllers/gui.php:69
+msgid "New reservation"
+msgstr ""
+
+#: views/elements/menu.php:6 controllers/menu.php:29 controllers/gui.php:77
+msgid "Reservations"
+msgstr ""
+
+#: views/elements/menu.php:8
+msgid "Topologies"
+msgstr ""
+
+#: views/elements/menu.php:9
+msgid "MEICANs"
+msgstr ""
+
+#: views/elements/menu.php:10 controllers/menu.php:32
+msgid "Domains"
+msgstr ""
+
+#: views/elements/menu.php:11 controllers/menu.php:33
+msgid "Networks"
+msgstr ""
+
+#: views/elements/menu.php:12 controllers/menu.php:34
+msgid "Devices"
+msgstr ""
+
+#: views/elements/menu.php:13 controllers/menu.php:35
+msgid "URNs"
+msgstr ""
+
+#: views/elements/menu.php:15 views/elements/menu.php:16
+#: controllers/menu.php:37
+msgid "Users"
+msgstr ""
+
+#: views/elements/menu.php:17 controllers/menu.php:39
+msgid "Groups"
+msgstr ""
+
+#: views/elements/menu.php:18
+msgid "Access control"
+msgstr ""
+
+#: views/elements/menu.php:20 controllers/menu.php:42
+msgid "BPM"
+msgstr ""
+
+#: views/elements/menu.php:21 controllers/menu.php:43 controllers/gui.php:85
+msgid "Requests"
+msgstr ""
+
+#: views/elements/menu.php:22 controllers/menu.php:44
+msgid "ODE"
+msgstr ""
+
+#: views/elements/info_box.php:7
+msgid "My settings"
+msgstr ""
+
+#: views/elements/info_box.php:10
+msgid "Help"
+msgstr ""
+
+#: views/elements/info_box.php:13
+msgid "About"
+msgstr ""
+
+#: views/elements/info_box.php:16
+msgid "Sign out"
+msgstr ""
+
+#: views/elements/info_box.php:19
+msgid "Server time"
+msgstr ""
 
 #: views/login.php:35
 msgid "About MEICAN"
@@ -43,100 +124,20 @@ msgstr ""
 msgid "Sign in"
 msgstr ""
 
-#: views/gui.php:149
-msgid "Not logged in"
-msgstr ""
-
-#: views/gui.php:152
-msgid "Session Expired"
-msgstr ""
-
-#: views/gui.php:238
-msgid "Loading"
-msgstr ""
-
-#: views/info_box.php:7
-msgid "My settings"
-msgstr ""
-
-#: views/info_box.php:10
-msgid "Help"
-msgstr ""
-
-#: views/info_box.php:13
-msgid "About"
-msgstr ""
-
-#: views/info_box.php:16
-msgid "Sign out"
-msgstr ""
-
-#: views/info_box.php:19
-msgid "Server time"
-msgstr ""
-
-#: controllers/login.php:44
-msgid "Failed on authentication"
-msgstr ""
-
-#: controllers/menu.php:31
+#: controllers/menu.php:27
 msgid "Dashboard"
 msgstr ""
 
-#: controllers/menu.php:32
-msgid "Circuits"
-msgstr ""
-
-#: controllers/menu.php:33 controllers/gui.php:77
-msgid "Reservations"
-msgstr ""
-
-#: controllers/menu.php:35
+#: controllers/menu.php:31
 msgid "Domain"
 msgstr ""
 
-#: controllers/menu.php:36
-msgid "Domains"
-msgstr ""
-
-#: controllers/menu.php:37
-msgid "Networks"
-msgstr ""
-
 #: controllers/menu.php:38
-msgid "Devices"
-msgstr ""
-
-#: controllers/menu.php:39
-msgid "URNs"
-msgstr ""
-
-#: controllers/menu.php:41
-msgid "Users"
-msgstr ""
-
-#: controllers/menu.php:42
 msgid "My Account"
 msgstr ""
 
-#: controllers/menu.php:43
-msgid "Groups"
-msgstr ""
-
-#: controllers/menu.php:44
+#: controllers/menu.php:40
 msgid "Access Control List"
-msgstr ""
-
-#: controllers/menu.php:46
-msgid "BPM"
-msgstr ""
-
-#: controllers/menu.php:47 controllers/gui.php:85
-msgid "Requests"
-msgstr ""
-
-#: controllers/menu.php:48
-msgid "ODE"
 msgstr ""
 
 #: controllers/gui.php:50
@@ -151,10 +152,10 @@ msgstr ""
 msgid "new requests to be authorized"
 msgstr ""
 
-#: controllers/gui.php:69
-msgid "New reservation"
-msgstr ""
-
 #: controllers/gui.php:93
 msgid "Management"
+msgstr ""
+
+#: controllers/login.php:44
+msgid "Failed on authentication"
 msgstr ""

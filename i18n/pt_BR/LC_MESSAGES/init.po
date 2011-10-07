@@ -2,14 +2,109 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-12 14:42-0300\n"
+"POT-Creation-Date: 2011-10-07 15:22-0300\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Leonardo <lfaganello@gmail.com>\n"
+"Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+
+#: views/elements/menu.php:4
+#: controllers/menu.php:28
+msgid "Circuits"
+msgstr "Circuitos"
+
+#: views/elements/menu.php:5
+#: controllers/gui.php:69
+msgid "New reservation"
+msgstr "Nova reserva"
+
+#: views/elements/menu.php:6
+#: controllers/menu.php:29
+#: controllers/gui.php:77
+msgid "Reservations"
+msgstr "Reservas"
+
+#: views/elements/menu.php:8
+msgid "Topologies"
+msgstr "Topologias"
+
+#: views/elements/menu.php:9
+msgid "MEICANs"
+msgstr "MEICANs"
+
+#: views/elements/menu.php:10
+#: controllers/menu.php:32
+msgid "Domains"
+msgstr "Domínios"
+
+#: views/elements/menu.php:11
+#: controllers/menu.php:33
+msgid "Networks"
+msgstr "Redes"
+
+#: views/elements/menu.php:12
+#: controllers/menu.php:34
+msgid "Devices"
+msgstr "Dispositivos"
+
+#: views/elements/menu.php:13
+#: controllers/menu.php:35
+msgid "URNs"
+msgstr "URNs"
+
+#: views/elements/menu.php:15
+#: views/elements/menu.php:16
+#: controllers/menu.php:37
+msgid "Users"
+msgstr "Usuários"
+
+#: views/elements/menu.php:17
+#: controllers/menu.php:39
+msgid "Groups"
+msgstr "Grupos"
+
+#: views/elements/menu.php:18
+msgid "Access control"
+msgstr "Controle de acesso"
+
+#: views/elements/menu.php:20
+#: controllers/menu.php:42
+msgid "BPM"
+msgstr "BPM"
+
+#: views/elements/menu.php:21
+#: controllers/menu.php:43
+#: controllers/gui.php:85
+msgid "Requests"
+msgstr "Requisições"
+
+#: views/elements/menu.php:22
+#: controllers/menu.php:44
+msgid "ODE"
+msgstr "ODE"
+
+#: views/elements/info_box.php:7
+msgid "My settings"
+msgstr "Minhas configurações"
+
+#: views/elements/info_box.php:10
+msgid "Help"
+msgstr "Ajuda"
+
+#: views/elements/info_box.php:13
+msgid "About"
+msgstr "Sobre"
+
+#: views/elements/info_box.php:16
+msgid "Sign out"
+msgstr "Sair"
+
+#: views/elements/info_box.php:19
+msgid "Server time"
+msgstr "Hora do servidor"
 
 #: views/login.php:35
 msgid "About MEICAN"
@@ -43,101 +138,21 @@ msgstr "Esqueceu sua senha?"
 msgid "Sign in"
 msgstr "Entrar"
 
-#: views/gui.php:149
-msgid "Not logged in"
-msgstr "Não logado"
-
-#: views/gui.php:152
-msgid "Session Expired"
-msgstr "Sessão expirada"
-
-#: views/gui.php:238
-msgid "Loading"
-msgstr "Carregando"
-
-#: views/info_box.php:7
-msgid "My settings"
-msgstr "Minhas configurações"
-
-#: views/info_box.php:10
-msgid "Help"
-msgstr "Ajuda"
-
-#: views/info_box.php:13
-msgid "About"
-msgstr "Sobre"
-
-#: views/info_box.php:16
-msgid "Sign out"
-msgstr "Sair"
-
-#: views/info_box.php:19
-msgid "Server time"
-msgstr "Hora do servidor"
-
-#: controllers/login.php:44
-msgid "Failed on authentication"
-msgstr "Falha na autenticação"
-
-#: controllers/menu.php:31
+#: controllers/menu.php:27
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: controllers/menu.php:32
-msgid "Circuits"
-msgstr "Circuitos"
-
-#: controllers/menu.php:33 controllers/gui.php:77
-msgid "Reservations"
-msgstr "Reservas"
-
-#: controllers/menu.php:35
+#: controllers/menu.php:31
 msgid "Domain"
 msgstr "Domínio"
 
-#: controllers/menu.php:36
-msgid "Domains"
-msgstr "Domínios"
-
-#: controllers/menu.php:37
-msgid "Networks"
-msgstr "Redes"
-
 #: controllers/menu.php:38
-msgid "Devices"
-msgstr "Dispositivos"
-
-#: controllers/menu.php:39
-msgid "URNs"
-msgstr "URNs"
-
-#: controllers/menu.php:41
-msgid "Users"
-msgstr "Usuários"
-
-#: controllers/menu.php:42
 msgid "My Account"
 msgstr "Minha Conta"
 
-#: controllers/menu.php:43
-msgid "Groups"
-msgstr "Grupos"
-
-#: controllers/menu.php:44
+#: controllers/menu.php:40
 msgid "Access Control List"
 msgstr "Lista de Controle de Acesso"
-
-#: controllers/menu.php:46
-msgid "BPM"
-msgstr "BPM"
-
-#: controllers/menu.php:47 controllers/gui.php:85
-msgid "Requests"
-msgstr "Requisições"
-
-#: controllers/menu.php:48
-msgid "ODE"
-msgstr "ODE"
 
 #: controllers/gui.php:50
 msgid "You have one new request to be authorized"
@@ -151,37 +166,36 @@ msgstr "Você possui"
 msgid "new requests to be authorized"
 msgstr "novas requisições para serem autorizadas"
 
-#: controllers/gui.php:69
-msgid "New reservation"
-msgstr "Nova reserva"
-
 #: controllers/gui.php:93
 msgid "Management"
 msgstr "Gerenciamento"
 
+#: controllers/login.php:44
+msgid "Failed on authentication"
+msgstr "Falha na autenticação"
+
+#~ msgid "Not logged in"
+#~ msgstr "Não logado"
+#~ msgid "Session Expired"
+#~ msgstr "Sessão expirada"
+#~ msgid "Loading"
+#~ msgstr "Carregando"
 #~ msgid "New Reservation"
 #~ msgstr "Nova Reserva"
-
 #~ msgid "About us"
 #~ msgstr "Sobre nós"
-
 #~ msgid "Developers"
 #~ msgstr "Desenvolvedores"
-
 #~ msgid "Terms of service"
 #~ msgstr "Termos do serviço"
-
 #~ msgid "Privacy policy"
 #~ msgstr "Política de privacidade"
-
 #~ msgid "My Settings"
 #~ msgstr "Minhas configurações"
-
 #~ msgid "Sign Out"
 #~ msgstr "Sair"
-
 #~ msgid "Flows"
 #~ msgstr "Fluxos"
-
 #~ msgid "Timers"
 #~ msgstr "Agendamentos"
+
