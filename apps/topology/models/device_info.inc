@@ -23,8 +23,9 @@ class device_info extends Resource_Model {
     }
     
     public function fetchList() {
-        if ($ret = parent::fetchList()){
-            $obj->name = $this->data[0]->dev_ip.' '.$this->data[0]->dev_descr;
+        if ($obj = parent::fetchList()){
+            $obj->name = $this->data[0]->dev_ip.';'.$this->data[0]->dev_descr;
+            return $obj;
         } else
             return false;
     }

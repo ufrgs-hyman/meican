@@ -341,26 +341,11 @@ function get_tree_models($tree_object) {
                 if (is_a($obj_model, "Model")) {
                     $pk = $obj_model->getPrimaryKey();
                     $obj_model->$pk = $node->obj_id;
-
-                    if ($res = $obj_model->fetch()) {
-
-                        $item = $res[0];
-
-                        $attr = $item->getValidInds();
-
-                        $temp = array();
-                        if (!empty($obj_model->displayField)) {
-                            $temp[] = $item->{$obj_model->displayField};
-                        } else
-                            foreach ($attr as $at_name) {
-                                if (($item->attributes[$at_name]->usedInInsert) && !($item->attributes[$at_name]->forceUpdate))
-                                    $temp[] = "$at_name: " . $item->$at_name;
-                            }
-
-                        $obj->id = $node->obj_id;
-                        $obj->name = implode("; ", $temp);
-
-                        $model->objs[] = $obj;
+                    if ($obj = $obj_model->fetchList()){
+                        $model = new stdClass();
+                        $model->id = $node->model;
+                        $model->name = $node->model;
+                        $model->objs[] = $obj; 
                     }
                 }
             }

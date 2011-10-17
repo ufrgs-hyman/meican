@@ -561,15 +561,6 @@ class Model {
             return $obj;
         }
         return false;
-        /*
-         * 
-            if ($obj = $obj_model->fetchList()){
-                $model = new stdClass();
-                $model->id = $node->model;
-                $model->name = $node->model;
-                $model->objs = array($obj);
-         
-         */
     }
 
 }
