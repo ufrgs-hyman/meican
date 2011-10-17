@@ -249,7 +249,7 @@ class acl extends Controller {
                 foreach ($aros as $a) {
                     $aco = new Acos();
                     $aco->model = $acl[2];
-                    $aco->obj_id = $acl[3];
+                    $aco->obj_id = ($acl[3] === "NULL") ? NULL : $acl[3];
                     $acos = $aco->fetch(FALSE);
 
                     $aros_acos = new aros_acos();
@@ -287,7 +287,7 @@ class acl extends Controller {
                 foreach ($aros as $a) {
                     $aco = new Acos();
                     $aco->model = $acl[3];
-                    $aco->obj_id = $acl[4];
+                    $aco->obj_id = ($acl[4] === "NULL") ? NULL : $acl[4];
                     $acos = $aco->fetch(FALSE);
 
                     $aros_acos = new aros_acos();
@@ -324,37 +324,46 @@ function get_tree_models($tree_object) {
     if ($nodes = $tree_object->fetch(FALSE)) {
         foreach ($nodes as $node) {
 
-            if (class_exists($node->model)) {
-            $obj_model = new $node->model;
-            if (is_a($obj_model, "Model")) {
-            $pk = $obj_model->getPrimaryKey();
-            $obj_model->$pk = $node->obj_id;
-            
-            if ($res = $obj_model->fetch()) {
-
-            $item = $res[0];
-
             $model = new stdClass();
             $model->id = $node->model;
             $model->name = $node->model;
-
-            $attr = $item->getValidInds();
-            
-            $temp = array();
-            if (!empty($obj_model->displayField)){
-                $temp[] = $item->{$obj_model->displayField};
-            } else
-                foreach ($attr as $at_name) {
-                    if (($item->attributes[$at_name]->usedInInsert) && !($item->attributes[$at_name]->forceUpdate))
-                        $temp[] = "$at_name: " . $item->$at_name;
-                }
-
-            $obj = new stdClass();
-            $obj->id = $node->obj_id;
-            $obj->name = implode("; ", $temp);
-
             $model->objs = array();
-            $model->objs[] = $obj;
+            
+            $obj = new stdClass();
+
+            if (empty($node->obj_id)) {
+                $obj->id = "NULL";
+                $obj->name = "void";
+
+                $model->objs[] = $obj;
+            } else {
+                $obj_model = new $node->model;
+                if (is_a($obj_model, "Model")) {
+                    $pk = $obj_model->getPrimaryKey();
+                    $obj_model->$pk = $node->obj_id;
+
+                    if ($res = $obj_model->fetch()) {
+
+                        $item = $res[0];
+
+                        $attr = $item->getValidInds();
+
+                        $temp = array();
+                        if (!empty($obj_model->displayField)) {
+                            $temp[] = $item->{$obj_model->displayField};
+                        } else
+                            foreach ($attr as $at_name) {
+                                if (($item->attributes[$at_name]->usedInInsert) && !($item->attributes[$at_name]->forceUpdate))
+                                    $temp[] = "$at_name: " . $item->$at_name;
+                            }
+
+                        $obj->id = $node->obj_id;
+                        $obj->name = implode("; ", $temp);
+
+                        $model->objs[] = $obj;
+                    }
+                }
+            }
 
             $modelInArray = FALSE;
 
@@ -366,13 +375,13 @@ function get_tree_models($tree_object) {
                         if ($o->id == $obj->id) {
                             $objInModel = TRUE;
                         }
-                        
+
                         break;
                     }
-                    
+
                     if (!$objInModel)
                         array_push($models[$model_index]->objs, $obj);
-                
+
                     break;
                 }
             }
@@ -380,12 +389,9 @@ function get_tree_models($tree_object) {
             if (!$modelInArray) {
                 array_push($models, $model);
             }
-            }
-            }
-            }
         }
     }
-    
+
     return $models;
 }
 
