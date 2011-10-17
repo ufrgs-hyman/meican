@@ -33,11 +33,11 @@
                  setInterval("updateSystemTime()", 60000);//<?php // chamada para atualizar a hora?>
                 //$("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
                 
-                $('a').pjax('#main', {error: errorFunc});
+                $('a').pjax('#main', {error: errorFunc, timeout: 2000});
                 $('#main')
                   .bind('start.pjax', function() {
                     clearFlash();
-                    $('#main').empty();
+                    //$('#main').empty();
                     $('#load_img').show();
 
                     clearInterval(js_function_interval);
@@ -46,12 +46,14 @@
                         clearInterval(js_function_interval);
                         
                         $('#flash_box').html($('.flash_box').html());
+                        $('.flash_box').remove();
                         
                         $.each($(".scripts i"), function() {
                             $.getScript($(this).html());
                         });
+                        $('.scripts').remove();
                         $('#load_img').hide();
-                        $('#main').html($('.content').html());
+                        //$('#main').html($('.content').html());
 
                         window.scroll(0, 0);
 
@@ -80,7 +82,8 @@
                             url: content_show,
                             data: param,
                             error: errorFunc,
-                            container: '#main'
+                            container: '#main',
+                            timeout: 5000
                         });
                     return false;
                 });

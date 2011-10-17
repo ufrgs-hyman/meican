@@ -37,6 +37,4 @@
         </div>
 <?php endif; ?>
 
-<div class="content">
-    <?php echo $content_for_body; ?>
-</div>
+<?php echo $content_for_body; ?>
