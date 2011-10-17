@@ -4,6 +4,7 @@ include_once 'libs/resource_model.php';
 include_once 'apps/circuits/models/timer_lib.inc';
 
 class timer_info extends Resource_Model {
+    var $displayField = "summary";
 
     public function timer_info() {
         $this->setTableName("timer_info");

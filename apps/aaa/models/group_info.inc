@@ -5,6 +5,7 @@ include_once 'apps/aaa/models/aros.inc';
 include_once 'apps/aaa/models/acos.inc';
 
 class group_info extends Model {
+    var $displayField = "grp_descr";
 
     function group_info() {
         $this->setTableName("group_info");

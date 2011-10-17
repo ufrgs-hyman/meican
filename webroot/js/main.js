@@ -37,12 +37,13 @@
                 $('#main')
                   .bind('start.pjax', function() {
                     clearFlash();
-                    //$('#main').empty();
+                    $('#main').empty();
                     $('#load_img').show();
 
                     clearInterval(js_function_interval);
                   })
                   .bind('end.pjax',   function(xhr) {
+                        $('#main').hide();
                         clearInterval(js_function_interval);
                         
                         $('#flash_box').html($('.flash_box').html());
@@ -54,7 +55,7 @@
                         $('.scripts').remove();
                         $('#load_img').hide();
                         //$('#main').html($('.content').html());
-
+                        $('#main').show();
                         window.scroll(0, 0);
 
                   });

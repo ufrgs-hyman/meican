@@ -4,6 +4,7 @@ include_once 'libs/resource_model.php';
 include_once 'apps/topology/models/topology.inc';
 
 class flow_info extends Resource_Model {
+    var $displayField = "path";
 
     public function flow_info() {
         $this->setTableName("flow_info");

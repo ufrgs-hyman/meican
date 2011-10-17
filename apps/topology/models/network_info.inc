@@ -3,6 +3,7 @@
 include_once 'libs/resource_model.php';
 
 class network_info extends Resource_Model {
+    var $displayField = "net_descr";
     
     public function network_info() {
 

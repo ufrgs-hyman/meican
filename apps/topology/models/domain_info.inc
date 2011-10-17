@@ -3,6 +3,7 @@
 include_once 'libs/resource_model.php';
 
 class domain_info extends Resource_Model {
+    var $displayField = "dom_descr";
 
     function domain_info() {
 

@@ -3,6 +3,7 @@
 include_once 'libs/resource_model.php';
 
 class device_info extends Resource_Model {
+    //var $displayField = "dev_descr";
     
     public function device_info() {
 

@@ -6,6 +6,7 @@ include_once 'apps/aaa/models/aros.inc';
 include_once 'apps/aaa/models/acos.inc';
 
 class user_info extends Model {
+    var $displayField = "usr_name";
 
     function user_info() {
         $this->setTableName("user_info");

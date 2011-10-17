@@ -3,6 +3,7 @@
 include_once 'libs/resource_model.php';
 
 class urn_info extends Resource_Model {
+    var $displayField = "urn_string";
 
     public function urn_info() {
 

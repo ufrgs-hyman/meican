@@ -8,6 +8,7 @@ include_once 'apps/circuits/models/timer_info.inc';
 include_once 'apps/circuits/models/oscars_reservation.inc';
 
 class reservation_info extends Resource_Model {
+    var $displayField = "res_name";
 
     public function reservation_info() {
         $this->setTableName("reservation_info");

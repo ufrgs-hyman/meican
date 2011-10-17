@@ -339,12 +339,15 @@ function get_tree_models($tree_object) {
             $model->name = $node->model;
 
             $attr = $item->getValidInds();
-
+            
             $temp = array();
-            foreach ($attr as $at_name) {
-                if (($item->attributes[$at_name]->usedInInsert) && !($item->attributes[$at_name]->forceUpdate))
-                    $temp[] = "$at_name: " . $item->$at_name;
-            }
+            if (!empty($obj_model->displayField)){
+                $temp[] = $item->{$obj_model->displayField};
+            } else
+                foreach ($attr as $at_name) {
+                    if (($item->attributes[$at_name]->usedInInsert) && !($item->attributes[$at_name]->forceUpdate))
+                        $temp[] = "$at_name: " . $item->$at_name;
+                }
 
             $obj = new stdClass();
             $obj->id = $node->obj_id;
