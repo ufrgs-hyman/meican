@@ -102,7 +102,7 @@ class Model {
                 $sql = "SELECT * FROM `$tableName`";
         }
         //Framework::debug("fetch",$sql);
-        return $this->querySql($sql, $tableName);
+        return ($this->data = $this->querySql($sql, $tableName));
     }
 
     /**
@@ -535,6 +535,41 @@ class Model {
             return $tmp[0]->{$field};
         else
             return $tmp[0];
+    }
+    
+    public function fetchList(){
+        if ($res = $this->fetch()) {
+
+            $item = $res[0];
+
+
+            $attr = $item->getValidInds();
+            
+            $temp = array();
+            if (!empty($this->displayField)){
+                $temp[] = $item->{$this->displayField};
+            } else
+                foreach ($attr as $at_name) {
+                    if (($item->attributes[$at_name]->usedInInsert) && !($item->attributes[$at_name]->forceUpdate))
+                        $temp[] = "$at_name: " . $item->$at_name;
+                }
+
+            $obj = new stdClass();
+            $obj->id = $node->obj_id;
+            $obj->name = implode("; ", $temp);
+            
+            return $obj;
+        }
+        return false;
+        /*
+         * 
+            if ($obj = $obj_model->fetchList()){
+                $model = new stdClass();
+                $model->id = $node->model;
+                $model->name = $node->model;
+                $model->objs = array($obj);
+         
+         */
     }
 
 }

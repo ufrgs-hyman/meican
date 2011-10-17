@@ -21,6 +21,13 @@ class device_info extends Resource_Model {
         $this->addAttribute("dev_lng","VARCHAR");
         $this->addAttribute("node_id","VARCHAR");
     }
+    
+    public function fetchList() {
+        if ($ret = parent::fetchList()){
+            $obj->name = $this->data[0]->dev_ip.' '.$this->data[0]->dev_descr;
+        } else
+            return false;
+    }
 
 //    public function fetchNetwork() {
 //        if (!isset($this->dev_id)) {
