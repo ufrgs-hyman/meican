@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="webroot/css/login1.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->url(); ?>webroot/css/login1.css" />
         <title><?php echo Framework::getSystemName(); ?></title>
         <script language="JavaScript1.2" src="<?php echo $this->url(''); ?>webroot/js/jquery.min.js"></script>
         <script language="JavaScript1.2" src="<?php echo $this->url(''); ?>webroot/js/jquery.crypt.js"></script>
