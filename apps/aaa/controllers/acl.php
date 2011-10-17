@@ -131,8 +131,10 @@ class acl extends Controller {
             
             $this->setArgsToBody($rights);
             
-            //$aros = get_tree_models(new Aros());
-            //$acos = get_tree_models(new Acos());
+            $aros = get_tree_models(new Aros());
+            Framework::debug("aros",$aros);
+            $acos = get_tree_models(new Acos());
+            Framework::debug("acos",$acos);
             
             $this->setArgsToScript(array(
                 "allow_desc_string" => _("Allow"),
@@ -322,7 +324,9 @@ function get_tree_models($tree_object) {
     if ($nodes = $tree_object->fetch(FALSE)) {
         foreach ($nodes as $node) {
 
+            if (class_exists($node->model)) {
             $obj_model = new $node->model;
+            if (is_a($obj_model, "Model")) {
             $pk = $obj_model->getPrimaryKey();
             $obj_model->$pk = $node->obj_id;
             
@@ -372,6 +376,8 @@ function get_tree_models($tree_object) {
 
             if (!$modelInArray) {
                 array_push($models, $model);
+            }
+            }
             }
             }
         }

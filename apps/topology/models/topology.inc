@@ -83,8 +83,6 @@ class MeicanTopology {
             $urn_info->urn_string = $urn_string;
             $urn_res = $urn_info->fetch();
 
-            Framework::debug("urn fetch",$urn_res);
-
             $urn = new stdClass();
             $urn->urn_id = $urn_res[0]->urn_id;
             $urn->urn_string = $urn_res[0]->urn_string;
@@ -118,8 +116,6 @@ class MeicanTopology {
             $children = $aco_dom[0]->findChildren();
         }
 
-        Framework::debug("children acos",$children);
-
         foreach ($children as $child) {
 
             if ($child->model == "urn_info") {
@@ -128,8 +124,6 @@ class MeicanTopology {
                 $urn_info->urn_id = $child->obj_id;
                 $urn_res = $urn_info->fetch();
 
-                Framework::debug("urn fetch",$urn_res);
-                
                 $urn = new stdClass();
                 $urn->urn_id = $urn_res[0]->urn_id;
                 $urn->urn_string = $urn_res[0]->urn_string;
@@ -156,7 +150,7 @@ class MeicanTopology {
             }
         }
 
-        Framework::debug("urns",$urns);
+        //Framework::debug("urns",$urns);
         
         return $urns;
     }

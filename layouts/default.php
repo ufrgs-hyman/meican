@@ -27,6 +27,7 @@
 
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/aaa/webroot/js/password.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/aaa/webroot/js/select.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/aaa/webroot/js/acl.js"></script>
 
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/jquery-ui.min.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/googlemaps.js"></script>
