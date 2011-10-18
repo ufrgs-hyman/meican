@@ -89,7 +89,7 @@ class Dispatcher {
               header('Location: index.php?message=Session Expired');
 
               } else header('HTTP/1.1 402 Timeout'); */
-            header('Location: '.$this->url('login'));
+            header('Location: '.$this->url('/login'));
             return false;
         }
     }
