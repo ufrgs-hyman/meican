@@ -38,6 +38,8 @@ class Dispatcher {
     public function __construct($defaults = array()) {
         $this->defaults = array_merge(array('app' => 'init', 'controller' => 'gui', 'action' => '', 'param' => array()));
         $this->base = dirname($_SERVER['PHP_SELF']);
+        if ($this->base == '/')
+            $this->base = '';
     }
 
     function dispatch() {

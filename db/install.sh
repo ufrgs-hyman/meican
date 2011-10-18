@@ -5,6 +5,7 @@ pear install mdb2
 pear install pear/MDB2#mysql
 pear install Mail
 pear install Net_SMTP
+a2enmod rewrite
 
 #mkdir /home/www
 #chmod 755 /home/www/
