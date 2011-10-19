@@ -25,7 +25,7 @@ class aros_acos extends Model {
     }
 
     public function delete() {
-        if (parent::delete()) {
+        if (parent::delete(FALSE)) {
             Common::apc_update();
             return TRUE;
         } else

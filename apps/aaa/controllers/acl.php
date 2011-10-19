@@ -55,22 +55,15 @@ class acl extends Controller {
                 $aro = $result_mger[0];
                 
                 $aro_obj_descr = "-";
-                if (($aro->obj_id) && class_exists($aro->model)) {
+                if (empty($aro->obj_id)) {
+                    $aro_obj_descr = "void";
+                } else {
                     $model = new $aro->model;
-
-                    if (method_exists($model, "getPrimaryKey")) {
+                    if (is_a($model, "Model")) {
                         $pk = $model->getPrimaryKey();
-
                         $model->$pk = $aro->obj_id;
-                        $return = $model->fetch(FALSE);
-                        $attr = $return[0]->getValidInds();
-
-                        $temp = array();
-                        foreach ($attr as $at_name) {
-                            if (($return[0]->attributes[$at_name]->usedInInsert) && !($return[0]->attributes[$at_name]->forceUpdate))
-                                $temp[] = "$at_name: " . $return[0]->$at_name;
-                        }
-                        $aro_obj_descr = implode("<br>", $temp);
+                        if ($displayName = $model->fetchList())
+                            $aro_obj_descr = $displayName;
                     }
                 }
                 
@@ -78,48 +71,30 @@ class acl extends Controller {
                 $right->aro_obj = $aro_obj_descr;
                 $right->aro_model = $aro->model;
                 
-                //Framework::debug("temp", implode("<br>", $temp));
-                
-//                switch ($aro->model) {
-//                    case "group_info":
-//                        $right->aro = $return[0]->grp_descr;
-//                        break;
-//                    case "user_info":
-//                        $right->aro = $return[0]->usr_login;
-//                        break;
-//                    default:
-//                        $right->aro = "$aro->model -> $aro->obj_id";
-//                }
-
                 $grp_managed = new Acos();
                 $grp_managed->aco_id = $r->aco_id;
                 $result_mged = $grp_managed->fetch(FALSE);
                 
                 $aco = $result_mged[0];
                 
-                $aco_obj_descr = ($aco->obj_id) ? "-" : "void";
-                if (($aco->obj_id) && class_exists($aco->model)) {
+                $aco_obj_descr = "-";
+                $aco_obj_id = $aco->obj_id;
+                if (empty($aco->obj_id)) {
+                    $aco_obj_descr = "void";
+                    $aco_obj_id = "NULL";
+                } else {
                     $model = new $aco->model;
-
-                    if (method_exists($model, "getPrimaryKey")) {
+                    if (is_a($model, "Model")) {
                         $pk = $model->getPrimaryKey();
-
                         $model->$pk = $aco->obj_id;
-                        $return = $model->fetch(FALSE);
-                        $attr = $return[0]->getValidInds();
-
-                        $temp = array();
-                        foreach ($attr as $at_name) {
-                            if (($return[0]->attributes[$at_name]->usedInInsert) && !($return[0]->attributes[$at_name]->forceUpdate))
-                                $temp[] = "$at_name: " . $return[0]->$at_name;
-                        }
-                        $aco_obj_descr = implode("<br>", $temp);
+                        if ($displayName = $model->fetchList())
+                            $aco_obj_descr = $displayName;
                     }
                 }
                 
                 $right->aco_model = $aco->model;
                 $right->aco_obj = $aco_obj_descr;
-                $right->aco_obj_id = $aco->obj_id;
+                $right->aco_obj_id = $aco_obj_id;
 
                 $right->editable = ($result_mger && $result_mged) ? TRUE : FALSE;
                 //$right->editable=TRUE;
@@ -132,24 +107,26 @@ class acl extends Controller {
             $this->setArgsToBody($rights);
             
             $aros = get_tree_models(new Aros());
-            Framework::debug("aros",$aros);
             $acos = get_tree_models(new Acos());
-            Framework::debug("acos",$acos);
             
             $this->setArgsToScript(array(
                 "allow_desc_string" => _("Allow"),
                 "deny_desc_string" => _("Deny"),
                 "str_delete_acl" => _("Delete ACL?"),
-                "str_acl_deleted" => _("ACL deleted"),
-                "str_acl_not_deleted" => _("Fail to delete ACL"),
+                "str_acl_deleted" => _("Access control deleted"),
+                "str_acl_not_deleted" => _("Fail to delete access control"),
                 "str_all" => _("All"),
                 "confirmMessage" => _("Save modifications?"),
                 "fillMessage" => _("Please fill in all the fields"),
+                "str_error_match_objs" => _("Tree objects do not match"),
+                "str_error_fetch_objs" => _("Error to fetch objects"),
                 "aros" => $aros,
                 "acos" => $acos,
             ));
             
-            $this->addScript('acl');
+            /** 
+             * @todo : verificar essa função
+             */
             $this->setInlineScript('acl_init');
         } else {
             $this->setAction('empty');
@@ -164,14 +141,15 @@ class acl extends Controller {
     }
     
     public function get_aros_acos() {
+        $aros = get_tree_models(new Aros());
+        $acos = get_tree_models(new Acos());
         
-        //$aros_models = array("group_info", "user_info");
-        //$acos_models = array("device_info", "domain_info", "flow_info", "network_info", "reservation_info", "timer_info", "request_info", "urn_info", "user_info");
-                
-        $args = new stdClass();
-        
-        $args->aros = get_tree_models(new Aros());
-        $args->acos = get_tree_models(new Acos());
+        if ($aros && $acos) {
+            $args = new stdClass();
+            $args->aros = $aros;
+            $args->acos = $acos;
+        } else
+            $args = FALSE;
         
         $this->setLayout('empty');
         $this->setAction('ajax');
@@ -201,8 +179,6 @@ class acl extends Controller {
             foreach ($del_accs as $perm_id) {
                 $acc = new aros_acos();
                 $acc->perm_id = $perm_id;
-                $tmp = $acc->fetch(FALSE);
-                $result = $tmp[0];
                 if ($acc->delete())
                     $count++;
             }
@@ -214,7 +190,7 @@ class acl extends Controller {
                     $this->setFlash(_("One access control was deleted"), "success");
                     break;
                 default:
-                    $this->setFlash("$count " . _("access controls were cancelled"), "success");
+                    $this->setFlash("$count " . _("access controls were deleted"), "success");
                     break;
             }
         }
@@ -237,7 +213,9 @@ class acl extends Controller {
 
     private function add($accessData) {
         $cont = 0;
-
+        
+        Framework::debug("acl add",$accessData);
+        
         if ($accessData) {
             foreach ($accessData as $acl) {
 
@@ -298,10 +276,10 @@ class acl extends Controller {
 
                     $aros_acos->model = ($acl[5] == "all") ? NULL : $acl[5];
 
-                    $aros_acos->create = ($acl[6] == -1) ? "NULL" : $acl[6];
-                    $aros_acos->read = ($acl[7] == -1) ? "NULL" : $acl[7];
-                    $aros_acos->update = ($acl[8] == -1) ? "NULL" : $acl[8];
-                    $aros_acos->delete = ($acl[9] == -1) ? "NULL" : $acl[9];
+                    $aros_acos->create = ($acl[6] == -1) ? NULL : $acl[6];
+                    $aros_acos->read = ($acl[7] == -1) ? NULL : $acl[7];
+                    $aros_acos->update = ($acl[8] == -1) ? NULL : $acl[8];
+                    $aros_acos->delete = ($acl[9] == -1) ? NULL : $acl[9];
 
                     if ($aros_acos->update())
                         $cont++;
@@ -334,18 +312,16 @@ function get_tree_models($tree_object) {
             if (empty($node->obj_id)) {
                 $obj->id = "NULL";
                 $obj->name = "void";
-
                 $model->objs[] = $obj;
             } else {
                 $obj_model = new $node->model;
                 if (is_a($obj_model, "Model")) {
                     $pk = $obj_model->getPrimaryKey();
                     $obj_model->$pk = $node->obj_id;
-                    if ($obj = $obj_model->fetchList()){
-                        $model = new stdClass();
-                        $model->id = $node->model;
-                        $model->name = $node->model;
-                        $model->objs[] = $obj; 
+                    if ($displayName = $obj_model->fetchList()) {
+                        $obj->id = $node->obj_id;
+                        $obj->name = $displayName;
+                        $model->objs[] = $obj;
                     }
                 }
             }
@@ -375,45 +351,6 @@ function get_tree_models($tree_object) {
                 array_push($models, $model);
             }
         }
-    }
-
-    return $models;
-}
-
-function temp_get_model_objs($models_array=array()) {
-    $models = array();
-
-    foreach ($models_array as $m) {
-        $model = new stdClass();
-
-        $model->id = $m;
-        $model->name = $m;
-
-        $tmp_mod_class = new $m;
-        $ret = $tmp_mod_class->fetch(FALSE);
-
-        $objs = array();
-        foreach ($ret as $item) {
-            $obj = new stdClass();
-
-            $pk = $item->getPrimaryKey();
-            $obj->id = $item->$pk;
-
-            $attr = $item->getValidInds();
-
-            $temp = array();
-            foreach ($attr as $at_name) {
-                if (($item->attributes[$at_name]->usedInInsert) && !($item->attributes[$at_name]->forceUpdate))
-                    $temp[] = "$at_name: " . $item->$at_name;
-            }
-            $obj->name = implode("; ", $temp);
-
-            $objs[] = $obj;
-        }
-        
-        $model->objs = $objs;
-
-        $models[] = $model;
     }
 
     return $models;

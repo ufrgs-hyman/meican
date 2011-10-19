@@ -13,11 +13,11 @@ function newACL() {
                     acos = data.acos;
                     fillACLNewLine();
                 } else {
-                    setFlash("no model found","error");
+                    setFlash("str_error_match_objs","error");
                 }
             } else {
                 // deu erro
-                setFlash("error to fetch aros", "error");
+                setFlash("str_error_fetch_objs", "error");
             }
         }, "json");
     }
@@ -100,7 +100,7 @@ function changeAccessSelect(acc_select, acc_array) {
 
     if (acc_id != -1) {
         var objs = null;
-        for (var i=0; acc_array.length; i++) {
+        for (var i in acc_array) {
             if (acc_array[i].id == acc_id) {
                 objs = acc_array[i].objs;
                 break;
@@ -108,7 +108,10 @@ function changeAccessSelect(acc_select, acc_array) {
         }
         
         if (objs.length > 0) {
-            fillSelectBox(html_id, objs);
+            if (objs.length == 1)
+                fillSelectBox(html_id, objs, objs[0].id);
+            else
+                fillSelectBox(html_id, objs);
         } else {
             $(html_id).empty();
             $(html_id).append('<option selected="true" value="-1">No object</option>');
@@ -163,6 +166,15 @@ function saveACL() {
         for (i=0; i < pos; i++) {
             if (validArray[i]) {
                 acl_newArray[index] = new Array();
+                
+                /**
+                 * @todo : substituir Array por Object, como abaixo
+                 *         nao esquecer de substituir tbm no PHP
+                 */
+                /*acl_newArray[index] = new Object();
+                acl_newArray[index].aro_model = $("#aro_model_select"+i).val();
+                acl_newArray[index].aro_obj = $("#aro_obj_select"+i).val();
+                acl_newArray[index].aco_model = $("#aco_model_select"+i).val();*/
 
                 acl_newArray[index][0] = $("#aro_model_select"+i).val(); // ARO model
                 acl_newArray[index][1] = $("#aro_obj_select"+i).val(); // ARO object id
@@ -186,6 +198,9 @@ function saveACL() {
                 acl_editArray: acl_editArray
             },
             function(data) {
+                /**
+                 * @todo : ver qual função chamar ao invés dessa
+                 */
                 loadHtml(data);
             }
         );
@@ -307,24 +322,3 @@ function deleteACL(perm_id) {
         }, "json");
     } else return;
 }
-
-//function showAroDesc(aro_id) {
-//    $("#aro_hint" + aro_id).show();
-//
-//    $("#aro_hint" + aro_id).position({
-//        my: "left top",
-//        at: "right top",
-//        of: $("#aro_box" + aro_id)
-//    });
-//    
-//    $('#aro_hint' + aro_id).css({
-//        'visibility': 'visible'
-//    });
-//}
-//
-//function hideAroDesc(aro_id) {
-//    $('#aro_hint' + aro_id).css({
-//        'visibility': 'hidden'
-//    });
-//    $("#aro_hint" + aro_id).hide();
-//}

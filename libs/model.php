@@ -537,11 +537,10 @@ class Model {
             return $tmp[0];
     }
     
-    public function fetchList(){
+    public function fetchList() {
         if ($res = $this->fetch()) {
 
             $item = $res[0];
-
 
             $attr = $item->getValidInds();
             
@@ -554,11 +553,7 @@ class Model {
                         $temp[] = "$at_name: " . $item->$at_name;
                 }
 
-            $obj = new stdClass();
-            $obj->id = $node->obj_id;
-            $obj->name = implode("; ", $temp);
-            
-            return $obj;
+            return implode("; ", $temp);
         }
         return false;
     }

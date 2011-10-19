@@ -32,32 +32,32 @@
         <tr id="line<?php echo $r->id; ?>">
 
             <?php if ($r->editable): ?>
-            <td>
-                <input type="checkbox" name="del_checkbox[]" value="<?php echo $r->id; ?>">
-            </td>
-            <td class="edit">
-                <img class="edit" src="<?php echo $this->url(''); ?>webroot/img/edit_1.png" onclick="editACL('<?php echo $r->id; ?>');">
-            </td>
-            <td class="edit">
-                <img class="delete" src="<?php echo $this->url(''); ?>webroot/img/remove.png" onclick="deleteACL('<?php echo $r->id; ?>');">
-            </td>
+                <td>
+                    <input type="checkbox" name="del_checkbox[]" value="<?php echo $r->id; ?>">
+                </td>
+                <td class="edit">
+                    <img class="edit" src="<?php echo $this->url(''); ?>webroot/img/edit_1.png" onclick="editACL('<?php echo $r->id; ?>');">
+                </td>
+                <td class="edit">
+                    <img class="delete" src="<?php echo $this->url(''); ?>webroot/img/remove.png" onclick="deleteACL('<?php echo $r->id; ?>');">
+                </td>
             <?php else: ?>
-            <td colspan="3"/>
+                <td colspan="3"/>
             <?php endif; ?>
 
-            <td id="aro_model_box<?php echo $r->id; ?>" itemid="<?php echo $r->aro_model; ?>"> <!-- onmouseover="showAroDesc(<php echo $r->id; ?>)" onmouseout="hideAroDesc(<php echo $r->id; ?>)" -->
+            <td id="aro_model_box<?php echo $r->id; ?>" itemid="<?php echo $r->aro_model; ?>">
                 <?php echo $r->aro_model; ?>
             </td>
-            
             <td id="aro_obj_box<?php echo $r->id; ?>" itemid="<?php echo $r->aro_obj_id; ?>">
                 <?php echo $r->aro_obj; ?>
-            <!-- div id="aro_hint<php echo $r->id; ?>" style="display: none; visibility: hidden; background-color: #FFFFFF; border-style: solid; border-width: 1; width: 200px; height: 50px">
-                <php echo $r->aro_hint; ?>
-            </div -->
             </td>
 
-            <td id="aco_model_box<?php echo $r->id; ?>" itemid="<?php echo $r->aco_model; ?>"><?php echo $r->aco_model; ?></td>
-            <td id="aco_obj_box<?php echo $r->id; ?>" itemid="<?php echo $r->aco_obj_id; ?>"><?php echo $r->aco_obj; ?></td>
+            <td id="aco_model_box<?php echo $r->id; ?>" itemid="<?php echo $r->aco_model; ?>">
+                <?php echo $r->aco_model; ?>
+            </td>
+            <td id="aco_obj_box<?php echo $r->id; ?>" itemid="<?php echo $r->aco_obj_id; ?>">
+                <?php echo $r->aco_obj; ?>
+            </td>
             
             <td id="model_box<?php echo $r->id; ?>" itemid="<?php echo $r->model; ?>"><?php echo $r->model; ?></td>
 
