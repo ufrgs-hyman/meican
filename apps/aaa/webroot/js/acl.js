@@ -192,18 +192,11 @@ function saveACL() {
 
     // mostra mensagem de confirmação para o usuário
     if (confirm(confirmMessage)) {
-        $.post(baseUrl+"aaa/acl/update",
-            {
+        
+        redir(baseUrl+"aaa/acl/update", {
                 acl_newArray: acl_newArray,
                 acl_editArray: acl_editArray
-            },
-            function(data) {
-                /**
-                 * @todo : ver qual função chamar ao invés dessa
-                 */
-                loadHtml(data);
-            }
-        );
+            });
     }
 }
 

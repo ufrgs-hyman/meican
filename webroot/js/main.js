@@ -99,7 +99,8 @@
                             url: url,
                             data: data,
                             error: errorFunc,
-                            container: '#main'
+                            container: '#main',
+                            timeout: 5000
                         });
                 return false;
             }
