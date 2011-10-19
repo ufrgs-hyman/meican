@@ -192,11 +192,10 @@ function saveACL() {
 
     // mostra mensagem de confirmação para o usuário
     if (confirm(confirmMessage)) {
-        
         redir(baseUrl+"aaa/acl/update", {
-                acl_newArray: acl_newArray,
-                acl_editArray: acl_editArray
-            });
+            acl_newArray: acl_newArray,
+            acl_editArray: acl_editArray
+        });
     }
 }
 

@@ -43,10 +43,10 @@ class acl extends Controller {
             
                 $right->id = $r->perm_id;
                 
-                $right->create = ($r->create) ? $r->create : "-";
-                $right->read = ($r->read) ? $r->read: "-";
-                $right->update = ($r->update) ? $r->update : "-";
-                $right->delete = ($r->delete) ? $r->delete : "-";
+                $right->create = (empty($r->create)) ? "-" : (($r->create == "allow") ? _("Allow") : _("Deny"));
+                $right->read = (empty($r->read)) ? "-" : (($r->read == "allow") ? _("Allow") : _("Deny"));
+                $right->update = (empty($r->update)) ? "-" : (($r->update == "allow") ? _("Allow") : _("Deny"));
+                $right->delete = (empty($r->delete)) ? "-" : (($r->delete == "allow") ? _("Allow") : _("Deny"));
 
                 $grp_manager = new Aros();
                 $grp_manager->aro_id = $r->aro_id;
@@ -213,8 +213,6 @@ class acl extends Controller {
 
     private function add($accessData) {
         $cont = 0;
-        
-        Framework::debug("acl add",$accessData);
         
         if ($accessData) {
             foreach ($accessData as $acl) {

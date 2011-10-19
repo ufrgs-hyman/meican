@@ -283,13 +283,15 @@ class OSCARSReservation {
         try {
             $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
             $result = $client->listReservations($envelope);
-
-            if (!$err = array_shift($result->return)){ //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
+            
+            if (is_string($result->return)) {
+                Framework::debug("OSCARS Bridge Error: ", $result->return);
+                return false;
+            } elseif (!$err = array_shift($result->return)) { //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
                 foreach ($result->return as $r)
-                        $this->statusArray[] = $r;
+                    $this->statusArray[] = $r;
 
                 return true;
-
             } else {
                 Framework::debug("OSCARS Bridge Error: ",$result->return[0]);
                 return false;
