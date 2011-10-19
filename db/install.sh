@@ -21,3 +21,5 @@ chown -R www-data:www-data /var/www/meican-2706/log
 nano /etc/apache2/sites-available/default
 
 /etc/init.d/apache2 restart
+
+bash /var/www/meican-main/db/build.sh

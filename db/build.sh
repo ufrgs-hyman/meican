@@ -6,7 +6,7 @@ database="meican";
 
 #agora=time;
 #mysqldump -user=$user --password=$password --host=$host -D$database > dump_$agora.sql
-
+echo "CREATE DATABASE IF NOT EXISTS " $database | mysql --user=$user --password=$password --host=$host; 
 
 case "$1" in
   data)
