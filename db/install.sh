@@ -1,6 +1,13 @@
 apt-get update
 apt-get install -y apache2 mysql-server mysql-client php5 php5-mysql php-apc phpmyadmin php-pear subversion ntp
 
+# Configurando mysql-server: selecionar senha de para usuário “root”
+# Configurando phpmyadmin: 
+#	- Selecionar servidor web: apache2
+#	- Configurar base com dbconfig-common? sim
+#	- Palavra-passe do administrador: 
+#	- Palavra-passe da aplicação Mysql: definida anteriormente na configuração do mysql
+
 pear install mdb2
 pear install pear/MDB2#mysql
 pear install Mail
