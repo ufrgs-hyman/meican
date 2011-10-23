@@ -58,6 +58,7 @@ class acl extends Controller {
                 $aro_obj_descr = "-";
                 if (empty($aro->obj_id)) {
                     $aro_obj_descr = "void";
+                    $canAccessARO = TRUE;
                 } else {
                     $model = new $aro->model;
                     if (is_a($model, "Model")) {
@@ -86,6 +87,7 @@ class acl extends Controller {
                 if (empty($aco->obj_id)) {
                     $aco_obj_descr = "void";
                     $aco_obj_id = "NULL";
+                    $canAccessACO = TRUE;
                 } else {
                     $model = new $aco->model;
                     if (is_a($model, "Model")) {
@@ -319,6 +321,7 @@ function get_tree_models($tree_object) {
                 $obj->id = "NULL";
                 $obj->name = "void";
                 $model->objs[] = $obj;
+                $canAccessObj = TRUE;
             } else {
                 $obj_model = new $node->model;
                 if (is_a($obj_model, "Model")) {
