@@ -53,6 +53,7 @@ class acl extends Controller {
                 $result_mger = $grp_manager->fetch(FALSE);
                 
                 $aro = $result_mger[0];
+                $canAccessARO = FALSE;
                 
                 $aro_obj_descr = "-";
                 if (empty($aro->obj_id)) {
@@ -62,8 +63,10 @@ class acl extends Controller {
                     if (is_a($model, "Model")) {
                         $pk = $model->getPrimaryKey();
                         $model->$pk = $aro->obj_id;
-                        if ($displayName = $model->fetchList())
+                        if ($displayName = $model->fetchList()) {
                             $aro_obj_descr = $displayName;
+                            $canAccessARO = TRUE;
+                        }
                     }
                 }
                 
@@ -76,6 +79,7 @@ class acl extends Controller {
                 $result_mged = $grp_managed->fetch(FALSE);
                 
                 $aco = $result_mged[0];
+                $canAccessACO = FALSE;
                 
                 $aco_obj_descr = "-";
                 $aco_obj_id = $aco->obj_id;
@@ -87,8 +91,10 @@ class acl extends Controller {
                     if (is_a($model, "Model")) {
                         $pk = $model->getPrimaryKey();
                         $model->$pk = $aco->obj_id;
-                        if ($displayName = $model->fetchList())
+                        if ($displayName = $model->fetchList()) {
                             $aco_obj_descr = $displayName;
+                            $canAccessACO = TRUE;
+                        }
                     }
                 }
                 
@@ -100,7 +106,8 @@ class acl extends Controller {
                 //$right->editable=TRUE;
                 $right->model = ($r->model) ? $r->model : _("All");
                 
-                $rights[] = $right;
+                if ($canAccessARO && $canAccessACO)
+                    $rights[] = $right;
             }
             $this->setAction('show');
             
@@ -306,6 +313,7 @@ function get_tree_models($tree_object) {
             $model->objs = array();
             
             $obj = new stdClass();
+            $canAccessObj = FALSE;
 
             if (empty($node->obj_id)) {
                 $obj->id = "NULL";
@@ -320,6 +328,7 @@ function get_tree_models($tree_object) {
                         $obj->id = $node->obj_id;
                         $obj->name = $displayName;
                         $model->objs[] = $obj;
+                        $canAccessObj = TRUE;
                     }
                 }
             }
@@ -338,7 +347,7 @@ function get_tree_models($tree_object) {
                         break;
                     }
 
-                    if (!$objInModel)
+                    if (!$objInModel && $canAccessObj)
                         array_push($models[$model_index]->objs, $obj);
 
                     break;
