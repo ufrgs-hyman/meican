@@ -7,10 +7,6 @@ $name = $this->passedArgs->res_name;
 $args = $this->passedArgs;
 $timers_exist = isset($args->timers) ? TRUE : FALSE;
 
-$flow = $this->passedArgs->flow;
-$timer = $this->passedArgs->timer;
-$name = $this->passedArgs->res_name;
-
 $freq_types = array();
 unset($freq);
 $freq->value = "DAILY";

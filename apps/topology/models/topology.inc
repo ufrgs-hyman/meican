@@ -122,31 +122,32 @@ class MeicanTopology {
                 
                 $urn_info = new urn_info();
                 $urn_info->urn_id = $child->obj_id;
-                $urn_res = $urn_info->fetch();
+                if ($urn_res = $urn_info->fetch()) {
 
-                $urn = new stdClass();
-                $urn->urn_id = $urn_res[0]->urn_id;
-                $urn->urn_string = $urn_res[0]->urn_string;
+                    $urn = new stdClass();
+                    $urn->urn_id = $urn_res[0]->urn_id;
+                    $urn->urn_string = $urn_res[0]->urn_string;
 
-                $net = new network_info();
-                $net->net_id = $urn_res[0]->net_id;
-                $res = $net->fetch(FALSE);
-                $urn->net_id = $res[0]->net_id;
-                $urn->network = $res[0]->net_descr;
+                    $net = new network_info();
+                    $net->net_id = $urn_res[0]->net_id;
+                    $res = $net->fetch(FALSE);
+                    $urn->net_id = $res[0]->net_id;
+                    $urn->network = $res[0]->net_descr;
 
-                $dev = new device_info();
-                $dev->dev_id = $urn_res[0]->dev_id;
-                $res = $dev->fetch(FALSE);
-                $urn->dev_id = $res[0]->dev_id;
-                $urn->device = $res[0]->dev_descr;
+                    $dev = new device_info();
+                    $dev->dev_id = $urn_res[0]->dev_id;
+                    $res = $dev->fetch(FALSE);
+                    $urn->dev_id = $res[0]->dev_id;
+                    $urn->device = $res[0]->dev_descr;
 
-                $urn->port = $urn_res[0]->port;
-                $urn->vlan = $urn_res[0]->vlan;
-                $urn->max_capacity = ($urn_res[0]->max_capacity) ? ($urn_res[0]->max_capacity) : "null";
-                $urn->min_capacity = ($urn_res[0]->min_capacity) ? ($urn_res[0]->min_capacity) : "null";
-                $urn->granularity = ($urn_res[0]->granularity) ? ($urn_res[0]->granularity) : "null";
-                
-                $urns[] = $urn;
+                    $urn->port = $urn_res[0]->port;
+                    $urn->vlan = $urn_res[0]->vlan;
+                    $urn->max_capacity = ($urn_res[0]->max_capacity) ? ($urn_res[0]->max_capacity) : "null";
+                    $urn->min_capacity = ($urn_res[0]->min_capacity) ? ($urn_res[0]->min_capacity) : "null";
+                    $urn->granularity = ($urn_res[0]->granularity) ? ($urn_res[0]->granularity) : "null";
+
+                    $urns[] = $urn;
+                }
             }
         }
 

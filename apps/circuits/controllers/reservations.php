@@ -411,32 +411,34 @@ class reservations extends Controller {
         //---------------------------------------
         // STEP 2 VARIABLES ---------------------
         $domain = new domain_info();
-        $allDomains = $domain->fetch();
+        $allDomains = $domain->fetch(FALSE);
         $allUrns = array();
         $domToMapArray = array();
-        $domains = array();
+        //$domains = array();
 
         foreach ($allDomains as $d) {
-            $dom = new stdClass();
-            $dom->id = $d->dom_id;
-            $dom->name = $d->dom_descr;
-            $dom->topology_id = $d->topo_domain_id;
-            $domains[] = $dom;
+//            $dom = new stdClass();
+//            $dom->id = $d->dom_id;
+//            $dom->name = $d->dom_descr;
+//            $dom->topology_id = $d->topo_domain_id;
+//            $domains[] = $dom;
 
-            $domain = new stdClass();
-            $domain->id = $d->dom_id;
-            $domain->name = $d->dom_descr;
-            $domain->topology_id = $d->topo_domain_id;
-            $before = microtime(true);
+            if ($networks = MeicanTopology::getURNDetails($d->dom_id)) {
+                $domain = new stdClass();
+                $domain->id = $d->dom_id;
+                $domain->name = $d->dom_descr;
+                $domain->topology_id = $d->topo_domain_id;
+                $before = microtime(true);
 
-            $domain->networks = MeicanTopology::getURNDetails($d->dom_id);
-            $urn = MeicanTopology::getURNs($d->dom_id);
-            Framework::debug("tempo", (microtime(true) - $before));
+                $domain->networks = $networks;
+                $urn = MeicanTopology::getURNs($d->dom_id);
+                //Framework::debug("tempo", (microtime(true) - $before));
 
-            foreach ($urn as $u) {
-                $allUrns[] = $u->urn_string;
+                foreach ($urn as $u) {
+                    $allUrns[] = $u->urn_string;
+                }
+                $domToMapArray[] = $domain;
             }
-            $domToMapArray[] = $domain;
         }
 
         // --------------------------------------
@@ -542,7 +544,7 @@ class reservations extends Controller {
         // arg name
         $args->name = $name;
         // arg endpoints
-        $args->domains = $domains;
+        //$args->domains = $domains;
         // arg bandwidth
         $args->bandwidthTip = "(" . $min . ", " . ($min + $div) . ", " . ($min + 2 * $div) . ", " . ($min + 3 * $div) . ", ... , " . $max . ")";
         // arg timer
