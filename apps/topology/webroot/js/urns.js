@@ -391,15 +391,10 @@ function saveURN() {
 
     // mostra mensagem de confirmação para o usuário
     if (confirm(confirmMessage)) {
-        $.post(baseUrl+"topology/urns/update",
-            {
-                urn_newArray: urn_newArray,
-                urn_editArray: urn_editArray
-            },
-            function(data) {
-                loadHtml(data);
-            }
-        );
+        redir(baseUrl+"topology/urns/update", {
+            urn_newArray: urn_newArray,
+            urn_editArray: urn_editArray
+        });
     }
 }
 
