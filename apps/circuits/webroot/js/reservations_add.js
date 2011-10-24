@@ -1696,12 +1696,10 @@ function map_saveFlow(flow_id) {
     } else {
         setFlash(flash_dstVlanReq, "warning");
         return;
-    }
+    }    
 
-    $.post(baseUrl+'circuits/flows/'+action, {
+    $.redir('circuits/flows/'+action, {
         flowData: flow_Array
-    }, function(data) {
-        loadHtml(data);
     });
 }
 

@@ -413,10 +413,8 @@ function saveFlow(flow_id) {
         return;
     }
 
-    $.post(baseUrl+'circuits/flows/'+action, {
+    $.redir('circuits/flows/'+action, {
         flowData: flow_Array
-    }, function(data) {
-        loadHtml(data);
     });
 }
 

@@ -108,16 +108,10 @@ function saveACL() {
     // mostra mensagem de confirmação para o usuário
     if (confirm(confirmMessage)) {
         rights_initVars();
-        $.post(baseUrl+"aaa/rights/update",
-            {
-                rule_newArray: rule_newArray,
-                rule_editArray: rule_editArray
-            },
-            function(data) {
-                $("#menu").load(baseUrl+"init/menu");//TODO: rever isso. é realmente necessário?
-                loadHtml(data);
-            }
-        );
+        $.redir("aaa/rights/update", {
+            rule_newArray: rule_newArray,
+            rule_editArray: rule_editArray
+        });
     }
 }
 

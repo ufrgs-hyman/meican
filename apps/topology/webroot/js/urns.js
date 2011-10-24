@@ -391,7 +391,7 @@ function saveURN() {
 
     // mostra mensagem de confirmação para o usuário
     if (confirm(confirmMessage)) {
-        redir(baseUrl+"topology/urns/update", {
+        $.redir("topology/urns/update", {
             urn_newArray: urn_newArray,
             urn_editArray: urn_editArray
         });

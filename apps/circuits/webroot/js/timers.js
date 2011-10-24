@@ -325,7 +325,7 @@ function saveTimer(timer_id) {
         $("#summary_input").val(sum_desc);
     }
     
-    $.post(baseUrl+"circuits/timers/update", {
+    $.redir("circuits/timers/update", {
         tmr_id: timer_id,
         name: name,
         start_date: $("#initialDate").val(),
@@ -338,8 +338,6 @@ function saveTimer(timer_id) {
         interval: interval,
         byday: byday,
         summary: sum_desc
-    }, function(data) {
-        loadHtml(data);
     });
 }
 
