@@ -111,10 +111,13 @@ function redir(url, data){
     return false;
 }
 
-function fillSelectBox(htmlId, fillerArray, current_val) {
-    //clearSelectBox(htmlId);
+function clearSelectBox(htmlId){
     $(htmlId).empty();
     $(htmlId).append('<option value="-1"></option>');
+}
+
+function fillSelectBox(htmlId, fillerArray, current_val) {
+    clearSelectBox(htmlId);
     for (var i=0; i < fillerArray.length; i++) {
         if (fillerArray[i].id == current_val)
             $(htmlId).append('<option selected="true" value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
