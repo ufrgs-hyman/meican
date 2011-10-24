@@ -817,19 +817,19 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
     $(edit_map.getDiv()).append(contextMenu);    
     
     if ((srcSet) && !(dstSet)) {
-        for (var i=0; i<edit_markersArray.length; i++) {
-            if ((edit_markersArray[i].id == path[0].network_id) && (edit_markersArray[i].domain_id == path[0].domain_id)) {
-                edit_markersArray[i].setMap(null);
-            }
-        }
+//        for (var i=0; i<edit_markersArray.length; i++) {
+//            if ((edit_markersArray[i].id == path[0].network_id) && (edit_markersArray[i].domain_id == path[0].domain_id)) {
+//                edit_markersArray[i].setMap(null);
+//            }
+//        }
         edit_clearSelectedMarkers();
         edit_addSelectedMarker(path[0].position, path[0].domain_id, path[0].domain_name, path[0].network_id, path[0].network_name, "src");
     } else if (!(srcSet) && (dstSet)){
-        for (var i=0; i<edit_markersArray.length; i++) {
-            if ((edit_markersArray[i].id == path[1].network_id) && (edit_markersArray[i].domain_id == path[1].domain_id)) {
-                edit_markersArray[i].setMap(null);
-            }
-        }
+//        for (var i=0; i<edit_markersArray.length; i++) {
+//            if ((edit_markersArray[i].id == path[1].network_id) && (edit_markersArray[i].domain_id == path[1].domain_id)) {
+//                edit_markersArray[i].setMap(null);
+//            }
+//        }
         edit_clearSelectedMarkers();
         edit_addSelectedMarker(path[1].position, path[1].domain_id, path[1].domain_name, path[1].network_id, path[1].network_name, "dst");
     }
