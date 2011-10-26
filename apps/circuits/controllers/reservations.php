@@ -320,6 +320,7 @@ class reservations extends Controller {
         $this->setLayout("empty");
 
         $res_id = Common::POST("res_id");
+        Framework::debug("gri stats",$res_id);
 
         $gri = new gri_info();
         $gri->res_id = $res_id;
