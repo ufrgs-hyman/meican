@@ -812,6 +812,8 @@ class reservations extends Controller {
         $res_diff_timestamp = $res_end_timestamp - $res_begin_timestamp;
 
         Framework::debug("post", $_POST);
+        $this->show();
+        return false;
 
         /**
          * insere o flow
