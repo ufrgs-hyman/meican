@@ -24,7 +24,7 @@ $preMenus = array(
             array('app' => 'aaa', 'controller' => 'users', 'action' => 'show')),
         _("Groups") => array('model' => 'group_info', 'url' => 
             array('app' => 'aaa', 'controller' => 'groups', 'action' => 'show')),
-        _("Access control") => array('model' => 'group_info', 'url' => 
+        _("Access control") => array('model' => 'acl', 'url' => 
             array('app' => 'aaa', 'controller' => 'acl', 'action' => 'show')),
     ),
     _("BPM") => array(
