@@ -5,7 +5,7 @@ if (status_array) {
         checkStatus(index, status_array[index]);
     }
 }
-
+alert("ola 2");
  var res_markersArray = [];
 
  var res_center = new google.maps.LatLng(0,0);
