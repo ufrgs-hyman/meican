@@ -102,7 +102,7 @@
                     <?php echo $this->element('menu', array('app' => 'init'));?>
                 </div>
                 <div id="load_img" style="display: none">
-                    <img src="<?php echo $base; ?>webroot/img/ajax-loader.gif" alt="<?php echo _('Loading'); ?>"/>
+                    <img src="<?php echo $base; ?>webroot/img/ajax-loader_1.gif" alt="<?php echo _('Loading'); ?>"/>
                 </div>
                 <div id="main">
                     <?php echo $content_for_body; //debug($this->script->jsFiles);?>
