@@ -34,7 +34,7 @@ $(document).ready(function() {
                 
     $('a[href!=""][href!="#"]').pjax('#main', {
         error: errorFunc, 
-        timeout: 2000
+        timeout: 5000
     });
     $('#main')
     .bind('start.pjax', function() {
@@ -90,7 +90,7 @@ $(document).ready(function() {
                 data: param,
                 error: errorFunc,
                 container: '#main',
-                timeout: 5000
+                timeout: 7000
             });
         return false;
     });
@@ -106,7 +106,7 @@ function redir(url, data){
         data: data,
         error: errorFunc,
         container: '#main',
-        timeout: 5000
+        timeout: 7000
     });
     return false;
 }
