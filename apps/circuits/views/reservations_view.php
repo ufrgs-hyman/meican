@@ -48,9 +48,9 @@ $bandwidth = $this->passedArgs->bandwidth;
                     <th class="listHeader"><?php echo _("Reservation ID"); ?></th>
                     <th class="listHeader" align="center">
                         <?php echo _("Status"); ?>
-                        <img alt="<?php echo _("loading"); ?>" style="display:none" id="load_dynamic" src="webroot/img/ajax-loader.gif">
+                        <img alt="<?php echo _("loading"); ?>" style="display:none" id="load_dynamic" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif">
                         <a href="" onclick="griRefreshStatus(<?php echo $res_id; ?>); return false;">
-                            <img alt="<?php echo _("refresh"); ?>" border="0" id="load_static" class="refreshTable" src="webroot/img/ajax-refresh.gif">
+                            <img alt="<?php echo _("refresh"); ?>" border="0" id="load_static" class="refreshTable" src="<?php echo $this->url(''); ?>webroot/img/ajax-refresh.gif">
                         </a>
                     </th>
                     <th class="listHeader"><?php echo _("Initial Date/Time"); ?></th>

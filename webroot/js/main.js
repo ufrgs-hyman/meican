@@ -32,7 +32,7 @@ $(document).ready(function() {
     setInterval("updateSystemTime()", 60000);//<?php // chamada para atualizar a hora?>
     //$("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
                 
-    $('a').pjax('#main', {
+    $('a[href!=""][href!="#"]').pjax('#main', {
         error: errorFunc, 
         timeout: 2000
     });
