@@ -20,5 +20,5 @@ google.maps = google.maps || {};
   };
   var loadScriptTime = (new Date).getTime();
   //getScript("http://maps.gstatic.com/intl/pt_br/mapfiles/api-3/5/3/main.js");
-  getScript("http://maps.google.com/maps?file=api&v=3&key=ABQIAAAAjOtiuD03_rTN12Y2XeZuORTgC8l82hKVXzf4o9-10vSf8FmcPRSTgaoG2ErxD7pqMWIGXzEo0iCJZA&sensor=false");
+  getScript("http://maps.google.com/maps/api/js?v=3.1&key=ABQIAAAAjOtiuD03_rTN12Y2XeZuORTgC8l82hKVXzf4o9-10vSf8FmcPRSTgaoG2ErxD7pqMWIGXzEo0iCJZA&sensor=false");
 })();
