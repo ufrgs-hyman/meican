@@ -27,3 +27,4 @@ if (status_array) {
  var res_map = new google.maps.Map(document.getElementById("res_mapCanvas"), res_myOptions);
  
 res_showCircuit();
+alert("ola");
