@@ -39,8 +39,6 @@ function res_showCircuit(){
 //        aux += 0.0005;
 //        dst_lng_network = aux.toString();
 //    }
-alert(src_lat_network);
-
     var coord_src = new google.maps.LatLng(src_lat_network, src_lng_network);
     res_addMarker(coord_src, "src");
     res_bounds.push(coord_src);
@@ -51,7 +49,7 @@ alert(src_lat_network);
     res_bounds.push(coord_dst);
     res_setBounds(res_bounds);
     
-    //res_drawPath(coord_src, coord_dst);
+    res_drawPath(coord_src, coord_dst);
 }
 
 function res_addMarker(location, where) {

@@ -35,6 +35,7 @@
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/StyledMarker.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/map.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/reservations.js"></script>
+        <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/reservation_map.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/reservations_add.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/flows.js"></script>
         <script type ="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>apps/circuits/webroot/js/timers.js"></script>

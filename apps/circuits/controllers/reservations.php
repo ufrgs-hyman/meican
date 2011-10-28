@@ -61,7 +61,7 @@ class reservations extends Controller {
                 } else {
                     $urn = new urn_info();
                     $urn->urn_string = $res->flow->source->urn;
-                    $urn_id = $urn->get('urn_id');
+                    $urn_id = $urn->get('urn_id',FALSE);
 
                     $urn_aco = new Acos($urn_id, "urn_info");
                     $dev_aco = $urn_aco->getParentNodes();
@@ -79,7 +79,7 @@ class reservations extends Controller {
                 } else {
                     $urn = new urn_info();
                     $urn->urn_string = $res->flow->dest->urn;
-                    $urn_id = $urn->get('urn_id');
+                    $urn_id = $urn->get('urn_id',FALSE);
 
                     $urn_aco = new Acos($urn_id, "urn_info");
                     $dev_aco = $urn_aco->getParentNodes();

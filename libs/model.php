@@ -529,8 +529,8 @@ class Model {
         return FALSE;
     }
 
-    public function get($field=false) {
-        $tmp = $this->fetch();
+    public function get($field=false, $useACL=TRUE) {
+        $tmp = $this->fetch($useACL);
         if ($field)
             return $tmp[0]->{$field};
         else
