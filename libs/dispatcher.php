@@ -33,6 +33,9 @@ function myErrorHandler($errno, $errstr, $errfile, $errline)
     return true;
 }
 
+
+include_once 'libs/app.php';
+
 class Dispatcher {
 
     public function __construct($defaults = array()) {
@@ -61,7 +64,7 @@ class Dispatcher {
         try {
             if (empty($app))
                 $app = Framework::getMainApp();
-            if (!($app = Framework::loadApp($app)))
+            if (!($app = App::factory($app)))
                 throw new Exception(_("Invalid app"));
             Language::setLang(get_class($app));
             if (empty($controller))

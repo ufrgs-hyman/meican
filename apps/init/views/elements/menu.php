@@ -51,7 +51,7 @@ foreach ($preMenus as $name => $sub)
     }*/
 ?>
 
-<?php foreach (App::getAllMenus() as $menu): ?>
+<?php foreach (MenuItem::getAllMenus() as $menu): ?>
     <div class="topItem">
 <?php if (!empty($menu->url)): ?>
             <a href="<?php echo $this->url($menu->url); ?>" target="main"><?php echo $menu->label; ?></a>

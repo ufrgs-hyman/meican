@@ -1,32 +1,6 @@
 <?php
 
-class MenuItem {
-    var $label;
-    var $url;
-    var $sub = array();
-    var $model = null;
-    var $right = 'read';
-    
-    public function __construct($args){
-      foreach($args as $key => $arg)
-          $this->$key = $arg;
-    }
-    
-    public static function filter($preMenus = array()){
-        if (empty($preMenus))
-            return $preMenus;
-        $menus = array();
-        $acl = AclLoader::getInstance();
-        foreach ($preMenus as $k => $preMenu)
-            if (empty($preMenu->model) || $acl->checkACL($preMenu->right, $preMenu->model)){
-                $preMenu->sub = self::filter($preMenu->sub);
-                if (!empty($preMenu->sub) || !empty($preMenu->url))
-                    $menus[$k] = $preMenu;
-            }
-        ksort($menus);
-        return $menus;
-    }
-}
+include_once 'libs/menu_item.php';
 
 class App {
     protected $appName;
@@ -67,18 +41,6 @@ class App {
         return array();
     }
     
-    public static function getAllMenus(){
-        $apps = array('aaa', 'bpm', 'circuits', 'init', 'topology');
-        $menus = array();
-        foreach ($apps as $app){
-            $appObj = self::factory($app);
-            if ($appObj)
-                $menus += $appObj->getMenu();//array_merge($appObj->getMenu(), $menus);
-        }
-        $menus = MenuItem::filter($menus);
-        return $menus;
-    }
-    
     // Método Factory parametrizado
     public static function factory($app, $args=array())
     {
@@ -86,7 +48,8 @@ class App {
                 include_once "apps/$app/$app.php") {
             return new $app($args);
         } else {
-            throw new Exception ('Driver não encontrado');
+            throw new Exception ('App not found');
+            return False;
         }
     }
     
