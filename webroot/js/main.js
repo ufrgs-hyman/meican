@@ -68,18 +68,6 @@ $(document).ready(function() {
             return false;
         }
 
-        $.each($(':password'), function() {
-            if ($(this).val()) {
-                var md5 = $(this).crypt({
-                    method:"md5"
-                });
-                $(this).attr({
-                    style: 'display: none'
-                });
-                $(this).val(md5);
-            }
-        });
-
         var content_show = $(this).attr("action");
         var param = $('form').serialize();
 

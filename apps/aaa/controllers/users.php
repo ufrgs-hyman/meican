@@ -101,8 +101,8 @@ class users extends Controller {
 
         $usr_login = Common::POST('usr_login');
         $usr_name = Common::POST('usr_name');
-        $usr_password = Common::POST('usr_password');
-        $usr_repassword = Common::POST('retype_password');
+        $usr_password = md5(Common::POST('usr_password'));
+        $usr_repassword = md5(Common::POST('retype_password'));
         $usedArray = Common::POST('usedArray');
 
         if ($usr_login && $usr_name && $usr_password && $usr_repassword && $usedArray) {
@@ -268,11 +268,11 @@ class users extends Controller {
                 $resultGroup = $user->updateGroups($usedArray);
 
             $usr_name = Common::POST('usr_name');
-            $usr_password = Common::POST('usr_password');
+            $usr_password = md5(Common::POST('usr_password'));
             $usr_email = Common::POST("usr_email");
 
             if ($usr_password) {
-                $usr_repassword = Common::POST('retype_password');
+                $usr_repassword = md5(Common::POST('retype_password'));
 
                 if ($usr_password != $usr_repassword) {
                     $this->setFlash(_("Passwords mismatch"), "error");
@@ -358,15 +358,15 @@ class users extends Controller {
             return;
         }
         
-        $old_password = Common::POST('old_usr_password');
+        $old_password = md5(Common::POST('old_usr_password'));
 
         if ($old_password) {
             $user->usr_password = $old_password;
             $result = $user->fetch();
 
             if ($result) { //senha antiga correta
-                $new_password = Common::POST('usr_password');
-                $new_repassword = Common::POST('retype_password');
+                $new_password = md5(Common::POST('usr_password'));
+                $new_repassword = md5(Common::POST('retype_password'));
                 
                 if ($new_password && $new_repassword) {
                     if ($new_password == $new_repassword) {
