@@ -10,16 +10,6 @@
 
             $(document).ready(function(){
                 $("#login").focus();
-
-                $('form').submit(function() {
-                    $.each($(':password'), function() {
-                        var md5 = $(this).crypt({method:"md5"});
-                        $(this).attr({style: 'display: none'});
-
-                        $(this).val(md5);
-                    }); //do each
-                    return true;
-                }); //do form
             }); //do ready
 
         </script>

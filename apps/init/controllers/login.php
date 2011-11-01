@@ -32,8 +32,8 @@ class login extends Controller {
     public function doLogin() {
         $user = new user_info();
         $user->usr_login = Common::POST('login');
-        $user->usr_password = Common::POST('password');
-
+        $user->usr_password = md5(Common::POST('password'));
+       
         $result = $user->login();
         if ($result) {
             $user = $result[0];
