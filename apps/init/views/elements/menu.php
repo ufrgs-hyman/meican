@@ -1,5 +1,5 @@
 <?php
-$preMenus = array(
+/*$preMenus = array(
     "Dashboard" => array('url' => array('app' => 'init', 'controller' => 'gui', 'action' => 'welcome')),
     _("Circuits") => array(
         _("New reservation") => array('model' => 'urn_info', 'right' => 'create', 'url' => 
@@ -48,22 +48,20 @@ foreach ($preMenus as $name => $sub)
         if (empty($sub['model']) || $acl->checkACL(isset($sub['right'])?$sub['right']:'read', $sub['model'])){
             $menus[$name] = $sub['url']; //check link
         }
-    }
+    }*/
 ?>
 
-<?php foreach ($menus as $topName => $v): ?>
+<?php foreach (App::getAllMenus() as $menu): ?>
     <div class="topItem">
-<?php if (isset($v['app'])): ?>
-            <a href="<?php echo $this->url($v); ?>" target="main"><?php echo $topName; ?></a>
-    </div>
+<?php if (!empty($menu->url)): ?>
+            <a href="<?php echo $this->url($menu->url); ?>" target="main"><?php echo $menu->label; ?></a>
 <?php else: ?>
-<?php echo $topName; ?>
-    </div>
-<?php foreach ($v as $subName => $url): ?>
-                <div class="subItem"><a href="<?php echo $this->url($url); ?>" target="main"><?php echo $subName; ?></a></div>
-<?php endforeach; ?>
-
+<?php echo $menu->label; ?>
 <?php endif; ?>
+    </div>
+<?php foreach ($menu->sub as $subMenu): ?>
+   <div class="subItem"><a href="<?php echo $this->url($subMenu->url); ?>" target="main"><?php echo $subMenu->label; ?></a></div>
+<?php endforeach; ?>
 
 <?php endforeach; ?>
   

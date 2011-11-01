@@ -8,6 +8,25 @@ class circuits extends App {
         $this->appName = 'circuits';
         $this->defaultController = 'reservations';
     }
+    
+    public function getMenu(){
+        return array(10 => new MenuItem(array(
+            'label' => _("Circuits"),
+            'sub' => array(
+                new MenuItem(array(
+                    'label' => _("New reservation"),
+                    'model' => 'urn_info',
+                    'right' => 'create',
+                    'url' => array('app' => $this->appName, 'controller' => 'reservations', 'action' => 'add')
+                )),
+                new MenuItem(array(
+                    'label' => _("Reservations"),
+                    'model' => 'reservation_info',
+                    'url' => array('app' => $this->appName, 'controller' => 'reservations')
+                )),
+            )
+        )));
+    }
 
 }
 

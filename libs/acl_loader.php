@@ -359,6 +359,16 @@ class AclLoader extends Tree_Model {
         }
         return FALSE;
     }
+    
+    // Guarda uma instância da classe
+    private static $instance;
+    function getInstance(){
+        if (!isset(self::$instance)) {
+            $c = __CLASS__;
+            self::$instance = new $c;
+        }
+        return self::$instance;
+    }
 
 }
 
