@@ -136,7 +136,7 @@ class Database {
             $return = str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $inp, &$count);
             if ($count > 0)
                 Framework::debug("trying sql injection");
-            return $return;
+            return htmlspecialchars($return);
         }
 
         return $inp;
