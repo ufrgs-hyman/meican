@@ -101,6 +101,7 @@ div#menu {
     background-color: #EEEEEE;
     color: #000000;
     padding: 10px;
+    height: 100%;
 }
 div#main {
     width: 80%;

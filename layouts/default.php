@@ -8,6 +8,8 @@
         <!-- GLOBAL JS SCRIPTS AND IN-LINE FUNCTIONS -->
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/style1.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/timePicker.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/style1.css" />
+	<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/start/jquery-ui.css" />
 
         <script type="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>webroot/js/jquery.min.js"></script>
         <script type="text/javascript" language="JavaScript1.2" src="<?php echo $base; ?>webroot/js/jquery-ui-1.8.16.custom.min.js"></script>
@@ -66,9 +68,17 @@
     } ?>
 <?php endif; ?>	
 
+<?php /*  Coloca o theme roller
+<link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css" />
+<script>$(document).ready(function(){$('#switcher').themeswitcher();});</script>
+<script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
+<div id="switcher"></div> */?>
+    
     </head>
 
     <body>
+  
+
 
         <div id="auxDiv">
         </div>

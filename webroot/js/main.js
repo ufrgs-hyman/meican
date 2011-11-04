@@ -24,6 +24,26 @@ var errorFunc = function(jqXHR) {
 };
 
 $(document).ready(function() {
+    
+    jQuery.fn.uify = function(){
+        
+        $(this).find('button,input[type=submit],input[type=button]').button();
+        //$('input[type=button].add').button({icon: 'plusthick'});
+        //$('input[type=button].add').button({ icons: {primary:'ui-icon-plusthick',secondary:'ui-icon-plusthick'} });
+        $(this).find('[disabled=disabled]').addClass('ui-state-disabled');
+        $(this).find('input[type!=submit],textarea,select').addClass('ui-widget ui-widget-content');
+        $(this).find('table').addClass('ui-widget ui-corner-all');
+        $(this).find('fieldset').addClass('ui-widget ui-corner-all');
+        $(this).find('table thead,table th').addClass('ui-widget-header');
+        $(this).find('table tbody,table tfoot').addClass('ui-widget-content');
+
+        $(this).find('div.menu').addClass('ui-widget');
+        $(this).find('div.topItem').addClass('ui-widget-header');
+        $(this).find('div.subItem').addClass('ui-widget-content');
+        
+    };
+    
+    $('body').uify();
 
     /* $("#info_box").load("<?php echo $this->url(array("app" => "init", "controller" => "info_box")); ?>", function() {
                     
@@ -57,6 +77,7 @@ $(document).ready(function() {
         $('.scripts').remove();
         $('#load_img').hide();
         //$('#main').html($('.content').html());
+        $('#main').uify();
         $('#main').show();
         window.scroll(0, 0);
 
@@ -165,5 +186,6 @@ $.extend({
             $("#flash_box").removeClass("fixed");
         }
     }
+    
                 
 });
