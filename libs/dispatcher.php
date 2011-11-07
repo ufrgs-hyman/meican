@@ -36,6 +36,11 @@ function myErrorHandler($errno, $errstr, $errfile, $errline)
 
 include_once 'libs/app.php';
 
+/**
+ * Dispatcher Class. Reads required url and instanciate properly apps, controller and calls an action.
+ * Also builds urls.
+ */
+
 class Dispatcher {
 
     public function __construct($defaults = array()) {
@@ -45,6 +50,9 @@ class Dispatcher {
             $this->base = '';
     }
 
+    /**
+     * Main function, reads url and call action
+     */
     function dispatch() {
         //set_error_handler('myErrorHandler');
         if (!empty($_SERVER['PATH_INFO']))
@@ -82,6 +90,10 @@ class Dispatcher {
         }
     }
 
+    /**
+     * Check wether a user is logged in, otherwise redirects to login page.
+     * @return Boolean  
+     */
     function checkLogin() {
         if (AuthSystem::userTryToLogin() || AuthSystem::isUserLoggedIn()) {
             return true;
@@ -113,6 +125,11 @@ class Dispatcher {
         $login->show($message);
     }
 
+    /**
+     * From a given URL string, extract the array of params (apps, controller, action, params)
+     * @param String $url The given URL
+     * @return array An array of URL params
+     */
     public function parse($url) {
         $val = explode('/', $url);
         if (empty($val[0]))
@@ -138,6 +155,11 @@ class Dispatcher {
         return $route;
     }
     
+    /**
+     * From a given array of params, builds a URL string
+     * @param array $params
+     * @return string
+     */
     public function url($params=null) {
         if (!is_array($params))
             return $this->base . '/' . $params;
