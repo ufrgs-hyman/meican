@@ -52,7 +52,51 @@ var edit_myOptions = {
     mapTypeControl: false,
     mapTypeId: google.maps.MapTypeId.TERRAIN
 };
+
+ function HomeControl(map, div, home) {
+
+  // Get the control DIV. We'll attach our control
+  // UI to this DIV.
+  var controlDiv = div;
+
+  // We set up a variable for the 'this' keyword
+  // since we're adding event listeners later
+  // and 'this' will be out of scope.
+  var control = this;
+
+  // Set CSS styles for the DIV containing the control
+  // Setting padding to 5 px will offset the control
+  // from the edge of the map
+  controlDiv.style.padding = '5px';
+
+  // Set CSS for the control border
+  var goHomeUI = document.createElement('DIV');
+  goHomeUI.title = 'Click to reset zoom';
+  controlDiv.appendChild(goHomeUI);
+  
+  // Set CSS for the control interior
+  var goHomeText = document.createElement('DIV');
+  goHomeText.innerHTML = 'Reset Zoom';
+  goHomeUI.appendChild(goHomeText);
+  $(goHomeText).addClass("zoom ui-button ui-widget ui-state-default ui-corner-all ui-widget-content ui-state-hover ui-state-active");
+  
+  google.maps.event.addDomListener(goHomeUI, 'click', function() {
+    edit_resetZoom();
+  });
+}
+
+
+
 var edit_map = new google.maps.Map(document.getElementById("edit_map_canvas"), edit_myOptions);
+
+
+var homeControlDiv = document.createElement('DIV');
+var homeControl = new HomeControl(edit_map, homeControlDiv);
+homeControlDiv.index = 1;
+edit_map.controls[google.maps.ControlPosition.TOP_LEFT].push(homeControlDiv);
+
+console.debug(homeControlDiv);
+
 google.maps.event.trigger(edit_map, 'resize');
 edit_map.setZoom( edit_map.getZoom() );
 infowindow = new google.maps.InfoWindow();
@@ -78,6 +122,8 @@ var view_myOptions = {
     mapTypeId: google.maps.MapTypeId.TERRAIN
 };
 var view_map = new google.maps.Map(document.getElementById("view_map_canvas"), view_myOptions);
+
+
 google.maps.event.trigger(view_map, 'resize');
 view_map.setZoom( view_map.getZoom() );
 
