@@ -45,6 +45,7 @@ $(document).ready(function() {
     
     $('body').uify();
 
+	$.feedbackTab.init();
     /* $("#info_box").load("<?php echo $this->url(array("app" => "init", "controller" => "info_box")); ?>", function() {
                     
                    
@@ -163,6 +164,7 @@ function WPToggle(divId, imageId) {
     }
 
 }
+ 
 
 $.extend({
     redir : function(url, data){
@@ -184,7 +186,32 @@ $.extend({
         } else {
             $("#flash_box").removeClass("fixed");
         }
-    }
-    
+    },
+    feedbackTab : {
+ 
+		speed:300,
+		containerWidth:$('.feedback-panel').outerWidth(),
+		containerHeight: $('.feedback-panel').height(),//$('.feedback-panel').outerHeight(),
+		tabWidth:$('.feedback-link').outerWidth(),
+	 
+	 
+		init:function(){
+		    //$('.feedback-panel').css('height',$.feedbackTab.containerHeight + 'px');
+		    $('.feedback-panel').css('top', '-' + $('.feedback-panel').outerHeight() + 'px');
+	 
+		    $('a.feedback-link').click(function(event){
+		        if ($('.feedback-panel').hasClass('open')) {
+		            $('.feedback-panel')
+		            .animate({top: '-' + $('.feedback-panel').outerHeight() + 'px'}, $.feedbackTab.speed)
+		            .removeClass('open');
+		        } else {
+		            $('.feedback-panel')
+		            .animate({top: $('.feedback-link').outerHeight() + 'px'},  $.feedbackTab.speed)
+		            .addClass('open');
+		        }
+		        event.preventDefault();
+		    });
+		}
+	}
                 
 });

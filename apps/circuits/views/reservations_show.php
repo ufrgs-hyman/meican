@@ -16,20 +16,20 @@
                 <th rowspan="2" class="large"></th>
                 <th rowspan="2" class="large"><?php echo _("Name"); ?></th>
                 <th rowspan="2" class="large"><?php echo _("Bandwidth (Mbps)"); ?></th>
-                <th rowspan="2" style="border-right: 1px solid black; min-width: 60px;" class="large"><?php echo _("Status"); ?></th>                
+                <th rowspan="2" class="large"><?php echo _("Status"); ?></th>                
                 
-                <th style="border-right: 1px solid black" colspan="3"><?php echo _("Source"); ?></th>
-                <th style="border-right: 1px solid black" colspan="3"><?php echo _("Destination"); ?></th>
+                <th colspan="3"><?php echo _("Source"); ?></th>
+                <th colspan="3"><?php echo _("Destination"); ?></th>
                 <th colspan="3"><?php echo _("Timer"); ?></th>
             </tr>
             <tr>
                 <th class="large"><?php echo _("Domain"); ?></th>
                 <th class="large"><?php echo _("Network"); ?></th>
-                <th class="large" style="border-right: 1px solid black"><?php echo _("Device"); ?></th>
+                <th class="large"><?php echo _("Device"); ?></th>
                 
                 <th class="large"><?php echo _("Domain"); ?></th>
                 <th class="large"><?php echo _("Network"); ?></th>
-                <th class="large" style="border-right: 1px solid black"><?php echo _("Device"); ?></th>
+                <th class="large"><?php echo _("Device"); ?></th>
                 
                 <th class="large"><?php echo _("Start"); ?></th>
                 <th class="large"><?php echo _("Finish"); ?></th>

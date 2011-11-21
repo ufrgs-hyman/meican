@@ -991,3 +991,31 @@ input[type="submit"]:hover {
 h1 { /* Títulos principais */
 	color: #D00;
 }
+
+.feedback-panel {
+    padding:20px;
+    width: 250px;
+    position:absolute;
+    top:-500px;
+    right:0px;
+}
+ 
+.feedback-panel a.feedback-tab {
+    background:transparent url(feedbacktab.gif) no-repeat scroll 0 0;
+    border-width: 1px 1px 1px 0;
+    display:block;
+    height:99px;
+    left:51px;
+    bottom:21px;
+    position:relative;
+    float:right;
+    text-indent:-9999px;
+    width:30px;
+    outline:none;
+}
+ 
+#response-message {
+    background: #ccc;
+    border: 1px solid #999;
+    padding:50px;
+}

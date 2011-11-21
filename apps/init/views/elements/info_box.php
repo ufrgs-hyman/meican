@@ -9,6 +9,6 @@
     <?php echo _('My account'); ?> </a></li>
             <li><a href="#"><?php echo _('Help'); ?></a></li>
             <li><a href="#"><?php echo _('About'); ?></a></li>
-            <li><a href="#"><?php echo _('Feedback'); ?></a></li>
+            <li><a href="#" class="feedback-link"><?php echo _('Feedback'); ?></a></li>
         </ul>
 </div>

@@ -87,8 +87,6 @@
         <!-- joga dentro dessa tag o html a ser processado - o que retorna do ajax -->
         <div id="htmlToLoad" style="display: none"></div>
         
-        
-        
 <?php echo $this->element('menu', array('app' => 'init'));?>
         
         
@@ -101,6 +99,7 @@
 <div id="canvas">
 <?php echo $this->element('info_box', array('app' => 'init'));?>
 	<div id="workspace">
+	
 		
 		<div id="flash_box" class="shadow ui-widget">
 		
@@ -123,6 +122,20 @@
 		</div>
 		<div id="main">
 		<?php echo $content_for_body; //debug($this->script->jsFiles);?>
+		</div>
+		
+        
+		<div class="feedback-panel ui-widget ui-widget-content ui-corner-all">
+		 
+			<h3>Send Us Feedback</h3>
+			<div id="form-wrap">
+			<form method="post" action="sendmail.php">
+			  Message:<br />
+			  <textarea id="message" name="message" rows="10" col="50" style="width:90%;padding:5px;"></textarea><br />
+			  <input type="submit" class="button" />
+			</form>
+		 
+			</div>    
 		</div>
 	</div>
 </div>        
