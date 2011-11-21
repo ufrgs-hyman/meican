@@ -4,13 +4,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title><?php echo Framework::getSystemName(); ?></title>
 
         <!-- GLOBAL JS SCRIPTS AND IN-LINE FUNCTIONS -->
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/style1.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/timePicker.css" />
-        <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/style1.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/meican1-theme/jquery-ui-1.8.16.custom.css" />
 	<?php //https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/start/jquery-ui.css ?>
 
@@ -87,41 +86,50 @@
         </div>
         <!-- joga dentro dessa tag o html a ser processado - o que retorna do ajax -->
         <div id="htmlToLoad" style="display: none"></div>
-            <div id="header" class="header">
-                <div id="logo_box">
-                    <a href="<?php echo $this->buildLink(array('action' => 'welcome')); ?>"><img class="logo" alt="MEICAN" src="<?php echo $this->url(''); ?>webroot/img/meican_white.png"/></a>
-                </div>
+        
+        
+        
+<?php echo $this->element('menu', array('app' => 'init'));?>
+        
+        
 
-                <div id="info_box">
-                    <?php echo $this->element('info_box', array('app' => 'init'));?>
-                </div>
-            </div>
-            <div id="flash_box" class="shadow">
-                <?php if ($content_for_flash): ?>
-                <?php foreach ($content_for_flash as $f) : ?>
-                    <?php
-                    $ar = explode(":", $f);
-                    $status = $ar[0];
-                    $message = $ar[1];
-                    ?>
-                    <div class="<?php echo $status; ?>"><?php echo $message; ?>
-                        <input type="button" class="closeFlash" onclick="clearFlash();"/>
-                    </div>
-                <?php endforeach; ?>
-                <?php endif; ?>
-
-            </div>
-            <div id="content">
-                <div id="menu">
-                    <?php echo $this->element('menu', array('app' => 'init'));?>
-                </div>
-                <div id="load_img" style="display: none">
-                    <img src="<?php echo $base; ?>webroot/img/ajax-loader_1.gif" alt="<?php echo _('Loading'); ?>"/>
-                </div>
-                <div id="main">
-                    <?php echo $content_for_body; //debug($this->script->jsFiles);?>
-                </div>
-            </div>
+<div id="system_date">
+	<?php echo date("H:i").'<br/>'.date("d/m/Y"); ?>
+</div>
+        
+        
+<div id="canvas">
+<?php echo $this->element('info_box', array('app' => 'init'));?>
+	<div id="workspace">
+		
+		<div id="flash_box" class="shadow ui-widget">
+		
+		
+				<?php if ($content_for_flash): ?>
+				<?php foreach ($content_for_flash as $f) : ?>
+				    <?php
+				    $ar = explode(":", $f);
+				    $status = $ar[0];
+				    $message = $ar[1];
+				    ?>
+			        <div class="<?php echo $status; ?> ui-corner-all" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><span class="ui-icon ui-icon-closethick close-button" onclick="clearFlash();"></span><?php echo $message; ?></p>
+				</div>
+				<?php endforeach; ?>
+				<?php endif; ?>
+				
+		</div>
+		<div id="load_img" style="display: none">
+				<img src="<?php echo $base; ?>webroot/img/ajax-loader_1.gif" alt="<?php echo _('Loading'); ?>"/>
+		</div>
+		<div id="main">
+		<?php echo $content_for_body; //debug($this->script->jsFiles);?>
+		</div>
+	</div>
+</div>        
+        
+        
+        
+      
            <!-- <div id="footer">
                 <img src="<?php echo $this->url(''); ?>webroot/img/footer.png" style="width:100%; position: absolute; height: 25px;"></img>
             </div>-->

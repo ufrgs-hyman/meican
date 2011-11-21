@@ -49,19 +49,28 @@ foreach ($preMenus as $name => $sub)
             $menus[$name] = $sub['url']; //check link
         }
     }*/
-?>
-
-<?php foreach (MenuItem::getAllMenus() as $menu): ?>
-    <div class="topItem">
-<?php if (!empty($menu->url)): ?>
-            <a href="<?php echo $this->url($menu->url); ?>" target="main"><?php echo $menu->label; ?></a>
-<?php else: ?>
-<?php echo $menu->label; ?>
-<?php endif; ?>
-    </div>
-<?php foreach ($menu->sub as $subMenu): ?>
-   <div class="subItem"><a href="<?php echo $this->url($subMenu->url); ?>" target="main"><?php echo $subMenu->label; ?></a></div>
-<?php endforeach; ?>
-
-<?php endforeach; ?>
+?>  
   
+  
+<div id="menu">
+	<div id="logo">
+		<p>MEICAN</p>
+	</div>
+    <ul>
+    	<?php foreach (MenuItem::getAllMenus() as $menu): ?>
+			<?php if (!empty($menu->url)): ?>
+				<li><a href="<?php echo $this->url($menu->url); ?>" target="main"><?php echo $menu->label; ?></a></li>
+			<?php else: ?>
+				<li><?php echo $menu->label; ?></li>
+			<?php endif; ?>
+			
+			<?php if (!empty($menu->sub)): ?>
+		    	<ul>
+				<?php foreach ($menu->sub as $subMenu): ?>
+					<li><a href="<?php echo $this->url($subMenu->url); ?>" target="main"><?php echo $subMenu->label; ?></a></li>
+				<?php endforeach; ?>
+		        </ul>
+			<?php endif; ?>
+
+		<?php endforeach; ?>
+</div>

@@ -2,20 +2,13 @@
    /* $userLogin = $this->passedArgs->usr_login;
     $system_time = $this->passedArgs->system_time;*/
 ?>
-
-<a href="<?php echo $this->buildLink(array('app'=>'aaa','controller'=>'users','action'=>'edit_settings')); ?>">
-    <?php echo _('My settings'); ?> </a> |
-
-<a href="#">
-    <?php echo _('Help'); ?> </a> |
-
-<a href="#">
-    <?php echo _('About'); ?> </a> |    
-    
-<a href="<?php echo $this->url(array('app' => 'init', 'controller' => 'login', 'action' => 'logout'));?>">
-    <?php echo _('Sign out'); ?>
-</a> (<?php echo AuthSystem::getUserLogin(); ?>) |
-
-<label title="<?php echo _("Server time"); ?>" id="system_time">
-    <?php echo date("d/m/Y H:i"); ?>
-</label>
+<div id="info_box">
+    	<ul>
+            <li><a href="<?php echo $this->url(array('app' => 'init', 'controller' => 'login', 'action' => 'logout'));?>"><?php echo _('Sign out'); ?> (<?php echo AuthSystem::getUserLogin(); ?>)</a></li>
+        	<li><a href="<?php echo $this->buildLink(array('app'=>'aaa','controller'=>'users','action'=>'edit_settings')); ?>">
+    <?php echo _('My account'); ?> </a></li>
+            <li><a href="#"><?php echo _('Help'); ?></a></li>
+            <li><a href="#"><?php echo _('About'); ?></a></li>
+            <li><a href="#"><?php echo _('Feedback'); ?></a></li>
+        </ul>
+</div>
