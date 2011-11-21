@@ -5,16 +5,16 @@
         </td>
         <td style="color:black">
             <div align="left">
-                <input type="radio" name="sourceVLANType" id="src_vlanUntagged" value="FALSE" disabled="disabled" onchange="map_changeVlanType(this,'src');"/><?php echo _("Untagged"); ?>
+                <input type="radio" name="sourceVLANType" id="src_vlanUntagged" value="FALSE" disabled="disabled" onchange="map_changeVlanType(this,'src');"/><label for="src_vlanUntagged"><?php echo _("Untagged"); ?></label>
                 <br>
-                <input type="radio" name="sourceVLANType" id="src_vlanTagged" value="TRUE" disabled="disabled" onchange="map_changeVlanType(this,'src');"/><?php echo _("Tagged"); ?>
+                <input type="radio" name="sourceVLANType" id="src_vlanTagged" value="TRUE" disabled="disabled" onchange="map_changeVlanType(this,'src');"/><label for="src_vlanTagged"><?php echo _("Tagged"); ?></label>
             </div>
         </td>
         <td style="color:black">
             <div align="left">
-                <input type="radio" name="destVLANType" id="dst_vlanUntagged" value="FALSE" disabled="disabled" onchange="map_changeVlanType(this,'dst');"/><?php echo _("Untagged"); ?>
+                <input type="radio" name="destVLANType" id="dst_vlanUntagged" value="FALSE" disabled="disabled" onchange="map_changeVlanType(this,'dst');"/><label for="dst_vlanUntagged"><?php echo _("Untagged"); ?></label>
                 <br>
-                <input type="radio" name="destVLANType" id="dst_vlanTagged" value="TRUE" disabled="disabled" onchange="map_changeVlanType(this,'dst');"/><?php echo _("Tagged"); ?>
+                <input type="radio" name="destVLANType" id="dst_vlanTagged" value="TRUE" disabled="disabled" onchange="map_changeVlanType(this,'dst');"/><label for="dst_vlanTagged"><?php echo _("Tagged"); ?></label>
             </div>
         </td>
     </tr>

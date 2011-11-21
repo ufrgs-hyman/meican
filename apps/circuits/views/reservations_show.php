@@ -45,7 +45,7 @@
                     </td>
                     <td style="padding-right: 5px; min-width: 20px">
                         <a href="<?php echo $this->buildLink(array('action' => 'view', 'param' => "res_id:$r->id")); ?>">
-                             <img src="<?php echo $this->url()?>webroot/img/eye.png"/>
+                             <img src="<?php echo $this->url()?>webroot/img/eye.png" alt="<?php echo _('View'); ?>"/>
                         </a>
                     </td>
 
@@ -59,7 +59,7 @@
 
                     <td>
                         <label id="status<?php echo $r->id; ?>"></label>
-                        <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading" class="load" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif"/>
+                        <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading<?php echo $r->id; ?>" class="load" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif"/>
                     </td>
                     <td>
                         <?php echo $r->flow->source->domain; ?>

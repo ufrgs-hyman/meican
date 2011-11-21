@@ -68,7 +68,7 @@
                         <tr>
                             <td class="left" colspan="3" style="color: black">
                                 <hr/>
-                                <input disabled="disabled" type="checkbox" name="vlan_options" id="showVlan_checkbox" onclick="showVlanConf()"/><p style="vertical-align: middle; display:inline"><?php echo _("Show VLAN configuration"); ?></p>
+                                <input disabled="disabled" type="checkbox" name="vlan_options" id="showVlan_checkbox" onclick="showVlanConf()"/><p style="vertical-align: middle; display:inline"><label for="showVlan_checkbox"><?php echo _("Show VLAN configuration"); ?></label></p>
                             </td>
                         </tr>
                         <tr id="vlan_tr">

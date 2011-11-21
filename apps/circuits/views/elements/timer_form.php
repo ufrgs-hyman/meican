@@ -45,7 +45,7 @@ $timer = (isset($argsToElement->timer)) ? $argsToElement->timer : NULL;
     <tr>
         <td class="left" colspan="6">
             <input type="checkbox" name="repeat_chkbox" id="repeat_chkbox" onClick="showRecurrenceBox();" />
-            <p style="display: inline; vertical-align: middle"> <?php echo _("Repeat..."); ?></p>
+            <p style="display: inline; vertical-align: middle"><label for="repeat_chkbox"> <?php echo _("Repeat..."); ?></label></p>
             <?php $this->addElement('timer_recurrence'); ?>
         </td>
     </tr>
