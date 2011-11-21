@@ -1,6 +1,17 @@
 <?php $user = $argsToElement; ?>
+<?php
+	$url = "http://www.gravatar.com/avatar/";
+	$url .= md5( strtolower( trim( $user->usr_email ) ) );
+	$s = 80;
+	$d = 'mm';
+	$r = 'g';
+	$url .= "?s=$s&d=$d&r=$r";
+ ?>
+ 
+ 
 
 <h1><?php echo _('Information'); ?></h1>
+<img src="<?php echo $url;?>" style="float:right;">
 
 <table class="withoutBorder add" style="margin-left: 40px">
     <tr>
