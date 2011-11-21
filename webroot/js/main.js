@@ -37,9 +37,9 @@ $(document).ready(function() {
         $(this).find('table thead,table th').addClass('ui-widget-header');
         $(this).find('table tbody,table tfoot').addClass('ui-widget-content');
 
-        $(this).find('div.menu').addClass('ui-widget');
+/*        $(this).find('div.menu').addClass('ui-widget');
         $(this).find('div.topItem').addClass('ui-widget-header');
-        $(this).find('div.subItem').addClass('ui-widget-content');
+        $(this).find('div.subItem').addClass('ui-widget-content');*/
         
     };
     

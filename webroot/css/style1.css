@@ -192,6 +192,10 @@ table th.large {
     padding-right: 10px;
 }
 
+table.list {
+	width: 100%;
+}
+
 table th.listHeader {
     line-height: 2;
 }
@@ -263,9 +267,9 @@ img.loading {
 
 input[type='submit'], input[type='button'], input[type='checkbox'] {
     text-align: center;
-    color: #000000;
+    /*color: #000000;
     font-weight: bold;
-    text-indent: 18px;
+    text-indent: 18px;*/
     cursor: pointer;
     height: 25px;
     border: 0px;

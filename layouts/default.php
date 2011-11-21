@@ -11,7 +11,8 @@
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/style1.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/timePicker.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/style1.css" />
-	<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/start/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/meican1-theme/jquery-ui-1.8.16.custom.css" />
+	<?php //https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/start/jquery-ui.css ?>
 
         <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.min.js"></script>
         <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery-ui-1.8.16.custom.min.js"></script>
