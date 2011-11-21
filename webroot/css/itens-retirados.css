@@ -1,0 +1,78 @@
+
+input.delete{
+    background-image:  url('../img/remove.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+   /* figura tem 18px 18px*/
+   float: left;
+}
+
+input.add{
+    background-image:  url('../img/add2_2.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+    float: right;
+}
+
+input.add_new{
+    background-image:  url('../img/add2_2.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+    float: left;
+}
+
+input.update{
+    background-image:  url('../img/update.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+}
+
+input.cancel{
+    background-image:  url('../img/cancel.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+    float:left;
+    
+}
+
+input.refresh{
+    background-image:  url('../img/refresh.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+}
+
+.refreshTable{
+    height: 15px;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+}
+
+input.save{
+    background-image:  url('../img/save_1.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+    float: right;
+}
+
+input.ok{
+    background-image:  url('../img/ok.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+    float: right;
+}
+
+input.next{
+    background-image:  url('../img/next.png') ;
+    background-repeat:  no-repeat;
+    background-position: 3px 2px;
+    /* figura tem 18px 18px*/
+    float: right;
+}
+
