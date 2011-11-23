@@ -283,6 +283,7 @@ div.control_tab {
     bottom: 0;
     margin-bottom: 15px;
     height: 40px;
+    float: right;
 }
 
 input.back{
@@ -529,12 +530,6 @@ overflow: hidden;
 clear: both;
 float: left; 
 background: #fff;
-}
-
-.tab_content {
-padding: 20px;
-font-size: 1.1em;
-text-indent: 30pt;
 }
 
 div#main a.link_tab, div#main a.link_tab:visited {
@@ -785,8 +780,9 @@ div.shadow {
 }
 
 #info_box ul a:hover {
-	/* background-color: #1D405C; */
-	background-color: #9D3C3E;
+	background-color: #1D405C; 
+/*	background-color: #9D3C3E;*/
+	/*background-color: #7C4D27;*/
 }
 
 #menu ul {
@@ -972,6 +968,10 @@ input[type="submit"]:hover {
 	padding: 0.5em 0.7em 0.5em 0.9em;
 	background-color: #EEE;
 	box-shadow: 2px 2px 4px #888;
+}
+
+.tab_subcontent{
+    float:left;
 }
 
 /* Cores das fontes */

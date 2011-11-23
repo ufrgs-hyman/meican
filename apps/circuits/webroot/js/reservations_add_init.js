@@ -76,7 +76,7 @@ var edit_myOptions = {
   
   // Set CSS for the control interior
   var goHomeText = document.createElement('DIV');
-  goHomeText.innerHTML = 'Reset Zoom';
+  goHomeText.innerHTML = reset_zoom;
   goHomeUI.appendChild(goHomeText);
   $(goHomeText).addClass("zoom ui-button ui-widget ui-state-default ui-corner-all ui-widget-content ui-state-hover ui-state-active");
   

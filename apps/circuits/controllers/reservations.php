@@ -536,6 +536,7 @@ class reservations extends Controller {
             "invalid_time_string" => _("Invalid time"),
             "active_string" => _("Active from"),
             "at_string" => _("at"),
+            "reset_zoom" => _("Reset Zoom"),
             "domains" => $domToMapArray,
             "urn_string" => $allUrns
         ));
