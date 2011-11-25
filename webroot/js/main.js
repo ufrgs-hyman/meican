@@ -34,10 +34,10 @@ $(document).ready(function() {
         $(this).find('input[type!=submit],textarea,select').addClass('ui-widget ui-widget-content');
         $(this).find('table').addClass('ui-widget ui-corner-all');
         $(this).find('fieldset').addClass('ui-widget ui-corner-all');
-        $(this).find('table thead,table th').addClass('ui-widget-header');
-        $(this).find('table tbody,table tfoot').addClass('ui-widget-content');
+        $(this).find('table thead').addClass('ui-widget-header');
+        $(this).find('table tbody').addClass('ui-widget-content');
 
-/*        $(this).find('div.menu').addClass('ui-widget');
+    /*        $(this).find('div.menu').addClass('ui-widget');
         $(this).find('div.topItem').addClass('ui-widget-header');
         $(this).find('div.subItem').addClass('ui-widget-content');*/
         
@@ -45,7 +45,7 @@ $(document).ready(function() {
     
     $('body').uify();
 
-	$.feedbackTab.init();
+    $.feedbackTab.init();
     /* $("#info_box").load("<?php echo $this->url(array("app" => "init", "controller" => "info_box")); ?>", function() {
                     
                    
@@ -141,7 +141,7 @@ function setFlash(message, status) {
     if (!status)
         status = "info";
     $('#flash_box').append('<div class="' + status + ' ui-corner-all" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><span class="ui-icon ui-icon-closethick close-button" onclick="clearFlash();"></span>'+ message +
-			        '</p>');
+        '</p>');
     window.scroll(0, 0);
     window.onscroll = $.windowScroll;
 }
@@ -169,7 +169,7 @@ function WPToggle(divId, imageId) {
 $.extend({
     redir : function(url, data){
         return redir(baseUrl+url, data);
-        /*$.pjax({
+    /*$.pjax({
             type: "POST",
             url: url,
             data: data,
@@ -187,31 +187,68 @@ $.extend({
             $("#flash_box").removeClass("fixed");
         }
     },
+    formatFields: function(){
+        var intInp = $('.integer-input[disabled!=true]'),
+        curInp = $('.currency-input[disabled!=true]');
+        if (intInp.length>0 || curInp.length>0){
+            applySpinner = function(){
+                intInp.numeric('.').spinner({});
+                if (curInp.length>0)
+                    if (window.Globalization)
+                        curInp.numeric('.').spinner({
+                            numberformat: 'n'
+                        });
+                    else
+                        $.getScript(baseUrl+'webroot/js/jquery.global.js', function(){
+                            window.Globalization = jQuery.global;
+                            curInp.numeric('.').spinner({
+                                numberformat: 'n'
+                            });
+                        });
+                //Trigger change event in field when spinner changes
+                $(".ui-spinner").bind("mouseup", function() {
+                    intInp.numeric('.').trigger("change");
+                //alert(intInp.numeric('.').val());
+                }).bind("keyup", function() {
+                    intInp.numeric('.').trigger("change");
+                //alert(intInp.numeric('.').val());
+                });
+            };
+            if (jQuery.isFunction(jQuery.fn.spinner))
+                applySpinner();
+            else
+                $.getScript(baseUrl+'webroot/js/ui.spinner.js', applySpinner);
+        }
+    },
     feedbackTab : {
  
-		speed:300,
-		containerWidth:$('.feedback-panel').outerWidth(),
-		containerHeight: $('.feedback-panel').height(),//$('.feedback-panel').outerHeight(),
-		tabWidth:$('.feedback-link').outerWidth(),
+        speed:300,
+        containerWidth:$('.feedback-panel').outerWidth(),
+        containerHeight: $('.feedback-panel').height(),//$('.feedback-panel').outerHeight(),
+        tabWidth:$('.feedback-link').outerWidth(),
 	 
 	 
-		init:function(){
-		    //$('.feedback-panel').css('height',$.feedbackTab.containerHeight + 'px');
-		    $('.feedback-panel').css('top', '-' + $('.feedback-panel').outerHeight() + 'px');
+        init:function(){
+            //$('.feedback-panel').css('height',$.feedbackTab.containerHeight + 'px');
+            $('.feedback-panel').css('top', '-' + $('.feedback-panel').outerHeight() + 'px');
 	 
-		    $('a.feedback-link').click(function(event){
-		        if ($('.feedback-panel').hasClass('open')) {
-		            $('.feedback-panel')
-		            .animate({top: '-' + $('.feedback-panel').outerHeight() + 'px'}, $.feedbackTab.speed)
-		            .removeClass('open');
-		        } else {
-		            $('.feedback-panel')
-		            .animate({top: $('.feedback-link').outerHeight() + 'px'},  $.feedbackTab.speed)
-		            .addClass('open');
-		        }
-		        event.preventDefault();
-		    });
-		}
-	}
+            $('a.feedback-link').click(function(event){
+                if ($('.feedback-panel').hasClass('open')) {
+                    $('.feedback-panel')
+                    .animate({
+                        top: '-' + $('.feedback-panel').outerHeight() + 'px'
+                        }, $.feedbackTab.speed)
+                    .removeClass('open');
+                } else {
+                    $('.feedback-panel')
+                    .animate({
+                        top: $('.feedback-link').outerHeight() + 'px'
+                        },  $.feedbackTab.speed)
+                    .addClass('open');
+                }
+                event.preventDefault();
+            });
+        }
+    }
                 
 });

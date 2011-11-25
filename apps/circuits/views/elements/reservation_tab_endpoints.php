@@ -7,16 +7,18 @@
     <div class="tab_subcontent" style="padding:10px;width:180px;">
         <?= $this->element('reservation_tab_point', array('type' => 'source')); ?>
         <div id="bandwidth_bar">
-            <div>
+            <div id="bandwidth_bar_text">
             <label id="amount_label" for="amount"></label>
             <label id="amount" style="border:0; color:#000; font-weight:bold; width:100%"></label>
-            <input type="hidden" name="bandwidth" id="bandwidth" value="200"/></div><?php //var sizepx = 5; $('#bandwidth_bar').click(function(){ sizepx = sizepx+5;  $('#bandwidth_bar div').animate({width: sizepx+'%'}, 100); });?>
+            <input type="number" name="bandwidth" id="bandwidth" value="0" class="integer-input" size="4" step="100" style="width:50px;" disabled="true"/>
+            <input type="hidden" name="bandwidth" id="bandwidth" value="200"/>
+            </div>
+            <div id="bandwidth_bar_inside"></div><?php //var sizepx = 5; $('#bandwidth_bar').click(function(){ sizepx = sizepx+5;  $('#bandwidth_bar div').animate({width: sizepx+'%'}, 100); });?>
         </div>
         <?= $this->element('reservation_tab_point', array('type' => 'destination')); ?>
         <div style="width: 100%; margin-top: 5px">
             <label id="amount_label" for="amount"></label>
             <label id="amount" style="border:0; color:#000; font-weight:bold; width:100%"></label>
-            <input type="hidden" name="bandwidth" id="bandwidth" value="200"/>
         </div>
 
         <input disabled="disabled" type="checkbox" name="vlan_options" id="showVlan_checkbox" onclick="showVlanConf()"/><p style="vertical-align: middle; display:inline"><label for="showVlan_checkbox"><?php echo _("Show VLAN configuration"); ?></label></p>

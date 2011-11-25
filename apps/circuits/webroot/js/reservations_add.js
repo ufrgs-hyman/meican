@@ -37,6 +37,14 @@ function createTabs(){
 }
 
 function createSlider(){
+    $("#bandwidth[type=number]").attr('step', band_div).attr('min', band_min).attr('max', band_max).attr('disabled', false);
+    var f = function(){
+        var v = ($("#bandwidth[type=number]").val()/band_max)*100;
+        console.debug(v);
+       $('#bandwidth_bar_inside').animate({width: v+'%'}, 100);       
+    };
+    $("#bandwidth[type=number]").change(f).keyup(f).click(f);
+    
     $('#slider').slider("max",band_min);
     
     $('#slider').slider({

@@ -49,7 +49,7 @@ var edit_myOptions = {
         style: google.maps.NavigationControlStyle.ZOOM_PAN
     },
     backgroundColor: "white",
-    mapTypeControl: false,
+//    mapTypeControl: false,
     mapTypeId: google.maps.MapTypeId.TERRAIN
 };
 
@@ -93,7 +93,7 @@ var edit_map = new google.maps.Map(document.getElementById("edit_map_canvas"), e
 var homeControlDiv = document.createElement('DIV');
 var homeControl = new HomeControl(edit_map, homeControlDiv);
 homeControlDiv.index = 1;
-edit_map.controls[google.maps.ControlPosition.TOP_LEFT].push(homeControlDiv);
+edit_map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
 
 console.debug(homeControlDiv);
 
