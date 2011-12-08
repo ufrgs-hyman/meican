@@ -968,7 +968,7 @@ table.list thead th {
 }
 
 .tab-overlay {
-	position: absolute; background-color: #fff; z-index: 3; opacity: 0.5; box-shadow: 2px 2px 4px #888; height:100%; width: 100%;
+	position: absolute; background-color: #fff; z-index: 3; opacity: 0.5; /*box-shadow: 2px 2px 4px #888;*/ height:100%; width: 100%;
 }
 
 
