@@ -1,6 +1,6 @@
 <div class="tab_content feedback-panel ui-corner-all">
-
-    <h3><?php echo _('Send Us Feedback'); ?></h3>
+    <form method="post" action="<?php $this->url(array('app' => 'init', 'controller' => 'mail'));?>">
+    <h1><?php echo _('Send Us Feedback'); ?></h1>
 
     <fieldset id="topic_details">
 
@@ -42,14 +42,13 @@
             <input class="submit" id="topic_submit" name="commit" tabindex="7" type="submit" value="Continue">
         </div>
     </fieldset>
-
+<?php /*
     <div id="form-wrap">
-        <form method="post" action="sendmail.php">
             <?php echo _('Message: '); ?><br />
             <textarea id="message" name="message" rows="10" cols="50" style="width:90%;padding:5px;" placeholder="<?php echo "Put here your feedback"; ?>"></textarea><br />
             <input type="submit" class="button" />
-        </form>
-
-    </div>    
+    </div>  */?> 
+    
+    </form>  
 </div>
 <?php //echo "Put here your feedback"; ?>

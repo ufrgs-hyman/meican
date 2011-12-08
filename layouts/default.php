@@ -13,13 +13,14 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/meican3-theme/jquery-ui-1.8.16.custom.css" />
         <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.min.js"></script>
         <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery-ui-1.8.16.custom.min.js"></script>
-        <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.pjax.js"></script>
        <?php //https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/start/jquery-ui.css
 	/*<script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.form.js"></script>
         <script type="text/javascript" src="<?php echo $base; ?>apps/init/webroot/js/info_box.js"></script>*/ 
         /* <!-- ESSE SCRIPT TÁ DANDO PROBLEMA
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/jquery-1.4.2.min.js"></script>
+        
+        <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.dataTables.min.js"></script>
         -->*/ ?>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/topology/webroot/js/devices.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/topology/webroot/js/networks.js"></script>

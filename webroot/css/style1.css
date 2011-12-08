@@ -13,7 +13,7 @@
 
 /* Tabela de disposição dos boxes iniciais */
 html, body {
-    font-family: Helvetica, Arial;
+    font-family: /*Helvetica, */Arial, sans-serif;
     font-size: 12px;
     margin: 0;
     width: 100%;
@@ -665,7 +665,6 @@ h1 {
 input[type="text"] {
     height: 21px;
     border: thin solid #BBB;
-    font-family:Arial, Helvetica, sans-serif;
     color: #4F4F4F;
     background-color: white;
 }
@@ -680,7 +679,7 @@ input[type="text"]:hover, select:hover, input[type="radio"]:hover, input[type="p
     border-width:thin;
     border-style: none solid;
     width:80px;
-    height:140px;
+    height:80px;
     margin: auto;
     box-shadow: 2px 0px 4px #888;
     position: relative;
@@ -688,7 +687,7 @@ input[type="text"]:hover, select:hover, input[type="radio"]:hover, input[type="p
 
 div#bandwidth_bar_text{
     position: absolute;
-    top: 20%;
+    top: 5%;
     left: 20%;
     z-index: 2;
 }

@@ -91,7 +91,7 @@ var view_center;
 var overlay; var mapDiv;
 var contextMenu;
 
-(function($){ 
+(function($){
 	/*função para criar mapa de edição */
 	$.fn.makeEditMap = function(){ /*inicializa mapa */
 		edit_map = new google.maps.Map(document.getElementById("edit_map_canvas"), edit_myOptions);
@@ -162,7 +162,7 @@ var contextMenu;
 		    
 		   $('#bandwidth_bar_inside').animate({width: v+'%', 'background-color': 'rgb('+(Math.round(255*(100-(k<0?0:k))/100))+','+(Math.round(255*(100-(-k<0?0:-k))/100))+',0)'}, 100);       
 		};
-		$("#bandwidth[type=number]").change(f).keydown(f).click(f).scroll(f);
+		$("#bandwidth[type=number]").change(f).keyup(f).click(f).scroll(f);
 		if (false){ /*configura tabs? não */
 		    $('#tabs-res ul').show();
 		    $('#tabs-3').show();
@@ -194,7 +194,7 @@ var contextMenu;
 		});
 		/* resize da janela muda tamanho do mapa */
 		$(window).resize(function() {
-		  $('#edit_map_canvas').css('width', $(window).width()-410);
+		  $('#edit_map_canvas').css('width', $(window).width()-400);
 	/*      $('.tab-overlay').each(function(n, item){
 		  	$(item).css({'width': $(item).parent().width(), 'height': $(item).parent().height()});
 		  });*/
@@ -210,7 +210,7 @@ var contextMenu;
 			validateReservationForm();
 		});
 		$('#res_name').focus();
-		$('#edit_map_canvas').css('width', $(window).width()-410);
+		$('#edit_map_canvas').css('width', $(window).width()-400);
 	  	$.fn.makeEditMap();
 	});
 	

@@ -72,7 +72,6 @@
                     <?php endforeach; ?>
                 </ul>
             <?php endif; ?>
-            <hr/>
 			</li>
         <?php endforeach; ?>
 </div>
