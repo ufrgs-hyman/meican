@@ -136,4 +136,33 @@ input.delete{
 
 
 
+#logo, #info_box {
+    height: 26px;
+    color: #D8E7F3;
+}
+
+
+#info_box ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#info_box ul a {
+    float: right;
+    display: block;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    color: #D8E7F3;
+    text-decoration: none;	
+    text-shadow: 2px 2px 0.2em black, -1px -1px #444;
+}
+
+#info_box ul a:hover {
+    /*background-color: #1D405C; */
+    background-color: #9D3C3E;
+    /*background-color: #7C4D27;*/
+}
+
+
+
 
