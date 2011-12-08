@@ -1,8 +1,6 @@
-<br/>
-
-<div class="tab_content">
+    <p style='color:black;'><?php echo _("Select source and destination networks by clicking on the map markers with any button and then choosing an option from the pop-up menu. After selecting the endpoints, choose the device and port on the right pane."); ?></p>
     <div class="tab_subcontent" style="border: solid #BBB 1px; box-shadow: 2px 2px 4px #888; border-image: initial;">
-        <div id="edit_map_canvas" style="width:400px; height: 400px;"></div>
+        <div id="edit_map_canvas" style="width:600px; height: 400px;"></div>
     </div>
     <div class="tab_subcontent" style="padding:10px;width:180px;">
         <?= $this->element('reservation_tab_point', array('type' => 'source')); ?>
@@ -10,8 +8,10 @@
             <div id="bandwidth_bar_text">
             <label id="amount_label" for="amount"></label>
             <label id="amount" style="border:0; color:#000; font-weight:bold; width:100%"></label>
-            <input type="number" name="bandwidth" id="bandwidth" value="0" class="integer-input" size="4" step="100" style="width:50px;" disabled="true"/>
-            <input type="hidden" name="bandwidth" id="bandwidth" value="200"/>
+            <label id="bandwidth_label" for="bandwidth"><?php echo _("Bandwidth");?></label>
+            <input type="number" name="bandwidth" id="bandwidth" value="200" class="integer-input" size="4" step="100" style="width:50px;" disabled="disabled"/>
+            <label id="bandwidth_un" for="bandwidth"><?php echo _("Mbps");?></label>
+            <?php //<input type="hidden" name="bandwidth" id="bandwidth" value="200"/> ?>
             </div>
             <div id="bandwidth_bar_inside"></div><?php //var sizepx = 5; $('#bandwidth_bar').click(function(){ sizepx = sizepx+5;  $('#bandwidth_bar div').animate({width: sizepx+'%'}, 100); });?>
         </div>
@@ -28,6 +28,5 @@
             <br/><br/>
         </div>
     </div>
-    <?php $this->addElement('reservation_tab3'); ?>
-</div>
-<br/>
+    <?php //$this->addElement('reservation_tab3'); ?>
+    <div style="clear:both;"></div>

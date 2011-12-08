@@ -1,11 +1,6 @@
-<br/>
-
-<table class="withoutBorder">
-    <tr>
-        <td class="reservation_name" style="text-align: left">
-            <?php echo _("Reservation name:"); ?>
-            <input type="text" name="res_name" id="res_name" size="50" value="<?php echo $name; ?>" onkeyup="changeName(this);"/>
-        </td>
-    </tr>
-</table>
-<br/>
+<h1>
+    <label for="res_name">
+        <?php echo _("New circuit name:"); ?>
+    </label>
+    <input type="text" name="res_name" id="res_name" size="50" value="<?php echo $name; ?>" onkeyup="changeName(this);"/>
+</h1>

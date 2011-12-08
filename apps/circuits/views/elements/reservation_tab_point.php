@@ -8,10 +8,10 @@ if ($type == 'source') {
 }
 ?>
 
-<table border="0" cellpadding="3" cellspacing="1" bgcolor="#BBB" style="width: 180px; box-shadow: 2px 2px 4px #888; height:120px;">
+<table class="reservation-point">
     <tbody><tr bgcolor="#DDDDDD" align="center">
             <td colspan="2">
-                <div style="float: right; border-style:solid; border-width:thin; border-color: #BBB; margin: 0; padding: 0 3px;">×</div>
+                <input type="button" id="clearpath" value="x" onClick="edit_clearAll();" style="float: right; border-style:solid; border-width:thin; border-color: #BBB; margin: 0 4px; padding: 0 3px;"/>
                 <div style="float: none;"><strong><?php echo $label; ?></strong></div>
             </td>
         </tr>

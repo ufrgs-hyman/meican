@@ -32,10 +32,10 @@ $(document).ready(function() {
         //$('input[type=button].add').button({ icons: {primary:'ui-icon-plusthick',secondary:'ui-icon-plusthick'} });
         $(this).find('[disabled=disabled]').addClass('ui-state-disabled');
         $(this).find('input[type!=submit],textarea,select').addClass('ui-widget ui-widget-content');
-        $(this).find('table').addClass('ui-widget ui-corner-all');
+        $(this).find('table.list').addClass('ui-widget ui-corner-all');
         $(this).find('fieldset').addClass('ui-widget ui-corner-all');
-        $(this).find('table thead').addClass('ui-widget-header');
-        $(this).find('table tbody').addClass('ui-widget-content');
+        $(this).find('table.list thead').addClass('ui-widget-header');
+        $(this).find('table.list tbody').addClass('ui-widget-content');
 
     /*        $(this).find('div.menu').addClass('ui-widget');
         $(this).find('div.topItem').addClass('ui-widget-header');
@@ -43,7 +43,6 @@ $(document).ready(function() {
         
     };
     
-    $('body').uify();
 
     $.feedbackTab.init();
     /* $("#info_box").load("<?php echo $this->url(array("app" => "init", "controller" => "info_box")); ?>", function() {
@@ -78,7 +77,6 @@ $(document).ready(function() {
         $('.scripts').remove();
         $('#load_img').hide();
         //$('#main').html($('.content').html());
-        $('#main').uify();
         $('#main').show();
         window.scroll(0, 0);
 
@@ -104,6 +102,17 @@ $(document).ready(function() {
             });
         return false;
     });
+    
+    
+    $('#main').bind('end.pjax', function(){
+        
+        $('#main').uify();
+        $('body').uify();
+    if (jQuery.isFunction(jQuery.fn.tablesorter))
+        $("table.list").tablesorter(/*{cssAsc: 'ui-icon ui-icon-triangle-1-n', cssDesc: 'ui-icon ui-icon-triangle-1-s'}*/);
+        
+    });
+    $('#main').trigger('end.pjax');
 // analisar a real necessidade disso
 //setTimeout(refresh, 10*60*1000); // carrega a página a cada 10 min., para não sobrecarregar scripts
 

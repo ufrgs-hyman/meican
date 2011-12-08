@@ -38,12 +38,6 @@ function createTabs(){
 
 function createSlider(){
     $("#bandwidth[type=number]").attr('step', band_div).attr('min', band_min).attr('max', band_max).attr('disabled', false);
-    var f = function(){
-        var v = ($("#bandwidth[type=number]").val()/band_max)*100;
-        console.debug(v);
-       $('#bandwidth_bar_inside').animate({width: v+'%'}, 100);       
-    };
-    $("#bandwidth[type=number]").change(f).keyup(f).click(f);
     
     $('#slider').slider("max",band_min);
     
@@ -76,19 +70,20 @@ function showSlider() {
     band_min = domains[i].networks[j].devices[k].ports[l].min_capacity / 1000000;
     band_div = domains[i].networks[j].devices[k].ports[l].granularity / 1000000;
     
-    $("#slider").slider("option", {
+    /*$("#slider").slider("option", {
         "max": band_max,
         "min": band_min,
         "step": band_div,
         "disabled": false
-    });
+    });*/
+    $('#bandwidth').attr("min", band_min).attr("max", band_max).attr("step", band_div).attr('disabled', false);
     //    $("#slider").slider("min", band_min);
     //    $("#slider").slider("step", band_div);
     //    $("#slider").slider( "option", "disabled", false );
     
-    $("#div-bandwidth").slideDown();
+    /*$("#div-bandwidth").slideDown();
     $("#amount_label").show();        
-    $("#amount").show();
+    $("#amount").show();*/
 }
 
 function nextTab(elem){
@@ -931,6 +926,7 @@ function edit_clearAll(){
     srcSet = false;
     dstSet = false;
     $("#slider").slider( "option", "disabled", true );
+    $("#bandwidth").attr("disabled", "disabled");
     $("#amount_label").hide();
     $("#amount").hide();
     $("#div-bandwidth").slideUp();   

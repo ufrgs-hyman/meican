@@ -59,7 +59,7 @@ foreach ($preMenus as $name => $sub)
     <ul>
     	<?php foreach (MenuItem::getAllMenus() as $menu): ?>
 			<?php if (!empty($menu->url)): ?>
-				<li><a href="<?php echo $this->url($menu->url); ?>" target="main"><?php echo $menu->label; ?></a></li>
+				<a href="<?php echo $this->url($menu->url); ?>" target="main"><?php echo $menu->label; ?></a>
 			<?php else: ?>
 				<li><?php echo $menu->label; ?></li>
 			<?php endif; ?>

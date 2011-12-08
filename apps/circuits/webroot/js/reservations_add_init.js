@@ -26,8 +26,29 @@ var path = new Array();
 var counter = 0;
 
 
-createTabs();
-createSlider();    
+/*createTabs();
+createSlider();*/    
+$(document).ready(function(){
+    var f = function(){
+        var v = ($("#bandwidth[type=number]").val()/band_max)*100;
+        console.debug(v);
+       $('#bandwidth_bar_inside').animate({width: v+'%'}, 100);       
+    };
+    $("#bandwidth[type=number]").change(f).keyup(f).click(f);
+    if (false)
+        $('#tabs-res').tabs({select: function(event, ui){
+            clearFlash();
+            // antes de mostrar a aba, copia conteudo dos campos
+            fillConfirmationTab();
+            google.maps.event.trigger(view_map, 'resize');
+            view_setBounds(view_bounds);
+        }});
+    else {
+        $('#tabs-res ul').hide();
+        $('#tabs-3').hide();
+    }
+    $('#repeat_chkbox').button();
+});
 
 var firstColor = "3a5879";
 var color = new Array();
@@ -78,7 +99,7 @@ var edit_myOptions = {
   var goHomeText = document.createElement('DIV');
   goHomeText.innerHTML = reset_zoom;
   goHomeUI.appendChild(goHomeText);
-  $(goHomeText).addClass("zoom ui-button ui-widget ui-state-default ui-corner-all ui-widget-content ui-state-hover ui-state-active");
+  $(goHomeText).addClass("zoom ui-button ui-widget ui-state-default ui-corner-all ui-widget-content").attr('style', "direction: ltr;overflow: hidden;text-align: center;position: relative;font-family: Arial, sans-serif;-webkit-user-select: none;font-size: 12px;line-height: 160%;padding: 0px 6px;border-radius: ;-webkit-box-shadow: rgba(0, 0, 0, 0.347656) 2px 2px 3px;box-shadow: rgba(0, 0, 0, 0.347656) 2px 2px 3px;min-width: 44px;color: black;border: 1px solid #A9BBDF;border-image: initial;padding-left: 6px;font-weight: normal;background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FEFEFE), to(#F3F3F3));background-osition: initial initial;background-repeat: initial initial;");
   
   google.maps.event.addDomListener(goHomeUI, 'click', function() {
     edit_resetZoom();

@@ -1,71 +1,34 @@
-<?php 
-
+<?php
 $start_date = $argsToElement->start_date;
 $finish_date = $argsToElement->finish_date;
 $start_time = $argsToElement->start_time;
 $finish_time = $argsToElement->finish_time;
 $timer = (isset($argsToElement->timer)) ? $argsToElement->timer : NULL;
-
 ?>
-<table>
-    <tr>
-        <th class="left large" colspan="2">
-            <?php echo _("Start") ?>
-        </th>
-        <th>&nbsp;</th>
-        <th class="left large" colspan="2">
-            <?php echo _("Finish") ?>
-        </th>
-        <th class="left large">
-            <?php echo _("Duration") ?>
-        </th>
-    </tr>
+<?php echo _("Start") ?>:
+<input type="text" name="start_time" size="7" value="<?php echo $start_time; ?>" class="hourPicker" id="initialTime"/>
+<input type="text" name="start_date" size="9" value="<?php echo $start_date; ?>" readonly class="datePicker" id="initialDate"/>
 
-    <tr>
-        <td class="left">
-            <?php echo _("Date"); ?> <input type="text" name="start_date" size="9" value="<?php echo $start_date; ?>" readonly class="datePicker" id="initialDate"/>
-        </td>
-        <td class="left">
-            <?php echo _("Time"); ?> <input type="text" name="start_time" size="7" value="<?php echo $start_time; ?>" class="hourPicker" id="initialTime"/>
-        </td>
-        <td class="left">
-            <?php echo _("until"); ?>
-        </td>
-        <td class="left">
-            <?php echo _("Date"); ?> <input type="text" name="finish_date" size="9" value="<?php echo $finish_date; ?>" readonly class="datePicker" id="finalDate"/>
-        </td>
-        <td class="left">
-            <?php echo _("Time"); ?> <input type="text" name="finish_time" size="7" value="<?php echo $finish_time; ?>" class="hourPicker" id="finalTime"/>
-        </td>
-        <td class="left">
-            <label id="duration"></label>
-        </td>
-    </tr>
+&nbsp;&nbsp;<?php echo _("Finish") ?>:
+<input type="text" name="finish_time" size="7" value="<?php echo $finish_time; ?>" class="hourPicker" id="finalTime"/>
+<input type="text" name="finish_date" size="9" value="<?php echo $finish_date; ?>" readonly class="datePicker" id="finalDate"/>
+&nbsp;&nbsp;&nbsp;
+<label id="duration"></label>
+<input type="checkbox" name="repeat_chkbox" id="repeat_chkbox" onClick="showRecurrenceBox();" />
+<label for="repeat_chkbox"> <?php echo _("Repeat..."); ?></label>
+<?php $this->addElement('timer_recurrence'); ?>
 
-    <tr>
-        <td class="left" colspan="6">
-            <input type="checkbox" name="repeat_chkbox" id="repeat_chkbox" onClick="showRecurrenceBox();" />
-            <p style="display: inline; vertical-align: middle"><label for="repeat_chkbox"> <?php echo _("Repeat..."); ?></label></p>
-            <?php $this->addElement('timer_recurrence'); ?>
-        </td>
-    </tr>
-    <tr>
-        <th style="text-align: left;" colspan="6"></th>
-    </tr>
-    <tr>
-        <td class="left" colspan="6">
-            <p style="display:inline; color:#3a5879; font-weight: bold"><?php echo _("Summary"); ?></p>:&nbsp;<label id="recurrence_summary"></label>
-            <label id="summary"></label>
-            <label id="short_desc"></label>
-            <label id="Sunday_desc"></label>
-            <label id="Monday_desc"></label>
-            <label id="Tuesday_desc"></label>
-            <label id="Wednesday_desc"></label>
-            <label id="Thursday_desc"></label>
-            <label id="Friday_desc"></label>
-            <label id="Saturday_desc"></label>
-            <label id="until_desc"></label>              
-            <input type="hidden" id="summary_input" name="summary" value=""/>
-        </td>
-    </tr>
-</table>
+<div>            
+    <p style="display:inline; color:#3a5879; font-weight: bold"><?php echo _("Summary"); ?></p>:&nbsp;<label id="recurrence_summary"></label>
+    <label id="summary"></label>
+    <label id="short_desc"></label>
+    <label id="Sunday_desc"></label>
+    <label id="Monday_desc"></label>
+    <label id="Tuesday_desc"></label>
+    <label id="Wednesday_desc"></label>
+    <label id="Thursday_desc"></label>
+    <label id="Friday_desc"></label>
+    <label id="Saturday_desc"></label>
+    <label id="until_desc"></label>              
+    <input type="hidden" id="summary_input" name="summary" value=""/>
+</div>
