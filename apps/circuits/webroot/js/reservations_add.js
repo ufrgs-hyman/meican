@@ -37,7 +37,6 @@ function createTabs(){
 }
 
 function createSlider(){
-    $("#bandwidth[type=number]").attr('step', band_div).attr('min', band_min).attr('max', band_max).attr('disabled', false);
     
     $('#slider').slider("max",band_min);
     
@@ -76,7 +75,7 @@ function showSlider() {
         "step": band_div,
         "disabled": false
     });*/
-    $('#bandwidth').attr("min", band_min).attr("max", band_max).attr("step", band_div).attr('disabled', false);
+    $('#bandwidth').attr("min", band_min).attr("max", band_max).attr("step", band_div).attr('disabled', false).trigger('click').removeClass("ui-state-disabled");
     //    $("#slider").slider("min", band_min);
     //    $("#slider").slider("step", band_div);
     //    $("#slider").slider( "option", "disabled", false );
@@ -183,6 +182,11 @@ function timerError(error){
 }
 
 function validateReservationForm() {
+	if (!$('#res_name').val().length){
+        setFlash(flash_missingEndpoints);
+        js_submit_form = false;
+        return false;	
+	}
     if (tab1_valid) {
         
         var hops = "";
@@ -618,33 +622,33 @@ function edit_initializeMap() {
 }
 
 //adiciona marcadores de endpoints no mapa 
-function edit_addMapMarker(location, domain_id, domain_name, network_id, network_name, color) {
+function edit_addMapMarker(coord, domain_id, domain_name, network_id, network_name, color) {
     
     marker = new StyledMarker({
         domain_id: domain_id,
         domain_name: domain_name,
         id: network_id,
         label: network_name,
-        position: location,
+        position: coord,
         styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
             color:color
         }),
         map:edit_map
     });
 
-    google.maps.event.addListener(marker, "click", function() { 
+    google.maps.event.addListener(marker, "click", function() {
         
-        selectedMarker = new StyledMarker({
+       /* selectedMarker = new StyledMarker({
             domain_id: domain_id,
             domain_name: domain_name,
             id: network_id,
             label: network_name,
-            position: location,
+            position: coord,
             styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
                 color:color
             }),
             map:edit_map
-        }); 
+        }); */
         
         contextMenu.find('a').click( function() {
             // fade out the menu
@@ -655,20 +659,20 @@ function edit_addMapMarker(location, domain_id, domain_name, network_id, network
             switch ( action )
             {
                 case 'fromHere':
-                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "src", function(){edit_initializeMap()});
+                    edit_markerClick(coord, domain_id, domain_name, network_id, network_name, "src", function(){edit_initializeMap()});
                     break;
                 case 'toHere':
-                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "dst", function(){edit_initializeMap()});
+                    edit_markerClick(coord, domain_id, domain_name, network_id, network_name, "dst", function(){edit_initializeMap()});
                     break;
             }
             return false;
         });
     
         var projection = overlay.getProjection(),
-        pos = projection.fromLatLngToContainerPixel(location),
+        pos = projection.fromLatLngToContainerPixel(coord),
         x = pos.x,
         y = pos.y;
-        selectedMarker.setMap(null);
+        /*selectedMarker.setMap(null);*/
             
         // save the clicked location
 
@@ -693,7 +697,7 @@ function edit_addMapMarker(location, domain_id, domain_name, network_id, network
             domain_name: domain_name,
             id: network_id,
             label: network_name,
-            position: location,
+            position: coord,
             styleIcon: new StyledIcon(StyledIconTypes.MARKER,{
                 color:"3A5879"
             }),
@@ -704,8 +708,10 @@ function edit_addMapMarker(location, domain_id, domain_name, network_id, network
             content:    "<b>" + domain_string + "</b>: " + domain_name + "<br/>" +
                         "<b>" + network_string + "</b>: " + network_name,
             disableAutoPan: true,
+            maxWidth: 50,
             size: new google.maps.Size(150,150)
         });
+        
         selectedMarker.setMap(null);
         infowindow.open(edit_map, selectedMarker);
     });
@@ -722,7 +728,7 @@ function edit_addMapMarker(location, domain_id, domain_name, network_id, network
             domain_name: domain_name,
             id: network_id,
             label: network_name,
-            position: location,
+            position: coord,
             styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
                 color:color
             }),
@@ -738,17 +744,17 @@ function edit_addMapMarker(location, domain_id, domain_name, network_id, network
             switch ( action )
             {
                 case 'fromHere':
-                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "src", function(){edit_initializeMap()});
+                    edit_markerClick(coord, domain_id, domain_name, network_id, network_name, "src", function(){edit_initializeMap()});
                     break;
                 case 'toHere':
-                    edit_markerClick(location, domain_id, domain_name, network_id, network_name, "dst", function(){edit_initializeMap()});
+                    edit_markerClick(coord, domain_id, domain_name, network_id, network_name, "dst", function(){edit_initializeMap()});
                     break;
             }
             return false;
         });
     
         var projection = overlay.getProjection(),
-        pos = projection.fromLatLngToContainerPixel(location),
+        pos = projection.fromLatLngToContainerPixel(coord),
         x = pos.x,
         y = pos.y;
         selectedMarker.setMap(null);
@@ -775,7 +781,7 @@ function edit_addMapMarker(location, domain_id, domain_name, network_id, network
 }
 
 //funcao que gerencia os "clicks" nos marcadores
-function edit_markerClick(location, domain_id, domain_name, network_id, network_name, where, callback_initializeMap){
+function edit_markerClick(coord, domain_id, domain_name, network_id, network_name, where, callback_initializeMap){
     contextMenu.hide();     
 
     if (where == "src") {
@@ -788,7 +794,7 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
             domain_name: domain_name,
             network_id: network_id,
             network_name: network_name,
-            position: location,
+            position: coord,
             color: "eee"
         };        
     } else if (where == "dst") {
@@ -801,7 +807,7 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
             domain_name: domain_name,
             network_id: network_id,
             network_name: network_name,
-            position: location,
+            position: coord,
             color: "eee"
         };
     }
@@ -854,7 +860,7 @@ function edit_markerClick(location, domain_id, domain_name, network_id, network_
     validateTab1();     
 }
 
-function edit_addSelectedMarker(location, domain_id, domain_name, network_id, network_name, where) {
+function edit_addSelectedMarker(coord, domain_id, domain_name, network_id, network_name, where) {
     var color;
     
     if (where == "src") {
@@ -868,7 +874,7 @@ function edit_addSelectedMarker(location, domain_id, domain_name, network_id, ne
         domain_name: domain_name,
         id: network_id,
         label: network_name,
-        position: location,
+        position: coord,
         clickable: false,
         styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
             color:color
@@ -926,7 +932,7 @@ function edit_clearAll(){
     srcSet = false;
     dstSet = false;
     $("#slider").slider( "option", "disabled", true );
-    $("#bandwidth").attr("disabled", "disabled");
+    $("#bandwidth").attr("disabled", "disabled").addClass("ui-state-disabled");
     $("#amount_label").hide();
     $("#amount").hide();
     $("#div-bandwidth").slideUp();   

@@ -111,7 +111,7 @@ function showRecurrenceBox() {
     }
     else {
         $("#fillSpace").css("height", "49%");
-        $("#recurrence").slideUp(0);
+        $("#recurrence").slideUp(100);
         $("#interval_type").empty();
         $("#short_desc").empty();
         $("#until_desc").empty();
@@ -123,7 +123,7 @@ function showRecurrenceBox() {
 }
 
 function initializeRecurrence() {
-        $("#recurrence").slideDown(0);        
+        $("#recurrence").slideDown(100);        
         $("#summary").empty();
         setFreq();
         //$("#initialRecurrence").setDate($("initialDate").getDate());

@@ -558,7 +558,8 @@ class reservations extends Controller {
         $this->setArgsToBody($args);
         // -----------------------------------------------------------------------------
         // SCRIPTS -----------------------------------------
-        $this->setInlineScript('reservations_add_init');
+        $this->addScriptForLayout(array(/*'googlemaps', 'markerClusterer', 'StyledMarker', 'map', 'reservations', 'reservation_map', 'reservations_add', 'flows', 'timers', 'jquery.timePicker',*/ 'reservations_add_init'/*, 'map_init'*/));
+        //$this->setInlineScript('reservations_add_init');
 
         if ($js_lang != "en-US") {
             $this->addScript("jquery.ui.datepicker-$js_lang");

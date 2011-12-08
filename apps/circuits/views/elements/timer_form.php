@@ -5,20 +5,20 @@ $start_time = $argsToElement->start_time;
 $finish_time = $argsToElement->finish_time;
 $timer = (isset($argsToElement->timer)) ? $argsToElement->timer : NULL;
 ?>
-<?php echo _("Start") ?>:
+<label for="initialTime"><?php echo _("Start") ?>: </label>
 <input type="text" name="start_time" size="7" value="<?php echo $start_time; ?>" class="hourPicker" id="initialTime"/>
 <input type="text" name="start_date" size="9" value="<?php echo $start_date; ?>" readonly class="datePicker" id="initialDate"/>
 
-&nbsp;&nbsp;<?php echo _("Finish") ?>:
+<label for="finalTime"><?php echo _("Finish") ?>:</label>
 <input type="text" name="finish_time" size="7" value="<?php echo $finish_time; ?>" class="hourPicker" id="finalTime"/>
 <input type="text" name="finish_date" size="9" value="<?php echo $finish_date; ?>" readonly class="datePicker" id="finalDate"/>
 &nbsp;&nbsp;&nbsp;
 <label id="duration"></label>
-<input type="checkbox" name="repeat_chkbox" id="repeat_chkbox" onClick="showRecurrenceBox();" />
+<input type="checkbox" name="repeat_chkbox" id="repeat_chkbox"/>
 <label for="repeat_chkbox"> <?php echo _("Repeat..."); ?></label>
 <?php $this->addElement('timer_recurrence'); ?>
 
-<div>            
+<div style="padding-top:1em;">            
     <p style="display:inline; color:#3a5879; font-weight: bold"><?php echo _("Summary"); ?></p>:&nbsp;<label id="recurrence_summary"></label>
     <label id="summary"></label>
     <label id="short_desc"></label>

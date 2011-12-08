@@ -24,14 +24,14 @@ echo _('Do you confirm?');
                 <th class="checkbox"></th>
                 <th class="large"></th>
                 <th class="large"><?php echo _("Name"); ?></th>
-                <th class="large"><?php echo _("Bandwidth (Mbps)"); ?></th>
+                <th class="large" style="width:10%;"><?php echo _("Bandwidth (Mbps)"); ?></th>
                 <th class="large"><?php echo _("Status"); ?></th>                
 
                 <th class="large"><?php echo _("Source"); ?></th>
                 <th class="large"><?php echo _("Destination"); ?></th>
                 <th class="large"><?php echo _("Start"); ?></th>
                 <th class="large"><?php echo _("Finish"); ?></th>
-                <th class="large"><?php echo _("Recurrence"); ?></th>
+                <th class="large" style="width:20%;"><?php echo _("Recurrence"); ?></th>
             </tr>
         </thead>
 
@@ -60,14 +60,14 @@ echo _('Do you confirm?');
                         <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading<?php echo $r->id; ?>" class="load" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif"/>
                     </td>
                     <td>
-                        <?php echo $r->flow->source->domain; ?>
+                        <?php echo $r->flow->source->domain; ?><br/>
                         <?php echo $r->flow->source->network; ?>
-                        <?php echo $r->flow->source->device; ?>
+                        <?php //echo $r->flow->source->device; ?>
                     </td>
                     <td>
-                        <?php echo $r->flow->dest->domain; ?>
+                        <?php echo $r->flow->dest->domain; ?><br/>
                         <?php echo $r->flow->dest->network; ?>
-                        <?php echo $r->flow->dest->device; ?>
+                        <?php //echo $r->flow->dest->device; ?>
                     </td>
                     <td>
                         <?php echo $r->timer->start; ?>

@@ -1,52 +1,59 @@
 <?php
 if ($type == 'source') {
-    $label = _(Source);
+    $label = _('Source');
     $prefix = 'src';
 } else {
-    $label = _(Destination);
+    $label = _('Destination');
     $prefix = 'dst';
 }
 ?>
 
 <table class="reservation-point">
-    <tbody><tr bgcolor="#DDDDDD" align="center">
-            <td colspan="2">
-                <input type="button" id="clearpath" value="x" onClick="edit_clearAll();" style="float: right; border-style:solid; border-width:thin; border-color: #BBB; margin: 0 4px; padding: 0 3px;"/>
-                <div style="float: none;"><strong><?php echo $label; ?></strong></div>
-            </td>
-        </tr>
-        <tr bgcolor="#FFFFFF" align="center">
-            <td><strong><?php echo _(Domain); ?></strong></td>
-            <td><label id="<?= $prefix ?>_domain"></label></td>
-        </tr>
-        <tr bgcolor="#FFFFFF" align="center">
-            <td><strong><?php echo _(Network); ?></strong></td>
-            <td><label id="<?= $prefix ?>_network"></label></td>
-        </tr>
-        <tr bgcolor="#FFFFFF" align="center">
-            <td><strong><?php echo _(Device); ?></strong></td>
-            <td class="pad">
-                <select id="<?= $prefix ?>_device" style="display:none" onchange="map_changeDevice('<?= $prefix ?>');"></select>
-            </td>
-        </tr>
-        <tr bgcolor="#FFFFFF" align="center">
-            <td><strong><?php echo _(Port); ?></strong></td>
-            <td class="pad">
-                <select id="<?= $prefix ?>_port" style="display:none" onchange="map_changePort('<?= $prefix ?>');"></select>
-                <input type="hidden" id="<?= $prefix ?>_urn" name="<?= $prefix ?>_urn"/>
-            </td>
+    <thead>
+        <tr bgcolor="#DDDDDD">
+            <th colspan="2">
+    <div class="ui-state-default ui-corner-all" id="<?= $prefix ?>_clearpath"style="float: right; margin: 0 4px; cursor: pointer;">
+        <span class="ui-icon ui-icon-minusthick"></span>
+    </div>
+    <div style="float: none;"><strong><?php echo $label; ?></strong></div>
+</th>
 </tr>
-<!-- <tr bgcolor="#FFFFFF" align="center">
-    <td><strong><?php echo _(Type); ?></strong></td>
-    <td><input type="checkbox" name="checkbox" id="checkbox" checked="">
-        <label for="checkbox">Tagged</label></td>
-</tr>
-<tr bgcolor="#FFFFFF" align="center">
-    <td><strong><?php echo _(VLAN); ?></strong></td>
-    <td>
-        <input name="textfield" type="text" id="textfield" value="3800" style="width:50px; text-align:center;">
-        <br>
-        3800 ~ 3899</td>
-</tr> -->
+</thead>
+<tbody>
+    <tr>
+        <td><strong><?php echo _('Domain'); ?></strong></td>
+        <td><label id="<?= $prefix ?>_domain"></label></td>
+    </tr>
+    <tr>
+        <td><strong><?php echo _('Network'); ?></strong></td>
+        <td><label id="<?= $prefix ?>_network"></label></td>
+    </tr>
+    <tr>
+        <td><strong><?php echo _('Device'); ?></strong></td>
+        <td>
+            <select id="<?= $prefix ?>_device" style="display:none" onchange="map_changeDevice('<?= $prefix ?>');"></select>
+        </td>
+    </tr>
+    <tr>
+        <td><strong><?php echo _('Port'); ?></strong></td>
+        <td>
+            <select id="<?= $prefix ?>_port" style="display:none" onchange="map_changePort('<?= $prefix ?>');"></select>
+            <input type="hidden" id="<?= $prefix ?>_urn" name="<?= $prefix ?>_urn"/>
+        </td>
+    </tr>
+    <?php $prefixex = $prefix == 'src' ? 'source' : 'destiny'; ?>
+    <tr>
+        <td><strong><?php echo _('Type'); ?></strong></td>
+        <td>
+            <input type="radio" name="<?= $prefixex ?>VLANType" id="<?= $prefix ?>_vlanUntagged" value="FALSE" disabled="disabled" onchange="map_changeVlanType(this,'<?= $prefix ?>');"/><label for="<?= $prefix ?>_vlanUntagged"><?php echo _("Untagged"); ?></label>
+            <input type="radio" name="<?= $prefixex ?>VLANType" id="<?= $prefix ?>_vlanTagged" value="TRUE" disabled="disabled" onchange="map_changeVlanType(this,'<?= $prefix ?>');"/><label for="<?= $prefix ?>_vlanTagged"><?php echo _("Tagged"); ?></label>
+        </td>
+    </tr>
+    <tr>
+        <td><strong><?php echo _('VLAN'); ?></strong></td>
+        <td>
+            <input type="text" id="<?= $prefix ?>_vlanText" size="14" name="<?= $prefix ?>_vlan" disabled="disabled"/>
+            <div id="<?= $prefix ?>_vlanTip"/>
+    </tr>
 </tbody>
 </table>

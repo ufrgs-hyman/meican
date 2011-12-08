@@ -1,3 +1,9 @@
+function updateSystemTime() {
+    $.post(baseUrl+"init/info_box/get_time", function(data) {
+        if (data)
+            $("#system_time").html(data);
+    }, "json");
+}
 
 var errorFunc = function(jqXHR) {
     switch (jqXHR.status) {
@@ -51,68 +57,75 @@ $(document).ready(function() {
                 });*/
     setInterval("updateSystemTime()", 60000);//<?php // chamada para atualizar a hora?>
     //$("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
-                
-    $('a[href!=""][href!="#"]').pjax('#main', {
-        error: errorFunc, 
-        timeout: 5000
-    });
-    $('#main')
-    .bind('start.pjax', function() {
-        clearFlash();
-        $('#main').empty();
-        $('#load_img').show();
-
-        clearInterval(js_function_interval);
-    })
-    .bind('end.pjax',   function(xhr) {
-        $('#main').hide();
-        clearInterval(js_function_interval);
-                        
-        $('#flash_box').html($('.flash_box').html());
-        $('.flash_box').remove();
-                        
-        $.each($(".scripts i"), function() {
-            $.getScript($(this).html());
+    if (jQuery.isFunction(jQuery.fn.pjax)){           
+        $('a[href!=""][href!="#"]').pjax('#main', {
+            error: errorFunc, 
+            timeout: 5000
         });
-        $('.scripts').remove();
-        $('#load_img').hide();
-        //$('#main').html($('.content').html());
-        $('#main').show();
-        window.scroll(0, 0);
+        $('#main')
+        .bind('start.pjax', function() {
+            clearFlash();
+            $('#main').empty();
+            $('#load_img').show();
 
-    });
-
-    $("body").delegate("form","submit",function() {
-        if (!js_submit_form) {
-            js_submit_form = true;
-            return false;
-        }
-
-        var content_show = $(this).attr("action");
-        var param = $('form').serialize();
-
-        if (content_show && param)
-            $.pjax({
-                type: "POST",
-                url: content_show,
-                data: param,
-                error: errorFunc,
-                container: '#main',
-                timeout: 7000
+            clearInterval(js_function_interval);
+        })
+        .bind('end.pjax',   function(xhr) {
+            $('#main').hide();
+            clearInterval(js_function_interval);
+                        
+            $('#flash_box').html($('.flash_box').html());
+            $('.flash_box').remove();
+                        
+/*            $.each($(".scripts script"), function() {
+                $.getScript($(this).attr('src'));
             });
-        return false;
-    });
+            $('.scripts').remove();*/
+            $('#load_img').hide();
+            //$('#main').html($('.content').html());
+            $('#main').show();
+            window.scroll(0, 0);
+
+        });
+
+        $("body").delegate("form","submit",function() {
+            if (!js_submit_form) {
+                js_submit_form = true;
+                return false;
+            }
+
+            var content_show = $(this).attr("action");
+            var param = $(this).serialize();
+
+            if (content_show && param)
+                $.pjax({
+                    type: "POST",
+                    url: content_show,
+                    data: param,
+                    error: errorFunc,
+                    container: '#main',
+                    timeout: 7000
+                });
+            return false;
+        });
     
     
-    $('#main').bind('end.pjax', function(){
+        $('#main').bind('end.pjax', function(){
         
-        $('#main').uify();
-        $('body').uify();
-    if (jQuery.isFunction(jQuery.fn.tablesorter))
-        $("table.list").tablesorter(/*{cssAsc: 'ui-icon ui-icon-triangle-1-n', cssDesc: 'ui-icon ui-icon-triangle-1-s'}*/);
+            $('#main').uify();
+            $('body').uify();
+            if (jQuery.isFunction(jQuery.fn.tablesorter))
+                $("table.list").tablesorter(/*{cssAsc: 'ui-icon ui-icon-triangle-1-n', cssDesc: 'ui-icon ui-icon-triangle-1-s'}*/);
+            if (jQuery.isFunction(jQuery.fn.dataTable))
+                $("table.list").dataTable(/*{cssAsc: 'ui-icon ui-icon-triangle-1-n', cssDesc: 'ui-icon ui-icon-triangle-1-s'}*/);
         
-    });
-    $('#main').trigger('end.pjax');
+            $('#menu .active').removeClass("active");
+            $('#menu a[href="'+window.location.pathname+'"]').addClass("active").parent().parent().slideDown();
+            $(this).addClass("active");
+        });
+        $('#menu .top').next().hide();
+        $('#main').trigger('end.pjax');
+    }
 // analisar a real necessidade disso
 //setTimeout(refresh, 10*60*1000); // carrega a página a cada 10 min., para não sobrecarregar scripts
 
@@ -174,11 +187,11 @@ function WPToggle(divId, imageId) {
 
 }
  
-
-$.extend({
-    redir : function(url, data){
-        return redir(baseUrl+url, data);
-    /*$.pjax({
+(function($){ 
+    $.extend({
+        redir : function(url, data){
+            return redir(baseUrl+url, data);
+        /*$.pjax({
             type: "POST",
             url: url,
             data: data,
@@ -187,77 +200,84 @@ $.extend({
             timeout: 5000
         });
         return false;*/
-    },
-    windowScroll: function () {
-        var top = $(window).scrollTop();
-        if (top >= 110) {
-            $("#flash_box").addClass("fixed");
-        } else {
-            $("#flash_box").removeClass("fixed");
-        }
-    },
-    formatFields: function(){
-        var intInp = $('.integer-input[disabled!=true]'),
-        curInp = $('.currency-input[disabled!=true]');
-        if (intInp.length>0 || curInp.length>0){
-            applySpinner = function(){
-                intInp.numeric('.').spinner({});
-                if (curInp.length>0)
-                    if (window.Globalization)
-                        curInp.numeric('.').spinner({
-                            numberformat: 'n'
-                        });
-                    else
-                        $.getScript(baseUrl+'webroot/js/jquery.global.js', function(){
-                            window.Globalization = jQuery.global;
+        },
+        windowScroll: function () {
+            var top = $(window).scrollTop();
+            if (top >= 110) {
+                $("#flash_box").addClass("fixed");
+            } else {
+                $("#flash_box").removeClass("fixed");
+            }
+        },
+        formatFields: function(){
+            var intInp = $('.integer-input[disabled!=true]'),
+            curInp = $('.currency-input[disabled!=true]');
+            if (intInp.length>0 || curInp.length>0){
+                applySpinner = function(){
+                    intInp.numeric('.').spinner({});
+                    if (curInp.length>0)
+                        if (window.Globalization)
                             curInp.numeric('.').spinner({
                                 numberformat: 'n'
                             });
-                        });
-                //Trigger change event in field when spinner changes
-                $(".ui-spinner").bind("mouseup", function() {
-                    intInp.numeric('.').trigger("change");
-                //alert(intInp.numeric('.').val());
-                }).bind("keyup", function() {
-                    intInp.numeric('.').trigger("change");
-                //alert(intInp.numeric('.').val());
-                });
-            };
-            if (jQuery.isFunction(jQuery.fn.spinner))
-                applySpinner();
-            else
-                $.getScript(baseUrl+'webroot/js/ui.spinner.js', applySpinner);
-        }
-    },
-    feedbackTab : {
+                        else
+                            $.getScript(baseUrl+'webroot/js/jquery.global.js', function(){
+                                window.Globalization = jQuery.global;
+                                curInp.numeric('.').spinner({
+                                    numberformat: 'n'
+                                });
+                            });
+                    //Trigger change event in field when spinner changes
+                    $(".ui-spinner").bind("mouseup", function() {
+                        intInp.numeric('.').trigger("change");
+                    //alert(intInp.numeric('.').val());
+                    }).bind("keyup", function() {
+                        intInp.numeric('.').trigger("change");
+                    //alert(intInp.numeric('.').val());
+                    });
+                };
+                if (jQuery.isFunction(jQuery.fn.spinner))
+                    applySpinner();
+                else
+                    $.getScript(baseUrl+'webroot/js/ui.spinner.js', applySpinner);
+            }
+        },
+        feedbackTab : {
  
-        speed:300,
-        containerWidth:$('.feedback-panel').outerWidth(),
-        containerHeight: $('.feedback-panel').height(),//$('.feedback-panel').outerHeight(),
-        tabWidth:$('.feedback-link').outerWidth(),
+            speed:300,
+            containerWidth:$('.feedback-panel').outerWidth(),
+            containerHeight: $('.feedback-panel').height(),//$('.feedback-panel').outerHeight(),
+            tabWidth:$('.feedback-link').outerWidth(),
 	 
 	 
-        init:function(){
-            //$('.feedback-panel').css('height',$.feedbackTab.containerHeight + 'px');
-            $('.feedback-panel').css('top', '-' + $('.feedback-panel').outerHeight() + 'px');
+            init:function(){
+                //$('.feedback-panel').css('height',$.feedbackTab.containerHeight + 'px');
+                $('.feedback-panel').css('top', '-' + ($('.feedback-panel').outerHeight()+70) + 'px');
 	 
-            $('a.feedback-link').click(function(event){
-                if ($('.feedback-panel').hasClass('open')) {
-                    $('.feedback-panel')
-                    .animate({
-                        top: '-' + $('.feedback-panel').outerHeight() + 'px'
+                $('a.feedback-link').click(function(event){
+                    if ($('.feedback-panel').hasClass('open')) {
+                        $('.feedback-panel')
+                        .animate({
+                            top: '-' + ($('.feedback-panel').outerHeight()+70) + 'px'
                         }, $.feedbackTab.speed)
-                    .removeClass('open');
-                } else {
-                    $('.feedback-panel')
-                    .animate({
-                        top: $('.feedback-link').outerHeight() + 'px'
+                        .removeClass('open');
+                    } else {
+                        $('.feedback-panel')
+                        .animate({
+                            top: $('.feedback-link').outerHeight() + 'px'
                         },  $.feedbackTab.speed)
-                    .addClass('open');
-                }
-                event.preventDefault();
-            });
+                        .addClass('open');
+                    }
+                    event.preventDefault();
+                });
+                $('#feedback-tabs li').click(function (){
+                	$('#feedback-tabs li').removeClass('active');
+                	$(this).addClass('active');
+                	$('#topic_style').val($(this).attr('class').split(' ')[0]);
+                });
+            }
         }
-    }
                 
-});
+    });
+
+})(jQuery);

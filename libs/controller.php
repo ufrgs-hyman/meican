@@ -15,6 +15,7 @@ class Controller {
     public $controller = NULL;
     public $action = NULL;
     protected $defaultAction;
+    public $viewVars = array('scripts_for_layout' => array());
 
     public function render() {
         //modificar para referenciar direto controller, nao passando os parametros para o construtor
@@ -30,7 +31,7 @@ class Controller {
 //            $teste = "app=$app";
 //        }
 //        debug("last view", $teste);
-
+		$view->set($this->viewVars);
         $view->setArgs($this->argsToBody);
         $view->script->setArgs($this->argsToScript);
         $view->script->setScriptFiles($this->scripts);
@@ -47,11 +48,19 @@ class Controller {
     }
 
     protected function addScript($script) {
-        $this->scripts[] = "apps/$this->app/webroot/js/$script.js?1";
+        $this->scripts[] = "apps/{$this->app}/webroot/js/$script.js?1";
     }
 
     protected function setInlineScript($script) {
-        $this->inlineScript = "apps/$this->app/webroot/js/$script.js?1";
+        $this->inlineScript = "apps/{$this->app}/webroot/js/$script.js?1";
+    }
+    
+    protected function addScriptForLayout($script){
+    	if (is_array($script))
+    		foreach ($script as $item)
+    			$this->addScriptForLayout($item);
+    	else
+	    	$this->viewVars['scripts_for_layout'][]="apps/{$this->app}/webroot/js/$script.js?1";
     }
 
     public function setFlash($message, $status='info') {
@@ -122,6 +131,33 @@ class Controller {
             return $paramArray;
         } else
             return FALSE;
+    }
+    
+     /**
+ * Allows a template or element to set a variable that will be available in
+ * a layout or other element. Analagous to Controller::set.
+ *
+ * @param mixed $one A string or an array of data.
+ * @param mixed $two Value in case $one is a string (which then works as the key).
+ *    Unused if $one is an associative array, otherwise serves as the values to $one's keys.
+ * @return void
+ * @access public
+ */
+    public function set($one, $two = null) {
+            $data = null;
+            if (is_array($one)) {
+                    if (is_array($two)) {
+                            $data = array_combine($one, $two);
+                    } else {
+                            $data = $one;
+                    }
+            } else {
+                    $data = array($one => $two);
+            }
+            if ($data == null) {
+                    return false;
+            }
+            $this->viewVars = $data + $this->viewVars;
     }
 
 }

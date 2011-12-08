@@ -56,11 +56,10 @@ div#logo_box {
 
 }
 div#info_box {
-    width: 27%;
+    width: 50%;
     float: right;
-    margin-right: 15px;
-    margin-top: 90px;
-    font-size: 12px;
+    margin-top: 80px;
+    font-size: 110%;
     text-align: right;
 }
 
@@ -123,22 +122,6 @@ img.logo {
     padding: 10px;
     border: 1px;
     margin: 0px;
-}
-
-
-
-input[type='submit'], input[type='button'], input[type='checkbox'] {
-    display: block;
-    text-align: center;
-    background-color: #3a5879;
-    color: #ffffff;
-    padding: 3px 3px 3px 3px;
-    text-transform: uppercase;
-    font-weight: bold;
-    cursor: pointer;
-    height: 25px;
-    border: 0px;
-    margin: 10px;
 }
 
 input.delete{
