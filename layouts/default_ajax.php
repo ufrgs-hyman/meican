@@ -26,18 +26,9 @@ if (!empty($scripts_for_layout)): ?>
 </div>
 <?php endif; ?>
 
-<?php if ($content_for_flash): ?>
+<?php if (!empty($content_for_flash)): ?>
     <div class="flash_box">
-    <?php foreach ($content_for_flash as $f) : ?>
-        <?php
-        $ar = explode(":", $f);
-        $status = $ar[0];
-        $message = $ar[1];
-        ?>
-        <div class="<?php echo $status; ?>"><?php echo $message; ?>
-            <input type="button" class="closeFlash" onclick="clearFlash();"/>
-        </div>
-    <?php endforeach; ?>
+    <?php echo $this->element('flash_box', array('app' => 'init')+compact('content_for_flash')); ?>
     </div>
 <?php endif; ?>
 <?php echo $content_for_body; ?>
