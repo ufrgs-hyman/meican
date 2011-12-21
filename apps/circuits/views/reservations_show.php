@@ -4,19 +4,10 @@
 
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
 
-
-    <div class="controls">
-        <input type="button" class="refresh" value="<?php echo _("Refresh"); ?>" onClick="refreshStatus();" />
-        <input class="add" type="button" value="<?php echo _("Add"); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'add')); ?>');"/> 
-        <input class="delete" type="submit" value="<?php echo _("Delete"); ?>" onClick="return confirm('<?php
-echo _('The selected reservations will be deleted.');
-echo '\n';
-echo _('Do you confirm?');
-?>')"/>
-    </div>
-
-    <br>
-
+    <?php echo $this->element('controls', array(
+        'app' => 'init',
+        'before' => '<input type="button" class="refresh" value="'. _("Refresh").'" onClick="refreshStatus();" />')); ?>
+    
     <table class="list" style="min-width: 105%">
 
         <thead>

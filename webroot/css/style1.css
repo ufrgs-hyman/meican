@@ -225,7 +225,9 @@ img.loading {
 }
 
 div.controls {
-    width: 100%;
+    /*width: 100%;*/
+    padding: 6px 0;
+    float: right;
 }
 
 div.control_tab {
