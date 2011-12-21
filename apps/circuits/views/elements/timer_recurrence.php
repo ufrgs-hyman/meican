@@ -37,7 +37,7 @@ $freq_types[] = $freq;
     </div>
 
     <div class="recurrence-item">
-        <?php echo _("Repeats every "); ?>                                                    
+        <label for="interval"><?php echo _("Repeats every "); ?></label>
         <select id="interval" name="interval" onchange="setFreq()">
             <?php
             if (!empty($timer)) {
@@ -84,7 +84,7 @@ $freq_types[] = $freq;
         </div>      
 
     </div>   
-
+    <div style="clear: both;"></div>
     <div class="recurrence-item">
         
         <h2><?php echo _("Range of recurrence"); ?></h2>
