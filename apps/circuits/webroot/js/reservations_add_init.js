@@ -162,8 +162,8 @@ var contextMenu;
             var k = 2*(50-v);
 		    
             $('#bandwidth_bar_inside').animate({
-                width: v+'%', 
-                'background-color': 'rgb('+(Math.round(255*(100-(k<0?0:k))/100))+','+(Math.round(255*(100-(-k<0?0:-k))/100))+',0)'
+                width: v+'%'/*, 
+                'background-color': 'rgb('+(Math.round(255*(100-(k<0?0:k))/100))+','+(Math.round(255*(100-(-k<0?0:-k))/100))+',0)'*/
                 }, 100);       
         };
         $("#bandwidth").change(f).keyup(f).click(f).scroll(f);
