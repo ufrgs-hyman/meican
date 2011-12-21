@@ -164,7 +164,7 @@ var contextMenu;
             $('#bandwidth_bar_inside').animate({
                 width: v+'%'/*, 
                 'background-color': 'rgb('+(Math.round(255*(100-(k<0?0:k))/100))+','+(Math.round(255*(100-(-k<0?0:-k))/100))+',0)'*/
-                }, 100);       
+            }, 100);       
         };
         $("#bandwidth").change(f).keyup(f).click(f).scroll(f);
         if (false){ /*configura tabs? não */
@@ -179,92 +179,92 @@ var contextMenu;
                     view_setBounds(view_bounds);
                 }
             });
-    } else {
-        $('#tabs-res ul').hide();
-        $('#tabs-3').hide();
-    }
-    /*$('#repeat_chkbox').button();*/
-    /*$('#weekdays input[type=checkbox]').button();*/
-    /* edições e cliques */
-    var clearAllFn = function (){
-        if (path.length != 0) {
-            for (var i=counter; i>0; i--) {
-                alert(i);
-                var removeHop = "#removeHop" + counter;
-                if ($(removeHop)) {
-                    lessFields($(removeHop));
+        } else {
+            $('#tabs-res ul').hide();
+            $('#tabs-3').hide();
+        }
+        /*$('#repeat_chkbox').button();*/
+        /*$('#weekdays input[type=checkbox]').button();*/
+        /* edições e cliques */
+        var clearAllFn = function (){
+            if (path.length != 0) {
+                for (var i=counter; i>0; i--) {
+                    alert(i);
+                    var removeHop = "#removeHop" + counter;
+                    if ($(removeHop)) {
+                        lessFields($(removeHop));
+                    }
                 }
+                counter = 0;
             }
-            counter = 0;
+    
+            edit_clearLines();
+            edit_clearSelectedMarkers();
+            edit_clearMarkers();
+            path = [];
+            edit_clearTopologyMarkers();
+            edit_setBounds(edit_bounds);    
+    
+            contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
+            contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
+            contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
+            contextMenu.bind('contextmenu', function() {
+                return false;
+            });
+            $(edit_map.getDiv()).append(contextMenu);    
+    
+            view_clearAll();    
+    
+            validateTab1();
+            if (tab2_valid) {
+                $("#t3").addClass("ui-state-disabled");
+            }
+            edit_initializeMap();
         }
     
-        edit_clearLines();
-        edit_clearSelectedMarkers();
-        edit_clearMarkers();
-        path = [];
-        edit_clearTopologyMarkers();
-        edit_setBounds(edit_bounds);    
-    
-        contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
-        contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
-        contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
-        contextMenu.bind('contextmenu', function() {
-            return false;
+        $('#src_clearpath').click(function(){
+            srcSet = false;
+            $("#bandwidth").attr("disabled", "disabled").addClass("ui-state-disabled");
+            $("#src_domain,#src_network").empty();
+            $("#src_device,#src_port").empty().disabled();//,#src_vlanTagged
+            map_clearVlanConf('src');
+            clearAllFn();        
         });
-        $(edit_map.getDiv()).append(contextMenu);    
-    
-        view_clearAll();    
-    
-        validateTab1();
-        if (tab2_valid) {
-            $("#t3").addClass("ui-state-disabled");
-        }
-        edit_initializeMap();
-    }
-    
-    $('#src_clearpath').click(function(){
-        srcSet = false;
-        $("#bandwidth").attr("disabled", "disabled").addClass("ui-state-disabled");
-        $("#src_domain,#src_network").empty();
-        $("#src_device,#src_port").empty().disabled();//,#src_vlanTagged
-        map_clearVlanConf('src');
-        clearAllFn();        
-    });
-    $('#dst_clearpath').click(function(){
-        dstSet = false;
-        $("#bandwidth").attr("disabled", "disabled").addClass("ui-state-disabled");
-        $("#dst_domain,#dst_network").empty();
-        $("#dst_device,#dst_port").empty().disabled();//,#dst_vlanTagged
-        map_clearVlanConf('dst');
-        clearAllFn();
-    });
-    $('#repeat_chkbox').click(function(){
-        showRecurrenceBox();
-    });
-    $('.recurrence-table td input[type=checkbox]').click(function(){
-        checkWeekDay(this.id);
-    });
-    $('#recur_radio,#nr_occurr,#untilDate').change(function(){
-        setUntilType();
-    });
-    /* resize da janela muda tamanho do mapa */
-    $(window).resize(function() {
-        $('#edit_map_canvas').css('width', $('#main').width()-$($('#tabs-1 div.tab_subcontent')[1]).width()-35);
-    /*      $('.tab-overlay').each(function(n, item){
+        $('#dst_clearpath').click(function(){
+            dstSet = false;
+            $("#bandwidth").attr("disabled", "disabled").addClass("ui-state-disabled");
+            $("#dst_domain,#dst_network").empty();
+            $("#dst_device,#dst_port").empty().disabled();//,#dst_vlanTagged
+            map_clearVlanConf('dst');
+            clearAllFn();
+        });
+        $('#repeat_chkbox').click(function(){
+            showRecurrenceBox();
+        });
+        $('.recurrence-table td input[type=checkbox]').click(function(){
+            checkWeekDay(this.id);
+        });
+        $('#recur_radio,#nr_occurr,#untilDate').change(function(){
+            setUntilType();
+        });
+        /* resize da janela muda tamanho do mapa */
+        $(window).resize(function() {
+            $('#edit_map_canvas').css('width', $('#main').width()-$($('#tabs-1 div.tab_subcontent')[1]).width()-20);
+        /*      $('.tab-overlay').each(function(n, item){
 		  	$(item).css({'width': $(item).parent().width(), 'height': $(item).parent().height()});
 		  });*/
-    });
-    /* quando digita nome, tira overlay */
-    $('form#reservation_add').submit(function() {
-        validateReservationForm();
-    });
-    $('#res_name').keyup(function(){
-        if ($(this).val())
-            $('.tab-overlay').fadeOut();
-        else
-            $('.tab-overlay').fadeIn();
-    }).focus();
-        $('#edit_map_canvas').css('width', $('#main').width()-$($('#tabs-1 div.tab_subcontent')[1]).width()-35);
+        });
+        /* quando digita nome, tira overlay */
+        $('form#reservation_add').submit(function() {
+            validateReservationForm();
+        });
+        $('#res_name').keyup(function(){
+            if ($(this).val())
+                $('.tab-overlay').fadeOut();
+            else
+                $('.tab-overlay').fadeIn();
+        }).focus();
+        $(window).trigger('resize');
         $.fn.makeEditMap();
     });
 	

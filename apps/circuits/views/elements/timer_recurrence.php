@@ -85,11 +85,11 @@ $freq_types[] = $freq;
 
     </div>   
     <div style="clear: both;"></div>
+    <h2><?php echo _("Range of recurrence"); ?></h2>
     <div class="recurrence-item">
-        
-        <h2><?php echo _("Range of recurrence"); ?></h2>
+
         <?php echo _("Starts on"); ?>:
-        <input type="text" size="9" id="initialRecurrence" value="<?php echo !empty($start_date)?$start_date:null; ?>">
+        <input type="text" size="9" id="initialRecurrence" value="<?php echo!empty($start_date) ? $start_date : null; ?>">
     </div>
     <div class="recurrence-item">
 
@@ -117,9 +117,11 @@ $freq_types[] = $freq;
 
         <input type="radio" name="until" id="date_radio" value="DATE" onchange="setUntilType();"/><label for="date_radio">
             <?php echo _("On"); ?>
-            <input type="text" name="until_date" size="9" readonly disabled class="datePicker" id="untilDate" value="<?php if (!empty($timer) && $timer->until)
+            <input type="text" name="until_date" size="9" readonly disabled class="datePicker" id="untilDate" value="<?php
+            if (!empty($timer) && $timer->until)
                 echo $timer->until; else
-                echo !empty($finish_date)?$finish_date:null; ?>"/></label>   
+                echo!empty($finish_date) ? $finish_date : null;
+            ?>"/></label>   
     </div>         
     <div style="clear:both;"></div>               
 
