@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-07 15:22-0300\n"
+"POT-Creation-Date: 2011-12-21 11:57-0200\n"
 "PO-Revision-Date: 2011-03-11 13:33-0300\n"
 "Last-Translator: Felipe <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,6 +15,19 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
+
+#: aaa.php:14 aaa.php:17 views/users_show.php:3 controllers/users.php:60
+#: controllers/groups.php:99 controllers/groups.php:208
+msgid "Users"
+msgstr ""
+
+#: aaa.php:22 controllers/users.php:87 controllers/users.php:230
+msgid "Groups"
+msgstr ""
+
+#: aaa.php:27 views/acl_show.php:3
+msgid "Access control"
+msgstr ""
 
 #: views/users_edit.php:3
 msgid "Edit user"
@@ -79,22 +92,22 @@ msgid "Current password"
 msgstr ""
 
 #: views/elements/identification_userAdd.php:3
-#: views/elements/identification_settings.php:3
+#: views/elements/identification_settings.php:13
 msgid "Information"
 msgstr ""
 
 #: views/elements/identification_userAdd.php:8
-#: views/elements/identification_settings.php:16 views/users_show.php:19
+#: views/elements/identification_settings.php:27 views/users_show.php:19
 #: views/groups_show.php:13
 msgid "Name"
 msgstr ""
 
 #: views/elements/identification_userAdd.php:17
-#: views/elements/identification_settings.php:25
+#: views/elements/identification_settings.php:36
 msgid "E-mail"
 msgstr ""
 
-#: views/elements/identification_settings.php:8 views/users_add.php:11
+#: views/elements/identification_settings.php:19 views/users_add.php:11
 msgid "Login"
 msgstr ""
 
@@ -121,11 +134,6 @@ msgstr ""
 
 #: views/groups_edit.php:11 views/groups_add.php:13
 msgid "Group name"
-msgstr ""
-
-#: views/users_show.php:3 controllers/users.php:60 controllers/groups.php:99
-#: controllers/groups.php:208
-msgid "Users"
 msgstr ""
 
 #: views/users_show.php:18 controllers/users.php:122 controllers/users.php:151
@@ -164,10 +172,6 @@ msgstr ""
 
 #: views/groups_show.php:56
 msgid "The selected groups will be deleted."
-msgstr ""
-
-#: views/acl_show.php:3
-msgid "Access control"
 msgstr ""
 
 #: views/acl_show.php:12
@@ -218,68 +222,74 @@ msgstr ""
 msgid "Add new user"
 msgstr ""
 
-#: controllers/acl.php:137 controllers/acl.php:154
-msgid "All"
-msgstr ""
-
-#: controllers/acl.php:149
+#: controllers/acl.php:46 controllers/acl.php:47 controllers/acl.php:48
+#: controllers/acl.php:49 controllers/acl.php:122
 msgid "Allow"
 msgstr ""
 
-#: controllers/acl.php:150
+#: controllers/acl.php:46 controllers/acl.php:47 controllers/acl.php:48
+#: controllers/acl.php:49 controllers/acl.php:123
 msgid "Deny"
 msgstr ""
 
-#: controllers/acl.php:151
+#: controllers/acl.php:109 controllers/acl.php:127
+msgid "All"
+msgstr ""
+
+#: controllers/acl.php:124
 msgid "Delete ACL?"
 msgstr ""
 
-#: controllers/acl.php:152
-msgid "ACL deleted"
+#: controllers/acl.php:125
+msgid "Access control deleted"
 msgstr ""
 
-#: controllers/acl.php:153
-msgid "Fail to delete ACL"
+#: controllers/acl.php:126
+msgid "Fail to delete access control"
 msgstr ""
 
-#: controllers/acl.php:155
+#: controllers/acl.php:128
 msgid "Save modifications?"
 msgstr ""
 
-#: controllers/acl.php:156
+#: controllers/acl.php:129
 msgid "Please fill in all the fields"
 msgstr ""
 
-#: controllers/acl.php:167
+#: controllers/acl.php:130
+msgid "Tree objects do not match"
+msgstr ""
+
+#: controllers/acl.php:131
+msgid "Error to fetch objects"
+msgstr ""
+
+#: controllers/acl.php:144
 msgid "Access Control List"
 msgstr ""
 
-#: controllers/acl.php:168
+#: controllers/acl.php:145
 msgid "You can't see any access control, click the button below to add one"
 msgstr ""
 
-#: controllers/acl.php:220
+#: controllers/acl.php:196
 msgid "No access control was deleted"
 msgstr ""
 
-#: controllers/acl.php:223
+#: controllers/acl.php:199
 msgid "One access control was deleted"
 msgstr ""
 
-#: controllers/acl.php:226
-msgid "access controls were cancelled"
+#: controllers/acl.php:202
+msgid "access controls were deleted"
 msgstr ""
 
-#: controllers/acl.php:242
+#: controllers/acl.php:218
 msgid "ACL updated"
 msgstr ""
 
 #: controllers/users.php:61
 msgid "You can't see any user, click the button below to add one"
-msgstr ""
-
-#: controllers/users.php:87 controllers/users.php:230
-msgid "Groups"
 msgstr ""
 
 #: controllers/users.php:95

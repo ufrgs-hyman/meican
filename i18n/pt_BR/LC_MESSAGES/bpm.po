@@ -7,14 +7,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-07 15:22-0300\n"
-"PO-Revision-Date: 2011-09-02 15:31-0300\n"
-"Last-Translator: Pietro Biasuz <pfbiasuz@inf.ufrgs.br>\n"
+"POT-Creation-Date: 2011-12-21 11:57-0200\n"
+"PO-Revision-Date: 2011-12-21 12:07-0300\n"
+"Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
+
+#: bpm.php:14
+msgid "BPM"
+msgstr "BPM"
+
+#: bpm.php:17
+msgid "Requests"
+msgstr "Requisições"
+
+#: bpm.php:22
+msgid "ODE"
+msgstr "ODE"
 
 #: views/ode_show.php:8
 msgid "Process"
@@ -88,27 +100,32 @@ msgstr "Pergunta"
 msgid "Create"
 msgstr "Criar"
 
-#: views/elements/requests_table.php:8 views/requests_show.php:11
+#: views/elements/requests_table.php:8
+#: views/requests_show.php:11
 #: views/requests_show.php:41
 msgid "Domain source"
 msgstr "Domínio de origem"
 
-#: views/elements/requests_table.php:9 views/requests_show.php:13
+#: views/elements/requests_table.php:9
+#: views/requests_show.php:13
 #: views/requests_show.php:43
 msgid "Requester"
 msgstr "Solicitante"
 
-#: views/elements/requests_table.php:10 views/requests_replyRequest.php:91
+#: views/elements/requests_table.php:10
+#: views/requests_replyRequest.php:91
 #: views/requests_show.php:46
 msgid "Response"
 msgstr "Resposta"
 
-#: views/elements/requests_table.php:11 views/requests_replyRequest.php:101
+#: views/elements/requests_table.php:11
+#: views/requests_replyRequest.php:101
 #: views/requests_show.php:47
 msgid "Message"
 msgstr "Mensagem"
 
-#: views/elements/requests_table.php:20 views/requests_show.php:30
+#: views/elements/requests_table.php:20
+#: views/requests_show.php:30
 msgid "Answer"
 msgstr "Responder"
 
@@ -176,15 +193,18 @@ msgstr "REJEITAR"
 msgid "Pending incoming requests"
 msgstr "Requisições Pendentes"
 
-#: views/requests_show.php:12 views/requests_show.php:42
+#: views/requests_show.php:12
+#: views/requests_show.php:42
 msgid "Domain destination"
 msgstr "Domínio de destino"
 
-#: views/requests_show.php:14 views/requests_show.php:44
+#: views/requests_show.php:14
+#: views/requests_show.php:44
 msgid "Resource type"
 msgstr "Tipo de recurso"
 
-#: views/requests_show.php:15 views/requests_show.php:45
+#: views/requests_show.php:15
+#: views/requests_show.php:45
 msgid "Resource description"
 msgstr "Descrição do recurso"
 
@@ -228,7 +248,8 @@ msgstr "Undeploy de processo realizado com sucesso"
 msgid "Fail to undeploy process"
 msgstr "Falha ao realizar undeploy do processo"
 
-#: controllers/requests.php:105 controllers/requests.php:114
+#: controllers/requests.php:105
+#: controllers/requests.php:114
 msgid "Unknown"
 msgstr "Desconhecido"
 
@@ -254,18 +275,14 @@ msgstr "requisições foram excluídas"
 
 #~ msgid "Domain Source"
 #~ msgstr "Domínio de Origem"
-
 #~ msgid "Destination Domain"
 #~ msgstr "Domínio de Destino"
-
 #~ msgid "Destination User"
 #~ msgstr "Usuário do Destino"
-
 #~ msgid "Domain Destination"
 #~ msgstr "Domínio de Destino"
-
 #~ msgid "In Progress"
 #~ msgstr "Em Andamento"
-
 #~ msgid "Request deleted"
 #~ msgstr "Requisição excluída"
+

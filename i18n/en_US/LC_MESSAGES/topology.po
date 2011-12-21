@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-07 15:22-0300\n"
+"POT-Creation-Date: 2011-12-21 11:57-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
 
-#: views/networks_show.php:7 controllers/networks.php:66
+#: topology.php:14
+msgid "Topologies"
+msgstr ""
+
+#: topology.php:17 views/meicans_show.php:7 controllers/meicans.php:42
+msgid "MEICANs"
+msgstr ""
+
+#: topology.php:22 views/domains_show.php:7 controllers/domains.php:42
+msgid "Domains"
+msgstr ""
+
+#: topology.php:27 views/networks_show.php:7 controllers/networks.php:66
 msgid "Networks"
+msgstr ""
+
+#: topology.php:32 views/networks_show.php:20 views/devices_show.php:3
+#: controllers/devices.php:75
+msgid "Devices"
+msgstr ""
+
+#: topology.php:37
+msgid "URNs"
 msgstr ""
 
 #: views/networks_show.php:17 views/domains_show.php:17
@@ -36,11 +57,6 @@ msgstr ""
 #: views/networks_show.php:19 views/elements/network_form.php:29
 #: views/elements/device_form.php:65 views/devices_show.php:19
 msgid "Longitude"
-msgstr ""
-
-#: views/networks_show.php:20 views/devices_show.php:3
-#: controllers/devices.php:73
-msgid "Devices"
 msgstr ""
 
 #: views/networks_show.php:21 views/urns_show.php:19 views/urns_show.php:34
@@ -110,10 +126,6 @@ msgstr ""
 msgid "Edit network"
 msgstr ""
 
-#: views/domains_show.php:7 controllers/domains.php:42
-msgid "Domains"
-msgstr ""
-
 #: views/domains_show.php:18 views/elements/domain_form.php:22
 msgid "OSCARS IP"
 msgstr ""
@@ -141,8 +153,8 @@ msgstr ""
 msgid "Network"
 msgstr ""
 
-#: views/elements/urn_header.php:4 controllers/devices.php:157
-#: controllers/devices.php:249 controllers/devices.php:267
+#: views/elements/urn_header.php:4 controllers/devices.php:163
+#: controllers/devices.php:257 controllers/devices.php:275
 msgid "Device"
 msgstr ""
 
@@ -254,10 +266,6 @@ msgstr ""
 msgid "Importing topology URNs (Uniform Resource Name)"
 msgstr ""
 
-#: views/meicans_show.php:7 controllers/meicans.php:42
-msgid "MEICANs"
-msgstr ""
-
 #: views/meicans_show.php:17
 msgid "Local?"
 msgstr ""
@@ -299,8 +307,8 @@ msgstr ""
 msgid "No network added, click the button below to add a new one"
 msgstr ""
 
-#: controllers/networks.php:82 controllers/devices.php:106
-#: controllers/devices.php:215
+#: controllers/networks.php:82 controllers/devices.php:109
+#: controllers/devices.php:223
 msgid "A name is required"
 msgstr ""
 
@@ -329,7 +337,7 @@ msgstr ""
 #: controllers/domains.php:82 controllers/domains.php:107
 #: controllers/meicans.php:83 controllers/meicans.php:108
 #: controllers/urns.php:81 controllers/urns.php:121
-#: controllers/devices.php:170 controllers/devices.php:231
+#: controllers/devices.php:178 controllers/devices.php:239
 msgid "Invalid index"
 msgstr ""
 
@@ -338,12 +346,12 @@ msgid "Network not found"
 msgstr ""
 
 #: controllers/networks.php:183 controllers/domains.php:124
-#: controllers/meicans.php:126 controllers/devices.php:249
+#: controllers/meicans.php:126 controllers/devices.php:257
 msgid "updated"
 msgstr ""
 
 #: controllers/networks.php:186 controllers/domains.php:127
-#: controllers/meicans.php:129 controllers/devices.php:252
+#: controllers/meicans.php:129 controllers/devices.php:260
 msgid "No change has been made"
 msgstr ""
 
@@ -355,7 +363,7 @@ msgstr ""
 
 #: controllers/networks.php:203 controllers/domains.php:142
 #: controllers/meicans.php:144 controllers/urns.php:249
-#: controllers/devices.php:267
+#: controllers/devices.php:275
 msgid "deleted"
 msgstr ""
 
@@ -450,36 +458,36 @@ msgstr ""
 msgid "URN"
 msgstr ""
 
-#: controllers/devices.php:74
+#: controllers/devices.php:76
 msgid "No device added, click the button below to add a new one"
 msgstr ""
 
-#: controllers/devices.php:107 controllers/devices.php:216
+#: controllers/devices.php:110 controllers/devices.php:224
 msgid "An IP address is required"
 msgstr ""
 
-#: controllers/devices.php:108 controllers/devices.php:217
+#: controllers/devices.php:111 controllers/devices.php:225
 msgid "A network is required"
 msgstr ""
 
-#: controllers/devices.php:119
+#: controllers/devices.php:122
 msgid "No network added, you should first add a network before adding a device"
 msgstr ""
 
-#: controllers/devices.php:128 controllers/devices.php:206
+#: controllers/devices.php:131 controllers/devices.php:214
 msgid ""
 "No domain added, you should first add a domain and network before adding a "
 "device"
 msgstr ""
 
-#: controllers/devices.php:157
+#: controllers/devices.php:163
 msgid "added in network"
 msgstr ""
 
-#: controllers/devices.php:160
+#: controllers/devices.php:168
 msgid "Fail to create device"
 msgstr ""
 
-#: controllers/devices.php:180
+#: controllers/devices.php:188
 msgid "Device not found"
 msgstr ""

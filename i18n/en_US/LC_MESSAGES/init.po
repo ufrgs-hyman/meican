@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-07 15:22-0300\n"
+"POT-Creation-Date: 2011-12-21 11:57-0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Felipe <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: \n"
@@ -11,133 +11,120 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
 
-#: views/elements/menu.php:4 controllers/menu.php:28
-msgid "Circuits"
+#: init.php:14 controllers/menu.php:27
+msgid "Dashboard"
 msgstr ""
 
-#: views/elements/menu.php:5 controllers/gui.php:69
-msgid "New reservation"
-msgstr ""
-
-#: views/elements/menu.php:6 controllers/menu.php:29 controllers/gui.php:77
-msgid "Reservations"
-msgstr ""
-
-#: views/elements/menu.php:8
-msgid "Topologies"
-msgstr ""
-
-#: views/elements/menu.php:9
-msgid "MEICANs"
-msgstr ""
-
-#: views/elements/menu.php:10 controllers/menu.php:32
-msgid "Domains"
-msgstr ""
-
-#: views/elements/menu.php:11 controllers/menu.php:33
-msgid "Networks"
-msgstr ""
-
-#: views/elements/menu.php:12 controllers/menu.php:34
-msgid "Devices"
-msgstr ""
-
-#: views/elements/menu.php:13 controllers/menu.php:35
-msgid "URNs"
-msgstr ""
-
-#: views/elements/menu.php:15 views/elements/menu.php:16
-#: controllers/menu.php:37
-msgid "Users"
-msgstr ""
-
-#: views/elements/menu.php:17 controllers/menu.php:39
-msgid "Groups"
-msgstr ""
-
-#: views/elements/menu.php:18
-msgid "Access control"
-msgstr ""
-
-#: views/elements/menu.php:20 controllers/menu.php:42
-msgid "BPM"
-msgstr ""
-
-#: views/elements/menu.php:21 controllers/menu.php:43 controllers/gui.php:85
-msgid "Requests"
-msgstr ""
-
-#: views/elements/menu.php:22 controllers/menu.php:44
-msgid "ODE"
+#: views/elements/feedback.php:3
+msgid "Send Us Feedback"
 msgstr ""
 
 #: views/elements/info_box.php:7
-msgid "My settings"
+msgid "Sign out"
+msgstr ""
+
+#: views/elements/info_box.php:9
+msgid "My account"
 msgstr ""
 
 #: views/elements/info_box.php:10
 msgid "Help"
 msgstr ""
 
-#: views/elements/info_box.php:13
+#: views/elements/info_box.php:11
 msgid "About"
 msgstr ""
 
-#: views/elements/info_box.php:16
-msgid "Sign out"
+#: views/elements/info_box.php:12
+msgid "Feedback"
 msgstr ""
 
-#: views/elements/info_box.php:19
-msgid "Server time"
-msgstr ""
-
-#: views/login.php:35
-msgid "About MEICAN"
-msgstr ""
-
-#: views/login.php:36
+#: views/login.php:32
 msgid "Create an account"
 msgstr ""
 
-#: views/login.php:37
+#: views/login.php:33
+msgid "About MEICAN"
+msgstr ""
+
+#: views/login.php:34
 msgid "Support"
 msgstr ""
 
-#: views/login.php:50
+#: views/login.php:48
 msgid "Sign in to MEICAN"
 msgstr ""
 
-#: views/login.php:56
+#: views/login.php:54
 msgid "Login"
 msgstr ""
 
-#: views/login.php:64
+#: views/login.php:62
 msgid "Password"
 msgstr ""
 
-#: views/login.php:75
+#: views/login.php:73
 msgid "Forgot your password?"
 msgstr ""
 
-#: views/login.php:90
+#: views/login.php:88
 msgid "Sign in"
 msgstr ""
 
-#: controllers/menu.php:27
-msgid "Dashboard"
+#: controllers/menu.php:28
+msgid "Circuits"
+msgstr ""
+
+#: controllers/menu.php:29 controllers/gui.php:77
+msgid "Reservations"
 msgstr ""
 
 #: controllers/menu.php:31
 msgid "Domain"
 msgstr ""
 
+#: controllers/menu.php:32
+msgid "Domains"
+msgstr ""
+
+#: controllers/menu.php:33
+msgid "Networks"
+msgstr ""
+
+#: controllers/menu.php:34
+msgid "Devices"
+msgstr ""
+
+#: controllers/menu.php:35
+msgid "URNs"
+msgstr ""
+
+#: controllers/menu.php:37
+msgid "Users"
+msgstr ""
+
 #: controllers/menu.php:38
 msgid "My Account"
 msgstr ""
 
+#: controllers/menu.php:39
+msgid "Groups"
+msgstr ""
+
 #: controllers/menu.php:40
 msgid "Access Control List"
+msgstr ""
+
+#: controllers/menu.php:42
+msgid "BPM"
+msgstr ""
+
+#: controllers/menu.php:43 controllers/gui.php:85
+msgid "Requests"
+msgstr ""
+
+#: controllers/menu.php:44
+msgid "ODE"
 msgstr ""
 
 #: controllers/gui.php:50
@@ -150,6 +137,10 @@ msgstr ""
 
 #: controllers/gui.php:55
 msgid "new requests to be authorized"
+msgstr ""
+
+#: controllers/gui.php:69
+msgid "New reservation"
 msgstr ""
 
 #: controllers/gui.php:93
