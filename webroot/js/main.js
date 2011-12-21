@@ -295,14 +295,14 @@ function WPToggle(divId, imageId) {
             speed:300,
             containerWidth:$('.feedback-panel').outerWidth(),
             containerHeight: $('.feedback-panel').height(),//$('.feedback-panel').outerHeight(),
-            tabWidth:$('.feedback-link').outerWidth(),
+            tabWidth:$('a.feedback-link').outerWidth(),
 	 
 	 
             init:function(){
                 //$('.feedback-panel').css('height',$.feedbackTab.containerHeight + 'px');
                 $('.feedback-panel').css('top', '-' + ($('.feedback-panel').outerHeight()+70) + 'px');
 	 
-                $('a.feedback-link').click(function(event){
+                $('.feedback-link').click(function(event){
                     if ($('.feedback-panel').hasClass('open')) {
                         $('.feedback-panel')
                         .animate({
@@ -312,7 +312,7 @@ function WPToggle(divId, imageId) {
                     } else {
                         $('.feedback-panel')
                         .animate({
-                            top: $('.feedback-link').offset().top + 15 + 'px'
+                            top: $('a.feedback-link').offset().top + 15 + 'px'
                         },  $.feedbackTab.speed)
                         .addClass('open');
                     }

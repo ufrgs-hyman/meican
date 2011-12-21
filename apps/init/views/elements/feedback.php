@@ -1,4 +1,7 @@
-<div class="tab_content feedback-panel ui-corner-all" style="top: 27px; " id="feedback-panel">
+<div class="feedback-panel tab_content ui-corner-all" style="top: 27px; " id="feedback-panel">
+    <div class="ui-state-default ui-corner-all feedback-link" style="float: left; margin: -20px -20px; cursor: pointer;">
+        <span class="ui-icon ui-icon-closethick"></span>
+    </div>
     <div id="emotion_select" style="left: 140px; top: 240px; display:none;" class="pos_right">
         <a href="#" class="<?= _("happy") ?>"><img alt="Feedback-happy" src="http://assets1.getsatisfaction.com/images/emoticons/feedback-happy.png?355ab45"><?= _("Happy") ?></a>
         <a href="#" class="<?= _("silly") ?>"><img alt="Feedback-silly" src="http://assets4.getsatisfaction.com/images/emoticons/feedback-silly.png?355ab45"><?= _("Silly") ?></a>
