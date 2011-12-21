@@ -58,7 +58,7 @@ $(document).ready(function() {
     setInterval("updateSystemTime()", 60000);//<?php // chamada para atualizar a hora?>
     //$("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
     if (jQuery.isFunction(jQuery.fn.pjax)){           
-        $('a[href!=""][href!="#"]').pjax('#main', {
+        $('a[href][href!=""][href!="#"]').pjax('#main', {
             error: errorFunc, 
             timeout: 5000
         });
@@ -214,11 +214,14 @@ function WPToggle(divId, imageId) {
                             });
                         });
                 //Trigger change event in field when spinner changes
+                $(this).find(".ui-spinner-button").bind("click", function() {
+                    $('.ui-spinner-button').parent().find('.ui-spinner-input').trigger("change");
+                });
                 $(this).find(".ui-spinner").bind("mouseup", function() {
-                    intInp.numeric('.').trigger("change");
+                    $(this).find('.ui-spinner-input').trigger("change");
                 //alert(intInp.numeric('.').val());
                 }).bind("keyup", function() {
-                    intInp.numeric('.').trigger("change");
+                    $(this).find('.ui-spinner-input').trigger("change");
                 //alert(intInp.numeric('.').val());
                 });
             };

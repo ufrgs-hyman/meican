@@ -158,7 +158,7 @@ var contextMenu;
 	
     $(document).ready(function(){
         var f = function(){
-            var v = ($("#bandwidth[type=number]").val()/band_max)*100;
+            var v = ($("#bandwidth").val()/band_max)*100;
             var k = 2*(50-v);
 		    
             $('#bandwidth_bar_inside').animate({
@@ -166,7 +166,7 @@ var contextMenu;
                 'background-color': 'rgb('+(Math.round(255*(100-(k<0?0:k))/100))+','+(Math.round(255*(100-(-k<0?0:-k))/100))+',0)'
                 }, 100);       
         };
-        $("#bandwidth[type=number]").change(f).keyup(f).click(f).scroll(f);
+        $("#bandwidth").change(f).keyup(f).click(f).scroll(f);
         if (false){ /*configura tabs? não */
             $('#tabs-res ul').show();
             $('#tabs-3').show();
