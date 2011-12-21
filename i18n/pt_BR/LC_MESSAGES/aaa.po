@@ -280,6 +280,13 @@ msgstr "controles de acesso foram excluídos"
 msgid "ACL updated"
 msgstr "ACL atualizado"
 
+#: controllers/users.php:60
+#: controllers/groups.php:99
+#: controllers/groups.php:208
+#: views/users_show.php:3
+msgid "Users"
+msgstr "Usuários"
+
 #: controllers/users.php:61
 msgid "You can't see any user, click the button below to add one"
 msgstr ""

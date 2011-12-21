@@ -175,11 +175,11 @@ msgstr "Reservas"
 
 #: controllers/menu.php:31
 msgid "Domain"
-msgstr "Domínio"
+msgstr "Domï¿½nio"
 
 #: controllers/menu.php:32
 msgid "Domains"
-msgstr "Domínios"
+msgstr "Domï¿½nios"
 
 #: controllers/menu.php:33
 msgid "Networks"
@@ -195,7 +195,7 @@ msgstr "URNs"
 
 #: controllers/menu.php:37
 msgid "Users"
-msgstr "Usuários"
+msgstr "Usuï¿½rios"
 
 #: controllers/menu.php:38
 msgid "My Account"
@@ -216,7 +216,7 @@ msgstr "BPM"
 #: controllers/menu.php:43
 #: controllers/gui.php:85
 msgid "Requests"
-msgstr "Requisições"
+msgstr "Requisiï¿½ï¿½es"
 
 #: controllers/menu.php:44
 msgid "ODE"
@@ -224,15 +224,15 @@ msgstr "ODE"
 
 #: controllers/gui.php:50
 msgid "You have one new request to be authorized"
-msgstr "Você possui uma nova requisição para ser autorizada"
+msgstr "Vocï¿½ possui uma nova requisiï¿½ï¿½o para ser autorizada"
 
 #: controllers/gui.php:53
 msgid "You have"
-msgstr "Você possui"
+msgstr "Vocï¿½ possui"
 
 #: controllers/gui.php:55
 msgid "new requests to be authorized"
-msgstr "novas requisições para serem autorizadas"
+msgstr "novas requisiï¿½ï¿½es para serem autorizadas"
 
 #: controllers/gui.php:69
 msgid "New reservation"
@@ -244,7 +244,7 @@ msgstr "Gerenciamento"
 
 #: controllers/login.php:44
 msgid "Failed on authentication"
-msgstr "Falha na autenticação"
+msgstr "Falha na autenticaï¿½ï¿½o"
 
 #~ msgid "Topologies"
 #~ msgstr "Topologias"
@@ -253,31 +253,41 @@ msgstr "Falha na autenticação"
 #~ msgid "Access control"
 #~ msgstr "Controle de acesso"
 #~ msgid "My settings"
-#~ msgstr "Minhas configurações"
+#~ msgstr "Minhas configuraï¿½ï¿½es"
 #~ msgid "Server time"
 #~ msgstr "Hora do servidor"
 #~ msgid "Not logged in"
-#~ msgstr "Não logado"
+#~ msgstr "Nï¿½o logado"
+
 #~ msgid "Session Expired"
-#~ msgstr "Sessão expirada"
+#~ msgstr "Sessï¿½o expirada"
+
 #~ msgid "Loading"
 #~ msgstr "Carregando"
+
 #~ msgid "New Reservation"
 #~ msgstr "Nova Reserva"
+
 #~ msgid "About us"
-#~ msgstr "Sobre nós"
+#~ msgstr "Sobre nï¿½s"
+
 #~ msgid "Developers"
 #~ msgstr "Desenvolvedores"
+
 #~ msgid "Terms of service"
-#~ msgstr "Termos do serviço"
+#~ msgstr "Termos do serviï¿½o"
+
 #~ msgid "Privacy policy"
-#~ msgstr "Política de privacidade"
+#~ msgstr "Polï¿½tica de privacidade"
+
 #~ msgid "My Settings"
-#~ msgstr "Minhas configurações"
+#~ msgstr "Minhas configuraï¿½ï¿½es"
+
 #~ msgid "Sign Out"
 #~ msgstr "Sair"
+
 #~ msgid "Flows"
 #~ msgstr "Fluxos"
+
 #~ msgid "Timers"
 #~ msgstr "Agendamentos"
-

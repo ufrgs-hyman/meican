@@ -28,9 +28,12 @@ msgstr ""
 msgid "Reservation Creation Wizard"
 msgstr "Assistente para Criação de Reserva"
 
-#: views/reservations_page2.php:12
-msgid "Step 3 - Defining the timer"
-msgstr "Etapa 3 - Definindo o agendamento"
+#: controllers/flows.php:164
+#: controllers/flows.php:355
+#: controllers/map.php:52
+#: controllers/reservations.php:485
+msgid "Invalid value for bandwidth"
+msgstr "Valor inválido para largura de banda"
 
 #: views/reservations_page2.php:28
 #: views/reservations_page2.php:30
@@ -75,9 +78,12 @@ msgstr "Anterior"
 msgid "Map View"
 msgstr "Visão de Mapa"
 
-#: views/flows_add.php:11
-msgid "Add Flow - Advanced View"
-msgstr "Adicionar Fluxo - Visão Avançada"
+#: controllers/flows.php:169
+#: controllers/flows.php:360
+#: controllers/map.php:57
+#: controllers/reservations.php:490
+msgid "Invalid value for destination VLAN"
+msgstr "Valor inválido para VLAN de destino"
 
 #: views/flows_add.php:24
 #: views/flows_edit.php:22
@@ -105,9 +111,9 @@ msgstr "Largura de banda"
 msgid "OK"
 msgstr "OK"
 
-#: views/flows_edit.php:11
-msgid "Edit Flow"
-msgstr "Editar Fluxo"
+#: controllers/flows.php:334
+msgid "Could not get destination topology"
+msgstr "Não foi possível buscar topologia do destino"
 
 #: views/reservations_add.php:12
 #: views/elements/timer_recurrence.php:5
@@ -162,9 +168,11 @@ msgstr "Agendamentos"
 msgid "Delete"
 msgstr "Excluir"
 
-#: views/timers_show.php:10
-msgid "The selected timers will be deleted."
-msgstr "Os agendamentos selecionados serão excluídos."
+#: controllers/map.php:67
+#: controllers/reservations.php:505
+#: controllers/reservations.php:1034
+msgid "Information about cluster"
+msgstr "Informações sobre o cluster"
 
 #: views/timers_show.php:10
 #: views/flows_show.php:10
@@ -216,6 +224,8 @@ msgstr "Destino"
 #: views/reservations_show.php:23
 #: views/elements/view_timer.php:11
 #: views/elements/timer_form.php:8
+#: views/elements/view_timer.php:11
+#: views/reservations_show.php:34
 msgid "Start"
 msgstr "Início"
 
@@ -241,13 +251,33 @@ msgstr "Visualizar"
 msgid "loading"
 msgstr "carregando"
 
-#: views/flows_show.php:3
-msgid "Flows"
-msgstr "Fluxos"
+#: views/elements/reservation_tab5.php:33
+#: views/elements/reservation_tab4.php:18
+#: views/reservations_page3.php:38
+#: views/reservations_page2.php:33
+msgid "Previous"
+msgstr "Anterior"
 
-#: views/flows_show.php:10
-msgid "The selected flows will be deleted."
-msgstr "Os fluxos selecionados serão excluídos."
+#: views/elements/reservation_tab5.php:34
+#: views/elements/reservation_tab4.php:19
+#: views/flows_add.php:52
+#: views/flows_add.php:54
+#: views/reservations_add.php:65
+#: views/flows_edit.php:50
+#: views/flows_edit.php:52
+#: views/reservations_page3.php:39
+#: views/timers_add.php:32
+#: views/timers_add.php:34
+#: views/timers_edit.php:34
+#: views/timers_edit.php:36
+#: views/reservations_page2.php:32
+#: views/flows_add_options.php:20
+#: views/flows_add_options.php:22
+#: views/map_show.php:124
+#: views/map_show.php:126
+#: views/reservations_page1.php:45
+msgid "Cancel"
+msgstr "Cancelar"
 
 #: views/elements/reservation_tab1.php:2
 msgid "New circuit name:"
@@ -420,17 +450,28 @@ msgstr "Em"
 msgid "any"
 msgstr "qualquer"
 
-#: views/elements/view_request.php:7
-msgid "Request"
-msgstr "Requisição"
+#: views/flows_add.php:16
+#: views/flows_edit.php:14
+#: views/reservations_page3.php:9
+#: views/timers_add.php:11
+#: views/timers_edit.php:12
+#: views/reservations_page2.php:8
+#: views/flows_add_options.php:10
+#: views/map_show.php:14
+#: views/reservations_page1.php:9
+msgid "Reservation Creation Wizard"
+msgstr "Assistente para Criação de Reserva"
 
-#: views/elements/view_request.php:20
-msgid "Response"
-msgstr "Resposta"
+#: views/flows_add.php:24
+#: views/flows_edit.php:22
+#: views/map_show.php:21
+msgid "Flow name"
+msgstr "Nome do fluxo"
 
-#: views/elements/view_request.php:28
-msgid "Message"
-msgstr "Mensagem"
+#: views/flows_add.php:27
+#: views/map_show.php:24
+msgid "Set the flow name"
+msgstr "Defina o nome do fluxo"
 
 #: views/elements/list_flows.php:82
 #: views/elements/list_flows.php:109
@@ -480,16 +521,9 @@ msgstr "Etapa 1 - Definindo o nome da reserva"
 #: views/reservations_page1.php:20
 #: views/reservations_view.php:23
 #: views/reservations_page3.php:20
+#: views/reservations_page1.php:20
 msgid "Reservation name"
 msgstr "Nome da reserva"
-
-#: views/reservations_page1.php:30
-msgid "Step 2 - Defining the flow"
-msgstr "Etapa 2 - Definindo o fluxo"
-
-#: views/reservations_view.php:13
-msgid "Reservation details"
-msgstr "Detalhes da reserva"
 
 #: views/reservations_view.php:47
 msgid "Tool"
@@ -498,6 +532,12 @@ msgstr "Ferramenta"
 #: views/reservations_view.php:48
 msgid "Reservation ID"
 msgstr "ID da Reserva"
+
+#: views/reservations_view.php:51
+#: views/reservations_view.php:75
+#: views/reservations_show.php:62
+msgid "loading"
+msgstr "carregando"
 
 #: views/reservations_view.php:53
 msgid "refresh"
@@ -538,9 +578,9 @@ msgstr "Componentes do Agendamento"
 msgid "Timer name"
 msgstr "Nome do agendamento"
 
-#: views/reservations_page3.php:13
-msgid "Step 4 - Confirmation"
-msgstr "Etapa 4 - Confirmação"
+#: views/reservations_page2.php:12
+msgid "Step 3 - Defining the timer"
+msgstr "Etapa 3 - Definindo o agendamento"
 
 #: views/reservations_page3.php:28
 #: controllers/flows.php:426
@@ -561,6 +601,10 @@ msgstr "Escolha o tipo de visão"
 #: views/map_show.php:9
 msgid "Advanced View"
 msgstr "Visão Avançada"
+
+#: views/timers_show.php:10
+msgid "The selected timers will be deleted."
+msgstr "Os agendamentos selecionados serão excluídos."
 
 #: views/map_show.php:11
 msgid "Add Flow - Map View"

@@ -143,45 +143,55 @@ msgstr "Rede"
 msgid "Device"
 msgstr "Dispositivo"
 
-#: views/elements/urn_header.php:5
-msgid "Port"
-msgstr "Porta"
+#: controllers/devices.php:163
+msgid "added in network"
+msgstr "adicionado à rede"
 
-#: views/elements/urn_header.php:6
-msgid "URN value"
-msgstr "Valor da URN"
+#: controllers/devices.php:168
+msgid "Fail to create device"
+msgstr "Falha ao criar dispositivo"
 
-#: views/elements/urn_header.php:7
-msgid "Link settings"
-msgstr "Configurações de Link"
+#: controllers/devices.php:178 controllers/devices.php:239
+#: controllers/urns.php:81 controllers/urns.php:121
+#: controllers/networks.php:128 controllers/networks.php:167
+#: controllers/domains.php:85 controllers/domains.php:110
+#: controllers/meicans.php:83 controllers/meicans.php:108
+msgid "Invalid index"
+msgstr "Índice inválido"
 
-#: views/elements/urn_header.php:11
-msgid "VLAN values"
-msgstr "Valores de VLAN"
+#: controllers/devices.php:188
+msgid "Device not found"
+msgstr "Dispositivo não encontrado"
 
-#: views/elements/urn_header.php:12
-msgid "Maximum capacity (bps)"
-msgstr "Capacidade máxima (bps)"
+#: controllers/devices.php:257 controllers/networks.php:183
+#: controllers/domains.php:127 controllers/meicans.php:126
+msgid "updated"
+msgstr "atualizado"
 
-#: views/elements/urn_header.php:13
-msgid "Minimum capacity (bps)"
-msgstr "Capacidade mínima (bps)"
+#: controllers/devices.php:260 controllers/networks.php:186
+#: controllers/domains.php:130 controllers/meicans.php:129
+msgid "No change has been made"
+msgstr "Nenhuma mudança foi efetuada"
 
-#: views/elements/urn_header.php:14
-msgid "Granularity (bps)"
-msgstr "Granularidade (bps)"
+#: controllers/devices.php:275 controllers/urns.php:249
+#: controllers/networks.php:203 controllers/domains.php:145
+#: controllers/meicans.php:144
+msgid "deleted"
+msgstr "excluído"
 
-#: views/elements/empty_urn.php:21
-msgid "Populate from topology"
-msgstr "Popular a partir da topologia"
+#: controllers/urns.php:51
+msgid "No new URN found in the network topology, this domain is updated"
+msgstr ""
+"Nenhuma nova URN encontrada na topologia da rede. Este domínio está "
+"atualizado"
 
-#: views/elements/empty_urn.php:22
-msgid "Populate manual"
-msgstr "Popular manualmente"
+#: controllers/urns.php:52
+msgid "An error has occurred while trying to import the topology"
+msgstr "Ocorreu um erro ao tentar importar a topologia"
 
-#: views/elements/domain_form.php:46
-msgid "ODE WSDL path"
-msgstr "Caminho WSDL do ODE"
+#: controllers/urns.php:53
+msgid "Delete URN?"
+msgstr "Excluir URN?"
 
 #: views/elements/meican_form.php:21 views/meicans_show.php:17
 msgid "MEICAN IP"
@@ -191,9 +201,9 @@ msgstr "IP do MEICAN"
 msgid "Directory name"
 msgstr "Nome do diretório"
 
-#: views/elements/meican_form.php:37
-msgid "Is local domain?"
-msgstr "É um domínio local?"
+#: controllers/urns.php:56 controllers/urns.php:105 controllers/urns.php:153
+msgid "Please fill in all the fields"
+msgstr "Por favor preencha todos os campos"
 
 #: views/elements/empty_db.php:20 views/urns_add_manual.php:67
 msgid "Add"
@@ -284,6 +294,10 @@ msgstr "Domínio não encontrada"
 msgid "No device added to this network"
 msgstr "Não há dispositivos adicionados nesta rede"
 
+#: controllers/networks.php:66 views/networks_show.php:7
+msgid "Networks"
+msgstr "Redes"
+
 #: controllers/networks.php:67
 msgid "No network added, click the button below to add a new one"
 msgstr ""
@@ -353,16 +367,27 @@ msgstr "excluído"
 msgid "No IP defined"
 msgstr "Não há IP definido"
 
-#: controllers/domains.php:43
+#: controllers/domains.php:45 views/domains_show.php:7
+msgid "Domains"
+msgstr "Domínios"
+
+#: controllers/domains.php:46
 msgid "No domain is added, click the button below to add a new one"
 msgstr ""
 "Não há domínios adicionados. Clique no botão abaixo para adicionar um novo."
 
-#: controllers/domains.php:70
+#: controllers/domains.php:70 controllers/domains.php:127
+#: controllers/domains.php:145 views/networks_show.php:21
+#: views/urns_import.php:13 views/urns_show.php:19 views/urns_show.php:34
+#: views/urns_add_manual.php:12
+msgid "Domain"
+msgstr "Domínio"
+
+#: controllers/domains.php:73
 msgid "Fail to create domain"
 msgstr "Falha ao criar domínio"
 
-#: controllers/domains.php:92
+#: controllers/domains.php:95
 msgid "Domain not found"
 msgstr "Domínio não encontrado"
 
@@ -373,6 +398,10 @@ msgstr "Sim"
 #: controllers/meicans.php:31
 msgid "No"
 msgstr "Não"
+
+#: controllers/meicans.php:42 views/meicans_show.php:7
+msgid "MEICANs"
+msgstr "MEICANs"
 
 #: controllers/meicans.php:43
 msgid "No MEICAN is registered, click the button below to register a new one"
@@ -398,21 +427,23 @@ msgstr ""
 "Nenhuma nova URN encontrada na topologia da rede. Este domínio está "
 "atualizado"
 
-#: controllers/urns.php:52
-msgid "An error has occurred while trying to import the topology"
-msgstr "Ocorreu um erro ao tentar importar a topologia"
+#: views/elements/meican_form.php:21 views/meicans_show.php:19
+msgid "MEICAN IP"
+msgstr "IP do MEICAN"
 
-#: controllers/urns.php:53
-msgid "Delete URN?"
-msgstr "Excluir URN?"
+#: views/elements/meican_form.php:29 views/meicans_show.php:20
+msgid "Directory name"
+msgstr "Nome do diretório"
 
-#: controllers/urns.php:54
-msgid "URN deleted"
-msgstr "URN excluída"
+#: views/elements/meican_form.php:37
+msgid "Is local domain?"
+msgstr "É um domínio local?"
 
-#: controllers/urns.php:55
-msgid "Fail to delete URN"
-msgstr "Falha ao excluir URN"
+#: views/elements/empty_db.php:20 views/networks_show.php:58
+#: views/meicans_show.php:54 views/devices_show.php:78
+#: views/domains_show.php:54 views/urns_add_manual.php:67
+msgid "Add"
+msgstr "Adicionar"
 
 #: controllers/urns.php:56 controllers/urns.php:105 controllers/urns.php:153
 msgid "Please fill in all the fields"
@@ -422,9 +453,9 @@ msgstr "Por favor preencha todos os campos"
 msgid "Save modifications?"
 msgstr "Salvar modificações?"
 
-#: controllers/urns.php:58
-msgid "A URN has been selected more than once"
-msgstr "Uma URN foi selecionada mais de uma vez"
+#: views/elements/domain_form.php:22 views/domains_show.php:18
+msgid "OSCARS IP"
+msgstr "IP do OSCARS"
 
 #: controllers/urns.php:68
 msgid ""
@@ -434,17 +465,17 @@ msgstr ""
 "Antes de adicionar uma URN, você precisa registrar pelo menos um domínio "
 "OSCARS. Clique no botão abaixo para registrar um novo"
 
-#: controllers/urns.php:132
-msgid "Error to import topology"
-msgstr "Erro ao importar topologia"
+#: views/elements/domain_form.php:38 views/domains_show.php:20
+msgid "ODE IP"
+msgstr "IP do ODE"
 
-#: controllers/urns.php:173
-msgid "URN updated"
-msgstr "URN atualizada"
+#: views/elements/domain_form.php:46
+msgid "ODE WSDL path"
+msgstr "Caminho WSDL do ODE"
 
-#: controllers/urns.php:249
-msgid "URN"
-msgstr "URN"
+#: views/elements/empty_urn.php:21
+msgid "Populate from topology"
+msgstr "Popular a partir da topologia"
 
 #: controllers/devices.php:76
 msgid "No device added, click the button below to add a new one"
