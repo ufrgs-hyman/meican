@@ -17,9 +17,11 @@ class Controller {
     protected $defaultAction;
     public $viewVars = array('scripts_for_layout' => array());
 
-    public function render() {
+    public function render($action=null) {
         //modificar para referenciar direto controller, nao passando os parametros para o construtor
-        $view = new View($this->app, $this->controller, $this->action);
+        if (empty($action))
+            $action = $this->action;
+        $view = new View($this->app, $this->controller, $action);
 
         if ($this->app != 'init') {
             Common::recordVar('last_view', "app=$this->app&controller=$this->controller&action=$this->action");

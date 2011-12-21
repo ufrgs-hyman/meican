@@ -23,10 +23,9 @@ class info_box extends Controller {
         $this->render();
     }
     
-    public function get_time() {
+    public function time() {
         $this->setLayout('empty');
-        $this->setArgsToBody(date("d/m/Y H:i"));
-        $this->setAction('ajax');
+        $this->action = 'time';
         $this->render();
     }
 

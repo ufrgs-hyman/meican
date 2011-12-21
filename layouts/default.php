@@ -47,14 +47,14 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <script type ="text/javascript">
 <?php // variavel para armazenar o ID quando a função setInterval() é usada
-// cada vez que um link é carregado, é feito um clear na variável, para não carregar em páginas erradas ?>
-                var js_function_interval = null;
-<?php // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate ?>
-                var js_submit_form = true;
-        <?php //url base para geração de url, é o diretório onde o sistema está instalado no servidor  ?>
-                var baseUrl = '<?php echo $this->url(''); ?>';
+// cada vez que um link é carregado, é feito um clear na variável, para não carregar em páginas erradas  ?>
+    var js_function_interval = null;
+<?php // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate  ?>
+    var js_submit_form = true;
+<?php //url base para geração de url, é o diretório onde o sistema está instalado no servidor   ?>
+            var baseUrl = '<?php echo $this->url(''); ?>';
         </script>
-<?php if ($this->script->scriptArgs): ?>
+        <?php if ($this->script->scriptArgs): ?>
             <script>
     <?php
     foreach ($this->script->scriptArgs as $name => $val) {
@@ -78,11 +78,11 @@
             <script type="text/javascript" src="<?php echo Dispatcher::getInstance()->url('') . $script ?>"></script>
         <?php endforeach; ?>
 
-<?php /*  Coloca o theme roller
-  <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css" />
-  <script>$(document).ready(function(){$('#switcher').themeswitcher();});</script>
-  <script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
-  <div id="switcher"></div> */ ?>
+        <?php /*  Coloca o theme roller
+          <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css" />
+          <script>$(document).ready(function(){$('#switcher').themeswitcher();});</script>
+          <script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
+          <div id="switcher"></div> */ ?>
 
     </head>
 
@@ -95,17 +95,17 @@
         <!-- joga dentro dessa tag o html a ser processado - o que retorna do ajax -->
         <div id="htmlToLoad" style="display: none"></div>
 
-<?php echo $this->element('menu', array('app' => 'init')); ?>
+        <?php echo $this->element('menu', array('app' => 'init')); ?>
 
 
 
         <div id="system_date">
-<?php echo date("H:i") . '<br/>' . date("d/m/Y"); ?>
+            <?php echo $this->element('time', array('app' => 'init')); ?>
         </div>
 
 
         <div id="canvas">
-<?php echo $this->element('info_box', array('app' => 'init')); ?>
+            <?php echo $this->element('info_box', array('app' => 'init')); ?>
             <div id="workspace">
                 <div id="flash_box" class="shadow ui-widget">
                     <?php echo $this->element('flash_box', array('app' => 'init') + compact('content_for_flash')); ?>
@@ -114,11 +114,11 @@
                     <img src="<?php echo $base; ?>webroot/img/ajax-loader_1.gif" alt="<?php echo _('Loading'); ?>"/>
                 </div>
                 <div id="main">
-<?php echo $content_for_body; //debug($this->script->jsFiles); ?>
+                    <?php echo $content_for_body; //debug($this->script->jsFiles); ?>
                 </div>
 
 
-<?php echo $this->element('feedback', array('app' => 'init')); ?>
+                <?php echo $this->element('feedback', array('app' => 'init')); ?>
             </div>
         </div>        
 
