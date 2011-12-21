@@ -43,7 +43,7 @@ if ($type == 'source') {
     </tr>
     <?php $prefixex = $prefix == 'src' ? 'source' : 'destiny'; ?>
     <tr>
-        <td><strong><?php echo _('Type'); ?></strong></td>
+        <td><strong><?php echo _('VLAN Type'); ?></strong></td>
         <td>
             <?php /*
               <input type="radio" name="<?= $prefixex ?>VLANType" id="<?= $prefix ?>_vlanUntagged" value="FALSE" disabled="disabled" onchange="map_changeVlanType(this,'<?= $prefix ?>');"/><label for="<?= $prefix ?>_vlanUntagged"><?php echo _("Untagged"); ?></label>
