@@ -1018,12 +1018,13 @@ table.list thead th {
 /* Spinner
 ----------------------------------*/
 .ui-spinner { position:relative; display: inline-block; overflow: hidden; padding: 0; vertical-align: middle; }
-.ui-spinner-input { padding: 0; margin: 0 18px 0 0; vertical-align: middle; }
-.ui-spinner-button { width: 16px; height: 50%; font-size: .5em; padding: 0; margin: 0; z-index: 1; text-align: center; vertical-align: middle; position: absolute; cursor: default; display: block; overflow: hidden; right: 0; }
+.ui-spinner-input { padding: 0; margin: 0 26px 0 26px; vertical-align: middle; }
+.ui-spinner-button { width: 24px; height: 100%; font-size: .5em; padding: 0; margin: 0; z-index: 1; text-align: center; vertical-align: middle; position: absolute; cursor: default; display: block; overflow: hidden; right: 0; }
 .ui-spinner a.ui-spinner-button { border-top: none; border-bottom: none; border-right: none; } /* more specificity required here to overide default borders */
-.ui-spinner .ui-icon { position: absolute; margin-top: -8px; top: 50%; left: 0; } /* vertical centre icon */
+.ui-spinner .ui-icon { position: absolute; margin-top: -8px; top: 50%; left: 20%; } /* vertical centre icon */
 .ui-spinner-up { top: 0; }
-.ui-spinner-down { bottom: 0; }
+.ui-spinner-down { top: 0;
+left: 0;}
 
 /* TR overrides */
 span.ui-spinner { background: none; }

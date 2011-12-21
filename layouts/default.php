@@ -43,7 +43,6 @@
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/timers.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/jquery.timePicker.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>webroot/js/main.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.spinnercontrol.js"></script>
 
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <script type ="text/javascript">
