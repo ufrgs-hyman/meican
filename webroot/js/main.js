@@ -120,7 +120,8 @@ $(document).ready(function() {
                 $("table.list").dataTable(/*{cssAsc: 'ui-icon ui-icon-triangle-1-n', cssDesc: 'ui-icon ui-icon-triangle-1-s'}*/);
         
             $('#menu .active').removeClass("active");
-            $('#menu ul ul a[href="'+window.location.pathname+'"]').addClass("active").parent().parent().slideDown().parent().find('h3 span.ui-icon').toggleClass('ui-icon-circle-arrow-e').toggleClass('ui-icon-circle-arrow-s');
+            var selectedMenu = $('#menu a[href="'+window.location.pathname+'"]').addClass("active");
+            selectedMenu.parent().parent().slideDown().parent().find('h3 span.ui-icon').toggleClass('ui-icon-circle-arrow-e').toggleClass('ui-icon-circle-arrow-s');
             $(this).addClass("active");
         });
         $('#menu h3').next().hide();
