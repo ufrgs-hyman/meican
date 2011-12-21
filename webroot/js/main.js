@@ -297,7 +297,7 @@ function WPToggle(divId, imageId) {
                     } else {
                         $('.feedback-panel')
                         .animate({
-                            top: $('.feedback-link').outerHeight() + 'px'
+                            top: $('.feedback-link').offset().top + 15 + 'px'
                         },  $.feedbackTab.speed)
                         .addClass('open');
                     }
@@ -308,6 +308,53 @@ function WPToggle(divId, imageId) {
                     $(this).addClass('active');
                     $('#topic_style').val($(this).attr('class').split(' ')[0]);
                 });
+                $('#topic_additional_detail, #topic_subject').keyup(function(){
+                    if ($(this).val().length > 0){
+                        $(this).prev().css({
+                            display: 'none'
+                        });
+                    } else {
+                        $(this).prev().css({
+                            display: 'block'
+                        });
+                    }
+                });
+                $('#feedback-tabs a').click(function (){
+                    $('#feedback-tabs li.active').removeClass('active');
+                    $(this).parent().addClass('active');
+                    var type = $(this).parent().attr('class').split(' ')[0];
+                    $('#topic_style').val(type);	
+                    $('#topic_additional_detail_label').html(feedback_descrbs[type]);
+                    return false;
+                });
+                $('#feedback-tabs li.idea a').click();
+                $('#emotion_select a').click(function(){
+                    $('#topic_emotitag_feeling').val($(this).attr('class'));
+                    $('#emotion_select').toggle();
+                    return false;
+                });
+                $('#emotion_selected').click(function(){
+                    $('#emotion_select').toggle();
+                    return false;
+                });/*
+    $('#feedback-panel form').submit(function(){
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (){
+                alert('Thank you');
+                $('.feedback-panel')
+                .animate({
+                    top: '-' + ($('.feedback-panel').outerHeight()+70) + 'px'
+                }, $.feedbackTab.speed)
+                .removeClass('open');
+				
+            }
+        })
+        ;
+        return false;
+    });*/
             }
         }
                 

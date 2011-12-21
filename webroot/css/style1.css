@@ -788,35 +788,6 @@ h1 { /* Títulos principais */
     color: #D00;
 }
 
-.feedback-panel {
-    padding:20px;
-    width: 400px;
-    position:absolute;
-    top:-500px;
-    right:20px;
-    z-index: 10;
-}
-
-.feedback-panel a.feedback-tab {
-    background:transparent url(feedbacktab.gif) no-repeat scroll 0 0;
-    border-width: 1px 1px 1px 0;
-    display:block;
-    height:99px;
-    left:51px;
-    bottom:21px;
-    position:relative;
-    float:right;
-    text-indent:-9999px;
-    width:30px;
-    outline:none;
-}
-
-#response-message {
-    background: #ccc;
-    border: 1px solid #999;
-    padding:50px;
-}
-
 table.reservation-point{
     width: 200px; 
     box-shadow: 2px 2px 4px #888; 
@@ -1064,3 +1035,286 @@ span.ui-spinner { background: none; }
 	font-size: 9pt;
 	font-family: Helvetica,Arial,sans-serif;
 }
+
+/* Feedback  */
+
+.feedback-panel {
+    padding:20px;
+    width: 330px;
+    position:absolute;
+    top:-500px;
+    right:20px;
+    z-index: 10;
+}
+
+.feedback-panel a.feedback-tab {
+    background:transparent url(http://assets3.getsatisfaction.com/stylesheets/355ab458eb/feedbacktab.gif) no-repeat scroll 0 0;
+    border-width: 1px 1px 1px 0;
+    display:block;
+    height:99px;
+    left:51px;
+    bottom:21px;
+    position:relative;
+    float:right;
+    text-indent:-9999px;
+    width:30px;
+    outline:none;
+}
+
+#feedback-panel {
+	color: black;
+	text-align: left;
+}
+
+#feedback-panel a, #feedback-panel a:visited, #feedback-panel a:link {
+	color: black;
+}
+
+
+.feedback-panel div, .feedback-panel span, .feedback-panel h1, .feedback-panel h2, .feedback-panel h3, .feedback-panel h4, .feedback-panel h5, .feedback-panel h6, .feedback-panel p, .feedback-panel blockquote, .feedback-panel a, .feedback-panel img, .feedback-panel strike, .feedback-panel strong, .feedback-panel dl, .feedback-panel dt, .feedback-panel dd, .feedback-panel ol, .feedback-panel ul, .feedback-panel li, .feedback-panel fieldset, .feedback-panel form, .feedback-panel label, .feedback-panel legend, .feedback-panel table, .feedback-panel caption, .feedback-panel tbody, .feedback-panel tfoot, .feedback-panel thead, .feedback-panel tr, .feedback-panel th, .feedback-panel td {
+margin: 0;
+padding: 0;
+border: 0;
+outline: 0;
+font-weight: inherit;
+font-style: inherit;
+font-size: 12px;
+
+font-weight: bold;
+font-family: arial;
+vertical-align: baseline;
+border-image: initial;
+}
+
+
+	.tabs {
+	  background: transparent url(http://assets3.getsatisfaction.com/images/link_line.png) repeat-x scroll 0 bottom;
+	  margin: 0 -15px 10px;
+	  padding: 0 15px;
+	  display: inline-block; }
+	  .tabs:after {
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden; }
+	  * html .tabs {
+		height: 1px; }
+	  .tabs {
+		display: block; }
+	  .tabs .btn {
+		float: right;
+		margin-right: 0; }
+	  .tabs ul {
+		position: relative; }
+		.tabs ul li {
+		  margin-right: 5px;
+		  float: left;
+		  font-size: 100%;
+		  font-weight: bold; }
+		  .tabs ul li a {
+		    color: #666666;
+		    text-decoration: none;
+		    display: block;
+		    text-align: center;
+		    padding: 6px 12px;
+		    border: 1px solid #cccccc;
+		    border-bottom-color: #dedede;
+		    background-color: #eeeeee;
+		    border-top-left-radius: 5px;
+		    -moz-border-radius-topleft: 5px;
+		    -webkit-border-top-left-radius: 5px;
+		    border-top-right-radius: 5px;
+		    -moz-border-radius-topright: 5px;
+		    -webkit-border-top-right-radius: 5px; }
+		  .tabs ul li a:hover {
+		    background-color: #f4f4f4; }
+		  .tabs ul li.on a {
+		    margin-top: 0;
+		    background-color: white;
+		    border-bottom: 1px solid white; }
+		    .tabs ul li.on a:hover {
+		      background: white; }
+  
+	.clearfix {
+	  display: inline-block; }
+	  .clearfix:after {
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden; }
+	  * html .clearfix {
+		height: 1px; }
+	  .clearfix {
+		display: block; }
+
+#feedback-tabs {
+  margin-bottom: 8px;
+  white-space: nowrap; }
+  #feedback-tabs li {
+    float: left;
+    padding: 0;
+    margin: 0;
+    margin-right: 1px;
+    list-style: none;
+    position: relative; }
+    #feedback-tabs li img {
+      display: none; }
+    #feedback-tabs li a {
+      display: block;
+      float: left;
+      text-decoration: none;
+      padding: 5px 10px 5px 30px;
+      border: 1px solid transparent;
+      background-repeat: no-repeat;
+      background-position: 8px 50%; }
+      #feedback-tabs li a:hover strong {
+        text-decoration: underline; }
+    #feedback-tabs li.active a {
+      color: #333333;
+      cursor: default;
+      background-color: white;
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      border: 1px solid #d8d8d8;
+      border-bottom-color: #b2b2b2;
+      border-right-color: #b2b2b2; }
+      #feedback-tabs li.active a strong {
+        text-decoration: none !important; }
+    #feedback-tabs li.active img {
+      top: 24px;
+      width: 13px;
+      height: 8px;
+      display: block;
+      position: absolute; }
+    #feedback-tabs li.idea a {
+      background-image: url(http://assets3.getsatisfaction.com/images/feedback_tab_idea.png); }
+    #feedback-tabs li.idea img {
+      left: 27px; }
+    #feedback-tabs li.question a {
+      background-image: url(http://assets3.getsatisfaction.com/images/feedback_tab_question.png); }
+    #feedback-tabs li.question img {
+      left: 42px; }
+    #feedback-tabs li.problem a {
+      background-image: url(http://assets3.getsatisfaction.com/images/feedback_tab_problem.png); }
+    #feedback-tabs li.problem img {
+      left: 39px; }
+    #feedback-tabs li.praise a {
+      background-image: url(http://assets3.getsatisfaction.com/images/feedback_tab_praise.png); }
+    #feedback-tabs li.praise img {
+      left: 34px; }
+    #feedback-tabs li.last {
+      margin-right: 0; }
+    
+    
+.feedback-panel a {
+	outline: none;
+}
+
+.feedback-panel fieldset {
+  border: none;
+  width: 335px;
+  float: left; }
+  .feedback-panel .private *, fieldset .private * {
+    vertical-align: middle; }
+  .feedback-panel #details_optional, fieldset #details_optional {
+    color: #666666;
+    font-size: 120%;
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    font-size: 90%;
+    font-weight: bold;
+    z-index: 1; }
+  .feedback-panel .on, fieldset .on {
+    color: black !important;
+    background-image: url(http://assets3.getsatisfaction.com/images/feedback-arrow-up.png) !important; }
+
+.text_box {
+  background-color: white;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border: 1px solid #cccccc;
+  border-color: #777777 #cccccc #cccccc #777777; }
+  .text_box label.prompted {
+    color: #999999;
+    font-size: 120%;
+    cursor: text;
+    width: 95%;
+    overflow: hidden;
+    top: 7px;
+    left: 7px;
+    position: absolute; }
+  .text_box textarea.text, .text_box input.text {
+    color: black;
+    font: 120% Arial, Helvetica, sans-serif;
+    padding: 6px;
+    width: 95%;
+    display: block;
+    border: none; }
+  .text_box textarea.text {
+    height: 70px; }
+    
+form .notification {
+  width: 322px;
+  margin-bottom: 10px;
+  padding: 3px 6px; }
+  form .notification p {
+    margin-bottom: 8px; }
+form .warning {
+  color: red;
+  background-color: pink; }
+form .success {
+  color: green;
+  background-color: lightgreen; }
+form .note {
+  color: #555555;
+  font-size: 110%;
+  padding: 5px 8px;
+  text-align: right; }
+form .row {
+  color: #666666;
+  width: 100%;
+  margin-bottom: 10px;
+  position: relative; }
+form .error {
+  border-color: red !important; }
+form #recaptcha_response_field {
+  padding: 3px; }
+/*form input.submit, form a.submit_link {
+  color: white;
+  font-size: 130%;
+  font-weight: bold;
+  cursor: pointer;
+  overflow: visible;
+  padding: 1px 15px 1px;
+  margin-right: 5px;
+  background-color: #098bd6;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border: 2px solid #0b77b7;
+  border-top-color: #5eb6e8; }*/
+  
+#emotion_select {
+  z-index: 100;
+  position: absolute;
+  margin-left: -6px;
+  background-color: white;
+  border: 1px solid #cccccc;
+  border-color: #cccccc #999999 #999999 #cccccc; }
+  #emotion_select a {
+    color: #333333;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 2px 12px 2px 6px;
+    display: block; }
+    #emotion_select a img {
+      margin-right: 2px; }
+    #emotion_select a:hover {
+      background-color: #eeeeee; }
+  #emotion_select * {
+    vertical-align: middle; }
