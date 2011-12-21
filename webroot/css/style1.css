@@ -519,9 +519,6 @@ td select {
 }
 
 
-
-
-
 #menu, #system_date {
     width: 130px;
 }
@@ -631,6 +628,15 @@ td select {
 
 #menu ul ul a:hover {
     background-color: #DFDFDF;
+}
+
+#menu li h3 span {
+	position: absolute;
+	margin-left: -18px;
+}
+
+#menu h3 {
+	margin: 0;
 }
 
 #system_date {

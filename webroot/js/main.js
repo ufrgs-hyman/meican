@@ -120,10 +120,17 @@ $(document).ready(function() {
                 $("table.list").dataTable(/*{cssAsc: 'ui-icon ui-icon-triangle-1-n', cssDesc: 'ui-icon ui-icon-triangle-1-s'}*/);
         
             $('#menu .active').removeClass("active");
-            $('#menu a[href="'+window.location.pathname+'"]').addClass("active").parent().parent().slideDown();
+            $('#menu ul ul a[href="'+window.location.pathname+'"]').addClass("active").parent().parent().slideDown().parent().find('h3 span.ui-icon').toggleClass('ui-icon-circle-arrow-e').toggleClass('ui-icon-circle-arrow-s');
             $(this).addClass("active");
         });
-        $('#menu .top').next().hide();
+        $('#menu h3').next().hide();
+        $('#menu h3 a').click(function(){
+            if (!$(this).attr('href')){
+                $(this).find('span.ui-icon').toggleClass('ui-icon-circle-arrow-e').toggleClass('ui-icon-circle-arrow-s');
+                $(this).parent().next().slideToggle();
+                return false;
+            }
+        });
         $('#main').trigger('end.pjax');
     }
 // analisar a real necessidade disso

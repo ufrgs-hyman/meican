@@ -59,12 +59,15 @@
     <ul>
         <?php foreach (MenuItem::getAllMenus() as $menu): ?>
 	        <li>
-            <?php if (!empty($menu->url)): ?>
-                <a href="<?php echo $this->url($menu->url); ?>" target="main"><?php echo $menu->label; ?></a>
-            <?php else: ?>
-            	<a href="" onclick="$(this).next().slideToggle();return false;" class="top"><?php echo $menu->label; ?></a>
-            <?php endif; ?>
-
+                <h3>
+                    <?php if (!empty($menu->url)): ?>
+                        <a href="<?php echo $this->url($menu->url); ?>" target="main">
+                    <span class="ui-icon ui-icon-circle-arrow-e"></span><?php echo $menu->label; ?></a>
+                    <?php else: ?>
+                        <a href="" class="top">
+                    <span class="ui-icon ui-icon-circle-arrow-e"></span><?php echo $menu->label; ?></a>
+                    <?php endif; ?>
+                </h3>
             <?php if (!empty($menu->sub)): ?>
                 <ul>
                     <?php foreach ($menu->sub as $subMenu): ?>
