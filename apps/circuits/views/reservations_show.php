@@ -4,10 +4,12 @@
 
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
 
-    <?php echo $this->element('controls', array(
+    <?php
+    echo $this->element('controls', array(
         'app' => 'init',
-        'before' => '<input type="button" class="refresh" value="'. _("Refresh").'" onClick="refreshStatus();" />')); ?>
-    
+        'before' => '<input type="button" class="refresh" value="' . _("Refresh") . '" onClick="refreshStatus();" />'));
+    ?>
+
     <table class="list" style="min-width: 105%">
 
         <thead>
@@ -51,14 +53,14 @@
                         <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading<?php echo $r->id; ?>" class="load" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif"/>
                     </td>
                     <td>
-                        <?php echo $r->flow->source->domain; ?><br/>
-                        <?php echo $r->flow->source->network; ?>
-                        <?php //echo $r->flow->source->device; ?>
+                        <?php echo $r->flow->source->domain; ?>
+    <?php echo $r->flow->source->network; ?>
+                        <?php //echo $r->flow->source->device;  ?>
                     </td>
                     <td>
-                        <?php echo $r->flow->dest->domain; ?><br/>
-                        <?php echo $r->flow->dest->network; ?>
-                        <?php //echo $r->flow->dest->device; ?>
+                        <?php echo $r->flow->dest->domain; ?>
+    <?php echo $r->flow->dest->network; ?>
+                        <?php //echo $r->flow->dest->device;  ?>
                     </td>
                     <td>
                         <?php echo $r->timer->start; ?>
@@ -67,9 +69,11 @@
                         <?php echo $r->timer->finish; ?>
                     </td>
                     <td>
-                <?php if ($r->timer->summary) {
-                    echo $r->timer->summary;
-                } ?>
+                        <?php
+                        if ($r->timer->summary) {
+                            echo $r->timer->summary;
+                        }
+                        ?>
                     </td>
                 </tr>
 <?php endforeach; ?>
