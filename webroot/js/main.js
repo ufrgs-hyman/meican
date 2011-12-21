@@ -184,7 +184,7 @@ function setFlash(message, status) {
     $('#flash_box').empty();
     if (!status)
         status = "info";
-    $('#flash_box').append('<div class="' + status + ' ui-corner-all" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><span class="ui-icon ui-icon-closethick close-button" onclick="clearFlash();"></span>'+ message +
+    $('#flash_box').append('<div class="' + status + ' ui-corner-all" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-closethick close-button" onclick="clearFlash();"></span>'+ message +
         '</p>');
     window.scroll(0, 0);
     window.onscroll = $.windowScroll;

@@ -74,6 +74,9 @@ div#flash_box {
 div#flash_box div {
     margin-bottom: 1.5em;
 }
+div#flash_box p {
+    margin: 3px 0;
+}
 
 div#load_img {
     text-align: center;
