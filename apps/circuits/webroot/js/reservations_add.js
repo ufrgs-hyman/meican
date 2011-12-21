@@ -1463,8 +1463,7 @@ function map_clearVlanConf(where) {
     var tip_htmlId = "#" + where + "_vlanTip";
 
     $(tip_htmlId).html("");
-    $(text_htmlId).val("");
-    $(text_htmlId).disabled();
+    $(text_htmlId).attr('title', '').val("").disabled();
 
     /*$(untagged_htmlId).removeAttr('checked');
     $(untagged_htmlId).attr('disabled','disabled');*/
@@ -1558,10 +1557,12 @@ function map_setEndpointConf(where) {
         // pode ser tagged
         $(tagged_htmlId).disabled(false);
 
-        if (vlan_min && vlan_max)
-            $(tip_htmlId).html(value_string + ': ' + vlan_min + ' - ' + vlan_max);
-        else if (vlan_validValues) {
-            $(tip_htmlId).html(value_string + ': ' + vlan_validValues);
+        if (vlan_min && vlan_max){
+            $(text_htmlId).attr('title', vlan_min + ' - ' + vlan_max);
+            //$(tip_htmlId).html(value_string + ': ' + vlan_min + ' - ' + vlan_max);
+        } else if (vlan_validValues) {
+            $(text_htmlId).attr('title', vlan_validValues);
+            //$(tip_htmlId).html(value_string + ': ' + vlan_validValues);
         }
 
         if (allowUntag) { //TODO: verificar isso
