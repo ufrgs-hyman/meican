@@ -264,7 +264,7 @@ var contextMenu;
         else
             $('.tab-overlay').fadeIn();
     }).focus();
-        $('#edit_map_canvas').css('width', $('#main').width()-$($('#tabs-1 div.tab_subcontent')[1]).width()-50);
+        $('#edit_map_canvas').css('width', $('#main').width()-$($('#tabs-1 div.tab_subcontent')[1]).width()-25);
         $.fn.makeEditMap();
     });
 	
