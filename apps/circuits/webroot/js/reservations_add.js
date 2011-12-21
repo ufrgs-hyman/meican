@@ -76,7 +76,9 @@ function showSlider() {
         "disabled": false
     });*/
     //$('#bandwidth').attr("min", band_min).attr("max", band_max).attr("step", band_div).attr('disabled', false).trigger('click').removeClass("ui-state-disabled");
-    $('#bandwidth').attr("min", band_min).attr("max", band_max).attr("step", band_div).disabled(false).trigger('click').parent().formatFields();
+    $('#bandwidth').attr("min", band_min).attr("max", band_max).attr("step", band_div).disabled(false).trigger('click').parent();
+    $('#bandwidth').SpinnerControl({min: band_min, max: band_max, step:band_div});
+
     //    $("#slider").slider("min", band_min);
     //    $("#slider").slider("step", band_div);
     //    $("#slider").slider( "option", "disabled", false );

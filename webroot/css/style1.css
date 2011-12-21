@@ -1322,20 +1322,49 @@ form #recaptcha_response_field {
 #emotion_select * {
     vertical-align: middle; }
 
-a#fdbk_close {
-    position: absolute;
-    cursor: pointer;
-    outline: none;
-    top: 0;
-    left: 0;
-    z-index: 4;
-    width: 16px;
-    height: 16px;
-    margin-right: 10px; margin-bottom: -10px;
-    overflow: hidden;
-    background-image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABYklEQVR42qXTvWrCUBQHcKe+QqfundPFxT0OnTJ0MtChmw/g4NgH6FtkEwoBv8BEA8EYFGswBIIEhFCrU4V26cfp+Qe5RLlKwcAPknty/7mHe1NoNBoy9+yZJWzBcN3J3j0cuGJJt9ul0WhEYRjSfD4nz/Oo0+kQ10J2eSygyL4xcb1eyyAUIV/sWhawHY/HtFqtTvJ9HyGbw4B6r9ejNE3/ZdfOQz4gnkwmtFwuM7VajRRFIcMwyLIs3GNM1HetePmA9yAIKEkSoVqtUrlcBtzv1abTKQJe9wIwGMexgGd8GQ5rvFoEvOUDFtiqKIoEXddJVdWMpml7Ndd1EfCSD3jC3mPPoVKpUKlUItM0AavAmKi3220E1PMBF+zTcRyazWYn9ft9Qsuyc3DLfm3bRs8y2BFM/mFFWQDcsE2r1SKsZjgcZgaDATWbTUxOxSmUBwiPLGEfOzGrH/uZzlIgorP8ASYfyJK1fcokAAAAAElFTkSuQmCC";
+.SpinnerControl
+{
+    overflow:auto;
+    float:left
 }
-
-a#fdbk_close:hover {
-    background-image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABX0lEQVR42qXTsWrCUBTGcaFroZNTwQfo1KnQN3CQblLIkD2CFIqbaEBQsGAIJBAaCIoQI4JKoeADFDpVmuCsUyE4FJyznJ4vSEjkKgWFH4R7cv/RS8zNZjORO/bMXDZkT+xWdO/hwtV+E02n0wxeg1d2eSxQYD+TyYRc1xXiGSIblhcFPnGT4zgnjUYjRBaHgaLneWSa5r+Mx2NE7tOBvmVZ1O12Y8vlkqIoovl8ToPBANdYS+a2bSPwkg58YNBsNhNBENB2uwVcZ2a9Xg+Bt0yg1WpRrVZLNBoNPBlwnZm1220E3tOBIQKKoiRWqxWFYRhbr9eZWafTQcBIBx4NwyBZlmO+79Nut8OTAd8Ca8kc54WDTwcu2He9XqdyuXySqqqEnyx6D27YLyKlUkkEB4jNISuIAnDNFpqmUaVSIUmSYtVqlXRdx2Z88uJXOeuBuexrr8+Kx/5MZ8kR0Vn+AGczfuZVuZDxAAAAAElFTkSuQmCC"
+.SpinnerControl div
+{
+    height:31px;
+    line-height:31px;
+    float:left;
+}
+.SpinnerControl .LeftButton
+{
+    width:30px;
+    background: url("../img/spinnerbuttons.png") no-repeat left top transparent;
+    cursor:pointer;
+}
+.SpinnerControl .LeftButton:hover
+{
+    width:30px;
+    background: url("../img/spinnerbuttons.png") no-repeat left bottom transparent;
+    cursor:pointer;
+}
+.SpinnerControl .ValueDisplay
+{
+    min-width:30px;
+    border: 1px solid black;
+    height: 29px;
+    overflow:auto;
+    font-family:Verdana;
+    font-size:14px;
+    line-height:29px;
+    text-align:center;
+}
+.SpinnerControl .RightButton
+{
+    width:30px;
+    background: url("../img/spinnerbuttons.png") no-repeat right top transparent;
+    cursor:pointer;
+}
+.SpinnerControl .RightButton:hover
+{
+    width:30px;
+    background: url("../img/spinnerbuttons.png") no-repeat right bottom transparent;
+    cursor:pointer;
 }
