@@ -10,7 +10,7 @@ include_once 'apps/circuits/controllers/flows.php';
 include_once 'apps/circuits/controllers/timers.php';
 
 include_once 'apps/circuits/models/reservation_info.inc';
-include_once 'apps/circuits/models/gri_info.inc';
+include_once 'apps/circuits/models/gri_info.php';
 include_once 'apps/circuits/models/flow_info.inc';
 include_once 'apps/circuits/models/timer_info.inc';
 include_once 'apps/bpm/models/request_info.inc';

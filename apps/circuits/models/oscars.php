@@ -3,7 +3,7 @@
 include_once 'apps/circuits/models/reservation_info.inc';
 include_once 'apps/circuits/models/flow_info.inc';
 include_once 'apps/circuits/models/timer_info.inc';
-include_once 'apps/circuits/models/gri_info.inc';
+include_once 'apps/circuits/models/gri_info.php';
 
 class oscars {
     private $endpoint;
