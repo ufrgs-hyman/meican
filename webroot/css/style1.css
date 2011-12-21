@@ -680,7 +680,7 @@ input[type="text"]:hover, select:hover, input[type="radio"]:hover, input[type="p
     border-color: #BBB;
     border-width:thin;
     border-style: none solid;
-    width:80px;
+    width:40px;
     height:80px;
     margin: auto;
     box-shadow: 2px 0px 4px #888;
