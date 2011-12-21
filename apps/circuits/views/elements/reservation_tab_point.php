@@ -31,13 +31,13 @@ if ($type == 'source') {
     <tr>
         <td><strong><?php echo _('Device'); ?></strong></td>
         <td>
-            <select id="<?= $prefix ?>_device" style="display:none" onchange="map_changeDevice('<?= $prefix ?>');"></select>
+            <select id="<?= $prefix ?>_device" onchange="map_changeDevice('<?= $prefix ?>');" disabled></select>
         </td>
     </tr>
     <tr>
         <td><strong><?php echo _('Port'); ?></strong></td>
         <td>
-            <select id="<?= $prefix ?>_port" style="display:none" onchange="map_changePort('<?= $prefix ?>');"></select>
+            <select id="<?= $prefix ?>_port" onchange="map_changePort('<?= $prefix ?>');" disabled></select>
             <input type="hidden" id="<?= $prefix ?>_urn" name="<?= $prefix ?>_urn"/>
         </td>
     </tr>
@@ -48,14 +48,14 @@ if ($type == 'source') {
         <?php /*
             <input type="radio" name="<?= $prefixex ?>VLANType" id="<?= $prefix ?>_vlanUntagged" value="FALSE" disabled="disabled" onchange="map_changeVlanType(this,'<?= $prefix ?>');"/><label for="<?= $prefix ?>_vlanUntagged"><?php echo _("Untagged"); ?></label>
             <input type="radio" name="<?= $prefixex ?>VLANType" id="<?= $prefix ?>_vlanTagged" value="TRUE" disabled="disabled" onchange="map_changeVlanType(this,'<?= $prefix ?>');"/><label for="<?= $prefix ?>_vlanTagged"><?php echo _("Tagged"); ?></label>*/ ?>
-            <input type="checkbox" name="<?= $prefixex ?>VLANType" id="<?= $prefix ?>_vlanTagged" onchange="map_changeVlanType(this,'<?= $prefix ?>');"/>
+            <input type="checkbox" name="<?= $prefixex ?>VLANType" id="<?= $prefix ?>_vlanTagged" onchange="map_changeVlanType(this,'<?= $prefix ?>');" disabled class="ui-state-disabled"/>
             <label for="<?= $prefix ?>_vlanTagged"><?php echo _("Tagged"); ?></label>
         </td>
     </tr>
     <tr>
         <td><strong><?php echo _('VLAN'); ?></strong></td>
         <td>
-            <input type="text" id="<?= $prefix ?>_vlanText" size="14" name="<?= $prefix ?>_vlan" disabled="disabled"/>
+            <input type="text" id="<?= $prefix ?>_vlanText" size="14" name="<?= $prefix ?>_vlan" disabled="disabled" class="ui-state-disabled"/>
             <div id="<?= $prefix ?>_vlanTip"/>
     </tr>
 </tbody>

@@ -9,7 +9,7 @@
             <label id="amount_label" for="amount"></label>
             <label id="amount" style="border:0; color:#000; font-weight:bold; width:100%"></label>
             <label id="bandwidth_label" for="bandwidth"><?php echo _("Bandwidth");?></label>
-            <input type="number" name="bandwidth" id="bandwidth" value="200" class="integer-input" size="4" step="100" style="width:50px;" disabled="disabled"/>
+            <input type="text" name="bandwidth" id="bandwidth" value="200" class="integer-input" size="4" step="100" style="width:50px;" disabled="disabled"/>
             <label id="bandwidth_un" for="bandwidth"><?php echo _("Mbps");?></label>
             <?php //<input type="hidden" name="bandwidth" id="bandwidth" value="200"/> ?>
             </div>

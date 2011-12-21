@@ -1368,8 +1368,8 @@ function map_changeNetwork(where, network_id, domain_id) {
     var device_id = "#" + where + "_device";
     var port_id = "#" + where + "_port";
 
-    $(port_id).slideUp();
-    $(device_id).slideUp();
+    $(device_id).disabled(false);
+    //$("#" + where + "_vlanTagged").disabled(false);
 
     map_clearVlanConf(where);
     clearSelectBox(device_id);
@@ -1386,7 +1386,7 @@ function map_changeNetwork(where, network_id, domain_id) {
             }
         }
         fillSelectBox(device_id, devices);
-        $(device_id).slideDown();
+        $(device_id).slideDown(); //TODO: pq slideDown aqui?
     }
 }
 
@@ -1396,7 +1396,8 @@ function map_changeDevice(where) {
     var device_id    = "#" + where + "_device";
     var port_id = "#" + where + "_port";
 
-    $(port_id).slideUp();
+    $(port_id).disabled(false);
+    //$(port_id).slideUp();
     map_clearVlanConf(where);
     clearSelectBox(port_id);
     
@@ -1455,20 +1456,20 @@ function map_changePort(where) {
 }
 
 function map_clearVlanConf(where) {
-    var untagged_htmlId = "#" + where + "_vlanUntagged";
+   // var untagged_htmlId = "#" + where + "_vlanUntagged";
     var tagged_htmlId = "#" + where + "_vlanTagged";
     var text_htmlId = "#" + where + "_vlanText";
     var tip_htmlId = "#" + where + "_vlanTip";
 
     $(tip_htmlId).html("");
     $(text_htmlId).val("");
-    $(text_htmlId).attr('disabled','disabled');
+    $(text_htmlId).disabled();
 
-    $(untagged_htmlId).removeAttr('checked');
-    $(untagged_htmlId).attr('disabled','disabled');
+    /*$(untagged_htmlId).removeAttr('checked');
+    $(untagged_htmlId).attr('disabled','disabled');*/
 
-    $(tagged_htmlId).removeAttr('checked');
-    $(tagged_htmlId).attr('disabled','disabled');
+    //$(tagged_htmlId).removeAttr('checked');
+    $(tagged_htmlId).disabled();
 
     if (where == "src") {
         src_urn = null;
@@ -1495,7 +1496,7 @@ function map_fillPorts(htmlId, portsArray, current_port) {
 
 function map_setEndpointConf(where) {
 
-    var untagged_htmlId = "#" + where + "_vlanUntagged";
+    /*var untagged_htmlId = "#" + where + "_vlanUntagged";*/
     var tagged_htmlId = "#" + where + "_vlanTagged";
     var text_htmlId = "#" + where + "_vlanText";
     var tip_htmlId = "#" + where + "_vlanTip";
@@ -1554,7 +1555,7 @@ function map_setEndpointConf(where) {
 
     if (allowTag) {
         // pode ser tagged
-        $(tagged_htmlId).removeAttr('disabled');
+        $(tagged_htmlId).disabled(false);
 
         if (vlan_min && vlan_max)
             $(tip_htmlId).html(value_string + ': ' + vlan_min + ' - ' + vlan_max);
@@ -1562,18 +1563,19 @@ function map_setEndpointConf(where) {
             $(tip_htmlId).html(value_string + ': ' + vlan_validValues);
         }
 
-        if (allowUntag) {
+        if (allowUntag) { //TODO: verificar isso
             // pode ser untagged também
-            $(untagged_htmlId).removeAttr('disabled');
-            $(untagged_htmlId).attr('checked','yes');
+            /*$(untagged_htmlId).removeAttr('disabled');
+            $(untagged_htmlId).attr('checked','yes');*/
         } else {
+            $(tagged_htmlId).disabled();
             $(tagged_htmlId).attr('checked','yes');
-            $(text_htmlId).removeAttr('disabled');
+            $(text_htmlId).disabled(false);
         }
     } else {
         // não pode ser tagged, significa que só pode ser untagged
-        $(untagged_htmlId).removeAttr('disabled');
-        $(untagged_htmlId).attr('checked','yes');
+        /*$(untagged_htmlId).removeAttr('disabled');
+        $(untagged_htmlId).attr('checked','yes');*/
     }
 
     if (where == "src") {
@@ -1614,14 +1616,12 @@ function map_getUrnData(where) {
 function map_changeVlanType(elem, where) {
     var text_htmlId = "#" + where + "_vlanText";
     var vlan_htmlId = "#confirmation_" + where + "_vlan"
-
-    if (elem.value == "FALSE") {
-        $(text_htmlId).attr('disabled','disabled');        
-        $(vlan_htmlId).html("Untagged");
-    }
-    else if (elem.value == "TRUE") {
-        $(text_htmlId).removeAttr('disabled');
+    if ((elem).is(':checked')){
+        $(text_htmlId).disabled();
         $(vlan_htmlId).html("Tagged: " + $(text_htmlId).val());
+    } else {
+        $(text_htmlId).disabled(false);        
+        $(vlan_htmlId).html("Untagged");
     }
     validateTab1();
 }

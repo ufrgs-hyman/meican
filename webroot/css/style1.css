@@ -514,7 +514,9 @@ div.shadow {
 
 
 
-
+td select {
+	width: 100%;
+}
 
 
 
@@ -587,8 +589,8 @@ div.shadow {
 }
 
 #menu ul li {
-    margin: 0 0.5em 0 0em;
-/*    padding: 1em 1em 1em 1.1em;*/
+/*    margin: 0 0.5em 0 0em;
+    padding: 1em 1em 1em 1.1em;*/
     font-size: 13px;
     font-weight: bold;
 }
@@ -836,6 +838,7 @@ table.list thead th {
 #menu .active {
     border-left: 5px solid #DD4B39;
     color: #D14836;
+    font-weight: bold;
 }
 
 #menu a{
@@ -968,7 +971,7 @@ table.list thead th {
 }
 
 .tab-overlay {
-	position: absolute; background-color: #fff; z-index: 3; opacity: 0.5; /*box-shadow: 2px 2px 4px #888;*/ height:100%; width: 100%;
+	position: absolute; background-color: #fff; z-index: 3; opacity: 0.5; /*box-shadow: 2px 2px 4px #888;*/ height:100%; width: 100%; padding: 4px;
 }
 
 

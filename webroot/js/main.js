@@ -77,7 +77,7 @@ $(document).ready(function() {
             $('#flash_box').html($('.flash_box').html());
             $('.flash_box').remove();
                         
-/*            $.each($(".scripts script"), function() {
+            /*            $.each($(".scripts script"), function() {
                 $.getScript($(this).attr('src'));
             });
             $('.scripts').remove();*/
@@ -188,6 +188,62 @@ function WPToggle(divId, imageId) {
 }
  
 (function($){ 
+    $.fn.formatFields = function(){
+        var intInp = $(this).find('.integer-input[disabled!=true]'),
+        curInp = $(this).find('.currency-input[disabled!=true]');
+        if (intInp.length>0 || curInp.length>0){
+            applySpinner = function(){
+                intInp.numeric('.').spinner({});
+                if (curInp.length>0)
+                    if (window.Globalization)
+                        curInp.numeric('.').spinner({
+                            numberformat: 'n'
+                        });
+                    else
+                        $.getScript(baseUrl+'webroot/js/jquery.global.js', function(){
+                            window.Globalization = jQuery.global;
+                            curInp.numeric('.').spinner({
+                                numberformat: 'n'
+                            });
+                        });
+                //Trigger change event in field when spinner changes
+                $(this).find(".ui-spinner").bind("mouseup", function() {
+                    intInp.numeric('.').trigger("change");
+                //alert(intInp.numeric('.').val());
+                }).bind("keyup", function() {
+                    intInp.numeric('.').trigger("change");
+                //alert(intInp.numeric('.').val());
+                });
+            };
+            if (jQuery.isFunction(jQuery.fn.spinner))
+                applySpinner();
+            else
+                $.getScript(baseUrl+'webroot/js/ui.spinner.js', applySpinner);
+        }
+    };
+    
+    $.fn.toggleDisabled = function(){
+        return this.each(function(){
+            this.disabled = !this.disabled;
+            if (this.disabled)
+                $(this).addClass('ui-state-disabled');
+            else
+                $(this).removeClass('ui-state-disabled');
+        });
+    };
+    
+    $.fn.disabled = function(value){
+        if (value == null)
+            value = true;
+        return this.each(function(){
+            this.disabled = value;
+            if (value)
+                $(this).addClass('ui-state-disabled');
+            else
+                $(this).removeClass('ui-state-disabled');
+        });
+    };
+    
     $.extend({
         redir : function(url, data){
             return redir(baseUrl+url, data);
@@ -207,39 +263,6 @@ function WPToggle(divId, imageId) {
                 $("#flash_box").addClass("fixed");
             } else {
                 $("#flash_box").removeClass("fixed");
-            }
-        },
-        formatFields: function(){
-            var intInp = $('.integer-input[disabled!=true]'),
-            curInp = $('.currency-input[disabled!=true]');
-            if (intInp.length>0 || curInp.length>0){
-                applySpinner = function(){
-                    intInp.numeric('.').spinner({});
-                    if (curInp.length>0)
-                        if (window.Globalization)
-                            curInp.numeric('.').spinner({
-                                numberformat: 'n'
-                            });
-                        else
-                            $.getScript(baseUrl+'webroot/js/jquery.global.js', function(){
-                                window.Globalization = jQuery.global;
-                                curInp.numeric('.').spinner({
-                                    numberformat: 'n'
-                                });
-                            });
-                    //Trigger change event in field when spinner changes
-                    $(".ui-spinner").bind("mouseup", function() {
-                        intInp.numeric('.').trigger("change");
-                    //alert(intInp.numeric('.').val());
-                    }).bind("keyup", function() {
-                        intInp.numeric('.').trigger("change");
-                    //alert(intInp.numeric('.').val());
-                    });
-                };
-                if (jQuery.isFunction(jQuery.fn.spinner))
-                    applySpinner();
-                else
-                    $.getScript(baseUrl+'webroot/js/ui.spinner.js', applySpinner);
             }
         },
         feedbackTab : {
@@ -271,9 +294,9 @@ function WPToggle(divId, imageId) {
                     event.preventDefault();
                 });
                 $('#feedback-tabs li').click(function (){
-                	$('#feedback-tabs li').removeClass('active');
-                	$(this).addClass('active');
-                	$('#topic_style').val($(this).attr('class').split(' ')[0]);
+                    $('#feedback-tabs li').removeClass('active');
+                    $(this).addClass('active');
+                    $('#topic_style').val($(this).attr('class').split(' ')[0]);
                 });
             }
         }
