@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-21 11:57-0200\n"
+"POT-Creation-Date: 2011-12-21 12:28-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,19 +21,19 @@ msgstr ""
 msgid "Topologies"
 msgstr ""
 
-#: topology.php:17 views/meicans_show.php:7 controllers/meicans.php:42
+#: topology.php:17 views/meicans_show.php:5 controllers/meicans.php:42
 msgid "MEICANs"
 msgstr ""
 
-#: topology.php:22 views/domains_show.php:7 controllers/domains.php:42
+#: topology.php:22 views/domains_show.php:5 controllers/domains.php:42
 msgid "Domains"
 msgstr ""
 
-#: topology.php:27 views/networks_show.php:7 controllers/networks.php:66
+#: topology.php:27 views/networks_show.php:5 controllers/networks.php:66
 msgid "Networks"
 msgstr ""
 
-#: topology.php:32 views/networks_show.php:20 views/devices_show.php:3
+#: topology.php:32 views/networks_show.php:18 views/devices_show.php:3
 #: controllers/devices.php:75
 msgid "Devices"
 msgstr ""
@@ -42,48 +42,28 @@ msgstr ""
 msgid "URNs"
 msgstr ""
 
-#: views/networks_show.php:17 views/domains_show.php:17
+#: views/networks_show.php:15 views/domains_show.php:15
 #: views/elements/network_form.php:11 views/elements/domain_form.php:14
 #: views/elements/meican_form.php:13 views/elements/device_form.php:11
-#: views/devices_show.php:13 views/meicans_show.php:18
+#: views/devices_show.php:13 views/meicans_show.php:16
 msgid "Name"
 msgstr ""
 
-#: views/networks_show.php:18 views/elements/network_form.php:20
+#: views/networks_show.php:16 views/elements/network_form.php:20
 #: views/elements/device_form.php:56 views/devices_show.php:18
 msgid "Latitude"
 msgstr ""
 
-#: views/networks_show.php:19 views/elements/network_form.php:29
+#: views/networks_show.php:17 views/elements/network_form.php:29
 #: views/elements/device_form.php:65 views/devices_show.php:19
 msgid "Longitude"
 msgstr ""
 
-#: views/networks_show.php:21 views/urns_show.php:19 views/urns_show.php:34
+#: views/networks_show.php:19 views/urns_show.php:19 views/urns_show.php:34
 #: views/urns_add_manual.php:12 views/urns_import.php:13
 #: controllers/domains.php:67 controllers/domains.php:124
 #: controllers/domains.php:142
 msgid "Domain"
-msgstr ""
-
-#: views/networks_show.php:58 views/domains_show.php:54
-#: views/elements/empty_db.php:20 views/urns_add_manual.php:67
-#: views/devices_show.php:78 views/meicans_show.php:54
-msgid "Add"
-msgstr ""
-
-#: views/networks_show.php:66 views/urns_show.php:57 views/domains_show.php:62
-#: views/devices_show.php:86 views/meicans_show.php:62
-msgid "Delete"
-msgstr ""
-
-#: views/networks_show.php:66
-msgid "The selected networks will be deleted."
-msgstr ""
-
-#: views/networks_show.php:66 views/urns_show.php:57 views/domains_show.php:62
-#: views/devices_show.php:86 views/meicans_show.php:62
-msgid "Do you confirm?"
 msgstr ""
 
 #: views/urns_show.php:8 controllers/urns.php:67
@@ -115,7 +95,15 @@ msgid "Cancel"
 msgstr ""
 
 #: views/urns_show.php:57
+msgid "Delete"
+msgstr ""
+
+#: views/urns_show.php:57
 msgid "The selected URNs will be deleted."
+msgstr ""
+
+#: views/urns_show.php:57
+msgid "Do you confirm?"
 msgstr ""
 
 #: views/networks_add.php:3 views/elements/device_form.php:144
@@ -126,20 +114,16 @@ msgstr ""
 msgid "Edit network"
 msgstr ""
 
-#: views/domains_show.php:18 views/elements/domain_form.php:22
+#: views/domains_show.php:16 views/elements/domain_form.php:22
 msgid "OSCARS IP"
 msgstr ""
 
-#: views/domains_show.php:19 views/elements/domain_form.php:30
+#: views/domains_show.php:17 views/elements/domain_form.php:30
 msgid "Topology ID"
 msgstr ""
 
-#: views/domains_show.php:20 views/elements/domain_form.php:38
+#: views/domains_show.php:18 views/elements/domain_form.php:38
 msgid "ODE IP"
-msgstr ""
-
-#: views/domains_show.php:62
-msgid "The selected domains will be deleted."
 msgstr ""
 
 #: views/elements/network_form.php:38 views/elements/device_form.php:83
@@ -198,11 +182,11 @@ msgstr ""
 msgid "ODE WSDL path"
 msgstr ""
 
-#: views/elements/meican_form.php:21 views/meicans_show.php:19
+#: views/elements/meican_form.php:21 views/meicans_show.php:17
 msgid "MEICAN IP"
 msgstr ""
 
-#: views/elements/meican_form.php:29 views/meicans_show.php:20
+#: views/elements/meican_form.php:29 views/meicans_show.php:18
 msgid "Directory name"
 msgstr ""
 
@@ -210,11 +194,15 @@ msgstr ""
 msgid "Is local domain?"
 msgstr ""
 
-#: views/elements/list_urns.php:42
+#: views/elements/empty_db.php:20 views/urns_add_manual.php:67
+msgid "Add"
+msgstr ""
+
+#: views/elements/list_urns.php:39
 msgid "Add from topology"
 msgstr ""
 
-#: views/elements/list_urns.php:43
+#: views/elements/list_urns.php:40
 msgid "Add manual"
 msgstr ""
 
@@ -258,20 +246,12 @@ msgstr ""
 msgid "#Endpoints"
 msgstr ""
 
-#: views/devices_show.php:86
-msgid "The selected devices will be deleted."
-msgstr ""
-
 #: views/urns_import.php:9
 msgid "Importing topology URNs (Uniform Resource Name)"
 msgstr ""
 
-#: views/meicans_show.php:17
+#: views/meicans_show.php:15
 msgid "Local?"
-msgstr ""
-
-#: views/meicans_show.php:62
-msgid "The selected MEICANs will be deleted."
 msgstr ""
 
 #: views/domains_edit.php:7

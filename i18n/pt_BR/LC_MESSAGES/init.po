@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-21 11:57-0200\n"
+"POT-Creation-Date: 2011-12-21 12:28-0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: \n"
@@ -16,9 +16,85 @@ msgstr ""
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: views/elements/feedback.php:3
+#: views/elements/feedback.php:6
+msgid "happy"
+msgstr "feliz"
+
+#: views/elements/feedback.php:6
+msgid "Happy"
+msgstr "Feliz"
+
+#: views/elements/feedback.php:7
+msgid "silly"
+msgstr "bobo"
+
+#: views/elements/feedback.php:7
+msgid "Silly"
+msgstr "Bobo"
+
+#: views/elements/feedback.php:8
+msgid "indifferent"
+msgstr "indiferente"
+
+#: views/elements/feedback.php:8
+msgid "Indifferent"
+msgstr "Indiferente"
+
+#: views/elements/feedback.php:9
+msgid "sad"
+msgstr "triste"
+
+#: views/elements/feedback.php:9
+msgid "Sad"
+msgstr "Triste"
+
+#: views/elements/feedback.php:12
 msgid "Send Us Feedback"
 msgstr "Envie-nos feedback"
+
+#: views/elements/feedback.php:19
+msgid "Idea"
+msgstr "Ideia"
+
+#: views/elements/feedback.php:23
+msgid "Question"
+msgstr "Pergunta"
+
+#: views/elements/feedback.php:27
+msgid "Problem"
+msgstr "Problema"
+
+#: views/elements/feedback.php:31
+msgid "Praise"
+msgstr "Elogio"
+
+#: views/elements/feedback.php:42
+msgid "Sum it up with a short title"
+msgstr "Resuma em um título"
+
+#: views/elements/feedback.php:46
+msgid "It makes me feel:"
+msgstr "Isso faz com que eu me sinta:"
+
+#: views/elements/feedback.php:55
+msgid "Send"
+msgstr "Enviar"
+
+#: views/elements/feedback.php:65
+msgid "Describe your idea"
+msgstr "Descreva sua ideia"
+
+#: views/elements/feedback.php:66
+msgid "Describe your question"
+msgstr "Descreva sua pergunta"
+
+#: views/elements/feedback.php:67
+msgid "Describe your praise"
+msgstr "Descreva seu elogio"
+
+#: views/elements/feedback.php:68
+msgid "Describe your problem"
+msgstr "Descreva seu problema"
 
 #: views/elements/info_box.php:7
 msgid "Sign out"
@@ -39,6 +115,22 @@ msgstr "Sobre"
 #: views/elements/info_box.php:12
 msgid "Feedback"
 msgstr "Feedback"
+
+#: views/elements/controls.php:13
+msgid "Add"
+msgstr "Adicionar"
+
+#: views/elements/controls.php:14
+msgid "Delete"
+msgstr "Excluir"
+
+#: views/elements/controls.php:14
+msgid "The selected items will be deleted."
+msgstr "Os itens selecionados serão excluídos."
+
+#: views/elements/controls.php:14
+msgid "Do you confirm?"
+msgstr "Você confirma?"
 
 #: views/login.php:32
 msgid "Create an account"

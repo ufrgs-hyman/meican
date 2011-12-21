@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-21 11:57-0200\n"
+"POT-Creation-Date: 2011-12-21 12:28-0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Felipe <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: \n"
@@ -15,8 +15,84 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: views/elements/feedback.php:3
+#: views/elements/feedback.php:6
+msgid "happy"
+msgstr ""
+
+#: views/elements/feedback.php:6
+msgid "Happy"
+msgstr ""
+
+#: views/elements/feedback.php:7
+msgid "silly"
+msgstr ""
+
+#: views/elements/feedback.php:7
+msgid "Silly"
+msgstr ""
+
+#: views/elements/feedback.php:8
+msgid "indifferent"
+msgstr ""
+
+#: views/elements/feedback.php:8
+msgid "Indifferent"
+msgstr ""
+
+#: views/elements/feedback.php:9
+msgid "sad"
+msgstr ""
+
+#: views/elements/feedback.php:9
+msgid "Sad"
+msgstr ""
+
+#: views/elements/feedback.php:12
 msgid "Send Us Feedback"
+msgstr ""
+
+#: views/elements/feedback.php:19
+msgid "Idea"
+msgstr ""
+
+#: views/elements/feedback.php:23
+msgid "Question"
+msgstr ""
+
+#: views/elements/feedback.php:27
+msgid "Problem"
+msgstr ""
+
+#: views/elements/feedback.php:31
+msgid "Praise"
+msgstr ""
+
+#: views/elements/feedback.php:42
+msgid "Sum it up with a short title"
+msgstr ""
+
+#: views/elements/feedback.php:46
+msgid "It makes me feel:"
+msgstr ""
+
+#: views/elements/feedback.php:55
+msgid "Send"
+msgstr ""
+
+#: views/elements/feedback.php:65
+msgid "Describe your idea"
+msgstr ""
+
+#: views/elements/feedback.php:66
+msgid "Describe your question"
+msgstr ""
+
+#: views/elements/feedback.php:67
+msgid "Describe your praise"
+msgstr ""
+
+#: views/elements/feedback.php:68
+msgid "Describe your problem"
 msgstr ""
 
 #: views/elements/info_box.php:7
@@ -37,6 +113,22 @@ msgstr ""
 
 #: views/elements/info_box.php:12
 msgid "Feedback"
+msgstr ""
+
+#: views/elements/controls.php:13
+msgid "Add"
+msgstr ""
+
+#: views/elements/controls.php:14
+msgid "Delete"
+msgstr ""
+
+#: views/elements/controls.php:14
+msgid "The selected items will be deleted."
+msgstr ""
+
+#: views/elements/controls.php:14
+msgid "Do you confirm?"
 msgstr ""
 
 #: views/login.php:32
