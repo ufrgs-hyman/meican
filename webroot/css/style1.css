@@ -452,9 +452,7 @@ div#flash_box .closeFlash {
 }
 
 div.shadow {
-    box-shadow: 2px 5px 6px rgba(0, 0, 0, 0.7);
-    -moz-box-shadow: 2px 5px 6px rgba(0, 0, 0, 0.7);
-    -webkit-box-shadow: 2px 5px 6px rgba(0, 0, 0, 0.7);
+    box-shadow: 2px 2px 4px #888;
 }
 
 #cancel_button {
@@ -785,7 +783,7 @@ h1 { /* Títulos principais */
 }
 
 table.reservation-point{
-    width: 200px; 
+    width: 160px; 
     box-shadow: 2px 2px 4px #888; 
     height:200px; 
     border:0.1em; 
