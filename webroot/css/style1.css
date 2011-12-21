@@ -226,16 +226,12 @@ img.loading {
 
 div.controls {
     width: 100%;
-    min-width: 100%;
 }
 
 div.control_tab {
     width: 100%;
-    min-width: 100%;
-    bottom: 0;
     margin-bottom: 15px;
     height: 40px;
-    float: right;
 }
 
 input.back{

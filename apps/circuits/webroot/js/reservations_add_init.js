@@ -249,7 +249,7 @@ var contextMenu;
     });
     /* resize da janela muda tamanho do mapa */
     $(window).resize(function() {
-        $('#edit_map_canvas').css('width', $('#main').width()-$($('#tabs-1 div.tab_subcontent')[1]).width()-25);
+        $('#edit_map_canvas').css('width', $('#main').width()-$($('#tabs-1 div.tab_subcontent')[1]).width()-35);
     /*      $('.tab-overlay').each(function(n, item){
 		  	$(item).css({'width': $(item).parent().width(), 'height': $(item).parent().height()});
 		  });*/
@@ -264,7 +264,7 @@ var contextMenu;
         else
             $('.tab-overlay').fadeIn();
     }).focus();
-        $('#edit_map_canvas').css('width', $('#main').width()-$($('#tabs-1 div.tab_subcontent')[1]).width()-25);
+        $('#edit_map_canvas').css('width', $('#main').width()-$($('#tabs-1 div.tab_subcontent')[1]).width()-35);
         $.fn.makeEditMap();
     });
 	
