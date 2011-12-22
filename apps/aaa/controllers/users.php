@@ -358,9 +358,10 @@ class users extends Controller {
             return;
         }
         
-        $old_password = md5(Common::POST('old_usr_password'));
+        $old_password = Common::POST('old_usr_password');
 
-        if ($old_password) {
+        if (!empty($old_password)) {
+            $old_password = md5($old_password);
             $user->usr_password = $old_password;
             $result = $user->fetch();
 
