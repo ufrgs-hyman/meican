@@ -1034,6 +1034,15 @@ span.ui-spinner { background: none; }
     background-position:-65px -16px;
 }
 
+/* fix for hover state */
+.ui-spinner span.ui-icon {
+    background-image: url(meican3-theme/images/ui-icons_4f4f4f_256x240.png);
+}
+
+.ui-spinner .ui-state-hover span.ui-icon, .ui-spinner .ui-state-active span.ui-icon {
+    background-image: url(meican3-theme/images/ui-icons_ffffff_256x240.png);
+}
+
 /* fonte para todos os widgets */
 .ui-widget, .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
     font-size: 9pt;

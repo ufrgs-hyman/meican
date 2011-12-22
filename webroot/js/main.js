@@ -229,7 +229,7 @@ function WPToggle(divId, imageId) {
                             });
                         });
                 //Trigger change event in field when spinner changes
-                $(this).find(".ui-spinner-button").bind("click", function() {
+               /* $(this).find(".ui-spinner-button").bind("click", function() {
                     $('.ui-spinner-button').parent().find('.ui-spinner-input').trigger("change");
                 });
                 $(this).find(".ui-spinner").bind("mouseup", function() {
@@ -238,13 +238,14 @@ function WPToggle(divId, imageId) {
                 }).bind("keyup", function() {
                     $(this).find('.ui-spinner-input').trigger("change");
                 //alert(intInp.numeric('.').val());
-                });
+                });*/
             };
             if (jQuery.isFunction(jQuery.fn.spinner))
                 applySpinner();
             else
                 $.getScript(baseUrl+'webroot/js/ui.spinner.js', applySpinner);
         }
+        return this;
     };
     
     $.fn.toggleDisabled = function(){
