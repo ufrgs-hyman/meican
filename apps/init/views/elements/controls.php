@@ -14,3 +14,4 @@ if (empty($after))
     <input class="delete" type="submit" value="<?php echo _('Delete'); ?>" onclick="return confirm('<?php echo _('The selected items will be deleted.').'\n'._('Do you confirm?'); ?>');"/>
     <?php echo $end; ?>
 </div>
+<br style="clear: both"/>
