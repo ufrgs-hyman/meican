@@ -27,7 +27,7 @@
 /* Tabela de disposição dos boxes iniciais */
 body {
        background-color: #3a5879;
-       font-family: helvetica, arial, sans-serif;
+       font-family: arial, sans-serif, helvetica;
        font-size: 14px;
        margin: 0px;
 }

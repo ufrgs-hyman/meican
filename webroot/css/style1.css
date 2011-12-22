@@ -13,7 +13,7 @@
 
 /* Tabela de disposição dos boxes iniciais */
 html, body {
-    font-family: /*Helvetica, */Arial, sans-serif;
+    font-family: arial, sans-serif, helvetica;
     font-size: 12px;
     margin: 0;
     width: 100%;
