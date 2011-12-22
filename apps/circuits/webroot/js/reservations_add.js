@@ -865,14 +865,7 @@ function edit_markerClick(coord, domain_id, domain_name, network_id, network_nam
         callback_initializeMap();
     }
     
-    
-    contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
-    contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
-    contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
-    contextMenu.bind('contextmenu', function() {
-        return false;
-    });
-    $(edit_map.getDiv()).append(contextMenu);    
+    $.fn.prepareContextMenu();   
     
     if ((srcSet) && !(dstSet)) {
         //        for (var i=0; i<edit_markersArray.length; i++) {
@@ -1015,13 +1008,7 @@ function edit_clearAll(){
     edit_clearTopologyMarkers();
     edit_setBounds(edit_bounds);    
     
-    contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
-    contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
-    contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
-    contextMenu.bind('contextmenu', function() {
-        return false;
-    });
-    $(edit_map.getDiv()).append(contextMenu);    
+    $.fn.prepareContextMenu();
     
     view_clearAll();    
     
@@ -1054,17 +1041,6 @@ function edit_clearSelectedMarkers(callback) {
     if (callback) {
         callback();
     }
-}
-
-
-//reseta o menu de pop-up
-function edit_resetContextMenu() {
-    contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
-    contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
-    contextMenu.bind('contextmenu', function() {
-        return false;
-    });
-    $(edit_map.getDiv()).append(contextMenu);     
 }
 
 // seta os limites do mapa para enquadrar os marcadores ou as rotas traçadas
@@ -1775,6 +1751,17 @@ function validateBand(band_value) {
 
 
 (function($){
+    $.fn.prepareContextMenu = function(){
+        
+        contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
+        contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
+        contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
+        contextMenu.bind('contextmenu', function() {
+            return false;
+        });
+        $(edit_map.getDiv()).append(contextMenu);
+    };
+    
     /*função para criar mapa de edição */
     $.fn.makeEditMap = function(){ /*inicializa mapa */
         
@@ -1835,13 +1822,7 @@ function validateBand(band_value) {
             }
         });
 	
-        contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
-        contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
-        contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
-        contextMenu.bind('contextmenu', function() {
-            return false;
-        });
-        $(edit_map.getDiv()).append(contextMenu);
+        $.fn.prepareContextMenu();
 
         MyOverlay.prototype = new google.maps.OverlayView();
         MyOverlay.prototype.onAdd = function() { }
@@ -1919,6 +1900,7 @@ function validateBand(band_value) {
         /* edições e cliques */
         var clearAllFn = function (){
             if (path.length != 0) {
+                console.debug('eeee');
                 for (var i=counter; i>0; i--) {
                     alert(i);
                     var removeHop = "#removeHop" + counter;
@@ -1929,44 +1911,38 @@ function validateBand(band_value) {
                 counter = 0;
             }
     
-            edit_clearLines();
             edit_clearSelectedMarkers();
             edit_clearMarkers();
             path = [];
             edit_clearTopologyMarkers();
             edit_setBounds(edit_bounds);    
     
-            contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
-            contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
-            contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
-            contextMenu.bind('contextmenu', function() {
-                return false;
-            });
-            $(edit_map.getDiv()).append(contextMenu);    
+            
+            $.fn.prepareContextMenu();
     
             view_clearAll();    
     
-            validateTab1();
-            if (tab2_valid) {
-                $("#t3").addClass("ui-state-disabled");
-            }
             edit_initializeMap();
         }
     
-        $('#src_clearpath').click(function(){
+        $('#src_clearpath').click(function(){ //limpa ponto de origem
             srcSet = false;
             $("#bandwidth").spinner('disable');
             $("#src_domain,#src_network").empty();
             $("#src_device,#src_port").empty().disabled();//,#src_vlanTagged
             map_clearVlanConf('src');
+            path.splice(0, 1);
+            edit_clearLines();
             clearAllFn();        
         });
-        $('#dst_clearpath').click(function(){
+        $('#dst_clearpath').click(function(){ //limpa ponto de destino
             dstSet = false;
             $("#bandwidth").spinner('disable');
             $("#dst_domain,#dst_network").empty();
             $("#dst_device,#dst_port").empty().disabled();//,#dst_vlanTagged
             map_clearVlanConf('dst');
+            path.splice(1, 1);
+            edit_clearLines();
             clearAllFn();
         });
         $('#repeat_chkbox').click(function(){
@@ -1995,8 +1971,8 @@ function validateBand(band_value) {
             else
                 $('.tab-overlay').fadeIn();
         }).focus();
-        $(window).trigger('resize');
         $.fn.makeEditMap();
+        $(window).trigger('resize');
     });
 	
 	
