@@ -1866,7 +1866,7 @@ function validateBand(band_value) {
     $(document).ready(function(){
         var f = function(){
             var v = ($("#bandwidth").val()/band_max)*100;
-            if (v>100)
+            if (v>100 || v < 0)
                 return ;
             var k = 2*(50-v);
 		    
