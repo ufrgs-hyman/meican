@@ -1,3 +1,38 @@
+var currentTab = "t1";
+var tab1_valid = false;
+var tab2_valid = true;
+var previousTab;
+
+var srcSet = false;
+var dstSet = false;
+var edit_markersArray = new Array();
+var edit_selectedMarkers = new Array();
+var view_markersArray = new Array();
+var edit_bounds = new Array();
+var edit_lines = new Array();
+var view_bounds = new Array();
+var view_lines = new Array();
+
+var waypoints = new Array();
+var waypointsMarkers = new Array();
+
+var src_networks = null;
+var dst_networks = null;
+var src_urn = null;
+var dst_urn = null;
+var path = new Array();
+
+var counter = 0;
+
+
+
+var edit_map;
+var view_map;
+var view_center;
+var overlay;
+var mapDiv;
+var contextMenu;
+
 /*function createTabs(){
     $(".cont_tab").hide();                              //esconde todo conteudo
 
@@ -154,7 +189,7 @@ function prevTab(elem){
             break;    
         }     
     } 
-}*/
+}
 
 function nameError(){
     setFlash(flash_nameReq);
@@ -166,7 +201,7 @@ function nameError(){
     previousTab = currentTab;
     currentTab = "t1"; 
     return false;
-}
+}*/
 
 function timerError(error){
     if (error) {
@@ -185,8 +220,9 @@ function timerError(error){
 
 function validateReservationForm() {
     if (!$('#res_name').val().length){
-        setFlash(flash_missingEndpoints);
+        setFlash(flash_nameReq);
         js_submit_form = false;
+        $('#res_name').focus();
         return false;	
     }
     if (tab1_valid) {
@@ -229,7 +265,7 @@ function validateReservationForm() {
     }
     return true;
 }
-
+/*
 function changeName(elem){
     if (elem.value != "") {
         $("#t1").removeClass("ui-state-disabled");
@@ -296,7 +332,7 @@ function changeName(elem){
         $("#div-tabs").addClass("inactive");
         $("#ul-tabs").addClass("inactive");        
     }
-}
+}*/
 
 function validateTab1() {
     if ( (path.length == 2) && ($("#src_device").val() != -1) && ($("#dst_device").val() != -1) &&
@@ -440,7 +476,7 @@ function saveRecurrence(){
     $("#recurrence-edit").show();
     
 }
- /*
+/*
 $.fn.extend({
     slideRight: function() {
         return this.each(function() {
@@ -478,6 +514,7 @@ function showVlanConf() {
 }*/
 
 function genHex(domainId) {
+    var firstColor = "3a5879";
     if (domainId == 0) {
         return firstColor;
     } else {
@@ -495,7 +532,7 @@ function genHex(domainId) {
         return color;            
     }
 }
-
+/*
 function moreFields() {
     counter++;
     var newFields = document.getElementById('addHops').cloneNode(true);
@@ -517,7 +554,7 @@ function moreFields() {
 function lessFields(elem) {
     elem.parentNode.parentNode.removeChild(elem.parentNode);
     edit_mapPlaceDevice();
-}
+}*/
 
 function fillUrnBox(htmlId, fillerArray, current_val) {
     clearSelectBox(htmlId);
@@ -593,7 +630,9 @@ function fillConfirmationTab() {
 //inicializa mapa com redes marcadas para a definicao dos endpoints
 function edit_initializeMap() {
     contextMenu.hide();
-    for (var i in domains) {        
+    
+    for (var i in domains) {
+        color = genHex(i);
         for (var j in domains[i].networks) {            
             if (domains[i].networks[j].latitude) {
                 for (var k=0; k<i; k++){
@@ -607,7 +646,7 @@ function edit_initializeMap() {
                     }
                 }
                 var coord = new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude);                
-                edit_addMapMarker(coord, domains[i].id, domains[i].name, domains[i].networks[j].id, domains[i].networks[j].name, color[i]);
+                edit_addMapMarker(coord, domains[i].id, domains[i].name, domains[i].networks[j].id, domains[i].networks[j].name, color);
                 edit_bounds.push(coord);
             }
         }
@@ -663,12 +702,12 @@ function edit_addMapMarker(coord, domain_id, domain_name, network_id, network_na
                 case 'fromHere':
                     edit_markerClick(coord, domain_id, domain_name, network_id, network_name, "src", function(){
                         edit_initializeMap()
-                        });
+                    });
                     break;
                 case 'toHere':
                     edit_markerClick(coord, domain_id, domain_name, network_id, network_name, "dst", function(){
                         edit_initializeMap()
-                        });
+                    });
                     break;
             }
             return false;
@@ -752,12 +791,12 @@ function edit_addMapMarker(coord, domain_id, domain_name, network_id, network_na
                 case 'fromHere':
                     edit_markerClick(coord, domain_id, domain_name, network_id, network_name, "src", function(){
                         edit_initializeMap()
-                        });
+                    });
                     break;
                 case 'toHere':
                     edit_markerClick(coord, domain_id, domain_name, network_id, network_name, "dst", function(){
                         edit_initializeMap()
-                        });
+                    });
                     break;
             }
             return false;
@@ -1733,3 +1772,234 @@ function validateBand(band_value) {
     } else
         return false;
 }
+
+
+(function($){
+    /*função para criar mapa de edição */
+    $.fn.makeEditMap = function(){ /*inicializa mapa */
+        
+        var edit_myOptions = {
+            zoom: 5,
+            center: new google.maps.LatLng(-23.051931,-60.975511),
+            streetViewControl: false,
+            navigationControlOptions: {
+                style: google.maps.NavigationControlStyle.ZOOM_PAN
+            },
+            backgroundColor: "white",
+            //    mapTypeControl: false,
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+        edit_map = new google.maps.Map(document.getElementById("edit_map_canvas"), edit_myOptions);
+        var RedefineZoomControl = function (map, div, home) {
+
+            // Get the control DIV. We'll attach our control
+            // UI to this DIV.
+            var controlDiv = div;
+
+            // We set up a variable for the 'this' keyword
+            // since we're adding event listeners later
+            // and 'this' will be out of scope.
+            var control = this;
+
+            // Set CSS styles for the DIV containing the control
+            // Setting padding to 5 px will offset the control
+            // from the edge of the map
+            controlDiv.style.padding = '5px';
+
+            // Set CSS for the control border
+            var goHomeUI = document.createElement('DIV');
+            goHomeUI.title = 'Click to reset zoom';
+            controlDiv.appendChild(goHomeUI);
+  
+            // Set CSS for the control interior
+            var goHomeText = document.createElement('DIV');
+            goHomeText.innerHTML = reset_zoom;
+            goHomeUI.appendChild(goHomeText);
+            $(goHomeText).addClass("zoom ui-button ui-widget ui-state-default ui-corner-all ui-widget-content").attr('style', "direction: ltr;overflow: hidden;text-align: center;position: relative;font-family: Arial, sans-serif;-webkit-user-select: none;font-size: 12px;line-height: 160%;padding: 0px 6px;border-radius: ;-webkit-box-shadow: rgba(0, 0, 0, 0.347656) 2px 2px 3px;box-shadow: rgba(0, 0, 0, 0.347656) 2px 2px 3px;min-width: 44px;color: black;border: 1px solid #A9BBDF;border-image: initial;padding-left: 6px;font-weight: normal;background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FEFEFE), to(#F3F3F3));background-osition: initial initial;background-repeat: initial initial;");
+  
+            google.maps.event.addDomListener(goHomeUI, 'click', function() {
+                edit_resetZoom();
+            });
+        }
+        var homeControlDiv = document.createElement('DIV');
+        var homeControl = new RedefineZoomControl(edit_map, homeControlDiv);
+        homeControlDiv.index = 1;
+        edit_map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
+	
+        google.maps.event.trigger(edit_map, 'resize');
+        edit_map.setZoom( edit_map.getZoom() );
+        infowindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(edit_map, 'zoom_changed', function() {
+            if (infowindow) {
+                infowindow.close(edit_map);
+            }
+        });
+	
+        contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
+        contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
+        contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
+        contextMenu.bind('contextmenu', function() {
+            return false;
+        });
+        $(edit_map.getDiv()).append(contextMenu);
+
+        MyOverlay.prototype = new google.maps.OverlayView();
+        MyOverlay.prototype.onAdd = function() { }
+        MyOverlay.prototype.onRemove = function() { }
+        MyOverlay.prototype.draw = function() { }
+        //	MyOverlay.prototype.draw.setMap(edit_map);
+        function MyOverlay(edit_map) {
+            this.setMap(edit_map);
+        }
+        overlay = new MyOverlay(edit_map);
+        mapDiv = $(edit_map.getDiv());
+        edit_initializeMap();
+        initializeTimer();
+	
+	
+        // MAPA PARA VISUALIZAÇÃO
+
+        view_center = new google.maps.LatLng(-23.051931,-60.975511);
+        var view_myOptions = {
+            zoom: 5,
+            zoomControl: false,
+            center: view_center,
+            streetViewControl: false,
+            mapTypeControl: false,
+            draggable: false,
+            disableDoubleClickZoom: true,
+            keyboardShortcuts: false,
+            scrollwheel: false,
+            backgroundColor: "white",
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+        view_map = new google.maps.Map(document.getElementById("view_map_canvas"), view_myOptions);
+
+
+        google.maps.event.trigger(view_map, 'resize');
+        view_map.setZoom( view_map.getZoom() );
+    };
+	
+    /* DOCUMENT READY !!!! */
+    
+    $(document).ready(function(){
+        var f = function(){
+            var v = ($("#bandwidth").val()/band_max)*100;
+            if (v>100)
+                return ;
+            var k = 2*(50-v);
+		    
+            $('#bandwidth_bar_inside').animate({
+                width: v+'%'/*, 
+                'background-color': 'rgb('+(Math.round(255*(100-(k<0?0:k))/100))+','+(Math.round(255*(100-(-k<0?0:-k))/100))+',0)'*/
+            }, 100);       
+        };
+        $('#bandwidth').attr("min", band_min).attr("max", band_max).attr("step", band_div).numeric().spinner({
+            spin: f, 
+            stop: f
+        }).spinner("disable").bind('spin', f).change(f).keyup(f).click(f).scroll(f);
+        if (false){ /*configura tabs? não */
+            $('#tabs-res ul').show();
+            $('#tabs-3').show();
+            $('#tabs-res').tabs({
+                select: function(event, ui){
+                    clearFlash();
+                    // antes de mostrar a aba, copia conteudo dos campos
+                    fillConfirmationTab();
+                    google.maps.event.trigger(view_map, 'resize');
+                    view_setBounds(view_bounds);
+                }
+            });
+        } else {
+            $('#tabs-res ul').hide();
+            $('#tabs-3').hide();
+        }
+        /*$('#repeat_chkbox').button();*/
+        /*$('#weekdays input[type=checkbox]').button();*/
+        /* edições e cliques */
+        var clearAllFn = function (){
+            if (path.length != 0) {
+                for (var i=counter; i>0; i--) {
+                    alert(i);
+                    var removeHop = "#removeHop" + counter;
+                    if ($(removeHop)) {
+                        lessFields($(removeHop));
+                    }
+                }
+                counter = 0;
+            }
+    
+            edit_clearLines();
+            edit_clearSelectedMarkers();
+            edit_clearMarkers();
+            path = [];
+            edit_clearTopologyMarkers();
+            edit_setBounds(edit_bounds);    
+    
+            contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
+            contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
+            contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
+            contextMenu.bind('contextmenu', function() {
+                return false;
+            });
+            $(edit_map.getDiv()).append(contextMenu);    
+    
+            view_clearAll();    
+    
+            validateTab1();
+            if (tab2_valid) {
+                $("#t3").addClass("ui-state-disabled");
+            }
+            edit_initializeMap();
+        }
+    
+        $('#src_clearpath').click(function(){
+            srcSet = false;
+            $("#bandwidth").spinner('disable');
+            $("#src_domain,#src_network").empty();
+            $("#src_device,#src_port").empty().disabled();//,#src_vlanTagged
+            map_clearVlanConf('src');
+            clearAllFn();        
+        });
+        $('#dst_clearpath').click(function(){
+            dstSet = false;
+            $("#bandwidth").spinner('disable');
+            $("#dst_domain,#dst_network").empty();
+            $("#dst_device,#dst_port").empty().disabled();//,#dst_vlanTagged
+            map_clearVlanConf('dst');
+            clearAllFn();
+        });
+        $('#repeat_chkbox').click(function(){
+            showRecurrenceBox();
+        });
+        $('.recurrence-table td input[type=checkbox]').click(function(){
+            checkWeekDay(this.id);
+        });
+        $('#recur_radio,#nr_occurr,#untilDate').change(function(){
+            setUntilType();
+        });
+        /* resize da janela muda tamanho do mapa */
+        $(window).resize(function() {
+            $('#edit_map_canvas').css('width', $('#main').width()-$($('#tabs-1 div.tab_subcontent')[1]).width()-20);
+        /*      $('.tab-overlay').each(function(n, item){
+		  	$(item).css({'width': $(item).parent().width(), 'height': $(item).parent().height()});
+		  });*/
+        });
+        /* quando digita nome, tira overlay */
+        $('form#reservation_add').submit(function() {
+            validateReservationForm();
+        });
+        $('#res_name').keyup(function(){
+            if ($(this).val())
+                $('.tab-overlay').fadeOut();
+            else
+                $('.tab-overlay').fadeIn();
+        }).focus();
+        $(window).trigger('resize');
+        $.fn.makeEditMap();
+    });
+	
+	
+	
+})(jQuery);
+
