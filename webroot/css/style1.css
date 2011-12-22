@@ -240,61 +240,6 @@ div.control_tab {
     height: 40px;
 }
 
-input.back{
-    background-image:  url('../img/back.png') ;
-    background-repeat:  no-repeat;
-    background-position: 3px 2px;
-    /* figura tem 18px 18px*/
-    float: right;
-}
-input.password{
-    background-image:  url('../img/password_1.png') ;
-    background-repeat:  no-repeat;
-    background-position: 3px 2px;
-    /* figura tem 18px 18px*/
-}
-input.answer{
-    background-image:  url('../img/answer_1.png') ;
-    background-repeat:  no-repeat;
-    background-position: 3px 2px;
-    /* figura tem 18px 18px*/
-}
-input.remove{
-    background-image:  url('../img/remove.png') ;
-    background-repeat:  no-repeat;
-    background-position: 3px 2px;
-    /* figura tem 18px 18px*/
-}
-input.zoom{
-    background-image:  url('../img/zoom_fit.png') ;
-    background-repeat:  no-repeat;
-    background-position: 1px 1px;
-    /* figura tem 18px 18px*/
-}
-input.clear{
-    background-image:  url('../img/clear.png') ;
-    background-repeat:  no-repeat;
-    background-position: 4px 3px;
-    /* figura tem 18px 18px*/
-}
-input.invert{
-    background-image:  url('../img/switch.png') ;
-    background-repeat:  no-repeat;
-    background-position: 3px 2px;
-    /* figura tem 18px 18px*/
-}
-input.mapview{
-    background-image:  url('../img/map.png') ;
-    background-repeat:  no-repeat;
-    background-position: 2px -1px;
-    /* figura tem 18px 18px*/
-}
-input.advancedview{
-    background-image:  url('../img/advanced_directory.png') ;
-    background-repeat:  no-repeat;
-    background-position: 2px 2px;
-    /* figura tem 18px 18px*/
-}
 
 div.topItem {
     font-weight: bold;
