@@ -1,16 +1,18 @@
 <div class="feedback-panel tab_content ui-corner-all" style="top: 27px; " id="feedback-panel">
+    
     <div class="ui-state-default ui-corner-all feedback-link" style="float: left; margin: -20px -20px; cursor: pointer;">
         <span class="ui-icon ui-icon-closethick"></span>
     </div>
+    
     <div id="emotion_select" style="left: 140px; top: 240px; display:none;" class="pos_right">
         <a href="#" class="<?= _("happy") ?>"><img alt="Feedback-happy" src="http://assets1.getsatisfaction.com/images/emoticons/feedback-happy.png?355ab45"><?= _("Happy") ?></a>
         <a href="#" class="<?= _("silly") ?>"><img alt="Feedback-silly" src="http://assets4.getsatisfaction.com/images/emoticons/feedback-silly.png?355ab45"><?= _("Silly") ?></a>
         <a href="#" class="<?= _("indifferent") ?>"><img alt="Feedback-indifferent" src="http://assets4.getsatisfaction.com/images/emoticons/feedback-indifferent.png?355ab45"><?= _("Indifferent") ?></a>
         <a href="#" class="<?= _("sad") ?>"><img alt="Feedback-sad" src="http://assets3.getsatisfaction.com/images/emoticons/feedback-sad.png?355ab45"><?= _("Sad") ?></a>
     </div>
-    <form method="post" action="http://inf.ufrgs.br/~labianchin/meican/feedback.php">
+    
+    <form method="post" action="<?php echo $this->url(array('app' => 'init', 'controller' => 'info_box', 'action' => 'feedback_submit')); ?>">
         <h1><?= _("Send Us Feedback") ?></h1>
-
 
         <fieldset id="topic_details" class="ui-widget ui-corner-all">
 
@@ -56,8 +58,8 @@
             </div>
         </fieldset>
 
-
-    </form>  
+    </form>
+    
 </div>
 
 <script type="text/javascript">
