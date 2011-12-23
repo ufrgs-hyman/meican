@@ -170,7 +170,7 @@ msgstr "Circuitos"
 
 #: controllers/menu.php:29
 msgid "New"
-msgstr "Nova"
+msgstr "Novo"
 
 #: controllers/menu.php:30
 msgid "Status"
