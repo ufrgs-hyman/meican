@@ -4,6 +4,7 @@ defined ('__MEICAN') or die ("Invalid access.");
 
 include_once 'libs/controller.php';
 include_once 'libs/auth.php';
+include_once 'libs/meican_mail.php';
 
 class info_box extends Controller {
 
@@ -27,6 +28,35 @@ class info_box extends Controller {
         $this->setLayout('empty');
         $this->action = 'time';
         $this->render();
+    }
+    
+    public function feedback_submit() {
+        $email = new Meican_Mail();
+        
+        $user = new user_info();
+        $user->usr_id = AuthSystem::getUserId();
+        $ret_usr = $user->fetch();
+        
+        $body = "User: ".$ret_usr[0]->usr_name."\n";
+        $body .= ($ret_usr[0]->usr_email) ? "E-mail: ".$ret_usr[0]->usr_email."\n\n" : "\n";
+        
+        $topic = Common::POST('topic');
+        
+        $body .= "Type: ".$topic['style']."\n\n";
+        
+        $body .= "Title: ".$topic['subject']."\n";
+        $body .= "Message: ".$topic['additional_detail']."\n";
+        
+        $body .= "\n";
+        $body .= "Makes me feel: ".$topic['emotitag']['feeling']."\n";
+        
+//        ob_start();
+//        print_r($_POST);
+//        $body = ob_get_contents();
+//        ob_end_clean();
+        Framework::debug("e-mail fb", $body);
+        
+        $email->send("luis.armandob@gmail.com, felipenesello@gmail.com, lfaganello@gmail.com", $body, "Feedback from MEICAN");
     }
 
 }
