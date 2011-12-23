@@ -228,8 +228,8 @@ function WPToggle(divId, imageId) {
                                 numberformat: 'n'
                             });
                         });
-                //Trigger change event in field when spinner changes
-               /* $(this).find(".ui-spinner-button").bind("click", function() {
+            //Trigger change event in field when spinner changes
+            /* $(this).find(".ui-spinner-button").bind("click", function() {
                     $('.ui-spinner-button').parent().find('.ui-spinner-input').trigger("change");
                 });
                 $(this).find(".ui-spinner").bind("mouseup", function() {
@@ -352,25 +352,28 @@ function WPToggle(divId, imageId) {
                 $('#emotion_selected').click(function(){
                     $('#emotion_select').toggle();
                     return false;
-                });/*
-    $('#feedback-panel form').submit(function(){
-        $.ajax({
-            type: 'POST',
-            url: $(this).attr('action'),
-            data: $(this).serialize(),
-            success: function (){
-                alert('Thank you');
-                $('.feedback-panel')
-                .animate({
-                    top: '-' + ($('.feedback-panel').outerHeight()+70) + 'px'
-                }, $.feedbackTab.speed)
-                .removeClass('open');
+                });
+                $('#feedback-panel form').submit(function(){
+                    $.ajax({
+                        type: 'POST',
+                        url: $(this).attr('action'),
+                        data: $(this).serialize(),
+                        success: function (){
+                            alert('Thank you');
+                            $('.feedback-panel')
+                            .animate({
+                                top: '-' + ($('.feedback-panel').outerHeight()+70) + 'px'
+                            }, $.feedbackTab.speed)
+                            .removeClass('open');
 				
-            }
-        })
-        ;
-        return false;
-    });*/
+                        },
+                        error: function (){
+                            alert('Problems to send, try again later');
+                        }
+                    })
+                    ;
+                    return false;
+                });
             }
         }
                 
