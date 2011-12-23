@@ -1926,6 +1926,8 @@ function validateBand(band_value) {
         }
     
         $('#src_clearpath').click(function(){ //limpa ponto de origem
+            if (!srcSet)
+                return false;
             srcSet = false;
             $("#bandwidth").spinner('disable');
             $("#src_domain,#src_network").empty();
@@ -1933,9 +1935,18 @@ function validateBand(band_value) {
             map_clearVlanConf('src');
             path.splice(0, 1);
             edit_clearLines();
-            clearAllFn();        
+            edit_selectedMarkers.pop().setMap(null);
+            while (edit_markersArray.length > 0 )
+                edit_markersArray.pop().setMap(null);
+            edit_clearTopologyMarkers();
+            edit_setBounds(edit_bounds); 
+            $.fn.prepareContextMenu();
+            edit_initializeMap();
+            //clearAllFn();        
         });
         $('#dst_clearpath').click(function(){ //limpa ponto de destino
+            if (!dstSet)
+                return false;
             dstSet = false;
             $("#bandwidth").spinner('disable');
             $("#dst_domain,#dst_network").empty();
@@ -1943,7 +1954,14 @@ function validateBand(band_value) {
             map_clearVlanConf('dst');
             path.splice(1, 1);
             edit_clearLines();
-            clearAllFn();
+            edit_selectedMarkers.pop().setMap(null);
+            while (edit_markersArray.length > 0 )
+                edit_markersArray.pop().setMap(null);
+            edit_clearTopologyMarkers();
+            edit_setBounds(edit_bounds); 
+            $.fn.prepareContextMenu();
+            edit_initializeMap();
+            //clearAllFn();
         });
         $('#repeat_chkbox').click(function(){
             showRecurrenceBox();
