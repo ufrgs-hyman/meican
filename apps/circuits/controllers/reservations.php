@@ -131,6 +131,16 @@ class reservations extends Controller {
 
         $this->render();
     }
+    
+    public function status(){
+        $this->action = "show";
+        $this->show();
+    }
+    
+    public function history(){
+        $this->action = "show";
+        $this->show();
+    }
 
     public function refresh_status() {
         $this->setAction("ajax");

@@ -76,7 +76,7 @@ class gui extends Controller {
             $icon = new stdClass();
             $icon->name = _('Reservations');
             $icon->figure = 'webroot/img/reservations_list.png';
-            $icon->link = array('app' => 'circuits', 'controller' => 'reservations');
+            $icon->link = array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'status');
             $icons[] = $icon;
         }
 

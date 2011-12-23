@@ -22,12 +22,12 @@ class circuits extends App {
                 new MenuItem(array(
                     'label' => _("Status"),
                     'model' => 'reservation_info',
-                    'url' => array('app' => $this->appName, 'controller' => 'reservations')
+                    'url' => array('app' => $this->appName, 'controller' => 'reservations', 'action' => 'status')
                 )),
                 new MenuItem(array(
                     'label' => _("History"),
                     'model' => 'reservation_info',
-                    'url' => array('app' => $this->appName, 'controller' => 'reservations')
+                    'url' => array('app' => $this->appName, 'controller' => 'reservations', 'action' => 'history')
                 )),
             )
         )));

@@ -290,21 +290,21 @@ class Model {
         foreach ($this->attributes as $attribute) {
             if ($attribute->usedInInsert) {
                 $name = $attribute->name;
-                
+
                 if ($isFirst) {
                     $isFirst = false;
                 } else {
                     $sqlValues.=", ";
                     $sqlNames.=", ";
                 }
-                
+
                 $sqlNames .= "`$name`";
-                
+
                 if ($values[$name] === NULL)
                     $sqlValues .= "NULL";
                 else {
                     if ($attribute->type == "VARCHAR")
-                        $sqlValues .= "'".$values[$name]."'";
+                        $sqlValues .= "'" . $values[$name] . "'";
                     else
                         $sqlValues .= $values[$name];
                 }
@@ -313,7 +313,7 @@ class Model {
         $sql = "INSERT INTO `$classname` ($sqlNames) values ($sqlValues)";
 
         //Framework::debug('sql insert',$sql);
-        
+
         $id = $this->insertSql($sql);
         if ($id !== FALSE) {
             // se ID não for idêntico a FALSE, é porque foi inserido
@@ -334,7 +334,7 @@ class Model {
             Framework::debug("objeto inserido mas não encontrado");
             return TRUE;
         } else
-            // objeto não inserido, retorna FALSE
+        // objeto não inserido, retorna FALSE
             return FALSE;
     }
 
@@ -403,8 +403,8 @@ class Model {
 
         return $this->execSql($sql);
     }
-    
-   /**
+
+    /**
      *
      * @param <string> $sql : well-formatted SQL string
      * @return <boolean> Object ID if insert was successful, FALSE otherwise
@@ -418,7 +418,7 @@ class Model {
         return $db->insert($sql);
     }
 
-   /**
+    /**
      *
      * @param <string> $sql : well-formatted SQL string
      * @return <boolean> TRUE if exec was successful, FALSE otherwise
@@ -432,7 +432,7 @@ class Model {
         return $db->exec($sql);
     }
 
-   /**
+    /**
      *
      * @param <string> $sql : SQL string using ';' as separator for the 'explode()' function.
      *                  Ex:  "DELETE FROM $tableName WHERE lft BETWEEN $left AND $right;
@@ -450,7 +450,7 @@ class Model {
         return $db->transactionExec($sql);
     }
 
-   /**
+    /**
      *
      * @param <string> $sql : well-formatted SQL string
      * @param <string> $tableName : name of class or table model
@@ -477,13 +477,19 @@ class Model {
         }
     }
 
+    private function normalizeStringArray($data = array()) {
+        foreach ($data as &$item)
+            $item = '"' . $item . '"';
+        return $data;
+    }
+
     function buildWhere($fields=array()) {
         $values = get_object_vars($this);
         $validInds = $this->getValidInds();
 
         if (!$validInds)
             return FALSE;
-        
+
         $newValidInds = array();
         if ($fields) {
             foreach ($validInds as $vi) {
@@ -499,9 +505,15 @@ class Model {
             if ($values[$vi] === NULL) {
                 $whereArgs[] = "`$vi` IS NULL";
             } elseif ($values[$vi]) {
-                if ($this->attributes[$vi]->type == "VARCHAR")
-                    $values[$vi] = "\"" . $values[$vi] . "\"";
-                $whereArgs[] = "`$vi`=$values[$vi]";
+                if (is_array($values[$vi])) {
+                    if ($this->attributes[$vi]->type == "VARCHAR")
+                        $values[$vi] = normalizeStringArray($values[$vi]);
+                    $values[$vi] = "`$vi` IN (" . implode(', ', $values[$vi]) . ")";
+                } else {
+                    if ($this->attributes[$vi]->type == "VARCHAR")
+                        $values[$vi] = "\"" . $values[$vi] . "\"";
+                    $whereArgs[] = "`$vi`=$values[$vi]";
+                }
             }
         }
 
@@ -536,16 +548,16 @@ class Model {
         else
             return $tmp[0];
     }
-    
+
     public function fetchList() {
         if ($res = $this->fetch()) {
 
             $item = $res[0];
 
             $attr = $item->getValidInds();
-            
+
             $temp = array();
-            if (!empty($this->displayField)){
+            if (!empty($this->displayField)) {
                 $temp[] = $item->{$this->displayField};
             } else
                 foreach ($attr as $at_name) {
