@@ -2,12 +2,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-21 12:28-0200\n"
+"POT-Creation-Date: 2011-12-23 13:39-0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
 
@@ -16,83 +16,83 @@ msgstr ""
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: views/elements/feedback.php:6
+#: views/elements/feedback.php:8
 msgid "happy"
 msgstr "feliz"
 
-#: views/elements/feedback.php:6
+#: views/elements/feedback.php:8
 msgid "Happy"
 msgstr "Feliz"
 
-#: views/elements/feedback.php:7
+#: views/elements/feedback.php:9
 msgid "silly"
 msgstr "bobo"
 
-#: views/elements/feedback.php:7
+#: views/elements/feedback.php:9
 msgid "Silly"
 msgstr "Bobo"
 
-#: views/elements/feedback.php:8
+#: views/elements/feedback.php:10
 msgid "indifferent"
 msgstr "indiferente"
 
-#: views/elements/feedback.php:8
+#: views/elements/feedback.php:10
 msgid "Indifferent"
 msgstr "Indiferente"
 
-#: views/elements/feedback.php:9
+#: views/elements/feedback.php:11
 msgid "sad"
 msgstr "triste"
 
-#: views/elements/feedback.php:9
+#: views/elements/feedback.php:11
 msgid "Sad"
 msgstr "Triste"
 
-#: views/elements/feedback.php:12
+#: views/elements/feedback.php:15
 msgid "Send Us Feedback"
 msgstr "Envie-nos feedback"
 
-#: views/elements/feedback.php:19
+#: views/elements/feedback.php:21
 msgid "Idea"
 msgstr "Ideia"
 
-#: views/elements/feedback.php:23
+#: views/elements/feedback.php:25
 msgid "Question"
 msgstr "Pergunta"
 
-#: views/elements/feedback.php:27
+#: views/elements/feedback.php:29
 msgid "Problem"
 msgstr "Problema"
 
-#: views/elements/feedback.php:31
+#: views/elements/feedback.php:33
 msgid "Praise"
 msgstr "Elogio"
 
-#: views/elements/feedback.php:42
+#: views/elements/feedback.php:44
 msgid "Sum it up with a short title"
-msgstr "Resuma em um t�tulo"
+msgstr "Resuma em um título"
 
-#: views/elements/feedback.php:46
+#: views/elements/feedback.php:48
 msgid "It makes me feel:"
 msgstr "Isso faz com que eu me sinta:"
 
-#: views/elements/feedback.php:55
+#: views/elements/feedback.php:57
 msgid "Send"
 msgstr "Enviar"
 
-#: views/elements/feedback.php:65
+#: views/elements/feedback.php:67
 msgid "Describe your idea"
 msgstr "Descreva sua ideia"
 
-#: views/elements/feedback.php:66
+#: views/elements/feedback.php:68
 msgid "Describe your question"
 msgstr "Descreva sua pergunta"
 
-#: views/elements/feedback.php:67
+#: views/elements/feedback.php:69
 msgid "Describe your praise"
 msgstr "Descreva seu elogio"
 
-#: views/elements/feedback.php:68
+#: views/elements/feedback.php:70
 msgid "Describe your problem"
 msgstr "Descreva seu problema"
 
@@ -126,41 +126,41 @@ msgstr "Excluir"
 
 #: views/elements/controls.php:14
 msgid "The selected items will be deleted."
-msgstr "Os itens selecionados ser�o exclu�dos."
+msgstr "Os itens selecionados serão excluídos."
 
 #: views/elements/controls.php:14
 msgid "Do you confirm?"
-msgstr "Voc� confirma?"
+msgstr "Você confirma?"
 
-#: views/login.php:32
+#: views/login.php:35
 msgid "Create an account"
 msgstr "Criar uma conta"
 
-#: views/login.php:33
+#: views/login.php:36
 msgid "About MEICAN"
 msgstr "Sobre o MEICAN"
 
-#: views/login.php:34
+#: views/login.php:37
 msgid "Support"
 msgstr "Suporte"
 
-#: views/login.php:48
+#: views/login.php:51
 msgid "Sign in to MEICAN"
 msgstr "Entrar no MEICAN"
 
-#: views/login.php:54
+#: views/login.php:57
 msgid "Login"
 msgstr "Login"
 
-#: views/login.php:62
+#: views/login.php:65
 msgid "Password"
 msgstr "Senha"
 
-#: views/login.php:73
+#: views/login.php:76
 msgid "Forgot your password?"
 msgstr "Esqueceu sua senha?"
 
-#: views/login.php:88
+#: views/login.php:91
 msgid "Sign in"
 msgstr "Entrar"
 
@@ -169,74 +169,85 @@ msgid "Circuits"
 msgstr "Circuitos"
 
 #: controllers/menu.php:29
-#: controllers/gui.php:77
-msgid "Reservations"
-msgstr "Reservas"
+msgid "New"
+msgstr "Nova"
+
+#: controllers/menu.php:30
+msgid "Status"
+msgstr "Status"
 
 #: controllers/menu.php:31
-msgid "Domain"
-msgstr "Dom�nio"
-
-#: controllers/menu.php:32
-msgid "Domains"
-msgstr "Dom�nios"
+msgid "History"
+msgstr "Histórico"
 
 #: controllers/menu.php:33
+msgid "Topologies"
+msgstr "Topologias"
+
+#: controllers/menu.php:34
+msgid "MEICANs"
+msgstr "MEICANs"
+
+#: controllers/menu.php:35
+msgid "Domains"
+msgstr "Domínios"
+
+#: controllers/menu.php:36
 msgid "Networks"
 msgstr "Redes"
 
-#: controllers/menu.php:34
+#: controllers/menu.php:37
 msgid "Devices"
 msgstr "Dispositivos"
 
-#: controllers/menu.php:35
+#: controllers/menu.php:38
 msgid "URNs"
 msgstr "URNs"
 
-#: controllers/menu.php:37
+#: controllers/menu.php:40
 msgid "Users"
-msgstr "Usu�rios"
+msgstr "Usuários"
 
-#: controllers/menu.php:38
-msgid "My Account"
-msgstr "Minha Conta"
-
-#: controllers/menu.php:39
+#: controllers/menu.php:41
 msgid "Groups"
 msgstr "Grupos"
 
-#: controllers/menu.php:40
+#: controllers/menu.php:42
 msgid "Access Control List"
 msgstr "Lista de Controle de Acesso"
 
-#: controllers/menu.php:42
+#: controllers/menu.php:44
 msgid "BPM"
 msgstr "BPM"
 
-#: controllers/menu.php:43
+#: controllers/menu.php:45
 #: controllers/gui.php:85
 msgid "Requests"
-msgstr "Requisi��es"
+msgstr "Requisições"
 
-#: controllers/menu.php:44
+#: controllers/menu.php:46
 msgid "ODE"
 msgstr "ODE"
 
 #: controllers/gui.php:50
 msgid "You have one new request to be authorized"
-msgstr "Voc� possui uma nova requisi��o para ser autorizada"
+msgstr "Você possui uma nova requisição para ser autorizada"
 
 #: controllers/gui.php:53
 msgid "You have"
-msgstr "Voc� possui"
+msgstr "Você possui"
 
 #: controllers/gui.php:55
 msgid "new requests to be authorized"
-msgstr "novas requisi��es para serem autorizadas"
+msgstr "novas requisições para serem autorizadas"
 
 #: controllers/gui.php:69
 msgid "New reservation"
 msgstr "Nova reserva"
+
+#: controllers/gui.php:77
+msgid "Reservations"
+msgstr "Reservas"
 
 #: controllers/gui.php:93
 msgid "Management"
@@ -244,12 +255,12 @@ msgstr "Gerenciamento"
 
 #: controllers/login.php:44
 msgid "Failed on authentication"
-msgstr "Falha na autentica��o"
+msgstr "Falha na autenticação"
 
-#~ msgid "Topologies"
-#~ msgstr "Topologias"
-#~ msgid "MEICANs"
-#~ msgstr "MEICANs"
+#~ msgid "Domain"
+#~ msgstr "Dom�nio"
+#~ msgid "My Account"
+#~ msgstr "Minha Conta"
 #~ msgid "Access control"
 #~ msgstr "Controle de acesso"
 #~ msgid "My settings"
@@ -258,36 +269,26 @@ msgstr "Falha na autentica��o"
 #~ msgstr "Hora do servidor"
 #~ msgid "Not logged in"
 #~ msgstr "N�o logado"
-
 #~ msgid "Session Expired"
 #~ msgstr "Sess�o expirada"
-
 #~ msgid "Loading"
 #~ msgstr "Carregando"
-
 #~ msgid "New Reservation"
 #~ msgstr "Nova Reserva"
-
 #~ msgid "About us"
 #~ msgstr "Sobre n�s"
-
 #~ msgid "Developers"
 #~ msgstr "Desenvolvedores"
-
 #~ msgid "Terms of service"
 #~ msgstr "Termos do servi�o"
-
 #~ msgid "Privacy policy"
 #~ msgstr "Pol�tica de privacidade"
-
 #~ msgid "My Settings"
 #~ msgstr "Minhas configura��es"
-
 #~ msgid "Sign Out"
 #~ msgstr "Sair"
-
 #~ msgid "Flows"
 #~ msgstr "Fluxos"
-
 #~ msgid "Timers"
 #~ msgstr "Agendamentos"
+

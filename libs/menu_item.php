@@ -28,17 +28,22 @@ class MenuItem {
         return $menus;
     }
     
-    public static function getAllMenus(){
-        $apps = array('aaa', 'bpm', 'circuits', 'init', 'topology'); //TODO: detectar automaticamente apps instaladas
+    public static function getAllMenus() {
+        $apps = array('aaa', 'bpm', 'init', 'topology', 'circuits'); //TODO: detectar automaticamente apps instaladas
         $menus = array();
         foreach ($apps as $app){
             $appObj = App::factory($app);
-            if ($appObj)
+            if ($appObj) {
+                //Language::setLang($appObj->getAppName());
+                //Framework::debug("mudando dom ".$appObj->getAppName());
                 $menus += $appObj->getMenu();//array_merge($appObj->getMenu(), $menus);
+            }
         }
+        //Language::setLang('init');
         $menus = self::filter($menus);
         return $menus;
     }
+    
 }
 
 ?>

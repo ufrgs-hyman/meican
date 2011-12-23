@@ -9,7 +9,7 @@ class aaa extends App {
         $this->defaultController = 'users';
     }
     
-    public function getMenu(){
+    public function getMenu() {
         return array(30 => new MenuItem(array(
             'label' => _("Users"),
             'sub' => array(

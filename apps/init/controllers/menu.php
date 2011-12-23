@@ -26,16 +26,18 @@ class menu extends Controller {
     private function dummy() {
         _("Dashboard");
         _("Circuits");
-        _("Reservations");
+        _("New");
+        _("Status");
+        _("History");
         
-        _("Domain");
+        _("Topologies");
+        _("MEICANs");
         _("Domains");
         _("Networks");
         _("Devices");
         _("URNs");
 
         _("Users");
-        _("My Account");
         _("Groups");
         _("Access Control List");
         

@@ -283,6 +283,7 @@ function WPToggle(divId, imageId) {
         });
         return false;*/
         },
+        
         windowScroll: function () {
             var top = $(window).scrollTop();
             if (top >= 110) {
@@ -291,6 +292,7 @@ function WPToggle(divId, imageId) {
                 $("#flash_box").removeClass("fixed");
             }
         },
+        
         feedbackTab : {
  
             speed:300,

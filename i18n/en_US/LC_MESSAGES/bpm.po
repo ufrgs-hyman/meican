@@ -8,14 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-21 12:28-0200\n"
+"POT-Creation-Date: 2011-12-23 13:39-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 
 #: bpm.php:14
 msgid "BPM"
@@ -33,72 +32,56 @@ msgstr ""
 msgid "Process"
 msgstr ""
 
-#: controllers/requests.php:134
-msgid "Response saved"
+#: views/ode_show.php:9
+msgid "Version"
 msgstr ""
 
-#: controllers/requests.php:139
-msgid "Response NOT saved"
+#: views/ode_show.php:10
+msgid "PID"
 msgstr ""
 
-#: controllers/requests.php:175
-msgid "No request was deleted"
+#: views/ode_show.php:11
+msgid "Status"
 msgstr ""
 
-#: controllers/requests.php:178
-msgid "One request was deleted"
+#: views/ode_show.php:12
+msgid "In progress"
 msgstr ""
 
-#: controllers/requests.php:181
-msgid "requests were deleted"
+#: views/ode_show.php:13
+msgid "Completed"
 msgstr ""
 
-#: controllers/ode.php:42
-msgid "Error on upload file"
+#: views/ode_show.php:14
+msgid "Error"
 msgstr ""
 
-#: controllers/ode.php:63
-msgid "Process deployed successfully "
+#: views/ode_show.php:15
+msgid "Failed"
 msgstr ""
 
-#: controllers/ode.php:68
-msgid "Fail to deploy process: "
+#: views/ode_show.php:16
+msgid "Suspended"
 msgstr ""
 
-#: controllers/ode.php:72
-msgid "invalid name for the process"
+#: views/ode_show.php:23
+msgid "Undeploy"
 msgstr ""
 
-#: controllers/ode.php:87
-msgid "Process undeployed successfully"
+#: views/ode_show.php:39
+msgid "Deploy process"
 msgstr ""
 
-#: controllers/ode.php:88
-msgid "Fail to undeploy process"
+#: views/ode_show.php:45
+msgid "Name"
 msgstr ""
 
-#: views/elements/requests_table.php:8 views/requests_show.php:11
-#: views/requests_show.php:41
-msgid "Domain source"
+#: views/ode_show.php:53
+msgid "File"
 msgstr ""
 
-#: views/elements/requests_table.php:9 views/requests_show.php:13
-#: views/requests_show.php:43
-msgid "Requester"
-msgstr ""
-
-#: views/elements/requests_table.php:10 views/requests_show.php:46
-#: views/requests_replyRequest.php:91
-msgid "Response"
-msgstr ""
-
-#: views/elements/requests_table.php:11 views/requests_show.php:47
-#: views/requests_replyRequest.php:101
-msgid "Message"
-msgstr ""
-
-#: views/elements/requests_table.php:20 views/requests_show.php:30
-msgid "Answer"
+#: views/ode_show.php:61
+msgid "Ok"
 msgstr ""
 
 #: views/requests_createRequest.php:12
@@ -117,36 +100,28 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: views/requests_show.php:6
-msgid "Pending incoming requests"
+#: views/elements/requests_table.php:8 views/requests_show.php:11
+#: views/requests_show.php:41
+msgid "Domain source"
 msgstr ""
 
-#: views/requests_show.php:12 views/requests_show.php:42
-msgid "Domain destination"
+#: views/elements/requests_table.php:9 views/requests_show.php:13
+#: views/requests_show.php:43
+msgid "Requester"
 msgstr ""
 
-#: views/requests_show.php:14 views/requests_show.php:44
-msgid "Resource type"
+#: views/elements/requests_table.php:10 views/requests_replyRequest.php:91
+#: views/requests_show.php:46
+msgid "Response"
 msgstr ""
 
-#: views/requests_show.php:15 views/requests_show.php:45
-msgid "Resource description"
+#: views/elements/requests_table.php:11 views/requests_replyRequest.php:101
+#: views/requests_show.php:47
+msgid "Message"
 msgstr ""
 
-#: views/requests_show.php:36
-msgid "Finished incoming requests"
-msgstr ""
-
-#: views/requests_show.php:67
-msgid "Delete"
-msgstr ""
-
-#: views/requests_show.php:67
-msgid "The selected requests will be deleted."
-msgstr ""
-
-#: views/requests_show.php:67
-msgid "Do you confirm?"
+#: views/elements/requests_table.php:20 views/requests_show.php:30
+msgid "Answer"
 msgstr ""
 
 #: views/requests_replyRequest.php:12
@@ -209,58 +184,82 @@ msgstr ""
 msgid "REJECT"
 msgstr ""
 
-#: views/ode_show.php:8
-msgid "Process"
+#: views/requests_show.php:6
+msgid "Pending incoming requests"
 msgstr ""
 
-#: views/ode_show.php:9
-msgid "Version"
+#: views/requests_show.php:12 views/requests_show.php:42
+msgid "Domain destination"
 msgstr ""
 
-#: views/ode_show.php:10
-msgid "PID"
+#: views/requests_show.php:14 views/requests_show.php:44
+msgid "Resource type"
 msgstr ""
 
-#: views/ode_show.php:11
-msgid "Status"
+#: views/requests_show.php:15 views/requests_show.php:45
+msgid "Resource description"
 msgstr ""
 
-#: views/ode_show.php:12
-msgid "In progress"
+#: views/requests_show.php:36
+msgid "Finished incoming requests"
 msgstr ""
 
-#: views/ode_show.php:13
-msgid "Completed"
+#: views/requests_show.php:67
+msgid "Delete"
 msgstr ""
 
-#: views/ode_show.php:14
-msgid "Error"
+#: views/requests_show.php:67
+msgid "The selected requests will be deleted."
 msgstr ""
 
-#: views/ode_show.php:15
-msgid "Failed"
+#: views/requests_show.php:67
+msgid "Do you confirm?"
 msgstr ""
 
-#: views/ode_show.php:16
-msgid "Suspended"
+#: controllers/ode.php:42
+msgid "Error on upload file"
 msgstr ""
 
-#: views/ode_show.php:23
-msgid "Undeploy"
+#: controllers/ode.php:63
+msgid "Process deployed successfully "
 msgstr ""
 
-#: views/ode_show.php:39
-msgid "Deploy process"
+#: controllers/ode.php:68
+msgid "Fail to deploy process: "
 msgstr ""
 
-#: views/ode_show.php:45
-msgid "Name"
+#: controllers/ode.php:72
+msgid "invalid name for the process"
 msgstr ""
 
-#: views/ode_show.php:53
-msgid "File"
+#: controllers/ode.php:87
+msgid "Process undeployed successfully"
 msgstr ""
 
-#: views/ode_show.php:61
-msgid "Ok"
+#: controllers/ode.php:88
+msgid "Fail to undeploy process"
+msgstr ""
+
+#: controllers/requests.php:105 controllers/requests.php:114
+msgid "Unknown"
+msgstr ""
+
+#: controllers/requests.php:134
+msgid "Response saved"
+msgstr ""
+
+#: controllers/requests.php:139
+msgid "Response NOT saved"
+msgstr ""
+
+#: controllers/requests.php:175
+msgid "No request was deleted"
+msgstr ""
+
+#: controllers/requests.php:178
+msgid "One request was deleted"
+msgstr ""
+
+#: controllers/requests.php:181
+msgid "requests were deleted"
 msgstr ""

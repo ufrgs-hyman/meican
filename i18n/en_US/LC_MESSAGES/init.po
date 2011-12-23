@@ -1,97 +1,102 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-21 12:28-0200\n"
-"PO-Revision-Date: \n"
-"Last-Translator: Felipe <felipe.nesello@inf.ufrgs.br>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2011-12-23 13:39-0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 
 #: init.php:14 controllers/menu.php:27
 msgid "Dashboard"
 msgstr ""
 
-#: views/elements/feedback.php:6
+#: views/elements/feedback.php:8
 msgid "happy"
 msgstr ""
 
-#: views/elements/feedback.php:6
+#: views/elements/feedback.php:8
 msgid "Happy"
 msgstr ""
 
-#: views/elements/feedback.php:7
+#: views/elements/feedback.php:9
 msgid "silly"
 msgstr ""
 
-#: views/elements/feedback.php:7
+#: views/elements/feedback.php:9
 msgid "Silly"
 msgstr ""
 
-#: views/elements/feedback.php:8
+#: views/elements/feedback.php:10
 msgid "indifferent"
 msgstr ""
 
-#: views/elements/feedback.php:8
+#: views/elements/feedback.php:10
 msgid "Indifferent"
 msgstr ""
 
-#: views/elements/feedback.php:9
+#: views/elements/feedback.php:11
 msgid "sad"
 msgstr ""
 
-#: views/elements/feedback.php:9
+#: views/elements/feedback.php:11
 msgid "Sad"
 msgstr ""
 
-#: views/elements/feedback.php:12
+#: views/elements/feedback.php:15
 msgid "Send Us Feedback"
 msgstr ""
 
-#: views/elements/feedback.php:19
+#: views/elements/feedback.php:21
 msgid "Idea"
 msgstr ""
 
-#: views/elements/feedback.php:23
+#: views/elements/feedback.php:25
 msgid "Question"
 msgstr ""
 
-#: views/elements/feedback.php:27
+#: views/elements/feedback.php:29
 msgid "Problem"
 msgstr ""
 
-#: views/elements/feedback.php:31
+#: views/elements/feedback.php:33
 msgid "Praise"
 msgstr ""
 
-#: views/elements/feedback.php:42
+#: views/elements/feedback.php:44
 msgid "Sum it up with a short title"
 msgstr ""
 
-#: views/elements/feedback.php:46
+#: views/elements/feedback.php:48
 msgid "It makes me feel:"
 msgstr ""
 
-#: views/elements/feedback.php:55
+#: views/elements/feedback.php:57
 msgid "Send"
 msgstr ""
 
-#: views/elements/feedback.php:65
+#: views/elements/feedback.php:67
 msgid "Describe your idea"
 msgstr ""
 
-#: views/elements/feedback.php:66
+#: views/elements/feedback.php:68
 msgid "Describe your question"
 msgstr ""
 
-#: views/elements/feedback.php:67
+#: views/elements/feedback.php:69
 msgid "Describe your praise"
 msgstr ""
 
-#: views/elements/feedback.php:68
+#: views/elements/feedback.php:70
 msgid "Describe your problem"
 msgstr ""
 
@@ -131,35 +136,35 @@ msgstr ""
 msgid "Do you confirm?"
 msgstr ""
 
-#: views/login.php:32
+#: views/login.php:35
 msgid "Create an account"
 msgstr ""
 
-#: views/login.php:33
+#: views/login.php:36
 msgid "About MEICAN"
 msgstr ""
 
-#: views/login.php:34
+#: views/login.php:37
 msgid "Support"
 msgstr ""
 
-#: views/login.php:48
+#: views/login.php:51
 msgid "Sign in to MEICAN"
 msgstr ""
 
-#: views/login.php:54
+#: views/login.php:57
 msgid "Login"
 msgstr ""
 
-#: views/login.php:62
+#: views/login.php:65
 msgid "Password"
 msgstr ""
 
-#: views/login.php:73
+#: views/login.php:76
 msgid "Forgot your password?"
 msgstr ""
 
-#: views/login.php:88
+#: views/login.php:91
 msgid "Sign in"
 msgstr ""
 
@@ -167,55 +172,63 @@ msgstr ""
 msgid "Circuits"
 msgstr ""
 
-#: controllers/menu.php:29 controllers/gui.php:77
-msgid "Reservations"
+#: controllers/menu.php:29
+msgid "New"
+msgstr ""
+
+#: controllers/menu.php:30
+msgid "Status"
 msgstr ""
 
 #: controllers/menu.php:31
-msgid "Domain"
-msgstr ""
-
-#: controllers/menu.php:32
-msgid "Domains"
+msgid "History"
 msgstr ""
 
 #: controllers/menu.php:33
-msgid "Networks"
+msgid "Topologies"
 msgstr ""
 
 #: controllers/menu.php:34
-msgid "Devices"
+msgid "MEICANs"
 msgstr ""
 
 #: controllers/menu.php:35
-msgid "URNs"
+msgid "Domains"
+msgstr ""
+
+#: controllers/menu.php:36
+msgid "Networks"
 msgstr ""
 
 #: controllers/menu.php:37
-msgid "Users"
+msgid "Devices"
 msgstr ""
 
 #: controllers/menu.php:38
-msgid "My Account"
-msgstr ""
-
-#: controllers/menu.php:39
-msgid "Groups"
+msgid "URNs"
 msgstr ""
 
 #: controllers/menu.php:40
-msgid "Access Control List"
+msgid "Users"
+msgstr ""
+
+#: controllers/menu.php:41
+msgid "Groups"
 msgstr ""
 
 #: controllers/menu.php:42
-msgid "BPM"
-msgstr ""
-
-#: controllers/menu.php:43 controllers/gui.php:85
-msgid "Requests"
+msgid "Access Control List"
 msgstr ""
 
 #: controllers/menu.php:44
+msgid "BPM"
+msgstr ""
+
+#: controllers/menu.php:45 controllers/gui.php:85
+msgid "Requests"
+msgstr ""
+
+#: controllers/menu.php:46
 msgid "ODE"
 msgstr ""
 
@@ -233,6 +246,10 @@ msgstr ""
 
 #: controllers/gui.php:69
 msgid "New reservation"
+msgstr ""
+
+#: controllers/gui.php:77
+msgid "Reservations"
 msgstr ""
 
 #: controllers/gui.php:93
