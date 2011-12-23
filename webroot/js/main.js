@@ -357,11 +357,11 @@ function WPToggle(divId, imageId) {
                 });
                 $('#feedback-panel form').submit(function(){
                     $.ajax({
-                        type: 'POST',
+                        type: 'post',
                         url: $(this).attr('action'),
                         data: $(this).serialize(),
-                        success: function (){
-                            alert('Thank you');
+                        success: function (data){
+                            alert(data);
                             $('.feedback-panel')
                             .animate({
                                 top: '-' + ($('.feedback-panel').outerHeight()+70) + 'px'
