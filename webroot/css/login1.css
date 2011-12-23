@@ -26,10 +26,10 @@
 
 /* Tabela de disposição dos boxes iniciais */
 body {
-       background-color: #3a5879;
-       font-family: arial, sans-serif, helvetica;
-       font-size: 14px;
-       margin: 0px;
+    background-color: #3a5879;
+    font-family: arial, sans-serif, helvetica;
+    font-size: 14px;
+    margin: 0px;
 }
 
 div#header {
@@ -71,7 +71,7 @@ div#content {
 }
 
 div#content a:hover {
-        text-decoration: underline;
+    text-decoration: underline;
 }
 
 div#login_form {
@@ -124,9 +124,9 @@ input.delete{
     background-image:  url('../img/remove.png') ;
     background-repeat:  no-repeat;
     background-position: 3px 2px;
-   /* figura tem 18px 18px*/
-   position: relative;
-   left: 0%;
+    /* figura tem 18px 18px*/
+    position: relative;
+    left: 0%;
 }
 
 
@@ -171,4 +171,6 @@ input.delete{
     text-shadow: -1px -1px 2px #121057, 1px 1px 2px #6967C3;*/
 }
 
-
+input[type="text"]:hover, select:hover, input[type="radio"]:hover, input[type="password"]:hover, input[type="checkbox"]:hover {
+    border: thin solid red;
+}

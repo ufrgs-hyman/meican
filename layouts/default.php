@@ -47,12 +47,12 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <script type ="text/javascript">
 <?php // variavel para armazenar o ID quando a função setInterval() é usada
-// cada vez que um link é carregado, é feito um clear na variável, para não carregar em páginas erradas  ?>
+// cada vez que um link é carregado, é feito um clear na variável, para não carregar em páginas erradas   ?>
     var js_function_interval = null;
-<?php // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate  ?>
+<?php // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate   ?>
     var js_submit_form = true;
-<?php //url base para geração de url, é o diretório onde o sistema está instalado no servidor   ?>
-            var baseUrl = '<?php echo $this->url(''); ?>';
+<?php //url base para geração de url, é o diretório onde o sistema está instalado no servidor    ?>
+    var baseUrl = '<?php echo $this->url(''); ?>';
         </script>
         <?php if ($this->script->scriptArgs): ?>
             <script>
