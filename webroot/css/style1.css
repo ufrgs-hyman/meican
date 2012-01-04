@@ -452,6 +452,9 @@ select:hover, select:select {
     background-color: white;
 }
 
+input.ui-button {
+    padding: 3px 5px;
+}
 
 
 
@@ -779,7 +782,7 @@ table.list thead th {
 
 .ui-state-default {
     box-shadow: inset 2px 2px 2px #FFFFFF, inset -1px -1px 2px #DDD;
-    text-shadow: 2px 2px 1px white;
+    /*text-shadow: 2px 2px 1px white;*/
 }
 
 .ui-state-hover, .ui-state-active{
