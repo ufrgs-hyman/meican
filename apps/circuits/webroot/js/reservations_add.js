@@ -1879,7 +1879,7 @@ function validateBand(band_value) {
             spin: f, 
             stop: f
         }).spinner("disable").bind('spin', f).change(f).keyup(f).click(f).scroll(f);
-        if (false){ /*configura tabs? não */
+      /*  if (false){ //configura tabs?
             $('#tabs-res ul').show();
             $('#tabs-3').show();
             $('#tabs-res').tabs({
@@ -1891,10 +1891,9 @@ function validateBand(band_value) {
                     view_setBounds(view_bounds);
                 }
             });
-        } else {
+        } else {*/
             $('#tabs-res ul').hide();
             $('#tabs-3').hide();
-        }
         /*$('#repeat_chkbox').button();*/
         /*$('#weekdays input[type=checkbox]').button();*/
         /* edições e cliques */
@@ -1923,7 +1922,7 @@ function validateBand(band_value) {
             view_clearAll();    
     
             edit_initializeMap();
-        }
+        };
     
         $('#src_clearpath').click(function(){ //limpa ponto de origem
             if (!srcSet)
@@ -1963,6 +1962,9 @@ function validateBand(band_value) {
             edit_initializeMap();
             //clearAllFn();
         });
+        $("#bandwidth").spinner('disable');
+        $("#src_domain,#src_network,#dst_domain,#dst_network").empty();
+        $("#src_device,#src_port,#dst_device,#dst_port").empty().disabled();
         $('#repeat_chkbox').click(function(){
             showRecurrenceBox();
         });
