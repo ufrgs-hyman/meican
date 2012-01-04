@@ -457,7 +457,8 @@ select:hover, select:select {
 }
 
 input.ui-button {
-    padding: 3px 5px;
+    padding: 4px 8px;
+    height: 24px;
 }
 
 
@@ -1004,7 +1005,10 @@ span.ui-spinner { background: none; }
 /* fonte para todos os widgets */
 .ui-widget, .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
     font-size: 9pt;
-    font-family: Helvetica,Arial,sans-serif;
+    font-family: arial, sans-serif, helvetica;
+	line-height: 14px;
+	word-spacing:	0;
+	font-weight: 400;
 }
 
 /* Feedback  */
