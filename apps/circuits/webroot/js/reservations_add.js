@@ -1990,7 +1990,7 @@ function validateBand(band_value) {
                 $('.tab-overlay').fadeOut();
             else
                 $('.tab-overlay').fadeIn();
-        }).focus();
+        }).focus().keyup();
         $.fn.makeEditMap();
         $(window).trigger('resize');
     });
