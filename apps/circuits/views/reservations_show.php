@@ -10,7 +10,7 @@
         'before' => '<input type="button" class="refresh" value="' . _("Refresh") . '" onClick="refreshStatus();" />'));
     ?>
 
-    <table class="list" style="min-width: 105%">
+    <table class="list">
 
         <thead>
             <tr>
