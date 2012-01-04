@@ -757,7 +757,7 @@ table.reservation-point td:nth-child(1) {
     width: 30%;
 }
 
-.reservation-point input, .reservation-point select{
+.reservation-point input[type=text], .reservation-point select{
 	width: 100%;
 }
 
