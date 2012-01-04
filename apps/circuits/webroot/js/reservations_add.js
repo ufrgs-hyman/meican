@@ -1974,7 +1974,7 @@ function validateBand(band_value) {
         });
         /* resize da janela muda tamanho do mapa */
         $(window).resize(function() {
-            $('#edit_map_canvas').css('width', $('#main').width()-$($('#tabs-1 div.tab_subcontent')[1]).width()-20);
+            $('#edit_map_canvas').css('width', $('#tabs-2').outerWidth()-$($('#tabs-1 div.tab_subcontent')[1]).outerWidth()-12 );
         /*      $('.tab-overlay').each(function(n, item){
 		  	$(item).css({'width': $(item).parent().width(), 'height': $(item).parent().height()});
 		  });*/

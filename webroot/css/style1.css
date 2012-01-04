@@ -448,7 +448,9 @@ div.shadow {
     border-top: solid 1px #ccc;
 }
 
-
+select:hover, select:select {
+    background-color: white;
+}
 
 
 
@@ -707,7 +709,7 @@ div#bandwidth_bar_text{
     padding: 0.5em 0.7em 0.5em 0.9em;
     background-color: #EEE;
     box-shadow: 2px 2px 4px #888;
-    margin: 1em 0;
+    margin: 12px 0;
 }
 
 .tab_subcontent{

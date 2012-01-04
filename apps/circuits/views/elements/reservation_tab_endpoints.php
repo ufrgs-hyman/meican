@@ -2,7 +2,7 @@
     <div class="tab_subcontent" style="border: solid #BBB 1px; box-shadow: 2px 2px 4px #888; border-image: initial;">
         <div id="edit_map_canvas" style="width:700px; height: 480px;"></div>
     </div>
-    <div class="tab_subcontent" style="padding-left:10px;">
+    <div class="tab_subcontent" style="float: right; padding-left:2px;">
         <?= $this->element('reservation_tab_point', array('type' => 'source')); ?>
         <div id="bandwidth_bar">
             <div id="bandwidth_bar_text">
