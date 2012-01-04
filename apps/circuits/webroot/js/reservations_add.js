@@ -1863,7 +1863,7 @@ function validateBand(band_value) {
 	
     /* DOCUMENT READY !!!! */
     
-    $(document).ready(function(){
+    $(function(){
         var f = function(){
             var v = ($("#bandwidth").val()/band_max)*100;
             if (v>100 || v < 0)
@@ -1992,7 +1992,7 @@ function validateBand(band_value) {
         $.fn.makeEditMap();
         $(window).trigger('resize');
     });
-	
+	$(window).load(function (){$(window).trigger('resize');});
 	
 	
 })(jQuery);

@@ -71,6 +71,8 @@ $(document).ready(function() {
             clearInterval(js_function_interval);
         })
         .bind('end.pjax',   function(xhr) {
+        
+            window.scroll(0, 0);
             $('#main').hide();
             clearInterval(js_function_interval);
                         
@@ -81,11 +83,11 @@ $(document).ready(function() {
                 $.getScript($(this).attr('src'));
             });
             $('.scripts').remove();*/
+            $('#main').hide();
             $('#load_img').hide();
             //$('#main').html($('.content').html());
             $('#main').show();
-            window.scroll(0, 0);
-
+			$(window).trigger('resize');
         });
 
         $("body").delegate("form","submit",function() {

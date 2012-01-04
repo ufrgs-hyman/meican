@@ -79,8 +79,12 @@ div#flash_box p {
 }
 
 div#load_img {
-    text-align: center;
-    margin: 150px auto;
+	text-align: center;
+	padding: 150px 0;
+	position: absolute;
+	z-index: 10;
+	background-color: white;
+	width: 100%;
 }
 
 img.logo {
@@ -750,6 +754,10 @@ table.reservation-point{
 
 table.reservation-point td:nth-child(1) {
     width: 30%;
+}
+
+.reservation-point input, .reservation-point select{
+	width: 100%;
 }
 
 table.reservation-point td, table.reservation-point th {
