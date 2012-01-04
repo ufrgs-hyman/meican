@@ -459,6 +459,10 @@ select:hover, select:select {
 input.ui-button {
     padding: 4px 8px;
     height: 24px;
+    line-height: 16px;
+    margin: 0 2px;
+    box-sizing: border-box;
+    min-width: 74px;
 }
 
 
