@@ -201,12 +201,12 @@ $.widget('ui.spinner', {
 				.append(self._buttonHtml())
 				// add behaviours
 				.hover(function() {
-					if (!options.disabled) {
+					/*if (!options.disabled) {
 						$(this).addClass('ui-state-hover');
-					}
+					}*/
 					self.hovered = true;
 				}, function() {
-					$(this).removeClass('ui-state-hover');
+					/*$(this).removeClass('ui-state-hover');*/
 					self.hovered = false;
 				});
 
@@ -230,14 +230,14 @@ $.widget('ui.spinner', {
 				}
 			})
 			.bind('focus.spinner', function() {
-				uiSpinner.addClass('ui-state-active');
+				/*uiSpinner.addClass('ui-state-active');*/
 				self.focused = true;
 			})
 			.bind('blur.spinner', function(event) {
 				self.value(self.element.val());
-				if (!self.hovered) {
+				/*if (!self.hovered) {
 					uiSpinner.removeClass('ui-state-active');
-				}		
+				}	*/	
 				self.focused = false;
 			});
 
