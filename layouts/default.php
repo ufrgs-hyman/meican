@@ -1,6 +1,5 @@
 <?php $args = $this->passedArgs ?>
 <?php $base = Dispatcher::getInstance()->url(); ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -32,7 +31,7 @@
         <script type ="text/javascript" src="<?php echo $base; ?>apps/aaa/webroot/js/password.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/aaa/webroot/js/select.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/aaa/webroot/js/acl.js"></script>
-
+        
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/googlemaps.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/markerClusterer.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/StyledMarker.js"></script>
@@ -88,22 +87,12 @@
 
     <body>
 
-
-
-        <div id="auxDiv">
-        </div>
-        <!-- joga dentro dessa tag o html a ser processado - o que retorna do ajax -->
-        <div id="htmlToLoad" style="display: none"></div>
-
         <div id="loading" style="display: none"><span><?php echo _('Loading...'); ?></span></div>
         <?php echo $this->element('menu', array('app' => 'init')); ?>
-
-
 
         <div id="system_date">
             <?php echo $this->element('time', array('app' => 'init')); ?>
         </div>
-
 
         <div id="canvas">
             <?php echo $this->element('info_box', array('app' => 'init')); ?>
@@ -115,21 +104,11 @@
                     <img src="<?php echo $base; ?>webroot/img/ajax-loader_1.gif" alt="<?php echo _('Loading'); ?>"/>
                 </div>
                 <div id="main">
-                    <?php echo $content_for_body; //debug($this->script->jsFiles); ?>
+                    <?php echo $content_for_body; ?>
                 </div>
-
 
                 <?php echo $this->element('feedback', array('app' => 'init')); ?>
             </div>
-        </div>        
-
-
-
-
-        <!-- <div id="footer">
-             <img src="<?php echo $this->url(''); ?>webroot/img/footer.png" style="width:100%; position: absolute; height: 25px;"></img>
-         </div>-->
+        </div>
     </body>
-
-
 </html>

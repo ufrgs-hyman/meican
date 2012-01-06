@@ -413,10 +413,8 @@ function validateTab3() {
 
 function cancelRecurrence(){
     if ($("#repeat_chkbox").attr("checked") && ($("#recurrence-edit").is(":visible"))) {
-        $("#auxDiv").hide();
         $("#recurrence").hide(); 
     } else {
-        $("#auxDiv").hide();
         $("#recurrence").hide(); 
         $("#repeat_chkbox").removeAttr("checked");
         $('#recurrence_summary').empty();
@@ -471,7 +469,6 @@ function saveRecurrence(){
     $("#summary_input").val(sum_desc);
     $("#confirmation_summary").html(sum_desc);
     $("#summary").html("");
-    $("#auxDiv").hide();
     $("#recurrence").hide();
     $("#recurrence-edit").show();
     
