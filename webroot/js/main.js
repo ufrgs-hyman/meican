@@ -64,16 +64,16 @@ $(document).ready(function() {
         });
         $('#main')
         .bind('start.pjax', function() {
-            clearFlash();
-            $('#main').empty();
-            $('#load_img').show();
+            /*clearFlash();
+            $('#main').empty();*/
+            $('#loading').show();
 
             clearInterval(js_function_interval);
         })
         .bind('end.pjax',   function(xhr) {
         
             window.scroll(0, 0);
-            $('#main').hide();
+            //$('#main').hide();
             clearInterval(js_function_interval);
                         
             $('#flash_box').html($('.flash_box').html());
@@ -83,11 +83,10 @@ $(document).ready(function() {
                 $.getScript($(this).attr('src'));
             });
             $('.scripts').remove();*/
-            $('#main').hide();
-            $('#load_img').hide();
             //$('#main').html($('.content').html());
-            $('#main').show();
+            //$('#main').show();
 			$(window).trigger('resize');
+            $('#loading').hide();
         });
 
         $("body").delegate("form","submit",function() {

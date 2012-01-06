@@ -87,6 +87,26 @@ div#load_img {
 	width: 100%;
 }
 
+#loading {
+    position: absolute;
+    width: 100%;
+    top: 4px;
+    text-align: center;
+}
+
+#loading span {
+    background-color: #F9EDBE;
+    border: 1px solid #F0C36D;
+    position: relative;
+    border-radius: 2px;
+    padding: 2px 10px;
+    font-size: 117%;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    
+}
+
 img.logo {
     padding: 10px;
     border: 1px;
