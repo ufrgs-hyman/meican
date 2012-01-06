@@ -889,7 +889,7 @@ function edit_markerClick(coord, domain_id, domain_name, network_id, network_nam
         lines.push(path[0].position);
         lines.push(path[1].position);
         edit_drawPath(lines);
-        $('#bandwidth').attr("min", band_min).attr("max", band_max).attr("step", band_div).trigger('click').spinner("enable");        
+        $('#bandwidth').attr("min", band_min).attr("max", band_max).attr("step", band_div).trigger('click').spinner("enable").disabled(false);        
         window.scroll(0, 650);
     } 
     

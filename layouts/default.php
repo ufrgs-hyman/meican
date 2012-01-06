@@ -106,7 +106,6 @@
                 <div id="main">
                     <?php echo $content_for_body; ?>
                 </div>
-
                 <?php echo $this->element('feedback', array('app' => 'init')); ?>
             </div>
         </div>
