@@ -11,20 +11,19 @@
     ?>
 
     <table class="list">
-
         <thead>
             <tr>
                 <th class="checkbox"></th>
                 <th class="large"></th>
                 <th class="large"><?php echo _("Name"); ?></th>
-                <th class="large" style="width:10%;"><?php echo _("Bandwidth (Mbps)"); ?></th>
-                <th class="large"><?php echo _("Status"); ?></th>                
+                <th class="large" style="width:82px;"><?php echo _("Bandwidth (Mbps)"); ?></th>
+                <th class="large" style="width:64px;"><?php echo _("Status"); ?></th>                
 
                 <th class="large"><?php echo _("Source"); ?></th>
                 <th class="large"><?php echo _("Destination"); ?></th>
                 <th class="large"><?php echo _("Start"); ?></th>
                 <th class="large"><?php echo _("Finish"); ?></th>
-                <th class="large" style="width:20%;"><?php echo _("Recurrence"); ?></th>
+                <th class="large" style="width:230px;"><?php echo _("Recurrence"); ?></th>
             </tr>
         </thead>
 
