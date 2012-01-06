@@ -31,6 +31,61 @@ var errorFunc = function(jqXHR) {
 
 $(document).ready(function() {
     
+    var menuHandler = jQuery.fn.menuHandler = {
+        menus : $('#menu ul ul'),
+        load: function(){
+            for (var i=0; i<this.menus.length; i++){
+                if (window.localStorage.getItem('submenu_'+i)){
+                    this.openSubMenu(i);
+                } else
+                    $(i).css('display', 'none');
+            }
+            
+        },
+        save: function(){
+            for (var i=0; i<this.menus.length; i++){
+                window.localStorage.setItem('submenu_'+i, ($(this.menus[i]).css('display') != 'none'));
+            }
+        },
+        openSubMenu: function(i){
+            if (typeof(i) != "object")
+                i = this.menus[i];
+            $(i).slideDown().parent().find('h3 span.ui-icon').removeClass('ui-icon-circle-arrow-e').addClass('ui-icon-circle-arrow-s');
+        },
+        closeSubMenu: function(i){
+            if (typeof(i) != "object")
+                i = this.menus[i];
+            $(i).slideUp().parent().find('h3 span.ui-icon').addClass('ui-icon-circle-arrow-e').removeClass('ui-icon-circle-arrow-s');
+        },
+        setSelected: function() {
+            $('#menu .active').removeClass("active");
+            var selectedMenu = $('#menu a[href="'+window.location.pathname+'"]').addClass("active");
+            if (!selectedMenu.hasClass('top')){
+                this.openSubMenu(selectedMenu.parent().parent());
+            }
+            this.save();
+        },
+        prepare: function() {
+            
+            menuHandler.load();
+            $('#menu h3 a').click(function(){
+                if (!$(this).attr('href')){
+                    $(this).find('span.ui-icon').toggleClass('ui-icon-circle-arrow-e').toggleClass('ui-icon-circle-arrow-s');
+                    $(this).parent().next().slideToggle();
+                    /*
+                    if ($(this).parent().next().css('display') == 'none'){
+                        $(this).find('span.ui-icon').addClass('ui-icon-circle-arrow-e').removeClass('ui-icon-circle-arrow-s');
+                    } else {
+                        $(this).find('span.ui-icon').removeClass('ui-icon-circle-arrow-e').addClass('ui-icon-circle-arrow-s');
+                    }*/
+
+                    menuHandler.save();
+                    return false;
+                }
+            });
+        }
+    }
+    
     jQuery.fn.uify = function(){
         
         $(this).find('button,input[type=submit],input[type=button]').button();
@@ -119,34 +174,10 @@ $(document).ready(function() {
                 $("table.list").tablesorter(/*{cssAsc: 'ui-icon ui-icon-triangle-1-n', cssDesc: 'ui-icon ui-icon-triangle-1-s'}*/);
             if (jQuery.isFunction(jQuery.fn.dataTable))
                 $("table.list").dataTable(/*{cssAsc: 'ui-icon ui-icon-triangle-1-n', cssDesc: 'ui-icon ui-icon-triangle-1-s'}*/);
+            menuHandler.setSelected();
         
-            $('#menu .active').removeClass("active");
-            var selectedMenu = $('#menu a[href="'+window.location.pathname+'"]').addClass("active");
-            if (!selectedMenu.hasClass('top')){
-                var s = selectedMenu.parent().parent().slideDown();
-                if (s.css('display') == 'none'){
-                    s.parent().find('h3 span.ui-icon').addClass('ui-icon-circle-arrow-e').removeClass('ui-icon-circle-arrow-s');
-                } else {
-                    s.parent().find('h3 span.ui-icon').removeClass('ui-icon-circle-arrow-e').addClass('ui-icon-circle-arrow-s');
-                }
-            }
-            $(this).addClass("active");
         });
-        $('#menu h3').next().hide();
-        $('#menu h3 a').click(function(){
-            if (!$(this).attr('href')){
-                $(this).find('span.ui-icon').toggleClass('ui-icon-circle-arrow-e').toggleClass('ui-icon-circle-arrow-s');
-                $(this).parent().next().slideToggle();
-                /*
-                if ($(this).parent().next().css('display') == 'none'){
-                    $(this).find('span.ui-icon').addClass('ui-icon-circle-arrow-e').removeClass('ui-icon-circle-arrow-s');
-                } else {
-                    $(this).find('span.ui-icon').removeClass('ui-icon-circle-arrow-e').addClass('ui-icon-circle-arrow-s');
-                }*/
-                
-                return false;
-            }
-        });
+        menuHandler.prepare();
         $('#main').trigger('end.pjax');
     }
 // analisar a real necessidade disso
