@@ -53,9 +53,6 @@
 
 
 <div id="menu">
-    <div id="logo">
-        <p>MEICAN</p>
-    </div>
     <ul>
         <?php foreach (MenuItem::getAllMenus() as $menu): ?>
 	        <li>

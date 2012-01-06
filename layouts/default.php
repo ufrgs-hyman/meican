@@ -31,7 +31,7 @@
         <script type ="text/javascript" src="<?php echo $base; ?>apps/aaa/webroot/js/password.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/aaa/webroot/js/select.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/aaa/webroot/js/acl.js"></script>
-        
+
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/googlemaps.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/markerClusterer.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/StyledMarker.js"></script>
@@ -46,11 +46,11 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <script type ="text/javascript">
 <?php // variavel para armazenar o ID quando a função setInterval() é usada
-// cada vez que um link é carregado, é feito um clear na variável, para não carregar em páginas erradas    ?>
+// cada vez que um link é carregado, é feito um clear na variável, para não carregar em páginas erradas      ?>
     var js_function_interval = null;
-<?php // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate    ?>
+<?php // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate      ?>
     var js_submit_form = true;
-<?php //url base para geração de url, é o diretório onde o sistema está instalado no servidor     ?>
+<?php //url base para geração de url, é o diretório onde o sistema está instalado no servidor       ?>
     var baseUrl = '<?php echo $this->url(''); ?>';
         </script>
         <?php if ($this->script->scriptArgs): ?>
@@ -88,10 +88,14 @@
     <body>
 
         <div id="loading" style="display: none"><span><?php echo _('Loading...'); ?></span></div>
-        <?php echo $this->element('menu', array('app' => 'init')); ?>
-
-        <div id="system_date">
-            <?php echo $this->element('time', array('app' => 'init')); ?>
+        <div id="left-panel">
+            <div id="logo">
+                <p>MEICAN</p>
+            </div>
+            <?php echo $this->element('menu', array('app' => 'init')); ?>
+            <div id="system_date">
+                <?php echo $this->element('time', array('app' => 'init')); ?>
+            </div>
         </div>
 
         <div id="canvas">

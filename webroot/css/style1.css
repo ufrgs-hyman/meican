@@ -487,19 +487,20 @@ td select {
     width: 100%;
 }
 
-
-#menu, #system_date {
+#left-panel, #system_date {
     width: 130px;
 }
 
-#menu {
+#left-panel {
     float: left;
     height: 100%;
-    overflow: auto;
     border-right-width: thin;
     border-right-style: solid;
     border-right-color: #DDD;
     background-color: #F4F4F4;
+    overflow: auto;
+}
+#menu {
 }
 
 #logo, #info_box {
