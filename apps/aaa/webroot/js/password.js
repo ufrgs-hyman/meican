@@ -10,8 +10,8 @@ $(document).ready(function(){
 
 
 function showPasswdBox(){
-    $("#changePassword").attr({
+    /*$("#changePassword").attr({
         disabled: 'disabled'
-    });
-    $('#tpassword').slideDown();
+    });*/
+    $('#tpassword').slideToggle();
 }
