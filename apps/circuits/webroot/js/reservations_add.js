@@ -889,7 +889,8 @@ function edit_markerClick(coord, domain_id, domain_name, network_id, network_nam
         lines.push(path[0].position);
         lines.push(path[1].position);
         edit_drawPath(lines);
-        $('#bandwidth').attr("min", band_min).attr("max", band_max).attr("step", band_div).trigger('click').spinner("enable").disabled(false);        
+        $('#bandwidth').attr("min", band_min).attr("max", band_max).attr("step", band_div).trigger('click').spinner("enable").disabled(false);   
+        $('#bandwidth_un').disabled(false);
         window.scroll(0, 650);
     } 
     
@@ -972,6 +973,7 @@ function edit_clearAll(){
     dstSet = false;
     $("#slider").slider( "option", "disabled", true );
     $("#bandwidth").spinner("disabled");
+    $('#bandwidth_un').disabled();
     $("#amount_label").hide();
     $("#amount").hide();  
     $("#src_domain").empty();
@@ -1483,7 +1485,7 @@ function map_clearVlanConf(where) {
     var tip_htmlId = "#" + where + "_vlanTip";
 
     $(tip_htmlId).html("");
-    $(text_htmlId).attr('title', '').val("").disabled();
+    $(text_htmlId).attr('title', '').val("").disabled().next().html("").disabled();
 
     /*$(untagged_htmlId).removeAttr('checked');
     $(untagged_htmlId).attr('disabled','disabled');*/
@@ -1578,10 +1580,10 @@ function map_setEndpointConf(where) {
         $(tagged_htmlId).disabled(false);
 
         if (vlan_min && vlan_max){
-            $(text_htmlId).attr('title', vlan_min + ' - ' + vlan_max);
+            $(text_htmlId).attr('title', vlan_min + ' - ' + vlan_max).next().html("("+vlan_min + ' - ' + vlan_max+")");
         //$(tip_htmlId).html(value_string + ': ' + vlan_min + ' - ' + vlan_max);
         } else if (vlan_validValues) {
-            $(text_htmlId).attr('title', vlan_validValues);
+            $(text_htmlId).attr('title', vlan_validValues).next().html("("+vlan_validValues+")");
         //$(tip_htmlId).html(value_string + ': ' + vlan_validValues);
         }
 
@@ -1876,6 +1878,7 @@ function validateBand(band_value) {
             spin: f, 
             stop: f
         }).spinner("disable").bind('spin', f).change(f).keyup(f).click(f).scroll(f);
+        $('#bandwidth_un').disabled();
       /*  if (false){ //configura tabs?
             $('#tabs-res ul').show();
             $('#tabs-3').show();
@@ -1926,6 +1929,7 @@ function validateBand(band_value) {
                 return false;
             srcSet = false;
             $("#bandwidth").spinner('disable');
+            $('#bandwidth_un').disabled();
             $("#src_domain,#src_network").empty();
             $("#src_device,#src_port").empty().disabled();//,#src_vlanTagged
             map_clearVlanConf('src');
@@ -1945,6 +1949,7 @@ function validateBand(band_value) {
                 return false;
             dstSet = false;
             $("#bandwidth").spinner('disable');
+            $('#bandwidth_un').disabled();
             $("#dst_domain,#dst_network").empty();
             $("#dst_device,#dst_port").empty().disabled();//,#dst_vlanTagged
             map_clearVlanConf('dst');
@@ -1960,6 +1965,7 @@ function validateBand(band_value) {
             //clearAllFn();
         });
         $("#bandwidth").spinner('disable');
+        $('#bandwidth_un').disabled();
         $("#src_domain,#src_network,#dst_domain,#dst_network").empty();
         $("#src_device,#src_port,#dst_device,#dst_port").empty().disabled();
         $('#repeat_chkbox').click(function(){

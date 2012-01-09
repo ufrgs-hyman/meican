@@ -475,8 +475,24 @@ input.ui-button {
     min-width: 74px;
 }
 
+.vlan-input {
+    position:relative;
+}
+.vlan-input label{
+    position:absolute;
+    top: 8px;
+    right: 4px;
+}
 
+#bandwidth_un{
+    position: absolute;
+    top: 5px;
+    left: 60px;
+}
 
+#bandwidth{
+    width:64px;
+}
 
 
 
