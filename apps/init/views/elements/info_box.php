@@ -3,6 +3,7 @@
     $system_time = $this->passedArgs->system_time;*/
 ?>
 <div id="info_box">
+        <div id="loading" style="display: none"><span><?php echo _('Loading...'); ?></span></div>
     	<ul>
             <li><a href="<?php echo $this->url(array('app' => 'init', 'controller' => 'login', 'action' => 'logout'));?>"><?php echo _('Sign out'); ?> (<?php echo AuthSystem::getUserLogin(); ?>)</a></li>
         	<li><a href="<?php echo $this->buildLink(array('app'=>'aaa','controller'=>'users','action'=>'edit_settings')); ?>">

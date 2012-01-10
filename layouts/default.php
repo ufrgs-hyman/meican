@@ -86,8 +86,6 @@
     </head>
 
     <body>
-
-        <div id="loading" style="display: none"><span><?php echo _('Loading...'); ?></span></div>
         <div id="left-panel">
             <div id="logo">
                 <p>MEICAN</p>
@@ -103,9 +101,6 @@
             <div id="workspace">
                 <div id="flash_box" class="shadow ui-widget">
                     <?php echo $this->element('flash_box', array('app' => 'init') + compact('content_for_flash')); ?>
-                </div>
-                <div id="load_img" style="display: none">
-                    <img src="<?php echo $base; ?>webroot/img/ajax-loader_1.gif" alt="<?php echo _('Loading'); ?>"/>
                 </div>
                 <div id="main">
                     <?php echo $content_for_body; ?>

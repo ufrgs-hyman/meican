@@ -91,10 +91,16 @@ div#load_img {
     position: absolute;
     width: 100%;
     top: 4px;
+    left: 0;
     text-align: center;
+    color: black;
+    z-index: 100;
+    font-weight: bold;
+
 }
 
 #loading span {
+    background: #FFF1A8 -webkit-gradient(linear,left top,left bottom,from(#FFE090),to(#FFF2B0));
     background-color: #F9EDBE;
     border: 1px solid #F0C36D;
     position: relative;
@@ -104,6 +110,13 @@ div#load_img {
     font-weight: bold;
     text-align: center;
     white-space: nowrap;
+    border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    box-shadow: rgba(0,0,0,0.246094) 0 -3px 5px,rgba(0,0,0,0.246094) 0 3px 5px;
+    -moz-box-shadow: rgba(0,0,0,0.246094) 0 -3px 5px,rgba(0,0,0,0.246094) 0 3px 5px;
+    -webkit-box-shadow: rgba(0,0,0,0.246094) 0 -3px 5px,rgba(0,0,0,0.246094) 0 3px 5px;
     
 }
 
