@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-10 14:52-0200\n"
+"POT-Creation-Date: 2012-01-10 15:36-0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: \n"
@@ -11,8 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
 
-#: init.php:14
-#: controllers/menu.php:27
+#: init.php:14 controllers/menu.php:27
 msgid "Dashboard"
 msgstr "Dashboard"
 
@@ -224,8 +223,7 @@ msgstr "Lista de Controle de Acesso"
 msgid "BPM"
 msgstr "BPM"
 
-#: controllers/menu.php:45
-#: controllers/gui.php:85
+#: controllers/menu.php:45 controllers/gui.php:85
 msgid "Requests"
 msgstr "Requisições"
 
@@ -271,36 +269,51 @@ msgstr "Falha na autenticação"
 
 #~ msgid "Domain"
 #~ msgstr "Dom�nio"
+
 #~ msgid "My Account"
 #~ msgstr "Minha Conta"
+
 #~ msgid "Access control"
 #~ msgstr "Controle de acesso"
+
 #~ msgid "My settings"
 #~ msgstr "Minhas configura��es"
+
 #~ msgid "Server time"
 #~ msgstr "Hora do servidor"
+
 #~ msgid "Not logged in"
 #~ msgstr "N�o logado"
+
 #~ msgid "Session Expired"
 #~ msgstr "Sess�o expirada"
+
 #~ msgid "Loading"
 #~ msgstr "Carregando"
+
 #~ msgid "New Reservation"
 #~ msgstr "Nova Reserva"
+
 #~ msgid "About us"
 #~ msgstr "Sobre n�s"
+
 #~ msgid "Developers"
 #~ msgstr "Desenvolvedores"
+
 #~ msgid "Terms of service"
 #~ msgstr "Termos do servi�o"
+
 #~ msgid "Privacy policy"
 #~ msgstr "Pol�tica de privacidade"
+
 #~ msgid "My Settings"
 #~ msgstr "Minhas configura��es"
+
 #~ msgid "Sign Out"
 #~ msgstr "Sair"
+
 #~ msgid "Flows"
 #~ msgstr "Fluxos"
+
 #~ msgid "Timers"
 #~ msgstr "Agendamentos"
-

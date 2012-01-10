@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-10 14:52-0200\n"
+"POT-Creation-Date: 2012-01-10 15:36-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,8 +24,7 @@ msgstr ""
 msgid "Scheduled"
 msgstr ""
 
-#: models/gri_info.php:31 views/reservations_add.php:48
-#: views/elements/reservation_tab5.php:32
+#: models/gri_info.php:31
 msgid "Finished"
 msgstr ""
 
@@ -167,6 +166,10 @@ msgstr ""
 #: views/reservations_add.php:36 views/elements/reservation_tab5.php:7
 #: views/reservations_add_old.php:39
 msgid "Confirmation"
+msgstr ""
+
+#: views/reservations_add.php:48 views/elements/reservation_tab5.php:32
+msgid "Submit"
 msgstr ""
 
 #: views/timers_show.php:3 controllers/timers.php:113
