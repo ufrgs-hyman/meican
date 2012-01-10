@@ -412,6 +412,10 @@ class reservations extends Controller {
             $this->render();
         }
     }
+    
+    public function add_form() {
+        $this->add();
+    }
 
     public function add() {
         // get Timestamp to calc reservation creation time by user

@@ -17,7 +17,7 @@ class circuits extends App {
                     'label' => _("New"),
                     'model' => 'urn_info',
                     'right' => 'create',
-                    'url' => array('app' => $this->appName, 'controller' => 'reservations', 'action' => 'add')
+                    'url' => array('app' => $this->appName, 'controller' => 'reservations', 'action' => 'add_form')
                 )),
                 new MenuItem(array(
                     'label' => _("Status"),
