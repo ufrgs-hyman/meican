@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-23 13:39-0200\n"
+"POT-Creation-Date: 2012-01-10 14:52-0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: \n"
@@ -96,23 +96,27 @@ msgstr "Descreva seu elogio"
 msgid "Describe your problem"
 msgstr "Descreva seu problema"
 
-#: views/elements/info_box.php:7
+#: views/elements/info_box.php:6
+msgid "Loading..."
+msgstr "Carregando..."
+
+#: views/elements/info_box.php:8
 msgid "Sign out"
 msgstr "Sair"
 
-#: views/elements/info_box.php:9
+#: views/elements/info_box.php:10
 msgid "My account"
 msgstr "Minha conta"
 
-#: views/elements/info_box.php:10
+#: views/elements/info_box.php:11
 msgid "Help"
 msgstr "Ajuda"
 
-#: views/elements/info_box.php:11
+#: views/elements/info_box.php:12
 msgid "About"
 msgstr "Sobre"
 
-#: views/elements/info_box.php:12
+#: views/elements/info_box.php:13
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -228,6 +232,14 @@ msgstr "Requisições"
 #: controllers/menu.php:46
 msgid "ODE"
 msgstr "ODE"
+
+#: controllers/info_box.php:61
+msgid "Feedback sent"
+msgstr "Feedback enviado"
+
+#: controllers/info_box.php:63
+msgid "Error sending feedback"
+msgstr "Erro ao enviar feedback"
 
 #: controllers/gui.php:50
 msgid "You have one new request to be authorized"

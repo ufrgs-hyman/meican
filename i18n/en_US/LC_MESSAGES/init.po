@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-23 13:39-0200\n"
+"POT-Creation-Date: 2012-01-10 14:52-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,23 +100,27 @@ msgstr ""
 msgid "Describe your problem"
 msgstr ""
 
-#: views/elements/info_box.php:7
+#: views/elements/info_box.php:6
+msgid "Loading..."
+msgstr ""
+
+#: views/elements/info_box.php:8
 msgid "Sign out"
 msgstr ""
 
-#: views/elements/info_box.php:9
+#: views/elements/info_box.php:10
 msgid "My account"
 msgstr ""
 
-#: views/elements/info_box.php:10
+#: views/elements/info_box.php:11
 msgid "Help"
 msgstr ""
 
-#: views/elements/info_box.php:11
+#: views/elements/info_box.php:12
 msgid "About"
 msgstr ""
 
-#: views/elements/info_box.php:12
+#: views/elements/info_box.php:13
 msgid "Feedback"
 msgstr ""
 
@@ -230,6 +234,14 @@ msgstr ""
 
 #: controllers/menu.php:46
 msgid "ODE"
+msgstr ""
+
+#: controllers/info_box.php:61
+msgid "Feedback sent"
+msgstr ""
+
+#: controllers/info_box.php:63
+msgid "Error sending feedback"
 msgstr ""
 
 #: controllers/gui.php:50
