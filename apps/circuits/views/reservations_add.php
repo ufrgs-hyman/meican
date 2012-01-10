@@ -33,11 +33,6 @@ $freq_types[] = $freq;
     </h1>
     <div id="tabs-res" class="reservation-tabs" style="position:relative;">
         <div class="tab-overlay"> </div>
-        <ul style="display:none;">
-            <li><a href="#tabs-1"><?php echo htmlentities(_('Endpoints & Bandwidth')); ?></a></li>
-            <li><a href="#tabs-2"><?php echo _('Timer'); ?></a></li>
-            <li><a href="#tabs-3"><?php echo _('Confirmation'); ?></a></li>
-        </ul>
         <div id="tabs-1">
             <?php $this->addElement('reservation_tab_endpoints'); ?>
         </div>
