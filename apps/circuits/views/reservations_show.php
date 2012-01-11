@@ -28,7 +28,7 @@
         </thead>
 
         <tbody>
-<?php foreach ($reservations as $r): ?>
+            <?php foreach ($reservations as $r): ?>
                 <tr id="line<?php echo $r->id; ?>">
                     <td>
                         <input type="checkbox" name="del_checkbox[]" value="<?php echo $r->id; ?>"/>
@@ -40,25 +40,27 @@
                     </td>
 
                     <td>
-    <?php echo $r->name; ?>
+                        <?php echo $r->name; ?>
                     </td>
 
                     <td>
-    <?php echo $r->bandwidth; ?>
+                        <?php echo $r->bandwidth; ?>
                     </td>
 
                     <td>
-                        <label id="status<?php echo $r->id; ?>"></label>
+                        <label id="status<?php echo $r->id; ?>">
+                            <?php echo $r->status; ?>
+                        </label>
                         <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading<?php echo $r->id; ?>" class="load" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif"/>
                     </td>
                     <td>
                         <?php echo $r->flow->source->domain; ?>
-    <?php echo $r->flow->source->network; ?>
+                        <?php echo $r->flow->source->network; ?>
                         <?php //echo $r->flow->source->device;  ?>
                     </td>
                     <td>
                         <?php echo $r->flow->dest->domain; ?>
-    <?php echo $r->flow->dest->network; ?>
+                        <?php echo $r->flow->dest->network; ?>
                         <?php //echo $r->flow->dest->device;  ?>
                     </td>
                     <td>
@@ -75,7 +77,8 @@
                         ?>
                     </td>
                 </tr>
-<?php endforeach; ?>
+            <?php endforeach; ?>
+        </tbody>
     </table>
 
 </form>

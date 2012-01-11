@@ -28,24 +28,27 @@ class reservations extends Controller {
         $this->defaultAction = 'show';
     }
 
-    public function show() {
-        // inicializa variáveis da sessão do wizard
-        Common::destroySessionVariable('res_name');
-        Common::destroySessionVariable('sel_flow');
-        Common::destroySessionVariable('sel_timer');
-        Common::destroySessionVariable('res_wizard');
+    public function show($filterArray=array()) {
+        // inicializa variável de sessão
         Common::destroySessionVariable('res_begin_timestamp');
 
         $res_info = new reservation_info();
+        if ($filterArray)
+            $res_info->res_id = $filterArray;
+        
         $allReservations = $res_info->fetch();
         if ($allReservations) {
             $reservations = array();
+            $src_domains = array();
 
             foreach ($allReservations as $r) {
                 $res = new stdClass();
                 $res->id = $r->res_id;
                 $res->name = $r->res_name;
                 $res->bandwidth = $r->bandwidth;
+                
+                $status = $r->getStatus();
+                $res->status = gri_info::translateStatus($status);
 
                 $flow = new flow_info();
                 $flow->flw_id = $r->flw_id;
@@ -58,6 +61,7 @@ class reservations extends Controller {
                 $dom = new domain_info();
                 if ($domain = $dom->getOSCARSDomain($res->flow->source->urn)) {
                     $res->flow->source->domain = $domain->dom_descr;
+                    $src_domains[] = $domain->dom_id;
                 } else {
                     $urn = new urn_info();
                     $urn->urn_string = $res->flow->source->urn;
@@ -71,6 +75,7 @@ class reservations extends Controller {
                     $dom = new domain_info();
                     $dom->dom_id = $dom_aco[0]->obj_id;
                     $res->flow->source->domain = $dom->get('dom_descr');
+                    $src_domains[] = $dom_aco[0]->obj_id;
                 }
 
                 $dom = new domain_info();
@@ -90,33 +95,22 @@ class reservations extends Controller {
                     $dom->dom_id = $dom_aco[0]->obj_id;
                     $res->flow->dest->domain = $dom->get('dom_descr');
                 }
-
+                
                 $reservations[] = $res;
             }
 
-            $this->setAction('show');
+            if ($this->action == "status") {
+                $domains_to_js = array_unique($src_domains);
 
-            $dom = new domain_info();
-            $domains = $dom->fetch(FALSE);
-            $domains_to_js = array();
-            foreach ($domains as $d) {
-                $has_reservations = FALSE;
-                $aco = new Acos($d->dom_id, "domain_info");
-                if ($aco_obj = $aco->fetch(FALSE)) {
-                    if ($aco_obj[0]->findChildren('reservation_info'))
-                        $has_reservations = TRUE;
-                }
-                if ($has_reservations) {
-                    $domains_to_js[] = $d->dom_id;
-                }
+                $this->setArgsToScript(array(
+                    'domains' => $domains_to_js,
+                    'str_error_refresh_status' => _("Error to get status")
+                ));
+
+                $this->setInlineScript('reservations_init');
             }
-
-            $this->setArgsToScript(array(
-                'domains' => $domains_to_js,
-                'str_error_refresh_status' => _("Error to get status")
-            ));
-
-            $this->setInlineScript('reservations_init');
+            
+            $this->setAction('show');
 
             $this->setArgsToBody($reservations);
         } else {
@@ -132,76 +126,52 @@ class reservations extends Controller {
         $this->render();
     }
     
-    public function status(){
-        $this->action = "show";
-        $this->show();
+    public function status() {
+        $gri = new gri_info();
+        $resIdArray = $gri->getStatusResId();
+        $this->action = "status";
+        $this->show($resIdArray);
     }
     
-    public function history(){
-        $this->action = "show";
-        $this->show();
+    public function history() {
+        $gri = new gri_info();
+        $resIdArray = $gri->getHistoryResId();
+        $this->action = "history";
+        $this->show($resIdArray);
     }
 
     public function refresh_status() {
         $this->setAction("ajax");
         $this->setLayout("empty");
 
-        $res_number = Common::POST("count"); // quantidade de reservas listadas
-        $res_id = Common::POST("res_id");
         $dom_id = Common::POST('dom_id');
+        
+        $gris = new gri_info();
+        $resToRefresh = $gris->getStatusResId($dom_id);
+        
+        $res_info = new reservation_info();
+        $res_info->res_id = $resToRefresh;
+        
+        $reservations = $res_info->fetch();
+        
+        Framework::debug("res to refresh",$reservations);
 
-        $aco = new Acos($dom_id, 'domain_info');
-        $aco_dom = $aco->fetch(FALSE);
-        $children = $aco_dom[0]->findChildren('reservation_info');
-
-        $reservations = array();
-        foreach ($children as $child) {
-            $res_info = new reservation_info();
-            $res_info->res_id = $child->obj_id;
-            if ($result = $res_info->fetch())
-                $reservations[] = $result[0];
-        }
-
-        // testa se a quantidade de reservas na página é diferente da quantidade de reservas no banco
-//        if (count($reservations) != $res_number) {
-//            header('HTTP/1.1 406 Refresh reservations');
-//            return;
-//        }
-
+        /**
+         * Transforma a lista bidimensional de gris para uma lista unidimensional -> para realizar uma só consulta ao OSCARS
+         * Preenche vetor griList
+         */
         $griList = array();
-        $control = array(); // vetor bidimensional para fazer a relação de quais gris foram inseridos em griList
-        // exemplo:
-        // se o gri da posição reservations[0][2] estiver em griList, então control[0][2] será true
-        // transforma a lista bidimensional de gris para uma lista unidimensional
         if ($reservations) {
-            $ind = 0;
-
             foreach ($reservations as $res) {
-                $control[$ind] = array();
-
                 $gri = new gri_info();
                 $gri->res_id = $res->res_id;
                 $gris = $gri->fetch(FALSE);
 
                 if ($gris) {
-                    $ind2 = 0;
                     foreach ($gris as $g) {
-                        switch ($g->status) {
-                            case "FINISHED":
-                            case "CANCELLED":
-                            case "FAILED":
-                                $control[$ind][$ind2] = FALSE;
-                                break;
-                            default:
-                                $griList[] = $g->gri_id;
-                                $control[$ind][$ind2] = TRUE;
-                        }
-                        $ind2++;
+                        $griList[] = $g->gri_id;
                     }
-                } else
-                    $control[$ind][0] = FALSE;
-
-                $ind++;
+                }
             }
         } else {
             Framework::debug("Falha ao buscar reservas no refresh status");
@@ -209,12 +179,17 @@ class reservations extends Controller {
             $this->render();
             return;
         }
-
+        
+        /**
+         * Realiza a consulta com o vetor preenchido
+         */
         $statusResult = array();
         if ($griList) {
             $dom = new domain_info();
             $dom->dom_id = $dom_id;
             $oscars_ip = $dom->get('oscars_ip');
+            
+            Framework::debug("gri list", $griList);
 
             $oscarsRes = new OSCARSReservation();
             $oscarsRes->setOscarsUrl($oscars_ip);
@@ -223,7 +198,7 @@ class reservations extends Controller {
             if ($oscarsRes->listReservations()) {
                 $statusResult = $oscarsRes->getStatusArray();
             } else {
-                Framework::debug("Falha ao conectar OSCARS no refresh status");
+                Framework::debug("Falha ao conectar OSCARS ($oscars_ip) no refresh status");
                 $this->setArgsToBody(FALSE);
                 $this->render();
                 return;
@@ -239,84 +214,42 @@ class reservations extends Controller {
 
         //Framework::debug("result list", $statusResult);
 
+        /**
+         * Atualiza no banco os status que mudaram
+         * Recalcula novo status para cada reserva
+         */
         $cont = 0;
-
         $statusList = array();
-        $now = time();
-
-        $ind = 0;
         foreach ($reservations as $res) {
-
             $gri = new gri_info();
             $gri->res_id = $res->res_id;
             $gris = $gri->fetch(FALSE);
-
-            $req = new request_info();
-            $req->resource_id = $res->res_id;
-            $req->resource_type = 'reservation_info';
-            $request = $req->fetch();
-
-            $status = "UNKNOWN";
-
+            
             if ($gris) {
-                $ind2 = 0;
-                $next_gri = $gris[0];
-
                 foreach ($gris as $g) {
-                    if ($control[$ind][$ind2]) {
-                        // se posição no control for TRUE, é porque atualizou o status
-                        $newStatus = $statusResult[$cont];
-                        $cont++;
-
-                        // testa se status atual da GRI é diferente do status que retornou do OSCARS
-                        if ($g->status != $newStatus) {
-                            $g->status = $newStatus;
-
-                            // atualiza o banco de dados com o novo status (retornado do OSCARS)
-                            $gri_tmp = new gri_info();
-                            $gri_tmp->gri_id = $g->gri_id;
-                            $gri_tmp->updateTo(array('status' => $newStatus), FALSE);
-                        }
+                    // testa se status atual da GRI é diferente do status que retornou do OSCARS
+                    if ($statusResult[$cont] != $g->status) {
+                        // atualiza o banco de dados com o novo status (retornado do OSCARS)
+                        $gri_tmp = new gri_info();
+                        $gri_tmp->gri_id = $g->gri_id;
+                        $gri_tmp->updateTo(array('status' => $statusResult[$cont]), FALSE);
                     }
-
-                    // executa lógica para determinar qual status mostrar na página
-                    $date = new DateTime($g->start);
-                    $start = $date->getTimestamp();
-
-                    $date = new DateTime($next_gri->start);
-                    $next_start = $date->getTimestamp();
-
-                    $new_diff = $start - $now;
-                    $next_diff = $next_start - $now;
-
-                    if (($new_diff > 0) && (($new_diff < $next_diff) || ($next_diff < 0))) {
-                        // é o GRI cujo status será mostrado na página
-                        $next_gri = $g;
-                    }
-
-                    $ind2++;
+                    $cont++;
                 }
-
-                if ($request) {
-                    if ($request[0]->response == 'reject')
-                        $status = 'REJECTED';
-                    elseif ($request[0]->response == 'accept')
-                        $status = $next_gri->status;
-                    else
-                        $status = ($request[0]->status) ? $request[0]->status : "UNKNOWN";
-                } else
-                    $status = $next_gri->status;
-            } else {
-                $status = "NO_GRI";
             }
-
+            
+            /** 
+             * recalcula novo status
+             * @todo algum tipo de cache para não executar getStatus toda vez
+             */
+            $status = $res->getStatus();
+            
             $status_obj = new stdClass();
             $status_obj->name = $status;
             $status_obj->translate = gri_info::translateStatus($status);
             $status_obj->id = $res->res_id;
-            $statusList[$ind] = $status_obj;
-
-            $ind++;
+            
+            $statusList[] = $status_obj;
         }
 
         //Framework::debug('status', $statusList);

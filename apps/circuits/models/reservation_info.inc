@@ -7,6 +7,8 @@ include_once 'apps/circuits/models/flow_info.inc';
 include_once 'apps/circuits/models/timer_info.inc';
 include_once 'apps/circuits/models/oscars_reservation.inc';
 
+include_once 'apps/bpm/models/request_info.inc';
+
 class reservation_info extends Resource_Model {
     var $displayField = "res_name";
 
@@ -22,6 +24,59 @@ class reservation_info extends Resource_Model {
         $this->addAttribute("tmr_id", "INTEGER");
 
         $this->addAttribute("creation_time", "VARCHAR");
+    }
+    
+    public function getStatus() {
+
+        if (!$this->res_id)
+            return FALSE;
+
+        $gri = new gri_info();
+        $gri->res_id = $this->res_id;
+        $gris = $gri->fetch(FALSE);
+
+        $req = new request_info();
+        $req->resource_id = $this->res_id;
+        $req->resource_type = 'reservation_info';
+        $request = $req->fetch();
+
+        $status = "UNKNOWN";
+        $now = time();
+
+        if ($gris) {
+            $next_gri = $gris[0];
+
+            foreach ($gris as $g) {
+                // executa lógica para determinar qual status mostrar na página
+                $date = new DateTime($g->start);
+                $start = $date->getTimestamp();
+
+                $date = new DateTime($next_gri->start);
+                $next_start = $date->getTimestamp();
+
+                $new_diff = $start - $now;
+                $next_diff = $next_start - $now;
+
+                if (($new_diff > 0) && (($new_diff < $next_diff) || ($next_diff < 0))) {
+                    // é o GRI cujo status será mostrado na página
+                    $next_gri = $g;
+                }
+            }
+
+            if ($request) {
+                if ($request[0]->response == 'reject')
+                    $status = 'REJECTED';
+                elseif ($request[0]->response == 'accept')
+                    $status = $next_gri->status;
+                else
+                    $status = ($request[0]->status) ? $request[0]->status : "UNKNOWN";
+            } else
+                $status = $next_gri->status;
+        } else {
+            $status = "NO_GRI";
+        }
+
+        return $status;
     }
 
     public function getReservationDetails() {

@@ -1,18 +1,11 @@
 function refreshStatus() {
     $('.load').show();
     
-    var count = 0;
-
-        $.each($("tbody tr"), function() {
-            count++;
-        });
-    
     for (var i in domains) {
         $.ajax ({
             type: "POST",
             url: baseUrl+'circuits/reservations/refresh_status',
             data: {
-                count: count,
                 dom_id: domains[i]
             },
             dataType: "json",

@@ -85,12 +85,12 @@ class Model {
             $allowPks = $acl->getAllowedPKey('read', $tableName);
 
             if ($allowPks) {
-                $inString = implode(',', $allowPks);
+                $inString = implode(', ', $allowPks);
                 $pk = $this->getPrimaryKey();
                 if ($whereArgsString)
-                    $sql = "SELECT * FROM `$tableName` WHERE $whereArgsString AND $pk IN ($inString)";
+                    $sql = "SELECT * FROM `$tableName` WHERE $whereArgsString AND `$pk` IN ($inString)";
                 else
-                    $sql = "SELECT * FROM `$tableName` WHERE $pk IN ($inString)";
+                    $sql = "SELECT * FROM `$tableName` WHERE `$pk` IN ($inString)";
             } else {
                 $empty = array();
                 return $empty; //sem acesso a nada
@@ -486,7 +486,7 @@ class Model {
     function buildWhere($fields=array()) {
         $values = get_object_vars($this);
         $validInds = $this->getValidInds();
-
+        
         if (!$validInds)
             return FALSE;
 
@@ -507,8 +507,8 @@ class Model {
             } elseif ($values[$vi]) {
                 if (is_array($values[$vi])) {
                     if ($this->attributes[$vi]->type == "VARCHAR")
-                        $values[$vi] = normalizeStringArray($values[$vi]);
-                    $values[$vi] = "`$vi` IN (" . implode(', ', $values[$vi]) . ")";
+                        $values[$vi] = $this->normalizeStringArray($values[$vi]);
+                    $whereArgs[] = "`$vi` IN (" . implode(', ', $values[$vi]) . ")";
                 } else {
                     if ($this->attributes[$vi]->type == "VARCHAR")
                         $values[$vi] = "\"" . $values[$vi] . "\"";

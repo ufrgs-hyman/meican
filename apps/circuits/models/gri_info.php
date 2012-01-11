@@ -18,6 +18,46 @@ class gri_info extends Model {
         $this->addAttribute("send", "INTEGER");
     }
     
+    /**
+     * @return Array res_id
+     */
+    public function getStatusResId($domId=NULL) {
+        $this->status = array("ACTIVE", "PENDING", "ACCEPTED", "SUBMITTED", "INCREATE", "INSETUP", "INTEARDOWN", "INMODIFY");
+        if ($domId)
+            $this->dom_id = $domId;
+        $gri_res = $this->fetch(FALSE);
+        
+        $filter_res_id_array = array();
+        if ($gri_res) {
+            foreach ($gri_res as $g) {
+                $filter_res_id_array[] = $g->res_id;
+            }
+        }
+        $filteredArray = array_unique($filter_res_id_array);
+        return $filteredArray;
+    }
+    
+    /**
+     * @return Array res_id
+     */
+    public function getHistoryResId() {
+        $this->status = array("FAILED", "FINISHED", "CANCELLED", "");
+        $his_gri_res = $this->fetch(FALSE);
+        
+        $his_filter_res_id_array = array();
+        if ($his_gri_res) {
+            foreach ($his_gri_res as $g) {
+                $his_filter_res_id_array[] = $g->res_id;
+            }
+        }
+        $stat_gri_res = $this->getStatusResId();
+        
+        // faz a diferença dos arrays, para garantir que a reserva não tenha nenhum GRI que mude de status
+        $filter_res_id_array = array_diff($his_filter_res_id_array, $stat_gri_res);
+        $filteredArray = array_unique($filter_res_id_array);
+        return $filteredArray;
+    }
+    
     static public function translateStatus($newStatus) {
         $status = "";
         switch ($newStatus) {
