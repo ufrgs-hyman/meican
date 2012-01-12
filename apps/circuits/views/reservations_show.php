@@ -1,13 +1,21 @@
-<?php $reservations = $this->passedArgs; ?>
+<?php
 
-<h1><?php echo _("Reservations"); ?></h1>
+$reservations = $this->passedArgs->reservations;
+$refresh = $this->passedArgs->refresh;
+
+?>
+
+<h1><?php if ($refresh) echo _("Active and pending reservations"); else echo _("History reservations"); ?></h1>
 
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
 
     <?php
-    echo $this->element('controls', array(
-        'app' => 'init',
-        'before' => '<input type="button" class="refresh" value="' . _("Refresh") . '" onClick="refreshStatus();" />'));
+    $arrayElem = ($refresh)
+        ? array('app' => 'init',
+                'before' => '<input type="button" class="refresh" value="' . _("Refresh") . '" onClick="refreshStatus();" />')
+        : array('app' => 'init');
+    
+    echo $this->element('controls', $arrayElem);
     ?>
 
     <table class="list">
@@ -34,7 +42,7 @@
                         <input type="checkbox" name="del_checkbox[]" value="<?php echo $r->id; ?>"/>
                     </td>
                     <td style="padding-right: 5px; min-width: 20px">
-                        <a href="<?php echo $this->buildLink(array('action' => 'view', 'param' => "res_id:$r->id")); ?>">
+                        <a href="<?php echo $this->buildLink(array('action' => 'view', 'param' => "res_id:$r->id,refresh:$refresh")); ?>">
                             <img src="<?php echo $this->url() ?>webroot/img/eye.png" alt="<?php echo _('View'); ?>"/>
                         </a>
                     </td>

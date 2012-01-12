@@ -7,6 +7,7 @@ $name = $this->passedArgs->res_name;
 $res_id = $this->passedArgs->res_id;
 $request = $this->passedArgs->request;
 $bandwidth = $this->passedArgs->bandwidth;
+$refresh = $this->passedArgs->refresh;
 
 ?>
 
@@ -39,19 +40,23 @@ $bandwidth = $this->passedArgs->bandwidth;
 
             <?php if ($gris): ?>
             
+                <?php if ($refresh): ?>
+                <div class="controls">
+                    <input type="button" class="refresh" value="<?php echo _("Refresh") ?>" onClick="griRefreshStatus(<?php echo $res_id; ?>);" />
+                </div>
+                <br style="clear: both"/>
+                <?php endif; ?>
+            
             <table class="list" style="width: 100%">
 
             <thead>
                 <tr>
                     <th class="listHeader"></th>
                     <th class="listHeader"><?php echo _("Tool"); ?></th>
-                    <th class="listHeader"><?php echo _("Reservation ID"); ?></th>
+                    <th class="listHeader"><?php echo _("Global Reservation Identifier (GRI)"); ?></th>
                     <th class="listHeader" align="center">
                         <?php echo _("Status"); ?>
-                        <img alt="<?php echo _("loading"); ?>" style="display:none" id="load_dynamic" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif">
-                        <a href="" onclick="griRefreshStatus(<?php echo $res_id; ?>); return false;">
-                            <img alt="<?php echo _("refresh"); ?>" border="0" id="load_static" class="refreshTable" src="<?php echo $this->url(''); ?>webroot/img/ajax-refresh.gif">
-                        </a>
+                        <img alt="<?php echo _("loading"); ?>" style="display:none" id="load_dynamic" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif"/>
                     </th>
                     <th class="listHeader"><?php echo _("Initial Date/Time"); ?></th>
                     <th class="listHeader"><?php echo _("Final Date/Time"); ?></th>
@@ -95,7 +100,7 @@ $bandwidth = $this->passedArgs->bandwidth;
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'cancel', 'param' => "res_id:$res_id")); ?>">    
 
     <div style="clear: both" class="controls">
-        <input class="back" type="button" onClick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');" value="<?php echo _("Back to reservations"); ?>" style="float: left"/>
+        <input class="back" type="button" onClick="redir('<?php $action = ($refresh) ? "status" : "history"; echo $this->buildLink(array("action" => $action)); ?>');" value="<?php echo _("Back to reservations"); ?>" style="float: left"/>
         <input class="cancel" type="submit" disabled id="cancel_button" style="display: none; opacity:0.4; float: right;" value="<?php echo _("Cancel reservations"); ?>" onClick="return confirm('<?php echo _('Cancel the selected reservations?'); ?>')"/>
     </div>
 

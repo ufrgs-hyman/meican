@@ -78,7 +78,7 @@ class Common {
         apc_store('last_update', $now);
     }
 
-    static function getLastUpdate(){
+    static function getLastUpdate() {
         date_default_timezone_set("America/Sao_Paulo");
         $now = mktime();
         $last_update_server = apc_fetch('last_update');
@@ -93,6 +93,23 @@ class Common {
             apc_store('last_update', $now);
             return $now;
         }
+    }
+    
+    /**
+     *
+     * @param Array $array An array of objects
+     * @param String $attribute An attribute name to extract to a single array
+     * @return Array A single array containing only the attribute specified
+     */
+    static function arrayExtractAttr($array, $attribute) {
+        $extractedArray = array();
+        if (is_array($array) && !empty($attribute)) {
+            foreach ($array as $a) {
+                if (array_key_exists($attribute, $a))
+                    $extractedArray[] = $a->{$attribute};
+            }
+        }
+        return $extractedArray;
     }
 
 }

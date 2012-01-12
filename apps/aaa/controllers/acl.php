@@ -14,7 +14,7 @@ include_once 'apps/aaa/models/acos.inc';
 include_once 'apps/bpm/models/request_info.inc';
 
 include_once 'apps/circuits/models/flow_info.inc';
-include_once 'apps/circuits/models/reservation_info.inc';
+include_once 'apps/circuits/models/reservation_info.php';
 include_once 'apps/circuits/models/timer_info.inc';
 
 include_once 'apps/topology/models/device_info.inc';

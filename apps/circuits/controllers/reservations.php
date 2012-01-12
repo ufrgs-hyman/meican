@@ -9,7 +9,7 @@ include_once 'libs/common.php';
 include_once 'apps/circuits/controllers/flows.php';
 include_once 'apps/circuits/controllers/timers.php';
 
-include_once 'apps/circuits/models/reservation_info.inc';
+include_once 'apps/circuits/models/reservation_info.php';
 include_once 'apps/circuits/models/gri_info.php';
 include_once 'apps/circuits/models/flow_info.inc';
 include_once 'apps/circuits/models/timer_info.inc';
@@ -110,17 +110,22 @@ class reservations extends Controller {
                 $this->setInlineScript('reservations_init');
             }
             
+            $args = new stdClass();
+            $args->reservations = $reservations;
+            $args->refresh = ($this->action == 'status') ? 1 : 0;
+            
             $this->setAction('show');
 
-            $this->setArgsToBody($reservations);
+            $this->setArgsToBody($args);
         } else {
-            $this->setAction('empty');
-
             $args = new stdClass();
-            $args->title = _("Reservations");
-            $args->message = _("You have no reservation, click the button below to create a new one");
+            $args->title = ($this->action == 'status') ? _("Active and pending reservations") : _("History reservations");
+            $args->message = ($this->action == 'status') ? _("You have no active or pending reservation, try <a href='history'>history</a> or click the button below to create a <a href='add'>new</a> one")
+                    : _("You have no reservation in history, click the button below to create a <a href='add'>new</a> one");
             $args->link = array("action" => "add");
             $this->setArgsToBody($args);
+            
+            $this->setAction('empty');
         }
 
         $this->render();
@@ -519,242 +524,6 @@ class reservations extends Controller {
         $this->render();
     }
 
-    public function page1() {
-        Common::setSessionVariable('res_wizard', TRUE);
-
-        $reservationName = NULL;
-        $selectedFlow = NULL;
-        if (Common::hasSessionVariable('res_name'))
-            $reservationName = Common::getSessionVariable('res_name');
-        else {
-            $reservationName = "Default reservation name";
-            Common::setSessionVariable('res_name', $reservationName);
-        }
-
-        if (Common::hasSessionVariable('sel_flow')) {
-            $selectedFlow = Common::getSessionVariable('sel_flow');
-        } else {
-            $selectedFlow = NULL;
-        }
-
-        $flow_info = new flow_info();
-        $allFlows = $flow_info->fetch();
-
-        if ($allFlows) {
-
-            $domains = array();
-            foreach ($allFlows as $f) {
-                if (array_search($f->src_dom, $domains) === FALSE)
-                    $domains[] = $f->src_dom;
-                if (array_search($f->dst_dom, $domains) === FALSE)
-                    $domains[] = $f->dst_dom;
-            }
-
-            $urn_string_array = array();
-
-            foreach ($domains as $d) {
-                $ind = 0;
-                $urn_string_array[$d] = array();
-                foreach ($allFlows as $f) {
-                    $urn_string_array[$d][$ind] = ($d == $f->src_dom) ? $f->src_urn_string : NULL;
-                    $ind++;
-                    $urn_string_array[$d][$ind] = ($d == $f->dst_dom) ? $f->dst_urn_string : NULL;
-                    $ind++;
-                }
-            }
-
-            $urnData = array();
-            foreach ($urn_string_array as $dom_id => $urn_array) {
-                $domain = new domain_info();
-                $domain->dom_id = $dom_id;
-                $dom = $domain->fetch(FALSE);
-                $endpoint = "http://{$dom[0]->dom_ip}/" . Framework::$systemDirName . "topology/ws";
-
-                $ws = new nusoap_client($endpoint, array('cache_wsdl' => 0));
-                $urnData[] = $ws->call('getURNsInfo', array('urn_string_list' => $urn_array));
-            }
-
-            $urnInfoMerge = array();
-            foreach ($urnData as $uD) {
-                foreach ($uD as $ind => $urn_str) {
-                    if ($urn_str)
-                        $urnInfoMerge[$ind] = $urn_str;
-                    elseif (!isset($urnInfoMerge[$ind]))
-                        $urnInfoMerge[$ind] = NULL;
-                }
-            }
-
-            $ind = 0;
-            $flows = array();
-
-            foreach ($allFlows as $f) {
-                $flow = new stdClass();
-                $flow->id = $f->flw_id;
-                $flow->name = $f->flw_name;
-                $flow->bandwidth = $f->bandwidth;
-
-                $domain = new domain_info();
-                $domain->dom_id = $f->src_dom;
-                $res_dom = $domain->fetch(FALSE);
-
-                $flow->source->domain = $res_dom[0]->dom_descr;
-                $flow->source->vlan = $f->src_vlan;
-
-                if ($urnInfoMerge[$ind]) {
-                    $flow->source->network = $urnInfoMerge[$ind]['net_descr'];
-                    $flow->source->device = $urnInfoMerge[$ind]['dev_descr'];
-                    $flow->source->port = $urnInfoMerge[$ind]['port_number'];
-                }
-
-                $ind++;
-
-                $domain = new domain_info();
-                $domain->dom_id = $f->dst_dom;
-                $res_dom = $domain->fetch(FALSE);
-
-                $flow->dest->domain = $res_dom[0]->dom_descr;
-                $flow->dest->vlan = $f->dst_vlan;
-
-                if ($urnInfoMerge[$ind]) {
-                    $flow->dest->network = $urnInfoMerge[$ind]['net_descr'];
-                    $flow->dest->device = $urnInfoMerge[$ind]['dev_descr'];
-                    $flow->dest->port = $urnInfoMerge[$ind]['port_number'];
-                }
-
-                $ind++;
-
-                $flow->editable = TRUE;
-                $flow->deletable = FALSE;
-                $flow->selectable = TRUE;
-
-                $flows[] = $flow;
-            }
-            $args = new stdClass();
-
-            $args->res_name = $reservationName;
-            $args->sel_flow = $selectedFlow;
-            $args->flows = $flows;
-
-            $this->setArgsToBody($args);
-        } else {
-            $args = new stdClass();
-
-            $args->res_name = $reservationName;
-            $args->sel_flow = $selectedFlow;
-
-            $args->link = array('app' => 'circuits', 'controller' => 'flows', 'action' => 'add_options');
-            $args->message = _("You have no flow, click the button below to create a new one");
-
-            $this->setArgsToBody($args);
-        }
-
-
-        $this->setAction('page1');
-        $this->render();
-    }
-
-    public function page2() {
-        $selectedTimer = NULL;
-        if (Common::hasSessionVariable('res_wizard') && Common::hasSessionVariable('sel_flow') && Common::hasSessionVariable('res_name')) {
-            $selectedFlow = Common::getSessionVariable('sel_flow');
-            $reservationName = Common::getSessionVariable('res_name');
-        } else {
-            $this->setFlash(_("Not enough arguments to reservation, going back to step 1 and 2..."), "warning");
-            $this->page1();
-            return;
-        }
-
-        if (Common::hasSessionVariable('sel_timer')) {
-            $selectedTimer = Common::getSessionVariable('sel_timer');
-        } else {
-            $selectedTimer = NULL;
-        }
-
-        $timer_info = new timer_info();
-        $allTimers = $timer_info->fetch();
-
-        if ($allTimers) {
-            $timers = array();
-
-            foreach ($allTimers as $t) {
-                $tim = new timer_info();
-                $tim->tmr_id = $t->tmr_id;
-                $timer = $tim->getTimerDetails();
-
-                $timer->editable = TRUE;
-                $timer->deletable = FALSE;
-                $timer->selectable = TRUE;
-
-                $timers[] = $timer;
-            }
-
-            $args = new stdClass();
-
-            $args->sel_timer = $selectedTimer;
-            $args->timers = $timers;
-
-            $this->setArgsToBody($args);
-        } else {
-            $args = new stdClass();
-
-            $args->sel_timer = $selectedTimer;
-
-            $args->link = array('app' => 'circuits', 'controller' => 'timers', 'action' => 'add_form');
-            $args->message = _("You have no timer, click the button below to create a new one");
-
-            $this->setArgsToBody($args);
-        }
-
-
-        $this->setAction('page2');
-        $this->render();
-    }
-
-    public function page3() {
-        $reservationName = NULL;
-        $selectedFlow = NULL;
-        $selectedTimer = NULL;
-        if (Common::hasSessionVariable('res_wizard') && Common::hasSessionVariable('sel_timer') && Common::hasSessionVariable('sel_flow') && Common::hasSessionVariable('res_name')) {
-            $selectedTimer = Common::getSessionVariable('sel_timer');
-            $selectedFlow = Common::getSessionVariable('sel_flow');
-            $reservationName = Common::getSessionVariable('res_name');
-        } else {
-            $this->setFlash(_("Not enough arguments to reservation, going back to step 3..."), "warning");
-            $this->page2();
-            return;
-        }
-
-        $flow_info = new flow_info();
-        $flow_info->flw_id = $selectedFlow;
-        $flow = $flow_info->getFlowDetails();
-
-        if (!$flow) {
-            $this->setFlash(_("Flow not found or could not get endpoints information"), "fatal");
-            $this->page1();
-            return;
-        }
-
-        $timer_info = new timer_info();
-        $timer_info->tmr_id = $selectedTimer;
-        $timer = $timer_info->getTimerDetails();
-
-        if (!$timer) {
-            $this->setFlash(_("Timer not found"), "fatal");
-            $this->page2();
-            return;
-        }
-
-
-        $args = new stdClass();
-        $args->flow = $flow;
-        $args->timer = $timer;
-        $args->res_name = $reservationName;
-
-        $this->setAction('page3');
-        $this->setArgsToBody($args);
-        $this->render();
-    }
-
     public function submit() {
 
         $res_end_timestamp = microtime(true);
@@ -762,6 +531,8 @@ class reservations extends Controller {
         $res_diff_timestamp = $res_end_timestamp - $res_begin_timestamp;
 
         Framework::debug("post", $_POST);
+        $this->status();
+        return;
 
         /**
          * insere o flow
@@ -831,7 +602,7 @@ class reservations extends Controller {
                     break;
             }
 
-            $this->view(array("res_id" => $res->res_id));
+            $this->view(array("res_id" => $res->res_id, "refresh" => '1'));
         } else {
             $new_flow->delete();
             $new_timer->delete();
@@ -840,15 +611,18 @@ class reservations extends Controller {
         }
     }
 
-    public function view($res_id_array) {
+    public function view($param_array) {
         $resId = NULL;
-        if (array_key_exists('res_id', $res_id_array)) {
-            $resId = $res_id_array['res_id'];
+        $refresh = 0;
+        if (array_key_exists('res_id', $param_array)) {
+            $resId = $param_array['res_id'];
         } else {
             $this->setFlash(_("Invalid index"), "fatal");
             $this->show();
             return;
         }
+        if (array_key_exists('refresh', $param_array))
+            $refresh = (integer) $param_array['refresh'];
 
         $res_info = new reservation_info();
         $res_info->res_id = $resId;
@@ -967,6 +741,7 @@ class reservations extends Controller {
         }
 
         $this->setArgsToScript(array(
+            "refreshReservation" => $refresh,
             "reservation_id" => $reservation->res_id,
             "status_array" => $status,
             "src_lat_network" => $flow->source->latitude,
@@ -994,28 +769,11 @@ class reservations extends Controller {
         $args->bandwidth = $reservation->bandwidth;
         $args->res_id = $reservation->res_id;
         $args->request = $request;
+        $args->refresh = $refresh;
 
         $this->setAction('view');
         $this->setArgsToBody($args);
         $this->render();
-    }
-
-    public function update_name() {
-        Common::setSessionVariable('res_name', Common::POST('name'));
-    }
-
-    public function update_flow($flw_id = NULL) {
-        if ($flw_id)
-            Common::setSessionVariable('sel_flow', $flw_id);
-        else
-            Common::setSessionVariable('sel_flow', Common::POST('flow'));
-    }
-
-    public function update_timer($tmr_id = NULL) {
-        if ($tmr_id)
-            Common::setSessionVariable('sel_timer', $tmr_id);
-        else
-            Common::setSessionVariable('sel_timer', Common::POST('timer'));
     }
 
 //    public function cancel($res_id_array) {

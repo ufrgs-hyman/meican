@@ -44,7 +44,7 @@ $freq_types[] = $freq;
         </div>
         <div id="tabs-4" class="control_tab">
             <input type="submit" id="bf"  class="ok" value="<?php echo _('Submit'); ?>"/>
-            <input type="button" id="bc1" class="cancel" value="<?php echo _('Cancel'); ?>" onclick="redir('<?php echo $this->buildLink(array("action" => "show")); ?>');"/>
+            <input type="button" id="bc1" class="cancel" value="<?php echo _('Cancel'); ?>" onclick="redir('<?php echo $this->buildLink(array("action" => "history")); ?>');"/>
         </div>
     </div>
 

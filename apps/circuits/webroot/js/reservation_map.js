@@ -64,13 +64,13 @@ function res_addMarker(location, where) {
         color = "00FF00";
     }
     
-    res_marker = new StyledMarker({
+    var res_marker = new StyledMarker({
         position: location,
         styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
             color:color
         }),
         map:res_map
-    });  
+    });
 
     res_markersArray.push(res_marker);
     res_marker.setMap(res_map);

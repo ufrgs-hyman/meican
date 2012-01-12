@@ -6,7 +6,7 @@ require_once 'includes/nuSOAP/lib/nusoap.php';
 include_once 'apps/aaa/models/user_info.inc';
 include_once 'apps/aaa/models/group_info.inc';
 include_once 'apps/bpm/models/request_info.inc';
-include_once 'apps/circuits/models/reservation_info.inc';
+include_once 'apps/circuits/models/reservation_info.php';
 include_once 'apps/circuits/models/flow_info.inc';
 include_once 'apps/circuits/models/timer_info.inc';
 include_once 'apps/topology/models/topology.inc';

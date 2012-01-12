@@ -35,7 +35,6 @@ function DayofWeek($date=NULL, $short=FALSE) {
     } else {
         $dw = date("w");
     }
-    Framework::debug("day", $dw);
     
     switch($dw) {
         case "0":

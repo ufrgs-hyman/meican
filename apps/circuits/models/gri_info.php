@@ -27,12 +27,7 @@ class gri_info extends Model {
             $this->dom_id = $domId;
         $gri_res = $this->fetch(FALSE);
         
-        $filter_res_id_array = array();
-        if ($gri_res) {
-            foreach ($gri_res as $g) {
-                $filter_res_id_array[] = $g->res_id;
-            }
-        }
+        $filter_res_id_array = Common::arrayExtractAttr($gri_res, "res_id");
         $filteredArray = array_unique($filter_res_id_array);
         return $filteredArray;
     }
@@ -42,18 +37,13 @@ class gri_info extends Model {
      */
     public function getHistoryResId() {
         $this->status = array("FAILED", "FINISHED", "CANCELLED", "");
-        $his_gri_res = $this->fetch(FALSE);
+        $hist_gri_res = $this->fetch(FALSE);
         
-        $his_filter_res_id_array = array();
-        if ($his_gri_res) {
-            foreach ($his_gri_res as $g) {
-                $his_filter_res_id_array[] = $g->res_id;
-            }
-        }
+        $hist_filter_res_id_array = Common::arrayExtractAttr($hist_gri_res, "res_id");
         $stat_gri_res = $this->getStatusResId();
         
         // faz a diferença dos arrays, para garantir que a reserva não tenha nenhum GRI que mude de status
-        $filter_res_id_array = array_diff($his_filter_res_id_array, $stat_gri_res);
+        $filter_res_id_array = array_diff($hist_filter_res_id_array, $stat_gri_res);
         $filteredArray = array_unique($filter_res_id_array);
         return $filteredArray;
     }

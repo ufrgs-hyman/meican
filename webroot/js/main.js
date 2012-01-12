@@ -1,8 +1,8 @@
 function updateSystemTime() {
-    $.post(baseUrl+"init/info_box/get_time", function(data) {
+    $.post(baseUrl+"init/info_box/time", function(data) {
         if (data)
             $("#system_date").html(data);
-    }, "json");
+    });
 }
 
 var errorFunc = function(jqXHR) {
@@ -141,7 +141,7 @@ $(document).ready(function() {
         
             window.scroll(0, 0);
             //$('#main').hide();
-            clearInterval(js_function_interval);
+            //clearInterval(js_function_interval);
                         
             $('#flash_box').html($('.flash_box').html());
             $('.flash_box').remove();
