@@ -93,10 +93,12 @@
       // Position
       var elmOffset = $(elm).offset();
       $tpDiv.css({'top':elmOffset.top + elm.offsetHeight, 'left':elmOffset.left});
-
+      if (elmOffset.top+$tpDiv.height() > $(window).height()){
+          $tpDiv.css({'top':elmOffset.top - $tpDiv.height()});
+      }
       // Show picker. This has to be done before scrollTop is set since that
       // can't be done on hidden elements.
-      $tpDiv.show();
+      $tpDiv.fadeIn('fast');
 
       // Try to find a time in the list that matches the entered time.
       var time = elm.value ? timeStringToDate(elm.value, settings) : startTime;
