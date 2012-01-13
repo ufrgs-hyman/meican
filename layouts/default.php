@@ -85,6 +85,7 @@
     </head>
 
     <body>
+        <div class="fade-overlay" id="MainOverlay"> </div>
         <div id="left-panel">
             <div id="logo">
                 <p>MEICAN</p>

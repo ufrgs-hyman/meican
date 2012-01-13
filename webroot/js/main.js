@@ -356,12 +356,14 @@ function WPToggle(divId, imageId) {
                             top: '-' + ($('.feedback-panel').outerHeight()+70) + 'px'
                         }, $.feedbackTab.speed)
                         .removeClass('open');
+                        $('#MainOverlay').hide();
                     } else {
                         $('.feedback-panel')
                         .animate({
                             top: $('a.feedback-link').offset().top + 15 + 'px'
                         },  $.feedbackTab.speed)
                         .addClass('open');
+                        $('#MainOverlay').show();
                     }
                     event.preventDefault();
                 });

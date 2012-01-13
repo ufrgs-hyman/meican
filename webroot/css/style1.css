@@ -961,7 +961,11 @@ table.list thead th {
 }
 
 .tab-overlay {
-    position: absolute; background-color: #fff; z-index: 3; opacity: 0.5; /*box-shadow: 2px 2px 4px #888;*/ height:100%; width: 100%; padding: 4px;
+}
+
+.fade-overlay{
+    position: absolute; background-color: #fff; z-index: 3; opacity: 0.5; /*box-shadow: 2px 2px 4px #888;*/  width: 100%; padding: 4px; display: none; 
+    height:100%;
 }
 
 

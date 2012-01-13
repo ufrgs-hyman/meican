@@ -32,7 +32,7 @@ $freq_types[] = $freq;
         <input type="text" name="res_name" id="res_name" size="50" value="<?php echo empty($name) ? null : $name; ?>"/>
     </h1>
     <div id="tabs-res" class="reservation-tabs" style="position:relative;">
-        <div class="tab-overlay"> </div>
+        <div class="tab-overlay fade-overlay"> </div>
         <div id="tabs-1">
             <?php $this->addElement('reservation_tab_endpoints'); ?>
         </div>
