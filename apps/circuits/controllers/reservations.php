@@ -776,40 +776,6 @@ class reservations extends Controller {
         $this->render();
     }
 
-//    public function cancel($res_id_array) {
-//        $cancel_reservations = Common::POST('cancel_checkbox');
-//
-//        if ($cancel_reservations) {
-//
-//            $cont = 0;
-//
-//            $endpoint = "http://" . Framework::$bridgeIp . "/axis2/services/BridgeOSCARS?wsdl";
-//            $client = new SoapClient($endpoint, array('cache_wsdl' => 0));
-//            if ($result = $client->cancel($cancel_reservations)) {
-//                foreach ($result->return as $val) {
-//                    if ($val == 0)
-//                        $cont++;
-//                }
-//            }
-//
-//            sleep(3);
-//
-//            switch ($cont) {
-//                case 0:
-//                    $this->setFlash(_("No reservation was cancelled"), "warning");
-//                    break;
-//                case 1:
-//                    $this->setFlash(_("One reservation was cancelled"), "success");
-//                    break;
-//                default:
-//                    $this->setFlash("$cont " . _("reservations were cancelled"), "success");
-//                    break;
-//            }
-//        }
-//
-//        $this->view($res_id_array);
-//    }
-
     public function delete() {
         $del_reservations = Common::POST("del_checkbox");
 
@@ -874,6 +840,12 @@ class reservations extends Controller {
     }
 
     function cancel($reservation_info) {
+        Framework::debug("post cancel",$_POST);
+        return;
+        
+        $cancel_reservations = Common::POST('cancel_checkbox');
+        
+        
         //descobrir IP do dominio origem da reserva para enviar ao OSCARS adequado
         $result = $reservation_info->fetch();
         $res = $result[0];
@@ -890,11 +862,48 @@ class reservations extends Controller {
                 $oscarsRes = new OSCARSReservation();
                 $oscarsRes->setOscarsUrl($flw->source->oscars_ip);
                 $oscarsRes->setGri($g->gri_id);
+                /**
+                 * @todo cancelar várias reservas de uma só vez
+                 */
                 $oscarsRes->cancelReservation();
                 unset($oscarsRes);
             }
         }
     }
+    
+//    public function cancel($res_id_array) {
+//        $cancel_reservations = Common::POST('cancel_checkbox');
+//
+//        if ($cancel_reservations) {
+//
+//            $cont = 0;
+//
+//            $endpoint = "http://" . Framework::$bridgeIp . "/axis2/services/BridgeOSCARS?wsdl";
+//            $client = new SoapClient($endpoint, array('cache_wsdl' => 0));
+//            if ($result = $client->cancel($cancel_reservations)) {
+//                foreach ($result->return as $val) {
+//                    if ($val == 0)
+//                        $cont++;
+//                }
+//            }
+//
+//            sleep(3);
+//
+//            switch ($cont) {
+//                case 0:
+//                    $this->setFlash(_("No reservation was cancelled"), "warning");
+//                    break;
+//                case 1:
+//                    $this->setFlash(_("One reservation was cancelled"), "success");
+//                    break;
+//                default:
+//                    $this->setFlash("$cont " . _("reservations were cancelled"), "success");
+//                    break;
+//            }
+//        }
+//
+//        $this->view($res_id_array);
+//    }
 
     function listStatus($grisArray) {
         $oscarsRes = new OSCARSReservation();
