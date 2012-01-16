@@ -24,8 +24,6 @@ class devices extends Controller {
 
     public function show() {
         
-        Framework::debug("dev show");
-
         $dev = new device_info();
         $allDevices = $dev->fetch();
 
@@ -75,7 +73,6 @@ class devices extends Controller {
             $this->setArgsToBody($args);
         }
         
-        Framework::debug("dev show render");
         $this->render();
     }
 

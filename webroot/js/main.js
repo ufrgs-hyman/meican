@@ -122,7 +122,7 @@ $(document).ready(function() {
                     
                    
                 });*/
-    setInterval("updateSystemTime()", 60000);//<?php // chamada para atualizar a hora?>
+    
     //$("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
     if (jQuery.isFunction(jQuery.fn.pjax)){           
         $('a[href][href!=""][href!="#"]').pjax('#main', {
@@ -137,7 +137,7 @@ $(document).ready(function() {
 
             clearInterval(js_function_interval);
         })
-        .bind('end.pjax',   function(xhr) {
+        .bind('end.pjax', function(xhr) {
         
             window.scroll(0, 0);
             //$('#main').hide();

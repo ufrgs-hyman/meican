@@ -167,8 +167,10 @@ class Model {
           //return "ERROR: database_object.inc -> UPDATE : PRIMARY KEY $primaryKey NÃO ENCONTRADA.";
          *
          */
-        if (!$changed)
+        if (!$changed) {
+            Framework::debug("not updated");
             return FALSE;
+        }
 
         if (sizeof($this->attributes) == 0)
         //return "Atributos invalidos";
@@ -182,7 +184,7 @@ class Model {
         $where = " WHERE ";
         foreach ($this->attributes as $attribute) {
             $name = $attribute->name;
-            if ($attribute->type == "VARCHAR") {
+            if (($attribute->type == "VARCHAR") && ($values[$name] !== NULL)) {
                 $values[$name] = "'" . $values[$name] . "'";
             }
             if ($attribute->usedInUpdate) {
@@ -191,7 +193,10 @@ class Model {
                 } else {
                     $sql.=", ";
                 }
-                $sql .= "`$name`=" . $values[$name];
+                if ($values[$name] === NULL)
+                    $sql .= "`$name`=NULL";
+                else
+                    $sql .= "`$name`=" . $values[$name];
             }
             if ($attribute->primaryKey) {
                 if ($isFirstWhere) {
