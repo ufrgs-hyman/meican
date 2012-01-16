@@ -53,24 +53,6 @@ $device = isset($argsToElement->device) ? $argsToElement->device : NULL;
     
     <tr>
         <th class="right">
-            <?php echo _("Latitude"); ?>:
-        </th>
-        <td class="left">
-            <input type="text" name="dev_lat" value="<?php if ($device) echo $device->dev_lat; ?>"/>
-        </td>
-    </tr>
-    
-    <tr>
-        <th class="right">
-            <?php echo _("Longitude"); ?>:
-        </th>
-        <td class="left">
-            <input type="text" name="dev_lng" value="<?php if ($device) echo $device->dev_lng; ?>"/>
-        </td>
-    </tr>
-    
-    <tr>
-        <th class="right">
             <?php echo _("Topology node ID"); ?>:
         </th>
         <td class="left">

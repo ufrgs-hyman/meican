@@ -41,8 +41,6 @@ class devices extends Controller {
                 $device->trademark = $d->trademark;
                 $device->model = $d->model;
                 $device->nr_ports = $d->nr_ports;
-                $device->latitude = ($d->dev_lat) ? $d->dev_lat : "-";
-                $device->longitude = ($d->dev_lng) ? $d->dev_lng : "-";
                 $device->node_id = $d->node_id;
                 
                 $device->nr_endpoints = 0;
@@ -152,8 +150,6 @@ class devices extends Controller {
         $device->model = $model;
         $device->nr_ports = $nr_ports;
         $device->net_id = $network;
-        $device->dev_lat = Common::POST("dev_lat");
-        $device->dev_lng = Common::POST("dev_lng");
         $device->node_id = Common::POST("node_id");
         
         Framework::debug("dev insert1");
@@ -248,8 +244,6 @@ class devices extends Controller {
         $device->trademark = Common::POST("trademark");
         $device->model = Common::POST("model");
         $device->nr_ports = Common::POST("nr_ports");
-        $device->dev_lat = Common::POST("dev_lat");
-        $device->dev_lng = Common::POST("dev_lng");
         $device->net_id = Common::POST("network");
         $device->node_id = Common::POST("node_id");
         

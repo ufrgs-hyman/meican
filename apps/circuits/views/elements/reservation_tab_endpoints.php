@@ -6,20 +6,20 @@
         <?= $this->element('reservation_tab_point', array('type' => 'source')); ?>
         <div id="bandwidth_bar">
             <div id="bandwidth_bar_text">
-            <label id="amount_label" for="amount"></label>
-            <label id="amount" style="border:0; color:#000; font-weight:bold; width:100%"></label>
-            <?php /*<label id="bandwidth_label" for="bandwidth"><?php echo _("Bandwidth");?></label>*/ ?>
-            <div style="text-align:center;">
-            <input type="text" name="bandwidth" id="bandwidth" value="200" class="integer-input" size="4" step="100" disabled="disabled"/>
-            </div>
-            <label id="bandwidth_un" for="bandwidth"><?php echo _("Mbps");?></label>
-            <?php //<input type="hidden" name="bandwidth" id="bandwidth" value="200"/> ?>
+                <label id="amount_label" for="amount"></label>
+                <label id="amount" style="border:0; color:#000; font-weight:bold; width:100%"></label>
+                <?php /*<label id="bandwidth_label" for="bandwidth"><?php echo _("Bandwidth");?></label>*/ ?>
+                <div style="text-align:center;">
+                    <input type="text" name="bandwidth" id="bandwidth" value="200" class="integer-input" size="4" step="100" disabled="disabled"/>
+                </div>
+                <label id="bandwidth_un" for="bandwidth"><?php echo _("Mbps");?></label>
+                <?php //<input type="hidden" name="bandwidth" id="bandwidth" value="200"/> ?>
             </div>
             <div id="bandwidth_bar_inside"></div><?php //var sizepx = 5; $('#bandwidth_bar').click(function(){ sizepx = sizepx+5;  $('#bandwidth_bar div').animate({width: sizepx+'%'}, 100); });?>
         </div>
         <?= $this->element('reservation_tab_point', array('type' => 'destination')); ?>
         
-<?php /*<div style="width: 100%; margin-top: 5px">
+        <?php /*<div style="width: 100%; margin-top: 5px">
             <label id="amount_label" for="amount"></label>
             <label id="amount" style="border:0; color:#000; font-weight:bold; width:100%"></label>
         </div>
@@ -28,5 +28,5 @@
             <?php $this->addElement('vlan'); ?><br/>
         </div>*/?>
     </div>
-    <?php //$this->addElement('reservation_tab3'); ?>
+        <?php //$this->addElement('reservation_tab3'); ?>
     <div style="clear:both;"></div>

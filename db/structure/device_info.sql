@@ -34,8 +34,6 @@ CREATE TABLE IF NOT EXISTS `device_info` (
   `model` char(16) DEFAULT NULL,
   `nr_ports` int(11) DEFAULT NULL,
   `net_id` int(11) NOT NULL,
-  `dev_lat` char(10) DEFAULT NULL,
-  `dev_lng` char(11) DEFAULT NULL,
   `node_id` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`dev_id`),
   KEY `net_id` (`net_id`)
