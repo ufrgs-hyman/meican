@@ -58,15 +58,7 @@ class Model {
     }
 
     public function getValidInds() {
-        unset($validInds);
-        foreach ($this->attributes as $attribute) {
-            $validInd[] = $attribute->name;
-        }
-
-        if (!isset($validInd))
-            return FALSE;
-        else
-            return $validInd;
+        return (Common::arrayExtractAttr($this->attributes, "name"));
     }
 
     /**
@@ -76,10 +68,10 @@ class Model {
      * @return <array> Object Model: objects were found
      */
     public function fetch($useACL = true) {
-        unset($allowPks);
         $tableName = $this->getTableName();
         $whereArgsString = $this->buildWhere();
 
+        $sql = "";
         if ($useACL) {
             $acl = new AclLoader();
             $allowPks = $acl->getAllowedPKey('read', $tableName);
@@ -104,7 +96,51 @@ class Model {
         //Framework::debug("fetch",$sql);
         return ($this->data = $this->querySql($sql, $tableName));
     }
+    
+    /**
+     * @example Before calling this function, all the 'usedInUpdate' attributes must be set, even when it should be NULL.
+     * Otherwise, the param will be set blank
+     * @return Boolean TRUE if update was success, FALSE otherwise
+     */
+    public function update() {
+        $pk = $this->getPrimaryKey();
+        if (!$this->{$pk})
+            return FALSE;
+        
+        $classname = $this->getTableName();
+        $values = get_object_vars($this);
+        $sql = "UPDATE `$classname` SET ";
+        $isFirst = true;
+        
+        foreach ($this->attributes as $attribute) {
+            $name = $attribute->name;
+            if (($attribute->type == "VARCHAR") && ($values[$name] !== NULL)) {
+                $values[$name] = "'" . $values[$name] . "'";
+            }
+            if ($attribute->usedInUpdate) {
+                if ($isFirst) {
+                    $isFirst = false;
+                } else {
+                    $sql.=", ";
+                }
+                if ($values[$name] === NULL)
+                    $sql .= "`$name`=NULL";
+                else
+                    $sql .= "`$name`=" . $values[$name];
+            }
+        }
+        
+        $where = " WHERE `$pk`=".$this->{$pk};
+        
+        $sql .= $where;
+        Framework::debug('update',$sql);
+        return $this->execSql($sql);
+    }
 
+    /**
+     * @deprecated OBSOLET FUNCTION -> replaced by update()
+     * 
+     */
     /**
      * Utiliza a PRIMARY_KEY do modelo para selecionar a linha a ser alterada.
      * Esse atributo precisa estar setado.
@@ -113,7 +149,8 @@ class Model {
      *
      * @return <boolean> TRUE if update was success, FALSE otherwise
      */
-    public function update() {
+    /*
+    public function update2() {
 
         //algoritmo simplificado:
         //achar a chave primária
@@ -122,7 +159,7 @@ class Model {
         // inicia objeto temporário para manter as informações do objeto original
 
 
-        unset($validInd);
+        $validInd = array();
 
         // varre a estrutura em busca da chave primária e constrói um vetor com índices válidos
         foreach ($this->attributes as $attribute) {
@@ -166,7 +203,7 @@ class Model {
         /** @todo : log
           //return "ERROR: database_object.inc -> UPDATE : PRIMARY KEY $primaryKey NÃO ENCONTRADA.";
          *
-         */
+         *
         if (!$changed) {
             Framework::debug("not updated");
             return FALSE;
@@ -211,7 +248,15 @@ class Model {
         //Framework::debug('update',$sql);
         return $this->execSql($sql);
     }
+    */
 
+    /**
+     * 
+     * @param Array $alt An array containing only the attributes to update
+     * @param Boolean $useACL Whether to use ACL or not, default is TRUE
+     * @return Boolean TRUE if operation was successful, FALSE otherwise
+     * @example This function is better to use when only some attributes of the model are updated, and not all of them
+     */
     public function updateTo($alt = Array(), $useACL = TRUE) {
 
         if (!$alt)
@@ -222,9 +267,8 @@ class Model {
         $values = get_object_vars($this);
 
         $validInds = $this->getValidInds();
-        unset($setArgs);
+        $setArgs = array();
         foreach ($alt as $ind => $val) {
-
             if ($val && array_search($ind, $validInds) !== FALSE) { //indice valido
                 if ($this->attributes[$ind]->type == "VARCHAR")
                     $alt[$ind] = "\"" . $alt[$ind] . "\"";
@@ -241,6 +285,8 @@ class Model {
             return FALSE;
 
         $whereArgsString = $this->buildWhere();
+        $sql = "";
+        $sqlfetch = "";
 
         if ($useACL) {
 
@@ -276,14 +322,12 @@ class Model {
             return FALSE;
         else
             return $this->execSql($sql);
-    }
-
-//do updateto
+    } //do updateTo
 
     /**
-     * @return <boolean> FALSE : on failed insertion (FAILED)
-     * @return <object> Object : the inserted object if it was possible to find it (SUCCESS)
-     * @return <boolean> TRUE : the object was inserted, but it was not possible to find it (SUCCESS)
+     * @return Boolean FALSE : on failed insertion (FAILED)
+     * @return Class Object : the inserted object if it was possible to find it (SUCCESS)
+     * @return Boolean TRUE : the object was inserted, but it was not possible to find it (SUCCESS)
      */
     public function insert() {
 
@@ -345,7 +389,7 @@ class Model {
 
     /**
      *
-     * @return <boolean> TRUE if delete was success, FALSE otherwise
+     * @return Boolean TRUE if delete was success, FALSE otherwise
      */
     public function delete($useACL = TRUE) {
         $tableName = $this->getTableName();
@@ -411,8 +455,8 @@ class Model {
 
     /**
      *
-     * @param <string> $sql : well-formatted SQL string
-     * @return <boolean> Object ID if insert was successful, FALSE otherwise
+     * @param String $sql : well-formatted SQL string
+     * @return Boolean Object ID if insert was successful, FALSE otherwise
      */
     protected function insertSql($sql) {
         $db = new Database();
@@ -425,8 +469,8 @@ class Model {
 
     /**
      *
-     * @param <string> $sql : well-formatted SQL string
-     * @return <boolean> TRUE if exec was successful, FALSE otherwise
+     * @param String $sql well-formatted SQL string
+     * @return Boolean TRUE if exec was successful, FALSE otherwise
      */
     protected function execSql($sql) {
         $db = new Database();
@@ -457,7 +501,7 @@ class Model {
 
     /**
      *
-     * @param <string> $sql : well-formatted SQL string
+     * @param <string> $sql well-formatted SQL string
      * @param <string> $tableName : name of class or table model
      * @return <boolean> FALSE: no object found
      * @return <array> Object Model: objects were found

@@ -4,10 +4,10 @@ defined ('__MEICAN') or die ("Invalid access.");
 
 include_once 'libs/controller.php';
 
-include_once 'apps/topology/models/urn_info.inc';
-include_once 'apps/topology/models/network_info.inc';
-include_once 'apps/topology/models/device_info.inc';
-include_once 'apps/topology/models/topology.inc';
+include_once 'apps/topology/models/urn_info.php';
+include_once 'apps/topology/models/network_info.php';
+include_once 'apps/topology/models/device_info.php';
+include_once 'apps/topology/models/topology.php';
 
 
 

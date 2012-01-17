@@ -1,19 +1,21 @@
 <?php
+
 $freq_types = array();
-unset($freq);
+$freq = new stdClass();
 $freq->value = "DAILY";
 $freq->descr = _("Everyday");
 $freq_types[] = $freq;
 
-unset($freq);
+$freq = new stdClass();
 $freq->value = "WEEKLY";
 $freq->descr = _("Weekly");
 $freq_types[] = $freq;
 
-unset($freq);
+$freq = new stdClass();
 $freq->value = "MONTHLY";
 $freq->descr = _("Monthly");
 $freq_types[] = $freq;
+
 ?>
 
 <div id="recurrence" style="display:none;">

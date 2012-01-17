@@ -1,10 +1,10 @@
 <?php
 
 include_once 'libs/controller.php';
-include_once 'apps/bpm/models/request_info.inc';
+include_once 'apps/bpm/models/request_info.php';
 include_once 'libs/auth.php';
-include_once 'apps/aaa/models/user_info.inc';
-include_once 'apps/topology/models/domain_info.inc';
+include_once 'apps/aaa/models/user_info.php';
+include_once 'apps/topology/models/domain_info.php';
 include_once 'apps/circuits/models/oscars.php';
 
 include_once 'includes/nuSOAP/lib/nusoap.php';

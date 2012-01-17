@@ -5,12 +5,12 @@ $hasUrn = FALSE;
 
 ?>
 
-<h1><?php echo _("URNs (Uniform Resource Name)"); ?></h1>
+<h1><?php echo _("URNs (Uniform resource name)"); ?></h1>
 
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
 
     <?php foreach ($domains as $dom): ?>
-    <div id="domain<?php echo $dom->id; ?>">                
+    <div id="domain<?php echo $dom->id; ?>">
         
         <?php if ($dom->urns): ?>
             <h2><img id="collapseExpand<?php echo $dom->id ?>" src="<?php echo $this->url(''); ?>webroot/img/minus.gif" onclick="WPToggle('#collapsableUrns<?php echo $dom->id ?>', '#collapseExpand<?php echo $dom->id ?>')"/>
@@ -26,6 +26,7 @@ $hasUrn = FALSE;
                     $hasUrn = TRUE;
                     $this->addElement('list_urns',$dom); 
                  ?>
+                <br/><br/>
             </div>
                  
         <?php else: ?>

@@ -4,6 +4,7 @@ $domains = isset($argsToElement->domains) ? $argsToElement->domains : NULL;
 $device = isset($argsToElement->device) ? $argsToElement->device : NULL;
 
 ?>
+
 <table class="withoutBorder add">
 
     <tr>
@@ -65,7 +66,7 @@ $device = isset($argsToElement->device) ? $argsToElement->device : NULL;
             <?php echo _("Select a domain"); ?>:
         </th>
         <td class="left">
-            <select id="dev_domain" onchange="dev_changeDomain(this)">
+            <select id="dev_domain" onchange="dev_changeDomain(this)" <?php if ($device) echo "disabled"; ?> >
                 <option value="-1"/>
                 <?php
                 if ($device) {
@@ -108,7 +109,7 @@ $device = isset($argsToElement->device) ? $argsToElement->device : NULL;
         </th>
         <td class="left">
             <?php if ($device && $net_found): ?>
-                <select name="network" id="dev_network">
+                <select name="network" id="dev_network" <?php if ($device) echo "disabled"; ?> >
                     <option value="-1"/>
                     <?php foreach ($networks as $n): ?>
                         <?php if ($n->id == $net_id): ?>

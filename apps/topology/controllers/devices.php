@@ -4,10 +4,10 @@ defined ('__MEICAN') or die ("Invalid access.");
 
 include_once 'libs/controller.php';
 
-include_once 'apps/topology/models/topology.inc';
-include_once 'apps/topology/models/domain_info.inc';
-include_once 'apps/topology/models/device_info.inc';
-include_once 'apps/topology/models/network_info.inc';
+include_once 'apps/topology/models/topology.php';
+include_once 'apps/topology/models/domain_info.php';
+include_once 'apps/topology/models/device_info.php';
+include_once 'apps/topology/models/network_info.php';
 
 include_once 'apps/topology/controllers/networks.php';
 include_once 'apps/topology/controllers/domains.php';
@@ -149,14 +149,9 @@ class devices extends Controller {
         $device->net_id = $network;
         $device->node_id = Common::POST("node_id");
         
-        Framework::debug("dev insert1");
-
         if ($device->insert($network, "network_info")) {
-            Framework::debug("dev insert2");
             $this->setFlash(_("Device")." '$device->dev_descr' "._("added in network")." '{$net_res[0]->net_descr}'", "success");
-            Framework::debug("dev insert3");
             $this->show();
-            Framework::debug("dev insert4");
             return;
         } else $this->setFlash(_("Fail to create device"), "error");
 
@@ -241,7 +236,7 @@ class devices extends Controller {
         $device->trademark = Common::POST("trademark");
         $device->model = Common::POST("model");
         $device->nr_ports = Common::POST("nr_ports");
-        $device->net_id = Common::POST("network");
+        //$device->net_id = Common::POST("network"); -> não puxa pois está desabilitado
         $device->node_id = Common::POST("node_id");
         
         if ($device->update()) {

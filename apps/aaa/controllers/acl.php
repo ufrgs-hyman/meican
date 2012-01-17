@@ -5,22 +5,22 @@ defined ('__MEICAN') or die ("Invalid access.");
 include_once 'libs/controller.php';
 include_once 'libs/auth.php';
 
-include_once 'apps/aaa/models/group_info.inc';
-include_once 'apps/aaa/models/user_info.inc';
-include_once 'apps/aaa/models/aros_acos.inc';
-include_once 'apps/aaa/models/aros.inc';
-include_once 'apps/aaa/models/acos.inc';
+include_once 'apps/aaa/models/group_info.php';
+include_once 'apps/aaa/models/user_info.php';
+include_once 'apps/aaa/models/aros_acos.php';
+include_once 'apps/aaa/models/aros.php';
+include_once 'apps/aaa/models/acos.php';
 
-include_once 'apps/bpm/models/request_info.inc';
+include_once 'apps/bpm/models/request_info.php';
 
-include_once 'apps/circuits/models/flow_info.inc';
+include_once 'apps/circuits/models/flow_info.php';
 include_once 'apps/circuits/models/reservation_info.php';
-include_once 'apps/circuits/models/timer_info.inc';
+include_once 'apps/circuits/models/timer_info.php';
 
-include_once 'apps/topology/models/device_info.inc';
-include_once 'apps/topology/models/domain_info.inc';
-include_once 'apps/topology/models/network_info.inc';
-include_once 'apps/topology/models/urn_info.inc';
+include_once 'apps/topology/models/device_info.php';
+include_once 'apps/topology/models/domain_info.php';
+include_once 'apps/topology/models/network_info.php';
+include_once 'apps/topology/models/urn_info.php';
 
 
 class acl extends Controller {

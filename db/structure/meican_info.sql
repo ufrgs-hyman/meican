@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `meican_info` (
   `meican_id` int(11) NOT NULL AUTO_INCREMENT,
   `meican_descr` varchar(30) NOT NULL,
   `meican_ip` varchar(64) NOT NULL,
-  `meican_dir_name` varchar(30) NOT NULL,
+  `meican_dir_name` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`meican_id`),
   UNIQUE KEY `fed_ip` (`meican_ip`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

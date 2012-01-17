@@ -1,8 +1,8 @@
 <?php
 include_once 'libs/controller.php';
 require_once 'includes/nuSOAP/lib/nusoap.php';
-include_once 'apps/topology/models/topology.inc';
-include_once 'apps/topology/models/meican_info.inc';
+include_once 'apps/topology/models/topology.php';
+include_once 'apps/topology/models/meican_info.php';
 
 class ws extends Controller {
 

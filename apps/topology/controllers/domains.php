@@ -4,7 +4,7 @@ defined ('__MEICAN') or die ("Invalid access.");
 
 include_once 'libs/controller.php';
 
-include_once 'apps/topology/models/domain_info.inc';
+include_once 'apps/topology/models/domain_info.php';
 
 class domains extends Controller {
 

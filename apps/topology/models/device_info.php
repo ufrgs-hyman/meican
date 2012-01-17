@@ -16,9 +16,7 @@ class device_info extends Resource_Model {
         $this->addAttribute("trademark","VARCHAR");
         $this->addAttribute("model","VARCHAR");
         $this->addAttribute("nr_ports","INTEGER");
-        $this->addAttribute("net_id","INTEGER");
-        $this->addAttribute("dev_lat","VARCHAR");
-        $this->addAttribute("dev_lng","VARCHAR");
+        $this->addAttribute("net_id","INTEGER", FALSE, TRUE, FALSE);
         $this->addAttribute("node_id","VARCHAR");
     }
     

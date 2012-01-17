@@ -1,7 +1,7 @@
 <?php
 
 include_once 'libs/resource_model.php';
-include_once 'apps/topology/models/topology.inc';
+include_once 'apps/topology/models/topology.php';
 
 class flow_info extends Resource_Model {
     var $displayField = "path";
@@ -154,11 +154,6 @@ class flow_info extends Resource_Model {
             return $flowData;
         }
     }
-
-    
-  
-
-
 
 }
 

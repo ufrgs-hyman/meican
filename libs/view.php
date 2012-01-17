@@ -120,7 +120,7 @@ class View {
         }
     }
 
-    public function element($element, $args=null) {
+    public function element($element, $args=array()) {
         if (!empty($args['app']))
             $app = $args['app'];
         else

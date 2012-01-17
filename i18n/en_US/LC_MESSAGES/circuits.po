@@ -8,13 +8,40 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-12 18:42-0200\n"
+"POT-Creation-Date: 2012-01-17 17:32-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: models/timer_info.php:58 controllers/timers.php:141
+#: controllers/timers.php:380 controllers/reservations.php:470
+msgid "days"
+msgstr ""
+
+#: models/timer_info.php:58 controllers/timers.php:140
+#: controllers/timers.php:379 controllers/reservations.php:469
+msgid "day"
+msgstr ""
+
+#: models/timer_info.php:63 controllers/reservations.php:479
+msgid "hours"
+msgstr ""
+
+#: models/timer_info.php:63 controllers/reservations.php:478
+msgid "hour"
+msgstr ""
+
+#: models/timer_info.php:68 controllers/reservations.php:481
+msgid "minutes"
+msgstr ""
+
+#: models/timer_info.php:68 models/timer_info.php:72
+#: controllers/reservations.php:480
+msgid "minute"
+msgstr ""
 
 #: models/gri_info.php:55
 msgid "Active"
@@ -105,7 +132,7 @@ msgid "OK"
 msgstr ""
 
 #: views/flows_add.php:52 views/flows_add.php:54 views/flows_edit.php:50
-#: views/flows_edit.php:52 views/reservations_add.php:47
+#: views/flows_edit.php:52 views/reservations_add.php:30
 #: views/timers_add.php:32 views/timers_add.php:34
 #: views/flows_add_options.php:20 views/flows_add_options.php:22
 #: views/map_show.php:124 views/map_show.php:126 views/timers_edit.php:34
@@ -117,27 +144,15 @@ msgstr ""
 msgid "Edit Flow"
 msgstr ""
 
-#: views/reservations_add.php:12 views/elements/timer_recurrence.php:5
-msgid "Everyday"
-msgstr ""
-
-#: views/reservations_add.php:17 views/elements/timer_recurrence.php:10
-msgid "Weekly"
-msgstr ""
-
-#: views/reservations_add.php:22 views/elements/timer_recurrence.php:15
-msgid "Monthly"
-msgstr ""
-
-#: views/reservations_add.php:31
+#: views/reservations_add.php:14
 msgid "New circuit name:"
 msgstr ""
 
-#: views/reservations_add.php:46
+#: views/reservations_add.php:29
 msgid "Submit"
 msgstr ""
 
-#: views/timers_show.php:3 controllers/timers.php:113
+#: views/timers_show.php:3 controllers/timers.php:100
 msgid "Timers"
 msgstr ""
 
@@ -153,15 +168,15 @@ msgstr ""
 msgid "Do you confirm?"
 msgstr ""
 
-#: views/reservations_show.php:8 controllers/reservations.php:122
+#: views/reservations_show.php:8 controllers/reservations.php:123
 msgid "Active and pending reservations"
 msgstr ""
 
-#: views/reservations_show.php:8 controllers/reservations.php:122
+#: views/reservations_show.php:8 controllers/reservations.php:123
 msgid "History reservations"
 msgstr ""
 
-#: views/reservations_show.php:15 views/reservations_view.php:45
+#: views/reservations_show.php:15 views/reservations_view.php:47
 msgid "Refresh"
 msgstr ""
 
@@ -174,8 +189,8 @@ msgstr ""
 msgid "Bandwidth (Mbps)"
 msgstr ""
 
-#: views/reservations_show.php:28 views/elements/view_request.php:12
-#: views/reservations_view.php:58 circuits.php:23
+#: views/reservations_show.php:28 views/elements/list_gris.php:13
+#: views/elements/view_request.php:12 circuits.php:23
 msgid "Status"
 msgstr ""
 
@@ -192,12 +207,12 @@ msgid "Destination"
 msgstr ""
 
 #: views/reservations_show.php:32 views/elements/view_timer.php:11
-#: views/elements/timer_form.php:8
+#: views/elements/timer_form.php:11
 msgid "Start"
 msgstr ""
 
 #: views/reservations_show.php:33 views/elements/view_timer.php:14
-#: views/elements/timer_form.php:12
+#: views/elements/timer_form.php:15
 msgid "Finish"
 msgstr ""
 
@@ -209,8 +224,8 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: views/reservations_show.php:62 views/reservations_view.php:59
-#: views/reservations_view.php:80
+#: views/reservations_show.php:62 views/elements/list_gris.php:14
+#: views/elements/list_gris.php:35
 msgid "loading"
 msgstr ""
 
@@ -222,33 +237,49 @@ msgstr ""
 msgid "The selected flows will be deleted."
 msgstr ""
 
+#: views/elements/list_gris.php:10
+msgid "Tool"
+msgstr ""
+
+#: views/elements/list_gris.php:11
+msgid "Global Reservation Identifier (GRI)"
+msgstr ""
+
+#: views/elements/list_gris.php:16
+msgid "Initial Date/Time"
+msgstr ""
+
+#: views/elements/list_gris.php:17
+msgid "Final Date/Time"
+msgstr ""
+
 #: views/elements/view_timer.php:17 views/elements/list_timers.php:16
 msgid "Duration"
 msgstr ""
 
 #: views/elements/view_timer.php:42 views/elements/view_timer.php:57
-#: views/elements/timer_form.php:22
+#: views/elements/timer_form.php:26
 msgid "Summary"
 msgstr ""
 
 #: views/elements/reservation_tab_point.php:24 views/elements/view_flow.php:21
 #: views/elements/list_flows.php:19 views/elements/list_flows.php:25
 #: views/elements/source_dest.php:21 controllers/map.php:59
-#: controllers/reservations.php:450 controllers/reservations.php:751
+#: controllers/reservations.php:451 controllers/reservations.php:752
 msgid "Domain"
 msgstr ""
 
 #: views/elements/reservation_tab_point.php:28 views/elements/view_flow.php:33
 #: views/elements/list_flows.php:20 views/elements/list_flows.php:26
 #: views/elements/source_dest.php:65 controllers/map.php:61
-#: controllers/reservations.php:452 controllers/reservations.php:753
+#: controllers/reservations.php:453 controllers/reservations.php:754
 msgid "Network"
 msgstr ""
 
 #: views/elements/reservation_tab_point.php:32 views/elements/view_flow.php:45
 #: views/elements/list_flows.php:21 views/elements/list_flows.php:27
 #: views/elements/source_dest.php:77 controllers/map.php:63
-#: controllers/reservations.php:454 controllers/reservations.php:755
+#: controllers/reservations.php:455 controllers/reservations.php:756
 msgid "Device"
 msgstr ""
 
@@ -274,96 +305,108 @@ msgstr ""
 msgid "VLAN"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:22
+#: views/elements/timer_recurrence.php:6
+msgid "Everyday"
+msgstr ""
+
+#: views/elements/timer_recurrence.php:11
+msgid "Weekly"
+msgstr ""
+
+#: views/elements/timer_recurrence.php:16
+msgid "Monthly"
+msgstr ""
+
+#: views/elements/timer_recurrence.php:24
 msgid "Recurrence pattern"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:40
+#: views/elements/timer_recurrence.php:42
 msgid "Repeats every "
 msgstr ""
 
-#: views/elements/timer_recurrence.php:60
+#: views/elements/timer_recurrence.php:62
 msgid "Sunday"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:60
+#: views/elements/timer_recurrence.php:62
 msgid "Sun"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:63
+#: views/elements/timer_recurrence.php:65
 msgid "Monday"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:63
+#: views/elements/timer_recurrence.php:65
 msgid "Mon"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:66
+#: views/elements/timer_recurrence.php:68
 msgid "Tuesday"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:66
+#: views/elements/timer_recurrence.php:68
 msgid "Tue"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:69
+#: views/elements/timer_recurrence.php:71
 msgid "Wednesday"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:69
+#: views/elements/timer_recurrence.php:71
 msgid "Wed"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:74
+#: views/elements/timer_recurrence.php:76
 msgid "Thursday"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:74
+#: views/elements/timer_recurrence.php:76
 msgid "Thu"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:77
+#: views/elements/timer_recurrence.php:79
 msgid "Friday"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:77
+#: views/elements/timer_recurrence.php:79
 msgid "Fri"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:80
+#: views/elements/timer_recurrence.php:82
 msgid "Saturday"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:80
+#: views/elements/timer_recurrence.php:82
 msgid "Sat"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:88
+#: views/elements/timer_recurrence.php:90
 msgid "Range of recurrence"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:91
+#: views/elements/timer_recurrence.php:93
 msgid "Starts on"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:99
+#: views/elements/timer_recurrence.php:101
 msgid "Ends:"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:101
+#: views/elements/timer_recurrence.php:103
 msgid "After"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:116
+#: views/elements/timer_recurrence.php:118
 msgid "occurrences"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:119
+#: views/elements/timer_recurrence.php:121
 msgid "On"
 msgstr ""
 
 #: views/elements/view_flow.php:75 views/elements/view_flow.php:85
-#: controllers/reservations.php:460
+#: controllers/reservations.php:461
 msgid "any"
 msgstr ""
 
@@ -389,7 +432,7 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: views/elements/timer_form.php:18
+#: views/elements/timer_form.php:21
 msgid "Repeat..."
 msgstr ""
 
@@ -420,32 +463,16 @@ msgstr ""
 msgid "Reservation name"
 msgstr ""
 
-#: views/reservations_view.php:55
-msgid "Tool"
-msgstr ""
-
-#: views/reservations_view.php:56
-msgid "Global Reservation Identifier (GRI)"
-msgstr ""
-
-#: views/reservations_view.php:61
-msgid "Initial Date/Time"
-msgstr ""
-
-#: views/reservations_view.php:62
-msgid "Final Date/Time"
-msgstr ""
-
-#: views/reservations_view.php:103 views/reservations_view.php:112
-msgid "Back to reservations"
-msgstr ""
-
-#: views/reservations_view.php:104
+#: views/reservations_view.php:48
 msgid "Cancel reservations"
 msgstr ""
 
-#: views/reservations_view.php:104
+#: views/reservations_view.php:48
 msgid "Cancel the selected reservations?"
+msgstr ""
+
+#: views/reservations_view.php:66
+msgid "Back to reservations"
 msgstr ""
 
 #: views/timers_add.php:8 views/timers_edit.php:9
@@ -472,7 +499,7 @@ msgstr ""
 msgid "Add Flow - Map View"
 msgstr ""
 
-#: views/map_show.php:38 controllers/reservations.php:491
+#: views/map_show.php:38 controllers/reservations.php:492
 msgid "Reset Zoom"
 msgstr ""
 
@@ -501,79 +528,79 @@ msgid "History"
 msgstr ""
 
 #: controllers/map.php:51 controllers/flows.php:163 controllers/flows.php:354
-#: controllers/reservations.php:437
+#: controllers/reservations.php:438
 msgid "A name is required"
 msgstr ""
 
 #: controllers/map.php:52 controllers/flows.php:164 controllers/flows.php:355
-#: controllers/reservations.php:438
+#: controllers/reservations.php:439
 msgid "Invalid value for bandwidth"
 msgstr ""
 
 #: controllers/map.php:53 controllers/flows.php:165 controllers/flows.php:356
-#: controllers/reservations.php:439
+#: controllers/reservations.php:440
 msgid "A source is required"
 msgstr ""
 
 #: controllers/map.php:54 controllers/flows.php:166 controllers/flows.php:357
-#: controllers/reservations.php:440
+#: controllers/reservations.php:441
 msgid "Invalid value for source VLAN"
 msgstr ""
 
 #: controllers/map.php:55 controllers/flows.php:167 controllers/flows.php:358
-#: controllers/reservations.php:441
+#: controllers/reservations.php:442
 msgid "Source VLAN type required"
 msgstr ""
 
 #: controllers/map.php:56 controllers/flows.php:168 controllers/flows.php:359
-#: controllers/reservations.php:442
+#: controllers/reservations.php:443
 msgid "A destination is required"
 msgstr ""
 
 #: controllers/map.php:57 controllers/flows.php:169 controllers/flows.php:360
-#: controllers/reservations.php:443
+#: controllers/reservations.php:444
 msgid "Invalid value for destination VLAN"
 msgstr ""
 
 #: controllers/map.php:58 controllers/flows.php:170 controllers/flows.php:361
-#: controllers/reservations.php:444
+#: controllers/reservations.php:445
 msgid "Destination VLAN type required"
 msgstr ""
 
-#: controllers/map.php:60 controllers/reservations.php:451
-#: controllers/reservations.php:752
+#: controllers/map.php:60 controllers/reservations.php:452
+#: controllers/reservations.php:753
 msgid "Domains"
 msgstr ""
 
-#: controllers/map.php:62 controllers/reservations.php:453
-#: controllers/reservations.php:754
+#: controllers/map.php:62 controllers/reservations.php:454
+#: controllers/reservations.php:755
 msgid "Networks"
 msgstr ""
 
-#: controllers/map.php:64 controllers/reservations.php:455
-#: controllers/reservations.php:756
+#: controllers/map.php:64 controllers/reservations.php:456
+#: controllers/reservations.php:757
 msgid "Devices"
 msgstr ""
 
-#: controllers/map.php:65 controllers/reservations.php:757
+#: controllers/map.php:65 controllers/reservations.php:758
 msgid "From Here"
 msgstr ""
 
-#: controllers/map.php:66 controllers/reservations.php:758
+#: controllers/map.php:66 controllers/reservations.php:759
 msgid "To Here"
 msgstr ""
 
-#: controllers/map.php:67 controllers/reservations.php:458
-#: controllers/reservations.php:759
+#: controllers/map.php:67 controllers/reservations.php:459
+#: controllers/reservations.php:760
 msgid "Information about cluster"
 msgstr ""
 
-#: controllers/flows.php:300 controllers/timers.php:314
-#: controllers/reservations.php:620
+#: controllers/flows.php:300 controllers/timers.php:301
+#: controllers/reservations.php:621
 msgid "Invalid index"
 msgstr ""
 
-#: controllers/flows.php:310 controllers/reservations.php:680
+#: controllers/flows.php:310 controllers/reservations.php:681
 msgid "Flow not found or could not get endpoints information"
 msgstr ""
 
@@ -591,227 +618,201 @@ msgid "Flow"
 msgstr ""
 
 #: controllers/flows.php:426 controllers/flows.php:429
-#: controllers/timers.php:294 controllers/timers.php:297
+#: controllers/timers.php:281 controllers/timers.php:284
 msgid "updated"
 msgstr ""
 
-#: controllers/flows.php:433 controllers/timers.php:302
+#: controllers/flows.php:433 controllers/timers.php:289
 msgid "No change has been made"
 msgstr ""
 
-#: controllers/flows.php:448 controllers/timers.php:434
-#: controllers/reservations.php:845
+#: controllers/flows.php:448 controllers/timers.php:421
+#: controllers/reservations.php:812
 msgid "deleted"
 msgstr ""
 
-#: controllers/timers.php:19 controllers/reservations.php:478
-msgid "hours"
-msgstr ""
-
-#: controllers/timers.php:20 controllers/reservations.php:477
-msgid "hour"
-msgstr ""
-
-#: controllers/timers.php:21 controllers/reservations.php:480
-msgid "minutes"
-msgstr ""
-
-#: controllers/timers.php:22 controllers/reservations.php:479
-msgid "minute"
-msgstr ""
-
-#: controllers/timers.php:23 controllers/timers.php:154
-#: controllers/timers.php:393 controllers/reservations.php:469
-msgid "days"
-msgstr ""
-
-#: controllers/timers.php:24 controllers/timers.php:153
-#: controllers/timers.php:392 controllers/reservations.php:468
-msgid "day"
-msgstr ""
-
-#: controllers/timers.php:114
+#: controllers/timers.php:101
 msgid "You have no timer, click the button below to create a new one"
 msgstr ""
 
-#: controllers/timers.php:152 controllers/timers.php:391
-#: controllers/reservations.php:467
+#: controllers/timers.php:139 controllers/timers.php:378
+#: controllers/reservations.php:468
 msgid "Repeat every"
 msgstr ""
 
-#: controllers/timers.php:155 controllers/timers.php:394
-#: controllers/reservations.php:470
+#: controllers/timers.php:142 controllers/timers.php:381
+#: controllers/reservations.php:471
 msgid "week"
 msgstr ""
 
-#: controllers/timers.php:156 controllers/timers.php:395
-#: controllers/reservations.php:471
+#: controllers/timers.php:143 controllers/timers.php:382
+#: controllers/reservations.php:472
 msgid "weeks"
 msgstr ""
 
-#: controllers/timers.php:157 controllers/timers.php:396
-#: controllers/reservations.php:472
+#: controllers/timers.php:144 controllers/timers.php:383
+#: controllers/reservations.php:473
 msgid "on"
 msgstr ""
 
-#: controllers/timers.php:158 controllers/timers.php:397
-#: controllers/reservations.php:473
+#: controllers/timers.php:145 controllers/timers.php:384
+#: controllers/reservations.php:474
 msgid "month"
 msgstr ""
 
-#: controllers/timers.php:159 controllers/timers.php:398
-#: controllers/reservations.php:474
+#: controllers/timers.php:146 controllers/timers.php:385
+#: controllers/reservations.php:475
 msgid "months"
 msgstr ""
 
-#: controllers/timers.php:160 controllers/timers.php:399
-#: controllers/reservations.php:482
+#: controllers/timers.php:147 controllers/timers.php:386
+#: controllers/reservations.php:483
 msgid "until"
 msgstr ""
 
-#: controllers/timers.php:161 controllers/timers.php:400
-#: controllers/reservations.php:483
+#: controllers/timers.php:148 controllers/timers.php:387
+#: controllers/reservations.php:484
 msgid "times"
 msgstr ""
 
-#: controllers/timers.php:162 controllers/timers.php:401
-#: controllers/reservations.php:484
+#: controllers/timers.php:149 controllers/timers.php:388
+#: controllers/reservations.php:485
 msgid "time"
 msgstr ""
 
-#: controllers/timers.php:163 controllers/timers.php:402
-#: controllers/reservations.php:485
+#: controllers/timers.php:150 controllers/timers.php:389
+#: controllers/reservations.php:486
 msgid "Please set an end rule"
 msgstr ""
 
-#: controllers/timers.php:164 controllers/timers.php:403
-#: controllers/reservations.php:486
+#: controllers/timers.php:151 controllers/timers.php:390
+#: controllers/reservations.php:487
 msgid "Select at least one day"
 msgstr ""
 
-#: controllers/timers.php:165 controllers/timers.php:404
-#: controllers/reservations.php:487
+#: controllers/timers.php:152 controllers/timers.php:391
+#: controllers/reservations.php:488
 msgid "Set name"
 msgstr ""
 
-#: controllers/timers.php:166 controllers/timers.php:405
-#: controllers/reservations.php:488
+#: controllers/timers.php:153 controllers/timers.php:392
+#: controllers/reservations.php:489
 msgid "Invalid time"
 msgstr ""
 
-#: controllers/timers.php:294 controllers/timers.php:297
-#: controllers/timers.php:434
+#: controllers/timers.php:281 controllers/timers.php:284
+#: controllers/timers.php:421
 msgid "Timer"
 msgstr ""
 
-#: controllers/timers.php:305
+#: controllers/timers.php:292
 msgid "Missing arguments"
 msgstr ""
 
-#: controllers/timers.php:325 controllers/reservations.php:690
+#: controllers/timers.php:312 controllers/reservations.php:691
 msgid "Timer not found"
 msgstr ""
 
-#: controllers/reservations.php:107
+#: controllers/reservations.php:108
 msgid "Error to get status"
 msgstr ""
 
-#: controllers/reservations.php:123
+#: controllers/reservations.php:124
 msgid ""
 "You have no active or pending reservation, try <a href='history'>history</a> "
 "or click the button below to create a <a href='add'>new</a> one"
 msgstr ""
 
-#: controllers/reservations.php:124
+#: controllers/reservations.php:125
 msgid ""
 "You have no reservation in history, click the button below to create a <a "
 "href='add'>new</a> one"
 msgstr ""
 
-#: controllers/reservations.php:435
+#: controllers/reservations.php:436
 msgid "Authorization from Network Administrator will be required."
 msgstr ""
 
-#: controllers/reservations.php:445
+#: controllers/reservations.php:446
 msgid "Timer is required"
 msgstr ""
 
-#: controllers/reservations.php:446
+#: controllers/reservations.php:447
 msgid "The end time occurs before the start time"
 msgstr ""
 
-#: controllers/reservations.php:447
+#: controllers/reservations.php:448
 msgid "Invalid duration"
 msgstr ""
 
-#: controllers/reservations.php:448
+#: controllers/reservations.php:449
 msgid "Missing endpoints"
 msgstr ""
 
-#: controllers/reservations.php:456
+#: controllers/reservations.php:457
 msgid "From here"
 msgstr ""
 
-#: controllers/reservations.php:457
+#: controllers/reservations.php:458
 msgid "To here"
 msgstr ""
 
-#: controllers/reservations.php:459
+#: controllers/reservations.php:460
 msgid "Coordinates"
 msgstr ""
 
-#: controllers/reservations.php:461
+#: controllers/reservations.php:462
 msgid "Value"
 msgstr ""
 
-#: controllers/reservations.php:475
+#: controllers/reservations.php:476
 msgid "year"
 msgstr ""
 
-#: controllers/reservations.php:476
+#: controllers/reservations.php:477
 msgid "years"
 msgstr ""
 
-#: controllers/reservations.php:481
+#: controllers/reservations.php:482
 msgid "and"
 msgstr ""
 
-#: controllers/reservations.php:489
+#: controllers/reservations.php:490
 msgid "Active from"
 msgstr ""
 
-#: controllers/reservations.php:490
+#: controllers/reservations.php:491
 msgid "at"
 msgstr ""
 
-#: controllers/reservations.php:557
+#: controllers/reservations.php:558
 msgid "Fail to save endpoints or timer on database"
 msgstr ""
 
-#: controllers/reservations.php:593
+#: controllers/reservations.php:594
 msgid "Error to send reservation to OSCARS"
 msgstr ""
 
-#: controllers/reservations.php:598
+#: controllers/reservations.php:599
 msgid "Reservation submitted"
 msgstr ""
 
-#: controllers/reservations.php:601
+#: controllers/reservations.php:602
 msgid "reservations submitted"
 msgstr ""
 
-#: controllers/reservations.php:609
+#: controllers/reservations.php:610
 msgid "Fail to save reservation on database"
 msgstr ""
 
-#: controllers/reservations.php:632
+#: controllers/reservations.php:633
 msgid "Reservation not found"
 msgstr ""
 
-#: controllers/reservations.php:845
+#: controllers/reservations.php:812
 msgid "Reservation"
 msgstr ""
 
-#: controllers/reservations.php:1032
+#: controllers/reservations.php:1042
 msgid "Error at invoking business layer."
 msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-12 18:42-0200\n"
+"POT-Creation-Date: 2012-01-17 17:32-0200\n"
 "PO-Revision-Date: 2012-01-10 14:59-0300\n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,6 +27,12 @@ msgstr "Requisições"
 #: bpm.php:22
 msgid "ODE"
 msgstr "ODE"
+
+#: models/request_info.php:165 models/request_info.php:166
+#: models/request_info.php:175 controllers/requests.php:105
+#: controllers/requests.php:114
+msgid "Unknown"
+msgstr "Desconhecido"
 
 #: views/ode_show.php:8
 msgid "Process"
@@ -239,10 +245,6 @@ msgstr "Undeploy de processo realizado com sucesso"
 #: controllers/ode.php:88
 msgid "Fail to undeploy process"
 msgstr "Falha ao realizar undeploy do processo"
-
-#: controllers/requests.php:105 controllers/requests.php:114
-msgid "Unknown"
-msgstr "Desconhecido"
 
 #: controllers/requests.php:134
 msgid "Response saved"

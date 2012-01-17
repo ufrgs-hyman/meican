@@ -33,7 +33,9 @@
             </tr>
         </table>
 
-        <input class="password" id="changePassword" type="button" value="<?php echo _('Change password'); ?>" onclick="showPasswdBox();"/>
+        <!-- input class="password" id="changePassword" type="button" value="<?php //echo _('Change password'); ?>" onclick="showPasswdBox();"/ -->
+        <input type="checkbox" name="changePassword" id="changePassword"  onclick="showPasswdBox();"/>
+        <?php echo _("Change password") ?>
 
         <div id="tpassword" style="display: none">
             <table class="withoutBorder" style="min-width: 0;">

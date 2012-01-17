@@ -1,10 +1,13 @@
 <?php
+
 $start_date = $argsToElement->start_date;
 $finish_date = $argsToElement->finish_date;
 $start_time = $argsToElement->start_time;
 $finish_time = $argsToElement->finish_time;
-$timer = (isset($argsToElement->timer)) ? $argsToElement->timer : NULL;
+//$timer = (isset($argsToElement->timer)) ? $argsToElement->timer : NULL;
+
 ?>
+
 <label for="initialTime"><?php echo _("Start") ?>: </label>
 <input type="text" name="start_time" size="7" value="<?php echo $start_time; ?>" class="hourPicker" id="initialTime"/>
 <input type="text" name="start_date" size="9" value="<?php echo $start_date; ?>" readonly class="datePicker" id="initialDate"/>
@@ -16,6 +19,7 @@ $timer = (isset($argsToElement->timer)) ? $argsToElement->timer : NULL;
 <label id="duration"></label>
 <input type="checkbox" name="repeat_chkbox" id="repeat_chkbox"/>
 <label for="repeat_chkbox"> <?php echo _("Repeat..."); ?></label>
+
 <?php $this->addElement('timer_recurrence'); ?>
 
 <div style="padding-top:1em;">            

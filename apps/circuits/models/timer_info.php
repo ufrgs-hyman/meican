@@ -1,7 +1,7 @@
 <?php
 
 include_once 'libs/resource_model.php';
-include_once 'apps/circuits/models/timer_lib.inc';
+include_once 'apps/circuits/models/timer_lib.php';
 
 class timer_info extends Resource_Model {
     var $displayField = "summary";

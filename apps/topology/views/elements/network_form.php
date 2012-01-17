@@ -38,7 +38,7 @@ $domains = isset($argsToElement->domains) ? $argsToElement->domains : NULL;
             <?php echo _("Select a domain"); ?>:
         </th>
         <td class="left">
-            <select id="domain_select" name="domain">
+            <select id="domain_select" name="domain" <?php if ($network) echo "disabled"; ?> >
                 <option value="-1"></option>
                 <?php
                 if ($network) {

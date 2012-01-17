@@ -2,9 +2,9 @@
 
 include_once 'libs/tree_model.php';
 include_once 'libs/auth.php';
-include_once 'apps/aaa/models/aros.inc';
-include_once 'apps/aaa/models/acos.inc';
-include_once 'apps/aaa/models/aros_acos.inc';
+include_once 'apps/aaa/models/aros.php';
+include_once 'apps/aaa/models/acos.php';
+include_once 'apps/aaa/models/aros_acos.php';
 include_once 'libs/common.php';
 
 class AclLoader extends Tree_Model {
@@ -299,22 +299,19 @@ class AclLoader extends Tree_Model {
         //vetor de acos do modelo que o usuario tem acesso
         $acos = $this->acl->{$right};
 
-
         if ($acos) {
             $strAcos = implode(',', $acos);
 
             $acos = new acos();
             //retorna os objetos (obj_id) que o usuário possui acesso
             $result = $acos->getAcoGroupByModel($strAcos, $model);
-
-            $obj = array(); //array com os ids do modelo que o usuário
-            foreach ($result as $r) {
-                $obj[] = $r->obj_id;
-            }
+            
+            //array com os ids do modelo que o usuário possui acesso
+            $objs = Common::arrayExtractAttr($result, "obj_id");
 
             //$strObj = implode(',', $obj);
 
-            return $obj;
+            return $objs;
         } else
             return FALSE;
     }

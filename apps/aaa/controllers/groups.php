@@ -6,9 +6,9 @@ include_once 'libs/controller.php';
 
 include_once 'libs/auth.php';
 
-include_once 'apps/aaa/models/group_info.inc';
-include_once 'apps/aaa/models/user_info.inc';
-include_once 'apps/aaa/models/aros.inc';
+include_once 'apps/aaa/models/group_info.php';
+include_once 'apps/aaa/models/user_info.php';
+include_once 'apps/aaa/models/aros.php';
 include_once 'libs/acl_loader.php';
 
 class groups extends Controller {
@@ -251,18 +251,18 @@ class groups extends Controller {
             $tmp = new group_info();
             $tmp->grp_descr = $group_descr;
 
-            if ($tmp->fetch()) {
-                $this->setFlash(_("Group") . " '$group_descr' " . _('already exists'), "error");
-                $this->edit($grp_id_array);
-                return;
+            if ($result = $tmp->fetch()) {
+                if ($result[0]->grp_id != $groupId) {
+                    $this->setFlash(_("Group") . " '$group_descr' " . _('already exists'), "error");
+                    $this->edit($grp_id_array);
+                    return;
+                }
             }
         }
 
         $group->grp_descr = $group_descr;
 
-        $result = $group->update();
-
-        if ($result) {
+        if ($group->update()) {
             $this->setFlash(_("Group information updated"), "success");
             $this->show();
         } else {

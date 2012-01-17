@@ -3,8 +3,8 @@
 defined ('__MEICAN') or die ("Invalid access.");
 
 include_once 'libs/controller.php';
-include_once 'apps/circuits/models/timer_info.inc';
-include_once 'apps/circuits/models/timer_lib.inc';
+include_once 'apps/circuits/models/timer_info.php';
+include_once 'apps/circuits/models/timer_lib.php';
 include_once 'apps/circuits/controllers/reservations.php';
 
 class timers extends Controller {
@@ -15,20 +15,7 @@ class timers extends Controller {
         $this->defaultAction = 'show';
     }
 
-    public function dummy() {
-        _("hours");
-        _("hour");
-        _("minutes");
-        _("minute");
-        _("days");
-        _("day");
-    }
-
     public function show() {
-        
-//        $mail = new Meican_Mail();
-//        if ($mail)
-//            $mail->send("felipenesello@gmail.com", "corpo do e-mail", "assunto do e-mail");
         
         $tim_teste = new timer_info();
         $tim_teste->start = dateTimeToDatabaseFormat("02/08/2011", "19:00");

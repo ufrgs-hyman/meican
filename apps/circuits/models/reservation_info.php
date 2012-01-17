@@ -3,11 +3,11 @@
 include_once 'libs/resource_model.php';
 
 include_once 'apps/circuits/models/gri_info.php';
-include_once 'apps/circuits/models/flow_info.inc';
-include_once 'apps/circuits/models/timer_info.inc';
-include_once 'apps/circuits/models/oscars_reservation.inc';
+include_once 'apps/circuits/models/flow_info.php';
+include_once 'apps/circuits/models/timer_info.php';
+include_once 'apps/circuits/models/oscars_reservation.php';
 
-include_once 'apps/bpm/models/request_info.inc';
+include_once 'apps/bpm/models/request_info.php';
 
 class reservation_info extends Resource_Model {
     var $displayField = "res_name";

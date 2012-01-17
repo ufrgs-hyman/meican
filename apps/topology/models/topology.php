@@ -1,11 +1,11 @@
 <?php
 
-include_once 'apps/topology/models/domain_info.inc';
-include_once 'apps/topology/models/network_info.inc';
-include_once 'apps/topology/models/device_info.inc';
-include_once 'apps/topology/models/urn_info.inc';
+include_once 'apps/topology/models/domain_info.php';
+include_once 'apps/topology/models/network_info.php';
+include_once 'apps/topology/models/device_info.php';
+include_once 'apps/topology/models/urn_info.php';
 
-include_once 'apps/circuits/models/oscars_reservation.inc';
+include_once 'apps/circuits/models/oscars_reservation.php';
 
 class MeicanTopology {
     
@@ -292,8 +292,6 @@ class MeicanTopology {
                 $device = new stdClass();
                 $device->id = $u->dev_id;
                 $device->name = $res[0]->dev_descr;
-                $device->latitude = $res[0]->dev_lat;
-                $device->longitude = $res[0]->dev_lng;
                 $device->topology_node_id = $res[0]->node_id;
                 $device->model = $res[0]->model;
 

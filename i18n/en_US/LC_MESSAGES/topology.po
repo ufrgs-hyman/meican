@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-12 18:42-0200\n"
+"POT-Creation-Date: 2012-01-17 17:32-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgid "Networks"
 msgstr ""
 
 #: topology.php:32 views/networks_show.php:18 views/devices_show.php:3
-#: controllers/devices.php:75
+#: controllers/devices.php:71
 msgid "Devices"
 msgstr ""
 
@@ -43,49 +43,47 @@ msgstr ""
 
 #: views/networks_show.php:15 views/domains_show.php:15
 #: views/elements/network_form.php:11 views/elements/domain_form.php:14
-#: views/elements/meican_form.php:13 views/elements/device_form.php:11
+#: views/elements/meican_form.php:13 views/elements/device_form.php:12
 #: views/devices_show.php:13 views/meicans_show.php:16
 msgid "Name"
 msgstr ""
 
 #: views/networks_show.php:16 views/elements/network_form.php:20
-#: views/elements/device_form.php:56 views/devices_show.php:18
 msgid "Latitude"
 msgstr ""
 
 #: views/networks_show.php:17 views/elements/network_form.php:29
-#: views/elements/device_form.php:65 views/devices_show.php:19
 msgid "Longitude"
 msgstr ""
 
-#: views/networks_show.php:19 views/urns_show.php:19 views/urns_show.php:34
+#: views/networks_show.php:19 views/urns_show.php:19 views/urns_show.php:35
 #: views/urns_add_manual.php:12 views/urns_import.php:13
 #: controllers/domains.php:67 controllers/domains.php:124
 #: controllers/domains.php:142
 msgid "Domain"
 msgstr ""
 
-#: views/urns_show.php:8 controllers/urns.php:67
-msgid "URNs (Uniform Resource Name)"
+#: views/urns_show.php:8
+msgid "URNs (Uniform resource name)"
 msgstr ""
 
-#: views/urns_show.php:42
+#: views/urns_show.php:43
 msgid ""
 "No URN in this domain, click the button below to import topology from IP "
 "address"
 msgstr ""
 
-#: views/urns_show.php:42
+#: views/urns_show.php:43
 msgid "No URN in this domain, choose one of the options below"
 msgstr ""
 
-#: views/urns_show.php:54 views/networks_add.php:12 views/networks_edit.php:10
+#: views/urns_show.php:55 views/networks_add.php:12 views/networks_edit.php:10
 #: views/urns_add_manual.php:75 views/meicans_add.php:9
 #: views/domains_add.php:11 views/urns_import.php:90 views/devices_add.php:16
 msgid "Save"
 msgstr ""
 
-#: views/urns_show.php:55 views/networks_add.php:13 views/networks_edit.php:11
+#: views/urns_show.php:56 views/networks_add.php:13 views/networks_edit.php:11
 #: views/urns_add_manual.php:76 views/meicans_add.php:10
 #: views/domains_add.php:12 views/urns_import.php:91 views/domains_edit.php:15
 #: views/devices_edit.php:12 views/devices_add.php:17
@@ -93,19 +91,19 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: views/urns_show.php:57
+#: views/urns_show.php:58
 msgid "Delete"
 msgstr ""
 
-#: views/urns_show.php:57
+#: views/urns_show.php:58
 msgid "The selected URNs will be deleted."
 msgstr ""
 
-#: views/urns_show.php:57
+#: views/urns_show.php:58
 msgid "Do you confirm?"
 msgstr ""
 
-#: views/networks_add.php:3 views/elements/device_form.php:144
+#: views/networks_add.php:3 views/elements/device_form.php:127
 msgid "Add network"
 msgstr ""
 
@@ -125,19 +123,19 @@ msgstr ""
 msgid "ODE IP"
 msgstr ""
 
-#: views/elements/network_form.php:38 views/elements/device_form.php:83
+#: views/elements/network_form.php:38 views/elements/device_form.php:66
 #: controllers/networks.php:84
 msgid "Select a domain"
 msgstr ""
 
-#: views/elements/urn_header.php:3 views/devices_show.php:20
+#: views/elements/urn_header.php:3 views/devices_show.php:18
 #: controllers/networks.php:110 controllers/networks.php:116
 #: controllers/networks.php:183 controllers/networks.php:203
 msgid "Network"
 msgstr ""
 
-#: views/elements/urn_header.php:4 controllers/devices.php:163
-#: controllers/devices.php:257 controllers/devices.php:275
+#: views/elements/urn_header.php:4 controllers/devices.php:153
+#: controllers/devices.php:243 controllers/devices.php:261
 msgid "Device"
 msgstr ""
 
@@ -197,39 +195,39 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: views/elements/list_urns.php:39
+#: views/elements/list_urns.php:40
 msgid "Add from topology"
 msgstr ""
 
-#: views/elements/list_urns.php:40
+#: views/elements/list_urns.php:41
 msgid "Add manual"
 msgstr ""
 
-#: views/elements/device_form.php:20 views/devices_show.php:14
+#: views/elements/device_form.php:21 views/devices_show.php:14
 msgid "IP address"
 msgstr ""
 
-#: views/elements/device_form.php:29 views/devices_show.php:15
+#: views/elements/device_form.php:30 views/devices_show.php:15
 msgid "Trademark"
 msgstr ""
 
-#: views/elements/device_form.php:38 views/devices_show.php:16
+#: views/elements/device_form.php:39 views/devices_show.php:16
 msgid "Model"
 msgstr ""
 
-#: views/elements/device_form.php:47 views/devices_show.php:17
+#: views/elements/device_form.php:48 views/devices_show.php:17
 msgid "Number of ports"
 msgstr ""
 
-#: views/elements/device_form.php:74 views/devices_show.php:21
+#: views/elements/device_form.php:57 views/devices_show.php:19
 msgid "Topology node ID"
 msgstr ""
 
-#: views/elements/device_form.php:118 views/domains_add.php:1
+#: views/elements/device_form.php:101 views/domains_add.php:1
 msgid "Add domain"
 msgstr ""
 
-#: views/elements/device_form.php:125
+#: views/elements/device_form.php:108
 msgid "Select a network"
 msgstr ""
 
@@ -241,7 +239,7 @@ msgstr ""
 msgid "Add MEICAN"
 msgstr ""
 
-#: views/devices_show.php:22
+#: views/devices_show.php:20
 msgid "#Endpoints"
 msgstr ""
 
@@ -286,8 +284,8 @@ msgstr ""
 msgid "No network added, click the button below to add a new one"
 msgstr ""
 
-#: controllers/networks.php:82 controllers/devices.php:109
-#: controllers/devices.php:223
+#: controllers/networks.php:82 controllers/devices.php:104
+#: controllers/devices.php:211
 msgid "A name is required"
 msgstr ""
 
@@ -296,7 +294,7 @@ msgid "Set coordinates"
 msgstr ""
 
 #: controllers/networks.php:110 controllers/domains.php:67
-#: controllers/meicans.php:68
+#: controllers/meicans.php:67
 msgid "added"
 msgstr ""
 
@@ -314,9 +312,9 @@ msgstr ""
 
 #: controllers/networks.php:128 controllers/networks.php:167
 #: controllers/domains.php:82 controllers/domains.php:107
-#: controllers/meicans.php:83 controllers/meicans.php:108
+#: controllers/meicans.php:82 controllers/meicans.php:107
 #: controllers/urns.php:81 controllers/urns.php:121
-#: controllers/devices.php:178 controllers/devices.php:239
+#: controllers/devices.php:166 controllers/devices.php:227
 msgid "Invalid index"
 msgstr ""
 
@@ -325,24 +323,24 @@ msgid "Network not found"
 msgstr ""
 
 #: controllers/networks.php:183 controllers/domains.php:124
-#: controllers/meicans.php:126 controllers/devices.php:257
+#: controllers/meicans.php:124 controllers/devices.php:243
 msgid "updated"
 msgstr ""
 
 #: controllers/networks.php:186 controllers/domains.php:127
-#: controllers/meicans.php:129 controllers/devices.php:260
+#: controllers/meicans.php:127 controllers/devices.php:246
 msgid "No change has been made"
 msgstr ""
 
 #: controllers/networks.php:188 controllers/domains.php:72
-#: controllers/domains.php:129 controllers/meicans.php:73
-#: controllers/meicans.php:131
+#: controllers/domains.php:129 controllers/meicans.php:72
+#: controllers/meicans.php:129
 msgid "Missing arguments"
 msgstr ""
 
 #: controllers/networks.php:203 controllers/domains.php:142
-#: controllers/meicans.php:144 controllers/urns.php:249
-#: controllers/devices.php:275
+#: controllers/meicans.php:142 controllers/urns.php:249
+#: controllers/devices.php:261
 msgid "deleted"
 msgstr ""
 
@@ -374,16 +372,16 @@ msgstr ""
 msgid "No MEICAN is registered, click the button below to register a new one"
 msgstr ""
 
-#: controllers/meicans.php:68 controllers/meicans.php:126
-#: controllers/meicans.php:144
+#: controllers/meicans.php:67 controllers/meicans.php:124
+#: controllers/meicans.php:142
 msgid "MEICAN"
 msgstr ""
 
-#: controllers/meicans.php:71
+#: controllers/meicans.php:70
 msgid "Fail to create MEICAN"
 msgstr ""
 
-#: controllers/meicans.php:93
+#: controllers/meicans.php:92
 msgid "MEICAN not found"
 msgstr ""
 
@@ -419,6 +417,10 @@ msgstr ""
 msgid "A URN has been selected more than once"
 msgstr ""
 
+#: controllers/urns.php:67
+msgid "URNs (Uniform Resource Name)"
+msgstr ""
+
 #: controllers/urns.php:68
 msgid ""
 "Before adding a URN, you need to register at least one OSCARS domain, click "
@@ -437,36 +439,36 @@ msgstr ""
 msgid "URN"
 msgstr ""
 
-#: controllers/devices.php:76
+#: controllers/devices.php:72
 msgid "No device added, click the button below to add a new one"
 msgstr ""
 
-#: controllers/devices.php:110 controllers/devices.php:224
+#: controllers/devices.php:105 controllers/devices.php:212
 msgid "An IP address is required"
 msgstr ""
 
-#: controllers/devices.php:111 controllers/devices.php:225
+#: controllers/devices.php:106 controllers/devices.php:213
 msgid "A network is required"
 msgstr ""
 
-#: controllers/devices.php:122
+#: controllers/devices.php:117
 msgid "No network added, you should first add a network before adding a device"
 msgstr ""
 
-#: controllers/devices.php:131 controllers/devices.php:214
+#: controllers/devices.php:126 controllers/devices.php:202
 msgid ""
 "No domain added, you should first add a domain and network before adding a "
 "device"
 msgstr ""
 
-#: controllers/devices.php:163
+#: controllers/devices.php:153
 msgid "added in network"
 msgstr ""
 
-#: controllers/devices.php:168
+#: controllers/devices.php:156
 msgid "Fail to create device"
 msgstr ""
 
-#: controllers/devices.php:188
+#: controllers/devices.php:176
 msgid "Device not found"
 msgstr ""

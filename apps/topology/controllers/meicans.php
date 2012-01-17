@@ -4,7 +4,7 @@ defined ('__MEICAN') or die ("Invalid access.");
 
 include_once 'libs/controller.php';
 
-include_once 'apps/topology/models/meican_info.inc';
+include_once 'apps/topology/models/meican_info.php';
 
 class meicans extends Controller {
 
@@ -55,13 +55,12 @@ class meicans extends Controller {
     public function add() {
         $meican_descr = Common::POST("meican_descr");
         $meican_ip = Common::POST("meican_ip");
-        $meican_dir_name = Common::POST("meican_dir_name");
 
-        if ($meican_descr && $meican_ip && $meican_dir_name) {
+        if ($meican_descr && $meican_ip) {
             $meican = new meican_info();
             $meican->meican_descr = $meican_descr;
             $meican->meican_ip = $meican_ip;
-            $meican->meican_dir_name = $meican_dir_name;
+            $meican->meican_dir_name = Common::POST("meican_dir_name");
             $meican->local_domain = (Common::POST("local_domain")) ? 1 : 0;
 
             if ($meican->insert()) {
@@ -112,14 +111,13 @@ class meicans extends Controller {
         
         $meican_descr = Common::POST("meican_descr");
         $meican_ip = Common::POST("meican_ip");
-        $meican_dir_name = Common::POST("meican_dir_name");
 
-        if ($meican_descr && $meican_ip && $meican_dir_name) {
+        if ($meican_descr && $meican_ip) {
             $meican = new meican_info();
             $meican->meican_id = $mecId;
             $meican->meican_descr = $meican_descr;
             $meican->meican_ip = $meican_ip;
-            $meican->meican_dir_name = $meican_dir_name;
+            $meican->meican_dir_name = Common::POST("meican_dir_name");
             $meican->local_domain = (Common::POST("local_domain")) ? 1 : 0;
 
             if ($meican->update()) {

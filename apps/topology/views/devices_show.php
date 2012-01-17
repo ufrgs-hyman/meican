@@ -15,8 +15,6 @@
                 <th class="large"><?php echo _("Trademark"); ?></th>
                 <th class="large"><?php echo _("Model"); ?></th>
                 <th class="large"><?php echo _("Number of ports"); ?></th>
-                <th class="large"><?php echo _("Latitude"); ?></th>
-                <th class="large"><?php echo _("Longitude"); ?></th>
                 <th class="large"><?php echo _("Network"); ?></th>
                 <th class="large"><?php echo _("Topology node ID"); ?></th>
                 <th class="large"><?php echo _("#Endpoints"); ?></th>
@@ -52,12 +50,6 @@
                     </td>
                     <td>
                         <?php echo $d->nr_ports; ?>
-                    </td>
-                    <td>
-                        <?php echo $d->latitude; ?>
-                    </td>
-                    <td>
-                        <?php echo $d->longitude; ?>
                     </td>
                     <td>
                         <?php echo $d->network; ?>

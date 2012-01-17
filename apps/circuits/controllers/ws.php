@@ -2,9 +2,9 @@
 include_once 'libs/controller.php';
 require_once 'includes/nuSOAP/lib/nusoap.php';
 include_once 'apps/circuits/models/reservation_info.php';
-include_once 'apps/circuits/models/flow_info.inc';
-include_once 'apps/circuits/models/timer_info.inc';
-include_once 'apps/topology/models/meican_info.inc';
+include_once 'apps/circuits/models/flow_info.php';
+include_once 'apps/circuits/models/timer_info.php';
+include_once 'apps/topology/models/meican_info.php';
 
 class ws extends Controller {
 

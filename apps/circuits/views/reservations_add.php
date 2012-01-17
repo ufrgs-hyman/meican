@@ -1,26 +1,9 @@
 <?php
-$flow = isset($this->passedArgs->flow) ? $this->passedArgs->flow : null;
-$timer = isset($this->passedArgs->timer) ? $this->passedArgs->timer : null;
+
 $name = isset($this->passedArgs->res_name) ? $this->passedArgs->res_name : null;
 
 $args = $this->passedArgs;
-$timers_exist = isset($args->timers) ? TRUE : FALSE;
-
-$freq_types = array();
-unset($freq);
-$freq->value = "DAILY";
-$freq->descr = _("Everyday");
-$freq_types[] = $freq;
-
-unset($freq);
-$freq->value = "WEEKLY";
-$freq->descr = _("Weekly");
-$freq_types[] = $freq;
-
-unset($freq);
-$freq->value = "MONTHLY";
-$freq->descr = _("Monthly");
-$freq_types[] = $freq;
+//$timers_exist = isset($args->timers) ? TRUE : FALSE;
 
 //<link type="text/css" rel="stylesheet" href="<?php echo $this->url(); >webroot/css/jquery-ui-1.8.13.custom.css" />
 ?>
@@ -37,7 +20,7 @@ $freq_types[] = $freq;
             <?php $this->addElement('reservation_tab_endpoints'); ?>
         </div>
         <div id="tabs-2" class="tab_content">
-            <?php $this->addElement('timer_form', $this->passedArgs); ?>
+            <?php $this->addElement('timer_form', $args); ?>
         </div>
         <div id="tabs-3" class="tab_content">
             <?php $this->addElement('reservation_tab_confirmation'); ?>

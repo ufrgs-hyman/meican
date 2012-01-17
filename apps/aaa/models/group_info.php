@@ -1,8 +1,8 @@
 <?php
 
 include_once 'libs/model.php';
-include_once 'apps/aaa/models/aros.inc';
-include_once 'apps/aaa/models/acos.inc';
+include_once 'apps/aaa/models/aros.php';
+include_once 'apps/aaa/models/acos.php';
 
 class group_info extends Model {
     var $displayField = "grp_descr";
@@ -97,10 +97,11 @@ class group_info extends Model {
         if (count($toAdd) > 0) {
             // adiciona usuários
             $firstVal = TRUE;
+            $values = "VALUES ";
             foreach ($toAdd as $usr_id) {
                 if ($firstVal) {
                     $firstVal = FALSE;
-                    $values = "VALUES ($usr_id, $this->grp_id)";
+                    $values .= "($usr_id, $this->grp_id)";
                 } else
                     $values .= ", ($usr_id, $this->grp_id)";
             }

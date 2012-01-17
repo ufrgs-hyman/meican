@@ -11,13 +11,14 @@ include_once 'apps/circuits/controllers/timers.php';
 
 include_once 'apps/circuits/models/reservation_info.php';
 include_once 'apps/circuits/models/gri_info.php';
-include_once 'apps/circuits/models/flow_info.inc';
-include_once 'apps/circuits/models/timer_info.inc';
-include_once 'apps/bpm/models/request_info.inc';
-include_once 'apps/circuits/models/oscars.php';
+include_once 'apps/circuits/models/flow_info.php';
+include_once 'apps/circuits/models/timer_info.php';
+include_once 'apps/circuits/models/oscars_reservation.php';
 
-include_once 'apps/topology/models/domain_info.inc';
-include_once 'apps/topology/models/topology.inc';
+include_once 'apps/bpm/models/request_info.php';
+
+include_once 'apps/topology/models/domain_info.php';
+include_once 'apps/topology/models/topology.php';
 include_once 'includes/nuSOAP/lib/nusoap.php';
 
 class reservations extends Controller {
@@ -360,7 +361,7 @@ class reservations extends Controller {
         Common::setSessionVariable("res_begin_timestamp", microtime(true));
 
         // STEP 1 VARIABLES ---------------------
-        $name = "Default_reservation_name";
+        //$name = "Default_reservation_name";
         //---------------------------------------
         // STEP 2 VARIABLES ---------------------
         $domain = new domain_info();
@@ -380,7 +381,7 @@ class reservations extends Controller {
                 $domain = new stdClass();
                 $domain->id = $d->dom_id;
                 $domain->name = $d->dom_descr;
-                $domain->topology_id = $d->topo_domain_id;
+                $domain->topology_id = $d->topology_id;
                 $before = microtime(true);
 
                 $domain->networks = $networks;
@@ -496,11 +497,11 @@ class reservations extends Controller {
         // ARGS to body ----------------------------------------------------------------
         $args = new stdClass();
         // arg name
-        $args->name = $name;
+        //$args->name = $name;
         // arg endpoints
         //$args->domains = $domains;
         // arg bandwidth
-        $args->bandwidthTip = "(" . $min . ", " . ($min + $div) . ", " . ($min + 2 * $div) . ", " . ($min + 3 * $div) . ", ... , " . $max . ")";
+        //$args->bandwidthTip = "(" . $min . ", " . ($min + $div) . ", " . ($min + 2 * $div) . ", " . ($min + 3 * $div) . ", ... , " . $max . ")";
         // arg timer
         $args->start_date = date($dateFormat);
         $args->finish_date = date($dateFormat);

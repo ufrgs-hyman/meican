@@ -5,10 +5,10 @@ defined ('__MEICAN') or die ("Invalid access.");
 include_once 'libs/controller.php';
 include_once 'libs/auth.php';
 include_once 'libs/language.php';
-include_once 'apps/aaa/models/user_info.inc';
-include_once 'apps/aaa/models/group_info.inc';
-include_once 'apps/aaa/models/aros.inc';
-include_once 'apps/aaa/models/acos.inc';
+include_once 'apps/aaa/models/user_info.php';
+include_once 'apps/aaa/models/group_info.php';
+include_once 'apps/aaa/models/aros.php';
+include_once 'apps/aaa/models/acos.php';
 include_once 'libs/acl_loader.php';
 
 class users extends Controller {
@@ -24,8 +24,6 @@ class users extends Controller {
          *  transformar essas consultas em uma função
          */
         $acl = new AclLoader();
-         $ok = $acl->checkACL("delete",'urn_info');
-         Framework::debug('retorno check',$ok);
 
         $usr_info = new user_info();
         $allUsers = $usr_info->fetch();
@@ -267,27 +265,43 @@ class users extends Controller {
             } else
                 $resultGroup = $user->updateGroups($usedArray);
 
-            $usr_name = Common::POST('usr_name');
-            $usr_password = md5(Common::POST('usr_password'));
-            $usr_email = Common::POST("usr_email");
+            if ($userResult = $user->fetch())
+                $usr_tmp = $userResult[0];
+            else {
+                $this->setFlash(_("Error to fetch user"), "error");
+                $this->edit($usr_id_array);
+                return;
+            }
+            
+            if ($usr_name = Common::POST('usr_name')) {
+                $user->usr_name = $usr_name;
+            } else {
+                $this->setFlash(_("No name was specified"), "warning");
+                $this->edit($usr_id_array);
+                return;
+            }
+            
+            $usr_password = Common::POST('usr_password');
+            $user->usr_email = Common::POST("usr_email");
+            $user->usr_settings = $usr_tmp->usr_settings;
 
             if ($usr_password) {
+                $usr_password = md5($usr_password);
                 $usr_repassword = md5(Common::POST('retype_password'));
 
-                if ($usr_password != $usr_repassword) {
+                if ($usr_password == $usr_repassword) {
+                    $user->usr_password = $usr_repassword;
+                } else {
                     $this->setFlash(_("Passwords mismatch"), "error");
                     $this->edit($usr_id_array);
                     return;
                 }
+            } else {
+                $user->usr_password = $usr_tmp->usr_password;
+            }
 
-                $result = $user->updateTo(array('usr_name' => $usr_name, 'usr_email' => $usr_email, 'usr_password' => $usr_password));
-            } else
-                $result = $user->updateTo(array('usr_name' => $usr_name, 'usr_email' => $usr_email));
-
-            if ($result) {
-                $res = $user->fetch();
-                $tmp = $res[0];
-                $this->setFlash(_("User") . " '$tmp->usr_login' " . _("updated"), "success");
+            if ($user->update()) {
+                $this->setFlash(_("User") . " '$usr_tmp->usr_login' " . _("updated"), "success");
                 $this->show();
             } else {
                 $this->setFlash(_("No change has been made"), "warning");
@@ -344,7 +358,6 @@ class users extends Controller {
     /**
      *
      * @return <type>
-     * @todo: RESOLVER PROBLEMA COM O UPDATE
      */
     public function update_settings() {
         $user = new user_info();
@@ -358,47 +371,56 @@ class users extends Controller {
             return;
         }
         
-        $old_password = Common::POST('old_usr_password');
+        if (Common::POST('changePassword')) {
+            $old_password = Common::POST('old_usr_password');
+            
+            if (!empty($old_password)) {
+                $old_password = md5($old_password);
+                $user->usr_password = $old_password;
+                $result = $user->fetch();
 
-        if (!empty($old_password)) {
-            $old_password = md5($old_password);
-            $user->usr_password = $old_password;
-            $result = $user->fetch();
+                if ($result) { //senha antiga correta
+                    $new_password = Common::POST('usr_password');
+                    $new_repassword = Common::POST('retype_password');
 
-            if ($result) { //senha antiga correta
-                $new_password = md5(Common::POST('usr_password'));
-                $new_repassword = md5(Common::POST('retype_password'));
-                
-                if ($new_password && $new_repassword) {
-                    if ($new_password == $new_repassword) {
-                        $user->usr_password = $new_password; //ok
+                    if ($new_password && $new_repassword) {
+                        if ($new_password == $new_repassword) {
+                            $user->usr_password = md5($new_password); //ok
+                        } else {
+                            $this->setFlash(_("Passwords mismatch"), "error");
+                            $this->edit_settings();
+                            return;
+                        }
                     } else {
-                        $this->setFlash(_("Passwords mismatch"), "error");
+                        $this->setFlash(_("Type the new password"), 'error');
                         $this->edit_settings();
                         return;
                     }
                 } else {
-                    $this->setFlash(_("Type the new password"),'error');
+                    $this->setFlash(_("Current password does not match"), 'error');
                     $this->edit_settings();
                     return;
                 }
             } else {
-                $this->setFlash(_("Current password does not match"),'error');
+                $this->setFlash(_("Missing required argument"), "warning");
                 $this->edit_settings();
                 return;
             }
+        } else {
+            $result = $user->fetch();
+            $user->usr_password = $result[0]->usr_password;
         }
         
         $user->usr_name = $usr_name;
+        $user->usr_email = Common::POST('usr_email');
         
         $dateFormat = Common::POST('dateformat');
         $lang = Common::POST('lang');
 
         $user->usr_settings = "date_format=$dateFormat;language=$lang";
-        $result = $user->update();
-
-        if ($result)
-            $this->setFlash(_("User settings updated successfully"), "success");
+        
+        if ($user->update())
+            $this->setFlash(_("User settings updated"), "success");
         else
             $this->setFlash(_("No change has been made"), "warning");
 

@@ -4,7 +4,7 @@ defined('__MEICAN') or die("Invalid access.");
 
 include_once 'libs/controller.php';
 include_once 'libs/auth.php';
-include_once 'apps/aaa/models/user_info.inc';
+include_once 'apps/aaa/models/user_info.php';
 
 class login extends Controller {
 
