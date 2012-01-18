@@ -19,16 +19,16 @@
     </thead>
                 
     <tbody>
-        <?php foreach ($gris as $i => $g): ?>
-            <tr id="line<?php echo $i; ?>">
+        <?php foreach ($gris as $g): ?>
+            <tr id="line<?php echo $g->id; ?>">
                 <td>
-                    <input type="checkbox" id="cancel<?php echo $i; ?>" disabled name="cancel_checkbox[]" value="<?php echo $g->id; ?>" onClick="disabelCancelButton(this);"/>
+                    <input type="checkbox" id="cancel<?php echo $g->id; ?>" disabled name="cancel_checkbox[]" value="<?php echo $g->id; ?>" onClick="disabelCancelButton(this);"/>
                 </td>
                 <td>
                     OSCARS
                 </td>
                 <td>
-                    <?php echo $g->id; ?>
+                    <?php echo $g->descr; ?>
                 </td>
                 <td>
                     <label id="status<?php echo $i; ?>"><?php echo $g->status; ?></label>

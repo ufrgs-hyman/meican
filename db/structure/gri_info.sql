@@ -27,13 +27,15 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 DROP TABLE IF EXISTS `gri_info`;
 CREATE TABLE IF NOT EXISTS `gri_info` (
-  `dom_id` int(11) NOT NULL,
-  `gri_id` char(40) NOT NULL,
+  `gri_id` int(11) NOT NULL AUTO_INCREMENT,
+  `gri_descr` char(40) NOT NULL,
   `status` enum('ACTIVE','PENDING','FINISHED','CANCELLED','FAILED','ACCEPTED','SUBMITTED','INCREATE','INSETUP','INTEARDOWN','INMODIFY') NOT NULL,
-  `res_id` int(11) NOT NULL,
   `start` datetime NOT NULL,
   `finish` datetime NOT NULL,
+  `dom_id` int(11) NOT NULL,
+  `res_id` int(11) NOT NULL,
   `send` tinyint(1) NOT NULL,
   PRIMARY KEY (`gri_id`),
+  UNIQUE KEY `gri_descr` (`gri_descr`),
   KEY `res_id` (`res_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;

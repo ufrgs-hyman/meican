@@ -175,7 +175,7 @@ class reservations extends Controller {
 
                 if ($gris) {
                     foreach ($gris as $g) {
-                        $griList[] = $g->gri_id;
+                        $griList[] = $g->gri_descr;
                     }
                 }
             }
@@ -287,7 +287,7 @@ class reservations extends Controller {
                         $control[$ind] = FALSE;
                         break;
                     default:
-                        $griList[] = $g->gri_id;
+                        $griList[] = $g->gri_descr;
                         $control[$ind] = TRUE;
                 }
                 $ind++;
@@ -727,6 +727,7 @@ class reservations extends Controller {
             foreach ($allGris as $g) {
                 $gri = new stdClass();
                 $gri->id = $g->gri_id;
+                $gri->descr = $g->gri_descr;
                 $gri->status = gri_info::translateStatus($g->status);
 
                 $status[] = $g->status;
@@ -792,7 +793,7 @@ class reservations extends Controller {
                 if ($gris = $gri->fetch(FALSE)) {
                     foreach ($gris as $g) {
                         $g->delete(FALSE);
-                        //$gris_to_cancel[] = $g->gri_id;
+                        //$gris_to_cancel[] = $g->gri_descr;
                     }
                 }
 
@@ -834,7 +835,7 @@ class reservations extends Controller {
         foreach ($gris as $g) {
             $oscarsRes = new OSCARSReservation();
             $oscarsRes->setOscarsUrl($flw->source->oscars_ip);
-            $oscarsRes->setGri($g->gri_id);
+            $oscarsRes->setGri($g->gri_descr);
             $oscarsRes->queryReservation();
             unset($oscarsRes);
         }
@@ -862,7 +863,7 @@ class reservations extends Controller {
             if ($g->status == "ACTIVE" || $g->status == "PENDING" || $g->status == "ACCEPTED") {
                 $oscarsRes = new OSCARSReservation();
                 $oscarsRes->setOscarsUrl($flw->source->oscars_ip);
-                $oscarsRes->setGri($g->gri_id);
+                $oscarsRes->setGri($g->gri_descr);
                 /**
                  * @todo cancelar várias reservas de uma só vez
                  */
@@ -978,10 +979,10 @@ class reservations extends Controller {
                 $resSent++;
 
                 $new_gri = new gri_info();
-                $new_gri->gri_id = $tmp->getGri();
+                $new_gri->gri_descr = $tmp->getGri();
+                $new_gri->status = $tmp->getStatus();
                 $new_gri->res_id = $reservation_info->res_id;
                 $new_gri->dom_id = $src_dom->dom_id;
-                $new_gri->status = $tmp->getStatus();
 
                 $date = new DateTime();
                 $date->setTimestamp($t->start);
@@ -1065,7 +1066,7 @@ class reservations extends Controller {
                         $reservation_info->res_id = $g->res_id;
                         $flw_id = $reservation_info->get('flw_id');
                         $flow = new flow_info();
-                        $flow->flw_id = $flow_id;
+                        $flow->flw_id = $flw_id;
                         $dom_src_id = $flow->get('src_dom');
                         $domain = new domain_info();
                         $domain->dom_id = $dom_src_id;
@@ -1073,7 +1074,7 @@ class reservations extends Controller {
                         $oscars_reservation = new OSCARSReservation();
                         $oscars_reservation->setOscarsUrl($src_dom->oscars_ip);
 
-                        $oscars_reservation->setGri($g->gri_id);
+                        $oscars_reservation->setGri($g->gri_descr);
                         if ($oscars_reservation->createPath()) {
                             $status = $oscars_reservation->getStatus();
                             $g->updateTo(array("send" => "0", "status" => $status), FALSE);

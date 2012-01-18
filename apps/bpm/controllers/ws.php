@@ -477,12 +477,12 @@ class ws extends Controller {
                         foreach ($allgris as $g) {
                              $oscRes = new OSCARSReservation();
                              $oscRes->setOscarsUrl($src_dom->oscars_ip);
-                             $oscRes->setGri($g->gri_id);
+                             $oscRes->setGri($g->gri_descr);
                              if ($oscRes->cancelReservation()){
                                  //apaga os gris negados do db MEICAN
                                  $g->delete(FALSE);
                              } else {
-                                 Framework::debug("error in cancel reservation gri ", $g->gri_id);
+                                 Framework::debug("error in cancel reservation gri ", $g->gri_descr);
                              }
                             unset($oscRes);
                         }

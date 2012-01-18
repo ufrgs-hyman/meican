@@ -9,12 +9,13 @@ class gri_info extends Model {
         $this->setTableName("gri_info");
 
         // Add all table attributes
-        $this->addAttribute("gri_id", "VARCHAR", TRUE, TRUE, FALSE);
-        $this->addAttribute("dom_id", "INTEGER");
+        $this->addAttribute("gri_id", "INTEGER", TRUE, FALSE, FALSE);
+        $this->addAttribute("gri_descr", "VARCHAR");
         $this->addAttribute("status", "VARCHAR");
-        $this->addAttribute("res_id", "INTEGER");
         $this->addAttribute("start", "VARCHAR");
         $this->addAttribute("finish", "VARCHAR");
+        $this->addAttribute("dom_id", "INTEGER");
+        $this->addAttribute("res_id", "INTEGER");
         $this->addAttribute("send", "INTEGER");
     }
     
