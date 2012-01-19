@@ -49,6 +49,7 @@ if ($type == 'source') {
               <input type="radio" name="<?= $prefixex ?>VLANType" id="<?= $prefix ?>_vlanUntagged" value="FALSE" disabled="disabled" onchange="map_changeVlanType(this,'<?= $prefix ?>');"/><label for="<?= $prefix ?>_vlanUntagged"><?php echo _("Untagged"); ?></label>
               <input type="radio" name="<?= $prefixex ?>VLANType" id="<?= $prefix ?>_vlanTagged" value="TRUE" disabled="disabled" onchange="map_changeVlanType(this,'<?= $prefix ?>');"/><label for="<?= $prefix ?>_vlanTagged"><?php echo _("Tagged"); ?></label> */ ?>
             <input type="checkbox" name="<?= $prefixex ?>VLANType" id="<?= $prefix ?>_vlanTagged" onchange="map_changeVlanType(this,'<?= $prefix ?>');" disabled class="ui-state-disabled"/>
+            <input type="hidden" name="<?= $prefix ?>_vlanType" id="<?= $prefix ?>_vlanType"/>
             <label for="<?= $prefix ?>_vlanTagged"><?php echo _("Tagged"); ?></label>
         </td>
     </tr>

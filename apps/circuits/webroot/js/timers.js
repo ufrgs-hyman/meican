@@ -51,20 +51,45 @@ function initializeTimer() {
     $("#view_durationTimer").html($("#duration").html());            
 }
 
+function writeSummaryToInput() {
+    var freq = $("#freq").val();
+
+    var week_str = "";
+    if (freq == "WEEKLY") {
+        var byday = getCheckedDays();
+        if (byday.length == 0) {
+            setFlash(select_day_string);
+            return;
+        }
+        byday = byday.toString();
+
+        var weekdays = ["#Sunday_desc","#Monday_desc","#Tuesday_desc","#Wednesday_desc","#Thursday_desc","#Friday_desc","#Saturday_desc"];
+
+        for (var i in weekdays) {
+            if ($(weekdays[i]).html())
+                week_str += $(weekdays[i]).html() + " ";
+        }
+    }
+
+    var sum_desc = $("#short_desc").html() + " ";
+    sum_desc += week_str;
+    sum_desc += $("#until_desc").html();
+    
+    $("#summary_input").val(sum_desc);
+}
+
 function refreshSummary() {
     if ($("#initialTime").val() < ($("#finalTime").val())) {
         var summary_string = active_string + " " + $("#initialDate").val() + " " + at_string + " " + $("#initialTime").val() + " " + until_string + 
             " " + $("#finalDate").val() + " " + at_string + " " + $("#finalTime").val();
                      
         $("#summary").html(summary_string);
-        $("#confirmation_summary").html(summary_string);
-        $("#summary_input").val($("#confirmation_summary").html());
     } else {
-        $("#summary").html("");
+        $("#summary").empty();
     }
 }
 
-function showRecurrenceBox() {    
+function showRecurrenceBox() {
     $("#untilDate").datepicker({
         dateFormat: date_format,
         showWeek: false,
@@ -115,7 +140,6 @@ function showRecurrenceBox() {
         $("#interval_type").empty();
         $("#short_desc").empty();
         $("#until_desc").empty();
-        $("#recurrence_summary").empty();
         $("#summary_input").val("");
         refreshSummary();
         //clearWeekConf();
@@ -150,7 +174,6 @@ function setSummary(sing_string, plural_string, opt_string) {
         $("#short_desc").html(repeat_every_string + ' ' + $("#interval").val() + ' ' + plural_string + aditional_string);
     }
     setUntilType();
-    
 }
 
 function clearWeekConf() {
@@ -219,16 +242,6 @@ function setUntilType() {
         $("#untilDate").attr("disabled", "disabled");
         $("#nr_occurr").attr("disabled", "disabled");
     }
-    $("#confirmation_summary").html($("#short_desc").html() + ' '
-                                  + $("#Sunday_desc").html() + ' '
-                                  + $("#Monday_desc").html() + ' '
-                                  + $("#Tuesday_desc").html() + ' '
-                                  + $("#Wednesday_desc").html() + ' '
-                                  + $("#Thursday_desc").html() + ' '
-                                  + $("#Friday_desc").html() + ' '
-                                  + $("#Saturday_desc").html() + ' '
-                                  + $("#until_desc").html());
-    $("#summary_input").val($("#confirmation_summary").html());
 }
 
 function checkWeekDay(day_name) {

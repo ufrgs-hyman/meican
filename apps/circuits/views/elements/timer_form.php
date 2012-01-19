@@ -23,8 +23,12 @@ $finish_time = $argsToElement->finish_time;
 <?php $this->addElement('timer_recurrence'); ?>
 
 <div style="padding-top:1em;">            
-    <p style="display:inline; color:#3a5879; font-weight: bold"><?php echo _("Summary"); ?></p>:&nbsp;<label id="recurrence_summary"></label>
+    <p style="display:inline; color:#3a5879; font-weight: bold"><?php echo _("Summary"); ?></p>:&nbsp;
+    
+    <!-- label for summary of circuit without recurrence, time when it would be active -->
     <label id="summary"></label>
+    
+    <!-- set of labels to describe the recurrence summary -->
     <label id="short_desc"></label>
     <label id="Sunday_desc"></label>
     <label id="Monday_desc"></label>
@@ -33,6 +37,8 @@ $finish_time = $argsToElement->finish_time;
     <label id="Thursday_desc"></label>
     <label id="Friday_desc"></label>
     <label id="Saturday_desc"></label>
-    <label id="until_desc"></label>              
+    <label id="until_desc"></label>
+    
+    <!-- input to post the summary description -->
     <input type="hidden" id="summary_input" name="summary" value=""/>
 </div>

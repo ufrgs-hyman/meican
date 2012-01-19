@@ -290,7 +290,7 @@ function changeVlanType(elem, where) {
     }
 }
 
-function validateBand(band_value) {
+function validateBand2(band_value) {
     var band = band_value.replace(/ /g, "");
     if (band >= band_min && band <= band_max) {
         if (band % band_div == 0) {

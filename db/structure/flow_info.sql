@@ -30,10 +30,10 @@ CREATE TABLE IF NOT EXISTS `flow_info` (
   `flw_id` int(11) NOT NULL AUTO_INCREMENT,
   `src_meican_id` int(11) NOT NULL,
   `src_urn_string` varchar(128) NOT NULL,
-  `src_vlan` varchar(11) DEFAULT NULL,
+  `src_vlan` int(11) DEFAULT NULL,
   `dst_meican_id` int(11) NOT NULL,
   `dst_urn_string` varchar(128) NOT NULL,
-  `dst_vlan` varchar(11) DEFAULT NULL,
+  `dst_vlan` int(11) DEFAULT NULL,
   `path` varchar(2056) DEFAULT NULL,
   PRIMARY KEY (`flw_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

@@ -224,7 +224,7 @@ class timers extends Controller {
                     $timer_info->byday = implode(',', $weekDays);
                 }
                 
-                $timer_info->summary = Common::POST('summary');// falta summary
+                $timer_info->summary = Common::POST('summary'); // ok
             }
             
             return $timer_info->insert();

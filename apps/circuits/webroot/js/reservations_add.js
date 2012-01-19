@@ -49,52 +49,94 @@ function timerError(error){
         return true;
 }
 
+function validateEndpoints() {
+    // verifica origem
+    if (src_urn) {
+        if ($("#src_vlanTagged").attr("checked")) {
+            $("#src_vlanType").val("tagged");
+            if (!checkVLAN("src")) {
+                setFlash(flash_srcVlanInv, "warning");
+                return false;
+            }
+        } else
+            $("#src_vlanType").val("untagged");
+    } else {
+        setFlash(flash_sourceReq, "warning");
+        return false;
+    }
+    
+    // verifica destino
+    if (dst_urn) {
+        if ($("#dst_vlanTagged").attr("checked")) {
+            $("#dst_vlanType").val("tagged");
+            if (!checkVLAN("dst")) {
+                setFlash(flash_dstVlanInv, "warning");
+                return false;
+            }
+        } else
+            $("#dst_vlanType").val("untagged");
+    } else {
+        setFlash(flash_destReq, "warning");
+        return false;
+    }
+    
+    return true;
+}
+
+function validateTimer() {
+    /*if ($("#finalTime").val() < $("#initialtime").val()) {
+        setFlash(flash_timerInvalid);
+        return false;
+    } else if ($("#finalTime").val() == $("#initialtime").val()) {
+        setFlash(flash_invalidDuration);
+        return false;
+    } else {
+        setFlash(flash_timerReq);
+        return false;
+    }
+    
+    return true;*/
+    writeSummaryToInput();
+    calcDuration();
+    return tab2_valid;
+}
+
 function validateReservationForm() {
-    if (!$('#res_name').val().length){
+    if (!$('#res_name').val().length) {
         setFlash(flash_nameReq);
         js_submit_form = false;
         $('#res_name').focus();
-        return false;	
-    }
-    if (tab1_valid) {
-        
-        var hops = "";
-        $.each($("#hops_line select"), function() {
-            if (this.value != -1)
-                hops += this.value + ";";
-        });
-        if (hops) {
-            var path = src_urn + ";";
-            path += hops;
-            path += dst_urn;
-            $("#path").val(path);
-        } else {
-            $("#path").val("");
-        }
-
-        if (tab2_valid) {
-            return true;
-        } else {
-            if ($("#finalTime").val() < $("#initialtime").val()) {
-                setFlash(flash_timerInvalid);
-                js_submit_form = false;
-                return false;
-            } else if ($("#finalTime").val() == $("#initialtime").val()) {
-                setFlash(flash_invalidDuration);
-                js_submit_form = false;
-                return false;
-            } else {
-                setFlash(flash_timerReq);
-                js_submit_form = false;
-                return false;
-            }
-        }
-    } else {
-        setFlash(flash_missingEndpoints);
-        js_submit_form = false;
         return false;
     }
-    return true;
+    
+    if (validateEndpoints() && validateBand($('#bandwidth').val()) && validateTimer()) {
+        return true;
+    } else {
+        js_submit_form = false;
+        $('#res_name').focus();
+        return false;
+    }
+        
+    /*var hops = "";
+    $.each($("#hops_line select"), function() {
+        if (this.value != -1)
+            hops += this.value + ";";
+    });
+    if (hops) {
+        var path = src_urn + ";";
+        path += hops;
+        path += dst_urn;
+        $("#path").val(path);
+    } else {
+        $("#path").val("");
+    }*/
+}
+
+function changeVlanValue(where) {
+    var text_vlanId = "#" + where + "_vlanText";
+    if ($(text_vlanId).val().length == 0) {
+        $(text_vlanId).val(any_string);
+    }
 }
 
 function validateTab1() {
@@ -809,7 +851,7 @@ function map_changePort(where) {
     if ($(port_id).val() != -1) {
         map_setEndpointConf(where);
     } else
-        tab1_valid = false
+        tab1_valid = false;
     //validateTab3();
 }
 
@@ -897,7 +939,7 @@ function map_setEndpointConf(where) {
             vlan_max = temp[1];
             allowUntag = false;
             $(text_htmlId).val(vlan_min);
-        } else {
+        }else {
             // nao possui virgula nem range. Ex: "0" ou "3000"
             vlan_validValues = urnData.vlan;
             if (vlan_validValues == 0) {
@@ -1048,7 +1090,7 @@ function map_saveFlow(flow_id) {
         }
         flow_Array[6] = dst_domain_id; // destination domainId
         flow_Array[7] = dst_urn; // destination URN
-    } else {
+    }else {
         setFlash(flash_destReq, "warning");
         return;
     }
@@ -1084,7 +1126,7 @@ function validateBand(band_value) {
 }
 
 
-(function($){
+(function($) {
     
     $.fn.mapView = {
         inicialize: function(){
@@ -1203,7 +1245,7 @@ function validateBand(band_value) {
                 edit_setBounds(edit_bounds);
             }
 
-            $.fn.mapEdit.setMarkersMap();                    
+            $.fn.mapEdit.setMarkersMap();
         },
     
         clearMapElements: function (elements) {
@@ -1459,6 +1501,7 @@ function validateBand(band_value) {
         clearDst: function () {//limpa ponto de destino
             $.fn.mapEdit.clearPoint('dst');
         },
+        
         clearAll: function (){
             if (path.length != 0) {
                 console.debug('clear all path');
@@ -1492,6 +1535,7 @@ function validateBand(band_value) {
     /* **************** DOCUMENT READY !!!! ******************** */
     
     $(function(){
+        
         var f = function(){
             var v = ($("#bandwidth").val()/band_max)*100;
             if (v>100 || v < 0)
@@ -1503,10 +1547,12 @@ function validateBand(band_value) {
                 'background-color': 'rgb('+(Math.round(255*(100-(k<0?0:k))/100))+','+(Math.round(255*(100-(-k<0?0:-k))/100))+',0)'*/
             }, 100);       
         };
+        
         $('#bandwidth').attr("min", band_min).attr("max", band_max).attr("step", band_div).numeric().spinner({
             spin: f, 
             stop: f
         }).spinner("disable").bind('spin', f).change(f).keyup(f).click(f).scroll(f);
+        
         $('#bandwidth_un').disabled();
         /*  if (false){ //configura tabs?
             $('#tabs-res ul').show();
@@ -1532,15 +1578,19 @@ function validateBand(band_value) {
         $('#bandwidth_un').disabled();
         $("#src_domain,#src_network,#dst_domain,#dst_network").empty();
         $("#src_device,#src_port,#dst_device,#dst_port").empty().disabled();
+        
+        map_clearVlanConf();
+        
         $('#repeat_chkbox').click(function(){
             showRecurrenceBox();
         });
-        $('.recurrence-table td input[type=checkbox]').click(function(){
+        $(".recurrence_table input[type=checkbox]").click(function(){
             checkWeekDay(this.id);
         });
-        $('#recur_radio,#nr_occurr,#untilDate').change(function(){
+        $('#recur_radio, #date_radio, #nr_occurr').change(function(){
             setUntilType();
         });
+        
         /* resize da janela muda tamanho do mapa */
         $(window).resize(function() {
             $('#edit_map_canvas').css('width', $('#tabs-2').outerWidth()-$($('#tabs-1 div.tab_subcontent')[1]).outerWidth()-12 );
@@ -1548,25 +1598,32 @@ function validateBand(band_value) {
 		  	$(item).css({'width': $(item).parent().width(), 'height': $(item).parent().height()});
 		  });*/
         });
-        /* quando digita nome, tira overlay */
+        
         $('form#reservation_add').submit(function() {
             validateReservationForm();
         });
+        
+        /* quando digita nome, tira overlay */
         $('#res_name').keyup(function(){
             if ($(this).val())
                 $('.tab-overlay').fadeOut();
             else
                 $('.tab-overlay').fadeIn();
         }).focus().keyup();
+        
         $.fn.mapEdit.inicialize();
-        $(window).trigger('resize');
-    });
-    $(window).load(function (){
+        
+        initializeTimer();
+        
         $(window).trigger('resize');
         
+        google.maps.event.trigger(edit_map, 'resize');
+        edit_map.setZoom( edit_map.getZoom() );
     });
-    google.maps.event.trigger(edit_map, 'resize');
-    edit_map.setZoom( edit_map.getZoom() );          
+    
+    $(window).load(function() {
+        $(window).trigger('resize');
+    });
 	
 })(jQuery);
 
