@@ -99,7 +99,6 @@ $(document).ready(function() {
     }
     
     jQuery.fn.uify = function(){
-        
         $(this).find('button,input[type=submit],input[type=button]').button();
         //$('input[type=button].add').button({icon: 'plusthick'});
         //$('input[type=button].add').button({ icons: {primary:'ui-icon-plusthick',secondary:'ui-icon-plusthick'} });
@@ -113,7 +112,6 @@ $(document).ready(function() {
     /*        $(this).find('div.menu').addClass('ui-widget');
         $(this).find('div.topItem').addClass('ui-widget-header');
         $(this).find('div.subItem').addClass('ui-widget-content');*/
-        
     };
     
 
@@ -194,7 +192,6 @@ $(document).ready(function() {
     }
 // analisar a real necessidade disso
 //setTimeout(refresh, 10*60*1000); // carrega a página a cada 10 min., para não sobrecarregar scripts
-
 }); //do ready
 
 function redir(url, data){
@@ -232,6 +229,7 @@ function setFlash(message, status) {
         '</p>');
     window.scroll(0, 0);
     window.onscroll = $.windowScroll;
+    //window.onscroll = window_scroll;
 }
 
 function clearFlash(){

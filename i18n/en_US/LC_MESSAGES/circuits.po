@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-17 17:32-0200\n"
+"POT-Creation-Date: 2012-01-20 18:06-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,59 +43,59 @@ msgstr ""
 msgid "minute"
 msgstr ""
 
-#: models/gri_info.php:55
+#: models/gri_info.php:56
 msgid "Active"
 msgstr ""
 
-#: models/gri_info.php:58
+#: models/gri_info.php:59
 msgid "Scheduled"
 msgstr ""
 
-#: models/gri_info.php:61
+#: models/gri_info.php:62
 msgid "Finished"
 msgstr ""
 
-#: models/gri_info.php:64
+#: models/gri_info.php:65
 msgid "Cancelled"
 msgstr ""
 
-#: models/gri_info.php:67
+#: models/gri_info.php:68
 msgid "Failed"
 msgstr ""
 
-#: models/gri_info.php:70
+#: models/gri_info.php:71
 msgid "Accepted"
 msgstr ""
 
-#: models/gri_info.php:73
+#: models/gri_info.php:74
 msgid "Submitted"
 msgstr ""
 
-#: models/gri_info.php:76
+#: models/gri_info.php:77
 msgid "In create"
 msgstr ""
 
-#: models/gri_info.php:79
+#: models/gri_info.php:80
 msgid "In setup"
 msgstr ""
 
-#: models/gri_info.php:82
+#: models/gri_info.php:83
 msgid "In tear down"
 msgstr ""
 
-#: models/gri_info.php:85
+#: models/gri_info.php:86
 msgid "In modify"
 msgstr ""
 
-#: models/gri_info.php:88
+#: models/gri_info.php:89
 msgid "Rejected"
 msgstr ""
 
-#: models/gri_info.php:91
+#: models/gri_info.php:92
 msgid "Unknown status"
 msgstr ""
 
-#: models/gri_info.php:94
+#: models/gri_info.php:95
 msgid "Reservation has no GRI"
 msgstr ""
 
@@ -189,7 +189,7 @@ msgstr ""
 msgid "Bandwidth (Mbps)"
 msgstr ""
 
-#: views/reservations_show.php:28 views/elements/list_gris.php:13
+#: views/reservations_show.php:28 views/elements/list_gris.php:16
 #: views/elements/view_request.php:12 circuits.php:23
 msgid "Status"
 msgstr ""
@@ -224,8 +224,8 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: views/reservations_show.php:62 views/elements/list_gris.php:14
-#: views/elements/list_gris.php:35
+#: views/reservations_show.php:62 views/elements/list_gris.php:17
+#: views/elements/list_gris.php:40
 msgid "loading"
 msgstr ""
 
@@ -237,19 +237,19 @@ msgstr ""
 msgid "The selected flows will be deleted."
 msgstr ""
 
-#: views/elements/list_gris.php:10
+#: views/elements/list_gris.php:13
 msgid "Tool"
 msgstr ""
 
-#: views/elements/list_gris.php:11
+#: views/elements/list_gris.php:14
 msgid "Global Reservation Identifier (GRI)"
 msgstr ""
 
-#: views/elements/list_gris.php:16
+#: views/elements/list_gris.php:19
 msgid "Initial Date/Time"
 msgstr ""
 
-#: views/elements/list_gris.php:17
+#: views/elements/list_gris.php:20
 msgid "Final Date/Time"
 msgstr ""
 
@@ -265,21 +265,21 @@ msgstr ""
 #: views/elements/reservation_tab_point.php:24 views/elements/view_flow.php:21
 #: views/elements/list_flows.php:19 views/elements/list_flows.php:25
 #: views/elements/source_dest.php:21 controllers/map.php:59
-#: controllers/reservations.php:451 controllers/reservations.php:752
+#: controllers/reservations.php:451 controllers/reservations.php:756
 msgid "Domain"
 msgstr ""
 
 #: views/elements/reservation_tab_point.php:28 views/elements/view_flow.php:33
 #: views/elements/list_flows.php:20 views/elements/list_flows.php:26
 #: views/elements/source_dest.php:65 controllers/map.php:61
-#: controllers/reservations.php:453 controllers/reservations.php:754
+#: controllers/reservations.php:453 controllers/reservations.php:758
 msgid "Network"
 msgstr ""
 
 #: views/elements/reservation_tab_point.php:32 views/elements/view_flow.php:45
 #: views/elements/list_flows.php:21 views/elements/list_flows.php:27
 #: views/elements/source_dest.php:77 controllers/map.php:63
-#: controllers/reservations.php:455 controllers/reservations.php:756
+#: controllers/reservations.php:455 controllers/reservations.php:760
 msgid "Device"
 msgstr ""
 
@@ -293,13 +293,13 @@ msgstr ""
 msgid "VLAN Type"
 msgstr ""
 
-#: views/elements/reservation_tab_point.php:52
+#: views/elements/reservation_tab_point.php:53
 #: views/elements/list_flows.php:82 views/elements/list_flows.php:109
 #: views/elements/vlan.php:10 views/elements/vlan.php:17
 msgid "Tagged"
 msgstr ""
 
-#: views/elements/reservation_tab_point.php:56 views/elements/view_flow.php:69
+#: views/elements/reservation_tab_point.php:57 views/elements/view_flow.php:69
 #: views/elements/list_flows.php:23 views/elements/list_flows.php:29
 #: views/elements/vlan.php:24
 msgid "VLAN"
@@ -317,67 +317,67 @@ msgstr ""
 msgid "Monthly"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:24
+#: views/elements/timer_recurrence.php:23
 msgid "Recurrence pattern"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:42
+#: views/elements/timer_recurrence.php:41
 msgid "Repeats every "
 msgstr ""
 
-#: views/elements/timer_recurrence.php:62
+#: views/elements/timer_recurrence.php:61
 msgid "Sunday"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:62
+#: views/elements/timer_recurrence.php:61
 msgid "Sun"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:65
+#: views/elements/timer_recurrence.php:64
 msgid "Monday"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:65
+#: views/elements/timer_recurrence.php:64
 msgid "Mon"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:68
+#: views/elements/timer_recurrence.php:67
 msgid "Tuesday"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:68
+#: views/elements/timer_recurrence.php:67
 msgid "Tue"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:71
+#: views/elements/timer_recurrence.php:70
 msgid "Wednesday"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:71
+#: views/elements/timer_recurrence.php:70
 msgid "Wed"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:76
+#: views/elements/timer_recurrence.php:75
 msgid "Thursday"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:76
+#: views/elements/timer_recurrence.php:75
 msgid "Thu"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:79
+#: views/elements/timer_recurrence.php:78
 msgid "Friday"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:79
+#: views/elements/timer_recurrence.php:78
 msgid "Fri"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:82
+#: views/elements/timer_recurrence.php:81
 msgid "Saturday"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:82
+#: views/elements/timer_recurrence.php:81
 msgid "Sat"
 msgstr ""
 
@@ -389,19 +389,19 @@ msgstr ""
 msgid "Starts on"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:101
+#: views/elements/timer_recurrence.php:98
 msgid "Ends:"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:103
+#: views/elements/timer_recurrence.php:102
 msgid "After"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:118
+#: views/elements/timer_recurrence.php:117
 msgid "occurrences"
 msgstr ""
 
-#: views/elements/timer_recurrence.php:121
+#: views/elements/timer_recurrence.php:122
 msgid "On"
 msgstr ""
 
@@ -527,107 +527,107 @@ msgstr ""
 msgid "History"
 msgstr ""
 
-#: controllers/map.php:51 controllers/flows.php:163 controllers/flows.php:354
+#: controllers/map.php:51 controllers/flows.php:163 controllers/flows.php:347
 #: controllers/reservations.php:438
 msgid "A name is required"
 msgstr ""
 
-#: controllers/map.php:52 controllers/flows.php:164 controllers/flows.php:355
+#: controllers/map.php:52 controllers/flows.php:164 controllers/flows.php:348
 #: controllers/reservations.php:439
 msgid "Invalid value for bandwidth"
 msgstr ""
 
-#: controllers/map.php:53 controllers/flows.php:165 controllers/flows.php:356
+#: controllers/map.php:53 controllers/flows.php:165 controllers/flows.php:349
 #: controllers/reservations.php:440
 msgid "A source is required"
 msgstr ""
 
-#: controllers/map.php:54 controllers/flows.php:166 controllers/flows.php:357
+#: controllers/map.php:54 controllers/flows.php:166 controllers/flows.php:350
 #: controllers/reservations.php:441
 msgid "Invalid value for source VLAN"
 msgstr ""
 
-#: controllers/map.php:55 controllers/flows.php:167 controllers/flows.php:358
+#: controllers/map.php:55 controllers/flows.php:167 controllers/flows.php:351
 #: controllers/reservations.php:442
 msgid "Source VLAN type required"
 msgstr ""
 
-#: controllers/map.php:56 controllers/flows.php:168 controllers/flows.php:359
+#: controllers/map.php:56 controllers/flows.php:168 controllers/flows.php:352
 #: controllers/reservations.php:443
 msgid "A destination is required"
 msgstr ""
 
-#: controllers/map.php:57 controllers/flows.php:169 controllers/flows.php:360
+#: controllers/map.php:57 controllers/flows.php:169 controllers/flows.php:353
 #: controllers/reservations.php:444
 msgid "Invalid value for destination VLAN"
 msgstr ""
 
-#: controllers/map.php:58 controllers/flows.php:170 controllers/flows.php:361
+#: controllers/map.php:58 controllers/flows.php:170 controllers/flows.php:354
 #: controllers/reservations.php:445
 msgid "Destination VLAN type required"
 msgstr ""
 
 #: controllers/map.php:60 controllers/reservations.php:452
-#: controllers/reservations.php:753
+#: controllers/reservations.php:757
 msgid "Domains"
 msgstr ""
 
 #: controllers/map.php:62 controllers/reservations.php:454
-#: controllers/reservations.php:755
+#: controllers/reservations.php:759
 msgid "Networks"
 msgstr ""
 
 #: controllers/map.php:64 controllers/reservations.php:456
-#: controllers/reservations.php:757
+#: controllers/reservations.php:761
 msgid "Devices"
 msgstr ""
 
-#: controllers/map.php:65 controllers/reservations.php:758
+#: controllers/map.php:65 controllers/reservations.php:762
 msgid "From Here"
 msgstr ""
 
-#: controllers/map.php:66 controllers/reservations.php:759
+#: controllers/map.php:66 controllers/reservations.php:763
 msgid "To Here"
 msgstr ""
 
 #: controllers/map.php:67 controllers/reservations.php:459
-#: controllers/reservations.php:760
+#: controllers/reservations.php:764
 msgid "Information about cluster"
 msgstr ""
 
-#: controllers/flows.php:300 controllers/timers.php:301
+#: controllers/flows.php:293 controllers/timers.php:301
 #: controllers/reservations.php:621
 msgid "Invalid index"
 msgstr ""
 
-#: controllers/flows.php:310 controllers/reservations.php:681
+#: controllers/flows.php:303 controllers/reservations.php:681
 msgid "Flow not found or could not get endpoints information"
 msgstr ""
 
-#: controllers/flows.php:320
+#: controllers/flows.php:313
 msgid "Could not get source topology"
 msgstr ""
 
-#: controllers/flows.php:334
+#: controllers/flows.php:327
 msgid "Could not get destination topology"
 msgstr ""
 
-#: controllers/flows.php:426 controllers/flows.php:429
-#: controllers/flows.php:448
+#: controllers/flows.php:419 controllers/flows.php:422
+#: controllers/flows.php:441
 msgid "Flow"
 msgstr ""
 
-#: controllers/flows.php:426 controllers/flows.php:429
+#: controllers/flows.php:419 controllers/flows.php:422
 #: controllers/timers.php:281 controllers/timers.php:284
 msgid "updated"
 msgstr ""
 
-#: controllers/flows.php:433 controllers/timers.php:289
+#: controllers/flows.php:426 controllers/timers.php:289
 msgid "No change has been made"
 msgstr ""
 
-#: controllers/flows.php:448 controllers/timers.php:421
-#: controllers/reservations.php:812
+#: controllers/flows.php:441 controllers/timers.php:421
+#: controllers/reservations.php:817
 msgid "deleted"
 msgstr ""
 
@@ -713,7 +713,7 @@ msgstr ""
 msgid "Timer not found"
 msgstr ""
 
-#: controllers/reservations.php:108
+#: controllers/reservations.php:108 controllers/reservations.php:765
 msgid "Error to get status"
 msgstr ""
 
@@ -809,10 +809,22 @@ msgstr ""
 msgid "Reservation not found"
 msgstr ""
 
-#: controllers/reservations.php:812
+#: controllers/reservations.php:817
 msgid "Reservation"
 msgstr ""
 
-#: controllers/reservations.php:1042
+#: controllers/reservations.php:887
+msgid "No reservation was cancelled"
+msgstr ""
+
+#: controllers/reservations.php:890
+msgid "One reservation was cancelled"
+msgstr ""
+
+#: controllers/reservations.php:893
+msgid "reservations were cancelled"
+msgstr ""
+
+#: controllers/reservations.php:1034
 msgid "Error at invoking business layer."
 msgstr ""

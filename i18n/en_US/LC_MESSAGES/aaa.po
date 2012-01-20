@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-17 17:32-0200\n"
+"POT-Creation-Date: 2012-01-20 18:06-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,7 +136,7 @@ msgid "Group name"
 msgstr ""
 
 #: views/users_show.php:18 controllers/users.php:120 controllers/users.php:149
-#: controllers/users.php:304 controllers/users.php:445
+#: controllers/users.php:304 controllers/users.php:444
 msgid "User"
 msgstr ""
 
@@ -300,7 +300,7 @@ msgid "already exists"
 msgstr ""
 
 #: controllers/users.php:151 controllers/users.php:295
-#: controllers/users.php:391
+#: controllers/users.php:390
 msgid "Passwords mismatch"
 msgstr ""
 
@@ -337,27 +337,27 @@ msgstr ""
 msgid "updated"
 msgstr ""
 
-#: controllers/users.php:307 controllers/users.php:426
+#: controllers/users.php:307 controllers/users.php:425
 msgid "No change has been made"
 msgstr ""
 
-#: controllers/users.php:370 controllers/users.php:406
+#: controllers/users.php:369 controllers/users.php:405
 msgid "Missing required argument"
 msgstr ""
 
-#: controllers/users.php:396
+#: controllers/users.php:395
 msgid "Type the new password"
 msgstr ""
 
-#: controllers/users.php:401
+#: controllers/users.php:400
 msgid "Current password does not match"
 msgstr ""
 
-#: controllers/users.php:424
+#: controllers/users.php:423
 msgid "User settings updated"
 msgstr ""
 
-#: controllers/users.php:445 controllers/groups.php:284
+#: controllers/users.php:444 controllers/groups.php:284
 msgid "deleted"
 msgstr ""
 

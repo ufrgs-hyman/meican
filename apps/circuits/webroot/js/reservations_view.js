@@ -12,7 +12,7 @@ $(document).ready(function() {
     $("#cancel_button").addClass('ui-state-disabled ui-button-disabled');
     
     if (refreshReservation) {
-        //griRefreshStatus(reservation_id);
+        griRefreshStatus(reservation_id);
         js_function_interval = setInterval("griRefreshStatus(" + reservation_id + ")", 30000);
     }
 

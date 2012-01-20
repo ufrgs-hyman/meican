@@ -1,12 +1,15 @@
-<?php 
-    $gris = $argsToElement;
+<?php
+    $gris = $argsToElement['gris'];
+    $refresh = $argsToElement['refresh'];
 ?>
 
 <table class="list" style="width: 100%">
     
     <thead>
         <tr>
+            <?php if ($refresh): ?>
             <th class="listHeader"></th>
+            <?php endif; ?>
             <th class="listHeader"><?php echo _("Tool"); ?></th>
             <th class="listHeader"><?php echo _("Global Reservation Identifier (GRI)"); ?></th>
             <th class="listHeader" align="center">
@@ -21,9 +24,11 @@
     <tbody>
         <?php foreach ($gris as $g): ?>
             <tr id="line<?php echo $g->id; ?>">
+                <?php if ($refresh): ?>
                 <td>
                     <input type="checkbox" id="cancel<?php echo $g->id; ?>" disabled name="cancel_checkbox[]" value="<?php echo $g->id; ?>" onClick="disabelCancelButton(this);"/>
                 </td>
+                <?php endif; ?>
                 <td>
                     OSCARS
                 </td>

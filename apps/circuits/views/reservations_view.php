@@ -50,7 +50,7 @@ $refresh = $this->passedArgs->refresh;
                 <br style="clear: both"/>
                 <?php endif; ?>
             
-            <?php $this->addElement('list_gris', $gris); ?>
+            <?php $this->addElement('list_gris', array('gris' => $gris, 'refresh' => $refresh)); ?>
                 
             </form>
             

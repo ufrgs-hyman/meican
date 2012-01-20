@@ -269,7 +269,7 @@ class reservations extends Controller {
         $this->setLayout("empty");
 
         $res_id = Common::POST("res_id");
-        Framework::debug("gri stats",$res_id);
+        //Framework::debug("gri stats",$res_id);
 
         $gri = new gri_info();
         $gri->res_id = $res_id;
@@ -761,7 +761,8 @@ class reservations extends Controller {
             "devices_string" => _("Devices"),
             "from_here_string" => _("From Here"),
             "to_here_string" => _("To Here"),
-            "cluster_information_string" => _("Information about cluster")
+            "cluster_information_string" => _("Information about cluster"),
+            'str_error_refresh_status' => _("Error to get status")
         ));
 
         $this->setInlineScript('reservations_view');
