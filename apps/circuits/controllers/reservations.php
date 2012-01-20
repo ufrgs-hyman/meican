@@ -162,7 +162,7 @@ class reservations extends Controller {
         
         $reservations = $res_info->fetch();
         
-        Framework::debug("res to refresh",$reservations);
+        //Framework::debug("res to refresh",$reservations);
 
         /**
          * Transforma a lista bidimensional de gris para uma lista unidimensional -> para realizar uma só consulta ao OSCARS
@@ -173,6 +173,7 @@ class reservations extends Controller {
             foreach ($reservations as $res) {
                 $gri = new gri_info();
                 $gri->res_id = $res->res_id;
+                $gri->dom_id = $dom_id;
                 $gris = $gri->fetch(FALSE);
 
                 if ($gris) {

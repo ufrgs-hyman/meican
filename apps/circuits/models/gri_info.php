@@ -23,13 +23,16 @@ class gri_info extends Model {
      * @return Array res_id
      */
     public function getStatusResId($domId=NULL) {
-        $this->status = array("ACTIVE", "PENDING", "ACCEPTED", "SUBMITTED", "INCREATE", "INSETUP", "INTEARDOWN", "INMODIFY");
+        $this->status = array("ACTIVE", "PENDING", "ACCEPTED", "SUBMITTED", "INCREATE", "INSETUP", "INTEARDOWN", "INMODIFY", "");
         if ($domId)
             $this->dom_id = $domId;
-        $gri_res = $this->fetch(FALSE);
         
-        $filter_res_id_array = Common::arrayExtractAttr($gri_res, "res_id");
-        $filteredArray = array_unique($filter_res_id_array);
+        $filteredArray = array(0);
+        if ($gri_res = $this->fetch(FALSE)) {
+            $filter_res_id_array = Common::arrayExtractAttr($gri_res, "res_id");
+            $filteredArray = array_unique($filter_res_id_array);
+        }
+        
         return $filteredArray;
     }
     
@@ -37,15 +40,19 @@ class gri_info extends Model {
      * @return Array res_id
      */
     public function getHistoryResId() {
-        $this->status = array("FAILED", "FINISHED", "CANCELLED", "");
-        $hist_gri_res = $this->fetch(FALSE);
-        
-        $hist_filter_res_id_array = Common::arrayExtractAttr($hist_gri_res, "res_id");
-        $stat_gri_res = $this->getStatusResId();
-        
-        // faz a diferença dos arrays, para garantir que a reserva não tenha nenhum GRI que mude de status
-        $filter_res_id_array = array_diff($hist_filter_res_id_array, $stat_gri_res);
-        $filteredArray = array_unique($filter_res_id_array);
+        $this->status = array("FAILED", "FINISHED", "CANCELLED");
+
+        $filteredArray = array(0);
+        if ($hist_gri_res = $this->fetch(FALSE)) {
+
+            $hist_filter_res_id_array = Common::arrayExtractAttr($hist_gri_res, "res_id");
+            $stat_gri_res = $this->getStatusResId();
+
+            // faz a diferença dos arrays, para garantir que a reserva não tenha nenhum GRI que mude de status
+            $filter_res_id_array = array_diff($hist_filter_res_id_array, $stat_gri_res);
+            $filteredArray = array_unique($filter_res_id_array);
+        }
+
         return $filteredArray;
     }
     
