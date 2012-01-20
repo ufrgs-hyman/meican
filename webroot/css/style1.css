@@ -433,11 +433,6 @@ div.shadow {
     box-shadow: 2px 2px 4px #888;
 }
 
-#cancel_button {
-    float:right;
-}
-
-
 #contextMenu {
     position: absolute;
     min-width: 100px;

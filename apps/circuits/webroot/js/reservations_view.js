@@ -35,4 +35,7 @@ $(document).ready(function() {
     
     res_map = new google.maps.Map(document.getElementById("res_mapCanvas"), res_myOptions);
     res_showCircuit();
+    $("#cancel_button").attr("disabled","disabled");
+    $("#cancel_button").addClass('ui-state-disabled ui-button-disabled');        
+    
 });

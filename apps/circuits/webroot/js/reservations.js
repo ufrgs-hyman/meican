@@ -112,8 +112,6 @@ function disabelCancelButton(elemId) {
         $("#cancel_button").removeClass('ui-state-disabled ui-button-disabled');
     } else {
         $("#cancel_button").attr("disabled","disabled");
-//        $("#cancel_button").css( {
-//            'opacity' : '0.4'
-//        });
+        $("#cancel_button").addClass('ui-state-disabled ui-button-disabled');        
     }
 }
