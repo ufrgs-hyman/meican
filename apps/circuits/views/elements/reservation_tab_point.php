@@ -57,8 +57,11 @@ if ($type == 'source') {
         <td><strong><?php echo _('VLAN'); ?></strong></td>
         <td class="vlan-input">
             <input type="text" id="<?= $prefix ?>_vlanText" size="14" name="<?= $prefix ?>_vlan" disabled="disabled" class="ui-state-disabled"/>
-            <label for="<?= $prefix ?>_vlanText" id="label_<?= $prefix ?>_vlanText" class="ui-state-disabled"></label>
-            <div id="<?= $prefix ?>_vlanTip"/>
+            <!--  comentado pois estava dando pau no firefox
+            <label for="<= $prefix ?>_vlanText" id="label_<= $prefix ?>_vlanText" class="ui-state-disabled"></label>
+            
+            <div id="<= $prefix ?>_vlanTip"/>
+            -->
         </td>
     </tr>
 </tbody>

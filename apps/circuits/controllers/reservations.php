@@ -534,9 +534,9 @@ class reservations extends Controller {
         $res_begin_timestamp = Common::getSessionVariable("res_begin_timestamp");
         $res_diff_timestamp = $res_end_timestamp - $res_begin_timestamp;
 
-        Framework::debug("post", $_POST);
-        $this->add_form();
-        return;
+//        Framework::debug("post", $_POST);
+//        $this->add_form();
+//        return;
 
         /**
          * insere o flow
