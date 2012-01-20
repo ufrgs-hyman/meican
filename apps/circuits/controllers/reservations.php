@@ -155,12 +155,14 @@ class reservations extends Controller {
         $gris = new gri_info();
         $resToRefresh = $gris->getStatusResId($dom_id);
         
+        Framework::debug("res array to refresh",$resToRefresh);
+        
         $res_info = new reservation_info();
         $res_info->res_id = $resToRefresh;
         
         $reservations = $res_info->fetch();
         
-        //Framework::debug("res to refresh",$reservations);
+        Framework::debug("res to refresh",$reservations);
 
         /**
          * Transforma a lista bidimensional de gris para uma lista unidimensional -> para realizar uma só consulta ao OSCARS
