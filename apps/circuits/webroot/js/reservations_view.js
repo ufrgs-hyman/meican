@@ -13,7 +13,7 @@ $(document).ready(function() {
 
     if (status_array) {
         for (var index in status_array) {
-            checkStatus(index, status_array[index]);
+            checkStatus(status_array[index].id, status_array[index].status);
         }
     }
 

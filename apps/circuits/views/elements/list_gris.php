@@ -31,7 +31,7 @@
                     <?php echo $g->descr; ?>
                 </td>
                 <td>
-                    <label id="status<?php echo $i; ?>"><?php echo $g->status; ?></label>
+                    <label id="status<?php echo $g->id; ?>"><?php echo $g->status; ?></label>
                     <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif"/>
                 </td>
                 <td>

@@ -160,7 +160,7 @@ class reservations extends Controller {
         
         $reservations = $res_info->fetch();
         
-        Framework::debug("res to refresh",$reservations);
+        //Framework::debug("res to refresh",$reservations);
 
         /**
          * Transforma a lista bidimensional de gris para uma lista unidimensional -> para realizar uma só consulta ao OSCARS
@@ -195,7 +195,7 @@ class reservations extends Controller {
             $dom->dom_id = $dom_id;
             $oscars_ip = $dom->get('oscars_ip');
             
-            Framework::debug("gri list", $griList);
+            Framework::debug("gri list ro refresh", $griList);
 
             $oscarsRes = new OSCARSReservation();
             $oscarsRes->setOscarsUrl($oscars_ip);
@@ -730,7 +730,10 @@ class reservations extends Controller {
                 $gri->descr = $g->gri_descr;
                 $gri->status = gri_info::translateStatus($g->status);
 
-                $status[] = $g->status;
+                $stat_obj = new stdClass();
+                $stat_obj->status = $g->status;
+                $stat_obj->id = $g->gri_id;
+                $status[] = $stat_obj;
 
                 $start = new DateTime($g->start);
                 $finish = new DateTime($g->finish);
@@ -841,7 +844,7 @@ class reservations extends Controller {
         }
     }
 
-    function cancel($reservation_info) {
+    public function cancel($gri_id_array) {
         Framework::debug("post cancel",$_POST);
         return;
         

@@ -109,11 +109,11 @@ function disabelCancelButton(elemId) {
 
     if (cancelCont) {
         $("#cancel_button").removeAttr("disabled");
-        $("#cancel_button").removeAttr("style");
+        $("#cancel_button").removeClass('ui-state-disabled ui-button-disabled');
     } else {
         $("#cancel_button").attr("disabled","disabled");
-        $("#cancel_button").css( {
-            'opacity' : '0.4'
-        });
+//        $("#cancel_button").css( {
+//            'opacity' : '0.4'
+//        });
     }
 }
