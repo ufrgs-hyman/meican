@@ -844,71 +844,58 @@ class reservations extends Controller {
         }
     }
 
-    public function cancel($gri_id_array) {
-        Framework::debug("post cancel",$_POST);
-        return;
-        
-        $cancel_reservations = Common::POST('cancel_checkbox');
-        
-        
-        //descobrir IP do dominio origem da reserva para enviar ao OSCARS adequado
-        $result = $reservation_info->fetch();
-        $res = $result[0];
-        $flow = new flow_info();
-        $flow->flw_id = $res->flw_id;
-        $flw = $flow->getFlowDetails();
+    public function cancel($param_array) {
+        $cancel_gris = Common::POST('cancel_checkbox');
 
         $gri = new gri_info();
-        $gri->res_id = $reservation_info->res_id;
-        $gris = $gri->fetch();
+        $gri->gri_id = $cancel_gris;
+        $gris = $gri->fetch(FALSE);
+        
+        $cont = 0;
 
-        foreach ($gris as $g) {
-            if ($g->status == "ACTIVE" || $g->status == "PENDING" || $g->status == "ACCEPTED") {
-                $oscarsRes = new OSCARSReservation();
-                $oscarsRes->setOscarsUrl($flw->source->oscars_ip);
-                $oscarsRes->setGri($g->gri_descr);
-                /**
-                 * @todo cancelar várias reservas de uma só vez
-                 */
-                $oscarsRes->cancelReservation();
-                unset($oscarsRes);
+        if ($gris) {
+            $dom = new domain_info();
+            $dom->dom_id = $gris[0]->dom_id;
+
+            if ($oscars_ip = $dom->get('oscars_ip')) {
+                foreach ($gris as $g) {
+                    if ($g->status == "ACTIVE" || $g->status == "PENDING" || $g->status == "ACCEPTED") {
+                        $oscarsRes = new OSCARSReservation();
+                        $oscarsRes->setOscarsUrl($oscars_ip);
+                        $oscarsRes->setGri($g->gri_descr);
+                        Framework::debug("gri to cancel",$g->gri_descr);
+                        /**
+                         * @todo cancelar várias reservas de uma só vez
+                         */
+                        if ($oscarsRes->cancelReservation()) {
+                            $cont++;
+                            $status_ret = $oscarsRes->getStatus();
+                            if ($status_ret != $g->status) {
+                                $gri_tmp = new gri_info();
+                                $gri_tmp->gri_id = $g->gri_id;
+                                $gri->updateTo(array('status' => $status_ret), FALSE);
+                            }
+                        }
+                    }
+                }
             }
         }
+        
+        switch ($cont) {
+            case 0:
+                $this->setFlash(_("No reservation was cancelled"), "warning");
+                break;
+            case 1:
+                $this->setFlash(_("One reservation was cancelled"), "success");
+                break;
+            default:
+                $this->setFlash("$cont " . _("reservations were cancelled"), "success");
+                break;
+        }
+        
+        sleep(3);
+        $this->view($param_array);
     }
-    
-//    public function cancel($res_id_array) {
-//        $cancel_reservations = Common::POST('cancel_checkbox');
-//
-//        if ($cancel_reservations) {
-//
-//            $cont = 0;
-//
-//            $endpoint = "http://" . Framework::$bridgeIp . "/axis2/services/BridgeOSCARS?wsdl";
-//            $client = new SoapClient($endpoint, array('cache_wsdl' => 0));
-//            if ($result = $client->cancel($cancel_reservations)) {
-//                foreach ($result->return as $val) {
-//                    if ($val == 0)
-//                        $cont++;
-//                }
-//            }
-//
-//            sleep(3);
-//
-//            switch ($cont) {
-//                case 0:
-//                    $this->setFlash(_("No reservation was cancelled"), "warning");
-//                    break;
-//                case 1:
-//                    $this->setFlash(_("One reservation was cancelled"), "success");
-//                    break;
-//                default:
-//                    $this->setFlash("$cont " . _("reservations were cancelled"), "success");
-//                    break;
-//            }
-//        }
-//
-//        $this->view($res_id_array);
-//    }
 
     function listStatus($grisArray) {
         $oscarsRes = new OSCARSReservation();

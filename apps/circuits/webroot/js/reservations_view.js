@@ -8,8 +8,13 @@ var res_lines = [];
 var res_myOptions = null;
 
 $(document).ready(function() {
-    if (refreshReservation)
+    $("#cancel_button").attr("disabled","disabled");
+    $("#cancel_button").addClass('ui-state-disabled ui-button-disabled');
+    
+    if (refreshReservation) {
+        //griRefreshStatus(reservation_id);
         js_function_interval = setInterval("griRefreshStatus(" + reservation_id + ")", 30000);
+    }
 
     if (status_array) {
         for (var index in status_array) {
@@ -35,7 +40,4 @@ $(document).ready(function() {
     
     res_map = new google.maps.Map(document.getElementById("res_mapCanvas"), res_myOptions);
     res_showCircuit();
-    $("#cancel_button").attr("disabled","disabled");
-    $("#cancel_button").addClass('ui-state-disabled ui-button-disabled');        
-    
 });
