@@ -272,7 +272,7 @@ class reservations extends Controller {
         $this->setLayout("empty");
 
         $res_id = Common::POST("res_id");
-        //Framework::debug("gri stats",$res_id);
+        Framework::debug("gri stats",$res_id);
 
         $gri = new gri_info();
         $gri->res_id = $res_id;
@@ -337,7 +337,7 @@ class reservations extends Controller {
                     }
 
                     $status_obj = new stdClass();
-                    $status_obj->id = $ind;
+                    $status_obj->id = $g->gri_id;
                     $status_obj->name = $g->status;
                     $status_obj->translate = gri_info::translateStatus($g->status);
                     $statusList[] = $status_obj;
