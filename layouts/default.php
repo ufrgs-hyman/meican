@@ -113,6 +113,7 @@
                 </div>
                 <?php echo $this->element('feedback', array('app' => 'init')); ?>
             </div>
+            <div style="clear:both;"></div>
         </div>
     </body>
 </html>
