@@ -1531,7 +1531,11 @@ function validateBand(band_value) {
         }
     
     };
-	
+    
+    /* resize da janela muda tamanho do mapa */
+    var resizefn = function() {
+        $('#edit_map_canvas').css('width', $('#subtab-points').offset().left-12-$('#tabs-2').offset().left );
+    };
     /* **************** DOCUMENT READY !!!! ******************** */
     
     $(function(){
@@ -1581,27 +1585,14 @@ function validateBand(band_value) {
         
         map_clearVlanConf();
         
-        $('#repeat_chkbox').click(function(){
-            showRecurrenceBox();
-        });
+        $('#repeat_chkbox').click(showRecurrenceBox);
         $(".recurrence_table input[type=checkbox]").click(function(){
             checkWeekDay(this.id);
         });
-        $('#recur_radio, #date_radio, #nr_occurr').change(function(){
-            setUntilType();
-        });
+        $('#recur_radio, #date_radio, #nr_occurr').change(setUntilType);
+        $(window).resize(resizefn);
         
-        /* resize da janela muda tamanho do mapa */
-        $(window).resize(function() {
-            $('#edit_map_canvas').css('width', $('#tabs-2').outerWidth()-$($('#tabs-1 div.tab_subcontent')[1]).outerWidth()-12 );
-        /*      $('.tab-overlay').each(function(n, item){
-		  	$(item).css({'width': $(item).parent().width(), 'height': $(item).parent().height()});
-		  });*/
-        });
-        
-        $('form#reservation_add').submit(function() {
-            validateReservationForm();
-        });
+        $('form#reservation_add').submit(validateReservationForm);
         
         /* quando digita nome, tira overlay */
         $('#res_name').keyup(function(){
@@ -1615,15 +1606,13 @@ function validateBand(band_value) {
         
         initializeTimer();
         
-        $(window).trigger('resize');
+        resizefn();
         
         google.maps.event.trigger(edit_map, 'resize');
-        edit_map.setZoom( edit_map.getZoom() );
+        //edit_map.setZoom( edit_map.getZoom() );
     });
     
-    $(window).load(function() {
-        $(window).trigger('resize');
-    });
+    $(window).load(resizefn);
 	
 })(jQuery);
 

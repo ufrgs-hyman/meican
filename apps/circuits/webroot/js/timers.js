@@ -132,11 +132,20 @@ function showRecurrenceBox() {
     }
 
     if ($("#repeat_chkbox").attr("checked")) {
-        initializeRecurrence();
-    }
-    else {
-        $("#fillSpace").css("height", "49%");
-        $("#recurrence").slideUp(100);
+        $("#recurrence").slideDown(100, function(){
+            $(window).trigger('resize');
+        });        
+        $("#summary").empty();
+        setFreq();
+        //$("#initialRecurrence").setDate($("initialDate").getDate());
+//        setUntilType();
+//        $("#rec_initialTime").html($("#initialTime").val());
+//        $("#rec_finalTime").html($("#finalTime").val());
+//        $("#rec_duration").html($("#duration").html());    
+    } else {
+        $("#recurrence").slideUp(100, function(){
+            $(window).trigger('resize');
+        });
         $("#interval_type").empty();
         $("#short_desc").empty();
         $("#until_desc").empty();
@@ -144,18 +153,6 @@ function showRecurrenceBox() {
         refreshSummary();
         //clearWeekConf();
     }
-}
-
-function initializeRecurrence() {
-        $("#recurrence").slideDown(100);        
-        $("#summary").empty();
-        setFreq();
-        //$("#initialRecurrence").setDate($("initialDate").getDate());
-//        setUntilType();
-//        $("#rec_initialTime").html($("#initialTime").val());
-//        $("#rec_finalTime").html($("#finalTime").val());
-//        $("#rec_duration").html($("#duration").html());        
-        $("#fillSpace").css("height", "18%");    
 }
 
 function setSummary(sing_string, plural_string, opt_string) {

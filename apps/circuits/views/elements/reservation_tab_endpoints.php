@@ -1,8 +1,8 @@
     <p style='color:black;display: none;'><?php echo _("Select source and destination networks by clicking on the map markers with any button and then choosing an option from the pop-up menu. After selecting the endpoints, choose the device and port on the right pane."); ?></p>
-    <div class="tab_subcontent" style="border: solid #BBB 1px; box-shadow: 2px 2px 4px #888; border-image: initial;">
+    <div id="subtab-map" class="tab_subcontent" style="border: solid #BBB 1px; box-shadow: 2px 2px 4px #888; border-image: initial;">
         <div id="edit_map_canvas" style="width:700px; height: 480px;"></div>
     </div>
-    <div class="tab_subcontent" style="float: right; padding-left:2px;">
+    <div id="subtab-points" class="tab_subcontent" style="float: right; padding-left:2px;">
         <?= $this->element('reservation_tab_point', array('type' => 'source')); ?>
         <div id="bandwidth_bar">
             <div id="bandwidth_bar_text">
