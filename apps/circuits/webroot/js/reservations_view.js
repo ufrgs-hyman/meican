@@ -8,9 +8,6 @@ var res_lines = [];
 var res_myOptions = null;
 
 $(document).ready(function() {
-    $("#cancel_button").attr("disabled","disabled");
-    $("#cancel_button").addClass('ui-state-disabled ui-button-disabled');
-    
     if (refreshReservation) {
         griRefreshStatus(reservation_id);
         js_function_interval = setInterval("griRefreshStatus(" + reservation_id + ")", 30000);

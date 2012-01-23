@@ -98,8 +98,10 @@ $(document).ready(function() {
         }
     }
     
-    jQuery.fn.uify = function(){
+    jQuery.fn.uify = function() {
         $(this).find('button,input[type=submit],input[type=button]').button();
+        $(this).find('button[disabled=disabled],input[disabled=disabled][type=submit],input[disabled=disabled][type=button]').button('disabled');
+        
         //$('input[type=button].add').button({icon: 'plusthick'});
         //$('input[type=button].add').button({ icons: {primary:'ui-icon-plusthick',secondary:'ui-icon-plusthick'} });
         $(this).find('[disabled=disabled]').addClass('ui-state-disabled');

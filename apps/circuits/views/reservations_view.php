@@ -44,8 +44,8 @@ $refresh = $this->passedArgs->refresh;
             
                 <?php if ($refresh): ?>
                 <div class="controls">
-                    <input type="button" class="refresh" value="<?php echo _("Refresh") ?>" onClick="griRefreshStatus(<?php echo $res_id; ?>);" />
-                    <input type="submit" class="cancel" id="cancel_button" value="<?php echo _("Cancel reservations"); ?>" onClick="return confirm('<?php echo _('Cancel the selected reservations?'); ?>')"/>
+                    <input type="button" class="refresh" value="<?php echo _("Refresh") ?>" onclick="griRefreshStatus(<?php echo $res_id; ?>);" />
+                    <input type="submit" class="cancel" disabled="disabled" id="cancel_button" value="<?php echo _("Cancel reservations"); ?>" onclick="return confirm('<?php echo _('Cancel the selected reservations?'); ?>')"/>
                 </div>
                 <br style="clear: both"/>
                 <?php endif; ?>

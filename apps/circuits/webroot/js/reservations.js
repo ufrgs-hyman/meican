@@ -1,3 +1,14 @@
+//(function($){ 
+//    
+//var cancelCont = 0;
+//
+//var res_map = null;
+//var res_center = null;
+//var res_markersArray = [];
+//var res_bounds = [];
+//var res_lines = [];
+//var res_myOptions = null;
+
 function refreshStatus() {
     $('.load').show();
     
@@ -108,10 +119,11 @@ function disabelCancelButton(elemId) {
         cancelCont--;
 
     if (cancelCont) {
-        $("#cancel_button").removeAttr("disabled");
-        $("#cancel_button").removeClass('ui-state-disabled ui-button-disabled');
+        $("#cancel_button").button('enable');
     } else {
-        $("#cancel_button").attr("disabled","disabled");
-        $("#cancel_button").addClass('ui-state-disabled ui-button-disabled');        
+        $("#cancel_button").button('disable');
     }
 }
+
+
+//})(jQuery);
