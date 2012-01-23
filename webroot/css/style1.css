@@ -193,8 +193,28 @@ table th.large {
     padding-right: 10px;
 }
 
+fieldset {
+    box-shadow: 2px 2px 4px #888;
+     border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+}
+
 table.list {
     width: 100%;
+    box-shadow: 2px 2px 4px #888;
+    /*font-size:*/
+}
+
+table.list thead th {
+    cursor: pointer;
+}
+
+table.list thead { border: 1px solid #5b7399; background: #27567c url(meican3-theme/images/ui-bg_flat_75_27567c_40x100.png) 50% 50% repeat-x; color: #d8e7f3; font-weight: bold; }
+table.list thead a { color: #d8e7f3; }
+
+table.list tbody {
+    border: 1px solid #AAA;
 }
 
 table th.listHeader {
@@ -770,9 +790,6 @@ div#bandwidth_bar_text{
     float:left;
 }
 
-table.list {
-    box-shadow: 2px 2px 4px #888;
-}
 
 /* Cores das fontes */
 
@@ -810,18 +827,6 @@ table.reservation-point td:nth-child(1) {
 
 table.reservation-point td, table.reservation-point th {
     border: 1px solid #BBB;
-}
-
-table.list thead th {
-    cursor: pointer;
-}
-
-table.list thead {
-    
-}
-
-table.list tbody{
-    
 }
 
 .recurrence-item{

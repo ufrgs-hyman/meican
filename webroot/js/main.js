@@ -105,11 +105,11 @@ $(document).ready(function() {
         //$('input[type=button].add').button({icon: 'plusthick'});
         //$('input[type=button].add').button({ icons: {primary:'ui-icon-plusthick',secondary:'ui-icon-plusthick'} });
         $(this).find('[disabled=disabled]').addClass('ui-state-disabled');
-        $(this).find('input[type!=submit],textarea,select').addClass('ui-widget ui-widget-content');
+       /* $(this).find('input[type!=submit],textarea,select').addClass('ui-widget ui-widget-content');
         $(this).find('table.list').addClass('ui-widget ui-corner-all');
         $(this).find('fieldset').addClass('ui-widget ui-corner-all');
         $(this).find('table.list thead').addClass('ui-widget-header');
-        $(this).find('table.list tbody').addClass('ui-widget-content');
+        $(this).find('table.list tbody').addClass('ui-widget-content');*/
 
     /*        $(this).find('div.menu').addClass('ui-widget');
         $(this).find('div.topItem').addClass('ui-widget-header');
