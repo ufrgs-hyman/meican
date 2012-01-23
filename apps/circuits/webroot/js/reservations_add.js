@@ -1601,7 +1601,7 @@ function validateBand(band_value) {
         $('form#reservation_add').submit(validateReservationForm);
         
         /* quando digita nome, tira overlay */
-        $('#res_name').keyup(function(){
+        $('#res_name').bind('keyup change', function(){
             if ($(this).val())
                 $('.tab-overlay').fadeOut();
             else
