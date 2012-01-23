@@ -816,6 +816,14 @@ table.list thead th {
     cursor: pointer;
 }
 
+table.list thead {
+    
+}
+
+table.list tbody{
+    
+}
+
 .recurrence-item{
     float: left;
     margin: 0.4em 2em;

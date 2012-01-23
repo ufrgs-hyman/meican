@@ -1534,7 +1534,8 @@ function validateBand(band_value) {
     
     /* resize da janela muda tamanho do mapa */
     var resizefn = function() {
-        $('#edit_map_canvas').css('width', $('#subtab-points').offset().left-12-$('#tabs-2').offset().left );
+        if ($('#edit_map_canvas'))
+            $('#edit_map_canvas').css('width', $('#subtab-points').offset().left-12-$('#tabs-2').offset().left );
     };
     /* **************** DOCUMENT READY !!!! ******************** */
     
@@ -1591,6 +1592,11 @@ function validateBand(band_value) {
         });
         $('#recur_radio, #date_radio, #nr_occurr').change(setUntilType);
         $(window).resize(resizefn);
+        var finishfn = function(){
+            $(window).unbind('resize');
+            $('#main').unbind('start.pjax', finishfn);
+        };
+        $('#main').bind('start.pjax', finishfn);
         
         $('form#reservation_add').submit(validateReservationForm);
         
