@@ -12,8 +12,8 @@ $refresh = $this->passedArgs->refresh;
     <?php
     $arrayElem = ($refresh)
         ? array('app' => 'init',
-                'before' => '<input type="button" class="refresh" value="' . _("Refresh") . '" onClick="refreshStatus();" />')
-        : array('app' => 'init');
+                'before' => '<input type="button" class="refresh" value="' . _("Refresh") . '" onclick="refreshStatus();" />')
+        : array('app' => 'init', 'buttons' => array('delete'));
     
     echo $this->element('controls', $arrayElem);
     ?>

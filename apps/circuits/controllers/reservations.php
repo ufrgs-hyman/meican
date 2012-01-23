@@ -785,6 +785,9 @@ class reservations extends Controller {
         $this->render();
     }
 
+    /**
+     * @todo Cancelar reservas no OSCARS (ativas e pendentes) antes de excluir do banco
+     */
     public function delete() {
         $del_reservations = Common::POST("del_checkbox");
 

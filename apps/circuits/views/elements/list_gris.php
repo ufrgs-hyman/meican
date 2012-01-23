@@ -35,9 +35,9 @@
                 <td>
                     <?php echo $g->descr; ?>
                 </td>
-                <td>
+                <td style="width:80px;">
                     <label id="status<?php echo $g->id; ?>"><?php echo $g->status; ?></label>
-                    <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif"/>
+                    <img alt="<?php echo _("loading"); ?>" class="load" style="display:none" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif"/>
                 </td>
                 <td>
                     <?php echo $g->start; ?>

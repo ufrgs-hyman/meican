@@ -48,7 +48,7 @@ function refreshStatus() {
 }
 
 function griRefreshStatus(res_id) {
-    //$('.load').show();
+    $('.load').show();
     
     $.ajax ({
         type: "POST",
@@ -58,7 +58,7 @@ function griRefreshStatus(res_id) {
         },
         dataType: "json",
         success: function(data) {
-            //$('.load').hide();
+            $('.load').hide();
             if (data) {
                 if (data.length != 0) {
                     var status_id = null;
