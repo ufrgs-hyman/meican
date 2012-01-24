@@ -58,47 +58,7 @@ class gui extends Controller {
                 
             $this->setFlash($msg, 'warning');
         }
-
-        //checar se tem acesso a novas reservas
-        $acl = new AclLoader();
-        
-        $icons = array();
-        
-        if ($acl->checkACL("create", 'urn_info')) {
-            $icon = new stdClass();
-            $icon->name = _('New reservation');
-            $icon->figure = 'webroot/img/new_reservation.png';
-            $icon->link = array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'add_form');
-            $icons[] = $icon;
-        }
-
-        if ($acl->checkACL("read", 'reservation_info')) {
-            $icon = new stdClass();
-            $icon->name = _('Reservations');
-            $icon->figure = 'webroot/img/reservations_list.png';
-            $icon->link = array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'status');
-            $icons[] = $icon;
-        }
-
-        if ($acl->checkACL("read", 'request_info')) {
-            $icon = new stdClass();
-            $icon->name = _('Requests');
-            $icon->figure = 'webroot/img/requests_1.png';
-            $icon->link = array('app' => 'bpm', 'controller' => 'requests');
-            $icons[] = $icon;
-        }
-
-        if ($acl->checkACL("read", 'group_info')) {
-            $icon = new stdClass();
-            $icon->name = _('Management');
-            $icon->figure = 'webroot/img/management.png';
-            $icon->link = array('app' => 'aaa', 'controller' => 'users');
-            $icons[] = $icon;
-        }
-        $this->setArgsToBody($icons);
         $this->render();
-
-
     }
 
 }

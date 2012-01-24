@@ -29,7 +29,7 @@ class MenuItem {
         return $menus;
     }
     
-    public static function getAllMenus() {
+    public static function getAllMenus($method = 'getMenu') {
         $apps = array('aaa', 'bpm', 'init', 'topology', 'circuits'); //TODO: detectar automaticamente apps instaladas
         $menus = array();
         foreach ($apps as $app){
@@ -37,7 +37,7 @@ class MenuItem {
             if ($appObj) {
                 //Language::setLang($appObj->getAppName());
                 //Framework::debug("mudando dom ".$appObj->getAppName());
-                $menus += $appObj->getMenu();//array_merge($appObj->getMenu(), $menus);
+                $menus += $appObj->{$method}();//array_merge($appObj->getMenu(), $menus);
             }
         }
         //Language::setLang('init');

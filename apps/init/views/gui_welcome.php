@@ -1,13 +1,10 @@
-<?php $icons = $this->passedArgs; ?>
-<?php if (!empty($icons)): ?>
-    <div class="dashboard">
-        <?php foreach ($icons as $icon): ?>
-            <div>
-                <h1><?php echo $icon->name; ?></h1>
-                <a href="<?php echo $this->buildLink($icon->link); ?>">
-                    <img src="<?php echo $this->url($icon->figure); ?>" alt="<?php echo $icon->name; ?>"/>
-                </a>
-            </div>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
+<div class="dashboard">
+    <?php foreach (MenuItem::getAllMenus('getDashboard') as $icon): ?>
+        <div>
+            <h1><?php echo $icon->label; ?></h1>
+            <a href="<?php echo $this->buildLink($icon->url); ?>">
+                <img src="<?php echo $this->url($icon->image); ?>" alt="<?php echo $icon->label; ?>"/>
+            </a>
+        </div>
+    <?php endforeach; ?>
+</div>
