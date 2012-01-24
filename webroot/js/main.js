@@ -1,5 +1,5 @@
 function updateSystemTime() {
-    $.post(baseUrl+"init/info_box/time", function(data) {
+    $.get(baseUrl+"init/info_box/time", function(data) {
         if (data)
             $("#system_date").html(data);
     });
