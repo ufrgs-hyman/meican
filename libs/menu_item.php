@@ -7,6 +7,7 @@ class MenuItem {
     var $sub = array();
     var $model = null;
     var $right = 'read';
+    var $image = null;
     
     public function __construct($args){
       foreach($args as $key => $arg)

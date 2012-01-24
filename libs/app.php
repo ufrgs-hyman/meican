@@ -41,6 +41,23 @@ class App {
         return array();
     }
     
+    
+    /**
+     * Return a array of dashboard items of the current application.
+     * Return something like:
+     * new MenuItem(array(
+                    'label' => '_("Users")',
+                    'model' => 'group_info',
+                    'right' => 'read',
+                    'url' => array('app' => $this->appName, 'controller' => 'users', 'action' => 'show'),
+                    'image' => '',
+                ));
+     * @return type 
+     */
+    public function getDashboard(){
+        return array();
+    }
+    
     // Método Factory parametrizado
     public static function factory($app, $args=array())
     {

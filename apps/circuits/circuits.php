@@ -32,6 +32,14 @@ class circuits extends App {
             )
         )));
     }
+    /*
+    function getDashboard(){
+        return array(new MenuItem(array(
+            
+            
+            array('app' => 'circuits', 'controller' => 'reservations', 'action' => 'add_form')
+        )));
+    }*/
 
 }
 

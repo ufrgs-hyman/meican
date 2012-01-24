@@ -298,6 +298,20 @@ div.control_tab {
     height: 40px;
 }
 
+.dashboard {
+    text-align: center;
+}
+
+.dashboard div {
+    display: inline-table;
+    width: 250px;
+    height: 200px;
+    text-align: center;
+}
+
+.dashboard h1 {
+    color: black;
+}
 
 div.topItem {
     font-weight: bold;
