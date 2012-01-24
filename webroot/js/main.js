@@ -5,7 +5,7 @@ function updateSystemTime() {
     });
 }
 
-var errorFunc = function(jqXHR) {
+var errorFunc = function(jqXHR, textStatus) {
     switch (jqXHR.status) {
         case 401:
             top.location.href = baseUrl;
@@ -27,6 +27,7 @@ var errorFunc = function(jqXHR) {
         default:
             setFlash("Unexpected error "+jqXHR.status, 'error');
     }
+    console.debug("Error on ajax: "+jqXHR.status+jqXHR.statusText);
 };
 
 $(document).ready(function() {
@@ -127,7 +128,7 @@ $(document).ready(function() {
     if (jQuery.isFunction(jQuery.fn.pjax)){           
         $('a[href][href!=""][href!="#"]').pjax('#main', {
             error: errorFunc, 
-            timeout: 5000
+            timeout: false
         });
         $('#main')
         .bind('start.pjax', function() {
@@ -172,7 +173,7 @@ $(document).ready(function() {
                     data: param,
                     error: errorFunc,
                     container: '#main',
-                    timeout: 7000
+                    timeout: false
                 });
             return false;
         });
@@ -203,7 +204,7 @@ function redir(url, data){
         data: data,
         error: errorFunc,
         container: '#main',
-        timeout: 7000
+        timeout: false
     });
     return false;
 }
