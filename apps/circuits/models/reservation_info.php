@@ -92,7 +92,6 @@ class reservation_info extends Resource_Model {
                 else
                     $status = ($request[0]->status) ? $request[0]->status : "UNKNOWN";
             } else {
-                Framework::debug("gri status", $gri_to_show->gri_id);
                 $status = $gri_to_show->status;
             }
         } else {
