@@ -90,11 +90,13 @@ function checkStatus(index, status) {
         case "FAILED":
         case "UNKNOWN":
         case "NO_GRI":
+            // pinta a linha de vermelho
             $('#line' + index).css( {
                 'background' : '#f99b9b'
             });
             break;
         case "ACTIVE":
+            // pinta a linha de verde
             $('#line' + index).css( {
                 'background' : '#99ec99'
             });
@@ -105,8 +107,12 @@ function checkStatus(index, status) {
         case "CANCELLED":
         case "INTEARDOWN":
         case "INMODIFY":
+            // remove cor da linha
+            $('#line' + index).removeAttr('style');
             break;
         default:
+            // remove cor da linha
+            $('#line' + index).removeAttr('style');
             $('#cancel' + index).removeAttr("disabled");
             break;
     }

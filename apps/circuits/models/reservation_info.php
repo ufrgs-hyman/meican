@@ -41,25 +41,46 @@ class reservation_info extends Resource_Model {
         $request = $req->fetch();
 
         $status = "UNKNOWN";
-        $now = time();
 
         if ($gris) {
-            $next_gri = $gris[0];
+            $now = time();
+            $gri_to_show = $gris[0];
 
             foreach ($gris as $g) {
                 // executa lógica para determinar qual status mostrar na página
-                $date = new DateTime($g->start);
-                $start = $date->getTimestamp();
+                $date_tmp = new DateTime($g->start);
+                $start = $date_tmp->getTimestamp();
+                
+                $date_tmp = new DateTime($g->finish);
+                $finish = $date_tmp->getTimestamp();
 
-                $date = new DateTime($next_gri->start);
-                $next_start = $date->getTimestamp();
+                $date_tmp = new DateTime($gri_to_show->start);
+                $to_show_start = $date_tmp->getTimestamp();
+                
+                $date_tmp = new DateTime($gri_to_show->finish);
+                $to_show_finish = $date_tmp->getTimestamp();
 
-                $new_diff = $start - $now;
-                $next_diff = $next_start - $now;
-
-                if (($new_diff > 0) && (($new_diff < $next_diff) || ($next_diff < 0))) {
-                    // é o GRI cujo status será mostrado na página
-                    $next_gri = $g;
+                // se tempo atual for antes do GRI, calcula a diferença, senão deixa FALSE
+                $start_diff = ($now < $start) ? $start - $now : FALSE;
+                $start_show_diff = ($now < $to_show_start) ? $to_show_start - $now : FALSE;
+                
+                // se tempo atual for depois do GRI, calcula a diferença, senão deixa FALSE
+                $finish_diff = ($now > $finish) ? $now - $finish : FALSE;
+                $finish_show_diff = ($now > $to_show_finish) ? $now - $to_show_finish : FALSE;
+                
+                if ($now >= $start && $now <= $finish) {
+                    // período do GRI é o tempo atual: encerra iteração, pois sempre será um só
+                    $gri_to_show = $g;
+                    break;
+                } elseif (($start_diff !== FALSE) && ($start_show_diff !== FALSE) && ($start_diff < $start_show_diff)) {
+                    // tempo está antes e GRI é o próximo
+                    $gri_to_show = $g;
+                } elseif (($finish_diff !== FALSE) && ($finish_show_diff !== FALSE) && ($finish_diff < $finish_show_diff)) {
+                    // tempo já passou e GRI foi o mais recente
+                    $gri_to_show = $g;
+                } elseif (($start_diff !== FALSE) && ($finish_show_diff !== FALSE)) {
+                    // tempo está entre o tempo dos GRIs, mostra o próximo
+                    $gri_to_show = $g;
                 }
             }
 
@@ -67,11 +88,13 @@ class reservation_info extends Resource_Model {
                 if ($request[0]->response == 'reject')
                     $status = 'REJECTED';
                 elseif ($request[0]->response == 'accept')
-                    $status = $next_gri->status;
+                    $status = $gri_to_show->status;
                 else
                     $status = ($request[0]->status) ? $request[0]->status : "UNKNOWN";
-            } else
-                $status = $next_gri->status;
+            } else {
+                Framework::debug("gri status", $gri_to_show->gri_id);
+                $status = $gri_to_show->status;
+            }
         } else {
             $status = "NO_GRI";
         }
