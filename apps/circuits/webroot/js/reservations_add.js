@@ -125,56 +125,6 @@ function cancelRecurrence(){
     }
 }
 
-function saveRecurrence(){
-
-    $("#recurrence-flash").hide();
-    $("#recurrence-warning").html("");
-    
-    var freq = $('input[name="freq"]:checked').val();
-
-    if ($("#date_radio").attr("checked")) {
-        var until = $("#untilDate").val();
-    } else if ($("#recur_radio").attr("checked"))
-        var count = $("#nr_occurr").val();
-    else {
-        $("#recurrence-flash").show();        
-        $("#recurrence-warning").html(end_rule_string);        
-        return;
-    }
-
-    var interval = $("#interval").val();
-
-    var week_str = "";
-    
-    if (freq == "WEEKLY") {
-        var byday = getCheckedDays();
-        if (byday.length == 0) {
-            $("#recurrence-flash").show();
-            $("#recurrence-warning").html(select_day_string);                    
-            return;
-        }
-        byday = byday.toString();
-        var weekdays = ["#Sunday_desc","#Monday_desc","#Tuesday_desc","#Wednesday_desc","#Thursday_desc","#Friday_desc","#Saturday_desc"];
-
-        for (var i in weekdays) {            
-            if ($(weekdays[i]).html()){                      
-                week_str += $(weekdays[i]).html() + " ";
-            }
-        }
-    }
-    
-    
-    var sum_desc = $("#short_desc").html() + " ";
-    sum_desc += week_str;
-    sum_desc += $("#until_desc").html();
-    $("#recurrence_summary").html(sum_desc);
-    $("#summary_input").val(sum_desc);
-    //$("#confirmation_summary").html(sum_desc);
-    $("#summary").html("");
-    $("#recurrence").hide();
-    $("#recurrence-edit").show();
-    
-}
 /*
 $.fn.extend({
     slideRight: function() {
@@ -211,6 +161,7 @@ function showVlanConf() {
     }
 }*/
 
+/*this function generates random colors to differentiate domains on the map*/
 function genHex(domainId) {
     var firstColor = "3a5879";
     if (domainId == 0) {
@@ -230,6 +181,8 @@ function genHex(domainId) {
         return color;            
     }
 }
+
+/* This function was used to add waypoints to the circuit. Currently is not being used, but will be used in the future */
 /*
 function moreFields() {
     counter++;
@@ -246,31 +199,20 @@ function moreFields() {
     var insertHere = document.getElementById('writeHops');
     insertHere.parentNode.insertBefore(newFields,insertHere);
     var selectId = "#selectHops" + counter;
-    fillUrnBox(selectId, urn_string);
+    //fillUrnBox(selectId, urn_string);
 }
 
+/* Analogue to the function moreFields(), the function lessFields() was used to remove waypoints from the circuit. */
+/*
 function lessFields(elem) {
     elem.parentNode.parentNode.removeChild(elem.parentNode);
     edit_mapPlaceDevice();
 }*/
 
-function fillUrnBox(htmlId, fillerArray, current_val) {
-    clearSelectBox(htmlId);
-    for (var i=0; i < fillerArray.length; i++) {
-        if (fillerArray[i] == current_val)
-            $(htmlId).append('<option selected="true" value="' + fillerArray[i] + '">' + fillerArray[i] + '</option>');
-        else
-            $(htmlId).append('<option value="' + fillerArray[i] + '">' + fillerArray[i] + '</option>');
-    }
-}
-
 
 /*----------------------------------------------------------------------------*/
 // INICIO DAS FUNÇÕES DO MAPA                                                                                           //
 /*----------------------------------------------------------------------------*/
-
-// EDIT FUNCTIONS
-
 
 // seta os limites do mapa para enquadrar os marcadores ou as rotas traçadas
 function edit_setBounds(flightPlanCoordinates){
@@ -284,121 +226,103 @@ function edit_setBounds(flightPlanCoordinates){
     edit_map.setCenter(polylineBounds.getCenter());
 }
 
-function decodeUrn(urn) {
-    
-    var string_aux = "domain=";
-    var domainTopology = urn.substring((urn.indexOf("domain=") + string_aux.length), urn.indexOf(":node="));    
-    string_aux = ":node=";
-    var deviceTopology = urn.substring((urn.indexOf(":node=") + string_aux.length), urn.indexOf(":port="));
+//
+//function decodeUrn(urn) {
+//    var string_aux = "domain=";
+//    var domainTopology = urn.substring((urn.indexOf("domain=") + string_aux.length), urn.indexOf(":node="));    
+//    string_aux = ":node=";
+//    var deviceTopology = urn.substring((urn.indexOf(":node=") + string_aux.length), urn.indexOf(":port="));
+//
+//
+//    for (var i in domains) {
+//        if (domains[i].topology_id == domainTopology) {
+//            for (var j in domains[i].networks) {
+//                for (var k in domains[i].networks[j].devices) {                    
+//                    if (domains[i].networks[j].devices[k].topology_node_id == deviceTopology) {
+//                        var waypoint = ({
+//                            location: new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude),
+//                            domain_id: domains[i].id,
+//                            domain_name: domains[i].name,
+//                            network_id: domains[i].networks[j].id, 
+//                            network_name: domains[i].networks[j].name, 
+//                            device_id: domains[i].networks[j].devices[k].id,
+//                            device_name: domains[i].networks[j].devices[k].name + " " + domains[i].networks[j].devices[k].model
+//                        });
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    return waypoint;
+//}
 
+//function edit_addTopologyMarker(waypoint) {
+//    
+//    marker = new google.maps.Marker({
+//        id : waypoint.device_id,
+//        position: waypoint.location,
+//        
+//        map:edit_map
+//    });
+//
+//    google.maps.event.addListener(marker, "mouseover", function(marker) {
+//
+//        infowindow = new google.maps.InfoWindow({
+//            content: "<b>" + domain_string + "</b>: " + waypoint.domain_name + "<br/>" +
+//            "<b>" + network_string + "</b>: " + waypoint.network_name + "<br/>" +
+//            "<b>" + device_string + "</b>: " + waypoint.device_name,
+//            disableAutoPan: true
+//        });
+//        infowindow.open(edit_map, marker);
+//    });
+//  
+//    google.maps.event.addListener(marker, "mouseout", function() {
+//        infowindow.close(edit_map);
+//    });
+//  
+//    // Display and position the menu    
+//    waypointsMarkers.push(marker);
+//    marker.setMap(edit_map);
+//}
 
-    for (var i in domains) {
-        if (domains[i].topology_id == domainTopology) {
-            for (var j in domains[i].networks) {
-                for (var k in domains[i].networks[j].devices) {                    
-                    if (domains[i].networks[j].devices[k].topology_node_id == deviceTopology) {
-                        var waypoint = ({
-                            location: new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude),
-                            domain_id: domains[i].id,
-                            domain_name: domains[i].name,
-                            network_id: domains[i].networks[j].id, 
-                            network_name: domains[i].networks[j].name, 
-                            device_id: domains[i].networks[j].devices[k].id,
-                            device_name: domains[i].networks[j].devices[k].name + " " + domains[i].networks[j].devices[k].model
-                        });
-                    }
-                }
-            }
-        }
-    }
-    return waypoint;
-}
+//function edit_redrawPath() {
+//
+//    for (var i=1; i<=counter; i++) {
+//        var selectId = "#selectHops" + counter;
+//        if ($(selectId).val()) {
+//            if ($(selectId).val() != -1) {
+//                var waypoint = decodeUrn($(selectId).val());
+//                waypoints.push(waypoint.location);
+//            }
+//        }
+//            
+//    }
+//    
+//    var flightPlanCoordinates = new Array();
+//    
+//    flightPlanCoordinates[0] = path[0].position;
+//    
+//    for(i=0; i<waypoints.length; i++) {
+//        flightPlanCoordinates[i+1] = waypoints[i];
+//    }
+//    
+//    var length = flightPlanCoordinates.length;
+//    
+//    flightPlanCoordinates[length] = path[1].position;
+//
+//    var line = new google.maps.Polyline({
+//        path: flightPlanCoordinates,
+//        strokeColor: "#0000FF",
+//        strokeOpacity: 0.5,
+//        strokeWeight: 4
+//    });
+//    line.setMap(edit_map);
+//    edit_lines.push(line);
+//    edit_setBounds(flightPlanCoordinates);  
+//    view_Circuit();    
+//}
 
-function edit_mapPlaceDevice() {
-
-    $.fn.mapEdit.clearMapElements(edit_lines);
-    //edit_clearTopologyMarkers();
-
-    for (i=1; i<=counter; i++) {
-        var selectId = "#selectHops" + counter;
-        if ($(selectId).val()) {
-            if ($(selectId).val() != -1) {
-                var waypoint = decodeUrn($(selectId).val())
-                edit_addTopologyMarker(waypoint);
-            }            
-        }
-
-    }
-    edit_redrawPath();
-}
-
-function edit_addTopologyMarker(waypoint) {
-    
-    marker = new google.maps.Marker({
-        id : waypoint.device_id,
-        position: waypoint.location,
-        
-        map:edit_map
-    });
-
-    google.maps.event.addListener(marker, "mouseover", function(marker) {
-
-        infowindow = new google.maps.InfoWindow({
-            content: "<b>" + domain_string + "</b>: " + waypoint.domain_name + "<br/>" +
-            "<b>" + network_string + "</b>: " + waypoint.network_name + "<br/>" +
-            "<b>" + device_string + "</b>: " + waypoint.device_name,
-            disableAutoPan: true
-        });
-        infowindow.open(edit_map, marker);
-    });
-  
-    google.maps.event.addListener(marker, "mouseout", function() {
-        infowindow.close(edit_map);
-    });
-  
-    // Display and position the menu    
-    waypointsMarkers.push(marker);
-    marker.setMap(edit_map);
-}
-
-function edit_redrawPath() {
-
-    for (var i=1; i<=counter; i++) {
-        var selectId = "#selectHops" + counter;
-        if ($(selectId).val()) {
-            if ($(selectId).val() != -1) {
-                var waypoint = decodeUrn($(selectId).val());
-                waypoints.push(waypoint.location);
-            }
-        }
-            
-    }
-    
-    var flightPlanCoordinates = new Array();
-    
-    flightPlanCoordinates[0] = path[0].position;
-    
-    for(i=0; i<waypoints.length; i++) {
-        flightPlanCoordinates[i+1] = waypoints[i];
-    }
-    
-    var length = flightPlanCoordinates.length;
-    
-    flightPlanCoordinates[length] = path[1].position;
-
-    var line = new google.maps.Polyline({
-        path: flightPlanCoordinates,
-        strokeColor: "#0000FF",
-        strokeOpacity: 0.5,
-        strokeWeight: 4
-    });
-    line.setMap(edit_map);
-    edit_lines.push(line);
-    edit_setBounds(flightPlanCoordinates);  
-    view_Circuit();    
-}
-
-function toggleCluster(toggle, arrayMarkers){
+//function toggleCluster(toggle, arrayMarkers){
 //
 //if (toggle) {
 //        markerCluster = new MarkerClusterer(edit_map, arrayMarkers);      
@@ -441,12 +365,12 @@ function toggleCluster(toggle, arrayMarkers){
 //    } else {
 //        markerCluster.clearMarkers(arrayMarkers);
 //    }
-}
+//}
 
 // VIEW FUNCTIONS
 
 // alterna entre a visão simples e a visão avançada no mapa
-function view_toggleTopology(){
+//function view_toggleTopology(){
 //    clearAll();
 //    if ((src_lat_network == dst_lat_network) && (src_lng_network == dst_lng_network)) {
 //        var aux = parseFloat(dst_lng_network);
@@ -479,129 +403,127 @@ function view_toggleTopology(){
 //        edit_drawPath(coordinatesArray);
 //    }
 //    edit_setBounds(bounds);
-}
+//}
 
 // inicializa o mapa para visualizacao do circuito
-function view_Circuit(){
-    var coord_src = path[0].position;
-    view_addMarker(coord_src, "src");
-    view_bounds.push(coord_src);
-    var coord_dst = path[1].position;
-    view_addMarker(coord_dst, "dst");
-    view_bounds.push(coord_dst);
-    view_setBounds(view_bounds);
-    var sourceDest = new Array();
-    sourceDest.push(path[0].position);
-    sourceDest.push(path[1].position);
-    view_drawPath(sourceDest);
-}
+
+//function view_Circuit(){
+//    var coord_src = path[0].position;
+//    view_addMarker(coord_src, "src");
+//    view_bounds.push(coord_src);
+//    var coord_dst = path[1].position;
+//    view_addMarker(coord_dst, "dst");
+//    view_bounds.push(coord_dst);
+//    view_setBounds(view_bounds);
+//    var sourceDest = new Array();
+//    sourceDest.push(path[0].position);
+//    sourceDest.push(path[1].position);
+//    view_drawPath(sourceDest);
+//}
 
 // adiciona marcadores no mapa para visualizacao do circuito
-function view_addMarker(location, where) {
-    var color;
-    
-    if (where == "src") {
-        color = "0000EE";
-    } else if (where == "dst") {
-        color = "FF0000";
-    }
-    
-    marker = new StyledMarker({
-        position: location,
-        styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
-            color:color
-        }),
-        map:view_map
-    });    
-
-    view_markersArray.push(marker);
-    marker.setMap(view_map);
-}
+//function view_addMarker(location, where) {
+//    var color;
+//    
+//    if (where == "src") {
+//        color = "0000EE";
+//    } else if (where == "dst") {
+//        color = "FF0000";
+//    }
+//    
+//    marker = new StyledMarker({
+//        position: location,
+//        styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
+//            color:color
+//        }),
+//        map:view_map
+//    });    
+//
+//    view_markersArray.push(marker);
+//    marker.setMap(view_map);
+//}
 
 // desenha linha entre endpoints para visualizacao do circuito
-function view_drawPath(flightPlanCoordinates) {
-    var line = new google.maps.Polyline({
-        path: flightPlanCoordinates,
-        strokeColor: "#0000FF",
-        strokeOpacity: 0.5,
-        strokeWeight: 4
-    });
-    line.setMap(view_map);
-    view_lines.push(line);
-    view_setBounds(flightPlanCoordinates);        
-}
+//function view_drawPath(flightPlanCoordinates) {
+//    var line = new google.maps.Polyline({
+//        path: flightPlanCoordinates,
+//        strokeColor: "#0000FF",
+//        strokeOpacity: 0.5,
+//        strokeWeight: 4
+//    });
+//    line.setMap(view_map);
+//    view_lines.push(line);
+//    view_setBounds(flightPlanCoordinates);        
+//}
 
-// deseha topologia para a visao avancada
-function view_drawTopology(coordinatesArray){
-    var flightPlanCoordinates = [];
-    for (var i=0; i<coordinatesArray.length; i++){
-        flightPlanCoordinates.push(coordinatesArray[i]);
-    }
-    var line = new google.maps.Polyline({
-        path: flightPlanCoordinates,
-        strokeColor: "#0000FF",
-        strokeOpacity: 0.5,
-        strokeWeight: 4
-    });
-
-    line.setMap(view_map);
-    view_lines.push(line);
-}
+// Draw the circuit including waypoints
+//function view_drawTopology(coordinatesArray){
+//    var flightPlanCoordinates = [];
+//    for (var i=0; i<coordinatesArray.length; i++){
+//        flightPlanCoordinates.push(coordinatesArray[i]);
+//    }
+//    var line = new google.maps.Polyline({
+//        path: flightPlanCoordinates,
+//        strokeColor: "#0000FF",
+//        strokeOpacity: 0.5,
+//        strokeWeight: 4
+//    });
+//
+//    line.setMap(view_map);
+//    view_lines.push(line);
+//}
 
 // limpa as linhas do mapa da visualizacao
-function view_clearLines(){
-    for (var i = 0; i < view_lines.length; i++) {
-        view_lines[i].setMap(null);
-    }    
-}
+//function view_clearLines(){
+//    for (var i = 0; i < view_lines.length; i++) {
+//        view_lines[i].setMap(null);
+//    }    
+//}
 
 // limpa os marcadores do mapa de visualizacao
-function view_clearMarkers(){
-    var j = view_markersArray.length;
-    
-    for (var i=0; i < j; i++){
-        view_markersArray[i].setMap(null);        
-    }
-    for (i=j; i>0; i--) {
-        view_markersArray.pop();
-    }
-    
-}
+//function view_clearMarkers(){
+//    var j = view_markersArray.length;
+//    
+//    for (var i=0; i < j; i++){
+//        view_markersArray[i].setMap(null);        
+//    }
+//    for (i=j; i>0; i--) {
+//        view_markersArray.pop();
+//    }
+//    
+//}
 
 //reseta os limites originais do mapa
-function view_clearBounds(){
-    var j = view_bounds.length;
-    for (var i=j; i>0; i--){
-        view_bounds.pop();        
-    }
-    view_setBounds(view_bounds);    
-}
+//function view_clearBounds(){
+//    var j = view_bounds.length;
+//    for (var i=j; i>0; i--){
+//        view_bounds.pop();        
+//    }
+//    view_setBounds(view_bounds);    
+//}
 
 // reseta o mapa ao estado original
-function view_clearAll(){
-    view_clearMarkers();
-    view_clearLines();
-    view_clearBounds();       
-}
+//function view_clearAll(){
+//    view_clearMarkers();
+//    view_clearLines();
+//    view_clearBounds();       
+//}
 
-function view_setBounds(flightPlanCoordinates){
-    polylineBounds = new google.maps.LatLngBounds();
+//function view_setBounds(flightPlanCoordinates){
+//    polylineBounds = new google.maps.LatLngBounds();
+//
+//    for (i=0; i<flightPlanCoordinates.length; i++) {
+//        polylineBounds.extend(flightPlanCoordinates[i]);
+//    }
+//    view_map.fitBounds(polylineBounds);
+//    view_map.setCenter(polylineBounds.getCenter());
+//}
 
-    for (i=0; i<flightPlanCoordinates.length; i++) {
-        polylineBounds.extend(flightPlanCoordinates[i]);
-    }
-    view_map.fitBounds(polylineBounds);
-    view_map.setCenter(polylineBounds.getCenter());
-}
 
 
-
-/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------*/
 // INICIO DAS FUNÇÕES AVANÇADAS DE FLUXO                                      //
-//                                                                            //
-//                                                                            //
-//                                                                            //
-/*----------------------------------------------------------------------------*/
+/*---------------------------------------------------------*/
 
 
 
@@ -857,93 +779,6 @@ function map_changeVlanType(elem, where) {
     } else {
         $(text_htmlId).disabled();        
     }
-}
-
-function map_saveFlow(flow_id) {
-    var flow_Array = new Array();
-
-    var action = "";
-    if (flow_id) {
-        action = "update";
-        flow_Array[0] = flow_id; // id do flow quando está editando
-    } else {
-        action = "add";
-        flow_Array[0] = 0;
-    }
-
-    flow_Array[1] = $('#name').val(); // name
-
-    if (!flow_Array[1]) {
-        setFlash(flash_nameReq, "warning");
-        return;
-    }
-
-    flow_Array[2] = validateBand($('#bandwidth').val()); // bandwidth
-    if (!flow_Array[2]) {
-        setFlash(flash_bandInv, "warning");
-        return;
-    }
-
-    if (src_urn) {
-        var src_domain_id;
-        for (var i=0; i<domains.length; i++){
-            if (domains[i].name == $("#src_domain").html()){
-                src_domain_id = domains[i].id;
-            }
-        }
-
-        flow_Array[3] = src_domain_id;// source domainId
-        flow_Array[4] = src_urn; // source URN
-    } else {
-        setFlash(flash_sourceReq, "warning");
-        return;
-    }
-
-    if ($("#src_vlanUntagged").attr("checked"))
-        flow_Array[5] = 0;
-    else if ($("#src_vlanTagged").attr("checked")) {
-        if (checkVLAN("src"))
-            flow_Array[5] = $('#src_vlanText').val(); // source VLAN
-        else {
-            setFlash(flash_srcVlanInv, "warning");
-            return;
-        }
-    } else {
-        setFlash(flash_srcVlanReq, "warning");
-        return;
-    }
-
-    if (dst_urn) {
-        var dst_domain_id;
-        for (i=0; i<domains.length; i++){
-            if (domains[i].name == $("#dst_domain").html()){
-                dst_domain_id = domains[i].id;
-            }
-        }
-        flow_Array[6] = dst_domain_id; // destination domainId
-        flow_Array[7] = dst_urn; // destination URN
-    }else {
-        setFlash(flash_destReq, "warning");
-        return;
-    }
-
-    if ($("#dst_vlanUntagged").attr("checked"))
-        flow_Array[8] = 0;
-    else if ($("#dst_vlanTagged").attr("checked")) {
-        if (checkVLAN("dst"))
-            flow_Array[8] = $('#dst_vlanText').val(); // destination VLAN
-        else {
-            setFlash(flash_dstVlanInv, "warning");
-            return;
-        }
-    } else {
-        setFlash(flash_dstVlanReq, "warning");
-        return;
-    }    
-
-    $.redir('circuits/flows/'+action, {
-        flowData: flow_Array
-    });
 }
 
 function validateBand(band_value) {
