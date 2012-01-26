@@ -301,12 +301,12 @@ table th.large {
     padding-right: 10px;
 }
 
-fieldset {
+/*fieldset {
     box-shadow: 2px 2px 4px #888;
      border-radius: 2px;
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
-}
+}*/
 
 table.list {
     width: 100%;
@@ -632,8 +632,6 @@ td select {
     background-color: #F4F4F4;
     overflow: auto;
 }
-#menu {
-}
 
 #logo, #info_box {
     height: 26px;
@@ -826,41 +824,6 @@ div#bandwidth_bar_text{
     margin: auto auto;
 }
 
-.tabs ul {
-    list-style: none;
-    padding: 4px 0 4px 0;
-    margin: 0;
-}
-
-.tabs li {
-    display: inline;
-    border: solid;
-    border-width: 1px 1px 0 1px;
-    padding: 4px 0 4px 0;
-    margin: 0 0.2em 0 0;
-    border-color: #DDD;
-    background-color: white;
-}
-
-.tabs li a {
-    padding: 4px 0.8em 4px 0.8em;
-    text-decoration: none;
-}
-
-.tabs li a:hover {
-    background: #F4F4F4;
-}
-
-.tabs #selected {
-    padding-bottom: 5px; 
-    background: #F4F4F4;
-}
-
-.tabs #selected a:hover {
-    background: #F4F4F4;
-    cursor: default;
-}
-
 .tab_content {
     /*float: left;*/
     border: 1px solid #BBB;
@@ -1045,13 +1008,7 @@ table.reservation-point td, table.reservation-point th {
 
 
 
-#menu hr {
-    border-bottom: 1px solid #EFEFEF;
-    margin-bottom: 6px;
-    margin-left: 10px;
-    margin-right: 4px;
-    margin-top: 6px;
-}
+
 
 .tab-overlay {
 }
@@ -1060,67 +1017,6 @@ table.reservation-point td, table.reservation-point th {
     position: absolute; background-color: #fff; z-index: 3; opacity: 0.5; /*box-shadow: 2px 2px 4px #888;*/  width: 100%; padding: 4px; display: none; 
     height:100%;
 }
-
-
-
-#feedback-tabs {
-    margin-bottom: 8px;
-    white-space: nowrap; }
-#feedback-tabs li {
-    float: left;
-    padding: 0;
-    margin: 0;
-    margin-right: 1px;
-    list-style: none;
-    position: relative; }
-#feedback-tabs li img {
-    display: none; }
-#feedback-tabs li a {
-    display: block;
-    float: left;
-    text-decoration: none;
-    padding: 5px 10px 5px 30px;
-    border: 1px solid transparent;
-    background-repeat: no-repeat;
-    background-position: 8px 50%; }
-#feedback-tabs li a:hover strong {
-    text-decoration: underline; }
-#feedback-tabs li.active a {
-    color: #333333;
-    cursor: default;
-    background-color: white;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border: 1px solid #d8d8d8;
-    border-bottom-color: #b2b2b2;
-    border-right-color: #b2b2b2; }
-#feedback-tabs li.active a strong {
-    text-decoration: none !important; }
-#feedback-tabs li.active img {
-    top: 24px;
-    width: 13px;
-    height: 8px;
-    display: block;
-    position: absolute; }
-/*#feedback-tabs li.idea a {
-  background-image: url(/images/feedback_tab_idea.png); }
-#feedback-tabs li.idea img {
-  left: 27px; }
-#feedback-tabs li.question a {
-  background-image: url(/images/feedback_tab_question.png); }
-#feedback-tabs li.question img {
-  left: 42px; }
-#feedback-tabs li.problem a {
-  background-image: url(/images/feedback_tab_problem.png); }
-#feedback-tabs li.problem img {
-  left: 39px; }
-#feedback-tabs li.praise a {
-  background-image: url(/images/feedback_tab_praise.png); }
-#feedback-tabs li.praise img {
-  left: 34px; }*/
-#feedback-tabs li.last {
-    margin-right: 0; }
 
 
 /* Spinner
@@ -1159,7 +1055,9 @@ span.ui-spinner { background: none; }
 	font-weight: 400;
 }
 
-/* Feedback  */
+/* =============================================================================
+   Feedback
+   ========================================================================== */
 
 .feedback-panel {
     padding:20px;
@@ -1198,19 +1096,12 @@ span.ui-spinner { background: none; }
 }
 
 
-.feedback-panel div, .feedback-panel span, .feedback-panel h1, .feedback-panel h2, .feedback-panel h3, .feedback-panel h4, .feedback-panel h5, .feedback-panel h6, .feedback-panel p, .feedback-panel blockquote, .feedback-panel a, .feedback-panel img, .feedback-panel strike, .feedback-panel strong, .feedback-panel dl, .feedback-panel dt, .feedback-panel dd, .feedback-panel ol, .feedback-panel ul, .feedback-panel li, .feedback-panel fieldset, .feedback-panel form, .feedback-panel label, .feedback-panel legend, .feedback-panel table, .feedback-panel caption, .feedback-panel tbody, .feedback-panel tfoot, .feedback-panel thead, .feedback-panel tr, .feedback-panel th, .feedback-panel td {
+.feedback-panel div, .feedback-panel span, .feedback-panel h6, .feedback-panel p, .feedback-panel blockquote, .feedback-panel a, .feedback-panel img, .feedback-panel dd, .feedback-panel ol, .feedback-panel ul, .feedback-panel li, .feedback-panel fieldset, .feedback-panel form, .feedback-panel label, .feedback-panel legend, .feedback-panel caption {
     margin: 0;
     padding: 0;
     border: 0;
-    outline: 0;
-    font-weight: inherit;
-    font-style: inherit;
-    font-size: 12px;
 
     font-weight: bold;
-    font-family: arial;
-    vertical-align: baseline;
-    border-image: initial;
 }
 
 
@@ -1445,50 +1336,3 @@ form #recaptcha_response_field {
     background-color: #eeeeee; }
 #emotion_select * {
     vertical-align: middle; }
-
-.SpinnerControl
-{
-    overflow:auto;
-    float:left
-}
-.SpinnerControl div
-{
-    height:31px;
-    line-height:31px;
-    float:left;
-}
-.SpinnerControl .LeftButton
-{
-    width:30px;
-    background: url("../img/spinnerbuttons.png") no-repeat left top transparent;
-    cursor:pointer;
-}
-.SpinnerControl .LeftButton:hover
-{
-    width:30px;
-    background: url("../img/spinnerbuttons.png") no-repeat left bottom transparent;
-    cursor:pointer;
-}
-.SpinnerControl .ValueDisplay
-{
-    min-width:30px;
-    border: 1px solid black;
-    height: 29px;
-    overflow:auto;
-    font-family:Verdana;
-    font-size:14px;
-    line-height:29px;
-    text-align:center;
-}
-.SpinnerControl .RightButton
-{
-    width:30px;
-    background: url("../img/spinnerbuttons.png") no-repeat right top transparent;
-    cursor:pointer;
-}
-.SpinnerControl .RightButton:hover
-{
-    width:30px;
-    background: url("../img/spinnerbuttons.png") no-repeat right bottom transparent;
-    cursor:pointer;
-}
