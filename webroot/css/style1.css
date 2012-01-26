@@ -411,10 +411,6 @@ table.icons td {
     height: 200px;
 }
 
-#confirmation_endpoints, #confirmation_endpoints .flow {
-    width: 100%;
-}
-
 #div-bandwidth {
     display: none;
 }

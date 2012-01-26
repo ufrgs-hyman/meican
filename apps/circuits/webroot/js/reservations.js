@@ -49,7 +49,6 @@ function refreshStatus() {
 
 function griRefreshStatus(res_id) {
     $('.load').show();
-    
     $.ajax ({
         type: "POST",
         url: baseUrl+'circuits/reservations/gri_refresh_status',

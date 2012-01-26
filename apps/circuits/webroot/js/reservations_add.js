@@ -1,53 +1,38 @@
-var currentTab = "t1";
-var tab1_valid = false;
-var tab2_valid = true;
-var previousTab;
+/* VARIAVEL PARA VALIDACAO DO TIMER */
+var timerValid = true; // se for verdadeiro, a validacao do timer esta correta
 
-var srcSet = false;
-var dstSet = false;
-var edit_markersArray = new Array();
-var view_markersArray = new Array();
-var edit_bounds = new Array();
-var edit_lines = new Array();
-var view_bounds = new Array();
-var view_lines = new Array();
+/* VARIAVEIS PARA CONTROLE DO MAPA*/
+var srcSet = false;  // origem selecionada
+var dstSet = false;  // destino selecionado
+var edit_markersArray = new Array(); // array dos marcadores no mapa de criacao da reserva
+var view_markersArray = new Array(); // array dos marcadores no mapa de visualizacao da reserva
+var edit_bounds = new Array(); // limites geograficos do mapa na criacao da reserva
+var edit_lines = new Array(); // linhas interligando os pontos do circuito na criacao da reserva
+var view_bounds = new Array(); // limites geograficos do mapa na visualizacao da reserva
+var view_lines = new Array();  // linhas interligando os pontos do circuito na visualizacao da reserva
+var path = new Array();  // rota completa do circuito -> origem, ponto intermediario 1, ponto intermediario 2, ... , destino. Se tiver tamanho 2, so ha origem e destino.
 
-var waypoints = new Array();
-var waypointsMarkers = new Array();
+/* VARIAVEIS PARA FUTURA INCLUSAO DE PONTOS INTERMEDIARIOS*/
+var waypoints = new Array(); // pontos intermediarios do circuito
+var waypointsMarkers = new Array(); // marcadores dos pontos intermediarios do circuito
+var counter = 0; // contador de numero de pontos intermediarios
 
+/* */ 
 var src_networks = null;
 var dst_networks = null;
 var src_urn = null;
 var dst_urn = null;
-var path = new Array();
 
-var counter = 0;
-
-
-var edit_map;
-var view_map;
-var view_center;
-var overlay;
-var mapDiv;
-var contextMenu = null;
+/* VARIAVEIS PARA DESENHO DO MAPA*/
+var edit_map; // Nome do mapa na criacao de reservas
+var view_map; // Nome do mapa na visualizacao de reservas
+var view_center; // Centro do mapa na criacao de reservas
+var overlay; // Camada de overlay para sobreposicoes
+var mapDiv; 
+var contextMenu = null; // menu pop-up ao clicar nas redes do mapa
 var editMapHandler;
 
 var useView = false;
-
-function timerError(error){
-    if (error) {
-        setFlash(flash_timerReq);
-        $("ul.tabs li").removeClass("active");
-        $("ul.tabs li:eq(3)").addClass("active");            
-        $(".cont_tab").hide();
-        activeTab = $("ul.tabs li:eq(3)").find("a").attr("href");
-        $(activeTab).fadeIn();
-        previousTab = currentTab;
-        currentTab = "t4"; 
-        return false;    
-    } else
-        return true;
-}
 
 function validateEndpoints() {
     // verifica origem
@@ -84,21 +69,9 @@ function validateEndpoints() {
 }
 
 function validateTimer() {
-    /*if ($("#finalTime").val() < $("#initialtime").val()) {
-        setFlash(flash_timerInvalid);
-        return false;
-    } else if ($("#finalTime").val() == $("#initialtime").val()) {
-        setFlash(flash_invalidDuration);
-        return false;
-    } else {
-        setFlash(flash_timerReq);
-        return false;
-    }
-    
-    return true;*/
     writeSummaryToInput();
     calcDuration();
-    return tab2_valid;
+    return timerValid;
 }
 
 function validateReservationForm() {
@@ -139,82 +112,6 @@ function changeVlanValue(where) {
     }
 }
 
-function validateTab1() {
-    if ( (path.length == 2) && ($("#src_device").val() != -1) && ($("#dst_device").val() != -1) &&
-        ($("#src_port").val() != -1) && ($("#dst_port").val() != -1) ) {
-        
-//        tab1_valid = true;
-//        $.each($("#hops_line select"), function() {
-//            if (this.value == -1) {
-//                tab1_valid &= false;
-//            }
-//        });
-//        if (!tab1_valid)
-//            return;
-        
-        if ($("#showVlan_checkbox").attr("checked")) {
-
-            if ($("#src_vlanUntagged").attr("checked"))
-                tab1_valid = true;
-            else if ($("#src_vlanTagged").attr("checked")) {
-                if (checkVLAN("src"))
-                    tab1_valid = true;
-                else {
-                    setFlash(flash_srcVlanInv, "warning");
-                    tab1_valid = false;
-                    return;
-                }
-            }
-            //            else {
-            //                setFlash(flash_srcVlanReq, "warning");
-            //                tab1_valid = false;
-            //                return;
-            //            }
-        
-            if ($("#dst_vlanUntagged").attr("checked"))
-                tab1_valid = true;
-            else if ($("#dst_vlanTagged").attr("checked")) {
-                if (checkVLAN("dst"))
-                    tab1_valid = true;
-                else {
-                    setFlash(flash_dstVlanInv, "warning");
-                    tab1_valid = false;
-                    return;
-                }
-            }
-        //            else {
-        //                setFlash(flash_dstVlanReq, "warning");
-        //                tab1_valid = false;
-        //                return;
-        //            }
-            
-        //            if (($('input[name="sourceVLANType"]:checked').val() == "TRUE") && ($("#src_vlanText").val() == "")) {
-        //                tab1_valid = false;
-        //            } else if (($('input[name="destVLANType"]:checked').val() == "TRUE") && ($("#dst_vlanText").val() == "")) {
-        //                tab1_valid = false;
-        //            } else {
-        //                tab1_valid = true;
-        //            }
-        } else {
-            tab1_valid = true;
-        }
-    } else {
-        tab1_valid = false;
-    }
-    //validateTab3();
-}
-
-function validateTab3() {
-//    if ((tab2_valid) && (tab1_valid)) {
-//        $("#t3").removeClass("ui-state-disabled");
-//        $("#bn2").removeClass("ui-state-disabled")
-//    }                
-//    else {
-//        
-//        $("#t3").addClass("ui-state-disabled");        
-//        $("#bn2").addClass("ui-state-disabled")
-//    }        
-}
 
 function cancelRecurrence(){
     if ($("#repeat_chkbox").attr("checked") && ($("#recurrence-edit").is(":visible"))) {
@@ -272,7 +169,7 @@ function saveRecurrence(){
     sum_desc += $("#until_desc").html();
     $("#recurrence_summary").html(sum_desc);
     $("#summary_input").val(sum_desc);
-    $("#confirmation_summary").html(sum_desc);
+    //$("#confirmation_summary").html(sum_desc);
     $("#summary").html("");
     $("#recurrence").hide();
     $("#recurrence-edit").show();
@@ -312,7 +209,6 @@ function showVlanConf() {
     }else {
         $("#div_vlan").slideUp();
     }
-    validateTab1();
 }*/
 
 function genHex(domainId) {
@@ -368,63 +264,9 @@ function fillUrnBox(htmlId, fillerArray, current_val) {
     }
 }
 
-function fillConfirmationTab() {
-    // preenche informacões dos endpoints
-    $("#confirmation_src_domain").html($("#src_domain").html());
-    $("#confirmation_src_network").html($("#src_network").html());
-    $("#confirmation_src_device ").html($("#src_device option:selected").html());
-    $("#confirmation_src_port").html($("#src_port option:selected").html());
-
-    $("#confirmation_dst_domain").html($("#dst_domain").html());
-    $("#confirmation_dst_network").html($("#dst_network").html());
-    $("#confirmation_dst_device").html($("#dst_device option:selected").html());
-    $("#confirmation_dst_port").html($("#dst_port option:selected").html());
-
-    // preenche info das VLANs
-    if ($("#showVlan_checkbox").attr("checked")) {
-
-        if ($("#src_vlanUntagged").attr("checked"))
-            $("#confirmation_src_vlan").html("Untagged");
-
-        else if ($("#src_vlanTagged").attr("checked")) {
-            if ($("#src_vlanText").val()) {
-                $("#confirmation_src_vlan").html("Tagged: " + $("#src_vlanText").val());
-            } else {
-                $("#confirmation_src_vlan").html("Tagged: " + any_string);
-            }
-        }
-
-        if ($("#dst_vlanUntagged").attr("checked"))
-            $("#confirmation_dst_vlan").html("Untagged");
-            
-        else if ($("#dst_vlanTagged").attr("checked")) {
-            if ($("#dst_vlanText").val()) {
-                $("#confirmation_dst_vlan").html("Tagged: " + $("#dst_vlanText").val());
-            } else {
-                $("#confirmation_dst_vlan").html("Tagged: " + any_string);
-            }
-        }
-
-    } else {
-        $("#confirmation_src_vlan").html("Tagged: " + any_string);
-        $("#confirmation_dst_vlan").html("Tagged: " + any_string);
-    }
-
-    // preenche info da banda
-    var value = $("#bandwidth").val();
-    $("#lb_bandwidth").html(value + " Mbps");
-
-    // preenche informacões do timer
-    $("#summary_input").val($("#confirmation_summary").html());
-}
-
 
 /*----------------------------------------------------------------------------*/
-// INICIO DAS FUNÇÕES DO MAPcounterA                                                 //
-//                                 
-//
-//  PREFIXO "edit_" INDICA USO DO SCRIPT NA TAB "Endpoints & Bandwidth"       //
-//  PREFIXO "view_" INDICA USO DO SCRIPT NA TAB "Confirmation"                //
+// INICIO DAS FUNÇÕES DO MAPA                                                                                           //
 /*----------------------------------------------------------------------------*/
 
 // EDIT FUNCTIONS
@@ -809,9 +651,7 @@ function map_changeDevice(where) {
             map_setEndpointConf(where);
         }        
         $(port_id).slideDown();
-    } else
-        tab1_valid = false;
-    //validateTab3();
+    } 
 }
 
 function map_getPorts(domain_id, network_id, device_id, where) {
@@ -820,8 +660,8 @@ function map_getPorts(domain_id, network_id, device_id, where) {
     if (devices) {
         for (var i=0; i<devices.length; i++) {
             if (devices[i].id == device_id) {
-                var confirmation_device = "#confirmation_" + where + "_device";                
-                $(confirmation_device).html(devices[i].name);
+                //var confirmation_device = "#confirmation_" + where + "_device";                
+                //$(confirmation_device).html(devices[i].name);
                 ports = devices[i].ports;
                 break;
             }
@@ -850,9 +690,7 @@ function map_changePort(where) {
     map_clearVlanConf(where);
     if ($(port_id).val() != -1) {
         map_setEndpointConf(where);
-    } else
-        tab1_valid = false;
-    //validateTab3();
+    }
 }
 
 function map_clearVlanConf(where) {
@@ -992,8 +830,6 @@ function map_setEndpointConf(where) {
         dst_vlan_validValues = vlan_validValues;
         $("#dst_urn").val(dst_urn);
     }
-
-    //validateTab1();
 }
 
 function map_getUrnData(where) {
@@ -1016,15 +852,11 @@ function map_getUrnData(where) {
 
 function map_changeVlanType(elem, where) {
     var text_htmlId = "#" + where + "_vlanText";
-    var vlan_htmlId = "#confirmation_" + where + "_vlan";
     if ($(elem).attr('checked')){
         $(text_htmlId).disabled(false);
-        $(vlan_htmlId).html("Tagged: " + $(text_htmlId).val());
     } else {
         $(text_htmlId).disabled();        
-        $(vlan_htmlId).html("Untagged");
     }
-    //validateTab1();
 }
 
 function map_saveFlow(flow_id) {
@@ -1235,7 +1067,7 @@ function validateBand(band_value) {
                     }
                 }
             }
-            toggleCluster(true, edit_markersArray);
+            //toggleCluster(true, edit_markersArray);
 
             google.maps.event.addListener(edit_map, 'click', function() {
                 contextMenu.hide();        
@@ -1406,9 +1238,7 @@ function validateBand(band_value) {
             $("#"+where+"_network").html(network_name); 
             map_changeNetwork(where, network_id, domain_id); 
     
-            $.fn.mapEdit.preparePath(path[0], path[1]);
-   
-            validateTab1();     
+            $.fn.mapEdit.preparePath(path[0], path[1]);    
         },
         
         /** Desenha linha entre dois pontos e prepara seleção de banda
@@ -1439,7 +1269,7 @@ function validateBand(band_value) {
             });
             line.setMap(edit_map);
             edit_lines.push(line);
-            toggleCluster(true,edit_markersArray);
+            //toggleCluster(true,edit_markersArray);
             //toggleCluster(false, edit_selectedMarkers);
             if ( flightPlanCoordinates[0] != flightPlanCoordinates[1] ) {
                 edit_setBounds(flightPlanCoordinates);  
@@ -1566,7 +1396,6 @@ function validateBand(band_value) {
                 select: function(event, ui){
                     clearFlash();
                     // antes de mostrar a aba, copia conteudo dos campos
-                    fillConfirmationTab();
                     google.maps.event.trigger(view_map, 'resize');
                     view_setBounds(view_bounds);
                 }

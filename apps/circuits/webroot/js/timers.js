@@ -424,8 +424,7 @@ function calcDuration(){
         
         if (difference < 0) {
             setFlash(flash_timerInvalid,"warning");
-            tab2_valid = false;
-            validateTab3();
+            timerValid = false;            
             $("#confirmation_summary").html("");
             $("#confirmation_initialTime").html("");
             $("#confirmation_finalTime").html("");
@@ -434,18 +433,16 @@ function calcDuration(){
             return;
         } else if (difference == 0){
             setFlash(flash_invalidDuration,"warning");
-            tab2_valid = false;
-            validateTab3();
+            timerValid = false;
             $("#confirmation_summary").html("");
             $("#confirmation_initialTime").html("");
             $("#confirmation_finalTime").html("");
-            $("#confirmation_duration").html("");          
+            $("#confirmation_duration").html("");  
             $("#duration").html("");
             return
         }
         clearFlash();
-        tab2_valid = true;
-        validateTab3();
+        timerValid = true;
         var total_minutes = Math.round(difference/(1000*60)); //diferenca em minutos
         
         var total_hours = parseInt((total_minutes/60));

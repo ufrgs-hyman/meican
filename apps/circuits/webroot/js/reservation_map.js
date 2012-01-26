@@ -1,38 +1,3 @@
-function toggleTopology(){
-    res_clearAll();
-    if ((src_lat_network == dst_lat_network) && (src_lng_network == dst_lng_network)) {
-        var aux = parseFloat(dst_lng_network);
-        aux += 0.0005;
-        dst_lng_network = aux.toString();
-    }
-    var coordinatesArray=[];
-
-    var coord_src = new google.maps.LatLng(src_lat_network, src_lng_network);
-    res_addMarker(coord_src, "src");
-    res_bounds.push(coord_src);
-
-    var waypoint = new google.maps.LatLng(-18,-54);    
-    res_bounds.push(waypoint, "way");
-
-    var coord_dst = new google.maps.LatLng(dst_lat_network, dst_lng_network);
-    res_addMarker(coord_dst, "dst");
-    res_bounds.push(coord_dst);
-
-    coordinatesArray.push(coord_src);
-    coordinatesArray.push(waypoint);
-    coordinatesArray.push(coord_dst);
-
-    if (topology) {
-        topology = false;
-        res_addMarker(waypoint);
-        res_drawTopology(coordinatesArray);
-    } else {
-        topology = true;
-        res_drawPath(coordinatesArray);
-    }
-    res_setBounds(res_bounds);
-}
-
 function res_showCircuit(){
 //    if ((src_lat_network == dst_lat_network) && (src_lng_network == dst_lng_network)) {
 //        var aux = parseFloat(dst_lng_network);

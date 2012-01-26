@@ -26,7 +26,6 @@
         <script type ="text/javascript" src="<?php echo $base; ?>apps/topology/webroot/js/devices.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/topology/webroot/js/networks.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/topology/webroot/js/urns.js"></script>
-
         <script type ="text/javascript" src="<?php echo $base; ?>apps/aaa/webroot/js/password.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/aaa/webroot/js/select.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/aaa/webroot/js/acl.js"></script>
@@ -34,7 +33,6 @@
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/googlemaps.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/markerClusterer.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/StyledMarker.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/map.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/reservations.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/reservation_map.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/flows.js"></script>
