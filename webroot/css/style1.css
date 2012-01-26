@@ -73,10 +73,36 @@ div#flash_box {
     text-align: center;
 }
 div#flash_box div {
-    margin-bottom: 1.5em;
+    margin-bottom: 0.5em;
 }
 div#flash_box p {
     margin: 3px 0;
+}
+
+#flash_box div.success {
+    border: 1px solid #408c39; background: #d9ffd7 url(images/ui-bg_inset-soft_95_fef1ec_1x100.png) 50% bottom repeat-x; color: #408c39;
+}
+#flash_box div.error {
+    border: 1px solid #900; background: #ffdbdb url(images/ui-bg_inset-soft_95_fef1ec_1x100.png) 50% bottom repeat-x; color: #900;
+}
+#flash_box div.fatal {
+    border: 1px solid #900; background: #ffdbdb url(images/ui-bg_inset-soft_95_fef1ec_1x100.png) 50% bottom repeat-x; color: #900;
+}
+#flash_box div.warning {
+    border: 1px solid #e18a29; background: #fff5de url(images/ui-bg_inset-soft_95_fef1ec_1x100.png) 50% bottom repeat-x; color: #e18a29;
+}
+#flash_box div.info {
+    border: 1px solid #007cc2; background: #c4eaff url(images/ui-bg_inset-soft_95_fef1ec_1x100.png) 50% bottom repeat-x; color: #007cc2;
+}
+
+div#flash_box .closeFlash {
+    background-image:  url('../img/delete_2.png') ;
+    background-color: transparent;
+    background-repeat:  no-repeat;
+    background-position: center;  
+    height: auto;
+    margin: 3px;
+    float: right;
 }
 
 div#load_img {
@@ -346,21 +372,7 @@ div.subItem {
     text-indent: 15px;
 }
 
-#flash_box div.success {
-    border: 1px solid #408c39; background: #d9ffd7 url(images/ui-bg_inset-soft_95_fef1ec_1x100.png) 50% bottom repeat-x; color: #408c39;
-}
-#flash_box div.error {
-    border: 1px solid #900; background: #ffdbdb url(images/ui-bg_inset-soft_95_fef1ec_1x100.png) 50% bottom repeat-x; color: #900;
-}
-#flash_box div.fatal {
-    border: 1px solid #900; background: #ffdbdb url(images/ui-bg_inset-soft_95_fef1ec_1x100.png) 50% bottom repeat-x; color: #900;
-}
-#flash_box div.warning {
-    border: 1px solid #e18a29; background: #fff5de url(images/ui-bg_inset-soft_95_fef1ec_1x100.png) 50% bottom repeat-x; color: #e18a29;
-}
-#flash_box div.info {
-    border: 1px solid #007cc2; background: #c4eaff url(images/ui-bg_inset-soft_95_fef1ec_1x100.png) 50% bottom repeat-x; color: #007cc2;
-}
+
 
 table.icons tr.new_line > td {
     padding-bottom: 2em;
@@ -442,16 +454,6 @@ div#main #l3:link, div#main #l3:visited, div#main #l3:hover, div#main #l3:visite
 
 .recurrence_table {
     padding: 3px;
-}
-
-div#flash_box .closeFlash {
-    background-image:  url('../img/delete_2.png') ;
-    background-color: transparent;
-    background-repeat:  no-repeat;
-    background-position: center;  
-    height: auto;
-    margin: 3px;
-    float: right;
 }
 
 .close-button{
@@ -706,7 +708,7 @@ h1 {
     padding: 0 0 0.5em 0;
 }
 
-input[type="text"] {
+input[type="text"], input[type="password"] {
     height: 21px;
     border: thin solid #BBB;
     color: #4F4F4F;

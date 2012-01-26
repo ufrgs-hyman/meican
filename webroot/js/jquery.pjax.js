@@ -120,6 +120,11 @@ var pjax = $.pjax = function( options ) {
         title = $.trim( this.find('title').remove().text() )
     if ( title ) document.title = title
 
+    // No <title>? Fragment? Look for data-title and title attributes.
+    if ( !title && options.fragment ) {
+      title = $fragment.attr('title') || $fragment.data('title')
+    }
+
     var state = {
       pjax: options.container,
       fragment: options.fragment,
@@ -185,6 +190,11 @@ pjax.defaults = {
   type: 'GET',
   dataType: 'html',
   beforeSend: function(xhr){
+<<<<<<< HEAD
+=======
+    this.trigger('pjax:start', [xhr, pjax.options])
+    // start.pjax is deprecated
+>>>>>>> 810cc600ae406ddc00d2984374ab5c8a208b3e2d
     this.trigger('start.pjax', [xhr, pjax.options])
     xhr.setRequestHeader('X-PJAX', 'true')
   },
@@ -193,6 +203,11 @@ pjax.defaults = {
       window.location = pjax.options.url
   },
   complete: function(xhr){
+<<<<<<< HEAD
+=======
+    this.trigger('pjax:end', [xhr, pjax.options])
+    // end.pjax is deprecated
+>>>>>>> 810cc600ae406ddc00d2984374ab5c8a208b3e2d
     this.trigger('end.pjax', [xhr, pjax.options])
   }
 }
@@ -240,8 +255,13 @@ if ( $.inArray('state', $.event.props) < 0 )
 // Is pjax supported by this browser?
 $.support.pjax =
   window.history && window.history.pushState && window.history.replaceState
+<<<<<<< HEAD
   // pushState isn't reliable on iOS yet.
   && !navigator.userAgent.match(/(iPod|iPhone|iPad|WebApps\/.+CFNetwork)/)
+=======
+  // pushState isn't reliable on iOS until 5.
+  && !navigator.userAgent.match(/((iPod|iPhone|iPad).+\bOS\s+[1-4]|WebApps\/.+CFNetwork)/)
+>>>>>>> 810cc600ae406ddc00d2984374ab5c8a208b3e2d
 
 
 // Fall back to normalcy for older browsers.
@@ -252,4 +272,8 @@ if ( !$.support.pjax ) {
   $.fn.pjax = function() { return this }
 }
 
+<<<<<<< HEAD
 })(jQuery);
+=======
+})(jQuery);
+>>>>>>> 810cc600ae406ddc00d2984374ab5c8a208b3e2d

@@ -1,7 +1,7 @@
 <?php $user = $this->passedArgs; ?>
 
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'update_settings', 'param' => 'usr_id:' . $user->usr_id)); ?>">        
-    <div id="settingsWrapper" style="width: 31%">
+    <div id="settingsWrapper" style="width: 400px;">
         <?php $this->addElement('identification_settings', $user); ?>
 
         <table id="userInfo" class="withoutBorder" style="margin-left: 19px; min-width: 0;">
@@ -35,7 +35,7 @@
 
         <!-- input class="password" id="changePassword" type="button" value="<?php //echo _('Change password'); ?>" onclick="showPasswdBox();"/ -->
         <input type="checkbox" name="changePassword" id="changePassword"  onclick="showPasswdBox();"/>
-        <?php echo _("Change password") ?>
+        <label for="changePassword"><?php echo _("Change password") ?></label>
 
         <div id="tpassword" style="display: none">
             <table class="withoutBorder" style="min-width: 0;">

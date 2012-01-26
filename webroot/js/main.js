@@ -128,7 +128,7 @@ $(document).ready(function() {
     if (jQuery.isFunction(jQuery.fn.pjax)){           
         $('a[href][href!=""][href!="#"]').pjax('#main', {
             error: errorFunc, 
-            timeout: false
+            timeout: null
         });
         $('#main')
         .bind('start.pjax', function() {
@@ -143,9 +143,6 @@ $(document).ready(function() {
             window.scroll(0, 0);
             //$('#main').hide();
             //clearInterval(js_function_interval);
-                        
-            $('#flash_box').html($('.flash_box').html());
-            $('.flash_box').remove();
                         
             /*            $.each($(".scripts script"), function() {
                 $.getScript($(this).attr('src'));
@@ -173,7 +170,7 @@ $(document).ready(function() {
                     data: param,
                     error: errorFunc,
                     container: '#main',
-                    timeout: false
+                    timeout: null
                 });
             return false;
         });
@@ -204,7 +201,7 @@ function redir(url, data){
         data: data,
         error: errorFunc,
         container: '#main',
-        timeout: false
+        timeout: null
     });
     return false;
 }
@@ -226,12 +223,7 @@ function fillSelectBox(htmlId, fillerArray, current_val) {
             
 function setFlash(message, status) {
     $('#flash_box').empty();
-    if (!status)
-        status = "info";
-    $('#flash_box').append('<div class="' + status + ' ui-corner-all" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-closethick close-button" onclick="clearFlash();"></span>'+ message +
-        '</p>');
-    window.scroll(0, 0);
-    window.onscroll = $.windowScroll;
+    $.flash(message, status);
     //window.onscroll = window_scroll;
 }
 
@@ -316,6 +308,15 @@ function WPToggle(divId, imageId) {
     };
     
     $.extend({
+        flash: function (message, status){
+            if (!status)
+                status = "info";
+            $('#flash_box').append('<div class="' + status + ' ui-corner-all shadow" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-closethick close-button" onclick="clearFlash();"></span>'+ message +
+                '</p>');
+            window.scroll(0, 0);
+            window.onscroll = $.windowScroll;
+        },
+        
         redir : function(url, data){
             return redir(baseUrl+url, data);
         /*$.pjax({
