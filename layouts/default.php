@@ -18,7 +18,7 @@
         //https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/start/jquery-ui.css
         /* <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.form.js"></script>
           <script type="text/javascript" src="<?php echo $base; ?>apps/init/webroot/js/info_box.js"></script> */
-        /* 
+        /*
 
           <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.dataTables.min.js"></script>
           --> */
@@ -42,18 +42,18 @@
 
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <script type ="text/javascript">
-            <?php // variavel para armazenar o ID quando a função setInterval() é usada
-            // cada vez que um link é carregado, é feito um clear na variável, para não carregar em páginas erradas      ?>
-            var js_function_interval = null;
-            <?php // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate      ?>
-            var js_submit_form = true;
-            <?php //url base para geração de url, é o diretório onde o sistema está instalado no servidor       ?>
-            var baseUrl = '<?php echo $this->url(''); ?>';
+<?php // variavel para armazenar o ID quando a função setInterval() é usada
+// cada vez que um link é carregado, é feito um clear na variável, para não carregar em páginas erradas       ?>
+                var js_function_interval = null;
+<?php // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate       ?>
+                var js_submit_form = true;
+<?php //url base para geração de url, é o diretório onde o sistema está instalado no servidor        ?>
+                var baseUrl = '<?php echo $this->url(''); ?>';
             
-            <?php // chamada para atualizar a hora ?>
-            $(document).ready(function() {
-                setInterval("updateSystemTime()", 60000); 
-            });
+<?php // chamada para atualizar a hora  ?>
+                $(document).ready(function() {
+                    setInterval("updateSystemTime()", 60000); 
+                });
             
         </script>
         <?php if ($this->script->scriptArgs): ?>
@@ -103,10 +103,8 @@
         <div id="canvas">
             <?php echo $this->element('info_box', array('app' => 'init')); ?>
             <div id="workspace">
-                <div id="flash_box" class="shadow ui-widget">
-                    <?php echo $this->element('flash_box', array('app' => 'init') + compact('content_for_flash')); ?>
-                </div>
                 <div id="main">
+                    <?php echo $this->element('flash_box', array('app' => 'init') + compact('content_for_flash')); ?>
                     <?php echo $content_for_body; ?>
                 </div>
                 <?php echo $this->element('feedback', array('app' => 'init')); ?>
