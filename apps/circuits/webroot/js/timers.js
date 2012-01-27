@@ -132,7 +132,7 @@ function showRecurrenceBox() {
     }
 
     if ($("#repeat_chkbox").attr("checked")) {
-        $("#recurrence").slideDown(100, function(){
+        $("#recurrence").slideDown(400, function(){
             $(window).trigger('resize');
         });        
         $("#summary").empty();
@@ -143,7 +143,7 @@ function showRecurrenceBox() {
 //        $("#rec_finalTime").html($("#finalTime").val());
 //        $("#rec_duration").html($("#duration").html());    
     } else {
-        $("#recurrence").slideUp(100, function(){
+        $("#recurrence").slideUp(400, function(){
             $(window).trigger('resize');
         });
         $("#interval_type").empty();
