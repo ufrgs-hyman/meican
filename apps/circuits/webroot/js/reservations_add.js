@@ -1110,10 +1110,10 @@ function validateBand(band_value) {
                 edit_setBounds(flightPlanCoordinates);  
             }
     
-            if (useView) {
-                view_clearAll();
-                view_Circuit();
-            }
+            //if (useView) {
+            //    view_clearAll();
+            //    view_Circuit();
+            //}
         },
         
         resetZoom: function(){
