@@ -43,9 +43,9 @@ class MeicanTopology {
                         $new_urn->name = $u->id;
 
                         $new_urn->vlan = $u->vlanRange;
-                        $new_urn->max_capacity = $u->maximumReservable;
-                        $new_urn->min_capacity = $u->minimumReservable;
-                        $new_urn->granularity = $u->granularity;
+                        $new_urn->max_capacity = $u->maximumReservable / 1000000;
+                        $new_urn->min_capacity = $u->minimumReservable / 1000000;
+                        $new_urn->granularity = $u->granularity / 1000000;
 
                         // pega todo string com ID da porta e separa pelos ":"
                         $topo_attr_array = explode(":", $u->id);
@@ -101,9 +101,9 @@ class MeicanTopology {
 
             $urn->port = $urn_res[0]->port;
             $urn->vlan = $urn_res[0]->vlan;
-            $urn->max_capacity = ($urn_res[0]->max_capacity) ? ($urn_res[0]->max_capacity) : "null";
-            $urn->min_capacity = ($urn_res[0]->min_capacity) ? ($urn_res[0]->min_capacity) : "null";
-            $urn->granularity = ($urn_res[0]->granularity) ? ($urn_res[0]->granularity) : "null";
+            $urn->max_capacity = $urn_res[0]->max_capacity;
+            $urn->min_capacity = $urn_res[0]->min_capacity;
+            $urn->granularity = $urn_res[0]->granularity;
 
             $urns[] = $urn;
             
@@ -113,17 +113,14 @@ class MeicanTopology {
         $aco = new Acos($dom_id, "domain_info");
 
         if ($aco_dom = $aco->fetch(FALSE)) {
-            $children = $aco_dom[0]->findChildren();
+            $children = $aco_dom[0]->findChildren('urn_info');
         }
-
-        foreach ($children as $child) {
-
-            if ($child->model == "urn_info") {
-                
+        
+        if ($children) {
+            foreach ($children as $child) {
                 $urn_info = new urn_info();
                 $urn_info->urn_id = $child->obj_id;
                 if ($urn_res = $urn_info->fetch()) {
-
                     $urn = new stdClass();
                     $urn->urn_id = $urn_res[0]->urn_id;
                     $urn->urn_string = $urn_res[0]->urn_string;
@@ -142,9 +139,9 @@ class MeicanTopology {
 
                     $urn->port = $urn_res[0]->port;
                     $urn->vlan = $urn_res[0]->vlan;
-                    $urn->max_capacity = ($urn_res[0]->max_capacity) ? ($urn_res[0]->max_capacity) : "null";
-                    $urn->min_capacity = ($urn_res[0]->min_capacity) ? ($urn_res[0]->min_capacity) : "null";
-                    $urn->granularity = ($urn_res[0]->granularity) ? ($urn_res[0]->granularity) : "null";
+                    $urn->max_capacity = $urn_res[0]->max_capacity;
+                    $urn->min_capacity = $urn_res[0]->min_capacity;
+                    $urn->granularity = $urn_res[0]->granularity;
 
                     $urns[] = $urn;
                 }
@@ -300,9 +297,16 @@ class MeicanTopology {
                 $port->urn_id = $u->urn_id;
                 $port->vlan = $u->vlan;
                 $port->port_number = $u->port;
-                $port->max_capacity = $u->max_capacity;
-                $port->min_capacity = $u->min_capacity;
-                $port->granularity = $u->granularity;
+                $port->max_capacity = ($u->max_capacity) ? (integer) $u->max_capacity : 1000;
+                $port->min_capacity = ($u->min_capacity) ? (integer) $u->min_capacity : 100;
+                $port->granularity = ($u->granularity) ? (integer) $u->granularity : 100;
+                
+                $acl = new AclLoader();
+                if ($acl->checkACL('create', 'urn_info', $u->urn_id)) {
+                    $port->allow_create = TRUE;
+                } else {
+                    $port->allow_create = FALSE;
+                }
 
                 $device->ports = array();
                 $device->ports[] = (array) $port;
@@ -324,12 +328,27 @@ class MeicanTopology {
 
                         $devInArray = FALSE;
                         foreach ($n['devices'] as $ind2 => $d) {
+                            $d['allow_create'] = FALSE;
+                            foreach ($d['ports'] as $p) {
+                                if ($p['allow_create']) {
+                                    $d['allow_create'] = TRUE;
+                                    break;
+                                }
+                            }
                             if ($d['id'] == $device->id) {
                                 // já existe o dispositivo dessa rede no vetor
                                 $devInArray = TRUE;
                                 // insere apenas a porta do dispositivo na última posição do vetor,
                                 $port = (array) $port;
                                 array_push($networks[$ind]['devices'][$ind2]['ports'], $port);
+                                break;
+                            }
+                        }
+                        
+                        $n['allow_create'] = FALSE;
+                        foreach ($n['devices'] as $d) {
+                            if ($d['allow_create']) {
+                                $n['allow_create'] = TRUE;
                                 break;
                             }
                         }
