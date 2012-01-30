@@ -6,45 +6,183 @@
         Purpose of the stylesheet follows.
 */
 
+/* =============================================================================
+   HTML5 element display
+   ========================================================================== */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
+audio[controls], canvas, video { display: inline-block; *display: inline; *zoom: 1; }
+
+
+/* =============================================================================
+   Base
+   ========================================================================== */
+
+/*
+ * 1. Correct text resizing oddly in IE6/7 when body font-size is set using em units
+ *    http://clagnut.com/blog/348/#c790
+ * 2. Force vertical scrollbar in non-IE
+ * 3. Remove Android and iOS tap highlight color to prevent entire container being highlighted
+ *    www.yuiblog.com/blog/2010/10/01/quick-tip-customizing-the-mobile-safari-tap-highlight-color/
+ * 4. Prevent iOS text size adjust on device orientation change, without disabling user zoom
+ *    www.456bereastreet.com/archive/201012/controlling_text_size_in_safari_for_ios_without_disabling_user_zoom/
+*/
+
+html { font-size: 100%; -webkit-overflow-scrolling: touch; -webkit-tap-highlight-color: rgba(0,0,0,0); -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body { margin: 0; font-size: 12px; line-height: 1.231; }
+
+body, button, input, select, textarea { font-family: arial, sans-serif, helvetica; color: #222; }
+
 /* 
-   TODO customize this sample style
-   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+ * These selection declarations have to be separate
+ * No text-shadow: twitter.com/miketaylr/status/12228805301
+ * Also: hot pink!
 */
 
-/*
-    Document   : teste
-    Created on : 25/02/2011, 13:35:22
-    Author     : pfbiasuz
-    Description:
-        Purpose of the stylesheet follows.
-*/
+::-moz-selection { background: #c00; color: #fff; text-shadow: none; }
+::selection { background: #c00; color: #fff; text-shadow: none; }
+
+
+/* =============================================================================
+   Links
+   ========================================================================== */
+
+a { color: #00e; }
+a:visited { color: #551a8b; }
+a:focus { outline: thin dotted; }
+
+/* Improve readability when focused and hovered in all browsers: people.opera.com/patrickl/experiments/keyboard/test */
+a:hover, a:active { outline: 0; }
+
+/* =============================================================================
+   Lists
+   ========================================================================== */
+
+ul, ol { margin: 1em 0; padding: 0 0 0 40px; }
+dd { margin: 0 0 0 40px; }
+nav ul, nav ol { list-style: none; margin: 0; padding: 0; }
+
+
+/* =============================================================================
+   Embedded content
+   ========================================================================== */
 
 /*
-   TODO customize this sample style
-   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+ * Improve image quality when scaled in IE7
+ * code.flickr.com/blog/2008/11/12/on-ui-quality-the-little-things-client-side-image-resizing/
 */
+
+img { border: 0; -ms-interpolation-mode: bicubic; }
+
+/* =============================================================================
+   Forms
+   ========================================================================== */
+
+form { margin: 0; }
+fieldset { border: 0; margin: 0; padding: 0; }
+
+/* 
+ * 1. Correct color not inheriting in IE6/7/8/9 
+ * 2. Correct alignment displayed oddly in IE6/7 
+*/
+
+legend { border: 0; *margin-left: -7px; padding: 0; }
+
+/* Indicate that 'label' will shift focus to the associated form element */
+label { cursor: pointer; }
+
+/*
+ * 1. Correct font-size not inheriting in all browsers
+ * 2. Remove margins in FF3/4 S5 Chrome
+ * 3. Define consistent vertical alignment display in all browsers
+*/
+
+button, input, select, textarea { font-size: 100%; margin: 0; vertical-align: baseline; *vertical-align: middle; }
+
+/*
+ * 1. Define line-height as normal to match FF3/4 (set using !important in the UA stylesheet)
+ * 2. Correct inner spacing displayed oddly in IE6/7
+*/
+
+button, input { line-height: normal; *overflow: visible; }
+
+/*
+ * 1. Display hand cursor for clickable form elements
+ * 2. Allow styling of clickable form elements in iOS
+*/
+
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; }
+
+/*
+ * Consistent box sizing and appearance
+*/
+
+input[type="checkbox"], input[type="radio"] { box-sizing: border-box; }
+input[type="search"] { -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
+
+/* 
+ * Remove inner padding and border in FF3/4
+ * www.sitepen.com/blog/2008/05/14/the-devils-in-the-details-fixing-dojos-toolbar-buttons/ 
+*/
+
+button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
+
+/* Remove default vertical scrollbar in IE6/7/8/9 */
+textarea { overflow: auto; vertical-align: top; }
+
+/* Colors for form validity */
+input:valid, textarea:valid {  }
+input:invalid, textarea:invalid { background-color: #f0dddd; }
+
+
+/* =============================================================================
+   Tables
+   ========================================================================== */
+
+table { border-collapse: collapse; border-spacing: 0; }
+
+
+
+/*h1, h2, h3, h4, h5, h6 {font-weight:normal;color:#111;}*/
+h1 {font-size:3em;line-height:1;margin-bottom:0.5em;}
+h2 {font-size:2em;margin-bottom:0.75em;}
+h3 {font-size:1.5em;line-height:1;margin-bottom:1em;}
+h4 {font-size:1.2em;line-height:1.25;margin-bottom:1.25em;}
+h5 {font-size:1em;font-weight:bold;margin-bottom:1.5em;}
+h6 {font-size:1em;font-weight:bold;}
+h1 img, h2 img, h3 img, h4 img, h5 img, h6 img {margin:0;}
+p {margin:0 0 1.5em;}
 
 /* Tabela de disposição dos boxes iniciais */
 body {
     background-color: #3a5879;
-    font-family: arial, sans-serif, helvetica;
-    font-size: 14px;
     margin: 0px;
 }
 
 div#header {
     width: 100%;
     height: 110px;
-    min-width: 800px;
-    color: white;
-    clear: both;
-    float: left;
 
 }
+
+div#footer {
+    color: #EEEEEE;
+    font-size: 0.75em;
+    text-align: right;
+    clear: both;
+    padding: 10px;
+
+}
+div#footer a:link, div#footer a:visited{
+    color: #EEEEEE;
+    font-size: 0.8em;
+}
+/*
 #header a:link, #header a:visited, #header a:hover {
     color:white;
     text-decoration: none;
-}
+}*/
 
 div#logo_box {
     width: 24%;
@@ -61,26 +199,27 @@ div#info_box {
 
 div#content {
     width: 100%;
-    min-width: 800px;
     clear: both;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 0px;
     background-color: #FFF;
     float: left;
 }
-
+/*
 div#content a:hover {
     text-decoration: underline;
-}
+}*/
 
 div#login_form {
-    width: 25%;
+    width: 275px;
     float: right;
     background-color: #eee;
-    padding-left: 30px;
-    margin-top: 30px;
-    margin-right: 20px
+    padding: 20px 30px;
+    margin: 20px;
+}
+
+div#login_form input {
+    width: 200px;
+    font-size: 150%;
+    height: 30px;
 }
 
 div#login_form hr {
@@ -100,35 +239,6 @@ div#message {
     text-align: center;
     font-weight: bold;
 }
-
-div#footer {
-    color: #EEEEEE;
-    font-size: 0.75em;
-    text-align: center;
-    clear: both;
-    padding: 10px;
-
-}
-div#footer a:link, div#footer a:visited{
-    color: #EEEEEE;
-    font-size: 0.8em;
-}
-
-img.logo {
-    padding: 10px;
-    border: 1px;
-    margin: 0px;
-}
-
-input.delete{
-    background-image:  url('../img/remove.png') ;
-    background-repeat:  no-repeat;
-    background-position: 3px 2px;
-    /* figura tem 18px 18px*/
-    position: relative;
-    left: 0%;
-}
-
 
 
 
@@ -160,8 +270,8 @@ input.delete{
 }
 
 .ui-state-default {
-    box-shadow: -1px -1px 2px #DDD, 2px 2px 2px #FFFFFF, inset 2px 2px 2px #FFFFFF, inset -1px -1px 2px #DDD;
-    text-shadow: 2px 2px 1px white;
+    box-shadow: inset 2px 2px 2px #FFFFFF, inset -1px -1px 2px #DDD;
+    /*text-shadow: 2px 2px 1px white;*/
 }
 
 .ui-state-hover, .ui-state-active{
@@ -173,4 +283,20 @@ input.delete{
 
 input[type="text"]:hover, select:hover, input[type="radio"]:hover, input[type="password"]:hover, input[type="checkbox"]:hover {
     border: thin solid red;
+}
+
+
+input.ui-button {
+    padding: 4px 8px;
+    height: 24px;
+    line-height: 16px;
+    margin: 0 2px;
+    box-sizing: border-box;
+    min-width: 74px;
+}
+
+input[type="text"], input[type="password"], select {
+    border: thin solid #BBB;
+    color: #4F4F4F;
+    background-color: white;
 }
