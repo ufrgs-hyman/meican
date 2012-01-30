@@ -267,9 +267,9 @@ class MeicanTopology {
 //        $allUrns = $urn_info->fetch(FALSE);
         
         $allUrns = MeicanTopology::getURNs($dom_id, $urn_string);
-
+        
         $networks = array();
-        if ($allUrns)
+        if ($allUrns) {
             foreach ($allUrns as $u) {
 
                 $net_info = new network_info();
@@ -281,6 +281,7 @@ class MeicanTopology {
                 $network->name = $res[0]->net_descr;
                 $network->latitude = $res[0]->net_lat;
                 $network->longitude = $res[0]->net_lng;
+                $network->allow_create = FALSE;
 
                 $dev_info = new device_info();
                 $dev_info->dev_id = $u->dev_id;
@@ -291,6 +292,7 @@ class MeicanTopology {
                 $device->name = $res[0]->dev_descr;
                 $device->topology_node_id = $res[0]->node_id;
                 $device->model = $res[0]->model;
+                $device->allow_create = FALSE;
 
                 $port = new stdClass();
                 $port->urn_string = $u->urn_string;
@@ -322,19 +324,11 @@ class MeicanTopology {
                 $netInArray = FALSE;
                 foreach ($networks as $ind => $n) {
                     if ($n['id'] == $network->id) {
-
                         // já existe a rede no vetor
                         $netInArray = TRUE;
 
                         $devInArray = FALSE;
                         foreach ($n['devices'] as $ind2 => $d) {
-                            $d['allow_create'] = FALSE;
-                            foreach ($d['ports'] as $p) {
-                                if ($p['allow_create']) {
-                                    $d['allow_create'] = TRUE;
-                                    break;
-                                }
-                            }
                             if ($d['id'] == $device->id) {
                                 // já existe o dispositivo dessa rede no vetor
                                 $devInArray = TRUE;
@@ -345,14 +339,6 @@ class MeicanTopology {
                             }
                         }
                         
-                        $n['allow_create'] = FALSE;
-                        foreach ($n['devices'] as $d) {
-                            if ($d['allow_create']) {
-                                $n['allow_create'] = TRUE;
-                                break;
-                            }
-                        }
-
                         // se o dispositivo não está no vetor dentro da rede, insere todo o objeto 'device'
                         if (!$devInArray) {
                             $device = (array) $device;
@@ -368,13 +354,29 @@ class MeicanTopology {
                     $network = (array) $network;
                     array_push($networks, $network);
                 }
-
             }
+        }
+        
+        /**
+         * Varre o vetor das redes para descobrir quais redes e dispositivos podem ter o "allow_create"
+         */
+        foreach ($networks as $ind => $net) {
+            foreach ($net['devices'] as $ind2 => $dev) {
+                foreach ($dev['ports'] as $p) {
+                    if ($p['allow_create']) {
+                        $networks[$ind]['devices'][$ind2]['allow_create'] = TRUE;
+                        $networks[$ind]['allow_create'] = TRUE;
+                        break;
+                    }
+                }
+            }
+        }
 
         //Framework::debug("net",$networks);
         return $networks;
 
     }
+    
 }
 
 ?>
