@@ -211,13 +211,19 @@ function clearSelectBox(htmlId){
     $(htmlId).append('<option value="-1"></option>');
 }
 
-function fillSelectBox(htmlId, fillerArray, current_val) {
+function fillSelectBox(htmlId, fillerArray, current_val, check_allow) {
     clearSelectBox(htmlId);
     for (var i=0; i < fillerArray.length; i++) {
-        if (fillerArray[i].id == current_val)
-            $(htmlId).append('<option selected="true" value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
-        else
-            $(htmlId).append('<option value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
+        
+        if ((check_allow) && (fillerArray[i].allow_create == false)) {
+            continue;       // if permission is needed and the user doesn't have, then doesn't fill the selectBox
+        } else {            // if permission isn't needed or the user have permission, fill the selectBox'
+            if (fillerArray[i].id == current_val) 
+                $(htmlId).append('<option selected="true" value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
+            else 
+                $(htmlId).append('<option value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
+        }
+        
     }
 }
             

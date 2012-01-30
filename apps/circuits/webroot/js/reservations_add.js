@@ -549,7 +549,12 @@ function map_changeNetwork(where, network_id, domain_id) {
                 }
             }
         }
-        fillSelectBox(device_id, devices);
+        if (where == 'src') {                            // if desired endpoint is a source endpoint, it's necessary to check for permissions'
+            fillSelectBox(device_id, devices, -1, true); // -1 indicates that this function uses a fourth parameter | True indicates that is necessary to check for permissions before filling the box
+        }
+        else {                                           //if desired checkpoint is a destination endpoint, then there's no need for permission'
+            fillSelectBox(device_id, devices);
+        }    
         $(device_id).slideDown(); //TODO: pq slideDown aqui?
     }
 }
@@ -567,7 +572,10 @@ function map_changeDevice(where) {
     
     if ($(device_id).val() != -1) {
         var ports = map_getPorts($(domain_id).html() ,$(network_id).html(), $(device_id).val(), where);
-        map_fillPorts(port_id, ports);
+        if (where='src')
+            map_fillPorts(port_id, ports, -1, true);
+        else
+            map_fillPorts(port_id, ports);
 
         if (ports.length == 1) {
             map_setEndpointConf(where);
@@ -643,13 +651,18 @@ function map_clearVlanConf(where) {
     }
 }
 
-function map_fillPorts(htmlId, portsArray, current_port) {
+function map_fillPorts(htmlId, portsArray, current_port, check_allow) {
     clearSelectBox(htmlId);
     for (var i=0; i < portsArray.length; i++) {
-        if ((portsArray[i].port_number == current_port) || (portsArray.length == 1))
-            $(htmlId).append('<option selected="true" value="' + portsArray[i].port_number + '">' + portsArray[i].port_number + '</option>');
-        else
-            $(htmlId).append('<option value="' + portsArray[i].port_number + '">' + portsArray[i].port_number + '</option>');
+        if ((check_allow) && (portsArray[i].allow_create==false)) {
+            continue;
+        }
+        else {
+            if ((portsArray[i].port_number == current_port) || (portsArray.length == 1))
+                $(htmlId).append('<option selected="true" value="' + portsArray[i].port_number + '">' + portsArray[i].port_number + '</option>');
+            else
+                $(htmlId).append('<option value="' + portsArray[i].port_number + '">' + portsArray[i].port_number + '</option>');
+        }
     }
 }
 
@@ -897,7 +910,7 @@ function validateBand(band_value) {
                             }
                         }
                         var coord = new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude);                
-                        this.addMapMarker(coord, domains[i].id, domains[i].name, domains[i].networks[j].id, domains[i].networks[j].name, color);
+                        this.addMapMarker(coord, domains[i].id, domains[i].name, domains[i].networks[j].id, domains[i].networks[j].name, domains[i].networks[j].allow_create, color);
                         edit_bounds.push(coord);
                     }
                 }
@@ -924,7 +937,7 @@ function validateBand(band_value) {
         prepareContextMenu: function(){
             if (contextMenu == null) {
                 contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
-                contextMenu.append('<li><a href="#fromHere">' + from_here_string + '</a></li>');
+                contextMenu.append('<li><a href="#fromHere" id="contextItem">' + from_here_string + '</a></li>');
                 contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
                 contextMenu.bind('contextmenu', function() {
                     return false;
@@ -946,7 +959,7 @@ function validateBand(band_value) {
         },
         
         //adiciona marcadores de endpoints no mapa 
-        addMapMarker: function (coord, domain_id, domain_name, network_id, network_name, color) {
+        addMapMarker: function (coord, domain_id, domain_name, network_id, network_name, allow_create, color) {
             for (i in edit_markersArray){
                 var mark = edit_markersArray[i];
                 if (
@@ -968,16 +981,30 @@ function validateBand(band_value) {
 
             var clickFn = function() {
         
+                if (allow_create) {
+                    $("#contextItem").removeClass("ui-state-disabled");
+                }
+                else {
+                    $("#contextItem").addClass("ui-state-disabled");
+                }
+                
                 contextMenu.find('a').unbind('click');
-                contextMenu.find('a').click( function() {
+                contextMenu.find('a[class=ui-state-disabled]').click( function() {
+                    setFlash("Ponto desejado não pode ser origem");
+                    return false;
+                });
+                
+                contextMenu.find('a[class!=ui-state-disabled]').click( function() {
                     // fade out the menu
                     contextMenu.fadeOut(75);
-
+                    clearFlash();
+                    
+                
                     // The link's href minus the #
                     switch ( $(this).attr('href').substr(1) )
                     {
                         case 'fromHere':
-                            $.fn.mapEdit.markerClick(coord, domain_id, domain_name, network_id, network_name, "src");
+                            $.fn.mapEdit.markerClick(coord, domain_id, domain_name, network_id, network_name, "src");   
                             break;
                         case 'toHere':
                             $.fn.mapEdit.markerClick(coord, domain_id, domain_name, network_id, network_name, "dst");
@@ -1005,6 +1032,7 @@ function validateBand(band_value) {
                     left: x
                 }).fadeIn(100);         
             };
+        
             google.maps.event.addListener(marker, "click", clickFn);
             google.maps.event.addListener(marker, 'rightclick', clickFn);    
     
