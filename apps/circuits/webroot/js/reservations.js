@@ -10,18 +10,20 @@
 //var res_myOptions = null;
 
 function refreshStatus() {
-    $('.load').show();
-    
     for (var i in domains) {
+        $('.load' + domains[i]).show();
+        
         $.ajax ({
             type: "POST",
             url: baseUrl+'circuits/reservations/refresh_status',
             data: {
                 dom_id: domains[i]
             },
+            dom_id: domains[i],
             dataType: "json",
             success: function(data) {
-                $('.load').hide();
+                $('.load' + this.dom_id).hide();
+                
                 if (data) {
                     var status_id = null;
 

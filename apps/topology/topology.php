@@ -35,7 +35,7 @@ class topology extends App {
                 )),
                 new MenuItem(array(
                     'label' => _("URNs"),
-                    'model' => 'urn_info',
+                    'model' => array('urn_info','domain_info'),
                     'url' => array('app' => $this->appName, 'controller' => 'urns')
                 )),
             )

@@ -9,7 +9,7 @@
 
 <tr>
     <th class="large"><?php echo _("VLAN values"); ?></th>
-    <th class="large"><?php echo _("Maximum capacity (bps)"); ?></th>
-    <th class="large"><?php echo _("Minimum capacity (bps)"); ?></th>
-    <th class="large"><?php echo _("Granularity (bps)"); ?></th>
+    <th class="large"><?php echo _("Maximum capacity (Mbps)"); ?></th>
+    <th class="large"><?php echo _("Minimum capacity (Mbps)"); ?></th>
+    <th class="large"><?php echo _("Granularity (Mbps)"); ?></th>
 </tr>

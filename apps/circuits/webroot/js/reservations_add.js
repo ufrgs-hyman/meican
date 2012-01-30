@@ -584,6 +584,14 @@ function map_changeDevice(where) {
     } 
 }
 
+function map_changePort(where) {
+    var port_id = "#" + where + "_port";
+    map_clearVlanConf(where);
+    if ($(port_id).val() != -1) {
+        map_setEndpointConf(where);
+    }
+}
+
 function map_getPorts(domain_id, network_id, device_id, where) {
     var devices = map_getDevices(domain_id, network_id);
     var ports = null;
@@ -615,14 +623,6 @@ function map_getDevices(domain_id, network_id) {
     return devices;
 }
 
-function map_changePort(where) {
-    var port_id = "#" + where + "_port";
-    map_clearVlanConf(where);
-    if ($(port_id).val() != -1) {
-        map_setEndpointConf(where);
-    }
-}
-
 function map_clearVlanConf(where) {
     // var untagged_htmlId = "#" + where + "_vlanUntagged";
     var tagged_htmlId = "#" + where + "_vlanTagged";
@@ -637,17 +637,26 @@ function map_clearVlanConf(where) {
 
     $(tagged_htmlId).removeAttr('checked');
     $(tagged_htmlId).disabled();
+    
+    $("#bandwidth").spinner('disable');
+    $('#bandwidth_un').disabled();
 
     if (where == "src") {
         src_urn = null;
         src_vlan_min = null;
         src_vlan_max = null;
         src_vlan_validValues = null;
+        src_max_cap = null;
+        src_min_cap = null;
+        src_div_cap = null;
     } else if (where == "dst") {
         dst_urn = null;
         dst_vlan_min = null;
         dst_vlan_max = null;
         dst_vlan_validValues = null;
+        dst_max_cap = null;
+        dst_min_cap = null;
+        dst_div_cap = null;
     }
 }
 
@@ -757,13 +766,34 @@ function map_setEndpointConf(where) {
         src_vlan_min = vlan_min;
         src_vlan_max = vlan_max;
         src_vlan_validValues = vlan_validValues;
+        src_max_cap = urnData.max_capacity;
+        src_min_cap = urnData.min_capacity;
+        src_div_cap = urnData.granularity;
         $("#src_urn").val(src_urn);
     } else if (where == "dst") {
         dst_urn = urnData.urn_string;
         dst_vlan_min = vlan_min;
         dst_vlan_max = vlan_max;
         dst_vlan_validValues = vlan_validValues;
+        dst_max_cap = urnData.max_capacity;
+        dst_min_cap = urnData.min_capacity;
+        dst_div_cap = urnData.granularity;
         $("#dst_urn").val(dst_urn);
+    }
+    
+    enableBandwidthSpinner();
+}
+
+function enableBandwidthSpinner() {
+    if (src_urn && dst_urn) {
+        var bmin_tmp = (src_min_cap >= dst_min_cap) ? src_min_cap : dst_min_cap;
+        var bmax_tmp = (src_max_cap <= dst_max_cap) ? src_max_cap : dst_max_cap;
+        var bdiv_tmp = (src_div_cap == dst_div_cap) ? src_div_cap : band_div;
+        
+        $('#bandwidth').spinner({min: bmin_tmp, max: bmax_tmp, step: bdiv_tmp}).spinner("enable").disabled(false).trigger('click');
+        $('#bandwidth_un').disabled(false);
+        $("#bandwidth").val(bmin_tmp);
+        $("#bandwidth").trigger("change");
     }
 }
 
@@ -1106,7 +1136,7 @@ function validateBand(band_value) {
         
         /** Desenha linha entre dois pontos e prepara seleção de banda
          **/
-        preparePath: function(from, to){
+        preparePath: function(from, to) {
             if ((from == null) || (to == null))
                 return ;
             
@@ -1114,8 +1144,6 @@ function validateBand(band_value) {
             
             $.fn.mapEdit.clearMapElements(edit_lines);
             this.drawPath(new Array(from.position, to.position));
-            $('#bandwidth').attr("min", band_min).attr("max", band_max).attr("step", band_div).trigger('click').spinner("enable").disabled(false);   
-            $('#bandwidth_un').disabled(false);
         },
         
         // desenha uma linha entre dois endpoints selecionados
@@ -1235,7 +1263,7 @@ function validateBand(band_value) {
     $(function(){
         
         var f = function(){
-            var v = ($("#bandwidth").val()/band_max)*100;
+            var v = ($("#bandwidth").val()/$("#bandwidth").attr('aria-valuemax'))*100;
             if (v>100 || v < 0)
                 return ;
             var k = 2*(50-v);
@@ -1247,7 +1275,7 @@ function validateBand(band_value) {
         };
         
         $('#bandwidth').attr("min", band_min).attr("max", band_max).attr("step", band_div).numeric().spinner({
-            spin: f, 
+            spin: f,
             stop: f
         }).spinner("disable").bind('spin', f).change(f).keyup(f).click(f).scroll(f);
         

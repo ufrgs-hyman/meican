@@ -19,12 +19,23 @@ class MenuItem {
             return $preMenus;
         $menus = array();
         $acl = AclLoader::getInstance();
-        foreach ($preMenus as $k => $preMenu)
-            if (empty($preMenu->model) || $acl->checkACL($preMenu->right, $preMenu->model)){
+        foreach ($preMenus as $k => $preMenu) {
+            if (is_array($preMenu->model)) {
+                $allowAll = TRUE;
+                foreach ($preMenu->model as $model) {
+                    $allowAll &= $acl->checkACL($preMenu->right, $model);
+                }
+                if ($allowAll) {
+                    $preMenu->sub = self::filter($preMenu->sub);
+                    if (!empty($preMenu->sub) || !empty($preMenu->url))
+                        $menus[$k] = $preMenu;
+                }
+            } elseif (empty($preMenu->model) || $acl->checkACL($preMenu->right, $preMenu->model)){
                 $preMenu->sub = self::filter($preMenu->sub);
                 if (!empty($preMenu->sub) || !empty($preMenu->url))
                     $menus[$k] = $preMenu;
             }
+        }
         ksort($menus);
         return $menus;
     }

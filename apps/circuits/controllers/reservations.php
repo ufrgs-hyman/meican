@@ -62,6 +62,7 @@ class reservations extends Controller {
                 $dom = new domain_info();
                 if ($domain = $dom->getOSCARSDomain($res->flow->source->urn)) {
                     $res->flow->source->domain = $domain->dom_descr;
+                    $res->flow->source->dom_id = $domain->dom_id;
                     $src_domains[] = $domain->dom_id;
                 } else {
                     $urn = new urn_info();
@@ -76,6 +77,7 @@ class reservations extends Controller {
                     $dom = new domain_info();
                     $dom->dom_id = $dom_aco[0]->obj_id;
                     $res->flow->source->domain = $dom->get('dom_descr');
+                    $res->flow->source->dom_id = $dom->get('dom_id');
                     $src_domains[] = $dom_aco[0]->obj_id;
                 }
 
@@ -369,7 +371,7 @@ class reservations extends Controller {
         // STEP 2 VARIABLES ---------------------
         $domain = new domain_info();
         $allDomains = $domain->fetch(FALSE);
-        $allUrns = array();
+        //$allUrns = array();
         $domToMapArray = array();
         //$domains = array();
 
@@ -388,13 +390,11 @@ class reservations extends Controller {
                 $before = microtime(true);
 
                 $domain->networks = $networks;
-                $urn = MeicanTopology::getURNs($d->dom_id);
+                $domToMapArray[] = $domain;
                 //Framework::debug("tempo", (microtime(true) - $before));
 
-                foreach ($urn as $u) {
-                    $allUrns[] = $u->urn_string;
-                }
-                $domToMapArray[] = $domain;
+                //$urns_tmp = Common::arrayExtractAttr(MeicanTopology::getURNs($d->dom_id), 'urn_string');
+                //array_push($allUrns, $urns_tmp);
             }
         }
 
@@ -494,7 +494,7 @@ class reservations extends Controller {
             "at_string" => _("at"),
             "reset_zoom" => _("Reset Zoom"),
             "domains" => $domToMapArray,
-            "urn_string" => $allUrns
+            //"urn_string" => $allUrns
         ));
         //}
         // ARGS to body ----------------------------------------------------------------

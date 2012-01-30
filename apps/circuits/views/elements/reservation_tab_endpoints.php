@@ -10,7 +10,7 @@
                 <label id="amount" style="border:0; color:#000; font-weight:bold; width:100%"></label>
                 <?php /*<label id="bandwidth_label" for="bandwidth"><?php echo _("Bandwidth");?></label>*/ ?>
                 <div style="text-align:center;">
-                    <input type="text" name="bandwidth" id="bandwidth" value="200" class="integer-input" size="4" step="100" disabled="disabled"/>
+                    <input type="text" name="bandwidth" id="bandwidth" value="100" class="integer-input" size="4" step="100" disabled="disabled"/>
                 </div>
                 <label id="bandwidth_un" for="bandwidth"><?php echo _("Mbps");?></label>
                 <?php //<input type="hidden" name="bandwidth" id="bandwidth" value="200"/> ?>

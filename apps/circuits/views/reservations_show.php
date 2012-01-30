@@ -59,7 +59,7 @@ $refresh = $this->passedArgs->refresh;
                         <label id="status<?php echo $r->id; ?>">
                             <?php echo $r->status; ?>
                         </label>
-                        <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading<?php echo $r->id; ?>" class="load" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif"/>
+                        <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading<?php echo $r->id; ?>" class="load<?= $r->flow->source->dom_id ?>" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif"/>
                     </td>
                     <td>
                         <?php echo $r->flow->source->domain; ?>
