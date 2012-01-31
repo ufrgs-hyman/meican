@@ -355,22 +355,14 @@ function WPToggle(divId, imageId) {
 	 
             init:function(){
                 //$('.feedback-panel').css('height',$.feedbackTab.containerHeight + 'px');
-                $('.feedback-panel').css('top', '-' + ($('.feedback-panel').outerHeight()+70) + 'px');
+                $('.feedback-panel').css('top', $('a.feedback-link').offset().top + 15 + 'px');
 	 
                 $('.feedback-link').click(function(event){
                     if ($('.feedback-panel').hasClass('open')) {
-                        $('.feedback-panel')
-                        .animate({
-                            top: '-' + ($('.feedback-panel').outerHeight()+70) + 'px'
-                        }, $.feedbackTab.speed)
-                        .removeClass('open');
+                        $('.feedback-panel').slideUp(this.speed).removeClass('open');
                         $('#MainOverlay').hide();
                     } else {
-                        $('.feedback-panel')
-                        .animate({
-                            top: $('a.feedback-link').offset().top + 15 + 'px'
-                        },  $.feedbackTab.speed)
-                        .addClass('open');
+                        $('.feedback-panel').slideDown(this.speed).addClass('open');
                         $('#MainOverlay').show();
                     }
                     event.preventDefault();

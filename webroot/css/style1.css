@@ -870,7 +870,7 @@ table.reservation-point td:nth-child(1) {
 }
 
 .reservation-point input[type=text], .reservation-point select{
-	width: 99%;
+	width: 80px;
     height: 22px;
 }
 
@@ -1067,6 +1067,7 @@ span.ui-spinner { background: none; }
     top:-500px;
     right:20px;
     z-index: 10;
+    -webkit-transform-style: preserve-3d;
 }
 
 .feedback-panel .tab_content{ 

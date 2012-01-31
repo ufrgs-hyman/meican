@@ -5,7 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title><?php echo Configure::read('systemName'); ?></title>
-
+		<link rel="shortcut icon" href="<?php echo $base; ?>webroot/favicon.ico" type="image/x-icon" />
         <!-- GLOBAL JS SCRIPTS AND IN-LINE FUNCTIONS -->
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/meican3-theme/jquery-ui-1.8.16.custom.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/style1.css" />
@@ -22,7 +22,10 @@
 
           
           --> */
-        ?><script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.dataTables.min.js"></script>
+        ?>
+        <?php if (Configure::read('dataTables')): ?>
+        <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.dataTables.min.js"></script>
+        <?php endif; ?>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/topology/webroot/js/devices.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/topology/webroot/js/networks.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/topology/webroot/js/urns.js"></script>

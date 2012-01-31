@@ -1,4 +1,4 @@
-<div class="feedback-panel tab_content ui-corner-all" style="top: 27px; " id="feedback-panel">
+<div class="feedback-panel tab_content ui-corner-all" style="top: 27px; display: none; " id="feedback-panel">
     
     <div class="ui-state-default ui-corner-all feedback-link" style="float: left; margin: -20px -20px; cursor: pointer;">
         <span class="ui-icon ui-icon-closethick"></span>
