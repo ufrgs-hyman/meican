@@ -320,7 +320,7 @@ function checkVLAN(where) {
         vlan_validValues = dst_vlan_validValues;
     } else return false;
 
-    if (!vlan_value)
+    if ((!vlan_value) || (vlan_value == "any"))
         return true;
 
     if (vlan_min && vlan_max) {

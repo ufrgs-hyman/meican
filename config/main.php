@@ -60,6 +60,6 @@ return array(
             'password' => 'futurarnp',
             'hostspec' => 'localhost',
             'database' => 'meican'
-        ),
+        )
     )
 );

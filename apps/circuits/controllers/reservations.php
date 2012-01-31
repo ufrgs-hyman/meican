@@ -493,6 +493,7 @@ class reservations extends Controller {
             "active_string" => _("Active from"),
             "at_string" => _("at"),
             "reset_zoom" => _("Reset Zoom"),
+            "any_string" => _("any"),
             "domains" => $domToMapArray,
             //"urn_string" => $allUrns
         ));
@@ -529,7 +530,6 @@ class reservations extends Controller {
     }
 
     public function submit() {
-
         $res_end_timestamp = microtime(true);
         $res_begin_timestamp = Common::getSessionVariable("res_begin_timestamp");
         $res_diff_timestamp = $res_end_timestamp - $res_begin_timestamp;

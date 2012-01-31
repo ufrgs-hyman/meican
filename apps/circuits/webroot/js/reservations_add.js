@@ -83,6 +83,18 @@ function validateReservationForm() {
     }
     
     if (validateEndpoints() && validateBand($('#bandwidth').val()) && validateTimer()) {
+        if ($("#src_vlanText").val() == "any") {
+            $("#src_vlanText").val("");
+        }
+        if ( ($("#src_vlanTagged").attr("checked")) && ($("#src_vlanText").attr("placeholder", "any")) ){
+            $("#src_vlanText").attr("placeholder","");
+        }
+        if ($("#dst_vlanText").val() == "any") {
+            $("#dst_vlanText").val("");
+        }
+        if ( ($("#dst_vlanTagged").attr("checked")) && ($("#dst_vlanText").attr("placeholder", "any")) ){
+            $("#dst_vlanText").attr("placeholder","");
+        }        
         return true;
     } else {
         js_submit_form = false;
@@ -630,7 +642,7 @@ function map_clearVlanConf(where) {
     var tip_htmlId = "#" + where + "_vlanTip";
 
     $(tip_htmlId).html("");
-    $(text_htmlId).attr('title', '').val("").disabled().next().html("").disabled();
+    $(text_htmlId).attr('title', '').val("").disabled().attr('placeholder',"").next().html("").disabled();
 
     /*$(untagged_htmlId).removeAttr('checked');
     $(untagged_htmlId).attr('disabled','disabled');*/
@@ -704,7 +716,7 @@ function map_setEndpointConf(where) {
             temp = temp[1].split("-");
             vlan_min = temp[0];
             vlan_max = temp[1];
-            $(text_htmlId).val(vlan_min);
+            $(text_htmlId).attr('placeholder', any_string);
         } else {
             // possui virgula, mas nao possui range. Ex: "3000,3001,3002" ou "0,3000,3001,3002"
             if (temp[0] != 0) {
@@ -712,6 +724,7 @@ function map_setEndpointConf(where) {
                 vlan_validValues = urnData.vlan;
             } else
                 vlan_validValues = urnData.vlan.substr(2);
+            $(text_htmlId).attr('placeholder', any_string);
         }
     } else {
         if (range != -1) {
@@ -720,7 +733,7 @@ function map_setEndpointConf(where) {
             vlan_min = temp[0];
             vlan_max = temp[1];
             allowUntag = false;
-            $(text_htmlId).val(vlan_min);
+            $(text_htmlId).attr('placeholder',any_string);
         }else {
             // nao possui virgula nem range. Ex: "0" ou "3000"
             vlan_validValues = urnData.vlan;
@@ -728,7 +741,7 @@ function map_setEndpointConf(where) {
                 allowTag = false;
             } else {
                 // um valor só para VLAN
-                $(text_htmlId).val(vlan_validValues);
+                $(text_htmlId).attr('placeholder', any_string);
                 allowUntag = false;
             }
         }
