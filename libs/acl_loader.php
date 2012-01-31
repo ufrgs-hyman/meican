@@ -42,8 +42,8 @@ class AclLoader extends Tree_Model {
 
     public function reloadACL($options = array()) {
         Framework::debug('reloading ACL...');
-
-        Framework::$debugMode = 0;
+        $debugLevel = Configure::read('debug');
+        Configure::write('debug', 0);
 
         $time = mktime();
 
@@ -95,7 +95,8 @@ class AclLoader extends Tree_Model {
         }
 
         Common::setSessionVariable('last_update', $time);
-        Framework::$debugMode = 1;
+        
+        Configure::write('debug', $debugLevel);
         return $acl;
     }
 

@@ -97,7 +97,7 @@ class flow_info extends Resource_Model {
 //            $dom = $domain->fetch(FALSE);
 
 //            //chamada de web service para buscar os dados completos da URN
-//            $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."topology/ws";
+//            $endpoint = "http://{$dom[0]->dom_ip}/".systemDirName."topology/ws";
 //            $ws = new nusoap_client($endpoint,array('cache_wsdl' => 0));
 //            $urnDetailsRet = $ws->call('getURNDetails', array($flow->src_urn_string));
 
@@ -129,7 +129,7 @@ class flow_info extends Resource_Model {
 //            $dom = $domain->fetch(FALSE);
 
             //chamada de web service para buscar os dados completos da URN
-//            $endpoint = "http://{$dom[0]->dom_ip}/".Framework::$systemDirName."topology/ws";
+//            $endpoint = "http://{$dom[0]->dom_ip}/".systemDirName."topology/ws";
 //            $ws = new nusoap_client($endpoint,array('cache_wsdl' => 0));
 //            $urnDetailsRet = $ws->call('getURNDetails', array($flow->dst_urn_string));
 

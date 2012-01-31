@@ -609,7 +609,7 @@ class ws extends Controller {
         function getRequestPath($req_id, $dom_src_ip) {
 
             $path = array (
-                    0 => Framework::$domIp,
+                    0 => Configure::read('domIp'),
                     1 => 'noc.inf.ufrgs.br:65502',
                     2 => 'noc.inf.ufrgs.br:65503');
 

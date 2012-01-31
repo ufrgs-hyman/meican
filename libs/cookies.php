@@ -29,7 +29,7 @@ class CookiesSystem {
      */
     static function setCookie ($cookie_name, $cookie_value, $expire = 0) {
         if ($expire == 0) {
-            $expire = time() + Framework::getCookieLifetime();
+            $expire = time() + Configure::read('cookieLifetime');
         }
         setcookie($cookie_name, $cookie_value, $expire);
     }

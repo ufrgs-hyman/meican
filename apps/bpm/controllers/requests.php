@@ -23,7 +23,7 @@ class requests extends Controller {
         $requests = new request_info();
 
         $temp = $requests->getRequestInfo(TRUE);
-        //$endpoint =  "http://143.54.12.185/Framework::$systemDirName/main.php?bpm/ws";
+        //$endpoint =  "http://143.54.12.185/dirname/main.php?bpm/ws";
         //$ws_client = new nusoap_client($endpoint, array('cache_wsdl' => 0));
         //$usr = array('usr_name' => 'Pietro Biasuz');
         //$grp = array('grp_id' => 2);
@@ -74,7 +74,7 @@ class requests extends Controller {
         $dom_ip = $_POST['dom_ip'];
 
         //consulta domínio remoto via web service para buscar os usuários do mesmo
-        $client = new nusoap_client("http://$dom_ip/".Framework::$systemDirName."bpm/ws", array('cache_wsdl' => 0));
+        $client = new nusoap_client("http://$dom_ip/".Configure::read('systemDirName')."bpm/ws", array('cache_wsdl' => 0));
 
         $result = $client->call('getUsers');
         $this->setAction('ajax');

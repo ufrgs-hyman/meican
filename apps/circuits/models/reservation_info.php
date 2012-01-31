@@ -143,7 +143,7 @@ class reservation_info extends Resource_Model {
 
         //cria nova request
         $newReq = new request_info();
-        $newReq->setDom('dom_src', Framework::$domIp);
+        $newReq->setDom('dom_src', Configure::read('domIp'));
         $newReq->req_id = $newReq->getNextId('req_id');
 
 
@@ -161,8 +161,8 @@ class reservation_info extends Resource_Model {
         $newReq->answerable = 'no';
 
         Framework::debug('dentro do sendauth');
-        $endpoint = Framework::$odeWSDLToRequest;
-        //$endpoint = "http://".Framework::$odeIp."/ode/deployment/bundles/v1_workflow_pietro/processes/v1_workflow_pietro/processes.ode/diagrama-v1-workflow_pietro.wsdl";
+        $endpoint = Configure::read('odeWSDLToRequest');
+        //$endpoint = "http://".odeip."/ode/deployment/bundles/v1_workflow_pietro/processes/v1_workflow_pietro/processes.ode/diagrama-v1-workflow_pietro.wsdl";
 
         if ($client = new SoapClient($endpoint, array('cache_wsdl' => 0))) {
 
@@ -215,7 +215,7 @@ class reservation_info extends Resource_Model {
                         $now_10 // end TS
         ));
 
-        $endpoint = "http://".Framework::$bridgeIp."/axis2/services/BridgeOSCARS?wsdl";
+        $endpoint = "http://".Configure::read('bridgeIp')."/axis2/services/BridgeOSCARS?wsdl";
         if ($client = new SoapClient($endpoint, array('cache_wsdl' => 0))) {
             if ($result = $client->list($gri_to_list))
                 Framework::debug('result list oscars', $result);

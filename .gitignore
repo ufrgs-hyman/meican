@@ -1,4 +1,4 @@
-log/*
-meican.conf.php
+/log/*
 /nbproject/*
 /webroot/css/.fr-KdDT0x/
+/config/local.php

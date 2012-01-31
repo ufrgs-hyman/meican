@@ -10,7 +10,7 @@ class Language {
       
 
         if (!$lang)
-             $lang = Framework::getDefaultLang();
+             $lang = Configure::read('defaultLang');
 
         return $lang;
 

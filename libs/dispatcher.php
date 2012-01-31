@@ -35,6 +35,11 @@ function myErrorHandler($errno, $errstr, $errfile, $errline)
 
 
 include_once 'libs/app.php';
+include_once 'libs/configure.php';
+include_once 'libs/datasource.php';
+include_once 'libs/auth.php';
+include_once 'libs/language.php';
+include_once 'libs/database.php';
 
 /**
  * Dispatcher Class. Reads required url and instanciate properly apps, controller and calls an action.
@@ -45,15 +50,21 @@ class Dispatcher {
 
     public function __construct($defaults = array()) {
         $this->defaults = array_merge(array('app' => 'init', 'controller' => 'gui', 'action' => '', 'param' => array()));
-        $this->base = dirname($_SERVER['PHP_SELF']);
+        $this->base = dirname(env('PHP_SELF'));
+        if ($this->base === DS || $this->base === '.') {
+				$this->base = '';
+			}
         if ($this->base == '/')
             $this->base = '';
+        Configure::load('config/main.php');
+        Configure::load('config/local.php');
+        Configure::write('systemDirName', $this->base);
     }
 
     /**
      * Main function, reads url and call action
      */
-    function dispatch() {
+    function dispatch($params = array()) {
         //set_error_handler('myErrorHandler');
         if (!empty($_SERVER['PATH_INFO']))
             $url = $_SERVER['PATH_INFO'];
@@ -65,13 +76,13 @@ class Dispatcher {
             return $this->login();
         /*if (empty($url)&&!(Common::GET('app')))
             return $this->legacyDispatch();*/
-        $this->params = $this->parse($url);
+        $this->params = array_merge($this->parse($url), $params);
         extract($this->params);
         if ($controller !== 'ws' && !$this->checkLogin()) //TODO: authetication for webservices
             return;
         try {
             if (empty($app))
-                $app = Framework::getMainApp();
+                $app = Configure::read('mainApp');
             if (!($app = App::factory($app)))
                 throw new Exception(_("Invalid app"));
             Language::setLang(get_class($app));
@@ -88,6 +99,7 @@ class Dispatcher {
         } catch (Exception $e) {
             echo $e->getMessage();
         }
+        Datasource::getInstance()->close();
     }
 
     /**
@@ -187,76 +199,6 @@ class Dispatcher {
             $instance[0] = & new Dispatcher();
         }
         return $instance[0];
-    }
-
-    function legacyDispatch() {
-        if (array_key_exists('app', $_GET) && array_key_exists('services', $_GET)) {
-            $appClass = Common::GET('app');
-            $app = Framework::loadApp($appClass);
-            $controller = $app->loadController('ws');
-        } else {
-
-            if (AuthSystem::userTryToLogin() || AuthSystem::isUserLoggedIn()) {
-
-                if (array_key_exists('app', $_GET)) {
-                    $appClass = Common::GET('app');
-                    $app = Framework::loadApp($appClass);
-                } else
-                    $app = FALSE;
-
-
-                if (!$app) {
-                    $appClass = Framework::getMainApp();
-                    $app = Framework::loadApp($appClass);
-
-                    Language::setLang($appClass);
-
-                    $controllerClass = $app->getDefaultController();
-                    $controller = $app->loadController($controllerClass);
-
-                    $action = $controller->getDefaultAction();
-                    $controller->$action();
-                } else {
-
-                    Language::setLang($appClass);
-
-                    if (array_key_exists('controller', $_GET)) {
-                        $controllerClass = $_GET['controller'];
-                        $controller = $app->loadController($controllerClass);
-                    } else
-                        $controller = FALSE;
-
-                    if (!$controller) {
-                        $controllerClass = $app->getDefaultController();
-                        $controller = $app->loadController($controllerClass);
-
-                        $action = $controller->getDefaultAction();
-                        $controller->$action();
-                    } else {
-
-                        $action = Common::GET('action');
-                        if ($action && method_exists($controller, $action)) {
-
-                            $param = Controller::getParam(Common::GET('param'));
-                            $controller->$action($param);
-                        } else {
-
-                            $action = $controller->getDefaultAction();
-                            $controller->$action();
-                        }
-                    }
-                }
-            } else {
-                $appClass = Common::GET('app');
-                $controllerClass = Common::GET('controller');
-                if (($appClass == "init") && ($controllerClass == "gui")) {
-                    // user has expired the session and is trying to reload the gui - refresh or F5
-                    // redirect to login
-                    header('Location: index.php?message=Session Expired');
-                } else
-                    header('HTTP/1.1 402 Timeout');
-            }
-        }
     }
 
 }

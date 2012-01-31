@@ -54,7 +54,7 @@ class ws extends Controller {
                 array('grp' => 'tns:groupType'),
                 array('grp_list'=> 'tns:groupTypeList'),
                 $namespace,
-                "http://$this_ip/".Framework::$systemDirName."$this->app/ws/getGroups",
+                "http://$this_ip/".Configure::read('systemDirName')."$this->app/ws/getGroups",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');

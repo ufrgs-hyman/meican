@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title><?php echo Framework::getSystemName(); ?></title>
+        <title><?php echo Configure::read('systemName');; ?></title>
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/login1.css" />
         <?php /*
           <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/style1.css" /> */ ?>

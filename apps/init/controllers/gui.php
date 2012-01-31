@@ -23,7 +23,7 @@ class gui extends Controller {
         $args->last_view = Common::rescueVar('last_view');
 
         if ($args->last_view === FALSE) {
-            //$app = Framework::getMainApp();
+            //$app = Configure::read('mainApp');
             //$args->last_view = "app=$app";
             $args->last_view =  "app=init&controller=gui&action=welcome";
         }

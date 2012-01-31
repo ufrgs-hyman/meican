@@ -141,7 +141,7 @@ class OSCARSReservation {
                 'endTimestamp' => $this->endTimestamp
         );
         try {
-            $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
+            $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
             $result = $client->createReservation($envelope);
 
             if (is_string($result->return)) {
@@ -175,7 +175,7 @@ class OSCARSReservation {
         );
 
         try {
-            $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
+            $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
             $result = $client->queryReservation($envelope);
             if (!$err = array_shift($result->return)) {
                 $this->setGri($result->return[0]);
@@ -221,7 +221,7 @@ class OSCARSReservation {
                 'endTimestamp' => $this->endTimestamp
         );
         try {
-            $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
+            $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
             $result = $client->modifyReservation($envelope);
 
             if (!$err = array_shift($result->return)){
@@ -251,7 +251,7 @@ class OSCARSReservation {
                 "gri" => $this->gri
         );
         try {
-            $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
+            $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
             $result = $client->cancelReservation($envelope);
             if (!$err = array_shift($result->return)){
                 $this->setGri($result->return[0]);
@@ -281,7 +281,7 @@ class OSCARSReservation {
         );
 
         try {
-            $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
+            $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
             $result = $client->listReservations($envelope);
             
             if (is_string($result->return)) {
@@ -314,7 +314,7 @@ class OSCARSReservation {
         );
 
         try {
-            $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
+            $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
             $result = $client->getTopology($envelope);
 
             if (!$err = array_shift($result->return)){ //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
@@ -344,7 +344,7 @@ class OSCARSReservation {
         );
 
         try {
-            $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
+            $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
             $result = $client->getTopology($envelope);
             
             if (is_string($result->return)) {
@@ -399,7 +399,7 @@ class OSCARSReservation {
         );
 
         try {
-            $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
+            $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
             $result = $client->createPath($envelope);
 
             if (!$err = array_shift($result->return)){ //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
@@ -429,7 +429,7 @@ class OSCARSReservation {
         );
 
         try {
-            $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
+            $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
             $result = $client->teardownPath($envelope);
 
             if (!$err = array_shift($result->return)){ //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
@@ -459,7 +459,7 @@ class OSCARSReservation {
         );
 
         try {
-            $client = new SoapClient(Framework::$OSCARSBridgeEPR, array('cache_wsdl' => 0));
+            $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
             $result = $client->refreshPath($envelope);
 
             if (!$err = array_shift($result->return)){ //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array

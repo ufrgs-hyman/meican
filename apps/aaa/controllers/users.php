@@ -133,7 +133,7 @@ class users extends Controller {
                             $text .= "Login: $user_info->usr_login\n";
                             $text .= "Senha: 123\n";
                             $text .= "Domínio: $ldom->dom_descr\n";
-                            $text .= "URL: http://$ipaddr/".Framework::$systemDirName."\n\n";
+                            $text .= "URL: http://$ipaddr/".Configure::read('systemDirName')."\n\n";
                             
                             $header = array();
                             $header["To"] = "$user_info->usr_name <$user_info->usr_email>";

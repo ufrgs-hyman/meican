@@ -2,6 +2,7 @@
 
 require_once 'MDB2.php';
 include_once 'libs/model.php';
+include_once 'libs/datasource.php';
 
 class Database {
     private $result;
@@ -15,7 +16,9 @@ class Database {
          * a conexão com o banco acontece na main
          * chama o método singleton apenas para obter a instância do MDB2
          */
-        $this->mdb2 = MDB2::singleton();
+        $datasource = Datasource::getInstance();
+        $datasource->open();
+        $this->mdb2 = $datasource->mdb2;//MDB2::singleton();
 
         if (MDB2::isError($this->mdb2)) {
             Framework::debug($this->mdb2->getMessage() . ", " . $this->mdb2->getDebugInfo());
