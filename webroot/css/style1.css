@@ -243,6 +243,8 @@ table {
     /*width: 70%;*/
     border-collapse: collapse;
     padding: 0px;
+    clear: both;
+    margin: 10px 0;
     /*    border: 1px solid #000000;*/
 }
 
