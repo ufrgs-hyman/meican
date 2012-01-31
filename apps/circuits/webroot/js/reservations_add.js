@@ -572,7 +572,7 @@ function map_changeDevice(where) {
     
     if ($(device_id).val() != -1) {
         var ports = map_getPorts($(domain_id).html() ,$(network_id).html(), $(device_id).val(), where);
-        if (where='src')
+        if (where == 'src')
             map_fillPorts(port_id, ports, -1, true);
         else
             map_fillPorts(port_id, ports);
