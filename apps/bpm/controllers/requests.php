@@ -7,7 +7,7 @@ include_once 'apps/aaa/models/user_info.php';
 include_once 'apps/topology/models/domain_info.php';
 include_once 'apps/circuits/models/oscars.php';
 
-include_once 'includes/nuSOAP/lib/nusoap.php';
+include_once 'libs/nuSOAP/lib/nusoap.php';
 
 class requests extends Controller {
 

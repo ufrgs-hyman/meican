@@ -19,7 +19,7 @@ include_once 'apps/bpm/models/request_info.php';
 
 include_once 'apps/topology/models/domain_info.php';
 include_once 'apps/topology/models/topology.php';
-include_once 'includes/nuSOAP/lib/nusoap.php';
+include_once 'libs/nuSOAP/lib/nusoap.php';
 
 class reservations extends Controller {
 

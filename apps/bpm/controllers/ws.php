@@ -1,7 +1,7 @@
 <?php
 
 include_once 'libs/controller.php';
-require_once 'includes/nuSOAP/lib/nusoap.php';
+require_once 'libs/nuSOAP/lib/nusoap.php';
 
 include_once 'apps/aaa/models/user_info.php';
 include_once 'apps/aaa/models/group_info.php';

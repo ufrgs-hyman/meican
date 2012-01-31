@@ -11,7 +11,7 @@ include_once 'apps/topology/models/domain_info.php';
 include_once 'apps/topology/models/topology.php';
 include_once 'apps/topology/models/meican_info.php';
 
-require_once 'includes/nuSOAP/lib/nusoap.php';
+require_once 'libs/nuSOAP/lib/nusoap.php';
 include_once 'apps/circuits/models/oscars_reservation.php';
 
 class flows extends Controller {

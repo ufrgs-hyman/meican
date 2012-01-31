@@ -1,5 +1,5 @@
 <?php
-require_once("../../../includes/nuSOAP/lib/nusoap.php");
+require_once("../../../libs/nuSOAP/lib/nusoap.php");
 
 $dir = str_replace("/apps/bpmStrategy","",__DIR__);
 ini_set('include_path',ini_get('include_path').':'.$dir.':');
