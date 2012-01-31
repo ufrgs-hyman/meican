@@ -5,7 +5,7 @@ class Datasource {
     var $mdb2 = null;
 
     public function open() {
-        if ($mdb2)
+        if ($this->mdb2)
             return true;
         $databaseConfs = Configure::read('database');
         $conf = $databaseConfs[Configure::read('defaultDatabase')];

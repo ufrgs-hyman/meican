@@ -61,12 +61,5 @@ return array(
             'hostspec' => 'localhost',
             'database' => 'meican'
         ),
-        'oracle' => array(
-            'phptype' => 'oci8',
-            'username' => 'digistar',
-            'password' => 'digistar',
-            'hostspec' => '//localhost',
-            'database' => 'XE'
-        )
     )
 );
