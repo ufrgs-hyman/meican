@@ -244,7 +244,6 @@ table {
     border-collapse: collapse;
     padding: 0px;
     clear: both;
-    margin: 10px 0;
     /*    border: 1px solid #000000;*/
 }
 
@@ -313,6 +312,7 @@ table th.large {
 table.list {
     width: 100%;
     box-shadow: 2px 2px 4px #888;
+    margin: 10px 0;
     /*font-size:*/
 }
 
