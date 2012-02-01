@@ -43,11 +43,10 @@ function fillACLNewLine() {
     
     $('#newline' + pos).append(columns);
 
-    fillSelectBox("#aro_model_select" + pos, aros);
-    fillSelectBox("#aco_model_select" + pos, acos);
+    $("#aro_model_select" + pos).fillSelectBox(aros);
+    $("#aco_model_select" + pos).fillSelectBox(acos);
     
-    fillSelectBox("#model_select" + pos, acos);
-    $("#model_select" + pos).append('<option value="all">' + str_all + '</option>');
+    $("#model_select" + pos).fillSelectBox(acos).append('<option value="all">' + str_all + '</option>');
 
     $('#aro_model_select' + pos).change(function() {
         changeAccessSelect(this, aros);
@@ -67,10 +66,10 @@ function fillACLNewLine() {
     crud_opt[1].id = "allow";
     crud_opt[1].name = allow_desc_string;
     
-    fillSelectBox("#create_select" + pos, crud_opt, "deny");
-    fillSelectBox("#read_select" + pos, crud_opt, "deny");
-    fillSelectBox("#update_select" + pos, crud_opt, "deny");
-    fillSelectBox("#delete_select" + pos, crud_opt, "deny");
+    $("#create_select" + pos).fillSelectBox(crud_opt, "deny");
+    $("#read_select" + pos).fillSelectBox(crud_opt, "deny");
+    $("#update_select" + pos).fillSelectBox(crud_opt, "deny");
+    $("#delete_select" + pos).fillSelectBox(crud_opt, "deny");
     
     $("#delete" + pos).click(function() {
         var replaceId = this.id.replace(/delete/, "");
@@ -109,12 +108,11 @@ function changeAccessSelect(acc_select, acc_array) {
         
         if (objs.length > 0) {
             if (objs.length == 1)
-                fillSelectBox(html_id, objs, objs[0].id);
+                $(html_id).fillSelectBox(objs, objs[0].id);
             else
-                fillSelectBox(html_id, objs);
+                $(html_id).fillSelectBox(objs);
         } else {
-            $(html_id).empty();
-            $(html_id).append('<option selected="true" value="-1">No object</option>');
+            $(html_id).empty().append('<option selected="true" value="-1">No object</option>');
         }
         $(html_id).slideDown();
     }
@@ -244,7 +242,7 @@ function editACL(perm_id) {
     $('#update_box' + perm_id).html('<select id="edit_update' + editpos + '"/>');
     $('#delete_box' + perm_id).html('<select id="edit_delete' + editpos + '"/>');
     
-    fillSelectBox('#edit_aro_model' + editpos, aros, old_aro_model);
+    $('#edit_aro_model' + editpos).fillSelectBox(aros, old_aro_model);
     var objs = null;
     for (var i=0; aros.length; i++) {
         if (aros[i].id == old_aro_model) {
@@ -252,9 +250,8 @@ function editACL(perm_id) {
             break;
         }
     }
-    fillSelectBox('#edit_aro_obj' + editpos, objs, old_aro_obj);
-    
-    fillSelectBox('#edit_aco_model' + editpos, acos, old_aco_model);
+    $('#edit_aro_obj' + editpos).fillSelectBox(objs, old_aro_obj);
+    $('#edit_aco_model' + editpos).fillSelectBox(acos, old_aco_model);
     objs = null;
     for (i=0; acos.length; i++) {
         if (acos[i].id == old_aco_model) {
@@ -262,9 +259,8 @@ function editACL(perm_id) {
             break;
         }
     }
-    fillSelectBox('#edit_aco_obj' + editpos, objs, old_aco_obj);
-    
-    fillSelectBox("#edit_model" + editpos, acos, old_model);
+    $('#edit_aco_obj' + editpos).fillSelectBox(objs, old_aco_obj);
+    $("#edit_model" + editpos).fillSelectBox(acos, old_model);
     if (old_model == str_all)
         $("#edit_model" + editpos).append('<option selected="true" value="all">' + str_all + '</option>');
     else
@@ -288,10 +284,10 @@ function editACL(perm_id) {
     crud_opt[1].id = "allow";
     crud_opt[1].name = allow_desc_string;
     
-    fillSelectBox("#edit_create" + editpos, crud_opt, old_create);
-    fillSelectBox("#edit_read" + editpos, crud_opt, old_read);
-    fillSelectBox("#edit_update" + editpos, crud_opt, old_update);
-    fillSelectBox("#edit_delete" + editpos, crud_opt, old_delete);
+    $("#edit_create" + editpos).fillSelectBox(crud_opt, old_create);
+    $("#edit_read" + editpos).fillSelectBox(crud_opt, old_read);
+    $("#edit_update" + editpos).fillSelectBox(crud_opt, old_update);
+    $("#edit_delete" + editpos).fillSelectBox(crud_opt, old_delete);
     
     $('#save_button').show();
     $('#cancel_button').show();

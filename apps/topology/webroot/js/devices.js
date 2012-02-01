@@ -31,8 +31,6 @@ function dev_changeDomain(elem) {
                 break;
             }
         }
-        fillSelectBox("#dev_network", networks);
-        $("#dev_network").removeAttr("disabled");
-        $("#dev_network").slideDown();
+        $("#dev_network").fillSelectBox(networks).removeAttr("disabled").slideDown();
     }
 }

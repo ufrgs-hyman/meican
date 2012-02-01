@@ -1,7 +1,3 @@
-function clearSelectBox(htmlId) {
-    $('#'+htmlId).html("");
-    $('#'+htmlId).append('<option value="-1"></option>');
-}
 
 function updateUsers(domainSelected, userSelected){
 
@@ -13,7 +9,7 @@ function updateUsers(domainSelected, userSelected){
         },
         success: function(data){
 
-            clearSelectBox(userSelected);
+            $(userSelected).clearSelectBox();
             $('#'+userSelected).removeAttr('disabled');
 
 

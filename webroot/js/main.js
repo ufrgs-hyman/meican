@@ -6,7 +6,6 @@ function updateSystemTime() {
 }
 
 $(function() {
-    $.feedbackTab.init();
     if (jQuery.isFunction(jQuery.fn.pjax)){           
         $('a[href][href!=""][href!="#"]').pjax("#main");
         $('#main')
@@ -47,30 +46,11 @@ $(function() {
     }
     $.fn.menuHandler.prepare();
     
+    $.feedbackTab.init();
 });
 
 function redir(url, data){
     $.redir(url, data);
-}
-
-function clearSelectBox(htmlId){
-    $(htmlId).empty().append('<option value="-1"></option>');
-}
-
-function fillSelectBox(htmlId, fillerArray, current_val, check_allow) {
-    clearSelectBox(htmlId);
-    for (var i=0; i < fillerArray.length; i++) {
-        
-        if ((check_allow) && (fillerArray[i].allow_create == false)) {
-            continue;       // if permission is needed and the user doesn't have, then doesn't fill the selectBox
-        } else {            // if permission isn't needed or the user have permission, fill the selectBox'
-            if (fillerArray[i].id == current_val) 
-                $(htmlId).append('<option selected="true" value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
-            else 
-                $(htmlId).append('<option value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
-        }
-        
-    }
 }
             
 function setFlash(message, status) {
@@ -199,54 +179,71 @@ function clearFlash(){
         timeout: null
     });
     
-    $.fn.formatFields = function(){
-        var intInp = $(this).find('.integer-input[disabled!=true]'),
-        curInp = $(this).find('.currency-input[disabled!=true]');
-        if (intInp.length>0 || curInp.length>0){
-            applySpinner = function(){
-                intInp.numeric('.').spinner({});
-                if (curInp.length>0)
-                    if (window.Globalization)
-                        curInp.numeric('.').spinner({
-                            numberformat: 'n'
-                        });
-                    else
-                        $.getScript(baseUrl+'webroot/js/jquery.global.js', function(){
-                            window.Globalization = jQuery.global;
+    
+    $.fn.extend({
+        formatFields: function(){
+            var intInp = $(this).find('.integer-input[disabled!=true]'),
+            curInp = $(this).find('.currency-input[disabled!=true]');
+            if (intInp.length>0 || curInp.length>0){
+                applySpinner = function(){
+                    intInp.numeric('.').spinner({});
+                    if (curInp.length>0)
+                        if (window.Globalization)
                             curInp.numeric('.').spinner({
                                 numberformat: 'n'
                             });
-                        });
-            };
-            if (jQuery.isFunction(jQuery.fn.spinner))
-                applySpinner();
-            else
-                $.getScript(baseUrl+'webroot/js/ui.spinner.js', applySpinner);
+                        else
+                            $.getScript(baseUrl+'webroot/js/jquery.global.js', function(){
+                                window.Globalization = jQuery.global;
+                                curInp.numeric('.').spinner({
+                                    numberformat: 'n'
+                                });
+                            });
+                };
+                if (jQuery.isFunction(jQuery.fn.spinner))
+                    applySpinner();
+                else
+                    $.getScript(baseUrl+'webroot/js/ui.spinner.js', applySpinner);
+            }
+            return this;
+        },
+        toggleDisabled : function(){
+            return this.each(function(){
+                this.disabled = !this.disabled;
+                if (this.disabled)
+                    $(this).addClass('ui-state-disabled');
+                else
+                    $(this).removeClass('ui-state-disabled');
+            });
+        },
+        disabled : function(value){
+            if (value == null)
+                value = true;
+            return this.each(function(){
+                this.disabled = value;
+                if (value)
+                    $(this).addClass('ui-state-disabled');
+                else
+                    $(this).removeClass('ui-state-disabled');
+            });
+        },
+        clearSelectBox : function (){
+            this.empty().append('<option value="-1"></option>');
+        },
+        fillSelectBox : function (fillerArray, current_val, check_allow) {
+            this.clearSelectBox();
+            for (var i in fillerArray) {
+                if ((check_allow) && (fillerArray[i].allow_create == false)) {
+                    continue;       // if permission is needed and the user doesn't have, then doesn't fill the selectBox
+                } else {            // if permission isn't needed or the user have permission, fill the selectBox'
+                    if (fillerArray[i].id == current_val) 
+                        this.append('<option selected="true" value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
+                    else 
+                        this.append('<option value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
+                }
+            }
         }
-        return this;
-    };
-    
-    $.fn.toggleDisabled = function(){
-        return this.each(function(){
-            this.disabled = !this.disabled;
-            if (this.disabled)
-                $(this).addClass('ui-state-disabled');
-            else
-                $(this).removeClass('ui-state-disabled');
-        });
-    };
-    
-    $.fn.disabled = function(value){
-        if (value == null)
-            value = true;
-        return this.each(function(){
-            this.disabled = value;
-            if (value)
-                $(this).addClass('ui-state-disabled');
-            else
-                $(this).removeClass('ui-state-disabled');
-        });
-    };
+    });
     
     $.extend({
         flash: function (message, status){
@@ -276,7 +273,9 @@ function clearFlash(){
         },
         
         navigate: function(obj){
-            var data = $.extend({container: "#main"}, obj);
+            var data = $.extend({
+                container: "#main"
+            }, obj);
             return $.pjax(data);            
         },
         

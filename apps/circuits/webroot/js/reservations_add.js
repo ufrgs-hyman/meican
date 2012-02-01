@@ -548,7 +548,7 @@ function map_changeNetwork(where, network_id, domain_id) {
     //$("#" + where + "_vlanTagged").disabled(false);
 
     map_clearVlanConf(where);
-    clearSelectBox(device_id);
+    $(device_id).clearSelectBox();
 
     if ($(network).html() != "") {
         var devices = [];
@@ -562,10 +562,10 @@ function map_changeNetwork(where, network_id, domain_id) {
             }
         }
         if (where == 'src') {                            // if desired endpoint is a source endpoint, it's necessary to check for permissions'
-            fillSelectBox(device_id, devices, -1, true); // -1 indicates that this function uses a fourth parameter | True indicates that is necessary to check for permissions before filling the box
+            $(device_id).fillSelectBox(devices, -1, true); // -1 indicates that this function uses a fourth parameter | True indicates that is necessary to check for permissions before filling the box
         }
         else {                                           //if desired checkpoint is a destination endpoint, then there's no need for permission'
-            fillSelectBox(device_id, devices);
+            $(device_id).fillSelectBox(devices);
         }    
         $(device_id).slideDown(); //TODO: pq slideDown aqui?
     }
@@ -580,7 +580,7 @@ function map_changeDevice(where) {
     $(port_id).disabled(false);
     //$(port_id).slideUp();
     map_clearVlanConf(where);
-    clearSelectBox(port_id);
+    $(port_id).clearSelectBox();
     
     if ($(device_id).val() != -1) {
         var ports = map_getPorts($(domain_id).html() ,$(network_id).html(), $(device_id).val(), where);
@@ -673,7 +673,7 @@ function map_clearVlanConf(where) {
 }
 
 function map_fillPorts(htmlId, portsArray, current_port, check_allow) {
-    clearSelectBox(htmlId);
+    $(htmlId).clearSelectBox();
     for (var i=0; i < portsArray.length; i++) {
         if ((check_allow) && (portsArray[i].allow_create==false)) {
             continue;

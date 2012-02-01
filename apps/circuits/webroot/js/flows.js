@@ -1,5 +1,5 @@
 function fillPorts(htmlId, portsArray, current_port) {
-    clearSelectBox(htmlId);
+    $(htmlId).clearSelectBox();
     for (var i=0; i < portsArray.length; i++) {
         if ((portsArray[i].port_number == current_port) || (portsArray.length == 1))
             $(htmlId).append('<option selected="true" value="' + portsArray[i].port_number + '">' + portsArray[i].port_number + '</option>');
@@ -75,18 +75,16 @@ function changeDomain(elem, where) {
         dst_networks = null;
 
     clearVlanConf(where);
-    clearSelectBox(network_id);
+    $(network_id).clearSelectBox();
 
     if (elem.value != -1) {
 
         if ( (where == "dst") && (elem.value == $("#src_domain").val()) ) {
             dst_networks = src_networks;
-            fillSelectBox(network_id, dst_networks);
-            $(network_id).slideDown();
+            $(network_id).fillSelectBox(dst_networks).slideDown();
         } else if ( (where == "src") && (elem.value == $("#dst_domain").val()) ) {
             src_networks = dst_networks;
-            fillSelectBox(network_id, src_networks);
-            $(network_id).slideDown();
+            $(network_id).fillSelectBox(src_networks).slideDown();
         } else {
             $(load_id).show();
 
@@ -102,8 +100,7 @@ function changeDomain(elem, where) {
                     else if (where == "dst")
                         dst_networks = data;
 
-                    fillSelectBox(network_id, data);
-                    $(network_id).slideDown();
+                    $(network_id).fillSelectBox(data).slideDown();
                 } else setFlash('Cannot connect to domain', 'error');
             }, "json");
         }
@@ -118,13 +115,12 @@ function changeNetwork(elem, where) {
     $(device_id).slideUp();
 
     clearVlanConf(where);
-    clearSelectBox(device_id);
+    $(device_id).clearSelectBox();
 
     if (elem.value != -1) {
         var devices = getDevices(elem.value, where);
 
-        fillSelectBox(device_id, devices);
-        $(device_id).slideDown();
+        $(device_id).fillSelectBox(devicfillSeles).slideDown();
     }
 }
 
@@ -135,7 +131,7 @@ function changeDevice(elem, where) {
     $(port_id).slideUp();
 
     clearVlanConf(where);
-    clearSelectBox(port_id);
+    $(port_id).clearSelectBox();
 
     if (elem.value != -1) {
         var ports = getPorts($(network_id).val(), elem.value, where);
@@ -420,21 +416,17 @@ function saveFlow(flow_id) {
 
 function fillFlowConf() {
     var networks = getNetworks("src");
-    fillSelectBox("#src_network", networks, src_network_id);
-    $("#src_network").show();
+    $("#src_network").fillSelectBox(networks, src_network_id).show();
     var devices = getDevices(src_network_id, "src");
-    fillSelectBox("#src_device", devices, src_device_id);
-    $("#src_device").show();
+    $("#src_device").fillSelectBox(devices, src_device_id).show();
     var ports = getPorts(src_network_id, src_device_id, "src");
     fillPorts("#src_port", ports, src_port);
     $("#src_port").show();
 
     networks = getNetworks("dst");
-    fillSelectBox("#dst_network", networks, dst_network_id);
-    $("#dst_network").show();
+    $("#dst_network").fillSelectBox(networks, dst_network_id).show();
     devices = getDevices(dst_network_id, "dst");
-    fillSelectBox("#dst_device", devices, dst_device_id);
-    $("#dst_device").show();
+    $("#dst_device").fillSelectBox(devices, dst_device_id).show();
     ports = getPorts(dst_network_id, dst_device_id, "dst");
     fillPorts("#dst_port", ports, dst_port);
     $("#dst_port").show();

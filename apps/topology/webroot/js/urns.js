@@ -93,8 +93,7 @@ function newURNLine(dom_id) {
     columns += '<td><input type="text" size="10" id="granularity' + pos + '"/></td>';
     $('#newline' + pos).append(columns);
     
-    fillSelectBox("#network" + pos, getNetworksFromDomain(dom_id));
-    $('#network' + pos).change(function() {
+    $('#network' + pos).fillSelectBox(getNetworksFromDomain(dom_id)).change(function() {
         changeNetworkURN(dom_id, this);
     });
     
@@ -140,17 +139,15 @@ function fillURNLine(dom_id, urn_id) {
     columns += '<td id="granularity' + pos + '"/>';
     $('#newline' + pos).append(columns);
 
-    fillSelectBox("#network" + pos, getNetworksFromDomain(dom_id));
-    if (urn_id) {
-        fillSelectBox("#urn" + pos, getURNsFromDomain(dom_id), urn_id);
-        changeURN(dom_id, "#urn" + pos);
-    } else
-        fillSelectBox("#urn" + pos, getURNsFromDomain(dom_id));
-
-    $('#network' + pos).change(function() {
+    $('#network' + pos).fillSelectBox(getNetworksFromDomain(dom_id)).change(function() {
         changeNetworkURN(dom_id, this);
     });
-    
+    if (urn_id) {
+        $("#urn" + pos).fillSelectBox(getURNsFromDomain(dom_id), urn_id);
+        changeURN(dom_id, "#urn" + pos);
+    } else
+        $("#urn" + pos).fillSelectBox(getURNsFromDomain(dom_id));
+
     $('#urn' + pos).change(function() {
         changeURN(dom_id, this);
     });
@@ -201,16 +198,11 @@ function editURN(dom_id, urnId) {
             }
         }
 
-        $('#network_box' + urnId).empty();
-        $('#device_box' + urnId).empty();
+        $('#network_box' + urnId).empty().html('<select id="edit_network' + editpos + '"/>');
+        $('#device_box' + urnId).empty().html('<select id="edit_device' + editpos + '"/>');
 
-        $('#network_box' + urnId).html('<select id="edit_network' + editpos + '"/>');
-        $('#device_box' + urnId).html('<select id="edit_device' + editpos + '"/>');
-
-        fillSelectBox('#edit_network' + editpos, networks, old_net_id);
-        fillSelectBox('#edit_device' + editpos, devices, old_dev_id);
-
-        $('#edit_network' + editpos).change(function() {
+        $('#edit_device' + editpos).fillSelectBox(devices, old_dev_id);
+        $('#edit_network' + editpos).fillSelectBox(networks, old_net_id).change(function() {
             changeNetworkURN(dom_id, this);
         });
     
@@ -265,8 +257,7 @@ function changeURN(domain_id, urn_select) {
 //                        }
 //                    });
                 
-                    fillSelectBox(html_deviceId, networks[i].devices, networks[i].devices[j].id);
-                    $(html_deviceId).slideDown();
+                    $(html_deviceId).fillSelectBox(networks[i].devices, networks[i].devices[j].id).slideDown();
                     dev_found = true;
                     break;
                 }
@@ -306,10 +297,9 @@ function changeNetworkURN(domain_id, network_select) {
         }
         
         if (devices.length > 0) {
-            fillSelectBox(deviceId, devices);
+            $(deviceId).fillSelectBox(devices);
         } else {
-            $(deviceId).empty();
-            $(deviceId).append('<option selected="true" value="-1">No device</option>');
+            $(deviceId).empty().append('<option selected="true" value="-1">No device</option>');
         }
         $(deviceId).slideDown();
     }
