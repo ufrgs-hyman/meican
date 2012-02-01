@@ -176,7 +176,7 @@ class Dispatcher {
         if (!is_array($params))
             return $this->base . '/' . $params;
         $url = $this->base . '/' . $params['app'] . '/' . $params['controller'];
-        if (!empty($params['action']))
+        if (!empty($params['action']) && $params['action']!='show' )
             $url .= '/' . $params['action'];
         if (!empty($params['param']))
             if (is_array($params['param'])) {
