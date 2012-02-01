@@ -216,10 +216,28 @@ div#login_form {
     margin: 20px;
 }
 
-div#login_form input {
-    width: 200px;
+div#login_form input[type=text], div#login_form input[type=password] {
+    width: 220px;
     font-size: 150%;
-    height: 30px;
+    height: 24px;
+    margin: 2px 0;
+}
+
+div#login_form label {
+    float: left;
+    width: 40px;
+    margin-right: 10px;
+    padding-top: 5px;
+}
+
+div#login_form p {
+    text-align: center;
+}
+
+div#login_form input[type=submit]{
+    width: 100%;
+    font-size: 150%;
+    height: 32px;
 }
 
 div#login_form hr {

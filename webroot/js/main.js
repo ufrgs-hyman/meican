@@ -355,6 +355,8 @@ function WPToggle(divId, imageId) {
 	 
             init:function(){
                 //$('.feedback-panel').css('height',$.feedbackTab.containerHeight + 'px');
+                if (!$('.feedback-panel').length)
+                    return;
                 $('.feedback-panel').css('top', $('a.feedback-link').offset().top + 15 + 'px');
 	 
                 $('.feedback-link').click(function(event){

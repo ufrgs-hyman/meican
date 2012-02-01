@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title><?php echo Configure::read('systemName');; ?></title>
+        <title><?php echo Configure::read('systemName');
+; ?></title>
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/login1.css" />
         <?php /*
           <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/style1.css" /> */ ?>
@@ -51,67 +52,36 @@
                 <h2 style="padding: 6px 0;"><?php echo _('Sign in to MEICAN'); ?></h2>
                 <hr/>
                 <form name="login_form" method="post" action="<?php echo $this->buildLink(array('action' => 'doLogin')); ?>">
-                    <table>
-                        <tr>
-                            <td>
-                                <?php echo _('Login'); ?>
-                            </td>
-                            <td>
-                                <input class="text" type="text" name="login" id="login"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <?php echo _('Password'); ?>
-                            </td>
-                            <td>
-                                <input class="text" type="password" name="password"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-
-                            </td>
-                            <td>
-                                (<a href="#"><?php echo _('Forgot your password?'); ?></a>)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <div id='message'><?php echo $message ?></div>
-                            </td>
-
-
-                        </tr>
-                        <tr>
-                            <td>
-
-                            </td>
-                            <td>
-                                <input class="next"  type="submit" name="submit_login" value="<?php echo _('Sign in'); ?>"/>
-                            </td>
-
-                        </tr>
-                    </table>
+                    <div>
+                        <label for="login"><?php echo _('Login'); ?></label>
+                        <input class="text" type="text" name="login" id="login"/>
+                    </div>
+                    <div>
+                        <label for="password"><?php echo _('Password'); ?></label>
+                        <input class="text" type="password" name="password"/>
+                    </div>
+                    <p>(<a href="#"><?php echo _('Forgot your password?'); ?></a>)</p>
+                    <div id='message'><?php echo $message ?></div>
+                    <input class="next ui-button ui-widget ui-state-default ui-corner-all"  type="submit" name="submit_login" value="<?php echo _('Sign in'); ?>"/>
                 </form>
             </div>
         </div>
-        <div id="footer">
-            <!--            <a href="#">
-            <?php //echo _('About us'); ?>
-                        </a> |
-                        <a href="#">
-            <?php //echo _('Developers'); ?>
-                        </a> |
-                        <a href="#">
-            <?php //echo _('Terms of service'); ?>
-                        </a> |
-                        <a href="#">
-            <?php //echo _('Privacy policy'); ?>
-                        </a>
-                        <br>
-                        2011
-            -->
-        </div>
+        <?php /*
+          <div id="footer">
+          <?php //echo _('About us');  ?>
+          </a> |
+          <a href="#">
+          <?php //echo _('Developers');  ?>
+          </a> |
+          <a href="#">
+          <?php //echo _('Terms of service');  ?>
+          </a> |
+          <a href="#">
+          <?php //echo _('Privacy policy');  ?>
+          </a>
+          <br>
+          2011
+          -->
+          </div> */ ?>
     </body>
 </html>
