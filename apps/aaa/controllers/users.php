@@ -17,6 +17,7 @@ class users extends Controller {
         $this->app = 'aaa';
         $this->controller = 'users';
         $this->defaultAction = 'show';
+        $this->addScriptForLayout(array('select'));
     }
 
     public function show() {

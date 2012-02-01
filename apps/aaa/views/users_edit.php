@@ -6,7 +6,7 @@
 
     <?php $this->addElement('identification_settings', $args->user); ?>
     
-    <input id="changePassword" type="button" value="<?php echo _('Change password'); ?>" onclick="showPasswdBox();"/>
+    <input id="changePassword" type="button" value="<?php echo _('Change password'); ?>" onclick="$('#tpassword').slideToggle();"/>
     
     <div id="tpassword" style="display: none">
         <table class="withoutBorder" style="min-width: 0">

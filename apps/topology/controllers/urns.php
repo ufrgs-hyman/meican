@@ -17,6 +17,7 @@ class urns extends Controller {
         $this->app = 'topology';
         $this->controller = 'urns';
         $this->defaultAction = 'show';
+        $this->addScriptForLayout(array('urns'));
     }
 
     public function show() {

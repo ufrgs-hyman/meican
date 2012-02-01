@@ -228,7 +228,7 @@ function clearFlash(){
             });
         },
         clearSelectBox : function (){
-            this.empty().append('<option value="-1"></option>');
+            return this.empty().append('<option value="-1"></option>');
         },
         fillSelectBox : function (fillerArray, current_val, check_allow) {
             this.clearSelectBox();
@@ -242,6 +242,7 @@ function clearFlash(){
                         this.append('<option value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
                 }
             }
+            return this;
         }
     });
     

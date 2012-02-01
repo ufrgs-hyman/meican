@@ -130,7 +130,6 @@ class reservations extends Controller {
             
             $this->setAction('empty');
         }
-
         $this->render();
     }
     
@@ -138,6 +137,7 @@ class reservations extends Controller {
         $gri = new gri_info();
         $resIdArray = $gri->getStatusResId();
         $this->action = "status";
+        $this->addScriptForLayout(array('reservations', 'reservations_init'));
         $this->show($resIdArray);
     }
     
@@ -515,7 +515,20 @@ class reservations extends Controller {
         $this->setArgsToBody($args);
         // -----------------------------------------------------------------------------
         // SCRIPTS -----------------------------------------
-        $this->addScriptForLayout(array(/*'googlemaps', 'markerClusterer', 'StyledMarker', 'map', 'reservations', 'reservation_map', 'reservations_add', 'flows', 'timers', 'jquery.timePicker',*/ 'reservations_add'/*, 'map_init'*/));
+        $this->addScriptForLayout(array(/*'googlemaps', 'StyledMarker', 'reservations', 'reservation_map', 'flows',*/'markerClusterer', 'timers', 'jquery.timePicker', 'reservations_add'/*, 'map_init'*/));
+        
+        /*
+         * 
+         * <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/googlemaps.js"></script>
+        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/markerClusterer.js"></script>
+        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/StyledMarker.js"></script>
+        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/reservations.js"></script>
+        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/reservation_map.js"></script>
+        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/flows.js"></script>
+        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/timers.js"></script>
+        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/jquery.timePicker.js"></script>
+         */
+        
         //$this->setInlineScript('reservations_add_init');
 
         if ($js_lang != "en-US") {
@@ -768,8 +781,6 @@ class reservations extends Controller {
             'str_error_refresh_status' => _("Error to get status")
         ));
 
-        $this->setInlineScript('reservations_view');
-
         $args = new stdClass();
         $args->gris = $gris;
         $args->flow = $flow;
@@ -782,6 +793,8 @@ class reservations extends Controller {
 
         $this->setAction('view');
         $this->setArgsToBody($args);
+        
+        $this->addScriptForLayout(array('reservations', 'reservations_view', 'reservation_map'));
         $this->render();
     }
 

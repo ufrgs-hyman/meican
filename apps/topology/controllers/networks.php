@@ -16,6 +16,7 @@ class networks extends Controller {
         $this->app = 'topology';
         $this->controller = 'networks';
         $this->defaultAction = 'show';
+        $this->addScriptForLayout(array('networks'));
     }
 
     public function show() {

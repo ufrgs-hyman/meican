@@ -25,23 +25,9 @@
         <?php if (Configure::read('dataTables')): ?>
         <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.dataTables.min.js"></script>
         <?php endif; ?>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/topology/webroot/js/devices.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/topology/webroot/js/networks.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/topology/webroot/js/urns.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/aaa/webroot/js/password.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/aaa/webroot/js/select.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/aaa/webroot/js/acl.js"></script>
-
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/googlemaps.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/markerClusterer.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/StyledMarker.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/reservations.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/reservation_map.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/flows.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/timers.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/jquery.timePicker.js"></script>
         <script type ="text/javascript" src="<?php echo $base; ?>webroot/js/main.js"></script>
-
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <script type ="text/javascript">
 <?php // variavel para armazenar o ID quando a função setInterval() é usada

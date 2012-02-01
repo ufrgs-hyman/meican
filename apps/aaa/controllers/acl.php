@@ -29,6 +29,7 @@ class acl extends Controller {
         $this->app = 'aaa';
         $this->controller = 'acl';
         $this->defaultAction = 'show';
+        $this->addScriptForLayout(array('acl'));
     }
 
     public function show() {

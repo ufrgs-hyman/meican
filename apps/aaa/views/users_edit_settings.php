@@ -34,7 +34,7 @@
         </table>
 
         <!-- input class="password" id="changePassword" type="button" value="<?php //echo _('Change password'); ?>" onclick="showPasswdBox();"/ -->
-        <input type="checkbox" name="changePassword" id="changePassword"  onclick="showPasswdBox();"/>
+        <input type="checkbox" name="changePassword" id="changePassword"  onclick="$('#tpassword').slideToggle();"/>
         <label for="changePassword"><?php echo _("Change password") ?></label>
 
         <div id="tpassword" style="display: none">

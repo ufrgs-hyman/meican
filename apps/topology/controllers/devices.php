@@ -20,6 +20,7 @@ class devices extends Controller {
         $this->app = 'topology';
         $this->controller = 'devices';
         $this->defaultAction = 'show';
+        $this->addScriptForLayout(array('devices'));
     }
 
     public function show() {
