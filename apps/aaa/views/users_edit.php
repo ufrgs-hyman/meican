@@ -1,9 +1,11 @@
 <?php $args = $this->passedArgs; ?>
 
-<h1><?php echo _('Edit user')?></h1>
+<div style="padding-bottom: 10px">
+    <h1><?php echo _('Edit user')?></h1>    
+</div>
+
 
 <form onSubmit="selectAll('used');" method="POST" action="<?php echo $this->buildLink(array('action' => 'update', 'param' => 'usr_id:'.$args->user->usr_id)); ?>">
-
     <?php $this->addElement('identification_settings', $args->user); ?>
     
     <input id="changePassword" type="button" value="<?php echo _('Change password'); ?>" onclick="$('#tpassword').slideToggle();"/>
@@ -29,8 +31,8 @@
             </tr>
         </table>
     </div>    
-
-    <div style="width:78%">
+    </br>
+    <div style="width:50%">
     <?php $this->addElement('associative_table', $args); ?>
 
         <div class="controls">

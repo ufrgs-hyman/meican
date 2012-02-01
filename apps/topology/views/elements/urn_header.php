@@ -3,7 +3,7 @@
     <th class="large" rowspan="2"><?php echo _("Network"); ?></th>
     <th class="large" rowspan="2"><?php echo _("Device"); ?></th>
     <th class="large" rowspan="2"><?php echo _("Port"); ?></th>
-    <th class="large" rowspan="2" style="border-right: 1px solid black"><?php echo _("URN value"); ?></th>
+    <th class="large" rowspan="2"><?php echo _("URN value"); ?></th>
     <th class="large" colspan="4"><?php echo _("Link settings"); ?></th>
 </tr>
 

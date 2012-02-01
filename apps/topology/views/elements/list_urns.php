@@ -15,10 +15,10 @@
                     <input type="checkbox" name="del_checkbox[]" value="<?php echo $u->urn_id; ?>">
                 </td>
                 <td class="edit">
-                    <img class="edit" src="<?php echo $this->url(''); ?>webroot/img/edit_1.png" onclick="editURN('<?php echo $domain->id; ?>', '<?php echo $u->urn_id; ?>');">
+                    <img style="cursor: pointer" class="edit" src="<?php echo $this->url(''); ?>webroot/img/edit_1.png" onclick="editURN('<?php echo $domain->id; ?>', '<?php echo $u->urn_id; ?>');">
                 </td>
                 <td class="edit">
-                    <img class="delete" src="<?php echo $this->url(''); ?>webroot/img/remove.png" onclick="deleteURN('<?php echo $u->urn_id; ?>');">
+                    <img style="cursor: pointer" class="delete" src="<?php echo $this->url(''); ?>webroot/img/remove.png" onclick="deleteURN('<?php echo $u->urn_id; ?>');">
                 </td>
 
                 <td id="network_box<?php echo $u->urn_id; ?>" title="<?php echo $u->net_id; ?>"><?php echo $u->network; ?></td>

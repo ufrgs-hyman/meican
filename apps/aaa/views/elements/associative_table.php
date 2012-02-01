@@ -14,7 +14,7 @@ $title = $argsToElement->title;
    
     <tr>
         <td>
-            <select id="unused" name="unusedArray[]" multiple="multiple" size="10" style="width: 45ex">
+            <select id="unused" name="unusedArray[]" multiple="multiple" size="10" style="width: 45ex; height: 35ex;">
                 <optgroup label="<?php echo _("Available"); ?>">
                     <?php foreach ($leftArray as $la): ?>
                     <option <?php if (!$la->editable) echo 'disabled="disabled"'; ?> value="<?php echo $la->id ?>"><?php echo $la->name ?></option>
@@ -43,7 +43,7 @@ $title = $argsToElement->title;
         </td>
 
         <td>
-            <select id="used" name="usedArray[]" multiple="multiple" size="10" style="width: 45ex">
+            <select id="used" name="usedArray[]" multiple="multiple" size="10" style="width: 45ex; height: 35ex;">
                 <optgroup label="<?php echo _("Used"); ?>">
                     <?php foreach ($rightArray as $ra): ?>
                     <option <?php if (!$ra->editable) echo 'disabled="disabled"'; ?> value="<?php echo $ra->id ?>"><?php echo $ra->name ?></option>
