@@ -12,7 +12,7 @@ $args = $this->passedArgs;
 
     <h1>
         <label for="res_name"><?php echo _("New circuit name:"); ?></label>
-        <input type="text" name="res_name" id="res_name" size="50" value="<?php echo empty($name) ? null : $name; ?>"/>
+        <input type="text" name="res_name" id="res_name" size="50" value="<?php echo empty($name) ? null : $name; ?>" placeholder="<?php echo _('Typing a name for the reservation will unlock the map') ?>" title="<?php echo _('To create a reservation, first type a name'); ?>"/>
     </h1>
     <div id="tabs-res" class="reservation-tabs" style="position:relative;">
         <div class="tab-overlay fade-overlay"> </div>

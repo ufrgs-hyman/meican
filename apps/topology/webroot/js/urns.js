@@ -172,39 +172,46 @@ function fillURNLine(dom_id, urn_id) {
 }
 
 function editURN(dom_id, urnId) {
-    var old_net_id = $('#network_box' + urnId).attr("title");
-    $('#network_box' + urnId).removeAttr("title");
+    if (isEditingURN) {
+        $("#cancel_button").click();
+        isEditingURN = false;
+    } else {
+        var old_net_id = $('#network_box' + urnId).attr("title");
+        $('#network_box' + urnId).removeAttr("title");
     
-    var old_dev_id = $('#device_box' + urnId).attr("title");
-    $('#device_box' + urnId).removeAttr("title");
+        var old_dev_id = $('#device_box' + urnId).attr("title");
+        $('#device_box' + urnId).removeAttr("title");
     
-    var networks = getNetworksFromDomain(dom_id);
-    var devices = null;
-    for (var i in networks) {
-        if (networks[i].id == old_net_id) {
-            devices = networks[i].devices;
-            break;
+        var networks = getNetworksFromDomain(dom_id);
+        var devices = null;
+        for (var i in networks) {
+            if (networks[i].id == old_net_id) {
+                devices = networks[i].devices;
+                break;
+            }
         }
+
+        $('#network_box' + urnId).empty();
+        $('#device_box' + urnId).empty();
+
+        $('#network_box' + urnId).html('<select id="edit_network' + editpos + '"/>');
+        $('#device_box' + urnId).html('<select id="edit_device' + editpos + '"/>');
+
+        fillSelectBox('#edit_network' + editpos, networks, old_net_id);
+        fillSelectBox('#edit_device' + editpos, devices, old_dev_id);
+
+        $('#edit_network' + editpos).change(function() {
+            changeNetworkURN(dom_id, this);
+        });
+    
+        $('#save_button').show();
+        $('#cancel_button').show();
+
+        isEditingURN = true;
+        editpos++;
+
     }
 
-    $('#network_box' + urnId).empty();
-    $('#device_box' + urnId).empty();
-
-    $('#network_box' + urnId).html('<select id="edit_network' + editpos + '"/>');
-    $('#device_box' + urnId).html('<select id="edit_device' + editpos + '"/>');
-
-    fillSelectBox('#edit_network' + editpos, networks, old_net_id);
-    fillSelectBox('#edit_device' + editpos, devices, old_dev_id);
-
-    $('#edit_network' + editpos).change(function() {
-        changeNetworkURN(dom_id, this);
-    });
-    
-    $('#save_button').show();
-    $('#cancel_button').show();
-
-    isEditingURN = true;
-    editpos++;
 }
 
 function getURN(domain_id, urn_id) {
