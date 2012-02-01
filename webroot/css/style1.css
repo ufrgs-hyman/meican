@@ -252,7 +252,8 @@ table.add {
     padding: 0px;
     min-width: 0;
     width: auto;
-    border: 1px solid #000000
+    border: 1px solid #000000;
+    clear:none;
 }
 
 table.withoutBorder{
