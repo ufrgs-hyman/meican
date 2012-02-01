@@ -1018,6 +1018,7 @@ table.reservation-point td, table.reservation-point th {
 .fade-overlay{
     position: absolute; background-color: #fff; z-index: 3; opacity: 0.5; /*box-shadow: 2px 2px 4px #888;*/  width: 100%; padding: 4px; display: none; 
     height:100%;
+    -webkit-transform-style: preserve-3d;
 }
 
 
@@ -1067,7 +1068,6 @@ span.ui-spinner { background: none; }
     top:-500px;
     right:20px;
     z-index: 10;
-    -webkit-transform-style: preserve-3d;
 }
 
 .feedback-panel .tab_content{ 
