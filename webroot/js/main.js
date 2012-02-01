@@ -5,32 +5,7 @@ function updateSystemTime() {
     });
 }
 
-var errorFunc = function(jqXHR, textStatus) {
-    switch (jqXHR.status) {
-        case 401:
-            top.location.href = baseUrl;
-            break;
-        case 402:
-            top.location.href = baseUrl;
-            break;
-        case 404:
-            setFlash("Page not found", 'error');
-            break;
-        case 405:
-            //change lang
-            top.location.href = baseUrl+'init/gui';
-            break;
-        case 406:
-            //force refresh
-            location.href = baseUrl+'init/gui';
-            break;
-        default:
-            setFlash("Unexpected error "+jqXHR.status, 'error');
-    }
-    console.debug("Error on ajax: "+jqXHR.status+jqXHR.statusText);
-};
-
-$(document).ready(function() {
+$(function() {
     
     var menuHandler = jQuery.fn.menuHandler = {
         menus : $('#menu ul ul'),
@@ -97,7 +72,7 @@ $(document).ready(function() {
                 }
             });
         }
-    }
+    };
     
     jQuery.fn.uify = function() {
         $(this).find('button,input[type=submit],input[type=button]').button();
@@ -106,7 +81,7 @@ $(document).ready(function() {
         //$('input[type=button].add').button({icon: 'plusthick'});
         //$('input[type=button].add').button({ icons: {primary:'ui-icon-plusthick',secondary:'ui-icon-plusthick'} });
         $(this).find('[disabled=disabled]').addClass('ui-state-disabled');
-       /* $(this).find('input[type!=submit],textarea,select').addClass('ui-widget ui-widget-content');
+    /* $(this).find('input[type!=submit],textarea,select').addClass('ui-widget ui-widget-content');
         $(this).find('table.list').addClass('ui-widget ui-corner-all');
         $(this).find('fieldset').addClass('ui-widget ui-corner-all');
         $(this).find('table.list thead').addClass('ui-widget-header');
@@ -126,31 +101,15 @@ $(document).ready(function() {
     
     //$("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
     if (jQuery.isFunction(jQuery.fn.pjax)){           
-        $('a[href][href!=""][href!="#"]').pjax('#main', {
-            error: errorFunc, 
-            timeout: null
-        });
+        $('a[href][href!=""][href!="#"]').pjax("#main");
         $('#main')
-        .bind('start.pjax', function() {
-            /*clearFlash();
-            $('#main').empty();*/
+        .bind('pjax:start', function() {
             $('#loading').show();
-
             clearInterval(js_function_interval);
         })
-        .bind('end.pjax', function(xhr) {
-        
+        .bind('pjax:end', function(xhr) {
             window.scroll(0, 0);
-            //$('#main').hide();
-            //clearInterval(js_function_interval);
-                        
-            /*            $.each($(".scripts script"), function() {
-                $.getScript($(this).attr('src'));
-            });
-            $('.scripts').remove();*/
-            //$('#main').html($('.content').html());
-            //$('#main').show();
-			$(window).trigger('resize');
+            $(window).trigger('resize');
             $('#loading').hide();
         });
 
@@ -164,19 +123,16 @@ $(document).ready(function() {
             var param = $(this).serialize();
 
             if (content_show && param)
-                $.pjax({
+                $.navigate({
                     type: "POST",
                     url: content_show,
-                    data: param,
-                    error: errorFunc,
-                    container: '#main',
-                    timeout: null
+                    data: param
                 });
             return false;
         });
     
     
-        $('#main').bind('end.pjax', function(){
+        $('#main').bind('pjax:end', function(){
         
             $('#main').uify();
             $('body').uify();
@@ -188,21 +144,24 @@ $(document).ready(function() {
         
         });
         menuHandler.prepare();
-        $('#main').trigger('end.pjax');
+        $('#main').trigger('pjax:end');
     }
 // analisar a real necessidade disso
 //setTimeout(refresh, 10*60*1000); // carrega a página a cada 10 min., para não sobrecarregar scripts
 }); //do ready
 
 function redir(url, data){
-    $.pjax({
-        type: "POST",
-        url: url,
-        data: data,
-        error: errorFunc,
-        container: '#main',
-        timeout: null
-    });
+    if (!data){
+        $.navigate({
+            url: url
+        });
+    } else {
+        $.navigate({
+            type: "POST",
+            url: url,
+            data: data
+        });
+    }
     return false;
 }
 
@@ -230,7 +189,7 @@ function fillSelectBox(htmlId, fillerArray, current_val, check_allow) {
 function setFlash(message, status) {
     $('#flash_box').empty();
     $.flash(message, status);
-    //window.onscroll = window_scroll;
+//window.onscroll = window_scroll;
 }
 
 function clearFlash(){
@@ -252,7 +211,36 @@ function WPToggle(divId, imageId) {
 
 }
  
-(function($){ 
+(function($){
+    
+    $.extend($.pjax.defaults, {
+        error: function(jqXHR, textStatus) {
+            switch (jqXHR.status) {
+                case 401:
+                    top.location.href = baseUrl;
+                    break;
+                case 402:
+                    top.location.href = baseUrl;
+                    break;
+                case 404:
+                    setFlash("Page not found", 'error');
+                    break;
+                case 405:
+                    //change lang
+                    top.location.href = baseUrl+'init/gui';
+                    break;
+                case 406:
+                    //force refresh
+                    location.href = baseUrl+'init/gui';
+                    break;
+                default:
+                    setFlash("Unexpected error "+jqXHR.status, 'error');
+            }
+            console.debug("Error on ajax: "+jqXHR.status+jqXHR.statusText);
+        },
+        timeout: null
+    });
+    
     $.fn.formatFields = function(){
         var intInp = $(this).find('.integer-input[disabled!=true]'),
         curInp = $(this).find('.currency-input[disabled!=true]');
@@ -271,17 +259,6 @@ function WPToggle(divId, imageId) {
                                 numberformat: 'n'
                             });
                         });
-            //Trigger change event in field when spinner changes
-            /* $(this).find(".ui-spinner-button").bind("click", function() {
-                    $('.ui-spinner-button').parent().find('.ui-spinner-input').trigger("change");
-                });
-                $(this).find(".ui-spinner").bind("mouseup", function() {
-                    $(this).find('.ui-spinner-input').trigger("change");
-                //alert(intInp.numeric('.').val());
-                }).bind("keyup", function() {
-                    $(this).find('.ui-spinner-input').trigger("change");
-                //alert(intInp.numeric('.').val());
-                });*/
             };
             if (jQuery.isFunction(jQuery.fn.spinner))
                 applySpinner();
@@ -325,15 +302,11 @@ function WPToggle(divId, imageId) {
         
         redir : function(url, data){
             return redir(baseUrl+url, data);
-        /*$.pjax({
-            type: "POST",
-            url: url,
-            data: data,
-            error: errorFunc,
-            container: '#main',
-            timeout: 5000
-        });
-        return false;*/
+        },
+        
+        navigate: function(obj){
+            var data = $.extend({container: "#main"}, obj);
+            return $.pjax(data);            
         },
         
         windowScroll: function () {

@@ -191,8 +191,6 @@ pjax.defaults = {
   dataType: 'html',
   beforeSend: function(xhr){
     this.trigger('pjax:start', [xhr, pjax.options])
-    // start.pjax is deprecated
-    this.trigger('start.pjax', [xhr, pjax.options])
     xhr.setRequestHeader('X-PJAX', 'true')
   },
   error: function(xhr, textStatus, errorThrown){
@@ -201,8 +199,6 @@ pjax.defaults = {
   },
   complete: function(xhr){
     this.trigger('pjax:end', [xhr, pjax.options])
-    // end.pjax is deprecated
-    this.trigger('end.pjax', [xhr, pjax.options])
   }
 }
 
