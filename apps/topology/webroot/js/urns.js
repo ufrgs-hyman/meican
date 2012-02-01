@@ -1,3 +1,13 @@
+function WPToggle(divId, imageId) {
+    if ($(divId).css("display") == "none") {
+        $(divId).slideDown();
+        $(imageId).attr("src", baseUrl+"webroot/img/minus.gif" );
+    } else {
+        $(divId).slideUp();
+        $(imageId).attr("src", baseUrl+"webroot/img/plus.gif");
+    }
+}
+
 function newURN(domain_id) {
     var urns = getURNsFromDomain(domain_id);
     

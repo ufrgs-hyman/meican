@@ -1327,9 +1327,9 @@ function validateBand(band_value) {
         $(window).resize(resizefn);
         var finishfn = function(){
             $(window).unbind('resize');
-            $('#main').unbind('start.pjax', finishfn);
+            $('#main').unbind('pjax:start', finishfn);
         };
-        $('#main').bind('start.pjax', finishfn);
+        $('#main').bind('pjax:start', finishfn);
         
         $('form#reservation_add').submit(validateReservationForm);
         

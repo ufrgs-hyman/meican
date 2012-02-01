@@ -6,6 +6,85 @@ function updateSystemTime() {
 }
 
 $(function() {
+    $.feedbackTab.init();
+    if (jQuery.isFunction(jQuery.fn.pjax)){           
+        $('a[href][href!=""][href!="#"]').pjax("#main");
+        $('#main')
+        .bind('pjax:start', function() {
+            $('#loading').show();
+            clearInterval(js_function_interval);
+        })
+        .bind('pjax:end', function(xhr) {
+            window.scroll(0, 0);
+            $(window).trigger('resize');
+            $('#loading').hide();
+        });
+
+        $("body").delegate("form","submit",function() {
+            if (!js_submit_form) {
+                js_submit_form = true;
+                return false;
+            }
+            $.navigate({
+                type: "POST",
+                url: $(this).attr("action"),
+                data: $(this).serialize()
+            });
+            return false;
+        });
+    
+        $('#main').bind('pjax:end', function(){
+        
+            $('body').uify();
+            if (jQuery.isFunction(jQuery.fn.tablesorter))
+                $("table.list").tablesorter(/*{cssAsc: 'ui-icon ui-icon-triangle-1-n', cssDesc: 'ui-icon ui-icon-triangle-1-s'}*/);
+            if (jQuery.isFunction(jQuery.fn.dataTable))
+                $("table.list").dataTable(/*{cssAsc: 'ui-icon ui-icon-triangle-1-n', cssDesc: 'ui-icon ui-icon-triangle-1-s'}*/);
+            $.fn.menuHandler.setSelected();
+        
+        });
+        $('#main').trigger('pjax:end');
+    }
+    $.fn.menuHandler.prepare();
+    
+});
+
+function redir(url, data){
+    $.redir(url, data);
+}
+
+function clearSelectBox(htmlId){
+    $(htmlId).empty().append('<option value="-1"></option>');
+}
+
+function fillSelectBox(htmlId, fillerArray, current_val, check_allow) {
+    clearSelectBox(htmlId);
+    for (var i=0; i < fillerArray.length; i++) {
+        
+        if ((check_allow) && (fillerArray[i].allow_create == false)) {
+            continue;       // if permission is needed and the user doesn't have, then doesn't fill the selectBox
+        } else {            // if permission isn't needed or the user have permission, fill the selectBox'
+            if (fillerArray[i].id == current_val) 
+                $(htmlId).append('<option selected="true" value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
+            else 
+                $(htmlId).append('<option value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
+        }
+        
+    }
+}
+            
+function setFlash(message, status) {
+    $('#flash_box').empty();
+    $.flash(message, status);
+//window.onscroll = window_scroll;
+}
+
+function clearFlash(){
+    $('#flash_box').empty();
+    window.onscroll = null;
+}
+ 
+(function($){
     
     var menuHandler = jQuery.fn.menuHandler = {
         menus : $('#menu ul ul'),
@@ -84,134 +163,13 @@ $(function() {
     /* $(this).find('input[type!=submit],textarea,select').addClass('ui-widget ui-widget-content');
         $(this).find('table.list').addClass('ui-widget ui-corner-all');
         $(this).find('fieldset').addClass('ui-widget ui-corner-all');
-        $(this).find('table.list thead').addClass('ui-widget-header');
+        $(this).find('table.list thead').addClass('ui-widget-hea2der');
         $(this).find('table.list tbody').addClass('ui-widget-content');*/
 
     /*        $(this).find('div.menu').addClass('ui-widget');
         $(this).find('div.topItem').addClass('ui-widget-header');
         $(this).find('div.subItem').addClass('ui-widget-content');*/
     };
-    
-
-    $.feedbackTab.init();
-    /* $("#info_box").load("<?php echo $this->url(array("app" => "init", "controller" => "info_box")); ?>", function() {
-                    
-                   
-                });*/
-    
-    //$("#menu").load("<?php echo $this->url(array("app" => "init", "controller" => "menu"));  ?>");
-    if (jQuery.isFunction(jQuery.fn.pjax)){           
-        $('a[href][href!=""][href!="#"]').pjax("#main");
-        $('#main')
-        .bind('pjax:start', function() {
-            $('#loading').show();
-            clearInterval(js_function_interval);
-        })
-        .bind('pjax:end', function(xhr) {
-            window.scroll(0, 0);
-            $(window).trigger('resize');
-            $('#loading').hide();
-        });
-
-        $("body").delegate("form","submit",function() {
-            if (!js_submit_form) {
-                js_submit_form = true;
-                return false;
-            }
-
-            var content_show = $(this).attr("action");
-            var param = $(this).serialize();
-
-            if (content_show && param)
-                $.navigate({
-                    type: "POST",
-                    url: content_show,
-                    data: param
-                });
-            return false;
-        });
-    
-    
-        $('#main').bind('pjax:end', function(){
-        
-            $('#main').uify();
-            $('body').uify();
-            if (jQuery.isFunction(jQuery.fn.tablesorter))
-                $("table.list").tablesorter(/*{cssAsc: 'ui-icon ui-icon-triangle-1-n', cssDesc: 'ui-icon ui-icon-triangle-1-s'}*/);
-            if (jQuery.isFunction(jQuery.fn.dataTable))
-                $("table.list").dataTable(/*{cssAsc: 'ui-icon ui-icon-triangle-1-n', cssDesc: 'ui-icon ui-icon-triangle-1-s'}*/);
-            menuHandler.setSelected();
-        
-        });
-        menuHandler.prepare();
-        $('#main').trigger('pjax:end');
-    }
-// analisar a real necessidade disso
-//setTimeout(refresh, 10*60*1000); // carrega a página a cada 10 min., para não sobrecarregar scripts
-}); //do ready
-
-function redir(url, data){
-    if (!data){
-        $.navigate({
-            url: url
-        });
-    } else {
-        $.navigate({
-            type: "POST",
-            url: url,
-            data: data
-        });
-    }
-    return false;
-}
-
-function clearSelectBox(htmlId){
-    $(htmlId).empty();
-    $(htmlId).append('<option value="-1"></option>');
-}
-
-function fillSelectBox(htmlId, fillerArray, current_val, check_allow) {
-    clearSelectBox(htmlId);
-    for (var i=0; i < fillerArray.length; i++) {
-        
-        if ((check_allow) && (fillerArray[i].allow_create == false)) {
-            continue;       // if permission is needed and the user doesn't have, then doesn't fill the selectBox
-        } else {            // if permission isn't needed or the user have permission, fill the selectBox'
-            if (fillerArray[i].id == current_val) 
-                $(htmlId).append('<option selected="true" value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
-            else 
-                $(htmlId).append('<option value="' + fillerArray[i].id + '">' + fillerArray[i].name + '</option>');
-        }
-        
-    }
-}
-            
-function setFlash(message, status) {
-    $('#flash_box').empty();
-    $.flash(message, status);
-//window.onscroll = window_scroll;
-}
-
-function clearFlash(){
-    $('#flash_box').empty();
-    window.onscroll = null;
-}
-
-function WPToggle(divId, imageId) {
-
-    if ($(divId).css("display") == "none") {
-        $(divId).slideDown();
-        $(imageId).attr("src", baseUrl+"webroot/img/minus.gif" );
-    }
-
-    else {
-        $(divId).slideUp();
-        $(imageId).attr("src", baseUrl+"webroot/img/plus.gif");
-    }
-
-}
- 
-(function($){
     
     $.extend($.pjax.defaults, {
         error: function(jqXHR, textStatus) {
@@ -301,7 +259,20 @@ function WPToggle(divId, imageId) {
         },
         
         redir : function(url, data){
-            return redir(baseUrl+url, data);
+            if (url[0]!='/')
+                url = baseUrl+url;
+            if (!data){
+                $.navigate({
+                    url: url
+                });
+            } else {
+                $.navigate({
+                    type: "POST",
+                    url: url,
+                    data: data
+                });
+            }
+            return false;
         },
         
         navigate: function(obj){
@@ -328,11 +299,9 @@ function WPToggle(divId, imageId) {
 	 
             init:function(){
                 //$('.feedback-panel').css('height',$.feedbackTab.containerHeight + 'px');
-                if (!$('.feedback-panel').length)
-                    return;
-                $('.feedback-panel').css('top', $('a.feedback-link').offset().top + 15 + 'px');
 	 
                 $('.feedback-link').click(function(event){
+                    $('.feedback-panel').css('top', $('a.feedback-link').offset().top + 15 + 'px');
                     if ($('.feedback-panel').hasClass('open')) {
                         $('.feedback-panel').slideUp(this.speed).removeClass('open');
                         $('#MainOverlay').hide();
@@ -347,7 +316,7 @@ function WPToggle(divId, imageId) {
                     $(this).addClass('active');
                     $('#topic_style').val($(this).attr('class').split(' ')[0]);
                 });
-                $('#topic_additional_detail, #topic_subject').keyup(function(){
+                $('#topic_additional_detail, #topic_subject').bind('keydown keyup', function(){
                     if ($(this).val().length > 0){
                         $(this).prev().css({
                             display: 'none'
