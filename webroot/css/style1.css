@@ -1024,6 +1024,10 @@ table.reservation-point td, table.reservation-point th {
     z-index: 5;
 }
 
+.placeholder
+{
+  color: #aaa;
+}
 
 /* Spinner
 ----------------------------------*/
