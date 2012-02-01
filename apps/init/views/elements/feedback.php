@@ -37,19 +37,16 @@
 
             <div><input id="topic_style" name="topic[style]" type="hidden" value="idea" class="ui-widget ui-widget-content"></div>
             <div class="row text_box">
-                <label class="prompted" for="topic_additional_detail" id="topic_additional_detail_label">...</label>
-                <textarea class="additional_detail text ui-widget ui-widget-content" cols="35" id="topic_additional_detail" name="topic[additional_detail]" rows="5" tabindex="1" style="margin-left: 0px; margin-right: 0px; width: 318px; margin-top: 0px; margin-bottom: 0px; height: 70px; "></textarea>
+                <textarea class="additional_detail text ui-widget ui-widget-content" cols="35" id="topic_additional_detail" name="topic[additional_detail]" rows="5" tabindex="1" style="margin-left: 0px; margin-right: 0px; width: 318px; margin-top: 0px; margin-bottom: 0px; height: 70px; " placeholder="<?= _("Describe your idea") ?>"></textarea>
             </div>
             <div class="row text_box">
-                <label class="prompted" for="topic_subject"><?= _("Sum it up with a short title") ?></label>
-                <input class="subject text ui-widget ui-widget-content" id="topic_subject" name="topic[subject]" tabindex="2" type="text">
+                <input class="subject text ui-widget ui-widget-content" id="topic_subject" name="topic[subject]" tabindex="2" type="text" placeholder="<?= _("Sum it up with a short title") ?>"/>
             </div>
             <div class="row text_box" style="z-index:10">
-                <label for="topic_emotitag_feeling" id="emotion_label"><?= _("It makes me feel:") ?></label>
                 <div id="emotion_picker">
                     <a href="#" id="emotion_selected"><img alt="Feedback-happy" src="http://assets1.getsatisfaction.com/images/emoticons/feedback-happy.png?b829cae"></a>
                     <a href="#" id="emotion_activate"></a>
-                    <input id="topic_emotitag_feeling" name="topic[emotitag][feeling]" size="14" style="float: left;padding:2px 4px;" tabindex="6" type="text" class="ui-widget ui-widget-content">
+                    <input id="topic_emotitag_feeling" name="topic[emotitag][feeling]" size="14" style="float: left;padding:2px 4px;" tabindex="6" type="text" class="ui-widget ui-widget-content" placeholder="<?= _("It makes me feel:") ?>"/>
                 </div>
                 <div><input id="topic_emotitag_face" name="topic[emotitag][face]" type="hidden" class="ui-widget ui-widget-content"></div>
             </div>

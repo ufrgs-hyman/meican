@@ -1016,9 +1016,12 @@ table.reservation-point td, table.reservation-point th {
 }
 
 .fade-overlay{
-    position: absolute; background-color: #fff; z-index: 3; opacity: 0.5; /*box-shadow: 2px 2px 4px #888;*/  width: 100%; padding: 4px; display: none; 
+    position: absolute; background-color: #fff; z-index: 4; opacity: 0.5; /*box-shadow: 2px 2px 4px #888;*/  width: 100%; padding: 4px; display: none; 
     height:100%;
     -webkit-transform-style: preserve-3d;
+}
+#MainOverlay{
+    z-index: 5;
 }
 
 

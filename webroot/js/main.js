@@ -299,7 +299,7 @@ function clearFlash(){
             init:function(){
                 //$('.feedback-panel').css('height',$.feedbackTab.containerHeight + 'px');
 	 
-                $('.feedback-link').click(function(event){
+                $('.feedback-link,#MainOverlay').click(function(e){
                     $('.feedback-panel').css('top', $('a.feedback-link').offset().top + 15 + 'px');
                     if ($('.feedback-panel').hasClass('open')) {
                         $('.feedback-panel').slideUp(this.speed).removeClass('open');
@@ -308,30 +308,19 @@ function clearFlash(){
                         $('.feedback-panel').slideDown(this.speed).addClass('open');
                         $('#MainOverlay').show();
                     }
-                    event.preventDefault();
+                    e.preventDefault();
                 });
                 $('#feedback-tabs li').click(function (){
                     $('#feedback-tabs li').removeClass('active');
                     $(this).addClass('active');
                     $('#topic_style').val($(this).attr('class').split(' ')[0]);
                 });
-                $('#topic_additional_detail, #topic_subject').bind('keydown keyup', function(){
-                    if ($(this).val().length > 0){
-                        $(this).prev().css({
-                            display: 'none'
-                        });
-                    } else {
-                        $(this).prev().css({
-                            display: 'block'
-                        });
-                    }
-                });
                 $('#feedback-tabs a').click(function (){
                     $('#feedback-tabs li.active').removeClass('active');
                     $(this).parent().addClass('active');
                     var type = $(this).parent().attr('class').split(' ')[0];
                     $('#topic_style').val(type);	
-                    $('#topic_additional_detail_label').html(feedback_descrbs[type]);
+                    $('#topic_additional_detail').attr('placeholder', feedback_descrbs[type]);
                     return false;
                 });
                 $('#feedback-tabs li.idea a').click();
@@ -346,7 +335,7 @@ function clearFlash(){
                 });
                 $('#feedback-panel form').submit(function(){
                     $.ajax({
-                        type: 'post',
+                        type: 'POST',
                         url: $(this).attr('action'),
                         data: $(this).serialize(),
                         success: function (data){
@@ -356,7 +345,6 @@ function clearFlash(){
                                 top: '-' + ($('.feedback-panel').outerHeight()+70) + 'px'
                             }, $.feedbackTab.speed)
                             .removeClass('open');
-				
                         },
                         error: function (){
                             alert('Problems to send, try again later');
