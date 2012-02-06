@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-20 18:06-0200\n"
+"POT-Creation-Date: 2012-02-06 16:58-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: init.php:14 controllers/menu.php:27
+#: init.php:14
 msgid "Dashboard"
 msgstr ""
 
@@ -72,31 +72,31 @@ msgstr ""
 msgid "Praise"
 msgstr ""
 
-#: views/elements/feedback.php:44
-msgid "Sum it up with a short title"
-msgstr ""
-
-#: views/elements/feedback.php:48
-msgid "It makes me feel:"
-msgstr ""
-
-#: views/elements/feedback.php:57
-msgid "Send"
-msgstr ""
-
-#: views/elements/feedback.php:67
+#: views/elements/feedback.php:40 views/elements/feedback.php:64
 msgid "Describe your idea"
 msgstr ""
 
-#: views/elements/feedback.php:68
+#: views/elements/feedback.php:43
+msgid "Sum it up with a short title"
+msgstr ""
+
+#: views/elements/feedback.php:49
+msgid "It makes me feel:"
+msgstr ""
+
+#: views/elements/feedback.php:54
+msgid "Send"
+msgstr ""
+
+#: views/elements/feedback.php:65
 msgid "Describe your question"
 msgstr ""
 
-#: views/elements/feedback.php:69
+#: views/elements/feedback.php:66
 msgid "Describe your praise"
 msgstr ""
 
-#: views/elements/feedback.php:70
+#: views/elements/feedback.php:67
 msgid "Describe your problem"
 msgstr ""
 
@@ -124,124 +124,68 @@ msgstr ""
 msgid "Feedback"
 msgstr ""
 
-#: views/elements/controls.php:13
+#: views/elements/controls.php:16
 msgid "Add"
 msgstr ""
 
-#: views/elements/controls.php:14
+#: views/elements/controls.php:19
 msgid "Delete"
 msgstr ""
 
-#: views/elements/controls.php:14
+#: views/elements/controls.php:19
 msgid "The selected items will be deleted."
 msgstr ""
 
-#: views/elements/controls.php:14
+#: views/elements/controls.php:19
 msgid "Do you confirm?"
 msgstr ""
 
-#: views/login.php:35
+#: views/login.php:36
 msgid "Create an account"
 msgstr ""
 
-#: views/login.php:36
+#: views/login.php:37
 msgid "About MEICAN"
 msgstr ""
 
-#: views/login.php:37
+#: views/login.php:38
 msgid "Support"
 msgstr ""
 
-#: views/login.php:51
+#: views/login.php:52
 msgid "Sign in to MEICAN"
 msgstr ""
 
-#: views/login.php:57
+#: views/login.php:56
 msgid "Login"
 msgstr ""
 
-#: views/login.php:65
+#: views/login.php:60
 msgid "Password"
 msgstr ""
 
-#: views/login.php:76
+#: views/login.php:63
 msgid "Forgot your password?"
 msgstr ""
 
-#: views/login.php:91
+#: views/login.php:65
 msgid "Sign in"
 msgstr ""
 
-#: controllers/menu.php:28
-msgid "Circuits"
-msgstr ""
-
-#: controllers/menu.php:29
-msgid "New"
-msgstr ""
-
-#: controllers/menu.php:30
-msgid "Status"
-msgstr ""
-
-#: controllers/menu.php:31
-msgid "History"
-msgstr ""
-
-#: controllers/menu.php:33
-msgid "Topologies"
-msgstr ""
-
-#: controllers/menu.php:34
-msgid "MEICANs"
-msgstr ""
-
-#: controllers/menu.php:35
-msgid "Domains"
-msgstr ""
-
-#: controllers/menu.php:36
-msgid "Networks"
-msgstr ""
-
-#: controllers/menu.php:37
-msgid "Devices"
-msgstr ""
-
-#: controllers/menu.php:38
-msgid "URNs"
-msgstr ""
-
-#: controllers/menu.php:40
-msgid "Users"
-msgstr ""
-
-#: controllers/menu.php:41
-msgid "Groups"
-msgstr ""
-
-#: controllers/menu.php:42
-msgid "Access Control List"
-msgstr ""
-
-#: controllers/menu.php:44
-msgid "BPM"
-msgstr ""
-
-#: controllers/menu.php:45 controllers/gui.php:85
-msgid "Requests"
-msgstr ""
-
-#: controllers/menu.php:46
-msgid "ODE"
-msgstr ""
-
-#: controllers/info_box.php:61
+#: controllers/info_box.php:57
 msgid "Feedback sent"
 msgstr ""
 
-#: controllers/info_box.php:63
+#: controllers/info_box.php:57
+msgid "Thank you"
+msgstr ""
+
+#: controllers/info_box.php:59
 msgid "Error sending feedback"
+msgstr ""
+
+#: controllers/info_box.php:59
+msgid "Try again later"
 msgstr ""
 
 #: controllers/gui.php:50
@@ -254,18 +198,6 @@ msgstr ""
 
 #: controllers/gui.php:55
 msgid "new requests to be authorized"
-msgstr ""
-
-#: controllers/gui.php:69
-msgid "New reservation"
-msgstr ""
-
-#: controllers/gui.php:77
-msgid "Reservations"
-msgstr ""
-
-#: controllers/gui.php:93
-msgid "Management"
 msgstr ""
 
 #: controllers/login.php:44

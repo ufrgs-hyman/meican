@@ -51,16 +51,12 @@ class info_box extends Controller {
         $body .= "\n";
         $body .= "Makes me feel: " . $topic['emotitag']['feeling'] . "\n";
 
-//        ob_start();
-//        print_r($_POST);
-//        $body = ob_get_contents();
-//        ob_end_clean();
-        Framework::debug("e-mail fb", $body);
-        $to = "luis.armandob@gmail.com, felipenesello@gmail.com, lfaganello@gmail.com";
+        //Framework::debug("e-mail fb", $body);
+        $to = "felipenesello@gmail.com";
         if ($email->send($to, $body, "Feedback from MEICAN"))
-            echo _("Feedback sent") . ". " . ("Thank you") . "!";
+            echo _("Feedback sent") . ". " . _("Thank you") . "!";
         else
-            echo _("Error sending feedback") . ". " . ("Try again later") . ".";
+            echo _("Error sending feedback") . ". " . _("Try again later") . ".";
     }
 
 }

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-20 18:06-0200\n"
-"PO-Revision-Date: 2012-01-17 17:32-0300\n"
+"POT-Creation-Date: 2012-02-06 16:58-0200\n"
+"PO-Revision-Date: 2012-02-06 16:47-0300\n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,12 +28,12 @@ msgstr "MEICANs"
 msgid "Domains"
 msgstr "Domínios"
 
-#: topology.php:27 views/networks_show.php:5 controllers/networks.php:66
+#: topology.php:27 views/networks_show.php:5 controllers/networks.php:67
 msgid "Networks"
 msgstr "Redes"
 
 #: topology.php:32 views/networks_show.php:18 views/devices_show.php:3
-#: controllers/devices.php:71
+#: controllers/devices.php:72
 msgid "Devices"
 msgstr "Dispositivos"
 
@@ -126,18 +126,18 @@ msgid "ODE IP"
 msgstr "IP do ODE"
 
 #: views/elements/network_form.php:38 views/elements/device_form.php:66
-#: controllers/networks.php:84
+#: controllers/networks.php:85
 msgid "Select a domain"
 msgstr "Selecione um domínio"
 
 #: views/elements/urn_header.php:3 views/devices_show.php:18
-#: controllers/networks.php:110 controllers/networks.php:116
-#: controllers/networks.php:183 controllers/networks.php:203
+#: controllers/networks.php:111 controllers/networks.php:117
+#: controllers/networks.php:184 controllers/networks.php:204
 msgid "Network"
 msgstr "Rede"
 
-#: views/elements/urn_header.php:4 controllers/devices.php:153
-#: controllers/devices.php:243 controllers/devices.php:261
+#: views/elements/urn_header.php:4 controllers/devices.php:154
+#: controllers/devices.php:244 controllers/devices.php:262
 msgid "Device"
 msgstr "Dispositivo"
 
@@ -158,16 +158,16 @@ msgid "VLAN values"
 msgstr "Valores de VLAN"
 
 #: views/elements/urn_header.php:12
-msgid "Maximum capacity (bps)"
-msgstr "Capacidade máxima (bps)"
+msgid "Maximum capacity (Mbps)"
+msgstr "Capacidade máxima (Mbps)"
 
 #: views/elements/urn_header.php:13
-msgid "Minimum capacity (bps)"
-msgstr "Capacidade mínima (bps)"
+msgid "Minimum capacity (Mbps)"
+msgstr "Capacidade mínima (Mbps)"
 
 #: views/elements/urn_header.php:14
-msgid "Granularity (bps)"
-msgstr "Granularidade (bps)"
+msgid "Granularity (Mbps)"
+msgstr "Granularidade (Mbps)"
 
 #: views/elements/empty_urn.php:21
 msgid "Populate from topology"
@@ -274,76 +274,76 @@ msgstr "Adicionar dispositivo"
 msgid "Edit MEICAN"
 msgstr "Editar MEICAN"
 
-#: controllers/networks.php:36
+#: controllers/networks.php:37
 msgid "Could not find domain"
 msgstr "Domínio não encontrada"
 
-#: controllers/networks.php:55
+#: controllers/networks.php:56
 msgid "No device added to this network"
 msgstr "Não há dispositivos adicionados nesta rede"
 
-#: controllers/networks.php:67
+#: controllers/networks.php:68
 msgid "No network added, click the button below to add a new one"
 msgstr ""
 "Não há redes adicionadas. Clique no botão abaixo para adicionar uma nova"
 
-#: controllers/networks.php:82 controllers/devices.php:104
-#: controllers/devices.php:211
+#: controllers/networks.php:83 controllers/devices.php:105
+#: controllers/devices.php:212
 msgid "A name is required"
 msgstr "É necessário informar um nome"
 
-#: controllers/networks.php:83
+#: controllers/networks.php:84
 msgid "Set coordinates"
 msgstr "Informar coordenadas"
 
-#: controllers/networks.php:110 controllers/domains.php:67
+#: controllers/networks.php:111 controllers/domains.php:67
 #: controllers/meicans.php:67
 msgid "added"
 msgstr "adicionado"
 
-#: controllers/networks.php:114
+#: controllers/networks.php:115
 msgid "Fail to create network"
 msgstr "Falha ao criar rede"
 
-#: controllers/networks.php:116
+#: controllers/networks.php:117
 msgid "already exists"
 msgstr "já existe"
 
-#: controllers/networks.php:118
+#: controllers/networks.php:119
 msgid "Missing argument"
 msgstr "Argumentos faltando"
 
-#: controllers/networks.php:128 controllers/networks.php:167
+#: controllers/networks.php:129 controllers/networks.php:168
 #: controllers/domains.php:82 controllers/domains.php:107
 #: controllers/meicans.php:82 controllers/meicans.php:107
-#: controllers/urns.php:81 controllers/urns.php:121
-#: controllers/devices.php:166 controllers/devices.php:227
+#: controllers/urns.php:82 controllers/urns.php:122
+#: controllers/devices.php:167 controllers/devices.php:228
 msgid "Invalid index"
 msgstr "Índice inválido"
 
-#: controllers/networks.php:139
+#: controllers/networks.php:140
 msgid "Network not found"
 msgstr "Rede não encontrada"
 
-#: controllers/networks.php:183 controllers/domains.php:124
-#: controllers/meicans.php:124 controllers/devices.php:243
+#: controllers/networks.php:184 controllers/domains.php:124
+#: controllers/meicans.php:124 controllers/devices.php:244
 msgid "updated"
 msgstr "atualizado"
 
-#: controllers/networks.php:186 controllers/domains.php:127
-#: controllers/meicans.php:127 controllers/devices.php:246
+#: controllers/networks.php:187 controllers/domains.php:127
+#: controllers/meicans.php:127 controllers/devices.php:247
 msgid "No change has been made"
 msgstr "Nenhuma mudança foi efetuada"
 
-#: controllers/networks.php:188 controllers/domains.php:72
+#: controllers/networks.php:189 controllers/domains.php:72
 #: controllers/domains.php:129 controllers/meicans.php:72
 #: controllers/meicans.php:129
 msgid "Missing arguments"
 msgstr "Argumentos faltando"
 
-#: controllers/networks.php:203 controllers/domains.php:142
-#: controllers/meicans.php:142 controllers/urns.php:249
-#: controllers/devices.php:261
+#: controllers/networks.php:204 controllers/domains.php:142
+#: controllers/meicans.php:142 controllers/urns.php:250
+#: controllers/devices.php:262
 msgid "deleted"
 msgstr "excluído"
 
@@ -390,45 +390,45 @@ msgstr "Falha ao criar MEICAN"
 msgid "MEICAN not found"
 msgstr "MEICAN não encontrado"
 
-#: controllers/urns.php:51
+#: controllers/urns.php:52
 msgid "No new URN found in the network topology, this domain is updated"
 msgstr ""
 "Nenhuma nova URN encontrada na topologia da rede. Este domínio está "
 "atualizado"
 
-#: controllers/urns.php:52
+#: controllers/urns.php:53
 msgid "An error has occurred while trying to import the topology"
 msgstr "Ocorreu um erro ao tentar importar a topologia"
 
-#: controllers/urns.php:53
+#: controllers/urns.php:54
 msgid "Delete URN?"
 msgstr "Excluir URN?"
 
-#: controllers/urns.php:54
+#: controllers/urns.php:55
 msgid "URN deleted"
 msgstr "URN excluído"
 
-#: controllers/urns.php:55
+#: controllers/urns.php:56
 msgid "Fail to delete URN"
 msgstr "Erro ao excluir URN"
 
-#: controllers/urns.php:56 controllers/urns.php:105 controllers/urns.php:153
+#: controllers/urns.php:57 controllers/urns.php:106 controllers/urns.php:154
 msgid "Please fill in all the fields"
 msgstr "Por favor preencha todos os campos"
 
-#: controllers/urns.php:57 controllers/urns.php:106 controllers/urns.php:154
+#: controllers/urns.php:58 controllers/urns.php:107 controllers/urns.php:155
 msgid "Save modifications?"
 msgstr "Salvar modificações?"
 
-#: controllers/urns.php:58
+#: controllers/urns.php:59
 msgid "A URN has been selected more than once"
 msgstr "Um URN foi selecionado mais de uma vez"
 
-#: controllers/urns.php:67
+#: controllers/urns.php:68
 msgid "URNs (Uniform Resource Name)"
 msgstr "URNs (Nome Uniforme de Acesso)"
 
-#: controllers/urns.php:68
+#: controllers/urns.php:69
 msgid ""
 "Before adding a URN, you need to register at least one OSCARS domain, click "
 "the button bellow to register a new one"
@@ -436,38 +436,38 @@ msgstr ""
 "Antes de adicionar uma URN, você precisa registrar pelo menos um domínio "
 "OSCARS. Clique no botão abaixo para registrar um novo"
 
-#: controllers/urns.php:132
+#: controllers/urns.php:133
 msgid "Error to import topology"
 msgstr "Erro ao importar topologia"
 
-#: controllers/urns.php:173
+#: controllers/urns.php:174
 msgid "URN updated"
 msgstr "URN atualizado"
 
-#: controllers/urns.php:249
+#: controllers/urns.php:250
 msgid "URN"
 msgstr "URN"
 
-#: controllers/devices.php:72
+#: controllers/devices.php:73
 msgid "No device added, click the button below to add a new one"
 msgstr ""
 "Nenhum dispositivo adicionado. Clique no botão abaixo para adicionar um novo"
 
-#: controllers/devices.php:105 controllers/devices.php:212
+#: controllers/devices.php:106 controllers/devices.php:213
 msgid "An IP address is required"
 msgstr "É necessário informar um endereço IP"
 
-#: controllers/devices.php:106 controllers/devices.php:213
+#: controllers/devices.php:107 controllers/devices.php:214
 msgid "A network is required"
 msgstr "É necessário informar uma rede"
 
-#: controllers/devices.php:117
+#: controllers/devices.php:118
 msgid "No network added, you should first add a network before adding a device"
 msgstr ""
 "Nenhuma rede adicionada. Você deve primeiramente adicionar uma rede antes de "
 "adicionar um dispositivo"
 
-#: controllers/devices.php:126 controllers/devices.php:202
+#: controllers/devices.php:127 controllers/devices.php:203
 msgid ""
 "No domain added, you should first add a domain and network before adding a "
 "device"
@@ -475,17 +475,26 @@ msgstr ""
 "Nenhum domínio adicionado. Você deve primeiramente adicionar um domínio e "
 "uma rede antes de adicionar um dispositivo"
 
-#: controllers/devices.php:153
+#: controllers/devices.php:154
 msgid "added in network"
 msgstr "adicionado à rede"
 
-#: controllers/devices.php:156
+#: controllers/devices.php:157
 msgid "Fail to create device"
 msgstr "Falha ao criar dispositivo"
 
-#: controllers/devices.php:176
+#: controllers/devices.php:177
 msgid "Device not found"
 msgstr "Dispositivo não encontrado"
+
+#~ msgid "Maximum capacity (bps)"
+#~ msgstr "Capacidade máxima (bps)"
+
+#~ msgid "Minimum capacity (bps)"
+#~ msgstr "Capacidade mínima (bps)"
+
+#~ msgid "Granularity (bps)"
+#~ msgstr "Granularidade (bps)"
 
 #~ msgid "The selected networks will be deleted."
 #~ msgstr "As redes selecionadas serão excluídas"

@@ -17,8 +17,8 @@ class Meican_Mail {
         $params["host"] = "ssl://smtp.inf.ufrgs.br";
         $params["port"] = "465";
         $params["auth"] = true;
-        $params["username"] = "fanesello";
-        $params["password"] = "Hookton06/10";
+        $params["username"] = "meican";
+        $params["password"] = "Futura2012RNP";
         $params["debug"] = false;
         
         $this->mail = Mail::factory("smtp", $params);
@@ -33,7 +33,7 @@ class Meican_Mail {
     public function send($to, $body, $subject=NULL, $headers=array()) {
 
         $tmp_headers = array();
-        $tmp_headers["From"] = isset($headers["From"]) ? $headers["From"] : "MEICAN <qame@inf.ufrgs.br>";
+        $tmp_headers["From"] = isset($headers["From"]) ? $headers["From"] : "MEICAN <meican@inf.ufrgs.br>";
         $tmp_headers["To"] = isset($headers["To"]) ? $headers["To"] : "$to <$to>";
         $tmp_headers["Subject"] = isset($headers["Subject"]) ? $headers["Subject"] : ($subject) ? $subject : _("No subject");
 

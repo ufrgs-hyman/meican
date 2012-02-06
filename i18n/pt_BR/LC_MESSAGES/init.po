@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-20 18:06-0200\n"
+"POT-Creation-Date: 2012-02-06 16:58-0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
 
-#: init.php:14 controllers/menu.php:27
+#: init.php:14
 msgid "Dashboard"
 msgstr "Dashboard"
 
@@ -67,31 +67,31 @@ msgstr "Problema"
 msgid "Praise"
 msgstr "Elogio"
 
-#: views/elements/feedback.php:44
-msgid "Sum it up with a short title"
-msgstr "Resuma em um título"
-
-#: views/elements/feedback.php:48
-msgid "It makes me feel:"
-msgstr "Isso faz com que eu me sinta:"
-
-#: views/elements/feedback.php:57
-msgid "Send"
-msgstr "Enviar"
-
-#: views/elements/feedback.php:67
+#: views/elements/feedback.php:40 views/elements/feedback.php:64
 msgid "Describe your idea"
 msgstr "Descreva sua ideia"
 
-#: views/elements/feedback.php:68
+#: views/elements/feedback.php:43
+msgid "Sum it up with a short title"
+msgstr "Resuma em um título"
+
+#: views/elements/feedback.php:49
+msgid "It makes me feel:"
+msgstr "Isso faz com que eu me sinta:"
+
+#: views/elements/feedback.php:54
+msgid "Send"
+msgstr "Enviar"
+
+#: views/elements/feedback.php:65
 msgid "Describe your question"
 msgstr "Descreva sua pergunta"
 
-#: views/elements/feedback.php:69
+#: views/elements/feedback.php:66
 msgid "Describe your praise"
 msgstr "Descreva seu elogio"
 
-#: views/elements/feedback.php:70
+#: views/elements/feedback.php:67
 msgid "Describe your problem"
 msgstr "Descreva seu problema"
 
@@ -119,125 +119,69 @@ msgstr "Sobre"
 msgid "Feedback"
 msgstr "Feedback"
 
-#: views/elements/controls.php:13
+#: views/elements/controls.php:16
 msgid "Add"
 msgstr "Adicionar"
 
-#: views/elements/controls.php:14
+#: views/elements/controls.php:19
 msgid "Delete"
 msgstr "Excluir"
 
-#: views/elements/controls.php:14
+#: views/elements/controls.php:19
 msgid "The selected items will be deleted."
 msgstr "Os itens selecionados serão excluídos."
 
-#: views/elements/controls.php:14
+#: views/elements/controls.php:19
 msgid "Do you confirm?"
 msgstr "Você confirma?"
 
-#: views/login.php:35
+#: views/login.php:36
 msgid "Create an account"
 msgstr "Criar uma conta"
 
-#: views/login.php:36
+#: views/login.php:37
 msgid "About MEICAN"
 msgstr "Sobre o MEICAN"
 
-#: views/login.php:37
+#: views/login.php:38
 msgid "Support"
 msgstr "Suporte"
 
-#: views/login.php:51
+#: views/login.php:52
 msgid "Sign in to MEICAN"
 msgstr "Entrar no MEICAN"
 
-#: views/login.php:57
+#: views/login.php:56
 msgid "Login"
 msgstr "Login"
 
-#: views/login.php:65
+#: views/login.php:60
 msgid "Password"
 msgstr "Senha"
 
-#: views/login.php:76
+#: views/login.php:63
 msgid "Forgot your password?"
 msgstr "Esqueceu sua senha?"
 
-#: views/login.php:91
+#: views/login.php:65
 msgid "Sign in"
 msgstr "Entrar"
 
-#: controllers/menu.php:28
-msgid "Circuits"
-msgstr "Circuitos"
-
-#: controllers/menu.php:29
-msgid "New"
-msgstr "Novo"
-
-#: controllers/menu.php:30
-msgid "Status"
-msgstr "Status"
-
-#: controllers/menu.php:31
-msgid "History"
-msgstr "Histórico"
-
-#: controllers/menu.php:33
-msgid "Topologies"
-msgstr "Topologias"
-
-#: controllers/menu.php:34
-msgid "MEICANs"
-msgstr "MEICANs"
-
-#: controllers/menu.php:35
-msgid "Domains"
-msgstr "Domínios"
-
-#: controllers/menu.php:36
-msgid "Networks"
-msgstr "Redes"
-
-#: controllers/menu.php:37
-msgid "Devices"
-msgstr "Dispositivos"
-
-#: controllers/menu.php:38
-msgid "URNs"
-msgstr "URNs"
-
-#: controllers/menu.php:40
-msgid "Users"
-msgstr "Usuários"
-
-#: controllers/menu.php:41
-msgid "Groups"
-msgstr "Grupos"
-
-#: controllers/menu.php:42
-msgid "Access Control List"
-msgstr "Lista de Controle de Acesso"
-
-#: controllers/menu.php:44
-msgid "BPM"
-msgstr "BPM"
-
-#: controllers/menu.php:45 controllers/gui.php:85
-msgid "Requests"
-msgstr "Requisições"
-
-#: controllers/menu.php:46
-msgid "ODE"
-msgstr "ODE"
-
-#: controllers/info_box.php:61
+#: controllers/info_box.php:57
 msgid "Feedback sent"
 msgstr "Feedback enviado"
 
-#: controllers/info_box.php:63
+#: controllers/info_box.php:57
+msgid "Thank you"
+msgstr "Obrigado"
+
+#: controllers/info_box.php:59
 msgid "Error sending feedback"
 msgstr "Erro ao enviar feedback"
+
+#: controllers/info_box.php:59
+msgid "Try again later"
+msgstr "Tente novamente mais tarde"
 
 #: controllers/gui.php:50
 msgid "You have one new request to be authorized"
@@ -251,21 +195,66 @@ msgstr "Você possui"
 msgid "new requests to be authorized"
 msgstr "novas requisições para serem autorizadas"
 
-#: controllers/gui.php:69
-msgid "New reservation"
-msgstr "Nova reserva"
-
-#: controllers/gui.php:77
-msgid "Reservations"
-msgstr "Reservas"
-
-#: controllers/gui.php:93
-msgid "Management"
-msgstr "Gerenciamento"
-
 #: controllers/login.php:44
 msgid "Failed on authentication"
 msgstr "Falha na autenticação"
+
+#~ msgid "Circuits"
+#~ msgstr "Circuitos"
+
+#~ msgid "New"
+#~ msgstr "Novo"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "History"
+#~ msgstr "Histórico"
+
+#~ msgid "Topologies"
+#~ msgstr "Topologias"
+
+#~ msgid "MEICANs"
+#~ msgstr "MEICANs"
+
+#~ msgid "Domains"
+#~ msgstr "Domínios"
+
+#~ msgid "Networks"
+#~ msgstr "Redes"
+
+#~ msgid "Devices"
+#~ msgstr "Dispositivos"
+
+#~ msgid "URNs"
+#~ msgstr "URNs"
+
+#~ msgid "Users"
+#~ msgstr "Usuários"
+
+#~ msgid "Groups"
+#~ msgstr "Grupos"
+
+#~ msgid "Access Control List"
+#~ msgstr "Lista de Controle de Acesso"
+
+#~ msgid "BPM"
+#~ msgstr "BPM"
+
+#~ msgid "Requests"
+#~ msgstr "Requisições"
+
+#~ msgid "ODE"
+#~ msgstr "ODE"
+
+#~ msgid "New reservation"
+#~ msgstr "Nova reserva"
+
+#~ msgid "Reservations"
+#~ msgstr "Reservas"
+
+#~ msgid "Management"
+#~ msgstr "Gerenciamento"
 
 #~ msgid "Domain"
 #~ msgstr "Dom�nio"
