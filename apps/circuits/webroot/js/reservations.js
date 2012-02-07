@@ -9,6 +9,10 @@
 //var res_lines = [];
 //var res_myOptions = null;
 
+$(document).ready(function() {
+    js_function_interval = setInterval("refreshStatus()", 60000);
+});
+
 function refreshStatus() {    
     for (var i in domains) {
         $('.load' + domains[i]).show();

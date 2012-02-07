@@ -110,7 +110,6 @@ class reservations extends Controller {
                     'str_error_refresh_status' => _("Error to get status")
                 ));
 
-                $this->setInlineScript('reservations_init');
             }
             
             $args = new stdClass();
@@ -137,7 +136,7 @@ class reservations extends Controller {
         $gri = new gri_info();
         $resIdArray = $gri->getStatusResId();
         $this->action = "status";
-        $this->addScriptForLayout(array('reservations', 'reservations_init'));
+        $this->addScriptForLayout(array('reservations'));
         $this->show($resIdArray);
     }
     
@@ -529,8 +528,6 @@ class reservations extends Controller {
         <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/jquery.timePicker.js"></script>
          */
         
-        //$this->setInlineScript('reservations_add_init');
-
         if ($js_lang != "en-US") {
             $this->addScript("jquery.ui.datepicker-$js_lang");
         }
