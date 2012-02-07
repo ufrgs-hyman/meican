@@ -9,7 +9,7 @@
 //var res_lines = [];
 //var res_myOptions = null;
 
-function refreshStatus() {
+function refreshStatus() {    
     for (var i in domains) {
         $('.load' + domains[i]).show();
         

@@ -794,7 +794,7 @@ class reservations extends Controller {
         $this->setAction('view');
         $this->setArgsToBody($args);
         
-        $this->addScriptForLayout(array('reservations', 'reservations_view', 'reservation_map'));
+        $this->addScriptForLayout(array('reservations', 'reservations_view'));
         $this->render();
     }
 

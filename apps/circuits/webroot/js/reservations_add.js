@@ -879,7 +879,6 @@ function validateBand(band_value) {
     $.fn.mapEdit = {
         
         inicialize: function(){ /*inicializa mapa */
-        
             var edit_myOptions = {
                 zoom: 5,
                 center: new google.maps.LatLng(-23.051931,-60.975511),
