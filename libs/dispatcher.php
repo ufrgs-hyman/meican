@@ -37,7 +37,6 @@ function myErrorHandler($errno, $errstr, $errfile, $errline)
 include_once 'libs/app.php';
 include_once 'libs/configure.php';
 include_once 'libs/datasource.php';
-include_once 'libs/auth.php';
 include_once 'libs/language.php';
 include_once 'libs/database.php';
 
@@ -59,6 +58,18 @@ class Dispatcher {
         Configure::load('config/main.php');
         Configure::load('config/local.php');
         Configure::write('systemDirName', $this->base);
+    }
+    
+    // Método Factory parametrizado
+    private function appFactory($app, $args=array())
+    {
+        if (file_exists("apps/$app/$app.php") &&
+                include_once "apps/$app/$app.php") {
+            return new $app($args);
+        } else {
+            throw new Exception ('App not found');
+            return False;
+        }
     }
 
     /**
@@ -83,7 +94,7 @@ class Dispatcher {
         try {
             if (empty($app))
                 $app = Configure::read('mainApp');
-            if (!($app = App::factory($app)))
+            if (!($app = $this->appFactory($app)))
                 throw new Exception(_("Invalid app"));
             Language::setLang(get_class($app));
             if (empty($controller))
@@ -107,6 +118,7 @@ class Dispatcher {
      * @return Boolean  
      */
     function checkLogin() {
+        include_once 'libs/auth.php';
         if (AuthSystem::userTryToLogin() || AuthSystem::isUserLoggedIn()) {
             return true;
         } else {
