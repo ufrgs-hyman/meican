@@ -1,6 +1,6 @@
 <?php
 
-include_once'libs/script.php';
+//include_once'libs/script.php';
 
 class View {
 
