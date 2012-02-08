@@ -1,12 +1,10 @@
-<?php $args = $this->passedArgs ?>
 <?php $base = $this->url(); ?>
 <!doctype html>
-<html class="no-js" lang="en">
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title><?php echo Configure::read('systemName'); ?></title>
-
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <link rel="shortcut icon" href="<?php echo $base; ?>webroot/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/meican3-theme/jquery-ui-1.8.16.custom.css" />
@@ -20,10 +18,6 @@
         //https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/start/jquery-ui.css
         /* <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.form.js"></script>
           <script type="text/javascript" src="<?php echo $base; ?>apps/init/webroot/js/info_box.js"></script> */
-        /*
-
-
-          --> */
         ?>
         <?php if (Configure::read('dataTables')): ?>
             <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.dataTables.min.js"></script>
@@ -49,7 +43,6 @@
           <script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
           <div id="switcher"></div> */ ?>
     </head>
-
     <body>
         <div class="fade-overlay" id="MainOverlay"> </div>
         <div id="left-panel">
