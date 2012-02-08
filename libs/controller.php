@@ -37,10 +37,11 @@ class Controller {
 //        debug("last view", $teste);
 		$view->set($this->viewVars);
         $view->set('content_for_flash', $this->flash? $this->flash : '');
+        $view->set('scripts_vars', $this->argsToScript);
         $view->setArgs($this->argsToBody);
-        $view->script->setArgs($this->argsToScript);
-        $view->script->setScriptFiles($this->scripts);
-        $view->script->setInlineScript($this->inlineScript);
+        //$view->script->setArgs($this->argsToScript);
+        //$view->script->setScriptFiles($this->scripts);
+        //$view->script->setInlineScript($this->inlineScript);
         echo $view->build();
     }
 
@@ -48,12 +49,13 @@ class Controller {
         return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
     }
 
-    protected function addScript($script) {
+    protected function addScript($script) { //@deprecated
         $this->scripts[] = "apps/{$this->app}/webroot/js/$script.js?1";
     }
 
     protected function setInlineScript($script) {
-        $this->inlineScript = "apps/{$this->app}/webroot/js/$script.js?1";
+        //$this->inlineScript = "apps/{$this->app}/webroot/js/$script.js?1";
+        $this->addScriptForLayout($script);
     }
     
     protected function addScriptForLayout($script){

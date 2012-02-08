@@ -6,7 +6,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title><?php echo Configure::read('systemName'); ?></title>
-        
+
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <link rel="shortcut icon" href="<?php echo $base; ?>webroot/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/meican3-theme/jquery-ui-1.8.16.custom.css" />
@@ -33,49 +33,21 @@
         <script type ="text/javascript" src="<?php echo $base; ?>webroot/js/main.js"></script>
         <script type ="text/javascript">
 <?php // variavel para armazenar o ID quando a função setInterval() é usada
-// cada vez que um link é carregado, é feito um clear na variável, para não carregar em páginas erradas        ?>
-    var js_function_interval = null;
-<?php // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate        ?>
+// cada vez que um link é carregado, é feito um clear na variável, para não carregar em páginas erradas            ?>
+    var js_function_interval = null; <?php // variavel global para armazenar o retorno de uma função de validação de um formulario, testada dentro do delegate            ?>
     var js_submit_form = true;
-<?php //url base para geração de url, é o diretório onde o sistema está instalado no servidor         ?>
-    var baseUrl = '<?php echo $this->url(''); ?>';
-            
-<?php // chamada para atualizar a hora   ?>
-    $(document).ready(function() {
+    var baseUrl = '<?php echo $this->url(''); ?>'; <?php //url base para geração de url, é o diretório onde o sistema está instalado no servidor  ?>
+    $(document).ready(function() {<?php // chamada para atualizar a hora       ?>
         setInterval("updateSystemTime()", 60000); 
     });
             
         </script>
-        <?php if ($this->script->scriptArgs): ?>
-            <script>
-    <?php
-    foreach ($this->script->scriptArgs as $name => $val) {
-        echo "var $name = " . json_encode($val) . ";\n";
-    }
-    ?>
-            </script>
-        <?php endif; ?>
-        <?php if ($this->script->jsFiles): ?>
-            <?php
-            foreach ($this->script->jsFiles as $f) {
-                echo '<script type ="text/javascript" src="' . $base . $f . '"></script>';
-            }
-            ?>
-        <?php endif; ?>	
-        <?php
-        if (!isset($scripts_for_layout))
-            $scripts_for_layout = array();
-        foreach ($scripts_for_layout as $script):
-            ?>
-            <script type="text/javascript" src="<?php echo $base . $script ?>"></script>
-        <?php endforeach; ?>
-
+        <?php echo $this->scripts(); ?>
         <?php /*  Coloca o theme roller
           <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css" />
           <script>$(document).ready(function(){$('#switcher').themeswitcher();});</script>
           <script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
           <div id="switcher"></div> */ ?>
-
     </head>
 
     <body>
@@ -101,19 +73,19 @@
             </div>
             <div style="clear:both;"></div>
         </div>
-        
-<?php if ($analytics = Configure::read('analytics')): //'UA-28835796-1'?>   
-<script>         
-	var _gaq=[['_setAccount',<?php echo $analytics;?>],['_trackPageview']]; // Change UA-XXXXX-X to be your site's ID
-	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
-	g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-	s.parentNode.insertBefore(g,s)}(document,'script'));
-</script>
-<?php endif; ?>
-<!--[if lt IE 7 ]>
-	<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
-	<script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
-<![endif]-->
+
+        <?php if ($analytics = Configure::read('analytics')): //'UA-28835796-1'?>   
+            <script>         
+                var _gaq=[['_setAccount',<?php echo $analytics; ?>],['_trackPageview']]; // Change UA-XXXXX-X to be your site's ID
+                (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+                    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+                    s.parentNode.insertBefore(g,s)}(document,'script'));
+            </script>
+        <?php endif; ?>
+        <!--[if lt IE 7 ]>
+            <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
+            <script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
+        <![endif]-->
 
     </body>
 </html>

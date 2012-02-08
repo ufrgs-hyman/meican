@@ -16,27 +16,26 @@ class View {
     //private $headerContent; //result of build header
     private $bodyArgs;
     //private $scriptArgs;
-    public $script;
+    //public $script;
     public $layout = 'default';
     public $viewVars = array();
-
 
     public function View($app, $controller, $action, $layout = 'default') {
         $this->app = $app;
         $this->controller = $controller;
         $this->action = $action;
         $this->layout = $layout;
-        
-        $this->script = new Script();
+
+        //$this->script = new Script();
     }
 
     public function build() {/*
-        if ($this->script->jsFiles || $this->script->scriptArgs)
-            $this->script->build();*/
+      if ($this->script->jsFiles || $this->script->scriptArgs)
+      $this->script->build(); */
         return $this->bodyContent = $this->buildView("layouts/$this->layout.php", array(
             'content_for_body' => $this->buildView($this->setView()),
-            //'content_for_script' => $this->script->content,
-        ));
+                //'content_for_script' => $this->script->content,
+                ));
     }
 
     public function setArgs($args) {
@@ -51,7 +50,7 @@ class View {
         return $this->view;
     }
 
-    public function buildView($view=null, $vars=array()){
+    public function buildView($view=null, $vars=array()) {
         if (file_exists($view)) {
             ob_start();
             extract(array_merge($this->viewVars, $vars), EXTR_SKIP);
@@ -64,7 +63,7 @@ class View {
         return $return;
     }
 
-    public function url($url = ''){
+    public function url($url = '') {
         return $this->buildLink($url);
     }
 
@@ -82,8 +81,8 @@ class View {
         else
             return $url = Dispatcher::getInstance()->url(array_merge(
                             array(
-                                'app' => $this->app,
-                                'controller' => $this->controller
+                        'app' => $this->app,
+                        'controller' => $this->controller
                             ), $argsArray));
         /* $url = "main.php";
 
@@ -134,32 +133,53 @@ class View {
     }
 
     /**
- * Allows a template or element to set a variable that will be available in
- * a layout or other element. Analagous to Controller::set.
- *
- * @param mixed $one A string or an array of data.
- * @param mixed $two Value in case $one is a string (which then works as the key).
- *    Unused if $one is an associative array, otherwise serves as the values to $one's keys.
- * @return void
- * @access public
- */
+     * Allows a template or element to set a variable that will be available in
+     * a layout or other element. Analagous to Controller::set.
+     *
+     * @param mixed $one A string or an array of data.
+     * @param mixed $two Value in case $one is a string (which then works as the key).
+     *    Unused if $one is an associative array, otherwise serves as the values to $one's keys.
+     * @return void
+     * @access public
+     */
     public function set($one, $two = null) {
-            $data = null;
-            if (is_array($one)) {
-                    if (is_array($two)) {
-                            $data = array_combine($one, $two);
-                    } else {
-                            $data = $one;
-                    }
+        $data = null;
+        if (is_array($one)) {
+            if (is_array($two)) {
+                $data = array_combine($one, $two);
             } else {
-                    $data = array($one => $two);
+                $data = $one;
             }
-            if ($data == null) {
-                    return false;
+        } else {
+            $data = array($one => $two);
+        }
+        if ($data == null) {
+            return false;
+        }
+        $this->viewVars = $data + $this->viewVars;
+    }
+
+    public function scripts() {
+        $scripts_vars = $this->viewVars['scripts_vars'];
+        $ret = '';
+        if (!empty($scripts_vars)) {
+            foreach ($scripts_vars as $name => $val) {
+                if (is_string($val))
+                    $ret .= "var $name = '$val';\n";
+                elseif (is_array($val) || is_object($val))
+                    $ret .= "var $name = " . json_encode($val) . ";\n";
+                else
+                    $ret .= "var $name = $val;\n";
             }
-            $this->viewVars = $data + $this->viewVars;
+            $ret = '<script type="text/javascript">' . $ret . '</script>';
+        }
+        $scripts_for_layout = $this->viewVars['scripts_for_layout'];
+        if (!empty($scripts_for_layout)) {
+            foreach ($scripts_for_layout as $script) {
+                $ret .= '<script type="text/javascript" src="' . $this->url() . $script . '"></script>';
+            }
+        }
+        return $ret;
     }
 
 }
-
-?>
