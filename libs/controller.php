@@ -21,12 +21,14 @@ class Controller {
         //modificar para referenciar direto controller, nao passando os parametros para o construtor
         if (empty($action))
             $action = $this->action;
-        $view = new View($this->app, $this->controller, $action);
+        if ($this->layout === 'default' && $this->isAjax())
+            $this->layout .= '_ajax';
+        $view = new View($this->app, $this->controller, $action, $this->layout);
 
-        if ($this->app != 'init') {
+        /*if ($this->app != 'init') {
             Common::recordVar('last_view', "app=$this->app&controller=$this->controller&action=$this->action");
             Common::setSessionVariable('welcome_loaded', 1);
-        }
+        }*/
 //        $teste = ::rescueVar('last_view');
 //        if ($teste === FALSE) {
 //            $app = Framework::Configure::read('mainApp');
@@ -34,14 +36,11 @@ class Controller {
 //        }
 //        debug("last view", $teste);
 		$view->set($this->viewVars);
+        $view->set('content_for_flash', $this->flash? $this->flash : '');
         $view->setArgs($this->argsToBody);
         $view->script->setArgs($this->argsToScript);
         $view->script->setScriptFiles($this->scripts);
         $view->script->setInlineScript($this->inlineScript);
-        if ($this->layout === 'default' && $this->isAjax())
-            $this->layout .= '_ajax';
-        $view->set('content_for_flash', $this->flash? $this->flash : '');
-        $view->layout = $this->layout;
         echo $view->build();
     }
 

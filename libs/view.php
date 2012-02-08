@@ -17,14 +17,16 @@ class View {
     private $bodyArgs;
     //private $scriptArgs;
     public $script;
+    public $layout = 'default';
     public $viewVars = array();
 
 
-    public function View($app, $controller, $action) {
+    public function View($app, $controller, $action, $layout = 'default') {
         $this->app = $app;
         $this->controller = $controller;
         $this->action = $action;
-
+        $this->layout = $layout;
+        
         $this->script = new Script();
     }
 
