@@ -1,5 +1,5 @@
 <?php $args = $this->passedArgs ?>
-<?php $base = Dispatcher::getInstance()->url(); ?>
+<?php $base = $this->url(); ?>
 <!doctype html>
 <html class="no-js" lang="en">
     <head>
@@ -58,7 +58,7 @@
         <?php if ($this->script->jsFiles): ?>
             <?php
             foreach ($this->script->jsFiles as $f) {
-                echo '<script type ="text/javascript" src="' . Dispatcher::getInstance()->url('') . $f . '"></script>';
+                echo '<script type ="text/javascript" src="' . $base . $f . '"></script>';
             }
             ?>
         <?php endif; ?>	
@@ -67,7 +67,7 @@
             $scripts_for_layout = array();
         foreach ($scripts_for_layout as $script):
             ?>
-            <script type="text/javascript" src="<?php echo Dispatcher::getInstance()->url('') . $script ?>"></script>
+            <script type="text/javascript" src="<?php echo $base . $script ?>"></script>
         <?php endforeach; ?>
 
         <?php /*  Coloca o theme roller

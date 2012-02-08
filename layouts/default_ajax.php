@@ -22,7 +22,7 @@ if (!empty($scripts_for_layout)):
     ?>
     <div class="scripts">    
         <?php foreach ($scripts_for_layout as $script): ?>
-            <script type="text/javascript" src="<?php echo Dispatcher::getInstance()->url('') . $script ?>"></script>
+            <script type="text/javascript" src="<?php echo $this->url() . $script ?>"></script>
     <?php endforeach; ?>
     </div>
 <?php endif; ?>

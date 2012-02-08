@@ -1,14 +1,13 @@
 <?php if ($this->jsFiles): ?>
 <div class="scripts">
     <?php foreach ($this->jsFiles as $f) {
-        echo "<i>".Dispatcher::getInstance()->url('').$f."</i>";
+        echo "<i>".$this->url().$f."</i>";
     } ?>
 </div>
 <?php endif; ?>
 
-<script>
+<script type="text/javascript">
 <?php
-
 if ($this->scriptArgs) {
     foreach ($this->scriptArgs as $name => $val) {
         if (is_string($val))
@@ -19,6 +18,5 @@ if ($this->scriptArgs) {
             echo "var $name = $val;";
     }
 }
-
 ?>
 </script>
