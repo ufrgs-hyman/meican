@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS `domain_info` (
   `topology_id` varchar(30) DEFAULT NULL,
   `ode_ip` varchar(128) DEFAULT NULL,
   `ode_wsdl_path` varchar(256) DEFAULT NULL,
+  `dom_version` varchar(128) NOT NULL,
   PRIMARY KEY (`dom_id`),
   UNIQUE KEY `dom_descr` (`dom_descr`),
   UNIQUE KEY `oscars_ip` (`oscars_ip`),
