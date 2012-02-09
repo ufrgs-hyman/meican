@@ -1,7 +1,7 @@
 <?php
 
 $domain = $this->passedArgs;
-
+Framework::debug('PASSADO PRA VIEW', $domain);
 ?>
 
 <h1><?php echo _("Edit domain"); ?></h1>

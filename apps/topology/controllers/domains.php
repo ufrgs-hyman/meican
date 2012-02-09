@@ -29,6 +29,7 @@ class domains extends Controller {
                 $domain->oscars_ip = $d->oscars_ip;
                 $domain->topology_id = $d->topology_id;
                 $domain->ode_ip = ($d->ode_ip) ? $d->ode_ip : _("No IP defined");
+                $domain->dom_version = $d->dom_version;
 
                 $domains[] = $domain;
             }
@@ -54,7 +55,6 @@ class domains extends Controller {
 
     public function add() {
         $dom_descr = Common::POST("dom_descr");
-
         if ($dom_descr) {
             $domain = new domain_info();
             $domain->dom_descr = $dom_descr;
@@ -62,7 +62,8 @@ class domains extends Controller {
             $domain->topology_id = Common::POST("topology_id");
             $domain->ode_ip = Common::POST("ode_ip");
             $domain->ode_wsdl_path = Common::POST("ode_wsdl_path");
-
+            $domain->dom_version = Common::POST("dom_version");
+     
             if ($domain->insert(NULL, "topology")) {
                 $this->setFlash(_("Domain")." '$domain->dom_descr' "._("added"), "success");
                 $this->show();
@@ -108,10 +109,10 @@ class domains extends Controller {
             $this->edit($dom_id_array);
             return;
         }
-        
         $dom_descr = Common::POST("dom_descr");
 
         if ($dom_descr) {
+
             $domain = new domain_info();
             $domain->dom_id = $domId;
             $domain->dom_descr = $dom_descr;
@@ -119,7 +120,7 @@ class domains extends Controller {
             $domain->topology_id = Common::POST("topology_id");
             $domain->ode_ip = Common::POST("ode_ip");
             $domain->ode_wsdl_path = Common::POST("ode_wsdl_path");
-
+            $domain->dom_version = Common::POST("dom_version");
             if ($domain->update()) {
                 $this->setFlash(_("Domain")." '$domain->dom_descr' "._("updated"), "success");
                 $this->show();

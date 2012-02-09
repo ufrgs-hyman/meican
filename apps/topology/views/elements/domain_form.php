@@ -5,6 +5,7 @@ $oscars_ip = isset($argsToElement->oscars_ip) ? $argsToElement->oscars_ip : NULL
 $topology_id = isset($argsToElement->topology_id) ? $argsToElement->topology_id : NULL;
 $ode_ip = isset($argsToElement->ode_ip) ? $argsToElement->ode_ip : NULL;
 $ode_wsdl_path = isset($argsToElement->ode_wsdl_path) ? $argsToElement->ode_wsdl_path : NULL;
+$dom_version = isset($argsToElement->dom_version) ? $argsToElement->dom_version : NULL;
 
 ?>
 
@@ -23,6 +24,18 @@ $ode_wsdl_path = isset($argsToElement->ode_wsdl_path) ? $argsToElement->ode_wsdl
         </th>
         <td class="left">
             <input type="text" name="oscars_ip" size="30" value="<?php echo $oscars_ip; ?>"/>
+        </td>
+    </tr>
+    <tr>
+        <th class="right">
+            <?php echo _("OSCARS Version"); ?>:
+        </th>
+        <td class="left">
+            <select name="dom_version" size="1">
+                <option <?php if ($dom_version == '0.5.3') echo 'selected="true"'; ?> value="0.5.3"> OSCARS 0.5.3 </option>
+                <option <?php if ($dom_version == '0.5.4') echo 'selected="true"'; ?> value="0.5.4"> OSCARS 0.5.4 </option>
+                <option <?php if ($dom_version == '0.6') echo 'selected="true"'; ?> value="0.6">   OSCARS 0.6   </option>
+            </select>
         </td>
     </tr>
     <tr>
