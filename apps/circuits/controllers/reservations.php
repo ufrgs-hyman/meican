@@ -13,6 +13,7 @@ include_once 'apps/circuits/models/reservation_info.php';
 include_once 'apps/circuits/models/gri_info.php';
 include_once 'apps/circuits/models/flow_info.php';
 include_once 'apps/circuits/models/timer_info.php';
+include_once 'apps/aaa/models/user_info.php';
 include_once 'apps/circuits/models/oscars_reservation.php';
 
 include_once 'apps/bpm/models/request_info.php';
@@ -58,6 +59,12 @@ class reservations extends Controller {
                 $timer = new timer_info();
                 $timer->tmr_id = $r->tmr_id;
                 $res->timer = $timer->getTimerDetails();
+                
+                $user = new user_info();
+                $user->usr_id = $r->usr_id;
+                $res->usr_login = $user->getLogin();
+                
+                Framework::debug("login", $res);
 
                 $dom = new domain_info();
                 if ($domain = $dom->getOSCARSDomain($res->flow->source->urn)) {
@@ -567,6 +574,8 @@ class reservations extends Controller {
             $reservation->flw_id = $new_flow->flw_id;
             $reservation->tmr_id = $new_timer->tmr_id;
             $reservation->creation_time = $res_diff_timestamp;
+            $reservation->usr_id = AuthSystem::getUserLogin();
+            Framework::debug("usuario", $reservation);
         } else {
             $this->setFlash(_('Fail to save endpoints or timer on database'), 'error');
             $this->show();
@@ -654,6 +663,10 @@ class reservations extends Controller {
         $flow_info->flw_id = $reservation->flw_id;
         $flow = $flow_info->getFlowDetails();
 
+        $usr_info = new user_info();
+        $usr_info->usr_id = $reservation->usr_id;
+        $usr_login = $usr_info->getLogin();
+        
         $dom = new domain_info();
         if ($domain = $dom->getOSCARSDomain($flow->source->urn)) {
             $flow->source->domain = $domain->dom_descr;
@@ -761,6 +774,7 @@ class reservations extends Controller {
         $this->setArgsToScript(array(
             "refreshReservation" => $refresh,
             "reservation_id" => $reservation->res_id,
+            "user_login" => $usr_login,
             "status_array" => $status,
             "src_lat_network" => $flow->source->latitude,
             "src_lng_network" => $flow->source->longitude,
@@ -787,6 +801,7 @@ class reservations extends Controller {
         $args->res_id = $reservation->res_id;
         $args->request = $request;
         $args->refresh = $refresh;
+        $args->usr_login = $usr_login;
 
         $this->setAction('view');
         $this->setArgsToBody($args);

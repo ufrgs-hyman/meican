@@ -22,6 +22,7 @@ class reservation_info extends Resource_Model {
         $this->addAttribute("bandwidth", "INTEGER");
         $this->addAttribute("flw_id", "INTEGER");
         $this->addAttribute("tmr_id", "INTEGER");
+        $this->addAttribute("usr_id", "INTEGER");
 
         $this->addAttribute("creation_time", "VARCHAR");
     }
@@ -119,6 +120,11 @@ class reservation_info extends Resource_Model {
         $timer->tmr_id = $res[0]->tmr_id;
         $tmp = $timer->fetch();
         $timer_info = $tmp[0];
+        
+        $user = new user_info();
+        $user->usr_id = $res[0]->usr_id;
+        $tmp = $user->fetch();
+        $user_info = $tmp[0];
 
         $return = array(
                 'res_id' => $this->res_id,
@@ -131,7 +137,8 @@ class reservation_info extends Resource_Model {
                 'path' => $flow_info->path,
                 'timer_begin' => $timer_info->begin_timestamp,
                 'timer_end' => $timer_info->end_timestamp,
-                'timer_rec' => $timer_info->summary
+                'timer_rec' => $timer_info->summary,
+                'usr_login' => $user_info->usr_login
         );
 
         $object = (object) $return;

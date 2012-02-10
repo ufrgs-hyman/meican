@@ -8,6 +8,7 @@ $res_id = $this->passedArgs->res_id;
 $request = $this->passedArgs->request;
 $bandwidth = $this->passedArgs->bandwidth;
 $refresh = $this->passedArgs->refresh;
+$usr_login = $this->passedArgs->usr_login;
 
 ?>
 
@@ -23,6 +24,9 @@ $refresh = $this->passedArgs->refresh;
                 <tr>
                     <th style="border-bottom:none; padding-right: 5px"><?php echo _("Reservation name"); ?>:</th>
                     <th style="border-bottom:none; padding-left: 5px; color: #3a5879"><?php echo $name; ?></th>
+                </tr>
+                <tr>
+                    <th style="border-bottom:none; padding-right: 5px; text-align: left"><?php echo _("User"); ?>: <?php echo $usr_login; ?></th>
                 </tr>
             </table>
             

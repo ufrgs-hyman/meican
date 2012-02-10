@@ -33,7 +33,9 @@ CREATE TABLE IF NOT EXISTS `reservation_info` (
   `tmr_id` int(11) NOT NULL,
   `bandwidth` int(11) NOT NULL,
   `creation_time` varchar(15) DEFAULT NULL,
+  `usr_id` int(16) DEFAULT NULL,
   PRIMARY KEY (`res_id`),
   KEY `flow_id` (`flw_id`),
-  KEY `timer_id` (`tmr_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  KEY `timer_id` (`tmr_id`),
+  KEY `usr_id` (`usr_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
