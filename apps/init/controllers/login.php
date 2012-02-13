@@ -18,7 +18,7 @@ class login extends Controller {
         if ($message){
             $this->setArgsToBody($message);
         }
-        $this->setLayout('empty');
+        $this->layout = 'empty';
         
         $this->render();
     }

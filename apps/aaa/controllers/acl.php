@@ -160,8 +160,7 @@ class acl extends Controller {
             $args->acos = $acos;
         } else
             $args = FALSE;
-        
-        $this->setLayout('empty');
+        $this->layout = 'empty';
         $this->setAction('ajax');
         $this->setArgsToBody($args);
         $this->render();
@@ -175,7 +174,7 @@ class acl extends Controller {
             $this->setArgsToBody($result);
         }
         
-        $this->setLayout('empty');
+        $this->layout = 'empty';
         $this->setAction('ajax');
 
         $this->render();
