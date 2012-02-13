@@ -155,6 +155,7 @@ class reservations extends Controller {
     }
 
     public function refresh_status() {
+        Configure::write('debug', 0);
         $this->setAction("ajax");
         $this->setLayout("empty");
 
@@ -163,7 +164,7 @@ class reservations extends Controller {
         $gris = new gri_info();
         $resToRefresh = $gris->getStatusResId($dom_id);
         
-        debug("res array to refresh",$resToRefresh);
+        //debug("res array to refresh",$resToRefresh);
         
         $res_info = new reservation_info();
         $res_info->res_id = $resToRefresh;
@@ -191,7 +192,7 @@ class reservations extends Controller {
                 }
             }
         } else {
-            debug("Falha ao buscar reservas no refresh status");
+            Log::write('debug', "Falha ao buscar reservas no refresh status");
             $this->setArgsToBody(FALSE);
             $this->render();
             return;
@@ -206,7 +207,7 @@ class reservations extends Controller {
             $dom->dom_id = $dom_id;
             $oscars_ip = $dom->get('oscars_ip');
             
-            debug("gri list ro refresh", $griList);
+            Log::write('debug', "gri list ro refresh", $griList);
 
             $oscarsRes = new OSCARSReservation();
             $oscarsRes->setOscarsUrl($oscars_ip);
@@ -215,7 +216,7 @@ class reservations extends Controller {
             if ($oscarsRes->listReservations()) {
                 $statusResult = $oscarsRes->getStatusArray();
             } else {
-                debug("Falha ao conectar OSCARS ($oscars_ip) no refresh status");
+                Log::write('debug', "Falha ao conectar OSCARS ($oscars_ip) no refresh status");
                 $this->setArgsToBody(FALSE);
                 $this->render();
                 return;
@@ -223,7 +224,7 @@ class reservations extends Controller {
         }
 
         if (count($statusResult) != count($griList)) {
-            debug("Problema de consistencia na refresh status", $statusResult);
+            Log::write('debug', "Problema de consistencia na refresh status", $statusResult);
             $this->setArgsToBody(FALSE);
             $this->render();
             return;
