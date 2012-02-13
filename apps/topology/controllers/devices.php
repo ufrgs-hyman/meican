@@ -30,7 +30,7 @@ class devices extends Controller {
 
         if ($allDevices) {
             $devices = array();
-            $acl = new AclLoader();
+            $acl = AclLoader::getInstance();
             
             foreach ($allDevices as $d) {
                 $device = new stdClass();

@@ -26,7 +26,7 @@ class groups extends Controller {
 
         if ($allGroups) {
             $groups = array();
-            $acl = new AclLoader();
+            $acl = AclLoader::getInstance();
             
             foreach ($allGroups as $grp) {
                 $group = new stdClass();
@@ -76,7 +76,7 @@ class groups extends Controller {
         $usersLeftArray = array();
 
         if ($allUsers) {
-            $acl = new AclLoader();
+            $acl = AclLoader::getInstance();
 
             foreach ($allUsers as $usr) {
                 $user = new stdClass();
@@ -160,7 +160,7 @@ class groups extends Controller {
             $group = $result[0];
         }
         
-        $acl = new AclLoader();
+        $acl = AclLoader::getInstance();
 
         // busca usuários que não pertencem ao grupo
         $allUsers = $group->fetchUsers(FALSE);

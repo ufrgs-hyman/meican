@@ -43,7 +43,7 @@ class MenuView {
         $menuView = new MenuView();
 
         $ind = 0;
-
+        $acl = AclLoader::getInstance();
         foreach ($menu->item as $i) {
 
             $temp = new Item();
@@ -59,7 +59,6 @@ class MenuView {
                     if ($s->right && $s->model) {
                         $rights = explode(',',$s->right);
                         $showSubItem = FALSE;
-                        $acl = new AclLoader();
                         foreach ($rights as $r) {
                             $showSubItem |= $acl->checkACL($r, $s->model);
                         }

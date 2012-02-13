@@ -360,7 +360,7 @@ class AclLoader extends Tree_Model {
     
     // Guarda uma instância da classe
     private static $instance;
-    function getInstance(){
+    public static function getInstance(){
         if (!isset(self::$instance)) {
             $c = __CLASS__;
             self::$instance = new $c;

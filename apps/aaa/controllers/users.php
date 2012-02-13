@@ -24,14 +24,14 @@ class users extends Controller {
         /** @todo
          *  transformar essas consultas em uma função
          */
-        $acl = new AclLoader();
+        $acl = AclLoader::getInstance();
 
         $usr_info = new user_info();
         $allUsers = $usr_info->fetch();
 
         if ($allUsers) {
             $users = array();
-            $acl = new AclLoader();
+            $acl = AclLoader::getInstance();
             
             foreach ($allUsers as $usr) {
                 $user = new stdClass();
@@ -70,7 +70,7 @@ class users extends Controller {
 
         if ($allGroups) {
             $leftArray = array();
-            $acl = new AclLoader();
+            $acl = AclLoader::getInstance();
 
             foreach ($allGroups as $grp) {
                 $group = new stdClass();
@@ -166,7 +166,7 @@ class users extends Controller {
             return;
         }
         
-        $acl = new AclLoader();
+        $acl = AclLoader::getInstance();
         if ($acl->checkACL('update', 'user_info', $userId)) {
 
             // instancia objeto do modelo
@@ -251,7 +251,7 @@ class users extends Controller {
             return;
         }
 
-        $acl = new AclLoader();
+        $acl = AclLoader::getInstance();
         if ($acl->checkACL('update', 'user_info', $userId)) {
 
             $user = new user_info();

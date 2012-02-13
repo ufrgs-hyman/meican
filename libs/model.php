@@ -73,7 +73,7 @@ class Model {
 
         $sql = "";
         if ($useACL) {
-            $acl = new AclLoader();
+            $acl = AclLoader::getInstance();
             $allowPks = $acl->getAllowedPKey('read', $tableName);
 
             if ($allowPks) {
@@ -290,7 +290,7 @@ class Model {
 
         if ($useACL) {
 
-            $acl = new AclLoader();
+            $acl = AclLoader::getInstance();
             $allowPks = $acl->getAllowedPKey('update', $tableName);
 
             if ($allowPks) {
@@ -413,7 +413,7 @@ class Model {
         $values = get_object_vars($this);
         $whereArgs = array();
         if ($useACL) {
-            $acl = new AclLoader();
+            $acl = AclLoader::getInstance();
             $restr = $acl->getAllowedPKey('delete', $tableName);
 
             //delete nao permite where do tipo IN

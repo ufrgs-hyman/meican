@@ -303,7 +303,7 @@ class MeicanTopology {
                 $port->min_capacity = ($u->min_capacity) ? (integer) $u->min_capacity : 100;
                 $port->granularity = ($u->granularity) ? (integer) $u->granularity : 100;
                 
-                $acl = new AclLoader();
+                $acl = AclLoader::getInstance();
                 if ($acl->checkACL('create', 'urn_info', $u->urn_id)) {
                     $port->allow_create = TRUE;
                 } else {
