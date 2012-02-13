@@ -6,7 +6,7 @@
  */
 
 if (!class_exists('Set')) {
-    require LIBS . 'set.php';
+    require LIBS . 'Utility/Set.php';
 }
 
 class Configure {
@@ -145,5 +145,56 @@ class Configure {
 
 	public static function load($file) {
 		return self::write(@include($file));
+	}
+    
+    
+/**
+ * Initializes configure and runs the bootstrap process.
+ * Bootstrapping includes the following steps:
+ *
+ * - Setup App array in Configure.
+ * - Include app/Config/core.php.
+ * - Configure core cache configurations.
+ * - Load App cache files.
+ * - Include app/Config/bootstrap.php.
+ * - Setup error/exception handlers.
+ *
+ * @param boolean $boot
+ * @return void
+ */
+	public static function bootstrap($boot = true) {
+		if ($boot) {
+			/*self::write('App', array(
+				'base' => false,
+				'baseUrl' => false,
+				'dir' => APP_DIR,
+				'webroot' => WEBROOT_DIR,
+				'www_root' => WWW_ROOT
+			));*/
+            
+            self::load('config/main.php');
+            self::load('config/local.php');
+/*
+			if (!include(APP . 'Config' . DS . 'core.php')) {
+				trigger_error(__d('cake_dev', "Can't find application core file. Please create %score.php, and make sure it is readable by PHP.", APP . 'Config' . DS), E_USER_ERROR);
+			}
+			App::$bootstrapping = false;
+			App::init();
+			App::build();
+			if (!include(APP . 'Config' . DS . 'bootstrap.php')) {
+				trigger_error(__d('cake_dev', "Can't find application bootstrap file. Please create %sbootstrap.php, and make sure it is readable by PHP.", APP . 'Config' . DS), E_USER_ERROR);
+			}*/
+			$level = -1;
+			if (isset(self::$_values['Error']['level'])) {
+				error_reporting(self::$_values['Error']['level']);
+				$level = self::$_values['Error']['level'];
+			}
+			if (!empty(self::$_values['Error']['handler'])) {
+				set_error_handler(self::$_values['Error']['handler'], $level);
+			}
+			if (!empty(self::$_values['Exception']['handler'])) {
+				set_exception_handler(self::$_values['Exception']['handler']);
+			}
+		}
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-include_once 'libs/model.php';
+include_once 'libs/Model/model.php';
 include_once 'apps/aaa/models/aros.php';
 include_once 'apps/aaa/models/acos.php';
 
@@ -74,7 +74,7 @@ class group_info extends Model {
                         foreach ($parents as $p) {
                             $u_aro = new Aros($d, 'user_info', $p->aro_id);
                             $result = $u_aro->fetch(FALSE);
-                            //Framework::debug('removearo',$result[0]);
+                            //debug('removearo',$result[0]);
                             $result[0]->removeSubTree();
                         }
 
@@ -84,7 +84,7 @@ class group_info extends Model {
                         foreach ($parents as $p) {
                             $u_aco = new Acos($d, 'user_info', $p->aco_id);
                             $result = $u_aco->fetch(FALSE);
-                            //Framework::debug('removeaco',$result[0]);
+                            //debug('removeaco',$result[0]);
                             $result[0]->removeSubTree();
                         }
                     }
@@ -260,11 +260,11 @@ class group_info extends Model {
 //        } else $resUpdate = TRUE;
 
             if ($resDelAco && $resDelAro) {
-                Framework::debug("delete ok");
+                debug("delete ok");
 
                 $sql = "SELECT * FROM group_info";
                 $res = $this->querySql($sql);
-                //Framework::debug('teste',$res);
+                //debug('teste',$res);
                 return TRUE;
             } else
                 return FALSE;

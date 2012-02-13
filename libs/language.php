@@ -1,5 +1,4 @@
 <?php
-include_once 'meican.conf.php';
 include_once 'libs/cookies.php';
 include_once 'libs/common.php';
 

@@ -1,6 +1,6 @@
 <?php
 
-include_once 'libs/model.php';
+include_once 'libs/Model/model.php';
 
 class Tree_Model extends Model {
 
@@ -11,7 +11,7 @@ class Tree_Model extends Model {
     function addChild2($child) {
 
         if (!($child->obj_id && $child->model)) {
-            Framework::debug('child param not set', $child);
+            debug('child param not set', $child);
             return FALSE;
         }
 
@@ -27,7 +27,7 @@ class Tree_Model extends Model {
             $whereString = $this->buildWhere(array('obj_id','model'));
             $sqlQuery = "SELECT $pk,rgt FROM $tableName WHERE $whereString";
         } else {
-            Framework::debug('parent node param not set', $this);
+            debug('parent node param not set', $this);
             return FALSE;
         }
 
@@ -69,7 +69,7 @@ class Tree_Model extends Model {
         $pk = $this->getPrimaryKey();
 
         if (!$this->{$pk}) {
-            Framework::debug('set the primary key to removesubtree.',$pk);
+            debug('set the primary key to removesubtree.',$pk);
             return FALSE;
         }
 
@@ -102,7 +102,7 @@ class Tree_Model extends Model {
         $pk = $this->getPrimaryKey();
 
         if (!$this->{$pk}) {
-            Framework::debug('set the primary key to removenode.',$pk);
+            debug('set the primary key to removenode.',$pk);
             return FALSE;
         }
 
@@ -124,7 +124,7 @@ class Tree_Model extends Model {
         $sqlQuery .= "UPDATE $tableName SET rgt = rgt - 2 WHERE rgt > $right;";
 
         if ($this->transactionSql($sqlQuery)){
-            Framework::debug("remove node");
+            debug("remove node");
             Common::apc_update();
             return TRUE;
         } else {
@@ -185,7 +185,7 @@ class Tree_Model extends Model {
         $pk = $this->getPrimaryKey();
 
         if (!$this->{$pk}) {
-            Framework::debug('set the primary key to findchildren.',$pk);
+            debug('set the primary key to findchildren.',$pk);
             return FALSE;
         } else {
             $and = " AND parent.$pk=".$this->{$pk};
@@ -266,7 +266,7 @@ class Tree_Model extends Model {
 //
 //        $result = $this->transactionSql($sqlQuery);
 //
-//        //Framework::debug('insert',$sqlQuery);
+//        //debug('insert',$sqlQuery);
 //
 //        $sqlQuery = "UNLOCK TABLES";
 //
@@ -285,7 +285,7 @@ class Tree_Model extends Model {
 //
 //
 //            if (!$this->{$pk}){
-//                 Framework::debug('set the primary key to getparentnode.',$pk);
+//                 debug('set the primary key to getparentnode.',$pk);
 //                return FALSE;
 //            } else {
 //                    $and = "AND node.$pk =".$this->{$pk};
@@ -301,7 +301,7 @@ class Tree_Model extends Model {
 //                ORDER BY parent.lft DESC
 //                LIMIT 0,1";
 //
-//        //Framework::debug('parentnode',$sql);
+//        //debug('parentnode',$sql);
 //        //primeiro resultado será o pai direto
 //        return $this->querySql($sql);
 //

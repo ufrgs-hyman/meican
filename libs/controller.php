@@ -1,8 +1,9 @@
 <?php
 
 include_once 'libs/view.php';
+include_once 'libs/Basics/Object.php';
 
-class Controller {
+class Controller extends Object {
 
     private $layout = "default";
     private $flash = array();
@@ -16,6 +17,15 @@ class Controller {
     public $action = NULL;
     protected $defaultAction;
     public $viewVars = array('scripts_for_layout' => array());
+    public $name = null;
+    
+    public function __construct(){
+        
+		if ($this->name === null) {
+			$this->name = substr(get_class($this), 0, strlen(get_class($this)) -10);
+		}
+        parent::__construct();
+    }
 
     public function render($action=null) {
         //modificar para referenciar direto controller, nao passando os parametros para o construtor
@@ -31,7 +41,7 @@ class Controller {
         }*/
 //        $teste = ::rescueVar('last_view');
 //        if ($teste === FALSE) {
-//            $app = Framework::Configure::read('mainApp');
+//            $app = Configure::read('mainApp');
 //            $teste = "app=$app";
 //        }
 //        debug("last view", $teste);
@@ -78,29 +88,9 @@ class Controller {
     protected function setArgsToScript($args) {
         $this->argsToScript = $args;
     }
-
-    public function setApp($app) {
-        $this->app = $app;
-    }
-
-    public function getApp() {
-        return $this->app;
-    }
-
-    public function setController($controller) {
-        $this->controller = $controller;
-    }
-
-    public function getController() {
-        return $this->controller;
-    }
-
+    
     public function setAction($action) {
         $this->action = $action;
-    }
-
-    public function getAction() {
-        return $this->action;
     }
 
     public function getDefaultAction() {
@@ -154,7 +144,44 @@ class Controller {
             }
             $this->viewVars = $data + $this->viewVars;
     }
+    
+    
+/**
+ * Dispatches the controller action.  Checks that the action
+ * exists and isn't private.
+ *
+ * @param CakeRequest $request
+ * @return mixed The resulting response.
+ * @throws PrivateActionException, MissingActionException
+ */
+	public function invokeAction($params) {
+        if (empty($params['action']))
+            $params['action'] = $this->getDefaultAction();
+		try {
+            $this->app = $params['app'];
+            $this->action = $params['action'];
+            $this->name = $this->controller = $params['controller'];
+            $this->params = $params;
+			$method = new ReflectionMethod($this, $params['action']);
+            $privateAction = (
+                $method->name[0] === '_' ||
+                !$method->isPublic() /*||
+                !in_array($method->name,  $this->methods)*/
+            );
+			if ($privateAction) {
+				throw new PrivateActionException(array(
+					'controller' => $this->name . "Controller",
+					'action' => $params['action']
+				));
+			}
+			return $method->invokeArgs($this, $params['pass']);
+
+		} catch (ReflectionException $e) {
+			throw new MissingActionException(array(
+				'controller' => $this->name . "Controller",
+				'action' => $params['action']
+			));
+		}
+	}
 
 }
-
-?>

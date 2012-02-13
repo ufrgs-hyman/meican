@@ -47,7 +47,7 @@ class ode extends Controller {
                 $upl .= 'Size: ' . ($_FILES['upload']['size'] / 1024);
                 ' Kb';
                 $upl .= 'Stored in: ' . $_FILES['upload']['tmp_name'];
-                Framework::debug('upload file',$upl);
+                debug('upload file',$upl);
 
                 try {
                     if ($client = new SoapClient("http://$this->ode_ip/ode/processes/DeploymentService?wsdl",array('cache_wsdl' => 0))) {
@@ -64,7 +64,7 @@ class ode extends Controller {
                     }
 
                 } catch (Exception $e) {
-                    Framework::debug('ODE Error: '. $e->getMessage());
+                    debug('ODE Error: '. $e->getMessage());
                     $this->setFlash(_('Fail to deploy process: '.$error ), 'error');
                 }
             }

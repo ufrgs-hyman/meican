@@ -28,6 +28,7 @@ class reservations extends Controller {
         $this->app = 'circuits';
         $this->controller = 'reservations';
         $this->defaultAction = 'show';
+        parent::__construct();
     }
 
     public function show($filterArray=array()) {
@@ -153,6 +154,7 @@ class reservations extends Controller {
     }
 
     public function refresh_status() {
+        Configure::write('debug', 0);
         $this->setAction("ajax");
         $this->layout = 'empty';
 
@@ -161,14 +163,14 @@ class reservations extends Controller {
         $gris = new gri_info();
         $resToRefresh = $gris->getStatusResId($dom_id);
         
-        Framework::debug("res array to refresh",$resToRefresh);
+        //debug("res array to refresh",$resToRefresh);
         
         $res_info = new reservation_info();
         $res_info->res_id = $resToRefresh;
         
         $reservations = $res_info->fetch();
         
-        //Framework::debug("res to refresh",$reservations);
+        //debug("res to refresh",$reservations);
 
         /**
          * Transforma a lista bidimensional de gris para uma lista unidimensional -> para realizar uma só consulta ao OSCARS
@@ -189,7 +191,7 @@ class reservations extends Controller {
                 }
             }
         } else {
-            Framework::debug("Falha ao buscar reservas no refresh status");
+            Log::write('debug', "Falha ao buscar reservas no refresh status");
             $this->setArgsToBody(FALSE);
             $this->render();
             return;
@@ -204,7 +206,7 @@ class reservations extends Controller {
             $dom->dom_id = $dom_id;
             $oscars_ip = $dom->get('oscars_ip');
             
-            Framework::debug("gri list ro refresh", $griList);
+            Log::write('debug', "gri list ro refresh", $griList);
 
             $oscarsRes = new OSCARSReservation();
             $oscarsRes->setOscarsUrl($oscars_ip);
@@ -213,7 +215,7 @@ class reservations extends Controller {
             if ($oscarsRes->listReservations()) {
                 $statusResult = $oscarsRes->getStatusArray();
             } else {
-                Framework::debug("Falha ao conectar OSCARS ($oscars_ip) no refresh status");
+                Log::write('debug', "Falha ao conectar OSCARS ($oscars_ip) no refresh status");
                 $this->setArgsToBody(FALSE);
                 $this->render();
                 return;
@@ -221,13 +223,13 @@ class reservations extends Controller {
         }
 
         if (count($statusResult) != count($griList)) {
-            Framework::debug("Problema de consistencia na refresh status", $statusResult);
+            Log::write('debug', "Problema de consistencia na refresh status", $statusResult);
             $this->setArgsToBody(FALSE);
             $this->render();
             return;
         }
 
-        //Framework::debug("result list", $statusResult);
+        //debug("result list", $statusResult);
 
         /**
          * Atualiza no banco os status que mudaram
@@ -267,7 +269,7 @@ class reservations extends Controller {
             $statusList[] = $status_obj;
         }
 
-        //Framework::debug('status', $statusList);
+        //debug('status', $statusList);
         //echo json_encode($statusList);
         $this->setArgsToBody($statusList);
         $this->render();
@@ -278,7 +280,7 @@ class reservations extends Controller {
         $this->layout = 'empty';
 
         $res_id = Common::POST("res_id");
-        Framework::debug("gri stats",$res_id);
+        debug("gri stats",$res_id);
 
         $gri = new gri_info();
         $gri->res_id = $res_id;
@@ -316,7 +318,7 @@ class reservations extends Controller {
                 if ($oscarsRes->listReservations()) {
                     $statusResult = $oscarsRes->getStatusArray();
                 } else {
-                    Framework::debug("Falha ao conectar OSCARS no refresh status");
+                    debug("Falha ao conectar OSCARS no refresh status");
                     $this->setArgsToBody(FALSE);
                     $this->render();
                     return;
@@ -355,7 +357,7 @@ class reservations extends Controller {
             $this->setArgsToBody($statusList);
             $this->render();
         } else {
-            Framework::debug("Falha ao buscar gris no refresh status");
+            debug("Falha ao buscar gris no refresh status");
             $this->setArgsToBody(FALSE);
             $this->render();
         }
@@ -395,7 +397,7 @@ class reservations extends Controller {
 
                 $domain->networks = $networks;
                 $domToMapArray[] = $domain;
-                //Framework::debug("tempo", (microtime(true) - $before));
+                //debug("tempo", (microtime(true) - $before));
 
                 //$urns_tmp = Common::arrayExtractAttr(MeicanTopology::getURNs($d->dom_id), 'urn_string');
                 //array_push($allUrns, $urns_tmp);
@@ -549,7 +551,7 @@ class reservations extends Controller {
         $res_begin_timestamp = Common::getSessionVariable("res_begin_timestamp");
         $res_diff_timestamp = $res_end_timestamp - $res_begin_timestamp;
 
-//        Framework::debug("post", $_POST);
+//        debug("post", $_POST);
 //        $this->add_form();
 //        return;
 
@@ -573,7 +575,7 @@ class reservations extends Controller {
             $reservation->tmr_id = $new_timer->tmr_id;
             $reservation->creation_time = $res_diff_timestamp;
             $reservation->usr_id = AuthSystem::getUserLogin();
-            Framework::debug("usuario", $reservation);
+            debug("usuario", $reservation);
         } else {
             $this->setFlash(_('Fail to save endpoints or timer on database'), 'error');
             $this->show();
@@ -717,8 +719,8 @@ class reservations extends Controller {
             return;
         }
 
-        Framework::debug("flow", $flow);
-        Framework::debug("timer", $timer);
+        debug("flow", $flow);
+        debug("timer", $timer);
 
         $req = new request_info();
         $req->resource_id = $reservation->res_id;
@@ -893,7 +895,7 @@ class reservations extends Controller {
                         $oscarsRes = new OSCARSReservation();
                         $oscarsRes->setOscarsUrl($oscars_ip);
                         $oscarsRes->setGri($g->gri_descr);
-                        Framework::debug("gri to cancel",$g->gri_descr);
+                        debug("gri to cancel",$g->gri_descr);
                         /**
                          * @todo cancelar várias reservas de uma só vez
                          */
@@ -932,12 +934,12 @@ class reservations extends Controller {
         $oscarsRes->setOscarsUrl("200.132.1.28:8080"); //oscars2
         $oscarsRes->setGrisString($grisArray);
         $result = $oscarsRes->listReservations();
-        Framework::debug("result do list", $result);
+        debug("result do list", $result);
     }
 
     function send($reservation_info) {
         
-        Framework::debug("res send",$reservation_info);
+        debug("res send",$reservation_info);
 
         $flw_id = $reservation_info->flw_id;
 
@@ -993,7 +995,7 @@ class reservations extends Controller {
             $tmp->setStartTimestamp($t->start); //em timestamp
             $tmp->setEndTimestamp($t->finish);
 
-            Framework::debug("tmp", $tmp);
+            debug("tmp", $tmp);
 
             if ($tmp->createReservation()) {
                 $resSent++;
@@ -1047,7 +1049,7 @@ class reservations extends Controller {
                 'dom_dst_ip' => $dst_dom->oscars_ip,
                 'usr_src' => $newReq->src_usr);
 
-            Framework::debug('ira enviar para autorizaçao...', $requestSOAP);
+            debug('ira enviar para autorizaçao...', $requestSOAP);
             try {
                 $client = new SoapClient($businessEndpoint, array('cache_wsdl' => 0));
 
@@ -1059,7 +1061,7 @@ class reservations extends Controller {
 
                 return TRUE;
             } catch (Exception $e) {
-                Framework::debug("Caught exception: ", $e->getMessage());
+                debug("Caught exception: ", $e->getMessage());
                 $this->setFlash(_('Error at invoking business layer.'));
                 $newReq->status = 'SENT FOR AUTHORIZATION';
 
@@ -1071,10 +1073,10 @@ class reservations extends Controller {
     }
 
     public function check() {
-        Framework::debug("chegou no controller");
+        debug("chegou no controller");
         $gris = new gri_info();
         $all = $gris->fetch(FALSE);
-        Framework::debug("gris", $all);
+        debug("gris", $all);
 
         foreach ($all as $g) {
             if ($g->send)

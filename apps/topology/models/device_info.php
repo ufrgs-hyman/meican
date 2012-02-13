@@ -1,6 +1,6 @@
 <?php
 
-include_once 'libs/resource_model.php';
+include_once 'libs/Model/resource_model.php';
 
 class device_info extends Resource_Model {
     //var $displayField = "dev_descr";
@@ -30,7 +30,7 @@ class device_info extends Resource_Model {
 
 //    public function fetchNetwork() {
 //        if (!isset($this->dev_id)) {
-//            //Framework::debug('Set $this->dev_id');
+//            //debug('Set $this->dev_id');
 //            return FALSE;
 //        }
 //

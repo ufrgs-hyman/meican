@@ -1,6 +1,6 @@
 <?php
 
-include_once 'libs/model.php';
+include_once 'libs/Model/model.php';
 
 class aros_acos extends Model {
 

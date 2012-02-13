@@ -12,7 +12,7 @@ class Datasource {
 
         $this->mdb2 = MDB2::singleton($conf);
         if (MDB2::isError($this->mdb2)) {
-            Framework::debug($this->mdb2->getMessage() . ", " . $this->mdb2->getDebugInfo());
+            debug($this->mdb2->getMessage() . ", " . $this->mdb2->getDebugInfo());
             die($this->mdb2->getMessage());
         }
         return true;
@@ -22,10 +22,6 @@ class Datasource {
         if (empty($this->mdb2))
             return;
         $this->mdb2->disconnect();
-    }
-
-    private function __destruct() {
-        $this->close();
     }
 
     static function &getInstance() {

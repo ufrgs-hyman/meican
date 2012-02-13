@@ -78,7 +78,7 @@ class ws extends Controller {
                 'Complex Hello World Method');
 
        function getResInfo($res_id_list) {
-            Framework::debug('getresinfo',$res_id_list);
+            debug('getresinfo',$res_id_list);
             if (isset($res_id_list) && is_array($res_id_list)) {
                 $ind = 0;
                 unset($res_info_list);
@@ -100,7 +100,7 @@ class ws extends Controller {
         }
 
         function getFlowInfo($res_id) {
-            Framework::debug('getflowinfo',$res_id);
+            debug('getflowinfo',$res_id);
             if (isset($res_id) && is_int($res_id)) {
                 $reservation = new reservation_info();
                 $reservation->res_id = $res_id;
@@ -108,7 +108,7 @@ class ws extends Controller {
                 $res = $reservation->fetch(FALSE);
 
                 if (!$res) {
-                    Framework::debug('reservation not found');
+                    debug('reservation not found');
                     return NULL;
                 } else {
 
@@ -120,18 +120,18 @@ class ws extends Controller {
                         return $return;
                         
                     } else {
-                        Framework::debug('flow not found');
+                        debug('flow not found');
                         return NULL;
                     }
                 }
             } else {
-                Framework::debug('res_id not int');
+                debug('res_id not int');
                 return NULL;
             }
         }
 
         function getTimerInfo($res_id) {
-            Framework::debug('gettimerinfo',$res_id);
+            debug('gettimerinfo',$res_id);
             if (isset($res_id) && is_int($res_id)) {
                 $reservation = new reservation_info();
                 $reservation->res_id = $res_id;
@@ -139,7 +139,7 @@ class ws extends Controller {
                 $res = $reservation->fetch(FALSE);
 
                 if (!$res) {
-                    Framework::debug('reservation not found');
+                    debug('reservation not found');
                     return NULL;
                 }
 
@@ -148,7 +148,7 @@ class ws extends Controller {
                 $timer_info = $timer->fetch(FALSE);
 
                 if (!$timer) {
-                    Framework::debug('timer not found');
+                    debug('timer not found');
                     return NULL;
                 }
 

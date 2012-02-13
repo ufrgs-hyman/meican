@@ -1,44 +1,11 @@
 <?php
 
-function myErrorHandler($errno, $errstr, $errfile, $errline)
-{
-    if (!(error_reporting() & $errno)) {
-        // This error code is not included in error_reporting
-        return;
-    }
-
-    switch ($errno) {
-    case E_USER_ERROR:
-        echo "<b>My ERROR</b> [$errno] $errstr<br />\n";
-        echo "  Fatal error on line $errline in file $errfile";
-        echo ", PHP " . PHP_VERSION . " (" . PHP_OS . ")<br />\n";
-        echo "Aborting...<br />\n";
-        exit(1);
-        break;
-
-    case E_USER_WARNING:
-        echo "<b>My WARNING</b> [$errno] $errstr<br />\n";
-        break;
-
-    case E_USER_NOTICE:
-        echo "<b>My NOTICE</b> [$errno] $errstr<br />\n";
-        break;
-
-    default:
-        echo "Unknown error type: [$errno] $errstr<br />\n";
-        break;
-    }
-
-    /* Don't execute PHP internal error handler */
-    return true;
-}
-
-
 include_once 'libs/app.php';
-include_once 'libs/configure.php';
-include_once 'libs/datasource.php';
+include_once 'libs/Basics/Configure.php';
+include_once 'libs/Basics/Object.php';
+include_once 'libs/Model/datasource.php';
 include_once 'libs/language.php';
-include_once 'libs/database.php';
+include_once 'libs/Model/database.php';
 
 /**
  * Dispatcher Class. Reads required url and instanciate properly apps, controller and calls an action.
@@ -48,16 +15,13 @@ include_once 'libs/database.php';
 class Dispatcher {
 
     public function __construct($defaults = array()) {
-        $this->defaults = array_merge(array('app' => 'init', 'controller' => 'gui', 'action' => '', 'param' => array()));
+        $this->defaults = array_merge(array('app' => 'init', 'controller' => 'gui', 'action' => '', 'pass' => array()));
         $this->base = dirname(env('PHP_SELF'));
         if ($this->base === DS || $this->base === '.') {
 				$this->base = '';
 			}
         if ($this->base == '/')
             $this->base = '';
-        Configure::load('config/main.php');
-        Configure::load('config/local.php');
-        Configure::write('systemDirName', $this->base);
     }
     
     // Método Factory parametrizado
@@ -76,7 +40,6 @@ class Dispatcher {
      * Main function, reads url and call action
      */
     function dispatch($params = array()) {
-        //set_error_handler('myErrorHandler');
         if (!empty($_SERVER['PATH_INFO']))
             $url = $_SERVER['PATH_INFO'];
         else if (array_key_exists('url', $_GET))
@@ -92,32 +55,43 @@ class Dispatcher {
         if ($controller !== 'ws' && !$this->checkLogin()) //TODO: authetication for webservices
             return;
         try {
-            if (empty($app))
-                $app = Configure::read('mainApp');
+            $this->bootstrap();
+            if (empty($this->params['app']))
+                $this->params['app'] = Configure::read('mainApp');
             if (!($app = $this->appFactory($app)))
                 throw new Exception(_("Invalid app"));
-            Language::setLang(get_class($app));
-            if (empty($controller))
-                $controller = $app->getDefaultController();
-            if (!($controller = $app->loadController($controller)))
-                throw new Exception(_("Invalid controller"));
-            if (empty($action))
-                $action = $controller->getDefaultAction();
-            if (!$action || !method_exists($controller, $action))
-                ;//throw new Exception(_("Invalid action"));
-            else
-                $controller->$action($param);
+            Language::setLang($this->params['app']);
+            if (empty($this->params['controller']))
+                $this->params['controller'] = $app->getDefaultController();       
+            $controller = $app->loadController($controller);
+
+            if (!($controller instanceof Controller)) {
+                throw new MissingControllerException(array(
+                    'class' => $controller . 'Controller'
+                ));
+            }
+            $controller->invokeAction($this->params);
         } catch (Exception $e) {
             echo $e->getMessage();
         }
         Datasource::getInstance()->close();
+    }
+    
+    public function bootstrap(){
+        include_once 'libs/Log/Log.php';
+        Log::config('default', array(
+            'engine' => 'FileLog'
+        ));
+        include_once 'libs/Error/ErrorHandler.php';
+        Configure::bootstrap(true);
+        Configure::write('systemDirName', $this->base);
     }
 
     /**
      * Check wether a user is logged in, otherwise redirects to login page.
      * @return Boolean  
      */
-    function checkLogin() {
+    public function checkLogin() {
         include_once 'libs/auth.php';
         if (AuthSystem::userTryToLogin() || AuthSystem::isUserLoggedIn()) {
             return true;
@@ -167,9 +141,9 @@ class Dispatcher {
             foreach ($params as $par) {
                 $p = explode(':', $par);
                 if (count($p) === 1)
-                    $route['param'][] = $p[0];
+                    $route['pass'][] = $p[0];
                 else
-                    $route['param'][$p[0]] = $p[1];
+                    $route['pass'][$p[0]] = $p[1];
             }
         } else if (count($val) == 2)
             $route = array('app' => $val[0], 'controller' => $val[1]);
@@ -190,17 +164,17 @@ class Dispatcher {
         $url = $this->base . '/' . $params['app'] . '/' . $params['controller'];
         if (!empty($params['action']) && $params['action']!='show' )
             $url .= '/' . $params['action'];
-        if (!empty($params['param']))
-            if (is_array($params['param'])) {
+        if (!empty($params['pass']))
+            if (is_array($params['pass'])) {
                 $str = array();
-                foreach ($params['param'] as $k => $v)
+                foreach ($params['pass'] as $k => $v)
                     if (is_int($k))
                         $str[] = $v;
                     else
                         $str[] = $k . ':' . $v;
                 $url .= '/' . implode(',', $str);
             } else
-                $url .= '/' . $params['param'];
+                $url .= '/' . $params['pass'];
         return $url;
     }
 

@@ -148,7 +148,7 @@ class MeicanTopology {
             }
         }
 
-        //Framework::debug("urns",$urns);
+        //debug("urns",$urns);
         
         return $urns;
     }
@@ -372,7 +372,7 @@ class MeicanTopology {
             }
         }
 
-        //Framework::debug("net",$networks);
+        //debug("net",$networks);
         return $networks;
 
     }

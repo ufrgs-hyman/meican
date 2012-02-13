@@ -1,8 +1,8 @@
 <?php
 
 require_once 'MDB2.php';
-include_once 'libs/model.php';
-include_once 'libs/datasource.php';
+include_once 'libs/Model/model.php';
+include_once 'libs/Model/datasource.php';
 
 class Database {
     private $result;
@@ -21,7 +21,7 @@ class Database {
         $this->mdb2 = $datasource->mdb2;//MDB2::singleton();
 
         if (MDB2::isError($this->mdb2)) {
-            Framework::debug($this->mdb2->getMessage() . ", " . $this->mdb2->getDebugInfo());
+            debug($this->mdb2->getMessage() . ", " . $this->mdb2->getDebugInfo());
             return FALSE;
         } else return TRUE;
     }
@@ -29,7 +29,7 @@ class Database {
     public function insert($sql) {
         $result = $this->mdb2->exec($sql);
         if (MDB2::isError($result)) {
-            Framework::debug($result->getMessage() . ", " . $result->getDebugInfo());
+            debug($result->getMessage() . ", " . $result->getDebugInfo());
             return FALSE;
         } else {
             return $this->mdb2->lastInsertId();
@@ -39,7 +39,7 @@ class Database {
     public function exec($sql) {
         $result = $this->mdb2->exec($sql);
         if (MDB2::isError($result)) {
-            Framework::debug($result->getMessage() . ", " . $result->getDebugInfo());
+            debug($result->getMessage() . ", " . $result->getDebugInfo());
             return FALSE;
         } else {
             return TRUE;
@@ -50,7 +50,7 @@ class Database {
         $result = $this->mdb2->query($sql);
 
         if (MDB2::isError($result)) {
-            Framework::debug($result->getMessage() . ", " . $result->getDebugInfo());
+            debug($result->getMessage() . ", " . $result->getDebugInfo());
             return FALSE;
         } else {
             $this->result = $result;
@@ -70,7 +70,7 @@ class Database {
 
         //Verifica se o Banco suporta transações
         if (!$this->mdb2->supports('transactions')) {
-            Framework::debug("Erro: Banco não suporta transações.");
+            debug("Erro: Banco não suporta transações.");
             return FALSE;
         }
 
@@ -85,10 +85,10 @@ class Database {
                 $result = $this->mdb2->exec($sqlQuery);
 
                 if (MDB2::isError($result)) {
-                    Framework::debug($result->getMessage() . ", " . $result->getDebugInfo());
+                    debug($result->getMessage() . ", " . $result->getDebugInfo());
                     //Caso ocorra erro, alterações são desfeitas pelo comando rollback() e desconecta do Banco
                     if ($this->mdb2->inTransaction()) {
-                        Framework::debug("Erro: Alterações serão desfeitas");
+                        debug("Erro: Alterações serão desfeitas");
                         $this->mdb2->rollback();
                     }
                     return FALSE;
@@ -138,7 +138,7 @@ class Database {
             $inp = trim($inp);
             $return = str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $inp, &$count);
             if ($count > 0)
-                Framework::debug("trying sql injection");
+                debug("trying sql injection");
             return htmlspecialchars($return);
         }
 
@@ -147,7 +147,7 @@ class Database {
     
 //    function getNextId($table) {
 //        if (DatabaseObject::$mdb2 == null) {
-//            DatabaseObject::$mdb2 = MDB2::connect(Framework::getDatabaseString());
+//            DatabaseObject::$mdb2 = MDB2::connect(getDatabaseString());
 //            if (MDB2::isError(DatabaseObject::$mdb2)) {
 //                die (DatabaseObject::$mdb2->getMessage() . ", " . DatabaseObject::$mdb2->getDebugInfo());
 //            }

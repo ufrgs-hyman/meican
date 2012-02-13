@@ -216,7 +216,6 @@ class devices extends Controller {
         ));
 
         $this->setArgsToBody($args);
-        $this->setAction('edit');
         $this->render();
     }
     

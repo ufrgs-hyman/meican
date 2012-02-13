@@ -2,7 +2,7 @@
 
 include_once 'libs/auth.php';
 include_once 'apps/aaa/models/acos.php';
-include_once 'libs/model.php';
+include_once 'libs/Model/model.php';
 
 class Resource_Model extends Model {
 
@@ -18,7 +18,7 @@ class Resource_Model extends Model {
             //arvore de acos, nodo vai embaixo do objeto (ou void) e modelo especificado
                 $p_aco = new Acos($parent_id, $model);
             else {
-                Framework::debug("not enough arguments in tree model insert");
+                debug("not enough arguments in tree model insert");
                 return FALSE;
             }
 

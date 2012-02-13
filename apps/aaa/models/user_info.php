@@ -1,6 +1,6 @@
 <?php
 
-include_once 'libs/model.php';
+include_once 'libs/Model/model.php';
 include_once 'libs/acl_loader.php';
 include_once 'apps/aaa/models/aros.php';
 include_once 'apps/aaa/models/acos.php';
@@ -75,7 +75,7 @@ class user_info extends Model {
                     foreach ($parents as $p) {
                         $u_aro = new Aros($this->usr_id, 'user_info', $p->aro_id);
                         $result = $u_aro->fetch(FALSE);
-                        //Framework::debug('removearo',$result[0]);
+                        //debug('removearo',$result[0]);
                         $result[0]->removeSubTree();
                     }
 
@@ -85,7 +85,7 @@ class user_info extends Model {
                     foreach ($parents as $p) {
                         $u_aco = new Acos($this->usr_id, 'user_info', $p->aco_id);
                         $result = $u_aco->fetch(FALSE);
-                        //Framework::debug('removeaco',$result[0]);
+                        //debug('removeaco',$result[0]);
                         $result[0]->removeSubTree();
                     }
                 }
@@ -207,14 +207,14 @@ class user_info extends Model {
 //            $aco_delete = new Acos($this->usr_id, 'user_info');
 //
 //             if (!($aco_delete->remove())) {
-//              Framework::debug('falha para deletar aco do usr');
+//              debug('falha para deletar aco do usr');
 //                        return FALSE;
 //
 //             }
 //
 //
 //                     if (!($aro_delete->remove())){
-//                        Framework::debug('falha para deletar aro do usr');
+//                        debug('falha para deletar aro do usr');
 //                        return FALSE;
 //                     }
 //

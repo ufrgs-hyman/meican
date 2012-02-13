@@ -1,7 +1,7 @@
 <?php
 
-//include_once 'libs/resource_model.php';
-include_once 'libs/model.php';
+//include_once 'libs/Model/resource_model.php';
+include_once 'libs/Model/model.php';
 
 class gri_info extends Model {
 

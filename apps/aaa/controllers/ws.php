@@ -61,7 +61,7 @@ class ws extends Controller {
 
 
         function getUsers($usr) {
-            Framework::debug('getusers',$usr);
+            debug('getusers',$usr);
             $user = new user_info();
 
             if (isset($usr) && is_array($usr)) {

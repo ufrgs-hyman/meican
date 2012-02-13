@@ -1,6 +1,6 @@
 <?php
 
-include_once 'libs/model.php';
+include_once 'libs/Model/model.php';
 include_once 'libs/auth.php';
 
 class authorization_info extends Model {
