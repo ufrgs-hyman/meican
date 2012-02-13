@@ -13,7 +13,6 @@ class info_box extends Controller {
         $this->app = 'init';
         $this->controller = 'info_box';
         $this->defaultAction = 'show';
-        $this->setLayout('info_box');
     }
 
     public function show() {
@@ -26,7 +25,7 @@ class info_box extends Controller {
     }
 
     public function time() {
-        $this->setLayout('empty');
+        $this->layout = 'empty';
         $this->action = 'time';
         $this->render();
     }

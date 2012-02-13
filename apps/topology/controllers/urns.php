@@ -215,7 +215,7 @@ class urns extends Controller {
 
     public function ajax_get_topology() {
         $urns = MeicanTopology::getURNTopology(Common::POST('domain_id'));
-        $this->setLayout('empty');
+        $this->layout = 'empty';
         $this->setAction('ajax');
         $this->setArgsToBody($urns);
         $this->render();
@@ -231,7 +231,7 @@ class urns extends Controller {
             $this->setArgsToBody($result);
         }
         
-        $this->setLayout('empty');
+        $this->layout = 'empty';
         $this->setAction('ajax');
 
         $this->render();

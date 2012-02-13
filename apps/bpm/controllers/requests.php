@@ -78,7 +78,7 @@ class requests extends Controller {
 
         $result = $client->call('getUsers');
         $this->setAction('ajax');
-        $this->setLayout('empty');
+        $this->layout = 'empty';
         $this->setArgsToBody($result);
         $this->render();
     }

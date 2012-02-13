@@ -13,7 +13,6 @@ class gui extends Controller {
         $this->app = 'init';
         $this->controller = 'gui';
         $this->defaultAction = 'welcome';
-        $this->setLayout('default');
     }
 
     public function show() {
@@ -39,7 +38,6 @@ class gui extends Controller {
 
     public function welcome() {
         $this->setAction('welcome');
-        $this->setLayout('default');
 
         $request = new request_info();
 

@@ -79,14 +79,6 @@ class Controller {
         $this->argsToScript = $args;
     }
 
-    public function setLayout($layout) {
-        $this->layout = $layout;
-    }
-
-    public function getLayout() {
-        return $this->layout;
-    }
-
     public function setApp($app) {
         $this->app = $app;
     }

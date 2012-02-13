@@ -154,7 +154,7 @@ class reservations extends Controller {
 
     public function refresh_status() {
         $this->setAction("ajax");
-        $this->setLayout("empty");
+        $this->layout = 'empty';
 
         $dom_id = Common::POST('dom_id');
         
@@ -275,7 +275,7 @@ class reservations extends Controller {
 
     public function gri_refresh_status() {
         $this->setAction("ajax");
-        $this->setLayout("empty");
+        $this->layout = 'empty';
 
         $res_id = Common::POST("res_id");
         Framework::debug("gri stats",$res_id);
