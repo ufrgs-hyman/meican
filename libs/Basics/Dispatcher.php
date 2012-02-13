@@ -2,6 +2,7 @@
 
 include_once 'libs/app.php';
 include_once 'libs/Basics/Configure.php';
+include_once 'libs/Basics/Object.php';
 include_once 'libs/Model/datasource.php';
 include_once 'libs/language.php';
 include_once 'libs/Model/database.php';
@@ -14,7 +15,7 @@ include_once 'libs/Model/database.php';
 class Dispatcher {
 
     public function __construct($defaults = array()) {
-        $this->defaults = array_merge(array('app' => 'init', 'controller' => 'gui', 'action' => '', 'param' => array()));
+        $this->defaults = array_merge(array('app' => 'init', 'controller' => 'gui', 'action' => '', 'pass' => array()));
         $this->base = dirname(env('PHP_SELF'));
         if ($this->base === DS || $this->base === '.') {
 				$this->base = '';
@@ -55,21 +56,21 @@ class Dispatcher {
             return;
         try {
             $this->bootstrap();
-            if (empty($app))
-                $app = Configure::read('mainApp');
+            if (empty($this->params['app']))
+                $this->params['app'] = Configure::read('mainApp');
             if (!($app = $this->appFactory($app)))
                 throw new Exception(_("Invalid app"));
-            Language::setLang(get_class($app));
-            if (empty($controller))
-                $controller = $app->getDefaultController();
-            if (!($controller = $app->loadController($controller)))
-                throw new Exception(_("Invalid controller"));
-            if (empty($action))
-                $action = $controller->getDefaultAction();
-            if (!$action || !method_exists($controller, $action))
-                ;//throw new Exception(_("Invalid action"));
-            else
-                $controller->$action($param);
+            Language::setLang($this->params['app']);
+            if (empty($this->params['controller']))
+                $this->params['controller'] = $app->getDefaultController();       
+            $controller = $app->loadController($controller);
+
+            if (!($controller instanceof Controller)) {
+                throw new MissingControllerException(array(
+                    'class' => $controller . 'Controller'
+                ));
+            }
+            $controller->invokeAction($this->params);
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -140,9 +141,9 @@ class Dispatcher {
             foreach ($params as $par) {
                 $p = explode(':', $par);
                 if (count($p) === 1)
-                    $route['param'][] = $p[0];
+                    $route['pass'][] = $p[0];
                 else
-                    $route['param'][$p[0]] = $p[1];
+                    $route['pass'][$p[0]] = $p[1];
             }
         } else if (count($val) == 2)
             $route = array('app' => $val[0], 'controller' => $val[1]);
@@ -163,17 +164,17 @@ class Dispatcher {
         $url = $this->base . '/' . $params['app'] . '/' . $params['controller'];
         if (!empty($params['action']) && $params['action']!='show' )
             $url .= '/' . $params['action'];
-        if (!empty($params['param']))
-            if (is_array($params['param'])) {
+        if (!empty($params['pass']))
+            if (is_array($params['pass'])) {
                 $str = array();
-                foreach ($params['param'] as $k => $v)
+                foreach ($params['pass'] as $k => $v)
                     if (is_int($k))
                         $str[] = $v;
                     else
                         $str[] = $k . ':' . $v;
                 $url .= '/' . implode(',', $str);
             } else
-                $url .= '/' . $params['param'];
+                $url .= '/' . $params['pass'];
         return $url;
     }
 

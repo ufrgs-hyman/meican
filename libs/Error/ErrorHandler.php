@@ -25,6 +25,7 @@ App::uses('ExceptionRenderer', 'Error');
 App::uses('AppController', 'Controller');*/
 include_once 'libs/Utility/Debugger.php';
 include_once 'libs/Log/Log.php';
+include_once 'libs/Error/exceptions.php';
 /*include_once 'libs/Error/ExceptionRenderer.php';*/
 
 

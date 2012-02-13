@@ -28,6 +28,7 @@ class reservations extends Controller {
         $this->app = 'circuits';
         $this->controller = 'reservations';
         $this->defaultAction = 'show';
+        parent::__construct();
     }
 
     public function show($filterArray=array()) {

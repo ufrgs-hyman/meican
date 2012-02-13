@@ -112,7 +112,6 @@ class acl extends Controller {
                 if ($canAccessARO && $canAccessACO)
                     $rights[] = $right;
             }
-            $this->setAction('show');
             
             $this->setArgsToBody($rights);
             
