@@ -36,7 +36,7 @@ class timers extends Controller {
                 elseif (Common::POST('until') == "NROCCURR")
                     $timer_info->count = Common::POST('count'); //ok
                 else
-                    Framework::debug("warning on add timer, missing end recurr");
+                    debug("warning on add timer, missing end recurr");
                 
                 $timer_info->interval = Common::POST('interval'); //ok
                 

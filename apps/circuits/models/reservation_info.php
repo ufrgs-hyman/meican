@@ -106,7 +106,7 @@ class reservation_info extends Resource_Model {
         $res = $this->fetch(FALSE);
 
         if (!$res) {
-            Framework::debug('reservation not found');
+            debug('reservation not found');
             return FALSE;
         }
 
@@ -167,7 +167,7 @@ class reservation_info extends Resource_Model {
         $newReq->resource_id = $this->res_id;
         $newReq->answerable = 'no';
 
-        Framework::debug('dentro do sendauth');
+        debug('dentro do sendauth');
         $endpoint = Configure::read('odeWSDLToRequest');
         //$endpoint = "http://".odeip."/ode/deployment/bundles/v1_workflow_pietro/processes/v1_workflow_pietro/processes.ode/diagrama-v1-workflow_pietro.wsdl";
 
@@ -179,7 +179,7 @@ class reservation_info extends Resource_Model {
                     'dom_dst_ip' => $res_flow->dst_dom_ip,
                     'usr_src' => $newReq->usr_src);
 
-            Framework::debug('ira enviar para autorizaçao...', $requestSOAP);
+            debug('ira enviar para autorizaçao...', $requestSOAP);
             if ($result = $client->Start_v1_workflow_felipe($requestSOAP)) {
                 $newReq->status = 'SENT FOR AUTHORIZATION';
                 //insere a requisicao no banco local
@@ -188,16 +188,16 @@ class reservation_info extends Resource_Model {
                     return TRUE;
 
                 else {
-                    Framework::debug('failed to insert request at local database');
+                    debug('failed to insert request at local database');
                     return FALSE;
                 }
 
             } else {
-                Framework::debug('cant call soap operation at ',$endpoint);
+                debug('cant call soap operation at ',$endpoint);
                 return FALSE;
             }
         } else {
-            Framework::debug('cant call soap client at ',$endpoint);
+            debug('cant call soap client at ',$endpoint);
             return FALSE;
         }
     }
@@ -225,10 +225,10 @@ class reservation_info extends Resource_Model {
         $endpoint = "http://".Configure::read('bridgeIp')."/axis2/services/BridgeOSCARS?wsdl";
         if ($client = new SoapClient($endpoint, array('cache_wsdl' => 0))) {
             if ($result = $client->list($gri_to_list))
-                Framework::debug('result list oscars', $result);
+                debug('result list oscars', $result);
 
             if ($result = $client->create($array_to_create))
-                Framework::debug('result create oscars', $result);
+                debug('result create oscars', $result);
         }
     }
 

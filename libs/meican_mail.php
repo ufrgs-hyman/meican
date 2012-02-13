@@ -24,7 +24,7 @@ class Meican_Mail {
         $this->mail = Mail::factory("smtp", $params);
         
         if (PEAR::isError($this->mail)) {
-            Framework::debug($this->mail->getMessage() . ", " . $this->mail->getDebugInfo());
+            debug($this->mail->getMessage() . ", " . $this->mail->getDebugInfo());
             return FALSE;
         } else
             return TRUE;
@@ -40,7 +40,7 @@ class Meican_Mail {
         $ret = $this->mail->send($to, $tmp_headers, $body);
 
         if (PEAR::isError($ret)) {
-            Framework::debug($ret->getMessage() . ", " . $ret->getDebugInfo());
+            debug($ret->getMessage() . ", " . $ret->getDebugInfo());
             return FALSE;
         } else {
             return TRUE;

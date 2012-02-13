@@ -18,7 +18,7 @@ class network_info extends Resource_Model {
 
 //    public function fetchDevices() {
 //        if (!isset($this->net_id)) {
-//            //Framework::debug('Set $this->net_id');
+//            //debug('Set $this->net_id');
 //            return FALSE;
 //        }
 //

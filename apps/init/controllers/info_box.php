@@ -51,7 +51,7 @@ class info_box extends Controller {
         $body .= "\n";
         $body .= "Makes me feel: " . $topic['emotitag']['feeling'] . "\n";
 
-        //Framework::debug("e-mail fb", $body);
+        //debug("e-mail fb", $body);
         $to = "felipenesello@gmail.com";
         if ($email->send($to, $body, "Feedback from MEICAN"))
             echo _("Feedback sent") . ". " . _("Thank you") . "!";

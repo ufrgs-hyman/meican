@@ -47,7 +47,7 @@ class MenuItem {
             $appObj = App::factory($app);
             if ($appObj) {
                 //Language::setLang($appObj->getAppName());
-                //Framework::debug("mudando dom ".$appObj->getAppName());
+                //debug("mudando dom ".$appObj->getAppName());
                 $menus += $appObj->{$method}();//array_merge($appObj->getMenu(), $menus);
             }
         }

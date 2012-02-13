@@ -150,7 +150,7 @@ class OSCARSReservation {
         if (!(isset($this->srcEndpoint) && isset($this->destEndpoint) &&
                 isset($this->oscarsUrl) && isset($this->startTimestamp) &&
                 isset($this->endTimestamp))) {
-            Framework::debug("parametros insuficientes no createreservation");
+            debug("parametros insuficientes no createreservation");
             return false;
         }
 
@@ -177,19 +177,19 @@ class OSCARSReservation {
                     $result = $client->createReservation($envelope);
 
                     if (is_string($result->return)) {
-                        Framework::debug("OSCARS Bridge Error: ", $result->return);
+                        debug("OSCARS Bridge Error: ", $result->return);
                         return false;
                     } elseif (!$err = array_shift($result->return)) {
                         $this->setGri($result->return[0]);
                         $this->setStatus($result->return[1]);
-                        Framework::debug("retorno do create reservation", $result->return);
+                        debug("retorno do create reservation", $result->return);
                         return true;
                     } else {
-                        Framework::debug("OSCARS Bridge Error: ", $err);
+                        debug("OSCARS Bridge Error: ", $err);
                         return false;
                     }
                 } catch (Exception $e) {
-                    Framework::debug("Caught exception: ", $e->getMessage());
+                    debug("Caught exception: ", $e->getMessage());
                     return false;
                 }
                 break;
@@ -198,7 +198,7 @@ class OSCARSReservation {
 
     function queryReservation() {
         if (!isset($this->gri)) {
-            Framework::debug("gri not set in query reservation");
+            debug("gri not set in query reservation");
             return false;
         }
 
@@ -230,22 +230,22 @@ class OSCARSReservation {
                         $this->setDestIsTagged($result->return[13]);
                         $this->setDestTag($result->return[14]);
                         $this->setPath($result->return[15]);
-                        Framework::debug("retorno do query reservation", $result->return);
+                        debug("retorno do query reservation", $result->return);
                         return true;
                     } else {
-                        Framework::debug("OSCARS Bridge Error: ", $err);
+                        debug("OSCARS Bridge Error: ", $err);
                         return false;
                     }
                 } catch (Exception $e) {
-                    Framework::debug("Caught exception: ", $e->getMessage());
+                    debug("Caught exception: ", $e->getMessage());
                     return false;
                 }
                 break;
             case "0.6":
-                Framework::debug("Versão 0.6 não suportada");
+                debug("Versão 0.6 não suportada");
                 break;
             default:
-                Framework::debug("Versão não suportada");
+                debug("Versão não suportada");
                 return false;
                 break;
         }
@@ -255,7 +255,7 @@ class OSCARSReservation {
 
         if (!(isset($this->oscarsUrl) && isset($this->startTimestamp) &&
                 isset($this->endTimestamp))) {
-            Framework::debug("parametros insuficientes no modify reservation");
+            debug("parametros insuficientes no modify reservation");
             return false;
         }
 
@@ -274,22 +274,22 @@ class OSCARSReservation {
                     if (!$err = array_shift($result->return)) {
                         $this->setGri($result->return[0]);
                         $this->setStatus($result->return[1]);
-                        Framework::debug("retorno do create reservation", $result->return);
+                        debug("retorno do create reservation", $result->return);
                         return true;
                     } else {
-                        Framework::debug("OSCARS Bridge Error: ", $err);
+                        debug("OSCARS Bridge Error: ", $err);
                         return false;
                     }
                 } catch (Exception $e) {
-                    Framework::debug("Caught exception: ", $e->getMessage());
+                    debug("Caught exception: ", $e->getMessage());
                     return false;
                 }
                 break;
             case "0.6":
-                Framework::debug("Versão 0.6 não suportada");
+                debug("Versão 0.6 não suportada");
                 break;
             default:
-                Framework::debug("Versão não suportada");
+                debug("Versão não suportada");
                 return false;
                 break;
         }
@@ -297,7 +297,7 @@ class OSCARSReservation {
 
     function cancelReservation() {
         if (!isset($this->gri)) {
-            Framework::debug("gri not set in cancel reservation");
+            debug("gri not set in cancel reservation");
             return false;
         }
 
@@ -314,22 +314,22 @@ class OSCARSReservation {
                     if (!$err = array_shift($result->return)) {
                         $this->setGri($result->return[0]);
                         $this->setStatus($result->return[1]);
-                        Framework::debug("retorno do cancel reservation", $result->return);
+                        debug("retorno do cancel reservation", $result->return);
                         return true;
                     } else {
-                        Framework::debug("OSCARS Bridge Error: ", $err);
+                        debug("OSCARS Bridge Error: ", $err);
                         return false;
                     }
                 } catch (Exception $e) {
-                    Framework::debug("Caught exception: ", $e->getMessage());
+                    debug("Caught exception: ", $e->getMessage());
                     return false;
                 }
                 break;
             case "0.6":
-                Framework::debug("Versão 0.6 não suportada");
+                debug("Versão 0.6 não suportada");
                 break;
             default:
-                Framework::debug("Versão não suportada");
+                debug("Versão não suportada");
                 return false;
                 break;
         }
@@ -337,7 +337,7 @@ class OSCARSReservation {
 
     function listReservations() {
         if (!isset($this->oscarsUrl)) {
-            Framework::debug("oscarsUrl not set in list reservations");
+            debug("oscarsUrl not set in list reservations");
             return false;
         }
 
@@ -354,7 +354,7 @@ class OSCARSReservation {
                     $result = $client->listReservations($envelope);
 
                     if (is_string($result->return)) {
-                        Framework::debug("OSCARS Bridge Error: ", $result->return);
+                        debug("OSCARS Bridge Error: ", $result->return);
                         return false;
                     } elseif (!$err = array_shift($result->return)) { //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
                         foreach ($result->return as $r)
@@ -362,19 +362,19 @@ class OSCARSReservation {
 
                         return true;
                     } else {
-                        Framework::debug("OSCARS Bridge Error: ", $result->return[0]);
+                        debug("OSCARS Bridge Error: ", $result->return[0]);
                         return false;
                     }
                 } catch (Exception $e) {
-                    Framework::debug("Caught exception: ", $e->getMessage());
+                    debug("Caught exception: ", $e->getMessage());
                     return false;
                 }
                 break;
             case "0.6":
-                Framework::debug("Versão 0.6 não suportada");
+                debug("Versão 0.6 não suportada");
                 break;
             default:
-                Framework::debug("Versão não suportada");
+                debug("Versão não suportada");
                 return false;
                 break;
         }
@@ -382,7 +382,7 @@ class OSCARSReservation {
 
     function getTopology() {
         if (!isset($this->oscarsUrl)) {
-            Framework::debug("oscarsUrl not set in get topology");
+            debug("oscarsUrl not set in get topology");
             return false;
         }
 
@@ -399,23 +399,23 @@ class OSCARSReservation {
 
                     if (!$err = array_shift($result->return)) { //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
                         //precisa tratar
-                        //Framework::debug("top", $result->return);
+                        //debug("top", $result->return);
                         $this->topology = $result->return;
                         return true;
                     } else {
-                        Framework::debug("OSCARS Bridge Error: ", $err);
+                        debug("OSCARS Bridge Error: ", $err);
                         return false;
                     }
                 } catch (Exception $e) {
-                    Framework::debug("Caught exception: ", $e->getMessage());
+                    debug("Caught exception: ", $e->getMessage());
                     return false;
                 }
                 break;
             case "0.6":
-                Framework::debug("Versão 0.6 não suportada");
+                debug("Versão 0.6 não suportada");
                 break;
             default:
-                Framework::debug("Versão não suportada");
+                debug("Versão não suportada");
                 return false;
                 break;
         }
@@ -423,7 +423,7 @@ class OSCARSReservation {
 
     function getUrns() {
         if (!isset($this->oscarsUrl)) {
-            Framework::debug("oscarsUrl not set in get topology");
+            debug("oscarsUrl not set in get topology");
             return false;
         }
 
@@ -439,7 +439,7 @@ class OSCARSReservation {
                     $result = $client->getTopology($envelope);
 
                     if (is_string($result->return)) {
-                        Framework::debug("OSCARS Bridge Error: ", $result->return);
+                        debug("OSCARS Bridge Error: ", $result->return);
                         return false;
                     } elseif (!$err = array_shift($result->return)) { //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
                         foreach ($result->return as $i) {
@@ -466,19 +466,19 @@ class OSCARSReservation {
                         }
                         return true;
                     } else {
-                        Framework::debug("OSCARS Bridge Error: ", $err);
+                        debug("OSCARS Bridge Error: ", $err);
                         return false;
                     }
                 } catch (Exception $e) {
-                    Framework::debug("Caught exception: ", $e->getMessage());
+                    debug("Caught exception: ", $e->getMessage());
                     return false;
                 }
                 break;
             case "0.6":
-                Framework::debug("Versão 0.6 não suportada");
+                debug("Versão 0.6 não suportada");
                 break;
             default:
-                Framework::debug("Versão não suportada");
+                debug("Versão não suportada");
                 return false;
                 break;
         }
@@ -486,7 +486,7 @@ class OSCARSReservation {
 
     function createPath() {
         if (!isset($this->oscarsUrl)) {
-            Framework::debug("oscarsUrl not set in create path");
+            debug("oscarsUrl not set in create path");
             return false;
         }
 
@@ -507,19 +507,19 @@ class OSCARSReservation {
                         $this->setStatus($result->return[1]);
                         return true;
                     } else {
-                        Framework::debug("OSCARS Bridge Error: ", $err);
+                        debug("OSCARS Bridge Error: ", $err);
                         return false;
                     }
                 } catch (Exception $e) {
-                    Framework::debug("Caught exception: ", $e->getMessage());
+                    debug("Caught exception: ", $e->getMessage());
                     return false;
                 }
                 break;
             case "0.6":
-                Framework::debug("Versão 0.6 não suportada");
+                debug("Versão 0.6 não suportada");
                 break;
             default:
-                Framework::debug("Versão não suportada");
+                debug("Versão não suportada");
                 return false;
                 break;
         }
@@ -527,7 +527,7 @@ class OSCARSReservation {
 
     function teardownPath() {
         if (!isset($this->oscarsUrl)) {
-            Framework::debug("oscarsUrl not set in create path");
+            debug("oscarsUrl not set in create path");
             return false;
         }
 
@@ -548,19 +548,19 @@ class OSCARSReservation {
                         $this->setStatus($result->return[1]);
                         return true;
                     } else {
-                        Framework::debug("OSCARS Bridge Error: ", $err);
+                        debug("OSCARS Bridge Error: ", $err);
                         return false;
                     }
                 } catch (Exception $e) {
-                    Framework::debug("Caught exception: ", $e->getMessage());
+                    debug("Caught exception: ", $e->getMessage());
                     return false;
                 }
                 break;
             case "0.6":
-                Framework::debug("Versão 0.6 não suportada");
+                debug("Versão 0.6 não suportada");
                 break;
             default:
-                Framework::debug("Versão não suportada");
+                debug("Versão não suportada");
                 return false;
                 break;
         }
@@ -568,7 +568,7 @@ class OSCARSReservation {
 
     function refreshPath() {
         if (!isset($this->oscarsUrl)) {
-            Framework::debug("oscarsUrl not set in create path");
+            debug("oscarsUrl not set in create path");
             return false;
         }
 
@@ -589,19 +589,19 @@ class OSCARSReservation {
                         $this->setStatus($result->return[1]);
                         return true;
                     } else {
-                        Framework::debug("OSCARS Bridge Error: ", $err);
+                        debug("OSCARS Bridge Error: ", $err);
                         return false;
                     }
                 } catch (Exception $e) {
-                    Framework::debug("Caught exception: ", $e->getMessage());
+                    debug("Caught exception: ", $e->getMessage());
                     return false;
                 }
                 break;
             case "0.6":
-                Framework::debug("Versão 0.6 não suportada");
+                debug("Versão 0.6 não suportada");
                 break;
             default:
-                Framework::debug("Versão não suportada");
+                debug("Versão não suportada");
                 return false;
                 break;
         }

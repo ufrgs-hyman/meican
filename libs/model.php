@@ -93,7 +93,7 @@ class Model {
             else
                 $sql = "SELECT * FROM `$tableName`";
         }
-        //Framework::debug("fetch",$sql);
+        //debug("fetch",$sql);
         return ($this->data = $this->querySql($sql, $tableName));
     }
     
@@ -133,7 +133,7 @@ class Model {
         $where = " WHERE `$pk`=".$this->{$pk};
         
         $sql .= $where;
-        Framework::debug('update',$sql);
+        debug('update',$sql);
         return $this->execSql($sql);
     }
 
@@ -174,7 +174,7 @@ class Model {
         $fetchObj = new $this->tableName;
         foreach ($primaryKey as $pk) {
             if (!$this->$pk) {
-                Framework::debug('set all the primary keys to update.', $pk);
+                debug('set all the primary keys to update.', $pk);
                 return FALSE;
             }
             else
@@ -205,7 +205,7 @@ class Model {
          *
          *
         if (!$changed) {
-            Framework::debug("not updated");
+            debug("not updated");
             return FALSE;
         }
 
@@ -245,7 +245,7 @@ class Model {
             }
         }
         $sql .= $where;
-        //Framework::debug('update',$sql);
+        //debug('update',$sql);
         return $this->execSql($sql);
     }
     */
@@ -316,7 +316,7 @@ class Model {
 
         $resfetch = $this->querySql($sqlfetch, $tableName);
 
-        Framework::debug('sql update', $sql);
+        debug('sql update', $sql);
 
         if (!$resfetch)
             return FALSE;
@@ -361,7 +361,7 @@ class Model {
         }
         $sql = "INSERT INTO `$classname` ($sqlNames) values ($sqlValues)";
 
-        //Framework::debug('sql insert',$sql);
+        //debug('sql insert',$sql);
 
         $id = $this->insertSql($sql);
         if ($id !== FALSE) {
@@ -380,7 +380,7 @@ class Model {
                     return $ret[0];
             }
             // se não conseguiu buscar objeto, apenas retorna TRUE
-            Framework::debug("objeto inserido mas não encontrado");
+            debug("objeto inserido mas não encontrado");
             return TRUE;
         } else
         // objeto não inserido, retorna FALSE
@@ -405,7 +405,7 @@ class Model {
             $toDelete[] = $f->{$pk};
         }
 
-        Framework::debug('todelete', $toDelete);
+        debug('todelete', $toDelete);
         if (!$toDelete) {
             return FALSE;
         }
@@ -418,7 +418,7 @@ class Model {
 
             //delete nao permite where do tipo IN
             foreach ($toDelete as $d) {
-                Framework::debug('fe', $d);
+                debug('fe', $d);
                 if (array_search($d, $restr) !== FALSE) { //verifica se a chave q quer deletar está dentro das permissoes
                     if ($this->attributes[$pk]->type == "VARCHAR")
                         $whereArgs[] = "`$pk`='$d'";

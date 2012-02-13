@@ -90,7 +90,7 @@ class request_info extends Resource_Model {
 //            $ode_ip = ;
 //
 //            if (parent::insert()) {
-//                Framework::debug('ira enviar...');
+//                debug('ira enviar...');
 //                $endpoint="http://$ode_ip/ode/deployment/bundles/jj-10/processes/jj.10/processes.ode/diagrama-odeJJ.wsdl";
 //
 //                $client = new SoapClient($endpoint,array('cache_wsdl' => 0));
@@ -105,21 +105,21 @@ class request_info extends Resource_Model {
 //                $result = $client->RecebeRequisicao($requestSOAP);
 //
 //                if ($result) {
-//                    Framework::debug('enviada');
+//                    debug('enviada');
 //                    return TRUE;
 //
 //                } else {
-//                    Framework::debug('fail to send to ode');
+//                    debug('fail to send to ode');
 //                        return FALSE;
 //                }
 //
 //            } else {
-//                Framework::debug('fail to add at local database');
+//                debug('fail to add at local database');
 //                return FALSE;
 //            }
 //
 //        } else {
-//            Framework::debug('falta setar res_id');
+//            debug('falta setar res_id');
 //            return FALSE;
 //        }
 //
@@ -232,12 +232,12 @@ class request_info extends Resource_Model {
                 return TRUE;
 
             } catch (Exception $e) {
-                Framework::debug('fail to send to ode');
+                debug('fail to send to ode');
                 return FALSE;
             }
 
         } else {
-            Framework::debug('fail to add at local database');
+            debug('fail to add at local database');
             return FALSE;
         }
     }

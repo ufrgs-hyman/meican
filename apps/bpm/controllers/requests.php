@@ -47,7 +47,7 @@ class requests extends Controller {
                 else $finished[] = $t;
             }
 
-            //Framework::debug('temp',$temp);
+            //debug('temp',$temp);
             $args->pending = $pending;
             $args->finished = $finished;
 
@@ -93,7 +93,7 @@ class requests extends Controller {
 
         $result = $request->getRequestInfo(TRUE, TRUE, TRUE, TRUE);
 
-        //Framework::debug('result',$result);
+        //debug('result',$result);
 
         $dom = new domain_info();
         $dom->dom_ip = $result[0]->flow_info['src_dom_ip'];
@@ -145,7 +145,7 @@ class requests extends Controller {
 
     public function delete() {
         if ($requests = Common::POST("del_checkbox")) {
-            Framework::debug('requests',$requests);
+            debug('requests',$requests);
             
             $count = 0;
             
@@ -187,7 +187,7 @@ class requests extends Controller {
     }
 
 //    function notifyResponse($response) {
-//        Framework::debug('acionando notify response', $response);
+//        debug('acionando notify response', $response);
 //
 //        if ($response) {
 //
@@ -201,28 +201,28 @@ class requests extends Controller {
 //
 //                        if ($req->updateTo(array('status' => 'SENT TO OSCARS'), FALSE)){
 //                            //requisicao aceita deve enviar ao OSCARS
-//                            Framework::debug('enviando ao OSCARS...');
+//                            debug('enviando ao OSCARS...');
 //                            $reservation = $req->fetch(FALSE);
 //                            $res = new oscars($reservation[0]->resource_id);
 //                            if ($res->createReservation())
 //                                return TRUE;
 //                            else {
-//                                Framework::debug('erro ao enviar ao oscars');
+//                                debug('erro ao enviar ao oscars');
 //                                return NULL;
 //                            }
 //                        }
 //                    } else {
 //                        //requisicao negada, termina
-//                        Framework::debug('requisicao negada', $response['req_id']);
+//                        debug('requisicao negada', $response['req_id']);
 //                        return TRUE;
 //                    }
 //            } else {
 //                //requisicao nao encontrada no banco local, requisicao nao enviada a este dominio
-//                Framework::debug('req nao encontrada', $response['req_id']);
+//                debug('req nao encontrada', $response['req_id']);
 //                return NULL;
 //            }
 //        } else {
-//            Framework::debug('notifyresponse without response set');
+//            debug('notifyresponse without response set');
 //            return NULL;
 //        }
 //    }

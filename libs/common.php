@@ -120,27 +120,97 @@ class Common {
  * Only runs if debug level is greater than zero.
  *
  * @param boolean $var Variable to show debug information for.
- * @param boolean $showHtml If set to true, the method prints the debug data in a screen-friendly way.
+ * @param boolean $showHtml If set to true, the method prints the debug data in a browser-friendly way.
  * @param boolean $showFrom If set to true, the method prints from where the function was called.
- * @link http://book.cakephp.org/view/1190/Basic-Debugging
- * @link http://book.cakephp.org/view/1128/debug
+ * @link http://book.cakephp.org/2.0/en/development/debugging.html#basic-debugging
+ * @link http://book.cakephp.org/2.0/en/core-libraries/global-constants-and-functions.html#debug
  */
-function debug($var = false, $showHtml = false, $showFrom = true) {
-    if (Configure::read('debug') > 1) {
-        if ($showFrom) {
-            $calledFrom = debug_backtrace();
-            echo '<strong>' . substr(str_replace('', '', $calledFrom[0]['file']), 1) . '</strong>';
-            echo ' (line <strong>' . $calledFrom[0]['line'] . '</strong>)';
-        }
-        echo "\n<pre class=\"cake-debug\">\n";
+function debug($var = false, $showHtml = null, $showFrom = true) {
+	if (Configure::read('debug') > 0) {
+		$file = '';
+		$line = '';
+		$lineInfo = '';
+		if ($showFrom) {
+			$calledFrom = debug_backtrace();
+			$file = substr(str_ireplace(ROOT, '', $calledFrom[0]['file']), 1);
+			$line = $calledFrom[0]['line'];
+		}
+		$html = <<<HTML
+<div class="cake-debug-output">
+%s
+<pre class="cake-debug">
+%s
+</pre>
+</div>
+HTML;
+		$text = <<<TEXT
+%s
+########## DEBUG ##########
+%s
+###########################
+TEXT;
+		$template = $html;
+		if (php_sapi_name() == 'cli' || $showHtml === false) {
+			$template = $text;
+			if ($showFrom) {
+				$lineInfo = sprintf('%s (line %s)', $file, $line);
+			}
+		}
+		if ($showHtml === null && $template !== $text) {
+			$showHtml = true;
+		}
+		$var = print_r($var, true);
+		if ($showHtml) {
+			$template = $html;
+			$var = h($var);
+			if ($showFrom) {
+				$lineInfo = sprintf('<span><strong>%s</strong> (line <strong>%s</strong>)</span>', $file, $line);
+			}
+		}
+		printf($template, $lineInfo, $var);
+	}
+    Log::write('debug', str_replace('<', '&lt;', str_replace('>', '&gt;', $var)));
+}
 
-        $var = print_r($var, true);
-        if ($showHtml) {
-            $var = str_replace('<', '&lt;', str_replace('>', '&gt;', $var));
-        }
-        echo $var . "\n</pre>\n";
-    }
-    
+
+
+/**
+ * Convenience method for htmlspecialchars.
+ *
+ * @param mixed $text Text to wrap through htmlspecialchars.  Also works with arrays, and objects.
+ *    Arrays will be mapped and have all their elements escaped.  Objects will be string cast if they
+ *    implement a `__toString` method.  Otherwise the class name will be used.
+ * @param boolean $double Encode existing html entities
+ * @param string $charset Character set to use when escaping.  Defaults to config value in 'App.encoding' or 'UTF-8'
+ * @return string Wrapped text
+ * @link http://book.cakephp.org/2.0/en/core-libraries/global-constants-and-functions.html#h
+ */
+function h($text, $double = true, $charset = null) {
+	if (is_array($text)) {
+		$texts = array();
+		foreach ($text as $k => $t) {
+			$texts[$k] = h($t, $double, $charset);
+		}
+		return $texts;
+	} elseif (is_object($text)) {
+		if (method_exists($text, '__toString')) {
+			$text = (string) $text;
+		} else {
+			$text = '(object)' . get_class($text);
+		}
+	}
+
+	static $defaultCharset = false;
+	if ($defaultCharset === false) {
+		$defaultCharset = Configure::read('App.encoding');
+		if ($defaultCharset === null) {
+			$defaultCharset = 'UTF-8';
+		}
+	}
+	if (is_string($double)) {
+		$charset = $double;
+	}
+	return htmlspecialchars($text, ENT_QUOTES, ($charset) ? $charset : $defaultCharset, $double);
 }
 
 /**

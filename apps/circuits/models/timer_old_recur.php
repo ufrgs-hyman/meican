@@ -223,7 +223,7 @@ function getNext($data_inicio, $byday, $freq) {
                 $offset += $dayTS;
             }
         }
-        //Framework::debug('Dias', date('d/m/Y',$daysleft));
+        //debug('Dias', date('d/m/Y',$daysleft));
         sort($daysleft);
 
     } else

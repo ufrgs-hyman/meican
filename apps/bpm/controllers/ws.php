@@ -244,7 +244,7 @@ class ws extends Controller {
                 'Complex Hello World Method');
 
         function getUsers($usr) {
-            Framework::debug('getusers',$usr);
+            debug('getusers',$usr);
             $user = new user_info();
 
             if (isset($usr) && is_array($usr)) {
@@ -265,7 +265,7 @@ class ws extends Controller {
         }
 
         function getGroups($grp) {
-            Framework::debug('getgroups',$grp);
+            debug('getgroups',$grp);
             $group = new group_info();
 
             if (isset($grp) && is_array($grp)) {
@@ -286,7 +286,7 @@ class ws extends Controller {
         }
 
         function getReqInfo($req_id, $dom_src_ip) {
-            Framework::debug('getreqinfo',$req_id);
+            debug('getreqinfo',$req_id);
 
             $req = new request_info();
             $req->req_id = $req_id;
@@ -308,7 +308,7 @@ class ws extends Controller {
                             'resc_descr' => $result2[0]->res_name,
                             'resc_type' => $rescTy);
 
-                    Framework::debug('return', $return);
+                    debug('return', $return);
                     return $return;
                 }
             }
@@ -316,7 +316,7 @@ class ws extends Controller {
         }
 
         function getFlowInfo($res_id) {
-            Framework::debug('getflowinfo',$res_id);
+            debug('getflowinfo',$res_id);
 
             $reservation = new reservation_info();
             $reservation->res_id = $res_id;
@@ -324,7 +324,7 @@ class ws extends Controller {
             $flw_id = $reservation->get('flw_id');
 
             if (!$flw_id) {
-                Framework::debug('reservation not found');
+                debug('reservation not found');
                 return NULL;
             } else {
 
@@ -346,7 +346,7 @@ class ws extends Controller {
                         'src_urn_string' =>  $flow->get('src_urn_string'),
                         'dst_urn_string' =>  $flow->get('dst_urn_string'),
                 );
-                Framework::debug('return do reqflowinfo', $return);
+                debug('return do reqflowinfo', $return);
                 return $return;
             }
         }
@@ -354,7 +354,7 @@ class ws extends Controller {
 
         /** necessita modificacao **/
         function getTimerInfo($res_id) {
-            Framework::debug('gettimerinfo',$res_id);
+            debug('gettimerinfo',$res_id);
             if (isset($res_id) && is_int($res_id)) {
                 $reservation = new reservation_info();
                 $reservation->res_id = $res_id;
@@ -362,7 +362,7 @@ class ws extends Controller {
                 $res = $reservation->fetch(FALSE);
 
                 if (!$res) {
-                    Framework::debug('reservation not found');
+                    debug('reservation not found');
                     return NULL;
                 }
 
@@ -371,7 +371,7 @@ class ws extends Controller {
                 $timer_info = $timer->fetch(FALSE);
 
                 if (!$timer) {
-                    Framework::debug('timer not found');
+                    debug('timer not found');
                     return NULL;
                 }
 
@@ -386,7 +386,7 @@ class ws extends Controller {
 
         /** necessita modificacao **/
         function getURNInfo($urn_string) {
-            Framework::debug('geturninfo',$urn_string);
+            debug('geturninfo',$urn_string);
 
             if (isset($urn_string) && is_string($urn_string)) {
                 $urn = new urn_info();
@@ -418,7 +418,7 @@ class ws extends Controller {
 
         /** necessita modificacao **/
         function getURNDetails($urn_string) {
-            Framework::debug('geturndetails',$urn_string);
+            debug('geturndetails',$urn_string);
             if (!isset($urn_string)) {
                 return MeicanTopology::getURNDetails();
             } elseif (is_string($urn_string)) {
@@ -428,7 +428,7 @@ class ws extends Controller {
         }
 
         function notifyResponse($response) {
-            Framework::debug('acionando notify response', $response);
+            debug('acionando notify response', $response);
             $validResponses = array ("accept","reject");
 
             if (array_search($response['response'], $validResponses)) {
@@ -450,7 +450,7 @@ class ws extends Controller {
 
                     if ($response['response']=='accept') {
 
-                        Framework::debug('setando campo send nos gris...');
+                        debug('setando campo send nos gris...');
 
                         $req->updateTo(array("status"=>"AUTHORIZED"),false);
                         $tmp = new gri_info();
@@ -482,7 +482,7 @@ class ws extends Controller {
                                  //apaga os gris negados do db MEICAN
                                  $g->delete(FALSE);
                              } else {
-                                 Framework::debug("error in cancel reservation gri ", $g->gri_descr);
+                                 debug("error in cancel reservation gri ", $g->gri_descr);
                              }
                             unset($oscRes);
                         }
@@ -491,17 +491,17 @@ class ws extends Controller {
                     return true; //se a requisicao foi negada ou aceita retorna true
 
                 } else {
-                    Framework::debug("essa requisicao já havia sido respondida");
+                    debug("essa requisicao já havia sido respondida");
                     return null;
                 }
             } else {
-                Framework::debug("valor de response invalido");
+                debug("valor de response invalido");
                 return null;
             }
         }
 
         function requestUserAuthorization($usr_dst, $request) {
-            Framework::debug('requestuserauth', $request);
+            debug('requestuserauth', $request);
             //colocar embaixo do usuário destino
             if ($usr_dst && $request) {
 
@@ -539,23 +539,23 @@ class ws extends Controller {
                         return TRUE;
 
                     } else {
-                        Framework::debug('fail to save the request by requestUserAuthorization');
+                        debug('fail to save the request by requestUserAuthorization');
                         return NULL;
                     }
 
                 } else {
-                    Framework::debug('user dst not found');
+                    debug('user dst not found');
                     return NULL;
                 }
             } else {
-                Framework::debug('requestUserAuthorization without request set or user');
+                debug('requestUserAuthorization without request set or user');
                 return NULL;
             }
         }
 
         function requestGroupAuthorization($grp_dst, $request) {
-            Framework::debug('requestgroupauth', $grp_dst);
-            Framework::debug('requestgroupauth', $request);
+            debug('requestgroupauth', $grp_dst);
+            debug('requestgroupauth', $request);
             //colocar embaixo do grupo destino
 
             if ($grp_dst && $request) {
@@ -591,17 +591,17 @@ class ws extends Controller {
                     if ($new_request->insert($grp_dst,'group_info'))
                         return TRUE;
                     else {
-                        Framework::debug('fail to save the request by requestUserAuthorization');
+                        debug('fail to save the request by requestUserAuthorization');
                         return NULL;
                     }
 
                 } else {
-                    Framework::debug('group dst not found');
+                    debug('group dst not found');
                     return NULL;
                 }
 
             } else {
-                Framework::debug('requestUserAuthorization without request set');
+                debug('requestUserAuthorization without request set');
                 return NULL;
             }
         }
@@ -618,7 +618,7 @@ class ws extends Controller {
         }
 
         function refreshRequestStatus($req_id, $dom_src_ip, $new_status) {
-            Framework::debug('refreshreqstatus', $new_status);
+            debug('refreshreqstatus', $new_status);
             $req = new request_info();
             $req->req_id = $req_id;
             $req->setDom('dom_src', $dom_src_ip);

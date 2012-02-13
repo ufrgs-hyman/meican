@@ -34,14 +34,14 @@ class Script {
                         $loadedVars[$ind] = $val;
                     }
                     Common::setSessionVariable('script_vars', $loadedVars);
-                    //Framework::debug("loading vars", $val);
+                    //debug("loading vars", $val);
                 }
 
             } else { //nao existe nada carregado de variaveis
                 $this->scriptArgs = $args;
                 $loadedVars = $args;
                 Common::setSessionVariable('script_vars', $loadedVars);
-                //Framework::debug("loading vars first time", $args);
+                //debug("loading vars first time", $args);
             }
 
         }
@@ -57,13 +57,13 @@ class Script {
                         $this->jsFiles[] = $js;
                         array_push($loadedScripts, $js);
                         Common::setSessionVariable('scripts', $loadedScripts);
-                        //Framework::debug("loading script", $js);
+                        //debug("loading script", $js);
                     }
                 }
             } else {
                 $this->jsFiles = $scriptFiles;
                 Common::setSessionVariable('scripts', $scriptFiles);
-                //Framework::debug("loading scripts first time", $scriptFiles);
+                //debug("loading scripts first time", $scriptFiles);
             }
         }
     }

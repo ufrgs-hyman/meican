@@ -1,6 +1,19 @@
 <?php
 
 return array(
+    
+	'Error' => array(
+		'handler' => 'ErrorHandler::handleError',
+		'level' => E_ALL & ~E_DEPRECATED,
+		'trace' => true
+	),
+    
+    'Exception' => array(
+		'handler' => 'ErrorHandler::handleException',
+		'renderer' => 'ExceptionRenderer',
+		'log' => true
+	),
+    
     /* internal system variables */
     "documentRoot" => null,
     "dirSeparator" => null,

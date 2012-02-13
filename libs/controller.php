@@ -31,7 +31,7 @@ class Controller {
         }*/
 //        $teste = ::rescueVar('last_view');
 //        if ($teste === FALSE) {
-//            $app = Framework::Configure::read('mainApp');
+//            $app = Configure::read('mainApp');
 //            $teste = "app=$app";
 //        }
 //        debug("last view", $teste);

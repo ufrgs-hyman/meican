@@ -89,7 +89,7 @@ class ws extends Controller {
                 'Complex Hello World Method');
 
         function getURNsInfo($urn_string_list) {
-            //Framework::debug('geturnsinfo',$urn_string_list);
+            //debug('geturnsinfo',$urn_string_list);
 
             if (isset($urn_string_list) && is_array($urn_string_list)) {
                 $ind = 0;
@@ -130,7 +130,7 @@ class ws extends Controller {
                         $ind++;
                     }
                 }
-                //Framework::debug('geturninfo return',$urn_info_list);
+                //debug('geturninfo return',$urn_info_list);
                 return $urn_info_list;
             } else return NULL;
         }

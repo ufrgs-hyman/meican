@@ -30,7 +30,7 @@ class device_info extends Resource_Model {
 
 //    public function fetchNetwork() {
 //        if (!isset($this->dev_id)) {
-//            //Framework::debug('Set $this->dev_id');
+//            //debug('Set $this->dev_id');
 //            return FALSE;
 //        }
 //

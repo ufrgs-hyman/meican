@@ -1,39 +1,5 @@
 <?php
 
-function myErrorHandler($errno, $errstr, $errfile, $errline)
-{
-    if (!(error_reporting() & $errno)) {
-        // This error code is not included in error_reporting
-        return;
-    }
-
-    switch ($errno) {
-    case E_USER_ERROR:
-        echo "<b>My ERROR</b> [$errno] $errstr<br />\n";
-        echo "  Fatal error on line $errline in file $errfile";
-        echo ", PHP " . PHP_VERSION . " (" . PHP_OS . ")<br />\n";
-        echo "Aborting...<br />\n";
-        exit(1);
-        break;
-
-    case E_USER_WARNING:
-        echo "<b>My WARNING</b> [$errno] $errstr<br />\n";
-        break;
-
-    case E_USER_NOTICE:
-        echo "<b>My NOTICE</b> [$errno] $errstr<br />\n";
-        break;
-
-    default:
-        echo "Unknown error type: [$errno] $errstr<br />\n";
-        break;
-    }
-
-    /* Don't execute PHP internal error handler */
-    return true;
-}
-
-
 include_once 'libs/app.php';
 include_once 'libs/configure.php';
 include_once 'libs/datasource.php';
@@ -55,9 +21,6 @@ class Dispatcher {
 			}
         if ($this->base == '/')
             $this->base = '';
-        Configure::load('config/main.php');
-        Configure::load('config/local.php');
-        Configure::write('systemDirName', $this->base);
     }
     
     // Método Factory parametrizado
@@ -76,7 +39,6 @@ class Dispatcher {
      * Main function, reads url and call action
      */
     function dispatch($params = array()) {
-        //set_error_handler('myErrorHandler');
         if (!empty($_SERVER['PATH_INFO']))
             $url = $_SERVER['PATH_INFO'];
         else if (array_key_exists('url', $_GET))
@@ -92,6 +54,7 @@ class Dispatcher {
         if ($controller !== 'ws' && !$this->checkLogin()) //TODO: authetication for webservices
             return;
         try {
+            $this->bootstrap();
             if (empty($app))
                 $app = Configure::read('mainApp');
             if (!($app = $this->appFactory($app)))
@@ -112,12 +75,22 @@ class Dispatcher {
         }
         Datasource::getInstance()->close();
     }
+    
+    public function bootstrap(){
+        include_once 'libs/Log/Log.php';
+        Log::config('default', array(
+            'engine' => 'FileLog'
+        ));
+        include_once 'libs/Error/ErrorHandler.php';
+        Configure::bootstrap(true);
+        Configure::write('systemDirName', $this->base);
+    }
 
     /**
      * Check wether a user is logged in, otherwise redirects to login page.
      * @return Boolean  
      */
-    function checkLogin() {
+    public function checkLogin() {
         include_once 'libs/auth.php';
         if (AuthSystem::userTryToLogin() || AuthSystem::isUserLoggedIn()) {
             return true;
