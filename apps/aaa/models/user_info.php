@@ -27,13 +27,6 @@ class user_info extends Model {
         return $this->querySql($sql, $tableName);
     }
 
-    public function getLogin() {
-        $tableName = $this->getTableName();
-        $sql = "SELECT usr_login FROM $tableName WHERE usr_id='$this->usr_id'";
-        $result = $this->querySql($sql, $tableName);
-        return $result[0]->usr_login;
-    }
-    
     /**
      * @param <type>
      * @param <boolean> $used = true retorna os grupos do usuário ; false retorna os grupos que o usuário não faz parte

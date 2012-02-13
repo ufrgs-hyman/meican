@@ -62,9 +62,7 @@ class reservations extends Controller {
                 
                 $user = new user_info();
                 $user->usr_id = $r->usr_id;
-                $res->usr_login = $user->getLogin();
-                
-                Framework::debug("login", $res);
+                $res->usr_login =$user->get('usr_login');
 
                 $dom = new domain_info();
                 if ($domain = $dom->getOSCARSDomain($res->flow->source->urn)) {
@@ -665,7 +663,7 @@ class reservations extends Controller {
 
         $usr_info = new user_info();
         $usr_info->usr_id = $reservation->usr_id;
-        $usr_login = $usr_info->getLogin();
+        $usr_login = $usr_info->get('usr_login');
         
         $dom = new domain_info();
         if ($domain = $dom->getOSCARSDomain($flow->source->urn)) {
