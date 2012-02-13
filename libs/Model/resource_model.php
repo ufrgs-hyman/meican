@@ -2,7 +2,7 @@
 
 include_once 'libs/auth.php';
 include_once 'apps/aaa/models/acos.php';
-include_once 'libs/model.php';
+include_once 'libs/Model/model.php';
 
 class Resource_Model extends Model {
 

@@ -1,6 +1,6 @@
 <?php
 
-include_once 'libs/resource_model.php';
+include_once 'libs/Model/resource_model.php';
 
 include_once 'apps/circuits/models/gri_info.php';
 include_once 'apps/circuits/models/flow_info.php';

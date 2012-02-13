@@ -1,8 +1,8 @@
 <?php
 
 require_once 'MDB2.php';
-include_once 'libs/attribute.php';
-include_once 'libs/database.php';
+include_once 'libs/Model/attribute.php';
+include_once 'libs/Model/database.php';
 include_once 'libs/acl_loader.php';
 
 class Model {

@@ -9,7 +9,7 @@ define("LOGS", ROOT.DS.'log'.DS);
 @define ('__MEICAN', 1);
 
 include_once 'libs/common.php';
-include_once 'libs/dispatcher.php';
+include_once 'libs/Basics/Dispatcher.php';
 
 
 //defined('__MEICAN') or die("Invalid access.");

@@ -1,10 +1,10 @@
 <?php
 
 include_once 'libs/app.php';
-include_once 'libs/configure.php';
-include_once 'libs/datasource.php';
+include_once 'libs/Basics/Configure.php';
+include_once 'libs/Model/datasource.php';
 include_once 'libs/language.php';
-include_once 'libs/database.php';
+include_once 'libs/Model/database.php';
 
 /**
  * Dispatcher Class. Reads required url and instanciate properly apps, controller and calls an action.
