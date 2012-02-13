@@ -63,8 +63,6 @@ class reservations extends Controller {
                 $user = new user_info();
                 $user->usr_id = $r->usr_id;
                 $res->usr_login = $user->getLogin();
-                
-                debug("login", $res);
 
                 $dom = new domain_info();
                 if ($domain = $dom->getOSCARSDomain($res->flow->source->urn)) {
