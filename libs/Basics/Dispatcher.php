@@ -46,6 +46,7 @@ class Dispatcher {
             $url = Common::GET('url');
         else
             $url = null;
+        $this->bootstrap();
         if ($url === 'login')
             return $this->login();
         /*if (empty($url)&&!(Common::GET('app')))
@@ -55,7 +56,6 @@ class Dispatcher {
         if ($controller !== 'ws' && !$this->checkLogin()) //TODO: authetication for webservices
             return;
         try {
-            $this->bootstrap();
             if (empty($this->params['app']))
                 $this->params['app'] = Configure::read('mainApp');
             if (!($app = $this->appFactory($app)))
