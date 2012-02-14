@@ -76,57 +76,53 @@ function clearFlash(){
                     $(this.menus[i]).css('display', 'none');
                 }
             }
-            
+        },
+        clear: function(){
+            for (var i=0; i<this.menus.length; i++){
+                window.localStorage.setItem('submenu_'+i, false);
+            }
         },
         save: function(){//window.localStorage.removeItem('submenu_'+0); window.localStorage.removeItem('submenu_'+1); window.localStorage.removeItem('submenu_'+2);
             for (var i=0; i<this.menus.length; i++){
                 window.localStorage.setItem('submenu_'+i, ($(this.menus[i]).css('display') != 'none'));
             }
         },
-        openSubMenu: function(i){
+        openSubMenu: function(i, callback){
             if (typeof(i) != "object")
                 i = this.menus[i];
-            $(i).slideDown().parent().find('h3 span.ui-icon').removeClass('ui-icon-circle-arrow-e').addClass('ui-icon-circle-arrow-s');
+            $(i).slideDown(400, callback).parent().find('h3 span.ui-icon').removeClass('ui-icon-circle-arrow-e').addClass('ui-icon-circle-arrow-s');
         },
-        closeSubMenu: function(i){
+        closeSubMenu: function(i, callback){
             if (typeof(i) != "object")
                 i = this.menus[i];
-            $(i).slideUp().parent().find('h3 span.ui-icon').addClass('ui-icon-circle-arrow-e').removeClass('ui-icon-circle-arrow-s');
+            $(i).slideUp(400, callback).parent().find('h3 span.ui-icon').addClass('ui-icon-circle-arrow-e').removeClass('ui-icon-circle-arrow-s');
         },
-        toggleSubMenu : function(i){
+        toggleSubMenu : function(i, callback ){
             if (typeof(i) != "object")
                 i = this.menus[i];
+            $(i).slideToggle(400, callback).parent().find('h3 span.ui-icon').toggleClass('ui-icon-circle-arrow-e').toggleClass('ui-icon-circle-arrow-s');/*
             if ($(i).css('display') == "none")
                 this.openSubMenu(i);
             else
-                this.closeSubMenu(i);
+                this.closeSubMenu(i);*/
         },
         setSelected: function() {
             $('#menu .active').removeClass("active");
             var selectedMenu = $('#menu a[href="'+window.location.pathname+'"]').addClass("active");
             if (!selectedMenu.hasClass('top')){
-                this.openSubMenu(selectedMenu.parent().parent());
+                this.openSubMenu(selectedMenu.parent().parent(), function(){
+                    menuHandler.save();
+                });
             }
-            setTimeout(function(){
-                menuHandler.save();
-            }, 500);
         },
         prepare: function() {
-            
+            this.menus = $('#menu ul ul');
             this.load();
             $('#menu h3 a').click(function(){
                 if (!$(this).attr('href')){
-                    menuHandler.toggleSubMenu($(this).parent().next());
-                    /*
-                    if ($(this).parent().next().css('display') == 'none'){
-                        $(this).find('span.ui-icon').addClass('ui-icon-circle-arrow-e').removeClass('ui-icon-circle-arrow-s');
-                    } else {
-                        $(this).find('span.ui-icon').removeClass('ui-icon-circle-arrow-e').addClass('ui-icon-circle-arrow-s');
-                    }*/
-
-                    setTimeout(function(){
+                    menuHandler.toggleSubMenu($(this).parent().next(), function(){
                         menuHandler.save();
-                    }, 500);
+                    });
                     return false;
                 }
             });
@@ -369,13 +365,13 @@ function clearFlash(){
     if(a&&d){
         j=i.placeholder=function(){
             return this
-            };
+        };
             
         j.input=j.textarea=true
-        }else{
+    }else{
         j=i.placeholder=function(){
             return this.filter((a?'textarea':':input')+'[placeholder]').not('.placeholder').bind('focus.placeholder',b).bind('blur.placeholder',e).trigger('blur.placeholder').end()
-            };
+        };
             
         j.input=a;
         j.textarea=d;
@@ -384,54 +380,54 @@ function clearFlash(){
                 var k=c('.placeholder',this).each(b);
                 setTimeout(function(){
                     k.each(e)
-                    },10)
-                })
-            });
+                },10)
+            })
+        });
         c(f).bind('unload.placeholder',function(){
             c('.placeholder').val('')
-            })
-        }
-        function g(l){
+        })
+    }
+    function g(l){
         var k={},m=/^jQuery\d+$/;
         c.each(l.attributes,function(o,n){
             if(n.specified&&!m.test(n.name)){
                 k[n.name]=n.value
-                }
-            });
-    return k
+            }
+        });
+        return k
     }
     function b(){
-    var k=c(this);
-    if(k.val()===k.attr('placeholder')&&k.hasClass('placeholder')){
-        if(k.data('placeholder-password')){
-            k.hide().next().show().focus().attr('id',k.removeAttr('id').data('placeholder-id'))
+        var k=c(this);
+        if(k.val()===k.attr('placeholder')&&k.hasClass('placeholder')){
+            if(k.data('placeholder-password')){
+                k.hide().next().show().focus().attr('id',k.removeAttr('id').data('placeholder-id'))
             }else{
-            k.val('').removeClass('placeholder')
+                k.val('').removeClass('placeholder')
             }
         }
-}
-function e(){
-    var o,n=c(this),k=n,m=this.id;
-    if(n.val()===''){
-        if(n.is(':password')){
-            if(!n.data('placeholder-textinput')){
-                try{
-                    o=n.clone().attr({
-                        type:'text'
-                    })
+    }
+    function e(){
+        var o,n=c(this),k=n,m=this.id;
+        if(n.val()===''){
+            if(n.is(':password')){
+                if(!n.data('placeholder-textinput')){
+                    try{
+                        o=n.clone().attr({
+                            type:'text'
+                        })
                     }catch(l){
-                    o=c('<input>').attr(c.extend(g(this),{
-                        type:'text'
-                    }))
+                        o=c('<input>').attr(c.extend(g(this),{
+                            type:'text'
+                        }))
                     }
                     o.removeAttr('name').data('placeholder-password',true).data('placeholder-id',m).bind('focus.placeholder',b);
-                n.data('placeholder-textinput',o).data('placeholder-id',m).before(o)
+                    n.data('placeholder-textinput',o).data('placeholder-id',m).before(o)
                 }
                 n=n.removeAttr('id').hide().prev().attr('id',m).show()
             }
             n.addClass('placeholder').val(n.attr('placeholder'))
         }else{
-        n.removeClass('placeholder')
+            n.removeClass('placeholder')
         }
     }
 }(this,document,jQuery));
