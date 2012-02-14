@@ -1,34 +1,14 @@
 <?php
-/**
- * Configure class
- *
- * PHP 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       Cake.Core
- * @since         CakePHP(tm) v 1.0.0.2363
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
 
-App::uses('Set', 'Utility');
+if (!class_exists('Set')) {
+    require LIBS . 'Utility/Set.php';
+}
 
-/**
- * Configuration class. Used for managing runtime configuration information.
- *
- * Provides features for reading and writing to the runtime configuration, as well
- * as methods for loading additional configuration files or storing runtime configuration
- * for future use.
- *
- * @package       Cake.Core
- * @link          http://book.cakephp.org/2.0/en/development/configuration.html#configure-class
- */
 class Configure {
 
 /**
@@ -39,61 +19,6 @@ class Configure {
 	protected static $_values = array(
 		'debug' => 0
 	);
-
-/**
- * Configured reader classes, used to load config files from resources
- *
- * @var array
- * @see Configure::load()
- */
-	protected static $_readers = array();
-
-/**
- * Initializes configure and runs the bootstrap process.
- * Bootstrapping includes the following steps:
- *
- * - Setup App array in Configure.
- * - Include app/Config/core.php.
- * - Configure core cache configurations.
- * - Load App cache files.
- * - Include app/Config/bootstrap.php.
- * - Setup error/exception handlers.
- *
- * @param boolean $boot
- * @return void
- */
-	public static function bootstrap($boot = true) {
-		if ($boot) {
-			self::write('App', array(
-				'base' => false,
-				'baseUrl' => false,
-				'dir' => APP_DIR,
-				'webroot' => WEBROOT_DIR,
-				'www_root' => WWW_ROOT
-			));
-
-			/*if (!include(APP . 'Config' . DS . 'core.php')) {
-				trigger_error(__d('cake_dev', "Can't find application core file. Please create %score.php, and make sure it is readable by PHP.", APP . 'Config' . DS), E_USER_ERROR);
-			}*/
-			App::$bootstrapping = false;
-			App::init();
-			//App::build();
-			/*if (!include(APP . 'Config' . DS . 'bootstrap.php')) {
-				trigger_error(__d('cake_dev', "Can't find application bootstrap file. Please create %sbootstrap.php, and make sure it is readable by PHP.", APP . 'Config' . DS), E_USER_ERROR);
-			}*/
-			$level = -1;
-			if (isset(self::$_values['Error']['level'])) {
-				error_reporting(self::$_values['Error']['level']);
-				$level = self::$_values['Error']['level'];
-			}
-			if (!empty(self::$_values['Error']['handler'])) {
-				set_error_handler(self::$_values['Error']['handler'], $level);
-			}
-			if (!empty(self::$_values['Exception']['handler'])) {
-				set_exception_handler(self::$_values['Exception']['handler']);
-			}
-		}
-	}
 
 /**
  * Used to store a dynamic variable in Configure.
@@ -143,14 +68,6 @@ class Configure {
 						self::$_values[$names[0]] = Set::insert(self::$_values[$names[0]], $names[1], $value);
 					break;
 				}
-			}
-		}
-
-		if (isset($config['debug']) && function_exists('ini_set')) {
-			if (self::$_values['debug']) {
-				ini_set('display_errors', 1);
-			} else {
-				ini_set('display_errors', 0);
 			}
 		}
 		return true;
@@ -226,163 +143,58 @@ class Configure {
 		self::$_values[$names[0]] = Set::remove(self::$_values[$names[0]], $names[1]);
 	}
 
+	public static function load($file) {
+		return self::write(@include($file));
+	}
+    
+    
 /**
- * Add a new reader to Configure.  Readers allow you to read configuration
- * files in various formats/storage locations.  CakePHP comes with two built-in readers
- * PhpReader and IniReader.  You can also implement your own reader classes in your application.
+ * Initializes configure and runs the bootstrap process.
+ * Bootstrapping includes the following steps:
  *
- * To add a new reader to Configure:
+ * - Setup App array in Configure.
+ * - Include app/Config/core.php.
+ * - Configure core cache configurations.
+ * - Load App cache files.
+ * - Include app/Config/bootstrap.php.
+ * - Setup error/exception handlers.
  *
- * `Configure::config('ini', new IniReader());`
- *
- * @param string $name The name of the reader being configured.  This alias is used later to
- *   read values from a specific reader.
- * @param ConfigReaderInterface $reader The reader to append.
+ * @param boolean $boot
  * @return void
  */
-	public static function config($name, ConfigReaderInterface $reader) {
-		self::$_readers[$name] = $reader;
-	}
-
-/**
- * Gets the names of the configured reader objects.
- *
- * @param string $name
- * @return array Array of the configured reader objects.
- */
-	public static function configured($name = null) {
-		if ($name) {
-			return isset(self::$_readers[$name]);
-		}
-		return array_keys(self::$_readers);
-	}
-
-/**
- * Remove a configured reader.  This will unset the reader
- * and make any future attempts to use it cause an Exception.
- *
- * @param string $name Name of the reader to drop.
- * @return boolean Success
- */
-	public static function drop($name) {
-		if (!isset(self::$_readers[$name])) {
-			return false;
-		}
-		unset(self::$_readers[$name]);
-		return true;
-	}
-
-/**
- * Loads stored configuration information from a resource.  You can add
- * config file resource readers with `Configure::config()`.
- *
- * Loaded configuration information will be merged with the current
- * runtime configuration. You can load configuration files from plugins
- * by preceding the filename with the plugin name.
- *
- * `Configure::load('Users.user', 'default')`
- *
- * Would load the 'user' config file using the default config reader.  You can load
- * app config files by giving the name of the resource you want loaded.
- *
- * `Configure::load('setup', 'default');`
- *
- * If using `default` config and no reader has been configured for it yet,
- * one will be automatically created using PhpReader
- *
- * @link http://book.cakephp.org/2.0/en/development/configuration.html#Configure::load
- * @param string $key name of configuration resource to load.
- * @param string $config Name of the configured reader to use to read the resource identified by $key.
- * @param boolean $merge if config files should be merged instead of simply overridden
- * @return mixed false if file not found, void if load successful.
- * @throws ConfigureException Will throw any exceptions the reader raises.
- */
-	public static function load($key, $config = 'default', $merge = true) {
-		/*if (!isset(self::$_readers[$config])) {
-			if ($config === 'default') {
-				App::uses('PhpReader', 'Configure');
-				self::$_readers[$config] = new PhpReader();
-			} else {
-				return false;
+	public static function bootstrap($boot = true) {
+		if ($boot) {
+			/*self::write('App', array(
+				'base' => false,
+				'baseUrl' => false,
+				'dir' => APP_DIR,
+				'webroot' => WEBROOT_DIR,
+				'www_root' => WWW_ROOT
+			));*/
+            
+            self::load('config/main.php');
+            self::load('config/local.php');
+/*
+			if (!include(APP . 'Config' . DS . 'core.php')) {
+				trigger_error(__d('cake_dev', "Can't find application core file. Please create %score.php, and make sure it is readable by PHP.", APP . 'Config' . DS), E_USER_ERROR);
 			}
-		}*/
-		$values = @include($key);// self::$_readers[$config]->read($key);
-        if (empty($values) || is_bool($values))
-            $values = array();
-		if ($merge) {
-			$keys = array_keys($values);
-			foreach ($keys as $key) {
-				if (($c = self::read($key)) && is_array($values[$key]) && is_array($c)) {
-					$values[$key] = Set::merge($c, $values[$key]);
-				}
+			App::$bootstrapping = false;
+			App::init();
+			App::build();
+			if (!include(APP . 'Config' . DS . 'bootstrap.php')) {
+				trigger_error(__d('cake_dev', "Can't find application bootstrap file. Please create %sbootstrap.php, and make sure it is readable by PHP.", APP . 'Config' . DS), E_USER_ERROR);
+			}*/
+			$level = -1;
+			if (isset(self::$_values['Error']['level'])) {
+				error_reporting(self::$_values['Error']['level']);
+				$level = self::$_values['Error']['level'];
+			}
+			if (!empty(self::$_values['Error']['handler'])) {
+				set_error_handler(self::$_values['Error']['handler'], $level);
+			}
+			if (!empty(self::$_values['Exception']['handler'])) {
+				set_exception_handler(self::$_values['Exception']['handler']);
 			}
 		}
-
-		return self::write($values);
 	}
-
-/**
- * Used to determine the current version of CakePHP.
- *
- * Usage `Configure::version();`
- *
- * @return string Current version of CakePHP
- */
-	public static function version() {
-		if (!isset(self::$_values['Cake']['version'])) {
-			require CAKE . 'Config' . DS . 'config.php';
-			self::write($config);
-		}
-		return self::$_values['Cake']['version'];
-	}
-
-/**
- * Used to write runtime configuration into Cache.  Stored runtime configuration can be
- * restored using `Configure::restore()`.  These methods can be used to enable configuration managers
- * frontends, or other GUI type interfaces for configuration.
- *
- * @param string $name The storage name for the saved configuration.
- * @param string $cacheConfig The cache configuration to save into.  Defaults to 'default'
- * @param array $data Either an array of data to store, or leave empty to store all values.
- * @return boolean Success
- */
-	public static function store($name, $cacheConfig = 'default', $data = null) {
-		if ($data === null) {
-			$data = self::$_values;
-		}
-		return Cache::write($name, $data, $cacheConfig);
-	}
-
-/**
- * Restores configuration data stored in the Cache into configure.  Restored
- * values will overwrite existing ones.
- *
- * @param string $name Name of the stored config file to load.
- * @param string $cacheConfig Name of the Cache configuration to read from.
- * @return boolean Success.
- */
-	public static function restore($name, $cacheConfig = 'default') {
-		$values = Cache::read($name, $cacheConfig);
-		if ($values) {
-			return self::write($values);
-		}
-		return false;
-	}
-}
-
-/**
- * An interface for creating objects compatible with Configure::load()
- *
- * @package       Cake.Core
- */
-interface ConfigReaderInterface {
-/**
- * Read method is used for reading configuration information from sources.
- * These sources can either be static resources like files, or dynamic ones like
- * a database, or other datasource.
- *
- * @param string $key
- * @return array An array of data to merge into the runtime configuration
- */
-	public function read($key);
 }
