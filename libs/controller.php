@@ -5,19 +5,17 @@ include_once 'libs/Basics/Object.php';
 
 class Controller extends Object {
 
-    private $layout = "default";
-    private $flash = array();
-    private $argsToBody = NULL;
-    private $argsToScript = NULL;
-    //private $argsToHeader = NULL;
-    private $scripts = array();
-    private $inlineScript = NULL;
+    protected $layout = "default";
+    protected $argsToBody = NULL;
+    protected $scripts = array();
+    //private $inlineScript = NULL;
     public $app;
     public $controller = NULL;
     public $action = NULL;
     protected $defaultAction;
     public $viewVars = array('scripts_for_layout' => array());
     public $name = null;
+    public $output = '';
     
     public function __construct(){
         
@@ -28,31 +26,18 @@ class Controller extends Object {
     }
 
     public function render($action=null) {
-        //modificar para referenciar direto controller, nao passando os parametros para o construtor
         if (empty($action))
             $action = $this->action;
         if ($this->layout === 'default' && $this->isAjax())
             $this->layout .= '_ajax';
         $view = new View($this->app, $this->controller, $action, $this->layout);
-
-        /*if ($this->app != 'init') {
-            Common::recordVar('last_view', "app=$this->app&controller=$this->controller&action=$this->action");
-            Common::setSessionVariable('welcome_loaded', 1);
-        }*/
-//        $teste = ::rescueVar('last_view');
-//        if ($teste === FALSE) {
-//            $app = Configure::read('mainApp');
-//            $teste = "app=$app";
-//        }
-//        debug("last view", $teste);
 		$view->set($this->viewVars);
-        $view->set('content_for_flash', $this->flash? $this->flash : '');
-        $view->set('scripts_vars', $this->argsToScript);
         $view->setArgs($this->argsToBody);
         //$view->script->setArgs($this->argsToScript);
         //$view->script->setScriptFiles($this->scripts);
         //$view->script->setInlineScript($this->inlineScript);
-        echo $view->build();
+        $this->output .= $view->build();
+        echo $this->output;
     }
 
     public function isAjax() {
@@ -77,8 +62,7 @@ class Controller extends Object {
     }
 
     public function setFlash($message, $status='info') {
-        $this->flash[] = "$status:$message";
-        //$this->flash[]->status = $status;
+        $this->viewVars['content_for_flash'][] = "$status:$message";
     }
 
     protected function setArgsToBody($args) {
@@ -86,7 +70,7 @@ class Controller extends Object {
     }
 
     protected function setArgsToScript($args) {
-        $this->argsToScript = $args;
+        $this->set('scripts_vars', $args);
     }
     
     public function setAction($action) {

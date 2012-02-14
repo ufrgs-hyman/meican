@@ -25,29 +25,23 @@ class View {
         $this->controller = $controller;
         $this->action = $action;
         $this->layout = $layout;
-
-        //$this->script = new Script();
-    }
-
-    public function build() {/*
-      if ($this->script->jsFiles || $this->script->scriptArgs)
-      $this->script->build(); */
-        return $this->bodyContent = $this->buildView("layouts/$this->layout.php", array(
-            'content_for_body' => $this->buildView($this->setView()),
-                //'content_for_script' => $this->script->content,
-                ));
-    }
-
-    public function setArgs($args) {
-        $this->bodyArgs = $args;
-    }
-
-    private function setView() {
         if ($this->action)
             $this->view = "apps/$this->app/views/$this->controller" . '_' . "$this->action.php";
         else
             $this->view = "apps/$this->app/views/$this->controller.php";
-        return $this->view;
+    }
+
+    public function build() {
+        if ($this->layout === 'empty')
+            return $this->bodyContent = $this->buildView($this->view);
+        else
+            return $this->bodyContent = $this->buildView("layouts/$this->layout.php", array(
+                'content_for_body' => $this->buildView($this->view),
+                    ));
+    }
+
+    public function setArgs($args) {
+        $this->bodyArgs = $args;
     }
 
     public function buildView($view=null, $vars=array()) {
@@ -160,7 +154,10 @@ class View {
     }
 
     public function scripts() {
-        $scripts_vars = $this->viewVars['scripts_vars'];
+        if (!empty($this->viewVars['scripts_vars']))
+            $scripts_vars = $this->viewVars['scripts_vars'];
+        else
+            $scripts_vars = array();
         $ret = '';
         if (!empty($scripts_vars)) {
             foreach ($scripts_vars as $name => $val) {
