@@ -8,7 +8,7 @@ function __d($domain, $msg, $args = null) {
 }
 
 //require CAKE . 'basics.php';
-
+/*
 if (!defined('WEBROOT_DIR')) {
     define('WEBROOT_DIR', 'webroot');
 }
@@ -29,7 +29,8 @@ App::uses('Object', 'Core');
 App::$bootstrapping = true;
 
 
-spl_autoload_register(array('App', 'load'));
+spl_autoload_register(array('App', 'load'));*/
+include_once 'libs/Core/Configure.php';
 include_once 'libs/Log/Log.php';
 Log::config('default', array(
     'engine' => 'FileLog'
