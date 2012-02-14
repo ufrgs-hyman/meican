@@ -157,7 +157,7 @@ class Controller extends Object {
 					'action' => $params['action']
 				));
 			}
-			return $method->invokeArgs($this, $params['pass']);
+			return $method->invokeArgs($this, array($params['pass'])); //TODO: tirar esse array
 
 		} catch (ReflectionException $e) {
 			throw new MissingActionException(array(

@@ -155,6 +155,10 @@ class Dispatcher {
         $url = $this->base . '/' . $params['app'] . '/' . $params['controller'];
         if (!empty($params['action']) && $params['action']!='show' )
             $url .= '/' . $params['action'];
+        if (empty($params['pass']))
+            $params['pass'] = array();
+        if (!empty($params['param']))
+            $params['pass'] = $params['param'];
         if (!empty($params['pass']))
             if (is_array($params['pass'])) {
                 $str = array();
