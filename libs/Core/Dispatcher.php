@@ -1,8 +1,9 @@
 <?php
 
-include_once 'libs/app.php';
-include_once 'libs/Basics/Configure.php';
-include_once 'libs/Basics/Object.php';
+include_once 'libs/common.php';
+include_once 'libs/application.php';
+include_once 'libs/Core/Configure.php';
+include_once 'libs/Core/Object.php';
 include_once 'libs/Model/datasource.php';
 include_once 'libs/language.php';
 include_once 'libs/Model/database.php';
@@ -22,6 +23,7 @@ class Dispatcher {
 			}
         if ($this->base == '/')
             $this->base = '';
+        Configure::write('systemDirName', $this->base);
     }
     
     // Método Factory parametrizado
@@ -46,7 +48,6 @@ class Dispatcher {
             $url = Common::GET('url');
         else
             $url = null;
-        $this->bootstrap();
         if ($url === 'login')
             return $this->login();
         /*if (empty($url)&&!(Common::GET('app')))
@@ -75,16 +76,6 @@ class Dispatcher {
             echo $e->getMessage();
         }
         Datasource::getInstance()->close();
-    }
-    
-    public function bootstrap(){
-        include_once 'libs/Log/Log.php';
-        Log::config('default', array(
-            'engine' => 'FileLog'
-        ));
-        include_once 'libs/Error/ErrorHandler.php';
-        Configure::bootstrap(true);
-        Configure::write('systemDirName', $this->base);
     }
 
     /**

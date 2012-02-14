@@ -1,7 +1,6 @@
 <?php
 
 include_once 'libs/view.php';
-include_once 'libs/Basics/Object.php';
 
 class Controller extends Object {
 

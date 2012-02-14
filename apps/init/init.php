@@ -1,8 +1,8 @@
 <?php
 
-include_once 'libs/app.php';
+include_once 'libs/application.php';
 
-class init extends App {
+class init extends Application {
 
     public function init() {
         $this->appName = 'init';

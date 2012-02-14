@@ -2,7 +2,7 @@
 
 include_once 'libs/menu_item.php';
 
-class App {
+class Application {
     protected $appName;
     protected $defaultController;
 

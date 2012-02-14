@@ -44,7 +44,7 @@ class MenuItem {
         $apps = array('aaa', 'bpm', 'init', 'topology', 'circuits'); //TODO: detectar automaticamente apps instaladas
         $menus = array();
         foreach ($apps as $app){
-            $appObj = App::factory($app);
+            $appObj = Application::factory($app);
             if ($appObj) {
                 //Language::setLang($appObj->getAppName());
                 //debug("mudando dom ".$appObj->getAppName());

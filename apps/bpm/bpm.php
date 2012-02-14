@@ -1,8 +1,8 @@
 <?php
 
-include_once 'libs/app.php';
+include_once 'libs/application.php';
 
-class bpm extends App {
+class bpm extends Application {
 
     public function bpm() {
         $this->appName = 'bpm';

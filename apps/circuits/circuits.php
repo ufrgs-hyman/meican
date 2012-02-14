@@ -1,8 +1,8 @@
 <?php
 
-include_once 'libs/app.php';
+include_once 'libs/application.php';
 
-class circuits extends App {
+class circuits extends Application {
 
     public function circuits() {
         $this->appName = 'circuits';
