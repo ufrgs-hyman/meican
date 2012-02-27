@@ -57,7 +57,10 @@ class Controller extends Object {
     		foreach ($script as $item)
     			$this->addScriptForLayout($item);
     	else
-	    	$this->viewVars['scripts_for_layout'][]="apps/{$this->app}/webroot/js/$script.js?1";
+            if (Configure::read('Asset.compress'))
+                $this->viewVars['scripts_for_layout'][]="{$this->app}/cjs/$script.js";
+            else
+                $this->viewVars['scripts_for_layout'][]="apps/{$this->app}/webroot/js/$script.js";
     }
 
     public function setFlash($message, $status='info') {

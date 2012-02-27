@@ -170,13 +170,14 @@ class View {
             }
             $ret = '<script type="text/javascript">' . $ret . '</script>';
         }
-        $scripts_for_layout = $this->viewVars['scripts_for_layout'];
-        if (!empty($scripts_for_layout)) {
-            foreach ($scripts_for_layout as $script) {
-                $ret .= '<script type="text/javascript" src="' . $this->url() . $script . '"></script>';
+        if (!empty($this->viewVars['scripts_for_layout'])) {
+            foreach ($this->viewVars['scripts_for_layout'] as $script) {
+                $ret .= '<script type="text/javascript" src="' . $this->url($script) . '"></script>';
             }
         }
         return $ret;
     }
+    
+    
 
 }

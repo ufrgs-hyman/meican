@@ -15,6 +15,7 @@ return array(
 	),
     
     'Asset' => array(
+        //'compress' => true,
         'filter' => array(
             'css' => 'assets.php',
             'js' => 'assets.php'
