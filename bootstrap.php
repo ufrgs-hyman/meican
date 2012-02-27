@@ -14,10 +14,10 @@ if (!defined('WEBROOT_DIR')) {
 }
 if (!defined('WWW_ROOT')) {
     define('WWW_ROOT', dirname(__FILE__) . DS . 'webroot');
-}
+}*/
 
-require CAKE . 'Core' . DS .'App.php';
-require CAKE . 'Error' . DS . 'exceptions.php';
+require LIBS . 'Core' . DS .'App.php';
+require LIBS . 'Error' . DS . 'exceptions.php';
 
 spl_autoload_register(array('App', 'load'));
 
@@ -26,16 +26,17 @@ App::uses('Configure', 'Core');
 App::uses('CakePlugin', 'Core');
 App::uses('Cache', 'Cache');
 App::uses('Object', 'Core');
-App::$bootstrapping = true;
+App::uses('Log', 'Log');
+//App::$bootstrapping = true;
 
-
-spl_autoload_register(array('App', 'load'));*/
-include_once 'libs/Core/Configure.php';
-include_once 'libs/Log/Log.php';
+//include_once 'libs/Core/Configure.php';
+//include_once 'libs/Log/Log.php';
 Log::config('default', array(
     'engine' => 'FileLog'
 ));
-include_once 'libs/Error/ErrorHandler.php';
+//include_once 'libs/Error/ErrorHandler.php';
 Configure::bootstrap(true);
 Configure::load('config/main.php');
 Configure::load('config/local.php');
+
+include_once 'libs/common.php';

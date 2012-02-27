@@ -2,8 +2,10 @@
 
 include_once 'libs/common.php';
 include_once 'libs/application.php';
-include_once 'libs/Core/Configure.php';
-include_once 'libs/Core/Object.php';
+
+App::uses('Configure', 'Core');
+App::uses('Object', 'Core');
+
 include_once 'libs/Model/datasource.php';
 include_once 'libs/language.php';
 include_once 'libs/Model/database.php';
