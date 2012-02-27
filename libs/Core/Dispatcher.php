@@ -50,8 +50,10 @@ class Dispatcher {
             $url = Common::GET('url');
         else
             $url = null;
-        if ($url === 'login')
-            return $this->login();
+        if ($this->login($url))
+            return ;
+        if ($this->asset($url))
+            return ;
         /*if (empty($url)&&!(Common::GET('app')))
             return $this->legacyDispatch();*/
         $this->params = array_merge($this->parse($url), $params);
@@ -102,7 +104,9 @@ class Dispatcher {
         }
     }
 
-    function login(){
+    function login($url = null){
+        if ($url !== 'login')
+            return false;
         include_once 'apps/init/controllers/login.php';
         Language::setLang('init');
 
@@ -114,7 +118,64 @@ class Dispatcher {
             $message = NULL;
 
         $login->show($message);
+        return true;
     }
+    
+/**
+ * Checks if a requested asset exists and sends it to the browser
+ *
+ * @param string $url Requested URL
+ * @param CakeResponse $response The response object to put the file contents in.
+ * @return boolean True on success if the asset file was found and sent
+ */
+	public function asset($url) {
+		if (strpos($url, '..') !== false || strpos($url, '.') === false) {
+			return false;
+		}
+		$isCss = (
+			strpos($url, 'ccss/') === 0 ||
+			preg_match('#^(theme/([^/]+)/ccss/)|(([^/]+)(?<!css)/ccss)/#i', $url)
+		);
+		$isJs = (
+			strpos($url, 'cjs/') === 0 ||
+			preg_match('#^/((theme/[^/]+)/cjs/)|(([^/]+)(?<!js)/cjs)/#i', $url)
+		);
+		if ($isCss || $isJs) {
+			include 'assets.php';
+			return true;
+		}
+        debug('a');
+		$pathSegments = explode('.', $url);
+		$ext = array_pop($pathSegments);
+		$parts = explode('/', $url);
+		$assetFile = null;
+
+		if ($parts[0] === 'theme') {
+			$themeName = $parts[1];
+			unset($parts[0], $parts[1]);
+			$fileFragment = urldecode(implode(DS, $parts));
+			$path = App::themePath($themeName) . 'webroot' . DS;
+			if (file_exists($path . $fileFragment)) {
+				$assetFile = $path . $fileFragment;
+			}
+		} else {
+			$plugin = Inflector::camelize($parts[0]);
+			if (CakePlugin::loaded($plugin)) {
+				unset($parts[0]);
+				$fileFragment = urldecode(implode(DS, $parts));
+				$pluginWebroot = CakePlugin::path($plugin) . 'webroot' . DS;
+				if (file_exists($pluginWebroot . $fileFragment)) {
+					$assetFile = $pluginWebroot . $fileFragment;
+				}
+			}
+		}
+
+		if ($assetFile !== null) {
+			$this->_deliverAsset($response, $assetFile, $ext);
+			return true;
+		}
+		return false;
+	}
 
     /**
      * From a given URL string, extract the array of params (apps, controller, action, params)

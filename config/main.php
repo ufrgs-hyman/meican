@@ -14,6 +14,14 @@ return array(
 		'log' => true
 	),
     
+    'Asset' => array(
+        'filter' => array(
+            'css' => 'assets.php',
+            'js' => 'assets.php'
+        )
+        
+    ),
+    
     /* internal system variables */
     "documentRoot" => null,
     "dirSeparator" => null,
