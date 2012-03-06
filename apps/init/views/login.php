@@ -58,7 +58,7 @@
                     </div>
                     <div>
                         <label for="password"><?php echo _('Password'); ?></label>
-                        <input class="text" type="password" name="password"/>
+                        <input class="text" type="password" name="password" id="password"/>
                     </div>
                     <p>(<a href="#"><?php echo _('Forgot your password?'); ?></a>)</p>
                     <div id='message'><?php echo $message ?></div>
