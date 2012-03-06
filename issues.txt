@@ -1,0 +1,31 @@
+Date/time da recorrencia.
+Ordenação das tabelas.
+Melhorar estilo dos flashs messages.
+Layer de dicas.
+Tradução do javascript.
+
+Aumentar tamanho (height) do menu e do info_box.
+Sistema de log, FEITO
+Mostrar usuário q criou reserva.
+Trocar icones (de visualizar)
+verificação ACL
+Html/Forms Helper
+Menu offline, FEITO
+
+colocar dica de escrever nome para a reserva para desabilitar página, FEITO
+melhorar o uify -> página parece redimensionar (piscar) antes de aplicar estilo, FEITO
+tela do feedback aparece rapidamente ao fazer refresh -> esconder, FEITO
+ACL static, FEITO
+
+melhorar mensagens de erro -> para atualizar dados, adicionar usuário, etc
+melhorar mensagens quando atualiza grupo
+melhorar consistência na atualização dos componentes da topologia -> atualizar ACOs (inclusive as reservas de baixo de determinado URN)
+implementar a opção de anular a edição da URN ao clicar pela 2ª vez no lápis
+quando clica em 'cancelar' e vai para a página da tabela, não destaca o link do menu
+fazer scroll para mostrar a mensagem flash
+melhorar edição de grupos (com grupos pais)
+adicionando reserva: teremos algum tipo de "backup" para solicitar reserva sem o mapa?
+melhorar buildWhere do model quando atributo é um array -> não filtra quando array é vazio
+Mudar ordenação das reservas na página reservations show para da mais recente até mais antiga
+VLAN any na interface de criar reserva
+mostrar explicitamente na interface os pontos que não podem ser de origem -> em andamento, terminar de testar
