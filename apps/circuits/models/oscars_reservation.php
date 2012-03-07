@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Driver class to operate with OSCARS
+ */
 class OSCARSReservation {
 
     private $oscarsUrl;
@@ -15,7 +18,7 @@ class OSCARSReservation {
     private $srcTag;
     private $destTag;
     private $version;
-    private $path; //deve conter o srcEndpoint e o destEndpoint e os hops intermediários separados por ;
+    private $path; //deve conter o srcEndpoint e o destEndpoint e os hops intermediários separados por ';'
     private $status;
     private $requestTime;
     private $pathSetupMode;
@@ -23,6 +26,9 @@ class OSCARSReservation {
     private $statusArray = Array();
     public $urns = Array();
 
+    /**
+     * Construct
+     */
     function OSCARSReservation() {
         $this->path = "null";
         $this->startTimestamp = 132412312;
@@ -37,6 +43,13 @@ class OSCARSReservation {
         $this->version = "0.5.4";
     }
 
+    
+    /**
+     * 
+     * GETTERS and SETTERS
+     * 
+     */
+    
     public function setOscarsUrl($oscars_ip) {
         $this->oscarsUrl = "http://$oscars_ip/axis2/services/OSCARS";
     }
@@ -143,6 +156,17 @@ class OSCARSReservation {
         $this->version = $version;
     }
 
+    
+    
+    
+    /**
+     *
+     * 
+     * Functions that implement the WS calls
+     * 
+     * 
+     */
+    
     function createReservation() {
 
         if (!(isset($this->srcEndpoint) && isset($this->destEndpoint) &&
@@ -175,19 +199,19 @@ class OSCARSReservation {
                     $result = $client->createReservation($envelope);
 
                     if (is_string($result->return)) {
-                        debug("OSCARS Bridge Error: ", $result->return);
+                        debug(array("OSCARS Bridge Error: ", $result->return));
                         return false;
                     } elseif (!$err = array_shift($result->return)) {
                         $this->setGri($result->return[0]);
                         $this->setStatus($result->return[1]);
-                        debug("retorno do create reservation", $result->return);
+                        debug(array("retorno do create reservation", $result->return));
                         return true;
                     } else {
-                        debug("OSCARS Bridge Error: ", $err);
+                        debug(array("OSCARS Bridge Error: ", $err));
                         return false;
                     }
                 } catch (Exception $e) {
-                    debug("Caught exception: ", $e->getMessage());
+                    debug(array("Caught exception: ", $e->getMessage()));
                     return false;
                 }
                 break;
@@ -228,14 +252,14 @@ class OSCARSReservation {
                         $this->setDestIsTagged($result->return[13]);
                         $this->setDestTag($result->return[14]);
                         $this->setPath($result->return[15]);
-                        debug("retorno do query reservation", $result->return);
+                        debug(array("retorno do query reservation", $result->return));
                         return true;
                     } else {
-                        debug("OSCARS Bridge Error: ", $err);
+                        debug(array("OSCARS Bridge Error: ", $err));
                         return false;
                     }
                 } catch (Exception $e) {
-                    debug("Caught exception: ", $e->getMessage());
+                    debug(array("Caught exception: ", $e->getMessage()));
                     return false;
                 }
                 break;
@@ -272,14 +296,14 @@ class OSCARSReservation {
                     if (!$err = array_shift($result->return)) {
                         $this->setGri($result->return[0]);
                         $this->setStatus($result->return[1]);
-                        debug("retorno do create reservation", $result->return);
+                        debug(array("retorno do create reservation", $result->return));
                         return true;
                     } else {
-                        debug("OSCARS Bridge Error: ", $err);
+                        debug(array("OSCARS Bridge Error: ", $err));
                         return false;
                     }
                 } catch (Exception $e) {
-                    debug("Caught exception: ", $e->getMessage());
+                    debug(array("Caught exception: ", $e->getMessage()));
                     return false;
                 }
                 break;
@@ -312,14 +336,14 @@ class OSCARSReservation {
                     if (!$err = array_shift($result->return)) {
                         $this->setGri($result->return[0]);
                         $this->setStatus($result->return[1]);
-                        debug("retorno do cancel reservation", $result->return);
+                        debug(array("retorno do cancel reservation", $result->return));
                         return true;
                     } else {
-                        debug("OSCARS Bridge Error: ", $err);
+                        debug(array("OSCARS Bridge Error: ", $err));
                         return false;
                     }
                 } catch (Exception $e) {
-                    debug("Caught exception: ", $e->getMessage());
+                    debug(array("Caught exception: ", $e->getMessage()));
                     return false;
                 }
                 break;
@@ -352,7 +376,7 @@ class OSCARSReservation {
                     $result = $client->listReservations($envelope);
 
                     if (is_string($result->return)) {
-                        debug("OSCARS Bridge Error: ", $result->return);
+                        debug(array("OSCARS Bridge Error: ", $result->return));
                         return false;
                     } elseif (!$err = array_shift($result->return)) { //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
                         foreach ($result->return as $r)
@@ -360,11 +384,11 @@ class OSCARSReservation {
 
                         return true;
                     } else {
-                        debug("OSCARS Bridge Error: ", $result->return[0]);
+                        debug(array("OSCARS Bridge Error: ", $result->return[0]));
                         return false;
                     }
                 } catch (Exception $e) {
-                    debug("Caught exception: ", $e->getMessage());
+                    debug(array("Caught exception: ", $e->getMessage()));
                     return false;
                 }
                 break;
@@ -401,11 +425,11 @@ class OSCARSReservation {
                         $this->topology = $result->return;
                         return true;
                     } else {
-                        debug("OSCARS Bridge Error: ", $err);
+                        debug(array("OSCARS Bridge Error: ", $err));
                         return false;
                     }
                 } catch (Exception $e) {
-                    debug("Caught exception: ", $e->getMessage());
+                    debug(array("Caught exception: ", $e->getMessage()));
                     return false;
                 }
                 break;
@@ -437,7 +461,7 @@ class OSCARSReservation {
                     $result = $client->getTopology($envelope);
 
                     if (is_string($result->return)) {
-                        debug("OSCARS Bridge Error: ", $result->return);
+                        debug(array("OSCARS Bridge Error: ", $result->return));
                         return false;
                     } elseif (!$err = array_shift($result->return)) { //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
                         foreach ($result->return as $i) {
@@ -449,9 +473,9 @@ class OSCARSReservation {
                                 //4- capacidade mínima reservável
                                 //5- capacidade máxima reservável
                                 //6- vlan range
-                                if ($array[1] == "urn:ogf:network:domain=*:node=*:port=*:link=*") {
+                                if (!empty($array[1]) && ($array[1] == "urn:ogf:network:domain=*:node=*:port=*:link=*")) {
                                     //é urn de ponto final
-                                    $urn = new Urn();
+                                    $urn = new stdClass();
                                     $urn->id = $array[0];
                                     $urn->capacity = $array[2];
                                     $urn->granularity = $array[3];
@@ -464,11 +488,11 @@ class OSCARSReservation {
                         }
                         return true;
                     } else {
-                        debug("OSCARS Bridge Error: ", $err);
+                        debug(array("OSCARS Bridge Error: ", $err));
                         return false;
                     }
                 } catch (Exception $e) {
-                    debug("Caught exception: ", $e->getMessage());
+                    debug(array("Caught exception: ", $e->getMessage()));
                     return false;
                 }
                 break;
@@ -505,11 +529,11 @@ class OSCARSReservation {
                         $this->setStatus($result->return[1]);
                         return true;
                     } else {
-                        debug("OSCARS Bridge Error: ", $err);
+                        debug(array("OSCARS Bridge Error: ", $err));
                         return false;
                     }
                 } catch (Exception $e) {
-                    debug("Caught exception: ", $e->getMessage());
+                    debug(array("Caught exception: ", $e->getMessage()));
                     return false;
                 }
                 break;
@@ -546,11 +570,11 @@ class OSCARSReservation {
                         $this->setStatus($result->return[1]);
                         return true;
                     } else {
-                        debug("OSCARS Bridge Error: ", $err);
+                        debug(array("OSCARS Bridge Error: ", $err));
                         return false;
                     }
                 } catch (Exception $e) {
-                    debug("Caught exception: ", $e->getMessage());
+                    debug(array("Caught exception: ", $e->getMessage()));
                     return false;
                 }
                 break;
@@ -587,11 +611,11 @@ class OSCARSReservation {
                         $this->setStatus($result->return[1]);
                         return true;
                     } else {
-                        debug("OSCARS Bridge Error: ", $err);
+                        debug(array("OSCARS Bridge Error: ", $err));
                         return false;
                     }
                 } catch (Exception $e) {
-                    debug("Caught exception: ", $e->getMessage());
+                    debug(array("Caught exception: ", $e->getMessage()));
                     return false;
                 }
                 break;

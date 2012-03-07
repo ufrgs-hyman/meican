@@ -574,8 +574,7 @@ class reservations extends Controller {
             $reservation->flw_id = $new_flow->flw_id;
             $reservation->tmr_id = $new_timer->tmr_id;
             $reservation->creation_time = $res_diff_timestamp;
-            $reservation->usr_id = AuthSystem::getUserLogin();
-            debug("usuario", $reservation);
+            $reservation->usr_id = AuthSystem::getUserId();
         } else {
             $this->setFlash(_('Fail to save endpoints or timer on database'), 'error');
             $this->show();
@@ -936,8 +935,6 @@ class reservations extends Controller {
 
     function send($reservation_info) {
         
-        debug("res send",$reservation_info);
-
         $flw_id = $reservation_info->flw_id;
 
         $flow = new flow_info();
@@ -991,8 +988,6 @@ class reservations extends Controller {
             $tmp = $oscarsRes;
             $tmp->setStartTimestamp($t->start); //em timestamp
             $tmp->setEndTimestamp($t->finish);
-
-            debug("tmp", $tmp);
 
             if ($tmp->createReservation()) {
                 $resSent++;
