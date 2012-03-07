@@ -46,7 +46,7 @@
             <div id="text_info">
 
             </div>
-
+<?php /*
 
             <div id="login_form" class="tab_content">
                 <h2 style="padding: 6px 0;"><?php echo _('Sign in to MEICAN'); ?></h2>
@@ -64,7 +64,32 @@
                     <div id='message'><?php echo $message ?></div>
                     <input class="next ui-button ui-widget ui-state-default ui-corner-all"  type="submit" name="submit_login" value="<?php echo _('Sign in'); ?>"/>
                 </form>
-            </div>
+            </div> */?>
+            
+            <div id="login_box" style="width: 390px; float: right;">
+       <div id="login_form" class="tab_content">
+                   <img src="<?php echo $this->url(''); ?>/webroot/img/meican_preto.png" alt="meican" style="height: 55px;">
+               
+               <form name="login_form" method="post" action="<?php echo $this->buildLink(array('action' => 'doLogin')); ?>">
+                           <div style="width: 100%;">
+                                           <div>
+                                                 <label for="login"><?php echo _('Login'); ?></label>
+                                         <br>
+                                                 <input class="text" type="text" name="login" id="login">
+                                           </div>
+                                           <div>
+                                               <label for="password"><?php echo _('Password'); ?></label>
+                                           <br>
+                                               <input class="text" type="password" name="password" id="password">
+                                           </div>
+                                           <p>(<a href="#" style=""><?php echo _('Forgot your password?'); ?></a>)</p>
+                                           <div id="message"></div>
+                                           <input class="next ui-button ui-widget ui-state-default ui-corner-all" type="submit" name="submit_login" value="<?php echo _('Sign in'); ?>" role="button" aria-disabled="false">
+                               </div>
+               </form>
+           </div>
+</div>
+            
         </div>
         <?php /*
           <div id="footer">
