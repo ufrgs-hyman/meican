@@ -719,9 +719,6 @@ class reservations extends Controller {
             return;
         }
 
-        debug("flow", $flow);
-        debug("timer", $timer);
-
         $req = new request_info();
         $req->resource_id = $reservation->res_id;
         $req->resource_type = 'reservation_info';
