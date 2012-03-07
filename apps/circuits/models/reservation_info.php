@@ -205,8 +205,8 @@ class reservation_info extends Resource_Model {
     function getGriDetails() {
         $gri_to_list = array('args0' => array('ufrgs.cipo.rnp.br-1259', 'ufrgs.cipo.rnp.br-1694'));
 
-        $now = mktime()+5*60;
-        $now_10 = mktime()+10*60;
+        $now = time()+5*60;
+        $now_10 = time()+10*60;
 
         $array_to_create = array('args0' => array(
                         'urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFRGS-CIPO-RNP-001:port=5:link=*', // source

@@ -24,7 +24,7 @@ class aros_acos extends Model {
             return FALSE;
     }
 
-    public function delete() {
+    public function delete($useACL = false) {
         if (parent::delete(FALSE)) {
             Common::apc_update();
             return TRUE;

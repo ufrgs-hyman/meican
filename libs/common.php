@@ -74,13 +74,13 @@ class Common {
     }
 
     static function apc_update() {
-        $now = mktime();
+        $now = time();
         apc_store('last_update', $now);
     }
 
     static function getLastUpdate() {
         date_default_timezone_set("America/Sao_Paulo");
-        $now = mktime();
+        $now = time();
         $last_update_server = apc_fetch('last_update');
         if ($last_update_server) {
             $timepout_1_week = 604800;

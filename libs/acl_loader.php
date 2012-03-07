@@ -45,7 +45,7 @@ class AclLoader extends Tree_Model {
         $debugLevel = Configure::read('debug');
         Configure::write('debug', 0);
 
-        $time = mktime();
+        $time = time();
 
         //procura pelos aro_id do user (pode ser mais de um)
         $aro = new aros();

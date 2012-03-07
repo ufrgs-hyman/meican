@@ -39,7 +39,7 @@ class Resource_Model extends Model {
         return FALSE;
     }
 
-    public function delete() {
+    public function delete($useACL = TRUE) {
         $model = $this->getTableName();
         $pk = $this->getPrimaryKey();
 
@@ -49,7 +49,7 @@ class Resource_Model extends Model {
         $aco = new Acos($this->{$pk}, $model);
         $result = $aco->fetch(FALSE);
 
-        if (parent::delete()) {
+        if (parent::delete($useACL)) {
             foreach ($result as $r)
                 $acoRes = $r->removeNode();
 
