@@ -156,14 +156,13 @@ p {margin:0 0 1.5em;}
 
 /* Tabela de disposição dos boxes iniciais */
 body {
-    background-color: #3a5879;
     margin: 0px;
 }
 
 div#header {
     width: 100%;
     height: 110px;
-
+    background-color: #3A5879;
 }
 
 div#footer {
@@ -202,6 +201,7 @@ div#content {
     clear: both;
     background-color: #FFF;
     float: left;
+    position: relative;
 }
 /*
 div#content a:hover {
@@ -232,12 +232,6 @@ div#login_form label {
 
 div#login_form p {
     text-align: center;
-}
-
-div#login_form input[type=submit]{
-    width: 100%;
-    font-size: 150%;
-    height: 32px;
 }
 
 div#login_form hr {
@@ -323,45 +317,51 @@ input[type="text"], input[type="password"], select {
 
 
 div#login_box {
-       width: 390px;
-       float: right;
+    width: 390px;
+    float: right;
 }
 
 div#login_form {
-       background-color: whiteSmoke;
-       padding: 20px 50px 20px 40px;
-       margin: 30px;
-       border: 1px solid #E5E5E5;
+    background-color: whiteSmoke;
+    padding: 20px 50px 20px 40px;
+    margin: 30px;
+    border: 1px solid #E5E5E5;
 }
 
 div#login_form label {
-       float: left;
-       width: 40px;
-       margin-right: 10px;
-       padding-top: 5px;
-       font-weight: bold;
+    float: left;
+    width: 40px;
+    margin-right: 10px;
+    padding-top: 5px;
+    font-weight: bold;
 }
 
 div#login_form input[type="text"], div#login_form input[type="password"] {
-       width: 100%;
-       font-size: 15px;
-       height: 32px;
-       margin: 2px 0;
-       padding: 0 6px;
-       display: inline-block;
+    width: 100%;
+    font-size: 15px;
+    height: 32px;
+    margin: 2px 0;
+    padding: 0 6px;
+    display: inline-block;
 }
 
 a {
-       color: #00E;
-       text-decoration: none;
+    color: #00E;
+    text-decoration: none;
 }
 
 a:hover, a:active {
-       outline: 0;
-       text-decoration: underline;
+    outline: 0;
+    text-decoration: underline;
 }
 
 div#login_form input[type="submit"] {
-       font-size: 13px;
-       height: 32px;
+    font-size: 13px;
+    height: 32px;
+}
+
+.logo-rnp {
+    bottom: 0;
+    position: absolute;
+    left: 40%;
 }

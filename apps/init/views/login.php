@@ -44,7 +44,9 @@
                 <img src="<?php echo $this->url(''); ?>webroot/img/logo_login.png" alt="MEICAN"/>
             </div>
             <div id="text_info">
-
+            </div>
+            <div class="logo-rnp">
+                <img src="<?php echo $this->url(''); ?>webroot/img/rnpmission.gif" alt="MEICAN"/>
             </div>
 <?php /*
 
@@ -82,9 +84,10 @@
                                            <br>
                                                <input class="text" type="password" name="password" id="password">
                                            </div>
-                                           <p>(<a href="#" style=""><?php echo _('Forgot your password?'); ?></a>)</p>
                                            <div id="message"></div>
-                                           <input class="next ui-button ui-widget ui-state-default ui-corner-all" type="submit" name="submit_login" value="<?php echo _('Sign in'); ?>" role="button" aria-disabled="false">
+                                           <div>
+                                           <input class="next ui-button ui-widget ui-state-default ui-corner-all" type="submit" name="submit_login" value="<?php echo _('Sign in'); ?>" role="button" aria-disabled="false"/> (<a href="#" style=""><?php echo _('Forgot your password?'); ?></a>)
+                                           </div>
                                </div>
                </form>
            </div>
