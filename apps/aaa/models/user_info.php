@@ -173,7 +173,7 @@ class user_info extends Model {
         return $resDel && $resAdd;
     }
 
-    public function delete() {
+    public function delete($useACL = FALSE) {
 
         //checkacl
         if ($this->updateGroups())

@@ -133,7 +133,7 @@ class Model {
         $where = " WHERE `$pk`=".$this->{$pk};
         
         $sql .= $where;
-        debug('update',$sql);
+        //debug('update',$sql);
         return $this->execSql($sql);
     }
 
@@ -316,7 +316,7 @@ class Model {
 
         $resfetch = $this->querySql($sqlfetch, $tableName);
 
-        debug('sql update', $sql);
+        //debug('sql update', $sql);
 
         if (!$resfetch)
             return FALSE;
@@ -405,7 +405,7 @@ class Model {
             $toDelete[] = $f->{$pk};
         }
 
-        debug('todelete', $toDelete);
+        //debug('todelete', $toDelete);
         if (!$toDelete) {
             return FALSE;
         }
@@ -418,7 +418,6 @@ class Model {
 
             //delete nao permite where do tipo IN
             foreach ($toDelete as $d) {
-                debug('fe', $d);
                 if (array_search($d, $restr) !== FALSE) { //verifica se a chave q quer deletar está dentro das permissoes
                     if ($this->attributes[$pk]->type == "VARCHAR")
                         $whereArgs[] = "`$pk`='$d'";
@@ -590,12 +589,14 @@ class Model {
         return FALSE;
     }
 
-    public function get($field=false, $useACL=TRUE) {
-        $tmp = $this->fetch($useACL);
-        if ($field)
-            return $tmp[0]->{$field};
-        else
-            return $tmp[0];
+    public function get($field=NULL, $useACL=TRUE) {
+        if ($tmp = $this->fetch($useACL)) {
+            if ($field)
+                return $tmp[0]->{$field};
+            else
+                return $tmp[0];
+        } else
+            return FALSE;
     }
 
     public function fetchList() {
