@@ -171,9 +171,6 @@ class Configure {
 				'webroot' => WEBROOT_DIR,
 				'www_root' => WWW_ROOT
 			));*/
-            
-            self::load('config/main.php');
-            self::load('config/local.php');
 /*
 			if (!include(APP . 'Config' . DS . 'core.php')) {
 				trigger_error(__d('cake_dev', "Can't find application core file. Please create %score.php, and make sure it is readable by PHP.", APP . 'Config' . DS), E_USER_ERROR);
@@ -195,6 +192,9 @@ class Configure {
 			if (!empty(self::$_values['Exception']['handler'])) {
 				set_exception_handler(self::$_values['Exception']['handler']);
 			}
+            if (Configure::read('debug')){
+                ini_set('display_errors', true);
+            }
 		}
 	}
 }

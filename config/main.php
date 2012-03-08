@@ -4,7 +4,7 @@ return array(
     
 	'Error' => array(
 		'handler' => 'ErrorHandler::handleError',
-		'level' => E_STRICT,//E_ALL & ~E_DEPRECATED,
+		'level' => E_ALL /*| E_DEPRECATED*/ ,
 		'trace' => true
 	),
     
