@@ -14,6 +14,10 @@ class AclLoader extends Tree_Model {
     private $perTyArray = array('read', 'create', 'update', 'delete');
 
     public function AclLoader() {
+        $this->load();
+    }
+    
+    public function load(){
 
         //fazer verificação da necessidade do reload
         $acl_ses = Common::getSessionVariable('acl');
@@ -365,6 +369,7 @@ class AclLoader extends Tree_Model {
             $c = __CLASS__;
             self::$instance = new $c;
         }
+        self::$instance->load();
         return self::$instance;
     }
 
