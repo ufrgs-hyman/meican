@@ -32,5 +32,10 @@ class Datasource {
         }
         return $instance[0];
     }
+    
+    static $queries = array();
+    static function logQuery($query){
+        self::$queries[] = $query;
+    }
 
 }

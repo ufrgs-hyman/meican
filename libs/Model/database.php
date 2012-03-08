@@ -27,6 +27,7 @@ class Database {
     }
     
     public function insert($sql) {
+        Datasource::logQuery($sql);
         $result = $this->mdb2->exec($sql);
         if (MDB2::isError($result)) {
             debug($result->getMessage() . ", " . $result->getDebugInfo());
@@ -37,6 +38,7 @@ class Database {
     }
     
     public function exec($sql) {
+        Datasource::logQuery($sql);
         $result = $this->mdb2->exec($sql);
         if (MDB2::isError($result)) {
             debug($result->getMessage() . ", " . $result->getDebugInfo());
@@ -48,7 +50,7 @@ class Database {
 
     public function query($sql, $classname='Model') {
         $result = $this->mdb2->query($sql);
-
+        Datasource::logQuery($sql);
         if (MDB2::isError($result)) {
             debug($result->getMessage() . ", " . $result->getDebugInfo());
             return FALSE;
@@ -67,7 +69,7 @@ class Database {
     }
 
     public function transactionExec($sql) {
-
+        Datasource::logQuery($sql);
         //Verifica se o Banco suporta transações
         if (!$this->mdb2->supports('transactions')) {
             debug("Erro: Banco não suporta transações.");
