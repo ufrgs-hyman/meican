@@ -12,6 +12,7 @@ define("LIBS", 'libs'.DS);
 define("APPLIBS", 'libs'.DS);
 define("CAKE", LIBS);
 define('APP', DS);
+define('APP_DIR', DS);
 define("LOGS", ROOT.DS.'log'.DS);
 @define ('__MEICAN', 1);
 

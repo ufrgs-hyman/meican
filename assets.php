@@ -97,7 +97,7 @@ header("Date: ". date("D, j M Y G:i:s", $templateModified) ." GMT");
 header("Content-Type: ". $fileType);
 header("Expires: ". gmdate("D, j M Y H:i:s", time() + 86400) ." GMT");
 header("Cache-Control: public, max-age=86400"); // HTTP/1.1
-//header("Pragma: cache_asset");        // HTTP/1.0
+header("Pragma: cache_asset");        // HTTP/1.0
 
 $time = round(getMicrotime() - $TIME_START, 4);
 print "/* time: $time s */".$output;
