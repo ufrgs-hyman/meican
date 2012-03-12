@@ -1,4 +1,3 @@
-<?php $message = $this->passedArgs; ?>
 <?php $base = $this->url(); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -70,13 +69,13 @@
             
             <div id="login_box" style="width: 390px; float: right;">
        <div id="login_form" class="tab_content">
-                   <img src="<?php echo $this->url(''); ?>/webroot/img/meican_preto.png" alt="meican" style="height: 55px;">
-               
+                   <img src="<?php echo $this->url(''); ?>/webroot/img/meican_preto.png" alt="meican" style="height: 55px;"/>
+                   <div id='message'><?php echo $message ?></div>
                <form name="login_form" method="post" action="<?php echo $this->buildLink(array('action' => 'doLogin')); ?>">
                            <div style="width: 100%;">
                                            <div>
                                                  <label for="login"><?php echo _('Login'); ?></label>
-                                         <br>
+                                         <br/>
                                                  <input class="text" type="text" name="login" id="login">
                                            </div>
                                            <div>

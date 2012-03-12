@@ -16,7 +16,7 @@ class login extends Controller {
 
     public function show($message = NULL) {
         if ($message){
-            $this->setArgsToBody($message);
+            $this->set(compact('message'));
         }
         $this->layout = 'empty';
         $this->action = false;
