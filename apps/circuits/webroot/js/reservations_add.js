@@ -124,6 +124,48 @@ function changeVlanValue(where) {
     }
 }
 
+function checkVLAN(where) {
+
+    var vlan_value = null;
+    var vlan_min = null;
+    var vlan_max = null;
+    var vlan_validValues = null;
+
+    if (where == "src") {
+        vlan_value = $("#src_vlanText").val();
+        vlan_min = src_vlan_min;
+        vlan_max = src_vlan_max;
+        vlan_validValues = src_vlan_validValues;
+    } else if (where == "dst") {
+        vlan_value = $("#dst_vlanText").val();
+        vlan_min = dst_vlan_min;
+        vlan_max = dst_vlan_max;
+        vlan_validValues = dst_vlan_validValues;
+    } else return false;
+
+    if (!vlan_value)
+        return true;
+
+    if (vlan_min && vlan_max) {
+        if ((vlan_value >= vlan_min) && (vlan_value <= vlan_max))
+            return true;
+        else
+            return false;
+    } else if (vlan_validValues) {
+        var temp = new Array();
+        var valid = false;
+        temp = vlan_validValues.split(",");
+        for (var i=0; i < temp.length; i++) {
+            if (vlan_value == temp[i])
+                valid = true;
+        }
+        if (valid)
+            return true;
+        else
+            return false;
+    } else
+        return false;
+}
 
 function cancelRecurrence(){
     if ($("#repeat_chkbox").attr("checked") && ($("#recurrence-edit").is(":visible"))) {

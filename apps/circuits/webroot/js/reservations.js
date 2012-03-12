@@ -13,7 +13,8 @@ $(document).ready(function() {
     js_function_interval = setInterval("refreshStatus()", 60000);
 });
 
-function refreshStatus() {    
+function refreshStatus() {
+    alert("refresh");
     for (var i in domains) {
         $('.load' + domains[i]).show();
         
@@ -29,16 +30,18 @@ function refreshStatus() {
                 $('.load' + this.dom_id).hide();
                 
                 if (data) {
-                    var status_id = null;
+                    if (data.length > 0) {
+                        var status_id = null;
 
-                    for (var i=0; i < data.length; i++) {
-                        status_id = '#status' + data[i].id;
+                        for (var i=0; i < data.length; i++) {
+                            status_id = '#status' + data[i].id;
                 
-                        if (data[i].translate != $(status_id).html()) {
-                            $(status_id).empty();
-                            $(status_id).html(data[i].translate);
+                            if (data[i].translate != $(status_id).html()) {
+                                $(status_id).empty();
+                                $(status_id).html(data[i].translate);
                 
-                            checkStatus(data[i].id, data[i].name);
+                                checkStatus(data[i].id, data[i].name);
+                            }
                         }
                     }
                 } else {
@@ -54,6 +57,7 @@ function refreshStatus() {
 }
 
 function griRefreshStatus(res_id) {
+    alert("gri refresh");
     $('.load').show();
     $.ajax ({
         type: "POST",

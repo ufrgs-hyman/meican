@@ -280,7 +280,6 @@ class reservations extends Controller {
         $this->layout = 'empty';
 
         $res_id = Common::POST("res_id");
-        debug("gri stats",$res_id);
 
         $gri = new gri_info();
         $gri->res_id = $res_id;
@@ -318,7 +317,7 @@ class reservations extends Controller {
                 if ($oscarsRes->listReservations()) {
                     $statusResult = $oscarsRes->getStatusArray();
                 } else {
-                    debug("Falha ao conectar OSCARS no refresh status");
+                    Log::write("error", "Fail to connect to OSCARS in refresh status");
                     $this->setArgsToBody(FALSE);
                     $this->render();
                     return;
@@ -357,7 +356,7 @@ class reservations extends Controller {
             $this->setArgsToBody($statusList);
             $this->render();
         } else {
-            debug("Falha ao buscar gris no refresh status");
+            Log::write("erro", "Fail to get GRIs in refresh status");
             $this->setArgsToBody(FALSE);
             $this->render();
         }
@@ -891,7 +890,7 @@ class reservations extends Controller {
                         $oscarsRes = new OSCARSReservation();
                         $oscarsRes->setOscarsUrl($oscars_ip);
                         $oscarsRes->setGri($g->gri_descr);
-                        debug("gri to cancel",$g->gri_descr);
+                        Log::write("info", "GRI to cancel: ".print_r($g->gri_descr, TRUE));
                         /**
                          * @todo cancelar várias reservas de uma só vez
                          */
@@ -1041,7 +1040,7 @@ class reservations extends Controller {
                 'dom_dst_ip' => $dst_dom->oscars_ip,
                 'usr_src' => $newReq->src_usr);
 
-            debug('ira enviar para autorizaçao...', $requestSOAP);
+            Log::write("info",'Sending for authorization '. print_r($requestSOAP,TRUE));
             try {
                 $client = new SoapClient($businessEndpoint, array('cache_wsdl' => 0));
 
@@ -1053,7 +1052,7 @@ class reservations extends Controller {
 
                 return TRUE;
             } catch (Exception $e) {
-                debug("Caught exception: ", $e->getMessage());
+                Log::write("error", "Caught exception while trying to connect to ODE: ". print_r($e->getMessage()));
                 $this->setFlash(_('Error at invoking business layer.'));
                 $newReq->status = 'SENT FOR AUTHORIZATION';
 
@@ -1065,10 +1064,10 @@ class reservations extends Controller {
     }
 
     public function check() {
-        debug("chegou no controller");
+        //debug("chegou no controller");
         $gris = new gri_info();
         $all = $gris->fetch(FALSE);
-        debug("gris", $all);
+        //debug("gris", $all);
 
         foreach ($all as $g) {
             if ($g->send)
