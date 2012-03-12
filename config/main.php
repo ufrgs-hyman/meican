@@ -15,7 +15,11 @@ return array(
 	),
     
     'Asset' => array(
+<<<<<<< HEAD
         //'compress' => true,
+=======
+        'compress' => true,
+>>>>>>> e0f7ee6560f12cfdfefd7bc8dab41b1a9e6ec26e
         'filter' => array(
             'css' => 'assets.php',
             'js' => 'assets.php'
@@ -43,7 +47,7 @@ return array(
     "defaultDatabase" => 'mysql',
     "dbConfig" => null,
     "defaultLang" => 'pt_BR.utf8',
-    "debug" => 2,
+    "debug" => 0,
     "useACL" => false,
     /**
      * CUIDADO COM O ENDEREÇO PARA OS WEBSERVICES

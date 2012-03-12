@@ -12,9 +12,16 @@
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/timePicker.css" />
         <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.min.js"></script>
         <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery-ui-1.8.16.custom.min.js"></script>
-        <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.pjax.js"></script>
-        <script type="text/javascript" src="<?php echo $base; ?>webroot/js/ui.spinner.js"></script>
+        
         <?php
+        echo $this->script(array('cjs/jquery.pjax.js', 'cjs/ui.spinner.js', 'circuits/cjs/googlemaps.js', 'circuits/cjs/StyledMarker.js', 'cjs/main.js'));
+        /*<script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.pjax.js"></script>
+        <script type="text/javascript" src="<?php echo $base; ?>webroot/js/ui.spinner.js"></script>
+         
+        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/googlemaps.js"></script>
+        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/StyledMarker.js"></script>
+        <script type ="text/javascript" src="<?php echo $base; ?>webroot/js/main.js"></script>
+         */
         //https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/start/jquery-ui.css
         /* <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.form.js"></script>
           <script type="text/javascript" src="<?php echo $base; ?>apps/init/webroot/js/info_box.js"></script> */
@@ -22,9 +29,6 @@
         <?php if (Configure::read('dataTables')): ?>
             <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.dataTables.min.js"></script>
         <?php endif; ?>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/googlemaps.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/StyledMarker.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>webroot/js/main.js"></script>
         <script type ="text/javascript">
 <?php // variavel para armazenar o ID quando a função setInterval() é usada
 // cada vez que um link é carregado, é feito um clear na variável, para não carregar em páginas erradas            ?>
