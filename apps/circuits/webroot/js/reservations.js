@@ -14,7 +14,6 @@ $(document).ready(function() {
 });
 
 function refreshStatus() {
-    alert("refresh");
     for (var i in domains) {
         $('.load' + domains[i]).show();
         
@@ -57,7 +56,6 @@ function refreshStatus() {
 }
 
 function griRefreshStatus(res_id) {
-    alert("gri refresh");
     $('.load').show();
     $.ajax ({
         type: "POST",
