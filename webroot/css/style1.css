@@ -390,12 +390,11 @@ img.loading {
     padding: 7px;
     float: right;
 }
-
+/*
 div.controls {
-    /*width: 100%;*/
     padding: 6px 0;
     float: right;
-}
+}*/
 
 div.control_tab {
     width: 100%;
