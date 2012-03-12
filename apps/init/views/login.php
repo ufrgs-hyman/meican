@@ -69,7 +69,7 @@
             
             <div id="login_box" style="width: 390px; float: right;">
        <div id="login_form" class="tab_content">
-                   <img src="<?php echo $this->url(''); ?>/webroot/img/meican_preto.png" alt="meican" style="height: 55px;"/>
+                   <img src="<?php echo $this->url(''); ?>webroot/img/meican_preto.png" alt="meican" style="height: 55px;"/>
                    <div id='message'><?php echo $message ?></div>
                <form name="login_form" method="post" action="<?php echo $this->buildLink(array('action' => 'doLogin')); ?>">
                            <div style="width: 100%;">
