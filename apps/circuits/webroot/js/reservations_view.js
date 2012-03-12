@@ -39,6 +39,56 @@ $(document).ready(function() {
     res_showCircuit();
 });
 
+function griRefreshStatus(res_id) {
+    $('.load').show();
+    $.ajax ({
+        type: "POST",
+        url: baseUrl+'circuits/reservations/gri_refresh_status',
+        data: {
+            res_id: res_id
+        },
+        dataType: "json",
+        success: function(data) {
+            $('.load').hide();
+            if (data) {
+                if (data.length != 0) {
+                    var status_id = null;
+
+                    for (var i=0; i < data.length; i++) {
+                        status_id = '#status' + data[i].id;
+                
+                        if (data[i].translate != $(status_id).html()) {
+                            $(status_id).empty();
+                            $(status_id).html(data[i].translate);
+                
+                            checkStatus(data[i].id, data[i].name);
+                        }
+                    }
+                }
+            } else {
+                setFlash(str_error_refresh_status,"error");
+            }
+        },
+        error: function(jqXHR) {
+            if (jqXHR.status == 406)
+                location.href = baseUrl+'init/gui';
+        }
+    });
+}
+
+function disabelCancelButton(elemId) {
+    if ($(elemId).attr("checked"))
+        cancelCont++;
+    else
+        cancelCont--;
+
+    if (cancelCont) {
+        $("#cancel_button").button('enable');
+    } else {
+        $("#cancel_button").button('disable');
+    }
+}
+
 function res_showCircuit(){
 //    if ((src_lat_network == dst_lat_network) && (src_lng_network == dst_lng_network)) {
 //        var aux = parseFloat(dst_lng_network);

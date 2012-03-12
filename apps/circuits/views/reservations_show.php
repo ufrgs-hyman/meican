@@ -90,3 +90,11 @@ $refresh = $this->passedArgs->refresh;
     </table>
 
 </form>
+
+<?php if ($refresh): ?>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            js_function_interval = setInterval("refreshStatus()", 60000);
+        });
+    </script>
+<?php endif; ?>

@@ -1,17 +1,3 @@
-//(function($){ 
-//    
-//var cancelCont = 0;
-//
-//var res_map = null;
-//var res_center = null;
-//var res_markersArray = [];
-//var res_bounds = [];
-//var res_lines = [];
-//var res_myOptions = null;
-
-$(document).ready(function() {
-    js_function_interval = setInterval("refreshStatus()", 60000);
-});
 
 function refreshStatus() {
     for (var i in domains) {
@@ -55,43 +41,6 @@ function refreshStatus() {
     }
 }
 
-function griRefreshStatus(res_id) {
-    $('.load').show();
-    $.ajax ({
-        type: "POST",
-        url: baseUrl+'circuits/reservations/gri_refresh_status',
-        data: {
-            res_id: res_id
-        },
-        dataType: "json",
-        success: function(data) {
-            $('.load').hide();
-            if (data) {
-                if (data.length != 0) {
-                    var status_id = null;
-
-                    for (var i=0; i < data.length; i++) {
-                        status_id = '#status' + data[i].id;
-                
-                        if (data[i].translate != $(status_id).html()) {
-                            $(status_id).empty();
-                            $(status_id).html(data[i].translate);
-                
-                            checkStatus(data[i].id, data[i].name);
-                        }
-                    }
-                }
-            } else {
-                setFlash(str_error_refresh_status,"error");
-            }
-        },
-        error: function(jqXHR) {
-            if (jqXHR.status == 406)
-                location.href = baseUrl+'init/gui';
-        }
-    });
-}
-
 function checkStatus(index, status) {
     switch (status) {
         case "FAILED":
@@ -124,19 +73,3 @@ function checkStatus(index, status) {
             break;
     }
 }
-
-function disabelCancelButton(elemId) {
-    if ($(elemId).attr("checked"))
-        cancelCont++;
-    else
-        cancelCont--;
-
-    if (cancelCont) {
-        $("#cancel_button").button('enable');
-    } else {
-        $("#cancel_button").button('disable');
-    }
-}
-
-
-//})(jQuery);

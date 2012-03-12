@@ -145,7 +145,7 @@ class acl extends Controller {
             $args->message = _("You can't see any access control, click the button below to add one");
             $this->setArgsToBody($args);
         }
-
+        $this->action = 'show';
         $this->render();
     }
     

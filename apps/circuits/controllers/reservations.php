@@ -550,9 +550,7 @@ class reservations extends Controller {
         $res_begin_timestamp = Common::getSessionVariable("res_begin_timestamp");
         $res_diff_timestamp = $res_end_timestamp - $res_begin_timestamp;
 
-//        debug("post", $_POST);
-//        $this->add_form();
-//        return;
+        Log::write("info", "Reservation data POST".print_r($_POST,TRUE));
 
         /**
          * insere o flow
@@ -934,6 +932,8 @@ class reservations extends Controller {
 
     function send($reservation_info) {
         
+        Log::write("info", "Reservation to be sent".print_r($reservation_info,TRUE));
+        
         $flw_id = $reservation_info->flw_id;
 
         $flow = new flow_info();
@@ -987,6 +987,8 @@ class reservations extends Controller {
             $tmp = $oscarsRes;
             $tmp->setStartTimestamp($t->start); //em timestamp
             $tmp->setEndTimestamp($t->finish);
+            
+            Log::write("info", "Sending reservation".print_r($tmp,TRUE));
 
             if ($tmp->createReservation()) {
                 $resSent++;

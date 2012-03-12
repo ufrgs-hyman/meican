@@ -36,5 +36,5 @@ INSERT INTO `acos` (`aco_id`, `obj_id`, `model`, `lft`, `rgt`, `parent_id`) VALU
 (10, NULL, 'user_info', 16, 17, 9),
 (11, NULL, 'acl', 26, 27, 1),
 (12, 1, 'group_info', 19, 24, 8),
-(13, 2, 'group_info', 20, 23, 11),
-(14, 1, 'user_info', 21, 22, 12);
+(13, 2, 'group_info', 20, 23, 12),
+(14, 1, 'user_info', 21, 22, 13);
