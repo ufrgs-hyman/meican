@@ -43,7 +43,7 @@ return array(
     "defaultDatabase" => 'mysql',
     "dbConfig" => null,
     "defaultLang" => 'pt_BR.utf8',
-    "debug" => 0,
+    "debug" => 2,
     "useACL" => false,
     /**
      * CUIDADO COM O ENDEREÇO PARA OS WEBSERVICES

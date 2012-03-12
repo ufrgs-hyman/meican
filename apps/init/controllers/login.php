@@ -19,7 +19,7 @@ class login extends Controller {
             $this->setArgsToBody($message);
         }
         $this->layout = 'empty';
-        
+        $this->action = false;
         $this->render();
     }
 

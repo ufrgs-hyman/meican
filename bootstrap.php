@@ -36,6 +36,7 @@ Log::config('default', array(
     'engine' => 'FileLog'
 ));
 //include_once 'libs/Error/ErrorHandler.php';
+debug('test');
 Configure::load('config/main.php');
 Configure::load('config/local.php');
 Configure::bootstrap(true);

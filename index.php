@@ -1,6 +1,5 @@
 <?php
 
-$init_session = true;
 /*
 define('APP_DIR', '');
 define('WEBROOT_DIR', 'webroot');
