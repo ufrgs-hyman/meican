@@ -26,7 +26,8 @@ class Language {
 
     static function setDomain($domain) {
         if (!is_string($domain)){
-            debug($domain);
+            /*debug(Debugger::trace());
+            debug($domain);*/
             return ;
         }
         bindtextdomain($domain, 'i18n');
