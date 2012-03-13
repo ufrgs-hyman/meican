@@ -22,6 +22,7 @@ return array(
         )
         
     ),
+    'apps' => array('aaa', 'bpm', 'init', 'topology', 'circuits'),
     
     /* internal system variables */
     "documentRoot" => null,

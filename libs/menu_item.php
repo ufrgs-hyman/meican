@@ -41,7 +41,7 @@ class MenuItem {
     }
     
     public static function getAllMenus($method = 'getMenu') {
-        $apps = array('aaa', 'bpm', 'init', 'topology', 'circuits'); //TODO: detectar automaticamente apps instaladas
+        $apps = Configure::read('apps');
         $menus = array();
         $dom = Language::getDomain();
         foreach ($apps as $app){
