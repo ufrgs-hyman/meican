@@ -70,18 +70,12 @@
         <?php endforeach; ?>
         </tbody>
 
-        <tfoot>
-        <tr>
-            <td colspan="12">
-                <img class="loading" style="display:none" id="loading" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif" />
-                <input class="add" type="button" id="new_button" value="<?php echo _("New access control"); ?>" onclick="newACL();" />
-            </td>
-        </tr>
-        </tfoot>
-
     </table>
     
     <div class="controls">
+        <img class="loading" style="display:none" id="loading" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif" />
+        <input class="add" type="button" id="new_button" value="<?php echo _("New access control"); ?>" onclick="newACL();" />
+        
         <input class="save" id="save_button" style="display:none" type="button"  value="<?php echo _("Save"); ?>" onclick="saveACL();"/>
         <input class="cancel" id="cancel_button" style="display:none" type="button" value="<?php echo _("Cancel"); ?>" onClick="redir('<?php echo $this->buildLink(array('action' => 'show')); ?>');">
 
