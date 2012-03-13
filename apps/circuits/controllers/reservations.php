@@ -645,14 +645,14 @@ class reservations extends Controller {
 
         $res_info = new reservation_info();
         $res_info->res_id = $resId;
-        $result = $res_info->fetch();
+        $resResult = $res_info->fetch();
 
-        if ($result === FALSE) {
+        if (!$resResult) {
             $this->setFlash(_("Reservation not found"), "fatal");
             $this->show();
             return;
         } else {
-            $reservation = $result[0];
+            $reservation = $resResult[0];
         }
 
         $flow_info = new flow_info();
@@ -661,7 +661,7 @@ class reservations extends Controller {
 
         $usr_info = new user_info();
         $usr_info->usr_id = $reservation->usr_id;
-        $usr_login = $usr_info->get('usr_login');
+        $usr_login = $usr_info->get('usr_login', FALSE);
         
         $dom = new domain_info();
         if ($domain = $dom->getOSCARSDomain($flow->source->urn)) {
