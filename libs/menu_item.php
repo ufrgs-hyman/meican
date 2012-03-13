@@ -43,19 +43,17 @@ class MenuItem {
     public static function getAllMenus($method = 'getMenu') {
         $apps = array('aaa', 'bpm', 'init', 'topology', 'circuits'); //TODO: detectar automaticamente apps instaladas
         $menus = array();
+        $dom = Language::getDomain();
         foreach ($apps as $app){
             $appObj = Application::factory($app);
             if ($appObj) {
-                //Language::setLang($appObj->getAppName());
-                //debug("mudando dom ".$appObj->getAppName());
+                Language::setDomain($app);
                 $menus += $appObj->{$method}();//array_merge($appObj->getMenu(), $menus);
             }
         }
-        //Language::setLang('init');
+        Language::setDomain($dom);
         $menus = self::filter($menus);
         return $menus;
     }
     
 }
-
-?>
