@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-06 16:58-0200\n"
+"POT-Creation-Date: 2012-03-13 13:31-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: \n"
@@ -135,69 +135,68 @@ msgstr "Os itens selecionados serão excluídos."
 msgid "Do you confirm?"
 msgstr "Você confirma?"
 
-#: views/login.php:36
+#: views/login.php:35
 msgid "Create an account"
 msgstr "Criar uma conta"
 
-#: views/login.php:37
+#: views/login.php:36
 msgid "About MEICAN"
 msgstr "Sobre o MEICAN"
 
-#: views/login.php:38
+#: views/login.php:37
 msgid "Support"
 msgstr "Suporte"
 
-#: views/login.php:52
-msgid "Sign in to MEICAN"
-msgstr "Entrar no MEICAN"
-
-#: views/login.php:56
+#: views/login.php:77
 msgid "Login"
 msgstr "Login"
 
-#: views/login.php:60
+#: views/login.php:82
 msgid "Password"
 msgstr "Senha"
 
-#: views/login.php:63
-msgid "Forgot your password?"
-msgstr "Esqueceu sua senha?"
-
-#: views/login.php:65
+#: views/login.php:88
 msgid "Sign in"
 msgstr "Entrar"
 
-#: controllers/info_box.php:57
+#: views/login.php:88
+msgid "Forgot your password?"
+msgstr "Esqueceu sua senha?"
+
+#: controllers/info_box.php:56
 msgid "Feedback sent"
 msgstr "Feedback enviado"
 
-#: controllers/info_box.php:57
+#: controllers/info_box.php:56
 msgid "Thank you"
 msgstr "Obrigado"
 
-#: controllers/info_box.php:59
+#: controllers/info_box.php:58
 msgid "Error sending feedback"
 msgstr "Erro ao enviar feedback"
 
-#: controllers/info_box.php:59
+#: controllers/info_box.php:58
 msgid "Try again later"
 msgstr "Tente novamente mais tarde"
 
-#: controllers/gui.php:50
+#: controllers/gui.php:48
 msgid "You have one new request to be authorized"
 msgstr "Você possui uma nova requisição para ser autorizada"
 
-#: controllers/gui.php:53
+#: controllers/gui.php:51
 msgid "You have"
 msgstr "Você possui"
 
-#: controllers/gui.php:55
+#: controllers/gui.php:53
 msgid "new requests to be authorized"
 msgstr "novas requisições para serem autorizadas"
 
 #: controllers/login.php:44
 msgid "Failed on authentication"
 msgstr "Falha na autenticação"
+
+#~ msgid "Sign in to MEICAN"
+#~ msgstr "Entrar no MEICAN"
 
 #~ msgid "Circuits"
 #~ msgstr "Circuitos"

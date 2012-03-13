@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-06 16:58-0200\n"
+"POT-Creation-Date: 2012-03-13 13:31-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -214,68 +214,68 @@ msgid "Add new user"
 msgstr ""
 
 #: controllers/acl.php:47 controllers/acl.php:48 controllers/acl.php:49
-#: controllers/acl.php:50 controllers/acl.php:123
+#: controllers/acl.php:50 controllers/acl.php:122
 msgid "Allow"
 msgstr ""
 
 #: controllers/acl.php:47 controllers/acl.php:48 controllers/acl.php:49
-#: controllers/acl.php:50 controllers/acl.php:124
+#: controllers/acl.php:50 controllers/acl.php:123
 msgid "Deny"
 msgstr ""
 
-#: controllers/acl.php:110 controllers/acl.php:128
+#: controllers/acl.php:110 controllers/acl.php:127
 msgid "All"
 msgstr ""
 
-#: controllers/acl.php:125
+#: controllers/acl.php:124
 msgid "Delete ACL?"
 msgstr ""
 
-#: controllers/acl.php:126
+#: controllers/acl.php:125
 msgid "Access control deleted"
 msgstr ""
 
-#: controllers/acl.php:127
+#: controllers/acl.php:126
 msgid "Fail to delete access control"
 msgstr ""
 
-#: controllers/acl.php:129
+#: controllers/acl.php:128
 msgid "Save modifications?"
 msgstr ""
 
-#: controllers/acl.php:130
+#: controllers/acl.php:129
 msgid "Please fill in all the fields"
 msgstr ""
 
-#: controllers/acl.php:131
+#: controllers/acl.php:130
 msgid "Tree objects do not match"
 msgstr ""
 
-#: controllers/acl.php:132
+#: controllers/acl.php:131
 msgid "Error to fetch objects"
 msgstr ""
 
-#: controllers/acl.php:145
+#: controllers/acl.php:144
 msgid "Access Control List"
 msgstr ""
 
-#: controllers/acl.php:146
+#: controllers/acl.php:145
 msgid "You can't see any access control, click the button below to add one"
 msgstr ""
 
-#: controllers/acl.php:197
+#: controllers/acl.php:195
 msgid "No access control was deleted"
 msgstr ""
 
-#: controllers/acl.php:200
+#: controllers/acl.php:198
 msgid "One access control was deleted"
 msgstr ""
 
-#: controllers/acl.php:203
+#: controllers/acl.php:201
 msgid "access controls were deleted"
 msgstr ""
 
-#: controllers/acl.php:219
+#: controllers/acl.php:217
 msgid "ACL updated"
 msgstr ""
 

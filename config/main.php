@@ -38,7 +38,7 @@ return array(
     "systemName" => 'MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks',
     "systemNameShort" => 'MEICAN',
     "systemVer" => '',
-    "mainApp" => 'aaa',
+    "mainApp" => 'circuits',
     "systemDirName" => 'meican/',
     /* database settings */
     "defaultDatabase" => 'mysql',

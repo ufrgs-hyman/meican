@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-06 16:58-0200\n"
+"POT-Creation-Date: 2012-03-13 13:31-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "MEICANs"
 msgstr ""
 
-#: topology.php:22 views/domains_show.php:5 controllers/domains.php:42
+#: topology.php:22 views/domains_show.php:5 controllers/domains.php:43
 msgid "Domains"
 msgstr ""
 
@@ -42,7 +42,7 @@ msgid "URNs"
 msgstr ""
 
 #: views/networks_show.php:15 views/domains_show.php:15
-#: views/elements/network_form.php:11 views/elements/domain_form.php:14
+#: views/elements/network_form.php:11 views/elements/domain_form.php:15
 #: views/elements/meican_form.php:13 views/elements/device_form.php:12
 #: views/devices_show.php:13 views/meicans_show.php:16
 msgid "Name"
@@ -58,8 +58,8 @@ msgstr ""
 
 #: views/networks_show.php:19 views/urns_show.php:19 views/urns_show.php:35
 #: views/urns_add_manual.php:12 views/urns_import.php:13
-#: controllers/domains.php:67 controllers/domains.php:124
-#: controllers/domains.php:142
+#: controllers/domains.php:68 controllers/domains.php:125
+#: controllers/domains.php:143
 msgid "Domain"
 msgstr ""
 
@@ -85,7 +85,7 @@ msgstr ""
 
 #: views/urns_show.php:56 views/networks_add.php:13 views/networks_edit.php:11
 #: views/urns_add_manual.php:76 views/meicans_add.php:10
-#: views/domains_add.php:12 views/urns_import.php:91 views/domains_edit.php:15
+#: views/domains_add.php:12 views/urns_import.php:91 views/domains_edit.php:14
 #: views/devices_edit.php:12 views/devices_add.php:17
 #: views/meicans_edit.php:16
 msgid "Cancel"
@@ -111,15 +111,19 @@ msgstr ""
 msgid "Edit network"
 msgstr ""
 
-#: views/domains_show.php:16 views/elements/domain_form.php:22
+#: views/domains_show.php:16 views/elements/domain_form.php:23
 msgid "OSCARS IP"
 msgstr ""
 
-#: views/domains_show.php:17 views/elements/domain_form.php:30
+#: views/domains_show.php:17 views/elements/domain_form.php:31
+msgid "OSCARS Version"
+msgstr ""
+
+#: views/domains_show.php:18 views/elements/domain_form.php:43
 msgid "Topology ID"
 msgstr ""
 
-#: views/domains_show.php:18 views/elements/domain_form.php:38
+#: views/domains_show.php:19 views/elements/domain_form.php:51
 msgid "ODE IP"
 msgstr ""
 
@@ -135,7 +139,7 @@ msgid "Network"
 msgstr ""
 
 #: views/elements/urn_header.php:4 controllers/devices.php:154
-#: controllers/devices.php:244 controllers/devices.php:262
+#: controllers/devices.php:243 controllers/devices.php:261
 msgid "Device"
 msgstr ""
 
@@ -175,7 +179,7 @@ msgstr ""
 msgid "Populate manual"
 msgstr ""
 
-#: views/elements/domain_form.php:46
+#: views/elements/domain_form.php:59
 msgid "ODE WSDL path"
 msgstr ""
 
@@ -251,11 +255,11 @@ msgstr ""
 msgid "Local?"
 msgstr ""
 
-#: views/domains_edit.php:7
+#: views/domains_edit.php:6
 msgid "Edit domain"
 msgstr ""
 
-#: views/domains_edit.php:14 views/devices_edit.php:11
+#: views/domains_edit.php:13 views/devices_edit.php:11
 #: views/meicans_edit.php:15
 msgid "Update"
 msgstr ""
@@ -293,7 +297,7 @@ msgstr ""
 msgid "Set coordinates"
 msgstr ""
 
-#: controllers/networks.php:111 controllers/domains.php:67
+#: controllers/networks.php:111 controllers/domains.php:68
 #: controllers/meicans.php:67
 msgid "added"
 msgstr ""
@@ -311,10 +315,10 @@ msgid "Missing argument"
 msgstr ""
 
 #: controllers/networks.php:129 controllers/networks.php:168
-#: controllers/domains.php:82 controllers/domains.php:107
+#: controllers/domains.php:83 controllers/domains.php:108
 #: controllers/meicans.php:82 controllers/meicans.php:107
 #: controllers/urns.php:82 controllers/urns.php:122
-#: controllers/devices.php:167 controllers/devices.php:228
+#: controllers/devices.php:167 controllers/devices.php:227
 msgid "Invalid index"
 msgstr ""
 
@@ -322,25 +326,25 @@ msgstr ""
 msgid "Network not found"
 msgstr ""
 
-#: controllers/networks.php:184 controllers/domains.php:124
-#: controllers/meicans.php:124 controllers/devices.php:244
+#: controllers/networks.php:184 controllers/domains.php:125
+#: controllers/meicans.php:124 controllers/devices.php:243
 msgid "updated"
 msgstr ""
 
-#: controllers/networks.php:187 controllers/domains.php:127
-#: controllers/meicans.php:127 controllers/devices.php:247
+#: controllers/networks.php:187 controllers/domains.php:128
+#: controllers/meicans.php:127 controllers/devices.php:246
 msgid "No change has been made"
 msgstr ""
 
-#: controllers/networks.php:189 controllers/domains.php:72
-#: controllers/domains.php:129 controllers/meicans.php:72
+#: controllers/networks.php:189 controllers/domains.php:73
+#: controllers/domains.php:130 controllers/meicans.php:72
 #: controllers/meicans.php:129
 msgid "Missing arguments"
 msgstr ""
 
-#: controllers/networks.php:204 controllers/domains.php:142
+#: controllers/networks.php:204 controllers/domains.php:143
 #: controllers/meicans.php:142 controllers/urns.php:250
-#: controllers/devices.php:262
+#: controllers/devices.php:261
 msgid "deleted"
 msgstr ""
 
@@ -348,15 +352,15 @@ msgstr ""
 msgid "No IP defined"
 msgstr ""
 
-#: controllers/domains.php:43
+#: controllers/domains.php:44
 msgid "No domain is added, click the button below to add a new one"
 msgstr ""
 
-#: controllers/domains.php:70
+#: controllers/domains.php:71
 msgid "Fail to create domain"
 msgstr ""
 
-#: controllers/domains.php:92
+#: controllers/domains.php:93
 msgid "Domain not found"
 msgstr ""
 
