@@ -71,6 +71,7 @@ $flow = $argsToElement;
         <td>
             <label id="confirmation_src_vlan">
                 <?php
+                    debug($flow->source->vlan);
                     if ($flow) {
                         $vlan = ($flow->source->vlan == 0) ? "Untagged" : ($flow->source->vlan == NULL) ? "Tagged: "._("any") : "Tagged: ".$flow->source->vlan;
                         echo $vlan;
