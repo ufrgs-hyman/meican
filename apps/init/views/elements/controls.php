@@ -20,4 +20,4 @@ if (empty($buttons))
     <?php endif; ?>
     <?php echo $after; ?>
 </div>
-<br style="clear: both"/>
+<div style="clear: both"></div>
