@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-13 13:31-0300\n"
-"PO-Revision-Date: 2012-03-13 13:32-0300\n"
+"PO-Revision-Date: 2012-03-13 20:45-0300\n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -87,7 +87,7 @@ msgstr "URNs (Nome uniforme de recurso)"
 
 #: views/urns_show.php:43
 msgid "No URN in this domain, click the button below to import topology from IP address"
-msgstr "Não há URNs neste domínio. Clique no botão abaixo para importar topologia a partir de um endereço IP"
+msgstr "Não há URNs neste domínio. Clique no botão abaixo para importar topologia a partir do endereço IP"
 
 #: views/urns_show.php:43
 msgid "No URN in this domain, choose one of the options below"
