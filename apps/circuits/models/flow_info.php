@@ -110,7 +110,10 @@ class flow_info extends Resource_Model {
 //            $flowData->source->domain = $dom[0]->dom_descr;
 //            $flowData->source->dom_id = $dom[0]->dom_id;
 //            $flowData->source->oscars_ip = $dom[0]->oscars_ip;
-            $flowData->source->vlan = $flow->src_vlan;
+            if ($flow->src_vlan !== NULL)
+                $flowData->source->vlan = (integer) $flow->src_vlan;
+            else
+                $flowData->source->vlan = $flow->src_vlan;
             $flowData->source->urn = $flow->src_urn_string;
 
             if ($urnDetailsRet) {
@@ -137,7 +140,10 @@ class flow_info extends Resource_Model {
 //            $flowData->dest->domain = $dom[0]->dom_descr;
 //            $flowData->dest->dom_id = $dom[0]->dom_id;
 //            $flowData->dest->oscars_ip = $dom[0]->oscars_ip;
-            $flowData->dest->vlan = $flow->dst_vlan;
+            if ($flow->dst_vlan !== NULL)
+                $flowData->dest->vlan = (integer) $flow->dst_vlan;
+            else
+                $flowData->dest->vlan = $flow->dst_vlan;
             $flowData->dest->urn = $flow->dst_urn_string;
 
             if ($urnDetailsRet) {
