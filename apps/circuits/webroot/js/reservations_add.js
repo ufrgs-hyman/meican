@@ -133,13 +133,13 @@ function checkVLAN(where) {
 
     if (where == "src") {
         vlan_value = $("#src_vlanText").val();
-        vlan_min = src_vlan_min;
-        vlan_max = src_vlan_max;
+        vlan_min = parseInt(src_vlan_min);
+        vlan_max = parseInt(src_vlan_max);
         vlan_validValues = src_vlan_validValues;
     } else if (where == "dst") {
         vlan_value = $("#dst_vlanText").val();
-        vlan_min = dst_vlan_min;
-        vlan_max = dst_vlan_max;
+        vlan_min = parseInt(dst_vlan_min);
+        vlan_max = parseInt(dst_vlan_max);
         vlan_validValues = dst_vlan_validValues;
     } else return false;
 
@@ -818,8 +818,8 @@ function map_setEndpointConf(where) {
 
     if (where == "src") {
         src_urn = urnData.urn_string;
-        src_vlan_min = vlan_min;
-        src_vlan_max = vlan_max;
+        src_vlan_min = parseInt(vlan_min);
+        src_vlan_max = parseInt(vlan_max);
         src_vlan_validValues = vlan_validValues;
         src_max_cap = urnData.max_capacity;
         src_min_cap = urnData.min_capacity;
@@ -827,8 +827,8 @@ function map_setEndpointConf(where) {
         $("#src_urn").val(src_urn);
     } else if (where == "dst") {
         dst_urn = urnData.urn_string;
-        dst_vlan_min = vlan_min;
-        dst_vlan_max = vlan_max;
+        dst_vlan_min = parseInt(vlan_min);
+        dst_vlan_max = parseInt(vlan_max);
         dst_vlan_validValues = vlan_validValues;
         dst_max_cap = urnData.max_capacity;
         dst_min_cap = urnData.min_capacity;
