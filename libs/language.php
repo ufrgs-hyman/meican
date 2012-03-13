@@ -25,8 +25,10 @@ class Language {
     }
 
     static function setDomain($domain) {
-        if (!is_string($domain))
+        if (!is_string($domain)){
+            debug($domain);
             return ;
+        }
         $lang = Language::getLang();
 
         Language::setTranslation($lang, $domain);

@@ -34,8 +34,21 @@ class Datasource {
     }
     
     static $queries = array();
-    static function logQuery($query){
-        self::$queries[] = $query;
+    static function logQuery($query, $error = null, $affected = null, $numRows = null, $took = null){
+        $took = $took*1000;
+        self::$queries[] = compact('query', 'error', 'affected', 'numRows', 'took');
+    }
+    
+    static function getQueries(){
+        function qsum($v, $q){
+                    return $q['took']+$v;
+                };
+        return
+            array(
+                'log' => self::$queries,
+                'count' => count(self::$queries),
+                'time' => array_reduce(self::$queries, 'qsum', 0)
+            );
     }
 
 }

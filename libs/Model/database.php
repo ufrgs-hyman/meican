@@ -27,31 +27,30 @@ class Database {
     }
     
     public function insert($sql) {
-        Datasource::logQuery($sql);
-        $result = $this->mdb2->exec($sql);
-        if (MDB2::isError($result)) {
-            debug($result->getMessage() . ", " . $result->getDebugInfo());
-            return FALSE;
-        } else {
+        if ($this->exec($sql))
             return $this->mdb2->lastInsertId();
-        }
+        else
+            return false;
     }
     
     public function exec($sql) {
-        Datasource::logQuery($sql);
+        $start = getMicrotime();
         $result = $this->mdb2->exec($sql);
         if (MDB2::isError($result)) {
+            Datasource::logQuery($sql, $result->getMessage() . ", " . $result->getDebugInfo(), 0, 0, getMicrotime()-$start);
             debug($result->getMessage() . ", " . $result->getDebugInfo());
             return FALSE;
         } else {
+            Datasource::logQuery($sql, null, 0, 0, getMicrotime()-$start);
             return TRUE;
         }
     }
 
     public function query($sql, $classname='Model') {
+        $start = getMicrotime();        
         $result = $this->mdb2->query($sql);
-        Datasource::logQuery($sql);
         if (MDB2::isError($result)) {
+            Datasource::logQuery($sql, $result->getMessage() . ", " . $result->getDebugInfo(), 0, 0, getMicrotime()-$start);
             debug($result->getMessage() . ", " . $result->getDebugInfo());
             return FALSE;
         } else {
@@ -62,14 +61,14 @@ class Database {
             } else {
                 $this->numRows = 0;
             }
-
+            Datasource::logQuery($sql, null, 0, $this->numRows, getMicrotime()-$start);
             $this->position = 0;
             return TRUE;
         }
     }
 
     public function transactionExec($sql) {
-        Datasource::logQuery($sql);
+        $start = getMicrotime();
         //Verifica se o Banco suporta transações
         if (!$this->mdb2->supports('transactions')) {
             debug("Erro: Banco não suporta transações.");
@@ -93,6 +92,7 @@ class Database {
                         debug("Erro: Alterações serão desfeitas");
                         $this->mdb2->rollback();
                     }
+                    Datasource::logQuery($sql, $result->getMessage() . ", " . $result->getDebugInfo(), 0, 0, getMicrotime()-$start);
                     return FALSE;
                 }
             }
@@ -100,6 +100,7 @@ class Database {
         //Se a transação foi concluída com sucesso, executa Commit() e desconecta do Banco
         if ($this->mdb2->inTransaction()) {
             $this->mdb2->commit();
+            Datasource::logQuery($sql, null, 0, 0, getMicrotime()-$start);
             return TRUE;
         }
     }
