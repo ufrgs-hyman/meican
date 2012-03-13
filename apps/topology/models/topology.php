@@ -32,7 +32,7 @@ class MeicanTopology {
                         $db[] = $u->urn_string; // vetor para comparação com a topologia
                     }
 
-                $index = 0;
+                $index = 1;
                 $urns_to_return = array();
                 foreach ($os->urns as $u) {
 
