@@ -29,9 +29,10 @@ class Language {
             debug($domain);
             return ;
         }
-        $lang = Language::getLang();
-
-        Language::setTranslation($lang, $domain);
+        bindtextdomain($domain, 'i18n');
+        bind_textdomain_codeset($domain, 'utf-8');
+        // e definimos que iremos utilizar o dominio de textos “hello”
+        textdomain($domain);
     }
 
     static function getDomain() {
