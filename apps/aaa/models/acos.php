@@ -2,7 +2,7 @@
 
 include_once 'libs/Model/tree_model.php';
 
-class Acos extends Tree_Model {
+class Acos extends TreeModel {
 
      function Acos($obj_id="", $model="",$parent_id="") {
         $this->setTableName("acos");

@@ -10,7 +10,7 @@ define('ROOT', dirname(__FILE__));
 define("LIBS", 'libs'.DS);
 define("APPLIBS", 'libs'.DS);
 define("CAKE", LIBS);
-define('APP', DS);
+define('APP', '');
 define('APP_DIR', DS);
 define("LOGS", ROOT.DS.'log'.DS);
 @define ('__MEICAN', 1);

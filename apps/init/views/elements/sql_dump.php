@@ -1,8 +1,8 @@
 <?php
 /**
- * SQL Dump element.  Dumps out SQL log information 
+ * SQL Dump element.  Dumps out SQL log information
  *
- * PHP versions 4 and 5
+ * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -12,30 +12,28 @@
  *
  * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       cake
- * @subpackage    cake.cake.libs.view.templates.elements
+ * @package       Cake.View.Elements
  * @since         CakePHP(tm) v 1.3
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-//debug(Datasource::$queries);
-if (/*!class_exists('ConnectionManager') || */Configure::read('debug') < 2) {
+if (!class_exists('ConnectionManager') || Configure::read('debug') < 2) {
 	return false;
-}/*
+}
 $noLogs = !isset($logs);
 if ($noLogs):
 	$sources = ConnectionManager::sourceList();
 
 	$logs = array();
 	foreach ($sources as $source):
-		$db =& ConnectionManager::getDataSource($source);
-		if (!$db->isInterfaceSupported('getLog')):
+		$db = ConnectionManager::getDataSource($source);
+		if (!method_exists($db, 'getLog')):
 			continue;
 		endif;
 		$logs[$source] = $db->getLog();
 	endforeach;
-endif;*/
-$logs = array(Datasource::getQueries());
-if (true):
+endif;
+
+if ($noLogs || isset($_forced_from_dbo_)):
 	foreach ($logs as $source => $logInfo):
 		$text = $logInfo['count'] > 1 ? 'queries' : 'query';
 		printf(
@@ -50,11 +48,12 @@ if (true):
 	<tbody>
 	<?php
 		foreach ($logInfo['log'] as $k => $i) :
-			echo "<tr><td>" . ($k + 1) . "</td><td>" . h($i['query']) . "</td><td>{$i['error']}</td><td style = \"text-align: right\">{$i['affected']}</td><td style = \"text-align: right\">{$i['numRows']}</td><td style = \"text-align: right\">".number_format($i['took'], 2)."</td></tr>\n";
+			$i += array('error' => '');
+			echo "<tr><td>" . ($k + 1) . "</td><td>" . h($i['query']) . "</td><td>{$i['error']}</td><td style = \"text-align: right\">{$i['affected']}</td><td style = \"text-align: right\">{$i['numRows']}</td><td style = \"text-align: right\">{$i['took']}</td></tr>\n";
 		endforeach;
 	?>
 	</tbody></table>
-	<?php 
+	<?php
 	endforeach;
 else:
 	echo '<p>Encountered unexpected $logs cannot generate SQL log</p>';

@@ -6,9 +6,8 @@ include_once 'libs/application.php';
 App::uses('Configure', 'Core');
 App::uses('Object', 'Core');
 
-include_once 'libs/Model/datasource.php';
+//include_once 'libs/Model/datasource.php';
 include_once 'libs/language.php';
-include_once 'libs/Model/database.php';
 
 /**
  * Dispatcher Class. Reads required url and instanciate properly apps, controller and calls an action.
@@ -78,8 +77,9 @@ class Dispatcher {
             $controller->invokeAction($this->params);
         } catch (Exception $e) {
             echo $e->getMessage();
-        }
-        Datasource::getInstance()->close();
+        }/*
+        if (class_exists('Datasource'))
+            Datasource::getInstance()->close();*/
     }
 
     /**

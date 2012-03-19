@@ -1436,6 +1436,7 @@ pre {
 .cake-debug-output {
 	padding: 0;
 	position: relative;
+    text-align: left;
 }
 .cake-debug-output > span {
 	position: absolute;

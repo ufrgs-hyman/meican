@@ -2,7 +2,7 @@
 
 include_once 'libs/Model/tree_model.php';
 
-class Aros extends Tree_Model {
+class Aros extends TreeModel {
 
      function Aros($obj_id="", $model="", $parent_id = "") {
         $this->setTableName("aros");
@@ -18,5 +18,3 @@ class Aros extends Tree_Model {
         $this->parent_id = $parent_id;
     } 
 }
-
-?>

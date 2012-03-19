@@ -7,7 +7,7 @@ include_once 'apps/aaa/models/acos.php';
 include_once 'apps/aaa/models/aros_acos.php';
 include_once 'libs/common.php';
 
-class AclLoader extends Tree_Model {
+class AclLoader extends TreeModel {
 
     public $model;
     public $acl;

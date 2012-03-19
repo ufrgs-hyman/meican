@@ -2,7 +2,7 @@
 
 include_once 'libs/Model/model.php';
 
-class Tree_Model extends Model {
+class TreeModel extends Model {
 
     function Tree_Model() {
 
@@ -197,8 +197,11 @@ class Tree_Model extends Model {
                     FROM $tableName AS node,
                 $tableName AS parent
                     WHERE (node.lft BETWEEN (parent.lft +1) AND (parent.rgt-1)) $and $restrModel";
-
-        return $this->querySql($sqlQuery, $tableName);
+        $ret = $this->querySql($sqlQuery, $tableName);
+        if (empty($ret))
+            return array();
+        else
+            return $ret;
     }
     
     public function getParentNodes() {

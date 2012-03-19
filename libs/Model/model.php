@@ -1,11 +1,9 @@
 <?php
-
-require_once 'MDB2.php';
 include_once 'libs/Model/attribute.php';
-include_once 'libs/Model/database.php';
-include_once 'libs/acl_loader.php';
+//include_once 'libs/acl_loader.php';
+App::uses('ConnectionManager', 'Model');
 
-class Model {
+class Model extends Object {
 
     public $attributes;
     private $tableName;
@@ -73,6 +71,7 @@ class Model {
 
         $sql = "";
         if ($useACL) {
+            include_once 'libs/acl_loader.php';
             $acl = AclLoader::getInstance();
             $allowPks = $acl->getAllowedPKey('read', $tableName);
 
@@ -96,7 +95,7 @@ class Model {
         //debug("fetch",$sql);
         return ($this->data = $this->querySql($sql, $tableName));
     }
-    
+
     /**
      * @example Before calling this function, all the 'usedInUpdate' attributes must be set, even when it should be NULL.
      * Otherwise, the param will be set blank
@@ -106,12 +105,12 @@ class Model {
         $pk = $this->getPrimaryKey();
         if (!$this->{$pk})
             return FALSE;
-        
+
         $classname = $this->getTableName();
         $values = get_object_vars($this);
         $sql = "UPDATE `$classname` SET ";
         $isFirst = true;
-        
+
         foreach ($this->attributes as $attribute) {
             $name = $attribute->name;
             if (($attribute->type == "VARCHAR") && ($values[$name] !== NULL)) {
@@ -129,9 +128,9 @@ class Model {
                     $sql .= "`$name`=" . $values[$name];
             }
         }
-        
-        $where = " WHERE `$pk`=".$this->{$pk};
-        
+
+        $where = " WHERE `$pk`=" . $this->{$pk};
+
         $sql .= $where;
         //debug('update',$sql);
         return $this->execSql($sql);
@@ -150,105 +149,105 @@ class Model {
      * @return <boolean> TRUE if update was success, FALSE otherwise
      */
     /*
-    public function update2() {
+      public function update2() {
 
-        //algoritmo simplificado:
-        //achar a chave primária
-        //fazer um fetch com o valor da chave primária setado no controller
-        //alterar SOMENTE os atributos que foram setados no controller e deixar os demais inalterados
-        // inicia objeto temporário para manter as informações do objeto original
+      //algoritmo simplificado:
+      //achar a chave primária
+      //fazer um fetch com o valor da chave primária setado no controller
+      //alterar SOMENTE os atributos que foram setados no controller e deixar os demais inalterados
+      // inicia objeto temporário para manter as informações do objeto original
 
 
-        $validInd = array();
+      $validInd = array();
 
-        // varre a estrutura em busca da chave primária e constrói um vetor com índices válidos
-        foreach ($this->attributes as $attribute) {
-            if ($attribute->primaryKey)
-                $primaryKey[] = $attribute->name;
+      // varre a estrutura em busca da chave primária e constrói um vetor com índices válidos
+      foreach ($this->attributes as $attribute) {
+      if ($attribute->primaryKey)
+      $primaryKey[] = $attribute->name;
 
-            $validInd[] = $attribute->name;
-        }
+      $validInd[] = $attribute->name;
+      }
 
-        // copia a chave primária (será usada na busca da linha a ser alterada no banco)
-        //return "ERROR: database_object.inc -> UPDATE : PRIMARY KEY $primaryKey NÃO SETADA.";
-        $fetchObj = new $this->tableName;
-        foreach ($primaryKey as $pk) {
-            if (!$this->$pk) {
-                debug('set all the primary keys to update.', $pk);
-                return FALSE;
-            }
-            else
-                $fetchObj->$pk = $this->$pk;
-        }
+      // copia a chave primária (será usada na busca da linha a ser alterada no banco)
+      //return "ERROR: database_object.inc -> UPDATE : PRIMARY KEY $primaryKey NÃO SETADA.";
+      $fetchObj = new $this->tableName;
+      foreach ($primaryKey as $pk) {
+      if (!$this->$pk) {
+      debug('set all the primary keys to update.', $pk);
+      return FALSE;
+      }
+      else
+      $fetchObj->$pk = $this->$pk;
+      }
 
-        $result = $fetchObj->fetch(FALSE);
-        $fetchResult = $result[0];
+      $result = $fetchObj->fetch(FALSE);
+      $fetchResult = $result[0];
 
-        $changed = FALSE;
-        if ($fetchResult !== FALSE) {
-            // varre os atributos do objeto original, verifica se não está setado
-            foreach ($this as $name => $val) {
-                if (array_search($name, $validInd) !== FALSE) { //verifica se o índice selecionado do objeto é um índice válido
-                    if ($val) { //se atributo do modelo estiver setado
-                        if (($val != $fetchResult->$name) || ($this->attributes[$name]->forceUpdate)) //testa se o valor é diferente OU é um atributo que SEMPRE deve ser alterado
-                            $changed = TRUE;
-                    } else {
-                        // copia o resultado da busca feita sobre o objeto temporário para o objeto original (os valores que não serão alterados)
-                        $this->$name = $fetchResult->$name;
-                    }
-                }
-            }
-        } else
-            return FALSE;
-        /** @todo : log
-          //return "ERROR: database_object.inc -> UPDATE : PRIMARY KEY $primaryKey NÃO ENCONTRADA.";
-         *
-         *
-        if (!$changed) {
-            debug("not updated");
-            return FALSE;
-        }
+      $changed = FALSE;
+      if ($fetchResult !== FALSE) {
+      // varre os atributos do objeto original, verifica se não está setado
+      foreach ($this as $name => $val) {
+      if (array_search($name, $validInd) !== FALSE) { //verifica se o índice selecionado do objeto é um índice válido
+      if ($val) { //se atributo do modelo estiver setado
+      if (($val != $fetchResult->$name) || ($this->attributes[$name]->forceUpdate)) //testa se o valor é diferente OU é um atributo que SEMPRE deve ser alterado
+      $changed = TRUE;
+      } else {
+      // copia o resultado da busca feita sobre o objeto temporário para o objeto original (os valores que não serão alterados)
+      $this->$name = $fetchResult->$name;
+      }
+      }
+      }
+      } else
+      return FALSE;
+      /** @todo : log
+      //return "ERROR: database_object.inc -> UPDATE : PRIMARY KEY $primaryKey NÃO ENCONTRADA.";
+     *
+     *
+      if (!$changed) {
+      debug("not updated");
+      return FALSE;
+      }
 
-        if (sizeof($this->attributes) == 0)
-        //return "Atributos invalidos";
-            return FALSE;
+      if (sizeof($this->attributes) == 0)
+      //return "Atributos invalidos";
+      return FALSE;
 
-        $classname = $this->getTableName();
-        $values = get_object_vars($this);
-        $sql = "UPDATE `$classname` SET ";
-        $isFirst = true;
-        $isFirstWhere = true;
-        $where = " WHERE ";
-        foreach ($this->attributes as $attribute) {
-            $name = $attribute->name;
-            if (($attribute->type == "VARCHAR") && ($values[$name] !== NULL)) {
-                $values[$name] = "'" . $values[$name] . "'";
-            }
-            if ($attribute->usedInUpdate) {
-                if ($isFirst) {
-                    $isFirst = false;
-                } else {
-                    $sql.=", ";
-                }
-                if ($values[$name] === NULL)
-                    $sql .= "`$name`=NULL";
-                else
-                    $sql .= "`$name`=" . $values[$name];
-            }
-            if ($attribute->primaryKey) {
-                if ($isFirstWhere) {
-                    $isFirstWhere = false;
-                } else {
-                    $where .= " AND ";
-                }
-                $where .= "`$name`=" . $values[$name];
-            }
-        }
-        $sql .= $where;
-        //debug('update',$sql);
-        return $this->execSql($sql);
-    }
-    */
+      $classname = $this->getTableName();
+      $values = get_object_vars($this);
+      $sql = "UPDATE `$classname` SET ";
+      $isFirst = true;
+      $isFirstWhere = true;
+      $where = " WHERE ";
+      foreach ($this->attributes as $attribute) {
+      $name = $attribute->name;
+      if (($attribute->type == "VARCHAR") && ($values[$name] !== NULL)) {
+      $values[$name] = "'" . $values[$name] . "'";
+      }
+      if ($attribute->usedInUpdate) {
+      if ($isFirst) {
+      $isFirst = false;
+      } else {
+      $sql.=", ";
+      }
+      if ($values[$name] === NULL)
+      $sql .= "`$name`=NULL";
+      else
+      $sql .= "`$name`=" . $values[$name];
+      }
+      if ($attribute->primaryKey) {
+      if ($isFirstWhere) {
+      $isFirstWhere = false;
+      } else {
+      $where .= " AND ";
+      }
+      $where .= "`$name`=" . $values[$name];
+      }
+      }
+      $sql .= $where;
+      //debug('update',$sql);
+      return $this->execSql($sql);
+      }
+     */
 
     /**
      * 
@@ -290,6 +289,7 @@ class Model {
 
         if ($useACL) {
 
+            include_once 'libs/acl_loader.php';
             $acl = AclLoader::getInstance();
             $allowPks = $acl->getAllowedPKey('update', $tableName);
 
@@ -322,7 +322,9 @@ class Model {
             return FALSE;
         else
             return $this->execSql($sql);
-    } //do updateTo
+    }
+
+//do updateTo
 
     /**
      * @return Boolean FALSE : on failed insertion (FAILED)
@@ -413,6 +415,7 @@ class Model {
         $values = get_object_vars($this);
         $whereArgs = array();
         if ($useACL) {
+            include_once 'libs/acl_loader.php';
             $acl = AclLoader::getInstance();
             $restr = $acl->getAllowedPKey('delete', $tableName);
 
@@ -458,12 +461,14 @@ class Model {
      * @return Boolean Object ID if insert was successful, FALSE otherwise
      */
     protected function insertSql($sql) {
-        $db = new Database();
-
-        if (!($db && $sql))
+        $ds = ConnectionManager::getDataSource('default');
+        if (!($ds && $sql))
             return FALSE;
 
-        return $db->insert($sql);
+        if ($ds->execute($sql))
+            return $ds->lastInsertId();
+        else
+            return false;
     }
 
     /**
@@ -472,12 +477,11 @@ class Model {
      * @return Boolean TRUE if exec was successful, FALSE otherwise
      */
     protected function execSql($sql) {
-        $db = new Database();
-
-        if (!($db && $sql))
+        $ds = ConnectionManager::getDataSource('default');
+        if (!($ds && $sql))
             return FALSE;
 
-        return $db->exec($sql);
+        return $ds->execute($sql);
     }
 
     /**
@@ -490,12 +494,15 @@ class Model {
      * @return <boolean> TRUE if transaction was successful. FALSE otherwise.
      */
     protected function transactionSql($sql) {
-        $db = new Database();
 
-        if (!($db && $sql))
+        $ds = ConnectionManager::getDataSource('default');
+        if (!($ds && $sql))
             return FALSE;
-
-        return $db->transactionExec($sql);
+        $ds->begin();
+        if (!$ds->execute($sql))
+            return $ds->rollback() && false;
+        else
+            return $ds->commit();
     }
 
     /**
@@ -506,23 +513,34 @@ class Model {
      * @return <array> Object Model: objects were found
      */
     protected function querySql($sql, $tableName = 'Model') {
-        $db = new Database();
-
-        if (!($db && $sql))
+        $ds = ConnectionManager::getDataSource('default');
+        if (!($ds && $sql))
             return FALSE;
-
-        if ($db->query($sql, $tableName)) {
-            $result_obj = array();
-            if ($db->hasNext()) {
-                while ($db->hasNext()) {
-                    $result_obj[] = $db->next();
+        $results = $ds->query($sql);
+        if (empty($results))
+            return false;/*
+        if (!in_array($tableName, array('acos', 'aros', 'domain_info', 'reservation_info')))
+            $tableName = 'stdClass';*/
+        $result_obj = array();
+        foreach ($results as &$row) {
+            $obj = new $tableName();
+            foreach ($row as $model => $modelRow)
+                foreach ($modelRow as $key => $value) {
+                    $obj->$key = $value;
                 }
-                return $result_obj;
-            } else
-                return $result_obj;
-        } else {
-            return FALSE;
+            $result_obj[] = $obj;
         }
+        return $result_obj;
+        /* if ($db->query($sql, $tableName)) {
+          $result_obj = array();
+          while ($db->hasNext()) {
+          $result_obj[] = $db->next();
+          }
+          debug($result_obj);
+          return $result_obj;
+          } else {
+          return FALSE;
+          } */
     }
 
     private function normalizeStringArray($data = array()) {
@@ -534,7 +552,7 @@ class Model {
     function buildWhere($fields=array()) {
         $values = get_object_vars($this);
         $validInds = $this->getValidInds();
-        
+
         if (!$validInds)
             return FALSE;
 
@@ -621,5 +639,3 @@ class Model {
     }
 
 }
-
-?>

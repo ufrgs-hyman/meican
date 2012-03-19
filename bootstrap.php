@@ -27,6 +27,7 @@ App::uses('CakePlugin', 'Core');
 App::uses('Cache', 'Cache');
 App::uses('Object', 'Core');
 App::uses('Log', 'Log');
+App::uses('Inflector', 'Utility');
 
 include_once 'libs/common.php';
 //App::$bootstrapping = true;
