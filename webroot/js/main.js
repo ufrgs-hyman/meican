@@ -41,7 +41,7 @@ $(function() {
                 $("table.list").dataTable(/*{cssAsc: 'ui-icon ui-icon-triangle-1-n', cssDesc: 'ui-icon ui-icon-triangle-1-s'}*/);
             $.fn.menuHandler.setSelected();
             $('input, textarea').placeholder();
-        
+            $(':checkbox').makeDeleteButton(':checkbox', '.delete');
         });
         $('#main').trigger('pjax:end');
     }
@@ -179,6 +179,16 @@ function clearFlash(){
     
     
     $.fn.extend({
+        makeDeleteButton: function(inpSelect, delSelector){
+            var ev = function (){
+                if ($(inpSelect+':checked').length >0)
+                    $(delSelector).show();
+                else
+                    $(delSelector).hide();
+            };
+            $(this).bind('click change', ev);
+            ev();
+        },
         formatFields: function(){
             var intInp = $(this).find('.integer-input[disabled!=true]'),
             curInp = $(this).find('.currency-input[disabled!=true]');

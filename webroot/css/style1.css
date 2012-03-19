@@ -392,8 +392,7 @@ img.loading {
 }
 
 div.controls {
-    padding: 6px 0;
-    float: right;
+    height: 24px;
 }
 
 div.control_tab {
