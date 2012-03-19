@@ -635,7 +635,7 @@ td select {
 }
 
 #logo, #info_box {
-    height: 26px;
+    height: 32px;
 
     color: #D8E7F3;
     background-color: #27567C;
@@ -651,7 +651,7 @@ td select {
 #logo p {
     text-align: center;
     margin: 0;
-    padding: 0.2em 0.5em 0.5em 0.5em;
+    padding: 0.4em;
     font-weight: bolder;
     font-size: 16px;
     text-shadow: 2px 2px 0.2em black, -1px -1px #444;
@@ -666,7 +666,7 @@ td select {
 #info_box ul a {
     float: right;
     display: block;
-    padding: 0.5em 0.5em 0.5em 0.5em;
+    padding: 0.8em;
     color: #D8E7F3;
     text-decoration: none;	
     text-shadow: 2px 2px 0.2em black, -1px -1px #444;
