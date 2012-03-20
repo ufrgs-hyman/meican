@@ -89,6 +89,10 @@ class OSCARSReservation {
     public function setPath($path) {
         $this->path = $path;
     }
+    
+    public function getPath() {
+        return $this->path;
+    }
 
     public function setSrcIsTagged($isTagged) {
         if ($isTagged)

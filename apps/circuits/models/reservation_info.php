@@ -101,6 +101,48 @@ class reservation_info extends Resource_Model {
 
         return $status;
     }
+    
+    /**
+     *
+     * @param Array $resIdArray An array containing reservation IDs to filter by status
+     * @return Array An array containing all reservation objects that user has permission to view
+     */
+    public function getReservationsToShow($resIdArray=array()) {
+        /**
+         * reservations that user has permission to read, e.g., enginner can read reservations from his domain
+         */
+        $res_info = new reservation_info();
+        if ($resIdArray)
+            $res_info->res_id = $resIdArray;
+        $topologyReservations = $res_info->fetch();
+        
+        /**
+         * initialize the array containing the reservations to show
+         */
+        $resevartionsToShow = $topologyReservations;
+        
+        /**
+         * reservations that the user has requested
+         */
+        $ures_info = new reservation_info();
+        $ures_info->usr_id = AuthSystem::getUserId();
+        if ($userReservations = $ures_info->fetch(FALSE)) {
+            if (empty($topologyReservations)) {
+                // user has only self-requested reservations
+                $resevartionsToShow = $userReservations;
+            } else {
+                // user has both type of reservations, merge them
+                $topResIdArray = Common::arrayExtractAttr($topologyReservations, "res_id");
+                foreach ($userReservations as $res) {
+                    if (array_search($res->res_id, $topResIdArray) === FALSE) {
+                        array_push($resevartionsToShow, $res);
+                    }
+                }
+            }
+        }
+        
+        return $resevartionsToShow;
+    }
 
     public function getReservationDetails() {
         $res = $this->fetch(FALSE);
@@ -201,6 +243,32 @@ class reservation_info extends Resource_Model {
             return FALSE;
         }
     }
+    
+    public function getPath($oscars_ip, $gri) {
+        $oscars = new OSCARSReservation();
+        $oscars->setGri($gri);
+        $oscars->setOscarsUrl($oscars_ip);
+        
+        $oscars->queryReservation();
+        
+//        while ($oscars->getStatus() == "PENDING") {
+//            
+//        }
+        
+        // path setup finished, start filter
+        if ($oscars->getStatus() == "PENDING") {
+            if ($pathArray = explode(";", $oscars->getPath())) {
+                foreach ($pathArray as $urn) {
+                    $dom = new domain_info();
+                    $domain = $dom->getOSCARSDomain($urn);
+                    if ($domain) {
+                        // achou dom no banco
+                    }
+                }
+            }
+        }
+        
+    }
 
     function getGriDetails() {
         $gri_to_list = array('args0' => array('ufrgs.cipo.rnp.br-1259', 'ufrgs.cipo.rnp.br-1694'));
@@ -232,10 +300,6 @@ class reservation_info extends Resource_Model {
         }
     }
 
-    function getFlow(){
-        $tmp = $this->fetch();
-        return $tmp[0]->flw_id;
-    }
 }
 
 ?>

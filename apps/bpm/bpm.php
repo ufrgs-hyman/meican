@@ -15,12 +15,12 @@ class bpm extends Application {
                 'sub' => array(
                     new MenuItem(array(
                         'label' => _("Requests"),
-                        'model' => 'request_info',
+                        'model' => 'bpm',
                         'url' => array('app' => $this->appName, 'controller' => 'requests')
                     )),
                     new MenuItem(array(
                         'label' => _("ODE"),
-                        'model' => 'request_info',
+                        'model' => 'bpm',
                         'url' => array('app' => $this->appName, 'controller' => 'ode')
                     )),
                 )
@@ -31,7 +31,7 @@ class bpm extends Application {
         return array(
             60 => new MenuItem(array(
                 'label' => _("Requests"),
-                'model' => 'request_info',
+                'model' => 'bpm',
                 'url' => array('app' => $this->appName, 'controller' => 'requests'),
                 'image' => 'webroot/img/requests_1.png'
             )),

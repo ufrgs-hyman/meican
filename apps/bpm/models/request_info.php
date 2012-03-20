@@ -6,22 +6,26 @@ include_once 'libs/auth.php';
 class request_info extends Resource_Model {
 
     function request_info() {
-
         $this->setTableName("request_info");
 
         // Add all table attributes
         $this->addAttribute('loc_id', "INTEGER", true, false, false);
         $this->addAttribute("req_id","INTEGER");
+        
+        $this->addAttribute("src_meican","INTEGER");
         $this->addAttribute("src_dom","INTEGER");
-        $this->addAttribute("dst_dom","INTEGER");
         $this->addAttribute("src_usr","INTEGER");
+        
+        $this->addAttribute("dst_meican","INTEGER");
+        $this->addAttribute("dst_dom","INTEGER");
+        
         $this->addAttribute("resource_type","VARCHAR");
         $this->addAttribute("resource_id","INTEGER");
+        
         $this->addAttribute('answerable',"VARCHAR");
         $this->addAttribute("status","VARCHAR");
         $this->addAttribute("response","VARCHAR");
         $this->addAttribute("message","VARCHAR");
-
     }
 
     public function setDom($dom_src, $arg_ip){
