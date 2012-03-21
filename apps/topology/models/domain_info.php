@@ -41,6 +41,17 @@ class domain_info extends Resource_Model {
             return FALSE;
         //$this = $result[0];
     }
+    
+    public function getTopologyId($urn_string) {
+        $parts = explode(":", $urn_string);
+        
+        $topo_attr = explode("=", $parts[3]);
+        $topology_id = NULL;
+        if (strtoupper($topo_attr[0]) == "DOMAIN")
+            $topology_id = $topo_attr[1];
+        
+        return $topology_id;
+    }
 
 }
 

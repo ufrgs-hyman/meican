@@ -255,19 +255,33 @@ class reservation_info extends Resource_Model {
 //            
 //        }
         
-        // path setup finished, start filter
+        $domains = array();
         if ($oscars->getStatus() == "PENDING") {
+            // path setup finished, start filter
             if ($pathArray = explode(";", $oscars->getPath())) {
+                
+                // put only the topology IDs into an array
+                $topoIdArray = array();
+                $dom = new domain_info();
                 foreach ($pathArray as $urn) {
+                    $topoIdArray[] = $dom->getTopologyId($urn);
+                }
+                array_unique($topoIdArray);
+                
+                // fill the array with the Endpoints of the path
+                foreach ($topoIdArray as $topId) {
                     $dom = new domain_info();
-                    $domain = $dom->getOSCARSDomain($urn);
-                    if ($domain) {
-                        // achou dom no banco
+                    $dom->topology_id = $topId;
+                    if ($d_result = $dom->fetch(FALSE)) {
+                        $d_tmp = $d_result[0];
+                        $domains[] = "http://$d_tmp->ode_ip/$d_tmp->ode_wsdl_path";
+                        //$businessEndpoint = "http://$src_dom->ode_ip/$src_dom->ode_wsdl_path";
                     }
                 }
             }
         }
         
+        return $domains;
     }
 
     function getGriDetails() {
