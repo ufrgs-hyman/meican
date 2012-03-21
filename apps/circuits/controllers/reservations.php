@@ -223,7 +223,7 @@ class reservations extends Controller {
         }
 
         if (count($statusResult) != count($griList)) {
-            Log::write('debug', "Problema de consistencia na refresh status", $statusResult);
+            Log::write('debug', "Problema de consistencia na refresh status " . print_r($statusResult, true));
             $this->setArgsToBody(FALSE);
             $this->render();
             return;
