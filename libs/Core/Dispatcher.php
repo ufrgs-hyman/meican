@@ -56,25 +56,25 @@ class Dispatcher {
         /*if (empty($url)&&!(Common::GET('app')))
             return $this->legacyDispatch();*/
         $this->params = array_merge($this->parse($url), $params);
-        extract($this->params);
-        if ($controller !== 'ws' && !$this->checkLogin()) //TODO: authetication for webservices
+        if ($this->params['controller'] !== 'ws' && !$this->checkLogin()) //TODO: authetication for webservices
             return;
         try {
             if (empty($this->params['app']))
                 $this->params['app'] = Configure::read('mainApp');
-            if (!($app = $this->appFactory($app)))
+            if (!($app = $this->appFactory($this->params['app'])))
                 throw new Exception(_("Invalid app"));
             Language::setLang($this->params['app']);
             if (empty($this->params['controller']))
                 $this->params['controller'] = $app->getDefaultController();       
-            $controller = $app->loadController($controller);
+            $controller = $app->loadController($this->params['controller']);
 
             if (!($controller instanceof Controller)) {
                 throw new MissingControllerException(array(
                     'class' => $controller . 'Controller'
                 ));
             }
-            $controller->invokeAction($this->params);
+            if ($this->params['controller'] !== 'ws')
+                $controller->invokeAction($this->params);
         } catch (Exception $e) {
             echo $e->getMessage();
         }/*
