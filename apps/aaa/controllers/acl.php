@@ -159,10 +159,7 @@ class acl extends Controller {
             $args->acos = $acos;
         } else
             $args = FALSE;
-        $this->layout = 'empty';
-        $this->setAction('ajax');
-        $this->setArgsToBody($args);
-        $this->render();
+        $this->renderJson($args);
     }
 
     public function singleDelete() {
@@ -171,12 +168,9 @@ class acl extends Controller {
             $acc->perm_id = $perm_id;
             $result = $acc->delete();
             $this->setArgsToBody($result);
-        }
-        
-        $this->layout = 'empty';
-        $this->setAction('ajax');
-
-        $this->render();
+        } else
+            $result = FALSE;
+        $this->renderJson($result);
     }
     
     public function delete() {

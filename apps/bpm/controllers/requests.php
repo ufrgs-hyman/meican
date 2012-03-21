@@ -77,10 +77,7 @@ class requests extends Controller {
         $client = new nusoap_client("http://$dom_ip/".Configure::read('systemDirName')."bpm/ws", array('cache_wsdl' => 0));
 
         $result = $client->call('getUsers');
-        $this->setAction('ajax');
-        $this->layout = 'empty';
-        $this->setArgsToBody($result);
-        $this->render();
+        $this->renderJson($result);
     }
 
     public function replyRequest($input) {

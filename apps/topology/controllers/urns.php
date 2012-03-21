@@ -214,27 +214,20 @@ class urns extends Controller {
     }
 
     public function ajax_get_topology() {
-        $urns = MeicanTopology::getURNTopology(Common::POST('domain_id'));
-        $this->layout = 'empty';
-        $this->setAction('ajax');
-        $this->setArgsToBody($urns);
-        $this->render();
+        $this->renderJson(MeicanTopology::getURNTopology(Common::POST('domain_id')));
     }
 
     public function singleDelete() {
         $del_urn = Common::POST('urnId');
-
         if ($del_urn) {
             $urn = new urn_info();
             $urn->urn_id = $del_urn;
             $result = $urn->delete();
             $this->setArgsToBody($result);
+        } else {
+            $result = FALSE;
         }
-        
-        $this->layout = 'empty';
-        $this->setAction('ajax');
-
-        $this->render();
+        $this->renderJson($result);
     }
 
     public function delete() {
