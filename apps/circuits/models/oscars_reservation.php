@@ -43,13 +43,11 @@ class OSCARSReservation {
         $this->version = "0.5.4";
     }
 
-    
     /**
      * 
      * GETTERS and SETTERS
      * 
      */
-    
     public function setOscarsUrl($oscars_ip) {
         $this->oscarsUrl = "http://$oscars_ip/axis2/services/OSCARS";
     }
@@ -160,31 +158,87 @@ class OSCARSReservation {
         $this->version = $version;
     }
 
-    
-    
-    
-    /**
-     *
-     * 
-     * Functions that implement the WS calls
-     * 
-     * 
-     */
-    
-    function createReservation() {
-
-        if (!(isset($this->srcEndpoint) && isset($this->destEndpoint) &&
-                isset($this->oscarsUrl) && isset($this->startTimestamp) &&
-                isset($this->endTimestamp))) {
-            debug("parametros insuficientes no createreservation");
-            return false;
+    public function checkOscarsUrl() {
+        if (!isset($this->oscarsUrl)) {
+            return $this->error("oscarsUrl not set");
         }
+        return true;
+    }
 
+    public function checkVersion() {
         switch ($this->version) {
             case "0.5.3":
             case "0.5.4":
-                $envelope = array(
-                    'oscars_url' => $this->oscarsUrl,
+                return true;
+            case "0.6":
+            default:
+                return $this->error(sprintf("Versão %s não suportada", $this->version));
+        }
+    }
+
+    protected function error($error) {
+        Log::write('error', "OSCARSReservation: " . $error);
+        return false;
+    }
+
+    protected function makeEnvelope($params = array()) {
+        return array_merge(
+                        array('oscars_url' => $this->oscarsUrl), $params);
+    }
+
+    /**
+     * Calls some method of of the Bridge SOAP. Handles exceptions and errors.
+     * @param string $method SOAP method being called
+     * @param array $envelope Arguments used to call the method
+     * @return mixed If some error happened, return false, otherwise, 
+     * return an array of results
+     */
+    protected function callBridge($method, $envelope) {
+        try {
+            $wsdl = Configure::read('OSCARSBridgeEPR');
+            if (!@file_get_contents($wsdl)) { //testa disponibilidade do wsdl
+                throw new SoapFault('Server', 'No WSDL found at ' . $wsdl);
+            }
+            $client = new SoapClient($wsdl, array(
+                        'trace' => 1,
+                        'cache_wsdl' => WSDL_CACHE_NONE,
+                        'exceptions' => true));
+            $result = $client->__soapCall($method, array($envelope));
+            if (is_string($result->return)) {
+                return $this->error("OSCARS Bridge Error: " . $result->return);
+            } elseif (!$err = array_shift($result->return)) {//tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
+                return $result;
+            } else {
+                return $this->error("OSCARS Bridge Error: " . $err);
+            }
+        } catch (Exception $e) {
+            return $this->error("Caught exception: " . $e->getMessage());
+        } catch (SoapFault $e) {
+            return $this->error("Caught SoapFault: " . $e->getMessage());
+        }
+    }
+
+    protected function setGriStatus($result) {
+        $this->setGri($result->return[1]);
+        $this->setStatus($result->return[2]);
+        return true;
+    }
+
+    /**
+     *
+     * 
+     * Functions that implement the WS calls, only for OSCARS 0.5.3 and 0.5.4!!!
+     * TODO: make new architeture using polymorphism, having one class for each OSCARS version 
+     * 
+     */
+    function createReservation() {
+        if (!(isset($this->srcEndpoint) && isset($this->destEndpoint) &&
+                isset($this->startTimestamp) && isset($this->endTimestamp))) {
+            return $this->error("insufficient parameters for createreservation");
+        } else if (!$this->checkVersion() || !$this->checkOscarsUrl()) {
+            return;
+        } else if (!$result = $this->callBridge(
+                'createReservation', $this->makeEnvelope(array(
                     'description' => $this->description,
                     'srcUrn' => $this->srcEndpoint,
                     'isSrcTagged' => $this->srcIsTagged,
@@ -197,442 +251,169 @@ class OSCARSReservation {
                     'pathSetupMode' => $this->pathSetupMode,
                     'startTimestamp' => $this->startTimestamp,
                     'endTimestamp' => $this->endTimestamp
-                );
-                try {
-                    $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
-                    $result = $client->createReservation($envelope);
-
-                    if (is_string($result->return)) {
-                        debug(array("OSCARS Bridge Error: ", $result->return));
-                        return false;
-                    } elseif (!$err = array_shift($result->return)) {
-                        $this->setGri($result->return[0]);
-                        $this->setStatus($result->return[1]);
-                        debug(array("retorno do create reservation", $result->return));
-                        return true;
-                    } else {
-                        debug(array("OSCARS Bridge Error: ", $err));
-                        return false;
-                    }
-                } catch (Exception $e) {
-                    debug(array("Caught exception: ", $e->getMessage()));
-                    return false;
-                }
-                break;
-        }
+                ))))
+            return false;
+        else
+            return $this->setGriStatus($result);
     }
 
     function queryReservation() {
         if (!isset($this->gri)) {
-            debug("gri not set in query reservation");
+            return $this->error("gri not set in query reservation");
+        } else if (!$this->checkVersion() || !$this->checkOscarsUrl()) {
+            return;
+        } else if (!$this->callBridge(
+                        'queryReservation', $this->makeEnvelope(array(
+                            "gri" => $this->gri
+                        ))))
             return false;
-        }
-
-        switch ($this->version) {
-            case "0.5.3":
-            case "0.5.4":
-                $envelope = array(
-                    "oscars_url" => $this->oscarsUrl,
-                    "gri" => $this->gri
-                );
-
-                try {
-                    $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
-                    $result = $client->queryReservation($envelope);
-                    if (!$err = array_shift($result->return)) {
-                        $this->setGri($result->return[0]);
-                        $this->setDescription($result->return[1]);
-                        $this->setLogin($result->return[2]);
-                        $this->setStatus($result->return[3]);
-                        $this->setRequestTime($result->return[4]);
-                        $this->setStartTimestamp($result->return[5]);
-                        $this->setEndTimestamp($result->return[6]);
-                        $this->setBandwidth($result->return[7]);
-                        $this->setPathSetupMode($result->return[8]);
-                        $this->setSrcEndpoint($result->return[9]);
-                        $this->setSrcIsTagged($result->return[10]);
-                        $this->setSrcTag($result->return[11]);
-                        $this->setDestEndpoint($result->return[12]);
-                        $this->setDestIsTagged($result->return[13]);
-                        $this->setDestTag($result->return[14]);
-                        $this->setPath($result->return[15]);
-                        debug(array("retorno do query reservation", $result->return));
-                        return true;
-                    } else {
-                        debug(array("OSCARS Bridge Error: ", $err));
-                        return false;
-                    }
-                } catch (Exception $e) {
-                    debug(array("Caught exception: ", $e->getMessage()));
-                    return false;
-                }
-                break;
-            case "0.6":
-                debug("Versão 0.6 não suportada");
-                break;
-            default:
-                debug("Versão não suportada");
-                return false;
-                break;
+        else {
+            $this->setGri($result->return[0]);
+            $this->setDescription($result->return[1]);
+            $this->setLogin($result->return[2]);
+            $this->setStatus($result->return[3]);
+            $this->setRequestTime($result->return[4]);
+            $this->setStartTimestamp($result->return[5]);
+            $this->setEndTimestamp($result->return[6]);
+            $this->setBandwidth($result->return[7]);
+            $this->setPathSetupMode($result->return[8]);
+            $this->setSrcEndpoint($result->return[9]);
+            $this->setSrcIsTagged($result->return[10]);
+            $this->setSrcTag($result->return[11]);
+            $this->setDestEndpoint($result->return[12]);
+            $this->setDestIsTagged($result->return[13]);
+            $this->setDestTag($result->return[14]);
+            $this->setPath($result->return[15]);
+            Log::write('debug', "retorno do query reservation" . print_r($result->return, true));
+            return true;
         }
     }
 
     function modifyReservation() {
-
-        if (!(isset($this->oscarsUrl) && isset($this->startTimestamp) &&
-                isset($this->endTimestamp))) {
-            debug("parametros insuficientes no modify reservation");
-            return false;
-        }
-
-        switch ($this->version) {
-            case "0.5.3":
-            case "0.5.4":
-                $envelope = array(
+        if (!(isset($this->startTimestamp) && isset($this->endTimestamp))) {
+            return $this->error("insufficient parameters for modifyReservation");
+        } else if (!$this->checkVersion() || !$this->checkOscarsUrl()) {
+            return;
+        } else if (!$result = $this->callBridge(
+                'modifyReservation', $this->makeEnvelope(array(
                     'oscars_url' => $this->oscarsUrl,
                     'startTimestamp' => $this->startTimestamp,
                     'endTimestamp' => $this->endTimestamp
-                );
-                try {
-                    $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
-                    $result = $client->modifyReservation($envelope);
-
-                    if (!$err = array_shift($result->return)) {
-                        $this->setGri($result->return[0]);
-                        $this->setStatus($result->return[1]);
-                        debug(array("retorno do create reservation", $result->return));
-                        return true;
-                    } else {
-                        debug(array("OSCARS Bridge Error: ", $err));
-                        return false;
-                    }
-                } catch (Exception $e) {
-                    debug(array("Caught exception: ", $e->getMessage()));
-                    return false;
-                }
-                break;
-            case "0.6":
-                debug("Versão 0.6 não suportada");
-                break;
-            default:
-                debug("Versão não suportada");
-                return false;
-                break;
-        }
+                ))))
+            return false;
+        else
+            return $this->setGriStatus($result);
     }
 
     function cancelReservation() {
         if (!isset($this->gri)) {
-            debug("gri not set in cancel reservation");
-            return false;
-        }
-
-        switch ($this->version) {
-            case "0.5.3":
-            case "0.5.4":
-                $envelope = array(
-                    "oscars_url" => $this->oscarsUrl,
+            return $this->error("gri not set in cancel reservation");
+        } else if (!$this->checkVersion() || !$this->checkOscarsUrl()) {
+            return;
+        } else if (!$result = $this->callBridge(
+                'cancelReservation', $this->makeEnvelope(array(
                     "gri" => $this->gri
-                );
-                try {
-                    $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
-                    $result = $client->cancelReservation($envelope);
-                    if (!$err = array_shift($result->return)) {
-                        $this->setGri($result->return[0]);
-                        $this->setStatus($result->return[1]);
-                        debug(array("retorno do cancel reservation", $result->return));
-                        return true;
-                    } else {
-                        debug(array("OSCARS Bridge Error: ", $err));
-                        return false;
-                    }
-                } catch (Exception $e) {
-                    debug(array("Caught exception: ", $e->getMessage()));
-                    return false;
-                }
-                break;
-            case "0.6":
-                debug("Versão 0.6 não suportada");
-                break;
-            default:
-                debug("Versão não suportada");
-                return false;
-                break;
-        }
+                ))))
+            return false;
+        else
+            return $this->setGriStatus($result);
     }
 
     function listReservations() {
-        if (!isset($this->oscarsUrl)) {
-            debug("oscarsUrl not set in list reservations");
-            return false;
-        }
-
-        switch ($this->version) {
-            case "0.5.3":
-            case "0.5.4":
-                $envelope = array(
-                    "oscars_url" => $this->oscarsUrl,
+        if (!$this->checkVersion() || !$this->checkOscarsUrl()) {
+            return;
+        } else if (!$result = $this->callBridge(
+                'listReservations', $this->makeEnvelope(array(
                     "grisString" => $this->grisString
-                );
-
-                try {
-                    $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
-                    $result = $client->listReservations($envelope);
-
-                    if (is_string($result->return)) {
-                        debug(array("OSCARS Bridge Error: ", $result->return));
-                        return false;
-                    } elseif (!$err = array_shift($result->return)) { //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
-                        foreach ($result->return as $r)
-                            $this->statusArray[] = $r;
-
-                        return true;
-                    } else {
-                        debug(array("OSCARS Bridge Error: ", $result->return[0]));
-                        return false;
-                    }
-                } catch (Exception $e) {
-                    debug(array("Caught exception: ", $e->getMessage()));
-                    return false;
-                }
-                break;
-            case "0.6":
-                debug("Versão 0.6 não suportada");
-                break;
-            default:
-                debug("Versão não suportada");
-                return false;
-                break;
+                ))))
+            return false;
+        else {
+            foreach ($result->return as $r)
+                $this->statusArray[] = $r;
+            return true;
         }
     }
 
     function getTopology() {
-        if (!isset($this->oscarsUrl)) {
-            debug("oscarsUrl not set in get topology");
+        if (!$this->checkVersion() || !$this->checkOscarsUrl()) {
+            return;
+        } else if (!$result = $this->callBridge(
+                'getTopology', $this->makeEnvelope()))
             return false;
-        }
-
-        switch ($this->version) {
-            case "0.5.3":
-            case "0.5.4":
-                $envelope = array(
-                    "oscars_url" => $this->oscarsUrl,
-                );
-
-                try {
-                    $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
-                    $result = $client->getTopology($envelope);
-
-                    if (!$err = array_shift($result->return)) { //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
-                        //precisa tratar
-                        //debug("top", $result->return);
-                        $this->topology = $result->return;
-                        return true;
-                    } else {
-                        debug(array("OSCARS Bridge Error: ", $err));
-                        return false;
-                    }
-                } catch (Exception $e) {
-                    debug(array("Caught exception: ", $e->getMessage()));
-                    return false;
-                }
-                break;
-            case "0.6":
-                debug("Versão 0.6 não suportada");
-                break;
-            default:
-                debug("Versão não suportada");
-                return false;
-                break;
+        else {
+            $this->topology = $result->return;
+            return true;
         }
     }
 
     function getUrns() {
-        if (!isset($this->oscarsUrl)) {
-            debug("oscarsUrl not set in get topology");
+        if (!$this->checkVersion() || !$this->checkOscarsUrl()) {
+            return;
+        } else if (!$result = $this->callBridge(
+                'getTopology', $this->makeEnvelope()))
             return false;
-        }
-
-        switch ($this->version) {
-            case "0.5.3":
-            case "0.5.4":
-                $envelope = array(
-                    "oscars_url" => $this->oscarsUrl,
-                );
-
-                try {
-                    $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
-                    $result = $client->getTopology($envelope);
-
-                    if (is_string($result->return)) {
-                        debug(array("OSCARS Bridge Error: ", $result->return));
-                        return false;
-                    } elseif (!$err = array_shift($result->return)) { //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
-                        foreach ($result->return as $i) {
-                            if ($array = explode(" ", $i)) {
-                                //0- linkId
-                                //1- remoteLinkId
-                                //2- capacidade
-                                //3- granularidade
-                                //4- capacidade mínima reservável
-                                //5- capacidade máxima reservável
-                                //6- vlan range
-                                if (!empty($array[1]) && ($array[1] == "urn:ogf:network:domain=*:node=*:port=*:link=*")) {
-                                    //é urn de ponto final
-                                    $urn = new stdClass();
-                                    $urn->id = $array[0];
-                                    $urn->capacity = $array[2];
-                                    $urn->granularity = $array[3];
-                                    $urn->minimumReservable = $array[4];
-                                    $urn->maximumReservable = $array[5];
-                                    $urn->vlanRange = $array[6];
-                                    $this->urns[] = $urn;
-                                }
-                            }
-                        }
-                        return true;
-                    } else {
-                        debug(array("OSCARS Bridge Error: ", $err));
-                        return false;
+        else {
+            foreach ($result->return as $i) {
+                if ($array = explode(" ", $i)) {
+                    //0- linkId
+                    //1- remoteLinkId
+                    //2- capacidade
+                    //3- granularidade
+                    //4- capacidade mínima reservável
+                    //5- capacidade máxima reservável
+                    //6- vlan range
+                    if (!empty($array[1]) &&
+                            ($array[1] == "urn:ogf:network:domain=*:node=*:port=*:link=*")) {
+                        //é urn de ponto final
+                        $urn = new stdClass();
+                        $urn->id = $array[0];
+                        $urn->capacity = $array[2];
+                        $urn->granularity = $array[3];
+                        $urn->minimumReservable = $array[4];
+                        $urn->maximumReservable = $array[5];
+                        $urn->vlanRange = $array[6];
+                        $this->urns[] = $urn;
                     }
-                } catch (Exception $e) {
-                    debug(array("Caught exception: ", $e->getMessage()));
-                    return false;
                 }
-                break;
-            case "0.6":
-                debug("Versão 0.6 não suportada");
-                break;
-            default:
-                debug("Versão não suportada");
-                return false;
-                break;
+            }
+            return true;
         }
     }
 
     function createPath() {
-        if (!isset($this->oscarsUrl)) {
-            debug("oscarsUrl not set in create path");
-            return false;
-        }
-
-        switch ($this->version) {
-            case "0.5.3":
-            case "0.5.4":
-                $envelope = array(
-                    "oscars_url" => $this->oscarsUrl,
+        if (!$this->checkVersion() || !$this->checkOscarsUrl()) {
+            return;
+        } else if (!$result = $this->callBridge(
+                'createPath', $this->makeEnvelope(array(
                     "gri" => $this->gri
-                );
-
-                try {
-                    $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
-                    $result = $client->createPath($envelope);
-
-                    if (!$err = array_shift($result->return)) { //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
-                        $this->setGri($result->return[0]);
-                        $this->setStatus($result->return[1]);
-                        return true;
-                    } else {
-                        debug(array("OSCARS Bridge Error: ", $err));
-                        return false;
-                    }
-                } catch (Exception $e) {
-                    debug(array("Caught exception: ", $e->getMessage()));
-                    return false;
-                }
-                break;
-            case "0.6":
-                debug("Versão 0.6 não suportada");
-                break;
-            default:
-                debug("Versão não suportada");
-                return false;
-                break;
-        }
+                ))))
+            return false;
+        else
+            return $this->setGriStatus($result);
     }
 
     function teardownPath() {
-        if (!isset($this->oscarsUrl)) {
-            debug("oscarsUrl not set in create path");
-            return false;
-        }
-
-        switch ($this->version) {
-            case "0.5.3":
-            case "0.5.4":
-                $envelope = array(
-                    "oscars_url" => $this->oscarsUrl,
+        if (!$this->checkVersion() || !$this->checkOscarsUrl()) {
+            return;
+        } else if (!$result = $this->callBridge(
+                'teardownPath', $this->makeEnvelope(array(
                     "gri" => $this->gri
-                );
-
-                try {
-                    $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
-                    $result = $client->teardownPath($envelope);
-
-                    if (!$err = array_shift($result->return)) { //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
-                        $this->setGri($result->return[0]);
-                        $this->setStatus($result->return[1]);
-                        return true;
-                    } else {
-                        debug(array("OSCARS Bridge Error: ", $err));
-                        return false;
-                    }
-                } catch (Exception $e) {
-                    debug(array("Caught exception: ", $e->getMessage()));
-                    return false;
-                }
-                break;
-            case "0.6":
-                debug("Versão 0.6 não suportada");
-                break;
-            default:
-                debug("Versão não suportada");
-                return false;
-                break;
-        }
+                ))))
+            return false;
+        else
+            return $this->setGriStatus($result);
     }
 
     function refreshPath() {
-        if (!isset($this->oscarsUrl)) {
-            debug("oscarsUrl not set in create path");
-            return false;
-        }
-
-        switch ($this->version) {
-            case "0.5.3":
-            case "0.5.4":
-                $envelope = array(
-                    "oscars_url" => $this->oscarsUrl,
+        if (!$this->checkVersion() || !$this->checkOscarsUrl()) {
+            return;
+        } else if (!$result = $this->callBridge(
+                'refreshPath', $this->makeEnvelope(array(
                     "gri" => $this->gri
-                );
-
-                try {
-                    $client = new SoapClient(Configure::read('OSCARSBridgeEPR'), array('cache_wsdl' => 0));
-                    $result = $client->refreshPath($envelope);
-
-                    if (!$err = array_shift($result->return)) { //tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
-                        $this->setGri($result->return[0]);
-                        $this->setStatus($result->return[1]);
-                        return true;
-                    } else {
-                        debug(array("OSCARS Bridge Error: ", $err));
-                        return false;
-                    }
-                } catch (Exception $e) {
-                    debug(array("Caught exception: ", $e->getMessage()));
-                    return false;
-                }
-                break;
-            case "0.6":
-                debug("Versão 0.6 não suportada");
-                break;
-            default:
-                debug("Versão não suportada");
-                return false;
-                break;
-        }
+                ))))
+            return false;
+        else
+            return $this->setGriStatus($result);
     }
 
 }
-
-?>
