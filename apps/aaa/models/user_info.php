@@ -183,10 +183,8 @@ class user_info extends Model {
         return FALSE;
     }
 
-    function insert($groups_array) {
-        $new_user = parent::insert(); //info do user
-
-        if ($new_user) {
+    function insertWithGroups($groups_array) {
+        if ($new_user = $this->insert()) {
             if ($new_user->updateGroups($groups_array)) {
                 return $new_user;
             }

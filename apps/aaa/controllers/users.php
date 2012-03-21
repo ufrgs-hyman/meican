@@ -115,9 +115,8 @@ class users extends Controller {
                     $user_info->usr_password = $usr_password;
                     $user_info->usr_email = Common::POST("usr_email");
 
-                    $result = $user_info->insert($usedArray);
 
-                    if ($result) {
+                    if ($result = $user_info->insertWithGroups($usedArray)) {
                         $this->setFlash(_("User") . " '$user_info->usr_login' " . _("added"), "success");
                         $this->show();
                         
