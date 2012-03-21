@@ -152,26 +152,20 @@ function clearFlash(){
             error: function(jqXHR, textStatus) {
                 switch (jqXHR.status) {
                     case 401:
-                        top.location.href = baseUrl;
-                        break;
                     case 402:
+                    case 405://change lang
+                    case 406://force refresh
                         top.location.href = baseUrl;
                         break;
+                    case 0:
                     case 404:
-                        setFlash("Page not found", 'error');
-                        break;
-                    case 405:
-                        //change lang
-                        top.location.href = baseUrl+'init/gui';
-                        break;
-                    case 406:
-                        //force refresh
-                        location.href = baseUrl+'init/gui';
+                        setFlash("Page not found. Try to reload the current page.", 'error');
                         break;
                     default:
                         setFlash("Unexpected error "+jqXHR.status, 'error');
                 }
                 console.debug("Error on ajax: "+jqXHR.status+jqXHR.statusText);
+                console.debug(jqXHR);
             },
             timeout: null
         });
