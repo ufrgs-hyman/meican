@@ -1,20 +1,14 @@
-<?php
-
-$reservations = $this->passedArgs->reservations;
-$refresh = $this->passedArgs->refresh;
-
-?>
-
-<h1><?php if ($refresh) echo _("Active and pending reservations"); else echo _("History reservations"); ?></h1>
-
+<h1><?php
+if ($refresh)
+    echo _("Active and pending reservations"); else
+    echo _("History reservations");
+?></h1>
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
 
     <?php
-    $arrayElem = ($refresh)
-        ? array('app' => 'init',
-                'before' => '<input type="button" class="refresh" value="' . _("Refresh") . '" onclick="refreshStatus();" />')
-        : array('app' => 'init', 'buttons' => array('delete'));
-    
+    $arrayElem = ($refresh) ? array('app' => 'init',
+        'before' => '<input type="button" class="refresh" value="' . _("Refresh") . '" onclick="refreshStatus();" />') : array('app' => 'init', 'buttons' => array('delete'));
+
     echo $this->element('controls', $arrayElem);
     ?>
 
@@ -36,7 +30,7 @@ $refresh = $this->passedArgs->refresh;
         </thead>
 
         <tbody>
-            <?php foreach ($reservations as $r): ?>
+<?php foreach ($reservations as $r): ?>
                 <tr id="line<?php echo $r->id; ?>">
                     <td>
                         <input type="checkbox" name="del_checkbox[]" value="<?php echo $r->id; ?>"/>
@@ -48,28 +42,28 @@ $refresh = $this->passedArgs->refresh;
                     </td>
 
                     <td>
-                        <?php echo $r->name; ?>
+    <?php echo $r->name; ?>
                     </td>
 
                     <td>
-                        <?php echo $r->bandwidth; ?>
+    <?php echo $r->bandwidth; ?>
                     </td>
 
                     <td>
                         <label id="status<?php echo $r->id; ?>">
-                            <?php echo $r->status; ?>
+    <?php echo $r->status; ?>
                         </label>
                         <img alt="<?php echo _("loading"); ?>" style="display:none" id="loading<?php echo $r->id; ?>" class="load<?= $r->flow->source->dom_id ?>" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif"/>
                     </td>
                     <td>
                         <?php echo $r->flow->source->domain; ?>
-                        <?php echo $r->flow->source->network; ?>
-                        <?php //echo $r->flow->source->device;  ?>
+    <?php echo $r->flow->source->network; ?>
+                        <?php //echo $r->flow->source->device;   ?>
                     </td>
                     <td>
                         <?php echo $r->flow->dest->domain; ?>
-                        <?php echo $r->flow->dest->network; ?>
-                        <?php //echo $r->flow->dest->device;  ?>
+    <?php echo $r->flow->dest->network; ?>
+                        <?php //echo $r->flow->dest->device;   ?>
                     </td>
                     <td>
                         <?php echo $r->timer->start; ?>
@@ -85,7 +79,7 @@ $refresh = $this->passedArgs->refresh;
                         ?>
                     </td>
                 </tr>
-            <?php endforeach; ?>
+<?php endforeach; ?>
         </tbody>
     </table>
 

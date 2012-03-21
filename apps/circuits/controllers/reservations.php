@@ -118,13 +118,11 @@ class reservations extends Controller {
 
             }
             
-            $args = new stdClass();
-            $args->reservations = $reservations;
-            $args->refresh = ($this->action == 'status') ? 1 : 0;
-            
-            $this->setAction('show');
-
-            $this->setArgsToBody($args);
+            $this->set(array(
+                'reservations' => $reservations,
+                'refresh' => ($this->action == 'status') ? 1 : 0
+            ));
+            $this->render('show');
         } else {
             $args = new stdClass();
             $args->title = ($this->action == 'status') ? _("Active and pending reservations") : _("History reservations");
@@ -133,9 +131,8 @@ class reservations extends Controller {
             $args->link = array("action" => "add");
             $this->setArgsToBody($args);
             
-            $this->setAction('empty');
+            $this->render('empty');
         }
-        $this->render();
     }
     
     public function status() {
