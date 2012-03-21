@@ -5,7 +5,6 @@ $name = isset($this->passedArgs->res_name) ? $this->passedArgs->res_name : null;
 $args = $this->passedArgs;
 //$timers_exist = isset($args->timers) ? TRUE : FALSE;
 
-//<link type="text/css" rel="stylesheet" href="<?php echo $this->url(); >webroot/css/jquery-ui-1.8.13.custom.css" />
 ?>
 
 <form id="reservation_add" method="POST" action="<?php echo $this->buildLink(array('action' => 'submit')); ?>">
