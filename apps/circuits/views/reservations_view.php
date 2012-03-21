@@ -1,15 +1,3 @@
-<?php
-$gris = $this->passedArgs->gris;
-$flow = $this->passedArgs->flow;
-$timer = $this->passedArgs->timer;
-$name = $this->passedArgs->res_name;
-$res_id = $this->passedArgs->res_id;
-$request = $this->passedArgs->request;
-$bandwidth = $this->passedArgs->bandwidth;
-$refresh = $this->passedArgs->refresh;
-$usr_login = $this->passedArgs->usr_login;
-?>
-
 <h1><?php echo _("Reservation details"); ?></h1>
 
 <table class="withoutBorder" style="width: 100%">
@@ -21,7 +9,7 @@ $usr_login = $this->passedArgs->usr_login;
             <table style="min-width: 30%" class="withoutBorder">
                 <tr>
                     <th style="border-bottom:none; padding-right: 5px; text-align: left"><?php echo _("Reservation name"); ?>:</th>
-                    <th style="border-bottom:none; padding-left: 5px; text-align: left"><?php echo $name; ?></th>
+                    <th style="border-bottom:none; padding-left: 5px; text-align: left"><?php echo $res_name; ?></th>
                 </tr>
                 <tr>
                     <th style="border-bottom:none; padding-right: 5px; text-align: left"><?php echo _("User"); ?>:</th>

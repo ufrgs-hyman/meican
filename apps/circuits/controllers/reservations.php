@@ -750,19 +750,13 @@ class reservations extends Controller {
             "cluster_information_string" => _("Information about cluster"),
             'str_error_refresh_status' => _("Error to get status")
         ));
-
-        $args = new stdClass();
-        $args->gris = $gris;
-        $args->flow = $flow;
-        $args->timer = $timer;
-        $args->res_name = $reservation->res_name;
-        $args->bandwidth = $reservation->bandwidth;
-        $args->res_id = $reservation->res_id;
-        $args->request = $request;
-        $args->refresh = $refresh;
-        $args->usr_login = $usr_login;
-        $this->setArgsToBody($args);
-        
+        $this->set(array(
+            'res_name' => $reservation->res_name,
+            'res_id' => $reservation->res_id,
+            'bandwidth' => $reservation->bandwidth
+        ));
+        $this->set(compact('gris', 'flow', 'timer', 
+                'request', 'refresh', 'usr_login'));
         $this->addScriptForLayout(array('reservations', 'reservations_view'));
         $this->render('view');
     }
