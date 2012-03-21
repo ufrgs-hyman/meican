@@ -33,24 +33,19 @@ class domains extends Controller {
 
                 $domains[] = $domain;
             }
-            $this->setAction('show');
-
             $this->setArgsToBody($domains);
+            $this->render('show');
         } else {
-            $this->setAction('empty');
-
             $args = new stdClass();
             $args->title = _("Domains");
             $args->message = _("No domain is added, click the button below to add a new one");
             $this->setArgsToBody($args);
+            $this->render('empty');
         }
-
-        $this->render();
     }
 
     public function add_form() {
-        $this->setAction('add');
-        $this->render();
+        $this->render('add');
     }
 
     public function add() {
@@ -96,8 +91,7 @@ class domains extends Controller {
         }
         
         $this->setArgsToBody($domain[0]);
-        $this->setAction('edit');
-        $this->render();
+        $this->render('edit');
     }
     
     public function update($dom_id_array) {

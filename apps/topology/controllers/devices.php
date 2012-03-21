@@ -62,19 +62,15 @@ class devices extends Controller {
 
                 $devices[] = $device;
             }
-            $this->setAction('show');
-            
             $this->setArgsToBody($devices);
+            $this->render('show');
         } else {
-            $this->setAction('empty');
-
             $args = new stdClass();
             $args->title = _("Devices");
             $args->message = _("No device added, click the button below to add a new one");
             $this->setArgsToBody($args);
+            $this->render('empty');
         }
-        
-        $this->render();
     }
 
     public function add_form() {
@@ -94,8 +90,6 @@ class devices extends Controller {
             }
 
             if ($domains) {
-                $this->setAction('add');
-
                 $args = new stdClass();
                 $args->domains = $domains;
 
@@ -108,7 +102,7 @@ class devices extends Controller {
                     "domains" => $domains
                 ));
 
-                $this->render();
+                $this->render('add');
             } else {
                 /**
                  * @todo

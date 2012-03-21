@@ -49,19 +49,16 @@ class users extends Controller {
                 
                 $users[] = $user;
             }
-            $this->setAction('show');
             
             $this->setArgsToBody($users);
+            $this->render('show');
         } else {
-            $this->setAction('empty');
-
             $args = new stdClass();
             $args->title = _("Users");
             $args->message = _("You can't see any user, click the button below to add one");
             $this->setArgsToBody($args);
+            $this->render('empty');
         }
-
-        $this->render();
     }
 
     public function add_form() {
@@ -80,8 +77,6 @@ class users extends Controller {
 
                 $leftArray[] = $group;
             }
-            $this->setAction('add');
-
             $args = new stdClass();
             $args->title = _('Groups');
             $args->left = $leftArray;
@@ -89,7 +84,7 @@ class users extends Controller {
 
             $this->setArgsToBody($args);
 
-            $this->render();
+            $this->render('add');
         } else {
             $this->setFlash(_("You don't have permission to view groups, so you can't add users"), "warning");
             $this->show();
@@ -222,8 +217,6 @@ class users extends Controller {
                     }
                 }
 
-            $this->setAction('edit');
-
             $args = new stdClass();
             $args->title = _('Groups');
             $args->left = $leftArray;
@@ -233,7 +226,7 @@ class users extends Controller {
 
             $this->setArgsToBody($args);
 
-            $this->render();
+            $this->render('edit');
         } else {
             $this->setFlash(_("You don't have permission to edit this user"), "warning");
             $this->show();
@@ -351,8 +344,7 @@ class users extends Controller {
         
         $this->setInlineScript('password');
         $this->setArgsToBody($user);
-        $this->setAction('edit_settings');
-        $this->render();
+        $this->render('edit_settings');
     }
 
     /**

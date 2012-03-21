@@ -32,24 +32,19 @@ class meicans extends Controller {
 
                 $meicans[] = $meican;
             }
-            $this->setAction('show');
-
             $this->setArgsToBody($meicans);
+            $this->render('show');
         } else {
-            $this->setAction('empty');
-
             $args = new stdClass();
             $args->title = _("MEICANs");
             $args->message = _("No MEICAN is registered, click the button below to register a new one");
             $this->setArgsToBody($args);
+            $this->render('empty');
         }
-
-        $this->render();
     }
     
     public function add_form() {
-        $this->setAction('add');
-        $this->render();
+        $this->render('add');
     }
     
     public function add() {
@@ -95,8 +90,7 @@ class meicans extends Controller {
         }
         
         $this->setArgsToBody($meican[0]);
-        $this->setAction('edit');
-        $this->render();
+        $this->render('edit');
     }
     
     public function update($mec_id_array) {

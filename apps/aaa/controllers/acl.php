@@ -138,15 +138,13 @@ class acl extends Controller {
              */
             $this->setInlineScript('acl_init');
         } else {
-            $this->setAction('empty');
-
             $args = new stdClass();
             $args->title = _("Access Control List");
             $args->message = _("You can't see any access control, click the button below to add one");
             $this->setArgsToBody($args);
+            $this->render('empty');
         }
-        $this->action = 'show';
-        $this->render();
+        $this->render('show');
     }
     
     public function get_aros_acos() {

@@ -57,19 +57,15 @@ class networks extends Controller {
 
                 $networks[] = $network;
             }
-            $this->setAction('show');
-
             $this->setArgsToBody($networks);
+            $this->render('show');
         } else {
-            $this->setAction('empty');
-
             $args = new stdClass();
             $args->title = _("Networks");
             $args->message = _("No network added, click the button below to add a new one");
             $this->setArgsToBody($args);
+            $this->render('empty');
         }
-
-        $this->render();
     }
 
     public function add_form() {
@@ -88,8 +84,7 @@ class networks extends Controller {
         $this->setArgsToScript($argsToSpt);
         
         $this->setArgsToBody($args);
-        $this->setAction('add');
-        $this->render();
+        $this->render('add');
     }
 
     public function add() {
@@ -156,8 +151,7 @@ class networks extends Controller {
         $args->network = $network;
         
         $this->setArgsToBody($args);
-        $this->setAction('edit');
-        $this->render();
+        $this->render('edit');
     }
     
     public function update($net_id_array) {

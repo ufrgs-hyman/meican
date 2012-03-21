@@ -53,19 +53,15 @@ class groups extends Controller {
                 
                 $groups[] = $group;
             }
-            $this->setAction('show');
-            
             $this->setArgsToBody($groups);
+            $this->render('show');
         } else {
-            $this->setAction('empty');
-
             $args = new stdClass();
             $args->title = _("User Groups");
             $args->message = _("You can't see any group, click the button below to add one");
             $this->setArgsToBody($args);
+            $this->render('empty');
         }
-
-        $this->render();
     }
 
     public function add_form() {
@@ -87,7 +83,6 @@ class groups extends Controller {
                 $usersLeftArray[] = $user;
             }
         }
-        $this->setAction('add');
 
         $group = new group_info();
         $groupsMged = $group->fetch();
@@ -102,7 +97,7 @@ class groups extends Controller {
 
         $this->setArgsToBody($args);
 
-        $this->render();
+        $this->render('add');
     } // addForm
 
     public function add() {
@@ -202,8 +197,6 @@ class groups extends Controller {
                 }
             }
 
-        $this->setAction('edit');
-
         $args = new stdClass();
         $args->title = _('Users');
         $args->left = $leftArray;
@@ -213,7 +206,7 @@ class groups extends Controller {
 
         $this->setArgsToBody($args);
 
-        $this->render();
+        $this->render('edit');
     } // edit
 
     public function update($grp_id_array) {

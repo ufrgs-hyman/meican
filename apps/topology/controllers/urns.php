@@ -43,9 +43,6 @@ class urns extends Controller {
                 $dom_to_js->networks = MeicanTopology::getNetworks($d->dom_id);
                 $domains_to_js[] = $dom_to_js;
             }
-
-            $this->setAction('show');
-
             $this->setArgsToBody($domains_to_body);
 
             $this->setArgsToScript(array(
@@ -61,17 +58,15 @@ class urns extends Controller {
             ));
 
             $this->setInlineScript('urns_init');
+            $this->render('show');
         } else {
-            $this->setAction('empty');
-
             $args = new stdClass();
             $args->title = _("URNs (Uniform Resource Name)");
             $args->message = _("Before adding a URN, you need to register at least one OSCARS domain, click the button bellow to register a new one");
             $args->link = array("controller" => "domains", "action" => "add_form");
             $this->setArgsToBody($args);
+            $this->render('empty');
         }
-
-        $this->render();
     }
     
     public function add_manual($dom_id_array) {
@@ -110,8 +105,7 @@ class urns extends Controller {
         
         $this->setInlineScript('urns_add_manual');
         
-        $this->setAction('add_manual');
-        $this->render();
+        $this->render('add_manual');
     }
     
     public function import($dom_id_array) {
@@ -159,8 +153,7 @@ class urns extends Controller {
 
         $this->setInlineScript('urns_import');
         
-        $this->setAction('import');
-        $this->render();
+        $this->render('import');
     }
 
     public function update() {

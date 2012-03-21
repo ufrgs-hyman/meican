@@ -18,7 +18,6 @@ class requests extends Controller {
     }
 
     public function show() {
-        $this->setAction('show');
 
         $requests = new request_info();
 
@@ -54,19 +53,17 @@ class requests extends Controller {
             $this->setArgsToBody($args);
         }
 
-        $this->render();
+        $this->render('show');
     } //function show
 
     public function createRequest () {
-
-        $this->setAction('createRequest');
 
         $domain = new domain_info();
         $domains = $domain->fetch(FALSE);
 
         $this->setArgsToBody($domains);
         $this->addScript('bpmStrategy');
-        $this->render();
+        $this->render('createRequest');
     }
 
     public function getUsers() {
@@ -81,8 +78,6 @@ class requests extends Controller {
     }
 
     public function replyRequest($input) {
-
-        $this->setAction('replyRequest');
 
         $request = new request_info();
 
@@ -113,7 +108,7 @@ class requests extends Controller {
 
         $args->request = $result[0];
         $this->setArgsToBody($args);
-        $this->render();
+        $this->render('replyRequest');
 
     }//function replyRequest
 

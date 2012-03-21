@@ -12,9 +12,6 @@ class ode extends Controller {
     }
 
     function show() {
-
-        $this->setAction('show');
-
         try {
             $client = new SoapClient("http://$this->ode_ip/ode/processes/ProcessManagement?wsdl",array('cache_wsdl' => 0));
             $allProcess = $client->listAllProcesses(NULL);
@@ -31,7 +28,7 @@ class ode extends Controller {
 
         $this->addScript('ajaxSubmit');
         $this->setArgsToBody($processes);
-        $this->render();
+        $this->render('show');
     }
 
     function deployProcess() {

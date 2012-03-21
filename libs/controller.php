@@ -75,14 +75,6 @@ class Controller extends Object {
         $this->set('scripts_vars', $args);
     }
     
-    public function setAction($action) {
-        $this->action = $action;
-    }
-
-    public function getDefaultAction() {
-        return $this->defaultAction;
-    }
-    
     public function renderJson($contents, $options = null){
         echo $this->output .= json_encode($contents, $options);
     }
@@ -146,7 +138,7 @@ class Controller extends Object {
  */
 	public function invokeAction($params) {
         if (empty($params['action']))
-            $params['action'] = $this->getDefaultAction();
+            $params['action'] = $this->defaultAction;
 		try {
             $this->app = $params['app'];
             $this->action = $params['action'];

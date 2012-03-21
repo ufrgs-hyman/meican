@@ -37,8 +37,6 @@ class gui extends Controller {
     }
 
     public function welcome() {
-        $this->setAction('welcome');
-
         $request = new request_info();
 
         if ($noReq = $request->checkRequests()) {
@@ -56,7 +54,7 @@ class gui extends Controller {
                 
             $this->setFlash($msg, 'warning');
         }
-        $this->render();
+        $this->render('welcome');
     }
 
 }
