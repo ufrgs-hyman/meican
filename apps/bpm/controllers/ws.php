@@ -37,47 +37,19 @@ class ws extends Controller {
          * do WSDL
          */
 
-        $server->wsdl->addComplexType('userType','complexType','struct','all','',
-                array('usr_id' => array('name' => 'usr_id','type' => 'xsd:int'),
-                'usr_name' => array('name' => 'usr_name','type' => 'xsd:string')));
-
-        $server->wsdl->addComplexType('userTypeList','complexType','array','all','',
-                array('usr' => array('name' => 'usr','type' => 'tns:groupType')));
-
-        $server->wsdl->addComplexType('groupType','complexType','struct','all','',
-                array('grp_id' => array('name' => 'grp_id','type' => 'xsd:int'),
-                'grp_descr' => array('name' => 'grp_descr','type' => 'xsd:string')));
-
-        $server->wsdl->addComplexType('groupTypeList','complexType','array','all','',
-                array('grp' => array('name' => 'grp','type' => 'tns:groupType')));
-
-        $server->wsdl->addComplexType('stringTypeList','complexType','array','all','',
+        /*$server->wsdl->addComplexType('stringTypeList','complexType','array','all','',
                 array('str' => array('name' => 'str','type' => 'xsd:string')));
+         * 
+         */
+        
+        $server->wsdl->addComplexType('stringTypeList','complexType','array','','SOAP-ENC:Array',array(),
+                array( array('ref' => 'SOAP-ENC:arrayType','wsdl:arrayType' => 'xsd:string[]'),
+                'xsd:string'));
 
         $server->wsdl->addComplexType('reqType','complexType','struct','all','',
                 array('resc_id' => array('name' => 'resc_id','type' => 'xsd:int'),
                 'resc_descr' => array('name' => 'resc_descr','type' => 'xsd:string'),
                 'resc_type' => array('name' => 'resc_type','type' => 'xsd:string')));
-
-        $server->wsdl->addComplexType('flowType','complexType','struct','all','',
-                array(
-                'src_dom_ip' => array('name' => 'src_domain_ip', 'type' => 'xsd:string'),
-                'src_urn_string' => array('name' => 'src_urn_string', 'type' => 'xsd:string'),
-                'dst_dom_ip' => array('name' => 'dst_domain_ip', 'type' => 'xsd:string'),
-                'dst_urn_string' => array('name' => 'dst_urn_string', 'type' => 'xsd:string'),
-                'bandwidth' => array('name' => 'bandwidth', 'type' => 'xsd:int')));
-
-        $server->wsdl->addComplexType('timerType','complexType','struct','all','',
-                array(
-                'start' => array('name' => 'start', 'type' => 'xsd:date'),
-                'finish' => array('name' => 'finish', 'type' => 'xsd:date'),
-                'recurrence' => array('name' => 'recurrence', 'type' => 'xsd:string')));
-
-        $server->wsdl->addComplexType('urnType','complexType','struct','all','',
-                array(
-                'net_descr' => array('name' => 'net_descr', 'type' => 'xsd:string'),
-                'dev_descr' => array('name' => 'dev_descr', 'type' => 'xsd:string'),
-                'port_number' => array('name' => 'port_number', 'type' => 'xsd:int')));
 
         $server->wsdl->addComplexType('requestType','complexType','struct','all','',
                 array(
@@ -93,102 +65,12 @@ class ws extends Controller {
                 'response' => array('name' => 'response','type' => 'xsd:string'),
                 'message' => array('name' => 'message','type' => 'xsd:string')));
 
-        /**
-         *  Tipos definidos para uso na função geturndetails
-         **/
-        $server->wsdl->addComplexType('portType','complexType','struct','all','',
-                array('port_number'  => array('name' => 'port_number','type' => 'xsd:int'),
-                'vlan'         => array('name' => 'vlan','type' => 'xsd:string'),
-                'max_capacity' => array('name' => 'max_capacity','type' => 'xsd:int'),
-                'min_capacity' => array('name' => 'min_capacity','type' => 'xsd:int'),
-                'granularity'  => array('name' => 'granularity','type' => 'xsd:int'),
-        ));
-
-        $server->wsdl->addComplexType('portTypeList','complexType','array','all','',
-                array('ports' => array('name' => 'ports','type' => 'tns:portType')));
-
-        $server->wsdl->addComplexType('deviceType','complexType','struct','all','',
-                array('dev_id'  => array('name' => 'dev_id','type' => 'xsd:int'),
-                'dev_descr' => array('name' => 'dev_descr','type' => 'xsd:string'),
-                'ports' => array('name' => 'ports','type' => 'tns:portTypeList')));
-
-        $server->wsdl->addComplexType('deviceTypeList','complexType','array','all','',
-                array('devices' => array('name' => 'devices','type' => 'tns:deviceType')));
-
-        $server->wsdl->addComplexType('netType','complexType','struct','all','',
-                array('net_id'  => array('name' => 'net_id','type' => 'xsd:int'),
-                'net_descr' => array('name' => 'net_descr','type' => 'xsd:string'),
-                'devices' => array('name' => 'devices','type' => 'tns:deviceTypeList')));
-
-        $server->wsdl->addComplexType('netTypeList','complexType','array','all','',
-                array('nets' => array('name' => 'nets','type' => 'tns:netType')));
-
-        $server->register(
-                'getUsers',
-                array('usr' => 'tns:userType'),
-                array('usr_list'=> 'tns:userTypeList'),
-                $namespace,
-                "http://$this_ip/$this_dir_name$this->app/ws/getUsers",
-                'rpc',
-                'encoded',
-                'Complex Hello World Method');
-
-        $server->register(
-                'getGroups',
-                array('grp' => 'tns:groupType'),
-                array('grp_list'=> 'tns:groupTypeList'),
-                $namespace,
-                "http://$this_ip/$this_dir_name$this->app/ws/getGroups",
-                'rpc',
-                'encoded',
-                'Complex Hello World Method');
-
         $server->register(
                 'getReqInfo',
                 array('req_id'=>'xsd:int','dom_src_ip'=>'xsd:string'),
                 array('req_info'=>'tns:reqType'),
                 $namespace,
                 "http://$this_ip/$this_dir_name$this->app/ws/getReqInfo",
-                'rpc',
-                'encoded',
-                'Complex Hello World Method');
-
-        $server->register(
-                'getFlowInfo',
-                array('res_id'=>'xsd:int'),
-                array('flow_info'=>'tns:flowType'),
-                $namespace,
-                "http://$this_ip/$this_dir_name$this->app/ws/getFlowInfo",
-                'rpc',
-                'encoded',
-                'Complex Hello World Method');
-
-        $server->register(
-                'getTimerInfo',
-                array('res_id'=>'xsd:int'),
-                array('timer_info'=>'tns:timerType'),
-                $namespace,
-                "http://$this_ip/$this_dir_name$this->app/ws/getTimerInfo",
-                'rpc',
-                'encoded',
-                'Complex Hello World Method');
-
-        $server->register(
-                'getURNInfo',
-                array('urn_string'=>'xsd:string'),
-                array('urn_info'=>'tns:urnType'),
-                $namespace,
-                "http://$this_ip/$this_dir_name$this->app/ws/getURNsInfo",
-                'rpc',
-                'encoded',
-                'Complex Hello World Method');
-
-        $server->register(
-                'getURNDetails',
-                array('urn_string'=>'xsd:string'),
-                array('urn_details'=>'tns:netTypeList'),
-                $namespace,
-                "http://$this_ip/$this_dir_name$this->app/ws/getURNDetails",
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
@@ -225,8 +107,8 @@ class ws extends Controller {
 
         $server->register(
                 'getRequestPath',
-                array('req_id'=>'xsd:int', 'dom_src_ip' => 'xsd:string'),
-                array('path_array' => 'tns:stringTypeList'),
+                array('req_id'=>'xsd:int'),
+                array('ode_ip_array' => 'tns:stringTypeList'),
                 $namespace,
                 "http://$this_ip/$this_dir_name$this->app/ws/getRequestPath",
                 'rpc',
@@ -242,48 +124,6 @@ class ws extends Controller {
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
-
-        function getUsers($usr) {
-            debug('getusers',$usr);
-            $user = new user_info();
-
-            if (isset($usr) && is_array($usr)) {
-                if (isset($usr['usr_id']) && is_int($usr['usr_id']))
-                    $user->usr_id = $usr['usr_id'];
-                if (isset($usr['usr_name']) && is_string($usr['usr_name']))
-                    $user->usr_name = $usr['usr_name'];
-            }
-
-            $result = $user->fetch(FALSE);
-
-            foreach ($result as $r)
-                $return[] = array('usr_id' => $r->usr_id, 'usr_name' => $r->usr_name);
-
-            if ($return)
-                return $return;
-            else return NULL;
-        }
-
-        function getGroups($grp) {
-            debug('getgroups',$grp);
-            $group = new group_info();
-
-            if (isset($grp) && is_array($grp)) {
-                if (isset($grp['grp_id']) && is_int($grp['grp_id']))
-                    $group->grp_id = $grp['grp_id'];
-                if (isset($grp['grp_descr']) && is_string($grp['grp_descr']))
-                    $group->grp_descr = $grp['grp_descr'];
-            }
-
-            $result = $group->fetch(FALSE);
-
-            foreach ($result as $r)
-                $return[] = array('grp_id' => $r->grp_id, 'grp_descr' => $r->grp_descr);
-
-            if ($return)
-                return $return;
-            else return NULL;
-        }
 
         function getReqInfo($req_id, $dom_src_ip) {
             debug('getreqinfo',$req_id);
@@ -311,118 +151,6 @@ class ws extends Controller {
                     debug('return', $return);
                     return $return;
                 }
-            }
-            return NULL;
-        }
-
-        function getFlowInfo($res_id) {
-            debug('getflowinfo',$res_id);
-
-            $reservation = new reservation_info();
-            $reservation->res_id = $res_id;
-
-            $flw_id = $reservation->get('flw_id');
-
-            if (!$flw_id) {
-                debug('reservation not found');
-                return NULL;
-            } else {
-
-                $flow = new flow_info();
-                $flow->flw_id = $flw_id;
-                $dom_src_id = $flow->get('src_dom');
-                $dom_dst_id = $flow->get('dst_dom');
-                $domain = new domain_info();
-                $domain->dom_id = $dom_src_id;
-                $dom_src = $domain->get();
-
-                $domain->dom_id = $dom_dst_id;
-                $dom_dst = $domain->get();
-
-                $return = array (
-                        'src_dom_ip' => $dom_src->oscars_ip,
-                        'dst_dom_ip' => $dom_dst->oscars_ip,
-                        'bandwidth' => $reservation->get('bandwidth'),
-                        'src_urn_string' =>  $flow->get('src_urn_string'),
-                        'dst_urn_string' =>  $flow->get('dst_urn_string'),
-                );
-                debug('return do reqflowinfo', $return);
-                return $return;
-            }
-        }
-
-
-        /** necessita modificacao **/
-        function getTimerInfo($res_id) {
-            debug('gettimerinfo',$res_id);
-            if (isset($res_id) && is_int($res_id)) {
-                $reservation = new reservation_info();
-                $reservation->res_id = $res_id;
-
-                $res = $reservation->fetch(FALSE);
-
-                if (!$res) {
-                    debug('reservation not found');
-                    return NULL;
-                }
-
-                $timer = new timer_info();
-                $timer->tmr_id = $res[0]->tmr_id;
-                $timer_info = $timer->fetch(FALSE);
-
-                if (!$timer) {
-                    debug('timer not found');
-                    return NULL;
-                }
-
-                $return = array(
-                        'start' => $timer_info[0]->start,
-                        'finish' => $timer_info[0]->finish,
-                        'recurrence' => $timer_info[0]->summary);
-
-                return $return;
-            } else return NULL;
-        }
-
-        /** necessita modificacao **/
-        function getURNInfo($urn_string) {
-            debug('geturninfo',$urn_string);
-
-            if (isset($urn_string) && is_string($urn_string)) {
-                $urn = new urn_info();
-                $urn->urn_string = $urn_string;
-
-                $result = $urn->fetch(FALSE);
-
-                if (!$result) {
-                    $urn_info = NULL;
-                } else {
-
-                    $net = new network_info();
-                    $net->net_id = $result[0]->net_id;
-                    $r_net = $net->fetch(FALSE);
-
-                    $dev = new device_info();
-                    $dev->dev_id = $result[0]->dev_id;
-                    $r_dev = $dev->fetch(FALSE);
-
-                    $urn_info = array ( 'net_descr' => $r_net[0]->net_descr,
-                            'dev_descr' => $r_dev[0]->dev_descr,
-                            'port_number' => $result[0]->port);
-                }
-            } else {
-                $urn_info = NULL;
-            }
-            return $urn_info;
-        }
-
-        /** necessita modificacao **/
-        function getURNDetails($urn_string) {
-            debug('geturndetails',$urn_string);
-            if (!isset($urn_string)) {
-                return MeicanTopology::getURNDetails();
-            } elseif (is_string($urn_string)) {
-                return MeicanTopology::getURNDetails($urn_string);
             }
             return NULL;
         }
@@ -606,15 +334,14 @@ class ws extends Controller {
             }
         }
 
-        function getRequestPath($req_id, $dom_src_ip) {
+        function getRequestPath($req_id) {
+            $gri = "gri";
+            $oscars_url = "http";
+            
+            $reservation = new reservation_info();
+            $ode_ip_array = $reservation->getPath($oscars_url, $gri);
 
-            $path = array (
-                    0 => Configure::read('domIp'),
-                    1 => 'noc.inf.ufrgs.br:65502',
-                    2 => 'noc.inf.ufrgs.br:65503');
-
-            return $path;
-
+            return $ode_ip_array;
         }
 
         function refreshRequestStatus($req_id, $dom_src_ip, $new_status) {

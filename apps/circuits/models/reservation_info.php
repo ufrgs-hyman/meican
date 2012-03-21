@@ -244,10 +244,10 @@ class reservation_info extends Resource_Model {
         }
     }
     
-    public function getPath($oscars_ip, $gri) {
+    public function getPath($oscars_url, $gri) {
         $oscars = new OSCARSReservation();
         $oscars->setGri($gri);
-        $oscars->setOscarsUrl($oscars_ip);
+        $oscars->setOscarsUrl($oscars_url);
         
         $oscars->queryReservation();
         
@@ -274,7 +274,7 @@ class reservation_info extends Resource_Model {
                     $dom->topology_id = $topId;
                     if ($d_result = $dom->fetch(FALSE)) {
                         $d_tmp = $d_result[0];
-                        $domains[] = "http://$d_tmp->ode_ip/$d_tmp->ode_wsdl_path";
+                        $domains[] = $d_tmp->ode_ip;
                         //$businessEndpoint = "http://$src_dom->ode_ip/$src_dom->ode_wsdl_path";
                     }
                 }

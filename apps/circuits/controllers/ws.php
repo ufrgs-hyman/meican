@@ -129,6 +129,48 @@ class ws extends Controller {
                 return NULL;
             }
         }
+        
+        /* 
+         * 
+         * função que estava em apps/bpm/controllers/ws.php
+         * 
+         * 
+        function getFlowInfo($res_id) {
+            debug('getflowinfo',$res_id);
+
+            $reservation = new reservation_info();
+            $reservation->res_id = $res_id;
+
+            $flw_id = $reservation->get('flw_id');
+
+            if (!$flw_id) {
+                debug('reservation not found');
+                return NULL;
+            } else {
+
+                $flow = new flow_info();
+                $flow->flw_id = $flw_id;
+                $dom_src_id = $flow->get('src_dom');
+                $dom_dst_id = $flow->get('dst_dom');
+                $domain = new domain_info();
+                $domain->dom_id = $dom_src_id;
+                $dom_src = $domain->get();
+
+                $domain->dom_id = $dom_dst_id;
+                $dom_dst = $domain->get();
+
+                $return = array (
+                        'src_dom_ip' => $dom_src->oscars_ip,
+                        'dst_dom_ip' => $dom_dst->oscars_ip,
+                        'bandwidth' => $reservation->get('bandwidth'),
+                        'src_urn_string' =>  $flow->get('src_urn_string'),
+                        'dst_urn_string' =>  $flow->get('dst_urn_string'),
+                );
+                debug('return do reqflowinfo', $return);
+                return $return;
+            }
+        }
+         */
 
         function getTimerInfo($res_id) {
             debug('gettimerinfo',$res_id);
@@ -160,9 +202,12 @@ class ws extends Controller {
                 return $return;
             } else return NULL;
         }
+        
         $POST_DATA = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
         $server->service($POST_DATA);
+        
     }
+    
 }
 
 ?>

@@ -72,6 +72,7 @@ class ws extends Controller {
             }
 
             $result = $user->fetch(FALSE);
+            $return = array();
 
             foreach ($result as $r)
                 $return[] = array('usr_id' => $r->usr_id, 'usr_name' => $r->usr_name);
@@ -80,6 +81,7 @@ class ws extends Controller {
                 return $return;
             else return NULL;
         }
+        
         function getGroups($grp) {
             $group = new group_info();
 
@@ -91,6 +93,7 @@ class ws extends Controller {
             }
 
             $result = $group->fetch(FALSE);
+            $return = array();
 
             foreach ($result as $r)
                 $return[] = array('grp_id' => $r->grp_id, 'grp_descr' => $r->grp_descr);

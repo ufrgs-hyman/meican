@@ -12,11 +12,14 @@ class domain_info extends Resource_Model {
         // Add all table attributes
         $this->addAttribute("dom_id","INTEGER", TRUE, FALSE, FALSE);
         $this->addAttribute("dom_descr","VARCHAR");
-        $this->addAttribute("dom_version", "VARCHAR");
+        
+        $this->addAttribute("oscars_ip","VARCHAR");
         $this->addAttribute("topology_id","VARCHAR");
+        
         $this->addAttribute("ode_ip","VARCHAR");
         $this->addAttribute("ode_wsdl_path","VARCHAR");
-        $this->addAttribute("oscars_ip","VARCHAR");
+        
+        $this->addAttribute("dom_version", "VARCHAR");
     }
 
     public function getDom(){
