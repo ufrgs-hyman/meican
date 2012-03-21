@@ -40,6 +40,7 @@ $(function() {
             if (jQuery.isFunction(jQuery.fn.dataTable))
                 $("table.list").dataTable(/*{cssAsc: 'ui-icon ui-icon-triangle-1-n', cssDesc: 'ui-icon ui-icon-triangle-1-s'}*/);
             $.fn.menuHandler.setSelected();
+            $.makeAutofocus();
             $('input, textarea').placeholder();
             $(':checkbox').makeDeleteButton(':checkbox', '.delete');
         });
@@ -56,7 +57,7 @@ function redir(url, data){
 function setFlash(message, status) {
     $('#flash_box').empty();
     $.flash(message, status);
-//window.onscroll = window_scroll;
+    //window.onscroll = window_scroll;
 }
 
 function clearFlash(){
@@ -136,13 +137,13 @@ function clearFlash(){
         //$('input[type=button].add').button({icon: 'plusthick'});
         //$('input[type=button].add').button({ icons: {primary:'ui-icon-plusthick',secondary:'ui-icon-plusthick'} });
         $(this).find('[disabled=disabled]').addClass('ui-state-disabled');
-    /* $(this).find('input[type!=submit],textarea,select').addClass('ui-widget ui-widget-content');
+        /* $(this).find('input[type!=submit],textarea,select').addClass('ui-widget ui-widget-content');
         $(this).find('table.list').addClass('ui-widget ui-corner-all');
         $(this).find('fieldset').addClass('ui-widget ui-corner-all');
         $(this).find('table.list thead').addClass('ui-widget-hea2der');
         $(this).find('table.list tbody').addClass('ui-widget-content');*/
 
-    /*        $(this).find('div.menu').addClass('ui-widget');
+        /*        $(this).find('div.menu').addClass('ui-widget');
         $(this).find('div.topItem').addClass('ui-widget-header');
         $(this).find('div.subItem').addClass('ui-widget-content');*/
     };
@@ -194,13 +195,13 @@ function clearFlash(){
                             curInp.numeric('.').spinner({
                                 numberformat: 'n'
                             });
-                        else
-                            $.getScript(baseUrl+'webroot/js/jquery.global.js', function(){
-                                window.Globalization = jQuery.global;
-                                curInp.numeric('.').spinner({
-                                    numberformat: 'n'
-                                });
+                    else
+                        $.getScript(baseUrl+'webroot/js/jquery.global.js', function(){
+                            window.Globalization = jQuery.global;
+                            curInp.numeric('.').spinner({
+                                numberformat: 'n'
                             });
+                    });
                 };
                 if (jQuery.isFunction(jQuery.fn.spinner))
                     applySpinner();
@@ -249,6 +250,16 @@ function clearFlash(){
     });
     
     $.extend({
+        makeAutofocus: function(){
+            if(!('autofocus' in document.createElement('input'))){
+                $('input[autofocus]').eq(0).focus();
+            }else{
+                // Fix for opera
+                $('input[autofocus]').eq(0).val('');    
+                $('input[autofocus]').eq(0).removeClass('placeholder');
+            }
+        },
+        
         flash: function (message, status){
             if (!status)
                 status = "info";
