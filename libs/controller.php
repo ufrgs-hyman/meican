@@ -82,6 +82,10 @@ class Controller extends Object {
     public function getDefaultAction() {
         return $this->defaultAction;
     }
+    
+    public function renderJson($contents, $options = null){
+        echo $this->output .= json_encode($contents, $options);
+    }
 
     /**
      *

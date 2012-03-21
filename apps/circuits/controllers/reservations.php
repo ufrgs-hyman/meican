@@ -154,9 +154,6 @@ class reservations extends Controller {
     }
 
     public function refresh_status() {
-        Configure::write('debug', 0);
-        $this->setAction("ajax");
-        $this->layout = 'empty';
 
         $dom_id = Common::POST('dom_id');
         
@@ -192,9 +189,7 @@ class reservations extends Controller {
             }
         } else {
             Log::write('debug', "Falha ao buscar reservas no refresh status");
-            $this->setArgsToBody(FALSE);
-            $this->render();
-            return;
+            return $this->renderJson(FALSE);
         }
         
         /**
@@ -216,17 +211,13 @@ class reservations extends Controller {
                 $statusResult = $oscarsRes->getStatusArray();
             } else {
                 Log::write('debug', "Falha ao conectar OSCARS ($oscars_ip) no refresh status");
-                $this->setArgsToBody(FALSE);
-                $this->render();
-                return;
+                return $this->renderJson(FALSE);
             }
         }
 
         if (count($statusResult) != count($griList)) {
             Log::write('debug', "Problema de consistencia na refresh status " . print_r($statusResult, true));
-            $this->setArgsToBody(FALSE);
-            $this->render();
-            return;
+            return $this->renderJson(FALSE);
         }
 
         //debug("result list", $statusResult);
@@ -269,15 +260,10 @@ class reservations extends Controller {
             $statusList[] = $status_obj;
         }
 
-        //debug('status', $statusList);
-        //echo json_encode($statusList);
-        $this->setArgsToBody($statusList);
-        $this->render();
+        $this->renderJson($statusList);
     }
 
     public function gri_refresh_status() {
-        $this->setAction("ajax");
-        $this->layout = 'empty';
 
         $res_id = Common::POST("res_id");
 
@@ -318,9 +304,7 @@ class reservations extends Controller {
                     $statusResult = $oscarsRes->getStatusArray();
                 } else {
                     Log::write("error", "Fail to connect to OSCARS in refresh status");
-                    $this->setArgsToBody(FALSE);
-                    $this->render();
-                    return;
+                    return $this->renderJson(FALSE);
                 }
 
                 $ind = 0;
@@ -353,12 +337,10 @@ class reservations extends Controller {
                 }
             }
 
-            $this->setArgsToBody($statusList);
-            $this->render();
+            $this->renderJson($statusList);
         } else {
             Log::write("erro", "Fail to get GRIs in refresh status");
-            $this->setArgsToBody(FALSE);
-            $this->render();
+            $this->renderJson(FALSE);
         }
     }
     
@@ -522,27 +504,11 @@ class reservations extends Controller {
         // SCRIPTS -----------------------------------------
         $this->addScriptForLayout(array(/*'googlemaps', 'StyledMarker', 'reservations', 'reservation_map', 'flows',*/'markerClusterer', 'timers', 'jquery.timePicker', 'reservations_add'/*, 'map_init'*/));
         
-        /*
-         * 
-         * <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/googlemaps.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/markerClusterer.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/StyledMarker.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/reservations.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/reservation_map.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/flows.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/timers.js"></script>
-        <script type ="text/javascript" src="<?php echo $base; ?>apps/circuits/webroot/js/jquery.timePicker.js"></script>
-         */
-        
         if ($js_lang != "en-US") {
             $this->addScript("jquery.ui.datepicker-$js_lang");
         }
-        // -------------------------------------------------
-        // ACTION ---------------------
-        $this->setAction('add');
-        // ----------------------------
 
-        $this->render();
+        $this->render('add');
     }
 
     public function submit() {
@@ -795,12 +761,10 @@ class reservations extends Controller {
         $args->request = $request;
         $args->refresh = $refresh;
         $args->usr_login = $usr_login;
-
-        $this->setAction('view');
         $this->setArgsToBody($args);
         
         $this->addScriptForLayout(array('reservations', 'reservations_view'));
-        $this->render();
+        $this->render('view');
     }
 
     /**
