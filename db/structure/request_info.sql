@@ -29,18 +29,17 @@ DROP TABLE IF EXISTS `request_info`;
 CREATE TABLE IF NOT EXISTS `request_info` (
   `loc_id` int(11) NOT NULL AUTO_INCREMENT,
   `req_id` int(11) NOT NULL,
-  `src_meican` int(11) NOT NULL,
-  `src_dom` int(11) NOT NULL,
+  `src_ode_ip` varchar(64) NOT NULL,
   `src_usr` int(11) NOT NULL,
-  `dst_meican` int(11) NOT NULL,
-  `dst_dom` int(11) DEFAULT NULL,
+  `dst_ode_ip` varchar(64) NOT NULL,
   `resource_type` varchar(32) DEFAULT NULL,
   `resource_id` int(11) DEFAULT NULL,
   `answerable` enum('yes','no') NOT NULL,
   `status` varchar(128) DEFAULT NULL,
   `response` enum('accept','reject') DEFAULT NULL,
   `message` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`loc_id`),
-  KEY `src_meican` (`src_meican`),
-  KEY `dst_meican` (`dst_meican`)
+  `response_user` int(11) DEFAULT NULL,
+  `start_time` float DEFAULT NULL,
+  `finish_time` float DEFAULT NULL,
+  PRIMARY KEY (`loc_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

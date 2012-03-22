@@ -42,29 +42,25 @@ class ws extends Controller {
                 'min_capacity' => array('name' => 'min_capacity','type' => 'xsd:int'),
                 'granularity'  => array('name' => 'granularity','type' => 'xsd:int'),
         ));
-
+        
         $server->wsdl->addComplexType('portTypeList','complexType','array','all','',
                 array('ports' => array('name' => 'ports','type' => 'tns:portType')));
-
+       
         $server->wsdl->addComplexType('deviceType','complexType','struct','all','',
-                array('dev_id'  => array('name' => 'dev_id','type' => 'xsd:int'),
-                'dev_descr' => array('name' => 'dev_descr','type' => 'xsd:string'),
-                'latitude' => array('name'=>'latitude','type'=>'xsd:float'),
-                'longitude' => array('name'=>'longitude','type'=>'xsd:float'),
-                'ports' => array('name' => 'ports','type' => 'tns:portTypeList')
-        ));
+                array('id'  => array('name' => 'id','type' => 'xsd:int'),
+                'name' => array('name' => 'name','type' => 'xsd:string'),
+                'ports' => array('name' => 'ports','type' => 'tns:portTypeList')));
 
         $server->wsdl->addComplexType('deviceTypeList','complexType','array','all','',
                 array('devices' => array('name' => 'devices','type' => 'tns:deviceType')));
 
         $server->wsdl->addComplexType('netType','complexType','struct','all','',
-                array('net_id'  => array('name' => 'net_id','type' => 'xsd:int'),
-                'net_descr' => array('name' => 'net_descr','type' => 'xsd:string'),
+                array('id'  => array('name' => 'id','type' => 'xsd:int'),
+                'name' => array('name' => 'name','type' => 'xsd:string'),
                 'latitude' => array('name' => 'latitude','type' => 'xsd:float'),
                 'longitude' => array('name' => 'longitude','type' => 'xsd:float'),
-                'devices' => array('name' => 'devices','type' => 'tns:deviceTypeList')
-        ));
-
+                'devices' => array('name' => 'devices','type' => 'tns:deviceTypeList')));
+        
         $server->wsdl->addComplexType('netTypeList','complexType','array','all','',
                 array('nets' => array('name' => 'nets','type' => 'tns:netType')));
 
@@ -77,11 +73,11 @@ class ws extends Controller {
                 'rpc',
                 'encoded',
                 'Complex Hello World Method');
-
+        
         $server->register(
                 'getURNDetails',
                 array('urn_string'=>'xsd:string'),
-                array('urn_details'=>'tns:urnTypeList'),
+                array('urn_details'=>'tns:netTypeList'),
                 $namespace,
                 "http://$this_ip/$this_dir_name$this->app/ws/getURNDetails",
                 'rpc',
@@ -93,23 +89,14 @@ class ws extends Controller {
 
             if (isset($urn_string_list) && is_array($urn_string_list)) {
                 $ind = 0;
-                unset($urn_info_list);
+                $urn_info_list = array();
 
-                foreach($urn_string_list as $urn_string) {
-
+                foreach ($urn_string_list as $urn_string) {
                     if (is_string($urn_string)) {
                         $urn = new urn_info();
                         $urn->urn_string = $urn_string;
 
-                        $result = $urn->fetch(FALSE);
-
-                        if (!$result) {
-                            //posição inválida
-                            $urn_info_list[$ind] = NULL;
-                            $ind++;
-                            continue;
-                        } else {
-
+                        if ($result = $urn->fetch(FALSE)) {
                             $net = new network_info();
                             $net->net_id = $result[0]->net_id;
                             $r_net = $net->fetch(FALSE);
@@ -118,17 +105,16 @@ class ws extends Controller {
                             $dev->dev_id = $result[0]->dev_id;
                             $r_dev = $dev->fetch(FALSE);
 
-                            $urn_info_list[$ind] = array ( 'net_descr' => $r_net[0]->net_descr,
-                                    'dev_descr' => $r_dev[0]->dev_descr,
-                                    'port_number' => $result[0]->port);
+                            $urn_info_list[$ind] = array('net_descr' => $r_net[0]->net_descr,
+                                'dev_descr' => $r_dev[0]->dev_descr,
+                                'port_number' => $result[0]->port);
                             $ind++;
+                            continue;
                         }
-
-                    } else {
-                        //posição não válida
-                        $urn_info_list[$ind] = NULL;
-                        $ind++;
                     }
+                    //posição inválida
+                    $urn_info_list[$ind] = NULL;
+                    $ind++;
                 }
                 //debug('geturninfo return',$urn_info_list);
                 return $urn_info_list;

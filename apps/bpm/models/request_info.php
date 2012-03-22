@@ -12,12 +12,10 @@ class request_info extends Resource_Model {
         $this->addAttribute('loc_id', "INTEGER", true, false, false);
         $this->addAttribute("req_id","INTEGER");
         
-        $this->addAttribute("src_meican","INTEGER");
-        $this->addAttribute("src_dom","INTEGER");
+        $this->addAttribute("src_ode_ip","VARCHAR");
         $this->addAttribute("src_usr","INTEGER");
         
-        $this->addAttribute("dst_meican","INTEGER");
-        $this->addAttribute("dst_dom","INTEGER");
+        $this->addAttribute("dst_ode_ip","VARCHAR");
         
         $this->addAttribute("resource_type","VARCHAR");
         $this->addAttribute("resource_id","INTEGER");
@@ -26,6 +24,10 @@ class request_info extends Resource_Model {
         $this->addAttribute("status","VARCHAR");
         $this->addAttribute("response","VARCHAR");
         $this->addAttribute("message","VARCHAR");
+        
+        $this->addAttribute("response_user", "INTEGER");
+        $this->addAttribute("start_time", "FLOAT");
+        $this->addAttribute("finish_time", "FLOAT");
     }
 
     public function setDom($dom_src, $arg_ip){
@@ -205,6 +207,64 @@ class request_info extends Resource_Model {
         }
         return FALSE;
     }
+    
+    /**
+     *
+     * response do meican2706
+     * 
+     * 
+     
+     public function response() {
+        $message = $this->message;
+        $response = $this->response;
+
+        unset($this->message);
+        unset($this->response);
+
+        $now = microtime(true);
+        $usr = AuthSystem::getUserLogin();
+
+        $res = $this->fetch(FALSE);
+        $tmp = $res[0];
+
+        if (!$tmp->response) {
+
+            $local = $this->updateTo(array('response' => $response, 'message' => $message, 'status' => 'ANSWERED', 'finish_time' => $now, 'response_user' => $usr), FALSE);
+
+            if ($local) {
+
+                $result = $this->fetch(FALSE);
+                $toSend = $result[0];
+                $toSend->setDomIp('dom_src_ip', $toSend->dom_src);
+                $endpoint = Framework::$odeWsdl;
+
+                try {
+                    $client = new SoapClient($endpoint, array('cache_wsdl' => 0));
+
+                    $responseSOAP = array(
+                        'req_id' => $toSend->req_id,
+                        'dom_src_ip' => $toSend->dom_src_ip,
+                        'response' => $toSend->response,
+                        'message' => $toSend->message);
+                    $service = Framework::$serviceToResponse;
+                    $client->$service($responseSOAP);
+
+                    return TRUE;
+                } catch (Exception $e) {
+                    Framework::debug('fail to send to ode');
+                    return FALSE;
+                }
+            } else {
+                Framework::debug('fail to add at local database');
+                return FALSE;
+            }
+        } else {
+            Framework::debug('request already answered');
+            return FALSE;
+        }
+    }
+     
+     */
 
     public function response() {
         $message = $this->message;
