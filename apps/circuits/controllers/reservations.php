@@ -196,18 +196,18 @@ class reservations extends Controller {
         if ($griList) {
             $dom = new domain_info();
             $dom->dom_id = $dom_id;
-            $oscars_ip = $dom->get('oscars_ip');
+            $idc_url = $dom->get('idc_url');
             
             Log::write('debug', "gri list ro refresh", $griList);
 
             $oscarsRes = new OSCARSReservation();
-            $oscarsRes->setOscarsUrl($oscars_ip);
+            $oscarsRes->setOscarsUrl($idc_url);
             $oscarsRes->setGrisString($griList);
 
             if ($oscarsRes->listReservations()) {
                 $statusResult = $oscarsRes->getStatusArray();
             } else {
-                Log::write('debug', "Falha ao conectar OSCARS ($oscars_ip) no refresh status");
+                Log::write('debug', "Falha ao conectar OSCARS ($idc_url) no refresh status");
                 return $this->renderJson(FALSE);
             }
         }
@@ -291,10 +291,10 @@ class reservations extends Controller {
             if ($griList) {
                 $dom = new domain_info();
                 $dom->dom_id = $gris[0]->dom_id;
-                $oscars_ip = $dom->get('oscars_ip');
+                $idc_url = $dom->get('idc_url');
 
                 $oscarsRes = new OSCARSReservation();
-                $oscarsRes->setOscarsUrl($oscars_ip);
+                $oscarsRes->setOscarsUrl($idc_url);
                 $oscarsRes->setGrisString($griList);
 
                 if ($oscarsRes->listReservations()) {
@@ -817,7 +817,7 @@ class reservations extends Controller {
 
         foreach ($gris as $g) {
             $oscarsRes = new OSCARSReservation();
-            $oscarsRes->setOscarsUrl($flw->source->oscars_ip);
+            $oscarsRes->setOscarsUrl($flw->source->idc_url);
             $oscarsRes->setGri($g->gri_descr);
             $oscarsRes->queryReservation();
             unset($oscarsRes);
@@ -837,11 +837,11 @@ class reservations extends Controller {
             $dom = new domain_info();
             $dom->dom_id = $gris[0]->dom_id;
 
-            if ($oscars_ip = $dom->get('oscars_ip')) {
+            if ($idc_url = $dom->get('idc_url')) {
                 foreach ($gris as $g) {
                     if ($g->status == "ACTIVE" || $g->status == "PENDING" || $g->status == "ACCEPTED") {
                         $oscarsRes = new OSCARSReservation();
-                        $oscarsRes->setOscarsUrl($oscars_ip);
+                        $oscarsRes->setOscarsUrl($idc_url);
                         $oscarsRes->setGri($g->gri_descr);
                         Log::write("info", "GRI to cancel: ".print_r($g->gri_descr, TRUE));
                         /**
@@ -899,7 +899,7 @@ class reservations extends Controller {
         $src_dom = $domain->getOSCARSDomain($src_urn_string);
 
         $oscarsRes = new OSCARSReservation();
-        $oscarsRes->setOscarsUrl($src_dom->oscars_ip);
+        $oscarsRes->setOscarsUrl($src_dom->idc_url);
         $oscarsRes->setDescription($reservation_info->res_name);
         $oscarsRes->setBandwidth($reservation_info->bandwidth);
         $oscarsRes->setSrcEndpoint($flow->get('src_urn_string'));
@@ -993,8 +993,8 @@ class reservations extends Controller {
 
             $requestSOAP = array(
                 'req_id' => $newReq->req_id,
-                'dom_src_ip' => $src_dom->oscars_ip,
-                'dom_dst_ip' => $dst_dom->oscars_ip,
+                'dom_src_ip' => $src_dom->idc_url,
+                'dom_dst_ip' => $dst_dom->idc_url,
                 'usr_src' => $newReq->src_usr);
 
             Log::write("info",'Sending for authorization '. print_r($requestSOAP,TRUE));
@@ -1042,7 +1042,7 @@ class reservations extends Controller {
                         $domain->dom_id = $dom_src_id;
                         $src_dom = $domain->get();
                         $oscars_reservation = new OSCARSReservation();
-                        $oscars_reservation->setOscarsUrl($src_dom->oscars_ip);
+                        $oscars_reservation->setOscarsUrl($src_dom->idc_url);
 
                         $oscars_reservation->setGri($g->gri_descr);
                         if ($oscars_reservation->createPath()) {

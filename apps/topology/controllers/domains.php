@@ -12,6 +12,7 @@ class domains extends Controller {
         $this->app = 'topology';
         $this->controller = 'domains';
         $this->defaultAction = 'show';
+        $this->addScriptForLayout(array('domains'));
     }
 
     public function show() {
@@ -27,6 +28,8 @@ class domains extends Controller {
                 $domain->id = $d->dom_id;
                 $domain->descr = $d->dom_descr;
                 $domain->oscars_ip = $d->oscars_ip;
+                $domain->oscars_protocol = $d->oscars_protocol;
+                $domain->idc_url = $d->idc_url;
                 $domain->topology_id = $d->topology_id;
                 $domain->ode_ip = ($d->ode_ip) ? $d->ode_ip : _("No IP defined");
                 $domain->dom_version = $d->dom_version;
@@ -53,7 +56,9 @@ class domains extends Controller {
         if ($dom_descr) {
             $domain = new domain_info();
             $domain->dom_descr = $dom_descr;
+            $domain->idc_url = Common::POST("idc_url");
             $domain->oscars_ip = Common::POST("oscars_ip");
+            $domain->oscars_protocol = Common::POST("oscars_protocol");
             $domain->topology_id = Common::POST("topology_id");
             $domain->ode_ip = Common::POST("ode_ip");
             $domain->ode_wsdl_path = Common::POST("ode_wsdl_path");
@@ -110,7 +115,9 @@ class domains extends Controller {
             $domain = new domain_info();
             $domain->dom_id = $domId;
             $domain->dom_descr = $dom_descr;
+            $domain->idc_url = Common::POST("idc_url");
             $domain->oscars_ip = Common::POST("oscars_ip");
+            $domain->oscars_protocol = Common::POST("oscars_protocol");
             $domain->topology_id = Common::POST("topology_id");
             $domain->ode_ip = Common::POST("ode_ip");
             $domain->ode_wsdl_path = Common::POST("ode_wsdl_path");

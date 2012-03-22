@@ -21,7 +21,7 @@ class MeicanTopology {
             $dom = $domain[0];
 
             $os = new OSCARSReservation();
-            $os->setOscarsUrl($dom->oscars_ip);
+            $os->setOscarsUrl($dom->idc_url);
 
             if ($os->getUrns()) {
 

@@ -1,5 +1,4 @@
 <?php
-
 $domain = $this->passedArgs;
 ?>
 

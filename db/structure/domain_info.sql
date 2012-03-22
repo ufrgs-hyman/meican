@@ -29,13 +29,13 @@ DROP TABLE IF EXISTS `domain_info`;
 CREATE TABLE IF NOT EXISTS `domain_info` (
   `dom_id` int(11) NOT NULL AUTO_INCREMENT,
   `dom_descr` varchar(30) NOT NULL,
-  `oscars_ip` varchar(64) DEFAULT NULL,
+  `idc_url` varchar(64) DEFAULT NULL,
   `topology_id` varchar(30) DEFAULT NULL,
   `ode_ip` varchar(128) DEFAULT NULL,
   `ode_wsdl_path` varchar(256) DEFAULT NULL,
   `dom_version` varchar(128) NOT NULL,
   PRIMARY KEY (`dom_id`),
   UNIQUE KEY `dom_descr` (`dom_descr`),
-  UNIQUE KEY `oscars_ip` (`oscars_ip`),
+  UNIQUE KEY `idc_url` (`idc_url`),
   UNIQUE KEY `topology_id` (`topology_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

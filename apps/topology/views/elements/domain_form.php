@@ -1,7 +1,8 @@
 <?php
-
 $dom_descr = isset($argsToElement->dom_descr) ? $argsToElement->dom_descr : NULL;
+$idc_url = isset($argsToElement->idc_url) ? $argsToElement->idc_url : NULL;
 $oscars_ip = isset($argsToElement->oscars_ip) ? $argsToElement->oscars_ip : NULL;
+$oscars_protocol = isset($argsToElement->oscars_protocol) ? $argsToElement->oscars_protocol : NULL;
 $topology_id = isset($argsToElement->topology_id) ? $argsToElement->topology_id : NULL;
 $ode_ip = isset($argsToElement->ode_ip) ? $argsToElement->ode_ip : NULL;
 $ode_wsdl_path = isset($argsToElement->ode_wsdl_path) ? $argsToElement->ode_wsdl_path : NULL;
@@ -23,7 +24,25 @@ $dom_version = isset($argsToElement->dom_version) ? $argsToElement->dom_version 
             <?php echo _("OSCARS IP"); ?>:
         </th>
         <td class="left">
-            <input type="text" name="oscars_ip" size="30" value="<?php echo $oscars_ip; ?>"/>
+            <input type="text" name="oscars_ip" id="oscars_ip" size="30" value="<?php echo $oscars_ip; ?>" onkeyup="buildIDC_URL()"/>
+        </td>
+    </tr>
+    <tr>
+        <th class="right">
+            <?php echo _("Protocol");?>:
+        </th>
+        <td class="left">
+            <input type="radio" name="oscars_protocol" id="http" value="http" <?php if ($oscars_protocol == 'http') echo checked; ?> onchange="buildIDC_URL()"/> HTTP &nbsp;&nbsp;
+            <input type="radio" name="oscars_protocol" id="https" value="https" <?php if ($oscars_protocol == 'https') echo checked; ?> onchange="buildIDC_URL()"/> HTTPS
+        </td>
+    </tr>
+    <tr>
+        <th class="right">
+            <?php echo _("IDC URL"); ?>:
+        </th>
+        <td class="left">
+            <label id="idc_url"><?php echo $idc_url; ?></label>
+            <input type="text" name="idc_url" id="input_idcUrl" hidden="true" value="<?php echo $idc_url; ?>"/>
         </td>
     </tr>
     <tr>
@@ -31,7 +50,7 @@ $dom_version = isset($argsToElement->dom_version) ? $argsToElement->dom_version 
             <?php echo _("OSCARS Version"); ?>:
         </th>
         <td class="left">
-            <select name="dom_version" size="1">
+            <select name="dom_version" size="1" style="width:222px">
                 <option <?php if ($dom_version == '0.5.3') echo 'selected="true"'; ?> value="0.5.3"> OSCARS 0.5.3 </option>
                 <option <?php if ($dom_version == '0.5.4') echo 'selected="true"'; ?> value="0.5.4"> OSCARS 0.5.4 </option>
                 <option <?php if ($dom_version == '0.6') echo 'selected="true"'; ?> value="0.6">   OSCARS 0.6   </option>

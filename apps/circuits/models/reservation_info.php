@@ -171,9 +171,9 @@ class reservation_info extends Resource_Model {
         $return = array(
                 'res_id' => $this->res_id,
                 'res_name' => $res[0]->res_name,
-                'dom_src' => $flow_info->source->oscars_ip,
+                'dom_src' => $flow_info->source->idc_url,
                 'urn_src' => $flow_info->source->urn,
-                'dom_dst' => $flow_info->dest->oscars_ip,
+                'dom_dst' => $flow_info->dest->idc_url,
                 'urn_dst' => $flow_info->dest->urn,
                 'bandwidth' => $res[0]->bandwidth,
                 'path' => $flow_info->path,
@@ -244,44 +244,45 @@ class reservation_info extends Resource_Model {
         }
     }
     
-    public function getPath($oscars_url, $gri) {
+    public function getPath() {
+        
+        if (!$this->res_id)
+            return FALSE;
+
+        $gri_info = new gri_info();
+        $gri_info->res_id = $this->res_id;
+        $gri = $gri_info->fetch(FALSE);
+
+        $domain_info = new domain_info();
+        $domain_info->dom_id = $gri[0]->dom_id;
+        $domain = $domain_info->fetch(FALSE);
+        
         $oscars = new OSCARSReservation();
-        $oscars->setGri($gri);
-        $oscars->setOscarsUrl($oscars_url);
-        
-        $oscars->queryReservation();
-        
-//        while ($oscars->getStatus() == "PENDING") {
-//            
-//        }
-        
-        $domains = array();
-        if ($oscars->getStatus() == "PENDING") {
-            // path setup finished, start filter
-            if ($pathArray = explode(";", $oscars->getPath())) {
-                
-                // put only the topology IDs into an array
-                $topoIdArray = array();
-                $dom = new domain_info();
-                foreach ($pathArray as $urn) {
-                    $topoIdArray[] = $dom->getTopologyId($urn);
+        $oscars->setGri($gri[0]->gri_descr);
+        $oscars->setOscarsUrl($domain[0]->idc_url);
+         
+        $pathArray = array();
+        $response = FALSE;
+
+        while (!$response) {
+            $oscars->queryReservation();
+            $status = $oscars->getStatus();
+            if (($status == "PENDING") || ($status == "ACTIVE") || ($status == "FINISHED")) {
+
+                if ($pathArray = explode(";", $oscars->getPath())) {
+                    $response = TRUE;
                 }
-                array_unique($topoIdArray);
-                
-                // fill the array with the Endpoints of the path
-                foreach ($topoIdArray as $topId) {
-                    $dom = new domain_info();
-                    $dom->topology_id = $topId;
-                    if ($d_result = $dom->fetch(FALSE)) {
-                        $d_tmp = $d_result[0];
-                        $domains[] = $d_tmp->ode_ip;
-                        //$businessEndpoint = "http://$src_dom->ode_ip/$src_dom->ode_wsdl_path";
-                    }
-                }
+            } elseif (($status == "INCREATE") || ($status == "ACCEPTED")) {
+                    sleep(2);
+                    continue;
+            } elseif (($status == "FAILED") || ($status == "CANCELLED")) {
+                    $pathArray = FALSE;
+                    Log::write("error", "Couldn't get path. Reservation FAILED or CANCELLED");
+                    $response = TRUE;
             }
         }
-        
-        return $domains;
+
+        return $pathArray;
     }
 
     function getGriDetails() {

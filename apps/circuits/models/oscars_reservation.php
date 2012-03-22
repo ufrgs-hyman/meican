@@ -48,8 +48,8 @@ class OSCARSReservation {
      * GETTERS and SETTERS
      * 
      */
-    public function setOscarsUrl($oscars_ip) {
-        $this->oscarsUrl = "http://$oscars_ip/axis2/services/OSCARS";
+    public function setOscarsUrl($idc_url) {
+        $this->oscarsUrl = $idc_url;
     }
 
     public function setGri($gri) {

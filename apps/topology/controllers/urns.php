@@ -31,7 +31,7 @@ class urns extends Controller {
                 $domain = new stdClass();
                 $domain->id = $d->dom_id;
                 $domain->descr = $d->dom_descr;
-                $domain->ip = $d->oscars_ip;
+                $domain->idc_url = $d->idc_url;
                 $domain->topo_id = $d->topology_id;
                 $domain->urns = MeicanTopology::getURNs($d->dom_id);
 
