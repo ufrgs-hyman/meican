@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS `domain_info` (
   `dom_id` int(11) NOT NULL AUTO_INCREMENT,
   `dom_descr` varchar(30) NOT NULL,
   `idc_url` varchar(64) DEFAULT NULL,
+  `oscars_ip` varchar(64) DEFAULT NULL,
+  `oscars_protocol` varchar(10) DEFAULT NOT NULL,
   `topology_id` varchar(30) DEFAULT NULL,
   `ode_ip` varchar(128) DEFAULT NULL,
   `ode_wsdl_path` varchar(256) DEFAULT NULL,
