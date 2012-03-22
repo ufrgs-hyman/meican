@@ -363,7 +363,7 @@ class Model extends Object {
         }
         $sql = "INSERT INTO `$classname` ($sqlNames) values ($sqlValues)";
 
-        //debug('sql insert',$sql);
+        //Log::write('debug', "SQL insert:\n" . print_r($sql, true));
 
         $id = $this->insertSql($sql);
         if ($id !== FALSE) {
@@ -382,11 +382,13 @@ class Model extends Object {
                     return $ret[0];
             }
             // se não conseguiu buscar objeto, apenas retorna TRUE
-            debug("objeto inserido mas não encontrado");
+            Log::write('warning', "Object inserted but not found");
             return TRUE;
-        } else
-        // objeto não inserido, retorna FALSE
+        } else {
+            // objeto não inserido, retorna FALSE
+            Log::write('error', "Error to execute insert SQL:\n" . print_r($sql, TRUE));
             return FALSE;
+        }
     }
 
     /**

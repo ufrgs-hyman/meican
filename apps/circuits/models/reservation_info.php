@@ -245,7 +245,7 @@ class reservation_info extends Resource_Model {
     }
     
     public function getPath() {
-        
+
         if (!$this->res_id)
             return FALSE;
 
@@ -256,29 +256,39 @@ class reservation_info extends Resource_Model {
         $domain_info = new domain_info();
         $domain_info->dom_id = $gri[0]->dom_id;
         $domain = $domain_info->fetch(FALSE);
-        
+
         $oscars = new OSCARSReservation();
         $oscars->setGri($gri[0]->gri_descr);
         $oscars->setOscarsUrl($domain[0]->idc_url);
-         
+
         $pathArray = array();
         $response = FALSE;
+        $cont = 0;
 
-        while (!$response) {
-            $oscars->queryReservation();
-            $status = $oscars->getStatus();
-            if (($status == "PENDING") || ($status == "ACTIVE") || ($status == "FINISHED")) {
+        Log::write("info", "Getting GRI path:\n" . print_r(array("OSCARS URL" => $domain[0]->idc_url, "GRI" => $gri[0]->gri_descr), TRUE));
 
-                if ($pathArray = explode(";", $oscars->getPath())) {
+        while (!$response && $cont < 15) {
+            if ($oscars->queryReservation()) {
+                $status = $oscars->getStatus();
+                if (($status == "PENDING") || ($status == "ACTIVE") || ($status == "FINISHED")) {
+                    if ($pathArray = explode(";", $oscars->getPath())) {
+                        $pathArray = array_filter($pathArray, 'strlen');
+                        Log::write("info", "Get path sucessful. Complete path:\n" . print_r($pathArray, TRUE));
+                        $response = TRUE;
+                    }
+                } elseif (($status == "INCREATE") || ($status == "ACCEPTED")) {
+                    sleep(2);
+                    $cont++;
+                    continue;
+                } elseif (($status == "FAILED") || ($status == "CANCELLED")) {
+                    Log::write("error", "Couldn't get path. Reservation FAILED or CANCELLED");
+                    $pathArray = FALSE;
                     $response = TRUE;
                 }
-            } elseif (($status == "INCREATE") || ($status == "ACCEPTED")) {
-                    sleep(2);
-                    continue;
-            } elseif (($status == "FAILED") || ($status == "CANCELLED")) {
-                    $pathArray = FALSE;
-                    Log::write("error", "Couldn't get path. Reservation FAILED or CANCELLED");
-                    $response = TRUE;
+            } else {
+                Log::write("error", "Couldn't get path. Query reservation failed");
+                $pathArray = FALSE;
+                $response = TRUE;
             }
         }
 

@@ -262,16 +262,16 @@ class OSCARSReservation {
             return $this->error("gri not set in query reservation");
         } else if (!$this->checkVersion() || !$this->checkOscarsUrl()) {
             return;
-        } else if (!$this->callBridge(
+        } else if (!$result = $this->callBridge(
                         'queryReservation', $this->makeEnvelope(array(
                             "gri" => $this->gri
                         ))))
             return false;
         else {
             $this->setGri($result->return[0]);
-            $this->setDescription($result->return[1]);
-            $this->setLogin($result->return[2]);
-            $this->setStatus($result->return[3]);
+            $this->setStatus($result->return[1]);
+            $this->setDescription($result->return[2]);
+            $this->setLogin($result->return[3]);
             $this->setRequestTime($result->return[4]);
             $this->setStartTimestamp($result->return[5]);
             $this->setEndTimestamp($result->return[6]);
@@ -284,7 +284,7 @@ class OSCARSReservation {
             $this->setDestIsTagged($result->return[13]);
             $this->setDestTag($result->return[14]);
             $this->setPath($result->return[15]);
-            Log::write('debug', "retorno do query reservation" . print_r($result->return, true));
+            Log::write('debug', "Query reservation return:\n" . print_r($result->return, true));
             return true;
         }
     }

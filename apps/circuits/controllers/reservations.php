@@ -39,12 +39,14 @@ class reservations extends Controller {
         if ($filterArray)
             $res_info->res_id = $filterArray;
         
-        $allReservations = $res_info->fetch();
-        if ($allReservations) {
+        $allResevartionsToShow = $res_info->fetch();
+        //$allResevartionsToShow = $res_info->getReservationsToShow($filterArray);
+            
+        if ($allResevartionsToShow) {
             $reservations = array();
             $src_domains = array();
 
-            foreach ($allReservations as $r) {
+            foreach ($allResevartionsToShow as $r) {
                 $res = new stdClass();
                 $res->id = $r->res_id;
                 $res->name = $r->res_name;
@@ -61,9 +63,11 @@ class reservations extends Controller {
                 $timer->tmr_id = $r->tmr_id;
                 $res->timer = $timer->getTimerDetails();
                 
+                /*
                 $user = new user_info();
                 $user->usr_id = $r->usr_id;
-                $res->usr_login = $user->get('usr_login');
+                $res->usr_login = $user->get('usr_login', FALSE);
+                 */
 
                 $dom = new domain_info();
                 if ($domain = $dom->getOSCARSDomain($res->flow->source->urn)) {
@@ -161,8 +165,8 @@ class reservations extends Controller {
         
         $res_info = new reservation_info();
         $res_info->res_id = $resToRefresh;
-        
         $reservations = $res_info->fetch();
+        //$reservations = $res_info->getReservationsToShow($resToRefresh);
         
         //debug("res to refresh",$reservations);
 
@@ -968,23 +972,36 @@ class reservations extends Controller {
             unset($tmp);
         }
 
-        if ($src_dom->ode_ip && $src_dom->ode_wsdl_path) {
+        if ($resSent && $src_dom->ode_ip && $src_dom->ode_wsdl_path) {
             //cria nova request com o domínio dom_src
             $newReq = new request_info();
-            $newReq->src_dom = $src_dom->dom_id;
+            
             $newReq->req_id = $newReq->getNextId('req_id');
+            
+            $newReq->src_ode_ip = $src_dom->ode_ip;
+            $newReq->src_usr = $reservation_info->usr_id;
 
-            //para buscar o dom_dst_ip
-            $domain->dom_id = $flow->get('dst_dom');
-            $dst_dom = $domain->get();
-            $newReq->dst_dom = $dst_dom->dom_id;
+            //para buscar o dst_ode_ip
+            $flow = new flow_info();
+            $flow->flw_id = $flw_id;
+            $dst_urn_string = $flow->get('dst_urn_string');
 
-            $newReq->src_usr = AuthSystem::getUserId();
+            $domain = new domain_info();
+            $dst_dom = $domain->getOSCARSDomain($dst_urn_string);
+            $newReq->dst_ode_ip = $dst_dom->ode_ip;
 
             $newReq->resource_type = 'reservation_info';
             $newReq->resource_id = $reservation_info->res_id;
+            
             $newReq->answerable = 'no';
-
+            
+            $newReq->response = NULL;
+            $newReq->message = NULL;
+            
+            $newReq->response_user = NULL;
+            $newReq->start_time = NULL;
+            $newReq->finish_time = NULL;
+            
             /**
              * PARA UM ÚNICO WSDL COM OPERAÇÕES SEPARADAS E PADRONIZADAS PARA ENVIAR
              * REQUISIÇÃO E ENVIAR RESPOSTA
@@ -993,9 +1010,9 @@ class reservations extends Controller {
 
             $requestSOAP = array(
                 'req_id' => $newReq->req_id,
-                'dom_src_ip' => $src_dom->idc_url,
-                'dom_dst_ip' => $dst_dom->idc_url,
-                'usr_src' => $newReq->src_usr);
+                'src_ode_ip' => $newReq->src_ode_ip,
+                'dst_ode_ip' => $newReq->dst_ode_ip,
+                'src_usr' => $newReq->src_usr);
 
             Log::write("info",'Sending for authorization '. print_r($requestSOAP,TRUE));
             try {
@@ -1007,7 +1024,7 @@ class reservations extends Controller {
 
                 $newReq->insert();
 
-                return TRUE;
+                return $resSent;
             } catch (Exception $e) {
                 Log::write("error", "Caught exception while trying to connect to ODE: ". print_r($e->getMessage()));
                 $this->setFlash(_('Error at invoking business layer.'));

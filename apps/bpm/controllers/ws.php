@@ -36,13 +36,13 @@ class ws extends Controller {
          * O problema é na declaração no namespace. Devendo ser encontrado alguma forma para declarar o SOAP-ENC nas definições
          * do WSDL
          */
-        /* $server->wsdl->addComplexType('stringTypeList','complexType','array','all','',
+        
+        
+        $server->wsdl->addComplexType('stringTypeList','complexType','array','all','',
           array('str' => array('name' => 'str','type' => 'xsd:string')));
-         * 
-         */
 
-        $server->wsdl->addComplexType('stringTypeList', 'complexType', 'array', '', 'SOAP-ENC:Array', array(), array(array('ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'xsd:string[]'),
-            'xsd:string'));
+        /*$server->wsdl->addComplexType('stringTypeList', 'complexType', 'array', '', 'SOAP-ENC:Array', array(), array(array('ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'xsd:string[]'),
+            'xsd:string'));*/
 
         $server->wsdl->addComplexType('reqType', 'complexType', 'struct', 'all', '', array(
             'resc_id' => array('name' => 'resc_id', 'type' => 'xsd:int'),
@@ -51,21 +51,21 @@ class ws extends Controller {
 
         $server->wsdl->addComplexType('requestType', 'complexType', 'struct', 'all', '', array(
             'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
-            'dom_src_ip' => array('name' => 'dom_src_ip', 'type' => 'xsd:string'),
-            'dom_dst_ip' => array('name' => 'dom_dst_ip', 'type' => 'xsd:string'),
-            'usr_src' => array('name' => 'usr_src', 'type' => 'xsd:int')));
+            'src_ode_ip' => array('name' => 'src_ode_ip', 'type' => 'xsd:string'),
+            'dst_ode_ip' => array('name' => 'dst_ode_ip', 'type' => 'xsd:string'),
+            'src_usr' => array('name' => 'src_usr', 'type' => 'xsd:int')));
 
         $server->wsdl->addComplexType('responseType', 'complexType', 'struct', 'all', '', array(
             'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
-            'dom_src_ip' => array('name' => 'dom_src_ip', 'type' => 'xsd:string'),
+            'src_ode_ip' => array('name' => 'src_ode_ip', 'type' => 'xsd:string'),
             'response' => array('name' => 'response', 'type' => 'xsd:string'),
             'message' => array('name' => 'message', 'type' => 'xsd:string')));
 
         $server->register(
-                'getReqInfo', array('req_id' => 'xsd:int', 'dom_src_ip' => 'xsd:string'), array('req_info' => 'tns:reqType'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/getReqInfo", 'rpc', 'encoded', 'Complex Hello World Method');
+                'getReqInfo', array('req_id' => 'xsd:int', 'src_ode_ip' => 'xsd:string'), array('req_info' => 'tns:reqType'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/getReqInfo", 'rpc', 'encoded', 'Complex Hello World Method');
 
         $server->register(
-                'notifyResponse', array('name' => 'tns:responseType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/notifyResponse", 'rpc', 'encoded', 'Complex Hello World Method');
+                'notifyResponse', array('response' => 'tns:responseType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/notifyResponse", 'rpc', 'encoded', 'Complex Hello World Method');
 
         $server->register(
                 'requestUserAuthorization', array('usr_dst' => 'xsd:int', 'request' => 'tns:requestType'), array('req_id' => 'xsd:int'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/requestUserAuthorization", 'rpc', 'encoded', 'Complex Hello World Method');
@@ -77,7 +77,7 @@ class ws extends Controller {
                 'getRequestPath', array('req_id' => 'xsd:int'), array('ode_ip_array' => 'tns:stringTypeList'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/getRequestPath", 'rpc', 'encoded', 'Complex Hello World Method');
 
         $server->register(
-                'refreshRequestStatus', array('req_id' => 'xsd:int', 'dom_src_ip' => 'xsd:string', 'new_status' => 'xsd:string'), array('confirmation' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/refreshRequestStatus", 'rpc', 'encoded', 'Complex Hello World Method');
+                'refreshRequestStatus', array('req_id' => 'xsd:int', 'src_ode_ip' => 'xsd:string', 'new_status' => 'xsd:string'), array('confirmation' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/refreshRequestStatus", 'rpc', 'encoded', 'Complex Hello World Method');
 
         
         function getReqInfo($req_id, $src_ode_ip) {
@@ -96,9 +96,10 @@ class ws extends Controller {
                 $resource->{$pk} = $result[0]->resource_id;
 
                 if ($result2 = $resource->fetch(FALSE)) {
-                    $return = array('resc_id' => $resource->{$pk},
-                        'resc_descr' => $result2[0]->displayField,
-                        'resc_type' => $rescTy);
+                    $return = array(
+                        'resc_id' => $resource->{$pk},
+                        'resc_type' => $rescTy,
+                        'resc_descr' => $result2[0]->{$resource->displayField});
 
                     Log::write('info', 'Request info return:' . print_r($return, TRUE));
                     return $return;
@@ -108,7 +109,7 @@ class ws extends Controller {
         }
 
         function notifyResponse($response) {
-            Log::write("info", "Notify response from ODE" . print_r($response, TRUE));
+            Log::write("info", "Notify response from ODE:\n" . print_r($response, TRUE));
             $validResponses = array("accept", "reject");
 
             if (array_search($response['response'], $validResponses)) {
@@ -184,7 +185,7 @@ class ws extends Controller {
         }
 
         function requestUserAuthorization($usr_dst, $request) {
-            Log::write('info', 'Request user authorizarion' . print_r($request, TRUE));
+            Log::write('info', "Request user authorizarion:\n" . print_r($request, TRUE));
 
             if ($usr_dst && $request) {
 
@@ -194,9 +195,19 @@ class ws extends Controller {
                 $new_request->src_ode_ip = $request['src_ode_ip'];
                 $new_request->src_usr = $request['src_usr'];
                 $new_request->dst_ode_ip = $request['dst_ode_ip'];
-
+                
+                $new_request->resource_type = NULL;
+                $new_request->resource_id = NULL;
+                
                 $new_request->answerable = 'yes';
+                
+                $new_request->status = NULL;
+                $new_request->response = NULL;
+                $new_request->message = NULL;
+                
+                $new_request->response_user = NULL;
                 $new_request->start_time = microtime(true);
+                $new_request->finish_time = NULL;
 
                 //insere embaixo do usuario passado como parametro
                 $user = new user_info();
@@ -251,9 +262,20 @@ class ws extends Controller {
                 $new_request->src_ode_ip = $request['src_ode_ip'];
                 $new_request->src_usr = $request['src_usr'];
                 $new_request->dst_ode_ip = $request['dst_ode_ip'];
-
+                
+                $new_request->resource_type = NULL;
+                $new_request->resource_id = NULL;
+                
                 $new_request->answerable = 'yes';
+                
+                $new_request->status = NULL;
+                $new_request->response = NULL;
+                $new_request->message = NULL;
+                
+                $new_request->response_user = NULL;
                 $new_request->start_time = microtime(true);
+                $new_request->finish_time = NULL;
+                
 
                 //insere embaixo do grupo passado como parametro
                 $group = new group_info();
@@ -308,40 +330,41 @@ class ws extends Controller {
         }
 
         function getRequestPath($req_id) {
-            $gri = "gri";
-            $oscars_url = "http";
+            Log::write('info', "Getting request path:\n" . print_r(array('req_id' => $req_id), TRUE));
+            
+            $req_info = new request_info();
+            $req_info->req_id = $req_id;
+            $req_info->answerable = 'no';
+            $request = $req_info->fetch(FALSE);
 
-            $req = new request_info();
-            $req->req_id = $req_id;
-            $req->answerable = 'no';
-            $req->fetch(FALSE);
-            
-            if ($req->resource_type == "reservation_info") {
-                $reservation = new reservation_info();
-                $reservation->res_id = $req->resource_id;
-                $pathArray = $reservation->getPath();
-            }
-            
             $ode_ip_array = array();
-                    // put only the topology IDs into an array
-                    $topoIdArray = array();
-                    $dom = new domain_info();
-                    foreach ($pathArray as $urn) {
-                        $topoIdArray[] = $dom->getTopologyId($urn);
-                    }
-                    array_unique($topoIdArray);
+            if ($request[0]->resource_type == "reservation_info") {
+                $reservation = new reservation_info();
+                $reservation->res_id = $request[0]->resource_id;
+                $pathArray = $reservation->getPath();
 
-                    // fill the array with the Endpoints of the path
-                    foreach ($topoIdArray as $topId) {
-                        $dom = new domain_info();
-                        $dom->topology_id = $topId;
-                        if ($d_result = $dom->fetch(FALSE)) {
-                            $d_tmp = $d_result[0];
-                            $ode_ip_array[] = $d_tmp->ode_ip;
-                            //$businessEndpoint = "http://$src_dom->ode_ip/$src_dom->ode_wsdl_path";
-                        }
-                    }            
-            
+                // put only the topology IDs into an array
+                $topoIdArray = array();
+                $dom = new domain_info();
+                foreach ($pathArray as $urn) {
+                    $topoIdArray[] = $dom->getTopologyId($urn);
+                }
+                $topoIdArray = array_unique($topoIdArray);
+
+                // fill the array with the ODE IPs of the path
+                foreach ($topoIdArray as $topId) {
+                    $dom = new domain_info();
+                    $dom->topology_id = $topId;
+                    if ($d_result = $dom->fetch(FALSE)) {
+                        $d_tmp = $d_result[0];
+                        $ode_ip_array[] = $d_tmp->ode_ip;
+                        //$businessEndpoint = "http://$src_dom->ode_ip/$src_dom->ode_wsdl_path";
+                    } else
+                        $ode_ip_array[] = NULL;
+                }
+            }
+            Log::write('info', "Request path return with ODE IPs:\n" . print_r($ode_ip_array, TRUE));
+
             return $ode_ip_array;
         }
 
