@@ -25,7 +25,7 @@ audio[controls], canvas, video { display: inline-block; *display: inline; *zoom:
  *    www.yuiblog.com/blog/2010/10/01/quick-tip-customizing-the-mobile-safari-tap-highlight-color/
  * 4. Prevent iOS text size adjust on device orientation change, without disabling user zoom
  *    www.456bereastreet.com/archive/201012/controlling_text_size_in_safari_for_ios_without_disabling_user_zoom/
- */
+*/
 
 html { font-size: 100%; -webkit-overflow-scrolling: touch; -webkit-tap-highlight-color: rgba(0,0,0,0); -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 
@@ -37,7 +37,7 @@ body, button, input, select, textarea { font-family: arial, sans-serif, helvetic
  * These selection declarations have to be separate
  * No text-shadow: twitter.com/miketaylr/status/12228805301
  * Also: hot pink!
- */
+*/
 
 ::-moz-selection { background: #c00; color: #fff; text-shadow: none; }
 ::selection { background: #c00; color: #fff; text-shadow: none; }
@@ -70,7 +70,7 @@ nav ul, nav ol { list-style: none; margin: 0; padding: 0; }
 /*
  * Improve image quality when scaled in IE7
  * code.flickr.com/blog/2008/11/12/on-ui-quality-the-little-things-client-side-image-resizing/
- */
+*/
 
 img { border: 0; -ms-interpolation-mode: bicubic; }
 
@@ -84,7 +84,7 @@ fieldset { border: 0; margin: 0; padding: 0; }
 /* 
  * 1. Correct color not inheriting in IE6/7/8/9 
  * 2. Correct alignment displayed oddly in IE6/7 
- */
+*/
 
 legend { border: 0; *margin-left: -7px; padding: 0; }
 
@@ -95,27 +95,27 @@ label { cursor: pointer; }
  * 1. Correct font-size not inheriting in all browsers
  * 2. Remove margins in FF3/4 S5 Chrome
  * 3. Define consistent vertical alignment display in all browsers
- */
+*/
 
 button, input, select, textarea { font-size: 100%; margin: 0; vertical-align: baseline; *vertical-align: middle; }
 
 /*
  * 1. Define line-height as normal to match FF3/4 (set using !important in the UA stylesheet)
  * 2. Correct inner spacing displayed oddly in IE6/7
- */
+*/
 
 button, input { line-height: normal; *overflow: visible; }
 
 /*
  * 1. Display hand cursor for clickable form elements
  * 2. Allow styling of clickable form elements in iOS
- */
+*/
 
 button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; }
 
 /*
  * Consistent box sizing and appearance
- */
+*/
 
 input[type="checkbox"], input[type="radio"] { box-sizing: border-box; }
 input[type="search"] { -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
@@ -123,7 +123,7 @@ input[type="search"] { -moz-box-sizing: content-box; -webkit-box-sizing: content
 /* 
  * Remove inner padding and border in FF3/4
  * www.sitepen.com/blog/2008/05/14/the-devils-in-the-details-fixing-dojos-toolbar-buttons/ 
- */
+*/
 
 button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
 
@@ -232,7 +232,7 @@ div#flash_box .closeFlash {
     box-shadow: rgba(0,0,0,0.246094) 0 -3px 5px,rgba(0,0,0,0.246094) 0 3px 5px;
     -moz-box-shadow: rgba(0,0,0,0.246094) 0 -3px 5px,rgba(0,0,0,0.246094) 0 3px 5px;
     -webkit-box-shadow: rgba(0,0,0,0.246094) 0 -3px 5px,rgba(0,0,0,0.246094) 0 3px 5px;
-    
+
 }
 
 .icons td {
@@ -827,10 +827,7 @@ div#bandwidth_bar_text{
 
 .tab_content {
     /*float: left;*/
-    border: 1px solid #BBB;
     padding: 0.5em 0.7em 0.5em 0.9em;
-    background-color: #EEE;
-    box-shadow: 2px 2px 4px #888;
     margin: 12px 0;
 }
 
@@ -838,6 +835,12 @@ div#bandwidth_bar_text{
     float:left;
 }
 
+.shadow-box, .tab_content{
+    border: solid #BBB 1px; 
+    box-shadow: 2px 2px 4px #888; 
+    background-color: #EEE;
+    border-image: initial;
+}
 
 /* Cores das fontes */
 
@@ -860,7 +863,7 @@ h1 { /* Títulos principais */
 table.reservation-point{
     width: 160px; 
     box-shadow: 2px 2px 4px #888; 
-    height:200px; 
+    height:200px;
     border:0.1em; 
 }
 
@@ -869,7 +872,7 @@ table.reservation-point td:nth-child(1) {
 }
 
 .reservation-point input[type=text], .reservation-point select {
-	width: 80px;
+    width: 80px;
     height: 22px;
 }
 
@@ -877,9 +880,34 @@ table.reservation-point td, table.reservation-point th {
     border: 1px solid #BBB;
 }
 
+.reservation-point thead{
+    background-color: #DDDDDD;
+}
+
+table.view-point{
+    height:160px; 
+}
+
 .recurrence-item{
     float: left;
     margin: 0.4em 2em;
+}
+
+dl {
+    line-height: 2em;
+    margin: 0em 0em;
+}
+
+dt {
+    font-weight: bold;
+    padding-left: 4px;
+    vertical-align: top;
+    width: 10em;
+}
+dd {
+    margin-left: 10em;
+    margin-top: -2em;
+    vertical-align: top;
 }
 
 #menu .active {
@@ -1025,7 +1053,7 @@ table.reservation-point td, table.reservation-point th {
 
 .placeholder
 {
-  color: #aaa;
+    color: #aaa;
 }
 
 /* Spinner
@@ -1059,9 +1087,9 @@ span.ui-spinner { background: none; }
 .ui-widget, .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
     font-size: 9pt;
     font-family: arial, sans-serif, helvetica;
-	line-height: 14px;
-	word-spacing:	0;
-	font-weight: 400;
+    line-height: 14px;
+    word-spacing:	0;
+    font-weight: 400;
 }
 
 /* =============================================================================
@@ -1371,160 +1399,160 @@ form #recaptcha_response_field {
 .notice,
 p.error,
 .error-message {
-	background: #ffcc00;
-	background-repeat: repeat-x;
-	background-image: -moz-linear-gradient(top, #ffcc00, #E6B800);
-	background-image: -ms-linear-gradient(top, #ffcc00, #E6B800);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#ffcc00), to(#E6B800));
-	background-image: -webkit-linear-gradient(top, #ffcc00, #E6B800);
-	background-image: -o-linear-gradient(top, #ffcc00, #E6B800);
-	background-image: linear-gradient(top, #ffcc00, #E6B800);
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	margin-bottom: 18px;
-	padding: 7px 14px;
-	color: #404040;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
-	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    background: #ffcc00;
+    background-repeat: repeat-x;
+    background-image: -moz-linear-gradient(top, #ffcc00, #E6B800);
+    background-image: -ms-linear-gradient(top, #ffcc00, #E6B800);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffcc00), to(#E6B800));
+    background-image: -webkit-linear-gradient(top, #ffcc00, #E6B800);
+    background-image: -o-linear-gradient(top, #ffcc00, #E6B800);
+    background-image: linear-gradient(top, #ffcc00, #E6B800);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin-bottom: 18px;
+    padding: 7px 14px;
+    color: #404040;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 .success,
 .message,
 .cake-error,
 p.error,
 .error-message {
-	clear: both;
-	color: #fff;
-	background: #c43c35;
-	border: 1px solid rgba(0, 0, 0, 0.5);
-	background-repeat: repeat-x;
-	background-image: -moz-linear-gradient(top, #ee5f5b, #c43c35);
-	background-image: -ms-linear-gradient(top, #ee5f5b, #c43c35);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#ee5f5b), to(#c43c35));
-	background-image: -webkit-linear-gradient(top, #ee5f5b, #c43c35);
-	background-image: -o-linear-gradient(top, #ee5f5b, #c43c35);
-	background-image: linear-gradient(top, #ee5f5b, #c43c35);
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+    clear: both;
+    color: #fff;
+    background: #c43c35;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    background-repeat: repeat-x;
+    background-image: -moz-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: -ms-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ee5f5b), to(#c43c35));
+    background-image: -webkit-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: -o-linear-gradient(top, #ee5f5b, #c43c35);
+    background-image: linear-gradient(top, #ee5f5b, #c43c35);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
 }
 .success {
-	clear: both;
-	color: #fff;
-	border: 1px solid rgba(0, 0, 0, 0.5);
-	background: #3B8230;
-	background-repeat: repeat-x;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#76BF6B), to(#3B8230));
-	background-image: -webkit-linear-gradient(top, #76BF6B, #3B8230);
-	background-image: -moz-linear-gradient(top, #76BF6B, #3B8230);
-	background-image: -ms-linear-gradient(top, #76BF6B, #3B8230);
-	background-image: -o-linear-gradient(top, #76BF6B, #3B8230);
-	background-image: linear-gradient(top, #76BF6B, #3B8230);
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+    clear: both;
+    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    background: #3B8230;
+    background-repeat: repeat-x;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#76BF6B), to(#3B8230));
+    background-image: -webkit-linear-gradient(top, #76BF6B, #3B8230);
+    background-image: -moz-linear-gradient(top, #76BF6B, #3B8230);
+    background-image: -ms-linear-gradient(top, #76BF6B, #3B8230);
+    background-image: -o-linear-gradient(top, #76BF6B, #3B8230);
+    background-image: linear-gradient(top, #76BF6B, #3B8230);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
 }
 /** Debugging **/
 pre {
-	color: #000;
-	background: #f0f0f0;
-	padding: 15px;
-	-moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    color: #000;
+    background: #f0f0f0;
+    padding: 15px;
+    -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 .cake-debug-output {
-	padding: 0;
-	position: relative;
+    padding: 0;
+    position: relative;
     text-align: left;
 }
 .cake-debug-output > span {
-	position: absolute;
-	top: 5px;
-	right: 5px;
-	background: rgba(255, 255, 255, 0.3);
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	padding: 5px 6px;
-	color: #000;
-	display: block;
-	float: left;
-	-moz-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.5);
-	-webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.5);
-	box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.5);
-	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255, 255, 255, 0.3);
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    padding: 5px 6px;
+    color: #000;
+    display: block;
+    float: left;
+    -moz-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.5);
+    -webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.5);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 .cake-debug,
 .cake-error {
-	font-size: 16px;
-	line-height: 20px;
-	clear: both;
+    font-size: 16px;
+    line-height: 20px;
+    clear: both;
 }
 .cake-error > a {
-	text-shadow: none;
+    text-shadow: none;
 }
 .cake-error {
-	white-space: normal;
+    white-space: normal;
 }
 .cake-stack-trace {
-	background: rgba(255, 255, 255, 0.7);
-	color: #333;
-	margin: 10px 0 5px 0;
-	padding: 10px 10px 0 10px;
-	font-size: 120%;
-	line-height: 140%;
-	overflow: auto;
-	position: relative;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
+    background: rgba(255, 255, 255, 0.7);
+    color: #333;
+    margin: 10px 0 5px 0;
+    padding: 10px 10px 0 10px;
+    font-size: 120%;
+    line-height: 140%;
+    overflow: auto;
+    position: relative;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
 }
 .cake-stack-trace a {
-	text-shadow: none;
-	background: rgba(255, 255, 255, 0.7);
-	padding: 5px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
-	margin: 0px 4px 10px 2px;
-	font-family: sans-serif;
-	font-size: 14px;
-	line-height: 14px;
-	display: inline-block;
-	text-decoration: none;
-	-moz-box-shadow: inset 0px 1px 0 rgba(0, 0, 0, 0.3);
-	-webkit-box-shadow: inset 0px 1px 0 rgba(0, 0, 0, 0.3);
-	box-shadow: inset 0px 1px 0 rgba(0, 0, 0, 0.3);
+    text-shadow: none;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 5px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    margin: 0px 4px 10px 2px;
+    font-family: sans-serif;
+    font-size: 14px;
+    line-height: 14px;
+    display: inline-block;
+    text-decoration: none;
+    -moz-box-shadow: inset 0px 1px 0 rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: inset 0px 1px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0px 1px 0 rgba(0, 0, 0, 0.3);
 }
 .cake-code-dump pre {
-	position: relative;
-	overflow: auto;
+    position: relative;
+    overflow: auto;
 }
 .cake-context {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 .cake-stack-trace pre {
-	color: #000;
-	background-color: #F0F0F0;
-	margin: 0px 0 10px 0;
-	padding: 1em;
-	overflow: auto;
-	text-shadow: none;
+    color: #000;
+    background-color: #F0F0F0;
+    margin: 0px 0 10px 0;
+    padding: 1em;
+    overflow: auto;
+    text-shadow: none;
 }
 /* excerpt */
 .cake-code-dump pre,
 .cake-code-dump pre code {
-	clear: both;
-	font-size: 12px;
-	line-height: 15px;
-	margin: 4px 2px;
-	padding: 4px;
-	overflow: auto;
+    clear: both;
+    font-size: 12px;
+    line-height: 15px;
+    margin: 4px 2px;
+    padding: 4px;
+    overflow: auto;
 }
 .cake-code-dump .code-highlight {
-	display: block;
-	background-color: rgba(255, 255, 0, 0.5);
+    display: block;
+    background-color: rgba(255, 255, 0, 0.5);
 }
 
 /* SQL log */
@@ -1538,4 +1566,12 @@ pre {
 }
 .cake-sql-log caption {
     color:#fff;
+}
+
+
+.float-right{
+    float: right;
+}
+.float-left{
+    float: left;
 }

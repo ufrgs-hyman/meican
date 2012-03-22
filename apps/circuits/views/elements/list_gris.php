@@ -1,8 +1,3 @@
-<?php
-    $gris = $argsToElement['gris'];
-    $refresh = $argsToElement['refresh'];
-?>
-
 <table class="list" style="width: 100%">
     
     <thead>
