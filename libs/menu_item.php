@@ -1,6 +1,8 @@
 <?php
 
 
+include_once 'libs/acl_loader.php';
+
 class MenuItem {
     var $label;
     var $url;
