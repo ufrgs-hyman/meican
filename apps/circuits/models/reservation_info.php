@@ -294,6 +294,84 @@ class reservation_info extends Resource_Model {
 
         return $pathArray;
     }
+    
+    /**
+     *
+     * @todo modificar!!
+     */
+    function getAvailableBandwidth($res_id) {
+        if (isset($res_id) && is_int($res_id)) {
+            $reservation = new reservation_info();
+            $reservation->res_id = $res_id;
+
+            $res = $reservation->fetch(FALSE);
+
+            if (!$res) {
+                Framework::debug('reservation not found');
+                return NULL;
+            }
+
+            $tim = new timer_info();
+            $tim->tmr_id = $res[0]->tmr_id;
+            $timer_info = $tim->fetch(FALSE);
+
+            if (!$timer_info) {
+                Framework::debug('timer not found');
+                return NULL;
+            }
+            $timer = $timer_info[0];
+
+            $gri = new gri_info();
+            $gris = $gri->fetch(FALSE);
+
+            $available_bands = array();
+
+            $recurr = $timer->getRecurrences();
+            foreach ($recurr as $r) {
+
+                $capacity = 1000;
+                $linkUtilization = 0;
+
+                foreach ($gris as $g) {
+
+                    if (($g->status != "FINISHED") && ($g->status != "CANCELLED") && ($g->status != "FAILED")) {
+
+                        $startDT = new DateTime($g->start);
+                        $finishDT = new DateTime($g->finish);
+
+                        $resStart = $startDT->getTimestamp();
+                        $resFinish = $finishDT->getTimestamp();
+
+                        if (!(($resFinish <= $r->start) || ($resStart >= $r->finish))) {
+
+                            /* if ( (($resStart <= $r->start) && ($resFinish >= $r->finish)) ||
+                              (($resStart >= $r->start) && ($resStart < $r->finish)) ||
+                              (($resFinish > $r->start) && ($resFinish <= $r->finish)) ) */
+
+                            $res_temp = new reservation_info();
+                            $res_temp->res_id = $g->res_id;
+                            $res_result = $res_temp->fetch(FALSE);
+
+                            $flow_temp = new flow_info();
+                            $flow_temp->flw_id = $res_result[0]->flw_id;
+                            $flow_result = $flow_temp->fetch(FALSE);
+
+                            $linkUtilization += $flow_result[0]->bandwidth;
+                        }
+                    }
+                }
+
+                $available_bands[] = $capacity - $linkUtilization;
+
+                Framework::debug("start", date("d/m/Y H:i:s", $r->start));
+                Framework::debug("finish", date("d/m/Y H:i:s", $r->finish));
+                Framework::debug("available band", $capacity - $linkUtilization);
+            }
+
+            return $available_bands;
+        } else
+            return NULL;
+    }
 
     function getGriDetails() {
         $gri_to_list = array('args0' => array('ufrgs.cipo.rnp.br-1259', 'ufrgs.cipo.rnp.br-1694'));

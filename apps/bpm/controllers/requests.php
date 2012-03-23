@@ -18,120 +18,102 @@ class requests extends Controller {
     }
 
     public function show() {
+        $req_info = new request_info();
+        $req_info->answerable = 'yes';
+        $requests = $req_info->fetch();
 
-        $requests = new request_info();
+        if ($requests) {
+            $pending = array();
+            $finished = array();
 
-        $temp = $requests->getRequestInfo(TRUE);
-        //$endpoint =  "http://143.54.12.185/dirname/main.php?bpm/ws";
-        //$ws_client = new nusoap_client($endpoint, array('cache_wsdl' => 0));
-        //$usr = array('usr_name' => 'Pietro Biasuz');
-        //$grp = array('grp_id' => 2);
-        //$result = $ws_client->call('getUsers', array('usr'=>$usr));
-        //$result = $ws_client->call('getGroups');
-        //$res_id_list = array(2,1,2);
-        //$result = $ws_client->call('getResInfo',array(2));
-        //$result = $ws_client->call('getTimerInfo',array(2));
-
-        //$result = $ws_client->call('getFlowInfo', array(1));
-        //$urn_array = array('urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFSC','error','blablalblablabla');
-        //$result = $ws_client->call('getURNInfo',array('urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFSC'));
-        //$result = $ws_client->call('getURNDetails',array('urn_string' => 'urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFSC'));
-        //$result = $ws_client->call('getURNDetails');
-
-        if ($temp) {
-            foreach ($temp as $t) {
-               if ($t->answerable == 'yes')
-                if (!$t->response)
-                    $pending[] = $t;
-                else $finished[] = $t;
+            foreach ($requests as $req) {
+                if (!$req->response)
+                    $pending[] = $req->getRequestInfo(TRUE);
+                else
+                    $finished[] = $req->getRequestInfo(TRUE);
             }
 
-            //debug('temp',$temp);
+            $args = new stdClass();
             $args->pending = $pending;
             $args->finished = $finished;
 
             $this->setArgsToBody($args);
+            $this->render('show');
+        } else {
+            $args = new stdClass();
+            $args->title = _("Requests");
+            $args->message = _("You have no pending or finished request");
+            $this->setArgsToBody($args);
+
+            $this->render('empty');
+        }
+    }
+
+//    public function createRequest () {
+//
+//        $domain = new domain_info();
+//        $domains = $domain->fetch(FALSE);
+//
+//        $this->setArgsToBody($domains);
+//        $this->addScript('bpmStrategy');
+//        $this->render('createRequest');
+//    }
+//
+//    public function getUsers() {
+//
+//        $dom_ip = $_POST['dom_ip'];
+//
+//        //consulta domínio remoto via web service para buscar os usuários do mesmo
+//        $client = new nusoap_client("http://$dom_ip/".Configure::read('systemDirName')."bpm/ws", array('cache_wsdl' => 0));
+//
+//        $result = $client->call('getUsers');
+//        $this->renderJson($result);
+//    }
+
+    public function reply($input) {
+        $locId = NULL;
+        if (array_key_exists('loc_id', $input)) {
+            $locId = $input['loc_id'];
+        } else {
+            $this->setFlash(_("Invalid index"), "fatal");
+            $this->show();
+            return;
         }
 
-        $this->render('show');
-    } //function show
-
-    public function createRequest () {
-
-        $domain = new domain_info();
-        $domains = $domain->fetch(FALSE);
-
-        $this->setArgsToBody($domains);
-        $this->addScript('bpmStrategy');
-        $this->render('createRequest');
-    }
-
-    public function getUsers() {
-
-        $dom_ip = $_POST['dom_ip'];
-
-        //consulta domínio remoto via web service para buscar os usuários do mesmo
-        $client = new nusoap_client("http://$dom_ip/".Configure::read('systemDirName')."bpm/ws", array('cache_wsdl' => 0));
-
-        $result = $client->call('getUsers');
-        $this->renderJson($result);
-    }
-
-    public function replyRequest($input) {
-
         $request = new request_info();
-
         $request->loc_id = $input['loc_id'];
 
         $result = $request->getRequestInfo(TRUE, TRUE, TRUE, TRUE);
 
-        //debug('result',$result);
+        $this->setArgsToBody($result);
+        $this->render('reply');
+    }
 
-        $dom = new domain_info();
-        $dom->dom_ip = $result[0]->flow_info['src_dom_ip'];
-        $s_result = $dom->fetch(FALSE);
-
-        if ($s_result)
-            $result[0]->flow_info['src_dom'] = $s_result[0]->dom_descr;
-        else {
-            $result[0]->flow_info['src_dom'] = _('Unknown');
+    public function saveResponse($request) {
+        $locId = NULL;
+        if (array_key_exists('loc_id', $request)) {
+            $locId = $request['loc_id'];
+        } else {
+            $this->setFlash(_("Invalid index"), "fatal");
+            $this->show();
+            return;
         }
 
-        $dom->dom_ip = $result[0]->flow_info['dst_dom_ip'];
-        $d_result = $dom->fetch(FALSE);
+        //insere no banco local
+        $to_response = new request_info();
+        $to_response->loc_id = $locId;
+        $to_response->answerable = 'yes';
+        $to_response->response = Common::POST('response');
+        $to_response->message = Common::POST('message');
 
-        if ($d_result)
-            $result[0]->flow_info['dst_dom'] = $d_result[0]->dom_descr;
-        else {
-            $result[0]->flow_info['dst_dom'] = _('Unknown');
-        }
-
-        $args->request = $result[0];
-        $this->setArgsToBody($args);
-        $this->render('replyRequest');
-
-    }//function replyRequest
-
-    function saveResponse($request) {
-
-        if ($request) {
-            //insere no banco local
-            $to_response = new request_info();
-            $to_response->loc_id = $request['loc_id'];
-            $to_response->answerable = 'yes';
-            $to_response->response = Common::POST('response');
-            $to_response->message = Common::POST('message');
-
-            if ($to_response->response()) {
-                $this->setFlash(_('Response saved'), "success");
-                $this->show();
-                return;
-            }
-            else {
-                $this->setFlash(_('Response NOT saved'), "error");
-                $this->show();
-                return;
-            }
+        if ($to_response->response()) {
+            $this->setFlash(_('Response saved'), "success");
+            $this->show();
+            return;
+        } else {
+            $this->setFlash(_('Response NOT saved'), "error");
+            $this->show();
+            return;
         }
     }
 

@@ -81,7 +81,7 @@ class ws extends Controller {
 
         
         function getReqInfo($req_id, $src_ode_ip) {
-            Log::write("info", "Get request info from ODE:" . print_r(array('req_id' => $req_id, 'src_ode_ip' => $src_ode_ip), TRUE));
+            Log::write('ws', "Get request info from ODE:" . print_r(array('req_id' => $req_id, 'src_ode_ip' => $src_ode_ip), TRUE));
 
             $req = new request_info();
             $req->req_id = $req_id;
@@ -101,7 +101,7 @@ class ws extends Controller {
                         'resc_type' => $rescTy,
                         'resc_descr' => $result2[0]->{$resource->displayField});
 
-                    Log::write('info', 'Request info return:' . print_r($return, TRUE));
+                    Log::write('ws', 'Request info return:' . print_r($return, TRUE));
                     return $return;
                 }
             }
@@ -109,17 +109,16 @@ class ws extends Controller {
         }
 
         function notifyResponse($response) {
-            Log::write("info", "Notify response from ODE:\n" . print_r($response, TRUE));
+            Log::write('ws', "Notify response from ODE:\n" . print_r($response, TRUE));
             $validResponses = array("accept", "reject");
 
-            if (array_search($response['response'], $validResponses)) {
+            if (array_search($response['response'], $validResponses) !== FALSE) {
 
                 $req = new request_info();
                 $req->req_id = $response['req_id'];
                 $req->src_ode_ip = $response['src_ode_ip'];
-                $req->answerable = 'no';
 
-                if (!$req->get('response')) {
+                if (!$req->get('response', FALSE)) {
 
                     $req->updateTo(array('message' => $response['message'], 'response' => $response['response']), FALSE);
 
@@ -131,10 +130,10 @@ class ws extends Controller {
                          * @todo Transformar em função de algum modelo (reservation_info ou gri_info)
                          */
                         $tmp = new gri_info();
-                        $tmp->res_id = $req->get('resource_id');
+                        $tmp->res_id = $req->get('resource_id', FALSE);
                         $allgris = $tmp->fetch(FALSE);
 
-                        Log::write("info", "Notify response: reservation authorized, setting GRIs to be sent. Reservation ID:" . print_r($tmp->res_id, TRUE));
+                        Log::write('ws', "Notify response: reservation authorized, setting GRIs to be sent. Reservation ID:\n" . print_r($tmp->res_id, TRUE));
 
                         foreach ($allgris as $g) {
                             $now = time();
@@ -152,7 +151,7 @@ class ws extends Controller {
 
                         //as reservas devem ser canceladas no OSCARS
                         $tmp = new gri_info();
-                        $tmp->res_id = $req->get('resource_id');
+                        $tmp->res_id = $req->get('resource_id', FALSE);
                         $allgris = $tmp->fetch(FALSE);
 
                         $dom_tmp = new domain_info();
@@ -167,7 +166,7 @@ class ws extends Controller {
                                 //apaga os gris negados do db MEICAN
                                 $g->delete(FALSE);
                             } else {
-                                Log::write("error", "Notify response: error to cancel GRI" . print_r($g->gri_descr, TRUE));
+                                Log::write('ws', "Notify response: error to cancel GRI:\n" . print_r($g->gri_descr, TRUE));
                             }
                             unset($oscRes);
                         }
@@ -175,17 +174,17 @@ class ws extends Controller {
 
                     return TRUE; //se a requisicao foi negada ou aceita retorna true
                 } else {
-                    Log::write("notice", "Notify response: request already answered");
+                    Log::write('ws', "Notify response: request already answered");
                     return NULL;
                 }
             } else {
-                Log::write("error", "Notify response: invalid response from ODE" . print_r($response, TRUE));
+                Log::write('ws', "Notify response: invalid response from ODE:\n" . print_r($response, TRUE));
                 return NULL;
             }
         }
 
         function requestUserAuthorization($usr_dst, $request) {
-            Log::write('info', "Request user authorizarion:\n" . print_r($request, TRUE));
+            Log::write('ws', "Request user authorizarion:\n" . print_r($request, TRUE));
 
             if ($usr_dst && $request) {
 
@@ -239,21 +238,21 @@ class ws extends Controller {
 
                         return TRUE;
                     } else {
-                        Log::write('error', 'Fail to save the request by requestUserAuthorization');
+                        Log::write('ws', 'Fail to save the request by requestUserAuthorization');
                         return NULL;
                     }
                 } else {
-                    Log::write('error', 'Destination user not found by requestUserAuthorization');
+                    Log::write('ws', 'Destination user not found by requestUserAuthorization');
                     return NULL;
                 }
             } else {
-                Log::write('error', 'Not enough arguments in requestUserAuthorization');
+                Log::write('ws', 'Not enough arguments in requestUserAuthorization');
                 return NULL;
             }
         }
 
         function requestGroupAuthorization($grp_dst, $request) {
-            Log::write('info', 'Request group authorizarion' . print_r($request, TRUE));
+            Log::write('ws', 'Request group authorizarion' . print_r($request, TRUE));
 
             if ($grp_dst && $request) {
                 $new_request = new request_info();
@@ -316,21 +315,21 @@ class ws extends Controller {
 
                         return TRUE;
                     } else {
-                        Log::write('error', 'Fail to save the request by requestGroupAuthorization');
+                        Log::write('ws', 'Fail to save the request by requestGroupAuthorization');
                         return NULL;
                     }
                 } else {
-                    Log::write('error', 'Destination group not found by requestGroupAuthorization');
+                    Log::write('ws', 'Destination group not found by requestGroupAuthorization');
                     return NULL;
                 }
             } else {
-                Log::write('error', 'Not enough arguments in requestGroupAuthorization');
+                Log::write('ws', 'Not enough arguments in requestGroupAuthorization');
                 return NULL;
             }
         }
 
         function getRequestPath($req_id) {
-            Log::write('info', "Getting request path:\n" . print_r(array('req_id' => $req_id), TRUE));
+            Log::write('ws', "Getting request path:\n" . print_r(array('req_id' => $req_id), TRUE));
             
             $req_info = new request_info();
             $req_info->req_id = $req_id;
@@ -363,13 +362,13 @@ class ws extends Controller {
                         $ode_ip_array[] = NULL;
                 }
             }
-            Log::write('info', "Request path return with ODE IPs:\n" . print_r($ode_ip_array, TRUE));
+            Log::write('ws', "Request path return with ODE IPs:\n" . print_r($ode_ip_array, TRUE));
 
             return $ode_ip_array;
         }
 
         function refreshRequestStatus($req_id, $src_ode_ip, $new_status) {
-            Log::write('info', 'Refresh request status:' . print_r(array('req_id' => $req_id, 'src_ode_ip' => $src_ode_ip, 'status' => $new_status), TRUE));
+            Log::write('ws', 'Refresh request status:' . print_r(array('req_id' => $req_id, 'src_ode_ip' => $src_ode_ip, 'status' => $new_status), TRUE));
 
             $req = new request_info();
             $req->req_id = $req_id;

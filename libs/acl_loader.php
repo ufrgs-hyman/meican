@@ -45,7 +45,7 @@ class AclLoader extends TreeModel {
     }
 
     public function reloadACL($options = array()) {
-        //debug('reloading ACL...');
+        Log::write('debug', 'Reloading ACL...');
         $debugLevel = Configure::read('debug');
         Configure::write('debug', 0);
 

@@ -185,21 +185,14 @@ class ws extends Controller {
                     return NULL;
                 }
 
-                $timer = new timer_info();
-                $timer->tmr_id = $res[0]->tmr_id;
-                $timer_info = $timer->fetch(FALSE);
-
-                if (!$timer) {
-                    debug('timer not found');
+                $timer_info = new timer_info();
+                $timer_info->tmr_id = $res[0]->tmr_id;
+                if ($timer = $timer_info->getTimerDetails())
+                    return (array) $timer;
+                else {
+                    Log::write('error', "Error to get timer details");
                     return NULL;
                 }
-
-                $return = array(
-                        'start' => $timer_info[0]->start,
-                        'finish' => $timer_info[0]->finish,
-                        'recurrence' => $timer_info[0]->summary);
-
-                return $return;
             } else return NULL;
         }
         

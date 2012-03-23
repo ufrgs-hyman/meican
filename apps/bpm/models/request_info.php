@@ -132,80 +132,196 @@ class request_info extends Resource_Model {
 //
 //    }
 
-    function getRequestInfo($getResInfo = FALSE, $getFlowInfo = FALSE, $getTimerInfo = FALSE,$getEndpointsInfo = FALSE) {
-        $temp = $this->fetch();
+    function getRequestInfo($getReqInfo = FALSE, $getFlowInfo = FALSE, $getTimerInfo = FALSE) {
 
-        if ($temp) {
-            foreach ($temp as $t) {
-                $domain = new domain_info();
-                $domain->dom_id = $t->dom_src;
-                $result2 = $domain->fetch(FALSE);
-                if ($result2[0]->dom_descr)
-                    $t->dom_src = $result2[0]->dom_descr;
-                else $t->dom_src = $result2[0]->dom_ip;
+        $domain_info = new domain_info();
+        $domain_info->ode_ip = $this->src_ode_ip;
 
-                $domain2 = new domain_info();
-                $domain2->dom_id = $t->dom_dst;
-                $result3 = $domain2->fetch(FALSE);
-                if ($result3[0]->dom_descr)
-                    $t->dom_dst = $result3[0]->dom_descr;
-                else  $t->dom_dst = $result3[0]->dom_ip;
+        $return_request = new stdClass();
 
-                $endpoint =  "http://{$result2[0]->dom_ip}/".Configure::read('systemDirName')."topology/ws";
-                $ws_client = new nusoap_client($endpoint, array('cache_wsdl' => 0));
+        $return_request->response = $this->response;
+        $return_request->message = $this->message;
+        
+        $return_request->resc_descr = _("Unknown");
+        $return_request->resc_type = _("Unknown");
 
-                $usr = array('usr_id' => $t->usr_src);
+        if ($domain_result = $domain_info->fetch(FALSE)) {
+            // request information was found in this MEICAN domain, WS is NOT required
 
-                if ($result = $ws_client->call('getUsers', array('usr' => $usr)))
-                    $t->usr_src = $result[0]['usr_name'];
+            $return_request->src_domain = $domain_result[0]->dom_descr;
 
-                if ($getResInfo) { //busca nome da reserva
-                    $endpoint2 =  "http://{$result2[0]->dom_ip}/".Configure::read('systemDirName')."bpm/ws";
-                    $ws_client2 = new nusoap_client($endpoint2, array('cache_wsdl' => 0));
+            $user_info = new user_info();
+            $user_info->usr_id = $this->src_usr;
+            if ($user = $user_info->fetch(FALSE))
+                $return_request->src_user = $user[0]->usr_name;
+            else
+                $return_request->src_user = $this->src_usr;
 
-                    if ($result = $ws_client2->call('getReqInfo',array('req_id' => $t->req_id))){
-                        $t->resc_id = $result['resc_id'];
-                        $t->resc_descr = $result['resc_descr'];
-                        $t->resc_type = $result['resc_type'];
-                    } else {
-                          $t->resc_descr = _('Unknown');
-                          $t->resc_type = _('Unknown');
+            $domain_info = new domain_info();
+            $domain_info->ode_ip = $this->dst_ode_ip;
+            if ($dst_domain = $domain_info->fetch(FALSE))
+                $return_request->dst_domain = $dst_domain[0]->dom_descr;
+            else {
+                // try to call a WS to get domain description
+                try {
+                    $ODEendpoint = "http://$this->src_ode_ip}/getMeicanData";
+                    $requestSOAP = array('ode_ip' => $this->dst_ode_ip);
+
+                    $client = new SoapClient($ODEendpoint, array('cache_wsdl' => 0));
+                    $domain = $client->getDomains($requestSOAP);
+
+                    $return_request->dst_domain = $domain['dom_descr'];
+                } catch (Exception $e) {
+                    Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
+
+                    $return_request->dst_domain = $this->dst_ode_ip;
+                }
+            }
+
+            if ($getReqInfo) {
+                if ($this->resource_type == "reservation_info") {
+                    $res_info = new reservation_info();
+                    $res_info->res_id = $this->resource_id;
+                    $reservation = $res_info->fetch(FALSE);
+
+                    $return_request->resc_descr = $reservation[0]->res_name;
+                    $return_request->resc_type = $this->resource_type;
+                    
+                    $return_request->bandwidth = $reservation[0]->bandwidth;
+
+                    if ($getFlowInfo) {
+                        $flow = new flow_info();
+                        $flow->flw_id = $reservation[0]->flw_id;
+                        $return_request->flow_info = (array) $flow->getFlowDetails();
+                    } else
+                        $return_request->flow_info = NULL;
+
+                    if ($getTimerInfo) {
+                        $timer = new timer_info();
+                        $timer->tmr_id = $reservation[0]->tmr_id;
+                        $return_request->timer_info = (array) $timer->getTimerDetails();
+                    } else
+                        $return_request->timer_info = NULL;
+                } else {
+                    $resource = new $this->resource_type();
+                    $pk = $resource->getPrimaryKey();
+                    $resource->{$pk} = $this->resource_id;
+
+                    if ($result = $resource->fetch(FALSE)) {
+                        $return_request->resc_descr = $result[0]->{$resource->displayField};
+                        $return_request->resc_type = $this->resource_type;
+                    }
+                    $return_request->flow_info = NULL;
+                    $return_request->timer_info = NULL;
+                }
+            }
+        } else {
+            // request information was NOT found in this MEICAN domain, trying WS to get data
+
+            $ODEendpoint = "http://$this->src_ode_ip}/getMeicanData";
+
+            // get source domain
+            try {
+                $requestSOAP = array('ode_ip' => $this->src_ode_ip);
+
+                $client = new SoapClient($ODEendpoint, array('cache_wsdl' => 0));
+                $domain = $client->getDomains($requestSOAP);
+
+                $return_request->src_domain = $domain['dom_descr'];
+            } catch (Exception $e) {
+                Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
+
+                $return_request->src_domain = $this->src_ode_ip;
+            }
+
+            // get destination domain
+            try {
+                $requestSOAP = array('ode_ip' => $this->dst_ode_ip);
+
+                $client = new SoapClient($ODEendpoint, array('cache_wsdl' => 0));
+                $domain = $client->getDomains($requestSOAP);
+
+                $return_request->dst_domain = $domain['dom_descr'];
+            } catch (Exception $e) {
+                Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
+
+                $return_request->dst_domain = $this->dst_ode_ip;
+            }
+
+            //get source user
+            try {
+                $requestSOAP = array('usr_id' => $this->src_usr);
+
+                $client = new SoapClient($ODEendpoint, array('cache_wsdl' => 0));
+                $user = $client->getUsers($requestSOAP);
+
+                $return_request->src_user = $user['usr_name'];
+            } catch (Exception $e) {
+                Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
+
+                $return_request->src_user = $this->src_usr;
+            }
+
+            // get request info
+            if ($getReqInfo) {
+                $return_request->resc_type = $this->resource_type;
+
+                if ($this->resource_type == "reservation_info") {
+                    try {
+                        $requestSOAP = array('res_id' => $this->resource_id);
+
+                        $client = new SoapClient($ODEendpoint, array('cache_wsdl' => 0));
+                        $reservation = $client->getReservations($requestSOAP);
+
+                        $return_request->resc_descr = $reservation['res_name'];
+                    } catch (Exception $e) {
+                        Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
                     }
 
-                 $endpoint_circuits =  "http://{$result2[0]->dom_ip}/".Configure::read('systemDirName')."circuits/ws";
-                 $ws_client_circuits = new nusoap_client($endpoint_circuits, array('cache_wsdl' => 0));
+                    if ($getFlowInfo) {
+                        try {
+                            $requestSOAP = array('res_id' => $this->resource_id);
 
-                    if ($getTimerInfo) { //busca informacoes de timer
-                        if ($result = $ws_client_circuits->call('getTimerInfo',array($t->resc_id)))
-                            $t->timer_info = $result;
-                        else $t->timer_info = _('Unknown');
-                    }
+                            $client = new SoapClient($ODEendpoint, array('cache_wsdl' => 0));
+                            $flow = $client->getFlowInfo($requestSOAP);
 
-
-                    if ($getFlowInfo) { //buscar informacoes de flow: urns, dom_ips, bandwidth
-                       
-                        $t->flow_info = $ws_client_circuits->call('getFlowInfo',array('res_id' => $t->resc_id));
-
-                        if ($getEndpointsInfo) { //busca net_descr, dev_descr e port_number
-                            $endpoint3 =  "http://{$t->flow_info['src_dom_ip']}/".Configure::read('systemDirName')."topology/ws";
-                            $urn_array = array($t->flow_info['src_urn_string']);
-                            if ($ws_client3 = new nusoap_client($endpoint3, array('cache_wsdl' => 0)))
-                                if ($u_src = $ws_client3->call('getURNsInfo', array('urn_string_list' => $urn_array)))
-                                    $t->src_endpoint = $u_src[0];
-
-                            $endpoint4 =  "http://{$t->flow_info['dst_dom_ip']}./".Configure::read('systemDirName')."topology/ws";
-                            $urn_array = array($t->flow_info['dst_urn_string']);
-                            if ($ws_client4 = new nusoap_client($endpoint4, array('cache_wsdl' => 0)))
-                                if ($u_dst = $ws_client3->call('getURNsInfo', array('urn_string_list' => $urn_array)))
-                                    $t->dst_endpoint = $u_dst[0];
+                            $return_request->flow_info = $flow;
+                        } catch (Exception $e) {
+                            Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
                         }
+                    }
+
+                    if ($getTimerInfo) {
+                        try {
+                            $requestSOAP = array('res_id' => $this->resource_id);
+
+                            $client = new SoapClient($ODEendpoint, array('cache_wsdl' => 0));
+                            $timer = $client->getTimerInfo($requestSOAP);
+
+                            $return_request->timer_info = $timer;
+                        } catch (Exception $e) {
+                            Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
+                        }
+                    }
+                } else {
+                    $return_request->flow_info = NULL;
+                    $return_request->timer_info = NULL;
+
+                    try {
+                        $requestSOAP = array('req_id' => $this->resource_id);
+
+                        $client = new SoapClient($ODEendpoint, array('cache_wsdl' => 0));
+                        $request = $client->getRequestInfo($requestSOAP);
+
+                        $return_request->resc_descr = $request['resc_descr'];
+                    } catch (Exception $e) {
+                        Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
                     }
                 }
             }
-            
-            return $temp;
         }
-        return FALSE;
+
+        return $return_request;
     }
     
     /**

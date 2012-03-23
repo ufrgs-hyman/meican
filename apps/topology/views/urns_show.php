@@ -38,9 +38,9 @@ $hasUrn = FALSE;
             ?>
             </h2>
             <div style="border: 1px solid black; padding-bottom: 50px; text-indent: 10px">
-                <?php     
+                <?php
                     $args = new stdClass();
-                    $args->message = ($dom->ip) ? _("No URN in this domain, click the button below to import topology from IP address")." $dom->ip" : _("No URN in this domain, choose one of the options below");
+                    $args->message = ($dom->idc_url) ? _("No URN in this domain, click the button below to import topology from OSCARS URL")." '$dom->idc_url'." : _("No URN in this domain, choose one of the options below.");
                     $args->import_link = array("action" => "import", "param" => "dom_id:$dom->id");
                     $args->add_link = array("action" => "add_manual", "param" => "dom_id:$dom->id");
                     $this->addElement("empty_urn", $args);
