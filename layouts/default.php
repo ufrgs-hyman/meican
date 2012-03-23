@@ -8,6 +8,9 @@
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <link rel="shortcut icon" href="<?php echo $base; ?>webroot/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/meican3-theme/jquery-ui-1.8.16.custom.css" />
+        <?php if (Configure::read('debug')): ?>
+        <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/debug.css" />
+        <?php endif; ?>
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/style1.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/timePicker.css" />
         <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.min.js"></script>
