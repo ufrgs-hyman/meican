@@ -1,11 +1,12 @@
 <?php
 
 include_once 'libs/controller.php';
-include_once 'apps/bpm/models/request_info.php';
 include_once 'libs/auth.php';
+
+include_once 'apps/bpm/models/request_info.php';
+include_once 'apps/circuits/models/reservation_info.php';
 include_once 'apps/aaa/models/user_info.php';
 include_once 'apps/topology/models/domain_info.php';
-include_once 'apps/circuits/models/oscars.php';
 
 include_once 'libs/nuSOAP/lib/nusoap.php';
 
@@ -84,6 +85,7 @@ class requests extends Controller {
         $request->loc_id = $input['loc_id'];
 
         $result = $request->getRequestInfo(TRUE, TRUE, TRUE, TRUE);
+        $result->available_bandwidth = NULL;
 
         $this->setArgsToBody($result);
         $this->render('reply');
@@ -117,6 +119,10 @@ class requests extends Controller {
         }
     }
 
+    /**
+     * @todo pensar em como apagar se request for de outro domínio
+     */
+    
     public function delete() {
         if ($requests = Common::POST("del_checkbox")) {
             debug('requests',$requests);
@@ -131,7 +137,6 @@ class requests extends Controller {
                 
                 $del_request = new request_info();
                 $del_request->req_id = $req_result[0]->req_id;
-                $del_request->dom_src = $req_result[0]->dom_src;
                 
                 if ($requests_to_delete = $del_request->fetch(FALSE)) {
                     $were_deleted = TRUE;

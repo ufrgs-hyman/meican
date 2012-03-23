@@ -54,18 +54,18 @@ $request = $this->passedArgs;
             <?php if ($request->flow_info): ?>
                 <tr>
                     <th><?php echo _('Network'); ?></th>
-                    <td><?php echo $request->flow_info['source']['network']; ?></td>
-                    <td><?php echo $request->flow_info['dest']['network']; ?></td>
+                    <td><?php echo $request->flow_info->source->network; ?></td>
+                    <td><?php echo $request->flow_info->dest->network; ?></td>
                 </tr>
                 <tr>
                     <th><?php echo _('Device'); ?></th>
-                    <td><?php echo $request->flow_info['source']['device']; ?></td>
-                    <td><?php echo $request->flow_info['dest']['device']; ?></td>
+                    <td><?php echo $request->flow_info->source->device; ?></td>
+                    <td><?php echo $request->flow_info->dest->device; ?></td>
                 </tr>
                 <tr>
                     <th><?php echo _('Port number'); ?></th>
-                    <td><?php echo $request->flow_info['source']['port']; ?></td>
-                    <td><?php echo $request->flow_info['dest']['port']; ?></td>
+                    <td><?php echo $request->flow_info->source->port; ?></td>
+                    <td><?php echo $request->flow_info->dest->port; ?></td>
                 </tr>
             <?php endif; ?>
 

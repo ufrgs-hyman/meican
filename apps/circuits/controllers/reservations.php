@@ -1025,11 +1025,15 @@ class reservations extends Controller {
 
                 $newReq->status = 'SENT FOR AUTHORIZATION';
 
-                $newReq->insert();
-
-                return $resSent;
+                if ($newReq->insert())
+                    return $resSent;
+                else {
+                    Log::write("error", "Failed to save request");
+                    return FALSE;
+                }
+                    
             } catch (Exception $e) {
-                Log::write("error", "Caught exception while trying to connect to ODE: ". print_r($e->getMessage()));
+                Log::write("error", "Caught exception while trying to connect to ODE:\n". print_r($e->getMessage()));
                 $this->setFlash(_('Error at invoking business layer.'));
                 $newReq->status = 'SENT FOR AUTHORIZATION';
 
