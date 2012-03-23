@@ -16,12 +16,12 @@ class Controller extends Object {
     public $name = null;
     public $output = '';
     public $autoRender = true;
-    
-    public function __construct(){
-        
-		if ($this->name === null) {
-			$this->name = substr(get_class($this), 0, strlen(get_class($this)) -10);
-		}
+
+    public function __construct() {
+
+        if ($this->name === null) {
+            $this->name = substr(get_class($this), 0, strlen(get_class($this)) - 10);
+        }
         parent::__construct();
     }
 
@@ -31,7 +31,7 @@ class Controller extends Object {
         if ($this->layout === 'default' && $this->isAjax())
             $this->layout .= '_ajax';
         $view = new View($this->app, $this->controller, $action, $this->layout);
-		$view->set($this->viewVars);
+        $view->set($this->viewVars);
         $view->setArgs($this->argsToBody);
         $this->autoRender = false;
         $this->output .= $view->build();
@@ -50,16 +50,16 @@ class Controller extends Object {
         //$this->inlineScript = "apps/{$this->app}/webroot/js/$script.js?1";
         $this->addScriptForLayout($script);
     }
-    
-    protected function addScriptForLayout($script){
-    	if (is_array($script))
-    		foreach ($script as $item)
-    			$this->addScriptForLayout($item);
-    	else
-            if (Configure::read('Asset.compress'))
-                $this->viewVars['scripts_for_layout'][]="{$this->app}/cjs/$script.js";
-            else
-                $this->viewVars['scripts_for_layout'][]="apps/{$this->app}/webroot/js/$script.js";
+
+    protected function addScriptForLayout($script) {
+        if (is_array($script))
+            foreach ($script as $item)
+                $this->addScriptForLayout($item);
+        else
+        if (Configure::read('Asset.compress'))
+            $this->viewVars['scripts_for_layout'][] = "{$this->app}/cjs/$script.js";
+        else
+            $this->viewVars['scripts_for_layout'][] = "apps/{$this->app}/webroot/js/$script.js";
     }
 
     public function setFlash($message, $status='info') {
@@ -73,8 +73,8 @@ class Controller extends Object {
     protected function setArgsToScript($args) {
         $this->set('scripts_vars', $args);
     }
-    
-    public function renderJson($contents, $options = null){
+
+    public function renderJson($contents, $options = null) {
         $this->autoRender = false;
         echo $this->output .= json_encode($contents, $options);
     }
@@ -99,71 +99,69 @@ class Controller extends Object {
         } else
             return FALSE;
     }
-    
-     /**
- * Allows a template or element to set a variable that will be available in
- * a layout or other element. Analagous to Controller::set.
- *
- * @param mixed $one A string or an array of data.
- * @param mixed $two Value in case $one is a string (which then works as the key).
- *    Unused if $one is an associative array, otherwise serves as the values to $one's keys.
- * @return void
- * @access public
- */
+
+    /**
+     * Allows a template or element to set a variable that will be available in
+     * a layout or other element. Analagous to Controller::set.
+     *
+     * @param mixed $one A string or an array of data.
+     * @param mixed $two Value in case $one is a string (which then works as the key).
+     *    Unused if $one is an associative array, otherwise serves as the values to $one's keys.
+     * @return void
+     * @access public
+     */
     public function set($one, $two = null) {
-            $data = null;
-            if (is_array($one)) {
-                    if (is_array($two)) {
-                            $data = array_combine($one, $two);
-                    } else {
-                            $data = $one;
-                    }
+        $data = null;
+        if (is_array($one)) {
+            if (is_array($two)) {
+                $data = array_combine($one, $two);
             } else {
-                    $data = array($one => $two);
+                $data = $one;
             }
-            if ($data == null) {
-                    return false;
-            }
-            $this->viewVars = $data + $this->viewVars;
+        } else {
+            $data = array($one => $two);
+        }
+        if ($data == null) {
+            return false;
+        }
+        $this->viewVars = $data + $this->viewVars;
     }
-    
-    
-/**
- * Dispatches the controller action.  Checks that the action
- * exists and isn't private.
- *
- * @param CakeRequest $request
- * @return mixed The resulting response.
- * @throws PrivateActionException, MissingActionException
- */
-	public function invokeAction($params) {
+
+    /**
+     * Dispatches the controller action.  Checks that the action
+     * exists and isn't private.
+     *
+     * @param CakeRequest $request
+     * @return mixed The resulting response.
+     * @throws PrivateActionException, MissingActionException
+     */
+    public function invokeAction($params) {
         if (empty($params['action']))
             $params['action'] = $this->defaultAction;
-		try {
+        try {
             $this->app = $params['app'];
             $this->action = $params['action'];
             $this->name = $this->controller = $params['controller'];
             $this->params = $params;
-			$method = new ReflectionMethod($this, $params['action']);
+            $method = new ReflectionMethod($this, $params['action']);
             $privateAction = (
-                $method->name[0] === '_' ||
-                !$method->isPublic() /*||
-                !in_array($method->name,  $this->methods)*/
-            );
-			if ($privateAction) {
-				throw new PrivateActionException(array(
-					'controller' => $this->name . "Controller",
-					'action' => $params['action']
-				));
-			}
-			return $method->invokeArgs($this, array($params['pass'])); //TODO: tirar esse array
-
-		} catch (ReflectionException $e) {
-			throw new MissingActionException(array(
-				'controller' => $this->name . "Controller",
-				'action' => $params['action']
-			));
-		}
-	}
+                    $method->name[0] === '_' ||
+                    !$method->isPublic() /* ||
+                      !in_array($method->name,  $this->methods) */
+                    );
+            if ($privateAction) {
+                throw new PrivateActionException(array(
+                    'controller' => $this->name . "Controller",
+                    'action' => $params['action']
+                ));
+            }
+            return $method->invokeArgs($this, array($params['pass'])); //TODO: tirar esse array
+        } catch (ReflectionException $e) {
+            throw new MissingActionException(array(
+                'controller' => $this->name . "Controller",
+                'action' => $params['action']
+            ));
+        }
+    }
 
 }
