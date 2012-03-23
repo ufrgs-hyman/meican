@@ -51,7 +51,8 @@
 
         <link rel="stylesheet" type="text/css" href="<?php echo $this->url(); ?>webroot/css/jquery.weekcalendar.css" />
         <script type="text/javascript" src="<?php echo $this->url(); ?>webroot/js/jquery.weekcalendar.js"></script>
-        <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/start/jquery-ui.css' />
+        <?php /*
+        <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/start/jquery-ui.css' />*/?>
         <script type="text/javascript">
             $(function() {
                 var $calendar = $('#calendar');
@@ -66,7 +67,6 @@
       businessHours :{start: 8, end: 18, limitDisplay: true },
       daysToShow : 7,
       height : function($calendar) {
-          console.debug($(window).height() - $("h1").outerHeight() - 1);
          return $(window).height() - $("h1").outerHeight() - 1;
       },
       eventRender : function(calEvent, $event) {
@@ -85,12 +85,12 @@
             $event.addClass('authorization-waiting');            
         }
       },
-      draggable : function(calEvent, $event) {
+     /* draggable : function(calEvent, $event) {
          return calEvent.readOnly != true;
       },
       resizable : function(calEvent, $event) {
          return calEvent.readOnly != true;
-      },/*
+      },
       eventNew : function(calEvent, $event) {
          var $dialogContent = $("#event_edit_container");
          resetForm($dialogContent);
@@ -134,7 +134,7 @@
       eventDrop : function(calEvent, $event) {
       },
       eventResize : function(calEvent, $event) {
-      },
+      },*/
       eventClick : function(calEvent, $event) {
 
          if (calEvent.readOnly) {
@@ -184,7 +184,7 @@
          setupStartAndEndTimeFields(startField, endField, calEvent, $calendar.weekCalendar("getTimeslotTimes", calEvent.start));
          $(window).resize().resize(); //fixes a bug in modal overlay size ??
 
-      },*/
+      },
       eventMouseover : function(calEvent, $event) {
       },
       eventMouseout : function(calEvent, $event) {
