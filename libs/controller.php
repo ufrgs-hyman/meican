@@ -15,6 +15,7 @@ class Controller extends Object {
     public $viewVars = array('scripts_for_layout' => array());
     public $name = null;
     public $output = '';
+    public $autoRender = true;
     
     public function __construct(){
         
@@ -32,9 +33,7 @@ class Controller extends Object {
         $view = new View($this->app, $this->controller, $action, $this->layout);
 		$view->set($this->viewVars);
         $view->setArgs($this->argsToBody);
-        //$view->script->setArgs($this->argsToScript);
-        //$view->script->setScriptFiles($this->scripts);
-        //$view->script->setInlineScript($this->inlineScript);
+        $this->autoRender = false;
         $this->output .= $view->build();
         echo $this->output;
     }
@@ -76,6 +75,7 @@ class Controller extends Object {
     }
     
     public function renderJson($contents, $options = null){
+        $this->autoRender = false;
         echo $this->output .= json_encode($contents, $options);
     }
 

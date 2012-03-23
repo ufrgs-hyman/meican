@@ -13,28 +13,26 @@ include_once 'libs/language.php';
  * Dispatcher Class. Reads required url and instanciate properly apps, controller and calls an action.
  * Also builds urls.
  */
-
 class Dispatcher {
 
     public function __construct($defaults = array()) {
         $this->defaults = array_merge(array('app' => 'init', 'controller' => 'gui', 'action' => '', 'pass' => array()));
         $this->base = dirname(env('PHP_SELF'));
         if ($this->base === DS || $this->base === '.') {
-				$this->base = '';
-			}
+            $this->base = '';
+        }
         if ($this->base == '/')
             $this->base = '';
         Configure::write('systemDirName', $this->base);
     }
-    
+
     // Método Factory parametrizado
-    private function appFactory($app, $args=array())
-    {
+    private function appFactory($app, $args=array()) {
         if (file_exists("apps/$app/$app.php") &&
                 include_once "apps/$app/$app.php") {
             return new $app($args);
         } else {
-            throw new Exception ('App not found');
+            throw new Exception('App not found');
             return False;
         }
     }
@@ -50,11 +48,11 @@ class Dispatcher {
         else
             $url = null;
         if ($this->login($url))
-            return ;
+            return;
         if ($this->asset($url))
-            return ;
-        /*if (empty($url)&&!(Common::GET('app')))
-            return $this->legacyDispatch();*/
+            return;
+        /* if (empty($url)&&!(Common::GET('app')))
+          return $this->legacyDispatch(); */
         $this->params = array_merge($this->parse($url), $params);
         if ($this->params['controller'] !== 'ws' && !$this->checkLogin()) //TODO: authetication for webservices
             return;
@@ -65,7 +63,7 @@ class Dispatcher {
                 throw new Exception(_("Invalid app"));
             Language::setLang($this->params['app']);
             if (empty($this->params['controller']))
-                $this->params['controller'] = $app->getDefaultController();       
+                $this->params['controller'] = $app->getDefaultController();
             $controller = $app->loadController($this->params['controller']);
 
             if (!($controller instanceof Controller)) {
@@ -75,11 +73,14 @@ class Dispatcher {
             }
             if ($this->params['controller'] !== 'ws')
                 $controller->invokeAction($this->params);
+            if ($controller->autoRender) {
+                $response = $controller->render();
+            }
         } catch (Exception $e) {
             echo $e->getMessage();
         }/*
-        if (class_exists('Datasource'))
-            Datasource::getInstance()->close();*/
+          if (class_exists('Datasource'))
+          Datasource::getInstance()->close(); */
     }
 
     /**
@@ -99,12 +100,12 @@ class Dispatcher {
               header('Location: index.php?message=Session Expired');
 
               } else header('HTTP/1.1 402 Timeout'); */
-            header('Location: '.$this->url('login'));
+            header('Location: ' . $this->url('login'));
             return false;
         }
     }
 
-    function login($url = null){
+    function login($url = null) {
         if ($url !== 'login')
             return false;
         include_once 'apps/init/controllers/login.php';
@@ -120,62 +121,62 @@ class Dispatcher {
         $login->show($message);
         return true;
     }
-    
-/**
- * Checks if a requested asset exists and sends it to the browser
- *
- * @param string $url Requested URL
- * @param CakeResponse $response The response object to put the file contents in.
- * @return boolean True on success if the asset file was found and sent
- */
-	public function asset($url) {
-		if (strpos($url, '..') !== false || strpos($url, '.') === false) {
-			return false;
-		}
-		$isCss = (
-			strpos($url, 'ccss/') === 0 ||
-			preg_match('#^(theme/([^/]+)/ccss/)|(([^/]+)(?<!css)/ccss)/#i', $url)
-		);
-		$isJs = (
-			strpos($url, 'cjs/') === 0 ||
-			preg_match('#^/((theme/[^/]+)/cjs/)|(([^/]+)(?<!js)/cjs)/#i', $url)
-		);
-		if ($isCss || $isJs) {
-			include 'assets.php';
-			return true;
-		}
+
+    /**
+     * Checks if a requested asset exists and sends it to the browser
+     *
+     * @param string $url Requested URL
+     * @param CakeResponse $response The response object to put the file contents in.
+     * @return boolean True on success if the asset file was found and sent
+     */
+    public function asset($url) {
+        if (strpos($url, '..') !== false || strpos($url, '.') === false) {
+            return false;
+        }
+        $isCss = (
+                strpos($url, 'ccss/') === 0 ||
+                preg_match('#^(theme/([^/]+)/ccss/)|(([^/]+)(?<!css)/ccss)/#i', $url)
+                );
+        $isJs = (
+                strpos($url, 'cjs/') === 0 ||
+                preg_match('#^/((theme/[^/]+)/cjs/)|(([^/]+)(?<!js)/cjs)/#i', $url)
+                );
+        if ($isCss || $isJs) {
+            include 'assets.php';
+            return true;
+        }
         debug('a');
-		$pathSegments = explode('.', $url);
-		$ext = array_pop($pathSegments);
-		$parts = explode('/', $url);
-		$assetFile = null;
+        $pathSegments = explode('.', $url);
+        $ext = array_pop($pathSegments);
+        $parts = explode('/', $url);
+        $assetFile = null;
 
-		if ($parts[0] === 'theme') {
-			$themeName = $parts[1];
-			unset($parts[0], $parts[1]);
-			$fileFragment = urldecode(implode(DS, $parts));
-			$path = App::themePath($themeName) . 'webroot' . DS;
-			if (file_exists($path . $fileFragment)) {
-				$assetFile = $path . $fileFragment;
-			}
-		} else {
-			$plugin = Inflector::camelize($parts[0]);
-			if (CakePlugin::loaded($plugin)) {
-				unset($parts[0]);
-				$fileFragment = urldecode(implode(DS, $parts));
-				$pluginWebroot = CakePlugin::path($plugin) . 'webroot' . DS;
-				if (file_exists($pluginWebroot . $fileFragment)) {
-					$assetFile = $pluginWebroot . $fileFragment;
-				}
-			}
-		}
+        if ($parts[0] === 'theme') {
+            $themeName = $parts[1];
+            unset($parts[0], $parts[1]);
+            $fileFragment = urldecode(implode(DS, $parts));
+            $path = App::themePath($themeName) . 'webroot' . DS;
+            if (file_exists($path . $fileFragment)) {
+                $assetFile = $path . $fileFragment;
+            }
+        } else {
+            $plugin = Inflector::camelize($parts[0]);
+            if (CakePlugin::loaded($plugin)) {
+                unset($parts[0]);
+                $fileFragment = urldecode(implode(DS, $parts));
+                $pluginWebroot = CakePlugin::path($plugin) . 'webroot' . DS;
+                if (file_exists($pluginWebroot . $fileFragment)) {
+                    $assetFile = $pluginWebroot . $fileFragment;
+                }
+            }
+        }
 
-		if ($assetFile !== null) {
-			$this->_deliverAsset($response, $assetFile, $ext);
-			return true;
-		}
-		return false;
-	}
+        if ($assetFile !== null) {
+            $this->_deliverAsset($response, $assetFile, $ext);
+            return true;
+        }
+        return false;
+    }
 
     /**
      * From a given URL string, extract the array of params (apps, controller, action, params)
@@ -206,7 +207,7 @@ class Dispatcher {
         $route = array_merge($this->defaults, $route);
         return $route;
     }
-    
+
     /**
      * From a given array of params, builds a URL string
      * @param array $params
@@ -216,7 +217,7 @@ class Dispatcher {
         if (!is_array($params))
             return $this->base . '/' . $params;
         $url = $this->base . '/' . $params['app'] . '/' . $params['controller'];
-        if (!empty($params['action']) && $params['action']!='show' )
+        if (!empty($params['action']) && $params['action'] != 'show')
             $url .= '/' . $params['action'];
         if (empty($params['pass']))
             $params['pass'] = array();
