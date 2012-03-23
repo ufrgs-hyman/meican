@@ -18,11 +18,7 @@
         <script type="text/javascript" src="http://updateyourbrowser.net/asn.js"> </script>
         <script type="text/javascript">
             var baseUrl = '<?php echo $this->url(''); ?>';
-            $(function(){
-                $.makeAutofocus();
-                $("body").uify();
-            }); //do ready
-
+            $(function(){$.makeAutofocus(); });
         </script>
     </head>
     <body>

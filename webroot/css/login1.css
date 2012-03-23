@@ -365,3 +365,35 @@ div#login_form input[type="submit"] {
     position: absolute;
     left: 40%;
 }
+
+
+input[type=submit], input[type=button], button {
+    display: inline;
+    min-width: 74px;
+    width: auto;
+    height: 24px;
+    line-height: 16px;
+    padding: 4px 8px;
+    margin: 0 2px;
+    border: 1px solid #BBB;
+    box-sizing: border-box;
+    box-shadow: inset 2px 2px 2px #FFFFFF, inset -1px -1px 2px #DDD;
+    background: #EEE;
+    color: #4F4F4F;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+button:hover, input[type=submit]:hover, input[type=button]:hover {
+    box-shadow: inset 2px 2px 2px #FAA, inset -1px -1px 2px #922;
+    text-shadow: -1px -1px 2px #922, 1px 1px 2px #FAA;
+    border: 1px solid #853A40;
+    background-color: #F44;
+    color: white;
+}
+
+input[disabled], button[disabled]{
+    opacity: .35; filter:Alpha(Opacity=35); background-image: none; 
+}
+
+.ui-state-disabled, [disabled] { opacity: .35; filter:Alpha(Opacity=35); background-image: none; }

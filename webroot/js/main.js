@@ -131,8 +131,8 @@ function clearFlash(){
     };
     
     jQuery.fn.uify = function() {
-        $(this).find('button,input[type=submit],input[type=button]').button();
-        $(this).find('button[disabled=disabled],input[disabled=disabled][type=submit],input[disabled=disabled][type=button]').button('disabled');
+        //$(this).find('button,input[type=submit],input[type=button]').button();
+        //$(this).find('button[disabled=disabled],input[disabled=disabled][type=submit],input[disabled=disabled][type=button]').button('disabled');
         
         //$('input[type=button].add').button({icon: 'plusthick'});
         //$('input[type=button].add').button({ icons: {primary:'ui-icon-plusthick',secondary:'ui-icon-plusthick'} });
