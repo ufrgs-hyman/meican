@@ -1575,3 +1575,18 @@ pre {
 .float-left{
     float: left;
 }
+
+.authorization-accepted, .authorization-accepted .wc-time{
+    background-color: green !important;
+    border: 1px solid #1B62C0;
+}
+
+.authorization-waiting, .authorization-waiting .wc-time{
+    background-color: yellow !important;
+    border: 1px solid #1B62C0;
+}
+
+.authorization-deny, .authorization-deny .wc-time{
+    background-color: red !important;
+    border: 1px solid #1B62C0;
+}
