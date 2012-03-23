@@ -596,6 +596,10 @@ class reservations extends Controller {
             $this->show();
         }
     }
+    
+    public function view2($param_array){
+        $this->view($param_array);
+    }
 
     public function view($param_array) {
         $resId = NULL;
@@ -759,7 +763,6 @@ class reservations extends Controller {
         $this->set(compact('gris', 'flow', 'timer', 
                 'request', 'refresh', 'usr_login'));
         $this->addScriptForLayout(array('reservations', 'reservations_view'));
-        $this->render('view');
     }
 
     /**
