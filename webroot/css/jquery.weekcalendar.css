@@ -18,6 +18,7 @@
 .wc-container table {
 	border-collapse: collapse;
     border-spacing: 0;
+    width: 100%;
 }
 .wc-container table td {
 	margin: 0;
