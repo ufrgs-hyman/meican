@@ -77,7 +77,9 @@ class Dispatcher {
                 $response = $controller->render();
             }
         } catch (Exception $e) {
-            echo $e->getMessage();
+            Debugger::showError(E_WARNING, "Catch dispatcher error");
+            Debugger::showError(E_WARNING, $e->getMessage());
+            debug($e->getTrace());
         }/*
           if (class_exists('Datasource'))
           Datasource::getInstance()->close(); */
