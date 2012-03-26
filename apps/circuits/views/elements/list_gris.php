@@ -6,7 +6,7 @@
             <th class="listHeader"></th>
             <?php endif; ?>
             <th class="listHeader"><?php echo _("Tool"); ?></th>
-            <th class="listHeader"><?php echo _("Global Reservation Identifier (GRI)"); ?></th>
+            <th class="listHeader"><?php echo _("GRI"); ?></th>
             <th class="listHeader" align="center">
                 <?php echo _("Status"); ?>
                 <img alt="<?php echo _("loading"); ?>" style="display:none" id="load_dynamic" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif"/>

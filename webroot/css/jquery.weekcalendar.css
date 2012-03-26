@@ -2,18 +2,29 @@
 
 .wc-container {
 	font-size: 14px;	
-	font-family: arial, helvetica;
+	/*font-family: arial, helvetica;*/
+}
+
+.wc-toolbar{
+    background-color: #DDD;
+    width: 100%;
 }
 
 .wc-nav {
-	padding: 1em;
-	text-align: right;	
+	/*padding: 1em;*/
+	text-align: right;
+    float: right;
 }
 
 .wc-nav button {
 	margin: 0 0.5em;	
 }
  
+h1.wc-title{
+    font-size: 12px;
+    color: #4F4F4F;
+    margin-bottom: 0;
+}
 
 .wc-container table {
 	border-collapse: collapse;
@@ -33,7 +44,7 @@
 }
 
 .wc-header .wc-time-column-header {
-	width: 6%;	
+	width: 64px;	
 }
 
 .wc-header .wc-scrollbar-shim {
@@ -49,7 +60,7 @@
 }
 
 .wc-grid-timeslot-header {
-	width: 6%;
+	width: 64px;
 	background: #eee;	
 }
 
@@ -119,6 +130,8 @@ table.wc-time-slots {
 	border-bottom: 1px solid #ccc;
 	color: #333;
 	font-size: 1.4em;
+  /*-webkit-transform: rotate(270deg);
+  -webkit-transform-origin: 50% 50%;*/
 }
 
 .wc-business-hours .wc-am-pm {
