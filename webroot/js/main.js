@@ -42,7 +42,7 @@ $(function() {
             $.fn.menuHandler.setSelected();
             $.makeAutofocus();
             $('input, textarea').placeholder();
-            $(':checkbox').makeDeleteButton(':checkbox', '.delete');
+            $(':checkbox').makeDeleteButton(':checkbox', '#DeleteButton');
         });
         $('#main').trigger('pjax:end');
     }
