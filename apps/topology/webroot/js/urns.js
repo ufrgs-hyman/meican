@@ -142,7 +142,7 @@ function fillURNLine(dom_id, urn_id) {
     $('#network' + pos).fillSelectBox(getNetworksFromDomain(dom_id)).change(function() {
         changeNetworkURN(dom_id, this);
     });
-    if (urn_id) {
+    if (urn_id != null) {
         $("#urn" + pos).fillSelectBox(getURNsFromDomain(dom_id), urn_id);
         changeURN(dom_id, "#urn" + pos);
     } else
