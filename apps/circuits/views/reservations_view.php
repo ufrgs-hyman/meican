@@ -1,12 +1,12 @@
 <h1><?php echo _("Reservation details"); ?></h1>
-<h2>
+<h4>
     <dl>
         <dt><?php echo _("Reservation name"); ?></dt>
         <dd><?php echo $res_name; ?></dd>
         <dt><?php echo _("User"); ?></dt>
         <dd><?php echo $usr_login; ?></dd>
     </dl>
-</h2>
+</h4>
 
 <div id="tabs-res" class="reservation-tabs" style="position:relative;">
     <div class="tab-overlay fade-overlay"> </div>

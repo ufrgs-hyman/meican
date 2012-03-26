@@ -1,12 +1,12 @@
 <h1><?php echo _("Reservation details"); ?></h1>
-<h2 class="float-left">
+<h4 class="float-left">
     <dl>
         <dt><?php echo _("Reservation name"); ?></dt>
         <dd><?php echo $res_name; ?></dd>
         <dt><?php echo _("User"); ?></dt>
         <dd><?php echo $usr_login; ?></dd>
     </dl>
-</h2>
+</h4>
 
 <div class="float-right">
     <?php if ($gris): ?>
@@ -28,9 +28,9 @@
     <div class="tab-overlay fade-overlay"> </div>
     <div id="tabs-1">
         <div id="subtab-map" class="tab_subcontent shadow-box">
-            <div id="res_mapCanvas" style="width:950px; height:400px;"></div>    
+            <div id="res_mapCanvas" style="width:400px; height:400px;"></div>    
         </div>
-        <div id="subtab-points" class="tab_subcontent" style="float: right; padding-left:2px;">
+        <div id="subtab-points" class="tab_subcontent float-left" style="padding-left:6px;">
             <?= $this->element('view_point', array('type' => 'source', 'flow' => $flow)); ?>
             <div id="bandwidth_bar">
                 <div id="bandwidth_bar_text">
@@ -42,17 +42,17 @@
             </div>
             <?= $this->element('view_point', array('type' => 'destination', 'flow' => $flow)); ?>
         </div>
+        <div id="calendar" class="float-left" style="padding-left: 6px; width:550px;"></div>
         <div style="clear:both;"></div>
     </div>
     <div id="tabs-2" class="tab_content">
         <?= $this->element('view_timer', compact('timer')); ?>
         <?= $request ? $this->element('view_request', compact('request')) : null; ?>
-        <div id="calendar"></div>
 
         <link rel="stylesheet" type="text/css" href="<?php echo $this->url(); ?>webroot/css/jquery.weekcalendar.css" />
         <script type="text/javascript" src="<?php echo $this->url(); ?>webroot/js/jquery.weekcalendar.js"></script>
-        <?php /*
-        <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/start/jquery-ui.css' />*/?>
+
+        <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/smoothness/jquery-ui.css' />
         <script type="text/javascript">
             $(function() {
                 var $calendar = $('#calendar');
@@ -66,8 +66,10 @@
       firstDayOfWeek : 1,
       businessHours :{start: 8, end: 18, limitDisplay: true },
       daysToShow : 7,
+      timeslotHeight: 10,
       height : function($calendar) {
-         return $(window).height() - $("h1").outerHeight() - 1;
+          return 400;
+         //return $(window).height() - $("h1").outerHeight() - 1;
       },
       eventRender : function(calEvent, $event) {
          /*if (calEvent.end.getTime() < new Date().getTime()) {
