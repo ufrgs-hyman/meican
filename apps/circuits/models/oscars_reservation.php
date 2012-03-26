@@ -219,8 +219,8 @@ class OSCARSReservation {
     }
 
     protected function setGriStatus($result) {
-        $this->setGri($result->return[1]);
-        $this->setStatus($result->return[2]);
+        $this->setGri($result->return[0]);
+        $this->setStatus($result->return[1]);
         return true;
     }
 
@@ -236,7 +236,7 @@ class OSCARSReservation {
                 isset($this->startTimestamp) && isset($this->endTimestamp))) {
             return $this->error("insufficient parameters for createreservation");
         } else if (!$this->checkVersion() || !$this->checkOscarsUrl()) {
-            return;
+            return false;
         } else if (!$result = $this->callBridge(
                 'createReservation', $this->makeEnvelope(array(
                     'description' => $this->description,
@@ -251,10 +251,12 @@ class OSCARSReservation {
                     'pathSetupMode' => $this->pathSetupMode,
                     'startTimestamp' => $this->startTimestamp,
                     'endTimestamp' => $this->endTimestamp
-                ))))
-            return false;
-        else
+                )))) {
+            return $this->error("Error to create reservation. Result:\n".print_r($result,true));
+        } else {
+            Log::write("debug","Create reservation result:\n".print_r($result,true));
             return $this->setGriStatus($result);
+        }
     }
 
     function queryReservation() {

@@ -894,7 +894,7 @@ class reservations extends Controller {
 
     function send($reservation_info) {
         
-        Log::write("info", "Reservation to be sent".print_r($reservation_info,TRUE));
+        Log::write("info", "Reservation to be sent:\n".print_r($reservation_info,TRUE));
         
         $flw_id = $reservation_info->flw_id;
 
@@ -950,7 +950,7 @@ class reservations extends Controller {
             $tmp->setStartTimestamp($t->start); //em timestamp
             $tmp->setEndTimestamp($t->finish);
             
-            Log::write("info", "Sending reservation".print_r($tmp,TRUE));
+            Log::write("info", "Sending reservation:\n".print_r($tmp,TRUE));
 
             if ($tmp->createReservation()) {
                 $resSent++;
