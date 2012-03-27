@@ -2,9 +2,7 @@
     
     <thead>
         <tr>
-            <?php if ($refresh): ?>
-            <th class="listHeader"></th>
-            <?php endif; ?>
+            <th class="listHeader" style="width: 80px;"></th>
             <th class="listHeader"><?php echo _("Tool"); ?></th>
             <th class="listHeader"><?php echo _("GRI"); ?></th>
             <th class="listHeader" align="center">
@@ -18,12 +16,17 @@
                 
     <tbody>
         <?php foreach ($gris as $g): ?>
-            <tr id="line<?php echo $g->id; ?>">
-                <?php if ($refresh): ?>
+            <tr id="line<?php echo $g->id; ?>" class="<?php echo $g->status;?>">
                 <td>
+                <?php if ($refresh): ?>
                     <input type="checkbox" id="cancel<?php echo $g->id; ?>" disabled name="cancel_checkbox[]" value="<?php echo $g->id; ?>" onClick="disabelCancelButton(this);"/>
-                </td>
                 <?php endif; ?>
+                <?php if (!empty($authorization)): ?>
+                    <img alt="<?php echo _("loading"); ?>" src="<?php echo $this->url(''); ?>webroot/img/cancel.png"/>
+                    <img alt="<?php echo _("loading"); ?>" src="<?php echo $this->url(''); ?>webroot/img/edit.png"/>
+                    <img alt="<?php echo _("loading"); ?>" src="<?php echo $this->url(''); ?>webroot/img/ok.png"/>
+                <?php endif; ?>
+                </td>
                 <td>
                     OSCARS
                 </td>

@@ -5,7 +5,7 @@
             <dt><?php echo _("Reservation name"); ?></dt>
             <dd><?php echo $res_name; ?></dd>
             <dt><?php echo _("User"); ?></dt>
-            <dd><?php echo $usr_login; ?></dd>
+            <dd><?php echo @$usr_login; ?></dd>
         </dl>
     </h4>
     <div id="subtab-map" class="tab_subcontent shadow-box">
@@ -35,7 +35,7 @@
                     <input type="submit" class="cancel" disabled="disabled" id="cancel_button" value="<?php echo _("Cancel reservations"); ?>" onclick="return confirm('<?php echo _('Cancel the selected reservations?'); ?>')"/>
                 </div>
             <?php endif; ?>
-            <?= $this->element('list_gris', compact('gris', 'refresh')+array('app' => 'circuits')); ?>
+            <?= $this->element('list_gris', compact('gris', 'refresh')+array('app' => 'circuits', 'authorization' => true)); ?>
         </form>
     <?php endif; ?>
     <div id="calendar" class="float-right" style="box-shadow: 2px 2px 4px #888;padding-left: 6px; width:550px;"></div>
