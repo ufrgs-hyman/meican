@@ -1,3 +1,7 @@
+<?php debug($request);
+extract(get_object_vars($request));
+$timer=$request->timer_info;
+$flow=$request->flow_info;?>
 <h1><?php echo _("Reservation details"); ?></h1>
 <div class="float-left">
     <h4>

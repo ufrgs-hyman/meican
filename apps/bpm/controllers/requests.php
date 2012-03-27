@@ -87,8 +87,8 @@ class requests extends Controller {
         $result = $request->getRequestInfo(TRUE, TRUE, TRUE, TRUE);
         $result->available_bandwidth = NULL;
 
-        $this->setArgsToBody($result);
-        $this->render('reply');
+        $this->set('request', $result);
+        $this->render('reply2');
     }
 
     public function saveResponse($request) {

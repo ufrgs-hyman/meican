@@ -1,7 +1,3 @@
-<?php
-$request = $this->passedArgs;
-?>
-
 <form method='POST' action="<?php echo $this->buildLink(array('action' => 'saveResponse', 'param' => array('loc_id' => $request->loc_id))); ?>">
 
     <table class="list">
