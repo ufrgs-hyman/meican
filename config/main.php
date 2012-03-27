@@ -60,26 +60,7 @@ return array(
      * NÃO ALTERAR
      */
     "OSCARSBridgeEPR" => 'http://localhost:8080/axis2/services/OSCARSBridge?wsdl',
-    /*
-     * 
-     * an associative array with the following keys:
-      phptype: Database backend used in PHP (mysql, odbc etc.)
-      dbsyntax: Database used with regards to SQL syntax etc.
-      protocol: Communication protocol to use (tcp, unix etc.)
-      hostspec: Host specification (hostname[:port])
-      database: Database to use on the DBMS server
-      username: User name for login
-      password: Password for login
-     */
-    'database' => array(
-        'mysql' => array(
-            'phptype' => 'mysql',
-            'username' => 'root',
-            'password' => 'futurarnp',
-            'hostspec' => 'localhost',
-            'database' => 'meican'
-        )
-    ),
+    
     'databases' => array(
         'default' => array(
             'datasource' => 'Database/Mysql',
