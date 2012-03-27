@@ -11,7 +11,7 @@ class bpm extends Application {
 
     public function getMenu() {
         return array(40 => new MenuItem(array(
-                'label' => _("BPM"),
+                'label' => _("Requests"),
                 'sub' => array(
                     new MenuItem(array(
                         'label' => _("Requests"),
