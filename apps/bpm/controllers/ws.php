@@ -54,6 +54,7 @@ class ws extends WebServiceController {
             'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
             'src_ode_ip' => array('name' => 'src_ode_ip', 'type' => 'xsd:string'),
             'dst_ode_ip' => array('name' => 'dst_ode_ip', 'type' => 'xsd:string'),
+            'crr_ode_ip' => array('name' => 'crr_ode_ip', 'type' => 'xsd:string'),
             'src_usr' => array('name' => 'src_usr', 'type' => 'xsd:int')));
 
         $server->wsdl->addComplexType('responseType', 'complexType', 'struct', 'all', '', array(
@@ -185,7 +186,7 @@ class ws extends WebServiceController {
         }
 
         function requestUserAuthorization($usr_dst, $request) {
-            Log::write('ws', "Request user authorizarion:\n" . print_r($request, TRUE));
+            Log::write('ws', "Request user authorizarion:\nUser:". print_r($usr_dst, TRUE). "\n" . print_r($request, TRUE));
 
             if ($usr_dst && $request) {
 
@@ -205,6 +206,7 @@ class ws extends WebServiceController {
                 $new_request->response = NULL;
                 $new_request->message = NULL;
                 
+                $new_request->crr_ode_ip = $request['crr_ode_ip'];
                 $new_request->response_user = NULL;
                 $new_request->start_time = microtime(true);
                 $new_request->finish_time = NULL;
@@ -253,7 +255,7 @@ class ws extends WebServiceController {
         }
 
         function requestGroupAuthorization($grp_dst, $request) {
-            Log::write('ws', 'Request group authorizarion' . print_r($request, TRUE));
+            Log::write('ws', "Request group authorizarion:\nGroup:". print_r($grp_dst, TRUE). "\n" . print_r($request, TRUE));
 
             if ($grp_dst && $request) {
                 $new_request = new request_info();
@@ -272,6 +274,7 @@ class ws extends WebServiceController {
                 $new_request->response = NULL;
                 $new_request->message = NULL;
                 
+                $new_request->crr_ode_ip = $request['crr_ode_ip'];
                 $new_request->response_user = NULL;
                 $new_request->start_time = microtime(true);
                 $new_request->finish_time = NULL;
@@ -369,7 +372,7 @@ class ws extends WebServiceController {
         }
 
         function refreshRequestStatus($req_id, $src_ode_ip, $new_status) {
-            Log::write('ws', 'Refresh request status:' . print_r(array('req_id' => $req_id, 'src_ode_ip' => $src_ode_ip, 'status' => $new_status), TRUE));
+            Log::write('ws', "Refresh request status:\n" . print_r(array('req_id' => $req_id, 'src_ode_ip' => $src_ode_ip, 'status' => $new_status), TRUE));
 
             $req = new request_info();
             $req->req_id = $req_id;

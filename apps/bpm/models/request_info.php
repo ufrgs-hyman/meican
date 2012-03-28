@@ -25,6 +25,7 @@ class request_info extends Resource_Model {
         $this->addAttribute("response", "VARCHAR");
         $this->addAttribute("message", "VARCHAR");
 
+        $this->addAttribute("crr_ode_ip", "VARCHAR");
         $this->addAttribute("response_user", "INTEGER");
         $this->addAttribute("start_time", "FLOAT");
         $this->addAttribute("finish_time", "FLOAT");
@@ -281,14 +282,17 @@ class request_info extends Resource_Model {
                 $responseSOAP = array(
                     'req_id' => $toResponse->req_id,
                     'src_ode_ip' => $toResponse->src_ode_ip,
+                    'crr_ode_ip' => $toResponse->crr_ode_ip,
                     'response' => $response,
                     'message' => $message);
 
                 $dom = new domain_info();
-                $dom->ode_ip = $toResponse->src_ode_ip;
+                $dom->ode_ip = $toResponse->crr_ode_ip;
                 $domain = $dom->fetch(FALSE);
 
-                $businessEndpoint = "http://$toResponse->src_ode_ip/" . $domain[0]->ode_wsdl_path;
+                $businessEndpoint = "http://$toResponse->crr_ode_ip/" . $domain[0]->ode_wsdl_path;
+                
+                Log::write("info","Sending response:\n". print_r($responseSOAP,TRUE));
 
                 try {
                     $client = new SoapClient($businessEndpoint, array('cache_wsdl' => 0));

@@ -4,13 +4,13 @@ $pending = $args->pending;
 $finished = $args->finished;
 ?>
 
+<form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
+
 <?php
 $arrayElem = array('app' => 'init', 'buttons' => array('delete'));
 echo $this->element('controls', $arrayElem);
 ?>
-
-<form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
-
+    
     <?php if ($pending): ?>
         <h3><?php echo _("Pending incoming requests"); ?></h3>
         

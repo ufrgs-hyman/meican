@@ -1001,6 +1001,7 @@ class reservations extends Controller {
             $newReq->response = NULL;
             $newReq->message = NULL;
             
+            $newReq->crr_ode_ip = NULL;
             $newReq->response_user = NULL;
             $newReq->start_time = NULL;
             $newReq->finish_time = NULL;
@@ -1017,7 +1018,7 @@ class reservations extends Controller {
                 'dst_ode_ip' => $newReq->dst_ode_ip,
                 'src_usr' => $newReq->src_usr);
 
-            Log::write("info",'Sending for authorization '. print_r($requestSOAP,TRUE));
+            Log::write("info","Sending for authorization:\n". print_r($requestSOAP,TRUE));
             try {
                 $client = new SoapClient($businessEndpoint, array('cache_wsdl' => 0));
 

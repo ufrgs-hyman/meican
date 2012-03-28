@@ -38,8 +38,9 @@ CREATE TABLE IF NOT EXISTS `request_info` (
   `status` varchar(128) DEFAULT NULL,
   `response` enum('accept','reject') DEFAULT NULL,
   `message` varchar(128) DEFAULT NULL,
+  `crr_ode_ip` varchar(64) DEFAULT NULL,
   `response_user` int(11) DEFAULT NULL,
   `start_time` float DEFAULT NULL,
   `finish_time` float DEFAULT NULL,
   PRIMARY KEY (`loc_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
