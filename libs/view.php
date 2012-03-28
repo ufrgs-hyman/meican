@@ -166,10 +166,10 @@ class View {
             foreach ($scripts_vars as $name => $val) {
                 if (is_string($val))
                     $ret .= "var $name = '$val';\n";
-                elseif (is_array($val) || is_object($val))
+                else//if (is_array($val) || is_object($val))
                     $ret .= "var $name = " . json_encode($val) . ";\n";
-                else
-                    $ret .= "var $name = $val;\n";
+                /*else
+                    $ret .= "var $name = $val;\n";*/
             }
             $ret = '<script type="text/javascript">' . $ret . '</script>';
         }
