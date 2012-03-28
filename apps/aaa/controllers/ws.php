@@ -6,9 +6,9 @@ include_once 'apps/topology/models/topology.php';
 include_once 'apps/aaa/models/user_info.php';
 include_once 'apps/aaa/models/group_info.php';
 include_once 'apps/topology/models/meican_info.php';
+include_once LIBS.'webservice_controller.php';
 
-
-class ws extends Controller {
+class ws extends WebServiceController {
 
     public function ws() {
         $this->app = 'aaa';

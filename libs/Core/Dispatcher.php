@@ -54,6 +54,7 @@ class Dispatcher {
         /* if (empty($url)&&!(Common::GET('app')))
           return $this->legacyDispatch(); */
         $this->params = array_merge($this->parse($url), $params);
+        debug($this->params['controller']);
         if ($this->params['controller'] !== 'ws' && !$this->checkLogin()) //TODO: authetication for webservices
             return;
         try {
@@ -90,6 +91,7 @@ class Dispatcher {
      * @return Boolean  
      */
     public function checkLogin() {
+        debug('oooo');
         include_once 'libs/auth.php';
         if (AuthSystem::userTryToLogin() || AuthSystem::isUserLoggedIn()) {
             return true;

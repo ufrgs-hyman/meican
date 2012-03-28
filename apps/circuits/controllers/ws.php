@@ -5,8 +5,9 @@ include_once 'apps/circuits/models/reservation_info.php';
 include_once 'apps/circuits/models/flow_info.php';
 include_once 'apps/circuits/models/timer_info.php';
 include_once 'apps/topology/models/meican_info.php';
+include_once LIBS.'webservice_controller.php';
 
-class ws extends Controller {
+class ws extends WebServiceController {
 
     public function ws() {
         $this->app = 'circuits';
