@@ -42,9 +42,6 @@ class ws extends WebServiceController {
         $server->wsdl->addComplexType('stringTypeList','complexType','array','all','',
           array('str' => array('name' => 'str','type' => 'xsd:string')));
 
-        /*$server->wsdl->addComplexType('stringTypeList', 'complexType', 'array', '', 'SOAP-ENC:Array', array(), array(array('ref' => 'SOAP-ENC:arrayType', 'wsdl:arrayType' => 'xsd:string[]'),
-            'xsd:string'));*/
-
         $server->wsdl->addComplexType('reqType', 'complexType', 'struct', 'all', '', array(
             'resc_id' => array('name' => 'resc_id', 'type' => 'xsd:int'),
             'resc_descr' => array('name' => 'resc_descr', 'type' => 'xsd:string'),
@@ -56,30 +53,45 @@ class ws extends WebServiceController {
             'dst_ode_ip' => array('name' => 'dst_ode_ip', 'type' => 'xsd:string'),
             'crr_ode_ip' => array('name' => 'crr_ode_ip', 'type' => 'xsd:string'),
             'src_usr' => array('name' => 'src_usr', 'type' => 'xsd:int')));
-
+        
+        $server->wsdl->addComplexType('statusType', 'complexType', 'struct', 'all', '', array(
+            'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
+            'src_ode_ip' => array('name' => 'src_ode_ip', 'type' => 'xsd:string'),
+            'status' => array('name' => 'status', 'type' => 'xsd:string')));
+        
         $server->wsdl->addComplexType('responseType', 'complexType', 'struct', 'all', '', array(
             'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
             'src_ode_ip' => array('name' => 'src_ode_ip', 'type' => 'xsd:string'),
+            'crr_ode_ip' => array('name' => 'crr_ode_ip', 'type' => 'xsd:string'),
             'response' => array('name' => 'response', 'type' => 'xsd:string'),
             'message' => array('name' => 'message', 'type' => 'xsd:string')));
 
-        $server->register(
-                'getReqInfo', array('req_id' => 'xsd:int', 'src_ode_ip' => 'xsd:string'), array('req_info' => 'tns:reqType'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/getReqInfo", 'rpc', 'encoded', 'Complex Hello World Method');
+        $server->wsdl->addComplexType('decisionType', 'complexType', 'struct', 'all', '', array(
+            'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
+            'src_ode_ip' => array('name' => 'src_ode_ip', 'type' => 'xsd:string'),
+            'response' => array('name' => 'response', 'type' => 'xsd:string')));
+        
 
         $server->register(
-                'notifyResponse', array('response' => 'tns:responseType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/notifyResponse", 'rpc', 'encoded', 'Complex Hello World Method');
+                'getReqInfo', array('req_id' => 'xsd:int', 'src_ode_ip' => 'xsd:string'), array('req_info' => 'tns:reqType'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/getReqInfo", 'rpc', 'encoded', 'Method to get request information');
 
         $server->register(
-                'requestUserAuthorization', array('usr_dst' => 'xsd:int', 'request' => 'tns:requestType'), array('req_id' => 'xsd:int'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/requestUserAuthorization", 'rpc', 'encoded', 'Complex Hello World Method');
+                'refreshStatus', array('status' => 'tns:statusType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/refreshStatus", 'rpc', 'encoded', 'Method only to refresh request status, modify all requests');
+        
+        $server->register(
+                'saveResponse', array('response' => 'tns:responseType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/saveResponse", 'rpc', 'encoded', 'Method to save response from current domain request, modify only one request');
+        
+        $server->register(
+                'finalDecision', array('decision' => 'tns:decisionType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/finalDecision", 'rpc', 'encoded', 'Method to notify final response to the user\'s request, modify all the request status as AUTHORIZED or DENIED');
 
         $server->register(
-                'requestGroupAuthorization', array('grp_dst' => 'xsd:int', 'request' => 'tns:requestType'), array('req_id' => 'xsd:int'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/requestGroupAuthorization", 'rpc', 'encoded', 'Complex Hello World Method');
+                'requestUserAuthorization', array('usr_dst' => 'xsd:int', 'request' => 'tns:requestType'), array('req_id' => 'xsd:int'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/requestUserAuthorization", 'rpc', 'encoded', 'Method to request authorization from a specific user');
 
         $server->register(
-                'getRequestPath', array('req_id' => 'xsd:int'), array('ode_ip_array' => 'tns:stringTypeList'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/getRequestPath", 'rpc', 'encoded', 'Complex Hello World Method');
+                'requestGroupAuthorization', array('grp_dst' => 'xsd:int', 'request' => 'tns:requestType'), array('req_id' => 'xsd:int'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/requestGroupAuthorization", 'rpc', 'encoded', 'Method to request authorization from a group');
 
         $server->register(
-                'refreshRequestStatus', array('req_id' => 'xsd:int', 'src_ode_ip' => 'xsd:string', 'new_status' => 'xsd:string'), array('confirmation' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/refreshRequestStatus", 'rpc', 'encoded', 'Complex Hello World Method');
+                'getRequestPath', array('req_id' => 'xsd:int', 'src_ode_ip' => 'xsd:string'), array('ode_ip_array' => 'tns:stringTypeList'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/getRequestPath", 'rpc', 'encoded', 'Method to get the reservation path');
 
         
         function getReqInfo($req_id, $src_ode_ip) {
@@ -87,7 +99,7 @@ class ws extends WebServiceController {
 
             $req = new request_info();
             $req->req_id = $req_id;
-            $req->src_ode_ip = $src_ode_ip;
+            $req->src_ode_ip = trim($src_ode_ip);
             $req->answerable = 'no';
 
             if ($result = $req->fetch(FALSE)) {
@@ -109,93 +121,162 @@ class ws extends WebServiceController {
             }
             return NULL;
         }
+        
+        function refreshStatus($status) {
+            Log::write('ws', "Refresh status:\n" . print_r($status, true));
 
-        function notifyResponse($response) {
-            Log::write('ws', "Notify response from ODE:\n" . print_r($response, TRUE));
-            $validResponses = array("accept", "reject");
+            if (array_key_exists('req_id', $status) &&
+                    array_key_exists('src_ode_ip', $status) &&
+                    array_key_exists('status', $status)) {
 
-            if (array_search($response['response'], $validResponses) !== FALSE) {
+                if ($status['req_id'] && $status['src_ode_ip'] && $status['status']) {
 
-                $req = new request_info();
-                $req->req_id = $response['req_id'];
-                $req->src_ode_ip = $response['src_ode_ip'];
+                    $req = new request_info();
+                    $req->req_id = $status['req_id'];
+                    $req->src_ode_ip = trim($status['src_ode_ip']);
 
-                if (!$req->get('response', FALSE)) {
+                    if ($req->updateTo(array("status" => $status['status']), false)) {
+                        Log::write('ws', "Refresh status: request status updated");
+                        return true;
+                    }
+                }
+            }
+            Log::write('ws', "Refresh status: could not update status");
+            return null;
+        }
+        
+        function saveResponse($response) {
+            Log::write('ws', "Save response:\n" . print_r($response, true));
 
-                    $req->updateTo(array('message' => $response['message'], 'response' => $response['response']), FALSE);
+            if (array_key_exists('req_id', $response) &&
+                    array_key_exists('src_ode_ip', $response) &&
+                    array_key_exists('crr_ode_ip', $response) &&
+                    array_key_exists('response', $response) &&
+                    array_key_exists('message', $response)) {
 
-                    if ($response['response'] == 'accept') {
-                        // request accepted
-                        $req->updateTo(array("status" => "AUTHORIZED"), FALSE);
+                if ($response['req_id'] && $response['src_ode_ip'] && $response['crr_ode_ip']) {
 
-                        /**
-                         * @todo Transformar em função de algum modelo (reservation_info ou gri_info)
-                         */
-                        $tmp = new gri_info();
-                        $tmp->res_id = $req->get('resource_id', FALSE);
-                        $allgris = $tmp->fetch(FALSE);
+                    $req = new request_info();
+                    $req->req_id = $response['req_id'];
+                    $req->src_ode_ip = trim($response['src_ode_ip']);
+                    $req->crr_ode_ip = trim($response['crr_ode_ip']);
 
-                        Log::write('ws', "Notify response: reservation authorized, setting GRIs to be sent. Reservation ID:\n" . print_r($tmp->res_id, TRUE));
+                    $validResponses = array("accept", "reject");
 
-                        foreach ($allgris as $g) {
-                            $now = time();
-                            $start = new DateTime($g->start);
-                            if ($now < ($start->getTimestamp() - 180)) //testa para ver se a reserva está NO MINIMO 3 minutos do tempo atual
-                                $g->updateTo(array("send" => 1), FALSE);
+                    if (array_search($response['response'], $validResponses) !== false) {
+                        if (!$req->get('response', false)) {
+                            $updated = false;
+                            if ($response['message'])
+                                $updated = $req->updateTo(array("response" => $response['response'], "message" => $response['message']), false);
+                            else
+                                $updated = $req->updateTo(array("response" => $response['response']), false);
+
+                            if ($updated) {
+                                Log::write('ws', "Save response: request response saved");
+                                return true;
+                            }
+                        } else
+                            Log::write('ws', "Save response: request already answered");
+                    } else
+                        Log::write('ws', "Save response: invalid response");
+                }
+            }
+            Log::write('ws', "Save response: request response NOT saved");
+            return null;
+        }
+
+        function finalDecision($decision) {
+            Log::write('ws', "Final decision from ODE:\n" . print_r($decision, true));
+
+            if (array_key_exists('req_id', $decision) &&
+                    array_key_exists('src_ode_ip', $decision) &&
+                    array_key_exists('response', $decision)) {
+
+                if ($decision['req_id'] && $decision['src_ode_ip']) {
+
+                    $validResponses = array("accept", "reject");
+
+                    if (array_search($decision['response'], $validResponses) !== false) {
+
+                        $req = new request_info();
+                        $req->req_id = $decision['req_id'];
+                        $req->src_ode_ip = trim($decision['src_ode_ip']);
+
+                        if ($decision['response'] == 'accept') {
+                            // request accepted
+                            $req->updateTo(array("status" => "AUTHORIZED"), false);
+
+                            /**
+                             * @todo Transformar em função de algum modelo (reservation_info ou gri_info)
+                             */
+                            $req->answerable = 'no';
+
+                            $tmp = new gri_info();
+                            $tmp->res_id = $req->get('resource_id', false);
+                            $allgris = $tmp->fetch(false);
+
+                            Log::write('ws', "Final decision: reservation authorized, setting GRIs to be sent. Reservation ID: " . print_r($tmp->res_id, true));
+
+                            foreach ($allgris as $g) {
+                                $now = time();
+                                $start = new DateTime($g->start);
+                                if ($now < ($start->getTimestamp() - 180)) //testa para ver se a reserva está NO MINIMO 3 minutos do tempo atual
+                                    $g->updateTo(array("send" => 1), false);
 
 //                            se for uma recorrencia, nao pode colocar timed out
 //                            else
 //                                $g->updateTo(array("status" => "TIMED OUT"), FALSE);
-                        }
-                    } else {
-                        // request denied
-                        $req->updateTo(array("status" => "DENIED"), FALSE);
-
-                        //as reservas devem ser canceladas no OSCARS
-                        $tmp = new gri_info();
-                        $tmp->res_id = $req->get('resource_id', FALSE);
-                        $allgris = $tmp->fetch(FALSE);
-
-                        $dom_tmp = new domain_info();
-                        $dom_tmp->ode_ip = $req->src_ode_ip;
-                        $dom = $dom_tmp->fetch(FALSE);
-
-                        foreach ($allgris as $g) {
-                            $oscRes = new OSCARSReservation();
-                            $oscRes->setOscarsUrl($dom->oscars_ip);
-                            $oscRes->setGri($g->gri_descr);
-                            if ($oscRes->cancelReservation()) {
-                                //apaga os gris negados do db MEICAN
-                                $g->delete(FALSE);
-                            } else {
-                                Log::write('ws', "Notify response: error to cancel GRI:\n" . print_r($g->gri_descr, TRUE));
                             }
-                            unset($oscRes);
-                        }
-                    }
+                        } else {
+                            // request denied
+                            $req->updateTo(array("status" => "DENIED"), false);
 
-                    return TRUE; //se a requisicao foi negada ou aceita retorna true
-                } else {
-                    Log::write('ws', "Notify response: request already answered");
-                    return NULL;
+                            $req->answerable = 'no';
+
+                            //as reservas devem ser canceladas no OSCARS
+                            $tmp = new gri_info();
+                            $tmp->res_id = $req->get('resource_id', false);
+                            $allgris = $tmp->fetch(false);
+
+                            Log::write('ws', "Final decision: reservation denied, cancelling GRIs. Reservation ID:\n" . print_r($tmp->res_id, true));
+
+                            $dom_tmp = new domain_info();
+                            $dom_tmp->ode_ip = $req->src_ode_ip;
+                            $dom = $dom_tmp->fetch(false);
+
+                            foreach ($allgris as $g) {
+                                $oscRes = new OSCARSReservation();
+                                $oscRes->setOscarsUrl($dom[0]->oscars_ip);
+                                $oscRes->setGri($g->gri_descr);
+                                if ($oscRes->cancelReservation()) {
+                                    //apaga os gris negados do db MEICAN
+                                    $g->delete(false);
+                                } else {
+                                    Log::write('ws', "Final decision: error to cancel GRI:\n" . print_r($g->gri_descr, true));
+                                }
+                                unset($oscRes);
+                            }
+                        }
+
+                        return true; //se a requisicao foi negada ou aceita retorna true
+                    } else
+                        Log::write('ws', "Final decision: invalid response from ODE:\n" . print_r($decision, true));
                 }
-            } else {
-                Log::write('ws', "Notify response: invalid response from ODE:\n" . print_r($response, TRUE));
-                return NULL;
             }
+            return null;
         }
 
         function requestUserAuthorization($usr_dst, $request) {
-            Log::write('ws', "Request user authorizarion:\nUser:". print_r($usr_dst, TRUE). "\n" . print_r($request, TRUE));
+            Log::write('ws', "Request user authorizarion:\nUser: ". print_r($usr_dst, TRUE). "\n" . print_r($request, TRUE));
 
             if ($usr_dst && $request) {
 
                 $new_request = new request_info();
                 $new_request->req_id = $request['req_id'];
 
-                $new_request->src_ode_ip = $request['src_ode_ip'];
+                $new_request->src_ode_ip = trim($request['src_ode_ip']);
                 $new_request->src_usr = $request['src_usr'];
-                $new_request->dst_ode_ip = $request['dst_ode_ip'];
+                $new_request->dst_ode_ip = trim($request['dst_ode_ip']);
                 
                 $new_request->resource_type = NULL;
                 $new_request->resource_id = NULL;
@@ -206,7 +287,7 @@ class ws extends WebServiceController {
                 $new_request->response = NULL;
                 $new_request->message = NULL;
                 
-                $new_request->crr_ode_ip = $request['crr_ode_ip'];
+                $new_request->crr_ode_ip = trim($request['crr_ode_ip']);
                 $new_request->response_user = NULL;
                 $new_request->start_time = microtime(true);
                 $new_request->finish_time = NULL;
@@ -255,15 +336,15 @@ class ws extends WebServiceController {
         }
 
         function requestGroupAuthorization($grp_dst, $request) {
-            Log::write('ws', "Request group authorizarion:\nGroup:". print_r($grp_dst, TRUE). "\n" . print_r($request, TRUE));
+            Log::write('ws', "Request group authorizarion:\nGroup: ". print_r($grp_dst, TRUE). "\n" . print_r($request, TRUE));
 
             if ($grp_dst && $request) {
                 $new_request = new request_info();
                 $new_request->req_id = $request['req_id'];
 
-                $new_request->src_ode_ip = $request['src_ode_ip'];
+                $new_request->src_ode_ip = trim($request['src_ode_ip']);
                 $new_request->src_usr = $request['src_usr'];
-                $new_request->dst_ode_ip = $request['dst_ode_ip'];
+                $new_request->dst_ode_ip = trim($request['dst_ode_ip']);
                 
                 $new_request->resource_type = NULL;
                 $new_request->resource_id = NULL;
@@ -274,7 +355,7 @@ class ws extends WebServiceController {
                 $new_request->response = NULL;
                 $new_request->message = NULL;
                 
-                $new_request->crr_ode_ip = $request['crr_ode_ip'];
+                $new_request->crr_ode_ip = trim($request['crr_ode_ip']);
                 $new_request->response_user = NULL;
                 $new_request->start_time = microtime(true);
                 $new_request->finish_time = NULL;
@@ -332,11 +413,12 @@ class ws extends WebServiceController {
             }
         }
 
-        function getRequestPath($req_id) {
-            Log::write('ws', "Getting request path:\n" . print_r(array('req_id' => $req_id), TRUE));
+        function getRequestPath($req_id, $src_ode_ip) {
+            Log::write('ws', "Getting request path:\n" . print_r(array('req_id' => $req_id, 'src_ode_ip' => $src_ode_ip), TRUE));
             
             $req_info = new request_info();
             $req_info->req_id = $req_id;
+            $req_info->src_ode_ip = trim($src_ode_ip);
             $req_info->answerable = 'no';
             $request = $req_info->fetch(FALSE);
 
@@ -369,20 +451,6 @@ class ws extends WebServiceController {
             Log::write('ws', "Request path return with ODE IPs:\n" . print_r($ode_ip_array, TRUE));
 
             return $ode_ip_array;
-        }
-
-        function refreshRequestStatus($req_id, $src_ode_ip, $new_status) {
-            Log::write('ws', "Refresh request status:\n" . print_r(array('req_id' => $req_id, 'src_ode_ip' => $src_ode_ip, 'status' => $new_status), TRUE));
-
-            $req = new request_info();
-            $req->req_id = $req_id;
-            $req->src_ode_ip = $src_ode_ip;
-
-            if ($new_status && $req->fetch(FALSE)) {
-                if ($req->updateTo(array('status' => $new_status), FALSE))
-                    return TRUE;
-            }
-            return NULL;
         }
 
         $POST_DATA = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
