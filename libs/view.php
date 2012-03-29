@@ -121,7 +121,7 @@ class View {
             include("apps/$this->app/views/elements/$elementName.php");
             return true;
         } else {
-            throw Exception("Element not found: "."apps/$this->app/views/elements/$elementName.php");
+            throw Exception("app not set: ".$this->app);
             return false;
         }
     }

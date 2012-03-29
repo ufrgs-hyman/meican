@@ -28,13 +28,13 @@ class Controller extends Object {
     public function render($action=null, $params = array()) {
         if (empty($action))
             $action = $this->action;
+        if ($this->layout === 'default' && $this->isAjax())
+            $this->layout .= '_ajax';
         $params = array_merge(array(
             'app' =>$this->app,
             'controller' => $this->controller,
             'layout' => $this->layout
         ), $params);
-        if ($this->layout === 'default' && $this->isAjax())
-            $this->layout .= '_ajax';
         $view = new View($params['app'], $params['controller'], $action, $params['layout']);
         $view->set($this->viewVars);
         $view->setArgs($this->argsToBody);
