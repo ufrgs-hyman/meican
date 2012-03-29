@@ -19,16 +19,24 @@ class View {
     //public $script;
     public $layout = 'default';
     public $viewVars = array();
+    public $extension = '.php';
 
     public function View($app, $controller, $action, $layout = 'default') {
         $this->app = $app;
         $this->controller = $controller;
         $this->action = $action;
         $this->layout = $layout;
-        if ($this->action)
-            $this->view = "apps/$this->app/views/$this->controller" . '_' . "$this->action.php";
+        if ($this->app)
+            $this->view = "apps/$this->app/views/";
         else
-            $this->view = "apps/$this->app/views/$this->controller.php";
+            $this->view = "layouts/";
+        if ($this->controller)
+            $this->view .= $this->controller;
+        if ($this->controller && $this->action)
+            $this->view .= '_';
+        if ($this->action)
+            $this->view .= $this->action;
+        $this->view .= $this->extension;
     }
 
     public function build() {
@@ -113,7 +121,7 @@ class View {
             include("apps/$this->app/views/elements/$elementName.php");
             return true;
         } else {
-            printf("SET APP CONF");
+            throw Exception("Element not found: "."apps/$this->app/views/elements/$elementName.php");
             return false;
         }
     }

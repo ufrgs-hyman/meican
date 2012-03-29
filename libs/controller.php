@@ -25,12 +25,17 @@ class Controller extends Object {
         parent::__construct();
     }
 
-    public function render($action=null) {
+    public function render($action=null, $params = array()) {
         if (empty($action))
             $action = $this->action;
+        $params = array_merge(array(
+            'app' =>$this->app,
+            'controller' => $this->controller,
+            'layout' => $this->layout
+        ), $params);
         if ($this->layout === 'default' && $this->isAjax())
             $this->layout .= '_ajax';
-        $view = new View($this->app, $this->controller, $action, $this->layout);
+        $view = new View($params['app'], $params['controller'], $action, $params['layout']);
         $view->set($this->viewVars);
         $view->setArgs($this->argsToBody);
         $this->autoRender = false;
