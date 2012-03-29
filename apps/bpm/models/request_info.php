@@ -64,6 +64,7 @@ class request_info extends Resource_Model {
 
         $return_request->loc_id = $this->loc_id;
         $return_request->req_id = $this->req_id;
+        $return_request->status = $this->status;
         $return_request->response = $this->response;
         $return_request->message = $this->message;
 
@@ -79,7 +80,7 @@ class request_info extends Resource_Model {
             $user_info = new user_info();
             $user_info->usr_id = $this->src_usr;
             if ($user = $user_info->fetch(FALSE))
-                $return_request->src_user = $user[0]->usr_name;
+                $return_request->src_user = $user[0]->usr_login;
             else
                 $return_request->src_user = $this->src_usr;
 
@@ -117,6 +118,7 @@ class request_info extends Resource_Model {
                         $res_info->res_id = $resourceReq->resource_id;
                         $reservation = $res_info->fetch(FALSE);
 
+                        $return_request->resc_id = $resourceReq->resource_id;
                         $return_request->resc_descr = $reservation[0]->res_name;
                         $return_request->resc_type = $resourceReq->resource_type;
 
@@ -126,13 +128,15 @@ class request_info extends Resource_Model {
                             $flow = new flow_info();
                             $flow->flw_id = $reservation[0]->flw_id;
                             $return_request->flow_info = $flow->getFlowDetails();
+                            $return_request->flow_info->source->domain = $return_request->src_domain;
+                            $return_request->flow_info->dest->domain = $return_request->dst_domain;
                         } else
                             $return_request->flow_info = NULL;
 
                         if ($getTimerInfo) {
                             $timer = new timer_info();
                             $timer->tmr_id = $reservation[0]->tmr_id;
-                            $return_request->timer_info = (array) $timer->getTimerDetails();
+                            $return_request->timer_info = $timer->getTimerDetails();
                         } else
                             $return_request->timer_info = NULL;
                     } else {

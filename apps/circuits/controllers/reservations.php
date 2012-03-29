@@ -701,37 +701,15 @@ class reservations extends Controller {
         }
 
         $status = array();
-        $gris = array();
 
         $gri = new gri_info();
-        $gri->res_id = $reservation->res_id;
-        $allGris = $gri->fetch(FALSE);
 
-        $dateFormat = "d/m/Y";
-        //$dateFormat = "M j, Y";
-
-        $hourFormat = "H:i";
-        //$hourFormat = "g:i a";
-
-        if ($allGris) {
-            foreach ($allGris as $g) {
-                $gri = new stdClass();
-                $gri->id = $g->gri_id;
-                $gri->descr = $g->gri_descr;
-                $gri->status = gri_info::translateStatus($g->status);
-
+        if ($gris = $gri->getGrisToView($reservation->res_id)) {
+            foreach ($gris as $g) {
                 $stat_obj = new stdClass();
-                $stat_obj->status = $g->status;
-                $stat_obj->id = $g->gri_id;
+                $stat_obj->id = $g->id;
+                $stat_obj->status = $g->original_status;
                 $status[] = $stat_obj;
-
-                $start = new DateTime($g->start);
-                $finish = new DateTime($g->finish);
-
-                $gri->start = $start->format("$dateFormat $hourFormat");
-                $gri->finish = $finish->format("$dateFormat $hourFormat");
-
-                $gris[] = $gri;
             }
         }
 

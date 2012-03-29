@@ -5,6 +5,7 @@ include_once 'libs/auth.php';
 
 include_once 'apps/bpm/models/request_info.php';
 include_once 'apps/circuits/models/reservation_info.php';
+include_once 'apps/circuits/models/gri_info.php';
 include_once 'apps/aaa/models/user_info.php';
 include_once 'apps/topology/models/domain_info.php';
 
@@ -86,6 +87,16 @@ class requests extends Controller {
 
         $result = $request->getRequestInfo(TRUE, TRUE, TRUE, TRUE);
         $result->available_bandwidth = NULL;
+        
+        $gri = new gri_info();
+        
+        $this->set(array(
+            'res_id' => $result->resc_id,
+            'res_name' => $result->resc_descr,
+            'bandwidth' => $result->bandwidth,
+            'usr_login' => $result->src_user,
+            'gris' => $gri->getGrisToView($result->resc_id)
+        ));
 
         $this->set('request', $result);
         $this->render('reply2');

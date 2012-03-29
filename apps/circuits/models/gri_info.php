@@ -56,6 +56,39 @@ class gri_info extends Model {
         return $filteredArray;
     }
     
+    public function getGrisToView($res_id = null) {
+        $gri = new gri_info();
+
+        if ($res_id)
+            $gri->res_id = $res_id;
+
+        $gris = array();
+
+        if ($allGris = $gri->fetch(FALSE)) {
+            $dateFormat = "d/m/Y";
+            //$dateFormat = "M j, Y";
+
+            $hourFormat = "H:i";
+            //$hourFormat = "g:i a";
+            foreach ($allGris as $g) {
+                $gri = new stdClass();
+                $gri->id = $g->gri_id;
+                $gri->descr = $g->gri_descr;
+                $gri->status = gri_info::translateStatus($g->status);
+                $gri->original_status = $g->status;
+
+                $start = new DateTime($g->start);
+                $finish = new DateTime($g->finish);
+
+                $gri->start = $start->format("$dateFormat $hourFormat");
+                $gri->finish = $finish->format("$dateFormat $hourFormat");
+
+                $gris[] = $gri;
+            }
+        }
+        return $gris;
+    }
+    
     static public function translateStatus($newStatus) {
         $status = "";
         switch ($newStatus) {
