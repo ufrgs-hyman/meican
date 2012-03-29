@@ -66,18 +66,17 @@
 
         $calendar.weekCalendar({
             buttons: true,
-            timeslotsPerHour : 4,/*
+            timeslotsPerHour : 2,
+            timeslotsPerHour : 4,
             allowCalEventOverlap : true,
-            overlapEventsSeparate: true,*/
-            firstDayOfWeek : 1,
-            /*businessHours :{start: 8, end: 18, limitDisplay: false },*/
+            overlapEventsSeparate: true,
+            businessHours : false,/*{start: 8, end: 18, limitDisplay: false },*/
             daysToShow : 7,
             timeslotHeight: 15,
             useShortDayNames: true,
-            timeslotsPerHour: 2,
             use24Hour: true,
             height : function($calendar) {
-                return 400;
+                return 500;
                 //return $(window).height() - $("h1").outerHeight() - 1;
             },
             eventAfterRender : function(calEvent, $element) {
@@ -88,7 +87,12 @@
        "border" : "1px solid #888"
     });
  }*/
-                $element.find(".wc-time").remove();
+                $element.attr('title', calEvent.title + ": "+
+                    calEvent.start.getHours()+":"+calEvent.start.getMinutes()+
+                    /*$.datepicker.formatDate('yy-mm-dd', calEvent.start)+*/" - "+
+                    calEvent.end.getHours()+":"+calEvent.end.getMinutes()
+                    /*$.datepicker.formatDate('yy-mm-dd', calEvent.end)*/); 
+                $element.find(".wc-time").empty();
                 if (calEvent.status > 0){
                     $element.addClass('authorization-accepted');
                 } else if (calEvent.status < 0){
@@ -238,7 +242,7 @@ eventClick : function(calEvent, $event) {
                     },
                     {
                         "id":3,
-                        "start": new Date(year, month, day + 1, 17),
+                        "start": new Date(year, month, day + 1, 12),
                         "end": new Date(year, month, day + 1, 17, 45),
                         "title":"Reservation3",
                         "status": 0

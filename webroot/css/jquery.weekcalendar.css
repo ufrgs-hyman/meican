@@ -39,7 +39,7 @@ h1.wc-title{
 .wc-header {
 	background: #eee;
 	border-top: 1px solid #aaa;
-	border-bottom: 1px solid #aaa;
+	border-bottom: 0;/*1px solid #aaa;*/
 	width: 100%;
 }
 
@@ -107,13 +107,17 @@ table.wc-time-slots {
 
 
 .wc-time-header-cell {
-	padding: 5px;	
-	height: 80px; /* reference height */
+	padding: 4px;	
+	height: 50px; /* reference height */
 }
 
 
 .wc-time-slot {
 	border-bottom: 1px dotted #ddd;	
+}
+
+.wc-hour-header.ui-state-default{
+    border-top: 0;
 }
 
 .wc-hour-header {
