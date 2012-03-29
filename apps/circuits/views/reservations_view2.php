@@ -66,13 +66,13 @@
 
         $calendar.weekCalendar({
             buttons: true,
-            timeslotsPerHour : 4,
+            timeslotsPerHour : 4,/*
             allowCalEventOverlap : true,
-            /*overlapEventsSeparate: true,*/
+            overlapEventsSeparate: true,*/
             firstDayOfWeek : 1,
-            businessHours :{start: 8, end: 18, limitDisplay: false },
+            /*businessHours :{start: 8, end: 18, limitDisplay: false },*/
             daysToShow : 7,
-            timeslotHeight: 20,
+            timeslotHeight: 15,
             useShortDayNames: true,
             timeslotsPerHour: 2,
             use24Hour: true,
