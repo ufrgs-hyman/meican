@@ -39,8 +39,9 @@ class Controller extends Object {
         $view->set($this->viewVars);
         $view->setArgs($this->argsToBody);
         $this->autoRender = false;
-        $this->output .= $view->build();
-        echo $this->output;
+        $output = $view->build();
+        $this->output .= $output;
+        echo $output;
     }
 
     public function isAjax() {

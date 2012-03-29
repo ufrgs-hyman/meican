@@ -2,7 +2,7 @@
 
 defined ('__MEICAN') or die ("Invalid access.");
 
-include_once 'libs/controller.php';
+include_once 'libs/meican_controller.php';
 
 include_once 'libs/auth.php';
 
@@ -11,7 +11,9 @@ include_once 'apps/aaa/models/user_info.php';
 include_once 'apps/aaa/models/aros.php';
 include_once 'libs/acl_loader.php';
 
-class groups extends Controller {
+class groups extends MeicanController {
+
+    public $modelClass = 'group_info';
 
     public function groups() {
         $this->app = 'aaa';
@@ -19,12 +21,16 @@ class groups extends Controller {
         $this->defaultAction = 'show';
     }
 
-    public function show() {
-      
-        $grp = new group_info();
-        $allGroups = $grp->fetch();
+    protected function renderEmpty(){
+        $this->set(array(
+            'title' => _("User Groups"),
+            'message' => _("You can't see any group, click the button below to add one")
+            ));
+        parent::renderEmpty();
+    }
 
-        if ($allGroups) {
+    public function show() {
+        if ($allGroups = $this->makeIndex()) {
             $groups = array();
             $acl = AclLoader::getInstance();
             
@@ -54,13 +60,6 @@ class groups extends Controller {
                 $groups[] = $group;
             }
             $this->setArgsToBody($groups);
-            $this->render('show');
-        } else {
-            $args = new stdClass();
-            $args->title = _("User Groups");
-            $args->message = _("You can't see any group, click the button below to add one");
-            $this->setArgsToBody($args);
-            $this->render('empty');
         }
     }
 

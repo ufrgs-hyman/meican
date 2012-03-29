@@ -2,7 +2,7 @@
 
 defined ('__MEICAN') or die ("Invalid access.");
 
-include_once 'libs/controller.php';
+include_once 'libs/meican_controller.php';
 include_once 'libs/auth.php';
 
 include_once 'apps/aaa/models/group_info.php';
@@ -23,7 +23,9 @@ include_once 'apps/topology/models/network_info.php';
 include_once 'apps/topology/models/urn_info.php';
 
 
-class acl extends Controller {
+class acl extends MeicanController {
+
+    public $modelClass = 'aros_acos';
 
     public function acl() {
         $this->app = 'aaa';
@@ -32,11 +34,17 @@ class acl extends Controller {
         $this->addScriptForLayout(array('acl'));
     }
 
-    public function show() {
-        $aros_acos = new aros_acos();
-        $allRights = $aros_acos->fetch(FALSE);
+    protected function renderEmpty(){
+        $this->set(array(
+            'title' => _("Access Control List"),
+            'message' => _("You can't see any access control, click the button below to add one"),
+            'link' => false
+            ));
+        parent::renderEmpty();
+    }
 
-        if ($allRights) {
+    public function show() {
+        if ($allRights = $this->makeIndex()) {
             $rights = array();
             
             foreach ($allRights as $r) {
@@ -137,12 +145,6 @@ class acl extends Controller {
              * @todo : verificar essa função
              */
             $this->setInlineScript('acl_init');
-        } else {
-            $args = new stdClass();
-            $args->title = _("Access Control List");
-            $args->message = _("You can't see any access control, click the button below to add one");
-            $this->setArgsToBody($args);
-            $this->render('empty');
         }
         $this->render('show');
     }

@@ -2,7 +2,7 @@
 
 defined ('__MEICAN') or die ("Invalid access.");
 
-include_once 'libs/controller.php';
+include_once 'libs/meican_controller.php';
 include_once 'libs/auth.php';
 include_once 'libs/language.php';
 include_once 'apps/aaa/models/user_info.php';
@@ -11,8 +11,10 @@ include_once 'apps/aaa/models/aros.php';
 include_once 'apps/aaa/models/acos.php';
 include_once 'libs/acl_loader.php';
 
-class users extends Controller {
+class users extends MeicanController {
 
+    public $modelClass = 'user_info';
+    
     public function users() {
         $this->app = 'aaa';
         $this->controller = 'users';
@@ -20,16 +22,19 @@ class users extends Controller {
         $this->addScriptForLayout(array('select'));
     }
 
+    protected function renderEmpty(){
+        $this->set(array(
+            'title' => _("Users"),
+            'message' => _("You can't see any user, click the button below to add one")
+            ));
+        parent::renderEmpty();
+    }
+    
     public function show() {
         /** @todo
          *  transformar essas consultas em uma função
          */
-        $acl = AclLoader::getInstance();
-
-        $usr_info = new user_info();
-        $allUsers = $usr_info->fetch();
-
-        if ($allUsers) {
+        if ($allUsers = $this->makeIndex()) {
             $users = array();
             $acl = AclLoader::getInstance();
             
@@ -51,13 +56,6 @@ class users extends Controller {
             }
             
             $this->setArgsToBody($users);
-            $this->render('show');
-        } else {
-            $args = new stdClass();
-            $args->title = _("Users");
-            $args->message = _("You can't see any user, click the button below to add one");
-            $this->setArgsToBody($args);
-            $this->render('empty');
         }
     }
 
