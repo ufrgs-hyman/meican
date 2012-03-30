@@ -1,15 +1,16 @@
 <?php //debug($request);
 extract(get_object_vars($request));
 $timer=$request->timer_info;
-$flow=$request->flow_info;?>
+$flow=$request->flow_info;
+?>
 <h1><?php echo _("Reservation details"); ?></h1>
 <div class="float-left">
     <h4>
         <dl>
             <dt><?php echo _("Reservation name"); ?></dt>
             <dd><?php echo $res_name; ?></dd>
-            <?php /*<dt><?php echo _("Requester Domain"); ?></dt>
-            <dd><?php echo @$usr_login; ?></dd> */?>
+            <dt><?php echo _("Requester Domain"); ?></dt>
+            <dd><?php echo $flow->source->domain; ?></dd> 
             <dt><?php echo _("Requester User"); ?></dt>
             <dd><?php echo @$usr_login; ?></dd>
         </dl>
@@ -25,7 +26,7 @@ $flow=$request->flow_info;?>
                     <label id="lb_bandwidth"><?php echo $bandwidth . " " . _("Mbps") ?></label>
                 </div>
             </div>
-            <div id="bandwidth_bar_inside"></div>
+            <div id="bandwidth_bar_inside" style="width: <?= round($bandwidth*100/1000); //TODO: calcular ?>%"></div>
         </div>
         <?= $this->element('view_point', array('app' => 'circuits', 'type' => 'destination', 'flow' => $flow)); ?>
     </div>
@@ -50,8 +51,7 @@ $flow=$request->flow_info;?>
 
 <div id="tabs-2" class="tab_content">
     <?= $this->element('view_timer', array('app' => 'circuits', 'timer' => $timer)); ?>
-    <?= $request ? $this->element('view_request', compact('request')+array('app' => 'circuits')) : null; ?>
-
+    <?= false && $request ? $this->element('view_request', compact('request')+array('app' => 'circuits')) : null; ?>
 </div>
 
 <div id="tabs-4" class="control_tab">
