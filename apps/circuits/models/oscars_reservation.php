@@ -203,7 +203,7 @@ class OSCARSReservation {
             $client = new SoapClient($wsdl, array(
                         'trace' => 1,
                         'cache_wsdl' => WSDL_CACHE_NONE,
-                        'exceptions' => true));           
+                        'exceptions' => true));
             $result = $client->__soapCall($method, array($envelope));
              Log::write("debug", print_r($result,TRUE));
             if (is_string($result->return)) {

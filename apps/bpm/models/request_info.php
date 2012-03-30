@@ -55,7 +55,7 @@ class request_info extends Resource_Model {
 
     function getRequestInfo($getReqInfo = FALSE, $getFlowInfo = FALSE, $getTimerInfo = FALSE) {
 
-        Log::write("debug", "Get request info:\n" . print_r($this, TRUE));
+        //Log::write("debug", "Get request info:\n" . print_r($this, TRUE));
 
         $domain_info = new domain_info();
         $domain_info->ode_ip = $this->src_ode_ip;
@@ -107,9 +107,10 @@ class request_info extends Resource_Model {
 
             if ($getReqInfo) {
                 $req_tmp = new request_info();
-                $req_tmp->red_id = $this->req_id;
+                $req_tmp->req_id = $this->req_id;
+                $req_tmp->src_ode_ip = $this->src_ode_ip;
                 $req_tmp->answerable = 'no';
-
+                
                 if ($req_result = $req_tmp->fetch(FALSE)) {
                     $resourceReq = $req_result[0];
 

@@ -68,6 +68,11 @@ class ws extends WebServiceController {
             'src_ode_ip' => array('name' => 'src_ode_ip', 'type' => 'xsd:string'),
             'response' => array('name' => 'response', 'type' => 'xsd:string')));
         
+        $server->wsdl->addComplexType('primaryType', 'complexType', 'struct', 'all', '', array(
+            'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
+            'src_ode_ip' => array('name' => 'src_ode_ip', 'type' => 'xsd:string'),
+            'crr_ode_ip' => array('name' => 'crr_ode_ip', 'type' => 'xsd:string')));
+        
 
         $server->register(
                 'getReqInfo', array('req_id' => 'xsd:int', 'src_ode_ip' => 'xsd:string'), array('req_info' => 'tns:reqType'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/getReqInfo", 'rpc', 'encoded', 'Method to get request information');
@@ -88,7 +93,7 @@ class ws extends WebServiceController {
                 'requestGroupAuthorization', array('grp_dst' => 'xsd:int', 'request' => 'tns:requestType'), array('req_id' => 'xsd:int'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/requestGroupAuthorization", 'rpc', 'encoded', 'Method to request authorization from a group');
 
         $server->register(
-                'getNextDomain', array('crr_ode_ip' => 'xsd:string', 'req_id' => 'xsd:int'), array('next_domain' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/getNextDomain", 'rpc', 'encoded', 'Complex Hello World Method');
+                'getNextDomain', array('primary' => 'tns:primaryType'), array('next_domain' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/getNextDomain", 'rpc', 'encoded', 'Complex Hello World Method');
         
         $server->register(
                 'getRequestPath', array('req_id' => 'xsd:int', 'src_ode_ip' => 'xsd:string'), array('ode_ip_array' => 'tns:stringTypeList'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/getRequestPath", 'rpc', 'encoded', 'Method to get the reservation path');
@@ -412,22 +417,29 @@ class ws extends WebServiceController {
                 return NULL;
             }
         }
+        
+        function getNextDomain($primary) {
+            Log::write('ws', "Getting next domain:\n" . print_r($primary, TRUE));
 
-        function getNextDomain($crr_ode_ip, $req_id, $dom_src) {
-            Log::write('ws', "Getting next domain:\n" . print_r(array('crr_ode_ip' => $crr_ode_ip), TRUE));
-            
-            $ode_ip_array = getRequestPath($req_id, $dom_src);
-            
-            $next_domain = NULL;
-            
-            for ($index=0; $index< count($ode_ip_array); $index++) {
-                if ($ode_ip_array[$index] == $crr_ode_ip) {
-                    $next_domain = $ode_ip_array[$index+1];
-                    break;
+            if (array_key_exists('req_id', $primary) &&
+                    array_key_exists('src_ode_ip', $primary) &&
+                    array_key_exists('crr_ode_ip', $primary)) {
+
+                $ode_ip_array = getRequestPath($primary['req_id'], $primary['src_ode_ip']);
+
+                $next_domain = NULL;
+
+                for ($index = 0; $index < count($ode_ip_array); $index++) {
+                    if ($ode_ip_array[$index] == trim($primary['crr_ode_ip'])) {
+                        if (array_key_exists($index + 1, $ode_ip_array)) {
+                            $next_domain = $ode_ip_array[$index + 1];
+                            break;
+                        }
+                    }
                 }
-            }       
-            Log::write('ws', "Next domain:\n" . print_r(array('next_domain' => $next_domain), TRUE));
-            return $next_domain;
+                Log::write('ws', "Next domain:\n" . print_r(array('next_domain' => $next_domain), TRUE));
+                return $next_domain;
+            }
         }
         
         function getRequestPath($req_id, $src_ode_ip) {
