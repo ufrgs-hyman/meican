@@ -425,7 +425,7 @@ class ws extends WebServiceController {
                     $next_domain = $ode_ip_array[$index+1];
                     break;
                 }
-            }
+            }       
             Log::write('ws', "Next domain:\n" . print_r(array('next_domain' => $next_domain), TRUE));
             return $next_domain;
         }
