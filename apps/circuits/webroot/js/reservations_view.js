@@ -95,17 +95,42 @@ function res_showCircuit(){
 //        aux += 0.0005;
 //        dst_lng_network = aux.toString();
 //    }
-    var coord_src = new google.maps.LatLng(src_lat_network, src_lng_network);
-    res_addMarker(coord_src, "src");
-    res_bounds.push(coord_src);
+//    alert(reservation_path[0].descr);
+//    alert(reservation_path[1].descr);
+    var networks_coordinates = [];
+    if (reservation_path.length > 0) {
+        
+        for (var i=0;i<reservation_path.length;i++){
+        
+            var coord = new google.maps.LatLng(reservation_path[i].latitude, reservation_path[i].longitude);
+            if (i==0) {
+                res_addMarker(coord, "src");
+            } else if (i== reservation_path.length-1) {
+                res_addMarker(coord, "dst");
+            } else {
+                res_addMarker(coord, "way");
+            }
+        
+            networks_coordinates.push(coord);
+        
+            res_bounds.push(coord);
+            res_setBounds(res_bounds);
+        
+        }
+    } else {
+        var coord_src = new google.maps.LatLng(src_lat_network, src_lng_network);
+        res_addMarker(coord_src, "src");
+        res_bounds.push(coord_src);
 
-    var coord_dst = new google.maps.LatLng(dst_lat_network, dst_lng_network);
-    res_addMarker(coord_dst, "dst");
-    
-    res_bounds.push(coord_dst);
-    res_setBounds(res_bounds);
-    
-    res_drawPath(coord_src, coord_dst);
+        var coord_dst = new google.maps.LatLng(dst_lat_network, dst_lng_network);
+        res_addMarker(coord_dst, "dst");   
+        res_bounds.push(coord_dst);
+        
+        networks_coordinates.push(coord_src);
+        networks_coordinates.push(coord_dst);
+        res_setBounds(res_bounds);
+    }
+    res_drawPath(networks_coordinates);
 }
 
 function res_addMarker(location, where) {
@@ -132,12 +157,12 @@ function res_addMarker(location, where) {
     res_marker.setMap(res_map);
 }
 
-function res_drawPath(origin, destination){
+function res_drawPath(networks_coordinates){
         //var origin = coordinatesArray[0];
         //var destination = coordinatesArray[(coordinatesArray.length -1)];
-        var flightPlanCoordinates = [origin, destination];
+        //var flightPlanCoordinates = [origin, destination];
         var line = new google.maps.Polyline({
-            path: flightPlanCoordinates,
+            path: networks_coordinates,
             strokeColor: "#0000FF",
             strokeOpacity: 0.5,
             strokeWeight: 4

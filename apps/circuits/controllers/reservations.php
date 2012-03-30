@@ -669,13 +669,18 @@ class reservations extends Controller {
             $dom->dom_id = $dom_aco[0]->obj_id;
             $flow->dest->domain = $dom->get('dom_descr');
         }
+        
+        if (!$flow->path) {
+            $pathArray = $reservation->getPath();
+            $flow->path = MeicanTopology::getWaypoints($pathArray);        
+        } 
 
         if (!$flow) {
             $this->setFlash(_("Flow not found or could not get endpoints information"), "fatal");
             $this->show();
             return;
         }
-
+        
         $timer_info = new timer_info();
         $timer_info->tmr_id = $reservation->tmr_id;
         $timer = $timer_info->getTimerDetails();
@@ -722,6 +727,7 @@ class reservations extends Controller {
             "src_lng_network" => $flow->source->longitude,
             "dst_lat_network" => $flow->dest->latitude,
             "dst_lng_network" => $flow->dest->longitude,
+            "reservation_path" => $flow->path,
             "domain_string" => _("Domain"),
             "domains_string" => _("Domains"),
             "network_string" => _("Network"),

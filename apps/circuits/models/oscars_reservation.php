@@ -194,6 +194,7 @@ class OSCARSReservation {
      * return an array of results
      */
     protected function callBridge($method, $envelope) {
+        Log::write("debug", print_r($method,TRUE));
         try {
             $wsdl = Configure::read('OSCARSBridgeEPR');
             if (!@file_get_contents($wsdl)) { //testa disponibilidade do wsdl
@@ -202,8 +203,9 @@ class OSCARSReservation {
             $client = new SoapClient($wsdl, array(
                         'trace' => 1,
                         'cache_wsdl' => WSDL_CACHE_NONE,
-                        'exceptions' => true));
+                        'exceptions' => true));           
             $result = $client->__soapCall($method, array($envelope));
+             Log::write("debug", print_r($result,TRUE));
             if (is_string($result->return)) {
                 return $this->error("OSCARS Bridge Error: " . $result->return);
             } elseif (!$err = array_shift($result->return)) {//tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array

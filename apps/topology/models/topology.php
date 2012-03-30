@@ -211,6 +211,68 @@ class MeicanTopology {
 
         return $networks;
     }
+    
+    
+    //This function returns all networks in circuit, with longitude and latitude
+    static public function getWaypoints($urn_string_array) {
+
+        $waypoints = array();
+
+        foreach ($urn_string_array as $urn_str) {
+            if ($urn_str) {                
+                $replaced_str = str_replace(":", "&", $urn_str);
+                parse_str($replaced_str);
+                $dom = new domain_info();
+                $dom->topology_id = $domain;
+                $dom_id = $dom->get("dom_id");
+                $aco = new Acos($dom_id, "domain_info");
+
+                if ($aco_dom = $aco->fetch(FALSE)) {
+                    $children = $aco_dom[0]->findChildren();
+                }
+
+                foreach ($children as $child) {                                        
+
+                    if ($child->model == "network_info") {
+                        
+                        $dev_info = new device_info();
+                        $dev_info->net_id = $child->obj_id;
+                        $allDevs = $dev_info->fetch(FALSE);
+                        
+                        if ($allDevs) {
+                            foreach ($allDevs as $dev) {
+                                if ($dev->node_id == $node) {
+                                    $insert = TRUE;
+;                                    $net_res= new network_info();
+                                    $net_res->net_id = $child->obj_id;
+                                    $net = $net_res->fetch(FALSE);
+                                    
+                                    foreach ($waypoints as $way){
+                                       if ($way->descr == $net[0]->net_descr) {
+                                           $insert = FALSE;
+                                       } 
+                                    }
+                                    
+                                    if ($insert) {
+                                        $network = new stdClass();
+                                        $network->id = $net[0]->net_id;
+                                        $network->descr = $net[0]->net_descr;
+                                        $network->latitude = $net[0]->net_lat;
+                                        $network->longitude = $net[0]->net_lng;
+                                        $waypoints[] = $network;
+                                        
+                                    }
+                                    
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $waypoints;
+    }
 
     static public function getURNsInfo($urn_string_array) {
         $urns = array();

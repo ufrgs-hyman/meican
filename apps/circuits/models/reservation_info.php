@@ -267,6 +267,7 @@ class reservation_info extends Resource_Model {
 
         Log::write("info", "Getting GRI path:\n" . print_r(array("OSCARS URL" => $domain[0]->idc_url, "GRI" => $gri[0]->gri_descr), TRUE));
 
+        
         while (!$response && $cont < 15) {
             if ($oscars->queryReservation()) {
                 $status = $oscars->getStatus();
@@ -291,7 +292,6 @@ class reservation_info extends Resource_Model {
                 $response = TRUE;
             }
         }
-
         return $pathArray;
     }
     

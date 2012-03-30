@@ -44,7 +44,6 @@ class urns extends Controller {
                 $domains_to_js[] = $dom_to_js;
             }
             $this->setArgsToBody($domains_to_body);
-
             $this->setArgsToScript(array(
                 "str_no_newUrn" => _("No new URN found in the network topology, this domain is updated"),
                 "str_error_import" => _("An error has occurred while trying to import the topology"),
