@@ -8,7 +8,9 @@ $flow=$request->flow_info;?>
         <dl>
             <dt><?php echo _("Reservation name"); ?></dt>
             <dd><?php echo $res_name; ?></dd>
-            <dt><?php echo _("User"); ?></dt>
+            <?php /*<dt><?php echo _("Requester Domain"); ?></dt>
+            <dd><?php echo @$usr_login; ?></dd> */?>
+            <dt><?php echo _("Requester User"); ?></dt>
             <dd><?php echo @$usr_login; ?></dd>
         </dl>
     </h4>
