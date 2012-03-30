@@ -82,6 +82,9 @@ class gri_info extends Model {
 
                 $gri->start = $start->format("$dateFormat $hourFormat");
                 $gri->finish = $finish->format("$dateFormat $hourFormat");
+                
+                $gri->start_date = $g->start;
+                $gri->finish_date = $g->finish;
 
                 $gris[] = $gri;
             }

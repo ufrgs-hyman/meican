@@ -56,10 +56,27 @@ $flow=$request->flow_info;?>
     <input class="back" type="button" onClick="redir('<?php $action = (!empty($refresh)) ? "status" : "history";
     echo $this->buildLink(array("action" => $action)); ?>');" value="<?php echo _("Back to reservations"); ?>"/>
 </div>
+<?php 
+$events = array();
+$i = 5;
+foreach ($gris as $gri){
+    $i++;
+    $events[] = array(
+        'id' => $i,
+        'start' => strtotime($gri->start_date)*1000,
+        'end' => strtotime($gri->finish_date)*1000,
+        'title' => '',
+        'class' => 'reservation-status-'.strtolower($gri->original_status)
+    );
+}
 
+/*
+                        "id":1,
+                        "start": new Date(year, month, day, 12),
+                        "end": new Date(year, month, day, 13, 30),
+                        "title":"Reservation1",
+                        "status": 1*/?>
 
-<script type="text/javascript" src="<?php echo $this->url(); ?>apps/circuits/webroot/js/reservations.js"></script>
-<script type="text/javascript" src="<?php echo $this->url(); ?>apps/circuits/webroot/js/reservations_view.js"></script>
 <script type="text/javascript" src="<?php echo $this->url(); ?>webroot/js/jquery.weekcalendar.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $this->url(); ?>webroot/css/jquery.weekcalendar.css" />
 
@@ -227,9 +244,14 @@ eventClick : function(calEvent, $event) {
             var year = new Date().getFullYear();
             var month = new Date().getMonth();
             var day = new Date().getDate();
-
+            var gris = <?= json_encode($events); ?>;
+            for (var i=0; i<gris.length; i++){
+                gris[i]['start'] = new Date(gris[i]['start']);
+                gris[i]['end'] = new Date(gris[i]['end']);
+            }
+            console.debug(gris);
             return {
-                events : [
+                events : gris.concat([                    
                     {
                         "id":1,
                         "start": new Date(year, month, day, 12),
@@ -282,7 +304,7 @@ eventClick : function(calEvent, $event) {
                         readOnly : true
                     }
 
-                ]
+                ])
             };
         }
 
@@ -342,3 +364,7 @@ eventClick : function(calEvent, $event) {
         });
     });    
 </script>
+
+
+<script type="text/javascript" src="<?php echo $this->url(); ?>apps/circuits/webroot/js/reservations.js"></script>
+<script type="text/javascript" src="<?php echo $this->url(); ?>apps/circuits/webroot/js/reservations_view.js"></script>

@@ -1401,7 +1401,7 @@ form #recaptcha_response_field {
     float: left;
 }
 
-.authorization-accepted, .authorization-accepted .wc-time{
+.reservation-status-accepted, .authorization-accepted, .authorization-accepted .wc-time{
     background-color: green !important;
     border: 1px solid #1B62C0;
 }
@@ -1414,4 +1414,10 @@ form #recaptcha_response_field {
 .authorization-deny, .authorization-deny .wc-time{
     background-color: red !important;
     border: 1px solid #1B62C0;
+}
+
+.reservation-status-active, .reservation-status-pending, .reservation-status-accepted,
+.reservation-status-submitted, .reservation-status-increate, .reservation-status-insetup, 
+.reservation-status-inteardown, .reservation-status-inmodify {
+    
 }
