@@ -5,7 +5,7 @@ $flow=$request->flow_info;
 ?>
 <h1><?php echo _("Reservation details"); ?></h1>
 <div class="float-left">
-    <h4>
+    <h4 style="margin:0;">
         <dl>
             <dt><?php echo _("Reservation name"); ?></dt>
             <dd><?php echo $res_name; ?></dd>
@@ -35,7 +35,7 @@ $flow=$request->flow_info;
 <div class="float-right" style="padding-left: 4px;">
     <?php if ($gris): ?>
 
-        <form method="POST" action="<?php echo $this->buildLink(array('action' => 'cancel', 'param' => "res_id:$res_id,refresh:1")); ?>">    
+        <form method="POST" style="min-height:64px;width:100%;" action="<?php echo $this->buildLink(array('action' => 'cancel', 'param' => "res_id:$res_id,refresh:1")); ?>">    
             <?php if (!empty($refresh)): ?>
                 <div class="controls">
                     <input type="button" class="refresh" value="<?php echo _("Refresh") ?>" onclick="griRefreshStatus(<?php echo $res_id; ?>);" />
@@ -45,7 +45,7 @@ $flow=$request->flow_info;
             <?= $this->element('list_gris', compact('gris', 'refresh')+array('app' => 'circuits', 'authorization' => true)); ?>
         </form>
     <?php endif; ?>
-    <div id="calendar" class="float-right" style="box-shadow: 2px 2px 4px #888;padding-left: 6px; width:550px;"></div>
+    <div id="calendar" class="float-right" style="box-shadow: 2px 2px 4px #888; width:550px;"></div>
 </div>
 <div style="clear:both;"></div>
 

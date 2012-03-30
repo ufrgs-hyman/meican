@@ -33,7 +33,7 @@
                 <td>
                     <?php echo $g->descr; ?>
                 </td>
-                <td style="width:80px;">
+                <td> <?php /* style="width:80px;"*/ ?>
                     <label id="status<?php echo $g->id; ?>"><?php echo $g->status; ?></label>
                     <img alt="<?php echo _("loading"); ?>" class="load" style="display:none" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif"/>
                 </td>
