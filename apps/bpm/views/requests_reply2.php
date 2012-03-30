@@ -1,4 +1,4 @@
-<?php debug($request);
+<?php //debug($request);
 extract(get_object_vars($request));
 $timer=$request->timer_info;
 $flow=$request->flow_info;?>
@@ -58,12 +58,14 @@ $flow=$request->flow_info;?>
 </div>
 
 
-
+<script type="text/javascript" src="<?php echo $this->url(); ?>apps/circuits/webroot/js/reservations.js"></script>
+<script type="text/javascript" src="<?php echo $this->url(); ?>apps/circuits/webroot/js/reservations_view.js"></script>
 <script type="text/javascript" src="<?php echo $this->url(); ?>webroot/js/jquery.weekcalendar.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $this->url(); ?>webroot/css/jquery.weekcalendar.css" />
 
 <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/smoothness/jquery-ui.css' />
 <script type="text/javascript">
+    var refreshReservation = false;
     $(function() {
         var $calendar = $('#calendar');
         var id = 10;

@@ -147,7 +147,6 @@ class Dispatcher {
             include 'assets.php';
             return true;
         }
-        debug('a');
         $pathSegments = explode('.', $url);
         $ext = array_pop($pathSegments);
         $parts = explode('/', $url);
