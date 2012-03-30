@@ -18,7 +18,7 @@
         <?php foreach ($gris as $g): ?>
             <tr id="line<?php echo $g->id; ?>" class="<?php echo $g->status;?>">
                 <td>
-                <?php if ($refresh): ?>
+                <?php if (!empty($refresh)): ?>
                     <input type="checkbox" id="cancel<?php echo $g->id; ?>" disabled name="cancel_checkbox[]" value="<?php echo $g->id; ?>" onClick="disabelCancelButton(this);"/>
                 <?php endif; ?>
                 <?php if (!empty($authorization)): ?>

@@ -9,7 +9,7 @@ $flow=$request->flow_info;?>
             <dt><?php echo _("Reservation name"); ?></dt>
             <dd><?php echo $res_name; ?></dd>
             <dt><?php echo _("User"); ?></dt>
-            <dd><?php echo $usr_login; ?></dd>
+            <dd><?php echo @$usr_login; ?></dd>
         </dl>
     </h4>
     <div id="subtab-map" class="tab_subcontent shadow-box">
@@ -33,13 +33,13 @@ $flow=$request->flow_info;?>
     <?php if ($gris): ?>
 
         <form method="POST" action="<?php echo $this->buildLink(array('action' => 'cancel', 'param' => "res_id:$res_id,refresh:1")); ?>">    
-            <?php if ($refresh): ?>
+            <?php if (!empty($refresh)): ?>
                 <div class="controls">
                     <input type="button" class="refresh" value="<?php echo _("Refresh") ?>" onclick="griRefreshStatus(<?php echo $res_id; ?>);" />
                     <input type="submit" class="cancel" disabled="disabled" id="cancel_button" value="<?php echo _("Cancel reservations"); ?>" onclick="return confirm('<?php echo _('Cancel the selected reservations?'); ?>')"/>
                 </div>
             <?php endif; ?>
-            <?= $this->element('list_gris', compact('gris', 'refresh')+array('app' => 'circuits')); ?>
+            <?= $this->element('list_gris', compact('gris', 'refresh')+array('app' => 'circuits', 'authorization' => true)); ?>
         </form>
     <?php endif; ?>
     <div id="calendar" class="float-right" style="box-shadow: 2px 2px 4px #888;padding-left: 6px; width:550px;"></div>
@@ -53,7 +53,7 @@ $flow=$request->flow_info;?>
 </div>
 
 <div id="tabs-4" class="control_tab">
-    <input class="back" type="button" onClick="redir('<?php $action = ($refresh) ? "status" : "history";
+    <input class="back" type="button" onClick="redir('<?php $action = (!empty($refresh)) ? "status" : "history";
     echo $this->buildLink(array("action" => $action)); ?>');" value="<?php echo _("Back to reservations"); ?>"/>
 </div>
 
@@ -70,15 +70,13 @@ $flow=$request->flow_info;?>
 
         $calendar.weekCalendar({
             buttons: true,
-            timeslotsPerHour : 4,
+            timeslotsPerHour : 2,
             allowCalEventOverlap : true,
-            /*overlapEventsSeparate: true,*/
-            firstDayOfWeek : 1,
-            businessHours :{start: 8, end: 18, limitDisplay: false },
+            overlapEventsSeparate: true,
+            businessHours : false,/*{start: 8, end: 18, limitDisplay: false },*/
             daysToShow : 7,
-            timeslotHeight: 20,
+            timeslotHeight: 15,
             useShortDayNames: true,
-            timeslotsPerHour: 2,
             use24Hour: true,
             height : function($calendar) {
                 return 400;
@@ -92,7 +90,12 @@ $flow=$request->flow_info;?>
        "border" : "1px solid #888"
     });
  }*/
-                $element.find(".wc-time").remove();
+                $element.attr('title', calEvent.title + ": "+
+                    calEvent.start.getHours()+":"+calEvent.start.getMinutes()+
+                    /*$.datepicker.formatDate('yy-mm-dd', calEvent.start)+*/" - "+
+                    calEvent.end.getHours()+":"+calEvent.end.getMinutes()
+                    /*$.datepicker.formatDate('yy-mm-dd', calEvent.end)*/); 
+                $element.find(".wc-time").empty();
                 if (calEvent.status > 0){
                     $element.addClass('authorization-accepted');
                 } else if (calEvent.status < 0){
@@ -242,7 +245,7 @@ eventClick : function(calEvent, $event) {
                     },
                     {
                         "id":3,
-                        "start": new Date(year, month, day + 1, 17),
+                        "start": new Date(year, month, day + 1, 12),
                         "end": new Date(year, month, day + 1, 17, 45),
                         "title":"Reservation3",
                         "status": 0

@@ -29,7 +29,7 @@
     <?php if ($gris): ?>
 
         <form method="POST" action="<?php echo $this->buildLink(array('action' => 'cancel', 'param' => "res_id:$res_id,refresh:1")); ?>">    
-            <?php if ($refresh): ?>
+            <?php if (!empty($refresh)): ?>
                 <div class="controls">
                     <input type="button" class="refresh" value="<?php echo _("Refresh") ?>" onclick="griRefreshStatus(<?php echo $res_id; ?>);" />
                     <input type="submit" class="cancel" disabled="disabled" id="cancel_button" value="<?php echo _("Cancel reservations"); ?>" onclick="return confirm('<?php echo _('Cancel the selected reservations?'); ?>')"/>
@@ -49,7 +49,7 @@
 </div>
 
 <div id="tabs-4" class="control_tab">
-    <input class="back" type="button" onClick="redir('<?php $action = ($refresh) ? "status" : "history";
+    <input class="back" type="button" onClick="redir('<?php $action = (!empty($refresh)) ? "status" : "history";
     echo $this->buildLink(array("action" => $action)); ?>');" value="<?php echo _("Back to reservations"); ?>"/>
 </div>
 
@@ -67,7 +67,6 @@
         $calendar.weekCalendar({
             buttons: true,
             timeslotsPerHour : 2,
-            timeslotsPerHour : 4,
             allowCalEventOverlap : true,
             overlapEventsSeparate: true,
             businessHours : false,/*{start: 8, end: 18, limitDisplay: false },*/
@@ -76,7 +75,7 @@
             useShortDayNames: true,
             use24Hour: true,
             height : function($calendar) {
-                return 500;
+                return 400;
                 //return $(window).height() - $("h1").outerHeight() - 1;
             },
             eventAfterRender : function(calEvent, $element) {
