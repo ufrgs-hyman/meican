@@ -22,9 +22,9 @@
                     <input type="checkbox" id="cancel<?php echo $g->id; ?>" disabled name="cancel_checkbox[]" value="<?php echo $g->id; ?>" onClick="disabelCancelButton(this);"/>
                 <?php endif; ?>
                 <?php if (!empty($authorization)): ?>
-                    <img alt="<?php echo _("loading"); ?>" src="<?php echo $this->url(''); ?>webroot/img/cancel.png"/>
+                    <img alt="<?php echo _("loading"); ?>" src="<?php echo $this->url(''); ?>webroot/img/hand_good.png"/>
                     <img alt="<?php echo _("loading"); ?>" src="<?php echo $this->url(''); ?>webroot/img/edit.png"/>
-                    <img alt="<?php echo _("loading"); ?>" src="<?php echo $this->url(''); ?>webroot/img/ok.png"/>
+                    <img alt="<?php echo _("loading"); ?>" src="<?php echo $this->url(''); ?>webroot/img/hand_bad.png"/>
                 <?php endif; ?>
                 </td>
                 <td>
