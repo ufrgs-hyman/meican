@@ -92,6 +92,13 @@ class gri_info extends Model {
         return $gris;
     }
     
+    public function getGrisToCreatePath() {
+        echo "gris";
+        $sql = "SELECT gri_id, gri_descr, dom_id FROM `gri_info`";
+        $sql .= " WHERE `send`=1 AND `status`='PENDING' AND NOW() BETWEEN `start` AND `finish`";
+        return parent::querySql($sql, 'gri_info');
+    }
+    
     static public function translateStatus($newStatus) {
         $status = "";
         switch ($newStatus) {

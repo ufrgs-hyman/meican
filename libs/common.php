@@ -5,6 +5,8 @@ include_once 'libs/cookies.php';
 class Common {
 
     static function getSessionVariable($variable) {
+        if (defined('NO_SESSION'))
+            return false;
         if (!session_id()) {
             session_start();
         }

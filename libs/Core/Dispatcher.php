@@ -47,14 +47,15 @@ class Dispatcher {
             $url = Common::GET('url');
         else
             $url = null;
-        if ($this->login($url))
+        if ($this->login($url)) // precisa fazer login?
             return;
         if ($this->asset($url))
             return;
         /* if (empty($url)&&!(Common::GET('app')))
           return $this->legacyDispatch(); */
-        $this->params = array_merge($this->parse($url), $params);
-        if ($this->params['controller'] !== 'ws' && !$this->checkLogin()) //TODO: authetication for webservices
+        $this->params = array_merge($this->parse($url), array('verify_login' => true), $params);
+        //verifica login?
+        if ($this->params['verify_login'] && $this->params['controller'] !== 'ws' && !$this->checkLogin()) //TODO: authetication for webservices
             return;
         try {
             if (empty($this->params['app']))

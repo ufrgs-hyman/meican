@@ -1030,36 +1030,32 @@ class reservations extends Controller {
     }
 
     public function check() {
-        //debug("chegou no controller");
-        $gris = new gri_info();
-        $all = $gris->fetch(FALSE);
-        //debug("gris", $all);
+        $this->autoRender = false;
+        Log::write("debug", "check chegou no controller");
+        $gri = new gri_info();
+        $gris = $gri->getGrisToCreatePath();
+        Log::write("debug", print_r($gris, true));
 
-        foreach ($all as $g) {
-            if ($g->send)
-                if ($g->status == "PENDING") {
-                    $now = time();
-                    $start = new DateTime($g->start);
-                    if ($start->getTimestamp() >= $now) {
-                        $reservation_info = new reservation_info();
-                        $reservation_info->res_id = $g->res_id;
-                        $flw_id = $reservation_info->get('flw_id');
-                        $flow = new flow_info();
-                        $flow->flw_id = $flw_id;
-                        $dom_src_id = $flow->get('src_dom');
-                        $domain = new domain_info();
-                        $domain->dom_id = $dom_src_id;
-                        $src_dom = $domain->get();
-                        $oscars_reservation = new OSCARSReservation();
-                        $oscars_reservation->setOscarsUrl($src_dom->idc_url);
+        if ($gris) {
+            foreach ($gris as $g) {
+                $dom = new domain_info();
+                $dom->dom_id = $g->dom_id;
+                $domain = $dom->fetch(false);
 
-                        $oscars_reservation->setGri($g->gri_descr);
-                        if ($oscars_reservation->createPath()) {
-                            $status = $oscars_reservation->getStatus();
-                            $g->updateTo(array("send" => "0", "status" => $status), FALSE);
-                        }
-                    }
+                $oscars_reservation = new OSCARSReservation();
+                $oscars_reservation->setOscarsUrl($domain[0]->idc_url);
+                $oscars_reservation->setGri($g->gri_descr);
+                
+                Log::write("debug","oscars res class\n".print_r($oscars_reservation,true));
+
+                if (true) {
+                //if ($oscars_reservation->createPath()) {
+                    Log::write("debug","Create path successful\n".print_r($g,true));
+                    //$status = $oscars_reservation->getStatus();
+                    $status="INCREATE";
+                    $g->updateTo(array("send" => "0", "status" => $status), false);
                 }
+            }
         }
     }
 

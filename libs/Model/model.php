@@ -268,10 +268,14 @@ class Model extends Object {
         $validInds = $this->getValidInds();
         $setArgs = array();
         foreach ($alt as $ind => $val) {
-            if ($val && array_search($ind, $validInds) !== FALSE) { //indice valido
-                if ($this->attributes[$ind]->type == "VARCHAR")
-                    $alt[$ind] = "\"" . $alt[$ind] . "\"";
-                $setArgs[] = "$ind=$alt[$ind]";
+            if (array_search($ind, $validInds) !== FALSE) { //indice valido
+                if ($val === NULL) {
+                    $setArgs[] = "$ind=NULL";
+                } else {
+                    if ($this->attributes[$ind]->type == "VARCHAR")
+                        $alt[$ind] = "\"" . $alt[$ind] . "\"";
+                    $setArgs[] = "$ind=$alt[$ind]";
+                }
             }
         }
 
