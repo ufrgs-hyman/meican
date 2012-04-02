@@ -340,7 +340,7 @@ class reservations extends Controller {
 
             $this->renderJson($statusList);
         } else {
-            Log::write("erro", "Fail to get GRIs in refresh status");
+            Log::write("error", "Fail to get GRIs in refresh status");
             $this->renderJson(FALSE);
         }
     }
@@ -696,12 +696,12 @@ class reservations extends Controller {
         $req->resource_type = 'reservation_info';
         $req->answerable = 'no';
 
-        $request = NULL;
+        $request = null;
         if ($result = $req->fetch()) {
             // a reserva possui requisição
             $request = new stdClass();
             $request->response = $result[0]->response;
-            $request->message = $result[0]->message;
+            //$request->message = $result[0]->message;
             $request->status = $result[0]->status;
         }
 

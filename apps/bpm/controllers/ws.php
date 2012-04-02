@@ -84,7 +84,7 @@ class ws extends WebServiceController {
                 'saveResponse', array('response' => 'tns:responseType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/saveResponse", 'rpc', 'encoded', 'Method to save response from current domain request, modify only one request');
         
         $server->register(
-                'finalDecision', array('decision' => 'tns:decisionType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/finalDecision", 'rpc', 'encoded', 'Method to notify final response to the user\'s request, modify all the request status as AUTHORIZED or DENIED');
+                'finalDecision', array('decision' => 'tns:decisionType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/finalDecision", 'rpc', 'encoded', 'Method to notify final response to the user\'s request, it saves the response to the resource request and modifies all the request status as AUTHORIZED or DENIED');
 
         $server->register(
                 'requestUserAuthorization', array('usr_dst' => 'xsd:int', 'request' => 'tns:requestType'), array('req_id' => 'xsd:int'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/requestUserAuthorization", 'rpc', 'encoded', 'Method to request authorization from a specific user');
@@ -206,20 +206,25 @@ class ws extends WebServiceController {
                         $req = new request_info();
                         $req->req_id = $decision['req_id'];
                         $req->src_ode_ip = trim($decision['src_ode_ip']);
+                        
+                        $req->answerable = 'no';
+
+                        // save final response to the resource request
+                        $req->updateTo(array("response" => $decision['response']), false);
+
+                        $tmp = new gri_info();
+                        $tmp->res_id = $req->get('resource_id', false);
+                        $allgris = $tmp->fetch(false);
+
+                        $req->answerable = '';
 
                         if ($decision['response'] == 'accept') {
                             // request accepted
                             $req->updateTo(array("status" => "AUTHORIZED"), false);
-
+                            
                             /**
                              * @todo Transformar em função de algum modelo (reservation_info ou gri_info)
                              */
-                            $req->answerable = 'no';
-
-                            $tmp = new gri_info();
-                            $tmp->res_id = $req->get('resource_id', false);
-                            $allgris = $tmp->fetch(false);
-
                             Log::write('ws', "Final decision: reservation authorized, setting GRIs to be sent. Reservation ID: " . print_r($tmp->res_id, true));
 
                             foreach ($allgris as $g) {
@@ -236,19 +241,13 @@ class ws extends WebServiceController {
                             // request denied
                             $req->updateTo(array("status" => "DENIED"), false);
 
-                            $req->answerable = 'no';
-
-                            //as reservas devem ser canceladas no OSCARS
-                            $tmp = new gri_info();
-                            $tmp->res_id = $req->get('resource_id', false);
-                            $allgris = $tmp->fetch(false);
-
                             Log::write('ws', "Final decision: reservation denied, cancelling GRIs. Reservation ID:\n" . print_r($tmp->res_id, true));
 
                             $dom_tmp = new domain_info();
                             $dom_tmp->ode_ip = $req->src_ode_ip;
                             $dom = $dom_tmp->fetch(false);
 
+                            //as reservas devem ser canceladas no OSCARS
                             foreach ($allgris as $g) {
                                 $oscRes = new OSCARSReservation();
                                 $oscRes->setOscarsUrl($dom[0]->oscars_ip);
