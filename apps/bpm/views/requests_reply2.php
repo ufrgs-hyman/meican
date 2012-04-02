@@ -12,7 +12,7 @@ $flow=$request->flow_info;
             <dt><?php echo _("Requester Domain"); ?></dt>
             <dd><?php echo $flow->source->domain; ?></dd> 
             <dt><?php echo _("Requester User"); ?></dt>
-            <dd><?php echo @$usr_login; ?></dd>
+            <dd><?php echo $usr_login; ?></dd>
         </dl>
     </h4>
     <div id="subtab-map" class="tab_subcontent shadow-box">

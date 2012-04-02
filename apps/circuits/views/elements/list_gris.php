@@ -16,15 +16,21 @@
                 
     <tbody>
         <?php foreach ($gris as $g): ?>
-            <tr id="line<?php echo $g->id; ?>" class="<?php echo $g->status;?>">
+            <tr id="line<?php echo $g->id; ?>" class="<?php echo @'reservation-status-'.strtolower($g->original_status); ?>">
                 <td>
                 <?php if (!empty($refresh)): ?>
                     <input type="checkbox" id="cancel<?php echo $g->id; ?>" disabled name="cancel_checkbox[]" value="<?php echo $g->id; ?>" onClick="disabelCancelButton(this);"/>
                 <?php endif; ?>
                 <?php if (!empty($authorization)): ?>
-                    <img alt="<?php echo _("loading"); ?>" src="<?php echo $this->url(''); ?>webroot/img/hand_good.png"/>
-                    <img alt="<?php echo _("loading"); ?>" src="<?php echo $this->url(''); ?>webroot/img/edit.png"/>
-                    <img alt="<?php echo _("loading"); ?>" src="<?php echo $this->url(''); ?>webroot/img/hand_bad.png"/>
+                    <?php if (in_array($g->original_status, array("ACTIVE", "PENDING"))): ?>
+                    <a href="<?php echo $this->url(array('app' => 'bpm', 'controller' => 'requests', 'action' => 'saveResponse', 'pass' => array('loc_id' => 1))); ?>">
+                        <img alt="<?php echo _("Accept"); ?>" src="<?php echo $this->url(''); ?>webroot/img/hand_good.png"/></a>
+                    <a href="<?php echo $this->url(array('app' => 'bpm', 'controller' => 'requests', 'action' => 'saveResponse')); ?>">
+                        <img alt="<?php echo _("Reject"); ?>" src="<?php echo $this->url(''); ?>webroot/img/hand_bad.png"/></a>
+                    <?php else: ?>
+                    <a href="<?php echo $this->url(array('app' => 'bpm', 'controller' => 'requests', 'action' => 'saveResponse')); ?>">
+                        <img alt="<?php echo _("Edit"); ?>" src="<?php echo $this->url(''); ?>webroot/img/edit.png"/></a>
+                    <?php endif; ?>
                 <?php endif; ?>
                 </td>
                 <td>
