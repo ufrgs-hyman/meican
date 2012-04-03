@@ -1,7 +1,8 @@
-<?php //debug($request);
+<?php
+//debug($request);
 extract(get_object_vars($request));
-$timer=$request->timer_info;
-$flow=$request->flow_info;
+$timer = $request->timer_info;
+$flow = $request->flow_info;
 ?>
 <h1><?php echo _("Reservation details"); ?></h1>
 <div class="float-left">
@@ -19,65 +20,89 @@ $flow=$request->flow_info;
         <div id="res_mapCanvas" style="width:400px; height:400px;"></div>    
     </div>
     <div id="subtab-points" class="tab_subcontent float-left" style="padding-left:6px;">
-        <?= $this->element('view_point', array('app' => 'circuits', 'type' => 'source', 'flow' => $flow)); ?>
+        <?=
+        $this->element('view_point',
+                array('app' => 'circuits', 'type' => 'source', 'flow' => $flow));
+        ?>
         <div id="bandwidth_bar">
             <div id="bandwidth_bar_text">
                 <div style="text-align:center;">
                     <label id="lb_bandwidth"><?php echo $bandwidth . " " . _("Mbps") ?></label>
                 </div>
             </div>
-            <div id="bandwidth_bar_inside" style="width: <?= round($bandwidth*100/1000); //TODO: calcular ?>%"></div>
+            <div id="bandwidth_bar_inside" style="width: <?= round($bandwidth * 100 / 1000); //TODO: calcular   ?>%"></div>
         </div>
-        <?= $this->element('view_point', array('app' => 'circuits', 'type' => 'destination', 'flow' => $flow)); ?>
+        <?=
+        $this->element('view_point',
+                array('app' => 'circuits', 'type' => 'destination', 'flow' => $flow));
+        ?>
     </div>
 </div>
 
 <div class="float-right" style="padding-left: 4px;">
-    <?php if ($gris): ?>
+        <?php if ($gris): ?>
 
         <form method="POST" style="min-height:64px;width:100%;" action="<?php echo $this->buildLink(array('action' => 'cancel', 'param' => "res_id:$res_id,refresh:1")); ?>">    
-            <?php if (!empty($refresh)): ?>
+    <?php if (!empty($refresh)): ?>
                 <div class="controls">
                     <input type="button" class="refresh" value="<?php echo _("Refresh") ?>" onclick="griRefreshStatus(<?php echo $res_id; ?>);" />
                     <input type="submit" class="cancel" disabled="disabled" id="cancel_button" value="<?php echo _("Cancel reservations"); ?>" onclick="return confirm('<?php echo _('Cancel the selected reservations?'); ?>')"/>
                 </div>
             <?php endif; ?>
-            <?= $this->element('list_gris', compact('gris', 'refresh')+array('app' => 'circuits', 'authorization' => true)); ?>
+            <?=
+            $this->element('list_gris',
+                    compact('gris', 'refresh') + array('app' => 'circuits', 'authorization' => true));
+            ?>
         </form>
-    <?php endif; ?>
+<?php endif; ?>
     <div id="calendar" class="float-right" style="box-shadow: 2px 2px 4px #888; width:550px;"></div>
 </div>
 <div style="clear:both;"></div>
 
 <div id="tabs-2" class="tab_content">
-    <?= $this->element('view_timer', array('app' => 'circuits', 'timer' => $timer)); ?>
-    <?= false && $request ? $this->element('view_request', compact('request')+array('app' => 'circuits')) : null; ?>
+    <?=
+    $this->element('view_timer', array('app' => 'circuits', 'timer' => $timer));
+    ?>
+<?=
+false && $request ? $this->element('view_request',
+                        compact('request') + array('app' => 'circuits')) : null;
+?>
 </div>
 
 <div id="tabs-4" class="control_tab">
-    <input class="back" type="button" onClick="redir('<?php $action = (!empty($refresh)) ? "status" : "history";
-    echo $this->buildLink(array("action" => $action)); ?>');" value="<?php echo _("Back to reservations"); ?>"/>
+    <form method="POST" action="<?php echo $this->buildLink(array('action' => 'saveResponse', 'param' => array('loc_id' => $request->loc_id))); ?>">
+        <div>
+            <label for="response"><?php echo _('Response'); ?></label>
+            <input type="radio" name="response" value="accept"/><?php echo _('ACCEPT'); ?>
+            <input type="radio" name="response" value="reject"/><?php echo _('REJECT'); ?>
+        </div>
+        <label for="message"><?php echo _('Message'); ?></label>
+        <input type="text" name="message" size="120"/>
+
+        <input class="ok" type='submit' value='<?php echo _('Reply'); ?>'/>
+    </form>
 </div>
-<?php 
+<?php
 $events = array();
 $i = 5;
-foreach ($gris as $gri){
+foreach ($gris as $gri) {
     $i++;
     $events[] = array(
         'id' => $i,
-        'start' => strtotime($gri->start_date)*1000,
-        'end' => strtotime($gri->finish_date)*1000,
+        'start' => strtotime($gri->start_date) * 1000,
+        'end' => strtotime($gri->finish_date) * 1000,
         'title' => '',
-        'class' => 'reservation-status-'.strtolower($gri->original_status)
+        'class' => 'reservation-status-' . strtolower($gri->original_status)
     );
 }
 
 /*
-                        "id":1,
-                        "start": new Date(year, month, day, 12),
-                        "end": new Date(year, month, day, 13, 30),
-                        "title":"Reservation1",
-                        "status": 1*/?>
+  "id":1,
+  "start": new Date(year, month, day, 12),
+  "end": new Date(year, month, day, 13, 30),
+  "title":"Reservation1",
+  "status": 1 */
+?>
 
 <script type="text/javascript" src="<?php echo $this->url(); ?>webroot/js/jquery.weekcalendar.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $this->url(); ?>webroot/css/jquery.weekcalendar.css" />
@@ -115,7 +140,7 @@ foreach ($gris as $gri){
                     calEvent.start.getHours()+":"+calEvent.start.getMinutes()+
                     /*$.datepicker.formatDate('yy-mm-dd', calEvent.start)+*/" - "+
                     calEvent.end.getHours()+":"+calEvent.end.getMinutes()
-                    /*$.datepicker.formatDate('yy-mm-dd', calEvent.end)*/); 
+                /*$.datepicker.formatDate('yy-mm-dd', calEvent.end)*/); 
                 $element.find(".wc-time").empty();
                 if (calEvent.status > 0){
                     $element.addClass('authorization-accepted');
