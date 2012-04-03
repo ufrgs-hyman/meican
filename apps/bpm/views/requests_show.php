@@ -1,9 +1,3 @@
-<?php
-$args = $this->passedArgs;
-$pending = $args->pending;
-$finished = $args->finished;
-?>
-
 <form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
 
     <?php

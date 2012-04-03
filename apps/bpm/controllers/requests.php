@@ -1,6 +1,6 @@
 <?php
 
-include_once 'libs/controller.php';
+include_once 'libs/meican_controller.php';
 include_once 'libs/auth.php';
 
 include_once 'apps/bpm/models/request_info.php';
@@ -11,20 +11,26 @@ include_once 'apps/topology/models/domain_info.php';
 
 include_once 'libs/nuSOAP/lib/nusoap.php';
 
-class requests extends Controller {
+class requests extends MeicanController {
 
+    public $modelClass = 'request_info';
     public function requests() {
         $this->app = 'bpm';
         $this->controller = 'requests';
         $this->defaultAction = 'show';
     }
 
-    public function show() {
-        $req_info = new request_info();
-        $req_info->answerable = 'yes';
-        $requests = $req_info->fetch();
+    protected function renderEmpty(){
+        $this->set(array(
+            'title' => _("Requests"),
+            'message' => _("You have no pending or finished request"),
+            'link' => false
+            ));
+        parent::renderEmpty();
+    }
 
-        if ($requests) {
+    public function show() {
+        if ($requests = $this->makeIndex(array('answerable' => 'yes'))) {
             $pending = array();
             $finished = array();
 
@@ -34,20 +40,7 @@ class requests extends Controller {
                 else
                     $finished[] = $req->getRequestInfo(TRUE);
             }
-
-            $args = new stdClass();
-            $args->pending = $pending;
-            $args->finished = $finished;
-
-            $this->setArgsToBody($args);
-            $this->render('show');
-        } else {
-            $args = new stdClass();
-            $args->title = _("Requests");
-            $args->message = _("You have no pending or finished request");
-            $this->setArgsToBody($args);
-
-            $this->render('empty');
+            $this->set(compact('pending', 'finished'));
         }
     }
 
