@@ -311,14 +311,14 @@ class reservation_info extends Resource_Model {
      * @todo modificar!!
      */
     function getAvailableBandwidth($res_id) {
-        if (isset($res_id) && is_int($res_id)) {
+        if (isset($res_id) ) { //&& is_int($res_id)) {
             $reservation = new reservation_info();
             $reservation->res_id = $res_id;
 
             $res = $reservation->fetch(FALSE);
 
             if (!$res) {
-                Framework::debug('reservation not found');
+                Log::write("debug", "Reservation not found");
                 return NULL;
             }
 
@@ -327,7 +327,7 @@ class reservation_info extends Resource_Model {
             $timer_info = $tim->fetch(FALSE);
 
             if (!$timer_info) {
-                Framework::debug('timer not found');
+                Log::write("debug", "Timer not found");
                 return NULL;
             }
             $timer = $timer_info[0];
@@ -363,25 +363,28 @@ class reservation_info extends Resource_Model {
                             $res_temp->res_id = $g->res_id;
                             $res_result = $res_temp->fetch(FALSE);
 
-                            $flow_temp = new flow_info();
-                            $flow_temp->flw_id = $res_result[0]->flw_id;
-                            $flow_result = $flow_temp->fetch(FALSE);
+                            //$flow_temp = new flow_info();
+                            //$flow_temp->flw_id = $res_result[0]->flw_id;
+                            //$flow_result = $flow_temp->fetch(FALSE);
 
-                            $linkUtilization += $flow_result[0]->bandwidth;
+                            //$linkUtilization += $flow_result[0]->bandwidth;
+                            
+                            $linkUtilization += $res_result[0]->bandwidth;
                         }
                     }
                 }
 
                 $available_bands[] = $capacity - $linkUtilization;
 
-                Framework::debug("start", date("d/m/Y H:i:s", $r->start));
-                Framework::debug("finish", date("d/m/Y H:i:s", $r->finish));
-                Framework::debug("available band", $capacity - $linkUtilization);
+                Log::write("debug", "Start: ".print_r(date("d/m/Y H:i:s", $r->start), true));
+                Log::write("debug", "Finish: ".print_r(date("d/m/Y H:i:s", $r->finish), true));
+                Log::write("debug", "Available Band: ".print_r($capacity,true)." - ".print_r($linkUtilization, true));
             }
 
             return $available_bands;
-        } else
+        } else {
             return NULL;
+        }
     }
 
     function getGriDetails() {
