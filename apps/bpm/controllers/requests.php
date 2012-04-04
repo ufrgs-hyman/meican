@@ -90,7 +90,7 @@ class requests extends MeicanController {
             'usr_login' => $result->src_user,
             'gris' => $gri->getGrisToView($result->resc_id)
         ));
-
+        $this->addScriptForLayout('requests');
         $this->set('request', $result);
         $this->render('reply2');
     }

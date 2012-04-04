@@ -69,20 +69,21 @@ false && $request ? $this->element('view_request',
 ?>
 </div>
 
-<div id="tabs-4" class="control_tab">
-    <form method="POST" action="<?php echo $this->buildLink(array('action' => 'saveResponse', 'param' => array('loc_id' => $request->loc_id))); ?>">
+<?php
+/*<div id="tabs-4" class="control_tab">
+    <form method="POST" id="FormReply" action="<?php echo $this->buildLink(array('action' => 'saveResponse', 'param' => array('loc_id' => $request->loc_id))); ?>">
         <div>
             <label for="response"><?php echo _('Response'); ?></label>
             <input type="radio" name="response" value="accept"/><?php echo _('ACCEPT'); ?>
             <input type="radio" name="response" value="reject"/><?php echo _('REJECT'); ?>
         </div>
         <label for="message"><?php echo _('Message'); ?></label>
-        <input type="text" name="message" size="120"/>
+        <input type="text" id="Message" name="message" size="120"/>
 
         <input class="ok" type='submit' value='<?php echo _('Reply'); ?>'/>
     </form>
-</div>
-<?php
+</div>*/
+
 $events = array();
 $i = 5;
 foreach ($gris as $gri) {
@@ -111,6 +112,8 @@ foreach ($gris as $gri) {
 <script type="text/javascript">
     var refreshReservation = false;
     $(function() {
+        request.setActionUrl('<?= $this->url(array('action' => 'saveResponse', 'param' => array('loc_id' => $request->loc_id)))?>');
+        
         var $calendar = $('#calendar');
         var id = 10;
 

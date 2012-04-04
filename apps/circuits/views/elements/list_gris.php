@@ -23,13 +23,10 @@
                 <?php endif; ?>
                 <?php if (!empty($authorization)): ?>
                     <?php if (in_array($g->original_status, array("ACTIVE", "PENDING"))): ?>
-                    <a href="<?php echo $this->url(array('app' => 'bpm', 'controller' => 'requests', 'action' => 'saveResponse', 'pass' => array('loc_id' => 1))); ?>">
-                        <img alt="<?php echo _("Accept"); ?>" src="<?php echo $this->url(''); ?>webroot/img/hand_good.png"/></a>
-                    <a href="<?php echo $this->url(array('app' => 'bpm', 'controller' => 'requests', 'action' => 'saveResponse')); ?>">
-                        <img alt="<?php echo _("Reject"); ?>" src="<?php echo $this->url(''); ?>webroot/img/hand_bad.png"/></a>
+                        <img alt="<?php echo _("Accept"); ?>" class="link-button" onclick="request.reply('accept');" src="<?php echo $this->url(''); ?>webroot/img/hand_good.png"/>
+                        <img alt="<?php echo _("Reject"); ?>" class="link-button" onclick="request.reply('reject');" src="<?php echo $this->url(''); ?>webroot/img/hand_bad.png"/>
                     <?php else: ?>
-                    <a href="<?php echo $this->url(array('app' => 'bpm', 'controller' => 'requests', 'action' => 'saveResponse')); ?>">
-                        <img alt="<?php echo _("Edit"); ?>" src="<?php echo $this->url(''); ?>webroot/img/edit.png"/></a>
+                        <img alt="<?php echo _("Edit"); ?>" class="link-button" src="<?php echo $this->url(''); ?>webroot/img/edit.png"/>
                     <?php endif; ?>
                 <?php endif; ?>
                 </td>

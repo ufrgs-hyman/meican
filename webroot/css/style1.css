@@ -520,6 +520,10 @@ div#main #l3:link, div#main #l3:visited, div#main #l3:hover, div#main #l3:visite
     cursor: pointer;
 }
 
+.link-button {
+    cursor: pointer;
+}
+
 .fixed {
     position: fixed;
     z-index: 5;
