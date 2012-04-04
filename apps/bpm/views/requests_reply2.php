@@ -71,6 +71,14 @@ $flow = $request->flow_info;
 <div id="tabs-4" class="control_tab">
     <input type="button" id="bc1" class="cancel" value="<?php echo _('Back'); ?>" onclick="redir('<?= $this->url(array("action" => "show")); ?>');"/>
 </div>
+<div id="dialog-form" title="<?= _("Authorization"); ?>">
+    <form>
+        <img id="MessageImg" alt="" src=""/>
+        <label for="name" id="MessageLabel">Provide a message</label>
+        <textarea type="text" name="name" id="Message" class="text ui-widget-content ui-corner-all" style="width:100%;margin-top:10px;" cols="20" rows="5"></textarea>
+    </form>
+</div>​
+
 <?php
 /* <div id="tabs-4" class="control_tab">
   <form method="POST" id="FormReply" action="<?php echo $this->buildLink(array('action' => 'saveResponse', 'param' => array('loc_id' => $request->loc_id))); ?>">

@@ -593,10 +593,10 @@ input[type=submit], input[type=button], button {
     line-height: 16px;
     padding: 4px 8px;
     margin: 0 2px;
-    border: 1px solid #BBB;
+    border: 1px solid #BBB !important;
     box-sizing: border-box;
     box-shadow: inset 2px 2px 2px #FFFFFF, inset -1px -1px 2px #DDD;
-    background: #EEE;
+    background: #EEE !important;
     color: #4F4F4F;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
@@ -605,9 +605,9 @@ input[type=submit], input[type=button], button {
 button:hover, input[type=submit]:hover, input[type=button]:hover {
     box-shadow: inset 2px 2px 2px #FAA, inset -1px -1px 2px #922;
     text-shadow: -1px -1px 2px #922, 1px 1px 2px #FAA;
-    border: 1px solid #853A40;
-    background-color: #F44;
-    color: white;
+    border: 1px solid #853A40 !important;
+    background-color: #F44 !important;
+    color: white !important;
 }
 
 input[disabled], button[disabled], .ui-state-disabled, [disabled]{
@@ -1429,4 +1429,8 @@ form #recaptcha_response_field {
 .cal-old{
     background-color: #aaa !important;
     border: 1px solid #888 !important;
+}
+
+.ui-button-text-only .ui-button-text {
+    padding: 0 !important;
 }
