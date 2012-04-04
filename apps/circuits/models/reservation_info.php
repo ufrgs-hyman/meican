@@ -306,115 +306,37 @@ class reservation_info extends Resource_Model {
         return $pathArray;
     }
     
-    /**
-     *
-     * @todo modificar!!
-     */
-    function getAvailableBandwidth($res_id) {
-        if (isset($res_id) ) { //&& is_int($res_id)) {
-            $reservation = new reservation_info();
-            $reservation->res_id = $res_id;
+    public function getAvailableBandwidth($res_id, $gri_id = null) {
+        $available_bands = array();
+        
+        if ($res_id) {
+            $gri_info = new gri_info();
+            $gri_info->res_id = $res_id;
 
-            $res = $reservation->fetch(FALSE);
+            if ($gri_id)
+                $gri_info->gri_id = $gri_id;
 
-            if (!$res) {
-                Log::write("debug", "Reservation not found");
-                return NULL;
-            }
+            if ($gris = $gri_info->fetch(false)) {
+                foreach ($gris as $gri) {
+                    $capacity = 1000;
+                    $linkUtilization = 0;
 
-            $tim = new timer_info();
-            $tim->tmr_id = $res[0]->tmr_id;
-            $timer_info = $tim->fetch(FALSE);
+                    $conflicted = gri_info::getConflictedGris($gri->start, $gri->finish, $res_id);
 
-            if (!$timer_info) {
-                Log::write("debug", "Timer not found");
-                return NULL;
-            }
-            $timer = $timer_info[0];
-
-            $gri = new gri_info();
-            $gris = $gri->fetch(FALSE);
-
-            $available_bands = array();
-
-            $recurr = $timer->getRecurrences();
-            foreach ($recurr as $r) {
-
-                $capacity = 1000;
-                $linkUtilization = 0;
-
-                foreach ($gris as $g) {
-
-                    if (($g->status != "FINISHED") && ($g->status != "CANCELLED") && ($g->status != "FAILED")) {
-
-                        $startDT = new DateTime($g->start);
-                        $finishDT = new DateTime($g->finish);
-
-                        $resStart = $startDT->getTimestamp();
-                        $resFinish = $finishDT->getTimestamp();
-
-                        if (!(($resFinish <= $r->start) || ($resStart >= $r->finish))) {
-
-                            /* if ( (($resStart <= $r->start) && ($resFinish >= $r->finish)) ||
-                              (($resStart >= $r->start) && ($resStart < $r->finish)) ||
-                              (($resFinish > $r->start) && ($resFinish <= $r->finish)) ) */
-
-                            $res_temp = new reservation_info();
-                            $res_temp->res_id = $g->res_id;
-                            $res_result = $res_temp->fetch(FALSE);
-
-                            //$flow_temp = new flow_info();
-                            //$flow_temp->flw_id = $res_result[0]->flw_id;
-                            //$flow_result = $flow_temp->fetch(FALSE);
-
-                            //$linkUtilization += $flow_result[0]->bandwidth;
-                            
-                            $linkUtilization += $res_result[0]->bandwidth;
-                        }
+                    foreach ($conflicted as $cg) {
+                        $linkUtilization += $cg->bandwidth;
                     }
+
+                    $available_bands[] = $capacity - $linkUtilization;
+
+                    Log::write("debug", "Start: " . print_r($gri->start, true));
+                    Log::write("debug", "Finish: " . print_r($gri->finish, true));
+                    Log::write("debug", "Available Band: " . print_r($capacity, true) . " - " . print_r($linkUtilization, true));
                 }
-
-                $available_bands[] = $capacity - $linkUtilization;
-
-                Log::write("debug", "Start: ".print_r(date("d/m/Y H:i:s", $r->start), true));
-                Log::write("debug", "Finish: ".print_r(date("d/m/Y H:i:s", $r->finish), true));
-                Log::write("debug", "Available Band: ".print_r($capacity,true)." - ".print_r($linkUtilization, true));
             }
-
-            return $available_bands;
-        } else {
-            return NULL;
         }
-    }
-
-    function getGriDetails() {
-        $gri_to_list = array('args0' => array('ufrgs.cipo.rnp.br-1259', 'ufrgs.cipo.rnp.br-1694'));
-
-        $now = time()+5*60;
-        $now_10 = time()+10*60;
-
-        $array_to_create = array('args0' => array(
-                        'urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFRGS-CIPO-RNP-001:port=5:link=*', // source
-                        'urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFRGS-CIPO-RNP-002:port=5:link=*', // dest
-                        '100', // banda
-                        $now, // begin TS
-                        $now_10, // end TS
-
-                        'urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFRGS-CIPO-RNP-002:port=5:link=*', // source
-                        'urn:ogf:network:domain=ufsc.cipo.rnp.br:node=UFRGS-CIPO-RNP-001:port=5:link=*', // dest
-                        '100', // banda
-                        $now, // begin TS
-                        $now_10 // end TS
-        ));
-
-        $endpoint = "http://".Configure::read('bridgeIp')."/axis2/services/BridgeOSCARS?wsdl";
-        if ($client = new SoapClient($endpoint, array('cache_wsdl' => 0))) {
-            if ($result = $client->list($gri_to_list))
-                debug('result list oscars', $result);
-
-            if ($result = $client->create($array_to_create))
-                debug('result create oscars', $result);
-        }
+        
+        return $available_bands;
     }
 
 }

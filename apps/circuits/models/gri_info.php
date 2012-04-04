@@ -143,6 +143,20 @@ class gri_info extends Model {
             return array();
     }
     
+    static public function getConflictedGris($start, $finish, $res_id = null) {
+        if ($start && $finish) {
+            $sql = "SELECT `gi`.*, `ri`.`bandwidth` FROM `gri_info` AS `gi`";
+            $sql .= " LEFT JOIN `reservation_info` AS `ri` ON `gi`.`res_id`=`ri`.`res_id`";
+            $sql .= " WHERE";
+            $sql .= " !((`gi`.`finish` <= '$start') OR (`gi`.`start` >= '$finish'))";
+            $sql .= " AND (`gi`.`status` NOT IN ('FAILED', 'FINISHED', 'CANCELLED', ''))";
+            $sql .= " AND (`gi`.`status` IS NOT NULL)";
+            $sql .= ($res_id) ? " AND (`gi`.`res_id` != $res_id);" : ";";
+            return parent::querySql($sql, 'gri_info');
+        } else
+            return array();
+    }
+    
     static public function translateStatus($newStatus) {
         $status = "";
         switch ($newStatus) {
