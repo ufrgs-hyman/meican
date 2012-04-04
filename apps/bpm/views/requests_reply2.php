@@ -50,7 +50,7 @@
             ?>
         </form>
     <?php endif; ?>
-    <div id="calendar" class="float-right" style="box-shadow: 2px 2px 4px #888; width:550px;"></div>
+    <div id="calendar" class="float-right" style="box-shadow: 2px 2px 4px #888; width:550px;height: 402px;"></div>
 </div>
 <div style="clear:both;"></div>
 
