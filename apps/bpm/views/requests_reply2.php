@@ -30,7 +30,7 @@ $flow = $request->flow_info;
                     <label id="lb_bandwidth"><?php echo $bandwidth . " " . _("Mbps") ?></label>
                 </div>
             </div>
-            <div id="bandwidth_bar_inside" style="width: <?= round($bandwidth * 100 / 1000); //TODO: calcular    ?>%"></div>
+            <div id="bandwidth_bar_inside" style="width: <?= round($bandwidth * 100 / 1000); //TODO: calcular     ?>%"></div>
         </div>
         <?=
         $this->element('view_point',
@@ -68,7 +68,9 @@ $flow = $request->flow_info;
                             compact('request') + array('app' => 'circuits')) : null;
     ?>
 </div>
-
+<div id="tabs-4" class="control_tab">
+    <input type="button" id="bc1" class="cancel" value="<?php echo _('Back'); ?>" onclick="redir('<?= $this->url(array("action" => "show")); ?>');"/>
+</div>
 <?php
 /* <div id="tabs-4" class="control_tab">
   <form method="POST" id="FormReply" action="<?php echo $this->buildLink(array('action' => 'saveResponse', 'param' => array('loc_id' => $request->loc_id))); ?>">
@@ -111,46 +113,46 @@ foreach ($gris as $gri) {
 <link rel='stylesheet' type='text/css' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/smoothness/jquery-ui.css' />
 <script type="text/javascript">
     var refreshReservation = false;
-$(function() {
-    request.setActionUrl('<?= $this->url(array('action' => 'saveResponse', 'param' => array('loc_id' => $request->loc_id))) ?>');
+    $(function() {
+        request.setActionUrl('<?= $this->url(array('action' => 'saveResponse', 'param' => array('loc_id' => $request->loc_id))) ?>');
         
-    var $calendar = $('#calendar');
-    var id = 10;
+        var $calendar = $('#calendar');
+        var id = 10;
 
-    $calendar.weekCalendar({
-        buttons: true,
-        timeslotsPerHour : 2,
-        allowCalEventOverlap : true,
-        overlapEventsSeparate: true,
-        businessHours : false,/*{start: 8, end: 18, limitDisplay: false },*/
-        daysToShow : 7,
-        timeslotHeight: 15,
-        useShortDayNames: true,
-        use24Hour: true,
-        height : function($calendar) {
-            return 400;
-            //return $(window).height() - $("h1").outerHeight() - 1;
-        },
-        eventAfterRender : function(calEvent, $element) {
-            /*if (calEvent.end.getTime() < new Date().getTime()) {
+        $calendar.weekCalendar({
+            buttons: true,
+            timeslotsPerHour : 2,
+            allowCalEventOverlap : true,
+            overlapEventsSeparate: true,
+            businessHours : false,/*{start: 8, end: 18, limitDisplay: false },*/
+            daysToShow : 7,
+            timeslotHeight: 15,
+            useShortDayNames: true,
+            use24Hour: true,
+            height : function($calendar) {
+                return 400;
+                //return $(window).height() - $("h1").outerHeight() - 1;
+            },
+            eventAfterRender : function(calEvent, $element) {
+                /*if (calEvent.end.getTime() < new Date().getTime()) {
     $event.css("backgroundColor", "#aaa");
     $event.find(".wc-time").css({
        "backgroundColor" : "#999",
        "border" : "1px solid #888"
     });
  }*/
-            $element.attr('title', calEvent.title + ": "+
-                calEvent.start.getHours()+":"+calEvent.start.getMinutes()+
-                /*$.datepicker.formatDate('yy-mm-dd', calEvent.start)+*/" - "+
-                calEvent.end.getHours()+":"+calEvent.end.getMinutes()
-            /*$.datepicker.formatDate('yy-mm-dd', calEvent.end)*/); 
-            $element.find(".wc-time").remove();
-            if (calEvent.hclass == undefined)
-                $element.addClass('cal-old');
-            else
-                $element.addClass(calEvent.hclass);
-        },
-        /* draggable : function(calEvent, $event) {
+                $element.attr('title', calEvent.title + ": "+
+                    calEvent.start.getHours()+":"+calEvent.start.getMinutes()+
+                    /*$.datepicker.formatDate('yy-mm-dd', calEvent.start)+*/" - "+
+                    calEvent.end.getHours()+":"+calEvent.end.getMinutes()
+                /*$.datepicker.formatDate('yy-mm-dd', calEvent.end)*/); 
+                $element.find(".wc-time").remove();
+                if (calEvent.hclass == undefined)
+                    $element.addClass('cal-old');
+                else
+                    $element.addClass(calEvent.hclass);
+            },
+            /* draggable : function(calEvent, $event) {
  return calEvent.readOnly != true;
 },
 resizable : function(calEvent, $event) {
@@ -250,146 +252,146 @@ eventClick : function(calEvent, $event) {
  $(window).resize().resize(); //fixes a bug in modal overlay size ??
 
 },*/
-        eventMouseover : function(calEvent, $event) {
-        },
-    eventMouseout : function(calEvent, $event) {
-    },
-noEvents : function() {
+            eventMouseover : function(calEvent, $event) {
+            },
+            eventMouseout : function(calEvent, $event) {
+            },
+            noEvents : function() {
 
-},
-data : function(start, end, callback) {
-callback(getEventData());
-}
-});
+            },
+            data : function(start, end, callback) {
+                callback(getEventData());
+            }
+        });
 
-function resetForm($dialogContent) {
-$dialogContent.find("input").val("");
-$dialogContent.find("textarea").val("");
-}
+        function resetForm($dialogContent) {
+            $dialogContent.find("input").val("");
+            $dialogContent.find("textarea").val("");
+        }
 
-function getEventData() {
-var year = new Date().getFullYear();
-var month = new Date().getMonth();
-var day = new Date().getDate();
-var gris = <?= json_encode($events); ?>;
-for (var i=0; i<gris.length; i++){
-gris[i]['start'] = new Date(gris[i]['start']);
-gris[i]['end'] = new Date(gris[i]['end']);
-}
-console.debug(gris);
-return {
-events : gris.concat([                    
-    {
-        "id":1,
-        "start": new Date(year, month, day, 12),
-        "end": new Date(year, month, day, 13, 30),
-        "title":"Reservation1",
-        "status": 1
-    },
-    {
-        "id":2,
-        "start": new Date(year, month, day, 14),
-        "end": new Date(year, month, day, 14, 45),
-        "title":"Reservation2",
-        "class": "test2",
-        "status": -1
-    },
-    {
-        "id":3,
-        "start": new Date(year, month, day + 1, 12),
-        "end": new Date(year, month, day + 1, 17, 45),
-        "title":"Reservation3",
-        "status": 0
-    },
-    {
-        "id":4,
-        "start": new Date(year, month, day - 1, 8),
-        "end": new Date(year, month, day - 1, 9, 30),
-        "title":"Reservation4",
-        "status": -1
-    },
-    {
-        "id":5,
-        "start": new Date(year, month, day + 1, 14),
-        "end": new Date(year, month, day + 1, 15),
-        "title":"Reservation5",
-        "status": 1
-    },
-    {
-        "id":6,
-        "start": new Date(year, month, day + 1, 14),
-        "end": new Date(year, month, day + 1, 15),
-        "title":"Reservation7",
-        "status": 1
-    },
-    {
-        "id":6,
-        "start": new Date(year, month, day, 10),
-        "end": new Date(year, month, day, 11),
-        "title":"Reservation6 (read only)",
-        "status": 0,
-        readOnly : true
-    }
+        function getEventData() {
+            var year = new Date().getFullYear();
+            var month = new Date().getMonth();
+            var day = new Date().getDate();
+            var gris = <?= json_encode($events); ?>;
+            for (var i=0; i<gris.length; i++){
+                gris[i]['start'] = new Date(gris[i]['start']);
+                gris[i]['end'] = new Date(gris[i]['end']);
+            }
+            console.debug(gris);
+            return {
+                events : gris.concat([                    
+                    {
+                        "id":1,
+                        "start": new Date(year, month, day, 12),
+                        "end": new Date(year, month, day, 13, 30),
+                        "title":"Reservation1",
+                        "status": 1
+                    },
+                    {
+                        "id":2,
+                        "start": new Date(year, month, day, 14),
+                        "end": new Date(year, month, day, 14, 45),
+                        "title":"Reservation2",
+                        "class": "test2",
+                        "status": -1
+                    },
+                    {
+                        "id":3,
+                        "start": new Date(year, month, day + 1, 12),
+                        "end": new Date(year, month, day + 1, 17, 45),
+                        "title":"Reservation3",
+                        "status": 0
+                    },
+                    {
+                        "id":4,
+                        "start": new Date(year, month, day - 1, 8),
+                        "end": new Date(year, month, day - 1, 9, 30),
+                        "title":"Reservation4",
+                        "status": -1
+                    },
+                    {
+                        "id":5,
+                        "start": new Date(year, month, day + 1, 14),
+                        "end": new Date(year, month, day + 1, 15),
+                        "title":"Reservation5",
+                        "status": 1
+                    },
+                    {
+                        "id":6,
+                        "start": new Date(year, month, day + 1, 14),
+                        "end": new Date(year, month, day + 1, 15),
+                        "title":"Reservation7",
+                        "status": 1
+                    },
+                    {
+                        "id":6,
+                        "start": new Date(year, month, day, 10),
+                        "end": new Date(year, month, day, 11),
+                        "title":"Reservation6 (read only)",
+                        "status": 0,
+                        readOnly : true
+                    }
 
-])
-};
-}
+                ])
+            };
+        }
 
 
-/*
-* Sets up the start and end time fields in the calendar event
-* form for editing based on the calendar event being edited
-*/
-function setupStartAndEndTimeFields($startTimeField, $endTimeField, calEvent, timeslotTimes) {
+        /*
+         * Sets up the start and end time fields in the calendar event
+         * form for editing based on the calendar event being edited
+         */
+        function setupStartAndEndTimeFields($startTimeField, $endTimeField, calEvent, timeslotTimes) {
 
-for (var i = 0; i < timeslotTimes.length; i++) {
-var startTime = timeslotTimes[i].start;
-var endTime = timeslotTimes[i].end;
-var startSelected = "";
-if (startTime.getTime() === calEvent.start.getTime()) {
-startSelected = "selected=\"selected\"";
-}
-var endSelected = "";
-if (endTime.getTime() === calEvent.end.getTime()) {
-endSelected = "selected=\"selected\"";
-}
-$startTimeField.append("<option value=\"" + startTime + "\" " + startSelected + ">" + timeslotTimes[i].startFormatted + "</option>");
-$endTimeField.append("<option value=\"" + endTime + "\" " + endSelected + ">" + timeslotTimes[i].endFormatted + "</option>");
+            for (var i = 0; i < timeslotTimes.length; i++) {
+                var startTime = timeslotTimes[i].start;
+                var endTime = timeslotTimes[i].end;
+                var startSelected = "";
+                if (startTime.getTime() === calEvent.start.getTime()) {
+                    startSelected = "selected=\"selected\"";
+                }
+                var endSelected = "";
+                if (endTime.getTime() === calEvent.end.getTime()) {
+                    endSelected = "selected=\"selected\"";
+                }
+                $startTimeField.append("<option value=\"" + startTime + "\" " + startSelected + ">" + timeslotTimes[i].startFormatted + "</option>");
+                $endTimeField.append("<option value=\"" + endTime + "\" " + endSelected + ">" + timeslotTimes[i].endFormatted + "</option>");
 
-}
-$endTimeOptions = $endTimeField.find("option");
-$startTimeField.trigger("change");
-}
+            }
+            $endTimeOptions = $endTimeField.find("option");
+            $startTimeField.trigger("change");
+        }
 
-var $endTimeField = $("select[name='end']");
-var $endTimeOptions = $endTimeField.find("option");
+        var $endTimeField = $("select[name='end']");
+        var $endTimeOptions = $endTimeField.find("option");
 
-//reduces the end time options to be only after the start time options.
-$("select[name='start']").change(function() {
-var startTime = $(this).find(":selected").val();
-var currentEndTime = $endTimeField.find("option:selected").val();
-$endTimeField.html(
-$endTimeOptions.filter(function() {
-return startTime < $(this).val();
-})
-);
+        //reduces the end time options to be only after the start time options.
+        $("select[name='start']").change(function() {
+            var startTime = $(this).find(":selected").val();
+            var currentEndTime = $endTimeField.find("option:selected").val();
+            $endTimeField.html(
+            $endTimeOptions.filter(function() {
+                return startTime < $(this).val();
+            })
+        );
 
-var endTimeSelected = false;
-$endTimeField.find("option").each(function() {
-if ($(this).val() === currentEndTime) {
-$(this).attr("selected", "selected");
-endTimeSelected = true;
-return false;
-}
-});
+            var endTimeSelected = false;
+            $endTimeField.find("option").each(function() {
+                if ($(this).val() === currentEndTime) {
+                    $(this).attr("selected", "selected");
+                    endTimeSelected = true;
+                    return false;
+                }
+            });
 
-if (!endTimeSelected) {
-//automatically select an end date 2 slots away.
-$endTimeField.find("option:eq(1)").attr("selected", "selected");
-}
+            if (!endTimeSelected) {
+                //automatically select an end date 2 slots away.
+                $endTimeField.find("option:eq(1)").attr("selected", "selected");
+            }
 
-});
-});    
+        });
+    });    
 </script>
 
 
