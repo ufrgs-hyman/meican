@@ -1423,5 +1423,10 @@ form #recaptcha_response_field {
 .reservation-status-active, .reservation-status-pending, .reservation-status-accepted,
 .reservation-status-submitted, .reservation-status-increate, .reservation-status-insetup, 
 .reservation-status-inteardown, .reservation-status-inmodify {
-    
+    background-color: yellow !important;
+}
+
+.cal-old{
+    background-color: #aaa !important;
+    border: 1px solid #888 !important;
 }
