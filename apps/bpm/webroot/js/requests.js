@@ -1,6 +1,6 @@
 var request = {};
 
-(function(startId) {
+(function() {
     var actionUrl = null;
     
 	this.reply = function(response) {

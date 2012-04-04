@@ -13,7 +13,7 @@ $(document).ready(function() {
         js_function_interval = setInterval("griRefreshStatus(" + reservation_id + ")", 30000);
     }
 
-    if (status_array) {
+    if ((typeof(status_array) != "undefined") && status_array) {
         for (var index in status_array) {
             checkStatus(status_array[index].id, status_array[index].status);
         }
@@ -98,7 +98,7 @@ function res_showCircuit(){
 //    alert(reservation_path[0].descr);
 //    alert(reservation_path[1].descr);
     var networks_coordinates = [];
-    if (reservation_path.length > 0) {
+    if ((typeof(reservation_path)!="undefined") && (reservation_path.length > 0)) {
         
         for (var i=0;i<reservation_path.length;i++){
         
