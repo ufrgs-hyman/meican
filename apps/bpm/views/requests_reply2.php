@@ -68,6 +68,7 @@
 </div>
 <div id="dialog-form" title="<?= _("Authorization"); ?>">
     <form>
+        <div id="MessageBandwidth"></div>
         <img id="MessageImg" alt="" src=""/>
         <label for="name" id="MessageLabel">Provide a message</label>
         <textarea type="text" name="name" id="Message" class="text ui-widget-content ui-corner-all" style="width:100%;margin-top:10px;" cols="20" rows="5"></textarea>
@@ -174,6 +175,9 @@ foreach ($calendar_gris as $gri){
 <script type="text/javascript">
     var refreshReservation = false;
     $(function() {
+        
+        request.setBandwidth('<?= $bandwidth ?>');
+        request.setAvailableBandwidth('<?= @$available_bandwidth ?>');
         request.setActionUrl('<?= $this->url(array('action' => 'saveResponse', 'param' => array('loc_id' => $request->loc_id))) ?>');
         
         var $calendar = $('#calendar');
@@ -338,6 +342,14 @@ eventClick : function(calEvent, $event) {
                 gris[i]['start'] = new Date(gris[i]['start']);
                 gris[i]['end'] = new Date(gris[i]['end']);
             }
+           /* gris = gris.concat([{
+                        "id":99,
+                        "start": new Date(2011, 9, 22, 10),
+                        "end": new Date(2011, 9, 22, 18, 45),
+                        "title":"Reservation2",
+                        "class": "test2",
+                        "status": -1
+                    }]);*/
             console.debug(gris);
             return {
                 events : gris

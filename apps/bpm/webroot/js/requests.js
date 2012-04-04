@@ -3,6 +3,8 @@ var request = {};
 (function() {
     var actionUrl = null;
     var response = null;
+    var availableBandwidth = null;
+    var bandwidth = null;
     
     this.reply = function(response) {
         //var message = prompt();
@@ -14,8 +16,17 @@ var request = {};
             $("#MessageLabel").html("Request will be rejected, please provide a message: ");
         }
         $("#Message").val('');
+        $("#MessageBandwidth").html('Bandwidth available: '+this.availableBandwidth+' Mbps. <br/>Bandwidth requested: '+this.bandwidth+' Mbps.');
         this.response = response;
         $("#dialog-form").dialog("open");
+    };
+
+    this.setAvailableBandwidth = function(v){
+        this.availableBandwidth = v;
+    };
+
+    this.setBandwidth = function(v){
+        this.bandwidth = v;
     };
 
     this.setActionUrl = function(url){
