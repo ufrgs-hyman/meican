@@ -89,21 +89,24 @@ class gri_info extends Model {
                 $gri->id = $g->gri_id;
                 $gri->descr = $g->gri_descr;
 
-                if ($request) {
-                    if ($request->response == 'reject')
+                if ($request && $request->response != 'accept') {
+                    // show request status
+                    if ($request->response == 'reject') {
                         // reservation request was denied
-                        $g->status = 'REJECTED';
-                    elseif ($request->response == 'accept')
-                        // reservation request was accepted
-                        $g->status = $g->status;
-                    else
+                        $gri->status = gri_info::translateStatus('REJECTED');
+                        $gri->original_status = 'REJECTED';
+                    } else {
                         // reservation request is pending
-                        $g->status = ($request->status) ? $request->status : "UNKNOWN";
+                        $status = ($request->status) ? $request->status : "UNKNOWN";
+                        $gri->status = gri_info::translateStatus($status);
+                        $gri->original_status = "REQ_PENDING";
+                    }
+                } else {
+                    // request doesn't exist or reservation request was accepted => show GRI status
+                    $gri->status = gri_info::translateStatus($g->status);
+                    $gri->original_status = $g->status;
                 }
                 
-                $gri->status = gri_info::translateStatus($g->status);
-                $gri->original_status = $g->status;
-
                 $start = new DateTime($g->start);
                 $finish = new DateTime($g->finish);
 

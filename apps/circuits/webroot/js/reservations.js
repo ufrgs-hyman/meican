@@ -18,14 +18,14 @@ function refreshStatus() {
                     if (data.length > 0) {
                         var status_id = null;
 
-                        for (var i=0; i < data.length; i++) {
-                            status_id = '#status' + data[i].id;
+                        for (var j in data) {
+                            status_id = '#status' + data[j].id;
                 
-                            if (data[i].translate != $(status_id).html()) {
+                            if (data[j].status != $(status_id).html()) {
                                 $(status_id).empty();
-                                $(status_id).html(data[i].translate);
+                                $(status_id).html(data[j].status);
                 
-                                checkStatus(data[i].id, data[i].name);
+                                checkStatus(data[j].id, data[j].original_status);
                             }
                         }
                     }

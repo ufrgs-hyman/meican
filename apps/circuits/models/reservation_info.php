@@ -42,10 +42,23 @@ class reservation_info extends Resource_Model {
         $req->answerable = 'no';
         $request = $req->fetch();
 
-        $status = "UNKNOWN";
+        $status_obj = new stdClass();
 
         if ($gris) {
-            if (!$request || ($request && $request[0]->response = 'accept')) {
+            if ($request && $request[0]->response != 'accept') {
+                // show request status
+                if ($request[0]->response == 'reject') {
+                    // reservation request was denied
+                    $status_obj->status = gri_info::translateStatus('REJECTED');
+                    $status_obj->original_status = 'REJECTED';
+                } else {
+                    // reservation request is pending
+                    $status = ($request[0]->status) ? $request[0]->status : "UNKNOWN";
+                    $status_obj->status = gri_info::translateStatus($status);
+                    $status_obj->original_status = "REQ_PENDING";
+                }
+            } else {
+                // show GRI status
 
                 $now = time();
                 $gri_to_show = $gris[0];
@@ -87,26 +100,17 @@ class reservation_info extends Resource_Model {
                         $gri_to_show = $g;
                     }
                 }
-            }
 
-            if ($request) {
-                if ($request[0]->response == 'reject')
-                    // reservation request was denied
-                    $status = 'REJECTED';
-                elseif ($request[0]->response == 'accept')
-                    // reservation request was accepted
-                    $status = $gri_to_show->status;
-                else
-                    // reservation request is pending
-                    $status = ($request[0]->status) ? $request[0]->status : "UNKNOWN";
-            } else {
-                $status = $gri_to_show->status;
+                $status_obj->status = gri_info::translateStatus($gri_to_show->status);
+                $status_obj->original_status = $gri_to_show->status;
             }
         } else {
             $status = "NO_GRI";
+            $status_obj->status = gri_info::translateStatus($status);
+            $status_obj->original_status = $status;
         }
 
-        return $status;
+        return $status_obj;
     }
     
     /**

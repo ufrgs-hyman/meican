@@ -52,8 +52,9 @@ class reservations extends Controller {
                 $res->name = $r->res_name;
                 $res->bandwidth = $r->bandwidth;
                 
-                $status = $r->getStatus();
-                $res->status = gri_info::translateStatus($status);
+                $status_obj = $r->getStatus();
+                $res->original_status = $status_obj->original_status;
+                $res->status = $status_obj->status;
 
                 $flow = new flow_info();
                 $flow->flw_id = $r->flw_id;
@@ -200,7 +201,7 @@ class reservations extends Controller {
         if ($griList) {
             $dom = new domain_info();
             $dom->dom_id = $dom_id;
-            $idc_url = $dom->get('idc_url');
+            $idc_url = $dom->get('idc_url',false);
             
             Log::write('debug', "gri list ro refresh", $griList);
 
@@ -254,9 +255,9 @@ class reservations extends Controller {
             $status = $res->getStatus();
             
             $status_obj = new stdClass();
-            $status_obj->name = $status;
-            $status_obj->translate = gri_info::translateStatus($status);
             $status_obj->id = $res->res_id;
+            $status_obj->original_status = $status->original_status;
+            $status_obj->status = $status->status;
             
             $statusList[] = $status_obj;
         }
@@ -280,29 +281,30 @@ class reservations extends Controller {
             $req->resource_type = 'reservation_info';
             $req->answerable = 'no';
             
-            $result = $req->fetch();
+            $request = $req->fetch();
 
-            if ($result && $result[0]->response != 'accept' ) {
-                
+            if ($request && $request[0]->response != 'accept') {
+                // show request status
                 // a reserva possui requisição
                 foreach ($gris as $g) {
-                    if ($result[0]->response == 'reject')
-                        // reservation request was denied
-                        $status = 'REJECTED';
-                    elseif ($result[0]->response == 'accept')
-                        // reservation request was accepted
-                        $status = $g->status;
-                    else
-                        // reservation request is pending
-                        $status = ($result[0]->status) ? $result[0]->status : "UNKNOWN";
-
                     $status_obj = new stdClass();
                     $status_obj->id = $g->gri_id;
-                    $status_obj->name = $status;
-                    $status_obj->translate = gri_info::translateStatus($status);
+
+                    if ($request[0]->response == 'reject') {
+                        // reservation request was denied
+                        $status_obj->status = gri_info::translateStatus('REJECTED');
+                        $status_obj->original_status = 'REJECTED';
+                    } else {
+                        // reservation request is pending
+                        $status = ($request[0]->status) ? $request[0]->status : "UNKNOWN";
+                        $status_obj->status = gri_info::translateStatus($status);
+                        $status_obj->original_status = "REQ_PENDING";
+                    }
+
                     $statusList[] = $status_obj;
                 }
             } else {
+                // show GRI status
                 // consulta o OSCARS
 
                 $control = array();
@@ -361,8 +363,8 @@ class reservations extends Controller {
 
                         $status_obj = new stdClass();
                         $status_obj->id = $g->gri_id;
-                        $status_obj->name = $g->status;
-                        $status_obj->translate = gri_info::translateStatus($g->status);
+                        $status_obj->original_status = $g->status;
+                        $status_obj->status = gri_info::translateStatus($g->status);
                         $statusList[] = $status_obj;
 
                         $ind++;

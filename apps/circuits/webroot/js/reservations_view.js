@@ -54,14 +54,14 @@ function griRefreshStatus(res_id) {
                 if (data.length != 0) {
                     var status_id = null;
 
-                    for (var i=0; i < data.length; i++) {
+                    for (var i in data) {
                         status_id = '#status' + data[i].id;
                 
-                        if (data[i].translate != $(status_id).html()) {
+                        if (data[i].status != $(status_id).html()) {
                             $(status_id).empty();
-                            $(status_id).html(data[i].translate);
+                            $(status_id).html(data[i].status);
                 
-                            checkStatus(data[i].id, data[i].name);
+                            checkStatus(data[i].id, data[i].original_status);
                         }
                     }
                 }
