@@ -14,18 +14,19 @@ include_once 'libs/nuSOAP/lib/nusoap.php';
 class requests extends MeicanController {
 
     public $modelClass = 'request_info';
+
     public function requests() {
         $this->app = 'bpm';
         $this->controller = 'requests';
         $this->defaultAction = 'show';
     }
 
-    protected function renderEmpty(){
+    protected function renderEmpty() {
         $this->set(array(
             'title' => _("Requests"),
             'message' => _("You have no pending or finished request"),
             'link' => false
-            ));
+        ));
         parent::renderEmpty();
     }
 
@@ -80,24 +81,28 @@ class requests extends MeicanController {
 
         $result = $request->getRequestInfo(TRUE, TRUE, TRUE, TRUE);
         $result->available_bandwidth = NULL;
-        
+
         $gri = new gri_info();
-        
+
         $offset = (30 * 24 * 60 * 60);
-        $calendar_gris = gri_info::getGrisToCalendar(date('Y-m-d H:i:s', time()-$offset), date('Y-m-d H:i:s', time()+$offset), $result->resc_id);
-        
-        Log::write("debug",print_r($calendar_gris,true));
-        
+        $calendar_gris = gri_info::getGrisToCalendar(date('Y-m-d H:i:s',
+                                time() - $offset),
+                        date('Y-m-d H:i:s', time() + $offset), $result->resc_id);
+
+        Log::write("debug", print_r($calendar_gris, true));
+
         $this->set(array(
             'res_id' => $result->resc_id,
             'res_name' => $result->resc_descr,
             'bandwidth' => $result->bandwidth,
             'usr_login' => $result->src_user,
+            'timer' => $result->timer_info,
+            'flow' => $result->flow_info,
             'gris' => $gri->getGrisToView($result->resc_id),
-            'calendar_gris' => $calendar_gris
+            'calendar_gris' => $calendar_gris ? $calendar_gris : array(),
+            'request' => $result
         ));
         $this->addScriptForLayout('requests');
-        $this->set('request', $result);
         $this->render('reply2');
     }
 
@@ -132,33 +137,32 @@ class requests extends MeicanController {
     /**
      * @todo pensar em como apagar se request for de outro domínio
      */
-    
     public function delete() {
         if ($requests = Common::POST("del_checkbox")) {
-            debug('requests',$requests);
-            
+            debug('requests', $requests);
+
             $count = 0;
-            
+
             foreach ($requests as $loc_id) {
                 $request = new request_info();
                 $request->loc_id = $loc_id;
-                
+
                 $req_result = $request->fetch(FALSE);
-                
+
                 $del_request = new request_info();
                 $del_request->req_id = $req_result[0]->req_id;
-                
+
                 if ($requests_to_delete = $del_request->fetch(FALSE)) {
                     $were_deleted = TRUE;
                     foreach ($requests_to_delete as $r_del) {
                         $were_deleted &= $r_del->delete();
                     }
-                    
+
                     if ($were_deleted)
                         $count++;
                 }
             }
-            
+
             switch ($count) {
                 case 0:
                     $this->setFlash(_("No request was deleted"), 'warning');
@@ -167,7 +171,8 @@ class requests extends MeicanController {
                     $this->setFlash(_("One request was deleted"), 'success');
                     break;
                 default:
-                    $this->setFlash("$count ". _("requests were deleted"), 'success');
+                    $this->setFlash("$count " . _("requests were deleted"),
+                            'success');
                     break;
             }
         }
@@ -215,6 +220,7 @@ class requests extends MeicanController {
 //            return NULL;
 //        }
 //    }
-} //class requests
+}
 
+//class requests
 ?>

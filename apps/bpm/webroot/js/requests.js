@@ -13,6 +13,7 @@ var request = {};
             $("#MessageImg").attr("src", baseUrl+"webroot/img/hand_bad.png");
             $("#MessageLabel").html("Request will be rejected, please provide a message: ");
         }
+        $("#Message").val('');
         this.response = response;
         $("#dialog-form").dialog("open");
     };

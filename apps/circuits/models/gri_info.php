@@ -137,7 +137,7 @@ class gri_info extends Model {
             $sql .= ($res_id) ? " AND (`gi`.`res_id` != $res_id);" : ";";
             return parent::querySql($sql, 'gri_info');
         } else
-            return false;
+            return array();
     }
     
     static public function translateStatus($newStatus) {

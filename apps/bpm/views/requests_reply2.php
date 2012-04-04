@@ -1,9 +1,4 @@
-<?php
-//debug($request);
-extract(get_object_vars($request));
-$timer = $request->timer_info;
-$flow = $request->flow_info;
-?>
+<?php extract(get_object_vars($request));?>
 <h1><?php echo _("Reply request"); ?></h1>
 <div class="float-left">
     <h4 style="margin:0;">
@@ -78,7 +73,6 @@ $flow = $request->flow_info;
         <textarea type="text" name="name" id="Message" class="text ui-widget-content ui-corner-all" style="width:100%;margin-top:10px;" cols="20" rows="5"></textarea>
     </form>
 </div>​
-
 <?php
 /* <div id="tabs-4" class="control_tab">
   <form method="POST" id="FormReply" action="<?php echo $this->buildLink(array('action' => 'saveResponse', 'param' => array('loc_id' => $request->loc_id))); ?>">
@@ -113,16 +107,64 @@ foreach ($calendar_gris as $gri){
         'start' => strtotime($gri->start_date)*1000,
         'end' => strtotime($gri->finish_date)*1000,
         'title' => '',
-        'class' => 'reservation-status-previous'
+        'hclass' => 'cal-old'
     );
 }
 
-/*
-  "id":1,
-  "start": new Date(year, month, day, 12),
-  "end": new Date(year, month, day, 13, 30),
-  "title":"Reservation1",
-  "status": 1 */
+/*.concat([                    
+                    {
+                        "id":1,
+                        "start": new Date(year, month, day, 12),
+                        "end": new Date(year, month, day, 13, 30),
+                        "title":"Reservation1",
+                        "status": 1
+                    },
+                    {
+                        "id":2,
+                        "start": new Date(year, month, day, 14),
+                        "end": new Date(year, month, day, 14, 45),
+                        "title":"Reservation2",
+                        "class": "test2",
+                        "status": -1
+                    },
+                    {
+                        "id":3,
+                        "start": new Date(year, month, day + 1, 12),
+                        "end": new Date(year, month, day + 1, 17, 45),
+                        "title":"Reservation3",
+                        "status": 0
+                    },
+                    {
+                        "id":4,
+                        "start": new Date(year, month, day - 1, 8),
+                        "end": new Date(year, month, day - 1, 9, 30),
+                        "title":"Reservation4",
+                        "status": -1
+                    },
+                    {
+                        "id":5,
+                        "start": new Date(year, month, day + 1, 14),
+                        "end": new Date(year, month, day + 1, 15),
+                        "title":"Reservation5",
+                        "status": 1
+                    },
+                    {
+                        "id":6,
+                        "start": new Date(year, month, day + 1, 14),
+                        "end": new Date(year, month, day + 1, 15),
+                        "title":"Reservation7",
+                        "status": 1
+                    },
+                    {
+                        "id":6,
+                        "start": new Date(year, month, day, 10),
+                        "end": new Date(year, month, day, 11),
+                        "title":"Reservation6 (read only)",
+                        "status": 0,
+                        readOnly : true
+                    }
+
+                ])*/
 ?>
 
 <script type="text/javascript" src="<?php echo $this->url(); ?>webroot/js/jquery.weekcalendar.js"></script>
@@ -298,60 +340,7 @@ eventClick : function(calEvent, $event) {
             }
             console.debug(gris);
             return {
-                events : gris.concat([                    
-                    {
-                        "id":1,
-                        "start": new Date(year, month, day, 12),
-                        "end": new Date(year, month, day, 13, 30),
-                        "title":"Reservation1",
-                        "status": 1
-                    },
-                    {
-                        "id":2,
-                        "start": new Date(year, month, day, 14),
-                        "end": new Date(year, month, day, 14, 45),
-                        "title":"Reservation2",
-                        "class": "test2",
-                        "status": -1
-                    },
-                    {
-                        "id":3,
-                        "start": new Date(year, month, day + 1, 12),
-                        "end": new Date(year, month, day + 1, 17, 45),
-                        "title":"Reservation3",
-                        "status": 0
-                    },
-                    {
-                        "id":4,
-                        "start": new Date(year, month, day - 1, 8),
-                        "end": new Date(year, month, day - 1, 9, 30),
-                        "title":"Reservation4",
-                        "status": -1
-                    },
-                    {
-                        "id":5,
-                        "start": new Date(year, month, day + 1, 14),
-                        "end": new Date(year, month, day + 1, 15),
-                        "title":"Reservation5",
-                        "status": 1
-                    },
-                    {
-                        "id":6,
-                        "start": new Date(year, month, day + 1, 14),
-                        "end": new Date(year, month, day + 1, 15),
-                        "title":"Reservation7",
-                        "status": 1
-                    },
-                    {
-                        "id":6,
-                        "start": new Date(year, month, day, 10),
-                        "end": new Date(year, month, day, 11),
-                        "title":"Reservation6 (read only)",
-                        "status": 0,
-                        readOnly : true
-                    }
-
-                ])
+                events : gris
             };
         }
 
