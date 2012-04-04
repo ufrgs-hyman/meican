@@ -22,7 +22,7 @@
                         <label id="lb_bandwidth"><?php echo $bandwidth . " " . _("Mbps") ?></label>
                     </div>
                 </div>
-                <div id="bandwidth_bar_inside"></div>
+                <div id="bandwidth_bar_inside" style="width: <?= round($bandwidth * 100 / 1000); ?>%"></div>
             </div>
             <?= $this->element('view_point', array('type' => 'destination', 'flow' => $flow)); ?>
         </div>
