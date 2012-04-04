@@ -293,7 +293,7 @@ class acl extends MeicanController {
 }
 
 function get_tree_models($tree_object) {
-    if (!is_a($tree_object, "Tree_Model")) {
+    if (!is_a($tree_object, "TreeModel")) {
         return FALSE;
     }
 

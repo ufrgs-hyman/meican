@@ -56,6 +56,7 @@ class users extends MeicanController {
             }
             
             $this->setArgsToBody($users);
+            $this->render('show');
         }
     }
 

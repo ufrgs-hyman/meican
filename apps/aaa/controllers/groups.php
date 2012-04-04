@@ -60,6 +60,7 @@ class groups extends MeicanController {
                 $groups[] = $group;
             }
             $this->setArgsToBody($groups);
+            $this->render('show');
         }
     }
 
