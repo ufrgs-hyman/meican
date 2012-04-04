@@ -83,12 +83,18 @@ class requests extends MeicanController {
         
         $gri = new gri_info();
         
+        $offset = (30 * 24 * 60 * 60);
+        $calendar_gris = gri_info::getGrisToCalendar(date('Y-m-d H:i:s', time()-$offset), date('Y-m-d H:i:s', time()+$offset), $result->resc_id);
+        
+        Log::write("debug",print_r($calendar_gris,true));
+        
         $this->set(array(
             'res_id' => $result->resc_id,
             'res_name' => $result->resc_descr,
             'bandwidth' => $result->bandwidth,
             'usr_login' => $result->src_user,
-            'gris' => $gri->getGrisToView($result->resc_id)
+            'gris' => $gri->getGrisToView($result->resc_id),
+            'calendar_gris' => $calendar_gris
         ));
         $this->addScriptForLayout('requests');
         $this->set('request', $result);

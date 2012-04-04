@@ -98,6 +98,16 @@ foreach ($gris as $gri) {
         'hclass' => 'reservation-status-' . strtolower($gri->original_status)
     );
 }
+foreach ($calendar_gris as $gri){
+    $i++;
+    $events[] = array(
+        'id' => $i,
+        'start' => strtotime($gri->start_date)*1000,
+        'end' => strtotime($gri->finish_date)*1000,
+        'title' => '',
+        'class' => 'reservation-status-previous'
+    );
+}
 
 /*
   "id":1,

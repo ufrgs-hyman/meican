@@ -59,8 +59,22 @@ class gri_info extends Model {
     public function getGrisToView($res_id = null) {
         $gri = new gri_info();
 
-        if ($res_id)
+        $request = null;
+        if ($res_id) {
             $gri->res_id = $res_id;
+
+            $req = new request_info();
+            $req->resource_id = $res_id;
+            $req->resource_type = 'reservation_info';
+            $req->answerable = 'no';
+
+            if ($result = $req->fetch()) {
+                // a reserva possui requisição
+                $request = new stdClass();
+                $request->response = $result[0]->response;
+                $request->status = $result[0]->status;
+            }
+        }
 
         $gris = array();
 
@@ -74,6 +88,19 @@ class gri_info extends Model {
                 $gri = new stdClass();
                 $gri->id = $g->gri_id;
                 $gri->descr = $g->gri_descr;
+
+                if ($request) {
+                    if ($request->response == 'reject')
+                        // reservation request was denied
+                        $g->status = 'REJECTED';
+                    elseif ($request->response == 'accept')
+                        // reservation request was accepted
+                        $g->status = $g->status;
+                    else
+                        // reservation request is pending
+                        $g->status = ($request->status) ? $request->status : "UNKNOWN";
+                }
+                
                 $gri->status = gri_info::translateStatus($g->status);
                 $gri->original_status = $g->status;
 
@@ -92,11 +119,25 @@ class gri_info extends Model {
         return $gris;
     }
     
-    public function getGrisToCreatePath() {
-        echo "gris";
-        $sql = "SELECT gri_id, gri_descr, dom_id FROM `gri_info`";
+    static public function getGrisToCreatePath() {
+        $sql = "SELECT `gri_id`, `gri_descr`, `dom_id` FROM `gri_info`";
         $sql .= " WHERE `send`=1 AND `status`='PENDING' AND NOW() BETWEEN `start` AND `finish`";
         return parent::querySql($sql, 'gri_info');
+    }
+    
+    static public function getGrisToCalendar($start, $finish, $res_id = null) {
+        if ($start && $finish) {
+            $sql = "SELECT `gi`.`gri_id`, `gi`.`gri_descr`, `gi`.`status`, `gi`.`start` AS 'start_date', `gi`.`finish` AS 'finish_date', `ri`.`bandwidth` FROM `gri_info` AS `gi`";
+            $sql .= " LEFT JOIN `reservation_info` AS `ri` ON `gi`.`res_id`=`ri`.`res_id`";
+            $sql .= " WHERE";
+            $sql .= " ((`gi`.`start` BETWEEN '$start' AND '$finish') OR";
+            $sql .= " (`gi`.`finish` BETWEEN '$start' AND '$finish'))";
+            $sql .= " AND (`gi`.`status` NOT IN ('FAILED', 'FINISHED', 'CANCELLED', ''))";
+            $sql .= " AND (`gi`.`status` IS NOT NULL)";
+            $sql .= ($res_id) ? " AND (`gi`.`res_id` != $res_id);" : ";";
+            return parent::querySql($sql, 'gri_info');
+        } else
+            return false;
     }
     
     static public function translateStatus($newStatus) {

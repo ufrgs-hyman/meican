@@ -272,69 +272,101 @@ class reservations extends Controller {
         $gri->res_id = $res_id;
         $gris = $gri->fetch(FALSE);
         if ($gris) {
-            $control = array();
-            $griList = array();
-
-            $ind = 0;
-            foreach ($gris as $g) {
-                switch ($g->status) {
-                    case "FINISHED":
-                    case "CANCELLED":
-                    case "FAILED":
-                        $control[$ind] = FALSE;
-                        break;
-                    default:
-                        $griList[] = $g->gri_descr;
-                        $control[$ind] = TRUE;
-                }
-                $ind++;
-            }
-
             $statusList = array();
 
-            if ($griList) {
-                $dom = new domain_info();
-                $dom->dom_id = $gris[0]->dom_id;
-                $idc_url = $dom->get('idc_url');
+            // testa se tem requisição, se tem, então mostra o status do ODE
+            $req = new request_info();
+            $req->resource_id = $res_id;
+            $req->resource_type = 'reservation_info';
+            $req->answerable = 'no';
+            
+            $result = $req->fetch();
 
-                $oscarsRes = new OSCARSReservation();
-                $oscarsRes->setOscarsUrl($idc_url);
-                $oscarsRes->setGrisString($griList);
-
-                if ($oscarsRes->listReservations()) {
-                    $statusResult = $oscarsRes->getStatusArray();
-                } else {
-                    Log::write("error", "Fail to connect to OSCARS in refresh status");
-                    return $this->renderJson(FALSE);
-                }
-
-                $ind = 0;
-                $cont = 0;
-
+            if ($result && $result[0]->response != 'accept' ) {
+                
+                // a reserva possui requisição
                 foreach ($gris as $g) {
-                    if ($control[$ind]) {
-                        // se posição no control for TRUE, é porque atualizou o status
-                        $newStatus = $statusResult[$cont];
-                        $cont++;
-
-                        // testa se status atual da GRI é diferente do status que retornou do OSCARS
-                        if ($g->status != $newStatus) {
-                            $g->status = $newStatus;
-
-                            // atualiza o banco de dados com o novo status (retornado do OSCARS)
-                            $gri_tmp = new gri_info();
-                            $gri_tmp->gri_id = $g->gri_id;
-                            $gri_tmp->updateTo(array('status' => $newStatus), FALSE);
-                        }
-                    }
+                    if ($result[0]->response == 'reject')
+                        // reservation request was denied
+                        $status = 'REJECTED';
+                    elseif ($result[0]->response == 'accept')
+                        // reservation request was accepted
+                        $status = $g->status;
+                    else
+                        // reservation request is pending
+                        $status = ($result[0]->status) ? $result[0]->status : "UNKNOWN";
 
                     $status_obj = new stdClass();
                     $status_obj->id = $g->gri_id;
-                    $status_obj->name = $g->status;
-                    $status_obj->translate = gri_info::translateStatus($g->status);
+                    $status_obj->name = $status;
+                    $status_obj->translate = gri_info::translateStatus($status);
                     $statusList[] = $status_obj;
+                }
+            } else {
+                // consulta o OSCARS
 
+                $control = array();
+                $griList = array();
+
+                $ind = 0;
+                foreach ($gris as $g) {
+                    switch ($g->status) {
+                        case "FINISHED":
+                        case "CANCELLED":
+                        case "FAILED":
+                            $control[$ind] = FALSE;
+                            break;
+                        default:
+                            $griList[] = $g->gri_descr;
+                            $control[$ind] = TRUE;
+                    }
                     $ind++;
+                }
+
+                if ($griList) {
+                    $dom = new domain_info();
+                    $dom->dom_id = $gris[0]->dom_id;
+                    $idc_url = $dom->get('idc_url');
+
+                    $oscarsRes = new OSCARSReservation();
+                    $oscarsRes->setOscarsUrl($idc_url);
+                    $oscarsRes->setGrisString($griList);
+
+                    if ($oscarsRes->listReservations()) {
+                        $statusResult = $oscarsRes->getStatusArray();
+                    } else {
+                        Log::write("error", "Fail to connect to OSCARS in refresh status");
+                        return $this->renderJson(FALSE);
+                    }
+
+                    $ind = 0;
+                    $cont = 0;
+
+                    foreach ($gris as $g) {
+                        if ($control[$ind]) {
+                            // se posição no control for TRUE, é porque atualizou o status
+                            $newStatus = $statusResult[$cont];
+                            $cont++;
+
+                            // testa se status atual da GRI é diferente do status que retornou do OSCARS
+                            if ($g->status != $newStatus) {
+                                $g->status = $newStatus;
+
+                                // atualiza o banco de dados com o novo status (retornado do OSCARS)
+                                $gri_tmp = new gri_info();
+                                $gri_tmp->gri_id = $g->gri_id;
+                                $gri_tmp->updateTo(array('status' => $newStatus), FALSE);
+                            }
+                        }
+
+                        $status_obj = new stdClass();
+                        $status_obj->id = $g->gri_id;
+                        $status_obj->name = $g->status;
+                        $status_obj->translate = gri_info::translateStatus($g->status);
+                        $statusList[] = $status_obj;
+
+                        $ind++;
+                    }
                 }
             }
 
@@ -747,6 +779,7 @@ class reservations extends Controller {
         $this->set(compact('gris', 'flow', 'timer', 
                 'request', 'refresh', 'usr_login'));
         $this->addScriptForLayout(array('reservations', 'reservations_view'));
+        $this->render('view');
     }
 
     /**
@@ -1032,8 +1065,7 @@ class reservations extends Controller {
     public function check() {
         $this->autoRender = false;
         Log::write("debug", "check chegou no controller");
-        $gri = new gri_info();
-        $gris = $gri->getGrisToCreatePath();
+        $gris = gri_info::getGrisToCreatePath();
         Log::write("debug", print_r($gris, true));
 
         if ($gris) {
