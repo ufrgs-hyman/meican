@@ -31,7 +31,7 @@
     <div id="tabs-2" class="tab_content">
         <div class="float-left">
         <?= $this->element('view_timer', compact('timer')); ?>
-        <?= $request?$this->element('view_request', compact('request')):null; ?>
+        <?= //$request?$this->element('view_request', compact('request')):null; ?>
         </div>
         <div class="float-right">
         <?php if ($gris): ?>
