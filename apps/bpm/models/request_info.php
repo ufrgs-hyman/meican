@@ -129,6 +129,12 @@ class request_info extends Resource_Model {
                             $flow = new flow_info();
                             $flow->flw_id = $reservation[0]->flw_id;
                             $return_request->flow_info = $flow->getFlowDetails();
+                            
+                            if (!$return_request->flow_info->path) {
+                                $pathArray = $reservation[0]->getPath();
+                                $return_request->flow_info->path = MeicanTopology::getWaypoints($pathArray);        
+                            }       
+                            
                             $return_request->flow_info->source->domain = $return_request->src_domain;
                             $return_request->flow_info->dest->domain = $return_request->dst_domain;
                         } else
