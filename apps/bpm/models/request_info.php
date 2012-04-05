@@ -286,27 +286,34 @@ class request_info extends Resource_Model {
 
                 $responseSOAP = array(
                     'req_id' => $toResponse->req_id,
-                    'src_ode_ip' => $toResponse->src_ode_ip,
-                    'crr_ode_ip' => $toResponse->crr_ode_ip,
+                    'dom_src_ip' => $toResponse->src_ode_ip,
+                    //'crr_ode_ip' => $toResponse->crr_ode_ip,
                     'response' => $response,
                     'message' => $message);
 
                 $dom = new domain_info();
                 $dom->ode_ip = $toResponse->crr_ode_ip;
-                $domain = $dom->fetch(FALSE);
+                $res_domain = $dom->fetch(FALSE);
 
-                $businessEndpoint = "http://$toResponse->crr_ode_ip/" . $domain[0]->ode_wsdl_path;
-                
-                Log::write("info","Sending response:\n". print_r($responseSOAP,TRUE));
+                $domain = $res_domain[0];
 
-                try {
-                    $client = new SoapClient($businessEndpoint, array('cache_wsdl' => 0));
+                if ($domain->ode_wsdl_path && $domain->ode_response) {
 
-                    $client->ReceiveResponse($responseSOAP);
-                    
-                    return TRUE;
-                } catch (Exception $e) {
-                    Log::write("error", "Caught exception while trying to connect to ODE:\n" . print_r($e->getMessage()));
+                    Log::write("info", "Sending response:\n" . print_r($responseSOAP, TRUE));
+
+                    try {
+                        $client = new SoapClient($domain->ode_wsdl_path, array('cache_wsdl' => WSDL_CACHE_NONE));
+                        
+                        $client->{$domain->ode_response}($responseSOAP);
+                        //$client->__soapCall($domain->ode_response, $responseSOAP);
+
+                        return TRUE;
+                    } catch (Exception $e) {
+                        Log::write("error", "Caught exception while trying to connect to ODE:\n" . print_r($e->getMessage()));
+                        return FALSE;
+                    }
+                } else {
+                    Log::write("error", 'ODE not confired correctly');
                     return FALSE;
                 }
             } else {

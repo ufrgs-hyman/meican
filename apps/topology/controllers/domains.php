@@ -60,8 +60,12 @@ class domains extends Controller {
             $domain->oscars_ip = Common::POST("oscars_ip");
             $domain->oscars_protocol = Common::POST("oscars_protocol");
             $domain->topology_id = Common::POST("topology_id");
+            
             $domain->ode_ip = Common::POST("ode_ip");
             $domain->ode_wsdl_path = Common::POST("ode_wsdl_path");
+            $domain->ode_start = Common::POST("ode_start");
+            $domain->ode_response = Common::POST("ode_response");
+            
             $domain->dom_version = Common::POST("dom_version");
      
             if ($domain->insert(NULL, "topology")) {
@@ -119,9 +123,14 @@ class domains extends Controller {
             $domain->oscars_ip = Common::POST("oscars_ip");
             $domain->oscars_protocol = Common::POST("oscars_protocol");
             $domain->topology_id = Common::POST("topology_id");
+            
             $domain->ode_ip = Common::POST("ode_ip");
             $domain->ode_wsdl_path = Common::POST("ode_wsdl_path");
+            $domain->ode_start = Common::POST("ode_start");
+            $domain->ode_response = Common::POST("ode_response");
+            
             $domain->dom_version = Common::POST("dom_version");
+            
             if ($domain->update()) {
                 $this->setFlash(_("Domain")." '$domain->dom_descr' "._("updated"), "success");
                 $this->show();

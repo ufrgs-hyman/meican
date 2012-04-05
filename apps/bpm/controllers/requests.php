@@ -43,6 +43,7 @@ class requests extends MeicanController {
             }
             $this->set(compact('pending', 'finished'));
         }
+        $this->render('show');
     }
 
 //    public function createRequest () {
@@ -78,8 +79,9 @@ class requests extends MeicanController {
 
         $request = new request_info();
         $request->loc_id = $input['loc_id'];
+        $req_result = $request->fetch();
 
-        $result = $request->getRequestInfo(TRUE, TRUE, TRUE, TRUE);
+        $result = $req_result[0]->getRequestInfo(TRUE, TRUE, TRUE, TRUE);
         $result->available_bandwidth = NULL;
 
         $gri = new gri_info();

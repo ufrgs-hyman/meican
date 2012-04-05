@@ -35,6 +35,8 @@ class reservation_info extends Resource_Model {
         $gri = new gri_info();
         $gri->res_id = $this->res_id;
         $gris = $gri->fetch(FALSE);
+        
+        //Log::write('debug', "get status:\n" . print_r($gris,true));
 
         $req = new request_info();
         $req->resource_id = $this->res_id;
@@ -100,7 +102,7 @@ class reservation_info extends Resource_Model {
                         $gri_to_show = $g;
                     }
                 }
-
+                
                 $status_obj->status = gri_info::translateStatus($gri_to_show->status);
                 $status_obj->original_status = $gri_to_show->status;
             }

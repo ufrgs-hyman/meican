@@ -1,11 +1,16 @@
 <?php
+
 $dom_descr = isset($argsToElement->dom_descr) ? $argsToElement->dom_descr : NULL;
 $idc_url = isset($argsToElement->idc_url) ? $argsToElement->idc_url : NULL;
 $oscars_ip = isset($argsToElement->oscars_ip) ? $argsToElement->oscars_ip : NULL;
 $oscars_protocol = isset($argsToElement->oscars_protocol) ? $argsToElement->oscars_protocol : NULL;
 $topology_id = isset($argsToElement->topology_id) ? $argsToElement->topology_id : NULL;
+
 $ode_ip = isset($argsToElement->ode_ip) ? $argsToElement->ode_ip : NULL;
 $ode_wsdl_path = isset($argsToElement->ode_wsdl_path) ? $argsToElement->ode_wsdl_path : NULL;
+$ode_start = isset($argsToElement->ode_start) ? $argsToElement->ode_start : NULL;
+$ode_response = isset($argsToElement->ode_response) ? $argsToElement->ode_response : NULL;
+
 $dom_version = isset($argsToElement->dom_version) ? $argsToElement->dom_version : NULL;
 
 ?>
@@ -65,6 +70,7 @@ $dom_version = isset($argsToElement->dom_version) ? $argsToElement->dom_version 
             <input type="text" name="topology_id" size="30" value="<?php echo $topology_id; ?>"/>
         </td>
     </tr>
+    
     <tr>
         <th class="right">
             <?php echo _("ODE IP"); ?>:
@@ -81,4 +87,21 @@ $dom_version = isset($argsToElement->dom_version) ? $argsToElement->dom_version 
             <input type="text" name="ode_wsdl_path" size="30" value="<?php echo $ode_wsdl_path; ?>"/>
         </td>
     </tr>
+    <tr>
+        <th class="right">
+            <?php echo _("ODE start function"); ?>:
+        </th>
+        <td class="left">
+            <input type="text" name="ode_start" size="30" value="<?php echo $ode_start; ?>"/>
+        </td>
+    </tr>
+    <tr>
+        <th class="right">
+            <?php echo _("ODE response function"); ?>:
+        </th>
+        <td class="left">
+            <input type="text" name="ode_response" size="30" value="<?php echo $ode_response; ?>"/>
+        </td>
+    </tr>
+    
 </table>

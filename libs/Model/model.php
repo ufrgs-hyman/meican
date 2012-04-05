@@ -93,6 +93,8 @@ class Model extends Object {
                 $sql = "SELECT * FROM `$tableName`";
         }
         //debug("fetch",$sql);
+        //Log::write('debug',"sql fetch:\n" . print_r($sql,true));
+        
         return ($this->data = $this->querySql($sql, $tableName));
     }
 
@@ -270,11 +272,11 @@ class Model extends Object {
         foreach ($alt as $ind => $val) {
             if (array_search($ind, $validInds) !== FALSE) { //indice valido
                 if ($val === NULL) {
-                    $setArgs[] = "$ind=NULL";
+                    $setArgs[] = "`$ind`=NULL";
                 } else {
                     if ($this->attributes[$ind]->type == "VARCHAR")
                         $alt[$ind] = "\"" . $alt[$ind] . "\"";
-                    $setArgs[] = "$ind=$alt[$ind]";
+                    $setArgs[] = "`$ind`=$alt[$ind]";
                 }
             }
         }
@@ -301,26 +303,27 @@ class Model extends Object {
                 $inString = implode(',', $allowPks);
                 $pk = $this->getPrimaryKey();
                 if ($whereArgsString) {
-                    $sql = "UPDATE $tableName SET $setArgsString WHERE $whereArgsString AND $pk IN ($inString)";
-                    $sqlfetch = "SELECT * FROM $tableName WHERE $whereArgsString AND $pk IN ($inString)";
+                    $sql = "UPDATE `$tableName` SET $setArgsString WHERE $whereArgsString AND `$pk` IN ($inString)";
+                    $sqlfetch = "SELECT * FROM `$tableName` WHERE $whereArgsString AND `$pk` IN ($inString)";
                 } else {
-                    $sql = "UPDATE $tableName WHERE $pk IN ($inString)";
-                    $sqlfetch = "SELECT * FROM $tableName WHERE $pk IN ($inString)";
+                    $sql = "UPDATE `$tableName` WHERE `$pk` IN ($inString)";
+                    $sqlfetch = "SELECT * FROM `$tableName` WHERE `$pk` IN ($inString)";
                 }
             } else
                 return FALSE; //sem acesso a nada
         } else { //sem ACL
             if ($whereArgsString) {
-                $sql = "UPDATE $tableName SET $setArgsString WHERE $whereArgsString";
-                $sqlfetch = "SELECT * FROM $tableName WHERE $whereArgsString";
+                $sql = "UPDATE `$tableName` SET $setArgsString WHERE $whereArgsString";
+                $sqlfetch = "SELECT * FROM `$tableName` WHERE $whereArgsString";
             }
             else
-                $sql = "UPDATE $tableName SET $setArgsString";
+                $sql = "UPDATE `$tableName` SET $setArgsString";
         }
 
         $resfetch = $this->querySql($sqlfetch, $tableName);
 
         //debug('sql update', $sql);
+        //Log::write('debug',"sql update:\n" . print_r($sql,true));
 
         if (!$resfetch)
             return FALSE;
@@ -450,7 +453,7 @@ class Model extends Object {
             $sql = "DELETE FROM `$tableName` WHERE $whereArgsString";
 
             //fetch before update to return false if none results will be selected
-            $sqlfetch = "SELECT * FROM $tableName WHERE $whereArgsString";
+            $sqlfetch = "SELECT * FROM `$tableName` WHERE $whereArgsString";
 
             $result = $this->querySql($sqlfetch, $tableName);
 
@@ -600,9 +603,9 @@ class Model extends Object {
         $whereString = $this->buildWhere();
 
         if ($whereString)
-            $sql = "SELECT MAX($field) as $field from $tableName WHERE $whereString";
+            $sql = "SELECT MAX(`$field`) as `$field` from `$tableName` WHERE $whereString";
         else
-            $sql = "SELECT MAX($field) as $field from $tableName";
+            $sql = "SELECT MAX(`$field`) as `$field` from `$tableName`";
 
         $result = $this->querySql($sql, $tableName);
 

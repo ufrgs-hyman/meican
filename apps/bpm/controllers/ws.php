@@ -471,7 +471,6 @@ class ws extends WebServiceController {
                     if ($d_result = $dom->fetch(FALSE)) {
                         $d_tmp = $d_result[0];
                         $ode_ip_array[] = $d_tmp->ode_ip;
-                        //$businessEndpoint = "http://$src_dom->ode_ip/$src_dom->ode_wsdl_path";
                     } else
                         $ode_ip_array[] = NULL;
                 }

@@ -203,7 +203,7 @@ class reservations extends Controller {
             $dom->dom_id = $dom_id;
             $idc_url = $dom->get('idc_url',false);
             
-            Log::write('debug', "gri list ro refresh", $griList);
+            Log::write('debug', "gri list ro refresh:\n" . print_r($griList,true));
 
             $oscarsRes = new OSCARSReservation();
             $oscarsRes->setOscarsUrl($idc_url);
@@ -222,7 +222,7 @@ class reservations extends Controller {
             return $this->renderJson(FALSE);
         }
 
-        //debug("result list", $statusResult);
+        //Log::write('debug', "refresh status result:\n" . print_r($statusResult,true));
 
         /**
          * Atualiza no banco os status que mudaram
@@ -242,7 +242,8 @@ class reservations extends Controller {
                         // atualiza o banco de dados com o novo status (retornado do OSCARS)
                         $gri_tmp = new gri_info();
                         $gri_tmp->gri_id = $g->gri_id;
-                        $gri_tmp->updateTo(array('status' => $statusResult[$cont]), FALSE);
+                        if ($gri_tmp->updateTo(array('status' => $statusResult[$cont]), FALSE))
+                                Log::write('debug', "status updated");
                     }
                     $cont++;
                 }
@@ -281,7 +282,10 @@ class reservations extends Controller {
             $req->resource_type = 'reservation_info';
             $req->answerable = 'no';
             
+            //Log::write("debug","res req".print_r($req,true));
+            
             $request = $req->fetch();
+            //Log::write("debug","request".print_r($request,true));
 
             if ($request && $request[0]->response != 'accept') {
                 // show request status
@@ -994,8 +998,8 @@ class reservations extends Controller {
             unset($tmp);
         }
 
-        if ($resSent && $src_dom->ode_ip && $src_dom->ode_wsdl_path) {
-            //cria nova request com o domínio dom_src
+        if ($resSent && $src_dom->ode_ip && $src_dom->ode_wsdl_path && $src_dom->ode_start) {
+            //cria nova request com o domínio $src_dom
             $newReq = new request_info();
             
             $newReq->req_id = $newReq->getNextId('req_id');
@@ -1025,23 +1029,19 @@ class reservations extends Controller {
             $newReq->start_time = NULL;
             $newReq->finish_time = NULL;
             
-            /**
-             * PARA UM ÚNICO WSDL COM OPERAÇÕES SEPARADAS E PADRONIZADAS PARA ENVIAR
-             * REQUISIÇÃO E ENVIAR RESPOSTA
-             */
-            $businessEndpoint = "http://$src_dom->ode_ip/$src_dom->ode_wsdl_path";
-
             $requestSOAP = array(
                 'req_id' => $newReq->req_id,
-                'src_ode_ip' => $newReq->src_ode_ip,
-                'dst_ode_ip' => $newReq->dst_ode_ip,
-                'src_usr' => $newReq->src_usr);
+                'dom_src_ip' => $newReq->src_ode_ip,
+                'dom_dst_ip' => $newReq->dst_ode_ip,
+                'usr_src' => $newReq->src_usr);
 
             Log::write("info","Sending for authorization:\n". print_r($requestSOAP,TRUE));
             try {
-                $client = new SoapClient($businessEndpoint, array('cache_wsdl' => 0));
+                $client = new SoapClient($src_dom->ode_wsdl_path, array('cache_wsdl' => WSDL_CACHE_NONE));
+                
+                $client->{$src_dom->ode_start}($requestSOAP);
 
-                $client->startWorkflow($requestSOAP);
+                //$client->__soapCall($src_dom->ode_start, $requestSOAP);
 
                 $newReq->status = 'SENT FOR AUTHORIZATION';
 
@@ -1054,7 +1054,7 @@ class reservations extends Controller {
                     
             } catch (Exception $e) {
                 Log::write("error", "Caught exception while trying to connect to ODE:\n". print_r($e->getMessage()));
-                $this->setFlash(_('Error at invoking business layer.'));
+                $this->setFlash("error", _('Error at invoking business layer.'));
                 $newReq->status = 'SENT FOR AUTHORIZATION';
 
                 $newReq->insert();

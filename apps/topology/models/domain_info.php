@@ -19,6 +19,8 @@ class domain_info extends Resource_Model {
         
         $this->addAttribute("ode_ip","VARCHAR");
         $this->addAttribute("ode_wsdl_path","VARCHAR");
+        $this->addAttribute("ode_start","VARCHAR");
+        $this->addAttribute("ode_response","VARCHAR");
         
         $this->addAttribute("dom_version","VARCHAR");
     }
