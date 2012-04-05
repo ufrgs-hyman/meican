@@ -22,7 +22,7 @@
                     <input type="checkbox" id="cancel<?php echo $g->id; ?>" disabled name="cancel_checkbox[]" value="<?php echo $g->id; ?>" onClick="disabelCancelButton(this);"/>
                 <?php endif; ?>
                 <?php if (!empty($authorization)): ?>
-                    <?php if (in_array($g->original_status, array("ACTIVE", "PENDING"))): ?>
+                    <?php if (true || in_array($g->original_status, array("ACTIVE", "PENDING"))): ?>
                         <img alt="<?php echo _("Accept"); ?>" class="link-button" onclick="request.reply('accept');" src="<?php echo $this->url(''); ?>webroot/img/hand_good.png"/>
                         <img alt="<?php echo _("Reject"); ?>" class="link-button" onclick="request.reply('reject');" src="<?php echo $this->url(''); ?>webroot/img/hand_bad.png"/>
                     <?php else: ?>
