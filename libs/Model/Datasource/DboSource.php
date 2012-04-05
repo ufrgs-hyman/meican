@@ -3117,6 +3117,7 @@ class DboSource extends DataSource {
  * @return void
  */
 	protected function _writeQueryCache($sql, $data, $params = array()) {
+		return ;
 		if (preg_match('/^\s*select/i', $sql)) {
 			$this->_queryCache[$sql][serialize($params)] = $data;
 		}

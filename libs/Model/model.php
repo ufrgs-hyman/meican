@@ -525,7 +525,7 @@ class Model extends Object {
         $ds = ConnectionManager::getDataSource('default');
         if (!($ds && $sql))
             return FALSE;
-        $results = $ds->query($sql);
+        $results = $ds->fetchAll($sql);
         if (empty($results))
             return false;/*
         if (!in_array($tableName, array('acos', 'aros', 'domain_info', 'reservation_info')))
