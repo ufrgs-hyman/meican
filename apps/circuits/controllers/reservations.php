@@ -242,8 +242,7 @@ class reservations extends Controller {
                         // atualiza o banco de dados com o novo status (retornado do OSCARS)
                         $gri_tmp = new gri_info();
                         $gri_tmp->gri_id = $g->gri_id;
-                        if ($gri_tmp->updateTo(array('status' => $statusResult[$cont]), FALSE))
-                                Log::write('debug', "status updated");
+                        $gri_tmp->updateTo(array('status' => $statusResult[$cont]), FALSE);
                     }
                     $cont++;
                 }
@@ -708,10 +707,10 @@ class reservations extends Controller {
             $flow->dest->domain = $dom->get('dom_descr');
         }
         
-        if (!$flow->path) {
-            $pathArray = $reservation->getPath();
-            $flow->path = MeicanTopology::getWaypoints($pathArray);        
-        } 
+//        if (!$flow->path) {
+//            $pathArray = $reservation->getPath();
+//            $flow->path = MeicanTopology::getWaypoints($pathArray);        
+//        } 
 
         if (!$flow) {
             $this->setFlash(_("Flow not found or could not get endpoints information"), "fatal");
@@ -1031,8 +1030,8 @@ class reservations extends Controller {
             
             $requestSOAP = array(
                 'req_id' => $newReq->req_id,
-                'dom_src_ip' => $newReq->src_ode_ip,
-                'dom_dst_ip' => $newReq->dst_ode_ip,
+                'src_ode_ip' => $newReq->src_ode_ip,
+                'dst_ode_ip' => $newReq->dst_ode_ip,
                 'usr_src' => $newReq->src_usr);
 
             Log::write("info","Sending for authorization:\n". print_r($requestSOAP,TRUE));

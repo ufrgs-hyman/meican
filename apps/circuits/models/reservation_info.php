@@ -284,7 +284,7 @@ class reservation_info extends Resource_Model {
         while (!$response && $cont < 15) {
             if ($oscars->queryReservation()) {
                 $status = $oscars->getStatus();
-                if (($status == "PENDING") || ($status == "ACTIVE") || ($status == "FINISHED")) {
+                if (($status == "PENDING") || ($status == "ACTIVE") || ($status == "FINISHED") || ($status == "FAILED")) {
                     if ($pathArray = explode(";", $oscars->getPath())) {
                         $pathArray = array_filter($pathArray, 'strlen');
                         Log::write("info", "Get path sucessful. Complete path:\n" . print_r($pathArray, TRUE));
@@ -294,7 +294,8 @@ class reservation_info extends Resource_Model {
                     sleep(2);
                     $cont++;
                     continue;
-                } elseif (($status == "FAILED") || ($status == "CANCELLED")) {
+                //} elseif (($status == "FAILED") || ($status == "CANCELLED")) {
+                } elseif ($status == "CANCELLED") {
                     Log::write("error", "Couldn't get path. Reservation FAILED or CANCELLED");
                     $pathArray = FALSE;
                     $response = TRUE;

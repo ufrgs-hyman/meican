@@ -45,8 +45,8 @@ var request = {};
                             type: "POST",
                             url: url,
                             data: {
-                                response: request.actionUrl, 
-                                message: request.response
+                                response: request.response, 
+                                message: message
                             }
                         });
                     $(this).dialog("close");

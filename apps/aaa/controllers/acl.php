@@ -44,7 +44,7 @@ class acl extends MeicanController {
     }
 
     public function show() {
-        if ($allRights = $this->makeIndex()) {
+        if ($allRights = $this->makeIndex(array('useACL' => false))) {
             $rights = array();
             
             foreach ($allRights as $r) {

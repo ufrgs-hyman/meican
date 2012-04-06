@@ -286,14 +286,11 @@ class request_info extends Resource_Model {
 
         if (!$toResponse->response) {
 
-            $local = $this->updateTo(array('response' => $response, 'message' => $message, 'status' => 'ANSWERED', 'finish_time' => $now, 'response_user' => $usr), FALSE);
-
-            if ($local) {
+            //$local = $this->updateTo(array('response' => $response, 'message' => $message, 'status' => 'ANSWERED', 'finish_time' => $now, 'response_user' => $usr), FALSE);
 
                 $responseSOAP = array(
                     'req_id' => $toResponse->req_id,
-                    'dom_src_ip' => $toResponse->src_ode_ip,
-                    //'crr_ode_ip' => $toResponse->crr_ode_ip,
+                    'src_ode_ip' => $toResponse->src_ode_ip,
                     'response' => $response,
                     'message' => $message);
 
@@ -310,7 +307,9 @@ class request_info extends Resource_Model {
                     try {
                         $client = new SoapClient($domain->ode_wsdl_path, array('cache_wsdl' => WSDL_CACHE_NONE));
                         
-                        $client->{$domain->ode_response}($responseSOAP);
+                        if ($client->{$domain->ode_response}($responseSOAP)) {
+                            $local = $this->updateTo(array('finish_time' => $now, 'response_user' => $usr), FALSE);
+                        }
                         //$client->__soapCall($domain->ode_response, $responseSOAP);
 
                         return TRUE;
@@ -322,10 +321,6 @@ class request_info extends Resource_Model {
                     Log::write("error", 'ODE not confired correctly');
                     return FALSE;
                 }
-            } else {
-                Log::write("error", 'Failed to save response at local database');
-                return FALSE;
-            }
         } else {
             Log::write('warning', "Request already answered:\n" . print_r($this, TRUE));
             return FALSE;
