@@ -5,6 +5,11 @@ var request = {};
     var response = null;
     var bandwidth = null;
     
+    this.resizefn = function() {
+        if ($('#res_mapCanvas'))
+            $('#res_mapCanvas').css('width', $('#subtab-points').offset().left-4-$('#tabs-2').offset().left );
+    };
+    
     this.reply = function(response, availableBandwidth) {
         //var message = prompt();
         if (response=="accept"){
@@ -53,3 +58,8 @@ var request = {};
         });
     }
 }).call(request);
+
+$(function(){
+   $(window).resize(request.resizefn);
+   request.resizefn();
+});

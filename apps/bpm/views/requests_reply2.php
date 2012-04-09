@@ -1,42 +1,18 @@
-<?php extract(get_object_vars($request));?>
+<?php extract(get_object_vars($request)); ?>
 <h1><?php echo _("Reply request"); ?></h1>
-<div class="float-left">
-    <h4 style="margin:0;">
-        <dl>
-            <dt><?php echo _("Reservation name"); ?></dt>
-            <dd><?php echo $res_name; ?></dd>
-            <dt><?php echo _("Requester Domain"); ?></dt>
-            <dd><?php echo $flow->source->domain; ?></dd> 
-            <dt><?php echo _("Requester User"); ?></dt>
-            <dd><?php echo $usr_login; ?></dd>
-        </dl>
-    </h4>
-    <div id="subtab-map" class="tab_subcontent shadow-box">
-        <div id="res_mapCanvas" style="width:400px; height:400px;"></div>    
-    </div>
-    <div id="subtab-points" class="tab_subcontent float-left" style="padding-left:6px;">
-        <?=
-        $this->element('view_point',
-                array('app' => 'circuits', 'type' => 'source', 'flow' => $flow));
-        ?>
-        <div id="bandwidth_bar">
-            <div id="bandwidth_bar_text">
-                <div style="text-align:center;">
-                    <label id="lb_bandwidth"><?php echo $bandwidth . " " . _("Mbps") ?></label>
-                </div>
-            </div>
-            <div id="bandwidth_bar_inside" style="width: <?= round($bandwidth * 100 / 1000); //TODO: calcular     ?>%"></div>
-        </div>
-        <?=
-        $this->element('view_point',
-                array('app' => 'circuits', 'type' => 'destination', 'flow' => $flow));
-        ?>
-    </div>
-</div>
+<h4 style="margin:0;">
+    <dl>
+        <dt><?php echo _("Reservation name"); ?></dt>
+        <dd><?php echo $res_name; ?></dd>
+        <dt><?php echo _("Requester Domain"); ?></dt>
+        <dd><?php echo $flow->source->domain; ?></dd> 
+        <dt><?php echo _("Requester User"); ?></dt>
+        <dd><?php echo $usr_login; ?></dd>
+    </dl>
+</h4>
 
 <div class="float-right" style="padding-left: 4px;">
     <?php if ($gris): ?>
-
         <form method="POST" style="min-height:64px;width:100%;" action="<?php echo $this->buildLink(array('action' => 'cancel', 'param' => "res_id:$res_id,refresh:1")); ?>">    
             <?php if (!empty($refresh)): ?>
                 <div class="controls">
@@ -50,6 +26,31 @@
             ?>
         </form>
     <?php endif; ?>
+</div>
+
+<div id="subtab-map" class="tab_subcontent shadow-box">
+    <div id="res_mapCanvas" style="width:400px; height:400px;"></div>    
+</div>
+<div id="subtab-points" class="tab_subcontent float-right" style="padding-left:6px;">
+    <?=
+    $this->element('view_point',
+            array('app' => 'circuits', 'type' => 'source', 'flow' => $flow));
+    ?>
+    <div id="bandwidth_bar">
+        <div id="bandwidth_bar_text">
+            <div style="text-align:center;">
+                <label id="lb_bandwidth"><?php echo $bandwidth . " " . _("Mbps") ?></label>
+            </div>
+        </div>
+        <div id="bandwidth_bar_inside" style="width: <?= round($bandwidth * 100 / 1000); //TODO: calcular      ?>%"></div>
+    </div>
+    <?=
+    $this->element('view_point',
+            array('app' => 'circuits', 'type' => 'destination', 'flow' => $flow));
+    ?>
+</div>
+
+<div class="float-right" style="padding-left: 4px;">
     <div id="calendar" class="float-right" style="box-shadow: 2px 2px 4px #888; width:550px;height: 402px;"></div>
 </div>
 <div style="clear:both;"></div>
@@ -101,71 +102,71 @@ foreach ($gris as $gri) {
         'hclass' => 'reservation-status-' . strtolower($gri->original_status)
     );
 }
-foreach ($calendar_gris as $gri){
+foreach ($calendar_gris as $gri) {
     $i++;
     $events[] = array(
         'id' => $i,
-        'start' => strtotime($gri->start_date)*1000,
-        'end' => strtotime($gri->finish_date)*1000,
+        'start' => strtotime($gri->start_date) * 1000,
+        'end' => strtotime($gri->finish_date) * 1000,
         'title' => '',
         'hclass' => 'cal-old'
     );
 }
 
-/*.concat([                    
-                    {
-                        "id":1,
-                        "start": new Date(year, month, day, 12),
-                        "end": new Date(year, month, day, 13, 30),
-                        "title":"Reservation1",
-                        "status": 1
-                    },
-                    {
-                        "id":2,
-                        "start": new Date(year, month, day, 14),
-                        "end": new Date(year, month, day, 14, 45),
-                        "title":"Reservation2",
-                        "class": "test2",
-                        "status": -1
-                    },
-                    {
-                        "id":3,
-                        "start": new Date(year, month, day + 1, 12),
-                        "end": new Date(year, month, day + 1, 17, 45),
-                        "title":"Reservation3",
-                        "status": 0
-                    },
-                    {
-                        "id":4,
-                        "start": new Date(year, month, day - 1, 8),
-                        "end": new Date(year, month, day - 1, 9, 30),
-                        "title":"Reservation4",
-                        "status": -1
-                    },
-                    {
-                        "id":5,
-                        "start": new Date(year, month, day + 1, 14),
-                        "end": new Date(year, month, day + 1, 15),
-                        "title":"Reservation5",
-                        "status": 1
-                    },
-                    {
-                        "id":6,
-                        "start": new Date(year, month, day + 1, 14),
-                        "end": new Date(year, month, day + 1, 15),
-                        "title":"Reservation7",
-                        "status": 1
-                    },
-                    {
-                        "id":6,
-                        "start": new Date(year, month, day, 10),
-                        "end": new Date(year, month, day, 11),
-                        "title":"Reservation6 (read only)",
-                        "status": 0,
-                        readOnly : true
-                    }
+/* .concat([                    
+  {
+  "id":1,
+  "start": new Date(year, month, day, 12),
+  "end": new Date(year, month, day, 13, 30),
+  "title":"Reservation1",
+  "status": 1
+  },
+  {
+  "id":2,
+  "start": new Date(year, month, day, 14),
+  "end": new Date(year, month, day, 14, 45),
+  "title":"Reservation2",
+  "class": "test2",
+  "status": -1
+  },
+  {
+  "id":3,
+  "start": new Date(year, month, day + 1, 12),
+  "end": new Date(year, month, day + 1, 17, 45),
+  "title":"Reservation3",
+  "status": 0
+  },
+  {
+  "id":4,
+  "start": new Date(year, month, day - 1, 8),
+  "end": new Date(year, month, day - 1, 9, 30),
+  "title":"Reservation4",
+  "status": -1
+  },
+  {
+  "id":5,
+  "start": new Date(year, month, day + 1, 14),
+  "end": new Date(year, month, day + 1, 15),
+  "title":"Reservation5",
+  "status": 1
+  },
+  {
+  "id":6,
+  "start": new Date(year, month, day + 1, 14),
+  "end": new Date(year, month, day + 1, 15),
+  "title":"Reservation7",
+  "status": 1
+  },
+  {
+  "id":6,
+  "start": new Date(year, month, day, 10),
+  "end": new Date(year, month, day, 11),
+  "title":"Reservation6 (read only)",
+  "status": 0,
+  readOnly : true
+  }
 
-                ])*/
+  ]) */
 ?>
 
 <script type="text/javascript" src="<?php echo $this->url(); ?>webroot/js/jquery.weekcalendar.js"></script>
@@ -341,7 +342,7 @@ eventClick : function(calEvent, $event) {
                 gris[i]['start'] = new Date(gris[i]['start']);
                 gris[i]['end'] = new Date(gris[i]['end']);
             }
-           /* gris = gris.concat([{
+            /* gris = gris.concat([{
                         "id":99,
                         "start": new Date(2011, 9, 22, 10),
                         "end": new Date(2011, 9, 22, 18, 45),

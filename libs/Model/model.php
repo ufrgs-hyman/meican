@@ -530,7 +530,7 @@ class Model extends Object {
      * @return <array> Object Model: objects were found
      */
     protected function querySql($sql, $tableName = 'Model') {
-        $ds = $this->getDataSource();
+        $ds = self::getDataSource();
         if (!($ds && $sql))
             return FALSE;
         $results = $ds->fetchAll($sql);
