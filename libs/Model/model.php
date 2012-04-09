@@ -535,7 +535,7 @@ class Model extends Object {
             return FALSE;
         $results = $ds->fetchAll($sql);
         if (empty($results))
-            return false;/*
+            return array();/*
         if (!in_array($tableName, array('acos', 'aros', 'domain_info', 'reservation_info')))
             $tableName = 'stdClass';*/
         $result_obj = array();

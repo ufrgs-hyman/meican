@@ -214,10 +214,11 @@ class MeicanTopology {
     
     
     //This function returns all networks in circuit, with longitude and latitude
-    static public function getWaypoints($urn_string_array) {
+    static public function getWaypoints(array $urn_string_array) {
 
         $waypoints = array();
-
+        if (empty($urn_string_array))
+            return array();
         foreach ($urn_string_array as $urn_str) {
             if ($urn_str) {
                 $replaced_str = str_replace(":", "&", $urn_str);
