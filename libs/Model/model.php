@@ -8,6 +8,7 @@ class Model extends Object {
     public $attributes;
     private $tableName;
     private $databaseString;
+    public $configName = 'default';
 
     function Model() {
         $this->attributes = array();
@@ -463,6 +464,12 @@ class Model extends Object {
 
         return $this->execSql($sql);
     }
+    
+    public function getDataSource(){
+        $config = Configure::read('useDatabase');
+        if (!$config) $config = 'default';
+        return ConnectionManager::getDataSource($config);
+    }
 
     /**
      *
@@ -470,7 +477,7 @@ class Model extends Object {
      * @return Boolean Object ID if insert was successful, FALSE otherwise
      */
     protected function insertSql($sql) {
-        $ds = ConnectionManager::getDataSource('default');
+        $ds = $this->getDataSource();
         if (!($ds && $sql))
             return FALSE;
 
@@ -486,7 +493,7 @@ class Model extends Object {
      * @return Boolean TRUE if exec was successful, FALSE otherwise
      */
     protected function execSql($sql) {
-        $ds = ConnectionManager::getDataSource('default');
+        $ds = $this->getDataSource();
         if (!($ds && $sql))
             return FALSE;
         $ret = $ds->execute($sql);
@@ -505,7 +512,7 @@ class Model extends Object {
      */
     protected function transactionSql($sql) {
 
-        $ds = ConnectionManager::getDataSource('default');
+        $ds = $this->getDataSource();
         if (!($ds && $sql))
             return FALSE;
         $ds->begin();
@@ -523,7 +530,7 @@ class Model extends Object {
      * @return <array> Object Model: objects were found
      */
     protected function querySql($sql, $tableName = 'Model') {
-        $ds = ConnectionManager::getDataSource('default');
+        $ds = $this->getDataSource();
         if (!($ds && $sql))
             return FALSE;
         $results = $ds->fetchAll($sql);

@@ -376,7 +376,9 @@ function pluginSplit($name, $dotAppend = false, $plugin = null) {
 class DATABASE_CONFIG {
 
     function __construct() {
-        $this->default = Configure::read('databases.default');
+        $configs = Configure::read('databases');
+        foreach ($configs as $k => $v)
+            $this->{$k} = $v;
     }
 
 }
