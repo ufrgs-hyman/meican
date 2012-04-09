@@ -23,7 +23,6 @@
     </head>
     <body>
         <div id="header" class="header">
-
             <div id="logo_box">
                 <img src="<?php echo $this->url(''); ?>webroot/img/meican_white.png" class="logo" alt="MEICAN"/>
             </div>
@@ -35,16 +34,15 @@
                 </ul>
             </div>
         </div>
+        
         <div id="content">
             <div id="figure">
                 <img src="<?php echo $this->url(''); ?>webroot/img/logo_login.png" alt="MEICAN"/>
             </div>
+            
             <div id="text_info">
             </div>
-            <div class="logo-rnp">
-                <img src="<?php echo $this->url(''); ?>webroot/img/rnpmission.gif" alt="MEICAN"/>
-            </div>
-
+            
             <div id="login_box" style="width: 390px; float: right;">
                 <div id="login_form" class="tab_content">
                     <p>
@@ -70,7 +68,13 @@
                     </form>
                 </div>
             </div>
-
         </div>
+        
+        <div id="footer">
+            <div class="logo-rnp">
+                <img src="<?php echo $this->url(''); ?>webroot/img/rnpmission.gif" style="height: 60px;" alt="RNP"/>
+            </div>
+        </div>
+        
     </body>
 </html>

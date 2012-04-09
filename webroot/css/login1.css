@@ -166,12 +166,9 @@ div#header {
 }
 
 div#footer {
-    color: #EEEEEE;
     font-size: 0.75em;
-    text-align: right;
+    text-align: center;
     clear: both;
-    padding: 10px;
-
 }
 div#footer a:link, div#footer a:visited{
     color: #EEEEEE;
@@ -361,13 +358,6 @@ div#login_form input[type="submit"] {
     font-size: 13px;
     height: 32px;
 }
-
-.logo-rnp {
-    bottom: 0;
-    position: absolute;
-    left: 40%;
-}
-
 
 input[type=submit], input[type=button], button {
     display: inline;
