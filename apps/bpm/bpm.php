@@ -19,7 +19,7 @@ class bpm extends Application {
                         'url' => array('app' => $this->appName, 'controller' => 'requests')
                     )),
                     new MenuItem(array(
-                        'label' => _("ODE"),
+                        'label' => _("Workflow"),
                         'model' => 'bpm',
                         'url' => array('app' => $this->appName, 'controller' => 'ode')
                     )),
