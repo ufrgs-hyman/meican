@@ -219,12 +219,12 @@ class MeicanTopology {
         $waypoints = array();
 
         foreach ($urn_string_array as $urn_str) {
-            if ($urn_str) {                
+            if ($urn_str) {
                 $replaced_str = str_replace(":", "&", $urn_str);
                 parse_str($replaced_str);
                 $dom = new domain_info();
                 $dom->topology_id = $domain;
-                $dom_id = $dom->get("dom_id");
+                $dom_id = $dom->get("dom_id", false);
                 $aco = new Acos($dom_id, "domain_info");
 
                 if ($aco_dom = $aco->fetch(FALSE)) {

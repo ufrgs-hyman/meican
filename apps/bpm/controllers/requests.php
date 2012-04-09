@@ -89,7 +89,7 @@ class requests extends MeicanController {
         $offset = (30 * 24 * 60 * 60);
         $calendar_gris = gri_info::getGrisToCalendar(date('Y-m-d H:i:s', time() - $offset), date('Y-m-d H:i:s', time() + $offset), $result->resc_id);
 
-        Log::write("debug", print_r($calendar_gris, true));
+        //Log::write("debug", print_r($gri->getGrisToView($result->resc_id, true), true));
 
         $this->set(array(
             'res_id' => $result->resc_id,
@@ -101,6 +101,9 @@ class requests extends MeicanController {
             'gris' => $gri->getGrisToView($result->resc_id),
             'calendar_gris' => $calendar_gris ? $calendar_gris : array(),
             'request' => $result
+        ));
+        $this->setArgsToScript(array(
+            'reservation_path' => $result->flow_info->path
         ));
         $this->addScriptForLayout('requests');
         $this->render('reply2');

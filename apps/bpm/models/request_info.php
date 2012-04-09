@@ -117,35 +117,36 @@ class request_info extends Resource_Model {
                     if ($resourceReq->resource_type == "reservation_info") {
                         $res_info = new reservation_info();
                         $res_info->res_id = $resourceReq->resource_id;
-                        $reservation = $res_info->fetch(FALSE);
+                        if ($reservation = $res_info->fetch(false)) {
 
-                        $return_request->resc_id = $resourceReq->resource_id;
-                        $return_request->resc_descr = $reservation[0]->res_name;
-                        $return_request->resc_type = $resourceReq->resource_type;
+                            $return_request->resc_id = $resourceReq->resource_id;
+                            $return_request->resc_descr = $reservation[0]->res_name;
+                            $return_request->resc_type = $resourceReq->resource_type;
 
-                        $return_request->bandwidth = $reservation[0]->bandwidth;
+                            $return_request->bandwidth = $reservation[0]->bandwidth;
 
-                        if ($getFlowInfo) {
-                            $flow = new flow_info();
-                            $flow->flw_id = $reservation[0]->flw_id;
-                            $return_request->flow_info = $flow->getFlowDetails();
-                            
-                            if (!$return_request->flow_info->path) {
-                                $pathArray = $reservation[0]->getPath();
-                                $return_request->flow_info->path = MeicanTopology::getWaypoints($pathArray);        
-                            }       
-                            
-                            $return_request->flow_info->source->domain = $return_request->src_domain;
-                            $return_request->flow_info->dest->domain = $return_request->dst_domain;
-                        } else
-                            $return_request->flow_info = NULL;
+                            if ($getFlowInfo) {
+                                $flow = new flow_info();
+                                $flow->flw_id = $reservation[0]->flw_id;
+                                $return_request->flow_info = $flow->getFlowDetails();
 
-                        if ($getTimerInfo) {
-                            $timer = new timer_info();
-                            $timer->tmr_id = $reservation[0]->tmr_id;
-                            $return_request->timer_info = $timer->getTimerDetails();
-                        } else
-                            $return_request->timer_info = NULL;
+                                if (!$return_request->flow_info->path) {
+                                    $pathArray = $reservation[0]->getPath();
+                                    $return_request->flow_info->path = MeicanTopology::getWaypoints($pathArray);
+                                }
+
+                                $return_request->flow_info->source->domain = $return_request->src_domain;
+                                $return_request->flow_info->dest->domain = $return_request->dst_domain;
+                            } else
+                                $return_request->flow_info = NULL;
+
+                            if ($getTimerInfo) {
+                                $timer = new timer_info();
+                                $timer->tmr_id = $reservation[0]->tmr_id;
+                                $return_request->timer_info = $timer->getTimerDetails();
+                            } else
+                                $return_request->timer_info = NULL;
+                        }
                     } else {
                         $resource = new $resourceReq->resource_type();
                         $pk = $resource->getPrimaryKey();

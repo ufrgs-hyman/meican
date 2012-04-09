@@ -284,7 +284,7 @@ class reservation_info extends Resource_Model {
         while (!$response && $cont < 15) {
             if ($oscars->queryReservation()) {
                 $status = $oscars->getStatus();
-                if (($status == "PENDING") || ($status == "ACTIVE") || ($status == "FINISHED") || ($status == "FAILED")) {
+                if (($status == "PENDING") || ($status == "ACTIVE") || ($status == "FINISHED") || ($status == "FAILED") || ($status == "CANCELLED")) {
                     if ($pathArray = explode(";", $oscars->getPath())) {
                         $pathArray = array_filter($pathArray, 'strlen');
                         Log::write("info", "Get path sucessful. Complete path:\n" . print_r($pathArray, TRUE));
@@ -294,11 +294,12 @@ class reservation_info extends Resource_Model {
                     sleep(2);
                     $cont++;
                     continue;
-                //} elseif (($status == "FAILED") || ($status == "CANCELLED")) {
-                } elseif ($status == "CANCELLED") {
-                    Log::write("error", "Couldn't get path. Reservation FAILED or CANCELLED");
-                    $pathArray = FALSE;
-                    $response = TRUE;
+                    //} elseif (($status == "FAILED") || ($status == "CANCELLED")) {
+//                } elseif ($status == "CANCELLED") {
+//                    Log::write("error", "Couldn't get path. Reservation FAILED or CANCELLED");
+//                    $pathArray = FALSE;
+//                    $response = TRUE;
+//                }
                 }
             } else {
                 Log::write("error", "Couldn't get path. Query reservation failed");
@@ -309,7 +310,7 @@ class reservation_info extends Resource_Model {
         return $pathArray;
     }
     
-    public function getAvailableBandwidth($res_id, $gri_id = null) {
+    static public function getAvailableBandwidth($res_id, $gri_id = null) {
         $available_bands = array();
         
         if ($res_id) {
@@ -332,9 +333,9 @@ class reservation_info extends Resource_Model {
 
                     $available_bands[] = $capacity - $linkUtilization;
 
-                    Log::write("debug", "Start: " . print_r($gri->start, true));
-                    Log::write("debug", "Finish: " . print_r($gri->finish, true));
-                    Log::write("debug", "Available Band: " . print_r($capacity, true) . " - " . print_r($linkUtilization, true));
+//                    Log::write("debug", "Start: " . print_r($gri->start, true));
+//                    Log::write("debug", "Finish: " . print_r($gri->finish, true));
+//                    Log::write("debug", "Available Band: " . print_r($capacity, true) . " - " . print_r($linkUtilization, true));
                 }
             }
         }

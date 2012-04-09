@@ -56,7 +56,7 @@ class gri_info extends Model {
         return $filteredArray;
     }
     
-    public function getGrisToView($res_id = null) {
+    public function getGrisToView($res_id = null, $getAvailableBandwidth = false) {
         $gri = new gri_info();
 
         $request = null;
@@ -115,6 +115,11 @@ class gri_info extends Model {
                 
                 $gri->start_date = $g->start;
                 $gri->finish_date = $g->finish;
+                
+                if ($getAvailableBandwidth) {
+                    $bands = reservation_info::getAvailableBandwidth($res_id, $g->gri_id);
+                    $gri->available_band = $bands[0];
+                }
 
                 $gris[] = $gri;
             }
