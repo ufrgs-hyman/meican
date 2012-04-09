@@ -1,14 +1,12 @@
 var cancelCont = 0;
 
 var res_map = null;
-var res_center = null;
 var res_markersArray = [];
 var res_bounds = [];
 var res_lines = [];
-var res_myOptions = null;
 
-$(document).ready(function() {
-    if (refreshReservation) {
+function res_buildMap(){
+    if ((typeof(refreshReservation) != "undefined") && refreshReservation) {
         griRefreshStatus(reservation_id);
         js_function_interval = setInterval("griRefreshStatus(" + reservation_id + ")", 30000);
     }
@@ -18,12 +16,10 @@ $(document).ready(function() {
             checkStatus(status_array[index].id, status_array[index].status);
         }
     }
-
-    res_center = new google.maps.LatLng(0,0);
-
-    res_myOptions = {
+    
+    this.res_map = new google.maps.Map(document.getElementById("res_mapCanvas"), {
         zoom: 3,
-        center: res_center,
+        center: new google.maps.LatLng(0,0),
         draggable: false,
         disableDoubleClickZoom: true,
         scrollwheel: false,
@@ -33,11 +29,14 @@ $(document).ready(function() {
         scaleControl: false,
         mapTypeControl: false,
         mapTypeId: google.maps.MapTypeId.TERRAIN
-    };
-    
-    res_map = new google.maps.Map(document.getElementById("res_mapCanvas"), res_myOptions);
-    res_showCircuit();
-});
+    });
+    this.res_showCircuit();
+}
+
+(function($){
+    $(res_buildMap);
+})(jQuery);
+
 
 function griRefreshStatus(res_id) {
     $('.load').show();
@@ -91,13 +90,13 @@ function disabelCancelButton(elemId) {
 }
 
 function res_showCircuit(){
-//    if ((src_lat_network == dst_lat_network) && (src_lng_network == dst_lng_network)) {
-//        var aux = parseFloat(dst_lng_network);
-//        aux += 0.0005;
-//        dst_lng_network = aux.toString();
-//    }
-//    alert(reservation_path[0].descr);
-//    alert(reservation_path[1].descr);
+    //    if ((src_lat_network == dst_lat_network) && (src_lng_network == dst_lng_network)) {
+    //        var aux = parseFloat(dst_lng_network);
+    //        aux += 0.0005;
+    //        dst_lng_network = aux.toString();
+    //    }
+    //    alert(reservation_path[0].descr);
+    //    alert(reservation_path[1].descr);
     var networks_coordinates = [];
     if ((typeof(reservation_path)!="undefined") && (reservation_path.length > 0)) {
         
@@ -105,33 +104,33 @@ function res_showCircuit(){
         
             var coord = new google.maps.LatLng(reservation_path[i].latitude, reservation_path[i].longitude);
             if (i==0) {
-                res_addMarker(coord, "src");
+                this.res_addMarker(coord, "src");
             } else if (i== reservation_path.length-1) {
-                res_addMarker(coord, "dst");
+                this.res_addMarker(coord, "dst");
             } else {
-                res_addMarker(coord, "way");
+                this.res_addMarker(coord, "way");
             }
         
             networks_coordinates.push(coord);
         
-            res_bounds.push(coord);
-            res_setBounds(res_bounds);
+            this.res_bounds.push(coord);
+            this.res_setBounds(res_bounds);
         
         }
     } else {
         var coord_src = new google.maps.LatLng(src_lat_network, src_lng_network);
-        res_addMarker(coord_src, "src");
-        res_bounds.push(coord_src);
+        this.res_addMarker(coord_src, "src");
+        this.res_bounds.push(coord_src);
 
         var coord_dst = new google.maps.LatLng(dst_lat_network, dst_lng_network);
-        res_addMarker(coord_dst, "dst");   
-        res_bounds.push(coord_dst);
+        this.res_addMarker(coord_dst, "dst");   
+        this.res_bounds.push(coord_dst);
         
         networks_coordinates.push(coord_src);
         networks_coordinates.push(coord_dst);
-        res_setBounds(res_bounds);
+        this.res_setBounds(res_bounds);
     }
-    res_drawPath(networks_coordinates);
+    this.res_drawPath(networks_coordinates);
 }
 
 function res_addMarker(location, where) {
@@ -151,70 +150,70 @@ function res_addMarker(location, where) {
         styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
             color:color
         }),
-        map:res_map
+        map: this.res_map
     });
 
-    res_markersArray.push(res_marker);
-    res_marker.setMap(res_map);
+    this.res_markersArray.push(res_marker);
+    res_marker.setMap(this.res_map);
 }
 
 function res_drawPath(networks_coordinates){
-        //var origin = coordinatesArray[0];
-        //var destination = coordinatesArray[(coordinatesArray.length -1)];
-        //var flightPlanCoordinates = [origin, destination];
-        var line = new google.maps.Polyline({
-            path: networks_coordinates,
-            strokeColor: "#0000FF",
-            strokeOpacity: 0.5,
-            strokeWeight: 4
-        });
+    //var origin = coordinatesArray[0];
+    //var destination = coordinatesArray[(coordinatesArray.length -1)];
+    //var flightPlanCoordinates = [origin, destination];
+    var line = new google.maps.Polyline({
+        path: networks_coordinates,
+        strokeColor: "#0000FF",
+        strokeOpacity: 0.5,
+        strokeWeight: 4
+    });
 
-        line.setMap(res_map);
-        res_lines.push(line);
+    line.setMap(this.res_map);
+    this.res_lines.push(line);
 }
 
 function res_drawTopology(coordinatesArray){
     
-        var flightPlanCoordinates = [];
+    var flightPlanCoordinates = [];
         
-        for (var i=0; i<coordinatesArray.length; i++){
-            flightPlanCoordinates.push(coordinatesArray[i]);
-        }
+    for (var i=0; i<coordinatesArray.length; i++){
+        flightPlanCoordinates.push(coordinatesArray[i]);
+    }
         
-        var line = new google.maps.Polyline({
-            path: flightPlanCoordinates,
-            strokeColor: "#0000FF",
-            strokeOpacity: 0.5,
-            strokeWeight: 4
-        });
+    var line = new google.maps.Polyline({
+        path: flightPlanCoordinates,
+        strokeColor: "#0000FF",
+        strokeOpacity: 0.5,
+        strokeWeight: 4
+    });
 
-        line.setMap(res_map);
-        res_lines.push(line);
+    line.setMap(this.res_map);
+    this.res_lines.push(line);
 }
 
 function res_clearAll(){
     for (var i = 0; i < res_lines.length; i++) {
-        res_lines[i].setMap(null);
+        this.res_lines[i].setMap(null);
     }    
-    res_setBounds(res_bounds);
+    this.res_setBounds(res_bounds);
 }
 
 function res_clearMarkers(){
     for (var i=0; i<res_markersArray.length; i++){
-        res_markersArray[i].setMap(null);
+        this.res_markersArray[i].setMap(null);
     }
 }
 
 function res_clearBounds(){
     for (var i=0; i<res_bounds.length; i++){
-        res_bounds.pop();
+        this.res_bounds.pop();
     }
 }
 
 function res_clearAll(){
-    res_clearMarkers();
-    res_clearAll();
-    res_clearBounds();
+    this.res_clearMarkers();
+    this.res_clearAll();
+    this.res_clearBounds();
 }
 
 function res_setBounds(flightPlanCoordinates){
@@ -223,6 +222,6 @@ function res_setBounds(flightPlanCoordinates){
     for (i=0; i<flightPlanCoordinates.length; i++) {
         polylineBounds.extend(flightPlanCoordinates[i]);
     }
-    res_map.fitBounds(polylineBounds);
-    res_map.setCenter(polylineBounds.getCenter());
+    this.res_map.fitBounds(polylineBounds);
+    this.res_map.setCenter(polylineBounds.getCenter());
 }
