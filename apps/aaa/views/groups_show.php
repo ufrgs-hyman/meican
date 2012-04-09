@@ -16,26 +16,26 @@
         </thead>
 
         <tbody>
-            <?php foreach ($groups as $g): ?>
+            <?php foreach ($groups as $gri): ?>
                 <tr>
                     <td>
-                        <?php if ($g->editable): ?>
-                            <input type="checkbox" name="del_checkbox[]" value="<?php echo $g->id; ?>" />
+                        <?php if ($gri->editable): ?>
+                            <input type="checkbox" name="del_checkbox[]" value="<?php echo $gri->id; ?>" />
                         <?php endif; ?>
                     </td>
                     <td>
-                        <?php if ($g->editable): ?>
-                            <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "grp_id:$g->id")); ?>">
+                        <?php if ($gri->editable): ?>
+                            <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "grp_id:$gri->id")); ?>">
                                 <img class="edit" src="<?php echo $this->url(''); ?>webroot/img/edit_1.png"/>
                             </a>
                         <?php endif; ?>
                     </td>
                     <td>
-                        <?php echo $g->descr; ?>
+                        <?php echo $gri->descr; ?>
                     </td>
 
                     <td>
-                        <?php echo $g->parents; ?>
+                        <?php echo $gri->parents; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

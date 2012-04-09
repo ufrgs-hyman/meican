@@ -27,8 +27,8 @@
             </th>
 
              <td class="left">
-                    <?php foreach($args->groups as $g): ?>
-                        <input type="checkbox" value="<?php echo $g->grp_id; ?>" name="parents[]" /> <?php echo $g->grp_descr; ?><br>
+                    <?php foreach($args->groups as $gri): ?>
+                        <input type="checkbox" value="<?php echo $gri->grp_id; ?>" name="parents[]" /> <?php echo $gri->grp_descr; ?><br>
                     <?php endforeach; ?>
             </td>
         </tr>

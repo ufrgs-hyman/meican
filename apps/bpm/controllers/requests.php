@@ -98,7 +98,7 @@ class requests extends MeicanController {
             'usr_login' => $result->src_user,
             'timer' => $result->timer_info,
             'flow' => $result->flow_info,
-            'gris' => $gri->getGrisToView($result->resc_id),
+            'gris' => $gri->getGrisToView($result->resc_id, true),
             'calendar_gris' => $calendar_gris ? $calendar_gris : array(),
             'request' => $result
         ));

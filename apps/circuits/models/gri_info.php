@@ -118,7 +118,7 @@ class gri_info extends Model {
                 
                 if ($getAvailableBandwidth) {
                     $bands = reservation_info::getAvailableBandwidth($res_id, $g->gri_id);
-                    $gri->available_band = $bands[0];
+                    $gri->available_bandwidth = $bands[0];
                 }
 
                 $gris[] = $gri;

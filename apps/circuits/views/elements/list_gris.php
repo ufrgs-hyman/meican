@@ -15,16 +15,16 @@
     </thead>
                 
     <tbody>
-        <?php foreach ($gris as $g): ?>
-            <tr id="line<?php echo $g->id; ?>" class="<?php echo @'reservation-status-'.strtolower($g->original_status); ?>">
+        <?php foreach ($gris as $gri): ?>
+            <tr id="line<?php echo $gri->id; ?>" class="<?php echo @'reservation-status-'.strtolower($gri->original_status); ?>">
                 <td>
                 <?php if (!empty($refresh)): ?>
-                    <input type="checkbox" id="cancel<?php echo $g->id; ?>" disabled name="cancel_checkbox[]" value="<?php echo $g->id; ?>" onClick="disabelCancelButton(this);"/>
+                    <input type="checkbox" id="cancel<?php echo $gri->id; ?>" disabled name="cancel_checkbox[]" value="<?php echo $gri->id; ?>" onclick="disabelCancelButton(this);"/>
                 <?php endif; ?>
                 <?php if (!empty($authorization)): ?>
-                    <?php if (true || in_array($g->original_status, array("ACTIVE", "PENDING"))): ?>
-                        <img alt="<?php echo _("Accept"); ?>" class="link-button" onclick="request.reply('accept');" src="<?php echo $this->url(''); ?>webroot/img/hand_good.png"/>
-                        <img alt="<?php echo _("Reject"); ?>" class="link-button" onclick="request.reply('reject');" src="<?php echo $this->url(''); ?>webroot/img/hand_bad.png"/>
+                    <?php if (true || in_array($gri->original_status, array("ACTIVE", "PENDING"))): ?>
+                        <img alt="<?php echo _("Accept"); ?>" class="link-button" onclick="request.reply('accept', <?= (int)$gri->available_bandwidth; ?>);" src="<?php echo $this->url(''); ?>webroot/img/hand_good.png"/>
+                        <img alt="<?php echo _("Reject"); ?>" class="link-button" onclick="request.reply('reject', <?= (int)$gri->available_bandwidth; ?>);" src="<?php echo $this->url(''); ?>webroot/img/hand_bad.png"/>
                     <?php else: ?>
                         <img alt="<?php echo _("Edit"); ?>" class="link-button" src="<?php echo $this->url(''); ?>webroot/img/edit.png"/>
                     <?php endif; ?>
@@ -34,17 +34,17 @@
                     OSCARS
                 </td>
                 <td>
-                    <?php echo $g->descr; ?>
+                    <?php echo $gri->descr; ?>
                 </td>
                 <td> <?php /* style="width:80px;"*/ ?>
-                    <label id="status<?php echo $g->id; ?>"><?php echo $g->status; ?></label>
+                    <label id="status<?php echo $gri->id; ?>"><?php echo $gri->status; ?></label>
                     <img alt="<?php echo _("loading"); ?>" class="load" style="display:none" src="<?php echo $this->url(''); ?>webroot/img/ajax-loader.gif"/>
                 </td>
                 <td>
-                    <?php echo $g->start; ?>
+                    <?php echo $gri->start; ?>
                 </td>
                 <td>
-                    <?php echo $g->finish; ?>
+                    <?php echo $gri->finish; ?>
                 </td>
             </tr>
         <?php endforeach; ?>

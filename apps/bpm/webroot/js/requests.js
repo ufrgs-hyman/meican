@@ -3,10 +3,9 @@ var request = {};
 (function() {
     var actionUrl = null;
     var response = null;
-    var availableBandwidth = null;
     var bandwidth = null;
     
-    this.reply = function(response) {
+    this.reply = function(response, availableBandwidth) {
         //var message = prompt();
         if (response=="accept"){
             $("#MessageImg").attr("src", baseUrl+"webroot/img/hand_good.png");
@@ -16,13 +15,9 @@ var request = {};
             $("#MessageLabel").html("Request will be rejected, please provide a message: ");
         }
         $("#Message").val('');
-        $("#MessageBandwidth").html('Bandwidth available: '+this.availableBandwidth+' Mbps. <br/>Bandwidth requested: '+this.bandwidth+' Mbps.');
+        $("#MessageBandwidth").html('Bandwidth available: '+availableBandwidth+' Mbps. <br/>Bandwidth requested: '+this.bandwidth+' Mbps.');
         this.response = response;
         $("#dialog-form").dialog("open");
-    };
-
-    this.setAvailableBandwidth = function(v){
-        this.availableBandwidth = v;
     };
 
     this.setBandwidth = function(v){
