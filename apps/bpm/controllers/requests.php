@@ -139,29 +139,32 @@ class requests extends MeicanController {
 
     /**
      * @todo pensar em como apagar se request for de outro domínio
+     * 
+     * Atualmente apagando tudo! Modificar posteriormente!
      */
     public function delete() {
-        if ($requests = Common::POST("del_checkbox")) {
-            debug('requests', $requests);
-
+        if ($requests = Common::POST("del_checkbox")) {           
+        
             $count = 0;
 
             foreach ($requests as $loc_id) {
                 $request = new request_info();
-                $request->loc_id = $loc_id;
-
+                $request->loc_id = $loc_id;                
                 $req_result = $request->fetch(FALSE);
 
                 $del_request = new request_info();
                 $del_request->req_id = $req_result[0]->req_id;
-
-                if ($requests_to_delete = $del_request->fetch(FALSE)) {
+                $del_request->src_ode_ip = $req_result[0]->src_ode_ip;
+                
+                if ($requests_to_delete = $del_request->fetch(false)) {
                     $were_deleted = TRUE;
                     foreach ($requests_to_delete as $r_del) {
-                        $were_deleted &= $r_del->delete();
+                        $req = new request_info();
+                        $req->loc_id = $r_del->loc_id;
+                        $were_deleted &= $req->delete(false);
                     }
 
-                    if ($were_deleted)
+                    if (($were_deleted) && ($r_del->answerable = 'yes')) 
                         $count++;
                 }
             }
