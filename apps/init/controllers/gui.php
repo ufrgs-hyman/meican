@@ -56,6 +56,12 @@ class gui extends Controller {
         }
         $this->render('welcome');
     }
+    
+    function clearCache(){
+        apc_clear_cache('user');
+        $this->autoRender = false;
+        $this->output = 'Cache cleared';
+    }
 
 }
 

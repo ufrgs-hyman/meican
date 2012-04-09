@@ -861,9 +861,12 @@ div#bandwidth_bar_text{
 }
 
 .shadow-box, .tab_content{
-    border: solid #BBB 1px; 
     box-shadow: 2px 2px 4px #888; 
     background-color: #EEE;
+}
+
+.tab_content{
+    border: solid #BBB 1px; 
     border-image: initial;
 }
 
@@ -1433,4 +1436,9 @@ form #recaptcha_response_field {
 
 .ui-button-text-only .ui-button-text {
     padding: 0 !important;
+}
+
+#calendar {
+    padding-left: 8px; 
+    box-shadow: 2px 2px 4px #888; 
 }
