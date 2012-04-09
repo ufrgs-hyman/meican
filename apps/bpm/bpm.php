@@ -14,7 +14,7 @@ class bpm extends Application {
                 'label' => _("Requests"),
                 'sub' => array(
                     new MenuItem(array(
-                        'label' => _("Requests"),
+                        'label' => _("Authorization"),
                         'model' => 'bpm',
                         'url' => array('app' => $this->appName, 'controller' => 'requests')
                     )),
