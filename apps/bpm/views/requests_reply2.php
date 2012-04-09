@@ -177,7 +177,6 @@ foreach ($calendar_gris as $gri){
     $(function() {
         
         request.setBandwidth('<?= $bandwidth ?>');
-        request.setAvailableBandwidth('<?= @$available_bandwidth ?>');
         request.setActionUrl('<?= $this->url(array('action' => 'saveResponse', 'param' => array('loc_id' => $request->loc_id))) ?>');
         
         var $calendar = $('#calendar');
