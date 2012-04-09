@@ -3117,10 +3117,20 @@ class DboSource extends DataSource {
  * @return void
  */
 	protected function _writeQueryCache($sql, $data, $params = array()) {
-		return ;
+        if (Configure::read('noQueryCahe'))
+            return;
 		if (preg_match('/^\s*select/i', $sql)) {
 			$this->_queryCache[$sql][serialize($params)] = $data;
 		}
+	}
+    
+/**
+ * Empties the Query caches.
+ *
+ * @return void
+ */
+	public function flushQueryCache() {
+		$this->_queryCache = array();
 	}
 
 /**

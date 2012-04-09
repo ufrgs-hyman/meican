@@ -72,5 +72,6 @@ return array(
             'prefix' => '',
         //'encoding' => 'utf8',
         )
-    )
+    ),
+    'noQueryCahe' => false
 );

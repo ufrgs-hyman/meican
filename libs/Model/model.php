@@ -489,8 +489,9 @@ class Model extends Object {
         $ds = ConnectionManager::getDataSource('default');
         if (!($ds && $sql))
             return FALSE;
-
-        return $ds->execute($sql);
+        $ret = $ds->execute($sql);
+        $ds->flushQueryCache();
+        return $ret;
     }
 
     /**
