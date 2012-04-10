@@ -708,9 +708,20 @@ class reservations extends Controller {
         }
         
         if (!$flow->path) {
+            
             $pathArray = $reservation->getPath();
-            $flow->path = MeicanTopology::getWaypoints($pathArray);        
+            
+            if ($pathArray) {
+                $pathString = implode(';', $pathArray);
+                $flow->updateTo(array('path' => $pathString), false);
+            }
+            
+        } else {
+            $pathArray = explode(';', $flow->path);
         }
+        
+        if ($pathArray)
+            $flow->path = MeicanTopology::getWaypoints($pathArray);
 
         if (!$flow) {
             $this->setFlash(_("Flow not found or could not get endpoints information"), "fatal");
