@@ -713,7 +713,7 @@ class reservations extends Controller {
             
             if ($pathArray) {
                 $pathString = implode(';', $pathArray);
-                $flow->updateTo(array('path' => $pathString), false);
+                $flow_info->updateTo(array('path' => $pathString), false);
             }
             
         } else {
