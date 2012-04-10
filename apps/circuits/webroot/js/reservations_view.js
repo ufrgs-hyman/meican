@@ -17,6 +17,22 @@ function res_buildMap(){
         }
     }
     
+    
+    this.resizefn = function() {
+        if (!$('#res_mapCanvas'))
+            return;
+        var of1 = $('#subtab-points').offset(),
+            of2 = $('#tabs-2').offset();
+        if (of1 && of2)
+            $('#res_mapCanvas').css('width', of1.left-of2.left-4 );
+    };
+    $(window).resize(this.resizefn);
+    var finishfn = function(){
+        $(window).unbind('resize');
+        $('#main').unbind('pjax:start', finishfn);
+    };
+    $('#main').bind('pjax:start', finishfn);
+    
     this.res_map = new google.maps.Map(document.getElementById("res_mapCanvas"), {
         zoom: 3,
         center: new google.maps.LatLng(0,0),

@@ -6,13 +6,6 @@ var request = {};
     var bandwidth = null;
     var gris = null;
     
-    this.resizefn = function() {
-        
-        console.debug('ress');
-        if ($('#res_mapCanvas'))
-            $('#res_mapCanvas').css('width', $('#subtab-points').offset().left-$('#tabs-2').offset().left );
-    };
-    
     this.reply = function(response, availableBandwidth) {
         //var message = prompt();
         if (response=="accept"){
@@ -72,14 +65,6 @@ var request = {};
     };
     
     this.buildCalendar = function(){
-        
-        var finishfn = function(){
-            $(window).unbind('resize');
-            $('#main').unbind('pjax:start', finishfn);
-            console.debug('ehhh');
-        };
-        $('#main').bind('pjax:start', finishfn);
-        $(window).resize(request.resizefn);
         
         var $calendar = $('#calendar');
         var id = 10;
