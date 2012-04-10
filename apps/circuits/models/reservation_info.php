@@ -263,11 +263,18 @@ class reservation_info extends Resource_Model {
             return FALSE;
 
         $flow_info = new flow_info();
-        $flow_info->flw_id = $this->flw_id;
-        $flow = $flow_info->getFlowDetails();
+        
+        if ($this->flw_id)
+            $flow_info->flw_id = $this->flw_id;
+        else {
+            $res = $this->fetch(false);
+            $flow_info->flw_id = $res[0]->flw_id;
+        }
+            
+        $flow = $flow_info->fetch(false);
 
-        if ($flow->path) {
-            $pathArray = explode(';', $flow->path);
+        if ($flow[0]->path) {
+            $pathArray = explode(';', $flow[0]->path);
         } else {
 
 
