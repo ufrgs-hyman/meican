@@ -116,10 +116,11 @@ function res_showCircuit(){
     //    alert(reservation_path[0].descr);
     //    alert(reservation_path[1].descr);
     var networks_coordinates = [];
-    if(typeof reservation_path === "undefined" || 
-        typeof src_lat_network === "undefined" || 
-        typeof src_lng_network === "undefined")
+    if(typeof reservation_path === "undefined" &&
+        (typeof src_lat_network === "undefined" || 
+        typeof src_lng_network === "undefined")) {
         return ;
+        }
     
     if ((typeof(reservation_path)!="undefined") && (reservation_path.length > 0)) {
         

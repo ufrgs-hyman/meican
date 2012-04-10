@@ -471,8 +471,7 @@ class ws extends WebServiceController {
                     if ($d_result = $dom->fetch(FALSE)) {
                         $d_tmp = $d_result[0];
                         $ode_ip_array[] = $d_tmp->ode_ip;
-                    } else
-                        $ode_ip_array[] = NULL;
+                    }
                 }
             }
             Log::write('ws', "Request path return with ODE IPs:\n" . print_r($ode_ip_array, TRUE));

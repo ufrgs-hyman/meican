@@ -105,7 +105,10 @@ class flow_info extends Resource_Model {
             $flowData = new stdClass();
 
             $flowData->id = $flow->flw_id;
-            $flowData->path = $flow->path;
+            
+            $res = new reservation_info();
+            $res->flw_id = $flow->flw_id;
+            $flowData->path = $res->getPath();
 
 //            $flowData->source->domain = $dom[0]->dom_descr;
 //            $flowData->source->dom_id = $dom[0]->dom_id;

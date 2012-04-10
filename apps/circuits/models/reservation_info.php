@@ -258,27 +258,38 @@ class reservation_info extends Resource_Model {
     }
     
     public function getPath() {
-
-        if (!$this->res_id)
-            return FALSE;
-
         $flow_info = new flow_info();
         
         if ($this->flw_id)
             $flow_info->flw_id = $this->flw_id;
         else {
-            $res = $this->fetch(false);
-            $flow_info->flw_id = $res[0]->flw_id;
+            if (!$this->res_id)
+                return FALSE;
+            
+            $flow_info->flw_id = $this->get('flw_id',false);
         }
             
-        $flow = $flow_info->fetch(false);
+        $path = null;
+        if (isset($flow_info->flw_id))
+            $path = $flow_info->get('path', false);
+        
+        $pathArray = array();
 
-        if ($flow[0]->path) {
-            $pathArray = explode(';', $flow[0]->path);
+        if ($path) {
+            Log::write("debug", "Path found in local database...");
+            $pathArray = explode(';', $path);
         } else {
-
-
-
+            if (!$this->res_id) {
+                if ($this->flw_id) {
+                    $res_tmp = new reservation_info();
+                    $res_tmp->flw_id = $this->flw_id;
+                    $this->res_id = $res_tmp->get('res_id',false);
+                } else
+                    return FALSE;
+            }
+            
+            Log::write("debug", "Path not found, trying OSCARS...");
+            
             $gri_info = new gri_info();
             $gri_info->res_id = $this->res_id;
             $gri = $gri_info->fetch(FALSE);
@@ -291,7 +302,6 @@ class reservation_info extends Resource_Model {
             $oscars->setGri($gri[0]->gri_descr);
             $oscars->setOscarsUrl($domain[0]->idc_url);
 
-            $pathArray = array();
             $response = FALSE;
             $cont = 0;
 
