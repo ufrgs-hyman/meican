@@ -38,7 +38,6 @@ var request = {};
     this.setActionUrl = function(url){
         this.actionUrl = url;
         var request = this;
-        
         $("#dialog-form").dialog({
             autoOpen: false,
             modal: true,
@@ -49,7 +48,7 @@ var request = {};
                     if (message && message != "")
                         $.navigate({
                             type: "POST",
-                            url: url,
+                            url: $('#UrlPost').attr('href'),
                             data: {
                                 response: request.response, 
                                 message: message

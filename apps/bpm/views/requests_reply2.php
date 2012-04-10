@@ -184,3 +184,5 @@ foreach ($calendar_gris as $gri) {
     request.buildCalendar();
 </script>
 
+<a href="<?= $this->url(array('action' => 'saveResponse', 'param' => array('loc_id' => $request->loc_id))) ?>" id="UrlPost" style="display:none;"></a>
+
