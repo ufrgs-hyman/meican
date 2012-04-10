@@ -707,18 +707,7 @@ class reservations extends Controller {
             $flow->dest->domain = $dom->get('dom_descr');
         }
         
-        if (!$flow->path) {
-            
-            $pathArray = $reservation->getPath();
-            
-            if ($pathArray) {
-                $pathString = implode(';', $pathArray);
-                $flow_info->updateTo(array('path' => $pathString), false);
-            }
-            
-        } else {
-            $pathArray = explode(';', $flow->path);
-        }
+        $pathArray = $reservation->getPath();
         
         if ($pathArray)
             $flow->path = MeicanTopology::getWaypoints($pathArray);

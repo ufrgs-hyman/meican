@@ -262,50 +262,63 @@ class reservation_info extends Resource_Model {
         if (!$this->res_id)
             return FALSE;
 
-        $gri_info = new gri_info();
-        $gri_info->res_id = $this->res_id;
-        $gri = $gri_info->fetch(FALSE);
+        $flow_info = new flow_info();
+        $flow_info->flw_id = $this->flw_id;
+        $flow = $flow_info->getFlowDetails();
 
-        $domain_info = new domain_info();
-        $domain_info->dom_id = $gri[0]->dom_id;
-        $domain = $domain_info->fetch(FALSE);
+        if ($flow->path) {
+            $pathArray = explode(';', $flow->path);
+        } else {
 
-        $oscars = new OSCARSReservation();
-        $oscars->setGri($gri[0]->gri_descr);
-        $oscars->setOscarsUrl($domain[0]->idc_url);
 
-        $pathArray = array();
-        $response = FALSE;
-        $cont = 0;
 
-        Log::write("info", "Getting GRI path:\n" . print_r(array("OSCARS URL" => $domain[0]->idc_url, "GRI" => $gri[0]->gri_descr), TRUE));
+            $gri_info = new gri_info();
+            $gri_info->res_id = $this->res_id;
+            $gri = $gri_info->fetch(FALSE);
 
-        
-        while (!$response && $cont < 15) {
-            if ($oscars->queryReservation()) {
-                $status = $oscars->getStatus();
-                if (($status == "PENDING") || ($status == "ACTIVE") || ($status == "FINISHED") || ($status == "FAILED") || ($status == "CANCELLED")) {
-                    if ($pathArray = explode(";", $oscars->getPath())) {
-                        $pathArray = array_filter($pathArray, 'strlen');
-                        Log::write("info", "Get path sucessful. Complete path:\n" . print_r($pathArray, TRUE));
-                        $response = TRUE;
-                    }
-                } elseif (($status == "INCREATE") || ($status == "ACCEPTED")) {
-                    sleep(2);
-                    $cont++;
-                    continue;
-                    //} elseif (($status == "FAILED") || ($status == "CANCELLED")) {
+            $domain_info = new domain_info();
+            $domain_info->dom_id = $gri[0]->dom_id;
+            $domain = $domain_info->fetch(FALSE);
+
+            $oscars = new OSCARSReservation();
+            $oscars->setGri($gri[0]->gri_descr);
+            $oscars->setOscarsUrl($domain[0]->idc_url);
+
+            $pathArray = array();
+            $response = FALSE;
+            $cont = 0;
+
+            Log::write("info", "Getting GRI path:\n" . print_r(array("OSCARS URL" => $domain[0]->idc_url, "GRI" => $gri[0]->gri_descr), TRUE));
+
+
+            while (!$response && $cont < 15) {
+                if ($oscars->queryReservation()) {
+                    $status = $oscars->getStatus();
+                    if (($status == "PENDING") || ($status == "ACTIVE") || ($status == "FINISHED") || ($status == "FAILED") || ($status == "CANCELLED")) {
+                        if ($pathArray = explode(";", $oscars->getPath())) {
+                            $pathArray = array_filter($pathArray, 'strlen');
+                            Log::write("info", "Get path sucessful. Complete path:\n" . print_r($pathArray, TRUE));
+                            $response = TRUE;
+                        }
+                    } elseif (($status == "INCREATE") || ($status == "ACCEPTED")) {
+                        sleep(2);
+                        $cont++;
+                        continue;
+                        //} elseif (($status == "FAILED") || ($status == "CANCELLED")) {
 //                } elseif ($status == "CANCELLED") {
 //                    Log::write("error", "Couldn't get path. Reservation FAILED or CANCELLED");
 //                    $pathArray = FALSE;
 //                    $response = TRUE;
 //                }
+                    }
+                } else {
+                    Log::write("error", "Couldn't get path. Query reservation failed");
+                    $pathArray = null;
+                    $response = true;
                 }
-            } else {
-                Log::write("error", "Couldn't get path. Query reservation failed");
-                $pathArray = FALSE;
-                $response = TRUE;
             }
+            $pathString = implode(';', $pathArray);
+            $flow_info->updateTo(array('path' => $pathString), false);
         }
         return $pathArray;
     }
