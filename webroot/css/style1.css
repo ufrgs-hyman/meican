@@ -1407,7 +1407,7 @@ form #recaptcha_response_field {
 .float-left{
     float: left;
 }
-
+/*
 .reservation-status-accepted, .authorization-accepted, .authorization-accepted .wc-time{
     background-color: green !important;
     border: 1px solid #1B62C0;
@@ -1427,7 +1427,7 @@ form #recaptcha_response_field {
 .reservation-status-submitted, .reservation-status-increate, .reservation-status-insetup, 
 .reservation-status-inteardown, .reservation-status-inmodify {
     background-color: yellow !important;
-}
+}*/
 
 .cal-old{
     background-color: #aaa !important;
