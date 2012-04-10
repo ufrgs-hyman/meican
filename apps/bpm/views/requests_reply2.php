@@ -185,4 +185,4 @@ foreach ($calendar_gris as $gri) {
 </script>
 
 <a href="<?= $this->url(array('action' => 'saveResponse', 'param' => array('loc_id' => $request->loc_id))) ?>" id="UrlPost" style="display:none;"></a>
-
+<div id="Response" sytle="display:none;"></div>

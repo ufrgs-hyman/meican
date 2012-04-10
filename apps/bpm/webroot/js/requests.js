@@ -18,6 +18,7 @@ var request = {};
         $("#Message").val('');
         $("#MessageBandwidth").html('Bandwidth available: '+availableBandwidth+' Mbps. <br/>Bandwidth requested: '+this.bandwidth+' Mbps.');
         this.response = response;
+        $('#Response').html(response);
         $("#dialog-form").dialog("open");
     };
 
@@ -50,7 +51,7 @@ var request = {};
                             type: "POST",
                             url: $('#UrlPost').attr('href'),
                             data: {
-                                response: request.response, 
+                                response: $('#Response').html(), 
                                 message: message
                             }
                         });
