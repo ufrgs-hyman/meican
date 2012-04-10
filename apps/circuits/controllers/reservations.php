@@ -283,7 +283,7 @@ class reservations extends Controller {
             
             //Log::write("debug","res req".print_r($req,true));
             
-            $request = $req->fetch();
+            $request = $req->fetch(false);
             //Log::write("debug","request".print_r($request,true));
 
             if ($request && $request[0]->response != 'accept') {

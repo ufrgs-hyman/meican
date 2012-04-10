@@ -42,7 +42,7 @@ class reservation_info extends Resource_Model {
         $req->resource_id = $this->res_id;
         $req->resource_type = 'reservation_info';
         $req->answerable = 'no';
-        $request = $req->fetch();
+        $request = $req->fetch(false);
 
         $status_obj = new stdClass();
 

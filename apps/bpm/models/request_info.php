@@ -312,6 +312,9 @@ class request_info extends Resource_Model {
                             $local = $this->updateTo(array('finish_time' => $now, 'response_user' => $usr), FALSE);
                         }
                         //$client->__soapCall($domain->ode_response, $responseSOAP);
+                        
+                        // wait for 2 seconds while ODE call saveResponse, then it will update de DB
+                        sleep(2);
 
                         return TRUE;
                     } catch (Exception $e) {

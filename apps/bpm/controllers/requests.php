@@ -82,7 +82,6 @@ class requests extends MeicanController {
         $req_result = $request->fetch();
 
         $result = $req_result[0]->getRequestInfo(TRUE, TRUE, TRUE, TRUE);
-        $result->available_bandwidth = NULL;
 
         $gri = new gri_info();
 
@@ -100,9 +99,11 @@ class requests extends MeicanController {
             'flow' => $result->flow_info,
             'gris' => $gri->getGrisToView($result->resc_id, true),
             'calendar_gris' => $calendar_gris ? $calendar_gris : array(),
-            'request' => $result
+            'request' => $result,
+            'refresh' => 0
         ));
         $this->setArgsToScript(array(
+            'refreshReservation' => 0,
             'reservation_path' => $result->flow_info->path
         ));
         $this->addScriptForLayout('requests');

@@ -67,8 +67,8 @@ class gri_info extends Model {
             $req->resource_id = $res_id;
             $req->resource_type = 'reservation_info';
             $req->answerable = 'no';
-
-            if ($result = $req->fetch()) {
+            
+            if ($result = $req->fetch(false)) {
                 // a reserva possui requisição
                 $request = new stdClass();
                 $request->response = $result[0]->response;
