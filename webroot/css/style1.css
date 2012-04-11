@@ -651,12 +651,10 @@ td select {
 
 #left-panel {
     float: left;
-    height: 100%;
     border-right-width: thin;
     border-right-style: solid;
     border-right-color: #DDD;
     background-color: #F4F4F4;
-    overflow: auto;
 }
 
 #logo, #info_box {
@@ -705,6 +703,11 @@ td select {
     /*background-color: #1D405C; */
     background-color: #9D3C3E;
     /*background-color: #7C4D27;*/
+}
+
+#menu {
+    height:100%;
+    overflow: auto;
 }
 
 #menu ul {
@@ -768,7 +771,7 @@ td select {
     margin: 0;
 }
 
-#system_date {
+#system_date {/* Data do sistema */
     padding: 0.2em 0 0.2em 0;
     position: fixed;
     bottom: 0;
@@ -780,6 +783,7 @@ td select {
     border-top-style: solid;
     border-top-width: thin;
     background-color: #EEE;
+    color: #4F4F4F;
 }
 
 #canvas {
@@ -877,10 +881,6 @@ div#bandwidth_bar_text{
 }
 
 .tabs li a { /* Títulos das tabs */
-    color: #4F4F4F;
-}
-
-#system_date { /* Data do sistema */
     color: #4F4F4F;
 }
 

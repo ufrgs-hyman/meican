@@ -44,6 +44,9 @@ $(function() {
             $('input, textarea').placeholder();
             $(':checkbox').makeDeleteButton(':checkbox', '#DeleteButton');
         });
+        $(window).bind('resize', function(){
+            $('#menu').css('height', $(window).height()-$('#menu').offset().top-$('#system_date').height());
+        });
         $('#main').trigger('pjax:end');
     }
     $.fn.menuHandler.prepare();
