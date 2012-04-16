@@ -183,6 +183,10 @@ function clearFlash(){
                     $(delSelector).show();
                 else
                     $(delSelector).hide();
+                if ($(this).is(':checked'))
+                    $(this).parents('tr').first().addClass('checked-line');
+                else
+                    $(this).parents('tr').first().removeClass('checked-line');
             };
             $(this).bind('click change', ev);
             ev();

@@ -359,6 +359,10 @@ table.list tbody tr:hover {
     cursor: default;
 }
 
+table.list tbody tr.checked-line {
+    background-color: #FFC;
+}
+
 
 table.flow tr > td:first-child {
     width: 20px;
