@@ -276,7 +276,7 @@ class reservation_info extends Resource_Model {
         $pathArray = array();
 
         if ($path) {
-            Log::write("circuits", "Path found in local database...");
+            //Log::write("circuits", "Path found in local database...");
             $pathArray = explode(';', $path);
         } else {
             if (!$this->res_id) {
