@@ -250,7 +250,7 @@ class ws extends WebServiceController {
                             //as reservas devem ser canceladas no OSCARS
                             foreach ($allgris as $g) {
                                 $oscRes = new OSCARSReservation();
-                                $oscRes->setOscarsUrl($dom[0]->oscars_ip);
+                                $oscRes->setOscarsUrl($dom[0]->idc_url);
                                 $oscRes->setGri($g->gri_descr);
                                 if ($oscRes->cancelReservation()) {
                                     //apaga os gris negados do db MEICAN
@@ -470,7 +470,8 @@ class ws extends WebServiceController {
                     $dom->topology_id = $topId;
                     if ($d_result = $dom->fetch(FALSE)) {
                         $d_tmp = $d_result[0];
-                        $ode_ip_array[] = $d_tmp->ode_ip;
+                        if ($d_tmp->ode_ip)
+                            $ode_ip_array[] = $d_tmp->ode_ip;
                     }
                 }
             }

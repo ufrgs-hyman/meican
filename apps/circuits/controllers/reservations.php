@@ -918,11 +918,12 @@ class reservations extends Controller {
         
         Log::write("info", "Reservation to be sent:\n".print_r($reservation_info,TRUE));
         
-        $flw_id = $reservation_info->flw_id;
-
-        $flow = new flow_info();
-        $flow->flw_id = $flw_id;
-        $src_urn_string = $flow->get('src_urn_string');
+        $flow_info = new flow_info();
+        $flow_info->flw_id = $reservation_info->flw_id;
+        $flow_res = $flow_info->fetch();
+        $flow = $flow_res[0];
+        
+        $src_urn_string = $flow->src_urn_string;
 
         $domain = new domain_info();
         $src_dom = $domain->getOSCARSDomain($src_urn_string);
@@ -931,33 +932,37 @@ class reservations extends Controller {
         $oscarsRes->setOscarsUrl($src_dom->idc_url);
         $oscarsRes->setDescription($reservation_info->res_name);
         $oscarsRes->setBandwidth($reservation_info->bandwidth);
-        $oscarsRes->setSrcEndpoint($flow->get('src_urn_string'));
-        $oscarsRes->setDestEndpoint($flow->get('dst_urn_string'));
+        $oscarsRes->setSrcEndpoint($flow->src_urn_string);
+        $oscarsRes->setDestEndpoint($flow->dst_urn_string);
 
-        if ($path = $flow->get('path'))
+        if ($path = $flow->path)
             $oscarsRes->setPath($path);
 
-        if ($vsrc = $flow->get('src_vlan'))
-            if ($vsrc == 0)
+        if ($flow->src_vlan !== null) {
+            $flow->src_vlan = (integer) $flow->src_vlan;
+            if ($flow->src_vlan === 0)
                 $oscarsRes->setSrcIsTagged(false);
             else {
                 $oscarsRes->setSrcIsTagged(true);
-                $oscarsRes->setSrcTag($vsrc);
+                $oscarsRes->setSrcTag($flow->src_vlan);
             }
+        }
 
-        if ($vdst = $flow->get('dst_vlan'))
-            if ($vdst == 0)
+        if ($flow->dst_vlan !== null) {
+            $flow->dst_vlan = (integer) $flow->dst_vlan;
+            if ($flow->dst_vlan === 0)
                 $oscarsRes->setDestIsTagged(false);
             else {
                 $oscarsRes->setDestIsTagged(true);
-                $oscarsRes->setDestTag($vdst);
+                $oscarsRes->setDestTag($flow->dst_vlan);
             }
+        }
 
         //precisa descobrir se a reserva deve ou não ser enviada para AUTORIZAÇÃO
-        if ($src_dom->ode_ip && $src_dom->ode_wsdl_path) {
+        if ($src_dom->ode_ip && $src_dom->ode_wsdl_path && $src_dom->ode_start) {
             //irá para autorização
             //cria reserva do tipo signal-xml
-            $oscarsRes->setPathSetupMode('signal-xml');
+            $oscarsRes->setPathSetupMode('timer-automatic');
         } else
             $oscarsRes->setPathSetupMode('timer-automatic');
 
@@ -1007,9 +1012,7 @@ class reservations extends Controller {
             $newReq->src_usr = $reservation_info->usr_id;
 
             //para buscar o dst_ode_ip
-            $flow = new flow_info();
-            $flow->flw_id = $flw_id;
-            $dst_urn_string = $flow->get('dst_urn_string');
+            $dst_urn_string = $flow->dst_urn_string;
 
             $domain = new domain_info();
             $dst_dom = $domain->getOSCARSDomain($dst_urn_string);
@@ -1081,11 +1084,11 @@ class reservations extends Controller {
                 
                 Log::write("debug","oscars res class\n".print_r($oscars_reservation,true));
 
-                if (true) {
-                //if ($oscars_reservation->createPath()) {
+                //if (true) {
+                if ($oscars_reservation->createPath()) {
                     Log::write("debug","Create path successful\n".print_r($g,true));
-                    //$status = $oscars_reservation->getStatus();
-                    $status="INCREATE";
+                    $status = $oscars_reservation->getStatus();
+                    //$status="INCREATE";
                     $g->updateTo(array("send" => "0", "status" => $status), false);
                 }
             }

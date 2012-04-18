@@ -201,6 +201,12 @@ class gri_info extends Model {
             case "REJECTED":
                 $status = _("Rejected");
                 break;
+            case "AUTHORIZED":
+                $status = _("Authorized");
+                break;
+            case "DENIED":
+                $status = _("Denied");
+                break;
             case "UNKNOWN":
                 $status = _("Unknown status");
                 break;
