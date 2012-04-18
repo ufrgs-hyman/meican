@@ -3,7 +3,8 @@ if ($refresh)
     echo _("Active and pending reservations"); else
     echo _("History reservations");
 ?></h1>
-<form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete')); ?>">
+
+<form method="POST" action="<?php echo $this->buildLink(array('action' => 'delete', 'param' => "refresh:$refresh")); ?>">
 
     <?php
     $arrayElem = ($refresh) ? array('app' => 'init',

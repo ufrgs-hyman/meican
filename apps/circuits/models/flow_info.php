@@ -79,7 +79,7 @@ class flow_info extends Resource_Model {
         }
     }
 
-    public function getFlowDetails() {
+    public function getFlowDetails($getPath = true) {
         if (!isset ($this->flw_id)) {
             return FALSE;
         } else {
@@ -106,9 +106,11 @@ class flow_info extends Resource_Model {
 
             $flowData->id = $flow->flw_id;
             
-            $res = new reservation_info();
-            $res->flw_id = $flow->flw_id;
-            $flowData->path = $res->getPath();
+            if ($getPath) {
+                $res = new reservation_info();
+                $res->flw_id = $flow->flw_id;
+                $flowData->path = $res->getPath();
+            }
 
 //            $flowData->source->domain = $dom[0]->dom_descr;
 //            $flowData->source->dom_id = $dom[0]->dom_id;

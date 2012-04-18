@@ -58,7 +58,7 @@ class reservations extends Controller {
 
                 $flow = new flow_info();
                 $flow->flw_id = $r->flw_id;
-                $res->flow = $flow->getFlowDetails();
+                $res->flow = $flow->getFlowDetails(false);
 
                 $timer = new timer_info();
                 $timer->tmr_id = $r->tmr_id;
@@ -790,7 +790,10 @@ class reservations extends Controller {
     /**
      * @todo Cancelar reservas no OSCARS (ativas e pendentes) antes de excluir do banco
      */
-    public function delete() {
+    public function delete($param_array) {
+        if (array_key_exists('refresh', $param_array))
+            $refresh = (integer) $param_array['refresh'];
+        
         $del_reservations = Common::POST("del_checkbox");
 
         if ($del_reservations) {
@@ -829,7 +832,10 @@ class reservations extends Controller {
             }
         }
 
-        $this->show();
+        if ($refresh)
+            $this->status();
+        else
+            $this->history();
     }
 
     function query($reservation_info) {
