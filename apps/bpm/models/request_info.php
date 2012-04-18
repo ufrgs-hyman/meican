@@ -73,7 +73,7 @@ class request_info extends Resource_Model {
 
         if ($domain_result = $domain_info->fetch(FALSE)) {
             // request information was found in this MEICAN domain, WS is NOT required
-            Log::write("debug", "Request is local");
+            Log::write("circuits", "Request is local");
             
             $return_request->src_domain = $domain_result[0]->dom_descr;
 
@@ -160,7 +160,7 @@ class request_info extends Resource_Model {
             }
         } else {
             // request information was NOT found in this MEICAN domain, trying WS to get data
-            Log::write("debug", "Request is remote");
+            Log::write("circuits", "Request is remote");
 
             $ODEendpoint = "http://$this->src_ode_ip}/getMeicanData";
 
@@ -300,7 +300,7 @@ class request_info extends Resource_Model {
 
                 if ($domain->ode_wsdl_path && $domain->ode_response) {
 
-                    Log::write("info", "Sending response:\n" . print_r($responseSOAP, TRUE));
+                    Log::write("circuits", "Sending response:\n" . print_r($responseSOAP, TRUE));
 
                     try {
                         $client = new SoapClient($domain->ode_wsdl_path, array('cache_wsdl' => WSDL_CACHE_NONE));

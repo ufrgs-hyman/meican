@@ -554,7 +554,7 @@ class reservations extends Controller {
         $res_begin_timestamp = Common::getSessionVariable("res_begin_timestamp");
         $res_diff_timestamp = $res_end_timestamp - $res_begin_timestamp;
 
-        Log::write("info", "Reservation data POST".print_r($_POST,TRUE));
+        Log::write("circuits", "Reservation data POST".print_r($_POST,TRUE));
 
         /**
          * insere o flow
@@ -916,7 +916,7 @@ class reservations extends Controller {
 
     function send($reservation_info) {
         
-        Log::write("info", "Reservation to be sent:\n".print_r($reservation_info,TRUE));
+        Log::write("circuits", "Reservation to be sent:\n".print_r($reservation_info,TRUE));
         
         $flow_info = new flow_info();
         $flow_info->flw_id = $reservation_info->flw_id;
@@ -977,7 +977,7 @@ class reservations extends Controller {
             $tmp->setStartTimestamp($t->start); //em timestamp
             $tmp->setEndTimestamp($t->finish);
             
-            Log::write("info", "Sending reservation:\n".print_r($tmp,TRUE));
+            Log::write("circuits", "Sending reservation:\n".print_r($tmp,TRUE));
 
             if ($tmp->createReservation()) {
                 $resSent++;
@@ -1037,7 +1037,7 @@ class reservations extends Controller {
                 'dst_ode_ip' => $newReq->dst_ode_ip,
                 'usr_src' => $newReq->src_usr);
 
-            Log::write("info","Sending for authorization:\n". print_r($requestSOAP,TRUE));
+            Log::write("circuits","Sending for authorization:\n". print_r($requestSOAP,TRUE));
             try {
                 $client = new SoapClient($src_dom->ode_wsdl_path, array('cache_wsdl' => WSDL_CACHE_NONE));
                 
