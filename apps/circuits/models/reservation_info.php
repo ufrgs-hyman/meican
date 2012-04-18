@@ -276,7 +276,7 @@ class reservation_info extends Resource_Model {
         $pathArray = array();
 
         if ($path) {
-            Log::write("debug", "Path found in local database...");
+            Log::write("circuits", "Path found in local database...");
             $pathArray = explode(';', $path);
         } else {
             if (!$this->res_id) {
@@ -288,7 +288,7 @@ class reservation_info extends Resource_Model {
                     return FALSE;
             }
             
-            Log::write("debug", "Path not found, trying OSCARS...");
+            Log::write("circuits", "Path not found, trying OSCARS...");
             
             $gri_info = new gri_info();
             $gri_info->res_id = $this->res_id;
@@ -305,7 +305,7 @@ class reservation_info extends Resource_Model {
             $response = FALSE;
             $cont = 0;
 
-            Log::write("info", "Getting GRI path:\n" . print_r(array("OSCARS URL" => $domain[0]->idc_url, "GRI" => $gri[0]->gri_descr), TRUE));
+            Log::write("circuits", "Getting GRI path:\n" . print_r(array("OSCARS URL" => $domain[0]->idc_url, "GRI" => $gri[0]->gri_descr), TRUE));
 
 
             while (!$response && $cont < 15) {
@@ -314,7 +314,7 @@ class reservation_info extends Resource_Model {
                     if (($status == "PENDING") || ($status == "ACTIVE") || ($status == "FINISHED") || ($status == "FAILED") || ($status == "CANCELLED")) {
                         if ($pathArray = explode(";", $oscars->getPath())) {
                             $pathArray = array_filter($pathArray, 'strlen');
-                            Log::write("info", "Get path sucessful. Complete path:\n" . print_r($pathArray, TRUE));
+                            Log::write("circuits", "Get path sucessful. Complete path:\n" . print_r($pathArray, TRUE));
                             $response = TRUE;
                         }
                     } elseif (($status == "INCREATE") || ($status == "ACCEPTED")) {
