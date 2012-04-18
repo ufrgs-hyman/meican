@@ -253,8 +253,9 @@ class ws extends WebServiceController {
                                 $oscRes->setOscarsUrl($dom[0]->idc_url);
                                 $oscRes->setGri($g->gri_descr);
                                 if ($oscRes->cancelReservation()) {
+                                    Log::write('ws', "Final decision: GRI cancelled:\n" . print_r($g->gri_descr, true));
                                     //apaga os gris negados do db MEICAN
-                                    $g->delete(false);
+                                    //$g->delete(false);
                                 } else {
                                     Log::write('ws', "Final decision: error to cancel GRI:\n" . print_r($g->gri_descr, true));
                                 }
