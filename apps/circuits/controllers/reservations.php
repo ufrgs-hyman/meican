@@ -707,11 +707,9 @@ class reservations extends Controller {
             $flow->dest->domain = $dom->get('dom_descr');
         }
         
-        $pathArray = $reservation->getPath();
+        if ($flow->path)
+            $flow->path = MeicanTopology::getWaypoints($flow->path);
         
-        if ($pathArray)
-            $flow->path = MeicanTopology::getWaypoints($pathArray);
-
         if (!$flow) {
             $this->setFlash(_("Flow not found or could not get endpoints information"), "fatal");
             $this->show();

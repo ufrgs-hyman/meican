@@ -107,23 +107,10 @@ function disabelCancelButton(elemId) {
     }
 }
 
-function res_showCircuit(){
-    //    if ((src_lat_network == dst_lat_network) && (src_lng_network == dst_lng_network)) {
-    //        var aux = parseFloat(dst_lng_network);
-    //        aux += 0.0005;
-    //        dst_lng_network = aux.toString();
-    //    }
-    //    alert(reservation_path[0].descr);
-    //    alert(reservation_path[1].descr);
+function res_showCircuit() {
     var networks_coordinates = [];
-    if(typeof reservation_path === "undefined" &&
-        (typeof src_lat_network === "undefined" || 
-        typeof src_lng_network === "undefined")) {
-        return ;
-        }
     
-    if ((typeof(reservation_path)!="undefined") && (reservation_path.length > 0)) {
-        
+    if ((reservation_path != null) && (typeof(reservation_path) !== "undefined") && (reservation_path.length > 0)) {
         for (var i=0;i<reservation_path.length;i++){
         
             var coord = new google.maps.LatLng(reservation_path[i].latitude, reservation_path[i].longitude);
@@ -141,7 +128,7 @@ function res_showCircuit(){
             this.res_setBounds(res_bounds);
         
         }
-    } else {
+    } else if ((src_lat_network != null) && (src_lng_network != null) && (dst_lat_network != null) && (dst_lng_network != null)) {
         var coord_src = new google.maps.LatLng(src_lat_network, src_lng_network);
         this.res_addMarker(coord_src, "src");
         this.res_bounds.push(coord_src);
@@ -153,7 +140,9 @@ function res_showCircuit(){
         networks_coordinates.push(coord_src);
         networks_coordinates.push(coord_dst);
         this.res_setBounds(res_bounds);
-    }
+    } else
+        return;
+    
     this.res_drawPath(networks_coordinates);
 }
 

@@ -110,7 +110,8 @@ class flow_info extends Resource_Model {
                 $res = new reservation_info();
                 $res->flw_id = $flow->flw_id;
                 $flowData->path = $res->getPath();
-            }
+            } else
+                $flowData->path = null;
 
 //            $flowData->source->domain = $dom[0]->dom_descr;
 //            $flowData->source->dom_id = $dom[0]->dom_id;
