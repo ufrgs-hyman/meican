@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `domain_info` (
   `dom_descr` varchar(30) NOT NULL,
   `idc_url` varchar(64) DEFAULT NULL,
   `oscars_ip` varchar(64) DEFAULT NULL,
-  `oscars_protocol` varchar(10) DEFAULT NULL,
+  `oscars_protocol` enum('http','https') DEFAULT 'http',
   `topology_id` varchar(30) DEFAULT NULL,
   `ode_ip` varchar(128) DEFAULT NULL,
   `ode_wsdl_path` varchar(256) DEFAULT NULL,
@@ -40,6 +40,6 @@ CREATE TABLE IF NOT EXISTS `domain_info` (
   `dom_version` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`dom_id`),
   UNIQUE KEY `dom_descr` (`dom_descr`),
-  UNIQUE KEY `idc_url` (`idc_url`),
+  UNIQUE KEY `oscars_ip` (`oscars_ip`),
   UNIQUE KEY `topology_id` (`topology_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
