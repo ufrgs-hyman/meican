@@ -143,7 +143,7 @@ class reservations extends Controller {
         $gri = new gri_info();
         $resIdArray = $gri->getStatusResId();
         $this->action = "status";
-        $this->addScriptForLayout(array('reservations_status', 'reservations'));
+        $this->addScriptForLayout(array('reservations', 'reservations_status'));
         $this->show($resIdArray);
     }
     
