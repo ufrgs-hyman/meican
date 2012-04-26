@@ -30,13 +30,13 @@ $hasUrn = FALSE;
             </div>
                  
         <?php else: ?>
-            <h2>
+            <h4>
             <?php
                 $text = _("Domain");
                 $text .= ($dom->topo_id) ? " $dom->descr - $dom->topo_id" : " $dom->descr";
                 echo $text;
             ?>
-            </h2>
+            </h4>
             <div style="border: 1px solid black; padding-bottom: 50px; text-indent: 10px">
                 <?php
                     $args = new stdClass();
