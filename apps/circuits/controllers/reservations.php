@@ -1004,8 +1004,14 @@ class reservations extends Controller {
             }
             unset($tmp);
         }
+        
+        //para buscar o dst_ode_ip
+        $dst_urn_string = $flow->dst_urn_string;
 
-        if ($resSent && $src_dom->ode_ip && $src_dom->ode_wsdl_path && $src_dom->ode_start) {
+        $domain = new domain_info();
+        $dst_dom = $domain->getOSCARSDomain($dst_urn_string);
+
+        if ($resSent && $src_dom->ode_ip && $src_dom->ode_wsdl_path && $src_dom->ode_start && $dst_dom->ode_ip) {
             //cria nova request com o domínio $src_dom
             $newReq = new request_info();
             
@@ -1014,11 +1020,6 @@ class reservations extends Controller {
             $newReq->src_ode_ip = $src_dom->ode_ip;
             $newReq->src_usr = $reservation_info->usr_id;
 
-            //para buscar o dst_ode_ip
-            $dst_urn_string = $flow->dst_urn_string;
-
-            $domain = new domain_info();
-            $dst_dom = $domain->getOSCARSDomain($dst_urn_string);
             $newReq->dst_ode_ip = $dst_dom->ode_ip;
 
             $newReq->resource_type = 'reservation_info';
