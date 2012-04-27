@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-16 17:11-0300\n"
+"POT-Creation-Date: 2012-04-27 16:59-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,7 +26,7 @@ msgid "New"
 msgstr ""
 
 #: circuits.php:23 views/elements/list_gris.php:9
-#: views/elements/view_request.php:6 views/reservations_show.php:22
+#: views/elements/view_request.php:6 views/reservations_show.php:23
 msgid "Status"
 msgstr ""
 
@@ -321,27 +321,27 @@ msgstr ""
 msgid "To Here"
 msgstr ""
 
-#: controllers/reservations.php:825
+#: controllers/reservations.php:828
 msgid "Reservation"
 msgstr ""
 
-#: controllers/reservations.php:825
+#: controllers/reservations.php:828
 msgid "deleted"
 msgstr ""
 
-#: controllers/reservations.php:895
+#: controllers/reservations.php:901
 msgid "No reservation was cancelled"
 msgstr ""
 
-#: controllers/reservations.php:898
+#: controllers/reservations.php:904
 msgid "One reservation was cancelled"
 msgstr ""
 
-#: controllers/reservations.php:901
+#: controllers/reservations.php:907
 msgid "reservations were cancelled"
 msgstr ""
 
-#: controllers/reservations.php:1056
+#: controllers/reservations.php:1065
 msgid "Error at invoking business layer."
 msgstr ""
 
@@ -363,7 +363,7 @@ msgid "Mbps"
 msgstr ""
 
 #: views/reservations_view.php:42 views/reservations_view2.php:34
-#: views/reservations_show.php:10
+#: views/reservations_show.php:11
 msgid "Refresh"
 msgstr ""
 
@@ -407,12 +407,12 @@ msgid "Cancel"
 msgstr ""
 
 #: views/elements/view_timer.php:2 views/elements/timer_form.php:11
-#: views/reservations_show.php:26
+#: views/reservations_show.php:27
 msgid "Start"
 msgstr ""
 
 #: views/elements/view_timer.php:4 views/elements/timer_form.php:15
-#: views/reservations_show.php:27
+#: views/reservations_show.php:28
 msgid "Finish"
 msgstr ""
 
@@ -433,7 +433,7 @@ msgid "GRI"
 msgstr ""
 
 #: views/elements/list_gris.php:10 views/elements/list_gris.php:41
-#: views/reservations_show.php:56
+#: views/reservations_show.php:57
 msgid "loading"
 msgstr ""
 
@@ -463,13 +463,13 @@ msgstr ""
 
 #: views/elements/reservation_tab_point.php:3
 #: views/elements/source_dest.php:12 views/elements/view_point.php:3
-#: views/elements/list_flows.php:14 views/reservations_show.php:24
+#: views/elements/list_flows.php:14 views/reservations_show.php:25
 msgid "Source"
 msgstr ""
 
 #: views/elements/reservation_tab_point.php:6
 #: views/elements/source_dest.php:15 views/elements/view_point.php:6
-#: views/elements/list_flows.php:15 views/reservations_show.php:25
+#: views/elements/list_flows.php:15 views/reservations_show.php:26
 msgid "Destination"
 msgstr ""
 
@@ -495,7 +495,7 @@ msgid "VLAN"
 msgstr ""
 
 #: views/elements/list_timers.php:13 views/elements/list_flows.php:13
-#: views/reservations_show.php:20
+#: views/reservations_show.php:21
 msgid "Name"
 msgstr ""
 
@@ -507,7 +507,7 @@ msgstr ""
 msgid "Final Date"
 msgstr ""
 
-#: views/elements/list_timers.php:17 views/reservations_show.php:28
+#: views/elements/list_timers.php:17 views/reservations_show.php:29
 msgid "Recurrence"
 msgstr ""
 
@@ -632,11 +632,11 @@ msgstr ""
 msgid "Untagged"
 msgstr ""
 
-#: views/reservations_show.php:21
+#: views/reservations_show.php:22
 msgid "Bandwidth (Mbps)"
 msgstr ""
 
-#: views/reservations_show.php:40
+#: views/reservations_show.php:41
 msgid "View"
 msgstr ""
 
@@ -689,9 +689,17 @@ msgid "Rejected"
 msgstr ""
 
 #: models/gri_info.php:205
-msgid "Unknown status"
+msgid "Authorized"
 msgstr ""
 
 #: models/gri_info.php:208
+msgid "Denied"
+msgstr ""
+
+#: models/gri_info.php:211
+msgid "Unknown status"
+msgstr ""
+
+#: models/gri_info.php:214
 msgid "Reservation has no GRI"
 msgstr ""

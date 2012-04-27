@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-16 17:11-0300\n"
+"POT-Creation-Date: 2012-04-27 16:59-0300\n"
 "PO-Revision-Date: 2012-04-16 17:15-0300\n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,14 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: bpm.php:14
-#: bpm.php:33
-#: controllers/requests.php:26
+#: bpm.php:14 bpm.php:33 controllers/requests.php:26
 msgid "Requests"
 msgstr "Requisições"
 
-#: bpm.php:17
-#: views/requests_reply2.php:71
+#: bpm.php:17 views/requests_reply2.php:71
 msgid "Authorization"
 msgstr "Autorização"
 
@@ -59,8 +56,7 @@ msgstr "Falha ao realizar undeploy do processo"
 msgid "You have no pending or finished request"
 msgstr "Você não possui requisições pendentes ou finalizadas"
 
-#: controllers/requests.php:75
-#: controllers/requests.php:118
+#: controllers/requests.php:75 controllers/requests.php:118
 msgid "Invalid index"
 msgstr "Índice inválido"
 
@@ -148,10 +144,8 @@ msgstr "Domínio da requisição"
 msgid "Request user"
 msgstr "Usuário solicitante"
 
-#: views/requests_reply.php:25
-#: views/requests_createRequest.php:12
-#: views/requests_show.php:16
-#: views/requests_show.php:54
+#: views/requests_reply.php:25 views/requests_createRequest.php:12
+#: views/requests_show.php:16 views/requests_show.php:54
 msgid "Destination domain"
 msgstr "Domínio de destino"
 
@@ -203,8 +197,7 @@ msgstr "Recorrência"
 msgid "Available Bandwidth (Mbps)"
 msgstr "Largura de Banda disponível (Mbps)"
 
-#: views/requests_reply.php:117
-#: views/elements/requests_table.php:10
+#: views/requests_reply.php:117 views/elements/requests_table.php:10
 #: views/requests_show.php:58
 msgid "Response"
 msgstr "Resposta"
@@ -217,8 +210,7 @@ msgstr "ACEITAR"
 msgid "REJECT"
 msgstr "REJEITAR"
 
-#: views/requests_reply.php:127
-#: views/elements/requests_table.php:11
+#: views/requests_reply.php:127 views/elements/requests_table.php:11
 #: views/requests_show.php:59
 msgid "Message"
 msgstr "Mensagem"
@@ -239,14 +231,12 @@ msgstr "Criar"
 msgid "Domain source"
 msgstr "Domínio de origem"
 
-#: views/elements/requests_table.php:9
-#: views/requests_show.php:17
+#: views/elements/requests_table.php:9 views/requests_show.php:17
 #: views/requests_show.php:55
 msgid "Requester"
 msgstr "Solicitante"
 
-#: views/elements/requests_table.php:20
-#: views/requests_show.php:38
+#: views/elements/requests_table.php:20 views/requests_show.php:38
 msgid "Answer"
 msgstr "Responder"
 
@@ -294,18 +284,15 @@ msgstr "Voltar"
 msgid "Pending incoming requests"
 msgstr "Requisições pendentes de entrada"
 
-#: views/requests_show.php:15
-#: views/requests_show.php:53
+#: views/requests_show.php:15 views/requests_show.php:53
 msgid "Source domain"
 msgstr "Domínio de origem"
 
-#: views/requests_show.php:18
-#: views/requests_show.php:56
+#: views/requests_show.php:18 views/requests_show.php:56
 msgid "Resource type"
 msgstr "Tipo de recurso"
 
-#: views/requests_show.php:19
-#: views/requests_show.php:57
+#: views/requests_show.php:19 views/requests_show.php:57
 msgid "Resource description"
 msgstr "Descrição do recurso"
 
@@ -313,8 +300,7 @@ msgstr "Descrição do recurso"
 msgid "Finished incoming requests"
 msgstr "Requisições concluídas de entrada"
 
-#: models/request_info.php:71
-#: models/request_info.php:72
+#: models/request_info.php:71 models/request_info.php:72
 msgid "Unknown"
 msgstr "Desconhecido"
 
