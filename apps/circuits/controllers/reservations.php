@@ -120,6 +120,7 @@ class reservations extends Controller {
                     'domains' => $domains_to_js,
                     'str_error_refresh_status' => _("Error to get status")
                 ));
+                $this->addScriptForLayout(array('reservations', 'reservations_status'));
             }
             
             $this->set(array(
@@ -143,7 +144,6 @@ class reservations extends Controller {
         $gri = new gri_info();
         $resIdArray = $gri->getStatusResId();
         $this->action = "status";
-        $this->addScriptForLayout(array('reservations', 'reservations_status'));
         $this->show($resIdArray);
     }
     
