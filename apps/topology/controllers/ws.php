@@ -16,6 +16,7 @@ class ws extends WebServiceController {
         
         $this_ip = $this_meican->getLocalMeicanIp();
         $this_dir_name = $this_meican->getLocalMeicanDirName();
+        $this_dir_name = ($this_dir_name) ? "$this_dir_name/" : "";
         
         $namespace = "http://MEICAN";
         $server = new nusoap_server();

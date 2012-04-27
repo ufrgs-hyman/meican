@@ -20,10 +20,11 @@ class ws extends WebServiceController {
         $this_meican = new meican_info();
         $this_ip = $this_meican->getLocalMeicanIp();
         $this_dir_name = $this_meican->getLocalMeicanDirName();
+        $this_dir_name = ($this_dir_name) ? "$this_dir_name/" : "";
 
         $namespace = "http://MEICAN";
         $server = new nusoap_server();
-        $server->configureWSDL("MEICAN_BPM_SERVICES", $namespace, "http://$this_ip/$this_dir_name/$this->app/ws");
+        $server->configureWSDL("MEICAN_BPM_SERVICES", $namespace, "http://$this_ip/$this_dir_name$this->app/ws");
         //$server->wsdl->schemaTargetNamespace = $namespace;
 
         /**
@@ -75,28 +76,28 @@ class ws extends WebServiceController {
         
 
         $server->register(
-                'getReqInfo', array('req_id' => 'xsd:int', 'src_ode_ip' => 'xsd:string'), array('req_info' => 'tns:reqType'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/getReqInfo", 'rpc', 'encoded', 'Method to get request information');
+                'getReqInfo', array('req_id' => 'xsd:int', 'src_ode_ip' => 'xsd:string'), array('req_info' => 'tns:reqType'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/getReqInfo", 'rpc', 'encoded', 'Method to get request information');
 
         $server->register(
-                'refreshStatus', array('status' => 'tns:statusType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/refreshStatus", 'rpc', 'encoded', 'Method only to refresh request status, modify all requests');
+                'refreshStatus', array('status' => 'tns:statusType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/refreshStatus", 'rpc', 'encoded', 'Method only to refresh request status, modify all requests');
         
         $server->register(
-                'saveResponse', array('response' => 'tns:responseType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/saveResponse", 'rpc', 'encoded', 'Method to save response from current domain request, modify only one request');
+                'saveResponse', array('response' => 'tns:responseType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/saveResponse", 'rpc', 'encoded', 'Method to save response from current domain request, modify only one request');
         
         $server->register(
-                'finalDecision', array('decision' => 'tns:decisionType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/finalDecision", 'rpc', 'encoded', 'Method to notify final response to the user\'s request, it saves the response to the resource request and modifies all the request status as AUTHORIZED or DENIED');
+                'finalDecision', array('decision' => 'tns:decisionType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/finalDecision", 'rpc', 'encoded', 'Method to notify final response to the user\'s request, it saves the response to the resource request and modifies all the request status as AUTHORIZED or DENIED');
 
         $server->register(
-                'requestUserAuthorization', array('usr_dst' => 'xsd:int', 'request' => 'tns:requestType'), array('req_id' => 'xsd:int'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/requestUserAuthorization", 'rpc', 'encoded', 'Method to request authorization from a specific user');
+                'requestUserAuthorization', array('usr_dst' => 'xsd:int', 'request' => 'tns:requestType'), array('req_id' => 'xsd:int'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/requestUserAuthorization", 'rpc', 'encoded', 'Method to request authorization from a specific user');
 
         $server->register(
-                'requestGroupAuthorization', array('grp_dst' => 'xsd:int', 'request' => 'tns:requestType'), array('req_id' => 'xsd:int'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/requestGroupAuthorization", 'rpc', 'encoded', 'Method to request authorization from a group');
+                'requestGroupAuthorization', array('grp_dst' => 'xsd:int', 'request' => 'tns:requestType'), array('req_id' => 'xsd:int'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/requestGroupAuthorization", 'rpc', 'encoded', 'Method to request authorization from a group');
 
         $server->register(
-                'getNextDomain', array('primary' => 'tns:primaryType'), array('next_domain' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/getNextDomain", 'rpc', 'encoded', 'Complex Hello World Method');
+                'getNextDomain', array('primary' => 'tns:primaryType'), array('next_domain' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/getNextDomain", 'rpc', 'encoded', 'Complex Hello World Method');
         
         $server->register(
-                'getRequestPath', array('req_id' => 'xsd:int', 'src_ode_ip' => 'xsd:string'), array('ode_ip_array' => 'tns:stringTypeList'), $namespace, "http://$this_ip/$this_dir_name/$this->app/ws/getRequestPath", 'rpc', 'encoded', 'Method to get the reservation path');
+                'getRequestPath', array('req_id' => 'xsd:int', 'src_ode_ip' => 'xsd:string'), array('ode_ip_array' => 'tns:stringTypeList'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/getRequestPath", 'rpc', 'encoded', 'Method to get the reservation path');
 
         
         function getReqInfo($req_id, $src_ode_ip) {
