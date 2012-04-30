@@ -103,6 +103,10 @@ class requests extends MeicanController {
             'refresh' => 0
         ));
         $this->setArgsToScript(array(
+            "src_lat_network" => $result->flow_info->source->latitude,
+            "src_lng_network" => $result->flow_info->source->longitude,
+            "dst_lat_network" => $result->flow_info->dest->latitude,
+            "dst_lng_network" => $result->flow_info->dest->longitude,
             'refreshReservation' => 0,
             'reservation_path' => $result->flow_info->path
         ));
