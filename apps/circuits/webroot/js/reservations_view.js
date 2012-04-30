@@ -32,6 +32,7 @@ function res_buildMap(){
         $('#main').unbind('pjax:start', finishfn);
     };
     $('#main').bind('pjax:start', finishfn);
+    this.resizefn();
     
     this.res_map = new google.maps.Map(document.getElementById("res_mapCanvas"), {
         zoom: 3,
