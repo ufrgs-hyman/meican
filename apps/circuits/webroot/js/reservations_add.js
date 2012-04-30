@@ -1311,6 +1311,7 @@ function validateBand(band_value) {
     var resizefn = function() {
         if ($('#edit_map_canvas'))
             $('#edit_map_canvas').css('width', $('#subtab-points').offset().left-12-$('#tabs-2').offset().left );
+        //google.maps.event.trigger(view_map, 'resize');
     };
     /* **************** DOCUMENT READY !!!! ******************** */
     
