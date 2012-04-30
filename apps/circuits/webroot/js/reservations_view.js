@@ -25,6 +25,7 @@ function res_buildMap(){
             of2 = $('#tabs-2').offset();
         if (of1 && of2)
             $('#res_mapCanvas').css('width', of1.left-of2.left-4 );
+        google.maps.event.trigger(res_map, 'resize');
     };
     $(window).resize(this.resizefn);
     var finishfn = function(){
