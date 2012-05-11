@@ -13,7 +13,7 @@ if ($type == 'source') {
         <tr>
             <th colspan="2">
                 <div class="ui-state-default ui-corner-all" id="<?= $prefix ?>_clearpath" style="float: right; margin: 0 4px; cursor: pointer;">
-                    <span class="ui-icon ui-icon-minusthick" title="<?= _("Clear path") ?>"></span>
+                    <span class="ui-icon ui-icon-minusthick" title="<?= _("Clear point") ?>"></span>
                 </div>
                 <div class="ui-state-default ui-corner-all" id="<?= $prefix ?>_thishost" style="float: right; cursor: pointer;">
                     <span class="ui-icon ui-icon-home" title="<?= _("Select this host") ?>"></span>

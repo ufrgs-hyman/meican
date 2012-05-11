@@ -4,6 +4,7 @@ $res_name = isset($this->passedArgs->res_name) ? $this->passedArgs->res_name : n
 $args = $this->passedArgs;
 //$timers_exist = isset($args->timers) ? TRUE : FALSE;
 ?>
+
 <form id="reservation_add" method="POST" action="<?php echo $this->buildLink(array('action' => 'submit')); ?>">
     <h1>
         <label for="res_name"><?php echo _("New circuit name:"); ?></label>
@@ -40,4 +41,12 @@ $args = $this->passedArgs;
         </div>
     </div>
 
+    <div id="edp-dialog-form" title="<?= _("Choose endpoint for a host"); ?>">
+        <form>
+            <label for="edp_reference"><?= _("Fill in with a hostname or IP address") ?></label>
+            <input type="text" name="edp_reference" id="edp_reference" size="25" placeholder="<?php echo _('Enter text') ?>" title="<?= _('Hostname or IP address'); ?>"/>
+            <input type="hidden" id="edp-dialog"/>
+        </form>
+    </div>
+    
 </form>

@@ -65,7 +65,12 @@ function validateEndpoints() {
         return false;
     }
     
-    return true;
+    if (src_urn != dst_urn) {
+        return true;
+    } else {
+        setFlash(flash_sameSrcDst, "error");
+        return false;
+    }
 }
 
 function validateTimer() {
@@ -267,22 +272,43 @@ function lessFields(elem) {
 // Funções para buscar endpoints
 /*----------------------------------------------------------------------------*/
 
-function fillPoint(point, data) {
+function fillPoint(point, endpointObj) {
+    var dom_found = false;
+    for (var i in domains) {
+        if (domains[i].id == endpointObj.domain) {
+            dom_found = true;
+            var domain_name = domains[i].name;
+            for (var j in domains[i].networks) {
+                var network_name = domains[i].networks[j].name;
+                if (domains[i].networks[j].id == endpointObj.network) {
+                    var coord = new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude);
+                    $.fn.mapEdit.markerClick(coord, endpointObj.domain, domain_name, endpointObj.network, network_name, point);
+                    break;
+                }
+            }
+        }
+        if (dom_found)
+            break;
+    }
     
+    $("#" + point + "_device").val(endpointObj.device);
+    map_changeDevice(point);
+    
+    $("#" + point + "_port").val(endpointObj.port);
+    map_changePort(point);
 }
 
 function selectThisHost(point) {
-    alert('this host: ' + point); return;
-
     $.ajax ({
         type: "POST",
         url: baseUrl+'circuits/reservations/selectThisHost',
         dataType: "json",
+        point: point,
         success: function(data) {
             if (data) {
-                fillPoint(point, data);
+                fillPoint(this.point, data);
             } else
-                setFlash("Could not get host");
+                setFlash(flash_couldNotGetHost, "error");
         },
         error: function(jqXHR) {
             if (jqXHR.status == 406)
@@ -300,15 +326,37 @@ function thisHostDst() {
 }
 
 function chooseHost(point) {
-    alert('choose host: ' + point); return;
+    $.ajax ({
+        type: "POST",
+        url: baseUrl+'circuits/reservations/chooseHost',
+        dataType: "json",
+        data: {
+            edp_reference: $("#edp_reference").val()
+        },
+        point: point,
+        success: function(data) {
+            if (data) {
+                fillPoint(this.point, data);
+            } else
+                setFlash(flash_couldNotGetHost, "error");
+        },
+        error: function(jqXHR) {
+            if (jqXHR.status == 406)
+                location.href = baseUrl+'init/gui';
+        }
+    });
 }
 
 function chooseHostSrc() {
-    chooseHost('src');
+    $("#edp-dialog").val('src');
+    $("#edp_reference").val("");
+    $("#edp-dialog-form").dialog("open");
 }
 
 function chooseHostDst() {
-    chooseHost('dst');
+    $("#edp-dialog").val('dst');
+    $("#edp_reference").val("");
+    $("#edp-dialog-form").dialog("open");
 }
 
 
@@ -1136,7 +1184,7 @@ function validateBand(band_value) {
                     switch ( $(this).attr('href').substr(1) )
                     {
                         case 'fromHere':
-                            $.fn.mapEdit.markerClick(coord, domain_id, domain_name, network_id, network_name, "src");   
+                            $.fn.mapEdit.markerClick(coord, domain_id, domain_name, network_id, network_name, "src");
                             break;
                         case 'toHere':
                             $.fn.mapEdit.markerClick(coord, domain_id, domain_name, network_id, network_name, "dst");
@@ -1361,6 +1409,8 @@ function validateBand(band_value) {
             $('#edit_map_canvas').css('width', $('#subtab-points').offset().left-12-$('#tabs-2').offset().left );
         //google.maps.event.trigger(view_map, 'resize');
     };
+    
+    
     /* **************** DOCUMENT READY !!!! ******************** */
     
     $(function(){
@@ -1411,6 +1461,24 @@ function validateBand(band_value) {
         $('#dst_thishost').click(thisHostDst);
         $('#src_choosehost').click(chooseHostSrc);
         $('#dst_choosehost').click(chooseHostDst);
+        
+        $("#edp-dialog-form").dialog({
+            autoOpen: false,
+            modal: true,
+            resizable: false,
+            buttons: [
+            {
+                text: ok_string,
+                click: function() {
+                    chooseHost($('#edp-dialog').val());
+                    $(this).dialog("close");
+                }
+            },
+            {
+                text: cancel_string,
+                click: function() { $(this).dialog("close"); }
+            }]
+        });
         
         map_clearVlanConf();
         

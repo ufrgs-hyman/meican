@@ -13,13 +13,16 @@ include_once 'apps/circuits/models/reservation_info.php';
 include_once 'apps/circuits/models/gri_info.php';
 include_once 'apps/circuits/models/flow_info.php';
 include_once 'apps/circuits/models/timer_info.php';
-include_once 'apps/aaa/models/user_info.php';
+include_once 'apps/circuits/models/client_info.php';
 include_once 'apps/circuits/models/oscars_reservation.php';
+
+include_once 'apps/aaa/models/user_info.php';
 
 include_once 'apps/bpm/models/request_info.php';
 
 include_once 'apps/topology/models/domain_info.php';
 include_once 'apps/topology/models/topology.php';
+
 include_once 'libs/nuSOAP/lib/nusoap.php';
 
 class reservations extends Controller {
@@ -474,6 +477,8 @@ class reservations extends Controller {
             "flash_timerInvalid" => _("The end time occurs before the start time"),
             "flash_invalidDuration" => _("Invalid duration"),
             "flash_missingEndpoints" => _("Missing endpoints"),
+            "flash_sameSrcDst" => _("Source and destination endpoints are the same"),
+            "flash_couldNotGetHost" => _("Could not get host"),
             // endpoints
             "domain_string" => _("Domain"),
             "domains_string" => _("Domains"),
@@ -487,6 +492,8 @@ class reservations extends Controller {
             "coordinates_string" => _("Coordinates"),
             "any_string" => _("any"),
             "value_string" => _("Value"),
+            "ok_string" => _("Ok"),
+            "cancel_string" => _("Cancel"),
             // timers
             "date_format" => $js_dateFormat,
             "language" => $js_lang,
@@ -546,6 +553,16 @@ class reservations extends Controller {
         }
 
         $this->render('add');
+    }
+    
+    public function selectThisHost() {
+        $endpointObj = client_info::getBestEndpoint($_SERVER['REMOTE_ADDR']);
+        $this->renderJson($endpointObj);
+    }
+    
+    public function chooseHost() {
+        $endpointObj = client_info::getBestEndpoint(Common::POST('edp_reference'));
+        $this->renderJson($endpointObj);
     }
 
     public function submit() {
