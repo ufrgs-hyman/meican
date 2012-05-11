@@ -299,6 +299,7 @@ function fillPoint(point, endpointObj) {
 }
 
 function selectThisHost(point) {
+    clearFlash();
     $.ajax ({
         type: "POST",
         url: baseUrl+'circuits/reservations/selectThisHost',
@@ -326,6 +327,7 @@ function thisHostDst() {
 }
 
 function chooseHost(point) {
+    clearFlash();
     $.ajax ({
         type: "POST",
         url: baseUrl+'circuits/reservations/chooseHost',
@@ -1476,7 +1478,7 @@ function validateBand(band_value) {
             },
             {
                 text: cancel_string,
-                click: function() { $(this).dialog("close"); }
+                click: function() {$(this).dialog("close");}
             }]
         });
         
