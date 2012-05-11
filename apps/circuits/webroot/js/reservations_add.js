@@ -263,6 +263,54 @@ function lessFields(elem) {
     edit_mapPlaceDevice();
 }*/
 
+/*----------------------------------------------------------------------------*/
+// Funções para buscar endpoints
+/*----------------------------------------------------------------------------*/
+
+function fillPoint(point, data) {
+    
+}
+
+function selectThisHost(point) {
+    alert('this host: ' + point); return;
+
+    $.ajax ({
+        type: "POST",
+        url: baseUrl+'circuits/reservations/selectThisHost',
+        dataType: "json",
+        success: function(data) {
+            if (data) {
+                fillPoint(point, data);
+            } else
+                setFlash("Could not get host");
+        },
+        error: function(jqXHR) {
+            if (jqXHR.status == 406)
+                location.href = baseUrl+'init/gui';
+        }
+    });
+}
+
+function thisHostSrc() {
+    selectThisHost('src');
+}
+
+function thisHostDst() {
+    selectThisHost('dst');
+}
+
+function chooseHost(point) {
+    alert('choose host: ' + point); return;
+}
+
+function chooseHostSrc() {
+    chooseHost('src');
+}
+
+function chooseHostDst() {
+    chooseHost('dst');
+}
+
 
 /*----------------------------------------------------------------------------*/
 // INICIO DAS FUNÇÕES DO MAPA                                                                                           //
@@ -1358,6 +1406,11 @@ function validateBand(band_value) {
         $('#bandwidth_un').disabled();
         $("#src_domain,#src_network,#dst_domain,#dst_network").empty();
         $("#src_device,#src_port,#dst_device,#dst_port").empty().disabled();
+        
+        $('#src_thishost').click(thisHostSrc);
+        $('#dst_thishost').click(thisHostDst);
+        $('#src_choosehost').click(chooseHostSrc);
+        $('#dst_choosehost').click(chooseHostDst);
         
         map_clearVlanConf();
         
