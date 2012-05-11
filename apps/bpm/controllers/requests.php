@@ -108,7 +108,14 @@ class requests extends MeicanController {
             "dst_lat_network" => $result->flow_info->dest->latitude,
             "dst_lng_network" => $result->flow_info->dest->longitude,
             'refreshReservation' => 0,
-            'reservation_path' => $result->flow_info->path
+            'reservation_path' => $result->flow_info->path,
+            // string messages
+            'ok_string' => _("Ok"),
+            'cancel_string' => _("Cancel"),
+            'accept_message' => _("Request will be accepted, please provide a message"),
+            'reject_message' => _("Request will be rejected, please provide a message"),
+            'available_bandwidth_string' => _("Available bandwidth"),
+            'requested_bandwidth_string' => _("Requested bandwidth")
         ));
         $this->addScriptForLayout('requests');
         $this->render('reply2');

@@ -10,13 +10,13 @@ var request = {};
         //var message = prompt();
         if (response=="accept"){
             $("#MessageImg").attr("src", baseUrl+"webroot/img/hand_good.png");
-            $("#MessageLabel").html("Request will be accepted, please provide a message: ");
-        }else{
+            $("#MessageLabel").html(accept_message + ": ");
+        } else {
             $("#MessageImg").attr("src", baseUrl+"webroot/img/hand_bad.png");
-            $("#MessageLabel").html("Request will be rejected, please provide a message: ");
+            $("#MessageLabel").html(reject_message + ": ");
         }
         $("#Message").val('');
-        $("#MessageBandwidth").html('Bandwidth available: '+availableBandwidth+' Mbps. <br/>Bandwidth requested: '+this.bandwidth+' Mbps.');
+        $("#MessageBandwidth").html(available_bandwidth_string + ': ' + availableBandwidth + ' Mbps.<br/>' + requested_bandwidth_string + ': '+this.bandwidth+' Mbps.');
         this.response = response;
         $('#Response').html(response);
         $("#dialog-form").dialog("open");
@@ -43,8 +43,10 @@ var request = {};
             autoOpen: false,
             modal: true,
             resizable: false,
-            buttons: {
-                "Ok": function() {
+            buttons: [
+            {
+                text: ok_string,
+                click: function() {
                     var message = $("#Message").val();
                     if (message && message != "")
                         $.navigate({
@@ -56,11 +58,14 @@ var request = {};
                             }
                         });
                     $(this).dialog("close");
-                },
-                "Cancel": function() {
+                }
+            },
+            {
+                text: cancel_string,
+                click: function() {
                     $(this).dialog("close");
                 }
-            }
+            }]
         });
     };
     

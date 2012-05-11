@@ -34,7 +34,9 @@
 <div id="subtab-map" class="tab_subcontent shadow-box">
     <div id="res_mapCanvas" style="width:400px; height:400px;"></div>    
 </div>
+
 <div id="calendar" class="float-right" style="width:550px;height: 402px;"></div>
+
 <div id="subtab-points" class="tab_subcontent float-right" style="padding-left:8px;">
     <?=
     $this->element('view_point',
@@ -65,17 +67,20 @@
                             compact('request') + array('app' => 'circuits')) : null;
     ?>
 </div>
+
 <div id="tabs-4" class="control_tab">
     <input type="button" id="bc1" class="cancel" value="<?php echo _('Back'); ?>" onclick="redir('<?= $this->url(array("action" => "show")); ?>');"/>
 </div>
+
 <div id="dialog-form" title="<?= _("Authorization"); ?>">
     <form>
         <div id="MessageBandwidth"></div>
         <img id="MessageImg" alt="" src=""/>
-        <label for="name" id="MessageLabel">Provide a message</label>
+        <label for="name" id="MessageLabel"><?= _("Provide a message") ?></label>
         <textarea type="text" name="name" id="Message" class="text ui-widget-content ui-corner-all" style="width:100%;margin-top:10px;" cols="20" rows="5"></textarea>
     </form>
 </div>
+
 <?php
 /* <div id="tabs-4" class="control_tab">
   <form method="POST" id="FormReply" action="<?php echo $this->buildLink(array('action' => 'saveResponse', 'param' => array('loc_id' => $request->loc_id))); ?>">
