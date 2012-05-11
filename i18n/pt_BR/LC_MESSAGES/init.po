@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-27 16:59-0300\n"
+"POT-Creation-Date: 2012-05-11 18:05-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: \n"
@@ -11,21 +11,9 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: controllers/info_box.php:56
-msgid "Feedback sent"
-msgstr "Feedback enviado"
-
-#: controllers/info_box.php:56
-msgid "Thank you"
-msgstr "Obrigado"
-
-#: controllers/info_box.php:58
-msgid "Error sending feedback"
-msgstr "Erro ao enviar feedback"
-
-#: controllers/info_box.php:58
-msgid "Try again later"
-msgstr "Tente novamente mais tarde"
+#: init.php:14
+msgid "Dashboard"
+msgstr "Dashboard"
 
 #: controllers/gui.php:46
 msgid "You have one new request to be authorized"
@@ -43,33 +31,65 @@ msgstr "novas requisições para serem autorizadas"
 msgid "Failed on authentication"
 msgstr "Falha na autenticação"
 
-#: init.php:14
-msgid "Dashboard"
-msgstr "Dashboard"
+#: controllers/info_box.php:56
+msgid "Feedback sent"
+msgstr "Feedback enviado"
 
-#: views/elements/info_box.php:6
-msgid "Loading..."
-msgstr "Carregando..."
+#: controllers/info_box.php:56
+msgid "Thank you"
+msgstr "Obrigado"
 
-#: views/elements/info_box.php:8
-msgid "Sign out"
-msgstr "Sair"
+#: controllers/info_box.php:58
+msgid "Error sending feedback"
+msgstr "Erro ao enviar feedback"
 
-#: views/elements/info_box.php:10
-msgid "My account"
-msgstr "Minha conta"
+#: controllers/info_box.php:58
+msgid "Try again later"
+msgstr "Tente novamente mais tarde"
 
-#: views/elements/info_box.php:11
-msgid "Help"
-msgstr "Ajuda"
+#: views/login.php:31
+msgid "Create an account"
+msgstr "Criar uma conta"
 
-#: views/elements/info_box.php:12
-msgid "About"
-msgstr "Sobre"
+#: views/login.php:32
+msgid "About MEICAN"
+msgstr "Sobre o MEICAN"
 
-#: views/elements/info_box.php:13
-msgid "Feedback"
-msgstr "Feedback"
+#: views/login.php:33
+msgid "Support"
+msgstr "Suporte"
+
+#: views/login.php:55
+msgid "Login"
+msgstr "Login"
+
+#: views/login.php:60
+msgid "Password"
+msgstr "Senha"
+
+#: views/login.php:65
+msgid "Sign in"
+msgstr "Entrar"
+
+#: views/login.php:65
+msgid "Forgot your password?"
+msgstr "Esqueceu sua senha?"
+
+#: views/elements/controls.php:16 views/empty_db.php:11
+msgid "Add"
+msgstr "Adicionar"
+
+#: views/elements/controls.php:19
+msgid "Delete"
+msgstr "Excluir"
+
+#: views/elements/controls.php:19
+msgid "The selected items will be deleted."
+msgstr "Os itens selecionados serão excluídos."
+
+#: views/elements/controls.php:19
+msgid "Do you confirm?"
+msgstr "Você confirma?"
 
 #: views/elements/feedback.php:8
 msgid "happy"
@@ -151,49 +171,29 @@ msgstr "Descreva seu elogio"
 msgid "Describe your problem"
 msgstr "Descreva seu problema"
 
-#: views/elements/controls.php:16 views/empty_db.php:11
-msgid "Add"
-msgstr "Adicionar"
+#: views/elements/info_box.php:6
+msgid "Loading..."
+msgstr "Carregando..."
 
-#: views/elements/controls.php:19
-msgid "Delete"
-msgstr "Excluir"
+#: views/elements/info_box.php:8
+msgid "Sign out"
+msgstr "Sair"
 
-#: views/elements/controls.php:19
-msgid "The selected items will be deleted."
-msgstr "Os itens selecionados serão excluídos."
+#: views/elements/info_box.php:10
+msgid "My account"
+msgstr "Minha conta"
 
-#: views/elements/controls.php:19
-msgid "Do you confirm?"
-msgstr "Você confirma?"
+#: views/elements/info_box.php:11
+msgid "Help"
+msgstr "Ajuda"
 
-#: views/login.php:31
-msgid "Create an account"
-msgstr "Criar uma conta"
+#: views/elements/info_box.php:12
+msgid "About"
+msgstr "Sobre"
 
-#: views/login.php:32
-msgid "About MEICAN"
-msgstr "Sobre o MEICAN"
-
-#: views/login.php:33
-msgid "Support"
-msgstr "Suporte"
-
-#: views/login.php:55
-msgid "Login"
-msgstr "Login"
-
-#: views/login.php:60
-msgid "Password"
-msgstr "Senha"
-
-#: views/login.php:65
-msgid "Sign in"
-msgstr "Entrar"
-
-#: views/login.php:65
-msgid "Forgot your password?"
-msgstr "Esqueceu sua senha?"
+#: views/elements/info_box.php:13
+msgid "Feedback"
+msgstr "Feedback"
 
 #~ msgid "Sign in to MEICAN"
 #~ msgstr "Entrar no MEICAN"

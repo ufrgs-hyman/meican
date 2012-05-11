@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-27 16:59-0300\n"
+"POT-Creation-Date: 2012-05-11 18:05-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,16 +17,60 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: bpm.php:14 bpm.php:33 controllers/requests.php:26
+#: controllers/requests.php:26 bpm.php:14 bpm.php:33
 msgid "Requests"
 msgstr ""
 
-#: bpm.php:17 views/requests_reply2.php:71
-msgid "Authorization"
+#: controllers/requests.php:27
+msgid "You have no pending or finished request"
 msgstr ""
 
-#: bpm.php:22
-msgid "Workflow"
+#: controllers/requests.php:75 controllers/requests.php:129
+msgid "Invalid index"
+msgstr ""
+
+#: controllers/requests.php:113 views/ode_show.php:61
+msgid "Ok"
+msgstr ""
+
+#: controllers/requests.php:114
+msgid "Cancel"
+msgstr ""
+
+#: controllers/requests.php:115
+msgid "Request will be accepted, please provide a message"
+msgstr ""
+
+#: controllers/requests.php:116
+msgid "Request will be rejected, please provide a message"
+msgstr ""
+
+#: controllers/requests.php:117
+msgid "Available bandwidth"
+msgstr ""
+
+#: controllers/requests.php:118
+msgid "Requested bandwidth"
+msgstr ""
+
+#: controllers/requests.php:142
+msgid "Response saved"
+msgstr ""
+
+#: controllers/requests.php:146
+msgid "Response NOT saved"
+msgstr ""
+
+#: controllers/requests.php:186
+msgid "No request was deleted"
+msgstr ""
+
+#: controllers/requests.php:189
+msgid "One request was deleted"
+msgstr ""
+
+#: controllers/requests.php:192
+msgid "requests were deleted"
 msgstr ""
 
 #: controllers/ode.php:39
@@ -53,32 +97,16 @@ msgstr ""
 msgid "Fail to undeploy process"
 msgstr ""
 
-#: controllers/requests.php:27
-msgid "You have no pending or finished request"
+#: bpm.php:17 views/requests_reply2.php:75
+msgid "Authorization"
 msgstr ""
 
-#: controllers/requests.php:75 controllers/requests.php:118
-msgid "Invalid index"
+#: bpm.php:22
+msgid "Workflow"
 msgstr ""
 
-#: controllers/requests.php:131
-msgid "Response saved"
-msgstr ""
-
-#: controllers/requests.php:135
-msgid "Response NOT saved"
-msgstr ""
-
-#: controllers/requests.php:175
-msgid "No request was deleted"
-msgstr ""
-
-#: controllers/requests.php:178
-msgid "One request was deleted"
-msgstr ""
-
-#: controllers/requests.php:181
-msgid "requests were deleted"
+#: models/request_info.php:71 models/request_info.php:72
+msgid "Unknown"
 msgstr ""
 
 #: views/ode_show.php:8
@@ -133,8 +161,108 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: views/ode_show.php:61
-msgid "Ok"
+#: views/requests_createRequest.php:12 views/requests_show.php:16
+#: views/requests_show.php:54 views/requests_reply.php:25
+msgid "Destination domain"
+msgstr ""
+
+#: views/requests_createRequest.php:27
+msgid "Destination user"
+msgstr ""
+
+#: views/requests_createRequest.php:42
+msgid "Question"
+msgstr ""
+
+#: views/requests_createRequest.php:50
+msgid "Create"
+msgstr ""
+
+#: views/requests_show.php:9
+msgid "Pending incoming requests"
+msgstr ""
+
+#: views/requests_show.php:15 views/requests_show.php:53
+msgid "Source domain"
+msgstr ""
+
+#: views/requests_show.php:17 views/requests_show.php:55
+#: views/elements/requests_table.php:9
+msgid "Requester"
+msgstr ""
+
+#: views/requests_show.php:18 views/requests_show.php:56
+msgid "Resource type"
+msgstr ""
+
+#: views/requests_show.php:19 views/requests_show.php:57
+msgid "Resource description"
+msgstr ""
+
+#: views/requests_show.php:38 views/elements/requests_table.php:20
+msgid "Answer"
+msgstr ""
+
+#: views/requests_show.php:47
+msgid "Finished incoming requests"
+msgstr ""
+
+#: views/requests_show.php:58 views/elements/requests_table.php:10
+#: views/requests_reply.php:117
+msgid "Response"
+msgstr ""
+
+#: views/requests_show.php:59 views/elements/requests_table.php:11
+#: views/requests_reply.php:127
+msgid "Message"
+msgstr ""
+
+#: views/elements/requests_table.php:8
+msgid "Domain source"
+msgstr ""
+
+#: views/elements/empty_db.php:20
+msgid "Add"
+msgstr ""
+
+#: views/requests_reply2.php:2
+msgid "Reply request"
+msgstr ""
+
+#: views/requests_reply2.php:5
+msgid "Reservation name"
+msgstr ""
+
+#: views/requests_reply2.php:7
+msgid "Requester Domain"
+msgstr ""
+
+#: views/requests_reply2.php:9
+msgid "Requester User"
+msgstr ""
+
+#: views/requests_reply2.php:19
+msgid "Refresh"
+msgstr ""
+
+#: views/requests_reply2.php:20
+msgid "Cancel reservations"
+msgstr ""
+
+#: views/requests_reply2.php:20
+msgid "Cancel the selected reservations?"
+msgstr ""
+
+#: views/requests_reply2.php:48
+msgid "Mbps"
+msgstr ""
+
+#: views/requests_reply2.php:72
+msgid "Back"
+msgstr ""
+
+#: views/requests_reply2.php:79
+msgid "Provide a message"
 msgstr ""
 
 #: views/requests_reply.php:7
@@ -143,11 +271,6 @@ msgstr ""
 
 #: views/requests_reply.php:16
 msgid "Request user"
-msgstr ""
-
-#: views/requests_reply.php:25 views/requests_createRequest.php:12
-#: views/requests_show.php:16 views/requests_show.php:54
-msgid "Destination domain"
 msgstr ""
 
 #: views/requests_reply.php:34
@@ -198,109 +321,10 @@ msgstr ""
 msgid "Available Bandwidth (Mbps)"
 msgstr ""
 
-#: views/requests_reply.php:117 views/elements/requests_table.php:10
-#: views/requests_show.php:58
-msgid "Response"
-msgstr ""
-
 #: views/requests_reply.php:120
 msgid "ACCEPT"
 msgstr ""
 
 #: views/requests_reply.php:121
 msgid "REJECT"
-msgstr ""
-
-#: views/requests_reply.php:127 views/elements/requests_table.php:11
-#: views/requests_show.php:59
-msgid "Message"
-msgstr ""
-
-#: views/requests_createRequest.php:27
-msgid "Destination user"
-msgstr ""
-
-#: views/requests_createRequest.php:42
-msgid "Question"
-msgstr ""
-
-#: views/requests_createRequest.php:50
-msgid "Create"
-msgstr ""
-
-#: views/elements/requests_table.php:8
-msgid "Domain source"
-msgstr ""
-
-#: views/elements/requests_table.php:9 views/requests_show.php:17
-#: views/requests_show.php:55
-msgid "Requester"
-msgstr ""
-
-#: views/elements/requests_table.php:20 views/requests_show.php:38
-msgid "Answer"
-msgstr ""
-
-#: views/elements/empty_db.php:20
-msgid "Add"
-msgstr ""
-
-#: views/requests_reply2.php:2
-msgid "Reply request"
-msgstr ""
-
-#: views/requests_reply2.php:5
-msgid "Reservation name"
-msgstr ""
-
-#: views/requests_reply2.php:7
-msgid "Requester Domain"
-msgstr ""
-
-#: views/requests_reply2.php:9
-msgid "Requester User"
-msgstr ""
-
-#: views/requests_reply2.php:19
-msgid "Refresh"
-msgstr ""
-
-#: views/requests_reply2.php:20
-msgid "Cancel reservations"
-msgstr ""
-
-#: views/requests_reply2.php:20
-msgid "Cancel the selected reservations?"
-msgstr ""
-
-#: views/requests_reply2.php:46
-msgid "Mbps"
-msgstr ""
-
-#: views/requests_reply2.php:69
-msgid "Back"
-msgstr ""
-
-#: views/requests_show.php:9
-msgid "Pending incoming requests"
-msgstr ""
-
-#: views/requests_show.php:15 views/requests_show.php:53
-msgid "Source domain"
-msgstr ""
-
-#: views/requests_show.php:18 views/requests_show.php:56
-msgid "Resource type"
-msgstr ""
-
-#: views/requests_show.php:19 views/requests_show.php:57
-msgid "Resource description"
-msgstr ""
-
-#: views/requests_show.php:47
-msgid "Finished incoming requests"
-msgstr ""
-
-#: models/request_info.php:71 models/request_info.php:72
-msgid "Unknown"
 msgstr ""

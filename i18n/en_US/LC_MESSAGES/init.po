@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-27 16:59-0300\n"
+"POT-Creation-Date: 2012-05-11 18:05-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,20 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: controllers/info_box.php:56
-msgid "Feedback sent"
-msgstr ""
-
-#: controllers/info_box.php:56
-msgid "Thank you"
-msgstr ""
-
-#: controllers/info_box.php:58
-msgid "Error sending feedback"
-msgstr ""
-
-#: controllers/info_box.php:58
-msgid "Try again later"
+#: init.php:14
+msgid "Dashboard"
 msgstr ""
 
 #: controllers/gui.php:46
@@ -49,32 +37,64 @@ msgstr ""
 msgid "Failed on authentication"
 msgstr ""
 
-#: init.php:14
-msgid "Dashboard"
+#: controllers/info_box.php:56
+msgid "Feedback sent"
 msgstr ""
 
-#: views/elements/info_box.php:6
-msgid "Loading..."
+#: controllers/info_box.php:56
+msgid "Thank you"
 msgstr ""
 
-#: views/elements/info_box.php:8
-msgid "Sign out"
+#: controllers/info_box.php:58
+msgid "Error sending feedback"
 msgstr ""
 
-#: views/elements/info_box.php:10
-msgid "My account"
+#: controllers/info_box.php:58
+msgid "Try again later"
 msgstr ""
 
-#: views/elements/info_box.php:11
-msgid "Help"
+#: views/login.php:31
+msgid "Create an account"
 msgstr ""
 
-#: views/elements/info_box.php:12
-msgid "About"
+#: views/login.php:32
+msgid "About MEICAN"
 msgstr ""
 
-#: views/elements/info_box.php:13
-msgid "Feedback"
+#: views/login.php:33
+msgid "Support"
+msgstr ""
+
+#: views/login.php:55
+msgid "Login"
+msgstr ""
+
+#: views/login.php:60
+msgid "Password"
+msgstr ""
+
+#: views/login.php:65
+msgid "Sign in"
+msgstr ""
+
+#: views/login.php:65
+msgid "Forgot your password?"
+msgstr ""
+
+#: views/elements/controls.php:16 views/empty_db.php:11
+msgid "Add"
+msgstr ""
+
+#: views/elements/controls.php:19
+msgid "Delete"
+msgstr ""
+
+#: views/elements/controls.php:19
+msgid "The selected items will be deleted."
+msgstr ""
+
+#: views/elements/controls.php:19
+msgid "Do you confirm?"
 msgstr ""
 
 #: views/elements/feedback.php:8
@@ -157,46 +177,26 @@ msgstr ""
 msgid "Describe your problem"
 msgstr ""
 
-#: views/elements/controls.php:16 views/empty_db.php:11
-msgid "Add"
+#: views/elements/info_box.php:6
+msgid "Loading..."
 msgstr ""
 
-#: views/elements/controls.php:19
-msgid "Delete"
+#: views/elements/info_box.php:8
+msgid "Sign out"
 msgstr ""
 
-#: views/elements/controls.php:19
-msgid "The selected items will be deleted."
+#: views/elements/info_box.php:10
+msgid "My account"
 msgstr ""
 
-#: views/elements/controls.php:19
-msgid "Do you confirm?"
+#: views/elements/info_box.php:11
+msgid "Help"
 msgstr ""
 
-#: views/login.php:31
-msgid "Create an account"
+#: views/elements/info_box.php:12
+msgid "About"
 msgstr ""
 
-#: views/login.php:32
-msgid "About MEICAN"
-msgstr ""
-
-#: views/login.php:33
-msgid "Support"
-msgstr ""
-
-#: views/login.php:55
-msgid "Login"
-msgstr ""
-
-#: views/login.php:60
-msgid "Password"
-msgstr ""
-
-#: views/login.php:65
-msgid "Sign in"
-msgstr ""
-
-#: views/login.php:65
-msgid "Forgot your password?"
+#: views/elements/info_box.php:13
+msgid "Feedback"
 msgstr ""

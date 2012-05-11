@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-27 16:59-0300\n"
+"POT-Creation-Date: 2012-05-11 18:05-0300\n"
 "PO-Revision-Date: 2012-04-16 17:13-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -117,6 +117,51 @@ msgstr ""
 msgid "deleted"
 msgstr ""
 
+#: controllers/groups.php:26
+msgid "User Groups"
+msgstr ""
+
+#: controllers/groups.php:27
+msgid "You can't see any group, click the button below to add one"
+msgstr ""
+
+#: controllers/groups.php:58
+msgid "Group is root"
+msgstr ""
+
+#: controllers/groups.php:117 controllers/groups.php:126
+#: controllers/groups.php:249 controllers/groups.php:277
+msgid "Group"
+msgstr ""
+
+#: controllers/groups.php:121
+msgid "Fail to add users in group"
+msgstr ""
+
+#: controllers/groups.php:124
+msgid "Fail to create group"
+msgstr ""
+
+#: controllers/groups.php:151
+msgid "Group not found"
+msgstr ""
+
+#: controllers/groups.php:235
+msgid "Group users updated"
+msgstr ""
+
+#: controllers/groups.php:237
+msgid "No changes in group users"
+msgstr ""
+
+#: controllers/groups.php:259
+msgid "Group information updated"
+msgstr ""
+
+#: controllers/groups.php:262
+msgid "No change in group information"
+msgstr ""
+
 #: controllers/acl.php:39
 msgid "Access Control List"
 msgstr ""
@@ -183,95 +228,6 @@ msgstr ""
 msgid "ACL updated"
 msgstr ""
 
-#: controllers/groups.php:26
-msgid "User Groups"
-msgstr ""
-
-#: controllers/groups.php:27
-msgid "You can't see any group, click the button below to add one"
-msgstr ""
-
-#: controllers/groups.php:58
-msgid "Group is root"
-msgstr ""
-
-#: controllers/groups.php:117 controllers/groups.php:126
-#: controllers/groups.php:249 controllers/groups.php:277
-msgid "Group"
-msgstr ""
-
-#: controllers/groups.php:121
-msgid "Fail to add users in group"
-msgstr ""
-
-#: controllers/groups.php:124
-msgid "Fail to create group"
-msgstr ""
-
-#: controllers/groups.php:151
-msgid "Group not found"
-msgstr ""
-
-#: controllers/groups.php:235
-msgid "Group users updated"
-msgstr ""
-
-#: controllers/groups.php:237
-msgid "No changes in group users"
-msgstr ""
-
-#: controllers/groups.php:259
-msgid "Group information updated"
-msgstr ""
-
-#: controllers/groups.php:262
-msgid "No change in group information"
-msgstr ""
-
-#: views/users_add.php:4
-msgid "Add new user"
-msgstr ""
-
-#: views/users_add.php:11 views/elements/identification_settings.php:19
-msgid "Login"
-msgstr ""
-
-#: views/users_add.php:19 views/users_edit_settings.php:53
-#: views/users_edit.php:17
-msgid "New password"
-msgstr ""
-
-#: views/users_add.php:28 views/users_edit_settings.php:62
-#: views/users_edit.php:26
-msgid "Retype new password"
-msgstr ""
-
-#: views/users_add.php:43 views/users_edit_settings.php:72
-#: views/groups_add.php:38 views/groups_edit.php:22 views/users_edit.php:39
-#: views/acl_show.php:79
-msgid "Save"
-msgstr ""
-
-#: views/users_add.php:44 views/users_edit_settings.php:73
-#: views/groups_add.php:39 views/groups_edit.php:23 views/users_edit.php:40
-#: views/acl_show.php:80
-msgid "Cancel"
-msgstr ""
-
-#: views/groups_show.php:3
-msgid "User groups"
-msgstr ""
-
-#: views/groups_show.php:13 views/users_show.php:19
-#: views/elements/identification_settings.php:26
-#: views/elements/identification_userAdd.php:8
-msgid "Name"
-msgstr ""
-
-#: views/groups_show.php:14
-msgid "Parent groups"
-msgstr ""
-
 #: views/users_edit_settings.php:10
 msgid "Language"
 msgstr ""
@@ -308,26 +264,31 @@ msgstr ""
 msgid "Current password"
 msgstr ""
 
-#: views/groups_add.php:4
-msgid "Add new group"
+#: views/users_edit_settings.php:53 views/users_edit.php:17
+#: views/users_add.php:19
+msgid "New password"
 msgstr ""
 
-#: views/groups_add.php:13 views/groups_edit.php:11
-msgid "Group name"
+#: views/users_edit_settings.php:62 views/users_edit.php:26
+#: views/users_add.php:28
+msgid "Retype new password"
 msgstr ""
 
-#: views/groups_add.php:26
-msgid "Select the parent groups"
+#: views/users_edit_settings.php:72 views/groups_edit.php:22
+#: views/groups_add.php:38 views/users_edit.php:39 views/acl_show.php:79
+#: views/users_add.php:43
+msgid "Save"
 msgstr ""
 
-#: views/elements/identification_settings.php:14
-#: views/elements/identification_userAdd.php:3
-msgid "Information"
+#: views/users_edit_settings.php:73 views/groups_edit.php:23
+#: views/groups_add.php:39 views/users_edit.php:40 views/acl_show.php:80
+#: views/users_add.php:44
+msgid "Cancel"
 msgstr ""
 
-#: views/elements/identification_settings.php:31
-#: views/elements/identification_userAdd.php:17
-msgid "E-mail"
+#: views/users_show.php:19 views/elements/identification_settings.php:26
+#: views/elements/identification_userAdd.php:8 views/groups_show.php:13
+msgid "Name"
 msgstr ""
 
 #: views/elements/associative_table.php:18
@@ -346,8 +307,42 @@ msgstr ""
 msgid "Used"
 msgstr ""
 
+#: views/elements/identification_settings.php:14
+#: views/elements/identification_userAdd.php:3
+msgid "Information"
+msgstr ""
+
+#: views/elements/identification_settings.php:19 views/users_add.php:11
+msgid "Login"
+msgstr ""
+
+#: views/elements/identification_settings.php:31
+#: views/elements/identification_userAdd.php:17
+msgid "E-mail"
+msgstr ""
+
+#: views/groups_show.php:3
+msgid "User groups"
+msgstr ""
+
+#: views/groups_show.php:14
+msgid "Parent groups"
+msgstr ""
+
 #: views/groups_edit.php:4
 msgid "Edit group"
+msgstr ""
+
+#: views/groups_edit.php:11 views/groups_add.php:13
+msgid "Group name"
+msgstr ""
+
+#: views/groups_add.php:4
+msgid "Add new group"
+msgstr ""
+
+#: views/groups_add.php:26
+msgid "Select the parent groups"
 msgstr ""
 
 #: views/users_edit.php:4
@@ -404,4 +399,8 @@ msgstr ""
 
 #: views/acl_show.php:82
 msgid "Do you confirm?"
+msgstr ""
+
+#: views/users_add.php:4
+msgid "Add new user"
 msgstr ""
