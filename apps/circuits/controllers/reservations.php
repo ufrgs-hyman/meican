@@ -424,6 +424,23 @@ class reservations extends Controller {
                 //array_push($allUrns, $urns_tmp);
             }
         }
+        
+        // array for autoComplete host
+        $client = new client_info();
+        $hostArray = array();
+        if ($allClients = $client->fetch(false)) {
+            foreach ($allClients as $c) {
+                if ($c->alias)
+                    $hostArray[] = $c->alias;
+                if ($c->ip_dcn)
+                    $hostArray[] = $c->ip_dcn;
+                if ($c->ip_internet)
+                    $hostArray[] = $c->ip_internet;
+                if ($c->mac_address)
+                    $hostArray[] = $c->mac_address;
+            }
+        }
+
 
         // --------------------------------------
         // STEP 3 VARIABLES ---------------
@@ -526,6 +543,7 @@ class reservations extends Controller {
             "reset_zoom" => _("Reset Zoom"),
             "any_string" => _("any"),
             "domains" => $domToMapArray,
+            "hosts" => $hostArray
             //"urn_string" => $allUrns
         ));
         //}

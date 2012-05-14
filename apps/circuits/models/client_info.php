@@ -26,7 +26,7 @@ class client_info extends Model {
      * @return EndpointObject Returns the endpoint object if the query was sucessful, false othewise
      */
     static public function getBestEndpoint($reference) {
-        Log::write("debug", "calculando edp");
+        Log::write("debug", "calculando edp: ".$reference);
         if (!$reference) {
             return false;
         }

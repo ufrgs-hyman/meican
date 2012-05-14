@@ -40,13 +40,13 @@ $args = $this->passedArgs;
             <input type="button" id="bc1" class="cancel" value="<?php echo _('Cancel'); ?>" onclick="redir('<?php echo $this->buildLink(array("action" => "history")); ?>');"/>
         </div>
     </div>
-
-    <div id="edp-dialog-form" title="<?= _("Choose endpoint for a host"); ?>">
-        <form>
-            <label for="edp_reference"><?= _("Fill in with a hostname or IP address") ?></label>
-            <input type="text" name="edp_reference" id="edp_reference" size="25" placeholder="<?php echo _('Enter text') ?>" title="<?= _('Hostname or IP address'); ?>"/>
-            <input type="hidden" id="edp-dialog"/>
-        </form>
-    </div>
     
+</form>
+
+<form>
+    <div id="edp-dialog-form" title="<?= _("Choose endpoint for a host"); ?>">
+        <label for="edp_reference"><?= _("Fill in with a hostname or IP address") ?></label>
+        <input type="text" name="edp_reference" id="edp_reference" size="25" placeholder="<?php echo _('Enter text') ?>" title="<?= _('Hostname or IP address'); ?>"/>
+        <input type="hidden" id="edp-dialog"/>
+    </div>
 </form>

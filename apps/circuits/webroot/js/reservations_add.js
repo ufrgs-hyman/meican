@@ -1412,6 +1412,16 @@ function validateBand(band_value) {
         //google.maps.event.trigger(view_map, 'resize');
     };
     
+    $.fn.dlg = function(options) {
+        return this.each(function() {
+            $(this).dialog(options);
+            $(this).keyup(function(e) {
+                if (e.keyCode == 13) {
+                    $('.ui-dialog').find('button:first').trigger('click');
+                }
+            });
+        });
+    }
     
     /* **************** DOCUMENT READY !!!! ******************** */
     
@@ -1481,6 +1491,16 @@ function validateBand(band_value) {
                 click: function() {$(this).dialog("close");}
             }]
         });
+        
+        $("#edp_reference").autocomplete({
+            source: hosts
+        });
+//        $("#edp_reference").keyup(function(event) {
+//            if (event.which == 13) {
+//                chooseHost($('#edp-dialog').val());
+//                $("#edp-dialog-form").dialog("close");
+//            }
+//        });
         
         map_clearVlanConf();
         
