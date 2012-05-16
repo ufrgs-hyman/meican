@@ -27,6 +27,24 @@ class device_info extends Resource_Model {
         } else
             return false;
     }
+    
+    public function getDeviceFromNode($urn_string) {
+        $parts = explode(":", $urn_string);
+
+        if (count($parts) > 4) {
+            $node_attr = explode("=", $parts[4]);
+            $this->node_id = null;
+            if (strtoupper($node_attr[0]) == "NODE")
+                $this->node_id = $node_attr[1];
+
+            if (!$this->node_id)
+                return false;
+
+            if ($result = $this->fetch(false))
+                return $result[0];
+        }
+        return false;
+    }
 
 //    public function fetchNetwork() {
 //        if (!isset($this->dev_id)) {

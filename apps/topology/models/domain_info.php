@@ -32,19 +32,20 @@ class domain_info extends Resource_Model {
 
     public function getOSCARSDomain($urn_string) {
         $parts = explode(":", $urn_string);
-        
-        $topo_attr = explode("=", $parts[3]);
-        $this->topology_id = NULL;
-        if (strtoupper($topo_attr[0]) == "DOMAIN")
-            $this->topology_id = $topo_attr[1];
-        
-        if (!$this->topology_id)
-            return FALSE;
 
-        if ($result = $this->fetch(FALSE))
-            return $result[0];
-        else
-            return FALSE;
+        if (count($parts) > 3) {
+            $topo_attr = explode("=", $parts[3]);
+            $this->topology_id = NULL;
+            if (strtoupper($topo_attr[0]) == "DOMAIN")
+                $this->topology_id = $topo_attr[1];
+
+            if (!$this->topology_id)
+                return FALSE;
+
+            if ($result = $this->fetch(FALSE))
+                return $result[0];
+        }
+        return false;
         //$this = $result[0];
     }
     

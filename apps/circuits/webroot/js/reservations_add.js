@@ -278,12 +278,17 @@ function fillPoint(point, endpointObj) {
         if (domains[i].id == endpointObj.domain) {
             dom_found = true;
             var domain_name = domains[i].name;
-            for (var j in domains[i].networks) {
-                var network_name = domains[i].networks[j].name;
-                if (domains[i].networks[j].id == endpointObj.network) {
-                    var coord = new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude);
-                    $.fn.mapEdit.markerClick(coord, endpointObj.domain, domain_name, endpointObj.network, network_name, point);
-                    break;
+            
+            $("#"+point+"_domain").html(domain_name);
+            
+            if (endpointObj.network != null) {
+                for (var j in domains[i].networks) {
+                    var network_name = domains[i].networks[j].name;
+                    if (domains[i].networks[j].id == endpointObj.network) {
+                        var coord = new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude);
+                        $.fn.mapEdit.markerClick(coord, endpointObj.domain, domain_name, endpointObj.network, network_name, point);
+                        break;
+                    }
                 }
             }
         }
@@ -291,11 +296,15 @@ function fillPoint(point, endpointObj) {
             break;
     }
     
-    $("#" + point + "_device").val(endpointObj.device);
-    map_changeDevice(point);
+    if (endpointObj.device != null) {
+        $("#" + point + "_device").val(endpointObj.device);
+        map_changeDevice(point);
+    }
     
-    $("#" + point + "_port").val(endpointObj.port);
-    map_changePort(point);
+    if (endpointObj.port != null) {
+        $("#" + point + "_port").val(endpointObj.port);
+        map_changePort(point);
+    }
 }
 
 function selectThisHost(point) {
@@ -923,6 +932,7 @@ function map_setEndpointConf(where) {
         src_min_cap = urnData.min_capacity;
         src_div_cap = urnData.granularity;
         $("#src_urn").val(src_urn);
+        //$("#src_copyedp").attr tem q desabilitar
     } else if (where == "dst") {
         dst_urn = urnData.urn_string;
         dst_vlan_min = parseInt(vlan_min);
@@ -1269,7 +1279,7 @@ function validateBand(band_value) {
                 map_:edit_map
             });
             
-            for (i in edit_markersArray){//retira marcador não selecionado
+            for (var i in edit_markersArray){//retira marcador não selecionado
                 if ((edit_markersArray[i].id == network_id) && 
                     (edit_markersArray[i].domain_id == domain_id)) {
                     edit_markersArray[i].setMap(null);
@@ -1478,12 +1488,13 @@ function validateBand(band_value) {
             autoOpen: false,
             modal: true,
             resizable: false,
+            width: "auto",
             buttons: [
             {
                 text: ok_string,
                 click: function() {
                     chooseHost($('#edp-dialog').val());
-                    $(this).dialog("close");
+                    //$(this).dialog("close");
                 }
             },
             {
@@ -1495,12 +1506,20 @@ function validateBand(band_value) {
         $("#edp_reference").autocomplete({
             source: hosts
         });
+        
 //        $("#edp_reference").keyup(function(event) {
 //            if (event.which == 13) {
 //                chooseHost($('#edp-dialog').val());
 //                $("#edp-dialog-form").dialog("close");
 //            }
 //        });
+
+        $("#copy-edp-dialog").dialog({
+            autoOpen: false,
+            modal: true,
+            resizable: false,
+            width: "auto"
+        });
         
         map_clearVlanConf();
         
