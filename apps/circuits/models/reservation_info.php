@@ -201,6 +201,10 @@ class reservation_info extends Resource_Model {
         return $object;
     }
 
+    /**
+     *
+     * @todo migrar função para nova estrutura
+     */
     public function sendForAuthorization() {
 
         //cria nova request

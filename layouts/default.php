@@ -17,7 +17,7 @@
         <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery-ui-1.8.16.custom.min.js"></script>
         
         <?php
-        echo $this->script(array('cjs/jquery.pjax.js', 'cjs/ui.spinner.js', 'circuits/cjs/googlemaps.js', 'circuits/cjs/StyledMarker.js', 'cjs/main.js'));
+        echo $this->script(array('cjs/jquery.pjax.js', 'cjs/ui.spinner.js', 'cjs/main.js'));
         /*<script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery.pjax.js"></script>
         <script type="text/javascript" src="<?php echo $base; ?>webroot/js/ui.spinner.js"></script>
          
@@ -41,7 +41,12 @@
     });
             
         </script>
-        <?php echo $this->scripts(); ?>
+        <?php
+        $this->viewVars['scripts_vars']['MapsAPIKey'] = Configure::read('MapsAPIKey');
+        $this->viewVars['scripts_for_layout'][] = "circuits/cjs/googlemaps.js";
+        $this->viewVars['scripts_for_layout'][] = "circuits/cjs/StyledMarker.js";
+        echo $this->scripts();
+        ?>
         <?php /*  Coloca o theme roller
           <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css" />
           <script>$(document).ready(function(){$('#switcher').themeswitcher();});</script>

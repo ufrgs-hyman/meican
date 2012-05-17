@@ -41,25 +41,13 @@ return array(
     "defaultLang" => 'pt_BR.utf8',
     "debug" => 2,
     "useACL" => false,
-    /**
-     * CUIDADO COM O ENDEREÇO PARA OS WEBSERVICES
-     * ALTERAR DE ACORDO COM A PORTA FORNECIDA PELA NOC
-     */
-    "fedIp" => 'noc.inf.ufrgs.br:65501', // route to 143.54.12.123:80
-    "odeIp" => 'noc.inf.ufrgs.br:65401', // route to 143.54.12.123:8080
 
     /**
-     *
-     * ODE CONFIGURACOES
-     * @var $odeWSDLToRequest: reservation_info > sendForAuthorization
-     * @var $odeWSDLToResponse: request_info > response
-     */
-    "odeWSDLToRequest" => "http://noc.inf.ufrgs.br:65401/ode/deployment/bundles/v4_felipe_workflow/processes/v4_felipe_workflow/processes.ode/diagrama-ODE_Workflow_Felipe.wsdl",
-    "odeWSDLToResponse" => "http://noc.inf.ufrgs.br:65401/ode/deployment/bundles/v4_felipe_workflow/processes/v4_felipe_workflow/processes.ode/diagrama-ODE_Workflow_Felipe.wsdl",
-    /**
-     * NÃO ALTERAR
+     * OSCARS Bridge configuration -> it must refers to the WSDL
      */
     "OSCARSBridgeEPR" => 'http://localhost:8080/axis2/services/OSCARSBridge?wsdl',
+    
+    'MapsAPIKey' => "",
     
     'databases' => array(
         'default' => array(
