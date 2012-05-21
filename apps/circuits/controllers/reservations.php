@@ -494,7 +494,7 @@ class reservations extends Controller {
             "flash_timerInvalid" => _("The end time occurs before the start time"),
             "flash_invalidDuration" => _("Invalid duration"),
             "flash_missingEndpoints" => _("Missing endpoints"),
-            "flash_sameSrcDst" => _("Source and destination endpoints are the same"),
+            "flash_sameSrcDst" => _("Source and destination endpoints cannot be the same"),
             "flash_couldNotGetHost" => _("Could not get host"),
             // endpoints
             "domain_string" => _("Domain"),

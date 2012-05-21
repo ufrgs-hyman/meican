@@ -28,7 +28,7 @@ class device_info extends Resource_Model {
             return false;
     }
     
-    public function getDeviceFromNode($urn_string) {
+    public function getDeviceFromNode($dom_id, $urn_string) {
         $parts = explode(":", $urn_string);
 
         if (count($parts) > 4) {
@@ -40,8 +40,24 @@ class device_info extends Resource_Model {
             if (!$this->node_id)
                 return false;
 
-            if ($result = $this->fetch(false))
-                return $result[0];
+            if ($dev_result = $this->fetch(false)) {
+                $devices = array();
+                $aco = new Acos($dom_id, 'domain_info');
+                $aco_res = $aco->fetch(false);
+                $aco_parent = $aco_res[0];
+                if ($children = $aco_parent->findChildren('device_info')) {
+                    $devices = Common::arrayExtractAttr($children, 'obj_id');
+                }
+
+                $device = null;
+                foreach ($dev_result as $dev) {
+                    if (array_search($dev->dev_id, $devices) !== false) {
+                        $device = $dev;
+                        break;
+                    }
+                }
+                return $device;
+            }
         }
         return false;
     }

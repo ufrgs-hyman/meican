@@ -52,7 +52,7 @@ class client_info extends Model {
 
                 // try device
                 $dev = new device_info();
-                $device = $dev->getDeviceFromNode($reference);
+                $device = $dev->getDeviceFromNode($domain->dom_id, $reference);
 
                 if ($domain) {
                     $endpoint = new stdClass();

@@ -44,15 +44,15 @@ $args = $this->passedArgs;
 </form>
 
 <form>
-    <div id="edp-dialog-form" title="<?= _("Choose endpoint for a host"); ?>">
+    <div id="edp-dialog-form" title="<?= _("Search host endpoint"); ?>">
         <label for="edp_reference"><?= _("Fill in with a hostname, IP address or URN") ?></label>
         <br/>
-        <input type="text" name="edp_reference" id="edp_reference" size="50" style="margin-top: 10px;" placeholder="<?php echo _('Enter text') ?>" title="<?= _('Hostname or IP address'); ?>"/>
+        <input type="text" name="edp_reference" id="edp_reference" size="50" style="margin-top: 10px;" placeholder="<?php echo _('Enter text') ?>" title="<?= _('Hostname, IP address or URN'); ?>"/>
         <input type="hidden" id="edp-dialog"/>
     </div>
 </form>
 
-<div id="copy-edp-dialog" title="<?= _("Copy endpoint"); ?>">
+<div id="copy-edp-dialog" title="<?= _("Copy endpoint link"); ?>">
     <label for="edp_link"><?= _("Copy and paste the link below") ?></label>
     <br/>
     <input type="text" name="edp_link" id="edp_link" size="50" style="margin-top: 10px;" title="<?= _('Hostname or IP address'); ?>" value="urn"/>
