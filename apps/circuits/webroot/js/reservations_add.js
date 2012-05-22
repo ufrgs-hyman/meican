@@ -379,34 +379,28 @@ function chooseHostDst() {
     $("#edp-dialog-form").dialog("open");
 }
 
-//function copyEndpointLink(point) {
-//    $("#edp-dialog").val('dst');
-//    $("#edp_reference").val("");
-//    $("#copy-edp-dialog").dialog("open");
-//}
+function copyEndpointLink(point, urn, partial_urn) {
+    var searchDisabled = $('#' + point + '_copyedp').attr('class').search("disabled");
+    
+    if (searchDisabled == -1) {
+        if (urn != null)
+            $("#edp_link").val(urn);
+        else if (partial_urn != null)
+            $("#edp_link").val(partial_urn);
+        else
+            $("#edp_link").val("unknown");
+    
+        $("#copy-edp-dialog").dialog("open");
+        $("#edp_link").trigger('click');
+    }
+}
 
 function copySrcLink() {
-    if (src_urn != null)
-        $("#edp_link").val(src_urn);
-    else if (src_partial_urn != null)
-        $("#edp_link").val(src_partial_urn);
-    else
-        $("#edp_link").val("unknown");
-    
-    $("#copy-edp-dialog").dialog("open");
-    $("#edp_link").trigger('click');
+    copyEndpointLink('src', src_urn, src_partial_urn);
 }
 
 function copyDstLink() {
-    if (dst_urn != null)
-        $("#edp_link").val(dst_urn);
-    else if (dst_partial_urn != null)
-        $("#edp_link").val(dst_partial_urn);
-    else
-        $("#edp_link").val("unknown");
-    
-    $("#copy-edp-dialog").dialog("open");
-    $("#edp_link").trigger('click');
+    copyEndpointLink('dst', dst_urn, dst_partial_urn);
 }
 
 
