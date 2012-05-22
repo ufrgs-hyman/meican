@@ -35,18 +35,19 @@ class domain_info extends Resource_Model {
 
         if (count($parts) > 3) {
             $topo_attr = explode("=", $parts[3]);
-            $this->topology_id = NULL;
-            if (strtoupper($topo_attr[0]) == "DOMAIN")
-                $this->topology_id = $topo_attr[1];
+            if (count($topo_attr) == 2) {
+                $this->topology_id = null;
+                if (strtoupper($topo_attr[0]) == "DOMAIN")
+                    $this->topology_id = $topo_attr[1];
 
-            if (!$this->topology_id)
-                return FALSE;
+                if (!$this->topology_id)
+                    return false;
 
-            if ($result = $this->fetch(FALSE))
-                return $result[0];
+                if ($result = $this->fetch(false))
+                    return $result[0];
+            }
         }
         return false;
-        //$this = $result[0];
     }
     
     public function getTopologyId($urn_string) {

@@ -19,7 +19,7 @@ if ($type == 'source') {
                     <span class="ui-icon ui-icon-home" title="<?= _("Select this host") ?>"></span>
                 </div>
                 <div class="ui-state-default ui-corner-all" id="<?= $prefix ?>_choosehost" style="float: right; margin-right: 2px; cursor: pointer;">
-                    <span class="ui-icon ui-icon-search" title="<?= _("Search host endpoint") ?>"></span>
+                    <span class="ui-icon ui-icon-search" title="<?= _("Search for endpoint") ?>"></span>
                 </div>
                 <div class="ui-state-default ui-corner-all ui-state-disabled" id="<?= $prefix ?>_copyedp" style="float: right; margin: 0 2px 0 4px; cursor: pointer;">
                     <span class="ui-icon ui-icon-link" title="<?= _("Copy endpoint link") ?>"></span>

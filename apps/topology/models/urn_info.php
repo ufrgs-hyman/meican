@@ -41,6 +41,30 @@ class urn_info extends Resource_Model {
         
         return FALSE;
     }
+    
+    public function verifyValidPort($dev_id, $urn_string) {
+        if (!$dev_id)
+            return false;
+        
+        $parts = explode(":", $urn_string);
+
+        if (count($parts) > 5) {
+            $port_attr = explode("=", $parts[5]);
+            if (count($port_attr) == 2) {
+                $this->dev_id = $dev_id;
+                $this->port = null;
+                if (strtoupper($port_attr[0]) == "PORT")
+                    $this->port = $port_attr[1];
+
+                if (!$this->port)
+                    return false;
+
+                if ($this->fetch())
+                    return $this->port;
+            }
+        }
+        return false;
+    }
 
 }
 

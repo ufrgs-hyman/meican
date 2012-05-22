@@ -36,7 +36,7 @@ class client_info extends Model {
         $parts = explode(":", $reference);
         $urnObj = null;
 
-        if (strtoupper($parts[0]) == "URN") {
+        if (@strtoupper($parts[0]) == "URN") {
             // it's a URN
             $urn_info = new urn_info();
             $urn_info->urn_string = $reference;
@@ -44,27 +44,37 @@ class client_info extends Model {
                 // URN was found in database
                 $urnObj = $urn_res[0];
             } else {
-                // try to get information from URN
-                // 
-                // try domain
-                $dom = new domain_info();
-                $domain = $dom->getOSCARSDomain($reference);
+                // try to get information from URN - partially filling in
+                $hasDomain = stripos($reference, 'domain=') === false ? false : true;
+                $hasNode = stripos($reference, 'node=') === false ? false : true;
+                $hasPort = stripos($reference, 'port=') === false ? false : true;
 
-                // try device
-                $dev = new device_info();
-                $device = $dev->getDeviceFromNode($domain->dom_id, $reference);
-
-                if ($domain) {
+                if ($hasDomain) {
                     $endpoint = new stdClass();
-                    $endpoint->domain = $domain->dom_id;
-                    if ($device) {
-                        $endpoint->network = $device->net_id;
-                        $endpoint->device = $device->dev_id;
-                    } else {
-                        $endpoint->network = null;
-                        $endpoint->device = null;
+                    $endpoint->domain = -1;
+                    $endpoint->network = null;
+                    $endpoint->device = $hasNode ? -1 : null;
+                    $endpoint->port = $hasPort ? -1 : null;
+
+                    // try domain
+                    $dom = new domain_info();
+                    if ($domain = $dom->getOSCARSDomain($reference)) {
+                        $endpoint->domain = $domain->dom_id;
+
+                        // try device
+                        $dev = new device_info();
+                        if ($device = $dev->getDeviceFromNode($domain->dom_id, $reference)) {
+                            $endpoint->network = $device->net_id;
+                            $endpoint->device = $device->dev_id;
+
+                            // try port
+                            $urn = new urn_info();
+                            if ($port = $urn->verifyValidPort($device->dev_id, $reference)) {
+                                $endpoint->port = $port;
+                            }
+                        }
                     }
-                    $endpoint->port = null;
+                    
                     return $endpoint;
                 } else
                     return false;
@@ -97,8 +107,8 @@ class client_info extends Model {
             }
         }
 
-        if ($urnObj) {
-            $dom_id = null;
+        if (is_a($urnObj, 'urn_info')) {
+            $dom_id = -1;
             $aco = new Acos($urnObj->net_id, 'network_info');
             if ($aco_parent = $aco->getParentNodes()) {
                 if ($aco_parent[0]->model = 'domain_info') {
@@ -106,20 +116,16 @@ class client_info extends Model {
                 }
             }
 
-            if ($dom_id) {
-                $endpoint = new stdClass();
-                $endpoint->domain = $dom_id;
-                $endpoint->network = $urnObj->net_id;
-                $endpoint->device = $urnObj->dev_id;
-                $endpoint->port = $urnObj->port;
+            $endpoint = new stdClass();
+            $endpoint->domain = $dom_id;
+            $endpoint->network = $urnObj->net_id;
+            $endpoint->device = $urnObj->dev_id;
+            $endpoint->port = $urnObj->port;
 
-                // se precisar pegar mais detalhes do endpoint
-                //$endpoint = MeicanTopology::getURNDetails($dom_id, $urn->urn_string);
-                //Log::write("debug", "sucesso, retornando...");
-                return $endpoint;
-            } else {
-                return false;
-            }
+            // se precisar pegar mais detalhes do endpoint
+            //$endpoint = MeicanTopology::getURNDetails($dom_id, $urn->urn_string);
+            //Log::write("debug", "sucesso, retornando...");
+            return $endpoint;
         }
 
         return false;

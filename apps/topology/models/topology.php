@@ -368,9 +368,9 @@ class MeicanTopology {
                 
                 $acl = AclLoader::getInstance();
                 if ($acl->checkACL('create', 'urn_info', $u->urn_id)) {
-                    $port->allow_create = TRUE;
+                    $port->allow_create = true;
                 } else {
-                    $port->allow_create = FALSE;
+                    $port->allow_create = false;
                 }
 
                 $device->ports = array();

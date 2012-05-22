@@ -275,7 +275,21 @@ function lessFields(elem) {
 /*----------------------------------------------------------------------------*/
 
 function fillPoint(point, endpointObj) {
+    var checkAcl = false;
+    if (point == "src")
+        checkAcl = true;
+    
+    if (endpointObj.domain == -1) {
+        setDialogMessage(flash_domainNotFound, "error");
+        return;
+    }
+    
     var dom_found = false;
+    var net_found = false;
+    
+    var network_name = null;
+    var coord = null;
+    
     for (var i in domains) {
         if (domains[i].id == endpointObj.domain) {
             dom_found = true;
@@ -283,18 +297,30 @@ function fillPoint(point, endpointObj) {
             
             if (endpointObj.network != null) {
                 for (var j in domains[i].networks) {
-                    var network_name = domains[i].networks[j].name;
+                    network_name = domains[i].networks[j].name;
                     if (domains[i].networks[j].id == endpointObj.network) {
-                        var coord = new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude);
-                        $.fn.mapEdit.markerClick(coord, endpointObj.domain, domain_name, domains[i].topology_id, endpointObj.network, network_name, point);
-                        break;
+                        if (!checkAcl || domains[i].networks[j].allow_create) {
+                            coord = new google.maps.LatLng(domains[i].networks[j].latitude, domains[i].networks[j].longitude);
+                            $.fn.mapEdit.markerClick(coord, endpointObj.domain, domain_name, domains[i].topology_id, endpointObj.network, network_name, point);
+                            net_found = true;
+                            break;
+                        } else {
+                            setDialogMessage(flash_networkCannotBeSource, "error");
+                            return;
+                        }
                     }
                 }
             } else {
                 if (domains[i].networks.length == 1) {
-                    var network_name = domains[i].networks[0].name;
-                    var coord = new google.maps.LatLng(domains[i].networks[0].latitude, domains[i].networks[0].longitude);
-                    $.fn.mapEdit.markerClick(coord, endpointObj.domain, domain_name, domains[i].topology_id, domains[i].networks[0].network_id, network_name, point);
+                    if (!checkAcl || domains[i].networks[0].allow_create) {
+                        network_name = domains[i].networks[0].name;
+                        coord = new google.maps.LatLng(domains[i].networks[0].latitude, domains[i].networks[0].longitude);
+                        $.fn.mapEdit.markerClick(coord, endpointObj.domain, domain_name, domains[i].topology_id, domains[i].networks[0].id, network_name, point);
+                        net_found = true;
+                    } else {
+                        setDialogMessage(flash_domainCannotBeSource, "error");
+                        return;
+                    }
                 } else {
                     $("#"+point+"_domain").html(domain_name);
                     setDomainPartialURN(point, domains[i].topology_id);
@@ -305,19 +331,81 @@ function fillPoint(point, endpointObj) {
             break;
     }
     
-    if (endpointObj.device != null) {
-        $("#" + point + "_device").val(endpointObj.device);
-        map_changeDevice(point);
+    if (dom_found && endpointObj.device == -1) {
+        setDialogMessage(flash_deviceNotFound, "error");
+        return;
     }
     
-    if (endpointObj.port != null) {
-        $("#" + point + "_port").val(endpointObj.port);
-        map_changePort(point);
+    if (net_found) {
+        if (endpointObj.device != null) {
+            
+            if (checkAcl && !deviceAllowCreate(endpointObj.device)) {
+                setDialogMessage(flash_deviceCannotBeSource, "error");
+                return;
+            }
+                
+            $("#" + point + "_device").val(endpointObj.device);
+            map_changeDevice(point);
+
+            if (checkAcl && (endpointObj.port != null) && (endpointObj.port != -1) && !portAllowCreate(endpointObj.port)) {
+                setDialogMessage(flash_portCannotBeSource, "error");
+                return;
+            }
+                    
+            if (endpointObj.port != null) {
+                $("#" + point + "_port").val(endpointObj.port);
+                map_changePort(point);
+                    
+                if (endpointObj.port == -1) {
+                    setDialogMessage(flash_portNotFound, "error");
+                    return;
+                }
+            }
+            
+            if ($("#" + point + "_port").val() != -1)
+                $("#edp_dialog_form").dialog("close");
+            else
+                setDialogMessage(flash_portNotSet, "warning");
+        } else
+            setDialogMessage(flash_deviceNotSet, "warning");
+    } else
+        setDialogMessage(flash_networkNotSet, "warning");
+}
+
+function deviceAllowCreate(device) {
+    var devices = map_getDevices($("#src_domain").html(), $("#src_network").html());
+    var allow_create = false;
+    for (var d in devices) {
+        if (devices[d].id == device) {
+            allow_create = devices[d].allow_create;
+            break;
+        }
     }
+    return allow_create;
+}
+
+function portAllowCreate(port) {
+    var ports = map_getPorts($("#src_domain").html(), $("#src_network").html(), $("#src_device").val());
+    var allow_create = false;
+    for (var p in ports) {
+        if (ports[p].port_number == port) {
+            allow_create = ports[p].allow_create;
+            break;
+        }
+    }
+    return allow_create;
+}
+
+function setDialogMessage(message, type) {
+    $("#dialog_msg").removeClass();
+    $("#dialog_msg").addClass(type);
+    $("#dialog_msg").html(message);
 }
 
 function selectThisHost(point) {
     clearFlash();
+    $.fn.mapEdit.clearPoint(point);
+    
     $.ajax ({
         type: "POST",
         url: baseUrl+'circuits/reservations/selectThisHost',
@@ -345,7 +433,9 @@ function thisHostDst() {
 }
 
 function chooseHost(point) {
-    clearFlash();
+    $("#dialog_msg").empty();
+    $.fn.mapEdit.clearPoint(point);
+    
     $.ajax ({
         type: "POST",
         url: baseUrl+'circuits/reservations/chooseHost',
@@ -357,8 +447,9 @@ function chooseHost(point) {
         success: function(data) {
             if (data) {
                 fillPoint(this.point, data);
-            } else
-                setFlash(flash_couldNotGetHost, "error");
+            } else {
+                setDialogMessage(flash_couldNotGetHost, "error");
+            }
         },
         error: function(jqXHR) {
             if (jqXHR.status == 406)
@@ -368,15 +459,13 @@ function chooseHost(point) {
 }
 
 function chooseHostSrc() {
-    $("#edp-dialog").val('src');
-    $("#edp_reference").val("");
-    $("#edp-dialog-form").dialog("open");
+    $("#edp_dialog").val('src');
+    $("#edp_dialog_form").dialog("open");
 }
 
 function chooseHostDst() {
-    $("#edp-dialog").val('dst');
-    $("#edp_reference").val("");
-    $("#edp-dialog-form").dialog("open");
+    $("#edp_dialog").val('dst');
+    $("#edp_dialog_form").dialog("open");
 }
 
 function copyEndpointLink(point, urn, partial_urn) {
@@ -390,7 +479,7 @@ function copyEndpointLink(point, urn, partial_urn) {
         else
             $("#edp_link").val("unknown");
     
-        $("#copy-edp-dialog").dialog("open");
+        $("#copy_edp_dialog").dialog("open");
         $("#edp_link").trigger('click');
     }
 }
@@ -812,7 +901,7 @@ function map_changeDevice(where) {
     $(port_id).clearSelectBox();
     
     if ($(device_id).val() != -1) {
-        var ports = map_getPorts($(domain_id).html(), $(network_id).html(), $(device_id).val(), where);
+        var ports = map_getPorts($(domain_id).html(), $(network_id).html(), $(device_id).val());
         if (where == 'src')
             map_fillPorts(port_id, ports, -1, true);
         else
@@ -838,14 +927,12 @@ function map_changePort(where) {
     }
 }
 
-function map_getPorts(domain_id, network_id, device_id, where) {
+function map_getPorts(domain_id, network_id, device_id) {
     var devices = map_getDevices(domain_id, network_id);
     var ports = null;
     if (devices) {
         for (var i=0; i<devices.length; i++) {
             if (devices[i].id == device_id) {
-                //var confirmation_device = "#confirmation_" + where + "_device";                
-                //$(confirmation_device).html(devices[i].name);
                 ports = devices[i].ports;
                 break;
             }
@@ -1435,11 +1522,13 @@ function validateBand(band_value) {
         clearPoint: function (point) {
             var n = 0;
             if (point == "src") {
+                src_partial_urn = null;
                 if (!srcSet)
                     return ;
                 srcSet = false;
                 n=0;
             } else if (point == "dst") {
+                dst_partial_urn = null;
                 if (!dstSet)
                     return ;
                 dstSet = false;
@@ -1467,12 +1556,10 @@ function validateBand(band_value) {
     
         clearSrc: function () {//limpa ponto de origem
             $.fn.mapEdit.clearPoint('src');
-            src_partial_urn = null;
         },
     
         clearDst: function () {//limpa ponto de destino
             $.fn.mapEdit.clearPoint('dst');
-            dst_partial_urn = null;
         },
         
         clearAll: function (){
@@ -1577,23 +1664,23 @@ function validateBand(band_value) {
         $('#src_copyedp').click(copySrcLink);
         $('#dst_copyedp').click(copyDstLink);
         
-        $("#edp-dialog-form").dialog({
+        $("#edp_dialog_form").dialog({
             autoOpen: false,
             modal: true,
             resizable: false,
             width: "auto",
+            beforeClose: function() {
+                $("#edp_reference").val("");
+                $("#dialog_msg").empty();
+            },
             buttons: [
             {
                 text: ok_string,
                 click: function() {
-                    chooseHost($('#edp-dialog').val());
-                    //$(this).dialog("close");
+                    chooseHost($('#edp_dialog').val());
                 }
             },
-            {
-                text: cancel_string,
-                click: function() {$(this).dialog("close");}
-            }]
+            ]
         });
         
         $("#edp_reference").autocomplete({
@@ -1602,12 +1689,12 @@ function validateBand(band_value) {
         
 //        $("#edp_reference").keyup(function(event) {
 //            if (event.which == 13) {
-//                chooseHost($('#edp-dialog').val());
-//                $("#edp-dialog-form").dialog("close");
+//                chooseHost($('#edp_dialog').val());
+//                $("#edp_dialog_form").dialog("close");
 //            }
 //        });
 
-        $("#copy-edp-dialog").dialog({
+        $("#copy_edp_dialog").dialog({
             autoOpen: false,
             modal: true,
             resizable: false,
