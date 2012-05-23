@@ -428,6 +428,7 @@ class reservations extends Controller {
         // array for autoComplete host
         $client = new client_info();
         $hostArray = array();
+        $hostArray[] = "urn:ogf:network:domain=";
         if ($allClients = $client->fetch(false)) {
             foreach ($allClients as $c) {
                 if ($c->alias)
