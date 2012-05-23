@@ -499,11 +499,10 @@ class reservations extends Controller {
             "flash_domainNotFound" => _("Domain not found"),
             "flash_deviceNotFound" => _("Device not found"),
             "flash_portNotFound" => _("Port not found"),
-            "flash_networkNotSet" => _("Network not set"),
+            "flash_pointNotSet" => _("Could not set point, probably there is not enough parameters"),
             "flash_deviceNotSet" => _("Device not set"),
             "flash_portNotSet" => _("Port not set"),
-            "flash_domainCannotBeSource" => _("Domain cannot be set as source"),
-            "flash_networkCannotBeSource" => _("Network cannot be set as source"),
+            "flash_pointCannotBeSource" => _("The point specified cannot be set as source"),
             "flash_deviceCannotBeSource" => _("Device cannot be set as source"),
             "flash_portCannotBeSource" => _("Port cannot be set as source"),
             // endpoints

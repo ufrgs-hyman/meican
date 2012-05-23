@@ -305,7 +305,7 @@ function fillPoint(point, endpointObj) {
                             net_found = true;
                             break;
                         } else {
-                            setDialogMessage(flash_networkCannotBeSource, "error");
+                            setDialogMessage(flash_pointCannotBeSource, "error");
                             return;
                         }
                     }
@@ -318,13 +318,14 @@ function fillPoint(point, endpointObj) {
                         $.fn.mapEdit.markerClick(coord, endpointObj.domain, domain_name, domains[i].topology_id, domains[i].networks[0].id, network_name, point);
                         net_found = true;
                     } else {
-                        setDialogMessage(flash_domainCannotBeSource, "error");
+                        setDialogMessage(flash_pointCannotBeSource, "error");
                         return;
                     }
-                } else {
-                    $("#"+point+"_domain").html(domain_name);
-                    setDomainPartialURN(point, domains[i].topology_id);
                 }
+//                else {
+//                    $("#"+point+"_domain").html(domain_name);
+//                    setDomainPartialURN(point, domains[i].topology_id);
+//                }
             }
         }
         if (dom_found)
@@ -369,7 +370,7 @@ function fillPoint(point, endpointObj) {
         } else
             setDialogMessage(flash_deviceNotSet, "warning");
     } else
-        setDialogMessage(flash_networkNotSet, "warning");
+        setDialogMessage(flash_pointNotSet, "warning");
 }
 
 function deviceAllowCreate(device) {
