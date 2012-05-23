@@ -1355,10 +1355,10 @@ function validateBand(band_value) {
                 }
                 
                 contextMenu.find('a').unbind('click');
-//                contextMenu.find('a[class=ui-state-disabled]').click( function() {
-//                    setFlash("Ponto desejado não pode ser origem");
-//                    return false;
-//                });
+                contextMenu.find('a[class=ui-state-disabled]').click( function() {
+                    //setFlash("Ponto desejado não pode ser origem");
+                    return false;
+                });
                 
                 contextMenu.find('a[class!=ui-state-disabled]').click( function() {
                     // fade out the menu
