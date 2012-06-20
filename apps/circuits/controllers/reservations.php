@@ -135,7 +135,7 @@ class reservations extends Controller {
             $args = new stdClass();
             $args->title = ($this->action == 'status') ? _("Active and pending reservations") : _("History reservations");
             $args->message = ($this->action == 'status') ? _("You have no active or pending reservation, try <a href='history'>history</a> or click the button below to create a <a href='add'>new</a> one")
-                    : _("You have no reservation in history, click the button below to create a <a href='add'>new</a> one");
+                    : _("You have no reservation in history, click the button below to create a <a href='add'>new reservation</a>");
             $args->link = array("action" => "add");
             $this->setArgsToBody($args);
             

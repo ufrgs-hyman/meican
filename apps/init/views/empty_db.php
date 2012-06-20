@@ -3,7 +3,7 @@
 <?php endif; ?>
 
 <?php if (!empty($message)): ?>
-<h3><?php echo $message; ?></h3>
+<h4><?php echo $message; ?></h4>
 <?php endif; ?>
 
 <?php if (!empty($link)): ?>
