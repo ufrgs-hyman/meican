@@ -389,3 +389,5 @@ input[disabled], button[disabled]{
 }
 
 .ui-state-disabled, [disabled] { opacity: .35; filter:Alpha(Opacity=35); background-image: none; }
+
+:focus {outline: 0;} /*no outline (in chrome) */

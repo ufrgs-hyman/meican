@@ -1458,3 +1458,5 @@ form #recaptcha_response_field {
 #dialog_msg.warning {
     color: #e18a29;
 }
+
+:focus {outline: 0;} /*no outline (in chrome) */
