@@ -1460,3 +1460,7 @@ form #recaptcha_response_field {
 }
 
 :focus {outline: 0;} /*no outline (in chrome) */
+
+#reservation_add #res_name {
+    width: 600px;
+}
