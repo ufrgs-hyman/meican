@@ -693,7 +693,7 @@ td select {
 #info_box ul a {
     float: right;
     display: block;
-    padding: 0.8em;
+    padding: 9px;
     color: #D8E7F3;
     text-decoration: none;	
     text-shadow: 2px 2px 0.2em black, -1px -1px #444;
