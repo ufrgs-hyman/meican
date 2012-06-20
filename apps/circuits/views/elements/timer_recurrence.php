@@ -20,7 +20,7 @@ $freq_types[] = $freq;
 
 <div id="recurrence" style="display:none;">
 
-    <h2><?php echo _("Recurrence pattern"); ?></h2>
+    <h3><?php echo _("Recurrence pattern"); ?></h3>
 
     <div class="recurrence-item">
         <?php
@@ -87,7 +87,7 @@ $freq_types[] = $freq;
     
     <div style="clear: both;"></div>
     
-    <h2><?php echo _("Range of recurrence"); ?></h2>
+    <h3><?php echo _("Range of recurrence"); ?></h3>
     
     <div class="recurrence-item">
         <?php echo _("Starts on"); ?>:
