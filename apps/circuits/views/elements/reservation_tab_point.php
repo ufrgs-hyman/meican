@@ -24,9 +24,7 @@ if ($type == 'source') {
                 <div class="ui-state-default ui-corner-all ui-state-disabled" id="<?= $prefix ?>_copyedp" style="float: right; margin: 0 2px 0 4px; cursor: pointer;">
                     <span class="ui-icon ui-icon-link" title="<?= _("Copy endpoint link") ?>"></span>
                 </div>
-                <div style="float: none;">
-                    <strong><?php echo $label; ?></strong>
-                </div>
+                <div class="title"><?php echo $label; ?></div>
             </th>
         </tr>
     </thead>

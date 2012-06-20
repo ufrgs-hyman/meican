@@ -1464,3 +1464,9 @@ form #recaptcha_response_field {
 #reservation_add #res_name {
     width: 600px;
 }
+
+.reservation-point .title{
+    font-weight: bold;
+    margin: 1px;
+    float: none;
+}
