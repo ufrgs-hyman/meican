@@ -205,7 +205,7 @@ div#flash_box .closeFlash {
 #loading {
     position: absolute;
     width: 100%;
-    top: 4px;
+    top: 0;
     left: 0;
     text-align: center;
     color: black;
