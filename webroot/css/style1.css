@@ -636,6 +636,7 @@ input[disabled], button[disabled], .ui-state-disabled, [disabled]{
 
 #bandwidth{
     width:64px;
+    border: 0;
 }
 
 
