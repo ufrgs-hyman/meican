@@ -58,7 +58,7 @@
         <div id="left-panel">
             <div id="logo">
                 <p>
-                    <img src="<?php echo $this->url(''); ?>webroot/img/meican_branco.png" class="logo" style="height: 28px;" alt="MEICAN"/>
+                    <img src="<?php echo $this->url(''); ?>webroot/img/meican_branco.png" class="logo" alt="MEICAN"/>
                 </p>
             </div>
             <?php echo $this->element('menu', array('app' => 'init')); ?>
