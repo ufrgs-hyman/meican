@@ -14,7 +14,7 @@ $(function() {
             clearInterval(js_function_interval);
         })
         .bind('pjax:end', function(xhr) {
-            window.scroll(0, 0);
+            $('#canvas').scrollTop(0);
             $(window).trigger('resize');
             $('#loading').hide();
         });
