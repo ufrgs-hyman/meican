@@ -1470,3 +1470,6 @@ form #recaptcha_response_field {
     margin: 1px;
     float: none;
 }
+
+::-webkit-input-placeholder  { color:#ddd; }
+input:-moz-placeholder { color:#ddd; }
