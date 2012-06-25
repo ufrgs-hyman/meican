@@ -49,8 +49,4 @@
         </div>
         <div style="clear:both;"></div>
     </div>
-    <div id="tabs-4" class="control_tab">
-        <input class="back" type="button" onClick="redir('<?php $action = ($refresh) ? "status" : "history";
-        echo $this->buildLink(array("action" => $action)); ?>');" value="<?php echo _("Back to reservations"); ?>"/>
-    </div>
 </div>
