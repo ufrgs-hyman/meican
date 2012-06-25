@@ -16,7 +16,7 @@ $finish_time = $argsToElement->finish_time;
 <input type="text" name="finish_time" size="7" value="<?php echo $finish_time; ?>" class="hourPicker" id="finalTime"/>
 <input type="text" name="finish_date" size="9" value="<?php echo $finish_date; ?>" readonly class="datePicker" id="finalDate"/>
 &nbsp;&nbsp;&nbsp;
-<label id="duration"></label>
+<label id="duration" str="<?php echo _("Duration") ?>: "></label>
 <input type="checkbox" name="repeat_chkbox" id="repeat_chkbox"/>
 <label for="repeat_chkbox"> <?php echo _("Repeat..."); ?></label>
 

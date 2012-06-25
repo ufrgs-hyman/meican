@@ -510,5 +510,5 @@ function calcDuration(){
         }        
     } 
     
-    $("#duration").html(duration); 
+    $("#duration").html($("#duration").attr('str')+duration); 
 }
