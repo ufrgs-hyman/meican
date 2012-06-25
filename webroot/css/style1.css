@@ -1478,3 +1478,11 @@ form #recaptcha_response_field {
 
 ::-webkit-input-placeholder  { color:#ddd; }
 input:-moz-placeholder { color:#ddd; }
+
+.label-description {
+    display:inline; color:#3a5879; font-weight: bold;
+}
+
+label {
+    margin-right: 6px;
+}
