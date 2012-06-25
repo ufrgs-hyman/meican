@@ -42,7 +42,7 @@ class gui extends Controller {
         if ($noReq = $request->checkRequests()) {
             if ($noReq == 1)
                 $noReq = "one";
-            $noReq = "<a href=\"".  Dispatcher::getInstance()->url(array('controller' => 'requests')) . "\">$noReq</a>";
+            $noReq = "<a href=\"".  Dispatcher::getInstance()->url(array('app' => 'bpm', 'controller' => 'requests')) . "\">$noReq</a>";
             $msg = _('You have') . " $noReq " . _('new requests to be authorized');                
             $this->setFlash($msg, 'warning');
         }
