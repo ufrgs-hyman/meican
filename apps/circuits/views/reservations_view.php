@@ -10,7 +10,7 @@
             <div id="bandwidth_bar">
                 <div id="bandwidth_bar_text">
                     <div style="text-align:center;">
-                        <label id="lb_bandwidth"><?php echo $bandwidth . " " . _("Mbps") ?></label>
+                        <input type="text" id="lb_bandwidth" value="<?php echo $bandwidth . " " . _("Mbps") ?>" disabled="disabled" class="ui-widget ui-spinner-input"/>
                     </div>
                 </div>
                 <div id="bandwidth_bar_inside" style="width: <?= round($bandwidth * 100 / 1000); ?>%"></div>

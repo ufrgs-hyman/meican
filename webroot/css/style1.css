@@ -639,6 +639,10 @@ input[disabled], button[disabled], .ui-state-disabled, [disabled]{
     border: 0;
 }
 
+#lb_bandwidth{
+    width:64px;
+}
+
 
 
 td select {
