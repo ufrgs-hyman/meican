@@ -71,8 +71,9 @@
         </div>
         
         <div id="footer">
-            <div class="logo-rnp">
-                <img src="<?php echo $this->url(''); ?>webroot/img/rnpmission.gif" style="height: 60px;" alt="RNP"/>
+            <div class="logos-footer">
+                <a href="http://www.rnp.br" title="RNP"><img src="<?php echo $this->url(''); ?>webroot/img/rnp.png" alt="RNP" style="height:90px;"/></a>
+                <a href="http://networks.inf.ufrgs.br/" title="Computer Networks UFRGS"><img src="<?php echo $this->url(''); ?>webroot/img/networks.jpg" alt="networks" style="height:90px;"/></a>
             </div>
         </div>
         
