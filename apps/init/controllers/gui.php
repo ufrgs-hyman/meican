@@ -40,18 +40,10 @@ class gui extends Controller {
         $request = new request_info();
 
         if ($noReq = $request->checkRequests()) {
-            
-            switch ($noReq) {
-                case 1:
-                    $msg = _('You have one new request to be authorized');
-                    break;
-                default:
-                    $msg = _('You have');
-                    $msg .= " $noReq ";
-                    $msg .= _('new requests to be authorized');
-                    break;
-            }
-                
+            if ($noReq == 1)
+                $noReq = "one";
+            $noReq = "<a href=\"".  Dispatcher::getInstance()->url(array('controller' => 'requests')) . "\">$noReq</a>";
+            $msg = _('You have') . " $noReq " . _('new requests to be authorized');                
             $this->setFlash($msg, 'warning');
         }
         $this->render('welcome');
