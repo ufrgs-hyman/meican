@@ -1,4 +1,7 @@
-<h1><?php echo _("Reservation name") . ": " . $res_name . " (" . $usr_login . ")"; ?></h1>
+<h1>
+    <label for="res_name"><?= _("Reservation name") . ": "; ?></label>
+    <div class="reservation-name"><?=$res_name . " (" . $usr_login . ")"?></div>
+</h1>
 <div id="tabs-res" class="reservation-tabs" style="position:relative;">
     <div class="tab-overlay fade-overlay"> </div>
     <div id="tabs-1">

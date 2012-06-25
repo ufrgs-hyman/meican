@@ -7,7 +7,7 @@ $args = $this->passedArgs;
 
 <form id="reservation_add" method="POST" action="<?= $this->buildLink(array('action' => 'submit')) ?>">
     <h1>
-        <label for="res_name"><?= _("New circuit name:") ?></label>
+        <label for="res_name"><?= _("Reservation name") . ": " ?></label>
         <input type="text" name="res_name" id="res_name" size="50" placeholder="<?= _('Typing a name for the reservation will unlock the map') ?>" title="<?= _('To create a reservation, first type a name') ?>"/>
     </h1>
     <div id="tabs-res" class="reservation-tabs" style="position:relative;">

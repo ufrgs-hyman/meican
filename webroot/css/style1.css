@@ -1486,3 +1486,8 @@ input:-moz-placeholder { color:#ddd; }
 label {
     margin-right: 6px;
 }
+
+.reservation-name{
+    color: #4F4F4F;
+    display: inline;
+}
