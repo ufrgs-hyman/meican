@@ -394,8 +394,8 @@ div.controls {
 
 div.control_tab {
     width: 100%;
-    margin-bottom: 15px;
-    height: 40px;
+    /*margin-bottom: 1em;*/
+    height: 2em;
 }
 
 /* =============================================================================
