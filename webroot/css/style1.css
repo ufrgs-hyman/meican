@@ -630,7 +630,7 @@ input[disabled], button[disabled], .ui-state-disabled, [disabled]{
 
 #bandwidth_un{
     position: absolute;
-    bottom: 6px;
+    bottom: 4px;
     left: 60px;
 }
 
