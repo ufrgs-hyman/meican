@@ -270,7 +270,8 @@ function clearFlash(){
         flash: function (message, status){
             if (!status)
                 status = "info";
-            $('#flash_box').append('<div class="' + status + ' ui-corner-all shadow" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-closethick close-button" onclick="clearFlash();"></span>'+ message +
+            //this code is also used in elements/flash_box.php
+            $('#flash_box').append('<div class="' + status + '"><p><span class="ui-icon ui-icon-closethick close-button" onclick="clearFlash();"></span>'+ message +
                 '</p>');
             window.scroll(0, 0);
             window.onscroll = $.windowScroll;

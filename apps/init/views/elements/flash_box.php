@@ -8,7 +8,8 @@
         $status = $ar[0];
         $message = $ar[1];
         ?>
-        <div class="<?php echo $status; ?> ui-corner-all shadow" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-closethick close-button" onclick="clearFlash();"></span><?php echo $message; ?></p>
+        <div class="<?php echo $status; ?>">
+            <p><span class="ui-icon ui-icon-closethick close-button" onclick="clearFlash();"></span><?php echo $message; ?></p>
         </div>
-    <?php endforeach; ?>
+    <?php endforeach; //When changing this code, remember to also change main.js flash?>
 </div>
