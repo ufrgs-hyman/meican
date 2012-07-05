@@ -20,7 +20,10 @@ class MeicanTopology {
         if ($domain = $domain_info->fetch()) {
             $dom = $domain[0];
 
-            $os = new OSCARSReservation();
+			$versTest = new OSCARSVersionTester($domain_info->getDomVersion());	// Added by Jeremy
+            // $os = new OSCARSReservation();		// OLD DESIGN
+			$os = $versTest->checkVersion();		// NEW DESIGN -- Added by Jeremy
+			
             $os->setOscarsUrl($dom->idc_url);
 
             if ($os->getUrns()) {
@@ -368,9 +371,9 @@ class MeicanTopology {
                 
                 $acl = AclLoader::getInstance();
                 if ($acl->checkACL('create', 'urn_info', $u->urn_id)) {
-                    $port->allow_create = true;
+                    $port->allow_create = TRUE;
                 } else {
-                    $port->allow_create = false;
+                    $port->allow_create = FALSE;
                 }
 
                 $device->ports = array();

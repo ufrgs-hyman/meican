@@ -201,10 +201,6 @@ class reservation_info extends Resource_Model {
         return $object;
     }
 
-    /**
-     *
-     * @todo migrar função para nova estrutura
-     */
     public function sendForAuthorization() {
 
         //cria nova request
@@ -302,7 +298,10 @@ class reservation_info extends Resource_Model {
             $domain_info->dom_id = $gri[0]->dom_id;
             $domain = $domain_info->fetch(FALSE);
 
-            $oscars = new OSCARSReservation();
+			$versTest = new OSCARSVersionTester($domain_info->getDomVersion());	// Added by Jeremy
+			$oscars = $versTest->checkVersion();		// NEW DESIGN -- Added by Jeremy
+            //$oscars = new OSCARSReservation();		// OLD DESIGN
+
             $oscars->setGri($gri[0]->gri_descr);
             $oscars->setOscarsUrl($domain[0]->idc_url);
 
