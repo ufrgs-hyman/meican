@@ -207,9 +207,9 @@ class reservations extends Controller {
             
             Log::write('debug', "gri list ro refresh:\n" . print_r($griList,true));
             
-            //$oscarsRes = new OSCARSReservation();						// OLD DESIGN
+            //$oscarsRes = new OSCARSReservation();			// OLD DESIGN
             $versTest = new OSCARSVersionTester($dom->getDomVersion());	// Added by Jeremy
-            $oscarsRes = $versTest->checkVersion();						// NEW DESIGN -- Added by Jeremy
+            $oscarsRes = $versTest->checkVersion();			// NEW DESIGN -- Added by Jeremy
             
             $oscarsRes->setOscarsUrl($idc_url);
             $oscarsRes->setGrisString($griList);

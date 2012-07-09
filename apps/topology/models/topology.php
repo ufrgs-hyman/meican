@@ -20,9 +20,9 @@ class MeicanTopology {
         if ($domain = $domain_info->fetch()) {
             $dom = $domain[0];
             
-            // $os = new OSCARSReservation();									// OLD DESIGN
+            // $os = new OSCARSReservation();					// OLD DESIGN
             $versTest = new OSCARSVersionTester($domain_info->getDomVersion());	// Added by Jeremy
-            $os = $versTest->checkVersion();									// NEW DESIGN -- Added by Jeremy
+            $os = $versTest->checkVersion();					// NEW DESIGN -- Added by Jeremy
 			
             $os->setOscarsUrl($dom->idc_url);
 

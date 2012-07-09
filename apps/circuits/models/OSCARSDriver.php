@@ -6,7 +6,7 @@
 * 
 * This class is Abstract and extended by concrete classes OSCARSDriver05 and OSCARSDriver06.
 * - Concrete classes inherit all variables, and getter/setter functions.
- */
+*/
 abstract class OSCARSDriver {
 
 	/**********************************************************************************************
@@ -24,7 +24,7 @@ abstract class OSCARSDriver {
     protected $destIsTagged;
     protected $srcTag;
     protected $destTag;
-	protected $version;
+    protected $version;
     protected $path; //deve conter o srcEndpoint e o destEndpoint e os hops intermediários separados por ';'
     protected $status;
     protected $requestTime;
@@ -32,68 +32,67 @@ abstract class OSCARSDriver {
     protected $grisString;		// Used for call to listReservations()
     protected $statusArray = Array();
     public $urns = Array();
-
-
-	/**********************************************************************************************
-	* GETTERS and SETTER functions -- Inherited by ALL concrete children.
-	**********************************************************************************************/
+    
+    /**********************************************************************************************
+    * GETTERS and SETTER functions -- Inherited by ALL concrete children.
+    **********************************************************************************************/
     public function setOscarsUrl($idc_url) 
-	{
+    {
         $this->oscarsUrl = $idc_url;
     }
 
     public function setGri($gri) 
-	{
+    {
         $this->gri = $gri;
     }
 
     public function getGri() 
-	{
+    {
         return $this->gri;
     }
 
     public function setDescription($description) 
-	{
+    {
         $this->description = $description;
     }
 
     public function setSrcEndpoint($srcEndpoint) 
-	{
+    {
         $this->srcEndpoint = $srcEndpoint;
     }
 
     public function setDestEndpoint($destEndpoint) 
-	{
+    {
         $this->destEndpoint = $destEndpoint;
     }
 
     public function setBandwidth($bandwidth) 
-	{
+    {
         $this->bandwidth = $bandwidth;
     }
 
     public function setStartTimestamp($startTimestamp) 
-	{
+    {
         $this->startTimestamp = $startTimestamp;
     }
 
     public function setEndTimestamp($endTimestamp) 
-	{
+    {
         $this->endTimestamp = $endTimestamp;
     }
 
     public function setPath($path) 
-	{
+    {
         $this->path = $path;
     }
     
     public function getPath() 
-	{
+    {
         return $this->path;
     }
 
     public function setSrcIsTagged($isTagged) 
-	{
+    {
         if ($isTagged)
             $this->srcIsTagged = "true";
         else
@@ -101,12 +100,12 @@ abstract class OSCARSDriver {
     }
 
     public function setSrcTag($vlan) 
-	{
+    {
         $this->srcTag = $vlan;
     }
 
     public function setDestIsTagged($isTagged) 
-	{
+    {
         if ($isTagged)
             $this->destIsTagged = "true";
         else
@@ -114,89 +113,89 @@ abstract class OSCARSDriver {
     }
 
     public function setDestTag($vlan) 
-	{
+    {
         $this->destTag = $vlan;
     }
 
     public function setStatus($status) 
-	{
+    {
         $this->status = $status;
     }
 
     public function getStatus() 
-	{
+    {
         return $this->status;
     }
 
     public function getStatusArray() 
-	{
+    {
         return $this->statusArray;
     }
 
     public function getStartTimestamp() 
-	{
+    {
         return $this->startTimestamp;
     }
 
-    public function getEndTimestamp() {
+    public function getEndTimestamp() 
+    {
         return $this->endTimestamp;
     }
 
     public function setLogin($login) 
-	{
+    {
         $this->login = $login;
     }
 
     public function setPathSetupMode($psm) 
-	{
+    {
         $this->pathSetupMode = $psm;
     }
 
     public function setRequestTime($date) 
-	{
+    {
         $this->requestTime = $date;
     }
 
     public function setGrisString($gris) 
-	{
+    {
         $this->grisString = implode(";", $gris);
     }
 
     protected function setGriStatus($result) 
-	{
+    {
         $this->setGri($result->return[0]);
         $this->setStatus($result->return[1]);
         return true;
     }
 
     public function checkOscarsUrl() 
-	{
+    {
         if (!isset($this->oscarsUrl)) 
-		{
+        {
             return $this->error("oscarsUrl not set");
         }
         return true;
     }
 
     protected function error($error) 
-	{
+    {
         Log::write('error', "OSCARSDriver: " . $error);
         return false;
     }
-
     
-	/**********************************************************************************************
-	* ABSTRACT FUNCTIONS -- Concrete implementations exist for each version of OSCARS
-	**********************************************************************************************/
-	abstract protected function makeEnvelope($params = array());  // Packages data to be sent by OSCARS calls to reduce parameter passing.
-
-	// OSCARS v0.5 client results in call to OSCARSBridge.java (via SOAP messages)
-	// OSCARS v0.6 client results in call to OSCARSBridge.php
-	abstract protected function callBridge($method, $envelope);	// Calls bridge that handles actual invocation of methods on OSCARS
+    /**********************************************************************************************
+    * ABSTRACT FUNCTIONS -- Concrete implementations exist for each version of OSCARS
+    **********************************************************************************************/
+    abstract protected function makeEnvelope($params = array());  // Packages data to be sent by OSCARS calls to reduce parameter passing.
+    
+    // OSCARS v0.5 client results in call to OSCARSBridge.java (via SOAP messages)
+    // OSCARS v0.6 client results in call to OSCARSBridge.php
+    abstract protected function callBridge($method, $envelope);	// Calls bridge that handles actual invocation of methods on OSCARS
 
     /**
     * Functions that implement the OSCARS calls.
- 	**/
+    **/
     abstract function createReservation(); 	// Submit a circuit creation request to OSCARS
 
     abstract function queryReservation();	// Query status of existing reservation from OSCARS

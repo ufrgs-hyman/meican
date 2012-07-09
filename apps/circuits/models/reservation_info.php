@@ -298,9 +298,9 @@ class reservation_info extends Resource_Model {
             $domain_info->dom_id = $gri[0]->dom_id;
             $domain = $domain_info->fetch(FALSE);
             
-            //$oscars = new OSCARSReservation();								// OLD DESIGN            
+            //$oscars = new OSCARSReservation();				// OLD DESIGN            
             $versTest = new OSCARSVersionTester($domain_info->getDomVersion());	// Added by Jeremy
-            $oscars = $versTest->checkVersion();								// NEW DESIGN -- Added by Jeremy
+            $oscars = $versTest->checkVersion();				// NEW DESIGN -- Added by Jeremy
 
             $oscars->setGri($gri[0]->gri_descr);
             $oscars->setOscarsUrl($domain[0]->idc_url);
