@@ -81,8 +81,6 @@ class OSCARSDriver06 extends OSCARSDriver
 	*   public function setPathSetupMode($psm)
 	*   public function setRequestTime($date) 
 	*   public function setGrisString($gris) 
-	*   public function getVersion()	  
-	*   public function setVersion($version)
 	*   public function checkOscarsUrl() 
     *   protected function error($error)
 	*   protected function setGriStatus($result)

@@ -247,13 +247,13 @@ class ws extends WebServiceController {
                             $dom_tmp = new domain_info();
                             $dom_tmp->ode_ip = $req->src_ode_ip;
                             $dom = $dom_tmp->fetch(false);
-
-							$versTest = new OSCARSVersionTester($dom->getDomVersion());	// Added by Jeremy
+                            
+                            $versTest = new OSCARSVersionTester($dom->getDomVersion());	// Added by Jeremy
 							
                             //as reservas devem ser canceladas no OSCARS
                             foreach ($allgris as $g) {
-                                //$oscRes = new OSCARSReservation();		// OLD DESIGN
-								$oscRes = $versTest->checkVersion();		// NEW DESIGN -- Added by Jeremy
+                            	//$oscRes = new OSCARSReservation();		// OLD DESIGN
+                            	$oscRes = $versTest->checkVersion();		// NEW DESIGN -- Added by Jeremy
 								
                                 $oscRes->setOscarsUrl($dom[0]->idc_url);
                                 $oscRes->setGri($g->gri_descr);

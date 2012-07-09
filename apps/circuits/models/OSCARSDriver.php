@@ -24,7 +24,7 @@ abstract class OSCARSDriver {
     protected $destIsTagged;
     protected $srcTag;
     protected $destTag;
-    protected $version;
+	protected $version;
     protected $path; //deve conter o srcEndpoint e o destEndpoint e os hops intermediários separados por ';'
     protected $status;
     protected $requestTime;
@@ -162,16 +162,6 @@ abstract class OSCARSDriver {
         $this->grisString = implode(";", $gris);
     }
 
-    public function getVersion() 
-	{
-        return $this->version;
-    }
-
-    public function setVersion($version) 
-	{
-        $this->version = $version;
-    }
-
     protected function setGriStatus($result) 
 	{
         $this->setGri($result->return[0]);
@@ -198,8 +188,6 @@ abstract class OSCARSDriver {
 	/**********************************************************************************************
 	* ABSTRACT FUNCTIONS -- Concrete implementations exist for each version of OSCARS
 	**********************************************************************************************/
-    abstract protected function checkVersion();	// What version of OSCARS is operating? -- MAY NOT BE NECESSARY IN THIS ARCHITECTURE SINCE THIS INFO IS NEEDED BEFORE INSTANTIATING CONCRETE CLASSES!!!!!
-
 	abstract protected function makeEnvelope($params = array());  // Packages data to be sent by OSCARS calls to reduce parameter passing.
 
 	// OSCARS v0.5 client results in call to OSCARSBridge.java (via SOAP messages)

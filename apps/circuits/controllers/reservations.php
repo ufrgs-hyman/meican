@@ -206,11 +206,11 @@ class reservations extends Controller {
             $idc_url = $dom->get('idc_url',false);
             
             Log::write('debug', "gri list ro refresh:\n" . print_r($griList,true));
-
-			$versTest = new OSCARSVersionTester($dom->getDomVersion());	// Added by Jeremy
-			$oscarsRes = $versTest->checkVersion();		// NEW DESIGN -- Added by Jeremy
-            //$oscarsRes = new OSCARSReservation();		// OLD DESIGN
-
+            
+            //$oscarsRes = new OSCARSReservation();						// OLD DESIGN
+            $versTest = new OSCARSVersionTester($dom->getDomVersion());	// Added by Jeremy
+            $oscarsRes = $versTest->checkVersion();						// NEW DESIGN -- Added by Jeremy
+            
             $oscarsRes->setOscarsUrl($idc_url);
             $oscarsRes->setGrisString($griList);
 
@@ -431,6 +431,7 @@ class reservations extends Controller {
         // array for autoComplete host
         $client = new client_info();
         $hostArray = array();
+        $hostArray[] = "urn:ogf:network:domain=";
         if ($allClients = $client->fetch(false)) {
             foreach ($allClients as $c) {
                 if ($c->alias)
@@ -497,8 +498,17 @@ class reservations extends Controller {
             "flash_timerInvalid" => _("The end time occurs before the start time"),
             "flash_invalidDuration" => _("Invalid duration"),
             "flash_missingEndpoints" => _("Missing endpoints"),
-            "flash_sameSrcDst" => _("Source and destination endpoints are the same"),
+            "flash_sameSrcDst" => _("Source and destination endpoints cannot be the same"),
             "flash_couldNotGetHost" => _("Could not get host"),
+			"flash_domainNotFound" => _("Domain not found"),
+			"flash_deviceNotFound" => _("Device not found"),
+			"flash_portNotFound" => _("Port not found"),
+			"flash_pointNotSet" => _("Could not set point, probably there is not enough parameters"),
+			"flash_deviceNotSet" => _("Device not set"),
+			"flash_portNotSet" => _("Port not set"),
+			"flash_pointCannotBeSource" => _("The point specified cannot be set as source"),
+			"flash_deviceCannotBeSource" => _("Device cannot be set as source"),
+			"flash_portCannotBeSource" => _("Port cannot be set as source"),
             // endpoints
             "domain_string" => _("Domain"),
             "domains_string" => _("Domains"),

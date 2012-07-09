@@ -81,26 +81,10 @@ class OSCARSDriver05 extends OSCARSDriver
 	*   public function setPathSetupMode($psm)
 	*   public function setRequestTime($date) 
 	*   public function setGrisString($gris) 
-	*   public function getVersion()	  
-	*   public function setVersion($version)
 	*   public function checkOscarsUrl() 
     *   protected function error($error)
 	*   protected function setGriStatus($result)
     **/
-
-	// This overrides parent's abstract method. Returns TRUE if this is OSCARS version 0.5
-    public function checkVersion() 
-	{
-        switch ($this->version) 
-		{
-            case "0.5.3":
-            case "0.5.4":
-                return true;
-            case "0.6":
-            default:
-                return $this->error(sprintf("Versão %s não suportada", $this->version));
-        }
-    }
 
 	/** 
 	* @Override parent abstract function.
@@ -234,9 +218,10 @@ class OSCARSDriver05 extends OSCARSDriver
 		{
             return;
         } 
-		else if (!$result = $this->callBridge('queryReservation', $this->makeEnvelope(array("gri" => $this->gri)))){
+		else if (!$result = $this->callBridge('queryReservation', $this->makeEnvelope(array("gri" => $this->gri))))
 		{
             return false;
+		}
         else 
 		{
             $this->setGri($result->return[0]);
