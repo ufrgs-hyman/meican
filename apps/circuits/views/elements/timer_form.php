@@ -8,11 +8,11 @@ $finish_time = $argsToElement->finish_time;
 
 ?>
 
-<label for="initialTime"><?php echo _("Start") ?>: </label>
+<label for="initialTime" class="label-description"><?php echo _("Start") ?>: </label>
 <input type="text" name="start_time" size="7" value="<?php echo $start_time; ?>" class="hourPicker" id="initialTime"/>
 <input type="text" name="start_date" size="9" value="<?php echo $start_date; ?>" readonly class="datePicker" id="initialDate"/>
 
-<label for="finalTime"><?php echo _("Finish") ?>:</label>
+<label for="finalTime" class="label-description"><?php echo _("Finish") ?>:</label>
 <input type="text" name="finish_time" size="7" value="<?php echo $finish_time; ?>" class="hourPicker" id="finalTime"/>
 <input type="text" name="finish_date" size="9" value="<?php echo $finish_date; ?>" readonly class="datePicker" id="finalDate"/>
 &nbsp;&nbsp;&nbsp;
