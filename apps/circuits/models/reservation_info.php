@@ -332,14 +332,14 @@ class reservation_info extends Resource_Model {
 //                    $response = TRUE;
 //                }
                     }
+                    $pathString = implode(';', $pathArray);
+                    $flow_info->updateTo(array('path' => $pathString), false);
                 } else {
                     Log::write("error", "Couldn't get path. Query reservation failed");
                     $pathArray = null;
                     $response = true;
                 }
             }
-            $pathString = implode(';', $pathArray);
-            $flow_info->updateTo(array('path' => $pathString), false);
         }
         return $pathArray;
     }
