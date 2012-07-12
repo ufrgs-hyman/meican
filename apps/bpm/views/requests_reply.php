@@ -37,24 +37,7 @@
 
 <div id="calendar" class="float-right" style="width:550px;height: 402px;"></div>
 
-<div id="subtab-points" class="tab_subcontent float-right" style="padding-left:8px;">
-    <?=
-    $this->element('view_point',
-            array('app' => 'circuits', 'type' => 'source', 'flow' => $flow));
-    ?>
-    <div id="bandwidth_bar">
-        <div id="bandwidth_bar_text">
-            <div style="text-align:center;">
-                <label id="lb_bandwidth"><?php echo $bandwidth . " " . _("Mbps") ?></label>
-            </div>
-        </div>
-        <div id="bandwidth_bar_inside" style="width: <?= round($bandwidth * 100 / 1000); //TODO: calcular       ?>%"></div>
-    </div>
-    <?=
-    $this->element('view_point',
-            array('app' => 'circuits', 'type' => 'destination', 'flow' => $flow));
-    ?>
-</div>
+<?= $this->element('circuit_info', compact('bandwidth', 'flow')+array('app' => 'circuits')); ?>
 
 <div style="clear:both;"></div>
 
