@@ -121,10 +121,8 @@ class OSCARSDriver05 extends OSCARSDriver
             }
 
             $client = new SoapClient($wsdl, array('trace' => 1,
-												  'cache_wsdl' => WSDL_CACHE_NONE,
-												  'exceptions' => true
-												  )
-									);
+						  'cache_wsdl' => WSDL_CACHE_NONE,
+						  'exceptions' => true));
 									
             $result = $client->__soapCall($method, array($envelope));
             Log::write("debug", print_r($result,TRUE));
@@ -189,7 +187,7 @@ class OSCARSDriver05 extends OSCARSDriver
 					'pathSetupMode' => $this->pathSetupMode,
 					'startTimestamp' => $this->startTimestamp,
 					'endTimestamp' => $this->endTimestamp
-		)))) 
+		))))
 		{
             return $this->error("Error to create reservation. Result:\n".print_r($result,true));
         } 
@@ -266,9 +264,9 @@ class OSCARSDriver05 extends OSCARSDriver
         } 
         else if (!$result = $this->callBridge('modifyReservation', 
         			$this->makeEnvelope(array('oscars_url' => $this->oscarsUrl,
-											  'startTimestamp' => $this->startTimestamp,
-											  'endTimestamp' => $this->endTimestamp
-				))))
+							  'startTimestamp' => $this->startTimestamp,
+							  'endTimestamp' => $this->endTimestamp
+		))))
 		{
             return false;
         }

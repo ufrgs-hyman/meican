@@ -55,7 +55,7 @@ $dom_version = isset($argsToElement->dom_version) ? $argsToElement->dom_version 
             <?php echo _("OSCARS Version"); ?>:
         </th>
         <td class="left">
-            <select name="dom_version" size="1" style="width:222px">
+            <select id="dom_version" name="dom_version" size="1" style="width:222px" onchange="buildIDC_URL()">
                 <option <?php if ($dom_version == '0.5.3') echo 'selected="true"'; ?> value="0.5.3"> OSCARS 0.5.3 </option>
                 <option <?php if ($dom_version == '0.5.4') echo 'selected="true"'; ?> value="0.5.4"> OSCARS 0.5.4 </option>
                 <option <?php if ($dom_version == '0.6') echo 'selected="true"'; ?> value="0.6">   OSCARS 0.6   </option>

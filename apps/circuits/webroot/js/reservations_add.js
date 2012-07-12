@@ -1723,7 +1723,7 @@ function validateBand(band_value) {
             $('#main').unbind('pjax:start', finishfn);
         };
         $('#main').bind('pjax:start', finishfn);
-        
+
         $('form#reservation_add').submit(validateReservationForm);
         
         /* quando digita nome, tira overlay */

@@ -115,7 +115,7 @@ class OSCARSDriver06 extends OSCARSDriver
     /**
     * @Override parent abstract function.
 	*
-	* Calls JAVA Bridge that handles actual invocation of methods on OSCARS
+	* Calls JAVA Bridge that handles actual invocation of methods on OSCARS. This method encapsulates calls to bridge in one place.
 	* - Handles exceptions and errors.
     * @param string $method, SOAP method being called
     * @param array $envelope, Arguments used to call the method
@@ -125,7 +125,14 @@ class OSCARSDriver06 extends OSCARSDriver
     protected function callBridge($method, $envelope) 
 	{
         Log::write("debug", print_r($method,TRUE));
-        try 
+        
+		$phpBridge = new OscarsBridge($method, $envelope);
+		
+		$responseFromBridge = $phpBridge->getOSCARSResponse();
+
+		return $responseFromBridge;
+		
+		/*try 
 		{
             $wsdl = Configure::read('OSCARSBridgeEPR');
             if (!@file_get_contents($wsdl))  //testa disponibilidade do wsdl 
@@ -162,7 +169,7 @@ class OSCARSDriver06 extends OSCARSDriver
 		catch (SoapFault $e) 
 		{
             return $this->error("Caught SoapFault: " . $e->getMessage());
-        }
+        }*/
     }
 
 	/**********************************************************************************************
