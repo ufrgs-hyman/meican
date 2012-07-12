@@ -118,7 +118,7 @@ class requests extends MeicanController {
             'requested_bandwidth_string' => _("Requested bandwidth")
         ));
         $this->addScriptForLayout('requests');
-        $this->render('reply2');
+        //$this->render('reply');
     }
 
     public function saveResponse($request) {
