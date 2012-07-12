@@ -42,9 +42,7 @@
 <div style="clear:both;"></div>
 
 <div id="tabs-2" class="tab_content">
-    <?=
-    $this->element('view_timer', array('app' => 'circuits', 'timer' => $timer));
-    ?>
+    <?=$this->element('view_timer', array('app' => 'circuits', 'timer' => $timer));?>
     <?=
     false && $request ? $this->element('view_request',
                             compact('request') + array('app' => 'circuits')) : null;
