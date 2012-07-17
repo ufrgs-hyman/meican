@@ -338,7 +338,10 @@ class reservations extends Controller {
                     $dom->dom_id = $gris[0]->dom_id;
                     $idc_url = $dom->get('idc_url');
 
-                    $oscarsRes = new OSCARSReservation();
+		            //$oscarsRes = new OSCARSReservation();			// OLD DESIGN
+		            $versTest = new OSCARSVersionTester($dom->getDomVersion());	// Added by Jeremy
+		            $oscarsRes = $versTest->checkVersion();			// NEW DESIGN -- Added by Jeremy
+		
                     $oscarsRes->setOscarsUrl($idc_url);
                     $oscarsRes->setGrisString($griList);
 
@@ -896,7 +899,10 @@ class reservations extends Controller {
         $gris = $gri->fetch();
 
         foreach ($gris as $g) {
-            $oscarsRes = new OSCARSReservation();
+            //$oscarsRes = new OSCARSReservation();			// OLD DESIGN
+            $versTest = new OSCARSVersionTester($dom->getDomVersion());	// Added by Jeremy
+            $oscarsRes = $versTest->checkVersion();			// NEW DESIGN -- Added by Jeremy
+
             $oscarsRes->setOscarsUrl($flw->source->idc_url);
             $oscarsRes->setGri($g->gri_descr);
             $oscarsRes->queryReservation();
@@ -920,7 +926,10 @@ class reservations extends Controller {
             if ($idc_url = $dom->get('idc_url')) {
                 foreach ($gris as $g) {
                     if ($g->status == "ACTIVE" || $g->status == "PENDING" || $g->status == "ACCEPTED") {
-                        $oscarsRes = new OSCARSReservation();
+                        //$oscarsRes = new OSCARSReservation();			// OLD DESIGN
+			            $versTest = new OSCARSVersionTester($dom->getDomVersion());	// Added by Jeremy
+			            $oscarsRes = $versTest->checkVersion();			// NEW DESIGN -- Added by Jeremy
+			
                         $oscarsRes->setOscarsUrl($idc_url);
                         $oscarsRes->setGri($g->gri_descr);
                         Log::write("info", "GRI to cancel: ".print_r($g->gri_descr, TRUE));
@@ -958,7 +967,10 @@ class reservations extends Controller {
     }
 
     function listStatus($grisArray) {
-        $oscarsRes = new OSCARSReservation();
+        //$oscarsRes = new OSCARSReservation();			// OLD DESIGN
+        $versTest = new OSCARSVersionTester($dom->getDomVersion());	// Added by Jeremy
+        $oscarsRes = $versTest->checkVersion();			// NEW DESIGN -- Added by Jeremy
+
         $oscarsRes->setOscarsUrl("200.132.1.28:8080"); //oscars2
         $oscarsRes->setGrisString($grisArray);
         $result = $oscarsRes->listReservations();
@@ -979,7 +991,10 @@ class reservations extends Controller {
         $domain = new domain_info();
         $src_dom = $domain->getOSCARSDomain($src_urn_string);
 
-        $oscarsRes = new OSCARSReservation();
+        //$oscarsRes = new OSCARSReservation();			// OLD DESIGN
+        $versTest = new OSCARSVersionTester($dom->getDomVersion());	// Added by Jeremy
+        $oscarsRes = $versTest->checkVersion();			// NEW DESIGN -- Added by Jeremy
+
         $oscarsRes->setOscarsUrl($src_dom->idc_url);
         $oscarsRes->setDescription($reservation_info->res_name);
         $oscarsRes->setBandwidth($reservation_info->bandwidth);

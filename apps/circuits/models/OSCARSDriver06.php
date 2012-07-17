@@ -109,7 +109,10 @@ class OSCARSDriver06 extends OSCARSDriver
 	**/
 	protected function makeEnvelope($params = array()) 
 	{
-        return array_merge(array('oscars_url' => $this->oscarsUrl), $params);
+        //return array_merge(array('oscars_url' => $this->oscarsUrl), $params);
+		return $params;
+		
+		// DELETE THIS AND REMOVE ABSTRACTION IN OSCARSDRIVER.php
     }
 
     /**
@@ -126,15 +129,17 @@ class OSCARSDriver06 extends OSCARSDriver
 	{
         Log::write("debug", print_r($method,TRUE));
         
+		/* To replace the below, working code for a PHP-only bridge *
 		$phpBridge = new OscarsBridge($method, $envelope);
 		
 		$responseFromBridge = $phpBridge->getOSCARSResponse();
 
 		return $responseFromBridge;
+		*/
 		
-		/*try 
+		try 
 		{
-            $wsdl = Configure::read('OSCARSBridgeEPR');
+            $wsdl = Configure::read('OSCARSBridgeEPRv6');
             if (!@file_get_contents($wsdl))  //testa disponibilidade do wsdl 
 			{ 
                 throw new SoapFault('Server', 'No WSDL found at ' . $wsdl);
@@ -146,6 +151,7 @@ class OSCARSDriver06 extends OSCARSDriver
 												 )
 									);
 									
+			$result = $client->__soapCall("buildBridge", array('oscars_url' => $this->oscarsUrl));	//One method to set up client connection
             $result = $client->__soapCall($method, array($envelope));
             Log::write("debug", print_r($result,TRUE));
 
@@ -197,7 +203,7 @@ class OSCARSDriver06 extends OSCARSDriver
             return false;
         } 
 		else if (!$result = $this->callBridge(
-                'createReservation', $this->makeEnvelope(array(
+                'createReservation', array(
                     'description' => $this->description,
                     'srcUrn' => $this->srcEndpoint,
                     'isSrcTagged' => $this->srcIsTagged,
@@ -210,7 +216,7 @@ class OSCARSDriver06 extends OSCARSDriver
                     'pathSetupMode' => $this->pathSetupMode,
                     'startTimestamp' => $this->startTimestamp,
                     'endTimestamp' => $this->endTimestamp
-                )))) 
+                ))) 
 		{
             return $this->error("Error to create reservation. Result:\n".print_r($result,true));
         } 
@@ -239,9 +245,10 @@ class OSCARSDriver06 extends OSCARSDriver
 		{
             return;
         } 
-		else if (!$result = $this->callBridge('queryReservation', $this->makeEnvelope(array("gri" => $this->gri)))){
+		else if (!$result = $this->callBridge('queryReservation', array("gri" => $this->gri)))
 		{
             return false;
+		}
         else 
 		{
             $this->setGri($result->return[0]);
@@ -284,10 +291,9 @@ class OSCARSDriver06 extends OSCARSDriver
 		{
             return;
         } 
-		else if (!$result = $this->callBridge('modifyReservation', 
-											  $this->makeEnvelope(array('oscars_url' => $this->oscarsUrl,
+		else if (!$result = $this->callBridge('modifyReservation', array('oscars_url' => $this->oscarsUrl,
                     													'startTimestamp' => $this->startTimestamp,
-                    													'endTimestamp' => $this->endTimestamp))))
+                    													'endTimestamp' => $this->endTimestamp)))
 		{
             return false;
 		}
@@ -315,7 +321,7 @@ class OSCARSDriver06 extends OSCARSDriver
 		{
             return;
         } 
-		else if (!$result = $this->callBridge('cancelReservation', $this->makeEnvelope(array("gri" => $this->gri))))
+		else if (!$result = $this->callBridge('cancelReservation', array("gri" => $this->gri)))
 		{
             return false;
 		}
@@ -340,10 +346,7 @@ class OSCARSDriver06 extends OSCARSDriver
 		{
             return;
         } 
-		else if (!$result = $this->callBridge(
-                'listReservations', $this->makeEnvelope(array(
-                    "grisString" => $this->grisString
-                ))))
+		else if (!$result = $this->callBridge('listReservations', array("grisString" => $this->grisString)))
 		{
             return false;
 		}
@@ -356,80 +359,6 @@ class OSCARSDriver06 extends OSCARSDriver
         }
     }
 
-	/**
-    * @Override parent abstract function.
-	*
-	* Retrieve all elements of OSCARS topology as a single String
-	* - Tells callBridge to call the SOAP method getTopology()
-    * @return true, if OSCARS SOAP status for getTopology = OK, false otherwise.
-    **/
-    function getTopology() 
-	{
-        if (!$this->checkOscarsUrl()) 
-		{
-            return;
-        } 
-		else if (!$result = $this->callBridge('getTopology', $this->makeEnvelope()))
-		{
-            return false;
-		}
-        else 
-		{
-            $this->topology = $result->return;
-            return true;
-        }
-    }
-
-	/**
-    * @Override parent abstract function.
-	*
-	* Parse specific URNs from the OSCARS topology
-	* - Tells callBridge to call the SOAP method getTopology()
-	* - Parses the result of getTopology() call and stores its components into a urn object 
-	* - Pushes each urn object onto the $urns global array
-    * @return true, if OSCARS SOAP status for getTopology = OK, false otherwise.
-    **/
-    function getUrns() 
-	{
-        if (!$this->checkOscarsUrl()) 
-		{
-            return;
-        } 
-		else if (!$result = $this->callBridge('getTopology', $this->makeEnvelope()))
-		{
-            return false;
-		}
-        else 
-		{
-            foreach ($result->return as $i) 
-			{
-                if ($array = explode(" ", $i)) 
-				{
-                    //0- linkId
-                    //1- remoteLinkId		-- not used here?
-                    //2- capacidade
-                    //3- granularidade
-                    //4- capacidade mínima reservável
-                    //5- capacidade máxima reservável
-                    //6- vlan range
-                    if (!empty($array[1]) && ($array[1] == "urn:ogf:network:domain=*:node=*:port=*:link=*")) 
-					{
-                        //é urn de ponto final
-                        $urn = new stdClass();
-                        $urn->id = $array[0];
-                        $urn->capacity = $array[2];
-                        $urn->granularity = $array[3];
-                        $urn->minimumReservable = $array[4];
-                        $urn->maximumReservable = $array[5];
-                        $urn->vlanRange = $array[6];
-                        $this->urns[] = $urn;
-                    }
-                }
-            }
-
-            return true;
-        }
-    }
 
 	/**
     * @Override parent abstract function.
@@ -445,7 +374,7 @@ class OSCARSDriver06 extends OSCARSDriver
 		{
             return;
         } 
-		else if (!$result = $this->callBridge('createPath', $this->makeEnvelope(array("gri" => $this->gri))))
+		else if (!$result = $this->callBridge('createPath', array("gri" => $this->gri)))
 		{
             return false;
 		}
@@ -469,7 +398,7 @@ class OSCARSDriver06 extends OSCARSDriver
 		{
             return;
         } 
-		else if (!$result = $this->callBridge('teardownPath', $this->makeEnvelope(array("gri" => $this->gri))))
+		else if (!$result = $this->callBridge('teardownPath', array("gri" => $this->gri)))
 		{
             return false;
 		}
@@ -479,28 +408,12 @@ class OSCARSDriver06 extends OSCARSDriver
 		}
     }
 
+
 	/**
-    * @Override parent abstract function.
-	*
-	* Refresh path in OSCARS
-	* - Tells callBridge to call the SOAP method refreshPath()
-	* - Passes in appropriate global request parameters after enveloping them together
-    * @return true, if OSCARS SOAP status for refreshPath = OK, false otherwise.
+    * These functions are NOT supported in OSCARSv0.6 -- Should not create issues
     **/
-    function refreshPath() 
-	{
-        if (!$this->checkOscarsUrl()) 
-		{
-            return;
-        } 
-		else if (!$result = $this->callBridge('refreshPath', $this->makeEnvelope(array("gri" => $this->gri))))
-		{
-            return false;
-		}
-        else
-		{
-            return $this->setGriStatus($result);
-		}
-    }
+    function getTopology(){ return $this->error("getTopology() is NOT supported in your version of OSCARS!"); }
+    function getUrns(){	 }
+    function refreshPath(){ return $this->error("refreshPath() is NOT supported in your version of OSCARS!"); }
 
 }
