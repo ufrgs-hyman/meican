@@ -61,6 +61,16 @@ class domain_info extends Resource_Model {
         return $topology_id;
     }
 
+	/**
+	*  Provides easy access to domain's version. -- Added by Jeremy
+	**/
+	public function getDomVersion()
+	{
+		$tmp = $this->fetch();
+		return $tmp["dom_version"];
+		//return $tmp[10];
+	}
+
 }
 
 ?>

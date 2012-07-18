@@ -1,7 +1,7 @@
 #!/bin/bash
 host="localhost"
-password="futurarnp"
-user="root"
+password="root" #password to mysql
+user="root"		#mysql username
 database="meican";
 
 #agora=time;
