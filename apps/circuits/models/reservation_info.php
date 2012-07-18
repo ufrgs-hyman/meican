@@ -6,6 +6,7 @@ include_once 'apps/circuits/models/gri_info.php';
 include_once 'apps/circuits/models/flow_info.php';
 include_once 'apps/circuits/models/timer_info.php';
 include_once 'apps/circuits/models/oscars_reservation.php';
+include_once 'apps/circuits/models/OSCARSVersionTester.php';
 
 include_once 'apps/bpm/models/request_info.php';
 
