@@ -39,7 +39,7 @@
 <h1><?php echo _('Deploy process'); ?></h1>
 
 <form action="" method="post" id="upload_form" enctype="multipart/form-data">
-    <table class="withoutBorder add">
+    <table class="add">
         <tr>
             <th class="right">
                 <label for='name_process'><?php echo _('Name'); ?>:</label>

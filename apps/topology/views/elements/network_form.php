@@ -5,7 +5,7 @@ $domains = isset($argsToElement->domains) ? $argsToElement->domains : NULL;
 
 ?>
 
-<table class="withoutBorder add">
+<table class="add">
     <tr>
         <th class="right">
             <?php echo _("Name"); ?>:

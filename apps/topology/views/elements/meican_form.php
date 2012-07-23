@@ -7,7 +7,7 @@ $is_local_domain = isset($argsToElement->local_domain) ? $argsToElement->local_d
 
 ?>
 
-<table class="withoutBorder add">
+<table class="add">
     <tr>
         <th class="right">
             <?php echo _("Name"); ?>:

@@ -4,7 +4,7 @@
     <div id="settingsWrapper" style="width: 400px;">
         <?php $this->addElement('identification_settings', $user); ?>
 
-        <table id="userInfo" class="withoutBorder" style="margin-left: 19px; min-width: 0;">
+        <table id="userInfo" style="margin-left: 19px; min-width: 0;">
             <tr>
                 <th class="right">
                     <?php echo _("Language"); ?>:
@@ -38,7 +38,7 @@
         <label for="changePassword"><?php echo _("Change password") ?></label>
 
         <div id="tpassword" style="display: none">
-            <table class="withoutBorder" style="min-width: 0;">
+            <table style="min-width: 0;">
                 <tr>
                     <th class="right">
                         <?php echo _('Current password'); ?>

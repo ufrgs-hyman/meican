@@ -55,7 +55,7 @@ $freq_types[] = $freq;
         <label id="interval_type"></label>
 
         <div id="weekdays" style="display: none">
-            <table cellspacing="0" cellpadding="0" style="width: 100%" class="withoutBorder">
+            <table>
                 <tr>
                     <td class="recurrence_table">
                         <input type="checkbox" name="sun_chkbox" value="SU" title="<?php echo _("Sunday"); ?>" id="Sunday"/><label for="Sunday"><?php echo _("Sun"); ?></label>

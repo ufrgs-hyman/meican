@@ -10,7 +10,7 @@ $title = $argsToElement->title;
     <?php echo $title; ?>
 </h1>
 
-<table class="withoutBorder">
+<table>
    
     <tr>
         <td>
@@ -24,7 +24,7 @@ $title = $argsToElement->title;
         </td>
 
         <td>
-            <table class="withoutBorder">
+            <table>
                 <tr>
                     <td>
                         <div align="center">

@@ -4,10 +4,10 @@
 <h1><?php echo _('Add new group')?></h1>
 
 <form onSubmit="selectAll('used');" method="POST" action="<?php echo $this->buildLink(array('action' => 'add')); ?>">
-    <table class="withoutBorder" style="min-width: 0">
+    <table style="min-width: 0">
         <tr>
             <td>
-    <table class="withoutBorder">
+    <table>
         <tr>
             <th class="right">
                 <?php echo _("Group name"); ?>:
@@ -20,7 +20,7 @@
 
     <?php $this->addElement('associative_table', $args->users); ?>
 
-    <table class="withoutBorder">
+    <table>
         <tr>
             <th class="right">
                 <?php echo _("Select the parent groups"); ?>:

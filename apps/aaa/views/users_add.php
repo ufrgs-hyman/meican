@@ -5,7 +5,7 @@
 
 <form onSubmit="selectAll('used');" method="POST" action="<?php echo $this->buildLink(array('action' => 'add')); ?>">
 
-    <table class="withoutBorder add" style="min-width: 30%">
+    <table class="add" style="min-width: 30%">
         <tr>
             <th class="right">
                 <?php echo _('Login'); ?>:

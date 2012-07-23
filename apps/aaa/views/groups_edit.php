@@ -5,7 +5,7 @@
 
 <form onSubmit="selectAll('used');" method="POST" action="<?php echo $this->buildLink(array('action' => 'update', 'param' => 'grp_id:'.$args->group->grp_id)); ?>">
 
-    <table class="withoutBorder" style="min-width: 0">
+    <table style="min-width: 0">
         <tr>
             <th class="right">
                 <?php echo _("Group name"); ?>:

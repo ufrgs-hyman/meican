@@ -15,7 +15,7 @@ $dom_version = isset($argsToElement->dom_version) ? $argsToElement->dom_version 
 
 ?>
 
-<table class="withoutBorder add">
+<table class="add">
     <tr>
         <th class="right">
             <?php echo _("Name"); ?>:

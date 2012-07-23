@@ -1,5 +1,5 @@
 <!-- CONFIRMATION -->
-<table id="confirmation_endpoints" class="withoutBorder">
+<table id="confirmation_endpoints">
     <tr>
         <td style="width: 1%; vertical-align: top"></td>
         <td style="width: 60%; padding-right: 5px; vertical-align: top">

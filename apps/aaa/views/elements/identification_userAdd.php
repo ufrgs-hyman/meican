@@ -2,7 +2,7 @@
 
 <h1><?php echo _('Information'); ?></h1>
 
-<table class="withoutBorder add">  
+<table class="add">  
     <tr>
         <th class="right">
             <?php echo _('Name'); ?>:

@@ -5,7 +5,7 @@ $device = isset($argsToElement->device) ? $argsToElement->device : NULL;
 
 ?>
 
-<table class="withoutBorder add">
+<table class="add">
 
     <tr>
         <th class="right">
