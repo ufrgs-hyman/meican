@@ -258,27 +258,12 @@ div#flash_box .closeFlash {
 
 table {
     /*width: 70%;*/
-    padding: 0px;
+    padding: 0;
     clear: both;
 }
 
-table.add {
-    border-collapse: collapse;
-    padding: 0px;
-    min-width: 0;
-    width: auto;
-    border: 1px solid #000000;
-    clear:none;
-}
-
-table.withoutBorder{
-    border: 0px none;
-}
-
 table td.left {
-    font-size:12px;
     text-align: left;
-    padding: 3px 7px 2px 7px;
 }
 
 .pad {
@@ -305,15 +290,11 @@ table th.left {
 }
 
 table th.right {
-    border-bottom: none;
     text-align:right;
-    padding: 1px;
-    padding-left: 2px;
 }
 
 table th.large {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 0 10px;
 }
 
 /*fieldset {
@@ -349,10 +330,6 @@ table th.listHeader {
     line-height: 2;
 }
 
-table .list th .urn_show {
-    border-right: 1px solid black;
-}
-
 table.list tr > td:first-child {
     width: 10px;
 }
@@ -372,39 +349,14 @@ table.list tbody tr:nth-child(even)    {
 table.list tbody tr:hover {
     background-color: #CCC;
 }
-
+/*
 table.list tbody tr:hover {
     cursor: default;
-}
+}*/
 
 table.list tbody tr.checked-line {
     background-color: #FFC;
 }
-
-
-table.flow tr > td:first-child {
-    width: 20px;
-}
-
-table.flow tr:nth-child(odd)    {
-    background-color:#eee;
-}
-
-table.flow tr:nth-child(even)    {
-    background-color:#fff;
-}
-
-table.flow tr:nth-child(odd)    {
-    background-color:#eee;
-}
-
-table.flow tr:nth-child(even)    {
-    background-color:#fff;
-}
-
-/*img.edit, img.delete {
-    border: 0px;
-}*/
 
 div.controls {
     height: 24px;
@@ -430,46 +382,8 @@ div.control_tab {
     width: 250px;
     height: 200px;
     text-align: center;
-}/*
-
-div.topItem {
-    font-weight: bold;
-    border-bottom-style: solid;
-    border-bottom-width: thin;    
-    text-decoration: none;
 }
-
-div.topItem a:link, div.topItem a:visited  {
-    font-weight: bold;   
-    text-decoration: none;    
-    color: #000000;
-}
-
-div.topItem:hover{
-    background-color: #CCC;
-}
-
-div.subItem a:link, div.subItem a:visited {
-    text-decoration: none;
-    font-weight: lighter;
-    color: #000000;
-}
-
-div.subItem:hover{
-    background-color: #CCC;
-}
-
-div.subItem {
-    text-transform: none;
-    text-indent: 15px;
-}*/
-
-
-
-
-img {
-    border: 0px;
-}/*
+/*
 table.icons tr.new_line > td {
     padding-bottom: 2em;
 }
