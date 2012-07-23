@@ -305,7 +305,7 @@ class AclLoader extends TreeModel {
         $acos = $this->acl->{$right};
 
         if ($acos) {
-            $strAcos = implode(',', $acos);
+            $strAcos = implode(', ', $acos);
 
             $acos = new acos();
             //retorna os objetos (obj_id) que o usuário possui acesso
@@ -333,7 +333,7 @@ class AclLoader extends TreeModel {
             // se passou um ID como parâmetro, tem que testar se o ID está na lista dos 'objs' retornados de 'getAllowedPKey'
 
             $aco = new Acos();
-            $strAcos = implode(',', $acos);
+            $strAcos = implode(', ', $acos);
 
             if ($aco->hasAnyAcoOfModel($strAcos, $model)) {
                 if ($id) {
@@ -377,4 +377,3 @@ class AclLoader extends TreeModel {
 }
 
 // da classe
-?>
