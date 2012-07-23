@@ -144,10 +144,10 @@ table { border-collapse: collapse; border-spacing: 0; }
 
 
 /*h1, h2, h3, h4, h5, h6 {font-weight:normal;color:#111;}*/
-h1 {font-size:2em;line-height:1;margin-bottom:0.5em;}
+h1 {font-size:2em;line-height:1em;margin-bottom:0.5em;}
 h2 {font-size:1.5em;margin-bottom:0.75em;}
-h3 {font-size:1.3em;line-height:1;margin: 0.5em 0;}
-h4 {font-size:1.1em;line-height:1.25;margin-bottom:1.25em;}
+h3 {font-size:1.3em;line-height:1em;margin: 0.5em 0;}
+h4 {font-size:1.1em;line-height:1.25em;margin-bottom:1.25em;}
 h5 {font-size:1em;font-weight:bold;margin-bottom:1.5em;}
 h6 {font-size:1em;font-weight:bold;}
 h1 img, h2 img, h3 img, h4 img, h5 img, h6 img {margin:0;}
@@ -669,54 +669,6 @@ td select {
     background-color: #F4F4F4;
 }
 
-#logo, #info_box {
-    height: 32px;
-
-    color: #D8E7F3;
-    background-color: #27567C;
-
-    border-width: thin;
-    border-style: solid;
-    border-top-color: #5B7399;
-    border-left-color: #5B7399;
-    border-right-color: #1D405C;
-    border-bottom-color: #1D405C;
-}
-
-#logo p {
-    text-align: center;
-    margin: 0;
-    padding: 0.2em;
-    font-weight: bolder;
-    font-size: 16px;
-    text-shadow: 2px 2px 0.2em black, -1px -1px #444;
-}
-
-#info_box ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-#info_box ul a {
-    float: right;
-    display: block;
-    padding: 9px;
-    color: #D8E7F3;
-    text-decoration: none;	
-    text-shadow: 2px 2px 0.2em black, -1px -1px #444;
-    border-left-style:solid;
-    border-left-color:#5B7399;
-    border-left-width:thin;
-    position: relative;
-}
-
-#info_box ul a:hover {
-    /*background-color: #1D405C; */
-    background-color: #9D3C3E;
-    /*background-color: #7C4D27;*/
-}
-
 #menu {
     height:100%;
     overflow: auto;
@@ -728,18 +680,10 @@ td select {
     list-style: none;
 }
 
-#menu ul li {
-    /*    margin: 0 0.5em 0 0em;
-        padding: 1em 1em 1em 1.1em;*/
-    font-size: 13px;
-    font-weight: bold;
-}
-
 #menu ul a {
     margin: 0;
-    padding: 1em 1em 1em 1.1em;
-    font-size: 13px;
-    font-weight: bold;
+    padding: 8px 0 8px 16px;
+    font-size: 10pt;
     text-decoration: none;
     display: block;
     border-left: 5px solid transparent;
@@ -750,24 +694,11 @@ td select {
     background-color: #DFDFDF;
 }
 
-#menu ul ul {
-    padding: 0 0 1em 0;
-    margin: 0;
-}
-
-#menu ul ul li {
-    padding: 0;
-    margin: 0;
-}
-
 #menu ul ul a {
-    padding: 0.25em 0 0.25em 1.7em;
-    font-size: 12px;
+    /*padding: 0.25em 0 0.25em 1.7em;*/
+    line-height: 1.5em;
+    padding: 0 0 0 1.5em;
     font-weight	: normal;
-    text-decoration: none;
-    display: block;
-    border-left: 5px solid transparent;
-    margin: 0;
 }
 
 #menu ul ul a:hover {
@@ -796,6 +727,64 @@ td select {
     border-top-width: thin;
     background-color: #EEE;
     color: #4F4F4F;
+}
+
+/* =============================================================================
+   info_box at top
+   ========================================================================== */
+
+#logo, #info_box {
+    height: 32px;
+
+    color: #D8E7F3;
+    background-color: #27567C;
+    border: 0;
+    /*
+    border-width: thin;
+    border-style: solid;
+    border-top-color: #5B7399;
+    border-left-color: #5B7399;
+    border-right-color: #1D405C;
+    border-bottom-color: #1D405C;*/
+}
+
+#logo p {
+    text-align: center;
+    margin: 0;
+    padding: 0.2em;
+    font-weight: bolder;
+    font-size: 16px;
+    text-shadow: 2px 2px 0.2em black, -1px -1px #444;
+}
+
+#info_box ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#info_box ul li {
+    float: right;
+    /*padding: 9px;*/
+    text-shadow: 2px 2px 0.2em black, -1px -1px #444;
+    border-left-style:solid;
+    border-left-color:#5B7399;
+    border-left-width:thin;
+    line-height: 32px;
+}
+
+#info_box a {
+    position: relative;
+    color: #D8E7F3;
+    text-decoration: none;
+    display: block;
+    padding: 0 12px;
+}
+
+#info_box ul li:hover {
+    /*background-color: #1D405C; */
+    background-color: #9D3C3E;
+    /*background-color: #7C4D27;*/
 }
 
 #canvas {
