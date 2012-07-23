@@ -215,6 +215,16 @@ div#flash_box .closeFlash {
     float: right;
 }
 
+.close-button{
+    float: right; 
+    margin-left: .3em; 
+    cursor: pointer;
+}
+
+.link-button {
+    cursor: pointer;
+}
+
 #loading {
     position: absolute;
     width: 100%;
@@ -420,7 +430,7 @@ div.control_tab {
     width: 250px;
     height: 200px;
     text-align: center;
-}
+}/*
 
 div.topItem {
     font-weight: bold;
@@ -452,16 +462,16 @@ div.subItem:hover{
 div.subItem {
     text-transform: none;
     text-indent: 15px;
-}
+}*/
 
 
 
-table.icons tr.new_line > td {
-    padding-bottom: 2em;
-}
 
 img {
     border: 0px;
+}/*
+table.icons tr.new_line > td {
+    padding-bottom: 2em;
 }
 table.icons {
     text-align: center;
@@ -477,7 +487,7 @@ table.icons {
 
 table.icons td {
     color: #000000;
-}
+}*/
 /*
 div#main #t3 {
     background-color: #9ACD32;
@@ -495,20 +505,6 @@ div#main #l3:link, div#main #l3:visited, div#main #l3:hover, div#main #l3:visite
     border: #8FBC8F;
     color: #000000;    
 }*/
-
-.recurrence_table {
-    padding: 3px;
-}
-
-.close-button{
-    float: right; 
-    margin-left: .3em; 
-    cursor: pointer;
-}
-
-.link-button {
-    cursor: pointer;
-}
 
 .fixed {
     position: fixed;
@@ -578,6 +574,21 @@ td select {
     background-color: #F4F4F4;
 }
 
+#system_date {/* Data do sistema */
+    padding: 0.2em 0 0.2em 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    border-top-color: #DDD;
+    border-top-style: solid;
+    border-top-width: thin;
+    background-color: #EEE;
+    color: #4F4F4F;
+}
+
 #menu {
     height:100%;
     overflow: auto;
@@ -631,21 +642,6 @@ td select {
 
 #menu a{
     border-left: 5px;
-}
-
-#system_date {/* Data do sistema */
-    padding: 0.2em 0 0.2em 0;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-    border-top-color: #DDD;
-    border-top-style: solid;
-    border-top-width: thin;
-    background-color: #EEE;
-    color: #4F4F4F;
 }
 
 /* =============================================================================
@@ -858,7 +854,7 @@ table.view-point{
 #slider {
     width: 40%;    
 }
-
+/*
 #view_map_canvas {
     width: 100%;
     height: 200px;
@@ -866,9 +862,9 @@ table.view-point{
 
 #div-bandwidth {
     display: none;
-}
+}*/
 
-#Sunday, #Monday, #Tuesday, #Wednesday, #Thursday, #Friday, #Saturday {
+.recurrence_table input {
     margin: 0px;
 }
 
@@ -1052,8 +1048,6 @@ dd {
 .sorting_desc_disabled {
     background: url('../img/sort_desc_disabled.png') no-repeat center right;
 }
-
-
 
 
 
