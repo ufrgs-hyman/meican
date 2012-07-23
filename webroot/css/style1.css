@@ -144,15 +144,20 @@ table { border-collapse: collapse; border-spacing: 0; }
 
 
 /*h1, h2, h3, h4, h5, h6 {font-weight:normal;color:#111;}*/
-h1 {font-size:2em;line-height:1em;margin-bottom:0.5em;}
-h2 {font-size:1.5em;margin-bottom:0.75em;}
+/*h1 {font-size:2em;line-height:1em;margin-bottom:0.5em;}*/
+h1 {
+    font-size: 1.5em;
+    margin: 0;
+    margin-bottom: 0.5em;
+    line-height: 1.5em;
+}
+h2 {font-size:1.3em;margin-bottom:0.75em;}
 h3 {font-size:1.3em;line-height:1em;margin: 0.5em 0;}
 h4 {font-size:1.1em;line-height:1.25em;margin-bottom:1.25em;}
 h5 {font-size:1em;font-weight:bold;margin-bottom:1.5em;}
 h6 {font-size:1em;font-weight:bold;}
 h1 img, h2 img, h3 img, h4 img, h5 img, h6 img {margin:0;}
 p {margin:0 0 1.5em;}
-
 
 
 /* Tabela de disposição dos boxes iniciais */
@@ -477,28 +482,6 @@ table.icons {
 table.icons td {
     color: #000000;
 }
-
-#edit_map_canvas {
-    width: 100%; 
-    height: 300px;
-}
-
-#slider {
-    width: 40%;    
-}
-
-#view_map_canvas {
-    width: 100%;
-    height: 200px;
-}
-
-#div-bandwidth {
-    display: none;
-}
-
-#Sunday, #Monday, #Tuesday, #Wednesday, #Thursday, #Friday, #Saturday {
-    margin: 0px;
-}
 /*
 div#main #t3 {
     background-color: #9ACD32;
@@ -540,49 +523,6 @@ div.shadow {
     box-shadow: 2px 2px 4px #888;
 }
 
-/* =============================================================================
-   Reservations Map Context Menu
-   ========================================================================== */
-
-#contextMenu {
-    position: absolute;
-    min-width: 100px;
-    z-index: 1000;
-    background: #fff;
-    border-top: solid 1px #CCC;
-    border-left: solid 1px #CCC;
-    border-bottom: solid 1px #676767;
-    border-right: solid 1px #676767;
-    padding: 0px;
-    margin: 0px;
-    display:none;
-}
-
-#contextMenu a {
-    color: #000;
-    text-decoration: none;
-    display: block;
-    line-height: 22px;
-    height: 22px;
-    padding: 1px 10px;
-}
-
-#contextMenu li {
-    list-style: none;
-    padding: 1px;
-    margin: 0px;
-}
-
-#contextMenu li.hover a {
-    background-color: #A7C4FA;
-}
-
-#contextMenu li.separator {
-    border-top: solid 1px #ccc;
-}
-
-
-
 select:hover, select:select {
     background-color: white;
 }
@@ -620,33 +560,6 @@ button:hover, input[type=submit]:hover, input[type=button]:hover {
 input[disabled], button[disabled], .ui-state-disabled, [disabled]{
     opacity: .50; filter:Alpha(Opacity=50); background-image: none; 
 }
-
-.vlan-input {
-    position:relative;
-}
-.vlan-input label{
-    position:absolute;
-    bottom: 10px;
-    right: 4px;
-    font-size: 80%;
-}
-
-#bandwidth_un{
-    position: absolute;
-    bottom: 4px;
-    left: 60px;
-}
-
-#bandwidth{
-    width:64px;
-    border: 0;
-}
-
-#lb_bandwidth{
-    width:64px;
-}
-
-
 
 td select {
     width: 100%;
@@ -712,6 +625,16 @@ td select {
 
 #menu h3 {
     margin: 0;
+}
+
+#menu .active {
+    border-left: 5px solid #DD4B39;
+    color: #D14836;
+    font-weight: bold;
+}
+
+#menu a{
+    border-left: 5px;
 }
 
 #system_date {/* Data do sistema */
@@ -789,21 +712,11 @@ td select {
 
 #canvas {
     height: 100%;
-    background-color: #FFF;
     overflow-y: scroll;
 }
 
 #workspace {
     padding: 1em;
-    color: #4F4F4F;
-}
-
-h1 {
-    font-size: 17px;
-    margin: 0;
-    margin-bottom: 0.5em;
-    height: 24px;
-    line-height: 24px;
 }
 
 input[type="text"], input[type="password"], select:not([multiple]) {
@@ -816,6 +729,24 @@ input[type="text"], input[type="password"], select:not([multiple]) {
 input[type="text"]:hover, select:hover, input[type="radio"]:hover, input[type="password"]:hover, input[type="checkbox"]:hover {
     border: thin solid red;
 }
+
+/* Cores das fontes */
+
+#menu ul li, #menu ul a, #menu ul ul a { /* Itens do menu principal */
+    color: #4F4F4F;
+}
+
+.tabs li a { /* Títulos das tabs */
+    color: #4F4F4F;
+}
+
+h1 { /* Títulos principais */
+    color: #D00;
+}
+
+/* =============================================================================
+   Reservations
+   ========================================================================== */
 
 #bandwidth_bar {
     background-color:white;
@@ -857,38 +788,21 @@ div#bandwidth_bar_text{
     margin: auto auto;
 }
 
-.tab_content {
-    /*float: left;*/
-    padding: 0.5em 0.7em 0.5em 0.9em;
-    margin: 12px 0;
-}
-
-.tab_subcontent{
-    float:left;
-}
-
 .shadow-box, .tab_content{
     box-shadow: 2px 2px 4px #888; 
     background-color: #EEE;
 }
 
-.tab_content{
+.tab_content {
+    /*float: left;*/
     border: solid #BBB 1px; 
     border-image: initial;
+    padding: 1em; /*0.5em 0.7em 0.5em 0.9em;*/
+    margin: 12px 0;
 }
 
-/* Cores das fontes */
-
-#menu ul li, #menu ul a, #menu ul ul a { /* Itens do menu principal */
-    color: #4F4F4F;
-}
-
-.tabs li a { /* Títulos das tabs */
-    color: #4F4F4F;
-}
-
-h1 { /* Títulos principais */
-    color: #D00;
+.tab_subcontent{
+    float:left;
 }
 
 table.reservation-point{
@@ -924,6 +838,110 @@ table.view-point{
     margin: 0.4em 2em;
 }
 
+#reservation_add #res_name {
+    width: 600px;
+}
+
+.reservation-point .title{
+    font-weight: bold;
+    margin: 1px;
+    float: none;
+}
+
+.reservation-name{
+    color: #4F4F4F;
+    display: inline;
+}
+
+
+#edit_map_canvas {
+    width: 100%; 
+    height: 300px;
+}
+
+#slider {
+    width: 40%;    
+}
+
+#view_map_canvas {
+    width: 100%;
+    height: 200px;
+}
+
+#div-bandwidth {
+    display: none;
+}
+
+#Sunday, #Monday, #Tuesday, #Wednesday, #Thursday, #Friday, #Saturday {
+    margin: 0px;
+}
+
+.vlan-input {
+    position:relative;
+}
+.vlan-input label{
+    position:absolute;
+    bottom: 10px;
+    right: 4px;
+    font-size: 80%;
+}
+
+#bandwidth_un{
+    position: absolute;
+    bottom: 4px;
+    left: 60px;
+}
+
+#bandwidth{
+    width:64px;
+    border: 0;
+}
+
+#lb_bandwidth{
+    width:64px;
+}
+
+/* =============================================================================
+   Reservations Map Context Menu
+   ========================================================================== */
+
+#contextMenu {
+    position: absolute;
+    min-width: 100px;
+    z-index: 1000;
+    background: #fff;
+    border-top: solid 1px #CCC;
+    border-left: solid 1px #CCC;
+    border-bottom: solid 1px #676767;
+    border-right: solid 1px #676767;
+    padding: 0px;
+    margin: 0px;
+    display:none;
+}
+
+#contextMenu a {
+    color: #000;
+    text-decoration: none;
+    display: block;
+    line-height: 22px;
+    height: 22px;
+    padding: 1px 10px;
+}
+
+#contextMenu li {
+    list-style: none;
+    padding: 1px;
+    margin: 0px;
+}
+
+#contextMenu li.hover a {
+    background-color: #A7C4FA;
+}
+
+#contextMenu li.separator {
+    border-top: solid 1px #ccc;
+}
+
 dl {
     line-height: 2em;
     margin: 0em 0em;
@@ -939,16 +957,6 @@ dd {
     margin-left: 12em;
     margin-top: -2em;
     vertical-align: top;
-}
-
-#menu .active {
-    border-left: 5px solid #DD4B39;
-    color: #D14836;
-    font-weight: bold;
-}
-
-#menu a{
-    border-left: 5px;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -1065,10 +1073,19 @@ dd {
     z-index: 5;
 }
 
+/* =============================================================================
+   Placeholders
+   ========================================================================== */
+
+::-webkit-input-placeholder  { color:#ddd; }
+input:-moz-placeholder { color:#ddd; }
+
 .placeholder
 {
     color: #aaa;
 }
+
+:focus {outline: 0;} /*no outline (in chrome) */
 
 /* Spinner
 ----------------------------------*/
@@ -1432,6 +1449,10 @@ form #recaptcha_response_field {
     background-color: yellow !important;
 }*/
 
+/* =============================================================================
+   Authorization Form
+   ========================================================================== */
+
 .cal-old{
     background-color: #aaa !important;
     border: 1px solid #888 !important;
@@ -1458,30 +1479,10 @@ form #recaptcha_response_field {
     color: #e18a29;
 }
 
-:focus {outline: 0;} /*no outline (in chrome) */
-
-#reservation_add #res_name {
-    width: 600px;
-}
-
-.reservation-point .title{
-    font-weight: bold;
-    margin: 1px;
-    float: none;
-}
-
-::-webkit-input-placeholder  { color:#ddd; }
-input:-moz-placeholder { color:#ddd; }
-
 .label-description {
     display:inline; color:#3a5879; font-weight: bold;
 }
 
 label {
     margin-right: 6px;
-}
-
-.reservation-name{
-    color: #4F4F4F;
-    display: inline;
 }
