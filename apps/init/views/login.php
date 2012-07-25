@@ -15,7 +15,6 @@
         <script type="text/javascript" src="<?php echo $this->url(''); ?>webroot/js/jquery.min.js"></script>
         <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery-ui-1.8.16.custom.min.js"></script>
         <script type="text/javascript" src="<?php echo $this->url(''); ?>webroot/js/main.js"></script>
-        <script type="text/javascript" src="http://updateyourbrowser.net/asn.js"> </script>
         <script type="text/javascript">
             var baseUrl = '<?php echo $this->url(''); ?>';
             $(function(){$.makeAutofocus(); });
