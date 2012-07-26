@@ -44,7 +44,7 @@ class meicans extends Controller {
     }
     
     public function add_form() {
-        $this->render('add');
+        $this->render('form');
     }
     
     public function add() {
@@ -89,8 +89,8 @@ class meicans extends Controller {
             return;
         }
         
-        $this->setArgsToBody($meican[0]);
-        $this->render('edit');
+        $this->set('meican', $meican[0]);
+        $this->render('form');
     }
     
     public function update($mec_id_array) {
