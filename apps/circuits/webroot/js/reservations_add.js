@@ -1534,9 +1534,12 @@ function validateBand(band_value) {
                     return ;
                 dstSet = false;
                 n=1;
+                //assert(path[n] == null && !dstSet)
             }
-            edit_markersArray.push(path[n].unselectedMarker); //coloca marcador de volta
-            path[n].unselectedMarker.setMap(edit_map);
+            if (path[n].unselectedMarker != null) {
+                edit_markersArray.push(path[n].unselectedMarker); //coloca marcador de volta
+                path[n].unselectedMarker.setMap(edit_map);
+            }
             path[n].setMap(null);
             path[n] = null;
             edit_lines = this.clearMapElements(edit_lines);
