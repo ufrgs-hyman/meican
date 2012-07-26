@@ -1387,6 +1387,18 @@ form #recaptcha_response_field {
     display:inline; color:#3a5879; font-weight: bold;
 }
 
-label {
-    margin-right: 6px;
+.form label {
+    /*margin-right: 6px;*/
+    float: left;
+    width: 170px;
+    margin-right: 10px;
+    text-align: right;
+    font-size: 100%;
+    padding-top: 5px;
+}
+
+form div.form {
+    clear: both;
+    padding: 2px;
+    vertical-align: text-top;
 }
