@@ -63,8 +63,10 @@ class View {
             $return = ob_get_contents();
             ob_end_clean();
             Language::setDomain($dom);
-        } else
+        } else {
+            throw new MissingViewException($view);
             $return = NULL; //TODO: trigger error
+        }
         return $return;
     }
 
