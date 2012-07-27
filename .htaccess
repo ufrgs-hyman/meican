@@ -3,6 +3,8 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+    #RewriteCond %{SERVER_PORT} !443
+    #RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L]
 </IfModule>
 <IfModule mod_headers.c>
 	# 1 YEAR
