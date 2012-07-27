@@ -425,14 +425,6 @@ function selectThisHost(point) {
     });
 }
 
-function thisHostSrc() {
-    selectThisHost('src');
-}
-
-function thisHostDst() {
-    selectThisHost('dst');
-}
-
 function chooseHost(point) {
     $("#dialog_msg").empty();
     $.fn.mapEdit.clearPoint(point);
@@ -459,17 +451,17 @@ function chooseHost(point) {
     });
 }
 
-function chooseHostSrc() {
-    $("#edp_dialog").val('src');
-    $("#edp_dialog_form").dialog("open");
-}
-
-function chooseHostDst() {
-    $("#edp_dialog").val('dst');
-    $("#edp_dialog_form").dialog("open");
-}
-
-function copyEndpointLink(point, urn, partial_urn) {
+function copyEndpointLink(point) {
+    var urn = null;
+    var partial_urn = null;
+    if (point == "src") {
+        urn = src_urn;
+        partial_urn = src_partial_urn;
+    } else {
+        urn = dst_urn;
+        partial_urn = dst_partial_urn;
+    }
+    
     var searchDisabled = $('#' + point + '_copyedp').attr('class').search("disabled");
     
     if (searchDisabled == -1) {
@@ -483,14 +475,6 @@ function copyEndpointLink(point, urn, partial_urn) {
         $("#copy_edp_dialog").dialog("open");
         $("#edp_link").trigger('click');
     }
-}
-
-function copySrcLink() {
-    copyEndpointLink('src', src_urn, src_partial_urn);
-}
-
-function copyDstLink() {
-    copyEndpointLink('dst', dst_urn, dst_partial_urn);
 }
 
 
@@ -1653,20 +1637,36 @@ function validateBand(band_value) {
         /*$('#repeat_chkbox').button();*/
         /*$('#weekdays input[type=checkbox]').button();*/
     
-        $('#src_clearpath').click($.fn.mapEdit.clearSrc);
-        $('#dst_clearpath').click($.fn.mapEdit.clearDst);
+
         $("#bandwidth").spinner('disable');
         $('#bandwidth_un').disabled();
         $("#src_domain,#src_network,#dst_domain,#dst_network").empty();
         $("#src_device,#src_port,#dst_device,#dst_port").empty().disabled();
-        
-        $('#src_thishost').click(thisHostSrc);
-        $('#dst_thishost').click(thisHostDst);
-        $('#src_choosehost').click(chooseHostSrc);
-        $('#dst_choosehost').click(chooseHostDst);
-        
-        $('#src_copyedp').click(copySrcLink);
-        $('#dst_copyedp').click(copyDstLink);
+
+        /*
+         * Initialization (bind) of endpoint icons 
+        */
+        var points = ["src","dst"];
+        for (var i in points) {
+            var point = points[i];
+            $('#' + point + '_clearpath').attr('prefix', point).click(function() {
+                $.fn.mapEdit.clearPoint($(this).attr('prefix'));
+            });
+	
+            $('#' + point + '_thishost').attr('prefix', point).click(function() {
+                selectThisHost($(this).attr('prefix'));
+            });
+	
+            $('#' + point + '_choosehost').attr('prefix', point).click(function() {
+                $("#edp_dialog").val($(this).attr('prefix'));
+                $("#edp_dialog_form").dialog("open");
+            });
+	
+            $('#' + point + '_copyedp').attr('prefix', point).click(function() {
+                copyEndpointLink($(this).attr('prefix'));
+            });
+        }
+
         
         $("#edp_dialog_form").dialog({
             autoOpen: false,
