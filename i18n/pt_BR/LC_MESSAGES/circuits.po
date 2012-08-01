@@ -7,416 +7,45 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-23 00:44-0300\n"
-"PO-Revision-Date: 2012-05-23 00:47-0300\n"
+"POT-Creation-Date: 2012-08-01 18:09-0300\n"
+"PO-Revision-Date: 2012-08-01 18:12-0300\n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
-#: controllers/reservations.php:124
-#: controllers/reservations.php:818
-msgid "Error to get status"
-msgstr "Erro ao obter status"
-
-#: controllers/reservations.php:136
-#: views/reservations_show.php:3
-msgid "Active and pending reservations"
-msgstr "Reservas ativas e pendentes"
-
-#: controllers/reservations.php:136
-#: views/reservations_show.php:4
-msgid "History reservations"
-msgstr "Histórico de reservas"
-
-#: controllers/reservations.php:137
-msgid "You have no active or pending reservation, try <a href='history'>history</a> or click the button below to create a <a href='add'>new</a> one"
-msgstr "Você não possui nenhuma reserva ativa ou pendente, tente o <a href='history'>histórico</a> ou clique no botão abaixo para criar uma <a href='add'>nova</a>"
-
-#: controllers/reservations.php:138
-msgid "You have no reservation in history, click the button below to create a <a href='add'>new</a> one"
-msgstr "Você não possui nenhuma reserva no histórico, clique no botão abaixo para criar uma <a href='add'>nova</a>"
-
-#: controllers/reservations.php:483
-msgid "Authorization from Network Administrator will be required."
-msgstr "Será necessária a autorização do Administrador da Rede."
-
-#: controllers/reservations.php:485
-msgid "A name is required"
-msgstr "É necessário um nome"
-
-#: controllers/reservations.php:486
-msgid "Invalid value for bandwidth"
-msgstr "Valor inválido para largura de banda"
-
-#: controllers/reservations.php:487
-msgid "A source is required"
-msgstr "É necessário um ponto de origem"
-
-#: controllers/reservations.php:488
-msgid "Invalid value for source VLAN"
-msgstr "Valor inválido para VLAN de origem"
-
-#: controllers/reservations.php:489
-msgid "Source VLAN type required"
-msgstr "É necessário definir o tipo da VLAN na origem"
-
-#: controllers/reservations.php:490
-msgid "A destination is required"
-msgstr "É necessário um ponto de destino"
-
-#: controllers/reservations.php:491
-msgid "Invalid value for destination VLAN"
-msgstr "Valor inválido para VLAN de destino"
-
-#: controllers/reservations.php:492
-msgid "Destination VLAN type required"
-msgstr "É necessário definir o tipo da VLAN no destino"
-
-#: controllers/reservations.php:493
-msgid "Timer is required"
-msgstr "Agendamento é necessário"
-
-#: controllers/reservations.php:494
-msgid "The end time occurs before the start time"
-msgstr "O tempo final ocorre antes do tempo inicial"
-
-#: controllers/reservations.php:495
-msgid "Invalid duration"
-msgstr "Duração inválida"
-
-#: controllers/reservations.php:496
-msgid "Missing endpoints"
-msgstr "Pontos de origem e destino não definidos"
-
-#: controllers/reservations.php:497
-msgid "Source and destination endpoints cannot be the same"
-msgstr "Os pontos finais de origem e destino não podem ser iguais"
-
-#: controllers/reservations.php:498
-msgid "Could not get host"
-msgstr "Não foi possível encontrar host"
-
-#: controllers/reservations.php:499
-msgid "Domain not found"
-msgstr "Domínio não encontrado"
-
-#: controllers/reservations.php:500
-msgid "Device not found"
-msgstr "Dispositivo não encontrado"
-
-#: controllers/reservations.php:501
-msgid "Port not found"
-msgstr "Porta não encontrada"
-
-#: controllers/reservations.php:502
-msgid "Could not set point, probably there is not enough parameters"
-msgstr "Não foi possível definir o ponto, provavelmente não há parâmetros suficientes"
-
-#: controllers/reservations.php:503
-msgid "Device not set"
-msgstr "Dispositivo não definido"
-
-#: controllers/reservations.php:504
-msgid "Port not set"
-msgstr "Porta não definida"
-
-#: controllers/reservations.php:505
-msgid "The point specified cannot be set as source"
-msgstr "O ponto especificado não pode ser definido como origem"
-
-#: controllers/reservations.php:506
-msgid "Device cannot be set as source"
-msgstr "O dispositivo não pode ser definido como origem"
-
-#: controllers/reservations.php:507
-msgid "Port cannot be set as source"
-msgstr "A porta não pode ser definida como origem"
-
-#: controllers/reservations.php:509
-#: controllers/reservations.php:809
-#: views/elements/source_dest.php:21
-#: views/elements/reservation_tab_point.php:36
-#: views/elements/list_flows.php:19
-#: views/elements/list_flows.php:25
-#: views/elements/view_point.php:24
-msgid "Domain"
-msgstr "Domínio"
-
-#: controllers/reservations.php:510
-#: controllers/reservations.php:810
-msgid "Domains"
-msgstr "Domínios"
-
-#: controllers/reservations.php:511
-#: controllers/reservations.php:811
-#: views/elements/source_dest.php:65
-#: views/elements/reservation_tab_point.php:40
-#: views/elements/list_flows.php:20
-#: views/elements/list_flows.php:26
-#: views/elements/view_point.php:31
-msgid "Network"
-msgstr "Rede"
-
-#: controllers/reservations.php:512
-#: controllers/reservations.php:812
-msgid "Networks"
-msgstr "Redes"
-
-#: controllers/reservations.php:513
-#: controllers/reservations.php:813
-#: views/elements/source_dest.php:77
-#: views/elements/reservation_tab_point.php:44
-#: views/elements/list_flows.php:21
-#: views/elements/list_flows.php:27
-#: views/elements/view_point.php:38
-msgid "Device"
-msgstr "Dispositivo"
-
-#: controllers/reservations.php:514
-#: controllers/reservations.php:814
-msgid "Devices"
-msgstr "Dispositivos"
-
-#: controllers/reservations.php:515
-msgid "From here"
-msgstr "A partir daqui"
-
-#: controllers/reservations.php:516
-msgid "To here"
-msgstr "Até aqui"
-
-#: controllers/reservations.php:517
-#: controllers/reservations.php:817
-msgid "Information about cluster"
-msgstr "Informações sobre o cluster"
-
-#: controllers/reservations.php:518
-msgid "Coordinates"
-msgstr "Coordenadas"
-
-#: controllers/reservations.php:519
-#: controllers/reservations.php:553
-#: views/elements/view_point.php:61
-msgid "any"
-msgstr "qualquer"
-
-#: controllers/reservations.php:520
-msgid "Value"
-msgstr "Valor"
-
-#: controllers/reservations.php:521
-msgid "Ok"
-msgstr "Ok"
-
-#: controllers/reservations.php:522
-#: views/reservations_add.php:40
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: controllers/reservations.php:528
-msgid "Repeat every"
-msgstr "Repetir a cada"
-
-#: controllers/reservations.php:529
 #: models/timer_info.php:58
-msgid "day"
-msgstr "dia"
-
-#: controllers/reservations.php:530
-#: models/timer_info.php:58
+#: controllers/reservations.php:531
 msgid "days"
 msgstr "dias"
 
-#: controllers/reservations.php:531
-msgid "week"
-msgstr "semana"
+#: models/timer_info.php:58
+#: controllers/reservations.php:530
+msgid "day"
+msgstr "dia"
 
-#: controllers/reservations.php:532
-msgid "weeks"
-msgstr "semanas"
-
-#: controllers/reservations.php:533
-msgid "on"
-msgstr "em"
-
-#: controllers/reservations.php:534
-msgid "month"
-msgstr "mês"
-
-#: controllers/reservations.php:535
-msgid "months"
-msgstr "meses"
-
-#: controllers/reservations.php:536
-msgid "year"
-msgstr "ano"
-
-#: controllers/reservations.php:537
-msgid "years"
-msgstr "anos"
-
-#: controllers/reservations.php:538
 #: models/timer_info.php:63
-msgid "hour"
-msgstr "hora"
-
-#: controllers/reservations.php:539
-#: models/timer_info.php:63
+#: controllers/reservations.php:540
 msgid "hours"
 msgstr "horas"
 
-#: controllers/reservations.php:540
-#: models/timer_info.php:68
-#: models/timer_info.php:72
-msgid "minute"
-msgstr "minuto"
+#: models/timer_info.php:63
+#: controllers/reservations.php:539
+msgid "hour"
+msgstr "hora"
 
-#: controllers/reservations.php:541
 #: models/timer_info.php:68
+#: controllers/reservations.php:542
 msgid "minutes"
 msgstr "minutos"
 
-#: controllers/reservations.php:542
-msgid "and"
-msgstr "e"
-
-#: controllers/reservations.php:543
-msgid "until"
-msgstr "até"
-
-#: controllers/reservations.php:544
-msgid "times"
-msgstr "vezes"
-
-#: controllers/reservations.php:545
-msgid "time"
-msgstr "vez"
-
-#: controllers/reservations.php:546
-msgid "Please set an end rule"
-msgstr "Defina uma regra de término"
-
-#: controllers/reservations.php:547
-msgid "Select at least one day"
-msgstr "Selecione pelo menos um dia"
-
-#: controllers/reservations.php:548
-msgid "Set name"
-msgstr "Defina um nome"
-
-#: controllers/reservations.php:549
-msgid "Invalid time"
-msgstr "Hora inválida"
-
-#: controllers/reservations.php:550
-msgid "Active from"
-msgstr "Ativo desde"
-
-#: controllers/reservations.php:551
-msgid "at"
-msgstr "às"
-
-#: controllers/reservations.php:552
-msgid "Reset Zoom"
-msgstr "Redefinir Zoom"
-
-#: controllers/reservations.php:623
-msgid "Fail to save endpoints or timer on database"
-msgstr "Falha ao salvar dados da reserva no banco"
-
-#: controllers/reservations.php:659
-msgid "Error to send reservation to OSCARS"
-msgstr "Erro ao enviar reserva para o OSCARS"
-
-#: controllers/reservations.php:664
-msgid "Reservation submitted"
-msgstr "Reserva enviada"
-
-#: controllers/reservations.php:667
-msgid "reservations submitted"
-msgstr "reservas enviadas"
-
-#: controllers/reservations.php:675
-msgid "Fail to save reservation on database"
-msgstr "Falha ao salvar reserva no banco de dados"
-
-#: controllers/reservations.php:690
-msgid "Invalid index"
-msgstr "Índice inválido"
-
-#: controllers/reservations.php:702
-msgid "Reservation not found"
-msgstr "Reserva não encontrada"
-
-#: controllers/reservations.php:757
-msgid "Flow not found or could not get endpoints information"
-msgstr "Fluxo não encontrado ou não foi possível buscar informações dos endpoints"
-
-#: controllers/reservations.php:767
-msgid "Timer not found"
-msgstr "Agendamento não encontrado"
-
-#: controllers/reservations.php:815
-msgid "From Here"
-msgstr "A partir daqui"
-
-#: controllers/reservations.php:816
-msgid "To Here"
-msgstr "Até aqui"
-
-#: controllers/reservations.php:869
-msgid "Reservation"
-msgstr "Reserva"
-
-#: controllers/reservations.php:869
-msgid "deleted"
-msgstr "excluído"
-
-#: controllers/reservations.php:942
-msgid "No reservation was cancelled"
-msgstr "Nenhuma reserva foi cancelada"
-
-#: controllers/reservations.php:945
-msgid "One reservation was cancelled"
-msgstr "Uma reserva foi cancelada"
-
-#: controllers/reservations.php:948
-msgid "reservations were cancelled"
-msgstr "reservas foram canceladas"
-
-#: controllers/reservations.php:1107
-msgid "Error at invoking business layer."
-msgstr "Erro ao invocar camada de negócios"
-
-#: circuits.php:14
-msgid "Circuits"
-msgstr "Circuitos"
-
-#: circuits.php:17
-msgid "New"
-msgstr "Novo"
-
-#: circuits.php:23
-#: views/elements/list_gris.php:9
-#: views/elements/view_request.php:6
-#: views/reservations_show.php:23
-msgid "Status"
-msgstr "Status"
-
-#: circuits.php:28
-msgid "History"
-msgstr "Histórico"
-
-#: circuits.php:39
-msgid "New Reservation"
-msgstr "Nova Reserva"
-
-#: circuits.php:46
-msgid "Reservations"
-msgstr "Reservas"
+#: models/timer_info.php:68
+#: models/timer_info.php:72
+#: controllers/reservations.php:541
+msgid "minute"
+msgstr "minuto"
 
 #: models/gri_info.php:169
 msgid "Active"
@@ -482,90 +111,181 @@ msgstr "Status desconhecido"
 msgid "Reservation has no GRI"
 msgstr "Reserva não possui GRI"
 
-#: views/reservations_view.php:1
-#: views/reservations_view2.php:1
-msgid "Reservation details"
-msgstr "Detalhes da reserva"
-
-#: views/reservations_view.php:4
+#: views/reservations_add.php:10
+#: views/reservations_view.php:2
 #: views/reservations_view2.php:5
 msgid "Reservation name"
 msgstr "Nome da reserva"
 
-#: views/reservations_view.php:6
-#: views/reservations_view2.php:7
-msgid "User"
-msgstr "Usuário"
+#: views/reservations_add.php:11
+msgid "Typing a name for the reservation will unlock the map"
+msgstr "Digite um nome para a reserva para desabilitar o mapa"
 
-#: views/reservations_view.php:22
-#: views/reservations_view2.php:19
+#: views/reservations_add.php:11
+msgid "To create a reservation, first type a name"
+msgstr "Para criar uma reserva, primeiro digite um nome"
+
+#: views/reservations_add.php:16
+msgid "Select source and destination networks by clicking on the map markers with any button and then choosing an option from the pop-up menu. After selecting the endpoints, choose the device and port on the right pane."
+msgstr "Selecione as redes de origem e destino clicando nos marcadores do mapa com qualquer botão e escolhendo uma opção do menu pop-up. Após selecionados os pontos de origem e destino, escolha o dispositivo e a porta no painel à direita."
+
 #: views/reservations_add.php:27
+#: views/elements/circuit_info.php:6
+#: views/reservations_view2.php:19
 msgid "Mbps"
 msgstr "Mbps"
 
-#: views/reservations_view.php:42
-#: views/reservations_view2.php:34
+#: views/reservations_add.php:39
+msgid "Submit"
+msgstr "Enviar"
+
+#: views/reservations_add.php:40
+#: controllers/reservations.php:523
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: views/reservations_add.php:46
+#: views/elements/reservation_tab_point.php:22
+msgid "Search for endpoint"
+msgstr "Procurar por um ponto final"
+
+#: views/reservations_add.php:47
+msgid "Fill in with a hostname, IP address or URN"
+msgstr "Preencha com o nome de um host, um endereço IP ou um URN"
+
+#: views/reservations_add.php:49
+msgid "Enter text"
+msgstr "Digite um texto"
+
+#: views/reservations_add.php:49
+msgid "Hostname, IP address or URN"
+msgstr "Nome de host, endereço IP ou URN"
+
+#: views/reservations_add.php:56
+#: views/elements/reservation_tab_point.php:25
+msgid "Copy endpoint link"
+msgstr "Copiar link do ponto final"
+
+#: views/reservations_add.php:57
+msgid "Copy and paste the link below"
+msgstr "Copie e cole o link abaixo"
+
+#: views/reservations_add.php:59
+msgid "URN"
+msgstr "URN"
+
+#: views/reservations_show.php:3
+#: controllers/reservations.php:136
+msgid "Active and pending reservations"
+msgstr "Reservas ativas e pendentes"
+
+#: views/reservations_show.php:4
+#: controllers/reservations.php:136
+msgid "History reservations"
+msgstr "Histórico de reservas"
+
 #: views/reservations_show.php:11
+#: views/reservations_view.php:25
+#: views/reservations_view2.php:34
 msgid "Refresh"
 msgstr "Atualizar"
 
-#: views/reservations_view.php:43
-#: views/reservations_view2.php:35
-msgid "Cancel reservations"
-msgstr "Cancelar reservas"
+#: views/reservations_show.php:21
+#: views/elements/list_flows.php:13
+#: views/elements/list_timers.php:13
+msgid "Name"
+msgstr "Nome"
 
-#: views/reservations_view.php:43
-#: views/reservations_view2.php:35
-msgid "Cancel the selected reservations?"
-msgstr "Cancelar as reservas selecionadas?"
+#: views/reservations_show.php:22
+msgid "Bandwidth (Mbps)"
+msgstr "Largura de banda (Mbps)"
 
-#: views/reservations_view.php:54
-#: views/reservations_view2.php:53
-msgid "Back to reservations"
-msgstr "Voltar às reservas"
+#: views/reservations_show.php:23
+#: views/elements/list_gris.php:9
+#: views/elements/view_request.php:6
+#: circuits.php:23
+msgid "Status"
+msgstr "Status"
 
-#: views/elements/source_dest.php:12
+#: views/reservations_show.php:25
 #: views/elements/reservation_tab_point.php:3
 #: views/elements/list_flows.php:14
 #: views/elements/view_point.php:3
-#: views/reservations_show.php:25
+#: views/elements/source_dest.php:12
 msgid "Source"
 msgstr "Origem"
 
-#: views/elements/source_dest.php:15
+#: views/reservations_show.php:26
 #: views/elements/reservation_tab_point.php:6
 #: views/elements/list_flows.php:15
 #: views/elements/view_point.php:6
-#: views/reservations_show.php:26
+#: views/elements/source_dest.php:15
 msgid "Destination"
 msgstr "Destino"
 
-#: views/elements/source_dest.php:89
-#: views/elements/reservation_tab_point.php:50
-#: views/elements/list_flows.php:22
-#: views/elements/list_flows.php:28
-#: views/elements/view_point.php:45
-msgid "Port"
-msgstr "Porta"
-
-#: views/elements/timer_form.php:11
-#: views/elements/view_timer.php:2
 #: views/reservations_show.php:27
+#: views/elements/view_timer.php:2
+#: views/elements/timer_form.php:11
 msgid "Start"
 msgstr "Início"
 
-#: views/elements/timer_form.php:15
-#: views/elements/view_timer.php:4
 #: views/reservations_show.php:28
+#: views/elements/view_timer.php:4
+#: views/elements/timer_form.php:15
 msgid "Finish"
 msgstr "Fim"
 
-#: views/elements/timer_form.php:21
-msgid "Repeat..."
-msgstr "Repetir..."
+#: views/reservations_show.php:29
+#: views/elements/list_timers.php:17
+msgid "Recurrence"
+msgstr "Recorrência"
 
+#: views/reservations_show.php:41
+msgid "View"
+msgstr "Visualizar"
+
+#: views/reservations_show.php:57
+#: views/elements/list_gris.php:10
+#: views/elements/list_gris.php:41
+msgid "loading"
+msgstr "carregando"
+
+#: views/elements/list_gris.php:6
+msgid "Tool"
+msgstr "Ferramenta"
+
+#: views/elements/list_gris.php:7
+msgid "GRI"
+msgstr "GRI"
+
+#: views/elements/list_gris.php:12
+msgid "Initial Date/Time"
+msgstr "Data/Hora Inicial"
+
+#: views/elements/list_gris.php:13
+msgid "Final Date/Time"
+msgstr "Data/Hora Final"
+
+#: views/elements/list_gris.php:26
+msgid "Accept"
+msgstr "Aceitar"
+
+#: views/elements/list_gris.php:27
+msgid "Reject"
+msgstr "Recusar"
+
+#: views/elements/list_gris.php:29
+msgid "Edit"
+msgstr "Editar"
+
+#: views/elements/view_timer.php:6
+#: views/elements/timer_form.php:19
+#: views/elements/list_timers.php:16
+msgid "Duration"
+msgstr "Duração"
+
+#: views/elements/view_timer.php:12
 #: views/elements/timer_form.php:26
-#: views/elements/view_timer.php:11
 msgid "Summary"
 msgstr "Resumo"
 
@@ -577,54 +297,60 @@ msgstr "Limpar ponto final"
 msgid "Select this host"
 msgstr "Selecionar este host"
 
-#: views/elements/reservation_tab_point.php:22
-#: views/reservations_add.php:46
-msgid "Search for endpoint"
-msgstr "Procurar por um ponto final"
+#: views/elements/reservation_tab_point.php:34
+#: views/elements/list_flows.php:19
+#: views/elements/list_flows.php:25
+#: views/elements/view_point.php:24
+#: views/elements/source_dest.php:21
+#: controllers/reservations.php:510
+#: controllers/reservations.php:810
+msgid "Domain"
+msgstr "Domínio"
 
-#: views/elements/reservation_tab_point.php:25
-#: views/reservations_add.php:56
-msgid "Copy endpoint link"
-msgstr "Copiar link do ponto final"
+#: views/elements/reservation_tab_point.php:38
+#: views/elements/list_flows.php:20
+#: views/elements/list_flows.php:26
+#: views/elements/view_point.php:31
+#: views/elements/source_dest.php:65
+#: controllers/reservations.php:512
+#: controllers/reservations.php:812
+msgid "Network"
+msgstr "Rede"
 
-#: views/elements/reservation_tab_point.php:58
+#: views/elements/reservation_tab_point.php:42
+#: views/elements/list_flows.php:21
+#: views/elements/list_flows.php:27
+#: views/elements/view_point.php:38
+#: views/elements/source_dest.php:77
+#: controllers/reservations.php:514
+#: controllers/reservations.php:814
+msgid "Device"
+msgstr "Dispositivo"
+
+#: views/elements/reservation_tab_point.php:48
+#: views/elements/list_flows.php:22
+#: views/elements/list_flows.php:28
+#: views/elements/view_point.php:45
+#: views/elements/source_dest.php:89
+msgid "Port"
+msgstr "Porta"
+
+#: views/elements/reservation_tab_point.php:56
 #: views/elements/view_point.php:53
 msgid "VLAN Type"
 msgstr "Tipo de VLAN"
 
-#: views/elements/reservation_tab_point.php:62
+#: views/elements/reservation_tab_point.php:60
 #: views/elements/list_flows.php:82
 #: views/elements/list_flows.php:109
 msgid "Tagged"
 msgstr "Tagged"
 
-#: views/elements/reservation_tab_point.php:66
+#: views/elements/reservation_tab_point.php:64
 #: views/elements/list_flows.php:23
 #: views/elements/list_flows.php:29
 msgid "VLAN"
 msgstr "VLAN"
-
-#: views/elements/list_flows.php:13
-#: views/elements/list_timers.php:13
-#: views/reservations_show.php:21
-msgid "Name"
-msgstr "Nome"
-
-#: views/elements/list_flows.php:82
-#: views/elements/list_flows.php:109
-msgid "Untagged"
-msgstr "Untagged"
-
-#: views/elements/list_flows.php:120
-#: views/elements/list_timers.php:66
-#: views/elements/empty_db.php:20
-msgid "Add"
-msgstr "Adicionar"
-
-#: views/elements/view_timer.php:6
-#: views/elements/list_timers.php:16
-msgid "Duration"
-msgstr "Duração"
 
 #: views/elements/timer_recurrence.php:6
 msgid "Everyday"
@@ -726,40 +452,6 @@ msgstr "ocorrências"
 msgid "On"
 msgstr "Em"
 
-#: views/elements/list_gris.php:6
-msgid "Tool"
-msgstr "Ferramenta"
-
-#: views/elements/list_gris.php:7
-msgid "GRI"
-msgstr "GRI"
-
-#: views/elements/list_gris.php:10
-#: views/elements/list_gris.php:41
-#: views/reservations_show.php:57
-msgid "loading"
-msgstr "carregando"
-
-#: views/elements/list_gris.php:12
-msgid "Initial Date/Time"
-msgstr "Data/Hora Inicial"
-
-#: views/elements/list_gris.php:13
-msgid "Final Date/Time"
-msgstr "Data/Hora Final"
-
-#: views/elements/list_gris.php:26
-msgid "Accept"
-msgstr "Aceitar"
-
-#: views/elements/list_gris.php:27
-msgid "Reject"
-msgstr "Recusar"
-
-#: views/elements/list_gris.php:29
-msgid "Edit"
-msgstr "Editar"
-
 #: views/elements/view_request.php:1
 msgid "Request"
 msgstr "Requisição"
@@ -772,6 +464,27 @@ msgstr "Resposta"
 msgid "Message"
 msgstr "Mensagem"
 
+#: views/elements/list_flows.php:82
+#: views/elements/list_flows.php:109
+msgid "Untagged"
+msgstr "Untagged"
+
+#: views/elements/list_flows.php:120
+#: views/elements/empty_db.php:20
+#: views/elements/list_timers.php:66
+msgid "Add"
+msgstr "Adicionar"
+
+#: views/elements/timer_form.php:21
+msgid "Repeat..."
+msgstr "Repetir..."
+
+#: views/elements/view_point.php:61
+#: controllers/reservations.php:520
+#: controllers/reservations.php:554
+msgid "any"
+msgstr "qualquer"
+
 #: views/elements/list_timers.php:14
 msgid "Initial Date"
 msgstr "Data Inicial"
@@ -780,272 +493,493 @@ msgstr "Data Inicial"
 msgid "Final Date"
 msgstr "Data Final"
 
-#: views/elements/list_timers.php:17
-#: views/reservations_show.php:29
-msgid "Recurrence"
-msgstr "Recorrência"
+#: views/reservations_view.php:26
+#: views/reservations_view2.php:35
+msgid "Cancel reservations"
+msgstr "Cancelar reservas"
 
-#: views/reservations_show.php:22
-msgid "Bandwidth (Mbps)"
-msgstr "Largura de banda (Mbps)"
+#: views/reservations_view.php:26
+#: views/reservations_view2.php:35
+msgid "Cancel the selected reservations?"
+msgstr "Cancelar as reservas selecionadas?"
 
-#: views/reservations_show.php:41
-msgid "View"
-msgstr "Visualizar"
+#: views/reservations_view2.php:1
+msgid "Reservation details"
+msgstr "Detalhes da reserva"
 
-#: views/reservations_add.php:10
-msgid "New circuit name:"
-msgstr "Nome para o novo circuito:"
+#: views/reservations_view2.php:7
+msgid "User"
+msgstr "Usuário"
 
-#: views/reservations_add.php:11
-msgid "Typing a name for the reservation will unlock the map"
-msgstr "Digite um nome para a reserva para desabilitar o mapa"
+#: views/reservations_view2.php:53
+msgid "Back to reservations"
+msgstr "Voltar às reservas"
 
-#: views/reservations_add.php:11
-msgid "To create a reservation, first type a name"
-msgstr "Para criar uma reserva, primeiro digite um nome"
+#: circuits.php:14
+msgid "Circuits"
+msgstr "Circuitos"
 
-#: views/reservations_add.php:16
-msgid "Select source and destination networks by clicking on the map markers with any button and then choosing an option from the pop-up menu. After selecting the endpoints, choose the device and port on the right pane."
-msgstr "Selecione as redes de origem e destino clicando nos marcadores do mapa com qualquer botão e escolhendo uma opção do menu pop-up. Após selecionados os pontos de origem e destino, escolha o dispositivo e a porta no painel à direita."
+#: circuits.php:17
+msgid "New"
+msgstr "Novo"
 
-#: views/reservations_add.php:39
-msgid "Submit"
-msgstr "Enviar"
+#: circuits.php:28
+msgid "History"
+msgstr "Histórico"
 
-#: views/reservations_add.php:47
-msgid "Fill in with a hostname, IP address or URN"
-msgstr "Preencha com o nome de um host, um endereço IP ou um URN"
+#: circuits.php:39
+msgid "New Reservation"
+msgstr "Nova Reserva"
 
-#: views/reservations_add.php:49
-msgid "Enter text"
-msgstr "Digite um texto"
+#: circuits.php:46
+msgid "Reservations"
+msgstr "Reservas"
 
-#: views/reservations_add.php:49
-msgid "Hostname, IP address or URN"
-msgstr "Nome de host, endereço IP ou URN"
+#: controllers/reservations.php:124
+#: controllers/reservations.php:819
+msgid "Error to get status"
+msgstr "Erro ao obter status"
 
-#: views/reservations_add.php:57
-msgid "Copy and paste the link below"
-msgstr "Copie e cole o link abaixo"
+#: controllers/reservations.php:137
+msgid "You have no active or pending reservation, try <a href='history'>history</a> or click the button below to create a <a href='add'>new</a> one"
+msgstr "Você não possui nenhuma reserva ativa ou pendente, tente o <a href='history'>histórico</a> ou clique no botão abaixo para criar uma <a href='add'>nova</a>"
 
-#: views/reservations_add.php:59
-msgid "URN"
-msgstr "URN"
+#: controllers/reservations.php:138
+msgid "You have no reservation in history, click the button below to create a <a href='add'>new reservation</a>"
+msgstr "Você não possui nenhuma reserva no histórico, clique no botão abaixo para criar uma <a href='add'>nova reserva</a>"
 
+#: controllers/reservations.php:484
+msgid "Authorization from Network Administrator will be required."
+msgstr "Será necessária a autorização do Administrador da Rede."
+
+#: controllers/reservations.php:486
+msgid "A name is required"
+msgstr "É necessário um nome"
+
+#: controllers/reservations.php:487
+msgid "Invalid value for bandwidth"
+msgstr "Valor inválido para largura de banda"
+
+#: controllers/reservations.php:488
+msgid "A source is required"
+msgstr "É necessário um ponto de origem"
+
+#: controllers/reservations.php:489
+msgid "Invalid value for source VLAN"
+msgstr "Valor inválido para VLAN de origem"
+
+#: controllers/reservations.php:490
+msgid "Source VLAN type required"
+msgstr "É necessário definir o tipo da VLAN na origem"
+
+#: controllers/reservations.php:491
+msgid "A destination is required"
+msgstr "É necessário um ponto de destino"
+
+#: controllers/reservations.php:492
+msgid "Invalid value for destination VLAN"
+msgstr "Valor inválido para VLAN de destino"
+
+#: controllers/reservations.php:493
+msgid "Destination VLAN type required"
+msgstr "É necessário definir o tipo da VLAN no destino"
+
+#: controllers/reservations.php:494
+msgid "Timer is required"
+msgstr "Agendamento é necessário"
+
+#: controllers/reservations.php:495
+msgid "The end time occurs before the start time"
+msgstr "O tempo final ocorre antes do tempo inicial"
+
+#: controllers/reservations.php:496
+msgid "Invalid duration"
+msgstr "Duração inválida"
+
+#: controllers/reservations.php:497
+msgid "Missing endpoints"
+msgstr "Pontos de origem e destino não definidos"
+
+#: controllers/reservations.php:498
+msgid "Source and destination endpoints cannot be the same"
+msgstr "Os pontos finais de origem e destino não podem ser iguais"
+
+#: controllers/reservations.php:499
+msgid "Could not get host"
+msgstr "Não foi possível encontrar host"
+
+#: controllers/reservations.php:500
+msgid "Domain not found"
+msgstr "Domínio não encontrado"
+
+#: controllers/reservations.php:501
+msgid "Device not found"
+msgstr "Dispositivo não encontrado"
+
+#: controllers/reservations.php:502
+msgid "Port not found"
+msgstr "Porta não encontrada"
+
+#: controllers/reservations.php:503
+msgid "Could not set point, probably there is not enough parameters"
+msgstr "Não foi possível definir o ponto, provavelmente não há parâmetros suficientes"
+
+#: controllers/reservations.php:504
+msgid "Device not set"
+msgstr "Dispositivo não definido"
+
+#: controllers/reservations.php:505
+msgid "Port not set"
+msgstr "Porta não definida"
+
+#: controllers/reservations.php:506
+msgid "The point specified cannot be set as source"
+msgstr "O ponto especificado não pode ser definido como origem"
+
+#: controllers/reservations.php:507
+msgid "Device cannot be set as source"
+msgstr "O dispositivo não pode ser definido como origem"
+
+#: controllers/reservations.php:508
+msgid "Port cannot be set as source"
+msgstr "A porta não pode ser definida como origem"
+
+#: controllers/reservations.php:511
+#: controllers/reservations.php:811
+msgid "Domains"
+msgstr "Domínios"
+
+#: controllers/reservations.php:513
+#: controllers/reservations.php:813
+msgid "Networks"
+msgstr "Redes"
+
+#: controllers/reservations.php:515
+#: controllers/reservations.php:815
+msgid "Devices"
+msgstr "Dispositivos"
+
+#: controllers/reservations.php:516
+msgid "From here"
+msgstr "A partir daqui"
+
+#: controllers/reservations.php:517
+msgid "To here"
+msgstr "Até aqui"
+
+#: controllers/reservations.php:518
+#: controllers/reservations.php:818
+msgid "Information about cluster"
+msgstr "Informações sobre o cluster"
+
+#: controllers/reservations.php:519
+msgid "Coordinates"
+msgstr "Coordenadas"
+
+#: controllers/reservations.php:521
+msgid "Value"
+msgstr "Valor"
+
+#: controllers/reservations.php:522
+msgid "Ok"
+msgstr "Ok"
+
+#: controllers/reservations.php:529
+msgid "Repeat every"
+msgstr "Repetir a cada"
+
+#: controllers/reservations.php:532
+msgid "week"
+msgstr "semana"
+
+#: controllers/reservations.php:533
+msgid "weeks"
+msgstr "semanas"
+
+#: controllers/reservations.php:534
+msgid "on"
+msgstr "em"
+
+#: controllers/reservations.php:535
+msgid "month"
+msgstr "mês"
+
+#: controllers/reservations.php:536
+msgid "months"
+msgstr "meses"
+
+#: controllers/reservations.php:537
+msgid "year"
+msgstr "ano"
+
+#: controllers/reservations.php:538
+msgid "years"
+msgstr "anos"
+
+#: controllers/reservations.php:543
+msgid "and"
+msgstr "e"
+
+#: controllers/reservations.php:544
+msgid "until"
+msgstr "até"
+
+#: controllers/reservations.php:545
+msgid "times"
+msgstr "vezes"
+
+#: controllers/reservations.php:546
+msgid "time"
+msgstr "vez"
+
+#: controllers/reservations.php:547
+msgid "Please set an end rule"
+msgstr "Defina uma regra de término"
+
+#: controllers/reservations.php:548
+msgid "Select at least one day"
+msgstr "Selecione pelo menos um dia"
+
+#: controllers/reservations.php:549
+msgid "Set name"
+msgstr "Defina um nome"
+
+#: controllers/reservations.php:550
+msgid "Invalid time"
+msgstr "Hora inválida"
+
+#: controllers/reservations.php:551
+msgid "Active from"
+msgstr "Ativo desde"
+
+#: controllers/reservations.php:552
+msgid "at"
+msgstr "às"
+
+#: controllers/reservations.php:553
+msgid "Reset Zoom"
+msgstr "Redefinir Zoom"
+
+#: controllers/reservations.php:624
+msgid "Fail to save endpoints or timer on database"
+msgstr "Falha ao salvar dados da reserva no banco"
+
+#: controllers/reservations.php:660
+msgid "Error to send reservation to OSCARS"
+msgstr "Erro ao enviar reserva para o OSCARS"
+
+#: controllers/reservations.php:665
+msgid "Reservation submitted"
+msgstr "Reserva enviada"
+
+#: controllers/reservations.php:668
+msgid "reservations submitted"
+msgstr "reservas enviadas"
+
+#: controllers/reservations.php:676
+msgid "Fail to save reservation on database"
+msgstr "Falha ao salvar reserva no banco de dados"
+
+#: controllers/reservations.php:691
+msgid "Invalid index"
+msgstr "Índice inválido"
+
+#: controllers/reservations.php:703
+msgid "Reservation not found"
+msgstr "Reserva não encontrada"
+
+#: controllers/reservations.php:758
+msgid "Flow not found or could not get endpoints information"
+msgstr "Fluxo não encontrado ou não foi possível buscar informações dos endpoints"
+
+#: controllers/reservations.php:768
+msgid "Timer not found"
+msgstr "Agendamento não encontrado"
+
+#: controllers/reservations.php:816
+msgid "From Here"
+msgstr "A partir daqui"
+
+#: controllers/reservations.php:817
+msgid "To Here"
+msgstr "Até aqui"
+
+#: controllers/reservations.php:870
+msgid "Reservation"
+msgstr "Reserva"
+
+#: controllers/reservations.php:870
+msgid "deleted"
+msgstr "excluído"
+
+#: controllers/reservations.php:943
+msgid "No reservation was cancelled"
+msgstr "Nenhuma reserva foi cancelada"
+
+#: controllers/reservations.php:946
+msgid "One reservation was cancelled"
+msgstr "Uma reserva foi cancelada"
+
+#: controllers/reservations.php:949
+msgid "reservations were cancelled"
+msgstr "reservas foram canceladas"
+
+#: controllers/reservations.php:1108
+msgid "Error at invoking business layer."
+msgstr "Erro ao invocar camada de negócios"
+
+#~ msgid ""
+#~ "You have no reservation in history, click the button below to create a <a "
+#~ "href='add'>new</a> one"
+#~ msgstr ""
+#~ "Você não possui nenhuma reserva no histórico, clique no botão abaixo para "
+#~ "criar uma <a href='add'>nova</a>"
+#~ msgid "New circuit name:"
+#~ msgstr "Nome para o novo circuito:"
 #~ msgid "Network not set"
 #~ msgstr "Rede não definida"
-
 #~ msgid "Domain cannot be set as source"
 #~ msgstr "O domínio não pode ser definido como origem"
-
 #~ msgid "Network cannot be set as source"
 #~ msgstr "A rede não pode ser definida como origem"
-
 #~ msgid "Hostname or IP address"
 #~ msgstr "Nome do host ou endereço IP"
-
 #~ msgid "Source and destination endpoints are the same"
 #~ msgstr "Pontos finais de origem e destino são os mesmos"
-
 #~ msgid "Clear point"
 #~ msgstr "Limpar ponto"
-
 #~ msgid "Choose host"
 #~ msgstr "Escolher host"
-
 #~ msgid "Choose endpoint for a host"
 #~ msgstr "Escolher ponto final para um host"
-
 #~ msgid "Fill in with a hostname or IP address"
 #~ msgstr "Preencha com o nome do host ou endereço IP"
-
 #~ msgid "Map View"
 #~ msgstr "Visão de Mapa"
-
 #~ msgid "Add Flow - Advanced View"
 #~ msgstr "Adicionar Fluxo - Visão Avançada"
-
 #~ msgid "Reservation Creation Wizard"
 #~ msgstr "Assistente para Criação de Reserva"
-
 #~ msgid "Flow name"
 #~ msgstr "Nome do fluxo"
-
 #~ msgid "Set the flow name"
 #~ msgstr "Defina o nome do fluxo"
-
 #~ msgid "Bandwidth"
 #~ msgstr "Largura de banda"
-
 #~ msgid "OK"
 #~ msgstr "OK"
-
 #~ msgid "Edit Flow"
 #~ msgstr "Editar Fluxo"
-
 #~ msgid "Timers"
 #~ msgstr "Agendamentos"
-
 #~ msgid "Delete"
 #~ msgstr "Excluir"
-
 #~ msgid "The selected timers will be deleted."
 #~ msgstr "Os agendamentos selecionados serão excluídos."
-
 #~ msgid "Do you confirm?"
 #~ msgstr "Confirma?"
-
 #~ msgid "Flows"
 #~ msgstr "Fluxos"
-
 #~ msgid "The selected flows will be deleted."
 #~ msgstr "Os fluxos selecionados serão excluídos."
-
 #~ msgid "Global Reservation Identifier (GRI)"
 #~ msgstr "Identificador Global da Reserva (GRI)"
-
 #~ msgid "Timer Components"
 #~ msgstr "Componentes do Agendamento"
-
 #~ msgid "Timer name"
 #~ msgstr "Nome do agendamento"
-
 #~ msgid "Add Flow"
 #~ msgstr "Adicionar Fluxo"
-
 #~ msgid "Choose view type"
 #~ msgstr "Escolha o tipo de visão"
-
 #~ msgid "Advanced View"
 #~ msgstr "Visão Avançada"
-
 #~ msgid "Add Flow - Map View"
 #~ msgstr "Adicionar Fluxo - Visão de Mapa"
-
 #~ msgid "Clear"
 #~ msgstr "Limpar"
-
 #~ msgid " Invert Route"
 #~ msgstr "Inverter Rota"
-
 #~ msgid "Save"
 #~ msgstr "Salvar"
-
 #~ msgid "Could not get source topology"
 #~ msgstr "Não foi possível buscar topologia da origem"
-
 #~ msgid "Could not get destination topology"
 #~ msgstr "Não foi possível buscar topologia do destino"
-
 #~ msgid "Flow"
 #~ msgstr "Fluxo"
-
 #~ msgid "updated"
 #~ msgstr "atualizado"
-
 #~ msgid "No change has been made"
 #~ msgstr "Nenhuma mudança realizada"
-
 #~ msgid "You have no timer, click the button below to create a new one"
 #~ msgstr ""
 #~ "Você não possui nenhum agendamento, clique no botão abaixo para criar um "
 #~ "novo"
-
 #~ msgid "Timer"
 #~ msgstr "Agendamento"
-
 #~ msgid "Missing arguments"
 #~ msgstr "Falta de parâmetros"
-
 #~ msgid "refresh"
 #~ msgstr "atualizar"
-
 #~ msgid "You have no reservation, click the button below to create a new one"
 #~ msgstr ""
 #~ "Você não possui nenhuma reserva, clique no botão abaixo para criar uma "
 #~ "nova"
-
 #~ msgid "You have no flow, click the button below to create a new one"
 #~ msgstr ""
 #~ "Você não possui nenhum fluxo, clique no botão abaixo para criar um novo"
-
 #~ msgid "Not enough arguments to reservation, going back to step 1 and 2..."
 #~ msgstr ""
 #~ "Parâmetros insuficientes para a reserva, voltando às etapas 1 e 2..."
-
 #~ msgid "Not enough arguments to reservation, going back to step 3..."
 #~ msgstr "Parâmetros insuficientes para a reserva, voltando à etapa 3..."
-
 #~ msgid "Step 3 - Defining the timer"
 #~ msgstr "Etapa 3 - Definindo o agendamento"
-
 #~ msgid "Next"
 #~ msgstr "Próximo"
-
 #~ msgid "Previous"
 #~ msgstr "Anterior"
-
 #~ msgid "Endpoints & Bandwidth"
 #~ msgstr "Origem/Destino e Largura de Banda"
-
 #~ msgid "Confirmation"
 #~ msgstr "Confirmação"
-
 #~ msgid "Show VLAN configuration"
 #~ msgstr "Mostrar configurações de VLAN"
-
 #~ msgid "Add new hop"
 #~ msgstr "Adicionar novo hop"
-
 #~ msgid "Step 1 - Defining the reservation name"
 #~ msgstr "Etapa 1 - Definindo o nome da reserva"
-
 #~ msgid "Step 2 - Defining the flow"
 #~ msgstr "Etapa 2 - Definindo o fluxo"
-
 #~ msgid "Reservation ID"
 #~ msgstr "ID da Reserva"
-
 #~ msgid "Circuit reservation wizard"
 #~ msgstr "Assistente de reserva de circuitos"
-
 #~ msgid "Step 4 - Confirmation"
 #~ msgstr "Etapa 4 - Confirmação"
-
 #~ msgid "The selected reservations will be deleted."
 #~ msgstr "As reservas selecionadas serão excluídas."
-
 #~ msgid "Type"
 #~ msgstr "Tipo"
-
 #~ msgid "New reservation"
 #~ msgstr "Nova reserva"
-
 #~ msgid "Reservation name:"
 #~ msgstr "Nome da reserva:"
-
 #~ msgid "Date"
 #~ msgstr "Data"
-
 #~ msgid "Time"
 #~ msgstr "Hora"
-
 #~ msgid "could not be cancelled"
 #~ msgstr "não pôde ser cancelada"
-
 #~ msgid "Reservation time"
 #~ msgstr "Horário da reserva"
-
 #~ msgid "End"
 #~ msgstr "Fim"
-
 #~ msgid "Save recurrence"
 #~ msgstr "Salvar recorrência"
-
 #~ msgid "Endpoints"
 #~ msgstr "Pontos de Origem/Destino"
-
 #~ msgid ""
 #~ "<p style='color:black; text-indent: 15px'>Select source and destination "
 #~ "networks by clicking on the map markers with any button and then choosing "
@@ -1056,52 +990,36 @@ msgstr "URN"
 #~ "destino clicando nos marcadores do mapa com qualquer botão e escolhendo "
 #~ "uma opção do menu pop-up. Após escolher os pontos, escolha os "
 #~ "dispositivos e portas no painel à direita."
-
 #~ msgid "Fail to get reservations"
 #~ msgstr "Falha ao buscar reservas"
-
 #~ msgid "Fail to get status"
 #~ msgstr "Falha ao buscar status"
-
 #~ msgid "The End Time occurs before the Start Time"
 #~ msgstr "Data Final ocorre antes da Data Inicial"
-
 #~ msgid "Invalid Duration"
 #~ msgstr "Duração Inválida"
-
 #~ msgid "Missing Endpoints"
 #~ msgstr "Faltando pontos de Origem/Destino"
-
 #~ msgid "added"
 #~ msgstr "adicionado"
-
 #~ msgid "Fail to create timer"
 #~ msgstr "Falha ao criar agendamento"
-
 #~ msgid "Show Vlan Configuration"
 #~ msgstr "Mostrar configurações de VLAN"
-
 #~ msgid "Reservation Time"
 #~ msgstr "Hora da Reserva"
-
 #~ msgid "Recurrence Pattern"
 #~ msgstr "Padrão de recorrência"
-
 #~ msgid "Range of Recurrence"
 #~ msgstr "Intervalo de recorrência"
-
 #~ msgid "Save Recurrence"
 #~ msgstr "Salvar recorrência"
-
 #~ msgid "Reservation Details"
 #~ msgstr "Detalhes da Reserva"
-
 #~ msgid "Toggle"
 #~ msgstr "Alternar"
-
 #~ msgid "<h1>Endpoints</h1>"
 #~ msgstr "<h1>Origem/Destino</h1>"
-
 #~ msgid ""
 #~ "Select the Origin and Destination Networks by clicking on the Map Markers "
 #~ "with any button and then choosing an option from the pop-up menu."
@@ -1109,43 +1027,32 @@ msgstr "URN"
 #~ "Escolha as Redes de Origem e Destino clicando nos marcadores do Mapa com "
 #~ "qualquer botão do mouse. Em seguida, escolha a opção desejada no menu pop-"
 #~ "up."
-
 #~ msgid ""
 #~ "Once you select the Endpoints, choose the Device and Port settings on the "
 #~ "right side."
 #~ msgstr ""
 #~ "Após a seleção dos pontos de Origem e Destino, configure os Dispositivos "
 #~ "e Portas no menu à direita."
-
 #~ msgid "<h1>Bandwidth</h1>"
 #~ msgstr "<h1>Largura de Banda</h1>"
-
 #~ msgid "How often"
 #~ msgstr "Com que frequência"
-
 #~ msgid "Repeats every"
 #~ msgstr "Repetir a cada"
-
 #~ msgid "Repeat on"
 #~ msgstr "Repete"
-
 #~ msgid "Ends"
 #~ msgstr "Termina"
-
 #~ msgid "Fail to create flow"
 #~ msgstr "Falha ao criar fluxo"
-
 #~ msgid "Not enough arguments to reservation, going back to step 4..."
 #~ msgstr "Parâmetros insuficientes para a reserva, voltando à etapa 4..."
-
 #~ msgid "No recurrence"
 #~ msgstr "Sem recorrência"
-
 #~ msgid "  Map View"
 #~ msgstr "Visão de Mapa"
-
 #~ msgid "  Advanced View"
 #~ msgstr "Visão Avançada"
-
 #~ msgid "Map"
 #~ msgstr "Mapa"
+

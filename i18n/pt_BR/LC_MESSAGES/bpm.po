@@ -7,96 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-23 00:44-0300\n"
+"POT-Creation-Date: 2012-08-01 18:09-0300\n"
 "PO-Revision-Date: 2012-05-11 17:59-0300\n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
-#: controllers/requests.php:26 bpm.php:14 bpm.php:33
+#: bpm.php:14 bpm.php:33 controllers/requests.php:26
 msgid "Requests"
 msgstr "Requisições"
 
-#: controllers/requests.php:27
-msgid "You have no pending or finished request"
-msgstr "Você não possui requisições pendentes ou finalizadas"
-
-#: controllers/requests.php:75 controllers/requests.php:129
-msgid "Invalid index"
-msgstr "Índice inválido"
-
-#: controllers/requests.php:113 views/ode_show.php:61
-msgid "Ok"
-msgstr "Ok"
-
-#: controllers/requests.php:114
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: controllers/requests.php:115
-msgid "Request will be accepted, please provide a message"
-msgstr "A requisição será aceita, por favor inclua uma mensagem"
-
-#: controllers/requests.php:116
-msgid "Request will be rejected, please provide a message"
-msgstr "A requisição será rejeitada, por favor inclua uma mensagem"
-
-#: controllers/requests.php:117
-msgid "Available bandwidth"
-msgstr "Largura de banda disponível"
-
-#: controllers/requests.php:118
-msgid "Requested bandwidth"
-msgstr "Largura de banda solicitada"
-
-#: controllers/requests.php:142
-msgid "Response saved"
-msgstr "Resposta salva"
-
-#: controllers/requests.php:146
-msgid "Response NOT saved"
-msgstr "Resposta não salva"
-
-#: controllers/requests.php:186
-msgid "No request was deleted"
-msgstr "Nenhuma requisição foi excluída"
-
-#: controllers/requests.php:189
-msgid "One request was deleted"
-msgstr "Uma requisição foi excluída"
-
-#: controllers/requests.php:192
-msgid "requests were deleted"
-msgstr "requisições foram excluídas"
-
-#: controllers/ode.php:39
-msgid "Error on upload file"
-msgstr "Erro ao enviar arquivo"
-
-#: controllers/ode.php:60
-msgid "Process deployed successfully "
-msgstr "Deploy de processo realizado com sucesso"
-
-#: controllers/ode.php:65
-msgid "Fail to deploy process: "
-msgstr "Falha ao realizar deploy do processo:"
-
-#: controllers/ode.php:69
-msgid "invalid name for the process"
-msgstr "nome inválido para o processo"
-
-#: controllers/ode.php:84
-msgid "Process undeployed successfully"
-msgstr "Undeploy de processo realizado com sucesso"
-
-#: controllers/ode.php:85
-msgid "Fail to undeploy process"
-msgstr "Falha ao realizar undeploy do processo"
-
-#: bpm.php:17 views/requests_reply2.php:75
+#: bpm.php:17 views/requests_reply.php:56
 msgid "Authorization"
 msgstr "Autorização"
 
@@ -160,8 +84,12 @@ msgstr "Nome"
 msgid "File"
 msgstr "Arquivo"
 
+#: views/ode_show.php:61 controllers/requests.php:113
+msgid "Ok"
+msgstr "Ok"
+
 #: views/requests_createRequest.php:12 views/requests_show.php:16
-#: views/requests_show.php:54 views/requests_reply.php:25
+#: views/requests_show.php:54 views/requests_reply.old.php:25
 msgid "Destination domain"
 msgstr "Domínio de destino"
 
@@ -177,6 +105,69 @@ msgstr "Pergunta"
 msgid "Create"
 msgstr "Criar"
 
+#: views/elements/requests_table.php:8
+msgid "Domain source"
+msgstr "Domínio de origem"
+
+#: views/elements/requests_table.php:9 views/requests_show.php:17
+#: views/requests_show.php:55
+msgid "Requester"
+msgstr "Solicitante"
+
+#: views/elements/requests_table.php:10 views/requests_show.php:58
+#: views/requests_reply.old.php:117
+msgid "Response"
+msgstr "Resposta"
+
+#: views/elements/requests_table.php:11 views/requests_show.php:59
+#: views/requests_reply.old.php:127
+msgid "Message"
+msgstr "Mensagem"
+
+#: views/elements/requests_table.php:20 views/requests_show.php:38
+msgid "Answer"
+msgstr "Responder"
+
+#: views/elements/empty_db.php:20
+msgid "Add"
+msgstr "Adicionar"
+
+#: views/requests_reply.php:2
+msgid "Reply request"
+msgstr "Responder requisição"
+
+#: views/requests_reply.php:5
+msgid "Reservation name"
+msgstr "Nome da reserva"
+
+#: views/requests_reply.php:7
+msgid "Requester Domain"
+msgstr "Domínio requisitante"
+
+#: views/requests_reply.php:9
+msgid "Requester User"
+msgstr "Usuário requisitante"
+
+#: views/requests_reply.php:19
+msgid "Refresh"
+msgstr "Atualizar"
+
+#: views/requests_reply.php:20
+msgid "Cancel reservations"
+msgstr "Cancelar reservas"
+
+#: views/requests_reply.php:20
+msgid "Cancel the selected reservations?"
+msgstr "Deseja cancelar as reservas selecionadas?"
+
+#: views/requests_reply.php:53
+msgid "Back"
+msgstr "Voltar"
+
+#: views/requests_reply.php:60
+msgid "Provide a message"
+msgstr "Inclua uma mensagem"
+
 #: views/requests_show.php:9
 msgid "Pending incoming requests"
 msgstr "Requisições pendentes de entrada"
@@ -184,11 +175,6 @@ msgstr "Requisições pendentes de entrada"
 #: views/requests_show.php:15 views/requests_show.php:53
 msgid "Source domain"
 msgstr "Domínio de origem"
-
-#: views/requests_show.php:17 views/requests_show.php:55
-#: views/elements/requests_table.php:9
-msgid "Requester"
-msgstr "Solicitante"
 
 #: views/requests_show.php:18 views/requests_show.php:56
 msgid "Resource type"
@@ -198,135 +184,148 @@ msgstr "Tipo de recurso"
 msgid "Resource description"
 msgstr "Descrição do recurso"
 
-#: views/requests_show.php:38 views/elements/requests_table.php:20
-msgid "Answer"
-msgstr "Responder"
-
 #: views/requests_show.php:47
 msgid "Finished incoming requests"
 msgstr "Requisições concluídas de entrada"
 
-#: views/requests_show.php:58 views/elements/requests_table.php:10
-#: views/requests_reply.php:117
-msgid "Response"
-msgstr "Resposta"
-
-#: views/requests_show.php:59 views/elements/requests_table.php:11
-#: views/requests_reply.php:127
-msgid "Message"
-msgstr "Mensagem"
-
-#: views/elements/requests_table.php:8
-msgid "Domain source"
-msgstr "Domínio de origem"
-
-#: views/elements/empty_db.php:20
-msgid "Add"
-msgstr "Adicionar"
-
-#: views/requests_reply2.php:2
-msgid "Reply request"
-msgstr "Responder requisição"
-
-#: views/requests_reply2.php:5
-msgid "Reservation name"
-msgstr "Nome da reserva"
-
-#: views/requests_reply2.php:7
-msgid "Requester Domain"
-msgstr "Domínio requisitante"
-
-#: views/requests_reply2.php:9
-msgid "Requester User"
-msgstr "Usuário requisitante"
-
-#: views/requests_reply2.php:19
-msgid "Refresh"
-msgstr "Atualizar"
-
-#: views/requests_reply2.php:20
-msgid "Cancel reservations"
-msgstr "Cancelar reservas"
-
-#: views/requests_reply2.php:20
-msgid "Cancel the selected reservations?"
-msgstr "Deseja cancelar as reservas selecionadas?"
-
-#: views/requests_reply2.php:48
-msgid "Mbps"
-msgstr "Mbps"
-
-#: views/requests_reply2.php:72
-msgid "Back"
-msgstr "Voltar"
-
-#: views/requests_reply2.php:79
-msgid "Provide a message"
-msgstr "Inclua uma mensagem"
-
-#: views/requests_reply.php:7
+#: views/requests_reply.old.php:7
 msgid "Request domain"
 msgstr "Domínio da requisição"
 
-#: views/requests_reply.php:16
+#: views/requests_reply.old.php:16
 msgid "Request user"
 msgstr "Usuário solicitante"
 
-#: views/requests_reply.php:34
+#: views/requests_reply.old.php:34
 msgid "Reservation details"
 msgstr "Detalhes da Reserva"
 
-#: views/requests_reply.php:40
+#: views/requests_reply.old.php:40
 msgid "Source"
 msgstr "Origem"
 
-#: views/requests_reply.php:41
+#: views/requests_reply.old.php:41
 msgid "Destination"
 msgstr "Destino"
 
-#: views/requests_reply.php:45
+#: views/requests_reply.old.php:45
 msgid "Domain"
 msgstr "Domínio"
 
-#: views/requests_reply.php:52
+#: views/requests_reply.old.php:52
 msgid "Network"
 msgstr "Rede"
 
-#: views/requests_reply.php:57
+#: views/requests_reply.old.php:57
 msgid "Device"
 msgstr "Dispositivo"
 
-#: views/requests_reply.php:62
+#: views/requests_reply.old.php:62
 msgid "Port number"
 msgstr "Número da porta"
 
-#: views/requests_reply.php:69
+#: views/requests_reply.old.php:69
 msgid "Bandwidth"
 msgstr "Largura de banda"
 
-#: views/requests_reply.php:75
+#: views/requests_reply.old.php:75
 msgid "Begin"
 msgstr "Início"
 
-#: views/requests_reply.php:79
+#: views/requests_reply.old.php:79
 msgid "End"
 msgstr "Fim"
 
-#: views/requests_reply.php:85
+#: views/requests_reply.old.php:85
 msgid "Recurrence"
 msgstr "Recorrência"
 
-#: views/requests_reply.php:98
+#: views/requests_reply.old.php:98
 msgid "Available Bandwidth (Mbps)"
 msgstr "Largura de Banda disponível (Mbps)"
 
-#: views/requests_reply.php:120
+#: views/requests_reply.old.php:120
 msgid "ACCEPT"
 msgstr "ACEITAR"
 
-#: views/requests_reply.php:121
+#: views/requests_reply.old.php:121
 msgid "REJECT"
 msgstr "REJEITAR"
+
+#: controllers/ode.php:39
+msgid "Error on upload file"
+msgstr "Erro ao enviar arquivo"
+
+#: controllers/ode.php:60
+msgid "Process deployed successfully "
+msgstr "Deploy de processo realizado com sucesso"
+
+#: controllers/ode.php:65
+msgid "Fail to deploy process: "
+msgstr "Falha ao realizar deploy do processo:"
+
+#: controllers/ode.php:69
+msgid "invalid name for the process"
+msgstr "nome inválido para o processo"
+
+#: controllers/ode.php:84
+msgid "Process undeployed successfully"
+msgstr "Undeploy de processo realizado com sucesso"
+
+#: controllers/ode.php:85
+msgid "Fail to undeploy process"
+msgstr "Falha ao realizar undeploy do processo"
+
+#: controllers/requests.php:27
+msgid "You have no pending or finished request"
+msgstr "Você não possui requisições pendentes ou finalizadas"
+
+#: controllers/requests.php:75 controllers/requests.php:129
+msgid "Invalid index"
+msgstr "Índice inválido"
+
+#: controllers/requests.php:114
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: controllers/requests.php:115
+msgid "Request will be accepted, please provide a message"
+msgstr "A requisição será aceita, por favor inclua uma mensagem"
+
+#: controllers/requests.php:116
+msgid "Request will be rejected, please provide a message"
+msgstr "A requisição será rejeitada, por favor inclua uma mensagem"
+
+#: controllers/requests.php:117
+msgid "Available bandwidth"
+msgstr "Largura de banda disponível"
+
+#: controllers/requests.php:118
+msgid "Requested bandwidth"
+msgstr "Largura de banda solicitada"
+
+#: controllers/requests.php:142
+msgid "Response saved"
+msgstr "Resposta salva"
+
+#: controllers/requests.php:146
+msgid "Response NOT saved"
+msgstr "Resposta não salva"
+
+#: controllers/requests.php:186
+msgid "No request was deleted"
+msgstr "Nenhuma requisição foi excluída"
+
+#: controllers/requests.php:189
+msgid "One request was deleted"
+msgstr "Uma requisição foi excluída"
+
+#: controllers/requests.php:192
+msgid "requests were deleted"
+msgstr "requisições foram excluídas"
+
+#~ msgid "Mbps"
+#~ msgstr "Mbps"
 
 #~ msgid "BPM"
 #~ msgstr "BPM"
