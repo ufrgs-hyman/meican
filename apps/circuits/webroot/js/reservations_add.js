@@ -1659,6 +1659,7 @@ function validateBand(band_value) {
 	
             $('#' + point + '_choosehost').attr('prefix', point).click(function() {
                 $("#edp_dialog").val($(this).attr('prefix'));
+                clearFlash();
                 $("#edp_dialog_form").dialog("open");
             });
 	

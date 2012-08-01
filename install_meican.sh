@@ -5,8 +5,8 @@ apt-get install -y apache2 mysql-server mysql-client php5 php5-mysql php-apc php
 # Configurando phpmyadmin: 
 #	- Selecionar servidor web: apache2
 #	- Configurar base com dbconfig-common? sim
-#	- Palavra-passe do administrador: 
-#	- Palavra-passe da aplicação Mysql: definida anteriormente na configuração do mysql
+#	- Palavra-passe do administrador: definida anteriormente na configuração do mysql
+#	- Palavra-passe da aplicação Mysql:
 
 pear install Mail
 pear install Net_SMTP
@@ -14,24 +14,25 @@ pear install Net_SMTP
 a2enmod rewrite #libera mod_rewrite no apache
 a2enmod ssl #habilita o modulo ssl
 
-#mkdir /home/www
-#chmod 755 /home/www/
 cd /var/www #download do svn
-svn checkout https://svn-redes.inf.ufrgs.br/hyman/tags/meican_v2-2 meican-main
-ln -ns /var/www/meican-main/ /var/www/meican
+svn checkout https://svn-redes.inf.ufrgs.br/hyman/tags/meican_v2-3
+#svn checkout https://svn-redes.inf.ufrgs.br/hyman/trunks/meican meican-trunk
+ln -ns /var/www/meican_v2-3 /var/www/meican
 
-chown -R www-data:www-data /var/www/meican-main/log
+chown -R www-data:www-data /var/www/meican/log
 
-cp /var/www/meican-main/db/meican.conf /etc/apache2/conf.d/ #Colocar configuração do meican no apache
+cd /etc/apache2/sites-available
+ln -s /var/www/meican/apache.conf meican.conf #Colocar configuração do meican no apache
+cd /etc/apache2/sites-enabled
+ln -s ../sites-available/meican.conf meican.conf
 
-
-nano /etc/apache2/sites-available/default #colocar /var/www/meican como document root
+nano /etc/apache2/sites-available/meican.conf #configurar site do meican no apache
+nano /var/www/meican/.htaccess #configurar htaccess, descomentar linhas necessárias se optar pelo redirecionamento para porta 443
 
 /etc/init.d/apache2 restart
 
+cd /var/www/meican/db/
+nano build.sh #configurar usuário e senha do mysql no script de importação do banco
+bash build.sh
 
-nano /var/www/meican-main/db/build.sh #configurar usuário e senha do mysql no script de importação do banco
-
-bash /var/www/meican-main/db/build.sh
-
-nano /var/www/meican-main/meican.conf.php #editar arquivo de configuração do meican
+nano /var/www/meican/config/local.php #editar arquivo de configuração do meican
