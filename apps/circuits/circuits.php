@@ -11,7 +11,7 @@ class circuits extends Application {
 
     public function getMenu() {
         return array(10 => new MenuItem(array(
-                'label' => _("Circuits"),
+                'label' => _("Reservations"),
                 'sub' => array(
                     new MenuItem(array(
                         'label' => _("New"),
