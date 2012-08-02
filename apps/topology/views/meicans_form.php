@@ -16,7 +16,7 @@ if (empty($meican)){
 <h1><?php echo sprintf($title, _("MEICAN")); ?></h1>
 
 <form method="POST" action="<?php echo $this->url($link); ?>">
-        <div class="form input">
+    <div class="form input">
         <label for="meican_descr"><?php echo _("Name"); ?></label>
         <input type="text" name="meican_descr" size="30" value="<?php echo $meican_descr; ?>"/>
     </div>
