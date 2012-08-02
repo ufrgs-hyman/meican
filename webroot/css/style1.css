@@ -457,7 +457,7 @@ input[type=submit], input[type=button], button {
 }
 button:hover, input[type=submit]:hover, input[type=button]:hover {
     box-shadow: inset 2px 2px 2px #FAA, inset -1px -1px 2px #922;
-    text-shadow: -1px -1px 2px #922, 1px 1px 2px #FAA;
+    /*text-shadow: -1px -1px 2px #922, 1px 1px 2px #FAA;*/
     border: 1px solid #853A40 !important;
     background-color: #F44 !important;
     color: white !important;
@@ -611,9 +611,7 @@ td select {
 }
 
 #info_box ul li:hover {
-    /*background-color: #1D405C; */
-    background-color: #9D3C3E;
-    /*background-color: #7C4D27;*/
+    background-color: #9D3C3E; /* #37658C;*/
 }
 
 #canvas {
