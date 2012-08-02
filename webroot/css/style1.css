@@ -478,13 +478,13 @@ td select {
 
 #left-panel, #system_date {
     width: 130px;
+    border-right-width: thin;
+    border-right-style: solid;
+    border-right-color: #DDD;
 }
 
 #left-panel {
     float: left;
-    border-right-width: thin;
-    border-right-style: solid;
-    border-right-color: #DDD;
     background-color: #F4F4F4;
 }
 
