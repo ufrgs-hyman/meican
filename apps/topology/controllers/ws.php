@@ -1,6 +1,6 @@
 <?php
 include_once 'libs/controller.php';
-require_once 'libs/nuSOAP/lib/nusoap.php';
+require_once 'libs/Vendors/nuSOAP/lib/nusoap.php';
 include_once 'apps/topology/models/topology.php';
 include_once 'apps/topology/models/meican_info.php';
 include_once LIBS.'webservice_controller.php';

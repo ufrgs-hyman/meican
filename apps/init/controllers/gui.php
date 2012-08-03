@@ -49,6 +49,11 @@ class gui extends Controller {
         $this->render('welcome');
     }
     
+    public function language($pass){
+        Language::getInstance()->setLanguage($pass[0].'.utf8');
+        header('HTTP/1.1 405 Change Language');
+    }
+    
     function clearCache(){
         apc_clear_cache('user');
         $this->autoRender = false;

@@ -61,6 +61,7 @@ class Application {
     // Método Factory parametrizado
     public static function factory($app, $args=array())
     {
+        Language::getInstance()->setDomain($app);
         if (file_exists("apps/$app/$app.php") &&
                 include_once "apps/$app/$app.php") {
             return new $app($args);

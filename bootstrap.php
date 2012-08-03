@@ -1,42 +1,36 @@
 <?php
+/* bootstrap CAKE PHP */
 
-function __d($domain, $msg, $args = null) {
-    if (!$msg) {
-        return;
-    }
-    return vsprintf($msg, $args);
+/**
+ * Path to the temporary files directory.
+ */
+if (!defined('TMP')) {
+	define('TMP', APP . DS);
+}
+$boot = false;
+if (!include (LIBS . 'Cake' . DS . 'bootstrap.php')) {
+    $failed = true;
+}
+if (!empty($failed)) {
+	trigger_error("CakePHP core could not be found.  Check the value of CAKE_CORE_INCLUDE_PATH in APP/webroot/index.php.  It should point to the directory containing your " . DS . "cake core directory and your " . DS . "vendors root directory.", E_USER_ERROR);
 }
 
-//require CAKE . 'basics.php';
-/*
-  if (!defined('WEBROOT_DIR')) {
-  define('WEBROOT_DIR', 'webroot');
-  }
-  if (!defined('WWW_ROOT')) {
-  define('WWW_ROOT', dirname(__FILE__) . DS . 'webroot');
-  } */
-
-require LIBS . 'Core' . DS . 'App.php';
-require LIBS . 'Error' . DS . 'exceptions.php';
-
-spl_autoload_register(array('App', 'load'));
-
-App::uses('ErrorHandler', 'Error');
-App::uses('Configure', 'Core');
-App::uses('CakePlugin', 'Core');
-App::uses('Cache', 'Cache');
-App::uses('Object', 'Core');
-App::uses('Log', 'Log');
-App::uses('Inflector', 'Utility');
-
 include_once 'libs/common.php';
-//App::$bootstrapping = true;
-//include_once 'libs/Core/Configure.php';
-//include_once 'libs/Log/Log.php';
-Log::config('default', array(
+App::uses('CakeLog', 'Log');
+CakeLog::config('default', array(
     'engine' => 'FileLog'
 ));
-//include_once 'libs/Error/ErrorHandler.php';
-Configure::load('config/main.php');
-Configure::load('config/local.php');
-Configure::bootstrap(true);
+
+//App::uses('PhpReader', 'Configure');
+include_once 'libs/IncludeReader.php';
+Configure::config('default', new IncludeReader(APP . 'config' . DS));
+Configure::write('App', array(
+				'base' => false,
+				'baseUrl' => false,
+				'dir' => APP_DIR,
+				'webroot' => WEBROOT_DIR,
+				'www_root' => WWW_ROOT
+			));
+Configure::load('main.php');
+Configure::load('local.php');
+//Configure::bootstrap(true);

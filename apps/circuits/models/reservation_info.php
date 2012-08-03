@@ -36,7 +36,7 @@ class reservation_info extends Resource_Model {
         $gri->res_id = $this->res_id;
         $gris = $gri->fetch(FALSE);
         
-        //Log::write('debug', "get status:\n" . print_r($gris,true));
+        //CakeLog::write('debug', "get status:\n" . print_r($gris,true));
 
         $req = new request_info();
         $req->resource_id = $this->res_id;
@@ -280,7 +280,7 @@ class reservation_info extends Resource_Model {
         $pathArray = array();
 
         if ($path) {
-            //Log::write("circuits", "Path found in local database...");
+            //CakeLog::write("circuits", "Path found in local database...");
             $pathArray = explode(';', $path);
         } else {
             if (!$this->res_id) {
@@ -292,7 +292,7 @@ class reservation_info extends Resource_Model {
                     return FALSE;
             }
             
-            Log::write("circuits", "Path not found, trying OSCARS...");
+            CakeLog::write("circuits", "Path not found, trying OSCARS...");
             
             $gri_info = new gri_info();
             $gri_info->res_id = $this->res_id;
@@ -309,7 +309,7 @@ class reservation_info extends Resource_Model {
             $response = FALSE;
             $cont = 0;
 
-            Log::write("circuits", "Getting GRI path:\n" . print_r(array("OSCARS URL" => $domain[0]->idc_url, "GRI" => $gri[0]->gri_descr), TRUE));
+            CakeLog::write("circuits", "Getting GRI path:\n" . print_r(array("OSCARS URL" => $domain[0]->idc_url, "GRI" => $gri[0]->gri_descr), TRUE));
 
 
             while (!$response && $cont < 15) {
@@ -318,7 +318,7 @@ class reservation_info extends Resource_Model {
                     if (($status == "PENDING") || ($status == "ACTIVE") || ($status == "FINISHED") || ($status == "FAILED") || ($status == "CANCELLED")) {
                         if ($pathArray = explode(";", $oscars->getPath())) {
                             $pathArray = array_filter($pathArray, 'strlen');
-                            Log::write("circuits", "Get path sucessful. Complete path:\n" . print_r($pathArray, TRUE));
+                            CakeLog::write("circuits", "Get path sucessful. Complete path:\n" . print_r($pathArray, TRUE));
                             $response = TRUE;
                         }
                     } elseif (($status == "INCREATE") || ($status == "ACCEPTED")) {
@@ -327,7 +327,7 @@ class reservation_info extends Resource_Model {
                         continue;
                         //} elseif (($status == "FAILED") || ($status == "CANCELLED")) {
 //                } elseif ($status == "CANCELLED") {
-//                    Log::write("error", "Couldn't get path. Reservation FAILED or CANCELLED");
+//                    CakeLog::write("error", "Couldn't get path. Reservation FAILED or CANCELLED");
 //                    $pathArray = FALSE;
 //                    $response = TRUE;
 //                }
@@ -335,7 +335,7 @@ class reservation_info extends Resource_Model {
                     $pathString = implode(';', $pathArray);
                     $flow_info->updateTo(array('path' => $pathString), false);
                 } else {
-                    Log::write("error", "Couldn't get path. Query reservation failed");
+                    CakeLog::write("error", "Couldn't get path. Query reservation failed");
                     $pathArray = null;
                     $response = true;
                 }
@@ -367,9 +367,9 @@ class reservation_info extends Resource_Model {
 
                     $available_bands[] = $capacity - $linkUtilization;
 
-//                    Log::write("debug", "Start: " . print_r($gri->start, true));
-//                    Log::write("debug", "Finish: " . print_r($gri->finish, true));
-//                    Log::write("debug", "Available Band: " . print_r($capacity, true) . " - " . print_r($linkUtilization, true));
+//                    CakeLog::write("debug", "Start: " . print_r($gri->start, true));
+//                    CakeLog::write("debug", "Finish: " . print_r($gri->finish, true));
+//                    CakeLog::write("debug", "Available Band: " . print_r($capacity, true) . " - " . print_r($linkUtilization, true));
                 }
             }
         }

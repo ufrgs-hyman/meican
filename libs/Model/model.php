@@ -1,7 +1,8 @@
 <?php
 include_once 'libs/Model/attribute.php';
 //include_once 'libs/acl_loader.php';
-App::uses('ConnectionManager', 'Model');
+include_once 'libs/Model/ConnectionManager.php';
+//App::uses('ConnectionManager', 'Model');
 
 class Model extends Object {
 
@@ -94,7 +95,7 @@ class Model extends Object {
                 $sql = "SELECT * FROM `$tableName`";
         }
         //debug("fetch",$sql);
-        //Log::write('debug',"sql fetch:\n" . print_r($sql,true));
+        //CakeLog::write('debug',"sql fetch:\n" . print_r($sql,true));
         
         return ($this->data = $this->querySql($sql, $tableName));
     }
@@ -324,7 +325,7 @@ class Model extends Object {
         $resfetch = $this->querySql($sqlfetch, $tableName);
 
         //debug('sql update', $sql);
-        //Log::write('debug',"sql update:\n" . print_r($sql,true));
+        //CakeLog::write('debug',"sql update:\n" . print_r($sql,true));
 
         if (!$resfetch)
             return FALSE;
@@ -371,7 +372,7 @@ class Model extends Object {
         }
         $sql = "INSERT INTO `$classname` ($sqlNames) values ($sqlValues)";
 
-        //Log::write('debug', "SQL insert:\n" . print_r($sql, true));
+        //CakeLog::write('debug', "SQL insert:\n" . print_r($sql, true));
 
         $id = $this->insertSql($sql);
         if ($id !== FALSE) {
@@ -390,11 +391,11 @@ class Model extends Object {
                     return $ret[0];
             }
             // se não conseguiu buscar objeto, apenas retorna TRUE
-            Log::write('warning', "Object inserted but not found");
+            CakeLog::write('warning', "Object inserted but not found");
             return TRUE;
         } else {
             // objeto não inserido, retorna FALSE
-            Log::write('error', "Error to execute insert SQL:\n" . print_r($sql, TRUE));
+            CakeLog::write('error', "Error to execute insert SQL:\n" . print_r($sql, TRUE));
             return FALSE;
         }
     }
@@ -497,7 +498,7 @@ class Model extends Object {
         if (!($ds && $sql))
             return FALSE;
         $ret = $ds->execute($sql);
-        $ds->flushQueryCache();
+        //$ds->_queryCache = array();
         return $ret;
     }
 
@@ -533,7 +534,7 @@ class Model extends Object {
         $ds = self::getDataSource();
         if (!($ds && $sql))
             return FALSE;
-        $results = $ds->fetchAll($sql);
+        $results = $ds->fetchAll($sql, array(), array('cache' => false));
         if (empty($results))
             return array();/*
         if (!in_array($tableName, array('acos', 'aros', 'domain_info', 'reservation_info')))

@@ -1,15 +1,14 @@
 #! /usr/bin/php
 
 <?php
-
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__FILE__));
 define("LIBS", 'libs'.DS);
-define("APPLIBS", 'libs'.DS);
-define("CAKE", LIBS);
 define('APP', '');
 define('APP_DIR', DS);
-define("LOGS", ROOT.DS.'log'.DS);
+//define("LOGS", ROOT.DS.'log'.DS);
+define('WEBROOT_DIR', 'webroot');
+define('WWW_ROOT', WEBROOT_DIR . DS);
 @define ('__MEICAN', 1);
 
 echo date("Y M j - H:i:s");

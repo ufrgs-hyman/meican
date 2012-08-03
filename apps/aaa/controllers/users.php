@@ -4,7 +4,6 @@ defined ('__MEICAN') or die ("Invalid access.");
 
 include_once 'libs/meican_controller.php';
 include_once 'libs/auth.php';
-include_once 'libs/language.php';
 include_once 'apps/aaa/models/user_info.php';
 include_once 'apps/aaa/models/group_info.php';
 include_once 'apps/aaa/models/aros.php';
@@ -323,7 +322,7 @@ class users extends MeicanController {
             $user = $result[0];
         }
 
-        $user->lang = Language::getLang();
+        $user->lang = Language::getInstance()->getLanguage();
 
         //explode a string com configurações de usuário para extrair
         //somente o formato da data
@@ -334,7 +333,7 @@ class users extends MeicanController {
 
         $user->dateformat = $tmp2[1];
         
-        $lang = explode(".", Language::getLang());
+        $lang = explode(".", Language::getInstance()->getLanguage());
         $js_lang = str_replace("_", "-", $lang[0]);
         
         $this->setArgsToScript(array(
@@ -414,9 +413,9 @@ class users extends MeicanController {
             $this->setFlash(_("User settings updated"), "success");
         else
             $this->setFlash(_("No change has been made"), "warning");
-
-        if (Language::getLang() != $lang) {
-            Language::refreshLangSetting($lang);
+        
+        if (Language::getInstance()->getLanguage() != $lang) {
+            Language::getInstance()->setLanguage($lang);
             header('HTTP/1.1 405 Change Language');
         }
         $this->edit_settings();

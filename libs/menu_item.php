@@ -45,15 +45,15 @@ class MenuItem {
     public static function getAllMenus($method = 'getMenu') {
         $apps = Configure::read('apps');
         $menus = array();
-        $dom = Language::getDomain();
+        $dom = Language::getInstance()->getDomain();
         foreach ($apps as $app){
             $appObj = Application::factory($app);
             if ($appObj) {
-                Language::setDomain($app);
+                //Language::getInstance()->setDomain($app);
                 $menus += $appObj->{$method}();//array_merge($appObj->getMenu(), $menus);
             }
         }
-        Language::setDomain($dom);
+        Language::getInstance()->setDomain($dom);
         $menus = self::filter($menus);
         return $menus;
     }

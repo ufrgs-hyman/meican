@@ -54,15 +54,15 @@ class View {
 
     public function buildView($view=null, $vars=array()) {
         if (file_exists($view)) {
-            $dom = Language::getDomain();
-            Language::setDomain(isset($vars['app'])?$vars['app']: $this->app);
+            $dom = Language::getInstance()->getDomain();
+            Language::getInstance()->setDomain(isset($vars['app'])?$vars['app']: $this->app);
             ob_start();
             extract(array_merge($this->viewVars, $vars), EXTR_SKIP);
             $this->passedArgs = $this->bodyArgs;
             include($view);
             $return = ob_get_contents();
             ob_end_clean();
-            Language::setDomain($dom);
+            Language::getInstance()->setDomain($dom);
         } else {
             throw new MissingViewException($view);
             $return = NULL; //TODO: trigger error

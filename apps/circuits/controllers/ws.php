@@ -1,6 +1,6 @@
 <?php
 include_once 'libs/controller.php';
-require_once 'libs/nuSOAP/lib/nusoap.php';
+require_once 'libs/Vendors/nuSOAP/lib/nusoap.php';
 include_once 'apps/circuits/models/reservation_info.php';
 include_once 'apps/circuits/models/flow_info.php';
 include_once 'apps/circuits/models/timer_info.php';
@@ -192,7 +192,7 @@ class ws extends WebServiceController {
                 if ($timer = $timer_info->getTimerDetails())
                     return (array) $timer;
                 else {
-                    Log::write('error', "Error to get timer details");
+                    CakeLog::write('error', "Error to get timer details");
                     return NULL;
                 }
             } else return NULL;

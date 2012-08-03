@@ -1,7 +1,7 @@
 <?php
 
 include_once 'libs/controller.php';
-require_once 'libs/nuSOAP/lib/nusoap.php';
+require_once 'libs/Vendors/nuSOAP/lib/nusoap.php';
 
 include_once 'apps/aaa/models/user_info.php';
 include_once 'apps/aaa/models/group_info.php';
@@ -101,7 +101,7 @@ class ws extends WebServiceController {
 
         
         function getReqInfo($req_id, $src_ode_ip) {
-            Log::write('ws', "Get request info from ODE:" . print_r(array('req_id' => $req_id, 'src_ode_ip' => $src_ode_ip), TRUE));
+            CakeLog::write('ws', "Get request info from ODE:" . print_r(array('req_id' => $req_id, 'src_ode_ip' => $src_ode_ip), TRUE));
 
             $req = new request_info();
             $req->req_id = $req_id;
@@ -121,7 +121,7 @@ class ws extends WebServiceController {
                         'resc_type' => $rescTy,
                         'resc_descr' => $result2[0]->{$resource->displayField});
 
-                    Log::write('ws', 'Request info return:' . print_r($return, TRUE));
+                    CakeLog::write('ws', 'Request info return:' . print_r($return, TRUE));
                     return $return;
                 }
             }
@@ -129,7 +129,7 @@ class ws extends WebServiceController {
         }
         
         function refreshStatus($status) {
-            Log::write('ws', "Refresh status:\n" . print_r($status, true));
+            CakeLog::write('ws', "Refresh status:\n" . print_r($status, true));
 
             if (array_key_exists('req_id', $status) &&
                     array_key_exists('src_ode_ip', $status) &&
@@ -142,17 +142,17 @@ class ws extends WebServiceController {
                     $req->src_ode_ip = trim($status['src_ode_ip']);
 
                     if ($req->updateTo(array("status" => $status['status']), false)) {
-                        Log::write('ws', "Refresh status: request status updated");
+                        CakeLog::write('ws', "Refresh status: request status updated");
                         return true;
                     }
                 }
             }
-            Log::write('ws', "Refresh status: could not update status");
+            CakeLog::write('ws', "Refresh status: could not update status");
             return null;
         }
         
         function saveResponse($response) {
-            Log::write('ws', "Save response:\n" . print_r($response, true));
+            CakeLog::write('ws', "Save response:\n" . print_r($response, true));
 
             if (array_key_exists('req_id', $response) &&
                     array_key_exists('src_ode_ip', $response) &&
@@ -178,21 +178,21 @@ class ws extends WebServiceController {
                                 $updated = $req->updateTo(array("response" => $response['response']), false);
 
                             if ($updated) {
-                                Log::write('ws', "Save response: request response saved");
+                                CakeLog::write('ws', "Save response: request response saved");
                                 return true;
                             }
                         } else
-                            Log::write('ws', "Save response: request already answered");
+                            CakeLog::write('ws', "Save response: request already answered");
                     } else
-                        Log::write('ws', "Save response: invalid response");
+                        CakeLog::write('ws', "Save response: invalid response");
                 }
             }
-            Log::write('ws', "Save response: request response NOT saved");
+            CakeLog::write('ws', "Save response: request response NOT saved");
             return null;
         }
 
         function finalDecision($decision) {
-            Log::write('ws', "Final decision from ODE:\n" . print_r($decision, true));
+            CakeLog::write('ws', "Final decision from ODE:\n" . print_r($decision, true));
 
             if (array_key_exists('req_id', $decision) &&
                     array_key_exists('src_ode_ip', $decision) &&
@@ -226,7 +226,7 @@ class ws extends WebServiceController {
                             /**
                              * @todo Transformar em função de algum modelo (reservation_info ou gri_info)
                              */
-                            Log::write('ws', "Final decision: reservation authorized, setting GRIs to be sent. Reservation ID: " . print_r($tmp->res_id, true));
+                            CakeLog::write('ws', "Final decision: reservation authorized, setting GRIs to be sent. Reservation ID: " . print_r($tmp->res_id, true));
 
                             foreach ($allgris as $g) {
                                 $now = time();
@@ -242,7 +242,7 @@ class ws extends WebServiceController {
                             // request denied
                             $req->updateTo(array("status" => "DENIED"), false);
 
-                            Log::write('ws', "Final decision: reservation denied, cancelling GRIs. Reservation ID:\n" . print_r($tmp->res_id, true));
+                            CakeLog::write('ws', "Final decision: reservation denied, cancelling GRIs. Reservation ID:\n" . print_r($tmp->res_id, true));
 
                             $dom_tmp = new domain_info();
                             $dom_tmp->ode_ip = $req->src_ode_ip;
@@ -254,11 +254,11 @@ class ws extends WebServiceController {
                                 $oscRes->setOscarsUrl($dom[0]->idc_url);
                                 $oscRes->setGri($g->gri_descr);
                                 if ($oscRes->cancelReservation()) {
-                                    Log::write('ws', "Final decision: GRI cancelled:\n" . print_r($g->gri_descr, true));
+                                    CakeLog::write('ws', "Final decision: GRI cancelled:\n" . print_r($g->gri_descr, true));
                                     //apaga os gris negados do db MEICAN
                                     //$g->delete(false);
                                 } else {
-                                    Log::write('ws', "Final decision: error to cancel GRI:\n" . print_r($g->gri_descr, true));
+                                    CakeLog::write('ws', "Final decision: error to cancel GRI:\n" . print_r($g->gri_descr, true));
                                 }
                                 unset($oscRes);
                             }
@@ -266,14 +266,14 @@ class ws extends WebServiceController {
 
                         return true; //se a requisicao foi negada ou aceita retorna true
                     } else
-                        Log::write('ws', "Final decision: invalid response from ODE:\n" . print_r($decision, true));
+                        CakeLog::write('ws', "Final decision: invalid response from ODE:\n" . print_r($decision, true));
                 }
             }
             return null;
         }
 
         function requestUserAuthorization($usr_dst, $request) {
-            Log::write('ws', "Request user authorizarion:\nUser: ". print_r($usr_dst, TRUE). "\n" . print_r($request, TRUE));
+            CakeLog::write('ws', "Request user authorizarion:\nUser: ". print_r($usr_dst, TRUE). "\n" . print_r($request, TRUE));
 
             if ($usr_dst && $request) {
 
@@ -328,21 +328,21 @@ class ws extends WebServiceController {
 
                         return TRUE;
                     } else {
-                        Log::write('ws', 'Fail to save the request by requestUserAuthorization');
+                        CakeLog::write('ws', 'Fail to save the request by requestUserAuthorization');
                         return NULL;
                     }
                 } else {
-                    Log::write('ws', 'Destination user not found by requestUserAuthorization');
+                    CakeLog::write('ws', 'Destination user not found by requestUserAuthorization');
                     return NULL;
                 }
             } else {
-                Log::write('ws', 'Not enough arguments in requestUserAuthorization');
+                CakeLog::write('ws', 'Not enough arguments in requestUserAuthorization');
                 return NULL;
             }
         }
 
         function requestGroupAuthorization($grp_dst, $request) {
-            Log::write('ws', "Request group authorizarion:\nGroup: ". print_r($grp_dst, TRUE). "\n" . print_r($request, TRUE));
+            CakeLog::write('ws', "Request group authorizarion:\nGroup: ". print_r($grp_dst, TRUE). "\n" . print_r($request, TRUE));
 
             if ($grp_dst && $request) {
                 $new_request = new request_info();
@@ -406,21 +406,21 @@ class ws extends WebServiceController {
 
                         return TRUE;
                     } else {
-                        Log::write('ws', 'Fail to save the request by requestGroupAuthorization');
+                        CakeLog::write('ws', 'Fail to save the request by requestGroupAuthorization');
                         return NULL;
                     }
                 } else {
-                    Log::write('ws', 'Destination group not found by requestGroupAuthorization');
+                    CakeLog::write('ws', 'Destination group not found by requestGroupAuthorization');
                     return NULL;
                 }
             } else {
-                Log::write('ws', 'Not enough arguments in requestGroupAuthorization');
+                CakeLog::write('ws', 'Not enough arguments in requestGroupAuthorization');
                 return NULL;
             }
         }
         
         function getNextDomain($primary) {
-            Log::write('ws', "Getting next domain:\n" . print_r($primary, TRUE));
+            CakeLog::write('ws', "Getting next domain:\n" . print_r($primary, TRUE));
 
             if (array_key_exists('req_id', $primary) &&
                     array_key_exists('src_ode_ip', $primary) &&
@@ -438,13 +438,13 @@ class ws extends WebServiceController {
                         }
                     }
                 }
-                Log::write('ws', "Next domain:\n" . print_r(array('next_domain' => $next_domain), TRUE));
+                CakeLog::write('ws', "Next domain:\n" . print_r(array('next_domain' => $next_domain), TRUE));
                 return $next_domain;
             }
         }
         
         function getRequestPath($req_id, $src_ode_ip) {
-            Log::write('ws', "Getting request path:\n" . print_r(array('req_id' => $req_id, 'src_ode_ip' => $src_ode_ip), TRUE));
+            CakeLog::write('ws', "Getting request path:\n" . print_r(array('req_id' => $req_id, 'src_ode_ip' => $src_ode_ip), TRUE));
             
             $req_info = new request_info();
             $req_info->req_id = $req_id;
@@ -477,7 +477,7 @@ class ws extends WebServiceController {
                     }
                 }
             }
-            Log::write('ws', "Request path return with ODE IPs:\n" . print_r($ode_ip_array, TRUE));
+            CakeLog::write('ws', "Request path return with ODE IPs:\n" . print_r($ode_ip_array, TRUE));
 
             return $ode_ip_array;
         }

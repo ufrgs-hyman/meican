@@ -32,8 +32,8 @@ class AuthSystem {
         Common::setSessionVariable('usr_login', $user->usr_login);
         Common::setSessionVariable('usr_id', $user->usr_id);
         Common::setSessionVariable('usr_password', $user->usr_password);
-        $lang = Language::getLang();
-        Language::refreshLangSetting($lang);
+        /*$lang = Language::getLang();
+        Language::refreshLangSetting($lang);*/
     }
 
     static function isUserLoggedIn() {

@@ -177,7 +177,7 @@ class OSCARSReservation {
     }
 
     protected function error($error) {
-        Log::write('error', "OSCARSReservation: " . $error);
+        CakeLog::write('error', "OSCARSReservation: " . $error);
         return false;
     }
 
@@ -194,7 +194,7 @@ class OSCARSReservation {
      * return an array of results
      */
     protected function callBridge($method, $envelope) {
-        Log::write("debug", print_r($method,TRUE));
+        CakeLog::write("debug", print_r($method,TRUE));
         try {
             $wsdl = Configure::read('OSCARSBridgeEPR');
             if (!@file_get_contents($wsdl)) { //testa disponibilidade do wsdl
@@ -205,7 +205,7 @@ class OSCARSReservation {
                         'cache_wsdl' => WSDL_CACHE_NONE,
                         'exceptions' => true));
             $result = $client->__soapCall($method, array($envelope));
-             Log::write("debug", print_r($result,TRUE));
+             CakeLog::write("debug", print_r($result,TRUE));
             if (is_string($result->return)) {
                 return $this->error("OSCARS Bridge Error: " . $result->return);
             } elseif (!$err = array_shift($result->return)) {//tira o primeiro elemento do array e retorna o conteudo do primeiro elemento do array
@@ -256,7 +256,7 @@ class OSCARSReservation {
                 )))) {
             return $this->error("Error to create reservation. Result:\n".print_r($result,true));
         } else {
-            Log::write("debug","Create reservation result:\n".print_r($result,true));
+            CakeLog::write("debug","Create reservation result:\n".print_r($result,true));
             return $this->setGriStatus($result);
         }
     }
@@ -288,7 +288,7 @@ class OSCARSReservation {
             $this->setDestIsTagged($result->return[13]);
             $this->setDestTag($result->return[14]);
             $this->setPath($result->return[15]);
-            Log::write('debug', "Query reservation return:\n" . print_r($result->return, true));
+            CakeLog::write('debug', "Query reservation return:\n" . print_r($result->return, true));
             return true;
         }
     }

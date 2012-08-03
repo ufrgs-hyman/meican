@@ -16,7 +16,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
-$TIME_START = getMicrotime();
+$TIME_START = microtime(true);
 // Get asset type
 $ext = trim(strrchr($url, '.'), '.');
 $assetType = ($ext === 'css') ? 'css' : 'js';
@@ -36,8 +36,12 @@ if (count($regs)>2){
 }
 
 //$cachePath = CACHE .'assets'. DS . str_replace(array('/','\\'), '-', $regs[1]);
-define('CSS', 'webroot/css/');
-define('JS', 'webroot/js/');
+if (!defined('CSS')){
+    define('CSS', 'webroot/css/');
+}
+if (!defined('JS')){
+    define('JS', 'webroot/js/');
+}
 
 if ($assetType == 'css') {
 	$filePath = $plugin . CSS . $file;
@@ -99,5 +103,5 @@ header("Expires: ". gmdate("D, j M Y H:i:s", time() + 86400) ." GMT");
 header("Cache-Control: public, max-age=86400"); // HTTP/1.1
 header("Pragma: cache_asset");        // HTTP/1.0
 
-$time = round(getMicrotime() - $TIME_START, 4);
+$time = round(microtime(true) - $TIME_START, 4);
 print "/* time: $time s */".$output;

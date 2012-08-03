@@ -27,7 +27,7 @@ class client_info extends Model {
      * @return EndpointObject Returns the endpoint object if the query was sucessful, false othewise
      */
     static public function getBestEndpoint($reference) {
-        Log::write("debug", "calculando edp: " . $reference);
+        CakeLog::write("debug", "calculando edp: " . $reference);
         if (!$reference) {
             return false;
         }
@@ -86,7 +86,7 @@ class client_info extends Model {
             $result = parent::querySql($sql, 'client_info');
 
             if ($result) {
-                //Log::write("debug", "achou no banco");
+                //CakeLog::write("debug", "achou no banco");
                 if (count($result) == 1) {
                     // retornou apenas um resultado
                     $urn_info = new urn_info();
@@ -97,12 +97,12 @@ class client_info extends Model {
                         return false;
                 } else {
                     // tratar ambiguidade
-                    Log::write("debug", "ambiguo");
+                    CakeLog::write("debug", "ambiguo");
                     return false;
                 }
             } else {
                 // try step 2 -> dynamic
-                Log::write("debug", "nao achou, deve seguir passo 2");
+                CakeLog::write("debug", "nao achou, deve seguir passo 2");
                 return false;
             }
         }
@@ -124,7 +124,7 @@ class client_info extends Model {
 
             // se precisar pegar mais detalhes do endpoint
             //$endpoint = MeicanTopology::getURNDetails($dom_id, $urn->urn_string);
-            //Log::write("debug", "sucesso, retornando...");
+            //CakeLog::write("debug", "sucesso, retornando...");
             return $endpoint;
         }
 

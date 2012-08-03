@@ -141,15 +141,15 @@ class Controller extends Object {
      * @return mixed The resulting response.
      * @throws PrivateActionException, MissingActionException
      */
-    public function invokeAction($params) {
-        if (empty($params['action']))
-            $params['action'] = $this->defaultAction;
+    public function invokeAction(CakeRequest $request) {
+        if (empty($request->params['action']))
+            $request->params['action'] = $this->defaultAction;
         try {
-            $this->app = $params['app'];
-            $this->action = $params['action'];
-            $this->name = $this->controller = $params['controller'];
-            $this->params = $params;
-            $method = new ReflectionMethod($this, $params['action']);
+            $this->app = $request->params['app'];
+            $this->action = $request->params['action'];
+            $this->name = $this->controller = $request->params['controller'];
+            $this->params = $request->params;
+            $method = new ReflectionMethod($this, $request->params['action']);
             $privateAction = (
                     $method->name[0] === '_' ||
                     !$method->isPublic() /* ||
@@ -158,14 +158,14 @@ class Controller extends Object {
             if ($privateAction) {
                 throw new PrivateActionException(array(
                     'controller' => $this->name . "Controller",
-                    'action' => $params['action']
+                    'action' => $request->params['action']
                 ));
             }
-            return $method->invokeArgs($this, array($params['pass'])); //TODO: tirar esse array
+            return $method->invokeArgs($this, array($request->params['pass'])); //TODO: tirar esse array
         } catch (ReflectionException $e) {
             throw new MissingActionException(array(
                 'controller' => $this->name . "Controller",
-                'action' => $params['action']
+                'action' => $request->params['action']
             ));
         }
     }

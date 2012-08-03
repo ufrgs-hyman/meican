@@ -55,7 +55,7 @@ class request_info extends Resource_Model {
 
     function getRequestInfo($getReqInfo = FALSE, $getFlowInfo = FALSE, $getTimerInfo = FALSE) {
 
-        //Log::write("debug", "Get request info:\n" . print_r($this, TRUE));
+        //CakeLog::write("debug", "Get request info:\n" . print_r($this, TRUE));
 
         $domain_info = new domain_info();
         $domain_info->ode_ip = $this->src_ode_ip;
@@ -73,7 +73,7 @@ class request_info extends Resource_Model {
 
         if ($domain_result = $domain_info->fetch(FALSE)) {
             // request information was found in this MEICAN domain, WS is NOT required
-            Log::write("circuits", "Request is local");
+            CakeLog::write("circuits", "Request is local");
             
             $return_request->src_domain = $domain_result[0]->dom_descr;
 
@@ -99,7 +99,7 @@ class request_info extends Resource_Model {
 
                     $return_request->dst_domain = $domain['dom_descr'];
                 } catch (Exception $e) {
-                    Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
+                    CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
 
                     $return_request->dst_domain = $this->dst_ode_ip;
                 }
@@ -161,7 +161,7 @@ class request_info extends Resource_Model {
             }
         } else {
             // request information was NOT found in this MEICAN domain, trying WS to get data
-            Log::write("circuits", "Request is remote");
+            CakeLog::write("circuits", "Request is remote");
 
             $ODEendpoint = "http://$this->src_ode_ip}/getMeicanData";
 
@@ -174,7 +174,7 @@ class request_info extends Resource_Model {
 
                 $return_request->src_domain = $domain['dom_descr'];
             } catch (Exception $e) {
-                Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
+                CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
 
                 $return_request->src_domain = $this->src_ode_ip;
             }
@@ -188,7 +188,7 @@ class request_info extends Resource_Model {
 
                 $return_request->dst_domain = $domain['dom_descr'];
             } catch (Exception $e) {
-                Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
+                CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
 
                 $return_request->dst_domain = $this->dst_ode_ip;
             }
@@ -202,7 +202,7 @@ class request_info extends Resource_Model {
 
                 $return_request->src_user = $user['usr_name'];
             } catch (Exception $e) {
-                Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
+                CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
 
                 $return_request->src_user = $this->src_usr;
             }
@@ -220,7 +220,7 @@ class request_info extends Resource_Model {
 
                         $return_request->resc_descr = $reservation['res_name'];
                     } catch (Exception $e) {
-                        Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
+                        CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
                     }
 
                     if ($getFlowInfo) {
@@ -232,7 +232,7 @@ class request_info extends Resource_Model {
 
                             $return_request->flow_info = $flow;
                         } catch (Exception $e) {
-                            Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
+                            CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
                         }
                     }
 
@@ -245,7 +245,7 @@ class request_info extends Resource_Model {
 
                             $return_request->timer_info = $timer;
                         } catch (Exception $e) {
-                            Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
+                            CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
                         }
                     }
                 } else {
@@ -260,12 +260,12 @@ class request_info extends Resource_Model {
 
                         $return_request->resc_descr = $request['resc_descr'];
                     } catch (Exception $e) {
-                        Log::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
+                        CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
                     }
                 }
             }
         }
-        Log::write("debug", "Request info return:\n" . print_r($return_request, TRUE));
+        CakeLog::write("debug", "Request info return:\n" . print_r($return_request, TRUE));
 
         return $return_request;
     }
@@ -301,7 +301,7 @@ class request_info extends Resource_Model {
 
                 if ($domain->ode_wsdl_path && $domain->ode_response) {
 
-                    Log::write("circuits", "Sending response:\n" . print_r($responseSOAP, TRUE));
+                    CakeLog::write("circuits", "Sending response:\n" . print_r($responseSOAP, TRUE));
 
                     try {
                         $client = new SoapClient($domain->ode_wsdl_path, array('cache_wsdl' => WSDL_CACHE_NONE));
@@ -316,15 +316,15 @@ class request_info extends Resource_Model {
 
                         return TRUE;
                     } catch (Exception $e) {
-                        Log::write("error", "Caught exception while trying to connect to ODE:\n" . print_r($e->getMessage()));
+                        CakeLog::write("error", "Caught exception while trying to connect to ODE:\n" . print_r($e->getMessage()));
                         return FALSE;
                     }
                 } else {
-                    Log::write("error", 'ODE not confired correctly');
+                    CakeLog::write("error", 'ODE not confired correctly');
                     return FALSE;
                 }
         } else {
-            Log::write('warning', "Request already answered:\n" . print_r($this, TRUE));
+            CakeLog::write('warning', "Request already answered:\n" . print_r($this, TRUE));
             return FALSE;
         }
     }

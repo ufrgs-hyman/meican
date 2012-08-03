@@ -45,7 +45,7 @@ class AclLoader extends TreeModel {
     }
 
     public function reloadACL($options = array()) {
-        Log::write('debug', 'Reloading ACL...');
+        CakeLog::write('debug', 'Reloading ACL...');
         $debugLevel = Configure::read('debug');
         Configure::write('debug', 0);
 
@@ -111,7 +111,7 @@ class AclLoader extends TreeModel {
      * @return <array> novo array old com as permissões de listaros atualizadas
      */
     function analisaPrioridadeIgual($listaros, $old) {
-        Log::write('acl_debug', "analise prioridade igual aros: " . print_r($listaros, true));
+        CakeLog::write('acl_debug', "analise prioridade igual aros: " . print_r($listaros, true));
 
         $new = array();
         //procura na tabela aros_acos os respectivos aros
@@ -125,11 +125,11 @@ class AclLoader extends TreeModel {
             foreach ($this->perTyArray as $perTy) {
                 unset($toSearch);
                 $level = 0;
-                Log::write('acl_debug', "***************** perty " . print_r($perTy, true));
+                CakeLog::write('acl_debug', "***************** perty " . print_r($perTy, true));
 
                 //avalia privilegios de mesmo nível, constroi um array new com as permissoes
                 foreach ($lines_aros_acos as $perm) {
-                    Log::write('acl_debug', "analisando perm " . print_r($perm->perm_id, true));
+                    CakeLog::write('acl_debug', "analisando perm " . print_r($perm->perm_id, true));
                     //ira restringir quais acos serao afetados, afetando apenas aqueles do model estipulado restrModel
                     $aco_id = $perm->aco_id;
                     if ($perm->model) {
@@ -158,11 +158,11 @@ class AclLoader extends TreeModel {
                             //tosearch precisa ser em ordem a avaliacao
                             if (isset($toSearch[$perTy][$level][$aco_id])) {
                                 $level++;
-                                Log::write('acl_debug', "vai incrementar a porquera" .print_r($level, true));
+                                CakeLog::write('acl_debug', "vai incrementar a porquera" .print_r($level, true));
                             }
                             $toSearch[$perTy][$level][$aco_id]->value = $perm->{$perTy};
                             $toSearch[$perTy][$level][$aco_id]->model = $perm->model;
-                            Log::write('acl_debug', "models diferentes ira analisar filhos" . print_r($toSearch, true));
+                            CakeLog::write('acl_debug', "models diferentes ira analisar filhos" . print_r($toSearch, true));
                         }
                     } else { //nao tem model definido
                         if (!array_key_exists($aco_id, $new[$perTy])) {
@@ -186,13 +186,13 @@ class AclLoader extends TreeModel {
 
                         //caso o aco_id não exista no array velho
                         if (!array_key_exists($aco_id, $old[$perTy])) {
-                            Log::write('acl_debug', "vai atribuir ao aco " .print_r($aco_id, true));
-                            Log::write('acl_debug', "permissao " .print_r($perm->value, true));
+                            CakeLog::write('acl_debug', "vai atribuir ao aco " .print_r($aco_id, true));
+                            CakeLog::write('acl_debug', "permissao " .print_r($perm->value, true));
                             $old[$perTy][$aco_id] = $perm->value;
 
                             if (isset($toSearch[$perTy][$level][$aco_id])) {
                                 $level++;
-                                Log::write('acl_debug', "vai incrementar a porquera" .print_r($level, true));
+                                CakeLog::write('acl_debug', "vai incrementar a porquera" .print_r($level, true));
                             }
                             $toSearch[$perTy][$level][$aco_id]->value = $perm->value;
                             //array com os nodos que forma atribuídos permissoes nessa interação
@@ -214,16 +214,16 @@ class AclLoader extends TreeModel {
                     $children = array();
                     if (isset($toSearch) && array_key_exists($perTy, $toSearch) && is_array($toSearch[$perTy][$ind])) {
                         //retorna os aco_id dos nodos a serem analisados
-                        Log::write('acl_debug', "tosearch" . print_r($toSearch, true));
+                        CakeLog::write('acl_debug', "tosearch" . print_r($toSearch, true));
                         $children = $this->getacosmesmonivel($toSearch[$perTy][$ind]);
-                        Log::write('acl_debug', "children" . print_r($children, true));
+                        CakeLog::write('acl_debug', "children" . print_r($children, true));
                     }
 
                     if (!$children)
                         break;
 
                     foreach ($children as $c) {
-                        Log::write('acl_debug', "analisando filhos do aco_id " . print_r($c->parent_id, true));
+                        CakeLog::write('acl_debug', "analisando filhos do aco_id " . print_r($c->parent_id, true));
 
                         if (!array_key_exists($c->aco_id, $new[$perTy])) {
 
@@ -249,8 +249,8 @@ class AclLoader extends TreeModel {
                     foreach ($new[$perTy] as $aco_id => $perm) {
                         if (!array_key_exists($aco_id, $old[$perTy])) {
                             $old[$perTy][$aco_id] = $perm->value;
-                            Log::write('acl_debug', "vai atribuir ao aco " . print_r($aco_id, true));
-                            Log::write('acl_debug', "permissao " . print_r($perm->value, true));
+                            CakeLog::write('acl_debug', "vai atribuir ao aco " . print_r($aco_id, true));
+                            CakeLog::write('acl_debug', "permissao " . print_r($perm->value, true));
 
 
 //                            $toSearch[$perTy][$level][$aco_id]->value= $perm->value;

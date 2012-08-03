@@ -23,7 +23,7 @@ include_once 'apps/bpm/models/request_info.php';
 include_once 'apps/topology/models/domain_info.php';
 include_once 'apps/topology/models/topology.php';
 
-include_once 'libs/nuSOAP/lib/nusoap.php';
+include_once 'libs/Vendors/nuSOAP/lib/nusoap.php';
 
 class reservations extends Controller {
 
@@ -192,7 +192,7 @@ class reservations extends Controller {
                 }
             }
         } else {
-            Log::write('debug', "Falha ao buscar reservas no refresh status");
+            CakeLog::write('debug', "Falha ao buscar reservas no refresh status");
             return $this->renderJson(FALSE);
         }
         
@@ -205,7 +205,7 @@ class reservations extends Controller {
             $dom->dom_id = $dom_id;
             $idc_url = $dom->get('idc_url',false);
             
-            Log::write('debug', "gri list ro refresh:\n" . print_r($griList,true));
+            CakeLog::write('debug', "gri list ro refresh:\n" . print_r($griList,true));
 
             $oscarsRes = new OSCARSReservation();
             $oscarsRes->setOscarsUrl($idc_url);
@@ -214,17 +214,17 @@ class reservations extends Controller {
             if ($oscarsRes->listReservations()) {
                 $statusResult = $oscarsRes->getStatusArray();
             } else {
-                Log::write('debug', "Falha ao conectar OSCARS ($idc_url) no refresh status");
+                CakeLog::write('debug', "Falha ao conectar OSCARS ($idc_url) no refresh status");
                 return $this->renderJson(FALSE);
             }
         }
 
         if (count($statusResult) != count($griList)) {
-            Log::write('debug', "Problema de consistencia na refresh status " . print_r($statusResult, true));
+            CakeLog::write('debug', "Problema de consistencia na refresh status " . print_r($statusResult, true));
             return $this->renderJson(FALSE);
         }
 
-        //Log::write('debug', "refresh status result:\n" . print_r($statusResult,true));
+        //CakeLog::write('debug', "refresh status result:\n" . print_r($statusResult,true));
 
         /**
          * Atualiza no banco os status que mudaram
@@ -283,10 +283,10 @@ class reservations extends Controller {
             $req->resource_type = 'reservation_info';
             $req->answerable = 'no';
             
-            //Log::write("debug","res req".print_r($req,true));
+            //CakeLog::write("debug","res req".print_r($req,true));
             
             $request = $req->fetch(false);
-            //Log::write("debug","request".print_r($request,true));
+            //CakeLog::write("debug","request".print_r($request,true));
 
             if ($request && $request[0]->response != 'accept') {
                 // show request status
@@ -342,7 +342,7 @@ class reservations extends Controller {
                     if ($oscarsRes->listReservations()) {
                         $statusResult = $oscarsRes->getStatusArray();
                     } else {
-                        Log::write("error", "Fail to connect to OSCARS in refresh status");
+                        CakeLog::write("error", "Fail to connect to OSCARS in refresh status");
                         return $this->renderJson(FALSE);
                     }
 
@@ -379,7 +379,7 @@ class reservations extends Controller {
 
             $this->renderJson($statusList);
         } else {
-            Log::write("error", "Fail to get GRIs in refresh status");
+            CakeLog::write("error", "Fail to get GRIs in refresh status");
             $this->renderJson(FALSE);
         }
     }
@@ -470,7 +470,7 @@ class reservations extends Controller {
 
         $today_check = DayofWeek();
 
-        $lang = explode(".", Language::getLang());
+        $lang = explode(".", Language::getInstance()->getLanguage());
         $js_lang = str_replace("_", "-", $lang[0]);
         // --------------------------------------------
         //if ($domToMapArray) {
@@ -598,7 +598,7 @@ class reservations extends Controller {
         $res_begin_timestamp = Common::getSessionVariable("res_begin_timestamp");
         $res_diff_timestamp = $res_end_timestamp - $res_begin_timestamp;
 
-        Log::write("circuits", "Reservation data POST".print_r($_POST,TRUE));
+        CakeLog::write("circuits", "Reservation data POST".print_r($_POST,TRUE));
 
         /**
          * insere o flow
@@ -920,7 +920,7 @@ class reservations extends Controller {
                         $oscarsRes = new OSCARSReservation();
                         $oscarsRes->setOscarsUrl($idc_url);
                         $oscarsRes->setGri($g->gri_descr);
-                        Log::write("info", "GRI to cancel: ".print_r($g->gri_descr, TRUE));
+                        CakeLog::write("info", "GRI to cancel: ".print_r($g->gri_descr, TRUE));
                         /**
                          * @todo cancelar várias reservas de uma só vez
                          */
@@ -964,7 +964,7 @@ class reservations extends Controller {
 
     function send($reservation_info) {
         
-        Log::write("circuits", "Reservation to be sent:\n".print_r($reservation_info,TRUE));
+        CakeLog::write("circuits", "Reservation to be sent:\n".print_r($reservation_info,TRUE));
         
         $flow_info = new flow_info();
         $flow_info->flw_id = $reservation_info->flw_id;
@@ -1025,7 +1025,7 @@ class reservations extends Controller {
             $tmp->setStartTimestamp($t->start); //em timestamp
             $tmp->setEndTimestamp($t->finish);
             
-            Log::write("circuits", "Sending reservation:\n".print_r($tmp,TRUE));
+            CakeLog::write("circuits", "Sending reservation:\n".print_r($tmp,TRUE));
 
             if ($tmp->createReservation()) {
                 $resSent++;
@@ -1086,7 +1086,7 @@ class reservations extends Controller {
                 'dst_ode_ip' => $newReq->dst_ode_ip,
                 'usr_src' => $newReq->src_usr);
 
-            Log::write("circuits","Sending for authorization:\n". print_r($requestSOAP,TRUE));
+            CakeLog::write("circuits","Sending for authorization:\n". print_r($requestSOAP,TRUE));
             try {
                 $client = new SoapClient($src_dom->ode_wsdl_path, array('cache_wsdl' => WSDL_CACHE_NONE));
                 
@@ -1099,12 +1099,12 @@ class reservations extends Controller {
                 if ($newReq->insert())
                     return $resSent;
                 else {
-                    Log::write("error", "Failed to save request");
+                    CakeLog::write("error", "Failed to save request");
                     return FALSE;
                 }
                     
             } catch (Exception $e) {
-                Log::write("error", "Caught exception while trying to connect to ODE:\n". print_r($e->getMessage()));
+                CakeLog::write("error", "Caught exception while trying to connect to ODE:\n". print_r($e->getMessage()));
                 $this->setFlash("error", _('Error at invoking business layer.'));
                 $newReq->status = 'SENT FOR AUTHORIZATION';
 
@@ -1117,9 +1117,9 @@ class reservations extends Controller {
 
     public function check() {
         $this->autoRender = false;
-        Log::write("debug", "check chegou no controller");
+        CakeLog::write("debug", "check chegou no controller");
         $gris = gri_info::getGrisToCreatePath();
-        Log::write("debug", print_r($gris, true));
+        CakeLog::write("debug", print_r($gris, true));
 
         if ($gris) {
             foreach ($gris as $g) {
@@ -1131,11 +1131,11 @@ class reservations extends Controller {
                 $oscars_reservation->setOscarsUrl($domain[0]->idc_url);
                 $oscars_reservation->setGri($g->gri_descr);
                 
-                Log::write("debug","oscars res class\n".print_r($oscars_reservation,true));
+                CakeLog::write("debug","oscars res class\n".print_r($oscars_reservation,true));
 
                 //if (true) {
                 if ($oscars_reservation->createPath()) {
-                    Log::write("debug","Create path successful\n".print_r($g,true));
+                    CakeLog::write("debug","Create path successful\n".print_r($g,true));
                     $status = $oscars_reservation->getStatus();
                     //$status="INCREATE";
                     $g->updateTo(array("send" => "0", "status" => $status), false);

@@ -9,7 +9,7 @@ include_once 'apps/circuits/models/gri_info.php';
 include_once 'apps/aaa/models/user_info.php';
 include_once 'apps/topology/models/domain_info.php';
 
-include_once 'libs/nuSOAP/lib/nusoap.php';
+include_once 'libs/Vendors/nuSOAP/lib/nusoap.php';
 
 class requests extends MeicanController {
 
@@ -88,7 +88,7 @@ class requests extends MeicanController {
         $offset = (30 * 24 * 60 * 60);
         $calendar_gris = gri_info::getGrisToCalendar(date('Y-m-d H:i:s', time() - $offset), date('Y-m-d H:i:s', time() + $offset), $result->resc_id);
 
-        //Log::write("debug", print_r($gri->getGrisToView($result->resc_id, true), true));
+        //CakeLog::write("debug", print_r($gri->getGrisToView($result->resc_id, true), true));
 
         $this->set(array(
             'res_id' => $result->resc_id,
