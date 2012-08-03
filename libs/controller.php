@@ -169,5 +169,59 @@ class Controller extends Object {
             ));
         }
     }
+    
+    /**
+ * Redirects to given $url, after turning off $this->autoRender.
+ * Script execution is halted after the redirect.
+ *
+ * @param mixed $url A string or array-based URL pointing to another location within the app,
+ *     or an absolute URL
+ * @param integer $status Optional HTTP status code (eg: 404)
+ * @param boolean $exit If true, exit() will be called after the redirect
+ * @return mixed void if $exit = false. Terminates script if $exit = true
+ */
+	public function redirect($url, $status = null, $exit = true) {
+		$this->autoRender = false;
+
+		if (is_array($status)) {
+			extract($status, EXTR_OVERWRITE);
+		}
+
+		if (function_exists('session_write_close')) {
+			session_write_close();
+		}
+/*
+		if (!empty($status) && is_string($status)) {
+			$codes = array_flip($this->response->httpCodes());
+			if (isset($codes[$status])) {
+				$status = $codes[$status];
+			}
+		}*/
+
+		if ($url !== null) {
+            $url = array_merge(array('app' => $this->app, 'controller' => $this->controller), $url);
+            header("Location: ".Dispatcher::getInstance()->url($url));
+		}
+
+		/*if (!empty($status) && ($status >= 300 && $status < 400)) {
+			$this->response->statusCode($status);
+		}*/
+
+		if ($exit) {
+			exit();
+		}
+	}
+    
+    
+
+    /**
+     * Verifies if a value is a integer, otherwise, flashes a error and redirects to index
+     * @param unknown_type $id
+     */
+    protected function validId($id=null) {
+        if (empty($id) || !(is_int($id) || preg_match('/^[0-9]*$/', $id)))
+            return false;
+        return true;
+    }
 
 }

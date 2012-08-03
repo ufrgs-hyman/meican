@@ -26,7 +26,7 @@ $meicans = $this->passedArgs;
                         <input type="checkbox" name="del_checkbox[]" value="<?php echo $m->id; ?>">
                     </td>
                     <td>
-                        <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "meican_id:$m->id")); ?>">
+                        <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => $m->id)); ?>">
                             <img class="edit" src="<?php echo $this->url(''); ?>webroot/img/edit_1.png"/>
                         </a>
                     </td>

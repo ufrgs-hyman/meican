@@ -9,7 +9,7 @@ if (empty($meican)){
     $link = array("action" => "add");
 } else {
     $title = _("Edit %s");
-    $link = array("action" => "update", "param" => "meican_id:$meican->meican_id");
+    $link = array("action" => "update", "param" => $meican->meican_id);
 }
 ?>
 

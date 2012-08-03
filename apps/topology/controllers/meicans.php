@@ -69,14 +69,12 @@ class meicans extends Controller {
         $this->add_form();
     }
     
-    public function edit($mec_id_array) {
-        $mecId = NULL;
-        if (array_key_exists('meican_id', $mec_id_array)) {
-            $mecId = $mec_id_array['meican_id'];
+    public function edit($params = array()) {
+        if ($this->validId($params[0])) {
+            $mecId = $params[0];
         } else {
             $this->setFlash(_("Invalid index"), "fatal");
-            $this->show();
-            return;
+            return $this->show();
         }
 
         $mec_info = new meican_info();
@@ -93,14 +91,12 @@ class meicans extends Controller {
         $this->render('form');
     }
     
-    public function update($mec_id_array) {
-        $mecId = NULL;
-        if (array_key_exists('meican_id', $mec_id_array)) {
-            $mecId = $mec_id_array['meican_id'];
+    public function update($params = array()) {
+        if ($this->validId($params[0])) {
+            $mecId = $params[0];
         } else {
             $this->setFlash(_("Invalid index"), "fatal");
-            $this->show();
-            return;
+            return $this->show();
         }
         
         $meican_descr = Common::POST("meican_descr");
@@ -122,7 +118,7 @@ class meicans extends Controller {
 
         } else $this->setFlash(_("Missing arguments"), "error");
         
-        $this->edit($mec_id_array);
+        $this->edit($params);
     }
     
     public function delete() {
