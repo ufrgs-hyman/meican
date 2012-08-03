@@ -2,15 +2,16 @@
 
 defined ('__MEICAN') or die ("Invalid access.");
 
-include_once 'libs/controller.php';
-
+include_once 'libs/meican_controller.php';
 include_once 'apps/aaa/models/group_info.php';
 
 include_once 'apps/topology/models/domain_info.php';
 include_once 'apps/topology/models/network_info.php';
 include_once 'apps/topology/models/device_info.php';
 
-class networks extends Controller {
+class networks extends MeicanController {
+
+    public $modelClass = 'network_info';
 
     public function networks() {
         $this->app = 'topology';
@@ -19,11 +20,16 @@ class networks extends Controller {
         $this->addScriptForLayout(array('networks'));
     }
 
-    public function show() {
-        $net = new network_info();
-        $allNets = $net->fetch();
+    protected function renderEmpty(){
+        $this->set(array(
+            'title' => _("Networks"),
+            'message' => sprintf(_("No %s created"), _("network")).". "._("Please, click the button below to add a new one")
+            ));
+        parent::renderEmpty();
+    }
 
-        if ($allNets) {
+    public function show() {
+        if ($allNets = $this->makeIndex()) {
             $networks = array();
 
             foreach ($allNets as $n) {
@@ -58,13 +64,6 @@ class networks extends Controller {
                 $networks[] = $network;
             }
             $this->setArgsToBody($networks);
-            $this->render('show');
-        } else {
-            $args = new stdClass();
-            $args->title = _("Networks");
-            $args->message = _("No network added, click the button below to add a new one");
-            $this->setArgsToBody($args);
-            $this->render('empty');
         }
     }
 

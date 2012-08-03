@@ -2,8 +2,7 @@
 
 defined ('__MEICAN') or die ("Invalid access.");
 
-include_once 'libs/controller.php';
-
+include_once 'libs/meican_controller.php';
 include_once 'apps/topology/models/urn_info.php';
 include_once 'apps/topology/models/network_info.php';
 include_once 'apps/topology/models/device_info.php';
@@ -11,7 +10,9 @@ include_once 'apps/topology/models/topology.php';
 
 
 
-class urns extends Controller {
+class urns extends MeicanController {
+
+    public $modelClass = 'domain_info';
 
     public function urns() {
         $this->app = 'topology';
@@ -20,10 +21,17 @@ class urns extends Controller {
         $this->addScriptForLayout(array('urns'));
     }
 
+    protected function renderEmpty(){
+        $this->set(array(
+            'title' => _("URNs (Uniform Resource Name)"),
+            'message' => _("Before adding a URN, you need to register at least one OSCARS domain, click the button bellow to register a new one"),
+            'link' => array("controller" => "domains", "action" => "add_form", 'app' => $this->app)
+            ));
+        parent::renderEmpty();
+    }
+
     public function show() {
-        
-        $dom = new domain_info();
-        if ($allDomains = $dom->fetch()) {
+        if ($allDomains = $this->makeIndex()) {
             $domains_to_body = array();
             $domains_to_js = array();
 
@@ -57,14 +65,6 @@ class urns extends Controller {
             ));
 
             $this->setInlineScript('urns_init');
-            $this->render('show');
-        } else {
-            $args = new stdClass();
-            $args->title = _("URNs (Uniform Resource Name)");
-            $args->message = _("Before adding a URN, you need to register at least one OSCARS domain, click the button bellow to register a new one");
-            $args->link = array("controller" => "domains", "action" => "add_form");
-            $this->setArgsToBody($args);
-            $this->render('empty');
         }
     }
     

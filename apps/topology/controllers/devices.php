@@ -2,8 +2,7 @@
 
 defined ('__MEICAN') or die ("Invalid access.");
 
-include_once 'libs/controller.php';
-
+include_once 'libs/meican_controller.php';
 include_once 'apps/topology/models/topology.php';
 include_once 'apps/topology/models/domain_info.php';
 include_once 'apps/topology/models/device_info.php';
@@ -14,7 +13,9 @@ include_once 'apps/topology/controllers/domains.php';
 
 include_once 'libs/acl_loader.php';
 
-class devices extends Controller {
+class devices extends MeicanController {
+
+    public $modelClass = 'device_info';
 
     public function devices() {
         $this->app = 'topology';
@@ -23,12 +24,16 @@ class devices extends Controller {
         $this->addScriptForLayout(array('devices'));
     }
 
-    public function show() {
-        
-        $dev = new device_info();
-        $allDevices = $dev->fetch();
+    protected function renderEmpty(){
+        $this->set(array(
+            'title' => _("Devices"),
+            'message' => sprintf(_("No %s created"), _("device")).". "._("Please, click the button below to add a new one")
+            ));
+        parent::renderEmpty();
+    }
 
-        if ($allDevices) {
+    public function show() {
+        if ($allDevices = $this->makeIndex()) {
             $devices = array();
             $acl = AclLoader::getInstance();
             
@@ -63,13 +68,6 @@ class devices extends Controller {
                 $devices[] = $device;
             }
             $this->setArgsToBody($devices);
-            $this->render('show');
-        } else {
-            $args = new stdClass();
-            $args->title = _("Devices");
-            $args->message = _("No device added, click the button below to add a new one");
-            $this->setArgsToBody($args);
-            $this->render('empty');
         }
     }
 

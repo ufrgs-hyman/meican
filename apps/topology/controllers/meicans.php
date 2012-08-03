@@ -2,11 +2,12 @@
 
 defined ('__MEICAN') or die ("Invalid access.");
 
-include_once 'libs/controller.php';
-
+include_once 'libs/meican_controller.php';
 include_once 'apps/topology/models/meican_info.php';
 
-class meicans extends Controller {
+class meicans extends MeicanController {
+
+    public $modelClass = 'meican_info';
 
     public function meicans() {
         $this->app = 'topology';
@@ -14,12 +15,16 @@ class meicans extends Controller {
         $this->defaultAction = 'show';
     }
 
+    protected function renderEmpty(){
+        $this->set(array(
+            'title' => _("MEICANs"),
+            'message' => sprintf(_("No %s created"), _("MEICAN")).". "._("Please, click the button below to add a new one")
+            ));
+        parent::renderEmpty();
+    }
+
     public function show() {
-
-        $mec = new meican_info();
-        $allMeicans = $mec->fetch(FALSE);
-
-        if ($allMeicans) {
+        if ($allMeicans = $this->makeIndex(array('useACL' => false))) {
             $meicans = array();
 
             foreach ($allMeicans as $m) {
@@ -33,13 +38,6 @@ class meicans extends Controller {
                 $meicans[] = $meican;
             }
             $this->setArgsToBody($meicans);
-            $this->render('show');
-        } else {
-            $args = new stdClass();
-            $args->title = _("MEICANs");
-            $args->message = _("No MEICAN is registered, click the button below to register a new one");
-            $this->setArgsToBody($args);
-            $this->render('empty');
         }
     }
     

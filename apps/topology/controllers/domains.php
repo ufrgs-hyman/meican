@@ -2,11 +2,12 @@
 
 defined ('__MEICAN') or die ("Invalid access.");
 
-include_once 'libs/controller.php';
-
+include_once 'libs/meican_controller.php';
 include_once 'apps/topology/models/domain_info.php';
 
-class domains extends Controller {
+class domains extends MeicanController {
+
+    public $modelClass = 'domain_info';
 
     public function domains() {
         $this->app = 'topology';
@@ -15,12 +16,16 @@ class domains extends Controller {
         $this->addScriptForLayout(array('domains'));
     }
 
+    protected function renderEmpty(){
+        $this->set(array(
+            'title' => _("Domains"),
+            'message' => sprintf(_("No %s created"), _("domain")).". "._("Please, click the button below to add a new one")
+            ));
+        parent::renderEmpty();
+    }
+
     public function show() {
-
-        $dom = new domain_info();
-        $allDomains = $dom->fetch();
-
-        if ($allDomains) {
+        if ($allDomains = $this->makeIndex()) {
             $domains = array();
 
             foreach ($allDomains as $d) {
@@ -38,12 +43,6 @@ class domains extends Controller {
             }
             $this->setArgsToBody($domains);
             $this->render('show');
-        } else {
-            $args = new stdClass();
-            $args->title = _("Domains");
-            $args->message = _("No domain is added, click the button below to add a new one");
-            $this->setArgsToBody($args);
-            $this->render('empty');
         }
     }
 
