@@ -11,7 +11,10 @@
             <li><a href="#"><?php echo _('Help'); ?></a></li>
             <li><a href="#"><?php echo _('About'); ?></a></li>
             <li><a href="#" class="feedback-link"><?php echo _('Feedback'); ?></a></li>
+            <?php /*
             <li><a href="<?php echo $this->url(array('app' => 'init', 'controller' => 'gui', 'action' => 'language', 'pass' => array('pt_BR')));?>"><?php echo _('Porguguese'); ?></a></li>
             <li><a href="<?php echo $this->url(array('app' => 'init', 'controller' => 'gui', 'action' => 'language', 'pass' => array('en_US')));?>"><?php echo _('English'); ?></a></li>
+             * 
+             */?>
         </ul>
 </div>
