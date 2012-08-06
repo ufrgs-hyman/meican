@@ -38,6 +38,7 @@ class meicans extends MeicanController {
                 $meicans[] = $meican;
             }
             $this->setArgsToBody($meicans);
+            $this->render('show');
         }
     }
     
