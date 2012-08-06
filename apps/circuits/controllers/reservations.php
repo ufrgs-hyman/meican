@@ -566,8 +566,8 @@ class reservations extends Controller {
         // arg bandwidth
         //$args->bandwidthTip = "(" . $min . ", " . ($min + $div) . ", " . ($min + 2 * $div) . ", " . ($min + 3 * $div) . ", ... , " . $max . ")";
         // arg timer
-        $args->start_date = date($dateFormat);
-        $args->finish_date = date($dateFormat);
+        $args->start_date = date($dateFormat, (time() + 30 * 60));
+        $args->finish_date = date($dateFormat, (time() + 90 * 60));
         $args->start_time = date($hourFormat, (time() + 30 * 60));
         $args->finish_time = date($hourFormat, (time() + 90 * 60));
 
