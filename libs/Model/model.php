@@ -487,6 +487,7 @@ class Model extends Object {
             else
                 return false;
         } catch (Exception $e) {
+            CakeLog::write('error', "Database error on insert: \n\t" . $e->getMessage() . "\n\tSQL: " . $sql);
             return false;
         }
     }
@@ -503,6 +504,7 @@ class Model extends Object {
         try{
             return $ds->execute($sql);
         } catch (Exception $e) {
+            CakeLog::write('error', "Database error on insert: \n\t" . $e->getMessage() . "\n\tSQL: " . $sql);
             return false;
         }
     }
@@ -527,6 +529,7 @@ class Model extends Object {
             else
                 return $ds->commit();
         } catch (Exception $e) {
+            CakeLog::write('error', "Database error on insert: \n\t" . $e->getMessage() . "\n\tSQL: " . $sql);
             return $ds->rollback() && false;
         }
     }
