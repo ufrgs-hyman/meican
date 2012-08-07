@@ -34,7 +34,7 @@ class Controller extends Object {
     public function render($action=null, $params = array()) {
         if (empty($action))
             $action = $this->action;
-        if ($this->layout === 'default' && $this->isAjax())
+        if ($this->layout === 'default' && $this->request->isAjax())
             $this->layout .= '_ajax';
         $params = array_merge(array(
             'app' =>$this->app,
@@ -47,11 +47,6 @@ class Controller extends Object {
         $output = $view->build();
         $this->output .= $output;
         echo $output;
-    }
-
-    public function isAjax() {
-        debug($this->request->isAjax());
-        return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
     }
 
     protected function addScript($script) { //@deprecated
