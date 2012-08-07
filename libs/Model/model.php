@@ -10,6 +10,7 @@ class Model extends Object {
     private $tableName;
     private $databaseString;
     public $configName = 'default';
+    public $exceptionMessage = '';
 
     function Model() {
         $this->attributes = array();
@@ -488,6 +489,7 @@ class Model extends Object {
                 return false;
         } catch (Exception $e) {
             CakeLog::write('error', "Database error on insert: \n\t" . $e->getMessage() . "\n\tSQL: " . $sql);
+            $this->exceptionMessage = $e->getMessage();
             return false;
         }
     }
@@ -505,6 +507,7 @@ class Model extends Object {
             return $ds->execute($sql);
         } catch (Exception $e) {
             CakeLog::write('error', "Database error on insert: \n\t" . $e->getMessage() . "\n\tSQL: " . $sql);
+            $this->exceptionMessage = $e->getMessage();
             return false;
         }
     }
@@ -530,6 +533,7 @@ class Model extends Object {
                 return $ds->commit();
         } catch (Exception $e) {
             CakeLog::write('error', "Database error on insert: \n\t" . $e->getMessage() . "\n\tSQL: " . $sql);
+            $this->exceptionMessage = $e->getMessage();
             return $ds->rollback() && false;
         }
     }
