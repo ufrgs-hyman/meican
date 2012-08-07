@@ -16,9 +16,12 @@ class Controller extends Object {
     public $name = null;
     public $output = '';
     public $autoRender = true;
+    public $request = null;
+    public $response = null;
 
-    public function __construct() {
-
+    public function __construct($request, $response) {
+        $this->request = $request;
+        $this->response = $response;
         if ($this->name === null) {
             $this->name = substr(get_class($this), 0, strlen(get_class($this)) - 10);
         }

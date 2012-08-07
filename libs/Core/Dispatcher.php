@@ -59,7 +59,7 @@ class Dispatcher {
                 throw new Exception(_("Invalid app"));
             if (empty($request->params['controller']))
                 $request->params['controller'] = $application->getDefaultController();
-            $controller = $application->loadController($request->params['controller']);
+            $controller = $application->loadController($request, null);
 
             if (!($controller instanceof Controller)) {
                 throw new MissingControllerException(array(

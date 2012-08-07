@@ -10,15 +10,25 @@ class Application {
         return $this->defaultController;
     }
 
-    public function loadController($controller) {
+    public function loadController($request, $response) {
+        $controller = $request->params['controller'];
         if (file_exists("apps/$this->appName/controllers/$controller.php")) {
             include_once "apps/$this->appName/controllers/$controller.php";
 
             if (class_exists($controller)){
-                return new $controller;
+                //return new $controller;
+                $ctrlClass = $controller;
+                if (!$ctrlClass) {
+                    return false;
+                }
+                $reflection = new ReflectionClass($ctrlClass);
+                if ($reflection->isAbstract() || $reflection->isInterface()) {
+                    return false;
+                }
+                return $reflection->newInstance($request, $response);
             }
-        }
-        return FALSE;
+        } else
+            return false;
     }
 
     public function getAppName(){
