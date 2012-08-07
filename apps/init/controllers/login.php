@@ -8,6 +8,9 @@ include_once 'apps/aaa/models/user_info.php';
 
 class login extends Controller {
 
+    public $app = 'init';
+    public $controller = 'login';
+    
     public function show($message = NULL) {
         if ($message){
             $this->set(compact('message'));

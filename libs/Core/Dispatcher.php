@@ -39,7 +39,7 @@ class Dispatcher {
             $url = Common::GET('url');
         else
             $url = null;
-        if ($this->login($request->url)) // precisa fazer login?
+        if ($this->login($request)) // precisa fazer login?
             return;
         if ($this->asset($request->url))
             return;
@@ -135,13 +135,16 @@ class Dispatcher {
         }
     }
 
-    function login($url = null) {
-        if ($url !== 'login')
+    function login($request = null) {
+        if ($request->url !== 'login')
             return false;
         Language::getInstance()->setDomain('init');
-
-        include_once 'apps/init/controllers/login.php';
-        $login = new Login();
+        $request->params = array(
+            'app' => 'init',
+            'controller' => 'login',
+            'action' => 'show'
+        );
+        $login = Application::factory($request->params['app'])->loadController($request, null);
 
         if (key_exists('message', $_GET))
             $message = $_GET['message'];

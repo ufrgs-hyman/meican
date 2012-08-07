@@ -17,7 +17,7 @@ class Controller extends Object {
     public $request = null;
     public $response = null;
 
-    public function __construct($request, $response) {
+    public function __construct($request = null, $response = null) {
         $this->request = $request;
         $this->response = $response;
         if ($this->name === null) {
