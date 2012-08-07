@@ -53,14 +53,14 @@ class View {
             Language::getInstance()->setDomain(isset($vars['app'])?$vars['app']: $this->app);
             ob_start();
             extract(array_merge($this->viewVars, $vars), EXTR_SKIP);
-            $this->passedArgs = $bodyArgs; //@deprecated TODO: do not use 
+            $this->passedArgs = isset($bodyArgs)?$bodyArgs:null; //@deprecated TODO: do not use 
             include($view);
             $return = ob_get_contents();
             ob_end_clean();
             Language::getInstance()->setDomain($dom);
         } else {
             throw new MissingViewException($view);
-            $return = NULL; //TODO: trigger error
+            $return = null; //TODO: trigger error
         }
         return $return;
     }
