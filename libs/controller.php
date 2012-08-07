@@ -5,7 +5,6 @@ include_once 'libs/view.php';
 class Controller extends Object {
 
     protected $layout = "default";
-    protected $scripts = array();
     //private $inlineScript = NULL;
     public $app;
     public $controller = NULL;
@@ -47,10 +46,6 @@ class Controller extends Object {
         $output = $view->build();
         $this->output .= $output;
         echo $output;
-    }
-
-    protected function addScript($script) { //@deprecated
-        $this->scripts[] = "apps/{$this->app}/webroot/js/$script.js?1";
     }
 
     protected function setInlineScript($script) {

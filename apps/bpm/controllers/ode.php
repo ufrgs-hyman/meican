@@ -20,7 +20,7 @@ class ode extends Controller {
             $this->setFlash('Unable to connect to ODE System', 'fatal');
         }
 
-        $this->addScript('ajaxSubmit');
+        $this->addScriptForLayout('ajaxSubmit');
         $this->setArgsToBody($processes);
         $this->render('show');
     }

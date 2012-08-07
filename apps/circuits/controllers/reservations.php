@@ -570,7 +570,7 @@ class reservations extends Controller {
         $this->addScriptForLayout(array(/*'googlemaps', 'StyledMarker', 'reservations', 'reservation_map', 'flows',*/'markerClusterer', 'timers', 'jquery.timePicker', 'reservations_add'/*, 'map_init'*/));
         
         if ($js_lang != "en-US") {
-            $this->addScript("jquery.ui.datepicker-$js_lang");
+            $this->addScriptForLayout("jquery.ui.datepicker-$js_lang");
         }
 
         $this->render('add');
