@@ -3,7 +3,7 @@
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__FILE__));
 define("LIBS", 'libs'.DS);
-define('APP', '');
+define('APP', ROOT . DS);
 define('APP_DIR', DS);
 //define("LOGS", ROOT.DS.'log'.DS);
 define('WEBROOT_DIR', 'webroot');
