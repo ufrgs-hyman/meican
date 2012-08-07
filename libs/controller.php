@@ -5,7 +5,6 @@ include_once 'libs/view.php';
 class Controller extends Object {
 
     protected $layout = "default";
-    protected $argsToBody = NULL;
     protected $scripts = array();
     //private $inlineScript = NULL;
     public $app;
@@ -40,7 +39,6 @@ class Controller extends Object {
         ), $params);
         $view = new View($params['app'], $params['controller'], $action, $params['layout']);
         $view->set($this->viewVars);
-        $view->setArgs($this->argsToBody);
         $this->autoRender = false;
         $output = $view->build();
         $this->output .= $output;
@@ -76,7 +74,7 @@ class Controller extends Object {
     }
 
     protected function setArgsToBody($args) {
-        $this->argsToBody = $args;
+        $this->set('bodyArgs', $args);
     }
 
     protected function setArgsToScript($args) {

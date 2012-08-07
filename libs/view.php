@@ -14,7 +14,6 @@ class View {
     //private $scriptContent;
     //private $header=array();   //array of files to build header
     //private $headerContent; //result of build header
-    private $bodyArgs;
     //private $scriptArgs;
     //public $script;
     public $layout = 'default';
@@ -48,17 +47,13 @@ class View {
                     ));
     }
 
-    public function setArgs($args) {
-        $this->bodyArgs = $args;
-    }
-
     public function buildView($view=null, $vars=array()) {
         if (file_exists($view)) {
             $dom = Language::getInstance()->getDomain();
             Language::getInstance()->setDomain(isset($vars['app'])?$vars['app']: $this->app);
             ob_start();
             extract(array_merge($this->viewVars, $vars), EXTR_SKIP);
-            $this->passedArgs = $this->bodyArgs;
+            $this->passedArgs = $bodyArgs; //@deprecated TODO: do not use 
             include($view);
             $return = ob_get_contents();
             ob_end_clean();
