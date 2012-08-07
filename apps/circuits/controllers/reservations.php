@@ -27,13 +27,6 @@ include_once 'libs/Vendors/nuSOAP/lib/nusoap.php';
 
 class reservations extends Controller {
 
-    public function reservations() {
-        $this->app = 'circuits';
-        $this->controller = 'reservations';
-        $this->defaultAction = 'show';
-        parent::__construct();
-    }
-
     public function show($filterArray=array()) {
         // inicializa variável de sessão
         Common::destroySessionVariable('res_begin_timestamp');

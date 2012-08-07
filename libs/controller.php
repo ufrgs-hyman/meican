@@ -10,7 +10,7 @@ class Controller extends Object {
     public $app;
     public $controller = NULL;
     public $action = NULL;
-    protected $defaultAction;
+    protected $defaultAction = 'show';
     public $viewVars = array('scripts_for_layout' => array());
     public $name = null;
     public $output = '';
