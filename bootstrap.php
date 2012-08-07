@@ -18,7 +18,8 @@ if (!empty($failed)) {
 include_once 'libs/common.php';
 App::uses('CakeLog', 'Log');
 CakeLog::config('default', array(
-    'engine' => 'FileLog'
+    'engine' => 'FileLog',
+    'path' => ROOT . DS . 'log' . DS
 ));
 
 //App::uses('PhpReader', 'Configure');
