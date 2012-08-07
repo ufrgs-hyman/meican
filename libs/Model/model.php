@@ -480,12 +480,15 @@ class Model extends Object {
     protected function insertSql($sql) {
         $ds = $this->getDataSource();
         if (!($ds && $sql))
-            return FALSE;
-
-        if ($ds->execute($sql))
-            return $ds->lastInsertId();
-        else
             return false;
+        try{
+            if ($ds->execute($sql))
+                return $ds->lastInsertId();
+            else
+                return false;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -496,10 +499,12 @@ class Model extends Object {
     protected function execSql($sql) {
         $ds = $this->getDataSource();
         if (!($ds && $sql))
-            return FALSE;
-        $ret = $ds->execute($sql);
-        //$ds->_queryCache = array();
-        return $ret;
+            return false;
+        try{
+            return $ds->execute($sql);
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -512,15 +517,18 @@ class Model extends Object {
      * @return <boolean> TRUE if transaction was successful. FALSE otherwise.
      */
     protected function transactionSql($sql) {
-
         $ds = $this->getDataSource();
         if (!($ds && $sql))
-            return FALSE;
-        $ds->begin();
-        if (!$ds->execute($sql))
+            return false;
+        try{
+            $ds->begin();
+            if (!$ds->execute($sql))
+                return $ds->rollback() && false;
+            else
+                return $ds->commit();
+        } catch (Exception $e) {
             return $ds->rollback() && false;
-        else
-            return $ds->commit();
+        }
     }
 
     /**
