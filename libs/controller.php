@@ -5,10 +5,10 @@ include_once 'libs/view.php';
 class Controller extends Object {
 
     protected $layout = "default";
-    //private $inlineScript = NULL;
+    //private $inlineScript = null;
     public $app;
-    public $controller = NULL;
-    public $action = NULL;
+    public $controller = null;
+    public $action = null;
     protected $defaultAction = 'show';
     public $viewVars = array('scripts_for_layout' => array());
     public $name = null;
@@ -99,7 +99,7 @@ class Controller extends Object {
 
             return $paramArray;
         } else
-            return FALSE;
+            return false;
     }
 
     /**
