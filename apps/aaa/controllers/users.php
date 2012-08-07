@@ -14,10 +14,7 @@ class users extends MeicanController {
 
     public $modelClass = 'user_info';
     
-    public function users() {
-        $this->app = 'aaa';
-        $this->controller = 'users';
-        $this->defaultAction = 'show';
+    public function beforeFilter(){
         $this->addScriptForLayout(array('select'));
     }
 

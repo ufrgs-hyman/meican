@@ -3,13 +3,7 @@
 include_once 'libs/controller.php';
 
 class ode extends Controller {
-
-    function ode() {
-        $this->app = 'bpm';
-        $this->controller = 'ode';
-        $this->defaultAction = 'show';
-        $this->ode_ip = "localhost:8080";
-    }
+    public $ode_ip = "localhost:8080";
 
     function show() {
         try {

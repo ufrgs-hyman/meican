@@ -15,12 +15,6 @@ class groups extends MeicanController {
 
     public $modelClass = 'group_info';
 
-    public function groups() {
-        $this->app = 'aaa';
-        $this->controller = 'groups';
-        $this->defaultAction = 'show';
-    }
-
     protected function renderEmpty(){
         $this->set(array(
             'title' => _("User Groups"),

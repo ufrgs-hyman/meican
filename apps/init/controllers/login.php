@@ -8,12 +8,6 @@ include_once 'apps/aaa/models/user_info.php';
 
 class login extends Controller {
 
-    public function login() {
-        $this->app = 'init';
-        $this->controller = 'login';
-        $this->defaultAction = 'show';
-    }
-
     public function show($message = NULL) {
         if ($message){
             $this->set(compact('message'));

@@ -26,11 +26,8 @@ include_once 'apps/topology/models/urn_info.php';
 class acl extends MeicanController {
 
     public $modelClass = 'aros_acos';
-
-    public function acl() {
-        $this->app = 'aaa';
-        $this->controller = 'acl';
-        $this->defaultAction = 'show';
+    
+    public function beforeFilter(){
         $this->addScriptForLayout(array('acl'));
     }
 

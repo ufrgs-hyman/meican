@@ -9,12 +9,6 @@ include_once 'apps/aaa/models/user_info.php';
 
 class info_box extends Controller {
 
-    public function info_box() {
-        $this->app = 'init';
-        $this->controller = 'info_box';
-        $this->defaultAction = 'show';
-    }
-
     public function show() {
         $args = new stdClass();
         $args->usr_login = AuthSystem::getUserLogin();
@@ -59,5 +53,3 @@ class info_box extends Controller {
     }
 
 }
-
-?>

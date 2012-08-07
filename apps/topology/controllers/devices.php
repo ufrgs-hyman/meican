@@ -17,10 +17,7 @@ class devices extends MeicanController {
 
     public $modelClass = 'device_info';
 
-    public function devices() {
-        $this->app = 'topology';
-        $this->controller = 'devices';
-        $this->defaultAction = 'show';
+    public function beforeFilter(){
         $this->addScriptForLayout(array('devices'));
     }
 

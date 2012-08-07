@@ -13,10 +13,7 @@ class networks extends MeicanController {
 
     public $modelClass = 'network_info';
 
-    public function networks() {
-        $this->app = 'topology';
-        $this->controller = 'networks';
-        $this->defaultAction = 'show';
+    public function beforeFilter(){
         $this->addScriptForLayout(array('networks'));
     }
 

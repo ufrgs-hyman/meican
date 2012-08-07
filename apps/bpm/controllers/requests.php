@@ -15,12 +15,6 @@ class requests extends MeicanController {
 
     public $modelClass = 'request_info';
 
-    public function requests() {
-        $this->app = 'bpm';
-        $this->controller = 'requests';
-        $this->defaultAction = 'show';
-    }
-
     protected function renderEmpty() {
         $this->set(array(
             'title' => _("Requests"),

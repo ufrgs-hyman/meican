@@ -9,11 +9,8 @@ include_once 'libs/acl_loader.php';
 
 class gui extends Controller {
 
-    public function gui() {
-        $this->app = 'init';
-        $this->controller = 'gui';
-        $this->defaultAction = 'welcome';
-    }
+    
+    protected $defaultAction = 'welcome';
 
     public function show() {
         Common::destroySessionVariable('scripts');

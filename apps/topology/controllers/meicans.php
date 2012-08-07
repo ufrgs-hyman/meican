@@ -9,12 +9,6 @@ class meicans extends MeicanController {
 
     public $modelClass = 'meican_info';
 
-    public function meicans() {
-        $this->app = 'topology';
-        $this->controller = 'meicans';
-        $this->defaultAction = 'show';
-    }
-
     protected function renderEmpty(){
         $this->set(array(
             'title' => _("MEICANs"),

@@ -14,10 +14,7 @@ class urns extends MeicanController {
 
     public $modelClass = 'domain_info';
 
-    public function urns() {
-        $this->app = 'topology';
-        $this->controller = 'urns';
-        $this->defaultAction = 'show';
+    public function beforeFilter(){
         $this->addScriptForLayout(array('urns'));
     }
 

@@ -27,6 +27,10 @@ class Controller extends Object {
         parent::__construct();
     }
 
+    function beforeFilter(){
+        
+    }
+    
     public function render($action=null, $params = array()) {
         if (empty($action))
             $action = $this->action;
@@ -46,6 +50,7 @@ class Controller extends Object {
     }
 
     public function isAjax() {
+        debug($this->request->isAjax());
         return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
     }
 

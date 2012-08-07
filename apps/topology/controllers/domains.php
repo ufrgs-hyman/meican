@@ -9,10 +9,7 @@ class domains extends MeicanController {
 
     public $modelClass = 'domain_info';
 
-    public function domains() {
-        $this->app = 'topology';
-        $this->controller = 'domains';
-        $this->defaultAction = 'show';
+    public function beforeFilter(){
         $this->addScriptForLayout(array('domains'));
     }
 
