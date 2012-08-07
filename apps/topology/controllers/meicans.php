@@ -129,9 +129,10 @@ class meicans extends MeicanController {
                 $result = $tmp[0];
                 if ($meican->delete())
                     $this->setFlash(_("MEICAN") . " '$result->meican_descr' " . _("deleted"), 'success');
+                else
+                    $this->setFlash(_("Error"), 'error');
             }
         }
-
         $this->show();
     }
     
