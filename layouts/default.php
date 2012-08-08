@@ -57,9 +57,7 @@
         <div class="fade-overlay" id="MainOverlay"> </div>
         <div id="left-panel">
             <div id="logo">
-                <p>
-                    <img src="<?php echo $this->url(''); ?>webroot/img/meican_branco.png" class="logo" alt="MEICAN"/>
-                </p>
+            	<img src="<?php echo $this->url(''); ?>webroot/img/meican_branco.png" class="logo" alt="MEICAN"/>
             </div>
             <?php echo $this->element('menu', array('app' => 'init')); ?>
             <div id="system_date">
