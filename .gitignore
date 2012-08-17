@@ -7,3 +7,7 @@ config/local.php
 .DS_Store
 
 webroot/img/meican_white (cópia).png
+
+apps/circuits/views/reservations_add.php
+
+libs/nuSOAP/samples/client1.php

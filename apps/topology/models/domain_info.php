@@ -66,9 +66,9 @@ class domain_info extends Resource_Model {
 	**/
 	public function getDomVersion()
 	{
-		$tmp = $this->fetch();
-		return $tmp["dom_version"];
-		//return $tmp[10];
+		$tmp = $this->get("dom_version");
+		
+		return $tmp;
 	}
 
 }

@@ -6,6 +6,7 @@ include_once 'apps/topology/models/device_info.php';
 include_once 'apps/topology/models/urn_info.php';
 
 include_once 'apps/circuits/models/oscars_reservation.php';
+include_once 'apps/circuits/models/OSCARSVersionTester.php';
 
 class MeicanTopology {
     
@@ -17,14 +18,18 @@ class MeicanTopology {
         $domain_info = new domain_info();
         $domain_info->dom_id = $dom_id;
 
-        if ($domain = $domain_info->fetch()) {
+        if ($domain = $domain_info->fetch()) 
+		{
             $dom = $domain[0];
             
             // $os = new OSCARSReservation();					// OLD DESIGN
             $versTest = new OSCARSVersionTester($domain_info->getDomVersion());	// Added by Jeremy
             $os = $versTest->checkVersion();					// NEW DESIGN -- Added by Jeremy
 			
+			$os->getVersion();
+						
             $os->setOscarsUrl($dom->idc_url);
+			$os->setDomainID($dom->topology_id);
 
             if ($os->getUrns()) {
 

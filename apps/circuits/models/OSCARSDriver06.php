@@ -1,5 +1,7 @@
 <?php
 
+include_once 'OSCARSDriver.php';
+
 /**
 * Driver class to operate with OSCARS v0.6 ONLY!!
 * - For OSCARS v0.5.3 and v0.5.4 functionality, refer to OSCARSDriver05 class.
@@ -14,6 +16,7 @@ class OSCARSDriver06 extends OSCARSDriver
     * The following variables are inherited (concrete) from parent class:
 	* ------------------------------------------------------------------
     * protected $oscarsUrl;
+	* protected $topoBridgeUrl;
     * protected $gri;
     * protected $description;
     * protected $srcEndpoint;
@@ -33,6 +36,7 @@ class OSCARSDriver06 extends OSCARSDriver
     * protected $grisString;		// Used for call to listReservations()
     * protected $statusArray = Array();
     * public $urns = Array();
+	* protected $domainID;
 	**/
 	
     /**
@@ -41,15 +45,15 @@ class OSCARSDriver06 extends OSCARSDriver
     function OSCARSDriver06() 
 	{
         $this->path = "null";
-        $this->startTimestamp = 132412312;
-        $this->endTimestamp = 1232131322;
+        $this->startTimestamp = time();
+        $this->endTimestamp = time() + 3600;
         $this->srcIsTagged = "true";
         $this->srcTag = "any";
         $this->destIsTagged = "true";
         $this->destTag = "any";
-        $this->pathSetupMode = "xml-signal";
+        $this->pathSetupMode = "signal-xml";
         $this->description = "Reservation from MEICAN";
-        $this->bandwidth = 100;
+        $this->bandwidth = 0;
         $this->version = "0.6";
     }
 
@@ -58,9 +62,12 @@ class OSCARSDriver06 extends OSCARSDriver
     * The following functions are inherited (concrete) from parent class:
 	* ------------------------------------------------------------------
     *   public function setOscarsUrl($idc_url)
+	*	public function setDomainID($domain)
+	*	public function getDomainID()
 	*   public function setGri($gri) 
 	*   public function getGri() 
 	*   public function setDescription($description) 
+	*   public function getDescription() 	
 	*   public function setSrcEndpoint($srcEndpoint) 
 	*   public function setDestEndpoint($destEndpoint) 
 	*   public function setBandwidth($bandwidth)
@@ -73,12 +80,14 @@ class OSCARSDriver06 extends OSCARSDriver
 	*   public function setDestIsTagged($isTagged)
 	*   public function setDestTag($vlan)
 	*   public function setStatus($status) 
+	*	public function getBandwidth() 
 	*   public function getStatus() 
 	*   public function getStatusArray() 
 	*   public function getStartTimestamp() 
 	*   public function getEndTimestamp()
 	*   public function setLogin($login) 
 	*   public function setPathSetupMode($psm)
+	*	public function getPathSetupMode()
 	*   public function setRequestTime($date) 
 	*   public function setGrisString($gris) 
 	*   public function checkOscarsUrl() 
@@ -86,34 +95,16 @@ class OSCARSDriver06 extends OSCARSDriver
 	*   protected function setGriStatus($result)
     **/
 
-	// This overrides parent's abstract method. Returns TRUE if this is OSCARS version 0.5
-    public function checkVersion() 
-	{
-        switch ($this->version) 
-		{
-			case "0.6":
-                return true;
- 			case "0.5.3":
-	        case "0.5.4":           
-            default:
-                return $this->error(sprintf("Versão %s não suportada", $this->version));
-        }
-    }
-
 	/** 
 	* @Override parent abstract function.
 	*
-	* Packages data to be sent by OSCARS calls to reduce parameter passing.
-	* - Called by most of the OSCARS calls for dynamic array building.
-	* @param array $params, array of arguments to merge with oscars_url
+	* NOT USED IN THIS CLASS
 	**/
 	protected function makeEnvelope($params = array()) 
 	{
-        //return array_merge(array('oscars_url' => $this->oscarsUrl), $params);
-		return $params;
-		
 		// DELETE THIS AND REMOVE ABSTRACTION IN OSCARSDRIVER.php
     }
+
 
     /**
     * @Override parent abstract function.
@@ -126,17 +117,7 @@ class OSCARSDriver06 extends OSCARSDriver
     * return an array of results
     **/
     protected function callBridge($method, $envelope) 
-	{
-        Log::write("debug", print_r($method,TRUE));
-        
-		/* To replace the below, working code for a PHP-only bridge *
-		$phpBridge = new OscarsBridge($method, $envelope);
-		
-		$responseFromBridge = $phpBridge->getOSCARSResponse();
-
-		return $responseFromBridge;
-		*/
-		
+	{        		
 		try 
 		{
             $wsdl = Configure::read('OSCARSBridgeEPRv6');
@@ -147,13 +128,18 @@ class OSCARSDriver06 extends OSCARSDriver
 
             $client = new SoapClient($wsdl, array('trace' => 1,
                         						  'cache_wsdl' => WSDL_CACHE_NONE,
-                        						  'exceptions' => true
+                        						  'exceptions' => true,
+												  'encoding' => 'UTF-8'
 												 )
-									);
-									
-			$result = $client->__soapCall("buildBridge", array('oscars_url' => $this->oscarsUrl));	//One method to set up client connection
-            $result = $client->__soapCall($method, array($envelope));
-            Log::write("debug", print_r($result,TRUE));
+									);		
+
+			if($method != "getTopology")
+			{
+				$params = array('oscarsUrl' => $this->oscarsUrl);
+				$result = $client->buildBridge($params);
+			}
+			
+            $result = $client->$method($envelope);
 
             if (is_string($result->return)) 
 			{
@@ -175,7 +161,7 @@ class OSCARSDriver06 extends OSCARSDriver
 		catch (SoapFault $e) 
 		{
             return $this->error("Caught SoapFault: " . $e->getMessage());
-        }*/
+        }
     }
 
 	/**********************************************************************************************
@@ -193,7 +179,7 @@ class OSCARSDriver06 extends OSCARSDriver
     * @return true, if OSCARS SOAP status for create = OK, Error otherwise.
     **/
     function createReservation() 
-	{
+	{	      		
         if (!(isset($this->srcEndpoint) && isset($this->destEndpoint) && isset($this->startTimestamp) && isset($this->endTimestamp))) 
 		{
             return $this->error("insufficient parameters for createreservation");
@@ -205,11 +191,11 @@ class OSCARSDriver06 extends OSCARSDriver
 		else if (!$result = $this->callBridge(
                 'createReservation', array(
                     'description' => $this->description,
-                    'srcUrn' => $this->srcEndpoint,
-                    'isSrcTagged' => $this->srcIsTagged,
+                    'srcEndpoint' => $this->srcEndpoint,
+                    'srcIsTagged' => $this->srcIsTagged,
                     'srcTag' => $this->srcTag,
-                    'destUrn' => $this->destEndpoint,
-                    'isDestTagged' => $this->destIsTagged,
+                    'destEndpoint' => $this->destEndpoint,
+                    'destIsTagged' => $this->destIsTagged,
                     'destTag' => $this->destTag,
                     'path' => $this->path,
                     'bandwidth' => $this->bandwidth,
@@ -221,9 +207,8 @@ class OSCARSDriver06 extends OSCARSDriver
             return $this->error("Error to create reservation. Result:\n".print_r($result,true));
         } 
 		else 
-		{
-            Log::write("debug","Create reservation result:\n".print_r($result,true));
-            return $this->setGriStatus($result);
+		{		
+			return $this->setGriStatus($result);
         }
     }
 
@@ -282,7 +267,7 @@ class OSCARSDriver06 extends OSCARSDriver
     * @return true, if OSCARS SOAP status for modify = OK, Error otherwise.
     **/
     function modifyReservation() 
-	{
+	{	
         if (!(isset($this->startTimestamp) && isset($this->endTimestamp))) 
 		{
             return $this->error("insufficient parameters for modifyReservation");
@@ -291,7 +276,7 @@ class OSCARSDriver06 extends OSCARSDriver
 		{
             return;
         } 
-		else if (!$result = $this->callBridge('modifyReservation', array('oscars_url' => $this->oscarsUrl,
+		else if (!$result = $this->callBridge('modifyReservation', array('gri' => $this->gri,
                     													'startTimestamp' => $this->startTimestamp,
                     													'endTimestamp' => $this->endTimestamp)))
 		{
@@ -342,6 +327,8 @@ class OSCARSDriver06 extends OSCARSDriver
     **/
     function listReservations() 
 	{
+		error_log("LIST IN LIST: \n" . print_r($this->grisString, true));
+		
         if (!$this->checkOscarsUrl()) 
 		{
             return;
@@ -354,6 +341,8 @@ class OSCARSDriver06 extends OSCARSDriver
 		{
             foreach ($result->return as $r)
                 $this->statusArray[] = $r;
+
+			error_log("STATUS ARRAY: \n" . print_r($this->statusArray, true));
 
             return true;
         }
@@ -369,7 +358,7 @@ class OSCARSDriver06 extends OSCARSDriver
     * @return true, if OSCARS SOAP status for createPath = OK, false otherwise.
     **/
     function createPath() 
-	{
+	{	
         if (!$this->checkOscarsUrl()) 
 		{
             return;
@@ -393,7 +382,7 @@ class OSCARSDriver06 extends OSCARSDriver
     * @return true, if OSCARS SOAP status for teardownPath = OK, false otherwise.
     **/
     function teardownPath() 
-	{
+	{		
         if (!$this->checkOscarsUrl()) 
 		{
             return;
@@ -409,11 +398,86 @@ class OSCARSDriver06 extends OSCARSDriver
     }
 
 
-	/**
-    * These functions are NOT supported in OSCARSv0.6 -- Should not create issues
+    /**
+    * @Override parent abstract function.
+    * 
+    * Retrieve all elements of OSCARS topology as a single String
+    * - Tells callBridge to call the SOAP method getTopology()
+    * @return true, if OSCARS SOAP status for getTopology = OK, false otherwise.
     **/
-    function getTopology(){ return $this->error("getTopology() is NOT supported in your version of OSCARS!"); }
-    function getUrns(){	 }
+    function getTopology()
+	{
+        if (!$this->checkOscarsUrl() || !$this->domainID) 
+		{
+            return;
+        }
+
+		// Set topoBridge URL based on OSCARS URL (ASSUMES THEY ARE ON THE SAME MACHINE USING DEFAULT PORTS!) //
+		$parsedURL = explode(":", $this->oscarsUrl);
+		$this->topoBridgeUrl = $parsedURL[0] . ":" . $parsedURL[1] . ":9019/topoBridge";
+		 		
+		if (!$result = $this->callBridge('getTopology', array("topoBridge_url" => $this->topoBridgeUrl, "topologyID" => $this->domainID)))
+		{
+            return false;
+		}
+        else 
+		{
+            $this->topology = $result->return;
+
+            return true;
+        }
+    }
+    
+    /**
+    * @Override parent abstract function.
+    * 
+    * Parse specific URNs from the OSCARS topology
+    * - Tells callBridge to call the SOAP method getTopology()
+    * - Parses the result of getTopology() call and stores its components into a urn object 
+    * - Pushes each urn object onto the $urns global array
+    * @return true, if OSCARS SOAP status for getTopology = OK, false otherwise.
+    * **/
+    function getUrns() 
+    {
+        if (!$this->getTopology())
+        {
+			return false;
+        }
+        else 
+        {
+            foreach ($this->topology as $i) 
+            {
+                if ($array = explode(" ", $i)) 
+                {
+                    //0- linkId
+                    //1- remoteLinkId		-- not used here?
+                    //2- capacidade
+                    //3- granularidade
+                    //4- capacidade mínima reservável
+                    //5- capacidade máxima reservável
+                    //6- vlan range
+
+					$link_regEx = "/urn:ogf:network:domain=\S+:node=\S+:port=\S+:link=\S+/";
+ 
+					if(preg_match($link_regEx, $array[0]))		//urn:ogf:network:domain=*:node=*:port=*:link=*
+                    {
+                       //é urn de ponto final
+                        $urn = new stdClass();
+                        $urn->id = $array[0];
+                        $urn->capacity = $array[2];
+                        $urn->granularity = $array[3];
+                        $urn->minimumReservable = $array[4];
+                        $urn->maximumReservable = $array[5];
+                        $urn->vlanRange = $array[6];
+                        $this->urns[] = $urn;
+                    }
+                }
+            }
+
+            return true;
+        }
+    }
+
     function refreshPath(){ return $this->error("refreshPath() is NOT supported in your version of OSCARS!"); }
 
 }

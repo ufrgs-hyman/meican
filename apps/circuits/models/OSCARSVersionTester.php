@@ -1,5 +1,8 @@
 <?php
 
+include_once 'apps/circuits/models/OSCARSDriver05.php';
+include_once 'apps/circuits/models/OSCARSDriver06.php';
+
 /**
 * - Simple class used to elevate the level of OSCARS version inspection. This class has one method which returns an object of type OSCARSDriver05 or 
 *   OSCARSDriver06 as appropriate to the OSCARS version in use. 

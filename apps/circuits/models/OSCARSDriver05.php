@@ -1,5 +1,7 @@
 <?php
 
+include_once 'OSCARSDriver.php';
+
 /**
 * Driver class to operate with OSCARS v0.5.3 and v0.5.4 ONLY!!
 * - For OSCARS v0.6 functionality, refer to OSCARSDriver06 class.
@@ -14,6 +16,7 @@ class OSCARSDriver05 extends OSCARSDriver
     * The following variables are inherited (concrete) from parent class:
     * ------------------------------------------------------------------
     * protected $oscarsUrl;
+	* protected $topoBridgeUrl;		// USED ONLY FOR v0.6
     * protected $gri;
     * protected $description;
     * protected $srcEndpoint;
@@ -33,6 +36,7 @@ class OSCARSDriver05 extends OSCARSDriver
     * protected $grisString;		// Used for call to listReservations()
     * protected $statusArray = Array();
     * public $urns = Array();
+	* protected $domainID;			// USED ONLY FOR v0.6
     **/
 	
     /**
@@ -54,36 +58,42 @@ class OSCARSDriver05 extends OSCARSDriver
     }
 
     /**
-    * ------------------------------------------------------------------
+	* ------------------------------------------------------------------
     * The following functions are inherited (concrete) from parent class:
-    * ------------------------------------------------------------------
+	* ------------------------------------------------------------------
     *   public function setOscarsUrl($idc_url)
-    * 	public function setGri($gri)
-    * 	public function getGri()
-    * 	public function setDescription($description)
-    * 	public function setSrcEndpoint($srcEndpoint)
-    * 	public function setDestEndpoint($destEndpoint)
-    * 	public function setBandwidth($bandwidth)
-    * 	public function setStartTimestamp($startTimestamp)
-    * 	public function setEndTimestamp($endTimestamp)
-    * 	public function setPath($path)
-    * 	public function getPath()
-    * 	public function setSrcIsTagged($isTagged)
-    * 	public function setSrcTag($vlan)
-    * 	public function setDestIsTagged($isTagged)
-    * 	public function setDestTag($vlan)
-    * 	public function setStatus($status)
-    * 	public function getStatus()
-    * 	public function getStatusArray()
-    * 	public function getStartTimestamp()
-    * 	public function getEndTimestamp()
-    * 	public function setLogin($login)
-    * 	public function setPathSetupMode($psm)
-    * 	public function setRequestTime($date)
-    * 	public function setGrisString($gris)
-    * 	public function checkOscarsUrl()
-    * 	protected function error($error)
-    * 	protected function setGriStatus($result)
+	*	public function setDomainID($domain)
+	*	public function getDomainID()
+	*   public function setGri($gri) 
+	*   public function getGri() 
+	*   public function setDescription($description) 
+	*   public function getDescription() 	
+	*   public function setSrcEndpoint($srcEndpoint) 
+	*   public function setDestEndpoint($destEndpoint) 
+	*   public function setBandwidth($bandwidth)
+	*   public function setStartTimestamp($startTimestamp) 
+	*   public function setEndTimestamp($endTimestamp) 
+	*   public function setPath($path)
+	*   public function getPath() 
+	*   public function setSrcIsTagged($isTagged) 
+	*   public function setSrcTag($vlan) 
+	*   public function setDestIsTagged($isTagged)
+	*   public function setDestTag($vlan)
+	*   public function setStatus($status) 
+	*	public function getBandwidth() 
+	*   public function getStatus() 
+	*   public function getStatusArray() 
+	*   public function getStartTimestamp() 
+	*   public function getEndTimestamp()
+	*   public function setLogin($login) 
+	*   public function setPathSetupMode($psm)
+	*	public function getPathSetupMode()
+	*   public function setRequestTime($date) 
+	*   public function setGrisString($gris) 
+	*   public function checkOscarsUrl() 
+    *   protected function error($error)
+	*   protected function setGriStatus($result)
+    *	protected function setGriStatus($result)
     **/
     
     

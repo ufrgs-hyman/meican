@@ -46,8 +46,7 @@ return array(
      * OSCARS Bridge configuration -> it must refers to the WSDL
      */
     "OSCARSBridgeEPR" => 'http://localhost:8080/axis2/services/OSCARSBridge?wsdl',
-	//"OSCARSBridgeEPRv6" => 'http://localhost:9001/OSCARS?wsdl',				//For OSCARS v0.6
-	"OSCARSBridgeEPRv6" => 'http://localhost:8080/OSCARSBridgeV6?wsdl',				//For OSCARS v0.6
+	"OSCARSBridgeEPRv6" => 'http://localhost:8082/OSCARSBridgeV6?wsdl',				//For OSCARS v0.6
 
     
     'MapsAPIKey' => "",

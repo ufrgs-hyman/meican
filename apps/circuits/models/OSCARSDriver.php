@@ -13,6 +13,7 @@ abstract class OSCARSDriver {
 	* GLOBAL VARIABLES -- Inherited by ALL concrete children.
 	**********************************************************************************************/	
     protected $oscarsUrl;
+	protected $topoBridgeUrl;
     protected $gri;
     protected $description;
     protected $srcEndpoint;
@@ -32,6 +33,7 @@ abstract class OSCARSDriver {
     protected $grisString;		// Used for call to listReservations()
     protected $statusArray = Array();
     public $urns = Array();
+	protected $domainID;
     
     /**********************************************************************************************
     * GETTERS and SETTER functions -- Inherited by ALL concrete children.
@@ -40,6 +42,16 @@ abstract class OSCARSDriver {
     {
         $this->oscarsUrl = $idc_url;
     }
+
+	public function setDomainID($domain)
+	{
+		$this->domainID = $domain;
+	}
+	
+	public function getDomainID()
+	{
+		return $this->domainID;
+	}
 
     public function setGri($gri) 
     {
@@ -54,6 +66,11 @@ abstract class OSCARSDriver {
     public function setDescription($description) 
     {
         $this->description = $description;
+    }
+
+    public function getDescription() 
+    {
+        return $this->description;
     }
 
     public function setSrcEndpoint($srcEndpoint) 
@@ -122,6 +139,11 @@ abstract class OSCARSDriver {
         $this->status = $status;
     }
 
+	public function getBandwidth() 
+    {
+        return $this->bandwidth;
+    }
+
     public function getStatus() 
     {
         return $this->status;
@@ -150,6 +172,11 @@ abstract class OSCARSDriver {
     public function setPathSetupMode($psm) 
     {
         $this->pathSetupMode = $psm;
+    }
+
+	public function getPathSetupMode() 
+    {
+        return $this->pathSetupMode;
     }
 
     public function setRequestTime($date) 
@@ -183,6 +210,11 @@ abstract class OSCARSDriver {
         Log::write('error', "OSCARSDriver: " . $error);
         return false;
     }
+
+	public function getVersion()
+	{
+		return $this->version;
+	}
     
     /**********************************************************************************************
     * ABSTRACT FUNCTIONS -- Concrete implementations exist for each version of OSCARS
