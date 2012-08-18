@@ -308,11 +308,12 @@ class reservation_info extends Resource_Model {
 
             $response = FALSE;
             $cont = 0;
+            $nr_attempts = 2;
 
             CakeLog::write("circuits", "Getting GRI path:\n" . print_r(array("OSCARS URL" => $domain[0]->idc_url, "GRI" => $gri[0]->gri_descr), TRUE));
 
 
-            while (!$response && $cont < 15) {
+            while (!$response && $cont < $nr_attempts) {
                 if ($oscars->queryReservation()) {
                     $status = $oscars->getStatus();
                     if (($status == "PENDING") || ($status == "ACTIVE") || ($status == "FINISHED") || ($status == "FAILED") || ($status == "CANCELLED")) {

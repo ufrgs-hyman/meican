@@ -1049,7 +1049,7 @@ class reservations extends Controller {
         $domain = new domain_info();
         $dst_dom = $domain->getOSCARSDomain($dst_urn_string);
 
-        if ($resSent && $src_dom->ode_ip && $src_dom->ode_wsdl_path && $src_dom->ode_start && $dst_dom->ode_ip) {
+        if ($resSent && $src_dom->ode_ip && $src_dom->ode_wsdl_path && $src_dom->ode_start) {
             //cria nova request com o domínio $src_dom
             $newReq = new request_info();
             
