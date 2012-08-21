@@ -62,6 +62,7 @@ class urns extends MeicanController {
             ));
 
             $this->setInlineScript('urns_init');
+            $this->setInlineScript('urns');
         }
     }
     
