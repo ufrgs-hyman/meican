@@ -582,8 +582,8 @@ class reservations extends Controller {
         // arg timer
         $args->start_date = date($dateFormat);
         $args->finish_date = date($dateFormat);
-        $args->start_time = date($hourFormat, (time() + 2 * 60));
-        $args->finish_time = date($hourFormat, (time() + 4 * 60));
+        $args->start_time = date($hourFormat, (time() + 30 * 60));
+        $args->finish_time = date($hourFormat, (time() + 90 * 60));
 
         $this->setArgsToBody($args);
         // -----------------------------------------------------------------------------
