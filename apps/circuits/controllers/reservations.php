@@ -919,7 +919,7 @@ class reservations extends Controller {
             $oscarsRes->setOscarsUrl($flw->source->idc_url);
             $oscarsRes->setGri($g->gri_descr);
             $oscarsRes->queryReservation();
-                        error_log("JUST QUERIED " . $g->gri_descr . ", STATUS = " . $oscarsRes->getStatus());
+
             unset($oscarsRes);
         }
     }
