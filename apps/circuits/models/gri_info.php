@@ -189,6 +189,12 @@ class gri_info extends Model {
             case "INCREATE":
                 $status = _("In create");
                 break;
+            case "INPATHCALCULATION":
+                $status = _("In path calculation");
+                break;
+            case "INCOMMIT":
+                $status = _("In commit");
+                break;
             case "INSETUP":
                 $status = _("In setup");
                 break;

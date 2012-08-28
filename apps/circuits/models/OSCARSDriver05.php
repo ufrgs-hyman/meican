@@ -289,7 +289,7 @@ class OSCARSDriver05 extends OSCARSDriver
     /**
     * @Override parent abstract function.
     * 
-    * Cancel active/reserved reservation in OSCARS
+    * Cancel active/pending reservation in OSCARS
     * - Tells callBridge to call the SOAP method cancelReservation()
     * - Passes in appropriate global request parameters after enveloping them together
     * @return true, if OSCARS SOAP status for cancel = OK, Error otherwise.

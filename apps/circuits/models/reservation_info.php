@@ -266,10 +266,10 @@ class reservation_info extends Resource_Model {
         else {
             if (!$this->res_id)
                 return FALSE;
-            
+
             $flow_info->flw_id = $this->get('flw_id',false);
         }
-            
+
         $path = null;
         if (isset($flow_info->flw_id))
             $path = $flow_info->get('path', false);
@@ -311,11 +311,11 @@ class reservation_info extends Resource_Model {
 
             Log::write("circuits", "Getting GRI path:\n" . print_r(array("OSCARS URL" => $domain[0]->idc_url, "GRI" => $gri[0]->gri_descr), TRUE));
 
-
             while (!$response && $cont < 15) {
                 if ($oscars->queryReservation()) {
                     $status = $oscars->getStatus();
-                    if (($status == "PENDING") || ($status == "ACTIVE") || ($status == "FINISHED") || ($status == "FAILED") || ($status == "CANCELLED")) {
+
+                    if (($status == "PENDING") || ($status == "ACTIVE") || ($status == "FINISHED") || ($status == "FAILED") || ($status == "CANCELLED")){
                         if ($pathArray = explode(";", $oscars->getPath())) {
                             $pathArray = array_filter($pathArray, 'strlen');
                             Log::write("circuits", "Get path sucessful. Complete path:\n" . print_r($pathArray, TRUE));

@@ -179,7 +179,7 @@ class OSCARSDriver06 extends OSCARSDriver
     * @return true, if OSCARS SOAP status for create = OK, Error otherwise.
     **/
     function createReservation() 
-	{	      		
+	{	 	     		
         if (!(isset($this->srcEndpoint) && isset($this->destEndpoint) && isset($this->startTimestamp) && isset($this->endTimestamp))) 
 		{
             return $this->error("insufficient parameters for createreservation");
@@ -187,7 +187,7 @@ class OSCARSDriver06 extends OSCARSDriver
 		else if (!$this->checkOscarsUrl()) 
 		{
             return false;
-        } 
+        }
 		else if (!$result = $this->callBridge(
                 'createReservation', array(
                     'description' => $this->description,
@@ -254,6 +254,11 @@ class OSCARSDriver06 extends OSCARSDriver
             $this->setPath($result->return[15]);
             Log::write('debug', "Query reservation return:\n" . print_r($result->return, true));
 
+            // MEICAN expects the v0.5 status "PENDING", but v0.6 returns "RESERVED". Rather than modifying several pieces of code, a simple translation here yields the same behavior as v0.5-compatible MEICAN //
+            if($this->getStatus() == "RESERVED")
+            {
+                $this->setStatus("PENDING");
+            }
             return true;
         }
     }
@@ -326,9 +331,7 @@ class OSCARSDriver06 extends OSCARSDriver
     * @return true, if OSCARS SOAP status for list = OK, false otherwise.
     **/
     function listReservations() 
-	{
-		error_log("LIST IN LIST: \n" . print_r($this->grisString, true));
-		
+	{		
         if (!$this->checkOscarsUrl()) 
 		{
             return;
@@ -340,9 +343,13 @@ class OSCARSDriver06 extends OSCARSDriver
         else 
 		{
             foreach ($result->return as $r)
+            {
+                // MEICAN expects the v0.5 status "PENDING", but v0.6 returns "RESERVED". Rather than modifying several pieces of code, a simple translation here yields the same behavior as v0.5-compatible MEICAN //
+                if($r == "RESERVED")
+                    $r = "PENDING";
+                
                 $this->statusArray[] = $r;
-
-			error_log("STATUS ARRAY: \n" . print_r($this->statusArray, true));
+            }
 
             return true;
         }

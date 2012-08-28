@@ -58,6 +58,12 @@ function checkStatus(index, status) {
             });
             $('#cancel' + index).removeAttr("disabled");
             break;
+        case "PENDING":
+            // pinta a linha de azul
+            $('#line' + index).css( {
+                'background' : '#46DFFF'
+            });
+            break;
         // do nothing in these cases
         case "FINISHED":
         case "CANCELLED":

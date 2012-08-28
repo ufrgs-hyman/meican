@@ -102,6 +102,7 @@ class flow_info extends Resource_Model {
 //            $urnDetailsRet = $ws->call('getURNDetails', array($flow->src_urn_string));
 
             $urnDetailsRet = MeicanTopology::getURNDetails(NULL, $flow->src_urn_string);
+
             $flowData = new stdClass();
 
             $flowData->id = $flow->flw_id;
@@ -143,6 +144,7 @@ class flow_info extends Resource_Model {
 //            $urnDetailsRet = $ws->call('getURNDetails', array($flow->dst_urn_string));
 
             $urnDetailsRet = MeicanTopology::getURNDetails(NULL, $flow->dst_urn_string);
+
 //            $flowData->dest->domain = $dom[0]->dom_descr;
 //            $flowData->dest->dom_id = $dom[0]->dom_id;
 //            $flowData->dest->oscars_ip = $dom[0]->oscars_ip;

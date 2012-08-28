@@ -88,7 +88,7 @@ function validateReservationForm() {
         $('#res_name').focus();
         return false;
     }
-    
+        
     if (validateEndpoints() && validateBand($('#bandwidth').val()) && validateTimer()) {
         if ($("#src_vlanText").val() == "any") {
             $("#src_vlanText").val("");
@@ -106,6 +106,7 @@ function validateReservationForm() {
     } else {
         js_submit_form = false;
         $('#res_name').focus();
+        setFlash("Request FAILED!", "error");
         return false;
     }
         
@@ -1127,6 +1128,10 @@ function enableBandwidthSpinner() {
         var bmax_tmp = (src_max_cap <= dst_max_cap) ? src_max_cap : dst_max_cap;
         var bdiv_tmp = (src_div_cap == dst_div_cap) ? src_div_cap : band_div;
         
+        band_min = bmin_tmp;
+        band_max = bmax_tmp;
+        band_div = bdiv_tmp;
+        
         $('#bandwidth').spinner({min: bmin_tmp, max: bmax_tmp, step: bdiv_tmp}).spinner("enable").disabled(false).trigger('click');
         $('#bandwidth_un').disabled(false);
         $("#bandwidth").val(bmin_tmp);
@@ -1142,7 +1147,7 @@ function map_getUrnData(where) {
 
     var ports = map_getPorts($(domain_id).html(), $(network_id).html(), $(device_id).val());
     var urnData = null;
-
+    
     for (var i=0; ports.length; i++) {
         if (ports[i].port_number == $(port_id).val()) {
             urnData = ports[i];
@@ -1163,13 +1168,21 @@ function map_changeVlanType(elem, where) {
 
 function validateBand(band_value) {
     var band = band_value.replace(/ /g, "");
+    
+    //alert("BANDWIDTH = " + band_value + "\nMINIMUM = " + band_min + "\nMAXIMUM = " + band_max + "\nGRANULARITY = " + band_div);
+    
     if (band >= band_min && band <= band_max) {
         if (band % band_div == 0) {
             return band;
-        } else
+        } else{
+            setFlash("BANDWIDTH NOT VALIDATED", "error");
             return false;
+            }
     } else
+    {
+        setFlash("BANDWIDTH NOT VALIDATED", "error");
         return false;
+        }
 }
 
 
@@ -1725,7 +1738,7 @@ function validateBand(band_value) {
         $('#main').bind('pjax:start', finishfn);
 
         $('form#reservation_add').submit(validateReservationForm);
-        
+                
         /* quando digita nome, tira overlay */
         $('#res_name').bind('keyup change', function(){
             if ($(this).val())

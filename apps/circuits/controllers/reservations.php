@@ -158,7 +158,6 @@ class reservations extends Controller {
     }
 
     public function refresh_status() {
-
         $dom_id = Common::POST('dom_id');
         
         $gris = new gri_info();
@@ -271,13 +270,13 @@ class reservations extends Controller {
     }
 
     public function gri_refresh_status() {
-
         $res_id = Common::POST("res_id");
 
         $gri = new gri_info();
         $gri->res_id = $res_id;
         $gris = $gri->fetch(FALSE);
-        if ($gris) {
+        if ($gris) 
+        {
             $statusList = array();
 
             // testa se tem requisição, se tem, então mostra o status do ODE
@@ -291,18 +290,23 @@ class reservations extends Controller {
             $request = $req->fetch(false);
             //Log::write("debug","request".print_r($request,true));
 
-            if ($request && $request[0]->response != 'accept') {
+            if ($request && $request[0]->response != 'accept') 
+            {
                 // show request status
                 // a reserva possui requisição
-                foreach ($gris as $g) {
+                foreach ($gris as $g) 
+                {
                     $status_obj = new stdClass();
                     $status_obj->id = $g->gri_id;
 
-                    if ($request[0]->response == 'reject') {
+                    if ($request[0]->response == 'reject') 
+                    {
                         // reservation request was denied
                         $status_obj->status = gri_info::translateStatus('REJECTED');
                         $status_obj->original_status = 'REJECTED';
-                    } else {
+                    } 
+                    else 
+                    {
                         // reservation request is pending
                         $status = ($request[0]->status) ? $request[0]->status : "UNKNOWN";
                         $status_obj->status = gri_info::translateStatus($status);
@@ -311,7 +315,9 @@ class reservations extends Controller {
 
                     $statusList[] = $status_obj;
                 }
-            } else {
+            } 
+            else 
+            {
                 // show GRI status
                 // consulta o OSCARS
 
@@ -348,23 +354,25 @@ class reservations extends Controller {
                     if ($oscarsRes->listReservations()) {
                         $statusResult = $oscarsRes->getStatusArray();
                     } else {
-                        Log::write("error", "Fail to connect to OSCARS in refresh status");
+                        Log::write("error", "Failed to connect to OSCARS in refresh status");
                         return $this->renderJson(FALSE);
                     }
 
                     $ind = 0;
                     $cont = 0;
 
-                    foreach ($gris as $g) {
-                        if ($control[$ind]) {
+                    foreach ($gris as $g) 
+                    {
+                        if ($control[$ind]) 
+                        {
                             // se posição no control for TRUE, é porque atualizou o status
                             $newStatus = $statusResult[$cont];
                             $cont++;
 
                             // testa se status atual da GRI é diferente do status que retornou do OSCARS
-                            if ($g->status != $newStatus) {
+                            if ($g->status != $newStatus) 
+                            {
                                 $g->status = $newStatus;
-
                                 // atualiza o banco de dados com o novo status (retornado do OSCARS)
                                 $gri_tmp = new gri_info();
                                 $gri_tmp->gri_id = $g->gri_id;
@@ -574,8 +582,8 @@ class reservations extends Controller {
         // arg timer
         $args->start_date = date($dateFormat);
         $args->finish_date = date($dateFormat);
-        $args->start_time = date($hourFormat, (time() + 30 * 60));
-        $args->finish_time = date($hourFormat, (time() + 90 * 60));
+        $args->start_time = date($hourFormat, (time() + 2 * 60));
+        $args->finish_time = date($hourFormat, (time() + 4 * 60));
 
         $this->setArgsToBody($args);
         // -----------------------------------------------------------------------------
@@ -627,7 +635,7 @@ class reservations extends Controller {
             $reservation->creation_time = $res_diff_timestamp;
             $reservation->usr_id = AuthSystem::getUserId();
         } else {
-            $this->setFlash(_('Fail to save endpoints or timer on database'), 'error');
+            $this->setFlash(_('Failed to save endpoints or timer on database'), 'error');
             $this->show();
             return;
         }
@@ -663,7 +671,7 @@ class reservations extends Controller {
                     $res->delete();
                     $new_flow->delete();
                     $new_timer->delete();
-                    $this->setFlash(_('Error to send reservation to OSCARS'), 'error');
+                    $this->setFlash(_('Error sending reservation to OSCARS'), 'error');
                     $this->show();
                     return;
                     break;
@@ -679,7 +687,7 @@ class reservations extends Controller {
         } else {
             $new_flow->delete();
             $new_timer->delete();
-            $this->setFlash(_('Fail to save reservation on database'), 'error');
+            $this->setFlash(_('Failed to save reservation on database'), 'error');
             $this->show();
         }
     }
@@ -720,7 +728,7 @@ class reservations extends Controller {
         $usr_info = new user_info();
         $usr_info->usr_id = $reservation->usr_id;
         $usr_login = $usr_info->get('usr_login', FALSE);
-        
+       
         $dom = new domain_info();
         if ($domain = $dom->getOSCARSDomain($flow->source->urn)) {
             $flow->source->domain = $domain->dom_descr;
@@ -756,7 +764,7 @@ class reservations extends Controller {
             $dom->dom_id = $dom_aco[0]->obj_id;
             $flow->dest->domain = $dom->get('dom_descr');
         }
-        
+      
         if ($flow->path)
             $flow->path = MeicanTopology::getWaypoints($flow->path);
         
@@ -765,7 +773,7 @@ class reservations extends Controller {
             $this->show();
             return;
         }
-        
+       
         $timer_info = new timer_info();
         $timer_info->tmr_id = $reservation->tmr_id;
         $timer = $timer_info->getTimerDetails();
@@ -794,8 +802,10 @@ class reservations extends Controller {
 
         $gri = new gri_info();
 
-        if ($gris = $gri->getGrisToView($reservation->res_id)) {
-            foreach ($gris as $g) {
+        if ($gris = $gri->getGrisToView($reservation->res_id)) 
+        {
+            foreach ($gris as $g) 
+            {
                 $stat_obj = new stdClass();
                 $stat_obj->id = $g->id;
                 $stat_obj->status = $g->original_status;
@@ -824,14 +834,17 @@ class reservations extends Controller {
             "cluster_information_string" => _("Information about cluster"),
             'str_error_refresh_status' => _("Error to get status")
         ));
+
         $this->set(array(
             'res_name' => $reservation->res_name,
             'res_id' => $reservation->res_id,
             'bandwidth' => $reservation->bandwidth
         ));
+
         $this->set(compact('gris', 'flow', 'timer', 
                 'request', 'refresh', 'usr_login'));
         $this->addScriptForLayout(array('reservations', 'reservations_view'));
+
         $this->render('view');
     }
 
@@ -906,6 +919,7 @@ class reservations extends Controller {
             $oscarsRes->setOscarsUrl($flw->source->idc_url);
             $oscarsRes->setGri($g->gri_descr);
             $oscarsRes->queryReservation();
+                        error_log("JUST QUERIED " . $g->gri_descr . ", STATUS = " . $oscarsRes->getStatus());
             unset($oscarsRes);
         }
     }
@@ -924,14 +938,17 @@ class reservations extends Controller {
             $dom->dom_id = $gris[0]->dom_id;
 
             if ($idc_url = $dom->get('idc_url')) {
-                foreach ($gris as $g) {
-                    if ($g->status == "ACTIVE" || $g->status == "PENDING" || $g->status == "ACCEPTED") {
+                foreach ($gris as $g) 
+                {
+                    if ($g->status == "ACTIVE" || $g->status == "PENDING" || $g->status == "ACCEPTED") 
+                    {
                         //$oscarsRes = new OSCARSReservation();			// OLD DESIGN
 			            $versTest = new OSCARSVersionTester($dom->getDomVersion());	// Added by Jeremy
 			            $oscarsRes = $versTest->checkVersion();			// NEW DESIGN -- Added by Jeremy
 			
                         $oscarsRes->setOscarsUrl($idc_url);
                         $oscarsRes->setGri($g->gri_descr);
+
                         Log::write("info", "GRI to cancel: ".print_r($g->gri_descr, TRUE));
                         /**
                          * @todo cancelar várias reservas de uma só vez
@@ -967,11 +984,15 @@ class reservations extends Controller {
     }
 
     function listStatus($grisArray) {
+        $dom = new domain_info();
+        $src_dom = $dom->getOSCARSDomain($src_urn_string);
+
         //$oscarsRes = new OSCARSReservation();			// OLD DESIGN
         $versTest = new OSCARSVersionTester($dom->getDomVersion());	// Added by Jeremy
         $oscarsRes = $versTest->checkVersion();			// NEW DESIGN -- Added by Jeremy
 
-        $oscarsRes->setOscarsUrl("200.132.1.28:8080"); //oscars2
+        //$oscarsRes->setOscarsUrl("200.132.1.28:8080"); //oscars2
+        $oscarsRes->setOscarsUrl($src_dom->idc_url);
         $oscarsRes->setGrisString($grisArray);
         $result = $oscarsRes->listReservations();
         debug("result do list", $result);
@@ -992,7 +1013,7 @@ class reservations extends Controller {
         $src_dom = $domain->getOSCARSDomain($src_urn_string);
 
         //$oscarsRes = new OSCARSReservation();			// OLD DESIGN
-        $versTest = new OSCARSVersionTester($dom->getDomVersion());	// Added by Jeremy
+        $versTest = new OSCARSVersionTester($domain->getDomVersion());	// Added by Jeremy
         $oscarsRes = $versTest->checkVersion();			// NEW DESIGN -- Added by Jeremy
 
         $oscarsRes->setOscarsUrl($src_dom->idc_url);
@@ -1145,7 +1166,10 @@ class reservations extends Controller {
                 $dom->dom_id = $g->dom_id;
                 $domain = $dom->fetch(false);
 
-                $oscars_reservation = new OSCARSReservation();
+                //$oscars_reservation = new OSCARSReservation();         // OLD DESIGN
+                $versTest = new OSCARSVersionTester($dom->getDomVersion()); // Added by Jeremy
+                $oscars_reservation = $versTest->checkVersion();         // NEW DESIGN -- Added by Jeremy
+
                 $oscars_reservation->setOscarsUrl($domain[0]->idc_url);
                 $oscars_reservation->setGri($g->gri_descr);
                 
