@@ -32,19 +32,22 @@
                 <div class="center"><img src="<?php echo $this->url(''); ?>webroot/img/meican_new.png" class="logo" alt="MEICAN"/></div>
                 <h2>Management Environment of Inter-domain Circuits for Advanced Networks</h2>
 
-<p>MEICAN allows network end-users to request, in a more user-friendly way, dedicated circuits in Dynamic Circuit Networks. MEICAN also enables network operators to evaluate and accept end-user's circuit requests in environments with multiple domains.
+                <p>MEICAN allows network end-users to request, in a more user-friendly way, dedicated circuits in <a href="http://en.wikipedia.org/wiki/Dynamic_circuit_network">Dynamic Circuit Networks</a>. MEICAN also enables network operators to evaluate and accept end-user's circuit requests in environments with multiple domains.
 With MEICAN, you can:</p>
 
 <ul>
     <li>
+        <img src="<?php echo $this->url(''); ?>webroot/img/bullet1.jpg" alt="Bullet" class="bullet"/>
         <b>Request Circuits</b>
         <p>Network end-user's circuits can be scheduled to be set up and teared down when it is more convenient.</p>
     </li>
     <li>
+        <img src="<?php echo $this->url(''); ?>webroot/img/bullet2.jpg" alt="Bullet" class="bullet"/>
         <b>Authorize Requests</b>
         <p>Network operators can be notified to accept or reject the requests of establishment of new circuits.</p>
     </li>
     <li>
+        <img src="<?php echo $this->url(''); ?>webroot/img/bullet3.jpg" alt="Bullet" class="bullet"/>
         <b>Build Automated Policies</b>
         <p>Authorization workflows can be used to automate the decision-making process along the multiple domains where end-user's circuits pass through.</p>
     </li>
@@ -63,7 +66,7 @@ With MEICAN, you can:</p>
                     <form name="login_form" method="post" action="<?php echo $this->buildLink(array('action' => 'doLogin')); ?>" class="login">
                         <div style="width: 100%;">
                             <div class="input">
-                                <label for="login"><?php echo _('Login'); ?></label>
+                                <label for="login"><?php echo _('User'); ?></label>
                                 <input class="text" type="text" name="login" id="login" autofocus tabindex="1"/>
                             </div>
                             <div class="input password">
