@@ -16,7 +16,7 @@ html,body{
 
 div#header {
     width: 100%;
-    height: 100px;
+    height: 32px;
     background-color: #27567C;
 }
 
@@ -73,29 +73,10 @@ div#login_form input[type=text], div#login_form input[type=password] {
     margin: 2px 0;
 }
 
-div#login_form label {
-    float: left;
-    width: 40px;
-    margin-right: 10px;
-    padding-top: 5px;
-}
-
-div#login_form p {
-    text-align: center;
-    margin-bottom: 0px;
-}
-
-div#login_form hr {
-}
-
 div#figure {
     float: left;
     width: 40%;
     padding: 20px;
-}
-div#text_info{
-    float: left;
-    width: 25%;
 }
 div#message {
     color:red;
@@ -105,7 +86,6 @@ div#message {
 
 
 div#login_box {
-    width: 390px;
     float: right;
 }
 
@@ -116,25 +96,76 @@ div#login_form {
     border: 1px solid #E5E5E5;
 }
 
-div#login_form label {
-    float: left;
-    width: 40px;
-    margin-right: 10px;
-    padding-top: 6px;
-    font-weight: bold;
-}
-
 div#login_form input[type="text"], div#login_form input[type="password"] {
     width: 100%;
     font-size: 14px;
-    height: 28px;
-    margin: 2px 0;
-    padding: 0 6px;
-    display: inline-block;
 }
 
-div#login_form input[type="submit"] {
+#login_form p{
+    text-align: center;
+}
+
+.login input {
+    padding: 2px;
+    margin: 0 10px 0 0;
+}
+
+.login .submit input {
     font-size: 13px;
     height: 24px;
-    margin: 16px 0;
+    margin: 8px 0;
+}
+
+.login .input, .login .submit {
+    margin: 4px 0;
+    padding: 0;
+}
+
+.login label{
+    padding: 0;
+    
+    float: left;
+    width: 40px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.login .password a {
+    color: #999;
+    float: right;
+    margin-right: 5px;
+}
+
+.login .submit/*, .login input[type="submit"]*/ {
+    font-size: 12pt;
+}
+
+.center{
+    text-align: center;
+}
+
+
+.main_info{
+    float: left;
+    width: 55%;
+    margin: 30px;
+}
+
+.main_info h2{
+    text-align: center;
+    color: red;
+    font-size: 14pt;
+}
+
+.logos-footer{
+    text-align: center;
+}
+
+.main_info .logo{
+    width: 50%;
+}
+
+.main_info p{
+    text-align: justify;
+    margin: 0.75em 0.5em;
 }

@@ -23,58 +23,71 @@
     </head>
     <body>
         <div id="header" class="header">
-            <div id="logo_box">
-                <img src="<?php echo $this->url(''); ?>webroot/img/meican_white.png" class="logo" alt="MEICAN"/>
-            </div>
-            <div id="info_box">
-                <ul>
-                    <li><a href="#"><?php echo _('Create an account'); ?></a></li>
-                    <li><a href="#"><?php echo _('About MEICAN'); ?></a></li>
-                    <li><a href="#"><?php echo _('Support'); ?></a></li>
-                </ul>
-            </div>
+            &nbsp;
         </div>
         
         <div id="content">
-            <div id="figure">
-                <img src="<?php echo $this->url(''); ?>webroot/img/logo_login.png" alt="MEICAN"/>
+            
+            <div id="text_info" class="main_info">
+                <div class="center"><img src="<?php echo $this->url(''); ?>webroot/img/meican_new.png" class="logo" alt="MEICAN"/></div>
+                <h2>Management Environment of Inter-domain Circuits for Advanced Networks</h2>
+
+<p>MEICAN allows network end-users to request, in a more user-friendly way, dedicated circuits in Dynamic Circuit Networks. MEICAN also enables network operators to evaluate and accept end-user's circuit requests in environments with multiple domains.
+With MEICAN, you can:</p>
+
+<ul>
+    <li>
+        <b>Request Circuits</b>
+        <p>Network end-user's circuits can be scheduled to be set up and teared down when it is more convenient.</p>
+    </li>
+    <li>
+        <b>Authorize Requests</b>
+        <p>Network operators can be notified to accept or reject the requests of establishment of new circuits.</p>
+    </li>
+    <li>
+        <b>Build Automated Policies</b>
+        <p>Authorization workflows can be used to automate the decision-making process along the multiple domains where end-user's circuits pass through.</p>
+    </li>
+</ul>
+
+
+
             </div>
             
-            <div id="text_info">
-            </div>
-            
-            <div id="login_box" style="width: 390px; float: right;">
+            <div id="login_box">
                 <div id="login_form" class="tab_content">
                     <p>
                         <img src="<?php echo $this->url(''); ?>webroot/img/meican_preto.png" alt="meican"/>
                     </p>
                     <div id="message"><?php echo @$message ?></div>
-                    <form name="login_form" method="post" action="<?php echo $this->buildLink(array('action' => 'doLogin')); ?>">
+                    <form name="login_form" method="post" action="<?php echo $this->buildLink(array('action' => 'doLogin')); ?>" class="login">
                         <div style="width: 100%;">
-                            <div>
+                            <div class="input">
                                 <label for="login"><?php echo _('Login'); ?></label>
-                                <br/>
-                                <input class="text" type="text" name="login" id="login" autofocus/>
+                                <input class="text" type="text" name="login" id="login" autofocus tabindex="1"/>
                             </div>
-                            <div>
+                            <div class="input password">
                                 <label for="password"><?php echo _('Password'); ?></label>
-                                <br>
-                                <input class="text" type="password" name="password" id="password">
+                                <a href="#" tabindex="5">(<?php echo _('Forgot your password?'); ?>)</a>
+                                <input class="text" type="password" name="password" id="password" tabindex="1">
                             </div>
-                            <div>
-                                <input class="next ui-button ui-widget ui-state-default ui-corner-all" type="submit" name="submit_login" value="<?php echo _('Sign in'); ?>" role="button" aria-disabled="false"/> (<a href="#" style=""><?php echo _('Forgot your password?'); ?></a>)
+                            <div class="submit">
+                                <input class="next ui-button ui-widget ui-state-default ui-corner-all" type="submit" name="submit_login" value="<?php echo _('Sign in'); ?>" role="button" aria-disabled="false" tabindex="3"/>
+                                <?php echo _('or'); ?> 
+                                <a href="#" tabindex="4"><?php echo _('New account'); ?> &raquo;</a>
                             </div>
                         </div>
                     </form>
+                </div>
+                <div class="logos-footer">
+                 <a href="http://www.rnp.br" title="RNP"><img src="<?php echo $this->url(''); ?>webroot/img/rnp.gif" alt="RNP" style="height:36px;"/></a>
+                 <a href="http://networks.inf.ufrgs.br/" title="Computer Networks UFRGS"><img src="<?php echo $this->url(''); ?>webroot/img/networks.jpg" alt="networks" style="height:42px;"/></a>
                 </div>
             </div>
         </div>
         
         <div id="footer">
-            <div class="logos-footer">
-                <a href="http://www.rnp.br" title="RNP"><img src="<?php echo $this->url(''); ?>webroot/img/rnp.png" alt="RNP" style="height:90px;"/></a>
-                <a href="http://networks.inf.ufrgs.br/" title="Computer Networks UFRGS"><img src="<?php echo $this->url(''); ?>webroot/img/networks.jpg" alt="networks" style="height:90px;"/></a>
-            </div>
+            
         </div>
         
     </body>
