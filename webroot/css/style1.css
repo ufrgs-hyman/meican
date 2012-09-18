@@ -687,6 +687,10 @@ div#bandwidth_bar_text{
     margin: auto auto;
 }
 
+#lb_bandwidth{
+    text-align: center;
+}
+
 .shadow-box, .tab_content{
     box-shadow: 2px 2px 4px #888; 
     background-color: #EEE;
