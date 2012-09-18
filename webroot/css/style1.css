@@ -749,13 +749,13 @@ table.view-point{
     font-weight: bold;
     margin: 1px;
     float: none;
+    line-height: 16px;
 }
 
 .reservation-name{
     color: #4F4F4F;
     display: inline;
 }
-
 
 #edit_map_canvas {
     width: 100%; 

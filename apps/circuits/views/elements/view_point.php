@@ -13,12 +13,12 @@ if ($type == 'source') {
     <thead>
         <tr>
             <th colspan="2">
-    <div style="float: none;">
-        <strong><?php echo $label; ?></strong>
-    </div>
-</th>
-</tr>
-</thead>
+                <span class="title">
+                    <?php echo $label; ?>
+                </span>
+            </th>
+        </tr>
+    </thead>
 <tbody>
     <tr>
         <td><strong><?php echo _('Domain'); ?></strong></td>
