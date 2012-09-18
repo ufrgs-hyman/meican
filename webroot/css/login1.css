@@ -120,14 +120,14 @@ div#login_form label {
     float: left;
     width: 40px;
     margin-right: 10px;
-    padding-top: 5px;
+    padding-top: 6px;
     font-weight: bold;
 }
 
 div#login_form input[type="text"], div#login_form input[type="password"] {
     width: 100%;
-    font-size: 15px;
-    height: 32px;
+    font-size: 14px;
+    height: 28px;
     margin: 2px 0;
     padding: 0 6px;
     display: inline-block;
@@ -136,5 +136,5 @@ div#login_form input[type="text"], div#login_form input[type="password"] {
 div#login_form input[type="submit"] {
     font-size: 13px;
     height: 24px;
-    margin: 6px 0;
+    margin: 16px 0;
 }
