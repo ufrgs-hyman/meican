@@ -12,11 +12,11 @@
         <div style="clear:both;"></div>
     </div>
     <div id="tabs-2" class="tab_content">
-        <div class="float-left">
+        <div>
         <?= $this->element('view_timer', compact('timer')); ?>
         <?php //$request?$this->element('view_request', compact('request')):null; ?>
         </div>
-        <div class="float-right">
+        <div>
         <?php if ($gris): ?>
 
             <form method="POST" action="<?php echo $this->buildLink(array('action' => 'cancel', 'param' => "res_id:$res_id,refresh:1")); ?>">    

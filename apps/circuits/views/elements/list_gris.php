@@ -1,4 +1,4 @@
-<table class="list" style="width: 100%">
+<table class="list" style="width: 0;">
     
     <thead>
         <tr>
