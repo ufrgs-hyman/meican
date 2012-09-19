@@ -160,7 +160,8 @@ class requests extends MeicanController {
 
                 $del_request = new request_info();
                 $del_request->req_id = $req_result[0]->req_id;
-                $del_request->src_ode_ip = $req_result[0]->src_ode_ip;
+                $del_request->src_meican_ip = $req_result[0]->src_meican_ip;
+                $del_request->src_dom_id = $req_result[0]->src_dom_id;
                 
                 if ($requests_to_delete = $del_request->fetch(false)) {
                     $were_deleted = TRUE;

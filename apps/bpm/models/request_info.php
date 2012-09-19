@@ -57,7 +57,7 @@ class request_info extends Resource_Model {
         }
     }
 
-    function getRequestInfo($getReqInfo = FALSE, $getFlowInfo = FALSE, $getTimerInfo = FALSE) {
+    function getRequestInfo($getReqInfo = false, $getFlowInfo = false, $getTimerInfo = false) {
 
         //CakeLog::write("debug", "Get request info:\n" . print_r($this, TRUE));
 
@@ -75,23 +75,33 @@ class request_info extends Resource_Model {
         $return_request->resc_descr = _("Unknown");
         $return_request->resc_type = _("Unknown");
 
+        /**
+         * Cases:
+         *      1) Request is local
+         *      1.1) Destination is local
+         *      1.2) Destination is remote (WS is required)
+         *      2) Request is remote (WS is required)
+         *      2.1) Destination is local (final MEICAN)
+         *      2.2) Destination is remote (intermediary MEICAN)
+         */
         if ($this->src_meican_ip == $meican_local) {
+            // Case 1
             // request information is in this MEICAN domain, WS is NOT required
             CakeLog::write("circuits", "Request is local");
             
             $dom_info = new domain_info();
             $dom_info->dom_id = $this->src_dom_id;
-            
             $return_request->src_domain = $dom_info->get("dom_descr", false);
 
             $user_info = new user_info();
             $user_info->usr_id = $this->src_usr;
-            if ($user = $user_info->fetch(FALSE))
+            if ($user = $user_info->fetch(false))
                 $return_request->src_user = $user[0]->usr_login;
             else
                 $return_request->src_user = $this->src_usr;
 
             if ($this->dst_meican_ip == $meican_local) {
+                // Case 1.1
                 $dom_info = new domain_info();
                 $dom_info->dom_id = $this->dst_dom_id;
             
@@ -100,10 +110,10 @@ class request_info extends Resource_Model {
                 /**
                  *  @TODO try to call a WS to get domain description
                  */
-                // try to call a WS to get domain description
+                // Case 1.2
                 try {
-                    $ODEendpoint = "http://$this->src_meican_ip}/getMeicanData";
-                    $requestSOAP = array('ode_ip' => $this->dst_meican_ip);
+                    $ODEendpoint = "http://$this->dst_meican_ip}/getMeicanData";
+                    $requestSOAP = array('dom_id' => $this->dst_dom_id);
 
                     $client = new SoapClient($ODEendpoint, array('cache_wsdl' => 0));
                     $domain = $client->getDomains($requestSOAP);
@@ -111,7 +121,6 @@ class request_info extends Resource_Model {
                     $return_request->dst_domain = $domain['dom_descr'];
                 } catch (Exception $e) {
                     CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
-
                     $return_request->dst_domain = $this->dst_meican_ip;
                 }
             }
@@ -123,7 +132,7 @@ class request_info extends Resource_Model {
                 $req_tmp->src_dom_id = $this->src_dom_id;
                 $req_tmp->answerable = 'no';
                 
-                if ($req_result = $req_tmp->fetch(FALSE)) {
+                if ($req_result = $req_tmp->fetch(false)) {
                     $resourceReq = $req_result[0];
 
                     if ($resourceReq->resource_type == "reservation_info") {
@@ -148,14 +157,14 @@ class request_info extends Resource_Model {
                                 $return_request->flow_info->source->domain = $return_request->src_domain;
                                 $return_request->flow_info->dest->domain = $return_request->dst_domain;
                             } else
-                                $return_request->flow_info = NULL;
+                                $return_request->flow_info = null;
 
                             if ($getTimerInfo) {
                                 $timer = new timer_info();
                                 $timer->tmr_id = $reservation[0]->tmr_id;
                                 $return_request->timer_info = $timer->getTimerDetails();
                             } else
-                                $return_request->timer_info = NULL;
+                                $return_request->timer_info = null;
                         }
                     } else {
                         $resource = new $resourceReq->resource_type();
@@ -166,20 +175,21 @@ class request_info extends Resource_Model {
                             $return_request->resc_descr = $result[0]->{$resource->displayField};
                             $return_request->resc_type = $resourceReq->resource_type;
                         }
-                        $return_request->flow_info = NULL;
-                        $return_request->timer_info = NULL;
+                        $return_request->flow_info = null;
+                        $return_request->timer_info = null;
                     }
                 }
             }
         } else {
+            // Case 2
             // request information was NOT found in this MEICAN domain, trying WS to get data
             CakeLog::write("circuits", "Request is remote");
 
-            $ODEendpoint = "http://$this->src_ode_ip}/getMeicanData";
+            $ODEendpoint = "http://$this->src_meican_ip}/getMeicanData";
 
             // get source domain
             try {
-                $requestSOAP = array('ode_ip' => $this->src_ode_ip);
+                $requestSOAP = array('dom_id' => $this->src_dom_id);
 
                 $client = new SoapClient($ODEendpoint, array('cache_wsdl' => 0));
                 $domain = $client->getDomains($requestSOAP);
@@ -187,22 +197,29 @@ class request_info extends Resource_Model {
                 $return_request->src_domain = $domain['dom_descr'];
             } catch (Exception $e) {
                 CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
-
-                $return_request->src_domain = $this->src_ode_ip;
+                $return_request->src_domain = $this->src_meican_ip;
             }
 
             // get destination domain
-            try {
-                $requestSOAP = array('ode_ip' => $this->dst_ode_ip);
+            if ($this->dst_meican_ip == $meican_local) {
+                // Case 2.1
+                $dom_info = new domain_info();
+                $dom_info->dom_id = $this->dst_dom_id;
+                $return_request->dst_domain = $dom_info->get("dom_descr", false);
+            } else {
+                // Case 2.2
+                try {
+                    $dstODEendpoint = "http://$this->dst_meican_ip}/getMeicanData";
+                    $requestSOAP = array('dom_id' => $this->dst_dom_id);
 
-                $client = new SoapClient($ODEendpoint, array('cache_wsdl' => 0));
-                $domain = $client->getDomains($requestSOAP);
+                    $client = new SoapClient($dstODEendpoint, array('cache_wsdl' => 0));
+                    $domain = $client->getDomains($requestSOAP);
 
-                $return_request->dst_domain = $domain['dom_descr'];
-            } catch (Exception $e) {
-                CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
-
-                $return_request->dst_domain = $this->dst_ode_ip;
+                    $return_request->dst_domain = $domain['dom_descr'];
+                } catch (Exception $e) {
+                    CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
+                    $return_request->dst_domain = $this->dst_meican_ip;
+                }
             }
 
             //get source user
@@ -215,7 +232,6 @@ class request_info extends Resource_Model {
                 $return_request->src_user = $user['usr_name'];
             } catch (Exception $e) {
                 CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
-
                 $return_request->src_user = $this->src_usr;
             }
 
@@ -261,8 +277,8 @@ class request_info extends Resource_Model {
                         }
                     }
                 } else {
-                    $return_request->flow_info = NULL;
-                    $return_request->timer_info = NULL;
+                    $return_request->flow_info = null;
+                    $return_request->timer_info = null;
 
                     try {
                         $requestSOAP = array('req_id' => $this->resource_id);
@@ -277,12 +293,15 @@ class request_info extends Resource_Model {
                 }
             }
         }
-        CakeLog::write("debug", "Request info return:\n" . print_r($return_request, TRUE));
+        CakeLog::write("debug", "Request info return:\n" . print_r($return_request, true));
 
         return $return_request;
     }
 
     public function response() {
+        $meican = new meican_info();
+        $meican_local = $meican->getLocalMeicanIp();
+
         $message = $this->message;
         $response = $this->response;
 
@@ -292,12 +311,12 @@ class request_info extends Resource_Model {
         $now = microtime(true);
         $usr = AuthSystem::getUserId();
 
-        $res = $this->fetch(FALSE);
+        $res = $this->fetch(false);
         $toResponse = $res[0];
 
-        if (!$toResponse->response) {
-
-            //$local = $this->updateTo(array('response' => $response, 'message' => $message, 'status' => 'ANSWERED', 'finish_time' => $now, 'response_user' => $usr), FALSE);
+        if ($toResponse->crr_meican_ip == $meican_local) {
+            if (!$toResponse->response) {
+                //$local = $this->updateTo(array('response' => $response, 'message' => $message, 'status' => 'ANSWERED', 'finish_time' => $now, 'response_user' => $usr), FALSE);
 
                 $responseSOAP = array(
                     'req_id' => $toResponse->req_id,
@@ -307,38 +326,41 @@ class request_info extends Resource_Model {
                     'message' => $message);
 
                 $dom = new domain_info();
-                $dom->ode_ip = $toResponse->crr_ode_ip;
-                $res_domain = $dom->fetch(FALSE);
+                $dom->dom_id = $toResponse->crr_dom_ip;
+                $res_domain = $dom->fetch(false);
 
                 $domain = $res_domain[0];
 
                 if ($domain->ode_wsdl_path && $domain->ode_response) {
 
-                    CakeLog::write("circuits", "Sending response:\n" . print_r($responseSOAP, TRUE));
+                    CakeLog::write("circuits", "Sending response:\n" . print_r($responseSOAP, true));
 
                     try {
                         $client = new SoapClient($domain->ode_wsdl_path, array('cache_wsdl' => WSDL_CACHE_NONE));
-                        
+
                         if ($client->{$domain->ode_response}($responseSOAP)) {
-                            $local = $this->updateTo(array('finish_time' => $now, 'response_user' => $usr), FALSE);
+                            $local = $this->updateTo(array('finish_time' => $now, 'response_user' => $usr), false);
                         }
                         //$client->__soapCall($domain->ode_response, $responseSOAP);
-                        
                         // wait for 2 seconds while ODE call saveResponse, then it will update de DB
                         sleep(2);
 
-                        return TRUE;
+                        return true;
                     } catch (Exception $e) {
                         CakeLog::write("error", "Caught exception while trying to connect to ODE:\n" . print_r($e->getMessage()));
-                        return FALSE;
+                        return false;
                     }
                 } else {
                     CakeLog::write("error", 'ODE not confired correctly');
-                    return FALSE;
+                    return false;
                 }
+            } else {
+                CakeLog::write('warning', "Request already answered:\n" . print_r($this, true));
+                return false;
+            }
         } else {
-            CakeLog::write('warning', "Request already answered:\n" . print_r($this, TRUE));
-            return FALSE;
+            CakeLog::write('warning', "MEICAN not current:\n" . print_r($this, true));
+            return false;
         }
     }
 

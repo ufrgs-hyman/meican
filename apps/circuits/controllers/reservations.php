@@ -1000,7 +1000,7 @@ class reservations extends Controller {
         }
 
         //precisa descobrir se a reserva deve ou não ser enviada para AUTORIZAÇÃO
-        if ($src_dom->ode_ip && $src_dom->ode_wsdl_path && $src_dom->ode_start) {
+        if ($src_dom->ode_wsdl_path && $src_dom->ode_start) {
             //irá para autorização
             //cria reserva do tipo signal-xml
             $oscarsRes->setPathSetupMode('timer-automatic');
@@ -1043,22 +1043,27 @@ class reservations extends Controller {
             unset($tmp);
         }
         
-        //para buscar o dst_ode_ip
+        //para buscar o dom id
         $dst_urn_string = $flow->dst_urn_string;
 
         $domain = new domain_info();
         $dst_dom = $domain->getOSCARSDomain($dst_urn_string);
 
-        if ($resSent && $src_dom->ode_ip && $src_dom->ode_wsdl_path && $src_dom->ode_start) {
+        if ($resSent && $src_dom->ode_wsdl_path && $src_dom->ode_start) {
             //cria nova request com o domínio $src_dom
+            $meican = new meican_info();
+            $meican_local = $meican->getLocalMeicanIp();
+            
             $newReq = new request_info();
             
             $newReq->req_id = $newReq->getNextId('req_id');
             
-            $newReq->src_ode_ip = $src_dom->ode_ip;
+            $newReq->src_meican_ip = $meican_local;
+            $newReq->src_dom_id = $src_dom->dom_id;
             $newReq->src_usr = $reservation_info->usr_id;
 
-            $newReq->dst_ode_ip = $dst_dom->ode_ip;
+            $newReq->dst_meican_ip = $meican_local;
+            $newReq->dst_dom_id = $dst_dom->dom_id;
 
             $newReq->resource_type = 'reservation_info';
             $newReq->resource_id = $reservation_info->res_id;
@@ -1068,16 +1073,19 @@ class reservations extends Controller {
             $newReq->response = NULL;
             $newReq->message = NULL;
             
-            $newReq->crr_ode_ip = NULL;
+            $newReq->crr_meican_ip = NULL;
+            $newReq->crr_dom_id = NULL;
             $newReq->response_user = NULL;
             $newReq->start_time = NULL;
             $newReq->finish_time = NULL;
             
             $requestSOAP = array(
                 'req_id' => $newReq->req_id,
-                'src_ode_ip' => $newReq->src_ode_ip,
-                'dst_ode_ip' => $newReq->dst_ode_ip,
-                'usr_src' => $newReq->src_usr);
+                'src_meican_ip' => $newReq->src_meican_ip,
+                'src_dom_id' => $newReq->src_dom_id,
+                'dst_meican_ip' => $newReq->dst_meican_ip,
+                'dst_dom_id' => $newReq->dst_dom_id,
+                'src_usr' => $newReq->src_usr);
 
             CakeLog::write("circuits","Sending for authorization:\n". print_r($requestSOAP,TRUE));
             try {
