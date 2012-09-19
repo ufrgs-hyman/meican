@@ -12,10 +12,12 @@ class request_info extends Resource_Model {
         $this->addAttribute('loc_id', "INTEGER", true, false, false);
         $this->addAttribute("req_id", "INTEGER");
 
-        $this->addAttribute("src_ode_ip", "VARCHAR");
+        $this->addAttribute("src_meican_ip", "VARCHAR");
+        $this->addAttribute("src_dom_id", "VARCHAR");
         $this->addAttribute("src_usr", "INTEGER");
 
-        $this->addAttribute("dst_ode_ip", "VARCHAR");
+        $this->addAttribute("dst_meican_ip", "VARCHAR");
+        $this->addAttribute("dst_dom_id", "VARCHAR");
 
         $this->addAttribute("resource_type", "VARCHAR");
         $this->addAttribute("resource_id", "INTEGER");
@@ -25,7 +27,9 @@ class request_info extends Resource_Model {
         $this->addAttribute("response", "VARCHAR");
         $this->addAttribute("message", "VARCHAR");
 
-        $this->addAttribute("crr_ode_ip", "VARCHAR");
+        $this->addAttribute("crr_meican_ip", "VARCHAR");
+        $this->addAttribute("crr_dom_id", "VARCHAR");
+        
         $this->addAttribute("response_user", "INTEGER");
         $this->addAttribute("start_time", "FLOAT");
         $this->addAttribute("finish_time", "FLOAT");
@@ -57,9 +61,9 @@ class request_info extends Resource_Model {
 
         //CakeLog::write("debug", "Get request info:\n" . print_r($this, TRUE));
 
-        $domain_info = new domain_info();
-        $domain_info->ode_ip = $this->src_ode_ip;
-
+        $meican_info = new meican_info();
+        $meican_local = $meican_info->getLocalMeicanIp();
+        
         $return_request = new stdClass();
 
         $return_request->loc_id = $this->loc_id;
@@ -71,11 +75,14 @@ class request_info extends Resource_Model {
         $return_request->resc_descr = _("Unknown");
         $return_request->resc_type = _("Unknown");
 
-        if ($domain_result = $domain_info->fetch(FALSE)) {
-            // request information was found in this MEICAN domain, WS is NOT required
+        if ($this->src_meican_ip == $meican_local) {
+            // request information is in this MEICAN domain, WS is NOT required
             CakeLog::write("circuits", "Request is local");
             
-            $return_request->src_domain = $domain_result[0]->dom_descr;
+            $dom_info = new domain_info();
+            $dom_info->dom_id = $this->src_dom_id;
+            
+            $return_request->src_domain = $dom_info->get("dom_descr", false);
 
             $user_info = new user_info();
             $user_info->usr_id = $this->src_usr;
@@ -84,15 +91,19 @@ class request_info extends Resource_Model {
             else
                 $return_request->src_user = $this->src_usr;
 
-            $domain_info = new domain_info();
-            $domain_info->ode_ip = $this->dst_ode_ip;
-            if ($dst_domain = $domain_info->fetch(FALSE))
-                $return_request->dst_domain = $dst_domain[0]->dom_descr;
-            else {
+            if ($this->dst_meican_ip == $meican_local) {
+                $dom_info = new domain_info();
+                $dom_info->dom_id = $this->dst_dom_id;
+            
+                $return_request->dst_domain = $dom_info->get("dom_descr", false);
+            } else {
+                /**
+                 *  @TODO try to call a WS to get domain description
+                 */
                 // try to call a WS to get domain description
                 try {
-                    $ODEendpoint = "http://$this->src_ode_ip}/getMeicanData";
-                    $requestSOAP = array('ode_ip' => $this->dst_ode_ip);
+                    $ODEendpoint = "http://$this->src_meican_ip}/getMeicanData";
+                    $requestSOAP = array('ode_ip' => $this->dst_meican_ip);
 
                     $client = new SoapClient($ODEendpoint, array('cache_wsdl' => 0));
                     $domain = $client->getDomains($requestSOAP);
@@ -101,14 +112,15 @@ class request_info extends Resource_Model {
                 } catch (Exception $e) {
                     CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
 
-                    $return_request->dst_domain = $this->dst_ode_ip;
+                    $return_request->dst_domain = $this->dst_meican_ip;
                 }
             }
 
             if ($getReqInfo) {
                 $req_tmp = new request_info();
                 $req_tmp->req_id = $this->req_id;
-                $req_tmp->src_ode_ip = $this->src_ode_ip;
+                $req_tmp->src_meican_ip = $this->src_meican_ip;
+                $req_tmp->src_dom_id = $this->src_dom_id;
                 $req_tmp->answerable = 'no';
                 
                 if ($req_result = $req_tmp->fetch(FALSE)) {
@@ -289,7 +301,8 @@ class request_info extends Resource_Model {
 
                 $responseSOAP = array(
                     'req_id' => $toResponse->req_id,
-                    'src_ode_ip' => $toResponse->src_ode_ip,
+                    'src_meican_ip' => $toResponse->src_meican_ip,
+                    'src_dom_id' => $toResponse->src_dom_id,
                     'response' => $response,
                     'message' => $message);
 

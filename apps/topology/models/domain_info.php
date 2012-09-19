@@ -17,7 +17,7 @@ class domain_info extends Resource_Model {
         $this->addAttribute("oscars_protocol","VARCHAR");
         $this->addAttribute("topology_id","VARCHAR");
         
-        $this->addAttribute("ode_ip","VARCHAR");
+        //$this->addAttribute("ode_ip","VARCHAR");
         $this->addAttribute("ode_wsdl_path","VARCHAR");
         $this->addAttribute("ode_start","VARCHAR");
         $this->addAttribute("ode_response","VARCHAR");
