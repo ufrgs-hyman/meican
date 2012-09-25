@@ -91,7 +91,7 @@ div#login_box {
 
 div#login_form {
     background-color: whiteSmoke;
-    padding: 20px 50px 20px 40px;
+    padding: 30px 40px;
     margin: 30px;
     border: 1px solid #E5E5E5;
 }
@@ -155,6 +155,8 @@ div#login_form input[type="text"], div#login_form input[type="password"] {
     text-align: center;
     color: rgb(204, 0, 0);
     font-size: 14pt;
+    margin: 0.75em auto;
+    width: 400px;
 }
 
 .logos-footer{

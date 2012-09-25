@@ -1,4 +1,5 @@
-<?php $base = $this->url(); ?>
+<?php $base = $this->url(); 
+    Language::getInstance()->setLanguage('en-us'); ?>
 <!doctype html>
 <html lang="en">
     <head>
@@ -59,9 +60,6 @@ With MEICAN, you can:</p>
             
             <div id="login_box">
                 <div id="login_form" class="tab_content">
-                    <p>
-                        <img src="<?php echo $this->url(''); ?>webroot/img/meican_preto.png" alt="meican"/>
-                    </p>
                     <div id="message"><?php echo @$message ?></div>
                     <form name="login_form" method="post" action="<?php echo $this->buildLink(array('action' => 'doLogin')); ?>" class="login">
                         <div style="width: 100%;">
