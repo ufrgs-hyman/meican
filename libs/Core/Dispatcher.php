@@ -5,6 +5,7 @@ include_once 'libs/application.php';
 
 App::uses('Configure', 'Core');
 App::uses('Object', 'Core');
+App::uses('Inflector', 'Utility');
 App::uses('Debugger', 'Utility');
 App::uses('CakeRequest', 'Network');
 App::uses('CakeResponse', 'Network');
@@ -41,8 +42,8 @@ class Dispatcher {
             $url = null;
         if ($this->login($request)) // precisa fazer login?
             return;
-        if ($this->asset($request->url))
-            return;
+        /*if ($this->asset($request->url))
+            return;*/
         /* if (empty($url)&&!(Common::GET('app')))
           return $this->legacyDispatch(); */
         $params = array_merge($this->parse($request->url), array('verify_login' => true));
