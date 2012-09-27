@@ -42,8 +42,8 @@ class Dispatcher {
             $url = null;
         if ($this->login($request)) // precisa fazer login?
             return;
-        /*if ($this->asset($request->url))
-            return;*/
+        if ($this->asset($request->url))
+            return;
         /* if (empty($url)&&!(Common::GET('app')))
           return $this->legacyDispatch(); */
         $params = array_merge($this->parse($request->url), array('verify_login' => true));
