@@ -15,13 +15,12 @@ class domain_info extends Resource_Model {
         $this->addAttribute("idc_url","VARCHAR");
         $this->addAttribute("oscars_ip","VARCHAR");
         $this->addAttribute("oscars_protocol","VARCHAR");
+        $this->addAttribute("dom_version","VARCHAR");
         $this->addAttribute("topology_id","VARCHAR");
         
         $this->addAttribute("ode_wsdl_path","VARCHAR");
         $this->addAttribute("ode_start","VARCHAR");
         $this->addAttribute("ode_response","VARCHAR");
-        
-        $this->addAttribute("dom_version","VARCHAR");
     }
 
     public function getDom(){

@@ -21,6 +21,8 @@ class ws extends WebServiceController {
         $this_ip = $this_meican->getLocalMeicanIp();
         $this_dir_name = $this_meican->getLocalMeicanDirName();
         $this_dir_name = ($this_dir_name) ? "$this_dir_name/" : "";
+        
+        $this->meican_local = $this_ip;
 
         $namespace = "http://MEICAN";
         $server = new nusoap_server();
@@ -47,36 +49,45 @@ class ws extends WebServiceController {
 
         $server->wsdl->addComplexType('requestType', 'complexType', 'struct', 'all', '', array(
             'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
-            'src_ode_ip' => array('name' => 'src_ode_ip', 'type' => 'xsd:string'),
-            'dst_ode_ip' => array('name' => 'dst_ode_ip', 'type' => 'xsd:string'),
-            'crr_ode_ip' => array('name' => 'crr_ode_ip', 'type' => 'xsd:string'),
+            'src_meican_ip' => array('name' => 'src_meican_ip', 'type' => 'xsd:string'),
+            'src_dom_id' => array('name' => 'src_dom_id', 'type' => 'xsd:string'),
+            'dst_meican_ip' => array('name' => 'dst_meican_ip', 'type' => 'xsd:string'),
+            'dst_dom_id' => array('name' => 'dst_dom_id', 'type' => 'xsd:string'),
+            'crr_meican_ip' => array('name' => 'crr_meican_ip', 'type' => 'xsd:string'),
+            'crr_dom_id' => array('name' => 'crr_dom_id', 'type' => 'xsd:string'),
             'src_usr' => array('name' => 'src_usr', 'type' => 'xsd:int')));
         
         $server->wsdl->addComplexType('statusType', 'complexType', 'struct', 'all', '', array(
             'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
-            'src_ode_ip' => array('name' => 'src_ode_ip', 'type' => 'xsd:string'),
+            'src_meican_ip' => array('name' => 'src_meican_ip', 'type' => 'xsd:string'),
+            'src_dom_id' => array('name' => 'src_dom_id', 'type' => 'xsd:string'),
             'status' => array('name' => 'status', 'type' => 'xsd:string')));
         
         $server->wsdl->addComplexType('responseType', 'complexType', 'struct', 'all', '', array(
             'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
-            'src_ode_ip' => array('name' => 'src_ode_ip', 'type' => 'xsd:string'),
-            'crr_ode_ip' => array('name' => 'crr_ode_ip', 'type' => 'xsd:string'),
+            'src_meican_ip' => array('name' => 'src_meican_ip', 'type' => 'xsd:string'),
+            'src_dom_id' => array('name' => 'src_dom_id', 'type' => 'xsd:string'),
+            'crr_meican_ip' => array('name' => 'crr_meican_ip', 'type' => 'xsd:string'),
+            'crr_dom_id' => array('name' => 'crr_dom_id', 'type' => 'xsd:string'),
             'response' => array('name' => 'response', 'type' => 'xsd:string'),
             'message' => array('name' => 'message', 'type' => 'xsd:string')));
 
         $server->wsdl->addComplexType('decisionType', 'complexType', 'struct', 'all', '', array(
             'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
-            'src_ode_ip' => array('name' => 'src_ode_ip', 'type' => 'xsd:string'),
+            'src_meican_ip' => array('name' => 'src_meican_ip', 'type' => 'xsd:string'),
+            'src_dom_id' => array('name' => 'src_dom_id', 'type' => 'xsd:string'),
             'response' => array('name' => 'response', 'type' => 'xsd:string')));
         
         $server->wsdl->addComplexType('primaryType', 'complexType', 'struct', 'all', '', array(
             'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
-            'src_ode_ip' => array('name' => 'src_ode_ip', 'type' => 'xsd:string'),
-            'crr_ode_ip' => array('name' => 'crr_ode_ip', 'type' => 'xsd:string')));
+            'src_meican_ip' => array('name' => 'src_meican_ip', 'type' => 'xsd:string'),
+            'src_dom_id' => array('name' => 'src_dom_id', 'type' => 'xsd:string'),
+            'crr_meican_ip' => array('name' => 'crr_meican_ip', 'type' => 'xsd:string'),
+            'crr_dom_id' => array('name' => 'crr_dom_id', 'type' => 'xsd:string')));
         
 
         $server->register(
-                'getReqInfo', array('req_id' => 'xsd:int', 'src_ode_ip' => 'xsd:string'), array('req_info' => 'tns:reqType'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/getReqInfo", 'rpc', 'encoded', 'Method to get request information');
+                'getReqInfo', array('req_id' => 'xsd:int', 'src_meican_ip' => 'xsd:string', 'src_dom_id' => 'xsd:string'), array('req_info' => 'tns:reqType'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/getReqInfo", 'rpc', 'encoded', 'Method to get request information');
 
         $server->register(
                 'refreshStatus', array('status' => 'tns:statusType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/refreshStatus", 'rpc', 'encoded', 'Method only to refresh request status, modify all requests');
@@ -97,15 +108,16 @@ class ws extends WebServiceController {
                 'getNextDomain', array('primary' => 'tns:primaryType'), array('next_domain' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/getNextDomain", 'rpc', 'encoded', 'Complex Hello World Method');
         
         $server->register(
-                'getRequestPath', array('req_id' => 'xsd:int', 'src_ode_ip' => 'xsd:string'), array('ode_ip_array' => 'tns:stringTypeList'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/getRequestPath", 'rpc', 'encoded', 'Method to get the reservation path');
+                'getRequestPath', array('req_id' => 'xsd:int', 'src_meican_ip' => 'xsd:string', 'src_dom_id' => 'xsd:string'), array('topo_id_array' => 'tns:stringTypeList'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/getRequestPath", 'rpc', 'encoded', 'Method to get the reservation path');
 
         
-        function getReqInfo($req_id, $src_ode_ip) {
-            CakeLog::write('ws', "Get request info from ODE:" . print_r(array('req_id' => $req_id, 'src_ode_ip' => $src_ode_ip), TRUE));
+        function getReqInfo($req_id, $src_meican_ip, $src_dom_id) {
+            CakeLog::write('ws', "Get request info from ODE:" . print_r(array('req_id' => $req_id, 'src_meican_ip' => $src_meican_ip, 'src_dom_id' => $src_dom_id), true));
 
             $req = new request_info();
             $req->req_id = $req_id;
-            $req->src_ode_ip = trim($src_ode_ip);
+            $req->src_meican_ip = trim($src_meican_ip);
+            $req->src_dom_id = trim($src_dom_id);
             $req->answerable = 'no';
 
             if ($result = $req->fetch(FALSE)) {
@@ -121,25 +133,27 @@ class ws extends WebServiceController {
                         'resc_type' => $rescTy,
                         'resc_descr' => $result2[0]->{$resource->displayField});
 
-                    CakeLog::write('ws', 'Request info return:' . print_r($return, TRUE));
+                    CakeLog::write('ws', 'Request info return:' . print_r($return, true));
                     return $return;
                 }
             }
-            return NULL;
+            return null;
         }
         
         function refreshStatus($status) {
             CakeLog::write('ws', "Refresh status:\n" . print_r($status, true));
 
             if (array_key_exists('req_id', $status) &&
-                    array_key_exists('src_ode_ip', $status) &&
+                    array_key_exists('src_meican_ip', $status) &&
+                    array_key_exists('src_dom_id', $status) &&
                     array_key_exists('status', $status)) {
 
-                if ($status['req_id'] && $status['src_ode_ip'] && $status['status']) {
+                if ($status['req_id'] && $status['src_meican_ip'] && $status['src_dom_id'] && $status['status']) {
 
                     $req = new request_info();
                     $req->req_id = $status['req_id'];
-                    $req->src_ode_ip = trim($status['src_ode_ip']);
+                    $req->src_meican_ip = trim($status['src_meican_ip']);
+                    $req->src_dom_id = trim($status['src_dom_id']);
 
                     if ($req->updateTo(array("status" => $status['status']), false)) {
                         CakeLog::write('ws', "Refresh status: request status updated");
@@ -155,17 +169,21 @@ class ws extends WebServiceController {
             CakeLog::write('ws', "Save response:\n" . print_r($response, true));
 
             if (array_key_exists('req_id', $response) &&
-                    array_key_exists('src_ode_ip', $response) &&
-                    array_key_exists('crr_ode_ip', $response) &&
+                    array_key_exists('src_meican_ip', $response) &&
+                    array_key_exists('src_dom_id', $response) &&
+                    array_key_exists('crr_meican_ip', $response) &&
+                    array_key_exists('crr_dom_id', $response) &&
                     array_key_exists('response', $response) &&
                     array_key_exists('message', $response)) {
 
-                if ($response['req_id'] && $response['src_ode_ip'] && $response['crr_ode_ip']) {
+                if ($response['req_id'] && $response['src_meican_ip'] && $response['src_dom_id'] && $response['crr_meican_ip'] && $response['crr_dom_id']) {
 
                     $req = new request_info();
                     $req->req_id = $response['req_id'];
-                    $req->src_ode_ip = trim($response['src_ode_ip']);
-                    $req->crr_ode_ip = trim($response['crr_ode_ip']);
+                    $req->src_meican_ip = trim($response['src_meican_ip']);
+                    $req->src_dom_id = trim($response['src_dom_id']);
+                    $req->crr_meican_ip = trim($response['crr_meican_ip']);
+                    $req->crr_dom_id = trim($response['crr_dom_id']);
 
                     $validResponses = array("accept", "reject");
 
@@ -195,10 +213,11 @@ class ws extends WebServiceController {
             CakeLog::write('ws', "Final decision from ODE:\n" . print_r($decision, true));
 
             if (array_key_exists('req_id', $decision) &&
-                    array_key_exists('src_ode_ip', $decision) &&
+                    array_key_exists('src_meican_ip', $decision) &&
+                    array_key_exists('src_dom_id', $decision) &&
                     array_key_exists('response', $decision)) {
 
-                if ($decision['req_id'] && $decision['src_ode_ip']) {
+                if ($decision['req_id'] && $decision['src_meican_ip'] && $decision['src_dom_id']) {
 
                     $validResponses = array("accept", "reject");
 
@@ -206,7 +225,8 @@ class ws extends WebServiceController {
 
                         $req = new request_info();
                         $req->req_id = $decision['req_id'];
-                        $req->src_ode_ip = trim($decision['src_ode_ip']);
+                        $req->src_meican_ip = trim($decision['src_meican_ip']);
+                        $req->src_dom_id = trim($decision['src_dom_id']);
                         
                         $req->answerable = 'no';
 
@@ -245,7 +265,7 @@ class ws extends WebServiceController {
                             CakeLog::write('ws', "Final decision: reservation denied, cancelling GRIs. Reservation ID:\n" . print_r($tmp->res_id, true));
 
                             $dom_tmp = new domain_info();
-                            $dom_tmp->ode_ip = $req->src_ode_ip;
+                            $dom_tmp->dom_id = $req->src_dom_id;
                             $dom = $dom_tmp->fetch(false);
 
                             //as reservas devem ser canceladas no OSCARS
@@ -272,36 +292,46 @@ class ws extends WebServiceController {
             return null;
         }
 
+        /**
+         * @todo Unificar funções requestUserAuthorization e requestGroupAuthorization, muito código repetido
+         * 
+         */
+        
         function requestUserAuthorization($usr_dst, $request) {
-            CakeLog::write('ws', "Request user authorizarion:\nUser: ". print_r($usr_dst, TRUE). "\n" . print_r($request, TRUE));
+            CakeLog::write('ws', "Request user authorizarion:\nUser: ". print_r($usr_dst, true). "\n" . print_r($request, true));
 
             if ($usr_dst && $request) {
 
                 $new_request = new request_info();
                 $new_request->req_id = $request['req_id'];
 
-                $new_request->src_ode_ip = trim($request['src_ode_ip']);
+                $new_request->src_meican_ip = trim($request['src_meican_ip']);
+                $new_request->src_dom_id = trim($request['src_dom_id']);
                 $new_request->src_usr = $request['src_usr'];
-                $new_request->dst_ode_ip = trim($request['dst_ode_ip']);
                 
-                $new_request->resource_type = NULL;
-                $new_request->resource_id = NULL;
+                $new_request->dst_meican_ip = trim($request['dst_meican_ip']);
+                $new_request->dst_dom_id = trim($request['dst_dom_id']);
+                
+                $new_request->resource_type = null;
+                $new_request->resource_id = null;
                 
                 $new_request->answerable = 'yes';
                 
-                $new_request->status = NULL;
-                $new_request->response = NULL;
-                $new_request->message = NULL;
+                $new_request->status = null;
+                $new_request->response = null;
+                $new_request->message = null;
                 
-                $new_request->crr_ode_ip = trim($request['crr_ode_ip']);
-                $new_request->response_user = NULL;
+                $new_request->crr_meican_ip = trim($request['crr_meican_ip']);
+                $new_request->crr_dom_id = trim($request['crr_dom_id']);
+                
+                $new_request->response_user = null;
                 $new_request->start_time = microtime(true);
-                $new_request->finish_time = NULL;
+                $new_request->finish_time = null;
 
                 //insere embaixo do usuario passado como parametro
                 $user = new user_info();
                 $user->usr_id = $usr_dst;
-                $resuser = $user->fetch(FALSE);
+                $resuser = $user->fetch(false);
 
                 if ($resuser) {
                     if ($new_request->insert($usr_dst, 'user_info')) {
@@ -326,51 +356,55 @@ class ws extends WebServiceController {
                           $mail->send($to, $text, $subject, $headers);
                           } */
 
-                        return TRUE;
+                        return true;
                     } else {
                         CakeLog::write('ws', 'Fail to save the request by requestUserAuthorization');
-                        return NULL;
+                        return null;
                     }
                 } else {
                     CakeLog::write('ws', 'Destination user not found by requestUserAuthorization');
-                    return NULL;
+                    return null;
                 }
             } else {
                 CakeLog::write('ws', 'Not enough arguments in requestUserAuthorization');
-                return NULL;
+                return null;
             }
         }
 
         function requestGroupAuthorization($grp_dst, $request) {
-            CakeLog::write('ws', "Request group authorizarion:\nGroup: ". print_r($grp_dst, TRUE). "\n" . print_r($request, TRUE));
+            CakeLog::write('ws', "Request group authorizarion:\nGroup: ". print_r($grp_dst, true). "\n" . print_r($request, true));
 
             if ($grp_dst && $request) {
                 $new_request = new request_info();
                 $new_request->req_id = $request['req_id'];
 
-                $new_request->src_ode_ip = trim($request['src_ode_ip']);
+                $new_request->src_meican_ip = trim($request['src_meican_ip']);
+                $new_request->src_dom_id = trim($request['src_dom_id']);
                 $new_request->src_usr = $request['src_usr'];
-                $new_request->dst_ode_ip = trim($request['dst_ode_ip']);
                 
-                $new_request->resource_type = NULL;
-                $new_request->resource_id = NULL;
+                $new_request->dst_meican_ip = trim($request['dst_meican_ip']);
+                $new_request->dst_dom_id = trim($request['dst_dom_id']);
+                
+                $new_request->resource_type = null;
+                $new_request->resource_id = null;
                 
                 $new_request->answerable = 'yes';
                 
-                $new_request->status = NULL;
-                $new_request->response = NULL;
-                $new_request->message = NULL;
+                $new_request->status = null;
+                $new_request->response = null;
+                $new_request->message = null;
                 
-                $new_request->crr_ode_ip = trim($request['crr_ode_ip']);
-                $new_request->response_user = NULL;
+                $new_request->crr_meican_ip = trim($request['crr_meican_ip']);
+                $new_request->crr_dom_id = trim($request['crr_dom_id']);
+                
+                $new_request->response_user = null;
                 $new_request->start_time = microtime(true);
-                $new_request->finish_time = NULL;
-                
+                $new_request->finish_time = null;
 
                 //insere embaixo do grupo passado como parametro
                 $group = new group_info();
                 $group->grp_id = $grp_dst;
-                $resgroup = $group->fetch(FALSE);
+                $resgroup = $group->fetch(false);
 
                 if ($resgroup) {
                     if ($insertedReq = $new_request->insert($grp_dst, 'group_info')) {
@@ -404,82 +438,87 @@ class ws extends WebServiceController {
                           }
                          */
 
-                        return TRUE;
+                        return true;
                     } else {
                         CakeLog::write('ws', 'Fail to save the request by requestGroupAuthorization');
-                        return NULL;
+                        return null;
                     }
                 } else {
                     CakeLog::write('ws', 'Destination group not found by requestGroupAuthorization');
-                    return NULL;
+                    return null;
                 }
             } else {
                 CakeLog::write('ws', 'Not enough arguments in requestGroupAuthorization');
-                return NULL;
+                return null;
             }
         }
         
         function getNextDomain($primary) {
-            CakeLog::write('ws', "Getting next domain:\n" . print_r($primary, TRUE));
+            CakeLog::write('ws', "Getting next domain:\n" . print_r($primary, true));
 
             if (array_key_exists('req_id', $primary) &&
-                    array_key_exists('src_ode_ip', $primary) &&
-                    array_key_exists('crr_ode_ip', $primary)) {
+                    array_key_exists('src_meican_ip', $primary) &&
+                    array_key_exists('src_dom_id', $primary) &&
+                    array_key_exists('crr_meican_ip', $primary) &&
+                    array_key_exists('crr_dom_id', $primary)) {
 
-                $ode_ip_array = getRequestPath($primary['req_id'], $primary['src_ode_ip']);
+                if ($this->meican_local == trim($primary['crr_meican_ip'])) {
 
-                $next_domain = NULL;
+                    $topo_id_array = getRequestPath($primary['req_id'], $primary['src_meican_ip'], $primary['src_dom_id']);
 
-                for ($index = 0; $index < count($ode_ip_array); $index++) {
-                    if ($ode_ip_array[$index] == trim($primary['crr_ode_ip'])) {
-                        if (array_key_exists($index + 1, $ode_ip_array)) {
-                            $next_domain = $ode_ip_array[$index + 1];
-                            break;
+                    $next_domain = null;
+                    $dom_info = new domain_info();
+                    $dom_info->dom_id = trim($primary['crr_dom_id']);
+                    $crr_domain = $dom_info->fetch(false);
+
+                    for ($index = 0; $index < count($topo_id_array); $index++) {
+                        if ($topo_id_array[$index] == $crr_domain[0]->topology_id) {
+                            if (array_key_exists($index + 1, $topo_id_array)) {
+                                $next_domain = $topo_id_array[$index + 1];
+                                break;
+                            }
                         }
                     }
+                    CakeLog::write('ws', "Next domain:\n" . print_r(array('next_domain' => $next_domain), true));
+                    return $next_domain;
+                } else {
+                    CakeLog::write('ws', "MEICAN is not current:\n" . print_r(array('meican_local' => $this->meican_local, 'crr_meican_ip' => $primary['crr_meican_ip']), true));
+                    return null;
                 }
-                CakeLog::write('ws', "Next domain:\n" . print_r(array('next_domain' => $next_domain), TRUE));
-                return $next_domain;
             }
         }
         
-        function getRequestPath($req_id, $src_ode_ip) {
-            CakeLog::write('ws', "Getting request path:\n" . print_r(array('req_id' => $req_id, 'src_ode_ip' => $src_ode_ip), TRUE));
+        function getRequestPath($req_id, $src_meican_ip, $src_dom_id) {
+            CakeLog::write('ws', "Getting request path:\n" . print_r(array('req_id' => $req_id, 'src_meican_ip' => $src_meican_ip, 'src_dom_id' => $src_dom_id), true));
             
             $req_info = new request_info();
             $req_info->req_id = $req_id;
-            $req_info->src_ode_ip = trim($src_ode_ip);
+            $req_info->src_meican_ip = trim($src_meican_ip);
+            $req_info->src_dom_id = trim($src_dom_id);
             $req_info->answerable = 'no';
-            $request = $req_info->fetch(FALSE);
+            $request = $req_info->fetch(false);
 
-            $ode_ip_array = array();
+            $topoIdArray = array();
             if ($request[0]->resource_type == "reservation_info") {
                 $reservation = new reservation_info();
                 $reservation->res_id = $request[0]->resource_id;
                 $pathArray = $reservation->getPath();
 
                 // put only the topology IDs into an array
-                $topoIdArray = array();
                 $dom = new domain_info();
                 foreach ($pathArray as $urn) {
                     $topoIdArray[] = $dom->getTopologyId($urn);
                 }
                 $topoIdArray = array_unique($topoIdArray);
 
-                // fill the array with the ODE IPs of the path
-                foreach ($topoIdArray as $topId) {
-                    $dom = new domain_info();
-                    $dom->topology_id = $topId;
-                    if ($d_result = $dom->fetch(FALSE)) {
-                        $d_tmp = $d_result[0];
-                        if ($d_tmp->ode_ip)
-                            $ode_ip_array[] = $d_tmp->ode_ip;
-                    }
-                }
+                // fill the array preceded by MEICAN IP, e.g.: meican.cipo.rnp.br:cipo.inf.ufrgs.br
+//                foreach ($topoIdArray as $index => $topoId) {
+//                    $topoIdArray[$index] = $this->meican_local.":$topoId";
+//                }
             }
-            CakeLog::write('ws', "Request path return with ODE IPs:\n" . print_r($ode_ip_array, TRUE));
+            CakeLog::write('ws', "Request path return with topology IDs:\n" . print_r($topoIdArray, true));
 
-            return $ode_ip_array;
+            return $topoIdArray;
         }
 
         $POST_DATA = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';

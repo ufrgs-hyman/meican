@@ -16,7 +16,6 @@ $domains = $this->passedArgs;
                 <th><?php echo _("OSCARS URL"); ?></th>
                 <th><?php echo _("OSCARS Version"); ?></th>
                 <th><?php echo _("Topology ID"); ?></th>
-                <th><?php echo _("ODE IP"); ?></th>
             </tr>
         </thead>
 
@@ -42,9 +41,6 @@ $domains = $this->passedArgs;
                     </td>
                     <td>
                         <?php echo $d->topology_id; ?>
-                    </td>
-                    <td>
-                        <?php echo $d->ode_ip; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

@@ -1,13 +1,21 @@
 <?php
 
-include_once 'libs/controller.php';
+include_once 'libs/meican_controller.php';
 
-class ode extends Controller {
-    public $ode_ip = "localhost:8080";
+include_once 'apps/topology/models/meican_info.php';
+
+class ode extends MeicanController {
+    private $meican_local;
+    
+    public function ode() {
+        $meican = new meican_info();
+        $this->meican_local = $meican->getLocalMeicanIp();
+    }
 
     function show() {
+        
         try {
-            $client = new SoapClient("http://$this->ode_ip/ode/processes/ProcessManagement?wsdl",array('cache_wsdl' => 0));
+            $client = new SoapClient("http://$this->meican_local:8080/ode/processes/ProcessManagement?wsdl",array('cache_wsdl' => 0));
             $allProcess = $client->listAllProcesses(NULL);
 
             if (!empty($allProcess->{"process-info-list"}->{"process-info"}) && !is_array($allProcess->{"process-info-list"}->{"process-info"})) {
@@ -41,7 +49,7 @@ class ode extends Controller {
                 debug('upload file',$upl);
 
                 try {
-                    if ($client = new SoapClient("http://$this->ode_ip/ode/processes/DeploymentService?wsdl",array('cache_wsdl' => 0))) {
+                    if ($client = new SoapClient("http://$this->meican_local:8080/ode/processes/DeploymentService?wsdl",array('cache_wsdl' => 0))) {
 
                         $filename = $_FILES['upload']['tmp_name'];
                         $handle = fopen($filename, "r");
@@ -70,7 +78,7 @@ class ode extends Controller {
 
         $package = $input['package'];
 
-        $client = new SoapClient("http://$this->ode_ip/ode/processes/DeploymentService?wsdl",array('cache_wsdl' => 0));
+        $client = new SoapClient("http://$this->meican_local:8080/ode/processes/DeploymentService?wsdl",array('cache_wsdl' => 0));
         $pack = array('packageName' => $package);
         $result = $client->undeploy($pack);
 

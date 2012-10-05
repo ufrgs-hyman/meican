@@ -6,7 +6,6 @@ $oscars_ip = isset($argsToElement->oscars_ip) ? $argsToElement->oscars_ip : NULL
 $oscars_protocol = isset($argsToElement->oscars_protocol) ? $argsToElement->oscars_protocol : NULL;
 $topology_id = isset($argsToElement->topology_id) ? $argsToElement->topology_id : NULL;
 
-$ode_ip = isset($argsToElement->ode_ip) ? $argsToElement->ode_ip : NULL;
 $ode_wsdl_path = isset($argsToElement->ode_wsdl_path) ? $argsToElement->ode_wsdl_path : NULL;
 $ode_start = isset($argsToElement->ode_start) ? $argsToElement->ode_start : NULL;
 $ode_response = isset($argsToElement->ode_response) ? $argsToElement->ode_response : NULL;
@@ -44,10 +43,6 @@ $dom_version = isset($argsToElement->dom_version) ? $argsToElement->dom_version 
 <div class="form input">
     <label for="topology_id"><?php echo _("Topology ID"); ?></label>
     <input type="text" name="topology_id" size="30" value="<?php echo $topology_id; ?>"/>
-</div>
-<div class="form input">
-    <label for="ode_ip"><?php echo _("ODE IP"); ?></label>
-    <input type="text" name="ode_ip" size="30" value="<?php echo $ode_ip; ?>"/>
 </div>
 <div class="form input">
     <label for="ode_wsdl_path"><?php echo _("ODE WSDL path"); ?></label>

@@ -33,7 +33,6 @@ class domains extends MeicanController {
                 $domain->oscars_protocol = $d->oscars_protocol;
                 $domain->idc_url = $d->idc_url;
                 $domain->topology_id = $d->topology_id;
-                $domain->ode_ip = ($d->ode_ip) ? $d->ode_ip : _("No IP defined");
                 $domain->dom_version = $d->dom_version;
 
                 $domains[] = $domain;
@@ -57,7 +56,6 @@ class domains extends MeicanController {
             $domain->oscars_protocol = Common::POST("oscars_protocol");
             $domain->topology_id = Common::POST("topology_id");
             
-            $domain->ode_ip = Common::POST("ode_ip");
             $domain->ode_wsdl_path = Common::POST("ode_wsdl_path");
             $domain->ode_start = Common::POST("ode_start");
             $domain->ode_response = Common::POST("ode_response");
@@ -120,7 +118,6 @@ class domains extends MeicanController {
             $domain->oscars_protocol = Common::POST("oscars_protocol");
             $domain->topology_id = Common::POST("topology_id");
             
-            $domain->ode_ip = Common::POST("ode_ip");
             $domain->ode_wsdl_path = Common::POST("ode_wsdl_path");
             $domain->ode_start = Common::POST("ode_start");
             $domain->ode_response = Common::POST("ode_response");
