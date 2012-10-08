@@ -13,6 +13,7 @@ include_once 'libs/acl_loader.php';
 
 class groups extends MeicanController {
 
+    public $app = 'aaa';
     public $modelClass = 'group_info';
 
     protected function renderEmpty(){

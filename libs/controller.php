@@ -24,6 +24,7 @@ class Controller extends Object {
             $this->name = substr(get_class($this), 0, strlen(get_class($this)) - 10);
         }
         parent::__construct();
+        $this->beforeFilter();
     }
 
     function beforeFilter(){

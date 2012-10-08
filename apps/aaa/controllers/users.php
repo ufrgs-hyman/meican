@@ -12,6 +12,7 @@ include_once 'libs/acl_loader.php';
 
 class users extends MeicanController {
 
+    public $app = 'aaa';
     public $modelClass = 'user_info';
     
     public function beforeFilter(){

@@ -13,6 +13,7 @@ include_once 'apps/topology/models/topology.php';
 class urns extends MeicanController {
 
     public $modelClass = 'domain_info';
+    public $app = 'topology';
 
     public function beforeFilter(){
         $this->addScriptForLayout(array('urns'));

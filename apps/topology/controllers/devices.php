@@ -16,6 +16,7 @@ include_once 'libs/acl_loader.php';
 class devices extends MeicanController {
 
     public $modelClass = 'device_info';
+    public $app = 'topology';
 
     public function beforeFilter(){
         $this->addScriptForLayout(array('devices'));

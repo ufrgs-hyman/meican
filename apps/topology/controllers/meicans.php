@@ -8,6 +8,7 @@ include_once 'apps/topology/models/meican_info.php';
 class meicans extends MeicanController {
 
     public $modelClass = 'meican_info';
+    public $app = 'topology';
 
     protected function renderEmpty(){
         $this->set(array(

@@ -12,6 +12,7 @@ include_once 'apps/topology/models/device_info.php';
 class networks extends MeicanController {
 
     public $modelClass = 'network_info';
+    public $app = 'topology';
 
     public function beforeFilter(){
         $this->addScriptForLayout(array('networks'));

@@ -25,6 +25,7 @@ include_once 'apps/topology/models/urn_info.php';
 
 class acl extends MeicanController {
 
+    public $app = 'aaa';
     public $modelClass = 'aros_acos';
     
     public function beforeFilter(){

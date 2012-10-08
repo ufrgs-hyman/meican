@@ -26,6 +26,7 @@ include_once 'apps/topology/models/topology.php';
 include_once 'libs/Vendors/nuSOAP/lib/nusoap.php';
 
 class reservations extends Controller {
+    public $app = 'circuits';
 
     public function show($filterArray=array()) {
         // inicializa variável de sessão
