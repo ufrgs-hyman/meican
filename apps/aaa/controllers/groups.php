@@ -15,6 +15,10 @@ class groups extends MeicanController {
 
     public $app = 'aaa';
     public $modelClass = 'group_info';
+    
+    public function beforeFilter(){
+        $this->addScriptForLayout(array('select'));
+    }
 
     protected function renderEmpty(){
         $this->set(array(
@@ -91,7 +95,6 @@ class groups extends MeicanController {
         $args->users->right = array();
 
         $this->setArgsToBody($args);
-
         $this->render('add');
     } // addForm
 
