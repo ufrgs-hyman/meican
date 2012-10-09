@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-01 18:09-0300\n"
+"POT-Creation-Date: 2012-10-09 17:56-0300\n"
 "PO-Revision-Date: 2012-05-11 17:59-0300\n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
 
-#: bpm.php:14 bpm.php:33 controllers/requests.php:26
+#: bpm.php:14 bpm.php:33 controllers/requests.php:20
 msgid "Requests"
 msgstr "Requisições"
 
@@ -28,7 +28,7 @@ msgstr "Autorização"
 msgid "Workflow"
 msgstr "Workflow"
 
-#: models/request_info.php:71 models/request_info.php:72
+#: models/request_info.php:75 models/request_info.php:76
 msgid "Unknown"
 msgstr "Desconhecido"
 
@@ -84,7 +84,7 @@ msgstr "Nome"
 msgid "File"
 msgstr "Arquivo"
 
-#: views/ode_show.php:61 controllers/requests.php:113
+#: views/ode_show.php:61 controllers/requests.php:107
 msgid "Ok"
 msgstr "Ok"
 
@@ -252,75 +252,75 @@ msgstr "ACEITAR"
 msgid "REJECT"
 msgstr "REJEITAR"
 
-#: controllers/ode.php:39
+#: controllers/ode.php:41
 msgid "Error on upload file"
 msgstr "Erro ao enviar arquivo"
 
-#: controllers/ode.php:60
+#: controllers/ode.php:62
 msgid "Process deployed successfully "
 msgstr "Deploy de processo realizado com sucesso"
 
-#: controllers/ode.php:65
+#: controllers/ode.php:67
 msgid "Fail to deploy process: "
 msgstr "Falha ao realizar deploy do processo:"
 
-#: controllers/ode.php:69
+#: controllers/ode.php:71
 msgid "invalid name for the process"
 msgstr "nome inválido para o processo"
 
-#: controllers/ode.php:84
+#: controllers/ode.php:86
 msgid "Process undeployed successfully"
 msgstr "Undeploy de processo realizado com sucesso"
 
-#: controllers/ode.php:85
+#: controllers/ode.php:87
 msgid "Fail to undeploy process"
 msgstr "Falha ao realizar undeploy do processo"
 
-#: controllers/requests.php:27
+#: controllers/requests.php:21
 msgid "You have no pending or finished request"
 msgstr "Você não possui requisições pendentes ou finalizadas"
 
-#: controllers/requests.php:75 controllers/requests.php:129
+#: controllers/requests.php:69 controllers/requests.php:123
 msgid "Invalid index"
 msgstr "Índice inválido"
 
-#: controllers/requests.php:114
+#: controllers/requests.php:108
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: controllers/requests.php:115
+#: controllers/requests.php:109
 msgid "Request will be accepted, please provide a message"
 msgstr "A requisição será aceita, por favor inclua uma mensagem"
 
-#: controllers/requests.php:116
+#: controllers/requests.php:110
 msgid "Request will be rejected, please provide a message"
 msgstr "A requisição será rejeitada, por favor inclua uma mensagem"
 
-#: controllers/requests.php:117
+#: controllers/requests.php:111
 msgid "Available bandwidth"
 msgstr "Largura de banda disponível"
 
-#: controllers/requests.php:118
+#: controllers/requests.php:112
 msgid "Requested bandwidth"
 msgstr "Largura de banda solicitada"
 
-#: controllers/requests.php:142
+#: controllers/requests.php:136
 msgid "Response saved"
 msgstr "Resposta salva"
 
-#: controllers/requests.php:146
+#: controllers/requests.php:140
 msgid "Response NOT saved"
 msgstr "Resposta não salva"
 
-#: controllers/requests.php:186
+#: controllers/requests.php:181
 msgid "No request was deleted"
 msgstr "Nenhuma requisição foi excluída"
 
-#: controllers/requests.php:189
+#: controllers/requests.php:184
 msgid "One request was deleted"
 msgstr "Uma requisição foi excluída"
 
-#: controllers/requests.php:192
+#: controllers/requests.php:187
 msgid "requests were deleted"
 msgstr "requisições foram excluídas"
 

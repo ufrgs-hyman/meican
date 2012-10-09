@@ -30,7 +30,8 @@ return array(
     "logFolder" => null,
     "systemLogFolder" => null,
     /* system profile */
-    "systemName" => 'MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks',
+    "systemFullName" => 'MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks',
+    "systemName" => 'Management Environment of Inter-domain Circuits for Advanced Networks',
     "systemNameShort" => 'MEICAN',
     "systemVer" => '',
     "mainApp" => 'circuits',

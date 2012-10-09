@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-01 18:09-0300\n"
+"POT-Creation-Date: 2012-10-09 17:56-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: \n"
@@ -67,7 +67,8 @@ msgstr "Problema"
 msgid "Praise"
 msgstr "Elogio"
 
-#: views/elements/feedback.php:40 views/elements/feedback.php:64
+#: views/elements/feedback.php:40
+#: views/elements/feedback.php:64
 msgid "Describe your idea"
 msgstr "Descreva sua ideia"
 
@@ -119,7 +120,8 @@ msgstr "Sobre"
 msgid "Feedback"
 msgstr "Feedback"
 
-#: views/elements/controls.php:16 views/empty_db.php:11
+#: views/elements/controls.php:16
+#: views/empty_db.php:11
 msgid "Add"
 msgstr "Adicionar"
 
@@ -135,172 +137,140 @@ msgstr "Os itens selecionados serão excluídos."
 msgid "Do you confirm?"
 msgstr "Você confirma?"
 
-#: views/login.php:30
-msgid "Create an account"
-msgstr "Criar uma conta"
+#: views/login.php:66
+msgid "User"
+msgstr "Usuário"
 
-#: views/login.php:31
-msgid "About MEICAN"
-msgstr "Sobre o MEICAN"
-
-#: views/login.php:32
-msgid "Support"
-msgstr "Suporte"
-
-#: views/login.php:54
-msgid "Login"
-msgstr "Login"
-
-#: views/login.php:59
+#: views/login.php:70
 msgid "Password"
 msgstr "Senha"
 
-#: views/login.php:64
-msgid "Sign in"
-msgstr "Entrar"
-
-#: views/login.php:64
+#: views/login.php:71
 msgid "Forgot your password?"
 msgstr "Esqueceu sua senha?"
 
-#: controllers/info_box.php:56
+#: views/login.php:75
+msgid "Sign in"
+msgstr "Entrar"
+
+#: views/login.php:76
+msgid "or"
+msgstr "ou"
+
+#: views/login.php:77
+msgid "New account"
+msgstr "Nova conta"
+
+#: controllers/info_box.php:50
 msgid "Feedback sent"
 msgstr "Feedback enviado"
 
-#: controllers/info_box.php:56
+#: controllers/info_box.php:50
 msgid "Thank you"
 msgstr "Obrigado"
 
-#: controllers/info_box.php:58
+#: controllers/info_box.php:52
 msgid "Error sending feedback"
 msgstr "Erro ao enviar feedback"
 
-#: controllers/info_box.php:58
+#: controllers/info_box.php:52
 msgid "Try again later"
 msgstr "Tente novamente mais tarde"
 
-#: controllers/gui.php:46
+#: controllers/gui.php:43
 msgid "You have"
 msgstr "Você possui"
 
-#: controllers/gui.php:46
+#: controllers/gui.php:43
 msgid "new requests to be authorized"
 msgstr "novas requisições para serem autorizadas"
 
-#: controllers/login.php:44
+#: controllers/login.php:41
 msgid "Failed on authentication"
 msgstr "Falha na autenticação"
 
+#~ msgid "Create an account"
+#~ msgstr "Criar uma conta"
+#~ msgid "About MEICAN"
+#~ msgstr "Sobre o MEICAN"
+#~ msgid "Support"
+#~ msgstr "Suporte"
+#~ msgid "Login"
+#~ msgstr "Login"
 #~ msgid "You have one new request to be authorized"
 #~ msgstr "Você possui uma nova requisição para ser autorizada"
-
 #~ msgid "Sign in to MEICAN"
 #~ msgstr "Entrar no MEICAN"
-
 #~ msgid "Circuits"
 #~ msgstr "Circuitos"
-
 #~ msgid "New"
 #~ msgstr "Novo"
-
 #~ msgid "Status"
 #~ msgstr "Status"
-
 #~ msgid "History"
 #~ msgstr "Histórico"
-
 #~ msgid "Topologies"
 #~ msgstr "Topologias"
-
 #~ msgid "MEICANs"
 #~ msgstr "MEICANs"
-
 #~ msgid "Domains"
 #~ msgstr "Domínios"
-
 #~ msgid "Networks"
 #~ msgstr "Redes"
-
 #~ msgid "Devices"
 #~ msgstr "Dispositivos"
-
 #~ msgid "URNs"
 #~ msgstr "URNs"
-
 #~ msgid "Users"
 #~ msgstr "Usuários"
-
 #~ msgid "Groups"
 #~ msgstr "Grupos"
-
 #~ msgid "Access Control List"
 #~ msgstr "Lista de Controle de Acesso"
-
 #~ msgid "BPM"
 #~ msgstr "BPM"
-
 #~ msgid "Requests"
 #~ msgstr "Requisições"
-
 #~ msgid "ODE"
 #~ msgstr "ODE"
-
 #~ msgid "New reservation"
 #~ msgstr "Nova reserva"
-
 #~ msgid "Reservations"
 #~ msgstr "Reservas"
-
 #~ msgid "Management"
 #~ msgstr "Gerenciamento"
-
 #~ msgid "Domain"
 #~ msgstr "Dom�nio"
-
 #~ msgid "My Account"
 #~ msgstr "Minha Conta"
-
 #~ msgid "Access control"
 #~ msgstr "Controle de acesso"
-
 #~ msgid "My settings"
 #~ msgstr "Minhas configura��es"
-
 #~ msgid "Server time"
 #~ msgstr "Hora do servidor"
-
 #~ msgid "Not logged in"
 #~ msgstr "N�o logado"
-
 #~ msgid "Session Expired"
 #~ msgstr "Sess�o expirada"
-
 #~ msgid "Loading"
 #~ msgstr "Carregando"
-
 #~ msgid "New Reservation"
 #~ msgstr "Nova Reserva"
-
 #~ msgid "About us"
 #~ msgstr "Sobre n�s"
-
 #~ msgid "Developers"
 #~ msgstr "Desenvolvedores"
-
 #~ msgid "Terms of service"
 #~ msgstr "Termos do servi�o"
-
 #~ msgid "Privacy policy"
 #~ msgstr "Pol�tica de privacidade"
-
 #~ msgid "My Settings"
 #~ msgstr "Minhas configura��es"
-
 #~ msgid "Sign Out"
 #~ msgstr "Sair"
-
 #~ msgid "Flows"
 #~ msgstr "Fluxos"
-
 #~ msgid "Timers"
 #~ msgstr "Agendamentos"
+

@@ -58,6 +58,7 @@ class Language {
     
     public function loadLanguageFromHeader(){
         //TODO: implement
+        // $locale = Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
     }
 
 }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-01 18:09-0300\n"
+"POT-Creation-Date: 2012-10-09 17:56-0300\n"
 "PO-Revision-Date: 2012-01-17 17:29-0300\n"
 "Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Language: \n"
 
 #: aaa.php:14 aaa.php:17 aaa.php:38 views/users_show.php:3
-#: controllers/users.php:27 controllers/groups.php:94
-#: controllers/groups.php:201
+#: controllers/users.php:24 controllers/groups.php:93
+#: controllers/groups.php:199
 msgid "Users"
 msgstr "Usuários"
 
-#: aaa.php:22 controllers/users.php:80 controllers/users.php:220
+#: aaa.php:22 controllers/users.php:77 controllers/users.php:217
 msgid "Groups"
 msgstr "Grupos"
 
@@ -136,8 +136,8 @@ msgstr "Editar grupo"
 msgid "Group name"
 msgstr "Nome do grupo"
 
-#: views/users_show.php:18 controllers/users.php:114 controllers/users.php:143
-#: controllers/users.php:296 controllers/users.php:435
+#: views/users_show.php:18 controllers/users.php:111 controllers/users.php:140
+#: controllers/users.php:293 controllers/users.php:432
 msgid "User"
 msgstr "Usuário"
 
@@ -213,205 +213,205 @@ msgstr "Confirma?"
 msgid "Add new user"
 msgstr "Adicionar novo usuário"
 
-#: controllers/acl.php:39
+#: controllers/acl.php:37
 msgid "Access Control List"
 msgstr "Lista de Controle de Acesso"
 
-#: controllers/acl.php:40
+#: controllers/acl.php:38
 msgid "You can't see any access control, click the button below to add one"
 msgstr ""
 "Você não tem permissão para visualizar nenhum controle de acesso, clique no "
 "botão abaixo para adicionar um novo"
 
-#: controllers/acl.php:55 controllers/acl.php:56 controllers/acl.php:57
-#: controllers/acl.php:58 controllers/acl.php:130
+#: controllers/acl.php:53 controllers/acl.php:54 controllers/acl.php:55
+#: controllers/acl.php:56 controllers/acl.php:128
 msgid "Allow"
 msgstr "Permitir"
 
-#: controllers/acl.php:55 controllers/acl.php:56 controllers/acl.php:57
-#: controllers/acl.php:58 controllers/acl.php:131
+#: controllers/acl.php:53 controllers/acl.php:54 controllers/acl.php:55
+#: controllers/acl.php:56 controllers/acl.php:129
 msgid "Deny"
 msgstr "Negar"
 
-#: controllers/acl.php:118 controllers/acl.php:135
+#: controllers/acl.php:116 controllers/acl.php:133
 msgid "All"
 msgstr "Todos"
 
-#: controllers/acl.php:132
+#: controllers/acl.php:130
 msgid "Delete ACL?"
 msgstr "Excluir ACL?"
 
-#: controllers/acl.php:133
+#: controllers/acl.php:131
 msgid "Access control deleted"
 msgstr "Controle de acesso excluído"
 
-#: controllers/acl.php:134
+#: controllers/acl.php:132
 msgid "Fail to delete access control"
 msgstr "Falha ao excluir controle de acesso"
 
-#: controllers/acl.php:136
+#: controllers/acl.php:134
 msgid "Save modifications?"
 msgstr "Salvar modificações?"
 
-#: controllers/acl.php:137
+#: controllers/acl.php:135
 msgid "Please fill in all the fields"
 msgstr "Por favor, preencha todos os campos"
 
-#: controllers/acl.php:138
+#: controllers/acl.php:136
 msgid "Tree objects do not match"
 msgstr "Objetos não conferem"
 
-#: controllers/acl.php:139
+#: controllers/acl.php:137
 msgid "Error to fetch objects"
 msgstr "Erro ao buscar objetos"
 
-#: controllers/acl.php:189
+#: controllers/acl.php:187
 msgid "No access control was deleted"
 msgstr "Nenhum controle de acesso foi excluído"
 
-#: controllers/acl.php:192
+#: controllers/acl.php:190
 msgid "One access control was deleted"
 msgstr "Um controle de acesso foi excluído"
 
-#: controllers/acl.php:195
+#: controllers/acl.php:193
 msgid "access controls were deleted"
 msgstr "controles de acesso foram excluídos"
 
-#: controllers/acl.php:211
+#: controllers/acl.php:209
 msgid "ACL updated"
 msgstr "ACL atualizado"
 
-#: controllers/users.php:28
+#: controllers/users.php:25
 msgid "You can't see any user, click the button below to add one"
 msgstr ""
 "Você não tem permissão para visualizar nenhum usuário, clique no botão "
 "abaixo para adicionar um novo"
 
-#: controllers/users.php:88
+#: controllers/users.php:85
 msgid "You don't have permission to view groups, so you can't add users"
 msgstr ""
 "Você não tem permissão para visualizar nenhum grupo, portanto você não tem "
 "permissão para adicionar usuários"
 
-#: controllers/users.php:114 controllers/groups.php:117
+#: controllers/users.php:111 controllers/groups.php:115
 msgid "added"
 msgstr "adicionado"
 
-#: controllers/users.php:141
+#: controllers/users.php:138
 msgid "Fail to create user"
 msgstr "Falha ao criar usuário"
 
-#: controllers/users.php:143 controllers/groups.php:126
-#: controllers/groups.php:249
+#: controllers/users.php:140 controllers/groups.php:124
+#: controllers/groups.php:247
 msgid "already exists"
 msgstr "já existe"
 
-#: controllers/users.php:145 controllers/users.php:287
-#: controllers/users.php:381
+#: controllers/users.php:142 controllers/users.php:284
+#: controllers/users.php:378
 msgid "Passwords mismatch"
 msgstr "Senhas não conferem"
 
-#: controllers/users.php:147 controllers/groups.php:128
+#: controllers/users.php:144 controllers/groups.php:126
 msgid "Missing argument"
 msgstr "Faltam parâmetros"
 
-#: controllers/users.php:157 controllers/users.php:240
-#: controllers/groups.php:139 controllers/groups.php:217
+#: controllers/users.php:154 controllers/users.php:237
+#: controllers/groups.php:137 controllers/groups.php:215
 msgid "Invalid index"
 msgstr "Índice inválido"
 
-#: controllers/users.php:172 controllers/users.php:319
+#: controllers/users.php:169 controllers/users.php:316
 msgid "User not found"
 msgstr "Usuário não encontrado"
 
-#: controllers/users.php:230 controllers/users.php:303
+#: controllers/users.php:227 controllers/users.php:300
 msgid "You don't have permission to edit this user"
 msgstr "Você não tem permissão para editar este usuário"
 
-#: controllers/users.php:254
+#: controllers/users.php:251
 msgid "Select at least 1 group for the user"
 msgstr "Selecione pelo menos 1 grupo para o usuário"
 
-#: controllers/users.php:263
+#: controllers/users.php:260
 msgid "Error to fetch user"
 msgstr "Erro ao buscar usuário"
 
-#: controllers/users.php:271
+#: controllers/users.php:268
 msgid "No name was specified"
 msgstr "Nenhum nome foi especificado"
 
-#: controllers/users.php:296
+#: controllers/users.php:293
 msgid "updated"
 msgstr "atualizado"
 
-#: controllers/users.php:299 controllers/users.php:416
+#: controllers/users.php:296 controllers/users.php:413
 msgid "No change has been made"
 msgstr "Nenhuma mudança realizada"
 
-#: controllers/users.php:360 controllers/users.php:396
+#: controllers/users.php:357 controllers/users.php:393
 msgid "Missing required argument"
 msgstr "Falta de parâmetros obrigatórios"
 
-#: controllers/users.php:386
+#: controllers/users.php:383
 msgid "Type the new password"
 msgstr "Digite nova senha"
 
-#: controllers/users.php:391
+#: controllers/users.php:388
 msgid "Current password does not match"
 msgstr "Senha atual não confere"
 
-#: controllers/users.php:414
+#: controllers/users.php:411
 msgid "User settings updated"
 msgstr "Configurações do usuário atualizadas"
 
-#: controllers/users.php:435 controllers/groups.php:277
+#: controllers/users.php:432 controllers/groups.php:275
 msgid "deleted"
 msgstr "excluído"
 
-#: controllers/groups.php:26
+#: controllers/groups.php:25
 msgid "User Groups"
 msgstr "Grupos de Usuário"
 
-#: controllers/groups.php:27
+#: controllers/groups.php:26
 msgid "You can't see any group, click the button below to add one"
 msgstr ""
 "Você não tem permissão para visualizar nenhum grupo, clique no botão abaixo "
 "para adicionar um novo"
 
-#: controllers/groups.php:58
+#: controllers/groups.php:57
 msgid "Group is root"
 msgstr "Grupo é raiz"
 
-#: controllers/groups.php:117 controllers/groups.php:126
-#: controllers/groups.php:249 controllers/groups.php:277
+#: controllers/groups.php:115 controllers/groups.php:124
+#: controllers/groups.php:247 controllers/groups.php:275
 msgid "Group"
 msgstr "Grupo"
 
-#: controllers/groups.php:121
+#: controllers/groups.php:119
 msgid "Fail to add users in group"
 msgstr "Falha ao adicionar usuários no grupo"
 
-#: controllers/groups.php:124
+#: controllers/groups.php:122
 msgid "Fail to create group"
 msgstr "Falha ao criar grupo"
 
-#: controllers/groups.php:151
+#: controllers/groups.php:149
 msgid "Group not found"
 msgstr "Grupo não encontrado"
 
-#: controllers/groups.php:235
+#: controllers/groups.php:233
 msgid "Group users updated"
 msgstr "Usuários do grupo atualizados"
 
-#: controllers/groups.php:237
+#: controllers/groups.php:235
 msgid "No changes in group users"
 msgstr "Nenhuma modificação nos usuários do grupo"
 
-#: controllers/groups.php:259
+#: controllers/groups.php:257
 msgid "Group information updated"
 msgstr "Informações do grupo atualizadas"
 
-#: controllers/groups.php:262
+#: controllers/groups.php:260
 msgid "No change in group information"
 msgstr "Nenhuma modificação nas informações do grupo"
 

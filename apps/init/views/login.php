@@ -3,11 +3,10 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title><?php echo Configure::read('systemName');
-; ?></title>
-        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <title><?php echo Configure::read('systemFullName'); ?></title>
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
         <link rel="shortcut icon" href="<?php echo $base; ?>webroot/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/style1.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/login1.css" />
@@ -31,7 +30,7 @@
             
             <div id="text_info" class="main_info">
                 <div class="center"><img src="<?php echo $this->url(''); ?>webroot/img/meican_new.png" class="logo" alt="MEICAN"/></div>
-                <h2>Management Environment of Inter-domain Circuits for Advanced Networks</h2>
+                <h2><?php echo Configure::read('systemName'); ?></h2>
 
                 <p>MEICAN allows network end-users to request, in a more user-friendly way, dedicated circuits in <a href="http://en.wikipedia.org/wiki/Dynamic_circuit_network">Dynamic Circuit Networks</a>. MEICAN also enables network operators to evaluate and accept end-user's circuit requests in environments with multiple domains.
 With MEICAN, you can:</p>
