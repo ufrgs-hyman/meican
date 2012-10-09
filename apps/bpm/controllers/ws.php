@@ -50,44 +50,44 @@ class ws extends WebServiceController {
         $server->wsdl->addComplexType('requestType', 'complexType', 'struct', 'all', '', array(
             'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
             'src_meican_ip' => array('name' => 'src_meican_ip', 'type' => 'xsd:string'),
-            'src_dom_id' => array('name' => 'src_dom_id', 'type' => 'xsd:string'),
+            'src_topology_id' => array('name' => 'src_topology_id', 'type' => 'xsd:string'),
             'dst_meican_ip' => array('name' => 'dst_meican_ip', 'type' => 'xsd:string'),
-            'dst_dom_id' => array('name' => 'dst_dom_id', 'type' => 'xsd:string'),
+            'dst_topology_id' => array('name' => 'dst_topology_id', 'type' => 'xsd:string'),
             'crr_meican_ip' => array('name' => 'crr_meican_ip', 'type' => 'xsd:string'),
-            'crr_dom_id' => array('name' => 'crr_dom_id', 'type' => 'xsd:string'),
+            'crr_topology_id' => array('name' => 'crr_topology_id', 'type' => 'xsd:string'),
             'src_usr' => array('name' => 'src_usr', 'type' => 'xsd:int')));
         
         $server->wsdl->addComplexType('statusType', 'complexType', 'struct', 'all', '', array(
             'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
             'src_meican_ip' => array('name' => 'src_meican_ip', 'type' => 'xsd:string'),
-            'src_dom_id' => array('name' => 'src_dom_id', 'type' => 'xsd:string'),
+            'src_topology_id' => array('name' => 'src_topology_id', 'type' => 'xsd:string'),
             'status' => array('name' => 'status', 'type' => 'xsd:string')));
         
         $server->wsdl->addComplexType('responseType', 'complexType', 'struct', 'all', '', array(
             'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
             'src_meican_ip' => array('name' => 'src_meican_ip', 'type' => 'xsd:string'),
-            'src_dom_id' => array('name' => 'src_dom_id', 'type' => 'xsd:string'),
+            'src_topology_id' => array('name' => 'src_topology_id', 'type' => 'xsd:string'),
             'crr_meican_ip' => array('name' => 'crr_meican_ip', 'type' => 'xsd:string'),
-            'crr_dom_id' => array('name' => 'crr_dom_id', 'type' => 'xsd:string'),
+            'crr_topology_id' => array('name' => 'crr_topology_id', 'type' => 'xsd:string'),
             'response' => array('name' => 'response', 'type' => 'xsd:string'),
             'message' => array('name' => 'message', 'type' => 'xsd:string')));
 
         $server->wsdl->addComplexType('decisionType', 'complexType', 'struct', 'all', '', array(
             'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
             'src_meican_ip' => array('name' => 'src_meican_ip', 'type' => 'xsd:string'),
-            'src_dom_id' => array('name' => 'src_dom_id', 'type' => 'xsd:string'),
+            'src_topology_id' => array('name' => 'src_topology_id', 'type' => 'xsd:string'),
             'response' => array('name' => 'response', 'type' => 'xsd:string')));
         
         $server->wsdl->addComplexType('primaryType', 'complexType', 'struct', 'all', '', array(
             'req_id' => array('name' => 'req_id', 'type' => 'xsd:int'),
             'src_meican_ip' => array('name' => 'src_meican_ip', 'type' => 'xsd:string'),
-            'src_dom_id' => array('name' => 'src_dom_id', 'type' => 'xsd:string'),
+            'src_topology_id' => array('name' => 'src_topology_id', 'type' => 'xsd:string'),
             'crr_meican_ip' => array('name' => 'crr_meican_ip', 'type' => 'xsd:string'),
-            'crr_dom_id' => array('name' => 'crr_dom_id', 'type' => 'xsd:string')));
+            'crr_topology_id' => array('name' => 'crr_topology_id', 'type' => 'xsd:string')));
         
 
         $server->register(
-                'getReqInfo', array('req_id' => 'xsd:int', 'src_meican_ip' => 'xsd:string', 'src_dom_id' => 'xsd:string'), array('req_info' => 'tns:reqType'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/getReqInfo", 'rpc', 'encoded', 'Method to get request information');
+                'getReqInfo', array('req_id' => 'xsd:int', 'src_meican_ip' => 'xsd:string', 'src_topology_id' => 'xsd:string'), array('req_info' => 'tns:reqType'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/getReqInfo", 'rpc', 'encoded', 'Method to get request information');
 
         $server->register(
                 'refreshStatus', array('status' => 'tns:statusType'), array('return' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/refreshStatus", 'rpc', 'encoded', 'Method only to refresh request status, modify all requests');
@@ -108,16 +108,16 @@ class ws extends WebServiceController {
                 'getNextDomain', array('primary' => 'tns:primaryType'), array('next_domain' => 'xsd:string'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/getNextDomain", 'rpc', 'encoded', 'Complex Hello World Method');
         
         $server->register(
-                'getRequestPath', array('req_id' => 'xsd:int', 'src_meican_ip' => 'xsd:string', 'src_dom_id' => 'xsd:string'), array('topo_id_array' => 'tns:stringTypeList'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/getRequestPath", 'rpc', 'encoded', 'Method to get the reservation path');
+                'getRequestPath', array('req_id' => 'xsd:int', 'src_meican_ip' => 'xsd:string', 'src_topology_id' => 'xsd:string'), array('topo_id_array' => 'tns:stringTypeList'), $namespace, "http://$this_ip/$this_dir_name$this->app/ws/getRequestPath", 'rpc', 'encoded', 'Method to get the reservation path');
 
         
-        function getReqInfo($req_id, $src_meican_ip, $src_dom_id) {
-            CakeLog::write('ws', "Get request info from ODE:" . print_r(array('req_id' => $req_id, 'src_meican_ip' => $src_meican_ip, 'src_dom_id' => $src_dom_id), true));
+        function getReqInfo($req_id, $src_meican_ip, $src_topology_id) {
+            CakeLog::write('ws', "Get request info from ODE:" . print_r(array('req_id' => $req_id, 'src_meican_ip' => $src_meican_ip, 'src_topology_id' => $src_topology_id), true));
 
             $req = new request_info();
             $req->req_id = $req_id;
             $req->src_meican_ip = trim($src_meican_ip);
-            $req->src_dom_id = trim($src_dom_id);
+            $req->src_topology_id = trim($src_topology_id);
             $req->answerable = 'no';
 
             if ($result = $req->fetch(FALSE)) {
@@ -145,15 +145,15 @@ class ws extends WebServiceController {
 
             if (array_key_exists('req_id', $status) &&
                     array_key_exists('src_meican_ip', $status) &&
-                    array_key_exists('src_dom_id', $status) &&
+                    array_key_exists('src_topology_id', $status) &&
                     array_key_exists('status', $status)) {
 
-                if ($status['req_id'] && $status['src_meican_ip'] && $status['src_dom_id'] && $status['status']) {
+                if ($status['req_id'] && $status['src_meican_ip'] && $status['src_topology_id'] && $status['status']) {
 
                     $req = new request_info();
                     $req->req_id = $status['req_id'];
                     $req->src_meican_ip = trim($status['src_meican_ip']);
-                    $req->src_dom_id = trim($status['src_dom_id']);
+                    $req->src_topology_id = trim($status['src_topology_id']);
 
                     if ($req->updateTo(array("status" => $status['status']), false)) {
                         CakeLog::write('ws', "Refresh status: request status updated");
@@ -170,20 +170,20 @@ class ws extends WebServiceController {
 
             if (array_key_exists('req_id', $response) &&
                     array_key_exists('src_meican_ip', $response) &&
-                    array_key_exists('src_dom_id', $response) &&
+                    array_key_exists('src_topology_id', $response) &&
                     array_key_exists('crr_meican_ip', $response) &&
-                    array_key_exists('crr_dom_id', $response) &&
+                    array_key_exists('crr_topology_id', $response) &&
                     array_key_exists('response', $response) &&
                     array_key_exists('message', $response)) {
 
-                if ($response['req_id'] && $response['src_meican_ip'] && $response['src_dom_id'] && $response['crr_meican_ip'] && $response['crr_dom_id']) {
+                if ($response['req_id'] && $response['src_meican_ip'] && $response['src_topology_id'] && $response['crr_meican_ip'] && $response['crr_topology_id']) {
 
                     $req = new request_info();
                     $req->req_id = $response['req_id'];
                     $req->src_meican_ip = trim($response['src_meican_ip']);
-                    $req->src_dom_id = trim($response['src_dom_id']);
+                    $req->src_topology_id = trim($response['src_topology_id']);
                     $req->crr_meican_ip = trim($response['crr_meican_ip']);
-                    $req->crr_dom_id = trim($response['crr_dom_id']);
+                    $req->crr_topology_id = trim($response['crr_topology_id']);
 
                     $validResponses = array("accept", "reject");
 
@@ -214,10 +214,10 @@ class ws extends WebServiceController {
 
             if (array_key_exists('req_id', $decision) &&
                     array_key_exists('src_meican_ip', $decision) &&
-                    array_key_exists('src_dom_id', $decision) &&
+                    array_key_exists('src_topology_id', $decision) &&
                     array_key_exists('response', $decision)) {
 
-                if ($decision['req_id'] && $decision['src_meican_ip'] && $decision['src_dom_id']) {
+                if ($decision['req_id'] && $decision['src_meican_ip'] && $decision['src_topology_id']) {
 
                     $validResponses = array("accept", "reject");
 
@@ -226,7 +226,7 @@ class ws extends WebServiceController {
                         $req = new request_info();
                         $req->req_id = $decision['req_id'];
                         $req->src_meican_ip = trim($decision['src_meican_ip']);
-                        $req->src_dom_id = trim($decision['src_dom_id']);
+                        $req->src_topology_id = trim($decision['src_topology_id']);
                         
                         $req->answerable = 'no';
 
@@ -265,7 +265,7 @@ class ws extends WebServiceController {
                             CakeLog::write('ws', "Final decision: reservation denied, cancelling GRIs. Reservation ID:\n" . print_r($tmp->res_id, true));
 
                             $dom_tmp = new domain_info();
-                            $dom_tmp->dom_id = $req->src_dom_id;
+                            $dom_tmp->topology_id = $req->src_topology_id;
                             $dom = $dom_tmp->fetch(false);
 
                             //as reservas devem ser canceladas no OSCARS
@@ -291,42 +291,13 @@ class ws extends WebServiceController {
             }
             return null;
         }
-
-        /**
-         * @todo Unificar funções requestUserAuthorization e requestGroupAuthorization, muito código repetido
-         * 
-         */
         
         function requestUserAuthorization($usr_dst, $request) {
             CakeLog::write('ws', "Request user authorizarion:\nUser: ". print_r($usr_dst, true). "\n" . print_r($request, true));
 
             if ($usr_dst && $request) {
-
                 $new_request = new request_info();
-                $new_request->req_id = $request['req_id'];
-
-                $new_request->src_meican_ip = trim($request['src_meican_ip']);
-                $new_request->src_dom_id = trim($request['src_dom_id']);
-                $new_request->src_usr = $request['src_usr'];
-                
-                $new_request->dst_meican_ip = trim($request['dst_meican_ip']);
-                $new_request->dst_dom_id = trim($request['dst_dom_id']);
-                
-                $new_request->resource_type = null;
-                $new_request->resource_id = null;
-                
-                $new_request->answerable = 'yes';
-                
-                $new_request->status = null;
-                $new_request->response = null;
-                $new_request->message = null;
-                
-                $new_request->crr_meican_ip = trim($request['crr_meican_ip']);
-                $new_request->crr_dom_id = trim($request['crr_dom_id']);
-                
-                $new_request->response_user = null;
-                $new_request->start_time = microtime(true);
-                $new_request->finish_time = null;
+                $new_request->fillRequest($request);
 
                 //insere embaixo do usuario passado como parametro
                 $user = new user_info();
@@ -376,30 +347,7 @@ class ws extends WebServiceController {
 
             if ($grp_dst && $request) {
                 $new_request = new request_info();
-                $new_request->req_id = $request['req_id'];
-
-                $new_request->src_meican_ip = trim($request['src_meican_ip']);
-                $new_request->src_dom_id = trim($request['src_dom_id']);
-                $new_request->src_usr = $request['src_usr'];
-                
-                $new_request->dst_meican_ip = trim($request['dst_meican_ip']);
-                $new_request->dst_dom_id = trim($request['dst_dom_id']);
-                
-                $new_request->resource_type = null;
-                $new_request->resource_id = null;
-                
-                $new_request->answerable = 'yes';
-                
-                $new_request->status = null;
-                $new_request->response = null;
-                $new_request->message = null;
-                
-                $new_request->crr_meican_ip = trim($request['crr_meican_ip']);
-                $new_request->crr_dom_id = trim($request['crr_dom_id']);
-                
-                $new_request->response_user = null;
-                $new_request->start_time = microtime(true);
-                $new_request->finish_time = null;
+                $new_request->fillRequest($request);
 
                 //insere embaixo do grupo passado como parametro
                 $group = new group_info();
@@ -458,21 +406,19 @@ class ws extends WebServiceController {
 
             if (array_key_exists('req_id', $primary) &&
                     array_key_exists('src_meican_ip', $primary) &&
-                    array_key_exists('src_dom_id', $primary) &&
+                    array_key_exists('src_topology_id', $primary) &&
                     array_key_exists('crr_meican_ip', $primary) &&
-                    array_key_exists('crr_dom_id', $primary)) {
+                    array_key_exists('crr_topology_id', $primary)) {
 
                 if ($this->meican_local == trim($primary['crr_meican_ip'])) {
 
-                    $topo_id_array = getRequestPath($primary['req_id'], $primary['src_meican_ip'], $primary['src_dom_id']);
+                    $topo_id_array = getRequestPath($primary['req_id'], $primary['src_meican_ip'], $primary['src_topology_id']);
 
                     $next_domain = null;
-                    $dom_info = new domain_info();
-                    $dom_info->dom_id = trim($primary['crr_dom_id']);
-                    $crr_domain = $dom_info->fetch(false);
+                    $crr_domain = trim($primary['crr_topology_id']);
 
                     for ($index = 0; $index < count($topo_id_array); $index++) {
-                        if ($topo_id_array[$index] == $crr_domain[0]->topology_id) {
+                        if ($topo_id_array[$index] == $crr_domain) {
                             if (array_key_exists($index + 1, $topo_id_array)) {
                                 $next_domain = $topo_id_array[$index + 1];
                                 break;
@@ -488,13 +434,13 @@ class ws extends WebServiceController {
             }
         }
         
-        function getRequestPath($req_id, $src_meican_ip, $src_dom_id) {
-            CakeLog::write('ws', "Getting request path:\n" . print_r(array('req_id' => $req_id, 'src_meican_ip' => $src_meican_ip, 'src_dom_id' => $src_dom_id), true));
+        function getRequestPath($req_id, $src_meican_ip, $src_topology_id) {
+            CakeLog::write('ws', "Getting request path:\n" . print_r(array('req_id' => $req_id, 'src_meican_ip' => $src_meican_ip, 'src_topology_id' => $src_topology_id), true));
             
             $req_info = new request_info();
             $req_info->req_id = $req_id;
             $req_info->src_meican_ip = trim($src_meican_ip);
-            $req_info->src_dom_id = trim($src_dom_id);
+            $req_info->src_topology_id = trim($src_topology_id);
             $req_info->answerable = 'no';
             $request = $req_info->fetch(false);
 

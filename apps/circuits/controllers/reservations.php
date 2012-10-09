@@ -1060,11 +1060,11 @@ class reservations extends Controller {
             $newReq->req_id = $newReq->getNextId('req_id');
             
             $newReq->src_meican_ip = $meican_local;
-            $newReq->src_dom_id = $src_dom->dom_id;
+            $newReq->src_topology_id = $src_dom->topology_id;
             $newReq->src_usr = $reservation_info->usr_id;
 
             $newReq->dst_meican_ip = $meican_local;
-            $newReq->dst_dom_id = $dst_dom->dom_id;
+            $newReq->dst_topology_id = $dst_dom->topology_id;
 
             $newReq->resource_type = 'reservation_info';
             $newReq->resource_id = $reservation_info->res_id;
@@ -1075,7 +1075,7 @@ class reservations extends Controller {
             $newReq->message = NULL;
             
             $newReq->crr_meican_ip = NULL;
-            $newReq->crr_dom_id = NULL;
+            $newReq->crr_topology_id = NULL;
             $newReq->response_user = NULL;
             $newReq->start_time = NULL;
             $newReq->finish_time = NULL;
@@ -1083,9 +1083,9 @@ class reservations extends Controller {
             $requestSOAP = array(
                 'req_id' => $newReq->req_id,
                 'src_meican_ip' => $newReq->src_meican_ip,
-                'src_dom_id' => $newReq->src_dom_id,
+                'src_topology_id' => $newReq->src_topology_id,
                 'dst_meican_ip' => $newReq->dst_meican_ip,
-                'dst_dom_id' => $newReq->dst_dom_id,
+                'dst_topology_id' => $newReq->dst_topology_id,
                 'src_usr' => $newReq->src_usr);
 
             CakeLog::write("circuits","Sending for authorization:\n". print_r($requestSOAP,TRUE));

@@ -13,11 +13,11 @@ class request_info extends Resource_Model {
         $this->addAttribute("req_id", "INTEGER");
 
         $this->addAttribute("src_meican_ip", "VARCHAR");
-        $this->addAttribute("src_dom_id", "VARCHAR");
+        $this->addAttribute("src_topology_id", "VARCHAR");
         $this->addAttribute("src_usr", "INTEGER");
 
         $this->addAttribute("dst_meican_ip", "VARCHAR");
-        $this->addAttribute("dst_dom_id", "VARCHAR");
+        $this->addAttribute("dst_topology_id", "VARCHAR");
 
         $this->addAttribute("resource_type", "VARCHAR");
         $this->addAttribute("resource_id", "INTEGER");
@@ -28,7 +28,7 @@ class request_info extends Resource_Model {
         $this->addAttribute("message", "VARCHAR");
 
         $this->addAttribute("crr_meican_ip", "VARCHAR");
-        $this->addAttribute("crr_dom_id", "VARCHAR");
+        $this->addAttribute("crr_topology_id", "VARCHAR");
         
         $this->addAttribute("response_user", "INTEGER");
         $this->addAttribute("start_time", "FLOAT");
@@ -54,6 +54,43 @@ class request_info extends Resource_Model {
         $domain->dom_id = $arg_id;
         if ($result = $domain->fetch(FALSE)) {
             $this->{$dom_src_ip} = $result[0]->dom_ip;
+        }
+    }
+    
+    public function fillRequest($requestEnv) {
+        if (array_key_exists('req_id', $requestEnv) &&
+                array_key_exists('src_meican_ip', $requestEnv) &&
+                array_key_exists('src_topology_id', $requestEnv) &&
+                array_key_exists('src_usr', $requestEnv) &&
+                array_key_exists('dst_meican_ip', $requestEnv) &&
+                array_key_exists('dst_topology_id', $requestEnv) &&
+                array_key_exists('crr_meican_ip', $requestEnv) &&
+                array_key_exists('crr_topology_id', $requestEnv)) {
+
+            $this->req_id = $requestEnv['req_id'];
+
+            $this->src_meican_ip = trim($requestEnv['src_meican_ip']);
+            $this->src_topology_id = trim($requestEnv['src_topology_id']);
+            $this->src_usr = $requestEnv['src_usr'];
+
+            $this->dst_meican_ip = trim($requestEnv['dst_meican_ip']);
+            $this->dst_topology_id = trim($requestEnv['dst_topology_id']);
+
+            $this->resource_type = null;
+            $this->resource_id = null;
+
+            $this->answerable = 'yes';
+
+            $this->status = null;
+            $this->response = null;
+            $this->message = null;
+
+            $this->crr_meican_ip = trim($requestEnv['crr_meican_ip']);
+            $this->crr_topology_id = trim($requestEnv['crr_topology_id']);
+
+            $this->response_user = null;
+            $this->start_time = microtime(true);
+            $this->finish_time = null;
         }
     }
 
@@ -90,7 +127,7 @@ class request_info extends Resource_Model {
             CakeLog::write("circuits", "Request is local");
             
             $dom_info = new domain_info();
-            $dom_info->dom_id = $this->src_dom_id;
+            $dom_info->topology_id = $this->src_topology_id;
             $return_request->src_domain = $dom_info->get("dom_descr", false);
 
             $user_info = new user_info();
@@ -103,7 +140,7 @@ class request_info extends Resource_Model {
             if ($this->dst_meican_ip == $meican_local) {
                 // Case 1.1
                 $dom_info = new domain_info();
-                $dom_info->dom_id = $this->dst_dom_id;
+                $dom_info->topology_id = $this->dst_topology_id;
             
                 $return_request->dst_domain = $dom_info->get("dom_descr", false);
             } else {
@@ -113,7 +150,7 @@ class request_info extends Resource_Model {
                 // Case 1.2
                 try {
                     $ODEendpoint = "http://$this->dst_meican_ip}/getMeicanData";
-                    $requestSOAP = array('dom_id' => $this->dst_dom_id);
+                    $requestSOAP = array('topology_id' => $this->dst_topology_id);
 
                     $client = new SoapClient($ODEendpoint, array('cache_wsdl' => 0));
                     $domain = $client->getDomains($requestSOAP);
@@ -121,7 +158,7 @@ class request_info extends Resource_Model {
                     $return_request->dst_domain = $domain['dom_descr'];
                 } catch (Exception $e) {
                     CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
-                    $return_request->dst_domain = $this->dst_meican_ip;
+                    $return_request->dst_domain = $this->dst_topology_id;
                 }
             }
 
@@ -129,7 +166,7 @@ class request_info extends Resource_Model {
                 $req_tmp = new request_info();
                 $req_tmp->req_id = $this->req_id;
                 $req_tmp->src_meican_ip = $this->src_meican_ip;
-                $req_tmp->src_dom_id = $this->src_dom_id;
+                $req_tmp->src_topology_id = $this->src_topology_id;
                 $req_tmp->answerable = 'no';
                 
                 if ($req_result = $req_tmp->fetch(false)) {
@@ -189,7 +226,7 @@ class request_info extends Resource_Model {
 
             // get source domain
             try {
-                $requestSOAP = array('dom_id' => $this->src_dom_id);
+                $requestSOAP = array('topology_id' => $this->src_topology_id);
 
                 $client = new SoapClient($ODEendpoint, array('cache_wsdl' => 0));
                 $domain = $client->getDomains($requestSOAP);
@@ -197,20 +234,20 @@ class request_info extends Resource_Model {
                 $return_request->src_domain = $domain['dom_descr'];
             } catch (Exception $e) {
                 CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
-                $return_request->src_domain = $this->src_meican_ip;
+                $return_request->src_domain = $this->src_topology_id;
             }
 
             // get destination domain
             if ($this->dst_meican_ip == $meican_local) {
                 // Case 2.1
                 $dom_info = new domain_info();
-                $dom_info->dom_id = $this->dst_dom_id;
+                $dom_info->topology_id = $this->dst_topology_id;
                 $return_request->dst_domain = $dom_info->get("dom_descr", false);
             } else {
                 // Case 2.2
                 try {
                     $dstODEendpoint = "http://$this->dst_meican_ip}/getMeicanData";
-                    $requestSOAP = array('dom_id' => $this->dst_dom_id);
+                    $requestSOAP = array('topology_id' => $this->dst_topology_id);
 
                     $client = new SoapClient($dstODEendpoint, array('cache_wsdl' => 0));
                     $domain = $client->getDomains($requestSOAP);
@@ -218,7 +255,7 @@ class request_info extends Resource_Model {
                     $return_request->dst_domain = $domain['dom_descr'];
                 } catch (Exception $e) {
                     CakeLog::write("error", "Caught exception while trying to call getMeicanData from ODE: " . print_r($e->getMessage()));
-                    $return_request->dst_domain = $this->dst_meican_ip;
+                    $return_request->dst_domain = $this->dst_topology_id;
                 }
             }
 
@@ -321,12 +358,12 @@ class request_info extends Resource_Model {
                 $responseSOAP = array(
                     'req_id' => $toResponse->req_id,
                     'src_meican_ip' => $toResponse->src_meican_ip,
-                    'src_dom_id' => $toResponse->src_dom_id,
+                    'src_topology_id' => $toResponse->src_topology_id,
                     'response' => $response,
                     'message' => $message);
 
                 $dom = new domain_info();
-                $dom->dom_id = $toResponse->crr_dom_ip;
+                $dom->topology_id = $toResponse->crr_topology_id;
                 $res_domain = $dom->fetch(false);
 
                 $domain = $res_domain[0];

@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `domain_info` (
   `oscars_ip` varchar(64) DEFAULT NULL,
   `oscars_protocol` enum('http','https') DEFAULT 'http',
   `dom_version` varchar(128) DEFAULT NULL,
-  `topology_id` varchar(30) DEFAULT NULL,
+  `topology_id` varchar(50) DEFAULT NULL,
   `ode_wsdl_path` varchar(256) DEFAULT NULL,
   `ode_start` varchar(32) DEFAULT NULL,
   `ode_response` varchar(32) DEFAULT NULL,
