@@ -1088,7 +1088,9 @@ class reservations extends Controller {
                 'dst_topology_id' => $newReq->dst_topology_id,
                 'src_usr' => $newReq->src_usr);
 
+            CakeLog::write("circuits",print_r($src_dom->topology_id,true));
             CakeLog::write("circuits","Sending for authorization:\n". print_r($requestSOAP,TRUE));
+            CakeLog::write("circuits",print_r($src_dom->ode_wsdl_path,true));
             try {
                 $client = new SoapClient($src_dom->ode_wsdl_path, array('cache_wsdl' => WSDL_CACHE_NONE));
                 
