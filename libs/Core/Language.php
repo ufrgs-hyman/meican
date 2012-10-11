@@ -9,9 +9,10 @@ class Language {
     private $domain = null;
     
     public function __construct(){
-        $language = Common::getSessionVariable('lang');
+        $language = false;//Common::getSessionVariable('lang');
         if (!$language)
             $language = Configure::read('defaultLang');
+        
         $this->setLanguage($language);
     }
     
@@ -54,6 +55,12 @@ class Language {
     
     public function getLanguage(){
         return $this->language;
+    }
+    
+    public function getSimpleLanguage(){
+        if (empty($this->language))
+            return 'en';
+        return substr($this->language, 0, 2);        
     }
     
     public function loadLanguageFromHeader(){

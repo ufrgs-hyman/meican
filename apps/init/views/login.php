@@ -1,5 +1,5 @@
 <?php $base = $this->url(); 
-    Language::getInstance()->setLanguage('en-us'); ?>
+    //Language::getInstance()->setLanguage('en-us'); ?>
 <!doctype html>
 <html lang="en">
     <head>
@@ -12,12 +12,12 @@
         <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/login1.css" />
         <?php /*
           <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/style1.css" /> */ ?>
-        <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>webroot/css/meican3-theme/jquery-ui-1.8.16.custom.css" />
-        <script type="text/javascript" src="<?php echo $this->url(''); ?>webroot/js/jquery.min.js"></script>
-        <script type="text/javascript" src="<?php echo $base; ?>webroot/js/jquery-ui-1.8.16.custom.min.js"></script>
-        <script type="text/javascript" src="<?php echo $this->url(''); ?>webroot/js/main.js"></script>
+        <link rel="stylesheet" type="text/css" href="<?= $base ?>webroot/css/meican3-theme/jquery-ui-1.8.16.custom.css" />
+        <script type="text/javascript" src="<?= $base ?>webroot/js/jquery.min.js"></script>
+        <script type="text/javascript" src="<?= $base ?>webroot/js/jquery-ui-1.8.16.custom.min.js"></script>
+        <script type="text/javascript" src="<?= $base ?>webroot/js/main.js"></script>
         <script type="text/javascript">
-            var baseUrl = '<?php echo $this->url(''); ?>';
+            var baseUrl = '<?= $base ?>';
             $(function(){$.makeAutofocus(); });
         </script>
     </head>
@@ -29,32 +29,7 @@
         <div id="content">
             
             <div id="text_info" class="main_info">
-                <div class="center"><img src="<?php echo $this->url(''); ?>webroot/img/meican_new.png" class="logo" alt="MEICAN"/></div>
-                <h2><?php echo Configure::read('systemName'); ?></h2>
-
-                <p>MEICAN allows network end-users to request, in a more user-friendly way, dedicated circuits in <a href="http://en.wikipedia.org/wiki/Dynamic_circuit_network">Dynamic Circuit Networks</a>. MEICAN also enables network operators to evaluate and accept end-user's circuit requests in environments with multiple domains.
-With MEICAN, you can:</p>
-
-<ul>
-    <li>
-        <img src="<?php echo $this->url(''); ?>webroot/img/bullet1.jpg" alt="Bullet" class="bullet"/>
-        <b>Request Circuits</b>
-        <p>Network end-user's circuits can be scheduled to be set up and teared down when it is more convenient.</p>
-    </li>
-    <li>
-        <img src="<?php echo $this->url(''); ?>webroot/img/bullet2.jpg" alt="Bullet" class="bullet"/>
-        <b>Authorize Requests</b>
-        <p>Network operators can be notified to accept or reject the requests of establishment of new circuits.</p>
-    </li>
-    <li>
-        <img src="<?php echo $this->url(''); ?>webroot/img/bullet3.jpg" alt="Bullet" class="bullet"/>
-        <b>Build Automated Policies</b>
-        <p>Authorization workflows can be used to automate the decision-making process along the multiple domains where end-user's circuits pass through.</p>
-    </li>
-</ul>
-
-
-
+                <?php echo $this->element('text_info_'.Language::getInstance()->getSimpleLanguage()); ?>
             </div>
             
             <div id="login_box">
@@ -80,8 +55,8 @@ With MEICAN, you can:</p>
                     </form>
                 </div>
                 <div class="logos-footer">
-                 <a href="http://www.rnp.br" title="RNP"><img src="<?php echo $this->url(''); ?>webroot/img/rnp.gif" alt="RNP" style="height:36px;"/></a>
-                 <a href="http://networks.inf.ufrgs.br/" title="Computer Networks UFRGS"><img src="<?php echo $this->url(''); ?>webroot/img/networks.jpg" alt="networks" style="height:42px;"/></a>
+                 <a href="http://www.rnp.br" title="RNP"><img src="<?= $base ?>webroot/img/rnp.gif" alt="RNP" style="height:36px;"/></a>
+                 <a href="http://networks.inf.ufrgs.br/" title="Computer Networks UFRGS"><img src="<?= $base ?>webroot/img/networks.jpg" alt="networks" style="height:42px;"/></a>
                 </div>
             </div>
         </div>
