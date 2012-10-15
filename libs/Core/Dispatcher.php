@@ -131,8 +131,11 @@ class Dispatcher {
         if (AuthSystem::userTryToLogin() || AuthSystem::isUserLoggedIn()) {
             return true;
         } else {
-            header('HTTP/1.1 403 Forbidden');
-            header('Location: ' . $this->url('login'));
+            //header('HTTP/1.1 401 Unauthorized');
+            if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+                header('Location: ' . $this->url('login'), true, 401);
+            else
+                header('Location: ' . $this->url('login'));
             return false;
         }
     }

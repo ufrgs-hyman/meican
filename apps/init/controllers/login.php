@@ -22,8 +22,7 @@ class login extends Controller {
 
     public function logout() {
         AuthSystem::userLogout();
-        header('HTTP/1.1 401 Logout');
-        //header('HTTP/1.1 404 Not Found');
+        header('HTTP/1.1 401 Unauthorized');
     }
 
     public function doLogin() {

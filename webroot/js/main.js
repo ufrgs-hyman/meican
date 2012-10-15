@@ -1,5 +1,5 @@
 function updateSystemTime() {
-    $.get(baseUrl+"init/info_box/time", function(data) {
+    $.get(baseUrl+"init/info_box/time", function(data, s, jq) {
         if (data)
             $("#system_date").html(data);
     });
@@ -151,12 +151,12 @@ function clearFlash(){
         $(this).find('div.subItem').addClass('ui-widget-content');*/
     };
     
-    if (jQuery.isFunction(jQuery.fn.pjax)){  
-        $.extend($.pjax.defaults, {
+    var defjax = {
             error: function(jqXHR, textStatus) {
                 switch (jqXHR.status) {
                     case 401:
                     case 402:
+                    case 403:  
                     case 405://change lang
                     case 406://force refresh
                         top.location.href = baseUrl;
@@ -172,8 +172,11 @@ function clearFlash(){
                 console.debug(jqXHR);
             },
             timeout: null
-        });
+        };
+    if (jQuery.isFunction(jQuery.fn.pjax)){  
+        $.extend($.pjax.defaults, defjax);
     }
+    jQuery.ajaxSetup(defjax);
     
     
     $.fn.extend({
