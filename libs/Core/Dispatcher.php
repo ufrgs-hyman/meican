@@ -131,6 +131,7 @@ class Dispatcher {
         if (AuthSystem::userTryToLogin() || AuthSystem::isUserLoggedIn()) {
             return true;
         } else {
+            header('HTTP/1.1 403 Forbidden');
             header('Location: ' . $this->url('login'));
             return false;
         }
