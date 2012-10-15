@@ -28,10 +28,6 @@
         
         <div id="content">
             
-            <div id="text_info" class="main_info">
-                <?php echo $this->element('text_info_'.Language::getInstance()->getSimpleLanguage()); ?>
-            </div>
-            
             <div id="login_box">
                 <div id="login_form" class="tab_content">
                     <div id="message"><?php echo @$message ?></div>
@@ -58,6 +54,12 @@
                  <a href="http://www.rnp.br" title="RNP"><img src="<?= $base ?>webroot/img/rnp.gif" alt="RNP" style="height:36px;"/></a>
                  <a href="http://networks.inf.ufrgs.br/" title="Computer Networks UFRGS"><img src="<?= $base ?>webroot/img/networks.jpg" alt="networks" style="height:42px;"/></a>
                 </div>
+            </div>
+            
+            
+            
+            <div id="text_info" class="main-info">
+                <?php echo $this->element('text_info_'.Language::getInstance()->getSimpleLanguage()); ?>
             </div>
         </div>
         
