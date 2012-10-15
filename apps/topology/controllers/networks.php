@@ -63,9 +63,11 @@ class networks extends MeicanController {
             }
             $this->setArgsToBody($networks);
         }
+        $this->render('show');
     }
 
     public function add_form() {
+        //$this->redirect(array('action' => 'show'));
         $domain_info = new domain_info();
         $domains = $domain_info->fetch();
         
@@ -101,8 +103,8 @@ class networks extends MeicanController {
 
                 if ($network->insert($parent_domain, "domain_info")) {
                     $this->setFlash(_("Network") . " '$network->net_descr' " . _("added"), "success");
-                    $this->show();
-                    return;
+                    return $this->show();
+                    //return $this->redirect(array('action' => 'show'));
                 } else
                     $this->setFlash(_("Fail to create network"), "error");
             } else
@@ -130,8 +132,8 @@ class networks extends MeicanController {
             $network = $res_network[0];
         } else {
             $this->setFlash(_("Network not found"), "fatal");
-            $this->show();
-            return;
+            return $this->show();
+            //return $this->redirect(array('action' => 'show'));
         }
         
         $aco = new Acos($network->net_id, "network_info");
