@@ -34,7 +34,7 @@ class devices extends MeicanController {
         if ($allDevices = $this->makeIndex()) {
             $devices = array();
             $acl = AclLoader::getInstance();
-            
+
             foreach ($allDevices as $d) {
                 $device = new stdClass();
                 $device->id = $d->dev_id;
@@ -44,9 +44,9 @@ class devices extends MeicanController {
                 $device->model = $d->model;
                 $device->nr_ports = $d->nr_ports;
                 $device->node_id = $d->node_id;
-                
+
                 $device->nr_endpoints = 0;
-                $aco = new Acos($d->dev_id,"device_info");
+                $aco = new Acos($d->dev_id, "device_info");
                 if ($aco_obj = $aco->fetch(FALSE)) {
                     $children = $aco_obj[0]->findChildren();
                     foreach ($children as $child) {
@@ -59,14 +59,14 @@ class devices extends MeicanController {
                 $tmp->net_id = $d->net_id;
                 $result = $tmp->fetch();
                 $device->network = $result[0]->net_descr;
-                
+
                 $device->deletable = $acl->checkACL('delete', 'device_info', $d->dev_id);
                 $device->editable = $acl->checkACL('update', 'device_info', $d->dev_id);
 
                 $devices[] = $device;
             }
             $this->setArgsToBody($devices);
-      			$this->render('show');
+            $this->render('show');
         }
     }
 

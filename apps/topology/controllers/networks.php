@@ -36,7 +36,7 @@ class networks extends MeicanController {
                 $network->descr = $n->net_descr;
                 $network->latitude = $n->net_lat;
                 $network->longitude = $n->net_lng;
-                
+
                 $aco = new Acos($n->net_id, "network_info");
                 $network->parent_domain = _("Could not find domain");
                 if ($parent = $aco->getParentNodes()) {
@@ -62,7 +62,7 @@ class networks extends MeicanController {
                 $networks[] = $network;
             }
             $this->setArgsToBody($networks);
-      			$this->render('show');
+            $this->render('show');
         }
     }
 

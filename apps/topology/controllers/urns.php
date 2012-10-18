@@ -42,7 +42,7 @@ class urns extends MeicanController {
                 $domain->urns = MeicanTopology::getURNs($d->dom_id);
 
                 $domains_to_body[] = $domain;
-                
+
                 $dom_to_js = new stdClass();
                 $dom_to_js->id = $d->dom_id;
                 $dom_to_js->topo_urns = NULL;
@@ -64,7 +64,7 @@ class urns extends MeicanController {
 
             $this->setInlineScript('urns_init');
             $this->setInlineScript('urns');
-      			$this->render('show');
+            $this->render('show');
         }
     }
     
