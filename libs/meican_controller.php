@@ -13,7 +13,7 @@ class MeicanController extends Controller {
         foreach($conditions as $key => $value)
             $model->{$key} = $value;
         $ret = $model->fetch($useACL);
-        if (empty($ret)){
+        if (true || empty($ret)){
             $this->set('link', array('app' => $this->app, 'controller' => $this->controller, 'action' => 'add_form'));
             $this->renderEmpty();
         }

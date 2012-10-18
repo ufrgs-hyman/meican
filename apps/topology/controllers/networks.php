@@ -62,8 +62,8 @@ class networks extends MeicanController {
                 $networks[] = $network;
             }
             $this->setArgsToBody($networks);
+      			$this->render('show');
         }
-        $this->render('show');
     }
 
     public function add_form() {

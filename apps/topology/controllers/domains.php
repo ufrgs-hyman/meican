@@ -39,8 +39,8 @@ class domains extends MeicanController {
                 $domains[] = $domain;
             }
             $this->setArgsToBody($domains);
+      			$this->render('show');
         }
-        $this->render('show');
     }
 
     public function add_form() {

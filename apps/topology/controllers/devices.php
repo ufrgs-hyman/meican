@@ -66,8 +66,8 @@ class devices extends MeicanController {
                 $devices[] = $device;
             }
             $this->setArgsToBody($devices);
+      			$this->render('show');
         }
-        $this->render('show');
     }
 
     public function add_form() {
