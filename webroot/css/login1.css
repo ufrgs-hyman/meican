@@ -15,7 +15,6 @@ html,body{
 }
 
 div#header {
-    max-width: 1100px;
     min-width: 780px;
     height: 32px;
     background-color: #27567C;
