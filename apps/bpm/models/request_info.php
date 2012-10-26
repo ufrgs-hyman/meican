@@ -1,5 +1,7 @@
 <?php
 
+include_once 'apps/topology/models/meican_info.php';
+
 include_once 'libs/Model/resource_model.php';
 include_once 'libs/auth.php';
 
@@ -370,6 +372,7 @@ class request_info extends Resource_Model {
 
                 if ($domain->ode_wsdl_path && $domain->ode_response) {
 
+                    CakeLog::write("ws", "ode wsdl:\n".  print_r($domain->ode_wsdl_path, true));
                     CakeLog::write("circuits", "Sending response:\n" . print_r($responseSOAP, true));
 
                     try {
