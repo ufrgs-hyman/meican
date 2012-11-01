@@ -23,6 +23,11 @@ class bpm extends Application {
                         'model' => 'bpm',
                         'url' => array('app' => $this->appName, 'controller' => 'ode')
                     )),
+                    new MenuItem(array(
+                        'label' => _("Policy Editor"),
+                        'model' => 'bpm',
+                        'url' => array('app' => $this->appName, 'controller' => 'policyEditor')
+                    )),
                 )
             )));
     }
