@@ -46,11 +46,6 @@
         $this->viewVars['scripts_for_layout'][] = "circuits/cjs/googlemaps.js";
         $this->viewVars['scripts_for_layout'][] = "circuits/cjs/StyledMarker.js";
         
-//        $this->viewVars['scripts_for_layout'][] = "cjs/WireIt/yui/";
-//        $this->viewVars['scripts_for_layout'][] = "cjs/WireIt/yui/";
-//        $this->viewVars['scripts_for_layout'][] = "cjs/WireIt/yui/";
-//        $this->viewVars['scripts_for_layout'][] = "cjs/WireIt/yui/";
-        
         echo $this->scripts();
         ?>
         <?php /*  Coloca o theme roller

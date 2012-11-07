@@ -111,6 +111,8 @@ div.Bubble div.body {
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/js/InOutContainer.js"></script>
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/js/adapters/json-rpc.js"></script>
 
+<script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/js/policyEditor.js"></script>
+
 <style>
 /* Comment Module */
 div.WireIt-Container.WiringEditor-module-comment { width: 200px; }
@@ -176,7 +178,7 @@ YAHOO.util.Event.onDOMReady( function() {
 					<br />
 					<p><b>Drag and drop modules from the Module list</b> on the left to the working layer in the middle.</p>
 					<br />
-					<p><a href="demo.js" target="_new">Click here to view the language definition for this editor.</a></p>
+					<p><a href="policyEditor" target="_new">Click here to view the language definition for this editor.</a></p>
 				</div>
 			</div>
 		</li>

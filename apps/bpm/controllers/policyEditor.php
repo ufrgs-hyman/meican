@@ -19,7 +19,7 @@ class policyEditor extends MeicanController {
     }
 
     public function show() {
-        
+        //$this->addScriptForLayout('policyEditor.js');
         $this->render('show');
     }
     
