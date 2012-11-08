@@ -1,19 +1,13 @@
-<?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-?>
-
-<head>
+    <!--
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>Policy Editor</title>
 	<link rel="icon" href="../favicon.ico" type="image/png" />
   <link rel="SHORTCUT ICON" href="../favicon.ico" type="image/png" />
-
+-->
+    
 <!-- YUI -->
-<link rel="stylesheet" type="text/css" href="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/reset-fonts-grids/reset-fonts-grids.css" />
+<!-- link rel="stylesheet" type="text/css" href="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/reset-fonts-grids/reset-fonts-grids.css" / -->
 <link rel="stylesheet" type="text/css" href="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/assets/skins/sam/skin.css" />
 
 <!-- InputEx CSS -->
@@ -70,7 +64,7 @@ div.Bubble div.body {
 <!-- YUI -->
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/utilities/utilities.js"></script>
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/resize/resize-min.js"></script>
-<script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/layout/layout-min.js"></script>
+<script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/layout/layout-debug.js"></script>
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/container/container-min.js"></script>
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/json/json-min.js"></script>
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/button/button-min.js"></script>
@@ -123,25 +117,32 @@ div.WireIt-Container.WiringEditor-module-comment div.body textarea { background-
 <script>
 
 // InputEx needs a correct path to this image
-inputEx.spacerUrl = "/inputex/trunk/images/space.gif";
+inputEx.spacerUrl = "<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/inputex/images/space.gif";
 
+$(function(){
+///    alert("oi");
+//});
 
-YAHOO.util.Event.onDOMReady( function() {
-	/*var*/ editor = new WireIt.WiringEditor(meicanPolicyLanguage); 
+//YAHOO.util.Event.onDOMReady( function() {
+    console.debug("carregando editor...");
+    //alert("ola");
+	//var
+        editor = new WireIt.WiringEditor(meicanPolicyLanguage); 
 	
 	// Open the infos panel
-	//editor.accordionView.openPanel(2);
-	editor.accordionView.closePanel(0);
-	editor.accordionView.closePanel(1);
-	editor.accordionView.closePanel(2);
+        //editor.accordionView.openPanel(2);
+	//editor.accordionView.closePanel(0);
+	//editor.accordionView.closePanel(1);
+	//editor.accordionView.closePanel(2);
 });
 
 </script>
 
-</head>
+<!-- body class="yui-skin-sam" -->
 
-<body class="yui-skin-sam">
-
+    <h1><?= _("Policy Editor") ?></h1>
+    <div id="container" class="yui-skin-sam">
+    
 	<div id="top">
 		<div class="logo">Policy Editor</div>
 		<div id="toolbar"></div>
@@ -203,5 +204,7 @@ YAHOO.util.Event.onDOMReady( function() {
 					<p>Close this dialog to test the WiringEditor</p>
 	    </div>
 	</div>
+        
+    </div>
 
-</body>
+<!-- /body -->

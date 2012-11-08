@@ -2,7 +2,10 @@ var meicanPolicyLanguage = {
 	
 	// Set a unique name for the language
 	languageName: "policyLanguage",
-
+        
+        // Set the adapter for communnication with backend
+        adapter: WireIt.WiringEditor.adapters.JsonRpc,
+        
 	// inputEx fields for pipes properties
 	propertiesFields: [
 		// default fields (the "name" field is required by the WiringEditor):
@@ -78,8 +81,8 @@ var meicanPolicyLanguage = {
 		{
 	         "name": "Start Policy",
 	         "container": {
-	      		"xtype":"WireIt.ImageContainer", 
-	      		"image": "request.png",
+	      		"xtype":"WireIt.ImageContainer",
+	      		"image": baseUrl + "apps/bpm/webroot/img/request.png",
 	      		//"icon": "imagem_teste.png",
 	      		"terminals": [
 	      			{"name": "_INPUT1", "direction": [-1,0], "offsetPosition": {"left": -15, "top": 20 }},
@@ -93,7 +96,7 @@ var meicanPolicyLanguage = {
 	         "name": "Filter for Domain",
 	         "container": {
 	      		"xtype":"WireIt.ImageContainer", 
-	      		"image": "domain.png",
+	      		"image": baseUrl + "apps/bpm/webroot/img/domain.png",
 	      		//"icon": "imagem_teste.png",
 	      		"terminals": [
 	      			{"name": "_INPUT1", "direction": [-1,0], "offsetPosition": {"left": -15, "top": 20 }},
@@ -106,7 +109,7 @@ var meicanPolicyLanguage = {
 	         "name": "Filter for Human",
 	         "container": {
 	      		"xtype":"WireIt.ImageContainer", 
-	      		"image": "user.png",
+	      		"image": baseUrl + "apps/bpm/webroot/img/user.png",
 	      		//"icon": "imagem_teste.png",
 	      		"terminals": [
 	      			{"name": "_INPUT1", "direction": [-1,0], "offsetPosition": {"left": -15, "top": 20 }},
@@ -120,7 +123,7 @@ var meicanPolicyLanguage = {
 	         "name": "Filter for Bandwidth",
 	         "container": {
 	      		"xtype":"WireIt.ImageContainer", 
-	      		"image": "bandwidth.png",
+	      		"image": baseUrl + "apps/bpm/webroot/img/bandwidth.png",
 	      		//"icon": "imagem_teste.png",
 	      		"terminals": [
 	      			{"name": "_INPUT1", "direction": [-1,0], "offsetPosition": {"left": -15, "top": 20 }},
@@ -135,7 +138,7 @@ var meicanPolicyLanguage = {
 	         "name": "Filter for Time",
 	         "container": {
 	      		"xtype":"WireIt.ImageContainer", 
-	      		"image": "time.png",
+	      		"image": baseUrl + "apps/bpm/webroot/img/time.png",
 	      		//"icon": "imagem_teste.png",
 	      		"terminals": [
 	      			{"name": "_INPUT1", "direction": [-1,0], "offsetPosition": {"left": -15, "top": 20 }},
@@ -149,7 +152,7 @@ var meicanPolicyLanguage = {
 	         "name": "Request Human Authorization",
 	         "container": {
 	      		"xtype":"WireIt.ImageContainer", 
-	      		"image": "request_user.png",
+	      		"image": baseUrl + "apps/bpm/webroot/img/request_user.png",
 	      		//"icon": "imagem_teste.png",
 	      		"terminals": [
 	      			{"name": "_INPUT1", "direction": [-1,0], "offsetPosition": {"left": -15, "top": 20 }},
@@ -163,7 +166,7 @@ var meicanPolicyLanguage = {
 	         "name": "Request Group Authorization",
 	         "container": {
 	      		"xtype":"WireIt.ImageContainer", 
-	      		"image": "request_group.png",
+	      		"image": baseUrl + "apps/bpm/webroot/img/request_group.png",
 	      		//"icon": "imagem_teste.png",
 	      		"terminals": [
 	      			{"name": "_INPUT1", "direction": [-1,0], "offsetPosition": {"left": -15, "top": 20 }},
@@ -178,13 +181,13 @@ var meicanPolicyLanguage = {
 	         "name": "Notify Human",
 	         "container": {
 	      		"xtype":"WireIt.ImageContainer", 
-	      		"image": "notify_user.png",
+	      		"image": baseUrl + "apps/bpm/webroot/img/notify_user.png",
 	      		//"icon": "imagem_teste.png",
 	      		"terminals": [
 	      			{"name": "_INPUT1", "direction": [-1,0], "offsetPosition": {"left": -15, "top": 20 }},
 	      			//{"name": "_INPUT2", "direction": [-1,0], "offsetPosition": {"left": -3, "top": 37 }},
 	      			{"name": "_OUTPUT", "direction": [1,0], "offsetPosition": {"left": 55, "top": 20 }}
-	      		],
+	      		]
 	      	}
 	      },
 	      
@@ -192,13 +195,13 @@ var meicanPolicyLanguage = {
 	         "name": "Notify Group",
 	         "container": {
 	      		"xtype":"WireIt.ImageContainer", 
-	      		"image": "notify_user.png",
+	      		"image": baseUrl + "apps/bpm/webroot/img/notify_user.png",
 	      		//"icon": "imagem_teste.png",
 	      		"terminals": [
 	      			{"name": "_INPUT1", "direction": [-1,0], "offsetPosition": {"left": -15, "top": 20 }},
 	      			//{"name": "_INPUT2", "direction": [-1,0], "offsetPosition": {"left": -3, "top": 37 }},
 	      			{"name": "_OUTPUT", "direction": [1,0], "offsetPosition": {"left": 55, "top": 20 }}
-	      		],
+	      		]
 	      	}
 	      },
 	      
@@ -206,20 +209,20 @@ var meicanPolicyLanguage = {
 	         "name": "Accept Automatically",
 	         "container": {
 	      		"xtype":"WireIt.ImageContainer", 
-	      		"image": "accept.png",
+	      		"image": baseUrl + "apps/bpm/webroot/img/accept.png",
 	      		//"icon": "imagem_teste.png",
 	      		"terminals": [
 	      			{"name": "_INPUT1", "direction": [-1,0], "offsetPosition": {"left": -15, "top": 20 }},
 	      			//{"name": "_INPUT2", "direction": [-1,0], "offsetPosition": {"left": -3, "top": 37 }},
 	      			{"name": "_OUTPUT", "direction": [1,0], "offsetPosition": {"left": 55, "top": 20 }}
-	      		],
+	      		]
 	      	}
 	      },
 	      {
 	         "name": "Deny Automatically",
 	         "container": {
 	      		"xtype":"WireIt.ImageContainer", 
-	      		"image": "deny.png",
+	      		"image": baseUrl + "apps/bpm/webroot/img/deny.png",
 	      		//"icon": "imagem_teste.png",
 	      		"terminals": [
 	      			{"name": "_INPUT1", "direction": [-1,0], "offsetPosition": {"left": -15, "top": 20 }},

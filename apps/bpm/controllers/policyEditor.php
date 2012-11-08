@@ -23,6 +23,10 @@ class policyEditor extends MeicanController {
         $this->render('show');
     }
     
+    public function handleWiring() {
+        CakeLog::write('debug', "Handle wiring debug");
+        $this->renderJson("123 testando");
+    }
     
 
 }
