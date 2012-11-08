@@ -3,6 +3,8 @@ var timerValid = true; // se for verdadeiro, a validacao do timer esta correta
 
 /* VARIAVEIS PARA CONTROLE DO MAPA*/
 var srcSet = false;  // origem selecionada
+var waypointCount = 0; // numero de pontos intermediarios selecionados
+var hops = new Array(); //array contendo posicao dos pontos intermediarios
 var dstSet = false;  // destino selecionado
 var edit_markersArray = new Array(); // array dos marcadores no mapa de criacao da reserva
 var view_markersArray = new Array(); // array dos marcadores no mapa de visualizacao da reserva
@@ -32,6 +34,7 @@ var view_center; // Centro do mapa na criacao de reservas
 var overlay; // Camada de overlay para sobreposicoes
 var mapDiv; 
 var contextMenu = null; // menu pop-up ao clicar nas redes do mapa
+var contextMenuWaypoint = null; //meun pop-up para waypoints
 var editMapHandler;
 
 var useView = false;
@@ -1232,6 +1235,7 @@ function validateBand(band_value) {
             });
 	
             $.fn.mapEdit.prepareContextMenu();
+            $.fn.mapEdit.prepareWaypointContextMenu();
             MyOverlay.prototype = new google.maps.OverlayView();
             MyOverlay.prototype.onAdd = function() { }
             MyOverlay.prototype.onRemove = function() { }
@@ -1268,7 +1272,8 @@ function validateBand(band_value) {
             //toggleCluster(true, edit_markersArray);
 
             google.maps.event.addListener(edit_map, 'click', function() {
-                contextMenu.hide();        
+                contextMenu.hide(); 
+                contextMenuWaypoint.hide(); 
             }); 
 
             if ( !(dstSet) && !(srcSet)) {       
@@ -1288,6 +1293,7 @@ function validateBand(band_value) {
             if (contextMenu == null) {
                 contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
                 contextMenu.append('<li><a href="#fromHere" id="contextItem">' + from_here_string + '</a></li>');
+                contextMenu.append('<li><a href="#setWaypoint" id="contextItem">' + waypoint_string + '</a></li>');
                 contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
                 contextMenu.bind('contextmenu', function() {
                     return false;
@@ -1295,7 +1301,18 @@ function validateBand(band_value) {
                 $(edit_map.getDiv()).append(contextMenu);
             }
         },
-        
+
+        prepareWaypointContextMenu: function(){
+            if (contextMenuWaypoint == null) {
+                contextMenuWaypoint = $(document.createElement('ul')).attr('id', 'contextMenu');
+                contextMenuWaypoint.append('<li><a href="#removeWaypoint" id="contextItem">' + remove_waypoint_string + '</a></li>');
+                contextMenuWaypoint.bind('contextMenuWaypoint', function() {
+                    return false;
+                });
+                $(edit_map.getDiv()).append(contextMenuWaypoint);
+            }
+        },
+
         setMarkersMap: function(){
             for (i in this.notVisibleMarkers){
                 this.notVisibleMarkers[i].setMap(null);
@@ -1356,6 +1373,9 @@ function validateBand(band_value) {
                         case 'fromHere':
                             $.fn.mapEdit.markerClick(coord, domain_id, domain_name, dom_topo_id, network_id, network_name, "src");
                             break;
+                        case 'setWaypoint':
+                            $.fn.mapEdit.markerClick(coord, domain_id, domain_name, dom_topo_id, network_id, network_name, "way");
+                            break;
                         case 'toHere':
                             $.fn.mapEdit.markerClick(coord, domain_id, domain_name, dom_topo_id, network_id, network_name, "dst");
                             break;
@@ -1406,7 +1426,7 @@ function validateBand(band_value) {
         
         //funcao que gerencia os "clicks" nos marcadores
         markerClick: function (coord, domain_id, domain_name, dom_topo_id, network_id, network_name, where){
-            var color;
+            var color
             if (where == "src") {
                 if (srcSet){
                     this.clearPoint("src");
@@ -1421,21 +1441,87 @@ function validateBand(band_value) {
                 dstSet = true;
                 n = 1;
                 color = "FF0000";
+            } else if (where == "way") {
+                waypointCount++;
+                n = 1 + waypointCount;
+                
+                color = "00FF00";                               
+                
+                var clickFnWay = function() {
+                    
+                    contextMenuWaypoint.find('a').unbind('click');
+                    
+                    contextMenuWaypoint.find('a').click( function() {
+                        // fade out the menu
+                        contextMenuWaypoint.fadeOut(75);
+                        clearFlash();
+                    
+                
+                        // The link's href minus the #
+                        switch ( $(this).attr('href').substr(1) )
+                        {
+                            case 'removeWaypoint':
+                                //$.fn.mapEdit.markerClick(coord, domain_id, domain_name, dom_topo_id, network_id, network_name, "way");
+                                break;
+                        }
+                        contextMenuWaypoint.hide();
+                        contextMenuWaypoint.find('a').unbind('click');
+                        return false;
+                    });
+    
+                    var pos = overlay.getProjection().fromLatLngToContainerPixel(coord),
+                    x = pos.x,
+                    y = pos.y;// save the clicked location
+
+                    // adjust if clicked to close to the edge of the map
+                    if (x > mapDiv.width() - contextMenuWaypoint.width())
+                        x -= contextMenuWaypoint.width();
+        
+                    if (y > mapDiv.height() - contextMenuWaypoint.height())
+                        y -= contextMenuWaypoint.height();
+
+                    // Set the location and fade in the context menu
+                    contextMenuWaypoint.css({
+                        top: y,
+                        left: x
+                    }).fadeIn(100);         
+                };
+        
+                path[n] = new StyledMarker({
+                    domain_id: domain_id,
+                    domain_name: domain_name,
+                    id: network_id,
+                    label: network_name,
+                    position: coord,
+                    styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
+                        color:color
+                    }),
+                    unselectedMarker: null,
+                    map: edit_map,
+                    map_:edit_map
+                });
+
+                google.maps.event.addListener(path[n], "click", clickFnWay);
+                google.maps.event.addListener(path[n], 'rightclick', clickFnWay);    
+
             }   
-            path[n] = new StyledMarker({
-                domain_id: domain_id,
-                domain_name: domain_name,
-                id: network_id,
-                label: network_name,
-                position: coord,
-                clickable: false,
-                styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
-                    color:color
-                }),
-                unselectedMarker: null,
-                map: edit_map,
-                map_:edit_map
-            });
+            
+            if (where != "way") {            
+                path[n] = new StyledMarker({
+                    domain_id: domain_id,
+                    domain_name: domain_name,
+                    id: network_id,
+                    label: network_name,
+                    position: coord,
+                    clickable: false,
+                    styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
+                        color:color
+                    }),
+                    unselectedMarker: null,
+                    map: edit_map,
+                    map_:edit_map
+                });
+            }
             
             for (var i in edit_markersArray){//retira marcador não selecionado
                 if ((edit_markersArray[i].id == network_id) && 
@@ -1451,20 +1537,27 @@ function validateBand(band_value) {
             setDomainPartialURN(where, dom_topo_id);
             $("#"+where+"_network").html(network_name); 
             map_changeNetwork(where, network_id, domain_id); 
-    
-            $.fn.mapEdit.preparePath(path[0], path[1]);    
+            
+            if (waypointCount != 0) {
+                for (i=1; i==waypointCount; i++) {
+                    hops.push(path[1+i].position);
+                }
+            }
+            
+            $.fn.mapEdit.preparePath(path[0], path[1], hops);    
         },
         
         /** Desenha linha entre dois pontos e prepara seleção de banda
          **/
-        preparePath: function(from, to) {
+        preparePath: function(from, to, waypoints) {
             if ((from == null) || (to == null))
                 return ;
             
             //$("#showVlan_checkbox").removeAttr("disabled");
             
             $.fn.mapEdit.clearMapElements(edit_lines);
-            this.drawPath(new Array(from.position, to.position));
+            
+            this.drawPath(new Array(from.position).concat(waypoints).concat(new Array(to.position)));
         },
         
         // desenha uma linha entre dois endpoints selecionados
@@ -1472,7 +1565,7 @@ function validateBand(band_value) {
     
             /*$.fn.mapEdit.clearMapElements(edit_selectedMarkers);
     callback_markers();*/
-
+           
             var line = new google.maps.Polyline({
                 path: flightPlanCoordinates,
                 strokeColor: "#0000FF",
@@ -1499,9 +1592,10 @@ function validateBand(band_value) {
         
         hasPath: function(){
             return 
-            (path.length == 2) &&
-            (path[0] != null) && 
-            (path[1] != null);
+              ((srcSet) && (dstSet) && (path[0] != null) && (path[1] != null));
+//            (path.length == 2) &&
+//            (path[0] != null) && 
+//            (path[1] != null);
         },
     
         clearPoint: function (point) {
@@ -1519,7 +1613,13 @@ function validateBand(band_value) {
                 dstSet = false;
                 n=1;
                 //assert(path[n] == null && !dstSet)
+            } else if (point == "way") {
+                if (waypointCount == 0)
+                    return;
+                waypointCount--;
+                
             }
+            
             if (path[n].unselectedMarker != null) {
                 edit_markersArray.push(path[n].unselectedMarker); //coloca marcador de volta
                 path[n].unselectedMarker.setMap(edit_map);
@@ -1572,7 +1672,8 @@ function validateBand(band_value) {
     
             
             $.fn.mapEdit.prepareContextMenu();
-    
+            $.fn.mapEdit.prepareWaypointContextMenu();
+            
             view_clearAll();    
     
             edit_initializeMap();

@@ -508,6 +508,8 @@ class reservations extends Controller {
             "device_string" => _("Device"),
             "devices_string" => _("Devices"),
             "from_here_string" => _("From here"),
+            "waypoint_string" => _("Set as waypoint"),
+            "remove_waypoint_string" => _("Remove waypoint"),            
             "to_here_string" => _("To here"),
             "cluster_information_string" => _("Information about cluster"),
             "coordinates_string" => _("Coordinates"),
