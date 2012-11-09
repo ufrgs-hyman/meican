@@ -141,15 +141,11 @@ $(function(){
 <!-- body class="yui-skin-sam" -->
 
     <h1><?= _("Policy Editor") ?></h1>
-    <div id="container" class="yui-skin-sam">
+    
+    <div id="container">
     
 	<div id="top">
-		<div class="logo">Policy Editor</div>
 		<div id="toolbar"></div>
-		<div class="topright">
-			<span>MEICAN Policy Editor</span> | 
-			<a href="https://meican.cipo.rnp.br/login">Home</a>
-		</div>
 	</div>
 
 
@@ -203,8 +199,8 @@ $(function(){
 					<br />
 					<p>Close this dialog to test the WiringEditor</p>
 	    </div>
-	</div>
-        
+	</div>    
+    
     </div>
 
 <!-- /body -->
