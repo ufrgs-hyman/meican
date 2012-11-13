@@ -3,8 +3,6 @@ var timerValid = true; // se for verdadeiro, a validacao do timer esta correta
 
 /* VARIAVEIS PARA CONTROLE DO MAPA*/
 var srcSet = false;  // origem selecionada
-var waypointCount = 0; // numero de pontos intermediarios selecionados
-var hops = new Array(); //array contendo posicao dos pontos intermediarios
 var dstSet = false;  // destino selecionado
 var edit_markersArray = new Array(); // array dos marcadores no mapa de criacao da reserva
 var view_markersArray = new Array(); // array dos marcadores no mapa de visualizacao da reserva
@@ -16,7 +14,6 @@ var path = new Array();  // rota completa do circuito -> origem, ponto intermedi
 
 /* VARIAVEIS PARA FUTURA INCLUSAO DE PONTOS INTERMEDIARIOS*/
 var waypoints = new Array(); // pontos intermediarios do circuito
-var waypointsMarkers = new Array(); // marcadores dos pontos intermediarios do circuito
 var counter = 0; // contador de numero de pontos intermediarios
 
 /* */ 
@@ -1188,6 +1185,8 @@ function validateBand(band_value) {
     
     /*função para criar mapa de edição */
     $.fn.mapEdit = {
+        waypointCount: 0, // numero de pontos intermediarios selecionados
+        hops : new Array(), //array contendo posicao dos pontos intermediarios
         
         inicialize: function(){ /*inicializa mapa */
             var edit_myOptions = {
@@ -1442,12 +1441,16 @@ function validateBand(band_value) {
                 n = 1;
                 color = "FF0000";
             } else if (where == "way") {
-                waypointCount++;
-                n = 1 + waypointCount;
+                $.fn.mapEdit.waypointCount++;
+                
+                n = $.fn.mapEdit.waypointCount;
+                
+                $.fn.mapEdit.hops.push(coord);
                 
                 color = "00FF00";                               
                 
                 var clickFnWay = function() {
+                    var order = this.order;
                     
                     contextMenuWaypoint.find('a').unbind('click');
                     
@@ -1461,7 +1464,7 @@ function validateBand(band_value) {
                         switch ( $(this).attr('href').substr(1) )
                         {
                             case 'removeWaypoint':
-                                //$.fn.mapEdit.markerClick(coord, domain_id, domain_name, dom_topo_id, network_id, network_name, "way");
+                                $.fn.mapEdit.clearPoint("way", order);
                                 break;
                         }
                         contextMenuWaypoint.hide();
@@ -1486,13 +1489,15 @@ function validateBand(band_value) {
                         left: x
                     }).fadeIn(100);         
                 };
+                
         
-                path[n] = new StyledMarker({
+                waypoints[n] = new StyledMarker({
                     domain_id: domain_id,
                     domain_name: domain_name,
                     id: network_id,
                     label: network_name,
                     position: coord,
+                    order: $.fn.mapEdit.waypointCount,
                     styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
                         color:color
                     }),
@@ -1500,10 +1505,11 @@ function validateBand(band_value) {
                     map: edit_map,
                     map_:edit_map
                 });
-
-                google.maps.event.addListener(path[n], "click", clickFnWay);
-                google.maps.event.addListener(path[n], 'rightclick', clickFnWay);    
-
+               
+                
+                google.maps.event.addListener(waypoints[n], "click", clickFnWay);
+                google.maps.event.addListener(waypoints[n], 'rightclick', clickFnWay);    
+                
             }   
             
             if (where != "way") {            
@@ -1538,13 +1544,8 @@ function validateBand(band_value) {
             $("#"+where+"_network").html(network_name); 
             map_changeNetwork(where, network_id, domain_id); 
             
-            if (waypointCount != 0) {
-                for (i=1; i==waypointCount; i++) {
-                    hops.push(path[1+i].position);
-                }
-            }
             
-            $.fn.mapEdit.preparePath(path[0], path[1], hops);    
+            $.fn.mapEdit.preparePath(path[0], path[1], $.fn.mapEdit.hops);    
         },
         
         /** Desenha linha entre dois pontos e prepara seleção de banda
@@ -1598,7 +1599,7 @@ function validateBand(band_value) {
 //            (path[1] != null);
         },
     
-        clearPoint: function (point) {
+        clearPoint: function (point, order) {
             var n = 0;
             if (point == "src") {
                 src_partial_urn = null;
@@ -1614,29 +1615,43 @@ function validateBand(band_value) {
                 n=1;
                 //assert(path[n] == null && !dstSet)
             } else if (point == "way") {
-                if (waypointCount == 0)
+                if (this.waypointCount == 0)
                     return;
-                waypointCount--;
+                n = order; 
                 
             }
             
-            if (path[n].unselectedMarker != null) {
-                edit_markersArray.push(path[n].unselectedMarker); //coloca marcador de volta
-                path[n].unselectedMarker.setMap(edit_map);
-            }
-            path[n].setMap(null);
-            path[n] = null;
-            edit_lines = this.clearMapElements(edit_lines);
-            waypointsMarkers = this.clearMapElements(waypointsMarkers); //TODO: trocar para remover apenas um ponto
+            if (point=="dst" || point == "src") {
+                if (path[n].unselectedMarker != null){
+                    edit_markersArray.push(path[n].unselectedMarker); //coloca marcador de volta
+                    path[n].unselectedMarker.setMap(edit_map);
+                }
             
-            if (!this.hasPath()){
-                $("#bandwidth").spinner('disable');
-                $('#bandwidth_un').disabled();
+                path[n].setMap(null); //remove ponto do mapa
+            
+                path[n] = null;
+            
+                edit_lines = this.clearMapElements(edit_lines);
+                //waypointsMarkers = this.clearMapElements(waypointsMarkers); //TODO: trocar para remover apenas um ponto
+            
+                if (!this.hasPath()){
+                    $("#bandwidth").spinner('disable');
+                    $('#bandwidth_un').disabled();
+                } else {
+                    $.fn.mapEdit.hops.splice((order-1), 1); //exclui ponto do array de hops, para desenho
+                    $.fn.mapEdit.preparePath(path[1], path[0], $.fn.mapEdit.hops);
+                }
+                $("#"+point+"_domain,#"+point+"_network").empty();
+                $("#"+point+"_device,#"+point+"_port").empty().disabled();//,#src_vlanTagged
+                $("#" + point + "_copyedp").disabled();
+                map_clearVlanConf(point);
+            } else if (point =="way") {
+                hops.splice(indexOf(waypoints[n].position),1);
+                
+                waypoints.splice(order, 1);
+                
+                $.fn.mapEdit.preparePath(path[0], path[1], hops);
             }
-            $("#"+point+"_domain,#"+point+"_network").empty();
-            $("#"+point+"_device,#"+point+"_port").empty().disabled();//,#src_vlanTagged
-            $("#" + point + "_copyedp").disabled();
-            map_clearVlanConf(point);
             
             edit_setBounds();
         //edit_initializeMap();
@@ -1667,7 +1682,7 @@ function validateBand(band_value) {
             $.fn.mapEdit.clearMapElements(edit_lines);
             //$.fn.mapEdit.clearMapElements(edit_selectedMarkers);
             $.fn.mapEdit.clearMapElements(edit_markersArray);
-            $.fn.mapEdit.clearMapElements(waypointsMarkers);
+            //$.fn.mapEdit.clearMapElements(waypointsMarkers);
             edit_setBounds(edit_bounds);    
     
             
