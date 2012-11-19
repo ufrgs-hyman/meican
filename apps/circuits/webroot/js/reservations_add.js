@@ -12,10 +12,6 @@ var view_bounds = new Array(); // limites geograficos do mapa na visualizacao da
 var view_lines = new Array();  // linhas interligando os pontos do circuito na visualizacao da reserva
 var path = new Array();  // rota completa do circuito -> origem, ponto intermediario 1, ponto intermediario 2, ... , destino. Se tiver tamanho 2, so ha origem e destino.
 
-/* VARIAVEIS PARA FUTURA INCLUSAO DE PONTOS INTERMEDIARIOS*/
-var waypoints = new Array(); // pontos intermediarios do circuito
-var counter = 0; // contador de numero de pontos intermediarios
-
 /* */ 
 var src_networks = null;
 var dst_networks = null;
@@ -1187,6 +1183,7 @@ function validateBand(band_value) {
     $.fn.mapEdit = {
         waypointCount: 0, // numero de pontos intermediarios selecionados
         hops : new Array(), //array contendo posicao dos pontos intermediarios
+        waypoints: new Array(),
         
         inicialize: function(){ /*inicializa mapa */
             var edit_myOptions = {
@@ -1440,10 +1437,11 @@ function validateBand(band_value) {
                 dstSet = true;
                 n = 1;
                 color = "FF0000";
-            } else if (where == "way") {
-                $.fn.mapEdit.waypointCount++;
+            } else if (where == "way") {                
                 
                 n = $.fn.mapEdit.waypointCount;
+                
+                $.fn.mapEdit.waypointCount++;
                 
                 $.fn.mapEdit.hops.push(coord);
                 
@@ -1451,7 +1449,7 @@ function validateBand(band_value) {
                 
                 var clickFnWay = function() {
                     var order = this.order;
-                    
+                    console.debug(order);
                     contextMenuWaypoint.find('a').unbind('click');
                     
                     contextMenuWaypoint.find('a').click( function() {
@@ -1491,13 +1489,13 @@ function validateBand(band_value) {
                 };
                 
         
-                waypoints[n] = new StyledMarker({
+                $.fn.mapEdit.waypoints[n] = new StyledMarker({
                     domain_id: domain_id,
                     domain_name: domain_name,
                     id: network_id,
                     label: network_name,
                     position: coord,
-                    order: $.fn.mapEdit.waypointCount,
+                    order: ($.fn.mapEdit.waypointCount - 1),
                     styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
                         color:color
                     }),
@@ -1506,9 +1504,19 @@ function validateBand(band_value) {
                     map_:edit_map
                 });
                
+                for (var i in edit_markersArray){//retira marcador não selecionado
+                    if ((edit_markersArray[i].id == network_id) && 
+                        (edit_markersArray[i].domain_id == domain_id)) {
+                        edit_markersArray[i].setMap(null);
+                        $.fn.mapEdit.waypoints[n].unselectedMarker = edit_markersArray[i];
+                        edit_markersArray.splice(i,1);
+                        break;
+                    }
+                }                
                 
-                google.maps.event.addListener(waypoints[n], "click", clickFnWay);
-                google.maps.event.addListener(waypoints[n], 'rightclick', clickFnWay);    
+                
+                google.maps.event.addListener($.fn.mapEdit.waypoints[n], "click", clickFnWay);
+                google.maps.event.addListener($.fn.mapEdit.waypoints[n], 'rightclick', clickFnWay);    
                 
             }   
             
@@ -1615,10 +1623,10 @@ function validateBand(band_value) {
                 n=1;
                 //assert(path[n] == null && !dstSet)
             } else if (point == "way") {
-                if (this.waypointCount == 0)
-                    return;
+                if ($.fn.mapEdit.waypointCount == 0)
+                    return;                
                 n = order; 
-                
+                $.fn.mapEdit.waypointCount--;
             }
             
             if (point=="dst" || point == "src") {
@@ -1631,30 +1639,37 @@ function validateBand(band_value) {
             
                 path[n] = null;
             
-                edit_lines = this.clearMapElements(edit_lines);
-                //waypointsMarkers = this.clearMapElements(waypointsMarkers); //TODO: trocar para remover apenas um ponto
-            
                 if (!this.hasPath()){
                     $("#bandwidth").spinner('disable');
                     $('#bandwidth_un').disabled();
-                } else {
-                    $.fn.mapEdit.hops.splice((order-1), 1); //exclui ponto do array de hops, para desenho
-                    $.fn.mapEdit.preparePath(path[1], path[0], $.fn.mapEdit.hops);
-                }
+                } 
+                
                 $("#"+point+"_domain,#"+point+"_network").empty();
                 $("#"+point+"_device,#"+point+"_port").empty().disabled();//,#src_vlanTagged
                 $("#" + point + "_copyedp").disabled();
                 map_clearVlanConf(point);
-            } else if (point =="way") {
-                hops.splice(indexOf(waypoints[n].position),1);
                 
-                waypoints.splice(order, 1);
+            } else if (point =="way") {  //caso ponto a ser removido seja intermediario
                 
-                $.fn.mapEdit.preparePath(path[0], path[1], hops);
+                if ($.fn.mapEdit.waypoints[n].unselectedMarker != null) {
+                    edit_markersArray.push($.fn.mapEdit.waypoints[n].unselectedMarker);   //devolve ponto original ao array de marcadores
+                    $.fn.mapEdit.waypoints[n].unselectedMarker.setMap(edit_map);          //devolve o marcador original ao mapa
+                } 
+                
+                $.fn.mapEdit.waypoints[n].setMap(null);   // exclui o marcador selecionado do mapa
+                $.fn.mapEdit.waypoints.splice(order, 1);  // retira marcador selecionado do array de pontos intermediarios                   
+                $.fn.mapEdit.hops.splice(n,1);            // retira posicao do ponto intermediario do array de 'hops' para desenho
+                
+                for (var i=0; i< $.fn.mapEdit.waypoints.length; i++) {
+                    if ($.fn.mapEdit.waypoints[i].order > order)
+                        $.fn.mapEdit.waypoints[i].order --;
+                }
+                
             }
             
-            edit_setBounds();
-        //edit_initializeMap();
+            edit_lines = this.clearMapElements(edit_lines);                   //remove as linhas do trajeto antigo
+            $.fn.mapEdit.preparePath(path[0], path[1], $.fn.mapEdit.hops);    //desenha novamente o caminho, com o novo trajeto            
+            edit_setBounds();   //centraliza o mapa
         },
     
         clearSrc: function () {//limpa ponto de origem
