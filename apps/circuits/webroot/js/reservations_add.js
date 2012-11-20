@@ -105,7 +105,7 @@ function validateReservationForm() {
         return false;
     }
         
-    /*var hops = "";
+/*var hops = "";
     $.each($("#hops_line select"), function() {
         if (this.value != -1)
             hops += this.value + ";";
@@ -318,10 +318,10 @@ function fillPoint(point, endpointObj) {
                         return;
                     }
                 }
-//                else {
-//                    $("#"+point+"_domain").html(domain_name);
-//                    setDomainPartialURN(point, domains[i].topology_id);
-//                }
+            //                else {
+            //                    $("#"+point+"_domain").html(domain_name);
+            //                    setDomainPartialURN(point, domains[i].topology_id);
+            //                }
             }
         }
         if (dom_found)
@@ -1107,7 +1107,11 @@ function enableBandwidthSpinner() {
         var bmax_tmp = (src_max_cap <= dst_max_cap) ? src_max_cap : dst_max_cap;
         var bdiv_tmp = (src_div_cap == dst_div_cap) ? src_div_cap : band_div;
         
-        $('#bandwidth').spinner({min: bmin_tmp, max: bmax_tmp, step: bdiv_tmp}).spinner("enable").disabled(false).trigger('click');
+        $('#bandwidth').spinner({
+            min: bmin_tmp, 
+            max: bmax_tmp, 
+            step: bdiv_tmp
+        }).spinner("enable").disabled(false).trigger('click');
         $('#bandwidth_un').disabled(false);
         $("#bandwidth").val(bmin_tmp);
         $("#bandwidth").trigger("change");
@@ -1449,7 +1453,6 @@ function validateBand(band_value) {
                 
                 var clickFnWay = function() {
                     var order = this.order;
-                    console.debug(order);
                     contextMenuWaypoint.find('a').unbind('click');
                     
                     contextMenuWaypoint.find('a').click( function() {
@@ -1514,6 +1517,7 @@ function validateBand(band_value) {
                     }
                 }                
                 
+                $("#waypoints_order").append("<li id='order_"+$.fn.mapEdit.waypoints[n].order+"'>" + network_name +"</li>");
                 
                 google.maps.event.addListener($.fn.mapEdit.waypoints[n], "click", clickFnWay);
                 google.maps.event.addListener($.fn.mapEdit.waypoints[n], 'rightclick', clickFnWay);    
@@ -1589,10 +1593,10 @@ function validateBand(band_value) {
                 edit_setBounds(flightPlanCoordinates);  
             }
     
-            //if (useView) {
-            //    view_clearAll();
-            //    view_Circuit();
-            //}
+        //if (useView) {
+        //    view_clearAll();
+        //    view_Circuit();
+        //}
         },
         
         resetZoom: function(){
@@ -1601,10 +1605,10 @@ function validateBand(band_value) {
         
         hasPath: function(){
             return 
-              ((srcSet) && (dstSet) && (path[0] != null) && (path[1] != null));
-//            (path.length == 2) &&
-//            (path[0] != null) && 
-//            (path[1] != null);
+            ((srcSet) && (dstSet) && (path[0] != null) && (path[1] != null));
+        //            (path.length == 2) &&
+        //            (path[0] != null) && 
+        //            (path[1] != null);
         },
     
         clearPoint: function (point, order) {
@@ -1621,7 +1625,7 @@ function validateBand(band_value) {
                     return ;
                 dstSet = false;
                 n=1;
-                //assert(path[n] == null && !dstSet)
+            //assert(path[n] == null && !dstSet)
             } else if (point == "way") {
                 if ($.fn.mapEdit.waypointCount == 0)
                     return;                
@@ -1660,9 +1664,12 @@ function validateBand(band_value) {
                 $.fn.mapEdit.waypoints.splice(order, 1);  // retira marcador selecionado do array de pontos intermediarios                   
                 $.fn.mapEdit.hops.splice(n,1);            // retira posicao do ponto intermediario do array de 'hops' para desenho
                 
-                for (var i=0; i< $.fn.mapEdit.waypoints.length; i++) {
-                    if ($.fn.mapEdit.waypoints[i].order > order)
+                $("#waypoints_order").empty();
+                
+                for (var i=0; i< $.fn.mapEdit.waypoints.length; i++) {                    
+                    if ($.fn.mapEdit.waypoints[i].order > order)                    
                         $.fn.mapEdit.waypoints[i].order --;
+                    $("#waypoints_order").append("<li id='order_"+$.fn.mapEdit.waypoints[i].order+"'>" + $.fn.mapEdit.waypoints[i].label +"</li>");    
                 }
                 
             }
@@ -1715,7 +1722,7 @@ function validateBand(band_value) {
     var resizefn = function() {
         if ($('#edit_map_canvas'))
             $('#edit_map_canvas').css('width', $('#subtab-points').offset().left-12-$('#tabs-2').offset().left );
-        //google.maps.event.trigger(view_map, 'resize');
+    //google.maps.event.trigger(view_map, 'resize');
     };
     
     $.fn.dlg = function(options) {
@@ -1823,12 +1830,12 @@ function validateBand(band_value) {
             source: hosts
         });
         
-//        $("#edp_reference").keyup(function(event) {
-//            if (event.which == 13) {
-//                chooseHost($('#edp_dialog').val());
-//                $("#edp_dialog_form").dialog("close");
-//            }
-//        });
+        //        $("#edp_reference").keyup(function(event) {
+        //            if (event.which == 13) {
+        //                chooseHost($('#edp_dialog').val());
+        //                $("#edp_dialog_form").dialog("close");
+        //            }
+        //        });
 
         $("#copy_edp_dialog").dialog({
             autoOpen: false,
@@ -1873,10 +1880,41 @@ function validateBand(band_value) {
         
         initializeTimer();
         
+        $("#waypoints_order").sortable({
+            update: function(event, ui) {
+                var auxOrder = $(this).sortable('toArray');
+                var newOrder = new Array();
+
+                $.fn.mapEdit.hops = [];
+
+                for (var i=0; i < auxOrder.length; i++) {
+                    var aux = auxOrder[i].split("order_");
+                    newOrder.push($.fn.mapEdit.waypoints[aux[1]]);                   
+                    newOrder[newOrder.length-1].order = newOrder.length-1;
+                    $.fn.mapEdit.hops.push(newOrder[newOrder.length-1].position);
+                }
+                
+                $.fn.mapEdit.waypoints = newOrder;
+                
+                
+                $("#waypoints_order").empty();
+                
+                for (i=0; i< $.fn.mapEdit.waypoints.length; i++) {                    
+                    $("#waypoints_order").append("<li id='order_"+$.fn.mapEdit.waypoints[i].order+"'>" + $.fn.mapEdit.waypoints[i].label +"</li>");    
+                }
+
+                if ($.fn.mapEdit.hasPath()) {
+                    edit_lines = $.fn.mapEdit.clearMapElements(edit_lines);
+                }
+                
+                $.fn.mapEdit.preparePath(path[0], path[1], $.fn.mapEdit.hops);
+            }
+        });
+        
         resizefn();
         
         google.maps.event.trigger(edit_map, 'resize');
-        //edit_map.setZoom( edit_map.getZoom() );
+    //edit_map.setZoom( edit_map.getZoom() );
     });
     
     $(window).load(resizefn);

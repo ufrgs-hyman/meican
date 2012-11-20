@@ -42,7 +42,10 @@ $args = $this->passedArgs;
             <input type="submit" id="bf"  class="ok" value="<?= _('Submit') ?>"/>
             <input type="button" id="bc1" class="cancel" value="<?= _('Cancel') ?>" onclick="redir('<?= $this->buildLink(array("action" => "history")) ?>');"/>
         </div>
+
     </div>
+        <ul id="waypoints_order">
+        </ul>    
 </form>
 
 <form>
