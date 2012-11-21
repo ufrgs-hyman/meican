@@ -22,6 +22,12 @@ class policyEditor extends MeicanController {
         //$this->addScriptForLayout('policyEditor.js');
         $this->render('show');
     }
+
+    public function show_frame() {
+        //$this->addScriptForLayout('policyEditor.js');
+        $this->layout = 'empty';
+        $this->render('show_frame');
+    }
     
     public function handleWiring() {
         CakeLog::write('debug', "Handle wiring debug");
@@ -30,6 +36,3 @@ class policyEditor extends MeicanController {
     
 
 }
-
-//class requests
-?>

@@ -1,6 +1,6 @@
 #!/bin/bash
 host="localhost"
-password="futurarnp"
+password="p-o0i9u8y7"
 user="root"
 database="meican";
 

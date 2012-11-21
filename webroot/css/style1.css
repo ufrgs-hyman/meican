@@ -1428,3 +1428,8 @@ form div.form {
     -webkit-transition: ease 1s;
     -moz-transition: ease 1s;
 } */
+
+#main iframe{
+    width: 100%;
+    height: 100%;
+}
