@@ -1,3 +1,4 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -5,9 +6,8 @@
 	<link rel="icon" href="../favicon.ico" type="image/png" />
   <link rel="SHORTCUT ICON" href="../favicon.ico" type="image/png" />
 
-    
 <!-- YUI -->
-<!-- link rel="stylesheet" type="text/css" href="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/reset-fonts-grids/reset-fonts-grids.css" / -->
+<link rel="stylesheet" type="text/css" href="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/reset-fonts-grids/reset-fonts-grids.css" />
 <link rel="stylesheet" type="text/css" href="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/assets/skins/sam/skin.css" />
 
 <!-- InputEx CSS -->
@@ -22,11 +22,13 @@
 
 <style>
 div.WireIt-Container {
-	width: 350px; /* Prevent the modules from scratching on the right */
+	width: 80px; /* Prevent the modules from scratching on the right */
+
 }
 
-div.WireIt-InOutContainer {	
-	width: 150px;
+
+div.WireIt-Container div.body{
+border: 0px;
 }
 
 div.WireIt-InputExTerminal {
@@ -39,12 +41,8 @@ div.WireIt-InputExTerminal div.WireIt-Terminal {
 	top: -3px;
 	left: -7px;
 }
-div.inputEx-Group div.inputEx-label {
-	width:100px;
-}
-
-div.WireIt-ImageContainer {
-	width: auto;
+div.inputEx-Group div.inputEx-label div.inputEx-Field{
+	width:80px;
 }
 
 div.Bubble div.body {
@@ -59,18 +57,49 @@ div.Bubble div.body {
 	top: -3px;
 }
 
+div.WireIt-Container-closebutton {
+/*background-image: url(../images/close.png);*/
+width: 25px;
+height: 15px;
+position: absolute;
+top: -6px;
+right:4px;
+cursor: pointer;
+}
+
+.inputEx-InPlaceEdit-visu{
+	width: 70px;
+text-align: center;
+}
+
+.WiringEditor-module-User .body, .WiringEditor-module-Bandwidth .body, .WiringEditor-module-New_Request .body, .WiringEditor-module-Domain .body, .WiringEditor-module-Deny_Automatically .body, .WiringEditor-module-Accept_Automatically .body{
+	width: 60px;
+	height: 60px;
+}
+
+.WiringEditor-module-Request_Group_Authorization .body, .WiringEditor-module-Request_User_Authorization .body{
+width: 84px;
+	height: 60px;
+}
+
+.WiringEditor-module-Bandwidth input[type="text"] {
+	width: 60px;
+}
+
+
+.WireIt-MeicanContainer  > .body > .inputEx-Group {
+	position: absolute;
+	top: 72px;
+	left: 0px;
+}
+
 </style>
 
-
-<script type ="text/javascript">
-    var baseUrl = '<?php echo $this->url(''); ?>'; 
-            
-        </script>
 
 <!-- YUI -->
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/utilities/utilities.js"></script>
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/resize/resize-min.js"></script>
-<script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/layout/layout-debug.js"></script>
+<script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/layout/layout-min.js"></script>
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/container/container-min.js"></script>
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/json/json-min.js"></script>
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/button/button-min.js"></script>
@@ -95,7 +124,7 @@ div.Bubble div.body {
 <script src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/accordionview/accordionview-min.js"  type='text/javascript'></script>
 
 <!-- WireIt -->
-<!--[if IE]><script type="text/javascript" src="<= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/excanvas.js"></script><![endif]-->
+<!--[if IE]><script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/excanvas.js"></script><![endif]-->
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/js/WireIt.js"></script>
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/js/CanvasElement.js"></script>
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/js/Wire.js"></script>
@@ -109,7 +138,12 @@ div.Bubble div.body {
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/js/WiringEditor.js"></script>
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/js/ImageContainer.js"></script>
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/js/InOutContainer.js"></script>
-<script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/js/adapters/json-rpc.js"></script>
+<script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/js/MeicanContainer.js"></script>
+
+<script type ="text/javascript">
+    var baseUrl = '<?php echo $this->url(''); ?>'; 
+</script>
+<script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/js/json-rpc.js"></script>
 
 <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/js/policyEditor.js"></script>
 
@@ -119,47 +153,43 @@ div.WireIt-Container.WiringEditor-module-comment { width: 200px; }
 div.WireIt-Container.WiringEditor-module-comment div.body { background-color: #EEEE66; }
 div.WireIt-Container.WiringEditor-module-comment div.body textarea { background-color: transparent; font-weight: bold; border: 0; }
 </style>
+
+
+<script>
+
+// InputEx needs a correct path to this image
+inputEx.spacerUrl = "/inputex/trunk/images/space.gif";
+
+
+YAHOO.util.Event.onDOMReady( function() {
+	var editor = new WireIt.WiringEditor(meicanPolicyLanguage); 
+	
+	// Open the infos panel
+	editor.accordionView.openPanel(2);
+});
+
+</script>
+
 </head>
 
-<!-- body class="yui-skin-sam" -->
 <body class="yui-skin-sam">
 
-    
-    <div id="container">
-    
 	<div id="top">
+		<div class="logo">Policy Editor</div>
 		<div id="toolbar"></div>
+		<div class="topright">
+			<span>MEICAN Policy Editor</span> | 
+			<a href="https://meican.cipo.rnp.br/login">Home</a>
+		</div>
 	</div>
 
 
 	<div id="left">
-	</div>
-	
-	
-	<div id="right">
-	  <ul id="accordionView">
+		<ul id="accordionView">
 		<li>
 			<h2>Properties</h2>
 			<div>
 				<div id="propertiesForm"></div>
-			</div>
-		</li>
-		<li>
-			<h2>Minimap</h2>
-			<div style='position: relative;'>
-				<div id="layerMap"></div>
-			</div>
-		</li>
-		<li>
-			<h2>Infos</h2>
-			<div>
-				<div style="padding: 10px;">
-					<p>This example shows how to use the <i>ImageContainer</i> and <i>FormContainer</i> in a language definition.</p>
-					<br />
-					<p><b>Drag and drop modules from the Module list</b> on the left to the working layer in the middle.</p>
-					<br />
-					<p><a href="policyEditor" target="_new">Click here to view the language definition for this editor.</a></p>
-				</div>
 			</div>
 		</li>
 		
@@ -171,43 +201,18 @@ div.WireIt-Container.WiringEditor-module-comment div.body textarea { background-
 	
 	
 	<div id="helpPanel">
-	    <div class="hd">Welcome to the WiringEditor demonstration</div>
+	    <div class="hd">Welcome to the MEICAN Policy Editor</div>
 	    <div class="bd" style="text-align: left;">
 					
-					<p>This example shows how to use the <i>ImageContainer</i> and <i>FormContainer</i> in a language definition.</p>
+					<p>This example shows how to use the <i>Modules</i>  language definition.</p>
 					<br />
 					<p><b>Drag and drop modules from the Module list</b> on the left to the working layer in the middle.</p>
 					<br />
-					<p><a href="demo.js" target="_new">Click here to view the language definition for this editor.</a></p>
+					<p><a href="meicanPolicyEditorModules.js" target="_new">Click here to view the language definition for this editor.</a></p>
 					<br />
-					<p>Close this dialog to test the WiringEditor</p>
+					<p>Close this dialog to test the MEICAN Policy Editor</p>
 	    </div>
-	</div>    
-    
-    </div>
+	</div>
 
-
-
-<script>
-
-// InputEx needs a correct path to this image
-inputEx.spacerUrl = "<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/inputex/images/space.gif";
-
-
-YAHOO.util.Event.onDOMReady( function() {
-    console.debug("carregando editor...");
-    //alert("ola");
-	//var
-        editor = new WireIt.WiringEditor(meicanPolicyLanguage); 
-	
-	// Open the infos panel
-        //editor.accordionView.openPanel(2);
-	//editor.accordionView.closePanel(0);
-	//editor.accordionView.closePanel(1);
-	//editor.accordionView.closePanel(2);
-});
-
-</script>
 </body>
-
 </html>

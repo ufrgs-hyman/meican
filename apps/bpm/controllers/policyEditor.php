@@ -34,5 +34,53 @@ class policyEditor extends MeicanController {
         $this->renderJson("123 testando");
     }
     
+    public function listWirings() {
+        $request = array(
+            'id' => null, 
+            'method' => null); //TODO: ler do post
+        //TODO: queries
+        $response = array (
+            'id' => $request['id'], 
+            'result' => NULL,
+            'error' => "unknown method '".$request['method']."' or incorrect parameters");
+        $this->renderJson($response);
+    }
+    
+    public function loadWirings() {
+        $request = array(
+            'id' => null, 
+            'method' => null); //TODO: ler do post
+        //TODO: queries
+        $response = array (
+            'id' => $request['id'], 
+            'result' => NULL,
+            'error' => "unknown method '".$request['method']."' or incorrect parameters");
+        $this->renderJson($response);
+    }
+    
+    public function deleteWiring() {
+        $request = array(
+            'id' => null, 
+            'method' => null); //TODO: ler do post
+        //TODO: queries
+        $response = array (
+            'id' => $request['id'], 
+            'result' => NULL,
+            'error' => "unknown method '".$request['method']."' or incorrect parameters");
+        $this->renderJson($response);
+    }
+    
+    public function saveWiring() {
+        $request = array(
+            'id' => null, 
+            'method' => null); //TODO: ler do post
+        //TODO: queries
+        $response = array (
+            'id' => $request['id'], 
+            'result' => NULL,
+            'error' => "unknown method '".$request['method']."' or incorrect parameters");
+        $this->renderJson($response);
+    }
+    
 
 }
