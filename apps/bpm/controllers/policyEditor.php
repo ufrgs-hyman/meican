@@ -6,6 +6,8 @@ include_once 'apps/bpm/models/request_info.php';
 include_once 'apps/aaa/models/user_info.php';
 include_once 'apps/topology/models/domain_info.php';
 
+include_once 'apps/bpm/models/wirings.php';
+
 class policyEditor extends MeicanController {
 
     public $modelClass = 'workflows_info';
@@ -44,6 +46,8 @@ class policyEditor extends MeicanController {
             'result' => NULL,
             'error' => "unknown method '".$request['method']."' or incorrect parameters");
         $this->renderJson($response);
+        
+        $hamehame = wirings::listWirings($language);
     }
     
     public function loadWirings() {
