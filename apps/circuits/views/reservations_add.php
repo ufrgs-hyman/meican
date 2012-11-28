@@ -46,6 +46,7 @@ $args = $this->passedArgs;
     </div>
         <ul id="waypoints_order">
         </ul>    
+        <input type="hidden" id="path_urn" name="path_urn"/>
 </form>
 
 <form>

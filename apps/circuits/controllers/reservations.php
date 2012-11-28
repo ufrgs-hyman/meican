@@ -509,6 +509,7 @@ class reservations extends Controller {
             "devices_string" => _("Devices"),
             "from_here_string" => _("From here"),
             "waypoint_string" => _("Set as waypoint"),
+            "waypointConf_string" => _("Configure waypoint"),
             "remove_waypoint_string" => _("Remove waypoint"),            
             "to_here_string" => _("To here"),
             "cluster_information_string" => _("Information about cluster"),
@@ -601,13 +602,13 @@ class reservations extends Controller {
          */
         $flow_cont = new flows();
         $new_flow = $flow_cont->add();
-
+        debug("FLOW ".print_r($new_flow, true));
         /**
          * insere o timer
          */
         $timer_cont = new timers();
         $new_timer = $timer_cont->add();
-
+        debug("TIMER ".print_r($new_timer, true));
         if ($new_flow && $new_timer) {
             $reservation = new reservation_info();
             $reservation->res_name = Common::POST("res_name");

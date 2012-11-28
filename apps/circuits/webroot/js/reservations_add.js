@@ -1156,6 +1156,19 @@ function validateBand(band_value) {
         return false;
 }
 
+function setPathUrn() {    
+    var strPath = "";
+    for (var i in $.fn.mapEdit.waypoints) {
+        for (var j in domains) {
+            if ($.fn.mapEdit.waypoints[i].domain_id == domains[j].id) {
+                strPath = strPath + "ogf:domain:network=" + domains[j].topology_id + ";";
+            }
+        }
+    }
+    console.debug(strPath);
+    $("#path_urn").val(strPath);
+
+}
 
 (function($) {
     
@@ -1558,6 +1571,8 @@ function validateBand(band_value) {
             
             
             $.fn.mapEdit.preparePath(path[0], path[1], $.fn.mapEdit.hops);    
+            
+            setPathUrn();
         },
         
         /** Desenha linha entre dois pontos e prepara seleção de banda

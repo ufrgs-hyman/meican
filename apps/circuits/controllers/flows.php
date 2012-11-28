@@ -21,7 +21,7 @@ class flows extends Controller {
         
         $src_urn = Common::POST("src_urn");
         $dst_urn = Common::POST("dst_urn");
-
+        $path_urn = Common::POST("path_urn");
         if ($src_urn && $dst_urn) {
 
             $new_flow = new flow_info();
@@ -34,8 +34,12 @@ class flows extends Controller {
             $new_flow->dst_meican_id = $meican->getLocalMeicanId();
             $new_flow->dst_urn_string = $dst_urn;
 
-            $new_flow->path = Common::POST("path");
-
+            //$new_flow->path = Common::POST("path");
+            
+            $new_flow->path = $src_urn.";".$path_urn.$dst_urn;
+            
+            debug($new_flow->path);
+            
             if (Common::POST("src_vlanType") == "untagged") {
                 // src VLAN untagged
                 $new_flow->src_vlan = 0;
