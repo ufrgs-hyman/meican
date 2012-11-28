@@ -1165,7 +1165,6 @@ function setPathUrn() {
             }
         }
     }
-    console.debug(strPath);
     $("#path_urn").val(strPath);
 
 }
