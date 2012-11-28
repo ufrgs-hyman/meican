@@ -13,5 +13,5 @@ google.maps = google.maps || {};
     };
 
     if (typeof(MapsAPIKey) != "undefined")
-        getScript("//maps.googleapis.com/maps/api/js?v=3.9&key=" + MapsAPIKey + "&sensor=false");
+        getScript("//maps.googleapis.com/maps/api/js?key=" + MapsAPIKey + "&sensor=false");
 })();
