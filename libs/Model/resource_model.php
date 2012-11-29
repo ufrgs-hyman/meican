@@ -48,15 +48,17 @@ class Resource_Model extends Model {
 
         $aco = new Acos($this->{$pk}, $model);
         $result = $aco->fetch(FALSE);
-
+        
         if (parent::delete($useACL)) {
             foreach ($result as $r)
                 $acoRes = $r->removeNode();
 
+            CakeLog::debug("Node deleted: " . print_r($this->{$pk},true) . " -> " . print_r($model,true));
             if ($acoRes)
                 return TRUE;
         }
-
+        
+        CakeLog::debug("Node NOT deleted: " . print_r($this->{$pk},true) . " -> " . print_r($model,true));
         return FALSE;
     }
 

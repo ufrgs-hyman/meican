@@ -31,20 +31,6 @@ class policyEditor extends MeicanController {
         $this->render('show_frame');
     }
     
-//    public function listWirings() {
-//        $request = array(
-//            'id' => null, 
-//            'method' => null); //TODO: ler do post
-//        //TODO: queries
-//        $response = array (
-//            'id' => $request['id'], 
-//            'result' => NULL,
-//            'error' => "unknown method '".$request['method']."' or incorrect parameters");
-//        $this->renderJson($response);
-//        
-//        $hamehame = wirings::listWirings($language);
-//    }
-    
     public function listWorkflows() {
         $request = json_decode(file_get_contents('php://input'),true);
         
@@ -64,8 +50,30 @@ class policyEditor extends MeicanController {
             }
         }
         
-        $result = array('id' => $request['id'], 'result' => $workflows, 'error' => NULL);
-        $this->renderJson($result);
+        $response = array('id' => $request['id'], 'result' => $workflows, 'error' => NULL);
+        $this->renderJson($response);
+    }
+    
+    public function saveWorkflow() {
+        $request = json_decode(file_get_contents('php://input'),true);
+        CakeLog::debug(print_r($request,true));
+        
+        $params = $request['params'];
+        
+        $work_info = new workflows_info();
+        $work_info->name = $params['name'];
+        $work_info->language = $params['language'];
+        $work_info->working = $params['working'];
+        $work_info->dom_id = 1;
+        $work_info->status = 0;
+        
+        if ($work_info->insert())
+            $result = true;
+        else
+            $result = NULL;
+        
+        $response = array ('id' => $request['id'],'result' => $result,'error' => NULL);
+        $this->renderJson($response);
     }
 
     public function loadWirings() {

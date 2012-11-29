@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS `workflows_info` (
   `name` varchar(255) NOT NULL,
   `working` longtext NOT NULL,
   `language` varchar(255) NOT NULL,
+  `dom_id` int(11) NOT NULL,
+  `status` int(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`,`language`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

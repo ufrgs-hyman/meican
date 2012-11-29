@@ -13,11 +13,11 @@ WireIt.WiringEditor.adapters.JsonRpc = {
     },
 	
     saveWiring: function(val, callbacks) {
-        this._sendJsonRpcRequest("saveWiring", val, callbacks);
+        this._sendJsonRpcRequest("saveWorkflow", val, callbacks);
     },
 	
     deleteWiring: function(val, callbacks) {
-        this._sendJsonRpcRequest("deleteWiring", val, callbacks);
+        this._sendJsonRpcRequest("deleteWorkflow", val, callbacks);
     },
 	
     listWirings: function(val, callbacks) {
