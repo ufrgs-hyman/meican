@@ -29,9 +29,7 @@ body {
 
 /* Toolbar */
 #toolbar {
-   position: absolute;
-   top: 10px;
-   left: 300px;
+   float: right;
 }
 
 #toolbar .yui-button {
@@ -126,6 +124,9 @@ div.savedStatus {
 /**
  * RIGHT
  */
+#propertiesForm {
+    float: right;
+}
  
 #right #propertiesForm {
 	font-size: 10px;
