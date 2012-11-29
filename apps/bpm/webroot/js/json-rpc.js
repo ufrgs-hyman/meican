@@ -21,7 +21,7 @@ WireIt.WiringEditor.adapters.JsonRpc = {
     },
 	
     listWirings: function(val, callbacks) {
-        this._sendJsonRpcRequest("listWirings", val, callbacks);
+        this._sendJsonRpcRequest("listWorkflows", val, callbacks);
     },
 	
     // private method to send a json-rpc request using ajax
@@ -31,7 +31,7 @@ WireIt.WiringEditor.adapters.JsonRpc = {
             "params":value,
             "version":"json-rpc-2.0"
         });
-
+        
         YAHOO.util.Connect.asyncRequest('POST', this.config.url+method, {
             success: function(o) {
                 var s = o.responseText,
