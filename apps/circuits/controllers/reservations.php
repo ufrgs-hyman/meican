@@ -853,20 +853,19 @@ class reservations extends Controller {
 
                 if ($tmp = $reservation->fetch()) {
                     $result = $tmp[0];
+                    
+                    if ($success = $reservation->delete()) {
+                        $flow = new flow_info();
+                        $flow->flw_id = $result->flw_id;
+                        $success &= $flow->delete();
 
-                    $flow = new flow_info();
-                    $flow->flw_id = $result->flw_id;
-                    $flow->delete();
-
-                    $timer = new timer_info();
-                    $timer->tmr_id = $result->tmr_id;
-                    $timer->delete();
-
-                    //if ($client->cancel($gris_to_cancel)) {
-                        if ($reservation->delete())
+                        $timer = new timer_info();
+                        $timer->tmr_id = $result->tmr_id;
+                        $success &= $timer->delete();
+                        
+                        if ($success)
                             $this->setFlash(_("Reservation") . " '$result->res_name' " . _("deleted"), 'success');
-                    //} else
-                        //$this->setFlash(_("Reservation") . " '$result->res_name' " . _("could not be cancelled"), 'error');
+                    }
                 }
             }
         }
