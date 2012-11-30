@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Policy Editor</title>
+        
         <link rel="icon" href="../favicon.ico" type="image/png" />
         <link rel="SHORTCUT ICON" href="../favicon.ico" type="image/png" />
 
@@ -194,7 +194,11 @@
         <div id="helpPanel">
             <div class="hd">Welcome to the MEICAN Policy Editor</div>
         </div>
+        
+        
     </div>
-
+<div>
+            hamehame
+            </div>
 </body>
 </html>

@@ -83,8 +83,8 @@ div.savedStatus {
  */
  
 .WiringEditor-module {
-   /*cursor: move;
-   background-color: #AADDDD;
+   cursor: move;
+   /*background-color: #AADDDD;
    margin: 5px;
    padding: 2px;
    font-size: 9pt;
@@ -98,7 +98,7 @@ div.savedStatus {
     
     box-shadow: 2px 2px 4px #888;
     border: 1px solid;
-    line-height: 2;
+   
 }
 
 #left .WiringEditor-module:hover {
@@ -106,7 +106,7 @@ div.savedStatus {
 }
 
 .WiringEditor-module img {
-   margin-left: 5px;
+   /*margin-left: 5px;*/
 }
 
 .WiringEditor-module span {
