@@ -8,8 +8,10 @@ class Language {
     private $language = null;
     private $domain = null;
     
-    public function __construct(){
-        $language = false;//Common::getSessionVariable('lang');
+    public function __construct() {
+        $language = Common::getSessionVariable('lang');
+        if (!$language)
+            $language = AuthSystem::getUserSettings('language');
         if (!$language)
             $language = Configure::read('defaultLang');
         

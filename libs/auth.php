@@ -32,6 +32,7 @@ class AuthSystem {
         Common::setSessionVariable('usr_login', $user->usr_login);
         Common::setSessionVariable('usr_id', $user->usr_id);
         Common::setSessionVariable('usr_password', $user->usr_password);
+        Common::setSessionVariable('usr_settings', $user->usr_settings);
         /*$lang = Language::getLang();
         Language::refreshLangSetting($lang);*/
     }
@@ -71,6 +72,31 @@ class AuthSystem {
 
     static function getUserId() {
         return Common::getSessionVariable('usr_id');
+    }
+    
+    static function getUserSettings($config = NULL) {
+        if ($settings = Common::getSessionVariable('usr_settings')) {
+            //setting example: 'date_format=dd/mm/yyyy;language=pt_BR.utf8'
+            if ($config) {
+                $setting_to_return = NULL;
+                $set_blocks = array();
+                $set_blocks = explode(";", $settings);
+                foreach ($set_blocks as $block) {
+                    $split_block = explode('=', $block);
+                    if ($split_block[0] == $config) {
+                        $setting_to_return = $split_block[1];
+                        break;
+                    }
+                }
+                return $setting_to_return;
+            } else
+                return $settings;
+        } else
+            return NULL;
+    }
+    
+    static function setUserSettings($usr_settings) {
+        Common::setSessionVariable('usr_settings', $usr_settings);
     }
 
     static function selfUserTest($usr_id) {

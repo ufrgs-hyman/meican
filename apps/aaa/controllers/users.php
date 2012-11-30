@@ -321,15 +321,8 @@ class users extends MeicanController {
         }
 
         $user->lang = Language::getInstance()->getLanguage();
-
-        //explode a string com configurações de usuário para extrair
-        //somente o formato da data
-        $tmp1 = array();
-        $tmp2 = array();
-        $tmp1 = explode(";", $user->usr_settings);
-        $tmp2 = explode('=', $tmp1[0]);
-
-        $user->dateformat = $tmp2[1];
+        //$user->lang = AuthSystem::getUserSettings('language');
+        $user->dateformat = AuthSystem::getUserSettings('date_format');
         
         $lang = explode(".", Language::getInstance()->getLanguage());
         $js_lang = str_replace("_", "-", $lang[0]);
@@ -338,7 +331,6 @@ class users extends MeicanController {
            "language" => $js_lang
         ));        
         
-        $this->setInlineScript('password');
         $this->setArgsToBody($user);
         $this->render('edit_settings');
     }
@@ -407,9 +399,10 @@ class users extends MeicanController {
 
         $user->usr_settings = "date_format=$dateFormat;language=$lang";
         
-        if ($user->update())
+        if ($user->update()) {
+            AuthSystem::setUserSettings($user->usr_settings);
             $this->setFlash(_("User settings updated"), "success");
-        else
+        } else
             $this->setFlash(_("No change has been made"), "warning");
         
         if (Language::getInstance()->getLanguage() != $lang) {
