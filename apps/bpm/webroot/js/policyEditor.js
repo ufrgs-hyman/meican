@@ -11,9 +11,9 @@ var meicanPolicyLanguage = {
 	layoutOptions: {
 	 	units: [
 	   	{ position: 'top', height: 50, body: 'top'},
-	      { position: 'right', width: 200, resize: true, body: 'left', gutter: '5px', collapse: true, 
-	        collapseSize: 25, header: 'Modules', scroll: false, animate: true },
-	      { position: 'center', body: 'center', gutter: '5px' }
+                { position: 'right', width: 200, resize: true, body: 'left', gutter: '5px', collapse: true, 
+	        collapseSize: 25, scroll: false, animate: true},
+                { position: 'center', body: 'center', gutter: '5px' }
 	   ]
 	},
 	layerOptions: {layerMap: false},
