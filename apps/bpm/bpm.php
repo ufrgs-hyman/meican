@@ -14,14 +14,14 @@ class bpm extends Application {
                 'label' => _("Workflows"),
                 'sub' => array(
                     new MenuItem(array(
-                        'label' => _("Workflow"),
-                        'model' => 'bpm',
-                        'url' => array('app' => $this->appName, 'controller' => 'ode')
-                    )),
-                    new MenuItem(array(
-                        'label' => _("Workflow Editor"),
+                        'label' => _("Status"),
                         'model' => 'bpm',
                         'url' => array('app' => $this->appName, 'controller' => 'policyEditor')
+                    )),
+                    new MenuItem(array(
+                        'label' => _("Workflow editor"),
+                        'model' => 'bpm',
+                        'url' => array('app' => $this->appName, 'controller' => 'policyEditor', 'action' => 'add_form')
                     )),
                 )
             )));

@@ -14,21 +14,69 @@ class policyEditor extends MeicanController {
 
     protected function renderEmpty() {
         $this->set(array(
-            'title' => _("Policy Editor"),
+            'title' => _("Workflows"),
             'link' => false
         ));
         parent::renderEmpty();
     }
 
     public function show() {
-        //$this->addScriptForLayout('policyEditor.js');
-        $this->render('show');
+        if ($allWorkflows = $this->makeIndex(array('useACL' => false))) {
+            $workflows = array();
+
+            foreach ($allWorkflows as $w) {
+                $workflow = new stdClass();
+                $workflow->id = $w->id;
+                $workflow->name = $w->name;
+                $workflow->language = $w->language;
+                $workflow->dom_id = $w->dom_id;
+                
+                $dom_tmp = new domain_info();
+                $dom_tmp->dom_id = $w->dom_id;
+                $domain = $dom_tmp->get('dom_descr');
+                $workflow->domain = $domain ? $domain : _("Unknown");
+                
+                $workflow->status = $w->status;
+                $workflow->status_descr = $w->status ? _("Enabled") : _("Disabled");
+
+                $workflows[] = $workflow;
+            }
+            $this->setArgsToBody($workflows);
+            $this->render('show');
+        }
+    }
+    
+    public function add_form() {
+        $this->render('add');
     }
 
     public function show_frame() {
-        //$this->addScriptForLayout('policyEditor.js');
         $this->layout = 'empty';
         $this->render('show_frame');
+    }
+    
+    public function edit($workflow_id_array) {
+        $id = NULL;
+        if (array_key_exists('id', $workflow_id_array)) {
+            $id = $workflow_id_array['id'];
+        } else {
+            $this->setFlash(_("Invalid index"), "fatal");
+            $this->show();
+            return;
+        }
+
+        $workflows_info = new workflows_info();
+        $workflows_info->id = $id;
+        $workflow = $workflows_info->fetch(false);
+
+        if (!$workflow) {
+            $this->setFlash(_("Workflow not found"), "fatal");
+            $this->show();
+            return;
+        }
+        
+        $this->setArgsToBody($workflow[0]);
+        $this->render('edit');
     }
     
     public function listWorkflows() {
