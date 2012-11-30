@@ -24,7 +24,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 truncate TABLE `acos`;
 INSERT INTO `acos` (`aco_id`, `obj_id`, `model`, `lft`, `rgt`, `parent_id`) VALUES
-(1, NULL, 'root', 1, 30, NULL),
+(1, NULL, 'root', 1, 32, NULL),
 (2, NULL, 'topology', 2, 13, 1),
 (3, NULL, 'domain_info', 3, 12, 2),
 (4, NULL, 'network_info', 4, 11, 3),
@@ -36,6 +36,7 @@ INSERT INTO `acos` (`aco_id`, `obj_id`, `model`, `lft`, `rgt`, `parent_id`) VALU
 (10, NULL, 'user_info', 16, 17, 9),
 (11, NULL, 'acl', 26, 27, 1),
 (12, NULL, 'bpm', 28, 29, 1),
-(13, 1, 'group_info', 19, 24, 8),
-(14, 2, 'group_info', 20, 23, 13),
-(15, 1, 'user_info', 21, 22, 14);
+(13, NULL, 'may_specify_path', 30, 31, 1),
+(14, 1, 'group_info', 19, 24, 8),
+(15, 2, 'group_info', 20, 23, 13),
+(16, 1, 'user_info', 21, 22, 14);
