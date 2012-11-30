@@ -5911,6 +5911,7 @@ WireIt.WiringEditor = function(options) {
 	  * @type {DOMElement}
 	  */
     this.leftEl = Dom.get('left');
+    
 
     // Render module list
     this.buildModulesList();
@@ -6082,7 +6083,7 @@ WireIt.WiringEditor.prototype = {
 
     var deleteButton = new widget.Button({ label:"Delete", id:"WiringEditor-deleteButton", container: toolbar });
     deleteButton.on("click", this.onDelete, this, true);
-
+console.debug('bla');
     //var helpButton = new widget.Button({ label:"Help", id:"WiringEditor-helpButton", container: toolbar });
     //helpButton.on("click", this.onHelp, this, true);
  },

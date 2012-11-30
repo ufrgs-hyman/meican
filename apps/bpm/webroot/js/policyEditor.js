@@ -11,8 +11,8 @@ var meicanPolicyLanguage = {
 	layoutOptions: {
 	 	units: [
 	   	{ position: 'top', height: 50, body: 'top'},
-	      { position: 'left', width: 200, resize: true, body: 'left', gutter: '5px', collapse: true, 
-	        collapseSize: 25, header: 'Modules', scroll: true, animate: true },
+	      { position: 'right', width: 200, resize: true, body: 'left', gutter: '5px', collapse: true, 
+	        collapseSize: 25, header: 'Modules', scroll: false, animate: true },
 	      { position: 'center', body: 'center', gutter: '5px' }
 	   ]
 	},
@@ -20,7 +20,7 @@ var meicanPolicyLanguage = {
 	// inputEx fields for pipes properties
 	propertiesFields: [
 		// default fields (the "name" field is required by the WiringEditor):
-		{"type": "string", inputParams: {"name": "name", label: "Title", typeInvite: "Enter a title", cols: 5 } },
+		{"type": "string", inputParams: {"name": "name", label: "Workflow name:", typeInvite: "Enter a title", cols: 5 } },
 
 	],
 	

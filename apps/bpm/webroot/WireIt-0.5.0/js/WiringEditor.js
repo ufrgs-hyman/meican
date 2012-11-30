@@ -277,20 +277,21 @@ WireIt.WiringEditor.prototype = {
  renderButtons: function() {
     var toolbar = Dom.get('toolbar');
     // Buttons :
+    /*
     var newButton = new widget.Button({ label:"New", id:"WiringEditor-newButton", container: toolbar });
     newButton.on("click", this.onNew, this, true);
 
     var loadButton = new widget.Button({ label:"Load", id:"WiringEditor-loadButton", container: toolbar });
-    loadButton.on("click", this.load, this, true);
+    loadButton.on("click", this.load, this, true);*/
 
     var saveButton = new widget.Button({ label:"Save", id:"WiringEditor-saveButton", container: toolbar });
     saveButton.on("click", this.onSave, this, true);
 
-    var deleteButton = new widget.Button({ label:"Delete", id:"WiringEditor-deleteButton", container: toolbar });
+ /*   var deleteButton = new widget.Button({ label:"Delete", id:"WiringEditor-deleteButton", container: toolbar });
     deleteButton.on("click", this.onDelete, this, true);
 
     var helpButton = new widget.Button({ label:"Help", id:"WiringEditor-helpButton", container: toolbar });
-    helpButton.on("click", this.onHelp, this, true);
+    helpButton.on("click", this.onHelp, this, true);*/
  },
 
 	/**
@@ -431,13 +432,13 @@ WireIt.WiringEditor.prototype = {
           modal: true
        });
        this.loadPanel.setHeader("Select the wiring to load");
-       this.loadPanel.setBody("Filter: <input type='text' id='loadFilter' /><div id='loadPanelBody'></div>");
+       //this.loadPanel.setBody("Filter: <input type='text' id='loadFilter' /><div id='loadPanelBody'></div>");
        this.loadPanel.render(document.body);
 
 		// Listen the keyup event to filter the module list
-		Event.onAvailable('loadFilter', function() {
+		/*Event.onAvailable('loadFilter', function() {
 			Event.addListener('loadFilter', "keyup", this.inputFilterTimer, this, true);
-		}, this, true);
+		}, this, true);*/
 
     }
  },

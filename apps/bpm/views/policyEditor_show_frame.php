@@ -92,6 +92,9 @@
                 top: 72px;
                 left: 0px;
             }
+            .worflow-editor-area {
+                border: 1px solid black;
+            }
 
         </style>
 
@@ -171,20 +174,20 @@
         </script>
 
     </head>
-
-    <body class="yui-skin-sam">
+<h1><?= _("Workflow Name:") ?></h1>
+    <body>
 
         <div id="top">
-            <div id="propertiesForm"></div>
+            
             <div id="toolbar"></div>
+            <div id="propertiesForm"></div>
         </div>
 
 
         <div id="left">
-            <ul id="accordionView"></ul>
         </div>
 
-        <div id="center">
+        <div id="center" class="worflow-editor-area">
         </div>
 
 

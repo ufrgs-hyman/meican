@@ -29,6 +29,11 @@ class circuits extends Application {
                         'model' => 'reservation_info',
                         'url' => array('app' => $this->appName, 'controller' => 'reservations', 'action' => 'history')
                     )),
+                    new MenuItem(array(
+                        'label' => _("Authorization"),
+                        'model' => 'bpm',
+                        'url' => array('app' => 'bpm', 'controller' => 'requests')
+                    )),
                 )
             )));
     }

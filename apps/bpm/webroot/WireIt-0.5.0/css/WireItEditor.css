@@ -66,9 +66,7 @@ body {
 div.savedStatus {
 	color:orange;
 	font-size:27pt;
-	left:650px;
-	position:absolute;
-	top:10px;
+	
 }
 
 /**
@@ -125,7 +123,27 @@ div.savedStatus {
  * RIGHT
  */
 #propertiesForm {
-    float: right;
+    /*float: right;*/
+    
+    font-size: 1.5em;
+    margin: 0;
+    margin-bottom: 0.5em;
+    line-height: 1.5em;
+}
+
+#propertiesForm label{
+    color: #D00;
+    font-weight: bold;
+    
+}
+
+#propertiesForm input {
+    height: 21px;
+    border: thin solid #BBB;
+    color: #4F4F4F;
+    background-color: white;
+    
+
 }
  
 #right #propertiesForm {
@@ -142,7 +160,7 @@ div.savedStatus {
 }
 
 #propertiesForm div.inputEx-Group div.inputEx-label {
-	width: 50px;
+	width: 150px;
 }
 
 

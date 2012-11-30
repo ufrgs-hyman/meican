@@ -11,20 +11,15 @@ class bpm extends Application {
 
     public function getMenu() {
         return array(40 => new MenuItem(array(
-                'label' => _("Requests"),
+                'label' => _("Workflows"),
                 'sub' => array(
-                    new MenuItem(array(
-                        'label' => _("Authorization"),
-                        'model' => 'bpm',
-                        'url' => array('app' => $this->appName, 'controller' => 'requests')
-                    )),
                     new MenuItem(array(
                         'label' => _("Workflow"),
                         'model' => 'bpm',
                         'url' => array('app' => $this->appName, 'controller' => 'ode')
                     )),
                     new MenuItem(array(
-                        'label' => _("Policy Editor"),
+                        'label' => _("Workflow Editor"),
                         'model' => 'bpm',
                         'url' => array('app' => $this->appName, 'controller' => 'policyEditor')
                     )),
