@@ -13,5 +13,11 @@
                 <option value="<?= $d->dom_id ?>"><?= $d->dom_descr ?></option>
                 <?php endforeach; ?>
             </select>
-        </div>
-<iframe src="<?php echo $this->url(array('action' => 'show_frame')); ?>"> </iframe>
+</div>
+
+<iframe name="workflow_editor" src="<?php echo $this->url(array('action' => 'show_frame')); ?>"> </iframe>
+
+<div class="controls">
+    <input type="submit" class="save" value="<?php echo _('Save'); ?>" onclick="window.frames.workflow_editor"/>
+    <input type="button" class="cancel" value="<?php echo _('Cancel'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'show')); ?>');"/>
+</div>

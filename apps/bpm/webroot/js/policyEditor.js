@@ -1,7 +1,6 @@
 var imagePath = baseUrl + 'apps/bpm/webroot/img/';
 var iconPath = baseUrl + 'apps/bpm/webroot/img/' + parent.language + '/';
 
-console.debug(parent.language);
 var domains = parent.domains ? parent.domains : [];
 var users = parent.users ? parent.users : [];
 var groups = parent.groups ? parent.groups : [];

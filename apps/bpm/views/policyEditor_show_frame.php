@@ -178,11 +178,7 @@
 
     </head>
     
-
-    
     <body>
-        <h1><?= _("Workflow Name:") ?></h1>
-        
         
         <div id="top">
             <div id="toolbar"></div>
