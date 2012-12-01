@@ -48,7 +48,8 @@ class policyEditor extends MeicanController {
     
     public function add_form() {
         $this->setArgsToScript(array(
-            "workflow_to_load" => "Teste"
+            "workflow_to_load" => "Teste",
+            "load_workflow" => 0,
         ));
         $this->render('add');
     }
@@ -78,8 +79,23 @@ class policyEditor extends MeicanController {
             return;
         }
         
-        $this->setArgsToBody($workflow[0]);
-        $this->render('edit');
+        $workflows = array();
+        $wkf = new stdClass();
+        $wkf->id = $workflow[0]->id;
+        $wkf->name = $workflow[0]->name;
+        $wkf->working = $workflow[0]->working;
+        $wkf->language = $workflow[0]->language;
+
+        $workflows[] = $wkf;
+        
+        $this->setArgsToScript(array(
+            "workflow_to_load" => "teste",
+            "load_workflow" => 1,
+            "workflow" => $workflows,
+            "workflow_name" => $wkf->name
+        ));
+        
+        $this->render('add');
     }
     
     public function listWorkflows() {

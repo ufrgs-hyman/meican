@@ -136,8 +136,13 @@ WireIt.WiringEditor = function(options) {
          
          console.debug(parent.workflow_to_load);
          
-	 this.load();
-         //this.onLoadSuccess(result);
+	 //this.load();
+         
+         if (parent.load_workflow) {
+             console.debug("loading...");
+             this.onLoadSuccess(parent.workflow);
+             this.loadPipe(parent.workflow_name);
+         }
 };
 
 WireIt.WiringEditor.prototype = {
@@ -572,7 +577,7 @@ WireIt.WiringEditor.prototype = {
 	
 		this.preventLayerChangedEvent = true;
 	
-     this.loadPanel.hide();
+     //this.loadPanel.hide();
 	
     var wiring = this.getPipeByName(name), i;
 
