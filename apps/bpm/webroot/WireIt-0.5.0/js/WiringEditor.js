@@ -136,6 +136,7 @@ WireIt.WiringEditor = function(options) {
          
 	 //this.load();
          
+         this.workflow_id = null;
          if (parent.load_workflow) {
              //console.debug("loading...");
              this.loadWorkflow(parent.workflow);
@@ -321,7 +322,7 @@ WireIt.WiringEditor.prototype = {
        return;
     }
 
-	this.tempSavedWiring = {name: value.name, working: JSON.stringify(value.working), language: this.options.languageName };
+    this.tempSavedWiring = {id: value.id, name: value.name, working: JSON.stringify(value.working), language: this.options.languageName };
                 
     this.adapter.saveWiring(this.tempSavedWiring, {
        success: this.saveModuleSuccess,
@@ -601,6 +602,8 @@ loadWorkflow: function(workflow) {
      //this.loadPanel.hide();
 	
     var ret = JSON.parse(workflow.working);
+    this.workflow_id = workflow.id;
+    
     var wiring = ret, i;
 
 	 if(!wiring) {
@@ -782,6 +785,7 @@ loadWorkflow: function(workflow) {
    obj.properties = this.propertiesForm.getValue();
     
    return {
+      id: this.workflow_id,
       name: obj.properties.name,
       working: obj
    };
