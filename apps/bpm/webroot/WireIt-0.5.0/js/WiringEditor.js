@@ -339,8 +339,10 @@ WireIt.WiringEditor.prototype = {
  saveModuleSuccess: function(o) {
 
 	this.markSaved();
-
-   this.alert("Saved !");
+   
+   console.debug(o);
+   parent.setFlash("Saved!");
+   //this.alert("Saved !");
 
 	// TODO:
 	/*var name = this.tempSavedWiring.name;	

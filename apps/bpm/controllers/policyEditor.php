@@ -124,19 +124,24 @@ class policyEditor extends MeicanController {
         $request = json_decode(file_get_contents('php://input'),true);
         CakeLog::debug(print_r($request,true));
         
-//        $params = $request['params'];
-//        
-//        $work_info = new workflows_info();
-//        $work_info->name = $params['name'];
-//        $work_info->language = $params['language'];
-//        $work_info->working = $params['working'];
-//        $work_info->dom_id = 1;
-//        $work_info->status = 0;
-//        
-//        if ($work_info->insert())
-//            $result = true;
+        $params = $request['params'];
+        
+//        if ($params['id'])
+//            $this->update($params);
 //        else
-//            $result = NULL;
+//            $this->add($params);
+        
+        $work_info = new workflows_info();
+        $work_info->name = $params['name'];
+        $work_info->language = $params['language'];
+        $work_info->working = $params['working'];
+        $work_info->dom_id = 1;
+        $work_info->status = 0;
+        
+        if ($work_info->insert())
+            $result = true;
+        else
+            $result = NULL;
         $result=true;
         $response = array ('id' => $request['id'],'result' => $result,'error' => NULL);
         $this->renderJson($response);
