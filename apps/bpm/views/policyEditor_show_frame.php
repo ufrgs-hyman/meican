@@ -55,6 +55,7 @@
             .WiringEditor-module span {
                 position: relative;
                 top: -3px;
+                display: none;
             }
 
             div.WireIt-Container-closebutton {
