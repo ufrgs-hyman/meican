@@ -47,14 +47,14 @@ class policyEditor extends MeicanController {
     }
     
     public function add_form() {
+        $this->setArgsToScript(array(
+            "workflow_to_load" => "Teste"
+        ));
         $this->render('add');
     }
 
     public function show_frame() {
         $this->layout = 'empty';
-        $this->setArgsToScript(array(
-            "workflow_to_load" => "Teste"
-        ));
         $this->render('show_frame');
     }
     
