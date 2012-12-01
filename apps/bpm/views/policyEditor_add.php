@@ -23,6 +23,6 @@
 <iframe name="workflow_editor" src="<?php echo $this->url(array('action' => 'show_frame')); ?>"> </iframe>
 
 <div class="controls">
-    <input type="submit" class="save" value="<?php echo _('Save'); ?>" onclick="window.frames.workflow_editor.WireIt.WiringEditor.prototype.onSave();"/>
+    <input type="submit" id="bt_save_workflow" class="save" value="<?php echo _('Save'); ?>" "/>
     <input type="button" class="cancel" value="<?php echo _('Cancel'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'show')); ?>');"/>
 </div>
