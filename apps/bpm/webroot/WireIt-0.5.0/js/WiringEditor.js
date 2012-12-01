@@ -512,7 +512,7 @@ WireIt.WiringEditor.prototype = {
 		this.pipes = wirings;
 		this.pipesByName = {};
 		
-		//this.renderLoadPanel();
+		this.renderLoadPanel();
     	this.updateLoadPanelList();
 
 		if(!this.afterFirstRun) {
