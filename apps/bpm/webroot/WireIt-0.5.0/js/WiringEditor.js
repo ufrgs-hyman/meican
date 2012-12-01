@@ -319,7 +319,7 @@ WireIt.WiringEditor.prototype = {
     var value = this.getValue();
     
     if(value.name === "") {
-       parent.setFlash(string_choose_name, "warning");
+       parent.setFlash(parent.string_choose_name, "warning");
        return;
     }
 
