@@ -261,6 +261,7 @@ animColors:{
 },	
 {
     "name": "Request_User_Authorization",
+    "title": "hamehame",
     "container": {
         "xtype":"WireIt.MeicanContainer", 
         "image": imagePath + "request_user.png",
