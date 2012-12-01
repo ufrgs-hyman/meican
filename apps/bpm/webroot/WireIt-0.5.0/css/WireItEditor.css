@@ -66,6 +66,7 @@ body {
 div.savedStatus {
 	color:orange;
 	font-size:27pt;
+        display: none;
 	
 }
 
