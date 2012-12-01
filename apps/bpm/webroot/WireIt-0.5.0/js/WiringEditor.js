@@ -103,7 +103,9 @@ WireIt.WiringEditor = function(options) {
     this.layout = new widget.Layout(this.el, this.options.layoutOptions);
     console.debug("ola2");
     this.layout.render();
+
 console.debug("ola3");    
+console.debug(workflow_teste);
 console.debug(workflow_to_load);
 console.debug("ola4");    
 	 // Right accordion

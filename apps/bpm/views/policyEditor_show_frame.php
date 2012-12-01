@@ -144,7 +144,8 @@
         <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/js/MeicanContainer.js"></script>
 
         <script type ="text/javascript">
-            var baseUrl = '<?php echo $this->url(''); ?>'; 
+            var baseUrl = '<?php echo $this->url(''); ?>';
+            var workflow_teste = 'Teste 2';
         </script>
         <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/js/json-rpc.js"></script>
 
