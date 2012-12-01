@@ -529,7 +529,7 @@ WireIt.WiringEditor.prototype = {
 			}
 		}
 
-    //this.loadPanel.show();
+    this.loadPanel.show();
 	},
 
  /**
