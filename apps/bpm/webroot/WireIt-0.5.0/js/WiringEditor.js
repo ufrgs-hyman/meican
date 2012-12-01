@@ -137,7 +137,8 @@ WireIt.WiringEditor = function(options) {
 	 //this.load();
          
          if (parent.load_workflow) {
-             //console.debug("loading...");
+             console.debug("loading...");
+             console.debug(workflow);
              //this.onLoadSuccess(parent.workflows);
              //this.loadPipe(parent.workflow_id);
              this.loadWorkflow(workflow);
