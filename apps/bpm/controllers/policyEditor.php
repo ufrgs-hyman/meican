@@ -19,7 +19,19 @@ class policyEditor extends MeicanController {
         parent::renderEmpty();
     }
     
-    private function buildArgs() {
+    private function buildArgs()  {
+        $dom = new domain_info();
+        $allDomains = $dom->fetch();
+        $domains_to_body = array();
+        foreach ($allDomains as $d) {
+            $domain = new stdClass();
+            $domain->dom_id = $d->dom_id;
+            $domain->dom_descr = $d->dom_descr;
+            $domains_to_body[] = $domain;
+        }
+        
+        $this->setArgsToBody($domains_to_body);
+            
         $user_info = new user_info();
         $allUsers = $user_info->fetch();
         $users = Common::arrayExtractAttr($allUsers, 'usr_login');
@@ -42,6 +54,7 @@ class policyEditor extends MeicanController {
             "language" => $language,
             "string_workflow_name" => _("Workflow name"),
             "string_enter_title" => _("Enter a title"),
+            "string_choose_name" => _("Please choose a name"),
             "string_save" => _("Workflow saved"),
         );
     }
@@ -72,18 +85,6 @@ class policyEditor extends MeicanController {
     }
     
     public function add_form() {
-        $dom = new domain_info();
-        $allDomains = $dom->fetch();
-        $domains = array();
-        foreach ($allDomains as $d) {
-            $domain = new stdClass();
-            $domain->dom_id = $d->dom_id;
-            $domain->dom_descr = $d->dom_descr;
-            $domains[] = $domain;
-        }
-        
-        $this->setArgsToBody($domains);
-        
         $args = array(
             "load_workflow" => 0,
         );
@@ -93,7 +94,6 @@ class policyEditor extends MeicanController {
     }
 
     public function show_frame() {
-        
         $this->layout = 'empty';
         $this->render('show_frame');
     }
@@ -166,6 +166,7 @@ class policyEditor extends MeicanController {
         $work_info->name = $params['name'];
         $work_info->language = $params['language'];
         $work_info->working = $params['working'];
+        // TODO: puxar dom_id do select box
         $work_info->dom_id = 1;
         $work_info->status = 0;
         

@@ -319,7 +319,7 @@ WireIt.WiringEditor.prototype = {
     var value = this.getValue();
     
     if(value.name === "") {
-       this.alert("Please choose a name");
+       parent.setFlash(string_choose_name, "warning");
        return;
     }
 
@@ -364,7 +364,8 @@ WireIt.WiringEditor.prototype = {
   * @method saveModuleFailure
   */
  saveModuleFailure: function(errorStr) {
-    this.alert("Unable to save the wiring : "+errorStr);
+     parent.setFlash("Unable to save the wiring : "+errorStr, "error");
+    //this.alert("Unable to save the wiring : "+errorStr);
  },
 
 	alert: function(txt) {
@@ -613,7 +614,8 @@ loadWorkflow: function(workflow) {
     var wiring = ret, i;
 
 	 if(!wiring) {
-		this.alert("The wiring '"+workflow.name+"' was not found.");
+             parent.setFlash("The wiring '"+workflow.name+"' was not found.", "error");
+		//this.alert("The wiring '"+workflow.name+"' was not found.");
 		return;
   	 }
     
