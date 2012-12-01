@@ -512,8 +512,8 @@ WireIt.WiringEditor.prototype = {
 		this.pipes = wirings;
 		this.pipesByName = {};
 		
-		this.renderLoadPanel();
-    	this.updateLoadPanelList();
+		//this.renderLoadPanel();
+    	//this.updateLoadPanelList();
 
 		if(!this.afterFirstRun) {
 			var p = window.location.search.substr(1).split('&');
@@ -529,7 +529,7 @@ WireIt.WiringEditor.prototype = {
 			}
 		}
 
-    this.loadPanel.show();
+    //this.loadPanel.show();
 	},
 
  /**
