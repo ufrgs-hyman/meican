@@ -1,5 +1,6 @@
 <?php
-    $domains = $this->passedArgs;
+    $domains = isset($this->passedArgs->domains) ? $this->passedArgs->domains : $this->passedArgs;
+    $dom_id = isset($this->passedArgs->dom_id) ? $this->passedArgs->dom_id : NULL;
 ?>
 
 <div>
@@ -10,7 +11,11 @@
         <select id="owner_dom_id">
     <?php endif; ?>
         <?php foreach ($domains as $d): ?>
-            <option value="<?= $d->dom_id ?>"><?= $d->dom_descr ?></option>
+            <?php if ($dom_id && ($dom_id == $d->dom_id)): ?>
+                <option selected="true" value="<?= $d->dom_id ?>"><?= $d->dom_descr ?></option>
+            <?php else: ?>
+                <option value="<?= $d->dom_id ?>"><?= $d->dom_descr ?></option>
+            <?php endif; ?>
         <?php endforeach; ?>
         </select>
 </div>

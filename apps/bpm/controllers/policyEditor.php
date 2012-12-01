@@ -20,18 +20,6 @@ class policyEditor extends MeicanController {
     }
     
     private function buildArgs()  {
-        $dom = new domain_info();
-        $allDomains = $dom->fetch();
-        $domains_to_body = array();
-        foreach ($allDomains as $d) {
-            $domain = new stdClass();
-            $domain->dom_id = $d->dom_id;
-            $domain->dom_descr = $d->dom_descr;
-            $domains_to_body[] = $domain;
-        }
-        
-        $this->setArgsToBody($domains_to_body);
-            
         $user_info = new user_info();
         $allUsers = $user_info->fetch();
         $users = Common::arrayExtractAttr($allUsers, 'usr_login');
@@ -85,10 +73,22 @@ class policyEditor extends MeicanController {
     }
     
     public function add_form() {
+        $dom = new domain_info();
+        $allDomains = $dom->fetch();
+        $domains_to_body = array();
+        foreach ($allDomains as $d) {
+            $domain = new stdClass();
+            $domain->dom_id = $d->dom_id;
+            $domain->dom_descr = $d->dom_descr;
+            $domains_to_body[] = $domain;
+        }
+
+        $this->setArgsToBody($domains_to_body);
+
         $args = array(
             "load_workflow" => 0,
         );
-        
+
         $this->setArgsToScript(array_merge($args, $this->buildArgs()));
         $this->render('add');
     }
@@ -117,6 +117,21 @@ class policyEditor extends MeicanController {
             $this->show();
             return;
         }
+        
+        $dom = new domain_info();
+        $allDomains = $dom->fetch();
+        $domains_to_body = array();
+        foreach ($allDomains as $d) {
+            $domain = new stdClass();
+            $domain->dom_id = $d->dom_id;
+            $domain->dom_descr = $d->dom_descr;
+            $domains_to_body[] = $domain;
+        }
+        $args = new stdClass();
+        $args->domains = $domains_to_body;
+        $args->dom_id = $workflow[0]->dom_id;
+
+        $this->setArgsToBody($args);
         
         $wkf = new stdClass();
         $wkf->id = $workflow[0]->id;
