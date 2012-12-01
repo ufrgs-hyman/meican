@@ -106,7 +106,7 @@ WireIt.WiringEditor = function(options) {
 
 console.debug("ola3");    
 console.debug(workflow_teste);
-console.debug(workflow_to_load);
+console.debug(parent.workflow_to_load);
 console.debug("ola4");    
 	 // Right accordion
     this.renderAccordion();
