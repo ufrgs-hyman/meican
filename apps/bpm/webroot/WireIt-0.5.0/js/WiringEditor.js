@@ -136,6 +136,7 @@ WireIt.WiringEditor = function(options) {
  	 }
          
          console.debug(workflow_to_load);
+         alert("ola");
          
 	 this.load();
          //this.onLoadSuccess(result);
