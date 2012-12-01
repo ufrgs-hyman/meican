@@ -1,7 +1,7 @@
 var imagePath = baseUrl + 'apps/bpm/webroot/img/';
 var iconPath = baseUrl + 'apps/bpm/webroot/img/en_US/';
 
-console.debug(parent.users);
+console.debug(parent.language);
 
 var meicanPolicyLanguage = {
 	

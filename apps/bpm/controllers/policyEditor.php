@@ -52,6 +52,8 @@ class policyEditor extends MeicanController {
         $users = Common::arrayExtractAttr($allUsers, 'usr_login');
         
         $this->setArgsToScript(array(
+            "language" => Language::getInstance()->getLanguage(),
+            "string_save" => _("Workflow saved"),
             "load_workflow" => 0,
             "users" => $users
         ));
@@ -83,6 +85,10 @@ class policyEditor extends MeicanController {
             return;
         }
         
+        $user_info = new user_info();
+        $allUsers = $user_info->fetch();
+        $users = Common::arrayExtractAttr($allUsers, 'usr_login');
+        
         $wkf = new stdClass();
         $wkf->id = $workflow[0]->id;
         $wkf->name = $workflow[0]->name;
@@ -90,6 +96,8 @@ class policyEditor extends MeicanController {
         $wkf->language = $workflow[0]->language;
 
         $this->setArgsToScript(array(
+            "string_save" => _("Workflow saved"),
+            "users" => $users,
             "load_workflow" => 1,
             "workflow" => $wkf,
         ));
@@ -126,11 +134,6 @@ class policyEditor extends MeicanController {
         
         $params = $request['params'];
         
-//        if ($params['id'])
-//            $this->update($params);
-//        else
-//            $this->add($params);
-        
         $work_info = new workflows_info();
         $work_info->name = $params['name'];
         $work_info->language = $params['language'];
@@ -138,11 +141,21 @@ class policyEditor extends MeicanController {
         $work_info->dom_id = 1;
         $work_info->status = 0;
         
-        if ($work_info->insert())
-            $result = true;
-        else
-            $result = NULL;
-        $result=true;
+        $result = new stdClass();
+        if ($params['id']) {
+            $work_info->id = $params['id'];
+            $result->success = $work_info->update();
+            $result->id = $work_info->id;
+        } else {
+            if ($added = $work_info->insert()) {
+                $result->success = true;
+                $result->id = $added->id;
+            } else {
+                $result->success = false;
+                $result->id = NULL;
+            }
+        }
+
         $response = array ('id' => $request['id'],'result' => $result,'error' => NULL);
         $this->renderJson($response);
     }

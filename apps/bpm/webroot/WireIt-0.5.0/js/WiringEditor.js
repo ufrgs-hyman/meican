@@ -340,8 +340,11 @@ WireIt.WiringEditor.prototype = {
 
 	this.markSaved();
    
-   console.debug(o);
-   parent.setFlash("Saved!");
+    if (!this.workflow_id && o.success && o.id) {
+        this.workflow_id = o.id;
+    }
+       
+   parent.setFlash(parent.string_save);
    //this.alert("Saved !");
 
 	// TODO:
