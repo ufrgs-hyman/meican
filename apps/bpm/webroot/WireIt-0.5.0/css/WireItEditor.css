@@ -91,14 +91,11 @@ div.savedStatus {
    -moz-border-radius: 2px;
    height: 16px;
    text-align: left;
-   */
-   font-size: 1em;
-    color: #3A5879;
-    text-align: left;
+   
     
     box-shadow: 2px 2px 4px #888;
     border: 1px solid;
-   
+   */
 }
 
 #left .WiringEditor-module:hover {
