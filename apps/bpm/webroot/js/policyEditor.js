@@ -400,16 +400,7 @@ animColors:{
                 "left": -15, 
                 "top": 20
             }
-        },
-
-        {
-        "name": "_OUTPUT", 
-        "direction": [1,0], 
-        "offsetPosition": {
-            "left": 55, 
-            "top": 20
         }
-    }
 ],
 	   				
 "fields": [
@@ -435,14 +426,7 @@ animColors:{
             }
         },
 
-        {
-        "name": "_OUTPUT", 
-        "direction": [1,0], 
-        "offsetPosition": {
-            "left": 55, 
-            "top": 20
-        }
-    }
+       
 ],
 	   				
 "fields": [
