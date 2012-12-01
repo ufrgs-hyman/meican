@@ -1,4 +1,5 @@
 var imagePath = baseUrl + 'apps/bpm/webroot/img/';
+console.debug(parent.load_workflow);
 
 var meicanPolicyLanguage = {
 	
@@ -261,7 +262,6 @@ animColors:{
 },	
 {
     "name": "Request_User_Authorization",
-    "title": "hamehame",
     "container": {
         "xtype":"WireIt.MeicanContainer", 
         "image": imagePath + "request_user.png",
