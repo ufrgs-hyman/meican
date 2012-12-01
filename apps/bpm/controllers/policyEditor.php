@@ -72,15 +72,6 @@ class policyEditor extends MeicanController {
     }
     
     public function add_form() {
-        $args = array(
-            "load_workflow" => 0,
-        );
-        
-        $this->setArgsToScript(array_merge($args, $this->buildArgs()));
-        $this->render('add');
-    }
-
-    public function show_frame() {
         $dom = new domain_info();
         $allDomains = $dom->fetch();
         $domains = array();
@@ -92,6 +83,17 @@ class policyEditor extends MeicanController {
         }
         
         $this->setArgsToBody($domains);
+        
+        $args = array(
+            "load_workflow" => 0,
+        );
+        
+        $this->setArgsToScript(array_merge($args, $this->buildArgs()));
+        $this->render('add');
+    }
+
+    public function show_frame() {
+        
         $this->layout = 'empty';
         $this->render('show_frame');
     }

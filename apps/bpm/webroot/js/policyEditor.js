@@ -51,8 +51,8 @@ var meicanPolicyLanguage = {
         "type": "string", 
         inputParams: {
             "name": "name", 
-            label: parent.string_workflow_name,
-            typeInvite: parent.string_enter_title, 
+            label: parent.string_workflow_name + ":",
+            typeInvite: parent.string_enter_title,
             cols: 5
         }
     },
