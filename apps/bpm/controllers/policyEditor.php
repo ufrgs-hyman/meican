@@ -2,10 +2,9 @@
 
 include_once 'libs/meican_controller.php';
 
-include_once 'apps/bpm/models/request_info.php';
 include_once 'apps/aaa/models/user_info.php';
+include_once 'apps/aaa/models/group_info.php';
 include_once 'apps/topology/models/domain_info.php';
-
 include_once 'apps/bpm/models/workflows_info.php';
 
 class policyEditor extends MeicanController {
@@ -19,6 +18,33 @@ class policyEditor extends MeicanController {
         ));
         parent::renderEmpty();
     }
+    
+    private function buildArgs() {
+        $user_info = new user_info();
+        $allUsers = $user_info->fetch();
+        $users = Common::arrayExtractAttr($allUsers, 'usr_login');
+        
+        $group_info = new group_info();
+        $allGroups = $group_info->fetch();
+        $groups = Common::arrayExtractAttr($allGroups, 'grp_descr');
+        
+        $domain_info = new domain_info();
+        $allDomains = $domain_info->fetch(false);
+        $domains = Common::arrayExtractAttr($allDomains, 'topology_id');
+        
+        $lang_temp = explode(".", Language::getInstance()->getLanguage());
+        $language = $lang_temp[0];
+        
+        return array(
+            "users" => $users,
+            "groups" => $groups,
+            "domains" => $domains,
+            "language" => $language,
+            "string_workflow_name" => _("Workflow name"),
+            "string_enter_title" => _("Enter a title"),
+            "string_save" => _("Workflow saved"),
+        );
+    }
 
     public function show() {
         if ($allWorkflows = $this->makeIndex(array('useACL' => false))) {
@@ -28,7 +54,6 @@ class policyEditor extends MeicanController {
                 $workflow = new stdClass();
                 $workflow->id = $w->id;
                 $workflow->name = $w->name;
-                $workflow->language = $w->language;
                 $workflow->dom_id = $w->dom_id;
                 
                 $dom_tmp = new domain_info();
@@ -47,20 +72,26 @@ class policyEditor extends MeicanController {
     }
     
     public function add_form() {
-        $user_info = new user_info();
-        $allUsers = $user_info->fetch();
-        $users = Common::arrayExtractAttr($allUsers, 'usr_login');
-        
-        $this->setArgsToScript(array(
-            "language" => Language::getInstance()->getLanguage(),
-            "string_save" => _("Workflow saved"),
+        $args = array(
             "load_workflow" => 0,
-            "users" => $users
-        ));
+        );
+        
+        $this->setArgsToScript(array_merge($args, $this->buildArgs()));
         $this->render('add');
     }
 
     public function show_frame() {
+        $dom = new domain_info();
+        $allDomains = $dom->fetch();
+        $domains = array();
+        foreach ($allDomains as $d) {
+            $domain = new stdClass();
+            $domain->dom_id = $d->dom_id;
+            $domain->dom_descr = $d->dom_descr;
+            $domains[] = $domain;
+        }
+        
+        $this->setArgsToBody($domains);
         $this->layout = 'empty';
         $this->render('show_frame');
     }
@@ -85,23 +116,18 @@ class policyEditor extends MeicanController {
             return;
         }
         
-        $user_info = new user_info();
-        $allUsers = $user_info->fetch();
-        $users = Common::arrayExtractAttr($allUsers, 'usr_login');
-        
         $wkf = new stdClass();
         $wkf->id = $workflow[0]->id;
         $wkf->name = $workflow[0]->name;
         $wkf->working = $workflow[0]->working;
         $wkf->language = $workflow[0]->language;
 
-        $this->setArgsToScript(array(
-            "string_save" => _("Workflow saved"),
-            "users" => $users,
+        $args = array(
             "load_workflow" => 1,
             "workflow" => $wkf,
-        ));
+        );
         
+        $this->setArgsToScript(array_merge($args, $this->buildArgs()));
         $this->render('add');
     }
     

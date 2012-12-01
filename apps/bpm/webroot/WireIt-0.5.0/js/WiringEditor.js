@@ -345,7 +345,7 @@ WireIt.WiringEditor.prototype = {
         this.workflow_id = o.id;
     }
        
-   parent.setFlash(parent.string_save);
+   parent.setFlash(parent.string_save, "success");
    //this.alert("Saved !");
 
 	// TODO:

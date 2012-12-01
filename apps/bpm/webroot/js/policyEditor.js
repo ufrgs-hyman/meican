@@ -1,7 +1,10 @@
 var imagePath = baseUrl + 'apps/bpm/webroot/img/';
-var iconPath = baseUrl + 'apps/bpm/webroot/img/en_US/';
+var iconPath = baseUrl + 'apps/bpm/webroot/img/' + parent.language + '/';
 
 console.debug(parent.language);
+var domains = parent.domains ? parent.domains : [];
+var users = parent.users ? parent.users : [];
+var groups = parent.groups ? parent.groups : [];
 
 var meicanPolicyLanguage = {
 	
@@ -48,8 +51,8 @@ var meicanPolicyLanguage = {
         "type": "string", 
         inputParams: {
             "name": "name", 
-            label: "Workflow name:", 
-            typeInvite: "Enter a title", 
+            label: parent.string_workflow_name,
+            typeInvite: parent.string_enter_title, 
             cols: 5
         }
     },
@@ -120,7 +123,7 @@ modules: [
             "inputParams": {
                 "label": "", 
                 "name": "title", 
-                "selectValues": ["RNP","UFRGS","UFPA"]
+                "selectValues": domains
                 }
             },
     "animColors":{
@@ -173,7 +176,7 @@ modules: [
             {
                 "label": "", 
                 "name": "title", 
-                "selectValues": parent.users
+                "selectValues": users
                 }
             },
     "animColors":{
@@ -230,7 +233,7 @@ modules: [
                     "type": "select", 
                     "inputParams": {
                         "name": "operator", 
-                        "selectValues": ["==","<","<=",">",">="]
+                        "selectValues": ["== ","< ","<= ","> ",">= "]
                     }
                 },
 
@@ -309,7 +312,7 @@ animColors:{
             {
                 "label": "", 
                 "name": "title", 
-                "selectValues": ["Fulano","Ciclano","Beltrano"]
+                "selectValues": users
                 }
             },
     "animColors":{
@@ -370,7 +373,7 @@ animColors:{
             {
                 "label": "", 
                 "name": "title", 
-                "selectValues": ["Admin","Engenheiros","Comum"]
+                "selectValues": groups
                 }
             },
     "animColors":{

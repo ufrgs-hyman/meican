@@ -13,7 +13,6 @@ $workflows = $this->passedArgs;
                 <th></th>
                 <th></th>
                 <th><?php echo _("Name"); ?></th>
-                <th><?php echo _("Language"); ?></th>
                 <th><?php echo _("Owner domain"); ?></th>
                 <th><?php echo _("Status"); ?></th>
             </tr>
@@ -36,9 +35,6 @@ $workflows = $this->passedArgs;
                     </td>
                     <td>
                         <?php echo $w->name; ?>
-                    </td>
-                    <td>
-                        <?php echo $w->language; ?>
                     </td>
                     <td>
                         <?php echo $w->domain; ?>
