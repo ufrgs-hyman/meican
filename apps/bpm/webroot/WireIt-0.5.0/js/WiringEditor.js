@@ -130,18 +130,17 @@ WireIt.WiringEditor = function(options) {
     this.renderPropertiesForm();
 
 	 // LoadWirings
-	 if( this.adapter.init && YAHOO.lang.isFunction(this.adapter.init) ) {
-			this.adapter.init();
- 	 }
-         
-         console.debug(parent.workflow_to_load);
+        if( this.adapter.init && YAHOO.lang.isFunction(this.adapter.init) ) {
+            this.adapter.init();
+        }
          
 	 //this.load();
          
          if (parent.load_workflow) {
-             console.debug("loading...");
-             this.onLoadSuccess(parent.workflow);
-             this.loadPipe(parent.workflow_name);
+             //console.debug("loading...");
+             //this.onLoadSuccess(parent.workflows);
+             //this.loadPipe(parent.workflow_id);
+             this.loadWorkflow(workflow);
          }
 };
 
@@ -560,12 +559,33 @@ WireIt.WiringEditor.prototype = {
     
     return null;
  },
- 
- /**
-  * @method loadPipe
-  * @param {String} name Pipe name
+
+/**
+  * @method getPipeById
+  * @param {Integer} id Pipe's id
+  * @return {Object} return the evaled json pipe configuration
   */
- loadPipe: function(name) {
+ getPipeById: function(id) {
+    var n = this.pipes.length,ret;
+    for(var i = 0 ; i < n ; i++) {
+       if(this.pipes[i].id == id) {
+          // Try to eval working property:
+          try {
+             ret = JSON.parse(this.pipes[i].working);
+             return ret;
+          }
+          catch(ex) {
+             this.alert("Unable to eval working json for module "+this.pipes[i].name);
+             return null;
+          }
+       }
+    }
+    
+    return null;
+ },
+
+
+loadWorkflow: function(workflow) {
 	
 	if(!this.isSaved()) {
 		if( !confirm("Warning: Your work is not saved yet ! Press ok to continue anyway.") ) {
@@ -579,10 +599,78 @@ WireIt.WiringEditor.prototype = {
 	
      //this.loadPanel.hide();
 	
-    var wiring = this.getPipeByName(name), i;
+    var ret = JSON.parse(workflow.working);
+    var wiring = ret, i;
 
 	 if(!wiring) {
-		this.alert("The wiring '"+name+"' was not found.");
+		this.alert("The wiring '"+id+"' was not found.");
+		return;
+  	 }
+    
+    // TODO: check if current wiring is saved...
+    this.layer.clear();
+    
+    this.propertiesForm.setValue(wiring.properties, false); // the false tells inputEx to NOT fire the updatedEvt
+    
+    if(lang.isArray(wiring.modules)) {
+      
+       // Containers
+       for(i = 0 ; i < wiring.modules.length ; i++) {
+          var m = wiring.modules[i];
+          if(this.modulesByName[m.name]) {
+             var baseContainerConfig = this.modulesByName[m.name].container;
+             YAHOO.lang.augmentObject(m.config, baseContainerConfig); 
+             m.config.title = m.name;
+             var container = this.layer.addContainer(m.config);
+             Dom.addClass(container.el, "WiringEditor-module-"+m.name);
+             container.setValue(m.value);
+          }
+          else {
+             throw new Error("WiringEditor: module '"+m.name+"' not found !");
+          }
+       }
+       
+       // Wires
+       if(lang.isArray(wiring.wires)) {
+           for(i = 0 ; i < wiring.wires.length ; i++) {
+              // On doit chercher dans la liste des terminaux de chacun des modules l'index des terminaux...
+              this.layer.addWire(wiring.wires[i]);
+           }
+        }
+     }
+     
+	this.markSaved();
+	
+	this.preventLayerChangedEvent = false;
+	
+  	}
+  	catch(ex) {
+     	this.alert(ex);
+  	}
+ },
+
+ /**
+  * @method loadPipe
+  * @param {Integer} id Pipe's id
+  */
+ loadPipe: function(id) {
+	
+	if(!this.isSaved()) {
+		if( !confirm("Warning: Your work is not saved yet ! Press ok to continue anyway.") ) {
+			return;
+		}
+	}
+	
+	try {
+	
+		this.preventLayerChangedEvent = true;
+	
+     //this.loadPanel.hide();
+	
+    var wiring = this.getPipeById(id), i;
+
+	 if(!wiring) {
+		this.alert("The wiring '"+id+"' was not found.");
 		return;
   	 }
     

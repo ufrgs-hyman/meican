@@ -96,7 +96,8 @@ class policyEditor extends MeicanController {
         $this->setArgsToScript(array(
             "workflow_to_load" => "teste",
             "load_workflow" => 1,
-            "workflow" => $workflows,
+            "workflows" => $workflows,
+            "workflow" => $wkf,
             "workflow_name" => $wkf->name
         ));
         
