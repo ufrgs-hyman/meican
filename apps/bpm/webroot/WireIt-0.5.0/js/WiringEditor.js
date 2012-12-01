@@ -173,6 +173,8 @@ WireIt.WiringEditor.prototype = {
 		{"type": "text", inputParams: {"name": "description", label: "Description", cols: 30, rows: 4} }
 	 ];
     
+    console.debug("hamehame");
+    
     this.options.layoutOptions = options.layoutOptions || {
 	 	units: [
 	   	{ position: 'top', height: 50, body: 'top'},
