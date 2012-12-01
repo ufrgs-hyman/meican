@@ -97,28 +97,28 @@ class policyEditor extends MeicanController {
         $this->render('add');
     }
     
-    public function listWorkflows() {
-        $request = json_decode(file_get_contents('php://input'),true);
-        
-        $workflow_info = new workflows_info();
-        $allWorkflows = $workflow_info->fetch(false);
-        
-        $workflows = array();
-        if ($allWorkflows) {
-            foreach ($allWorkflows as $w) {
-                $workflow = new stdClass();
-                $workflow->id = $w->id;
-                $workflow->name = $w->name;
-                $workflow->working = $w->working;
-                $workflow->language = $w->language;
-                
-                $workflows[] = $workflow;
-            }
-        }
-        
-        $response = array('id' => $request['id'], 'result' => $workflows, 'error' => NULL);
-        $this->renderJson($response);
-    }
+//    public function listWorkflows() {
+//        $request = json_decode(file_get_contents('php://input'),true);
+//        
+//        $workflow_info = new workflows_info();
+//        $allWorkflows = $workflow_info->fetch(false);
+//        
+//        $workflows = array();
+//        if ($allWorkflows) {
+//            foreach ($allWorkflows as $w) {
+//                $workflow = new stdClass();
+//                $workflow->id = $w->id;
+//                $workflow->name = $w->name;
+//                $workflow->working = $w->working;
+//                $workflow->language = $w->language;
+//                
+//                $workflows[] = $workflow;
+//            }
+//        }
+//        
+//        $response = array('id' => $request['id'], 'result' => $workflows, 'error' => NULL);
+//        $this->renderJson($response);
+//    }
     
     public function saveWorkflow() {
         $request = json_decode(file_get_contents('php://input'),true);
@@ -142,29 +142,19 @@ class policyEditor extends MeicanController {
         $this->renderJson($response);
     }
     
-    public function deleteWiring() {
-        $request = array(
-            'id' => null, 
-            'method' => null); //TODO: ler do post
-        //TODO: queries
-        $response = array (
-            'id' => $request['id'], 
-            'result' => NULL,
-            'error' => "unknown method '".$request['method']."' or incorrect parameters");
-        $this->renderJson($response);
+    public function delete() {
+        if ($del_workflows = Common::POST('del_checkbox')) {
+            foreach ($del_workflows as $id) {
+                $workflow = new workflows_info();
+                $workflow->id = $id;
+                $tmp = $workflow->fetch(false);
+                $result = $tmp[0];
+                if ($workflow->delete(false))
+                    $this->setFlash(_("Workflow") . " '$result->name' " . _("deleted"), 'success');
+            }
+        }
+
+        $this->show();
     }
-    
-    public function saveWiring() {
-        $request = array(
-            'id' => null, 
-            'method' => null); //TODO: ler do post
-        //TODO: queries
-        $response = array (
-            'id' => $request['id'], 
-            'result' => NULL,
-            'error' => "unknown method '".$request['method']."' or incorrect parameters");
-        $this->renderJson($response);
-    }
-    
 
 }
