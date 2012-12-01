@@ -172,7 +172,7 @@ modules: [
             {
                 "label": "", 
                 "name": "title", 
-                "selectValues": ["Fulano","Ciclano","Beltrano"]
+                "selectValues": parent.users
                 }
             },
     "animColors":{
