@@ -52,6 +52,9 @@ class policyEditor extends MeicanController {
 
     public function show_frame() {
         $this->layout = 'empty';
+        $this->setArgsToScript(array(
+            "workflow_to_load" => "Teste"
+        ));
         $this->render('show_frame');
     }
     

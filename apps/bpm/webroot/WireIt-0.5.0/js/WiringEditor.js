@@ -134,7 +134,11 @@ WireIt.WiringEditor = function(options) {
 	 if( this.adapter.init && YAHOO.lang.isFunction(this.adapter.init) ) {
 			this.adapter.init();
  	 }
+         
+         console.debug(workflow_to_load);
+         
 	 this.load();
+         //this.onLoadSuccess(result);
 };
 
 WireIt.WiringEditor.prototype = {
@@ -509,7 +513,7 @@ WireIt.WiringEditor.prototype = {
 		this.pipes = wirings;
 		this.pipesByName = {};
 		
-		this.renderLoadPanel();
+		//this.renderLoadPanel();
     	this.updateLoadPanelList();
 
 		if(!this.afterFirstRun) {
@@ -526,7 +530,7 @@ WireIt.WiringEditor.prototype = {
 			}
 		}
 
-    this.loadPanel.show();
+    //this.loadPanel.show();
 	},
 
  /**

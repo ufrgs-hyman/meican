@@ -174,31 +174,25 @@
         </script>
 
     </head>
-<h1><?= _("Workflow Name:") ?></h1>
+    
+    <h1><?= _("Workflow Name:") ?></h1>
     <body>
-
+        
         <div id="top">
-            
             <div id="toolbar"></div>
             <div id="propertiesForm"></div>
         </div>
-
-
+            
         <div id="left">
         </div>
-
+            
         <div id="center" class="worflow-editor-area">
         </div>
-
-
+            
         <div id="helpPanel">
             <div class="hd">Welcome to the MEICAN Policy Editor</div>
         </div>
-        
-        
-    </div>
-<div>
-            hamehame
-            </div>
-</body>
+            
+    </body>
+
 </html>
