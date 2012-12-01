@@ -294,6 +294,7 @@ WireIt.WiringEditor.prototype = {
     var saveButton = new widget.Button({ label:"Save", id:"WiringEditor-saveButton", container: toolbar });
     saveButton.on("click", this.onSave, this, true);
     
+    var saveButton2 = new widget.Button({ label:"Save", id:"WiringEditor-saveButton2", container: Dom.get('teste') });
     //Dom.get(parent.bt_save_workflow).onclick = this.onSave();
     Dom.get(parent.bt_save_workflow).onclick = this.onSave;
 
