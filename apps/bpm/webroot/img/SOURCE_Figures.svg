@@ -198,9 +198,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.7463907"
+     inkscape:zoom="1.2348847"
      inkscape:cx="68.43772"
-     inkscape:cy="1026.965"
+     inkscape:cy="784.5041"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -226,23 +226,23 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       ry="3.6321542"
-       y="60.004768"
-       x="-123.55799"
-       height="39.434818"
-       width="183.62318"
+       ry="3.6300533"
+       y="78.339684"
+       x="-389.23743"
+       height="39.412006"
+       width="190.7764"
        id="rect3399"
-       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.20078397;stroke-opacity:1"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22359538;stroke-opacity:1"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_request.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <rect
-       style="opacity:0.98999999000000005;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       style="opacity:0.98999999;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1"
        id="rect3217"
        width="38.549179"
        height="38.078533"
-       x="-122.97183"
-       y="60.646599"
+       x="-388.66266"
+       y="78.970108"
        ry="3.281599"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_request.png"
        inkscape:export-xdpi="90"
@@ -1034,65 +1034,10 @@
          d="m 7.409936,7.46283 9.879914,0 0,3.08751 -9.879914,0 0,-3.08751 z m 0,13.84956 9.879914,0 0,3.08743 -9.879914,0 0,-3.08743 z m -3.881395,6.91593 17.642709,0 0,-24.699778 -17.642709,0 0,24.699778 z m 17.642709,3.52855 -17.642709,0 C 1.587843,31.75687 0,30.16902 0,28.22832 L 0,3.528542 C 0,1.587843 1.587843,0 3.528541,0 L 21.17125,0 c 1.9407,0 3.52854,1.587843 3.52854,3.528542 l 0,24.699778 c 0,1.9407 -1.58784,3.52855 -3.52854,3.52855 z M 7.44981,14.34348 l 9.87992,0 0,3.17569 -9.87992,0 0,-3.17569 z"
          inkscape:connector-curvature="0" />
     </g>
-    <rect
-       inkscape:export-ydpi="90"
-       inkscape:export-xdpi="90"
-       inkscape:export-filename="/home/jjcsantanna/Área de Trabalho/source_meican/apps/bpm/webroot/img/ico_domain.png"
-       ry="3.6329455"
-       y="178.20065"
-       x="162.79079"
-       height="39.443409"
-       width="39.443409"
-       id="rect3157"
-       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:0.55659044;stroke-opacity:1" />
-    <rect
-       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:0.55659038;stroke-opacity:1"
-       id="rect3167"
-       width="39.443409"
-       height="39.443409"
-       x="118.91579"
-       y="177.44948"
-       ry="3.6329458"
-       inkscape:export-filename="/home/jjcsantanna/Área de Trabalho/source_meican/apps/bpm/webroot/img/ico_user.png"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
-    <rect
-       inkscape:export-ydpi="90"
-       inkscape:export-xdpi="90"
-       inkscape:export-filename="/home/jjcsantanna/Área de Trabalho/source_meican/apps/bpm/webroot/img/ico_bandwidth.png"
-       ry="3.6329458"
-       y="176.34593"
-       x="207.6342"
-       height="39.443409"
-       width="39.443409"
-       id="rect3268"
-       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:0.55659038;stroke-opacity:1" />
-    <rect
-       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:0.55659038;stroke-opacity:1"
-       id="rect3270"
-       width="39.443409"
-       height="39.443409"
-       x="206.2243"
-       y="221.06813"
-       ry="3.6329458"
-       inkscape:export-filename="/home/jjcsantanna/Área de Trabalho/source_meican/apps/bpm/webroot/img/ico_deny.png"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90" />
     <g
        style="fill:#aa0000"
        id="g3278"
        transform="matrix(0.45128391,0,0,-0.45128391,143.15204,161.41354)" />
-    <rect
-       inkscape:export-ydpi="90"
-       inkscape:export-xdpi="90"
-       inkscape:export-filename="/home/jjcsantanna/Área de Trabalho/source_meican/apps/bpm/webroot/img/ico_accept.png"
-       ry="3.6329458"
-       y="218.82944"
-       x="248.311"
-       height="39.443409"
-       width="39.443409"
-       id="rect3288"
-       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:0.55659038;stroke-opacity:1" />
     <g
        id="g3220"
        style="fill:#008000"
@@ -1101,7 +1046,7 @@
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_request.png"
-       transform="matrix(0.57728364,0,0,0.56713942,-326.33777,-300.41718)"
+       transform="matrix(0.57728364,0,0,0.56713942,-592.0286,-282.09367)"
        d="m 411.1321,670.52454 a 26.263966,25.253813 0 1 1 -52.52793,0 26.263966,25.253813 0 1 1 52.52793,0 z"
        sodipodi:ry="25.253813"
        sodipodi:rx="26.263966"
@@ -1112,7 +1057,7 @@
        sodipodi:type="arc" />
     <g
        id="g3403"
-       transform="matrix(0.67988536,0,0,-0.66793823,-112.55621,90.469517)"
+       transform="matrix(0.67988536,0,0,-0.66793823,-378.24704,108.79302)"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_request.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -1125,36 +1070,36 @@
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
-       x="-78.157074"
-       y="83.893501"
+       x="-343.8479"
+       y="102.21701"
        id="text3203"
        sodipodi:linespacing="125%"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_request.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
-         x="-78.157074"
-         y="83.893501"
+         x="-343.8479"
+         y="102.21701"
          id="tspan3207">Arriving a new request</tspan></text>
     <rect
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_domain.png"
-       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.20083857;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22365093;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3223"
-       width="183.62314"
-       height="39.434818"
-       x="-122.97"
-       y="104.09176"
-       ry="3.6321542" />
+       width="190.77635"
+       height="39.412006"
+       x="-388.64941"
+       y="122.42667"
+       ry="3.630053" />
     <rect
        ry="3.281599"
-       y="104.73753"
-       x="-122.39922"
+       y="123.06104"
+       x="-388.09006"
        height="38.078533"
        width="38.549179"
        id="rect3225"
-       style="opacity:0.98999999000000005;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       style="opacity:0.98999999;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_domain.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
@@ -1164,7 +1109,7 @@
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_domain.png"
        id="g3159"
        inkscape:label="image51"
-       transform="matrix(1.0602648,0,0,-1.0602648,-122.07675,136.90888)">
+       transform="matrix(1.0602648,0,0,-1.0602648,-387.76758,155.23239)">
       <g
          id="g3161" />
       <g
@@ -1179,41 +1124,41 @@
     <text
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
-       x="-13.980538"
-       y="118.76661"
+       x="-279.67136"
+       y="137.09012"
        id="text3995"
        sodipodi:linespacing="125%"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_domain.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
-         x="-12.316476"
-         y="118.76661"
+         x="-278.00729"
+         y="137.09012"
          id="tspan3997"
          style="font-size:12px">Filter by </tspan><tspan
          sodipodi:role="line"
-         x="-13.980538"
-         y="133.7666"
+         x="-279.67136"
+         y="152.0901"
          id="tspan3999"
          style="font-size:12px">requesting domain</tspan></text>
     <rect
-       ry="3.6325314"
-       y="149.32295"
-       x="-123.55571"
-       height="39.438915"
-       width="183.03378"
+       ry="3.6302552"
+       y="167.65881"
+       x="-389.23419"
+       height="39.414204"
+       width="190.77632"
        id="rect4018"
-       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.19897211;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22368479;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_user.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <rect
-       style="opacity:0.98999999000000005;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       style="opacity:0.98999999;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1"
        id="rect4020"
        width="38.549179"
        height="38.078533"
-       x="-122.97183"
-       y="149.97368"
+       x="-388.66266"
+       y="168.29718"
        ry="3.281599"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_user.png"
        inkscape:export-xdpi="90"
@@ -1224,7 +1169,7 @@
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_user.png"
        id="g3177"
        inkscape:label="image21"
-       transform="matrix(1.0268042,0,0,-1.0268042,-120.6236,184.73765)">
+       transform="matrix(1.0268042,0,0,-1.0268042,-386.31443,203.06116)">
       <g
          id="g3179" />
       <g
@@ -1239,20 +1184,20 @@
     <text
        sodipodi:linespacing="125%"
        id="text3213"
-       y="165.14799"
-       x="-16.319733"
+       y="183.4715"
+       x="-282.01056"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
        xml:space="preserve"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_user.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90"><tspan
          id="tspan3215"
-         y="165.14799"
-         x="-14.65567"
+         y="183.4715"
+         x="-280.3465"
          sodipodi:role="line"
          style="font-size:12px">Filter by </tspan><tspan
-         y="180.14799"
-         x="-16.319733"
+         y="198.4715"
+         x="-282.01056"
          sodipodi:role="line"
          id="tspan4001"
          style="font-size:12px">requesting user</tspan></text>
@@ -1260,20 +1205,20 @@
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_bandwidth.png"
-       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.19897211;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22368479;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect4030"
-       width="183.03378"
-       height="39.438915"
-       x="-124.14696"
-       y="196.84413"
-       ry="3.6325314" />
+       width="190.77632"
+       height="39.414204"
+       x="-389.82544"
+       y="215.17999"
+       ry="3.6302552" />
     <rect
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_bandwidth.png"
        ry="3.281599"
-       y="197.50027"
-       x="-123.54444"
+       y="215.82378"
+       x="-389.23526"
        height="38.078533"
        width="38.549179"
        id="rect4032"
@@ -1284,7 +1229,7 @@
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_bandwidth.png"
        id="g3254"
        inkscape:label="bandwidth"
-       transform="matrix(1.4664143,0,0,-1.4664144,-127.50555,234.48235)">
+       transform="matrix(1.4664143,0,0,-1.4664144,-393.19638,252.80586)">
       <g
          id="g3256" />
       <g
@@ -1315,28 +1260,28 @@
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_bandwidth.png"
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
-       x="-19.182779"
-       y="212.10197"
+       x="-284.87363"
+       y="230.42548"
        id="text4034"
        sodipodi:linespacing="125%"><tspan
          style="font-size:12px"
          sodipodi:role="line"
-         x="-17.518717"
-         y="212.10197"
+         x="-283.20956"
+         y="230.42548"
          id="tspan4036">Filter by </tspan><tspan
          style="font-size:12px"
          id="tspan4038"
          sodipodi:role="line"
-         x="-19.182779"
-         y="227.10197">requested bandwidth</tspan></text>
+         x="-284.87363"
+         y="245.42548">requested bandwidth</tspan></text>
     <rect
-       ry="3.6309004"
-       y="240.94896"
-       x="-123.56844"
-       height="39.421204"
-       width="184.79555"
+       ry="3.6291466"
+       y="259.28198"
+       x="-389.24976"
+       height="39.402164"
+       width="190.7765"
        id="rect4040"
-       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.204458;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22349846;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_request_user.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
@@ -1345,8 +1290,8 @@
        id="rect4042"
        width="38.549179"
        height="38.078533"
-       x="-122.97183"
-       y="241.59122"
+       x="-388.66266"
+       y="259.91473"
        ry="3.281599"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_request_user.png"
        inkscape:export-xdpi="90"
@@ -1356,7 +1301,7 @@
        transform="matrix(0.70665186,0,0,-0.70665182,-116.29608,331.82758)" />
     <g
        id="g4049"
-       transform="translate(7.527781,-52.561489)"
+       transform="translate(-258.16305,-34.237983)"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_request_user.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -1388,28 +1333,28 @@
        id="rect4062"
        width="177.26685"
        height="39.443409"
-       x="72.821266"
-       y="51.977825"
+       x="-392.1377"
+       y="355.46091"
        ry="3.6329455" />
     <rect
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_deny.png"
        ry="3.281599"
-       y="52.630062"
-       x="73.43325"
+       y="356.11313"
+       x="-391.5257"
        height="38.078533"
        width="38.549179"
        id="rect4064"
        style="opacity:0.98999999;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
     <rect
-       ry="3.6320329"
-       y="51.989182"
-       x="72.855026"
-       height="39.433502"
-       width="184.20227"
+       ry="3.6301033"
+       y="355.48273"
+       x="-392.09344"
+       height="39.412552"
+       width="190.77634"
        id="rect4066"
-       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.20271075;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22365952;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_deny.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
@@ -1418,8 +1363,8 @@
        id="rect4068"
        width="38.549179"
        height="38.078533"
-       x="73.43325"
-       y="52.630062"
+       x="-391.5257"
+       y="356.11313"
        ry="3.281599"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_deny.png"
        inkscape:export-xdpi="90"
@@ -1427,20 +1372,20 @@
     <text
        sodipodi:linespacing="125%"
        id="text4076"
-       y="256.19293"
-       x="-13.456684"
+       y="274.51645"
+       x="-279.14752"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
        xml:space="preserve"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_request_user.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90"><tspan
-         y="256.19293"
-         x="-13.456684"
+         y="274.51645"
+         x="-279.14752"
          sodipodi:role="line"
          style="font-size:12px"
          id="tspan3240">Request authorization</tspan><tspan
-         y="271.19293"
-         x="-13.456684"
+         y="289.51645"
+         x="-279.14752"
          sodipodi:role="line"
          id="tspan4080"
          style="font-size:12px">to single administrator</tspan></text>
@@ -1448,20 +1393,20 @@
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_request_group.png"
-       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.20439541;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22343493;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect4102"
-       width="184.79561"
-       height="39.417088"
-       x="-119.56239"
-       y="290.76917"
-       ry="3.6305211" />
+       width="190.77657"
+       height="39.398048"
+       x="-385.24371"
+       y="309.1022"
+       ry="3.6287675" />
     <rect
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_request_group.png"
        ry="3.281599"
-       y="291.40826"
-       x="-118.96356"
+       y="309.73178"
+       x="-384.65439"
        height="38.078533"
        width="38.549179"
        id="rect4104"
@@ -1472,23 +1417,23 @@
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_request_group.png"
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
-       x="-8.8758068"
-       y="306.58258"
+       x="-274.56665"
+       y="324.9061"
        id="text4116"
        sodipodi:linespacing="125%"><tspan
          style="font-size:12px"
          sodipodi:role="line"
-         x="-8.8758068"
-         y="306.58258"
+         x="-274.56665"
+         y="324.9061"
          id="tspan4118">Request authorization</tspan><tspan
          style="font-size:12px"
          id="tspan4120"
          sodipodi:role="line"
-         x="-8.8758068"
-         y="321.58258">to administrators group</tspan></text>
+         x="-274.56665"
+         y="339.9061">to administrators group</tspan></text>
     <g
        id="g4055"
-       transform="translate(-282.29652,68.713148)"
+       transform="translate(-547.98735,87.036654)"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_request_group.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -1540,27 +1485,27 @@
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_accept.png"
-       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.20271075;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22365952;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect4122"
-       width="184.20227"
-       height="39.433502"
-       x="72.26001"
-       y="102.93862"
-       ry="3.6320329" />
+       width="190.77634"
+       height="39.412552"
+       x="-392.68848"
+       y="406.43219"
+       ry="3.6301033" />
     <rect
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_accept.png"
        ry="3.281599"
-       y="103.59231"
-       x="72.860641"
+       y="407.07538"
+       x="-392.09833"
        height="38.078533"
        width="38.549179"
        id="rect4124"
        style="opacity:0.98999999;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
     <g
        id="g4126"
-       transform="translate(-133.41802,-168.34722)"
+       transform="translate(-598.37697,135.13585)"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_deny.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -1583,7 +1528,7 @@
     </g>
     <g
        id="g4130"
-       transform="translate(-175.79113,-115.66713)"
+       transform="translate(-640.75008,187.81594)"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_accept.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
@@ -1612,15 +1557,15 @@
     <text
        sodipodi:linespacing="125%"
        id="text4135"
-       y="75.820923"
-       x="183.80318"
+       y="379.30399"
+       x="-281.15579"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
        xml:space="preserve"
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_deny.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90"><tspan
-         y="75.820923"
-         x="185.46724"
+         y="379.30399"
+         x="-279.49173"
          sodipodi:role="line"
          id="tspan4139"
          style="font-size:12px">Authorization Denied </tspan></text>
@@ -1630,14 +1575,601 @@
        inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/en_US/ico_accept.png"
        xml:space="preserve"
        style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
-       x="182.94841"
-       y="126.31378"
+       x="-282.01056"
+       y="429.79684"
        id="text4155"
        sodipodi:linespacing="125%"><tspan
          style="font-size:12px"
          id="tspan4157"
          sodipodi:role="line"
-         x="182.94841"
-         y="126.31378">Authorization Accepted</tspan></text>
+         x="-282.01056"
+         y="429.79684">Authorization Accepted</tspan></text>
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_request.png"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22359538;stroke-opacity:1"
+       id="rect3240"
+       width="190.7764"
+       height="39.412006"
+       x="-181.95277"
+       y="80.630119"
+       ry="3.6300533" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_request.png"
+       ry="3.281599"
+       y="81.260544"
+       x="-181.37801"
+       height="38.078533"
+       width="38.549179"
+       id="rect3242"
+       style="opacity:0.98999999;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3244"
+       sodipodi:cx="384.86813"
+       sodipodi:cy="670.52454"
+       sodipodi:rx="26.263966"
+       sodipodi:ry="25.253813"
+       d="m 411.1321,670.52454 a 26.263966,25.253813 0 1 1 -52.52793,0 26.263966,25.253813 0 1 1 52.52793,0 z"
+       transform="matrix(0.57728364,0,0,0.56713942,-384.74394,-279.80323)"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_request.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_request.png"
+       transform="matrix(0.67988536,0,0,-0.66793823,-170.96238,111.08346)"
+       id="g3246">
+      <path
+         id="path3248"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         d="m 7.409936,7.46283 9.879914,0 0,3.08751 -9.879914,0 0,-3.08751 z m 0,13.84956 9.879914,0 0,3.08743 -9.879914,0 0,-3.08743 z m -3.881395,6.91593 17.642709,0 0,-24.699778 -17.642709,0 0,24.699778 z m 17.642709,3.52855 -17.642709,0 C 1.587843,31.75687 0,30.16902 0,28.22832 L 0,3.528542 C 0,1.587843 1.587843,0 3.528541,0 L 21.17125,0 c 1.9407,0 3.52854,1.587843 3.52854,3.528542 l 0,24.699778 c 0,1.9407 -1.58784,3.52855 -3.52854,3.52855 z M 7.44981,14.34348 l 9.87992,0 0,3.17569 -9.87992,0 0,-3.17569 z"
+         inkscape:connector-curvature="0" />
+    </g>
+    <text
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_request.png"
+       sodipodi:linespacing="125%"
+       id="text3250"
+       y="96.409523"
+       x="-68.812912"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+       xml:space="preserve"><tspan
+         id="tspan3252"
+         y="96.409523"
+         x="-67.148849"
+         sodipodi:role="line">Chegada de uma </tspan><tspan
+         y="111.40952"
+         x="-68.812912"
+         sodipodi:role="line"
+         id="tspan3421">nova requisição</tspan></text>
+    <rect
+       ry="3.630053"
+       y="124.71711"
+       x="-181.36476"
+       height="39.412006"
+       width="190.77635"
+       id="rect3254"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22365093;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_domain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_domain.png"
+       style="opacity:0.98999999;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="rect3256"
+       width="38.549179"
+       height="38.078533"
+       x="-180.8054"
+       y="125.35148"
+       ry="3.281599" />
+    <g
+       transform="matrix(1.0602648,0,0,-1.0602648,-180.48292,157.52283)"
+       inkscape:label="image51"
+       id="g3259"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_domain.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         id="g3261" />
+      <g
+         id="g3263">
+        <path
+           id="path3265"
+           style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           d="m 27.071673,17.431498 c -0.48623,0 -0.96258,-0.04238 -1.42658,-0.12 -1.15773,3.78259 -4.74343,6.54194 -8.99002,6.54194 -5.18308,0 -9.3845123,-4.10724 -9.3845123,-9.17422 0,-0.45167 0.035288,-0.89627 0.099854,-1.33027 -0.248757,0.02826 -0.499991,0.04587 -0.756512,0.04587 -3.52431,0 -6.3817252,-2.794622 -6.3817252,-6.2384868 0,-3.443863 2.8574152,-6.23844298 6.3817252,-6.23844298 l 20.4577703,0 c 4.66509,0 8.44592,3.69790798 8.44592,8.25680498 0,4.5588948 -3.78083,8.2568048 -8.44592,8.2568048"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <text
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_domain.png"
+       sodipodi:linespacing="125%"
+       id="text3267"
+       y="140.19035"
+       x="-66.386696"
+       style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+       xml:space="preserve"><tspan
+         style="font-size:12px"
+         id="tspan3271"
+         y="140.19035"
+         x="-64.722633"
+         sodipodi:role="line">Filtrar por </tspan><tspan
+         style="font-size:12px"
+         y="155.19035"
+         x="-66.386696"
+         sodipodi:role="line"
+         id="tspan3399">domínio requisitante</tspan></text>
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_user.png"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22368479;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3273"
+       width="190.77632"
+       height="39.414204"
+       x="-181.94954"
+       y="169.94925"
+       ry="3.6302552" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_user.png"
+       ry="3.281599"
+       y="170.58762"
+       x="-181.37801"
+       height="38.078533"
+       width="38.549179"
+       id="rect3275"
+       style="opacity:0.98999999;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <g
+       transform="matrix(1.0268042,0,0,-1.0268042,-179.02977,205.3516)"
+       inkscape:label="image21"
+       id="g3277"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_user.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         id="g3279" />
+      <g
+         id="g3281">
+        <path
+           id="path3283"
+           style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           d="m 25.97005,8.031301 c -4.34719,1.585087 -5.73741,2.921989 -5.73741,5.784709 0,1.71878 1.32673,1.15771 1.90895,4.30489 0.24345,1.30554 1.41495,0.0211 1.64078,3.00167 0,1.18804 -0.64222,1.48309 -0.64222,1.48309 0,0 0.32817,1.75789 0.45519,3.11073 0.15524,1.68562 -0.97388,6.04047 -7.0112,6.04047 -6.03733,0 -7.17002,-4.35485 -7.01121,-6.04047 0.127022,-1.35284 0.45515,-3.11073 0.45515,-3.11073 0,0 -0.642173,-0.29505 -0.642173,-1.48309 C 9.611739,18.142 10.7832,19.42644 11.02669,18.1209 11.6089,14.97372 12.9356,15.53479 12.9356,13.81601 12.9356,10.95329 11.54537,9.616388 7.19823,8.031301 2.833385,6.441046 0,4.81995 0,3.714523 0,2.609701 0,-5.722046e-6 0,-5.722046e-6 l 33.16827,0 c 0,0 0,2.609706722046 0,3.714528722046 0,1.105427 -2.83342,2.726523 -7.19822,4.316778"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <text
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_user.png"
+       xml:space="preserve"
+       style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+       x="-68.725899"
+       y="185.76193"
+       id="text3285"
+       sodipodi:linespacing="125%"><tspan
+         style="font-size:12px"
+         sodipodi:role="line"
+         x="-68.725899"
+         y="185.76193"
+         id="tspan3287">Filtrar por</tspan><tspan
+         style="font-size:12px"
+         id="tspan3289"
+         sodipodi:role="line"
+         x="-68.725899"
+         y="200.76193">usuário requisitante</tspan></text>
+    <rect
+       ry="3.6302552"
+       y="217.47043"
+       x="-182.54079"
+       height="39.414204"
+       width="190.77632"
+       id="rect3291"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22368479;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_bandwidth.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="opacity:0.98999999;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="rect3293"
+       width="38.549179"
+       height="38.078533"
+       x="-181.95061"
+       y="218.11421"
+       ry="3.281599"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_bandwidth.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       transform="matrix(1.4664143,0,0,-1.4664144,-185.91172,255.0963)"
+       inkscape:label="bandwidth"
+       id="g3295"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_bandwidth.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         id="g3297" />
+      <g
+         id="g3299">
+        <g
+           clip-path="url(#clipPath4903)"
+           id="g3301">
+          <path
+             id="path3303"
+             style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             d="M 3.936666,4.152408 3.926332,4.246097 16.63545,15.29833 16.93811,12.6515 27.76423,19.72126 27.93939,19.84309 15.2406,8.69719 14.93796,11.344 3.936666,4.152408 z"
+             inkscape:connector-curvature="0" />
+          <g
+             transform="matrix(1,0,0,-1,-972.5,368.5)"
+             id="g3305">
+            <path
+               id="path3307"
+               style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none"
+               d="m 976.4367,364.3476 -0.0104,-0.0937 12.7092,-11.0522 0.3026,2.6468 10.8259,-7.0698 0.175,-0.1218 -12.6984,11.1459 -0.3026,-2.6468 -11.0013,7.1916 z"
+               inkscape:connector-curvature="0" />
+          </g>
+        </g>
+      </g>
+    </g>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3309"
+       y="232.71591"
+       x="-68.681252"
+       style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+       xml:space="preserve"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_bandwidth.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         id="tspan3311"
+         y="232.71591"
+         x="-67.017189"
+         sodipodi:role="line"
+         style="font-size:12px">Filtrar por </tspan><tspan
+         y="247.71591"
+         x="-68.681252"
+         sodipodi:role="line"
+         id="tspan3313"
+         style="font-size:12px">banda requisitada</tspan></text>
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_request_user.png"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22349846;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3315"
+       width="190.7765"
+       height="39.402164"
+       x="-181.9651"
+       y="261.57242"
+       ry="3.6291466" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_request_user.png"
+       ry="3.281599"
+       y="262.20517"
+       x="-181.37801"
+       height="38.078533"
+       width="38.549179"
+       id="rect3317"
+       style="opacity:0.98999999;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <g
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_request_user.png"
+       transform="translate(-50.878392,-31.947545)"
+       id="g3319">
+      <g
+         id="g3321"
+         transform="matrix(0.70665186,0,0,-0.70665182,-116.29608,331.82758)">
+        <path
+           inkscape:connector-curvature="0"
+           d="m 25.97005,8.031301 c -4.34719,1.585087 -5.73741,2.921989 -5.73741,5.784709 0,1.71878 1.32673,1.15771 1.90895,4.30489 0.24345,1.30554 1.41495,0.0211 1.64078,3.00167 0,1.18804 -0.64222,1.48309 -0.64222,1.48309 0,0 0.32817,1.75789 0.45519,3.11073 0.15524,1.68562 -0.97388,6.04047 -7.0112,6.04047 -6.03733,0 -7.17002,-4.35485 -7.01121,-6.04047 0.127022,-1.35284 0.45515,-3.11073 0.45515,-3.11073 0,0 -0.642173,-0.29505 -0.642173,-1.48309 C 9.611739,18.142 10.7832,19.42644 11.02669,18.1209 11.6089,14.97372 12.9356,15.53479 12.9356,13.81601 12.9356,10.95329 11.54537,9.616388 7.19823,8.031301 2.833385,6.441046 0,4.81995 0,3.714523 0,2.609701 0,-5.722046e-6 0,-5.722046e-6 l 33.16827,0 c 0,0 0,2.609706722046 0,3.714528722046 0,1.105427 -2.83342,2.726523 -7.19822,4.316778"
+           style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="path3323" />
+      </g>
+      <path
+         inkscape:connector-curvature="0"
+         d="m -124.02107,314.36628 8.05751,0 0,-2.518 -8.05751,0 0,2.518 z m 0,-11.29493 8.05751,0 0,-2.51793 -8.05751,0 0,2.51793 z m -3.16545,-5.64024 14.38841,0 0,20.14376 -14.38841,0 0,-20.14376 z m 14.38841,-2.87769 -14.38841,0 c -1.58272,0 -2.87768,1.29496 -2.87768,2.87769 l 0,20.14376 c 0,1.58272 1.29496,2.87768 2.87768,2.87768 l 14.38841,0 c 1.58273,0 2.87768,-1.29496 2.87768,-2.87768 l 0,-20.14376 c 0,-1.58273 -1.29495,-2.87769 -2.87768,-2.87769 z m -11.19044,14.20139 8.05751,0 0,-2.58992 -8.05751,0 0,2.58992 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="path3325" />
+      <path
+         inkscape:connector-curvature="0"
+         d="m -103.03502,299.1338 0.0529,6.56414 2.43117,-0.0196 -3.53435,3.91861 -3.59707,-3.86112 2.43117,-0.0196 -0.0477,-5.91583 -5.02441,0.0405 -0.0183,-2.26909 5.67271,-0.0457 c 0.89467,-0.007 1.62662,0.71239 1.63384,1.60771"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="path3327" />
+    </g>
+    <rect
+       ry="3.6329455"
+       y="357.75134"
+       x="-184.85304"
+       height="39.443409"
+       width="177.26685"
+       id="rect3329"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.17999995;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_deny.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="opacity:0.98999999;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="rect3331"
+       width="38.549179"
+       height="38.078533"
+       x="-184.24104"
+       y="358.40356"
+       ry="3.281599"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_deny.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_deny.png"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22365952;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3333"
+       width="190.77634"
+       height="39.412552"
+       x="-184.80879"
+       y="357.77316"
+       ry="3.6301033" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_deny.png"
+       ry="3.281599"
+       y="358.40356"
+       x="-184.24104"
+       height="38.078533"
+       width="38.549179"
+       id="rect3335"
+       style="opacity:0.98999999;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
+    <text
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_request_user.png"
+       xml:space="preserve"
+       style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+       x="-67.862862"
+       y="276.80688"
+       id="text3337"
+       sodipodi:linespacing="125%"><tspan
+         style="font-size:12px"
+         sodipodi:role="line"
+         x="-66.198799"
+         y="276.80688"
+         id="tspan3403">Requisitar autorização de </tspan><tspan
+         style="font-size:12px"
+         sodipodi:role="line"
+         x="-67.862862"
+         y="291.80688"
+         id="tspan3419">único administrador</tspan></text>
+    <rect
+       ry="3.6309803"
+       y="311.38062"
+       x="-177.97107"
+       height="39.422073"
+       width="190.7762"
+       id="rect3343"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22380662;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_request_group.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="opacity:0.98999999;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="rect3345"
+       width="38.549179"
+       height="38.078533"
+       x="-177.36974"
+       y="312.02222"
+       ry="3.281599"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_request_group.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text3347"
+       y="327.19653"
+       x="-63.233028"
+       style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+       xml:space="preserve"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_request_group.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="327.19653"
+         x="-63.233028"
+         sodipodi:role="line"
+         style="font-size:12px"
+         id="tspan3407">Requisitar autorização de</tspan><tspan
+         y="342.19653"
+         x="-63.233028"
+         sodipodi:role="line"
+         style="font-size:12px"
+         id="tspan3415">grupo de administradores</tspan></text>
+    <g
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_request_group.png"
+       transform="translate(-340.70269,89.327092)"
+       id="g3353">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 196.22802,254.63645 c -3.07195,-1.12011 -4.05435,-2.06483 -4.05435,-4.08778 0,-1.21458 0.93754,-0.8181 1.34897,-3.04206 0.17203,-0.92256 0.99987,-0.0149 1.15946,-2.12113 0,-0.83953 -0.45383,-1.04803 -0.45383,-1.04803 0,0 0.2319,-1.24222 0.32166,-2.1982 0.1097,-1.19115 -0.68819,-4.26851 -4.95448,-4.26851 -4.26629,0 -5.0667,3.07736 -4.95448,4.26851 0.0898,0.95598 0.32163,2.1982 0.32163,2.1982 0,0 -0.45379,0.2085 -0.45379,1.04803 0.15958,2.10622 0.9874,1.19857 1.15946,2.12113 0.41142,2.22396 1.34894,1.82748 1.34894,3.04206 0,2.02295 -0.98241,2.96767 -4.05433,4.08778 -3.08442,1.12375 -5.08664,2.2693 -5.08664,3.05046 0,0.78072 0,2.62487 0,2.62487 l 20.93448,0.0572 1.71158,-0.79157 c 0,0 0.79236,-1.10982 0.79236,-1.89054 0,-0.78116 -2.00224,-1.92671 -5.08664,-3.05046"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="path3355"
+         sodipodi:nodetypes="csccccsccccscscccsc"
+         inkscape:export-filename="/home/jjcsantanna/Área de Trabalho/source_meican/apps/bpm/webroot/img/ico_request_group.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90" />
+      <path
+         id="path3358"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         d="m 169.70929,241.71745 8.05751,0 0,-2.518 -8.05751,0 0,2.518 z m 0,-11.29493 8.05751,0 0,-2.51793 -8.05751,0 0,2.51793 z m -3.16545,-5.64024 14.38841,0 0,20.14376 -14.38841,0 0,-20.14376 z m 14.38841,-2.87769 -14.38841,0 c -1.58272,0 -2.87768,1.29496 -2.87768,2.87769 l 0,20.14376 c 0,1.58272 1.29496,2.87768 2.87768,2.87768 l 14.38841,0 c 1.58273,0 2.87768,-1.29496 2.87768,-2.87768 l 0,-20.14376 c 0,-1.58273 -1.29495,-2.87769 -2.87768,-2.87769 z m -11.19044,14.20139 8.05751,0 0,-2.58992 -8.05751,0 0,2.58992 z"
+         inkscape:connector-curvature="0"
+         inkscape:export-filename="/home/jjcsantanna/Área de Trabalho/source_meican/apps/bpm/webroot/img/ico_request_group.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90" />
+      <path
+         id="path3360"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         d="m 190.69534,226.48497 0.0529,6.56414 2.43117,-0.0196 -3.53435,3.91861 -3.59707,-3.86112 2.43117,-0.0196 -0.0477,-5.91583 -5.02441,0.0405 -0.0183,-2.26909 5.67271,-0.0457 c 0.89467,-0.007 1.62662,0.71239 1.63384,1.60771"
+         inkscape:connector-curvature="0"
+         inkscape:export-filename="/home/jjcsantanna/Área de Trabalho/source_meican/apps/bpm/webroot/img/ico_request_group.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90" />
+      <path
+         id="path3362"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         d="m 202.07031,254.54213 c -1.96609,-0.71688 -1.80804,-1.25009 -1.80804,-2.54481 0,-0.77735 0.60003,-0.52359 0.86335,-1.94696 0.11011,-0.59045 0.63994,-0.01 0.74207,-1.35755 0,-0.53732 -0.29045,-0.67076 -0.29045,-0.67076 0,0 0.14842,-0.79503 0.20587,-1.40688 0.0702,-0.76235 -0.44046,-2.7319 -3.17094,-2.7319 -2.73048,0 -3.24276,1.96955 -3.17094,2.7319 0.0575,0.61185 0.20585,1.40688 0.20585,1.40688 0,0 -0.29043,0.13344 -0.29043,0.67076 0.10213,1.34801 0.63195,0.7671 0.74207,1.35755 0.26331,1.42337 0.86334,1.16961 0.86334,1.94696 0,1.29472 -0.62876,1.89935 -2.59483,2.61624 -1.97407,0.71922 -3.25552,1.45238 -3.25552,1.95233 0,0.49968 0,1.67996 0,1.67996 l 9.84974,1.02856 c 0,0 0.82309,-1.24176 0.82309,-1.74143 0,-0.49995 -0.17823,-0.59701 0.19146,-1.6678"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="csccccsccccscsccsc"
+         inkscape:export-filename="/home/jjcsantanna/Área de Trabalho/source_meican/apps/bpm/webroot/img/ico_request_group.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90" />
+      <path
+         sodipodi:nodetypes="csccccsccccscsccsc"
+         id="path3364"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         d="m 184.69173,257.13004 c -1.79084,-0.65298 -2.36354,-1.20372 -2.36354,-2.38303 0,-0.70805 0.54655,-0.47692 0.7864,-1.77341 0.10029,-0.53782 0.58289,-0.009 0.67592,-1.23655 0,-0.48941 -0.26456,-0.61096 -0.26456,-0.61096 0,0 0.13519,-0.72417 0.18751,-1.28148 0.064,-0.69439 -0.40119,-2.48839 -2.88828,-2.48839 -2.4871,0 -2.95371,1.794 -2.88829,2.48839 0.0523,0.55731 0.1875,1.28148 0.1875,1.28148 0,0 -0.26455,0.12155 -0.26455,0.61096 0.093,1.22786 0.57562,0.69873 0.67593,1.23655 0.23984,1.29649 0.78638,1.06536 0.78638,1.77341 0,1.17931 -0.57271,1.73005 -2.36353,2.38303 -1.79811,0.65511 -2.96533,1.32293 -2.96533,1.77831 0,0.45514 0,1.53021 0,1.53021 l 13.84595,0.0228 c 0,0 -0.18218,-1.09784 -0.18218,-1.55298 0,-0.45538 -1.16724,-1.1232 -2.96533,-1.77831"
+         inkscape:connector-curvature="0"
+         inkscape:export-filename="/home/jjcsantanna/Área de Trabalho/source_meican/apps/bpm/webroot/img/ico_request_group.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90" />
+    </g>
+    <rect
+       ry="3.6301033"
+       y="408.72263"
+       x="-185.40382"
+       height="39.412552"
+       width="190.77634"
+       id="rect3366"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:#000000;stroke-width:1.22365952;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_accept.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="opacity:0.98999999;fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       id="rect3368"
+       width="38.549179"
+       height="38.078533"
+       x="-184.81367"
+       y="409.36581"
+       ry="3.281599"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_accept.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_deny.png"
+       transform="translate(-391.09231,137.42629)"
+       id="g3370">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 220.98091,248.45974 9.67283,0 0,-3.02278 -9.67283,0 0,3.02278 z m 0,-13.55926 9.67283,0 0,-3.02274 -9.67283,0 0,3.02274 z m -3.80005,-6.77097 17.27293,0 0,24.18206 -17.27293,0 0,-24.18206 z m 17.27293,-3.45459 -17.27293,0 c -1.90002,0 -3.45458,1.55459 -3.45458,3.45459 l 0,24.18206 c 0,1.90002 1.55456,3.45459 3.45458,3.45459 l 17.27293,0 c 1.9,0 3.45457,-1.55457 3.45457,-3.45459 l 0,-24.18206 c 0,-1.9 -1.55457,-3.45459 -3.45457,-3.45459 z m -13.43385,17.04841 9.67285,0 0,-3.10912 -9.67285,0 0,3.10912 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="path3372"
+         inkscape:export-filename="/home/jjcsantanna/Área de Trabalho/source_meican/apps/bpm/webroot/img/ico_deny.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90" />
+      <path
+         id="path3374"
+         style="fill:#aa0000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         d="m 234.47189,246.39672 -5.48575,-6.27275 5.48575,-6.27318 c 0.93551,-0.93312 0.93551,-2.44508 0,-3.3782 -0.93153,-0.93275 -2.44431,-0.93235 -3.37583,3.8e-4 l -5.27874,6.03191 -5.27873,-6.03191 c -0.93153,-0.93273 -2.4443,-0.93313 -3.37583,-3.8e-4 -0.93556,0.93312 -0.93556,2.44508 0,3.3782 l 5.4857,6.27318 -5.4857,6.27275 c -0.93556,0.93274 -0.93556,2.44469 0,3.37781 0.93153,0.93275 2.4443,0.93275 3.37583,0 l 5.27873,-6.03185 5.27874,6.03185 c 0.93152,0.93275 2.4443,0.93275 3.37583,0 0.93551,-0.93312 0.93551,-2.44507 0,-3.37781"
+         inkscape:connector-curvature="0"
+         inkscape:export-filename="/home/jjcsantanna/Área de Trabalho/source_meican/apps/bpm/webroot/img/ico_deny.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90" />
+    </g>
+    <g
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_accept.png"
+       transform="translate(-433.46542,190.10638)"
+       id="g3376">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 262.79175,246.35543 9.65318,0 0,-3.01665 -9.65318,0 0,3.01665 z m 0,-13.53173 9.65318,0 0,-3.01658 -9.65318,0 0,3.01658 z m -3.79232,-6.75722 17.23783,0 0,24.13295 -17.23783,0 0,-24.13295 z m 17.23783,-3.44757 -17.23783,0 c -1.89617,0 -3.44757,1.55141 -3.44757,3.44757 l 0,24.13295 c 0,1.89617 1.5514,3.44757 3.44757,3.44757 l 17.23783,0 c 1.89616,0 3.44756,-1.5514 3.44756,-3.44757 l 0,-24.13295 c 0,-1.89616 -1.5514,-3.44757 -3.44756,-3.44757 z m -13.40655,17.01377 9.65319,0 0,-3.10281 -9.65319,0 0,3.10281 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="path3379"
+         inkscape:export-filename="/home/jjcsantanna/Área de Trabalho/source_meican/apps/bpm/webroot/img/ico_accept.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90" />
+      <g
+         id="g3381"
+         style="fill:#008000"
+         transform="matrix(0.80827873,0,0,-0.80827875,260.54518,244.37377)"
+         inkscape:export-filename="/home/jjcsantanna/Área de Trabalho/source_meican/apps/bpm/webroot/img/ico_accept.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90">
+        <path
+           id="path3383"
+           style="fill:#008000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           d="M 8.765623,0 C 7.996424,0 7.269524,0.3591862 6.803732,0.9752617 L 0.4982259,9.301238 C -0.3203773,10.38448 -0.1086733,11.92611 0.9746137,12.74652 2.057858,13.56724 3.59983,13.35235 4.421965,12.27013 L 8.568004,6.794559 18.9984,23.54067 c 0.7163,1.15169 2.23355,1.50424 3.38739,0.78759 1.15384,-0.71772 1.50317,-2.23501 0.78686,-3.38778 L 10.851,1.159485 C 10.42402,0.4717369 9.686567,0.03915405 8.874985,0.00245667 8.839708,6.904602e-4 8.8009,0 8.765623,0"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <text
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_deny.png"
+       xml:space="preserve"
+       style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+       x="-73.871132"
+       y="381.59442"
+       id="text3385"
+       sodipodi:linespacing="125%"><tspan
+         style="font-size:12px"
+         id="tspan3387"
+         sodipodi:role="line"
+         x="-73.871132"
+         y="381.59442">Autorização Negada</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3389"
+       y="432.08728"
+       x="-74.725899"
+       style="font-size:11px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
+       xml:space="preserve"
+       inkscape:export-filename="/Users/jjsantanna/Desktop/source_meican/apps/bpm/webroot/img/pt_BR/ico_accept.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="432.08728"
+         x="-74.725899"
+         sodipodi:role="line"
+         id="tspan3391"
+         style="font-size:12px">Autorizaão Aceita</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial Narrow;-inkscape-font-specification:Arial Narrow Bold Condensed"
+       x="85.891434"
+       y="240.40184"
+       id="text3393"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3395"
+         x="85.891434"
+         y="240.40184" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial Narrow;-inkscape-font-specification:Arial Narrow Bold Condensed"
+       x="20.041334"
+       y="438.52475"
+       id="text3409"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3411"
+         x="20.041334"
+         y="438.52475" /></text>
   </g>
 </svg>
