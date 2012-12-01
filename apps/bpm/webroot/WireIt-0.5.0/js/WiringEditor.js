@@ -95,14 +95,14 @@ WireIt.WiringEditor = function(options) {
      });
      this.helpPanel.render();
 	
-    
+    console.debug("ola");
     /**
      * @property layout
      * @type {YAHOO.widget.Layout}
      */
     this.layout = new widget.Layout(this.el, this.options.layoutOptions);
     this.layout.render();
-
+console.debug(workflow_to_load);
 	 // Right accordion
     this.renderAccordion();
 
