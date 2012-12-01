@@ -66,6 +66,7 @@ YAHOO.extend(WireIt.ModuleProxy,YAHOO.util.DDProxy, {
  */
 WireIt.WiringEditor = function(options) {
 	
+        console.debug("inicializando...");
 	 /**
 	  * Hash object to reference module definitions by their name
 	  * @property modulesByName
