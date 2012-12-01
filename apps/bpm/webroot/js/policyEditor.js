@@ -1,4 +1,5 @@
-var imagePath = baseUrl + 'apps/bpm/webroot/img/en_US/';
+var imagePath = baseUrl + 'apps/bpm/webroot/img/';
+var iconPath = baseUrl + 'apps/bpm/webroot/img/en_US/';
 
 console.debug(parent.users);
 
@@ -61,7 +62,7 @@ modules: [
 {
     "name": "New_Request",
     "container": {
-        "icon": imagePath + "ico_request.png",
+        "icon": iconPath + "ico_request.png",
         "xtype": "WireIt.MeicanContainer",
         "image": imagePath + "request.png",
         "propertiesForm": [],
@@ -84,7 +85,7 @@ modules: [
 {
     "name": "Domain",
     "container": {
-        "icon": imagePath + "ico_domain.png",
+        "icon": iconPath + "ico_domain.png",
         "xtype": "WireIt.MeicanContainer",
         "image": imagePath + "domain.png",
         "propertiesForm": [],
@@ -135,7 +136,7 @@ modules: [
 {
     "name": "User",
     "container": {
-        "icon": imagePath + "ico_user.png",
+        "icon": iconPath + "ico_user.png",
         "xtype": "WireIt.MeicanContainer",
         "image": imagePath + "user.png",
         "propertiesForm": [],
@@ -190,7 +191,7 @@ modules: [
 {
     "name": "Bandwidth",
     "container": {
-        "icon": imagePath + "ico_bandwidth.png",
+        "icon": iconPath + "ico_bandwidth.png",
         "xtype": "WireIt.MeicanContainer",
         "image": imagePath + "bandwidth.png",
         "propertiesForm": [],
@@ -266,7 +267,7 @@ animColors:{
     "container": {
         "xtype":"WireIt.MeicanContainer", 
         "image": imagePath + "request_user.png",
-        "icon": imagePath + "ico_request_user.png",
+        "icon": iconPath + "ico_request_user.png",
 
         "terminals": [
         {
@@ -327,7 +328,7 @@ animColors:{
     "container": {
         "xtype":"WireIt.MeicanContainer", 
         "image": imagePath + "request_group.png",
-        "icon": imagePath + "ico_request_group.png",
+        "icon": iconPath + "ico_request_group.png",
 
         "terminals": [
         {
@@ -386,7 +387,7 @@ animColors:{
 {
     "name": "Accept_Automatically",
     "container": {
-        "icon": imagePath + "ico_accept.png",
+        "icon": iconPath + "ico_accept.png",
         "xtype": "WireIt.MeicanContainer",
         "image": imagePath + "accept.png",
         "propertiesForm": [],
@@ -419,7 +420,7 @@ animColors:{
 {
     "name": "Deny_Automatically",
     "container": {
-        "icon": imagePath + "ico_deny.png",
+        "icon": iconPath + "ico_deny.png",
         "xtype": "WireIt.MeicanContainer",
         "image": imagePath + "deny.png",
         "propertiesForm": [],
