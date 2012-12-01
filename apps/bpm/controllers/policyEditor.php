@@ -52,7 +52,6 @@ class policyEditor extends MeicanController {
         $users = Common::arrayExtractAttr($allUsers, 'usr_login');
         
         $this->setArgsToScript(array(
-            "workflow_to_load" => "Teste",
             "load_workflow" => 0,
             "users" => $users
         ));
@@ -84,21 +83,15 @@ class policyEditor extends MeicanController {
             return;
         }
         
-        $workflows = array();
         $wkf = new stdClass();
         $wkf->id = $workflow[0]->id;
         $wkf->name = $workflow[0]->name;
         $wkf->working = $workflow[0]->working;
         $wkf->language = $workflow[0]->language;
 
-        $workflows[] = $wkf;
-        
         $this->setArgsToScript(array(
-            "workflow_to_load" => "teste",
             "load_workflow" => 1,
-            "workflows" => $workflows,
             "workflow" => $wkf,
-            "workflow_name" => $wkf->name
         ));
         
         $this->render('add');
@@ -146,18 +139,6 @@ class policyEditor extends MeicanController {
             $result = NULL;
         
         $response = array ('id' => $request['id'],'result' => $result,'error' => NULL);
-        $this->renderJson($response);
-    }
-
-    public function loadWirings() {
-        $request = array(
-            'id' => null, 
-            'method' => null); //TODO: ler do post
-        //TODO: queries
-        $response = array (
-            'id' => $request['id'], 
-            'result' => NULL,
-            'error' => "unknown method '".$request['method']."' or incorrect parameters");
         $this->renderJson($response);
     }
     

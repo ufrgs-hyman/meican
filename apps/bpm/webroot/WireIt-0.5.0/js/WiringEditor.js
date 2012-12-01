@@ -137,10 +137,7 @@ WireIt.WiringEditor = function(options) {
 	 //this.load();
          
          if (parent.load_workflow) {
-             console.debug("loading...");
-             console.debug(parent.workflow);
-             //this.onLoadSuccess(parent.workflows);
-             //this.loadPipe(parent.workflow_id);
+             //console.debug("loading...");
              this.loadWorkflow(parent.workflow);
          }
 };
@@ -585,7 +582,10 @@ WireIt.WiringEditor.prototype = {
     return null;
  },
 
-
+/**
+  * @method loadWorkflow
+  * @param {Object} workflow Object containing the workflow properties
+  */
 loadWorkflow: function(workflow) {
 	
 	if(!this.isSaved()) {
@@ -604,7 +604,7 @@ loadWorkflow: function(workflow) {
     var wiring = ret, i;
 
 	 if(!wiring) {
-		this.alert("The wiring '"+id+"' was not found.");
+		this.alert("The wiring '"+workflow.name+"' was not found.");
 		return;
   	 }
     
