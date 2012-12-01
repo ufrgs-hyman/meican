@@ -15,7 +15,7 @@ class policyEditor extends MeicanController {
     protected function renderEmpty() {
         $this->set(array(
             'title' => _("Workflows"),
-            'link' => false
+            'message' => sprintf(_("No %s created"), _("workflow")).". "._("Please, click the button below to add a new one")
         ));
         parent::renderEmpty();
     }
