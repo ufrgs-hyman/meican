@@ -1,5 +1,6 @@
 var imagePath = baseUrl + 'apps/bpm/webroot/img/';
-console.debug(parent.load_workflow);
+
+console.debug(parent.users);
 
 var meicanPolicyLanguage = {
 	

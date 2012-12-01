@@ -47,9 +47,14 @@ class policyEditor extends MeicanController {
     }
     
     public function add_form() {
+        $user_info = new user_info();
+        $allUsers = $user_info->fetch();
+        $users = Common::arrayExtractAttr($allUsers, 'usr_login');
+        
         $this->setArgsToScript(array(
             "workflow_to_load" => "Teste",
             "load_workflow" => 0,
+            "users" => $users
         ));
         $this->render('add');
     }
