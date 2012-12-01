@@ -66,7 +66,6 @@ YAHOO.extend(WireIt.ModuleProxy,YAHOO.util.DDProxy, {
  */
 WireIt.WiringEditor = function(options) {
 	
-        console.debug("inicializando...");
 	 /**
 	  * Hash object to reference module definitions by their name
 	  * @property modulesByName
@@ -95,19 +94,13 @@ WireIt.WiringEditor = function(options) {
      });
      this.helpPanel.render();
 	
-    console.debug("ola");
     /**
      * @property layout
      * @type {YAHOO.widget.Layout}
      */
     this.layout = new widget.Layout(this.el, this.options.layoutOptions);
-    console.debug("ola2");
     this.layout.render();
 
-console.debug("ola3");    
-console.debug(workflow_teste);
-console.debug(parent.workflow_to_load);
-console.debug("ola4");    
 	 // Right accordion
     this.renderAccordion();
 
@@ -141,8 +134,7 @@ console.debug("ola4");
 			this.adapter.init();
  	 }
          
-         console.debug(workflow_to_load);
-         alert("ola");
+         console.debug(parent.workflow_to_load);
          
 	 this.load();
          //this.onLoadSuccess(result);
