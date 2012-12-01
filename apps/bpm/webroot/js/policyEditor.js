@@ -1,4 +1,4 @@
-var imagePath = baseUrl + 'apps/bpm/webroot/img/';
+var imagePath = baseUrl + 'apps/bpm/webroot/img/en_US/';
 
 console.debug(parent.users);
 

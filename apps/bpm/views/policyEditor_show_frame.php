@@ -92,6 +92,7 @@
                 top: 72px;
                 left: 0px;
             }
+         
             .worflow-editor-area {
                 border: 1px solid black;
             }
