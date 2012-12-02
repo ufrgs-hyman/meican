@@ -90,12 +90,12 @@ class policyEditor extends MeicanController {
         );
 
         $this->setArgsToScript(array_merge($args, $this->buildArgs()));
-        $this->render('add');
+        $this->render('load_frame');
     }
 
     public function show_frame() {
         $this->layout = 'empty';
-        $this->render('show_frame');
+        $this->render('frame');
     }
     
     public function edit($workflow_id_array) {
@@ -145,7 +145,7 @@ class policyEditor extends MeicanController {
         );
         
         $this->setArgsToScript(array_merge($args, $this->buildArgs()));
-        $this->render('add');
+        $this->render('load_frame');
     }
     
 //    public function listWorkflows() {

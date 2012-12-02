@@ -194,9 +194,6 @@
         <div id="helpPanel">
             <div class="hd">Welcome to the MEICAN Policy Editor</div>
         </div>
-        
-        <div id="teste">
-        </div>
             
     </body>
 

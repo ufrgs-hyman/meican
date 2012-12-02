@@ -335,25 +335,6 @@ WireIt.WiringEditor.prototype = {
 
  },
 
-saveModule2: function(object) {
-    
-    var value = object.getValue();
-    
-    if(value.name === "") {
-       parent.setFlash(parent.string_choose_name, "warning");
-       return;
-    }
-
-    object.tempSavedWiring = {id: value.id, name: value.name, working: JSON.stringify(value.working), language: object.options.languageName };
-                
-    object.adapter.saveWiring(object.tempSavedWiring, {
-       success: object.saveModuleSuccess,
-       failure: object.saveModuleFailure,
-       scope: object
-    });
-
- },
-
  /**
   * saveModule success callback
   * @method saveModuleSuccess
