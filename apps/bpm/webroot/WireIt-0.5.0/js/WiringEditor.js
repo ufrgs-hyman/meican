@@ -294,9 +294,10 @@ WireIt.WiringEditor.prototype = {
     var saveButton = new widget.Button({ label:"Save", id:"WiringEditor-saveButton", container: toolbar });
     saveButton.on("click", this.onSave, this, true);
     
-    var saveButton2 = new widget.Button({ label:"Save", id:"WiringEditor-saveButton", container: Dom.get('teste') });
     //Dom.get(parent.bt_save_workflow).onclick = this.onSave();
-    Dom.get(parent.bt_save_workflow).onclick = this.onSave;
+    Dom.get(parent.bt_save_workflow).onclick = function() {
+        this.saveModule2(this);
+    };
 
  /*   var deleteButton = new widget.Button({ label:"Delete", id:"WiringEditor-deleteButton", container: toolbar });
     deleteButton.on("click", this.onDelete, this, true);
@@ -333,6 +334,25 @@ WireIt.WiringEditor.prototype = {
        success: this.saveModuleSuccess,
        failure: this.saveModuleFailure,
        scope: this
+    });
+
+ },
+
+saveModule2: function(object) {
+    
+    var value = object.getValue();
+    
+    if(value.name === "") {
+       parent.setFlash(parent.string_choose_name, "warning");
+       return;
+    }
+
+    object.tempSavedWiring = {id: value.id, name: value.name, working: JSON.stringify(value.working), language: object.options.languageName };
+                
+    object.adapter.saveWiring(object.tempSavedWiring, {
+       success: object.saveModuleSuccess,
+       failure: object.saveModuleFailure,
+       scope: object
     });
 
  },
