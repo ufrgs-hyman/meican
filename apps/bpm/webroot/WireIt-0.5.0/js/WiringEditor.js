@@ -294,10 +294,7 @@ WireIt.WiringEditor.prototype = {
     var saveButton = new widget.Button({ label:"Save", id:"WiringEditor-saveButton", container: toolbar });
     saveButton.on("click", this.onSave, this, true);
     
-    //Dom.get(parent.bt_save_workflow).onclick = this.onSave();
-    Dom.get(parent.bt_save_workflow).onclick = function() {
-        this.saveModule2(this);
-    };
+    Dom.get(parent.bt_save_workflow).onclick = this.onSave;
 
  /*   var deleteButton = new widget.Button({ label:"Delete", id:"WiringEditor-deleteButton", container: toolbar });
     deleteButton.on("click", this.onDelete, this, true);
