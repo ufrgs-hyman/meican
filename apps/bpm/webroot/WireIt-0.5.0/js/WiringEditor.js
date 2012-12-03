@@ -289,12 +289,12 @@ WireIt.WiringEditor.prototype = {
     newButton.on("click", this.onNew, this, true);
 
     var loadButton = new widget.Button({ label:"Load", id:"WiringEditor-loadButton", container: toolbar });
-    loadButton.on("click", this.load, this, true);*/
+    loadButton.on("click", this.load, this, true);
 
     var saveButton = new widget.Button({ label:"Save", id:"WiringEditor-saveButton", container: toolbar });
     saveButton.on("click", this.onSave, this, true);
 
- /*   var deleteButton = new widget.Button({ label:"Delete", id:"WiringEditor-deleteButton", container: toolbar });
+    var deleteButton = new widget.Button({ label:"Delete", id:"WiringEditor-deleteButton", container: toolbar });
     deleteButton.on("click", this.onDelete, this, true);
 
     var helpButton = new widget.Button({ label:"Help", id:"WiringEditor-helpButton", container: toolbar });
