@@ -165,13 +165,13 @@
 
             // InputEx needs a correct path to this image
             inputEx.spacerUrl = "/inputex/trunk/images/space.gif";
-
+            var workflowEditor;
 
             YAHOO.util.Event.onDOMReady( function() {
-                var editor = new WireIt.WiringEditor(meicanPolicyLanguage); 
+                workflowEditor = new WireIt.WiringEditor(meicanPolicyLanguage); 
 	
                 // Open the infos panel
-                editor.accordionView.openPanel(2);
+                workflowEditor.accordionView.openPanel(2);
             });
 
         </script>

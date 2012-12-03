@@ -20,9 +20,9 @@
         </select>
 </div>
 
-<iframe name="workflow_editor" src="<?php echo $this->url(array('action' => 'show_frame')); ?>"> </iframe>
+<iframe name="workflow_editor" id="workflow_editor" src="<?php echo $this->url(array('action' => 'show_frame')); ?>"> </iframe>
 
 <div class="controls">
-    <input type="submit" id="bt_save_workflow" class="save" value="<?php echo _('Save'); ?>"/>
+    <input type="submit" id="bt_save_workflow" class="save" value="<?php echo _('Save'); ?>" onclick="document.getElementById('workflow_editor').contentWindow['workflowEditor'].saveModule();"/>
     <input type="button" class="cancel" value="<?php echo _('Cancel'); ?>" onclick="redir('<?php echo $this->buildLink(array('action' => 'show')); ?>');"/>
 </div>

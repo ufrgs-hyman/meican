@@ -293,8 +293,6 @@ WireIt.WiringEditor.prototype = {
 
     var saveButton = new widget.Button({ label:"Save", id:"WiringEditor-saveButton", container: toolbar });
     saveButton.on("click", this.onSave, this, true);
-    
-    Dom.get(parent.bt_save_workflow).onclick = this.onSave;
 
  /*   var deleteButton = new widget.Button({ label:"Delete", id:"WiringEditor-deleteButton", container: toolbar });
     deleteButton.on("click", this.onDelete, this, true);
@@ -325,7 +323,12 @@ WireIt.WiringEditor.prototype = {
        return;
     }
 
-    this.tempSavedWiring = {id: value.id, name: value.name, working: JSON.stringify(value.working), language: this.options.languageName };
+    this.tempSavedWiring = {id: value.id, 
+        name: value.name, 
+        working: JSON.stringify(value.working), 
+        language: this.options.languageName,
+        dom_id: 1,
+        status: 0};
                 
     this.adapter.saveWiring(this.tempSavedWiring, {
        success: this.saveModuleSuccess,

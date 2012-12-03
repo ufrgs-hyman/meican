@@ -181,9 +181,8 @@ class policyEditor extends MeicanController {
         $work_info->name = $params['name'];
         $work_info->language = $params['language'];
         $work_info->working = $params['working'];
-        // TODO: puxar dom_id do select box
-        $work_info->dom_id = 1;
-        $work_info->status = 0;
+        $work_info->dom_id = $params['dom_id'];
+        $work_info->status = $params['status'];
         
         $result = new stdClass();
         if ($params['id']) {
