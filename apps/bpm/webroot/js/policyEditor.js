@@ -60,7 +60,7 @@ var meicanPolicyLanguage = {
         "inputParams": {
 		"name": "domains_owner",                 
 		"label": "Select the owner domain: ", 
-                "selectValues": domains
+                "selectValues": domains.descr
          }
     }
     
