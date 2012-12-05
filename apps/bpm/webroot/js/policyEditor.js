@@ -59,7 +59,7 @@ var meicanPolicyLanguage = {
     	"type": "select", 
         "inputParams": {
 		"name": "domains_owner",                 
-		"label": parent.string_workflow_name + ": aa ", 
+		"label": "Select the owner domain: ", 
                 "selectValues": domains
          }
     }
