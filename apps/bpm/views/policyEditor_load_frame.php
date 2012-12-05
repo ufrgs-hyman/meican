@@ -21,6 +21,7 @@
         </select>
 </div>
 -->
+<br>
 
 <iframe name="workflow_editor" id="workflow_editor" src="<?php echo $this->url(array('action' => 'show_frame')); ?>"> </iframe>
 
