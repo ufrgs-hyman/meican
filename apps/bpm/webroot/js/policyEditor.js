@@ -42,7 +42,12 @@ var meicanPolicyLanguage = {
     },
     layerOptions: {
         layerMap: false
+	position: 'left', width: 200, resize: true, body: 'left', gutter: '5px', collapse: true, 
+	        collapseSize: 25, header: 'Modules', scroll: true, animate: true },
     },
+
+
+
     // inputEx fields for pipes properties
     propertiesFields: [
     // default fields (the "name" field is required by the WiringEditor):
