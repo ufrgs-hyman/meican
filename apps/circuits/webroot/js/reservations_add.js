@@ -1156,6 +1156,22 @@ function validateBand(band_value) {
         return false;
 }
 
+function maySpecifyPath() {
+    if ($("#chk_maySpecifyPath").attr('checked')) {
+        $("#waypointsConfiguration").slideDown(1);
+//        for (var i in $.fn.mapEdit.waypoints) {
+//            $.fn.mapEdit.waypoints[i].unselectedMarker.setMap(null);
+//            $.fn.mapEdit.waypoints[i].setMap(edit_map);
+//        }        
+    } else {
+        $("#waypointsConfiguration").slideUp(1);
+//        for (var i in $.fn.mapEdit.waypoints) {
+//            $.fn.mapEdit.waypoints[i].setMap(null);
+//            $.fn.mapEdit.waypoints[i].unselectedMarker.setMap(edit_map);            
+//        }
+    }
+}
+
 function setPathUrn() {    
     var strPath = "";
     for (var i in $.fn.mapEdit.waypoints) {
@@ -1303,14 +1319,24 @@ function setPathUrn() {
     
         prepareContextMenu: function(){
             if (contextMenu == null) {
-                contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
-                contextMenu.append('<li><a href="#fromHere" id="contextItem">' + from_here_string + '</a></li>');
-                contextMenu.append('<li><a href="#setWaypoint" id="contextItem">' + waypoint_string + '</a></li>');
-                contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
-                contextMenu.bind('contextmenu', function() {
-                    return false;
-                });
-                $(edit_map.getDiv()).append(contextMenu);
+                if (specify_path) {
+                    contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
+                    contextMenu.append('<li><a href="#fromHere" id="contextItem">' + from_here_string + '</a></li>');
+                    contextMenu.append('<li><a href="#setWaypoint" id="contextItem">' + waypoint_string + '</a></li>');
+                    contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
+                    contextMenu.bind('contextmenu', function() {
+                        return false;
+                    });
+                    $(edit_map.getDiv()).append(contextMenu);
+                } else {
+                    contextMenu = $(document.createElement('ul')).attr('id', 'contextMenu');
+                    contextMenu.append('<li><a href="#fromHere" id="contextItem">' + from_here_string + '</a></li>');
+                    contextMenu.append('<li><a href="#toHere">' + to_here_string + '</a></li>');
+                    contextMenu.bind('contextmenu', function() {
+                        return false;
+                    });
+                    $(edit_map.getDiv()).append(contextMenu);                    
+                }
             }
         },
 
@@ -1351,6 +1377,7 @@ function setPathUrn() {
                 domain_name: domain_name,
                 id: network_id,
                 label: network_name,
+                allow_create: allow_create,
                 position: coord,
                 styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
                     color:color
@@ -1360,7 +1387,7 @@ function setPathUrn() {
 
             var clickFn = function() {
         
-                if (allow_create) {
+                if (this.allow_create) {
                     $("#contextItem").removeClass("ui-state-disabled");
                 }
                 else {
@@ -1529,7 +1556,11 @@ function setPathUrn() {
                     }
                 }                
                 
-                $("#waypoints_order").append("<li id='order_"+$.fn.mapEdit.waypoints[n].order+"'>" + network_name +"</li>");
+                $("#waypoints_order").append("<li class='ui-state-default' id='order_"+$.fn.mapEdit.waypoints[n].order+"'>" + network_name +"</li>");
+                
+                $("#chk_maySpecifyPath").removeAttr("disabled");
+                $("#advConfLabel").removeAttr("disabled");
+                maySpecifyPath();
                 
                 google.maps.event.addListener($.fn.mapEdit.waypoints[n], "click", clickFnWay);
                 google.maps.event.addListener($.fn.mapEdit.waypoints[n], 'rightclick', clickFnWay);    
@@ -1577,14 +1608,27 @@ function setPathUrn() {
         /** Desenha linha entre dois pontos e prepara seleção de banda
          **/
         preparePath: function(from, to, waypoints) {
-            if ((from == null) || (to == null))
-                return ;
+            var pathToDraw = new Array();
             
-            //$("#showVlan_checkbox").removeAttr("disabled");
+            if (from != null)  {
+                pathToDraw.push(from.position);
+            }
             
-            $.fn.mapEdit.clearMapElements(edit_lines);
+            if (waypoints != null) {
+                for (var i in waypoints) {
+                    pathToDraw.push(waypoints[i]);
+                }
+            }
             
-            this.drawPath(new Array(from.position).concat(waypoints).concat(new Array(to.position)));
+            if (to != null) {
+                pathToDraw.push(to.position);
+            }
+            
+            if (pathToDraw.length > 1) {
+                $.fn.mapEdit.clearMapElements(edit_lines);
+                this.drawPath(pathToDraw);
+            } else
+                return;
         },
         
         // desenha uma linha entre dois endpoints selecionados
@@ -1680,10 +1724,16 @@ function setPathUrn() {
                 
                 $("#waypoints_order").empty();
                 
-                for (var i=0; i< $.fn.mapEdit.waypoints.length; i++) {                    
-                    if ($.fn.mapEdit.waypoints[i].order > order)                    
-                        $.fn.mapEdit.waypoints[i].order --;
-                    $("#waypoints_order").append("<li id='order_"+$.fn.mapEdit.waypoints[i].order+"'>" + $.fn.mapEdit.waypoints[i].label +"</li>");    
+                if ($.fn.mapEdit.waypoints.length == 0) {
+                    $("#waypointsConfiguration").slideUp(1);
+                    $("#chk_maySpecifyPath").attr("disabled", "disabled");
+                    $("#advConfLabel").attr("disabled", "disabled");
+                } else {
+                    for (var i=0; i< $.fn.mapEdit.waypoints.length; i++) {                    
+                        if ($.fn.mapEdit.waypoints[i].order > order)                    
+                            $.fn.mapEdit.waypoints[i].order --;
+                        $("#waypoints_order").append("<li class=ui-state-default id='order_"+$.fn.mapEdit.waypoints[i].order+"'>" + $.fn.mapEdit.waypoints[i].label +"</li>");    
+                    }
                 }
                 
             }
@@ -1914,7 +1964,7 @@ function setPathUrn() {
                 $("#waypoints_order").empty();
                 
                 for (i=0; i< $.fn.mapEdit.waypoints.length; i++) {                    
-                    $("#waypoints_order").append("<li id='order_"+$.fn.mapEdit.waypoints[i].order+"'>" + $.fn.mapEdit.waypoints[i].label +"</li>");    
+                    $("#waypoints_order").append("<li class='ui-state-default' id='order_"+$.fn.mapEdit.waypoints[i].order+"'>" + $.fn.mapEdit.waypoints[i].label +"</li>");    
                 }
 
                 if ($.fn.mapEdit.hasPath()) {
@@ -1923,7 +1973,7 @@ function setPathUrn() {
                 
                 $.fn.mapEdit.preparePath(path[0], path[1], $.fn.mapEdit.hops);
             }
-        });
+        }).css("display","block");
         
         resizefn();
         

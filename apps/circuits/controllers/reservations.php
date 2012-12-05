@@ -467,6 +467,12 @@ class reservations extends Controller {
         $lang = explode(".", Language::getInstance()->getLanguage());
         $js_lang = str_replace("_", "-", $lang[0]);
         // --------------------------------------------
+        // 
+        // ACL permission to specify path
+           $acl = AclLoader::getInstance();
+           $specify_path = $acl->checkACL("read", "may_specify_path");
+        // 
+        // ---------------------------------------------
         //if ($domToMapArray) {
         // Args to Script
         $this->setArgsToScript(array(
@@ -475,6 +481,7 @@ class reservations extends Controller {
             "band_max" => $bmax,
             "band_div" => $bdiv,
             "band_warning" => $bwarn,
+            "specify_path" => $specify_path,
             "warning_string" => _("Authorization from Network Administrator will be required."),
             // flash messages
             "flash_nameReq" => _("A name is required"),
@@ -567,7 +574,9 @@ class reservations extends Controller {
         $args->finish_date = date($dateFormat, (time() + 90 * 60));
         $args->start_time = date($hourFormat, (time() + 30 * 60));
         $args->finish_time = date($hourFormat, (time() + 90 * 60));
-
+        
+        $args->specify_path = $specify_path;
+        
         $this->setArgsToBody($args);
         // -----------------------------------------------------------------------------
         // SCRIPTS -----------------------------------------

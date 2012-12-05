@@ -1399,35 +1399,6 @@ form div.form {
     padding: 2px;
     vertical-align: text-top;
 }
-/*
- #curl{
-    width:40px;
-    height:40px;
-    position:relative;
-    top:0;
-    left:0;
-}
-#curl:hover{
-    width:300px;
-    height:300px;
-     -webkit-transition: ease 1s;
-     -moz-transition: ease 1s;
-}
-#code{
-    background:#fffff;
-    overflow:hidden;
-    width:35px;
-    height:35px;
-    position:fixed;
-    top:0;
-    left:0;
-}
-#code:hover{
-    width:250px;
-    height:250px;
-    -webkit-transition: ease 1s;
-    -moz-transition: ease 1s;
-} */
 
 #main iframe{
     width: 100%;
@@ -1435,3 +1406,14 @@ form div.form {
     border: 0;
 }
 
+#waypoints_order {
+    list-style-type: none;
+}
+
+#waypoints_order li {
+    width: 15%;
+    margin-bottom: 0.4%;
+    text-align: center;
+    cursor:pointer;
+    cursor:hand;
+}
