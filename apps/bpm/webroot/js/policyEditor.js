@@ -55,6 +55,15 @@ var meicanPolicyLanguage = {
             cols: 5
         }
     },
+    {
+    	"type": "select", 
+        "inputParams": {
+		"name": "domains_owner",                 
+		"label": parent.string_workflow_name + ": aa ", 
+                "selectValues": domains
+         }
+    }
+    
 
 ],
 	
