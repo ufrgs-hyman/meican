@@ -30,7 +30,8 @@ var meicanPolicyLanguage = {
             collapse: true, 
             collapseSize: 25, 
             scroll: false, 
-            animate: true
+            animate: true,
+	    header: 'Drag and Drop to Pooll'
         },
 
         {
@@ -42,9 +43,8 @@ var meicanPolicyLanguage = {
     },
     layerOptions: {
         layerMap: false
-	position: 'left', width: 200, resize: true, body: 'left', gutter: '5px', collapse: true, 
-	        collapseSize: 25, header: 'Modules', scroll: true, animate: true },
     },
+
 
 
 
