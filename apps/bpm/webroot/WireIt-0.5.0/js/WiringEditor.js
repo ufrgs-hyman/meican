@@ -178,10 +178,10 @@ WireIt.WiringEditor.prototype = {
 	 	units: [
 	   	{ position: 'top', height: 50, body: 'top'},
 	      { position: 'left', width: 200, resize: true, body: 'left', gutter: '5px', collapse: true, 
-	        collapseSize: 25, header: 'Modules', scroll: true, animate: true },
+	        collapseSize: 25, header: 'Modules123', scroll: true, animate: true },
 	      { position: 'center', body: 'center', gutter: '5px' },
 	      { position: 'right', width: 320, resize: true, body: 'right', gutter: '5px', collapse: true, 
-	        collapseSize: 25, /*header: 'Properties', scroll: true,*/ animate: true }
+	        collapseSize: 25, header: 'Properties', scroll: true, animate: true }
 	   ]
 	};
      
