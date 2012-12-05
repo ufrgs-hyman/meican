@@ -31,7 +31,7 @@ var meicanPolicyLanguage = {
             collapseSize: 25, 
             scroll: false, 
             animate: true,
-	    header: 'Drag and Drop to Pooll'
+	    header: 'Drag and drop this elements'
         },
 
         {
