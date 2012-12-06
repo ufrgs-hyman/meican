@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-06 13:43-0200\n"
+"POT-Creation-Date: 2012-12-06 14:40-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,7 +42,7 @@ msgstr ""
 msgid "New Reservation"
 msgstr ""
 
-#: controllers/reservations.php:118 controllers/reservations.php:825
+#: controllers/reservations.php:118 controllers/reservations.php:827
 msgid "Error to get status"
 msgstr ""
 
@@ -67,102 +67,111 @@ msgid ""
 msgstr ""
 
 #: controllers/reservations.php:485
-msgid "Authorization from Network Administrator will be required."
+msgid "Save"
+msgstr ""
+
+#: controllers/reservations.php:486 controllers/reservations.php:529
+#: views/reservations_add.php:46
+msgid "Cancel"
 msgstr ""
 
 #: controllers/reservations.php:487
-msgid "A name is required"
-msgstr ""
-
-#: controllers/reservations.php:488
-msgid "Invalid value for bandwidth"
+msgid "Authorization from Network Administrator will be required."
 msgstr ""
 
 #: controllers/reservations.php:489
-msgid "A source is required"
+msgid "A name is required"
 msgstr ""
 
 #: controllers/reservations.php:490
-msgid "Invalid value for source VLAN"
+msgid "Invalid value for bandwidth"
 msgstr ""
 
 #: controllers/reservations.php:491
-msgid "Source VLAN type required"
+msgid "A source is required"
 msgstr ""
 
 #: controllers/reservations.php:492
-msgid "A destination is required"
+msgid "Invalid value for source VLAN"
 msgstr ""
 
 #: controllers/reservations.php:493
-msgid "Invalid value for destination VLAN"
+msgid "Source VLAN type required"
 msgstr ""
 
 #: controllers/reservations.php:494
-msgid "Destination VLAN type required"
+msgid "A destination is required"
 msgstr ""
 
 #: controllers/reservations.php:495
-msgid "Timer is required"
+msgid "Invalid value for destination VLAN"
 msgstr ""
 
 #: controllers/reservations.php:496
-msgid "The end time occurs before the start time"
+msgid "Destination VLAN type required"
 msgstr ""
 
 #: controllers/reservations.php:497
-msgid "Invalid duration"
+msgid "Timer is required"
 msgstr ""
 
 #: controllers/reservations.php:498
-msgid "Missing endpoints"
+msgid "The end time occurs before the start time"
 msgstr ""
 
 #: controllers/reservations.php:499
-msgid "Source and destination endpoints cannot be the same"
+msgid "Invalid duration"
 msgstr ""
 
 #: controllers/reservations.php:500
-msgid "Could not get host"
+msgid "Missing endpoints"
 msgstr ""
 
 #: controllers/reservations.php:501
-msgid "Domain not found"
+msgid "Source and destination endpoints cannot be the same"
 msgstr ""
 
 #: controllers/reservations.php:502
-msgid "Device not found"
+msgid "Could not get host"
 msgstr ""
 
 #: controllers/reservations.php:503
-msgid "Port not found"
+msgid "Domain not found"
 msgstr ""
 
 #: controllers/reservations.php:504
-msgid "Could not set point, probably there is not enough parameters"
+msgid "Device not found"
 msgstr ""
 
 #: controllers/reservations.php:505
-msgid "Device not set"
+msgid "Port not found"
 msgstr ""
 
 #: controllers/reservations.php:506
-msgid "Port not set"
+msgid "Could not set point, probably there is not enough parameters"
 msgstr ""
 
 #: controllers/reservations.php:507
-msgid "The point specified cannot be set as source"
+msgid "Device not set"
 msgstr ""
 
 #: controllers/reservations.php:508
-msgid "Device cannot be set as source"
+msgid "Port not set"
 msgstr ""
 
 #: controllers/reservations.php:509
+msgid "The point specified cannot be set as source"
+msgstr ""
+
+#: controllers/reservations.php:510
+msgid "Device cannot be set as source"
+msgstr ""
+
+#: controllers/reservations.php:511
 msgid "Port cannot be set as source"
 msgstr ""
 
-#: controllers/reservations.php:511 controllers/reservations.php:816
+#: controllers/reservations.php:513 controllers/reservations.php:818
 #: views/elements/waypoints_form.php:14
 #: views/elements/reservation_tab_point.php:34
 #: views/elements/source_dest.php:21 views/elements/view_point.php:24
@@ -170,11 +179,11 @@ msgstr ""
 msgid "Domain"
 msgstr ""
 
-#: controllers/reservations.php:512 controllers/reservations.php:817
+#: controllers/reservations.php:514 controllers/reservations.php:819
 msgid "Domains"
 msgstr ""
 
-#: controllers/reservations.php:513 controllers/reservations.php:818
+#: controllers/reservations.php:515 controllers/reservations.php:820
 #: views/elements/waypoints_form.php:20
 #: views/elements/reservation_tab_point.php:38
 #: views/elements/source_dest.php:65 views/elements/view_point.php:31
@@ -182,11 +191,11 @@ msgstr ""
 msgid "Network"
 msgstr ""
 
-#: controllers/reservations.php:514 controllers/reservations.php:819
+#: controllers/reservations.php:516 controllers/reservations.php:821
 msgid "Networks"
 msgstr ""
 
-#: controllers/reservations.php:515 controllers/reservations.php:820
+#: controllers/reservations.php:517 controllers/reservations.php:822
 #: views/elements/waypoints_form.php:26
 #: views/elements/reservation_tab_point.php:42
 #: views/elements/source_dest.php:77 views/elements/view_point.php:38
@@ -194,221 +203,217 @@ msgstr ""
 msgid "Device"
 msgstr ""
 
-#: controllers/reservations.php:516 controllers/reservations.php:821
+#: controllers/reservations.php:518 controllers/reservations.php:823
 msgid "Devices"
 msgstr ""
 
-#: controllers/reservations.php:517
+#: controllers/reservations.php:519
 msgid "From here"
 msgstr ""
 
-#: controllers/reservations.php:518
+#: controllers/reservations.php:520
 msgid "Set as waypoint"
 msgstr ""
 
-#: controllers/reservations.php:519
+#: controllers/reservations.php:521
 msgid "Configure waypoint"
 msgstr ""
 
-#: controllers/reservations.php:520
+#: controllers/reservations.php:522
 msgid "Remove waypoint"
 msgstr ""
 
-#: controllers/reservations.php:521
+#: controllers/reservations.php:523
 msgid "To here"
 msgstr ""
 
-#: controllers/reservations.php:522 controllers/reservations.php:824
+#: controllers/reservations.php:524 controllers/reservations.php:826
 msgid "Information about cluster"
 msgstr ""
 
-#: controllers/reservations.php:523
+#: controllers/reservations.php:525
 msgid "Coordinates"
 msgstr ""
 
-#: controllers/reservations.php:524 controllers/reservations.php:558
+#: controllers/reservations.php:526 controllers/reservations.php:560
 #: views/elements/view_point.php:61
 msgid "any"
 msgstr ""
 
-#: controllers/reservations.php:525
+#: controllers/reservations.php:527
 msgid "Value"
 msgstr ""
 
-#: controllers/reservations.php:526
+#: controllers/reservations.php:528
 msgid "Ok"
 msgstr ""
 
-#: controllers/reservations.php:527 views/reservations_add.php:46
-msgid "Cancel"
-msgstr ""
-
-#: controllers/reservations.php:533
+#: controllers/reservations.php:535
 msgid "Repeat every"
 msgstr ""
 
-#: controllers/reservations.php:534 models/timer_info.php:58
+#: controllers/reservations.php:536 models/timer_info.php:58
 msgid "day"
 msgstr ""
 
-#: controllers/reservations.php:535 models/timer_info.php:58
+#: controllers/reservations.php:537 models/timer_info.php:58
 msgid "days"
 msgstr ""
 
-#: controllers/reservations.php:536
+#: controllers/reservations.php:538
 msgid "week"
 msgstr ""
 
-#: controllers/reservations.php:537
+#: controllers/reservations.php:539
 msgid "weeks"
 msgstr ""
 
-#: controllers/reservations.php:538
+#: controllers/reservations.php:540
 msgid "on"
 msgstr ""
 
-#: controllers/reservations.php:539
+#: controllers/reservations.php:541
 msgid "month"
 msgstr ""
 
-#: controllers/reservations.php:540
+#: controllers/reservations.php:542
 msgid "months"
 msgstr ""
 
-#: controllers/reservations.php:541
+#: controllers/reservations.php:543
 msgid "year"
 msgstr ""
 
-#: controllers/reservations.php:542
+#: controllers/reservations.php:544
 msgid "years"
 msgstr ""
 
-#: controllers/reservations.php:543 models/timer_info.php:63
+#: controllers/reservations.php:545 models/timer_info.php:63
 msgid "hour"
 msgstr ""
 
-#: controllers/reservations.php:544 models/timer_info.php:63
+#: controllers/reservations.php:546 models/timer_info.php:63
 msgid "hours"
 msgstr ""
 
-#: controllers/reservations.php:545 models/timer_info.php:68
+#: controllers/reservations.php:547 models/timer_info.php:68
 #: models/timer_info.php:72
 msgid "minute"
 msgstr ""
 
-#: controllers/reservations.php:546 models/timer_info.php:68
+#: controllers/reservations.php:548 models/timer_info.php:68
 msgid "minutes"
 msgstr ""
 
-#: controllers/reservations.php:547
+#: controllers/reservations.php:549
 msgid "and"
 msgstr ""
 
-#: controllers/reservations.php:548
+#: controllers/reservations.php:550
 msgid "until"
 msgstr ""
 
-#: controllers/reservations.php:549
+#: controllers/reservations.php:551
 msgid "times"
 msgstr ""
 
-#: controllers/reservations.php:550
+#: controllers/reservations.php:552
 msgid "time"
 msgstr ""
 
-#: controllers/reservations.php:551
+#: controllers/reservations.php:553
 msgid "Please set an end rule"
 msgstr ""
 
-#: controllers/reservations.php:552
+#: controllers/reservations.php:554
 msgid "Select at least one day"
 msgstr ""
 
-#: controllers/reservations.php:553
+#: controllers/reservations.php:555
 msgid "Set name"
 msgstr ""
 
-#: controllers/reservations.php:554
+#: controllers/reservations.php:556
 msgid "Invalid time"
 msgstr ""
 
-#: controllers/reservations.php:555
+#: controllers/reservations.php:557
 msgid "Active from"
 msgstr ""
 
-#: controllers/reservations.php:556
+#: controllers/reservations.php:558
 msgid "at"
 msgstr ""
 
-#: controllers/reservations.php:557
+#: controllers/reservations.php:559
 msgid "Reset Zoom"
 msgstr ""
 
-#: controllers/reservations.php:630
+#: controllers/reservations.php:632
 msgid "Fail to save endpoints or timer on database"
 msgstr ""
 
-#: controllers/reservations.php:666
+#: controllers/reservations.php:668
 msgid "Error to send reservation to OSCARS"
 msgstr ""
 
-#: controllers/reservations.php:671
+#: controllers/reservations.php:673
 msgid "Reservation submitted"
 msgstr ""
 
-#: controllers/reservations.php:674
+#: controllers/reservations.php:676
 msgid "reservations submitted"
 msgstr ""
 
-#: controllers/reservations.php:682
+#: controllers/reservations.php:684
 msgid "Fail to save reservation on database"
 msgstr ""
 
-#: controllers/reservations.php:697
+#: controllers/reservations.php:699
 msgid "Invalid index"
 msgstr ""
 
-#: controllers/reservations.php:709
+#: controllers/reservations.php:711
 msgid "Reservation not found"
 msgstr ""
 
-#: controllers/reservations.php:764
+#: controllers/reservations.php:766
 msgid "Flow not found or could not get endpoints information"
 msgstr ""
 
-#: controllers/reservations.php:774
+#: controllers/reservations.php:776
 msgid "Timer not found"
 msgstr ""
 
-#: controllers/reservations.php:822
+#: controllers/reservations.php:824
 msgid "From Here"
 msgstr ""
 
-#: controllers/reservations.php:823
+#: controllers/reservations.php:825
 msgid "To Here"
 msgstr ""
 
-#: controllers/reservations.php:876
+#: controllers/reservations.php:878
 msgid "Reservation"
 msgstr ""
 
-#: controllers/reservations.php:876
+#: controllers/reservations.php:878
 msgid "deleted"
 msgstr ""
 
-#: controllers/reservations.php:948
+#: controllers/reservations.php:950
 msgid "No reservation was cancelled"
 msgstr ""
 
-#: controllers/reservations.php:951
+#: controllers/reservations.php:953
 msgid "One reservation was cancelled"
 msgstr ""
 
-#: controllers/reservations.php:954
+#: controllers/reservations.php:956
 msgid "reservations were cancelled"
 msgstr ""
 
-#: controllers/reservations.php:1123
+#: controllers/reservations.php:1125
 msgid "Error at invoking business layer."
 msgstr ""
 

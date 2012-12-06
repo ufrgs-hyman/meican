@@ -2079,14 +2079,14 @@ function completeURN() {
             hide: "fade",
             buttons: [
             {
-                text:"Save", 
+                text:save_string, 
                 click: function() {
                     completeURN();
                     $(this).dialog( "close" ); 
                 }
             },
             {   
-                text:"Cancel", 
+                text:"cancel_string", 
                 click: function() {
                     $(this).dialog( "close" );
                 }

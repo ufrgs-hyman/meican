@@ -482,6 +482,8 @@ class reservations extends Controller {
             "band_div" => $bdiv,
             "band_warning" => $bwarn,
             "specify_path" => $specify_path,
+            "save_string" => _("Save"),
+            "cancel_string" => _("Cancel"),
             "warning_string" => _("Authorization from Network Administrator will be required."),
             // flash messages
             "flash_nameReq" => _("A name is required"),
