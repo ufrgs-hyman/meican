@@ -7,186 +7,170 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-09 17:56-0300\n"
-"PO-Revision-Date: 2012-05-11 17:59-0300\n"
-"Last-Translator: Felipe A. Nesello <felipe.nesello@inf.ufrgs.br>\n"
+"POT-Creation-Date: 2012-12-06 13:43-0200\n"
+"PO-Revision-Date: 2012-12-06 13:46-0300\n"
+"Last-Translator: \n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 
-#: bpm.php:14 bpm.php:33 controllers/requests.php:20
-msgid "Requests"
-msgstr "Requisições"
+#: bpm.php:14
+#: controllers/policyEditor.php:16
+#: views/policyEditor_show.php:5
+msgid "Workflows"
+msgstr ""
 
-#: bpm.php:17 views/requests_reply.php:56
-msgid "Authorization"
-msgstr "Autorização"
-
-#: bpm.php:22
-msgid "Workflow"
-msgstr "Workflow"
-
-#: models/request_info.php:75 models/request_info.php:76
-msgid "Unknown"
-msgstr "Desconhecido"
-
-#: views/ode_show.php:8
-msgid "Process"
-msgstr "Processo"
-
-#: views/ode_show.php:9
-msgid "Version"
-msgstr "Versão"
-
-#: views/ode_show.php:10
-msgid "PID"
-msgstr "PID"
-
+#: bpm.php:17
 #: views/ode_show.php:11
+#: views/policyEditor_show.php:17
 msgid "Status"
 msgstr "Status"
 
-#: views/ode_show.php:12
-msgid "In progress"
-msgstr "Em progresso"
+#: bpm.php:22
+msgid "Workflow editor"
+msgstr ""
 
-#: views/ode_show.php:13
-msgid "Completed"
-msgstr "Concluído"
+#: bpm.php:33
+#: controllers/requests.php:20
+msgid "Requests"
+msgstr "Requisições"
 
-#: views/ode_show.php:14
-msgid "Error"
-msgstr "Erro"
+#: controllers/policyEditor.php:17
+#, php-format
+msgid "No %s created"
+msgstr ""
 
-#: views/ode_show.php:15
-msgid "Failed"
-msgstr "Falha"
+#: controllers/policyEditor.php:17
+msgid "workflow"
+msgstr ""
 
-#: views/ode_show.php:16
-msgid "Suspended"
-msgstr "Suspenso"
+#: controllers/policyEditor.php:17
+msgid "Please, click the button below to add a new one"
+msgstr ""
 
-#: views/ode_show.php:23
-msgid "Undeploy"
-msgstr "Undeploy"
+#: controllers/policyEditor.php:43
+msgid "Workflow name"
+msgstr ""
 
-#: views/ode_show.php:39
-msgid "Deploy process"
-msgstr "Deploy de Processo"
+#: controllers/policyEditor.php:44
+msgid "Enter a title"
+msgstr ""
 
-#: views/ode_show.php:45
-msgid "Name"
-msgstr "Nome"
+#: controllers/policyEditor.php:45
+msgid "Please choose a name"
+msgstr ""
 
-#: views/ode_show.php:53
-msgid "File"
-msgstr "Arquivo"
+#: controllers/policyEditor.php:46
+msgid "Workflow saved"
+msgstr ""
 
-#: views/ode_show.php:61 controllers/requests.php:107
+#: controllers/policyEditor.php:63
+#: models/request_info.php:114
+#: models/request_info.php:115
+msgid "Unknown"
+msgstr "Desconhecido"
+
+#: controllers/policyEditor.php:66
+msgid "Enabled"
+msgstr ""
+
+#: controllers/policyEditor.php:66
+msgid "Disabled"
+msgstr ""
+
+#: controllers/policyEditor.php:106
+#: controllers/requests.php:69
+#: controllers/requests.php:123
+msgid "Invalid index"
+msgstr "Índice inválido"
+
+#: controllers/policyEditor.php:116
+msgid "Workflow not found"
+msgstr ""
+
+#: controllers/policyEditor.php:214
+msgid "Workflow"
+msgstr "Workflow"
+
+#: controllers/policyEditor.php:214
+msgid "deleted"
+msgstr ""
+
+#: controllers/ode.php:41
+msgid "Error on upload file"
+msgstr "Erro ao enviar arquivo"
+
+#: controllers/ode.php:62
+msgid "Process deployed successfully "
+msgstr "Deploy de processo realizado com sucesso"
+
+#: controllers/ode.php:67
+msgid "Fail to deploy process: "
+msgstr "Falha ao realizar deploy do processo:"
+
+#: controllers/ode.php:71
+msgid "invalid name for the process"
+msgstr "nome inválido para o processo"
+
+#: controllers/ode.php:86
+msgid "Process undeployed successfully"
+msgstr "Undeploy de processo realizado com sucesso"
+
+#: controllers/ode.php:87
+msgid "Fail to undeploy process"
+msgstr "Falha ao realizar undeploy do processo"
+
+#: controllers/requests.php:21
+msgid "You have no pending or finished request"
+msgstr "Você não possui requisições pendentes ou finalizadas"
+
+#: controllers/requests.php:107
+#: views/ode_show.php:61
 msgid "Ok"
 msgstr "Ok"
 
-#: views/requests_createRequest.php:12 views/requests_show.php:16
-#: views/requests_show.php:54 views/requests_reply.old.php:25
-msgid "Destination domain"
-msgstr "Domínio de destino"
+#: controllers/requests.php:108
+#: views/policyEditor_load_frame.php:28
+msgid "Cancel"
+msgstr "Cancelar"
 
-#: views/requests_createRequest.php:27
-msgid "Destination user"
-msgstr "Usuário de destino"
+#: controllers/requests.php:109
+msgid "Request will be accepted, please provide a message"
+msgstr "A requisição será aceita, por favor inclua uma mensagem"
 
-#: views/requests_createRequest.php:42
-msgid "Question"
-msgstr "Pergunta"
+#: controllers/requests.php:110
+msgid "Request will be rejected, please provide a message"
+msgstr "A requisição será rejeitada, por favor inclua uma mensagem"
 
-#: views/requests_createRequest.php:50
-msgid "Create"
-msgstr "Criar"
+#: controllers/requests.php:111
+msgid "Available bandwidth"
+msgstr "Largura de banda disponível"
 
-#: views/elements/requests_table.php:8
-msgid "Domain source"
-msgstr "Domínio de origem"
+#: controllers/requests.php:112
+msgid "Requested bandwidth"
+msgstr "Largura de banda solicitada"
 
-#: views/elements/requests_table.php:9 views/requests_show.php:17
-#: views/requests_show.php:55
-msgid "Requester"
-msgstr "Solicitante"
+#: controllers/requests.php:136
+msgid "Response saved"
+msgstr "Resposta salva"
 
-#: views/elements/requests_table.php:10 views/requests_show.php:58
-#: views/requests_reply.old.php:117
-msgid "Response"
-msgstr "Resposta"
+#: controllers/requests.php:140
+msgid "Response NOT saved"
+msgstr "Resposta não salva"
 
-#: views/elements/requests_table.php:11 views/requests_show.php:59
-#: views/requests_reply.old.php:127
-msgid "Message"
-msgstr "Mensagem"
+#: controllers/requests.php:181
+msgid "No request was deleted"
+msgstr "Nenhuma requisição foi excluída"
 
-#: views/elements/requests_table.php:20 views/requests_show.php:38
-msgid "Answer"
-msgstr "Responder"
+#: controllers/requests.php:184
+msgid "One request was deleted"
+msgstr "Uma requisição foi excluída"
 
-#: views/elements/empty_db.php:20
-msgid "Add"
-msgstr "Adicionar"
-
-#: views/requests_reply.php:2
-msgid "Reply request"
-msgstr "Responder requisição"
-
-#: views/requests_reply.php:5
-msgid "Reservation name"
-msgstr "Nome da reserva"
-
-#: views/requests_reply.php:7
-msgid "Requester Domain"
-msgstr "Domínio requisitante"
-
-#: views/requests_reply.php:9
-msgid "Requester User"
-msgstr "Usuário requisitante"
-
-#: views/requests_reply.php:19
-msgid "Refresh"
-msgstr "Atualizar"
-
-#: views/requests_reply.php:20
-msgid "Cancel reservations"
-msgstr "Cancelar reservas"
-
-#: views/requests_reply.php:20
-msgid "Cancel the selected reservations?"
-msgstr "Deseja cancelar as reservas selecionadas?"
-
-#: views/requests_reply.php:53
-msgid "Back"
-msgstr "Voltar"
-
-#: views/requests_reply.php:60
-msgid "Provide a message"
-msgstr "Inclua uma mensagem"
-
-#: views/requests_show.php:9
-msgid "Pending incoming requests"
-msgstr "Requisições pendentes de entrada"
-
-#: views/requests_show.php:15 views/requests_show.php:53
-msgid "Source domain"
-msgstr "Domínio de origem"
-
-#: views/requests_show.php:18 views/requests_show.php:56
-msgid "Resource type"
-msgstr "Tipo de recurso"
-
-#: views/requests_show.php:19 views/requests_show.php:57
-msgid "Resource description"
-msgstr "Descrição do recurso"
-
-#: views/requests_show.php:47
-msgid "Finished incoming requests"
-msgstr "Requisições concluídas de entrada"
+#: controllers/requests.php:187
+msgid "requests were deleted"
+msgstr "requisições foram excluídas"
 
 #: views/requests_reply.old.php:7
 msgid "Request domain"
@@ -195,6 +179,13 @@ msgstr "Domínio da requisição"
 #: views/requests_reply.old.php:16
 msgid "Request user"
 msgstr "Usuário solicitante"
+
+#: views/requests_reply.old.php:25
+#: views/requests_createRequest.php:12
+#: views/requests_show.php:16
+#: views/requests_show.php:54
+msgid "Destination domain"
+msgstr "Domínio de destino"
 
 #: views/requests_reply.old.php:34
 msgid "Reservation details"
@@ -244,6 +235,12 @@ msgstr "Recorrência"
 msgid "Available Bandwidth (Mbps)"
 msgstr "Largura de Banda disponível (Mbps)"
 
+#: views/requests_reply.old.php:117
+#: views/elements/requests_table.php:10
+#: views/requests_show.php:58
+msgid "Response"
+msgstr "Resposta"
+
 #: views/requests_reply.old.php:120
 msgid "ACCEPT"
 msgstr "ACEITAR"
@@ -252,77 +249,166 @@ msgstr "ACEITAR"
 msgid "REJECT"
 msgstr "REJEITAR"
 
-#: controllers/ode.php:41
-msgid "Error on upload file"
-msgstr "Erro ao enviar arquivo"
+#: views/requests_reply.old.php:127
+#: views/elements/requests_table.php:11
+#: views/requests_show.php:59
+msgid "Message"
+msgstr "Mensagem"
 
-#: controllers/ode.php:62
-msgid "Process deployed successfully "
-msgstr "Deploy de processo realizado com sucesso"
+#: views/ode_show.php:8
+msgid "Process"
+msgstr "Processo"
 
-#: controllers/ode.php:67
-msgid "Fail to deploy process: "
-msgstr "Falha ao realizar deploy do processo:"
+#: views/ode_show.php:9
+msgid "Version"
+msgstr "Versão"
 
-#: controllers/ode.php:71
-msgid "invalid name for the process"
-msgstr "nome inválido para o processo"
+#: views/ode_show.php:10
+msgid "PID"
+msgstr "PID"
 
-#: controllers/ode.php:86
-msgid "Process undeployed successfully"
-msgstr "Undeploy de processo realizado com sucesso"
+#: views/ode_show.php:12
+msgid "In progress"
+msgstr "Em progresso"
 
-#: controllers/ode.php:87
-msgid "Fail to undeploy process"
-msgstr "Falha ao realizar undeploy do processo"
+#: views/ode_show.php:13
+msgid "Completed"
+msgstr "Concluído"
 
-#: controllers/requests.php:21
-msgid "You have no pending or finished request"
-msgstr "Você não possui requisições pendentes ou finalizadas"
+#: views/ode_show.php:14
+msgid "Error"
+msgstr "Erro"
 
-#: controllers/requests.php:69 controllers/requests.php:123
-msgid "Invalid index"
-msgstr "Índice inválido"
+#: views/ode_show.php:15
+msgid "Failed"
+msgstr "Falha"
 
-#: controllers/requests.php:108
-msgid "Cancel"
-msgstr "Cancelar"
+#: views/ode_show.php:16
+msgid "Suspended"
+msgstr "Suspenso"
 
-#: controllers/requests.php:109
-msgid "Request will be accepted, please provide a message"
-msgstr "A requisição será aceita, por favor inclua uma mensagem"
+#: views/ode_show.php:23
+msgid "Undeploy"
+msgstr "Undeploy"
 
-#: controllers/requests.php:110
-msgid "Request will be rejected, please provide a message"
-msgstr "A requisição será rejeitada, por favor inclua uma mensagem"
+#: views/ode_show.php:39
+msgid "Deploy process"
+msgstr "Deploy de Processo"
 
-#: controllers/requests.php:111
-msgid "Available bandwidth"
-msgstr "Largura de banda disponível"
+#: views/ode_show.php:45
+#: views/policyEditor_show.php:15
+msgid "Name"
+msgstr "Nome"
 
-#: controllers/requests.php:112
-msgid "Requested bandwidth"
-msgstr "Largura de banda solicitada"
+#: views/ode_show.php:53
+msgid "File"
+msgstr "Arquivo"
 
-#: controllers/requests.php:136
-msgid "Response saved"
-msgstr "Resposta salva"
+#: views/requests_reply.php:2
+msgid "Reply request"
+msgstr "Responder requisição"
 
-#: controllers/requests.php:140
-msgid "Response NOT saved"
-msgstr "Resposta não salva"
+#: views/requests_reply.php:5
+msgid "Reservation name"
+msgstr "Nome da reserva"
 
-#: controllers/requests.php:181
-msgid "No request was deleted"
-msgstr "Nenhuma requisição foi excluída"
+#: views/requests_reply.php:7
+msgid "Requester Domain"
+msgstr "Domínio requisitante"
 
-#: controllers/requests.php:184
-msgid "One request was deleted"
-msgstr "Uma requisição foi excluída"
+#: views/requests_reply.php:9
+msgid "Requester User"
+msgstr "Usuário requisitante"
 
-#: controllers/requests.php:187
-msgid "requests were deleted"
-msgstr "requisições foram excluídas"
+#: views/requests_reply.php:19
+msgid "Refresh"
+msgstr "Atualizar"
+
+#: views/requests_reply.php:20
+msgid "Cancel reservations"
+msgstr "Cancelar reservas"
+
+#: views/requests_reply.php:20
+msgid "Cancel the selected reservations?"
+msgstr "Deseja cancelar as reservas selecionadas?"
+
+#: views/requests_reply.php:53
+msgid "Back"
+msgstr "Voltar"
+
+#: views/requests_reply.php:56
+msgid "Authorization"
+msgstr "Autorização"
+
+#: views/requests_reply.php:60
+msgid "Provide a message"
+msgstr "Inclua uma mensagem"
+
+#: views/requests_createRequest.php:27
+msgid "Destination user"
+msgstr "Usuário de destino"
+
+#: views/requests_createRequest.php:42
+msgid "Question"
+msgstr "Pergunta"
+
+#: views/requests_createRequest.php:50
+msgid "Create"
+msgstr "Criar"
+
+#: views/elements/requests_table.php:8
+msgid "Domain source"
+msgstr "Domínio de origem"
+
+#: views/elements/requests_table.php:9
+#: views/requests_show.php:17
+#: views/requests_show.php:55
+msgid "Requester"
+msgstr "Solicitante"
+
+#: views/elements/requests_table.php:20
+#: views/requests_show.php:38
+msgid "Answer"
+msgstr "Responder"
+
+#: views/elements/empty_db.php:20
+msgid "Add"
+msgstr "Adicionar"
+
+#: views/requests_show.php:9
+msgid "Pending incoming requests"
+msgstr "Requisições pendentes de entrada"
+
+#: views/requests_show.php:15
+#: views/requests_show.php:53
+msgid "Source domain"
+msgstr "Domínio de origem"
+
+#: views/requests_show.php:18
+#: views/requests_show.php:56
+msgid "Resource type"
+msgstr "Tipo de recurso"
+
+#: views/requests_show.php:19
+#: views/requests_show.php:57
+msgid "Resource description"
+msgstr "Descrição do recurso"
+
+#: views/requests_show.php:47
+msgid "Finished incoming requests"
+msgstr "Requisições concluídas de entrada"
+
+#: views/policyEditor_show.php:16
+msgid "Owner domain"
+msgstr ""
+
+#: views/policyEditor_load_frame.php:8
+msgid "Select the owner domain"
+msgstr ""
+
+#: views/policyEditor_load_frame.php:27
+msgid "Save"
+msgstr "Salvar"
 
 #~ msgid "Mbps"
 #~ msgstr "Mbps"

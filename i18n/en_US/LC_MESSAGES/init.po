@@ -8,17 +8,69 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-09 17:56-0300\n"
+"POT-Creation-Date: 2012-12-06 13:43-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
+
+#: controllers/info_box.php:50
+msgid "Feedback sent"
+msgstr ""
+
+#: controllers/info_box.php:50
+msgid "Thank you"
+msgstr ""
+
+#: controllers/info_box.php:52
+msgid "Error sending feedback"
+msgstr ""
+
+#: controllers/info_box.php:52
+msgid "Try again later"
+msgstr ""
+
+#: controllers/gui.php:43
+msgid "You have"
+msgstr ""
+
+#: controllers/gui.php:43
+msgid "new requests to be authorized"
+msgstr ""
+
+#: controllers/login.php:40
+msgid "Failed on authentication"
+msgstr ""
 
 #: init.php:14
 msgid "Dashboard"
+msgstr ""
+
+#: views/elements/info_box.php:6
+msgid "Loading..."
+msgstr ""
+
+#: views/elements/info_box.php:8
+msgid "Sign out"
+msgstr ""
+
+#: views/elements/info_box.php:10
+msgid "My account"
+msgstr ""
+
+#: views/elements/info_box.php:11
+msgid "Help"
+msgstr ""
+
+#: views/elements/info_box.php:12
+msgid "About"
+msgstr ""
+
+#: views/elements/info_box.php:13
+msgid "Feedback"
 msgstr ""
 
 #: views/elements/feedback.php:8
@@ -101,30 +153,6 @@ msgstr ""
 msgid "Describe your problem"
 msgstr ""
 
-#: views/elements/info_box.php:6
-msgid "Loading..."
-msgstr ""
-
-#: views/elements/info_box.php:8
-msgid "Sign out"
-msgstr ""
-
-#: views/elements/info_box.php:10
-msgid "My account"
-msgstr ""
-
-#: views/elements/info_box.php:11
-msgid "Help"
-msgstr ""
-
-#: views/elements/info_box.php:12
-msgid "About"
-msgstr ""
-
-#: views/elements/info_box.php:13
-msgid "Feedback"
-msgstr ""
-
 #: views/elements/controls.php:16 views/empty_db.php:11
 msgid "Add"
 msgstr ""
@@ -141,54 +169,26 @@ msgstr ""
 msgid "Do you confirm?"
 msgstr ""
 
-#: views/login.php:66
+#: views/login.php:37
 msgid "User"
 msgstr ""
 
-#: views/login.php:70
+#: views/login.php:41
 msgid "Password"
 msgstr ""
 
-#: views/login.php:71
+#: views/login.php:42
 msgid "Forgot your password?"
 msgstr ""
 
-#: views/login.php:75
+#: views/login.php:46
 msgid "Sign in"
 msgstr ""
 
-#: views/login.php:76
+#: views/login.php:47
 msgid "or"
 msgstr ""
 
-#: views/login.php:77
+#: views/login.php:48
 msgid "New account"
-msgstr ""
-
-#: controllers/info_box.php:50
-msgid "Feedback sent"
-msgstr ""
-
-#: controllers/info_box.php:50
-msgid "Thank you"
-msgstr ""
-
-#: controllers/info_box.php:52
-msgid "Error sending feedback"
-msgstr ""
-
-#: controllers/info_box.php:52
-msgid "Try again later"
-msgstr ""
-
-#: controllers/gui.php:43
-msgid "You have"
-msgstr ""
-
-#: controllers/gui.php:43
-msgid "new requests to be authorized"
-msgstr ""
-
-#: controllers/login.php:41
-msgid "Failed on authentication"
 msgstr ""

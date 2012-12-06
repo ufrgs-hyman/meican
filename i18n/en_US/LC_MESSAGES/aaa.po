@@ -7,18 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-09 17:56-0300\n"
+"POT-Creation-Date: 2012-12-06 13:43-0200\n"
 "PO-Revision-Date: 2012-04-16 17:13-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 
-#: aaa.php:14 aaa.php:17 aaa.php:38 views/users_show.php:3
-#: controllers/users.php:24 controllers/groups.php:93
-#: controllers/groups.php:199
+#: aaa.php:14 aaa.php:17 aaa.php:38 controllers/users.php:24
+#: controllers/groups.php:93 controllers/groups.php:199 views/users_show.php:3
 msgid "Users"
 msgstr ""
 
@@ -30,187 +29,92 @@ msgstr ""
 msgid "Access control"
 msgstr ""
 
-#: views/users_edit.php:4
-msgid "Edit user"
+#: controllers/users.php:25
+msgid "You can't see any user, click the button below to add one"
 msgstr ""
 
-#: views/users_edit.php:11 views/users_edit_settings.php:38
-msgid "Change password"
+#: controllers/users.php:85
+msgid "You don't have permission to view groups, so you can't add users"
 msgstr ""
 
-#: views/users_edit.php:17 views/users_edit_settings.php:53
-#: views/users_add.php:19
-msgid "New password"
-msgstr ""
-
-#: views/users_edit.php:26 views/users_edit_settings.php:62
-#: views/users_add.php:28
-msgid "Retype new password"
-msgstr ""
-
-#: views/users_edit.php:39 views/users_edit_settings.php:72
-#: views/groups_edit.php:22 views/groups_add.php:38 views/acl_show.php:79
-#: views/users_add.php:43
-msgid "Save"
-msgstr ""
-
-#: views/users_edit.php:40 views/users_edit_settings.php:73
-#: views/groups_edit.php:23 views/groups_add.php:39 views/acl_show.php:80
-#: views/users_add.php:44
-msgid "Cancel"
-msgstr ""
-
-#: views/users_edit_settings.php:10
-msgid "Language"
-msgstr ""
-
-#: views/users_edit_settings.php:14
-msgid "English"
-msgstr ""
-
-#: views/users_edit_settings.php:15
-msgid "Portuguese"
-msgstr ""
-
-#: views/users_edit_settings.php:24
-msgid "Date Format"
-msgstr ""
-
-#: views/users_edit_settings.php:28
-msgid "dd / mm / yyyy"
-msgstr ""
-
-#: views/users_edit_settings.php:29
-msgid "mm / dd / yyyy"
-msgstr ""
-
-#: views/users_edit_settings.php:30
-msgid "yyyy / mm / dd"
-msgstr ""
-
-#: views/users_edit_settings.php:44
-msgid "Current password"
-msgstr ""
-
-#: views/elements/identification_userAdd.php:3
-#: views/elements/identification_settings.php:14
-msgid "Information"
-msgstr ""
-
-#: views/elements/identification_userAdd.php:8
-#: views/elements/identification_settings.php:26 views/users_show.php:19
-#: views/groups_show.php:13
-msgid "Name"
-msgstr ""
-
-#: views/elements/identification_userAdd.php:17
-#: views/elements/identification_settings.php:31
-msgid "E-mail"
-msgstr ""
-
-#: views/elements/identification_settings.php:19 views/users_add.php:11
-msgid "Login"
-msgstr ""
-
-#: views/elements/associative_table.php:18
-msgid "Available"
-msgstr ""
-
-#: views/elements/associative_table.php:31
-msgid "Add"
-msgstr ""
-
-#: views/elements/associative_table.php:38
-msgid "Remove"
-msgstr ""
-
-#: views/elements/associative_table.php:47
-msgid "Used"
-msgstr ""
-
-#: views/groups_edit.php:4
-msgid "Edit group"
-msgstr ""
-
-#: views/groups_edit.php:11 views/groups_add.php:13
-msgid "Group name"
-msgstr ""
-
-#: views/users_show.php:18 controllers/users.php:111 controllers/users.php:140
-#: controllers/users.php:293 controllers/users.php:432
+#: controllers/users.php:111 controllers/users.php:140
+#: controllers/users.php:293 controllers/users.php:425 views/users_show.php:18
 msgid "User"
 msgstr ""
 
-#: views/groups_add.php:4
-msgid "Add new group"
+#: controllers/users.php:111 controllers/groups.php:115
+msgid "added"
 msgstr ""
 
-#: views/groups_add.php:26
-msgid "Select the parent groups"
+#: controllers/users.php:138
+msgid "Fail to create user"
 msgstr ""
 
-#: views/groups_show.php:3
-msgid "User groups"
+#: controllers/users.php:140 controllers/groups.php:124
+#: controllers/groups.php:247
+msgid "already exists"
 msgstr ""
 
-#: views/groups_show.php:14
-msgid "Parent groups"
+#: controllers/users.php:142 controllers/users.php:284
+#: controllers/users.php:370
+msgid "Passwords mismatch"
 msgstr ""
 
-#: views/acl_show.php:12
-msgid "Access request object"
+#: controllers/users.php:144 controllers/groups.php:126
+msgid "Missing argument"
 msgstr ""
 
-#: views/acl_show.php:13
-msgid "Access control object"
+#: controllers/users.php:154 controllers/users.php:237
+#: controllers/groups.php:137 controllers/groups.php:215
+msgid "Invalid index"
 msgstr ""
 
-#: views/acl_show.php:14
-msgid "Object type"
+#: controllers/users.php:169 controllers/users.php:316
+msgid "User not found"
 msgstr ""
 
-#: views/acl_show.php:15
-msgid "Operations"
+#: controllers/users.php:227 controllers/users.php:300
+msgid "You don't have permission to edit this user"
 msgstr ""
 
-#: views/acl_show.php:19 views/acl_show.php:21
-msgid "Model"
+#: controllers/users.php:251
+msgid "Select at least 1 group for the user"
 msgstr ""
 
-#: views/acl_show.php:20 views/acl_show.php:22
-msgid "Object"
+#: controllers/users.php:260
+msgid "Error to fetch user"
 msgstr ""
 
-#: views/acl_show.php:23
-msgid "Create"
+#: controllers/users.php:268
+msgid "No name was specified"
 msgstr ""
 
-#: views/acl_show.php:24
-msgid "Read"
+#: controllers/users.php:293
+msgid "updated"
 msgstr ""
 
-#: views/acl_show.php:25
-msgid "Update"
+#: controllers/users.php:296 controllers/users.php:406
+msgid "No change has been made"
 msgstr ""
 
-#: views/acl_show.php:26 views/acl_show.php:82
-msgid "Delete"
+#: controllers/users.php:349 controllers/users.php:385
+msgid "Missing required argument"
 msgstr ""
 
-#: views/acl_show.php:77
-msgid "New access control"
+#: controllers/users.php:375
+msgid "Type the new password"
 msgstr ""
 
-#: views/acl_show.php:82
-msgid "The selected access controls will be deleted."
+#: controllers/users.php:380
+msgid "Current password does not match"
 msgstr ""
 
-#: views/acl_show.php:82
-msgid "Do you confirm?"
+#: controllers/users.php:404
+msgid "User settings updated"
 msgstr ""
 
-#: views/users_add.php:4
-msgid "Add new user"
+#: controllers/users.php:425 controllers/groups.php:275
+msgid "deleted"
 msgstr ""
 
 #: controllers/acl.php:37
@@ -279,89 +183,6 @@ msgstr ""
 msgid "ACL updated"
 msgstr ""
 
-#: controllers/users.php:25
-msgid "You can't see any user, click the button below to add one"
-msgstr ""
-
-#: controllers/users.php:85
-msgid "You don't have permission to view groups, so you can't add users"
-msgstr ""
-
-#: controllers/users.php:111 controllers/groups.php:115
-msgid "added"
-msgstr ""
-
-#: controllers/users.php:138
-msgid "Fail to create user"
-msgstr ""
-
-#: controllers/users.php:140 controllers/groups.php:124
-#: controllers/groups.php:247
-msgid "already exists"
-msgstr ""
-
-#: controllers/users.php:142 controllers/users.php:284
-#: controllers/users.php:378
-msgid "Passwords mismatch"
-msgstr ""
-
-#: controllers/users.php:144 controllers/groups.php:126
-msgid "Missing argument"
-msgstr ""
-
-#: controllers/users.php:154 controllers/users.php:237
-#: controllers/groups.php:137 controllers/groups.php:215
-msgid "Invalid index"
-msgstr ""
-
-#: controllers/users.php:169 controllers/users.php:316
-msgid "User not found"
-msgstr ""
-
-#: controllers/users.php:227 controllers/users.php:300
-msgid "You don't have permission to edit this user"
-msgstr ""
-
-#: controllers/users.php:251
-msgid "Select at least 1 group for the user"
-msgstr ""
-
-#: controllers/users.php:260
-msgid "Error to fetch user"
-msgstr ""
-
-#: controllers/users.php:268
-msgid "No name was specified"
-msgstr ""
-
-#: controllers/users.php:293
-msgid "updated"
-msgstr ""
-
-#: controllers/users.php:296 controllers/users.php:413
-msgid "No change has been made"
-msgstr ""
-
-#: controllers/users.php:357 controllers/users.php:393
-msgid "Missing required argument"
-msgstr ""
-
-#: controllers/users.php:383
-msgid "Type the new password"
-msgstr ""
-
-#: controllers/users.php:388
-msgid "Current password does not match"
-msgstr ""
-
-#: controllers/users.php:411
-msgid "User settings updated"
-msgstr ""
-
-#: controllers/users.php:432 controllers/groups.php:275
-msgid "deleted"
-msgstr ""
-
 #: controllers/groups.php:25
 msgid "User Groups"
 msgstr ""
@@ -405,4 +226,182 @@ msgstr ""
 
 #: controllers/groups.php:260
 msgid "No change in group information"
+msgstr ""
+
+#: views/users_add.php:4
+msgid "Add new user"
+msgstr ""
+
+#: views/users_add.php:11 views/elements/identification_settings.php:19
+msgid "Login"
+msgstr ""
+
+#: views/users_add.php:19 views/users_edit_settings.php:53
+#: views/users_edit.php:17
+msgid "New password"
+msgstr ""
+
+#: views/users_add.php:28 views/users_edit_settings.php:62
+#: views/users_edit.php:26
+msgid "Retype new password"
+msgstr ""
+
+#: views/users_add.php:43 views/users_edit_settings.php:72
+#: views/groups_add.php:38 views/groups_edit.php:22 views/users_edit.php:39
+#: views/acl_show.php:79
+msgid "Save"
+msgstr ""
+
+#: views/users_add.php:44 views/users_edit_settings.php:73
+#: views/groups_add.php:39 views/groups_edit.php:23 views/users_edit.php:40
+#: views/acl_show.php:80
+msgid "Cancel"
+msgstr ""
+
+#: views/groups_show.php:3
+msgid "User groups"
+msgstr ""
+
+#: views/groups_show.php:13 views/users_show.php:19
+#: views/elements/identification_settings.php:26
+#: views/elements/identification_userAdd.php:8
+msgid "Name"
+msgstr ""
+
+#: views/groups_show.php:14
+msgid "Parent groups"
+msgstr ""
+
+#: views/users_edit_settings.php:10
+msgid "Language"
+msgstr ""
+
+#: views/users_edit_settings.php:14
+msgid "English"
+msgstr ""
+
+#: views/users_edit_settings.php:15
+msgid "Portuguese"
+msgstr ""
+
+#: views/users_edit_settings.php:24
+msgid "Date Format"
+msgstr ""
+
+#: views/users_edit_settings.php:28
+msgid "dd / mm / yyyy"
+msgstr ""
+
+#: views/users_edit_settings.php:29
+msgid "mm / dd / yyyy"
+msgstr ""
+
+#: views/users_edit_settings.php:30
+msgid "yyyy / mm / dd"
+msgstr ""
+
+#: views/users_edit_settings.php:38 views/users_edit.php:11
+msgid "Change password"
+msgstr ""
+
+#: views/users_edit_settings.php:44
+msgid "Current password"
+msgstr ""
+
+#: views/groups_add.php:4
+msgid "Add new group"
+msgstr ""
+
+#: views/groups_add.php:13 views/groups_edit.php:11
+msgid "Group name"
+msgstr ""
+
+#: views/groups_add.php:26
+msgid "Select the parent groups"
+msgstr ""
+
+#: views/elements/identification_settings.php:14
+#: views/elements/identification_userAdd.php:3
+msgid "Information"
+msgstr ""
+
+#: views/elements/identification_settings.php:31
+#: views/elements/identification_userAdd.php:17
+msgid "E-mail"
+msgstr ""
+
+#: views/elements/associative_table.php:18
+msgid "Available"
+msgstr ""
+
+#: views/elements/associative_table.php:31
+msgid "Add"
+msgstr ""
+
+#: views/elements/associative_table.php:38
+msgid "Remove"
+msgstr ""
+
+#: views/elements/associative_table.php:47
+msgid "Used"
+msgstr ""
+
+#: views/groups_edit.php:4
+msgid "Edit group"
+msgstr ""
+
+#: views/users_edit.php:4
+msgid "Edit user"
+msgstr ""
+
+#: views/acl_show.php:12
+msgid "Access request object"
+msgstr ""
+
+#: views/acl_show.php:13
+msgid "Access control object"
+msgstr ""
+
+#: views/acl_show.php:14
+msgid "Object type"
+msgstr ""
+
+#: views/acl_show.php:15
+msgid "Operations"
+msgstr ""
+
+#: views/acl_show.php:19 views/acl_show.php:21
+msgid "Model"
+msgstr ""
+
+#: views/acl_show.php:20 views/acl_show.php:22
+msgid "Object"
+msgstr ""
+
+#: views/acl_show.php:23
+msgid "Create"
+msgstr ""
+
+#: views/acl_show.php:24
+msgid "Read"
+msgstr ""
+
+#: views/acl_show.php:25
+msgid "Update"
+msgstr ""
+
+#: views/acl_show.php:26 views/acl_show.php:82
+msgid "Delete"
+msgstr ""
+
+#: views/acl_show.php:77
+msgid "New access control"
+msgstr ""
+
+#: views/acl_show.php:82
+msgid "The selected access controls will be deleted."
+msgstr ""
+
+#: views/acl_show.php:82
+msgid "Do you confirm?"
 msgstr ""
