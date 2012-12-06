@@ -110,6 +110,7 @@
         <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/button/button-min.js"></script>
         <script type="text/javascript" src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/tabview/tabview-min.js"></script>
 
+        <?php echo $this->scripts(); ?>
         <!-- InputEx with wirable options (WirableField-beta) -->
         <script src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/inputex/js/inputex.js"  type='text/javascript'></script>
         <script src="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/inputex/js/Field.js"  type='text/javascript'></script>

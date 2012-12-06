@@ -3,7 +3,7 @@
     $dom_id = isset($this->passedArgs->dom_id) ? $this->passedArgs->dom_id : NULL;
 ?>
 
-<!--
+<?php /*
 <div>
     <span><?= _("Select the owner domain") ?>:</span>
     <?php if (count($domains) == 1): ?>
@@ -19,8 +19,8 @@
             <?php endif; ?>
         <?php endforeach; ?>
         </select>
-</div>
--->
+</div>*/
+?>
 <iframe name="workflow_editor" id="workflow_editor" src="<?php echo $this->url(array('action' => 'show_frame')); ?>"> </iframe>
 
 <div class="controls">

@@ -1,9 +1,22 @@
 var imagePath = baseUrl + 'apps/bpm/webroot/img/';
-var iconPath = baseUrl + 'apps/bpm/webroot/img/' + parent.language + '/';
 
-var domains = parent.domains ? parent.domains : [];
-var users = parent.users ? parent.users : [];
-var groups = parent.groups ? parent.groups : [];
+console.debug(domains);
+console.debug(owner_domains);
+var iconPath = baseUrl + 'apps/bpm/webroot/img/' + language + '/';
+
+var domains = domains ? domains : [];
+var users = users ? users : [];
+var groups = groups ? groups : [];
+
+//TODO: tem variaveis globais aqui!!!!!!!!!!!!!!! -> colocar escopo para essas variáveis
+
+var owner_domains = owner_domains ? owner_domains : [];
+
+var owner_keys = [], owner_values = [];
+for (k in owner_domains) {
+    owner_keys.push(k);
+    owner_values.push(owner_domains[k]);
+}
 
 var meicanPolicyLanguage = {
 	
@@ -65,7 +78,8 @@ var meicanPolicyLanguage = {
         "inputParams": {
 		"name": "domains_owner",                 
 		"label": "Select the owner domain: ", 
-                "selectValues": domains
+                "selectValues": owner_keys,
+                "selectOptions": owner_values
          }
     }
     

@@ -20,6 +20,7 @@ class policyEditor extends MeicanController {
     }
     
     private function buildArgs()  {
+        //TODO: lembre-se isso está sendo passado para o load_frame e para o frame
         $user_info = new user_info();
         $allUsers = $user_info->fetch();
         $users = Common::arrayExtractAttr($allUsers, 'usr_login');
@@ -30,16 +31,19 @@ class policyEditor extends MeicanController {
         
         $domain_info = new domain_info();
         $allDomains = $domain_info->fetch(false);
+        
+        $owner_domains = array();
+        foreach ($allDomains as $domain)
+            $owner_domains[$domain->dom_id] = $domain->dom_descr;
+        
         $domains = Common::arrayExtractAttr($allDomains, 'topology_id');
         
         $lang_temp = explode(".", Language::getInstance()->getLanguage());
         $language = $lang_temp[0];
         
-        return array(
-            "users" => $users,
-            "groups" => $groups,
-            "domains" => $domains,
-            "language" => $language,
+        
+        return compact('users', 'groups', 'domains', 'language', 'owner_domains')
+            +array(
             "string_workflow_name" => _("Workflow name"),
             "string_enter_title" => _("Enter a title"),
             "string_choose_name" => _("Please choose a name"),
@@ -94,6 +98,8 @@ class policyEditor extends MeicanController {
     }
 
     public function show_frame() {
+        $this->setArgsToScript($this->buildArgs());
+        
         $this->layout = 'empty';
         $this->render('frame');
     }
