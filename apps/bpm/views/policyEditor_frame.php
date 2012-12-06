@@ -95,7 +95,7 @@
             }
          
             .worflow-editor-area {
-                border: 1px solid black;
+                border: 1px solid grey;
             }
 
         </style>

@@ -157,12 +157,16 @@ div.WireIt-InOutContainer div.body {
  */
 div.WireIt-Layer {
    border: 0; /* Changing this value causes positioning issues */
-   overflow: scroll;
+   overflow: auto;
    margin: auto;
    position: relative;
-	height: 100%; 
-	width: 100%;
-	background-color: white;
+   height: 100%; 
+   width: 100%;
+   background-color: white;
+        
+   box-shadow: 2px 2px 4px #888;
+   border-color: #AAA;
+
 }
 
 canvas.WireIt-LayerMap {

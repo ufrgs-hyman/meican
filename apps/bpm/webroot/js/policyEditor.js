@@ -73,7 +73,7 @@ var meicanPolicyLanguage = {
             cols: 5
         }
     },
-    {
+   /* {
     	"type": "select", 
         "inputParams": {
 		"name": "domains_owner",                 
@@ -81,7 +81,7 @@ var meicanPolicyLanguage = {
                 "selectValues": owner_keys,
                 "selectOptions": owner_values
          }
-    }
+    }*/
     
 
 ],
