@@ -2086,7 +2086,7 @@ function completeURN() {
                 }
             },
             {   
-                text:"cancel_string", 
+                text:cancel_string, 
                 click: function() {
                     $(this).dialog( "close" );
                 }
