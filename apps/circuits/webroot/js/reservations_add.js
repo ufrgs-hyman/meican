@@ -2075,8 +2075,8 @@ function completeURN() {
             resizable: false,
             draggable: false,
             modal: true,
-            show: "blind",
-            hide: "explode",
+            show: "fade",
+            hide: "fade",
             buttons: [
             {
                 text:"Save", 

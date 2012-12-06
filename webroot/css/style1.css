@@ -1419,7 +1419,7 @@ form div.form {
 }
 
 #waypoints_order li:hover {
-    background: #C00; 
-    color: #fff; 
+    background: #F44; 
+    color: white; 
     text-shadow: none;
 }
