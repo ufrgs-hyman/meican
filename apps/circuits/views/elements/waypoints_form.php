@@ -8,7 +8,7 @@
     <label class="label-description"> <?php echo _("Waypoints order"); ?>:</label>
     <ul id='waypoints_order'>
     </ul>
-    <div id="dialog-modal" title="Setup device">
+    <div id="dialog-modal" title="<?php echo _('Setup device'); ?>">
         <dl>
             <dt>
                 <label class="label-description"><?php echo _("Domain") ?>:</label>

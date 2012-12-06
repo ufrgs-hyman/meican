@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-06 14:40-0200\n"
+"POT-Creation-Date: 2012-12-06 14:48-0200\n"
 "PO-Revision-Date: 2012-12-03 15:29-0300\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,49 +45,49 @@ msgstr ""
 msgid "Please, click the button below to add a new one"
 msgstr ""
 
-#: controllers/policyEditor.php:43
+#: controllers/policyEditor.php:47
 msgid "Workflow name"
 msgstr ""
 
-#: controllers/policyEditor.php:44
+#: controllers/policyEditor.php:48
 msgid "Enter a title"
 msgstr ""
 
-#: controllers/policyEditor.php:45
+#: controllers/policyEditor.php:49
 msgid "Please choose a name"
 msgstr ""
 
-#: controllers/policyEditor.php:46
+#: controllers/policyEditor.php:50
 msgid "Workflow saved"
 msgstr ""
 
-#: controllers/policyEditor.php:63 models/request_info.php:114
+#: controllers/policyEditor.php:67 models/request_info.php:114
 #: models/request_info.php:115
 msgid "Unknown"
 msgstr "Desconhecido"
 
-#: controllers/policyEditor.php:66
+#: controllers/policyEditor.php:70
 msgid "Enabled"
 msgstr ""
 
-#: controllers/policyEditor.php:66
+#: controllers/policyEditor.php:70
 msgid "Disabled"
 msgstr ""
 
-#: controllers/policyEditor.php:106 controllers/requests.php:69
+#: controllers/policyEditor.php:112 controllers/requests.php:69
 #: controllers/requests.php:123
 msgid "Invalid index"
 msgstr ""
 
-#: controllers/policyEditor.php:116
+#: controllers/policyEditor.php:122
 msgid "Workflow not found"
 msgstr ""
 
-#: controllers/policyEditor.php:214
+#: controllers/policyEditor.php:220
 msgid "Workflow"
 msgstr "Workflow"
 
-#: controllers/policyEditor.php:214
+#: controllers/policyEditor.php:220
 msgid "deleted"
 msgstr ""
 
@@ -381,10 +381,6 @@ msgstr ""
 
 #: views/policyEditor_show.php:16
 msgid "Owner domain"
-msgstr ""
-
-#: views/policyEditor_load_frame.php:8
-msgid "Select the owner domain"
 msgstr ""
 
 #: views/policyEditor_load_frame.php:27
