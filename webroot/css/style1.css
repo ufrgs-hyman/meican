@@ -1417,3 +1417,9 @@ form div.form {
     cursor:pointer;
     cursor:hand;
 }
+
+#waypoints_order li:hover {
+    background: #C00; 
+    color: #fff; 
+    text-shadow: none;
+}

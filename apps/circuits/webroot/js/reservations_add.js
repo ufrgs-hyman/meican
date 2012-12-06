@@ -1159,31 +1159,91 @@ function validateBand(band_value) {
 function maySpecifyPath() {
     if ($("#chk_maySpecifyPath").attr('checked')) {
         $("#waypointsConfiguration").slideDown(1);
-//        for (var i in $.fn.mapEdit.waypoints) {
-//            $.fn.mapEdit.waypoints[i].unselectedMarker.setMap(null);
-//            $.fn.mapEdit.waypoints[i].setMap(edit_map);
-//        }        
+    //        for (var i in $.fn.mapEdit.waypoints) {
+    //            $.fn.mapEdit.waypoints[i].unselectedMarker.setMap(null);
+    //            $.fn.mapEdit.waypoints[i].setMap(edit_map);
+    //        }        
     } else {
         $("#waypointsConfiguration").slideUp(1);
-//        for (var i in $.fn.mapEdit.waypoints) {
-//            $.fn.mapEdit.waypoints[i].setMap(null);
-//            $.fn.mapEdit.waypoints[i].unselectedMarker.setMap(edit_map);            
-//        }
+    //        for (var i in $.fn.mapEdit.waypoints) {
+    //            $.fn.mapEdit.waypoints[i].setMap(null);
+    //            $.fn.mapEdit.waypoints[i].unselectedMarker.setMap(edit_map);            
+    //        }
+    }
+}
+
+function loadDevices(elem) {
+    var devices = new Array();
+    var str = "";
+    var dev = "";
+    
+    for (var i in domains) {
+        for (var j in domains[i].networks) {
+            for (var k in domains[i].networks[j].devices) {
+                if ((domains[i].id == $(elem).children("#domain_id").html()) && 
+                    (domains[i].networks[j].id == $(elem).children("#network_id").html())) {
+                    $("#waypointDomain").html(domains[i].name);
+                    $("#waypointNetwork").html(domains[i].networks[j].name);                    
+                    for (w in $.fn.mapEdit.waypoints) {
+                        if (($.fn.mapEdit.waypoints[w].domain_id == domains[i].id) &&
+                            ($.fn.mapEdit.waypoints[w].id == domains[i].networks[j].id)){
+                            str = $.fn.mapEdit.waypoints[w].urn.split(":node");
+                            if (str.length > 1) {
+                                dev = domains[i].networks[j].devices[k].id;
+                                break;
+                            }
+                        }
+                    }
+                    devices.push(domains[i].networks[j].devices[k]);
+                }
+            }
+        }
+    }
+
+    $("#waypointDevice").fillSelectBox(devices);
+    if (dev != "") {
+        $("#waypointDevice").val(dev);
     }
 }
 
 function setPathUrn() {    
     var strPath = "";
     for (var i in $.fn.mapEdit.waypoints) {
-        for (var j in domains) {
-            if ($.fn.mapEdit.waypoints[i].domain_id == domains[j].id) {
-                strPath = strPath + "ogf:domain:network=" + domains[j].topology_id + ";";
+        strPath = strPath + $.fn.mapEdit.waypoints[i].urn + ";";
+    }
+    $("#path_urn").val(strPath);
+}
+
+function completeURN() {
+    if ($("#waypointDevice").val() != -1) {
+        for (var w in $.fn.mapEdit.waypoints) {
+            for (var i in domains) {
+                for (var j in domains[i].networks) {
+                    for (var k in domains[i].networks[j].devices) {
+                        if ((domains[i].networks[j].devices[k].id == $("#waypointDevice").val()) &&
+                            (domains[i].id == $.fn.mapEdit.waypoints[w].domain_id) &&
+                            (domains[i].networks[j].id) == $.fn.mapEdit.waypoints[w].id) {
+                            $.fn.mapEdit.waypoints[w].urn = "urn:ogf:network:domain=" + domains[i].topology_id + ":node=" + domains[i].networks[j].devices[k].topology_node_id;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        for (var w in $.fn.mapEdit.waypoints) {
+            if (($("#waypointDomain").html() == $.fn.mapEdit.waypoints[w].domain_name) &&
+                ($("#waypointNetwork").html() == $.fn.mapEdit.waypoints[w].label)) {
+                $.fn.mapEdit.waypoints[w].urn = "urn:ogf:network:domain=" + $.fn.mapEdit.waypoints[w].topology_id;
+                break;
             }
         }
     }
-    $("#path_urn").val(strPath);
-
+    setPathUrn();        
 }
+    
+
+
 
 (function($) {
     
@@ -1534,9 +1594,11 @@ function setPathUrn() {
                 $.fn.mapEdit.waypoints[n] = new StyledMarker({
                     domain_id: domain_id,
                     domain_name: domain_name,
+                    topology_id: dom_topo_id,
                     id: network_id,
                     label: network_name,
                     position: coord,
+                    urn : "urn:ogf:network:domain=" + dom_topo_id,
                     order: ($.fn.mapEdit.waypointCount - 1),
                     styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
                         color:color
@@ -1556,7 +1618,17 @@ function setPathUrn() {
                     }
                 }                
                 
-                $("#waypoints_order").append("<li class='ui-state-default' id='order_"+$.fn.mapEdit.waypoints[n].order+"'>" + network_name +"</li>");
+                $("#waypoints_order").append("<li class='ui-state-default opener' id='order_"+$.fn.mapEdit.waypoints[n].order+"'>"  + network_name + "<label id='domain_id' hidden>" + domain_id + "</label><label id='network_id' hidden>" + network_id + "</label> </li>");
+
+                $(".opener").click(function() {
+                    var content = this;
+                    $("#dialog-modal").dialog( {
+                        open: function(event, ui) {
+                            loadDevices(content);
+                        } 
+                    });
+                    $("#dialog-modal").dialog("open");
+                });
                 
                 $("#chk_maySpecifyPath").removeAttr("disabled");
                 $("#advConfLabel").removeAttr("disabled");
@@ -1732,8 +1804,18 @@ function setPathUrn() {
                     for (var i=0; i< $.fn.mapEdit.waypoints.length; i++) {                    
                         if ($.fn.mapEdit.waypoints[i].order > order)                    
                             $.fn.mapEdit.waypoints[i].order --;
-                        $("#waypoints_order").append("<li class=ui-state-default id='order_"+$.fn.mapEdit.waypoints[i].order+"'>" + $.fn.mapEdit.waypoints[i].label +"</li>");    
+                        $("#waypoints_order").append("<li class='ui-state-default opener' id='order_"+$.fn.mapEdit.waypoints[i].order+"'>" + $.fn.mapEdit.waypoints[i].label +"<label id='domain_id' hidden>" + $.fn.mapEdit.waypoints[i].domain_id + "</label><label id='network_id' hidden>" + $.fn.mapEdit.waypoints[i].id + "</li>");    
                     }
+                    $(".opener").click(function() {
+                        var content = this;
+                        $("#dialog-modal").dialog( {
+                            open: function(event, ui) {
+                                loadDevices(content);
+                            } 
+                        });
+                        $("#dialog-modal").dialog("open");
+                    });
+                
                 }
                 
             }
@@ -1847,7 +1929,7 @@ function setPathUrn() {
 
         /*
          * Initialization (bind) of endpoint icons 
-        */
+         */
         var points = ["src","dst"];
         for (var i in points) {
             var point = points[i];
@@ -1964,7 +2046,7 @@ function setPathUrn() {
                 $("#waypoints_order").empty();
                 
                 for (i=0; i< $.fn.mapEdit.waypoints.length; i++) {                    
-                    $("#waypoints_order").append("<li class='ui-state-default' id='order_"+$.fn.mapEdit.waypoints[i].order+"'>" + $.fn.mapEdit.waypoints[i].label +"</li>");    
+                    $("#waypoints_order").append("<li class='ui-state-default opener' id='order_"+$.fn.mapEdit.waypoints[i].order+"'>" + $.fn.mapEdit.waypoints[i].label + "<label id='domain_id' hidden>" + $.fn.mapEdit.waypoints[i].domain_id + "</label><label id='network_id' hidden>" + $.fn.mapEdit.waypoints[i].id + "</li>");    
                 }
 
                 if ($.fn.mapEdit.hasPath()) {
@@ -1972,9 +2054,48 @@ function setPathUrn() {
                 }
                 
                 $.fn.mapEdit.preparePath(path[0], path[1], $.fn.mapEdit.hops);
-            }
+                
+                $(".opener").click(function() {
+                    var content = this;
+                    $("#dialog-modal").dialog( {
+                        open: function(event, ui) {
+                            loadDevices(content);
+                        } 
+                    });
+                    $("#dialog-modal").dialog("open");
+                });                
+                
+                setPathUrn();
+            }      
+            
         }).css("display","block");
         
+        $("#dialog-modal").dialog({
+            autoOpen: false,
+            resizable: false,
+            draggable: false,
+            modal: true,
+            show: "blind",
+            hide: "explode",
+            buttons: [
+            {
+                text:"Save", 
+                click: function() {
+                    completeURN();
+                    $(this).dialog( "close" ); 
+                }
+            },
+            {   
+                text:"Cancel", 
+                click: function() {
+                    $(this).dialog( "close" );
+                }
+            }
+            ]
+        });
+
+
+
         resizefn();
         
         google.maps.event.trigger(edit_map, 'resize');
