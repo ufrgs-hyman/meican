@@ -143,6 +143,10 @@ div.savedStatus {
     
 }
 
+#propertiesForm input,  #propertiesForm select{
+    font-size: 18px;
+}
+
 #propertiesForm input {
     height: 21px;
     border: thin solid #BBB;
@@ -151,7 +155,6 @@ div.savedStatus {
     width: 600px;
     position: absolute;
     top: 8px;
-    font-size: 18px;
 
 }
  
