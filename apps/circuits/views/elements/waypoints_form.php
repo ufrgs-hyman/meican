@@ -28,12 +28,6 @@
             <dd>
                 <select id="waypointDevice" onchange="completeURN();"></select>
             </dd>
-            <dt>
-                <label class="label-description"><?php echo _("URN"); ?></label>
-            </dt>
-            <dd>
-                <label id="partialURN"></label>
-            </dd>
         </dl>
     </div>
 </div>  
