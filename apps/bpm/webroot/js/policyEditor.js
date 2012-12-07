@@ -30,7 +30,7 @@ var meicanPolicyLanguage = {
         units: [
         {
             position: 'top', 
-            height: 70, 
+            height: 36, 
             body: 'top'
         },
 
@@ -39,18 +39,21 @@ var meicanPolicyLanguage = {
             width: 200, 
             resize: true, 
             body: 'left', 
-            gutter: '5px', 
+            gutter: 0, 
             collapse: true, 
             collapseSize: 25, 
             scroll: false, 
             animate: true,
+            left: '4px',
+            'class': '',
 	    header: 'Drag and drop this elements'
         },
 
         {
             position: 'center', 
             body: 'center', 
-            gutter: '5px'
+            gutter: '2px',
+            left: 0
         }
         ]
     },

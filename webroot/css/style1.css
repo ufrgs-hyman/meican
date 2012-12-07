@@ -1402,8 +1402,9 @@ form div.form {
 
 #main iframe{
     width: 100%;
-    height: 500px;
+    height: 480px;
     border: 0;
+    margin-bottom: 10px;
 }
 
 #waypoints_order {

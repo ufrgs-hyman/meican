@@ -185,6 +185,32 @@ class policyEditor extends MeicanController {
         
     }
     
+    
+    //TODO:EDITOR
+    public function deploy($workflow_id_array) {
+        $id = NULL;
+        if (array_key_exists('id', $workflow_id_array)) {
+            $id = $workflow_id_array['id'];
+        } else {
+            $this->setFlash(_("Invalid index"), "fatal");
+            $this->show();
+            return;
+        }
+
+        $workflows_info = new workflows_info();
+        $workflows_info->id = $id;
+        $workflow = $workflows_info->fetch(false);
+        $workflow = $workflow[0];
+        $wirit = json_decode($workflow->working);
+        debug($wirit->modules);
+        foreach ($wirit->modules as $module){
+            debug($module->name);
+            debug($module->value);
+        }
+        
+        
+    }
+    
 //    public function listWorkflows() {
 //        $request = json_decode(file_get_contents('php://input'),true);
 //        
@@ -213,13 +239,13 @@ class policyEditor extends MeicanController {
         CakeLog::debug(print_r($request,true));
         
         $params = $request['params'];
-        $working = json_decode($params['working']);
+       // $working = json_decode($params['working']);
         
         $work_info = new workflows_info();
         $work_info->name = $params['name'];
         $work_info->language = $params['language'];
         $work_info->working = $params['working'];
-        $work_info->dom_id = $working->properties->domains_owner;
+        //$work_info->dom_id = $working->properties->domains_owner;
         $work_info->status = $params['status'];
         
         $result = new stdClass();

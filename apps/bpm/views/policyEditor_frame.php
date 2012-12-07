@@ -7,7 +7,6 @@
         <link rel="SHORTCUT ICON" href="../favicon.ico" type="image/png" />
 
         <!-- YUI -->
-        <link rel="stylesheet" type="text/css" href="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/reset-fonts-grids/reset-fonts-grids.css" />
         <link rel="stylesheet" type="text/css" href="<?= $this->url() ?>apps/bpm/webroot/WireIt-0.5.0/lib/yui/assets/skins/sam/skin.css" />
 
         <!-- InputEx CSS -->
@@ -92,10 +91,6 @@
                 position: absolute;
                 top: 72px;
                 left: 0px;
-            }
-         
-            .worflow-editor-area {
-                border: 1px solid grey;
             }
 
         </style>
