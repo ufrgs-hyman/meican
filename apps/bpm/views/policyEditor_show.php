@@ -32,6 +32,12 @@ $workflows = $this->passedArgs;
                         <a href="<?php echo $this->buildLink(array('action' => 'edit', 'param' => "id:$w->id")); ?>">
                             <img class="edit" src="<?php echo $this->url(''); ?>webroot/img/edit_1.png"/>
                         </a>
+                        <a href="<?php echo $this->buildLink(array('action' => 'deploy', 'param' => "id:$w->id")); ?>">
+                            <img class="edit" src="<?php echo $this->url(''); ?>webroot/img/edit_1.png"/>
+                        </a>
+                        <a href="<?php echo $this->buildLink(array('action' => 'duplicate', 'param' => "id:$w->id")); ?>">
+                            <img class="edit" src="<?php echo $this->url(''); ?>webroot/img/edit_1.png"/>
+                        </a>
                     </td>
                     <td>
                         <?php echo $w->name; ?>

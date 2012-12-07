@@ -154,6 +154,37 @@ class policyEditor extends MeicanController {
         $this->render('load_frame');
     }
     
+    
+    
+    public function duplicate($workflow_id_array) {
+        $id = NULL;
+        if (array_key_exists('id', $workflow_id_array)) {
+            $id = $workflow_id_array['id'];
+        } else {
+            $this->setFlash(_("Invalid index"), "fatal");
+            $this->show();
+            return;
+        }
+
+        $workflows_info = new workflows_info();
+        $workflows_info->id = $id;
+        $workflow = $workflows_info->fetch(false);
+        $workflow = $workflow[0];
+        
+        $workflow->name .= ' (copy)';
+        
+        $result = new stdClass();
+        $workflow->id = null;
+        if ($added = $workflow->insert()) {
+            $result->success = true;
+            $result->id = $added->id;
+        } else {
+            $result->success = false;
+            $result->id = NULL;
+        }
+        
+    }
+    
 //    public function listWorkflows() {
 //        $request = json_decode(file_get_contents('php://input'),true);
 //        
