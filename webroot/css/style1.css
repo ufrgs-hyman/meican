@@ -623,6 +623,7 @@ input[type="text"], input[type="password"], select:not([multiple]) {
     border: thin solid #BBB;
     color: #4F4F4F;
     background-color: white;
+    padding: 0;
 }
 
 input[type="text"]:hover, select:hover, input[type="radio"]:hover, input[type="password"]:hover, input[type="checkbox"]:hover {

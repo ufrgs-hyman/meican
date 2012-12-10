@@ -30,7 +30,7 @@ var meicanPolicyLanguage = {
         units: [
         {
             position: 'top', 
-            height: 36, 
+            height: 56, 
             body: 'top'
         },
 
@@ -76,7 +76,7 @@ var meicanPolicyLanguage = {
             cols: 5
         }
     },
-   /* {
+    {
     	"type": "select", 
         "inputParams": {
 		"name": "domains_owner",                 
@@ -84,7 +84,7 @@ var meicanPolicyLanguage = {
                 "selectValues": owner_keys,
                 "selectOptions": owner_values
          }
-    }*/
+    }
     
 
 ],

@@ -216,7 +216,7 @@ input[disabled], button[disabled], .ui-state-disabled, [disabled]{
     font-size: 13px;
     position: absolute;
     top: 4px;
-    padding: 1px 0;
+    padding: 0;
 }
 
 select, input { /*TODO: isso é replicação de código, já tem no style.css*/ 
@@ -230,7 +230,7 @@ input[type="text"]:hover, select:hover, input[type="radio"]:hover, input[type="p
 }
 
 #propertiesForm input {
-    width: 590px;
+    width: 589px;
 
 }
 

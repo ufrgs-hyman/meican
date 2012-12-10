@@ -172,6 +172,9 @@ class policyEditor extends MeicanController {
         $workflow = $workflow[0];
         
         $workflow->name .= ' (copy)';
+        $working = json_decode($workflow->working);
+        $working->properties->name .= ' (copy)';
+        $workflow->working = json_encode($working);
         
         $result = new stdClass();
         $workflow->id = null;
@@ -182,6 +185,7 @@ class policyEditor extends MeicanController {
             $result->success = false;
             $result->id = NULL;
         }
+        $this->show();
         
     }
     
@@ -239,13 +243,13 @@ class policyEditor extends MeicanController {
         CakeLog::debug(print_r($request,true));
         
         $params = $request['params'];
-       // $working = json_decode($params['working']);
+        $working = json_decode($params['working']);
         
         $work_info = new workflows_info();
         $work_info->name = $params['name'];
         $work_info->language = $params['language'];
         $work_info->working = $params['working'];
-        //$work_info->dom_id = $working->properties->domains_owner;
+        $work_info->dom_id = $working->properties->domains_owner;
         $work_info->status = $params['status'];
         
         $result = new stdClass();
