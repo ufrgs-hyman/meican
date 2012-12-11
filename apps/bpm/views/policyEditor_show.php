@@ -36,7 +36,7 @@ $workflows = $this->passedArgs;
                             <img class="edit" src="<?php echo $this->url(''); ?>webroot/img/edit_1.png"/>
                         </a>
                         <a href="<?php echo $this->buildLink(array('action' => 'duplicate', 'param' => "id:$w->id")); ?>">
-                            <img class="edit" src="<?php echo $this->url(''); ?>webroot/img/ico_clone.jpg"/>
+                            <img class="edit" src="<?php echo $this->url(''); ?>webroot/img/copy.png"/>
                         </a>
                     </td>
                     <td>
