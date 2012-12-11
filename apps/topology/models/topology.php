@@ -314,6 +314,91 @@ class MeicanTopology {
 
         return $urns;
     }
+    
+    static function getAllTopology($dom_id) {
+        $networksToReturn = array();
+
+        $aco = new Acos($dom_id, "domain_info");
+        if ($aco_dom = $aco->fetch(false)) {
+            $children = $aco_dom[0]->findChildren('network_info');
+        }
+
+        if ($children) {
+            $netIdArray = Common::arrayExtractAttr($children, 'obj_id');
+
+            $net_info = new network_info();
+            $net_info->net_id = $netIdArray;
+            $allNetworks = $net_info->fetch(false);
+
+            foreach ($allNetworks as $net) {
+                $network = new stdClass();
+                $network->id = $net->net_id;
+                $network->name = $net->net_descr;
+                $network->latitude = $net->net_lat;
+                $network->longitude = $net->net_lng;
+                $network->allow_create = false;
+                $network->devices = array();
+
+                $dev_info = new device_info();
+                $dev_info->net_id = $network->id;
+                $netDevices = $dev_info->fetch(false);
+                foreach ($netDevices as $dev) {
+                    $device = new stdClass();
+                    $device->id = $dev->dev_id;
+                    $device->name = $dev->dev_descr;
+                    $device->topology_node_id = $dev->node_id;
+                    $device->model = $dev->model;
+                    $device->allow_create = false;
+                    $device->ports = array();
+
+                    $urn_info = new urn_info();
+                    $urn_info->net_id = $network->id;
+                    $urn_info->dev_id = $device->id;
+                    $devUrns = $urn_info->fetch(false);
+                    foreach ($devUrns as $u) {
+                        $port = new stdClass();
+                        $port->urn_string = $u->urn_string;
+                        $port->urn_id = $u->urn_id;
+                        $port->vlan = $u->vlan;
+                        $port->port_number = $u->port;
+                        $port->max_capacity = ($u->max_capacity) ? (integer) $u->max_capacity : 1000;
+                        $port->min_capacity = ($u->min_capacity) ? (integer) $u->min_capacity : 100;
+                        $port->granularity = ($u->granularity) ? (integer) $u->granularity : 100;
+
+                        $acl = AclLoader::getInstance();
+                        if ($acl->checkACL('create', 'urn_info', $u->urn_id)) {
+                            $port->allow_create = true;
+                        } else {
+                            $port->allow_create = false;
+                        }
+
+                        $device->ports[] = (array) $port;
+                    }
+
+                    $network->devices[] = (array) $device;
+                }
+            }
+
+            $networksToReturn[] = (array) $network;
+        }
+
+        /**
+         * Varre o vetor das redes para descobrir quais redes e dispositivos podem ter o "allow_create"
+         */
+        foreach ($networksToReturn as $ind => $net) {
+            foreach ($net['devices'] as $ind2 => $dev) {
+                foreach ($dev['ports'] as $p) {
+                    if ($p['allow_create']) {
+                        $networksToReturn[$ind]['devices'][$ind2]['allow_create'] = true;
+                        $networksToReturn[$ind]['allow_create'] = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $networksToReturn;
+    }
 
     /**
      * utilizada para preencher um novo flow, busca direto na tabela urn_info

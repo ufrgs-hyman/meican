@@ -386,37 +386,34 @@ class reservations extends Controller {
         // get Timestamp to calc reservation creation time by user
         Common::setSessionVariable("res_begin_timestamp", microtime(true));
 
+        // ACL permission to specify path
+        $acl = AclLoader::getInstance();
+        $specify_path = $acl->checkACL("read", "may_specify_path");
+        //
+        
         // STEP 1 VARIABLES ---------------------
         //$name = "Default_reservation_name";
         //---------------------------------------
         // STEP 2 VARIABLES ---------------------
         $domain = new domain_info();
-        $allDomains = $domain->fetch(FALSE);
-        //$allUrns = array();
+        $allDomains = $domain->fetch(false);
         $domToMapArray = array();
-        //$domains = array();
 
         foreach ($allDomains as $d) {
-//            $dom = new stdClass();
-//            $dom->id = $d->dom_id;
-//            $dom->name = $d->dom_descr;
-//            $dom->topology_id = $d->topo_domain_id;
-//            $domains[] = $dom;
-
-            if ($networks = MeicanTopology::getURNDetails($d->dom_id)) {
-                $domain = new stdClass();
-                $domain->id = $d->dom_id;
-                $domain->name = $d->dom_descr;
-                $domain->topology_id = $d->topology_id;
-                $before = microtime(true);
-
-                $domain->networks = $networks;
-                $domToMapArray[] = $domain;
-                //debug("tempo", (microtime(true) - $before));
-
-                //$urns_tmp = Common::arrayExtractAttr(MeicanTopology::getURNs($d->dom_id), 'urn_string');
-                //array_push($allUrns, $urns_tmp);
+            $networks = array();
+            if ($specify_path) {
+                $networks = MeicanTopology::getAllTopology($d->dom_id);
+            } else {
+                $networks = MeicanTopology::getURNDetails($d->dom_id);
             }
+
+            $domain = new stdClass();
+            $domain->id = $d->dom_id;
+            $domain->name = $d->dom_descr;
+            $domain->topology_id = $d->topology_id;
+            $domain->networks = $networks;
+            
+            $domToMapArray[] = $domain;
         }
         
         // array for autoComplete host
@@ -467,11 +464,7 @@ class reservations extends Controller {
         $lang = explode(".", Language::getInstance()->getLanguage());
         $js_lang = str_replace("_", "-", $lang[0]);
         // --------------------------------------------
-        // 
-        // ACL permission to specify path
-           $acl = AclLoader::getInstance();
-           $specify_path = $acl->checkACL("read", "may_specify_path");
-        // 
+        //
         // ---------------------------------------------
         //if ($domToMapArray) {
         // Args to Script
@@ -561,7 +554,6 @@ class reservations extends Controller {
             "any_string" => _("any"),
             "domains" => $domToMapArray,
             "hosts" => $hostArray
-            //"urn_string" => $allUrns
         ));
         //}
         // ARGS to body ----------------------------------------------------------------
