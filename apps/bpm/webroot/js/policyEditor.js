@@ -46,7 +46,8 @@ var meicanPolicyLanguage = {
             animate: true,
             left: '4px',
             'class': '',
-	    header: 'Drag and drop these elements',
+	    header: parent.string_drag_and_drop + ":",
+                           
                         
         },
 
@@ -81,7 +82,8 @@ var meicanPolicyLanguage = {
     	"type": "select", 
         "inputParams": {
 		"name": "domains_owner",                 
-		"label": "Select the owner domain: ", 
+		//"label": "Select the owner domain: ", 
+                label: parent.string_select_owner + ":", 
                 "selectValues": owner_keys,
                 "selectOptions": owner_values
          }

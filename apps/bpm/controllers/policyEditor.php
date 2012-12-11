@@ -49,6 +49,8 @@ class policyEditor extends MeicanController {
             "string_enter_title" => _("Enter a title"),
             "string_choose_name" => _("Please choose a name"),
             "string_save" => _("Workflow saved"),
+            "string_select_owner" =>_("Select the owner domain"),
+            "string_drag_and_drop"=>_("Drag and drop these elements")  
         );
     }
 
