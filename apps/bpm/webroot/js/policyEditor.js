@@ -36,7 +36,7 @@ var meicanPolicyLanguage = {
 
         {
             position: 'right', 
-            width: 200, 
+            width: 230, 
             resize: true, 
             body: 'left', 
             gutter: 0, 
