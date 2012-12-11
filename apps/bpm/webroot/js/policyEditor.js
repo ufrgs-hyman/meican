@@ -46,7 +46,8 @@ var meicanPolicyLanguage = {
             animate: true,
             left: '4px',
             'class': '',
-	    header: 'Drag and drop this elements'
+	    header: 'Drag and drop these elements',
+            top: '-16px'
         },
 
         {
