@@ -56,23 +56,30 @@ class policyEditor extends MeicanController {
             $workflows = array();
 
             foreach ($allWorkflows as $w) {
-                $workflow = new stdClass();
-                $workflow->id = $w->id;
-                $workflow->name = $w->name;
-                $workflow->dom_id = $w->dom_id;
-                
-                $dom_tmp = new domain_info();
-                $dom_tmp->dom_id = $w->dom_id;
-                $domain = $dom_tmp->get('dom_descr');
-                $workflow->domain = $domain ? $domain : _("Unknown");
-                
-                $workflow->status = $w->status;
-                $workflow->status_descr = $w->status ? _("Enabled") : _("Disabled");
+                $acl = AclLoader::getInstance();
+                if ($acl->checkACL("update", "domain_info", $w->dom_id)) {
+                    $workflow = new stdClass();
+                    $workflow->id = $w->id;
+                    $workflow->name = $w->name;
+                    $workflow->dom_id = $w->dom_id;
 
-                $workflows[] = $workflow;
+                    $dom_tmp = new domain_info();
+                    $dom_tmp->dom_id = $w->dom_id;
+                    $domain = $dom_tmp->get('dom_descr');
+                    $workflow->domain = $domain ? $domain : _("Unknown");
+
+                    $workflow->status = $w->status;
+                    $workflow->status_descr = $w->status ? _("Enabled") : _("Disabled");
+
+                    $workflows[] = $workflow;
+                }
             }
-            $this->setArgsToBody($workflows);
-            $this->render('show');
+            if (empty($workflows)) {
+                $this->renderEmpty();
+            } else {
+                $this->setArgsToBody($workflows);
+                $this->render('show');
+            }
         }
     }
     
@@ -123,38 +130,43 @@ class policyEditor extends MeicanController {
             $this->show();
             return;
         }
-        
-        $dom = new domain_info();
-        $allDomains = $dom->fetch();
-        $domains_to_body = array();
-        foreach ($allDomains as $d) {
-            $domain = new stdClass();
-            $domain->dom_id = $d->dom_id;
-            $domain->dom_descr = $d->dom_descr;
-            $domains_to_body[] = $domain;
+
+        $acl = AclLoader::getInstance();
+        if ($acl->checkACL("update", "domain_info", $workflow[0]->dom_id)) {
+
+            $dom = new domain_info();
+            $allDomains = $dom->fetch();
+            $domains_to_body = array();
+            foreach ($allDomains as $d) {
+                $domain = new stdClass();
+                $domain->dom_id = $d->dom_id;
+                $domain->dom_descr = $d->dom_descr;
+                $domains_to_body[] = $domain;
+            }
+            $args = new stdClass();
+            $args->domains = $domains_to_body;
+            $args->dom_id = $workflow[0]->dom_id;
+
+            $this->setArgsToBody($args);
+
+            $wkf = new stdClass();
+            $wkf->id = $workflow[0]->id;
+            $wkf->name = $workflow[0]->name;
+            $wkf->working = $workflow[0]->working;
+            $wkf->language = $workflow[0]->language;
+
+            $args = array(
+                "load_workflow" => 1,
+                "workflow" => $wkf,
+            );
+
+            $this->setArgsToScript(array_merge($args, $this->buildArgs()));
+            $this->render('load_frame');
+        } else {
+            $this->setFlash(_("Permission denied"));
+            $this->show();
         }
-        $args = new stdClass();
-        $args->domains = $domains_to_body;
-        $args->dom_id = $workflow[0]->dom_id;
-
-        $this->setArgsToBody($args);
-        
-        $wkf = new stdClass();
-        $wkf->id = $workflow[0]->id;
-        $wkf->name = $workflow[0]->name;
-        $wkf->working = $workflow[0]->working;
-        $wkf->language = $workflow[0]->language;
-
-        $args = array(
-            "load_workflow" => 1,
-            "workflow" => $wkf,
-        );
-        
-        $this->setArgsToScript(array_merge($args, $this->buildArgs()));
-        $this->render('load_frame');
     }
-    
-    
     
     public function duplicate($workflow_id_array) {
         $id = NULL;

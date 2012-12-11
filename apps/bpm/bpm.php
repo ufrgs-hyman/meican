@@ -13,7 +13,7 @@ class bpm extends Application {
         return array(40 => 
             new MenuItem(array(
                 'label' => _("Workflows"),
-                'model' => 'bpm',
+                'model' => 'bpm','domain_info',
                 'url' => array('app' => $this->appName, 'controller' => 'policyEditor')
             ))
             );
