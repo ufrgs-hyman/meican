@@ -28,6 +28,8 @@ var overlay; // Camada de overlay para sobreposicoes
 var mapDiv; 
 var contextMenu = null; // menu pop-up ao clicar nas redes do mapa
 var contextMenuWaypoint = null; //meun pop-up para waypoints
+var contextMenuEndpoint = null; //meun pop-up para waypoints
+
 var editMapHandler;
 
 var useView = false;
@@ -1156,22 +1158,6 @@ function validateBand(band_value) {
         return false;
 }
 
-function maySpecifyPath() {
-    if ($("#chk_maySpecifyPath").attr('checked')) {
-        $("#waypointsConfiguration").slideDown(1);
-    //        for (var i in $.fn.mapEdit.waypoints) {
-    //            $.fn.mapEdit.waypoints[i].unselectedMarker.setMap(null);
-    //            $.fn.mapEdit.waypoints[i].setMap(edit_map);
-    //        }        
-    } else {
-        $("#waypointsConfiguration").slideUp(1);
-    //        for (var i in $.fn.mapEdit.waypoints) {
-    //            $.fn.mapEdit.waypoints[i].setMap(null);
-    //            $.fn.mapEdit.waypoints[i].unselectedMarker.setMap(edit_map);            
-    //        }
-    }
-}
-
 function loadDevices(elem) {
     var devices = new Array();
     var str = "";
@@ -1324,6 +1310,7 @@ function completeURN() {
 	
             $.fn.mapEdit.prepareContextMenu();
             $.fn.mapEdit.prepareWaypointContextMenu();
+            $.fn.mapEdit.prepareEndpointContextMenu();
             MyOverlay.prototype = new google.maps.OverlayView();
             MyOverlay.prototype.onAdd = function() { }
             MyOverlay.prototype.onRemove = function() { }
@@ -1408,6 +1395,17 @@ function completeURN() {
                     return false;
                 });
                 $(edit_map.getDiv()).append(contextMenuWaypoint);
+            }
+        },
+        
+        prepareEndpointContextMenu: function(){
+            if (contextMenuEndpoint == null) {
+                contextMenuEndpoint = $(document.createElement('ul')).attr('id', 'contextMenu');
+                contextMenuEndpoint.append('<li><a href="#removeEndpoint" id="contextItem">' + remove_endpoint_string + '</a></li>');
+                contextMenuEndpoint.bind('contextMenuEndpoint', function() {
+                    return false;
+                });
+                $(edit_map.getDiv()).append(contextMenuEndpoint);
             }
         },
 
@@ -1629,31 +1627,71 @@ function completeURN() {
                     });
                     $("#dialog-modal").dialog("open");
                 });
-                
-                $("#chk_maySpecifyPath").removeAttr("disabled");
-                $("#advConfLabel").removeAttr("disabled");
-                maySpecifyPath();
-                
+
                 google.maps.event.addListener($.fn.mapEdit.waypoints[n], "click", clickFnWay);
                 google.maps.event.addListener($.fn.mapEdit.waypoints[n], 'rightclick', clickFnWay);    
-                
             }   
             
-            if (where != "way") {            
+            if (where != "way") {  
+                
+                var clickFnEnd = function() {
+                    var where = this.where;
+                    contextMenuEndpoint.find('a').unbind('click');
+                    
+                    contextMenuEndpoint.find('a').click( function() {
+                        // fade out the menu
+                        contextMenuEndpoint.fadeOut(75);
+                        clearFlash();
+                    
+                
+                        // The link's href minus the #
+                        switch ( $(this).attr('href').substr(1) )
+                        {
+                            case 'removeEndpoint':
+                                $.fn.mapEdit.clearPoint(where);
+                                break;
+                        }
+                        contextMenuEndpoint.hide();
+                        contextMenuEndpoint.find('a').unbind('click');
+                        return false;
+                    });
+    
+                    var pos = overlay.getProjection().fromLatLngToContainerPixel(coord),
+                    x = pos.x,
+                    y = pos.y;// save the clicked location
+
+                    // adjust if clicked to close to the edge of the map
+                    if (x > mapDiv.width() - contextMenuEndpoint.width())
+                        x -= contextMenuEndpoint.width();
+        
+                    if (y > mapDiv.height() - contextMenuEndpoint.height())
+                        y -= contextMenuEndpoint.height();
+
+                    // Set the location and fade in the context menu
+                    contextMenuEndpoint.css({
+                        top: y,
+                        left: x
+                    }).fadeIn(100);         
+                };                
+                
                 path[n] = new StyledMarker({
                     domain_id: domain_id,
                     domain_name: domain_name,
                     id: network_id,
                     label: network_name,
                     position: coord,
-                    clickable: false,
                     styleIcon:new StyledIcon(StyledIconTypes.MARKER,{
                         color:color
                     }),
                     unselectedMarker: null,
                     map: edit_map,
-                    map_:edit_map
+                    map_:edit_map,
+                    where: where
                 });
+    
+                google.maps.event.addListener(path[n], "click", clickFnEnd);
+                google.maps.event.addListener(path[n], 'rightclick', clickFnEnd);
+ 
             }
             
             for (var i in edit_markersArray){//retira marcador não selecionado
@@ -1665,7 +1703,7 @@ function completeURN() {
                     break;
                 }
             }
-            
+
             $("#"+where+"_domain").html(domain_name);
             setDomainPartialURN(where, dom_topo_id);
             $("#"+where+"_network").html(network_name); 
@@ -1700,6 +1738,7 @@ function completeURN() {
                 $.fn.mapEdit.clearMapElements(edit_lines);
                 this.drawPath(pathToDraw);
             } else
+                edit_setBounds();
                 return;
         },
         
@@ -1796,11 +1835,7 @@ function completeURN() {
                 
                 $("#waypoints_order").empty();
                 
-                if ($.fn.mapEdit.waypoints.length == 0) {
-                    $("#waypointsConfiguration").slideUp(1);
-                    $("#chk_maySpecifyPath").attr("disabled", "disabled");
-                    $("#advConfLabel").attr("disabled", "disabled");
-                } else {
+                if ($.fn.mapEdit.waypoints.length != 0) {
                     for (var i=0; i< $.fn.mapEdit.waypoints.length; i++) {                    
                         if ($.fn.mapEdit.waypoints[i].order > order)                    
                             $.fn.mapEdit.waypoints[i].order --;
@@ -1822,7 +1857,7 @@ function completeURN() {
             
             edit_lines = this.clearMapElements(edit_lines);                   //remove as linhas do trajeto antigo
             $.fn.mapEdit.preparePath(path[0], path[1], $.fn.mapEdit.hops);    //desenha novamente o caminho, com o novo trajeto            
-            edit_setBounds();   //centraliza o mapa
+//            edit_setBounds(edit_bounds);   //centraliza o mapa
         },
     
         clearSrc: function () {//limpa ponto de origem
@@ -1856,6 +1891,7 @@ function completeURN() {
             
             $.fn.mapEdit.prepareContextMenu();
             $.fn.mapEdit.prepareWaypointContextMenu();
+            $.fn.mapEdit.prepareEndpointContextMenu();
             
             view_clearAll();    
     

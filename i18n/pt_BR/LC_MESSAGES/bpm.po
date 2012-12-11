@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-06 14:48-0200\n"
+"POT-Creation-Date: 2012-12-11 01:31-0200\n"
 "PO-Revision-Date: 2012-12-06 13:46-0300\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,19 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: bpm.php:14 controllers/policyEditor.php:16 views/policyEditor_show.php:5
+#: bpm.php:15 controllers/policyEditor.php:16 views/policyEditor_show.php:5
 msgid "Workflows"
 msgstr ""
 
-#: bpm.php:17 views/ode_show.php:11 views/policyEditor_show.php:17
-msgid "Status"
-msgstr "Status"
-
-#: bpm.php:22
-msgid "Workflow editor"
-msgstr ""
-
-#: bpm.php:33 controllers/requests.php:20
+#: bpm.php:25 controllers/requests.php:20
 msgid "Requests"
 msgstr "Requisições"
 
@@ -74,7 +66,8 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
-#: controllers/policyEditor.php:112 controllers/requests.php:69
+#: controllers/policyEditor.php:112 controllers/policyEditor.php:164
+#: controllers/policyEditor.php:199 controllers/requests.php:69
 #: controllers/requests.php:123
 msgid "Invalid index"
 msgstr "Índice inválido"
@@ -83,11 +76,11 @@ msgstr "Índice inválido"
 msgid "Workflow not found"
 msgstr ""
 
-#: controllers/policyEditor.php:220
+#: controllers/policyEditor.php:282
 msgid "Workflow"
 msgstr "Workflow"
 
-#: controllers/policyEditor.php:220
+#: controllers/policyEditor.php:282
 msgid "deleted"
 msgstr ""
 
@@ -253,6 +246,10 @@ msgstr "Versão"
 #: views/ode_show.php:10
 msgid "PID"
 msgstr "PID"
+
+#: views/ode_show.php:11 views/policyEditor_show.php:17
+msgid "Status"
+msgstr "Status"
 
 #: views/ode_show.php:12
 msgid "In progress"

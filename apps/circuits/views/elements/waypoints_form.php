@@ -2,9 +2,7 @@
       
 ?>
     
-<br/>
-<input disabled type='checkbox' id='chk_maySpecifyPath' onchange='maySpecifyPath();'/> <label id="advConfLabel" disabled> <?php echo _("Advanced configurations (Select at least one waypoint to enable)"); ?> </label>
-<div id='waypointsConfiguration' class='tab_content' hidden>
+<div id='waypointsConfiguration' class='tab_content'>
     <label class="label-description"> <?php echo _("Waypoints order"); ?>:</label>
     <ul id='waypoints_order'>
     </ul>

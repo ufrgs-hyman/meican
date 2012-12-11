@@ -1416,8 +1416,7 @@ form div.form {
     width: 15%;
     margin-bottom: 0.4%;
     text-align: center;
-    cursor:pointer;
-    cursor:hand;
+    cursor:move;
 }
 
 #waypoints_order li:hover {
