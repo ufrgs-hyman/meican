@@ -30,7 +30,7 @@ var meicanPolicyLanguage = {
         units: [
         {
             position: 'top', 
-            height: 71, 
+            height: '71px', 
             body: 'top'
         },
 
