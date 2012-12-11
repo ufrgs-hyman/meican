@@ -236,6 +236,7 @@ input[type="text"]:hover, select:hover, input[type="radio"]:hover, input[type="p
 
 #propertiesForm, #propertiesForm input, #propertiesForm label, #propertiesForm select {
     font-size: 18px;
+    line-height: 24px;
 }
 
 #right #propertiesForm {
