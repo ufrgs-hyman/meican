@@ -48,7 +48,7 @@ var meicanPolicyLanguage = {
             'class': '',
 	    header: 'Drag and drop these elements',
             position: 'absolute',
-            top: '-16px'
+            top: '-5px'
             
         },
 
