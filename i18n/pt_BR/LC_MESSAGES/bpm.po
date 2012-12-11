@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-12-11 01:31-0200\n"
-"PO-Revision-Date: 2012-12-06 13:46-0300\n"
+"PO-Revision-Date: 2012-12-11 01:43-0300\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -16,65 +16,71 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: bpm.php:15 controllers/policyEditor.php:16 views/policyEditor_show.php:5
+#: bpm.php:15
+#: controllers/policyEditor.php:16
+#: views/policyEditor_show.php:5
 msgid "Workflows"
-msgstr ""
+msgstr "Workflows"
 
-#: bpm.php:25 controllers/requests.php:20
+#: bpm.php:25
+#: controllers/requests.php:20
 msgid "Requests"
 msgstr "Requisições"
 
 #: controllers/policyEditor.php:17
 #, php-format
 msgid "No %s created"
-msgstr ""
+msgstr "%s não criado"
 
 #: controllers/policyEditor.php:17
 msgid "workflow"
-msgstr ""
+msgstr "workflow"
 
 #: controllers/policyEditor.php:17
 msgid "Please, click the button below to add a new one"
-msgstr ""
+msgstr "Por favor, clique o botão abaixo para adicionar um novo workflow"
 
 #: controllers/policyEditor.php:47
 msgid "Workflow name"
-msgstr ""
+msgstr "Nome do workflow"
 
 #: controllers/policyEditor.php:48
 msgid "Enter a title"
-msgstr ""
+msgstr "Insira um título"
 
 #: controllers/policyEditor.php:49
 msgid "Please choose a name"
-msgstr ""
+msgstr "Por favor escolha um nome"
 
 #: controllers/policyEditor.php:50
 msgid "Workflow saved"
-msgstr ""
+msgstr "Worklfow salvo"
 
-#: controllers/policyEditor.php:67 models/request_info.php:114
+#: controllers/policyEditor.php:67
+#: models/request_info.php:114
 #: models/request_info.php:115
 msgid "Unknown"
 msgstr "Desconhecido"
 
 #: controllers/policyEditor.php:70
 msgid "Enabled"
-msgstr ""
+msgstr "Habilitado"
 
 #: controllers/policyEditor.php:70
 msgid "Disabled"
-msgstr ""
+msgstr "Desabilitado"
 
-#: controllers/policyEditor.php:112 controllers/policyEditor.php:164
-#: controllers/policyEditor.php:199 controllers/requests.php:69
+#: controllers/policyEditor.php:112
+#: controllers/policyEditor.php:164
+#: controllers/policyEditor.php:199
+#: controllers/requests.php:69
 #: controllers/requests.php:123
 msgid "Invalid index"
 msgstr "Índice inválido"
 
 #: controllers/policyEditor.php:122
 msgid "Workflow not found"
-msgstr ""
+msgstr "Wokflow não encontrado"
 
 #: controllers/policyEditor.php:282
 msgid "Workflow"
@@ -82,7 +88,7 @@ msgstr "Workflow"
 
 #: controllers/policyEditor.php:282
 msgid "deleted"
-msgstr ""
+msgstr "Deletado"
 
 #: controllers/ode.php:41
 msgid "Error on upload file"
@@ -112,11 +118,13 @@ msgstr "Falha ao realizar undeploy do processo"
 msgid "You have no pending or finished request"
 msgstr "Você não possui requisições pendentes ou finalizadas"
 
-#: controllers/requests.php:107 views/ode_show.php:61
+#: controllers/requests.php:107
+#: views/ode_show.php:61
 msgid "Ok"
 msgstr "Ok"
 
-#: controllers/requests.php:108 views/policyEditor_load_frame.php:28
+#: controllers/requests.php:108
+#: views/policyEditor_load_frame.php:28
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -164,8 +172,10 @@ msgstr "Domínio da requisição"
 msgid "Request user"
 msgstr "Usuário solicitante"
 
-#: views/requests_reply.old.php:25 views/requests_createRequest.php:12
-#: views/requests_show.php:16 views/requests_show.php:54
+#: views/requests_reply.old.php:25
+#: views/requests_createRequest.php:12
+#: views/requests_show.php:16
+#: views/requests_show.php:54
 msgid "Destination domain"
 msgstr "Domínio de destino"
 
@@ -217,7 +227,8 @@ msgstr "Recorrência"
 msgid "Available Bandwidth (Mbps)"
 msgstr "Largura de Banda disponível (Mbps)"
 
-#: views/requests_reply.old.php:117 views/elements/requests_table.php:10
+#: views/requests_reply.old.php:117
+#: views/elements/requests_table.php:10
 #: views/requests_show.php:58
 msgid "Response"
 msgstr "Resposta"
@@ -230,7 +241,8 @@ msgstr "ACEITAR"
 msgid "REJECT"
 msgstr "REJEITAR"
 
-#: views/requests_reply.old.php:127 views/elements/requests_table.php:11
+#: views/requests_reply.old.php:127
+#: views/elements/requests_table.php:11
 #: views/requests_show.php:59
 msgid "Message"
 msgstr "Mensagem"
@@ -247,7 +259,8 @@ msgstr "Versão"
 msgid "PID"
 msgstr "PID"
 
-#: views/ode_show.php:11 views/policyEditor_show.php:17
+#: views/ode_show.php:11
+#: views/policyEditor_show.php:17
 msgid "Status"
 msgstr "Status"
 
@@ -279,7 +292,8 @@ msgstr "Undeploy"
 msgid "Deploy process"
 msgstr "Deploy de Processo"
 
-#: views/ode_show.php:45 views/policyEditor_show.php:15
+#: views/ode_show.php:45
+#: views/policyEditor_show.php:15
 msgid "Name"
 msgstr "Nome"
 
@@ -343,12 +357,14 @@ msgstr "Criar"
 msgid "Domain source"
 msgstr "Domínio de origem"
 
-#: views/elements/requests_table.php:9 views/requests_show.php:17
+#: views/elements/requests_table.php:9
+#: views/requests_show.php:17
 #: views/requests_show.php:55
 msgid "Requester"
 msgstr "Solicitante"
 
-#: views/elements/requests_table.php:20 views/requests_show.php:38
+#: views/elements/requests_table.php:20
+#: views/requests_show.php:38
 msgid "Answer"
 msgstr "Responder"
 
@@ -360,15 +376,18 @@ msgstr "Adicionar"
 msgid "Pending incoming requests"
 msgstr "Requisições pendentes de entrada"
 
-#: views/requests_show.php:15 views/requests_show.php:53
+#: views/requests_show.php:15
+#: views/requests_show.php:53
 msgid "Source domain"
 msgstr "Domínio de origem"
 
-#: views/requests_show.php:18 views/requests_show.php:56
+#: views/requests_show.php:18
+#: views/requests_show.php:56
 msgid "Resource type"
 msgstr "Tipo de recurso"
 
-#: views/requests_show.php:19 views/requests_show.php:57
+#: views/requests_show.php:19
+#: views/requests_show.php:57
 msgid "Resource description"
 msgstr "Descrição do recurso"
 
@@ -378,7 +397,7 @@ msgstr "Requisições concluídas de entrada"
 
 #: views/policyEditor_show.php:16
 msgid "Owner domain"
-msgstr ""
+msgstr "Domínio responsável"
 
 #: views/policyEditor_load_frame.php:27
 msgid "Save"
