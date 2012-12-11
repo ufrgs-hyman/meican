@@ -401,11 +401,11 @@ class reservations extends Controller {
 
         foreach ($allDomains as $d) {
             $networks = array();
-            if ($specify_path) {
-                $networks = MeicanTopology::getAllTopology($d->dom_id);
-            } else {
+            //if ($specify_path) {                
+            //    $networks = MeicanTopology::getAllTopology($d->dom_id);               
+            //} else {
                 $networks = MeicanTopology::getURNDetails($d->dom_id);
-            }
+            //}
 
             $domain = new stdClass();
             $domain->id = $d->dom_id;
@@ -580,8 +580,8 @@ class reservations extends Controller {
         if ($js_lang != "en-US") {
             $this->addScriptForLayout("jquery.ui.datepicker-$js_lang");
         }
-
         $this->render('add');
+        
     }
     
     public function selectThisHost() {

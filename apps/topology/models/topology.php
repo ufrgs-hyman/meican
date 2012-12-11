@@ -396,7 +396,6 @@ class MeicanTopology {
                 }
             }
         }
-
         return $networksToReturn;
     }
 
