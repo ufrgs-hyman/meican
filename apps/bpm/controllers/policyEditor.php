@@ -33,7 +33,8 @@ class policyEditor extends MeicanController {
         $allDomains = $domain_info->fetch(false);
         
         $owner_domains = array();
-        foreach ($allDomains as $domain)
+        $restrictedDomains = $domain_info->fetch();
+        foreach ($restrictedDomains as $domain)
             $owner_domains[$domain->dom_id] = $domain->dom_descr;
         
         $domains = Common::arrayExtractAttr($allDomains, 'topology_id');
@@ -163,7 +164,7 @@ class policyEditor extends MeicanController {
             $this->setArgsToScript(array_merge($args, $this->buildArgs()));
             $this->render('load_frame');
         } else {
-            $this->setFlash(_("Permission denied"));
+            $this->setFlash(_("Permission denied"), "error");
             $this->show();
         }
     }
