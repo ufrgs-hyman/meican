@@ -8,6 +8,6 @@ MEICAN 2 is a complete rewrite of its previous version. The system meets the dem
 
 ##REQUIREMENTS
 
-PHP 5.5
+PHP 5.5+
 
 ##INSTALLATION GUIDE
