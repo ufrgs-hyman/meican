@@ -8,7 +8,10 @@ MEICAN 2 is a complete rewrite of its previous version. The system meets the dem
 
 ##REQUIREMENTS
 
+Apache 2.4+
+MySQL 5+
 PHP 5.5+
+cURL
 
 ##INSTALLATION GUIDE
 
@@ -20,5 +23,5 @@ PHP 5.5+
                 AllowOverride All
                 Order deny,allow
                 Allow from all
-        </Directory>
+</Directory>
 ```
