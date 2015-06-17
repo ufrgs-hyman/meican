@@ -1,24 +1,24 @@
 <?php
 
 return [
-	"meican.version" 					=> "2.1.0.310",
+	"meican.version" => "2.1.0.310",
 		
-	"google.analytics.enabled" 			=> false,
-	"google.analytics.key" 				=> "",
+	"google.analytics.enabled" => false,
+	"google.analytics.key" => "",
 		
-    'aggregator.importer.enabled'		=> false,
-	'aggregator.default.url'			=> "",
+    'aggregator.importer.enabled' => true,
+	'aggregator.default.url' => "",
 			
-	'meican.certificate.filename'		=> "",
-	'meican.certificate.passphrase'		=> "",	
+	'meican.certificate.filename' => "",
+	'meican.certificate.passphrase' => "",	
 		
-	'meican.nsa.id'						=> "",
+	'meican.nsa.id' => "",
 	
-	'meican.connection.requester.url' 	=> '',	
+	'meican.connection.requester.url' => '',	
 	
-	"perfsonar.importer.enabled"		=> false,
-	"perfsonar.default.url"				=> "",
+	"perfsonar.importer.enabled" => true,
+	"perfsonar.default.url"	=> "",
 	
-	"provider.force.dummy" 				=> false,
+	"provider.force.dummy" => false,
 
 ];
