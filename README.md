@@ -13,7 +13,9 @@ MySQL 5+
 PHP 5.5+
 cURL
 
-##INSTALLATION GUIDE
+##INSTALLATION GUIDE 
+
+comming soon
 
 ###Apache configuration
 
