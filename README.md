@@ -14,9 +14,9 @@ PHP 5.5+
 
 ###Apache configuration
 
-@<Directory /var/www/meican>
+```<Directory /var/www/meican>
                 Options Indexes FollowSymLinks MultiViews
                 AllowOverride All
                 Order deny,allow
                 Allow from all
-        </Directory>@
+        </Directory>```
