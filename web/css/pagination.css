@@ -1,0 +1,50 @@
+.pagination {
+	-webkit-padding-start: 0px;
+}
+
+.pagination li {
+	float: left;
+	display: inline;
+	margin: 0 5px 0 0;
+	display: block;
+	padding: 1px;
+	color:#27567c;
+}
+
+.pagination .active {
+	background-color:#eeeeee;
+	color:#27567c;
+	border:1px solid #27567c;
+}
+
+.pagination a {
+	border: 1px solid #dddddd;
+	background: #fefefe;
+	color: #27567c;
+	text-decoration: none;
+	float: left;
+	padding: 0.22em;
+}
+
+.pagination .active a {
+	border: 1px solid #5b7399;
+	background: #27567c;
+	color: #ffffff;
+}
+
+.pagination a:visited {
+	color: #27567c;
+}
+
+.pagination .active a:visited {
+	color: #ffffff;
+}
+
+.pagination span {
+	border: 1px solid #dddddd;
+	background: #fefefe;
+	color: #dddddd;
+	text-decoration: none;
+	float: left;
+	padding: 0.22em;
+}

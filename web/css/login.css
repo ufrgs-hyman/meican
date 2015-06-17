@@ -1,0 +1,183 @@
+/* 
+    Document   : login1
+    Created on : 23/05/2011, 12:53:19
+    Author     : pfbiasuz
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body {
+    margin: 0px;
+}
+
+html,body{
+    overflow: auto;
+}
+
+div#header {
+    min-width: 780px;
+    height: 32px;
+    background-color: #27567C;
+}
+
+div#footer {
+    font-size: 0.75em;
+    text-align: center;
+    clear: both;
+}
+div#footer a:link, div#footer a:visited{
+    color: #EEEEEE;
+    font-size: 0.8em;
+}
+/*
+#header a:link, #header a:visited, #header a:hover {
+    color:white;
+    text-decoration: none;
+}*/
+
+div#logo_box {
+    width: 24%;
+    float: left;
+    margin: 4px;
+}
+
+div#info_box {
+    float: right;
+    margin-top: 68px;
+}
+
+div#content {
+    clear: both;
+    background-color: #FFF;
+    position: relative;
+    max-width: 1100px;
+    min-width: 780px;
+    margin: 16px auto;
+    padding: 10px;
+}
+/*
+div#content a:hover {
+    text-decoration: underline;
+}*/
+
+div#login_form {
+    width: 275px;
+    float: right;
+    background-color: #eee;
+    padding: 20px 30px;
+    margin: 20px;
+}
+
+div#login_form input[type=text], div#login_form input[type=password] {
+    width: 220px;
+    font-size: 150%;
+    height: 24px;
+    margin: 2px 0;
+}
+
+div#figure {
+    float: left;
+    width: 40%;
+    padding: 20px;
+}
+div#message {
+    color:red;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+div#login_box {
+    float: right;
+}
+
+div#login_form {
+    background-color: whiteSmoke;
+    padding: 30px 40px;
+    margin: 30px 0;
+    border: 1px solid #E5E5E5;
+}
+
+div#login_form input[type="text"], div#login_form input[type="password"] {
+    width: 100%;
+    font-size: 14px;
+}
+
+#login_form p{
+    text-align: center;
+}
+
+.login input {
+    padding: 2px;
+    margin: 0 10px 0 0;
+}
+
+.login .submit input {
+    font-size: 13px;
+    height: 24px;
+    margin: 8px 0;
+}
+
+.login .input, .login .submit {
+    margin: 4px 0;
+    padding: 0;
+}
+
+.login label{
+    padding: 0;
+    
+    float: left;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.login .password a {
+    color: #999;
+    float: right;
+    margin-right: 5px;
+}
+
+.login .submit/*, .login input[type="submit"]*/ {
+    font-size: 12pt;
+}
+
+.center{
+    text-align: center;
+}
+
+
+.main-info{
+    margin: 0 400px 0 0;   
+}
+
+.main-info h2{
+    text-align: center;
+    color: rgb(204, 0, 0);
+    font-size: 14pt;
+    margin: 0.75em auto;
+    width: 400px;
+}
+
+.logos-footer{
+    text-align: center;
+}
+
+.main-info .logo{
+    width: 50%;
+}
+
+.main-info p{
+    text-align: justify;
+    margin: 0.75em 0.5em;
+}
+
+.main-info .bullet{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 10px;
+}
+
+.main-info li{
+    padding: 4px 0 4px 50px;
+}
