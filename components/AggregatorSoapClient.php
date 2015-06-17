@@ -16,14 +16,14 @@ class AggregatorSoapClient extends \SoapClient {
 	function __construct($providerNSA, $connectionService){
 		$this->wsdl = $connectionService."?wsdl";
 		if (Yii::$app->id == "meican-console") {
-			$meicanRequesterUrl = Yii::$app->params['requester.url'];
+			$meicanRequesterUrl = Yii::$app->params['meican.connection.requester.url'];
 		} else {
 			$meicanRequesterUrl = Url::toRoute("/circuits/connection", "http");
 		}
 		
 		$this->replyTo = $meicanRequesterUrl;
-		$this->local_cert = realpath(__DIR__."/../certificates/meican.pem");
-		$this->cert_passphrase = "futurarnp";
+		$this->local_cert = realpath(__DIR__."/../certificates/".\Yii::$app->params['meican.certificate.filename']);
+		$this->cert_passphrase = Yii::$app->params['meican.certificate.passphrase'];
 		$this->providerNSA = $providerNSA;
 		
 		$soapOptions = array(
@@ -107,12 +107,12 @@ class AggregatorSoapClient extends \SoapClient {
 
 	function setAggHeader(){
 		$ns = "http://schemas.ogf.org/nsi/2013/12/framework/headers";
-		$connection = new \SoapVar(array("Connection" => "urn:ogf:network:cipo.ufrgs.br:2014:nsa:meican"), SOAP_ENC_OBJECT, null, null, null, null);
+		$connection = new \SoapVar(array("Connection" => Yii::$app->params['meican.nsa.id']), SOAP_ENC_OBJECT, null, null, null, null);
 
 		$headerBody = array(
 				"protocolVersion"=>"application/vnd.ogf.nsi.cs.v2.provider+soap",
 				"correlationId"  =>"", //Generated on request
-				"requesterNSA"   =>"urn:ogf:network:cipo.ufrgs.br:2014:nsa:meican",
+				"requesterNSA"   =>	Yii::$app->params['meican.nsa.id'],
 				"providerNSA"    =>$this->providerNSA,
 				"replyTo"       => $this->replyTo,
 				"ConnectionTrace" => $connection
