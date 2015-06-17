@@ -11,3 +11,12 @@ MEICAN 2 is a complete rewrite of its previous version. The system meets the dem
 PHP 5.5+
 
 ##INSTALLATION GUIDE
+
+###Apache configuration
+
+@<Directory /var/www/meican>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Order deny,allow
+                Allow from all
+        </Directory>@
