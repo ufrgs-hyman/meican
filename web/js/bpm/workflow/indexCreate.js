@@ -46,10 +46,11 @@ $(document).ready(function() {
 		          }
 		       ]
 			});
-		} else {
+		} else if(selectBox.options.length == 1){
 			var params = "?domainId=".concat(selectBox.options[selectBox.selectedIndex].value);
 	  	  	$("#dialog").dialog("close");
 	  	  	window.location="../workflow/create".concat(params);
 		}
+		else window.location="../workflow/index";
 	});
 });
