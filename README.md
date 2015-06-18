@@ -97,7 +97,7 @@ sudo ln -s /path/to/meican2-#version#/web /var/www/meican
 Enable the Rewrite mode:
 
 ```
-a2enmod rewrite
+sudo a2enmod rewrite
 ```
 
 Enable symbol links and change the document root:
@@ -112,3 +112,10 @@ DocumentRoot /var/www/meican
     Allow from all
 </Directory>
 ```
+
+Finally restart the Apache service:
+
+```
+sudo service apache2 restart
+```
+
