@@ -31,7 +31,7 @@ web/                css, images, javascripts
 - PHP 5.5+
 - cURL
 
-##INSTALLATION GUIDE (under review)
+##INSTALLATION GUIDE
 
 The following steps were performed on an Ubuntu 14.04.
 
@@ -71,21 +71,20 @@ Configure database settings:
 nano meican2-#version#/config/db.php
 ```
 
-Install Composer 
+On source code folder (meican2-#version#) install the [Composer](https://getcomposer.org)
 
 ```
 curl -sS https://getcomposer.org/installer | php
 php composer.phar global require "fxp/composer-asset-plugin:1.0.0”
 ```
 
-Install dependencies:
+Install MEICAN and all dependencies:
 
 ```
-cd meican2-#version#
 php composer.phar install
 ```
 
-It is possible that before the installation you are prompted by a "access token" of GitHub. To get a valid "access token" you must have a user on GitHub and request one on: https://github.com/settings/tokens
+It is possible that before the installation you are prompted by a "access token" of GitHub. You must have a user on GitHub to get a valid token on: https://github.com/settings/tokens
 
 Create a simbolic link to app web folder on /var/www:
 
