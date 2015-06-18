@@ -28,11 +28,11 @@
     },
     "scripts": {
         "pre-update-cmd": [
-            "php yii migrate"
+            "php yii migrate --interactive=0"
         ],
         "post-install-cmd": [
             "yii\\composer\\Installer::postCreateProject",
-            "php yii migrate"
+            "php yii migrate --interactive=0"
         ]
     },
     "extra": {
