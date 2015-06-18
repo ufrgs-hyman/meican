@@ -6,24 +6,96 @@ MEICAN 2 is a complete rewrite of its previous version. The system meets the dem
 
 ##DIRECTORY STRUCTURE
 
+```
+assets/             global assets directory
+certificates/       certificates used by application
+components/         reused or third-party php scripts
+config/             application configuration
+controllers/        global controllers, e.g. RBAC
+mail/               layouts and templates for mail sender
+messages/           i18N translations
+migrations/         database version control
+models/             database models
+modules/            application modules, e.g. circuits or topology
+runtime/            folder for logging and debug features
+tests/              test scripts
+views/              global views, layouts or templates
+web/                css, images, javascripts
+```
+
 ##REQUIREMENTS
 
-Apache 2.4+
-MySQL 5+
-PHP 5.5+
-cURL
+- Ubuntu 14.04 (or any other system with Crontab feature)
+- Apache 2.4+ (recommended)
+- MySQL 5+
+- PHP 5.5+
+- cURL
 
-##INSTALLATION GUIDE 
+##INSTALLATION GUIDE (under review)
 
-comming soon
+The following steps were performed on an Ubuntu 14.04.
 
-###Apache configuration
+#####Prepare environment
+
+```
+sudo apt-get install apache2 mysql-server php5 curl php5-mysql php5-curl
+```
+
+#####Setup database
+
+While not mandatory, the phpMyAdmin installation is recommended for easy database management.
+
+```
+sudo apt-get install phpMyAdmin
+```
+
+Or you can simply create a database via the command line.
+
+```
+mysql -u #user# -p
+CREATE DATABASE IF NOT EXISTS `meican2`;
+```
+
+#####Install Composer
+
+```
+curl -sS https://getcomposer.org/installer | php
+php composer.phar global require "fxp/composer-asset-plugin:1.0.0”
+```
+
+#####Download and install MEICAN
+
+Get source code:
+
+```
+wget https://github.com/ufrgs-hyman/meican2/archive/#version#.tar.gz
+tar -zxvf #version#.tar.gz
+```
+
+Install dependencies:
+
+```
+cd meican2-#version#.tar.gz
+php composer.phar install
+```
+
+It is possible that before the installation you are prompted by a "access token" of GitHub. To get a valid "access token" you must have a user on GitHub and request one on: https://github.com/settings/tokens
+
+#####Apache configuration
+
+Enable the Rewrite mode:
+
+```
+a2enmod rewrite
+```
+
+Enable symbol links:
 
 ```
 <Directory /var/www/meican>
-                Options Indexes FollowSymLinks MultiViews
-                AllowOverride All
-                Order deny,allow
-                Allow from all
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride All
+    Order deny,allow
+    Allow from all
 </Directory>
 ```
