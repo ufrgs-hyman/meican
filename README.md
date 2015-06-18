@@ -119,3 +119,4 @@ Finally restart the Apache service:
 sudo service apache2 restart
 ```
 
+With this configuration, MEICAN will be available at http://localhost
