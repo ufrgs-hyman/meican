@@ -12,23 +12,24 @@
     "require": {
         "php": ">=5.5.0",
         "yiisoft/yii2": "2.0.3",
-        "yiisoft/yii2-bootstrap": "*",
-        "yiisoft/yii2-swiftmailer": "*",
-        "yiisoft/yii2-jui": "*",
-        "thiagotalma/yii2-fullcalendar": "*"
+        "yiisoft/yii2-bootstrap": "2.0.3",
+        "yiisoft/yii2-swiftmailer": "2.0.3",
+        "yiisoft/yii2-jui": "2.0.3",
+        "thiagotalma/yii2-fullcalendar": "2.0.0"
     },
     "require-dev": {
-        "yiisoft/yii2-codeception": "*",
-        "yiisoft/yii2-debug": "*",
-        "yiisoft/yii2-gii": "*",
-        "yiisoft/yii2-faker": "*"
+        "yiisoft/yii2-codeception": "2.0.3",
+        "yiisoft/yii2-debug": "2.0.3",
+        "yiisoft/yii2-gii": "2.0.3",
+        "yiisoft/yii2-faker": "2.0.3"
     },
     "config": {
         "process-timeout": 1800
     },
     "scripts": {
-        "post-create-project-cmd": [
-            "yii\\composer\\Installer::postCreateProject"
+         "post-install-cmd": [
+            "yii\\composer\\Installer::postCreateProject",
+            "php yii migrate"
         ]
     },
     "extra": {
