@@ -59,20 +59,26 @@ CREATE DATABASE IF NOT EXISTS `meican2`;
 
 #####Download and install MEICAN
 
-Get source code:
+Get compressed source code:
 
 ```
 wget https://github.com/ufrgs-hyman/meican2/archive/#version#.tar.gz
 tar -zxvf #version#.tar.gz
 ```
 
+or clone the Git repository:
+
+```
+git clone https://github.com/ufrgs-hyman/meican2.git
+```
+
 Configure database settings:
 
 ```
-nano meican2-#version#/config/db.php
+nano #meican-folder#/config/db.php
 ```
 
-On source code folder (meican2-#version#) install the [Composer](https://getcomposer.org)
+On source code folder (#meican-folder#) install the [Composer](https://getcomposer.org)
 
 ```
 curl -sS https://getcomposer.org/installer | php
@@ -90,7 +96,7 @@ It is possible that before the installation you are prompted by a "access token"
 Create a simbolic link to app web folder on /var/www:
 
 ```
-sudo ln -s /path/to/meican2-#version#/web /var/www/meican
+sudo ln -s /path/to/#meican-folder#/web /var/www/meican
 ```
 
 #####Apache configuration
