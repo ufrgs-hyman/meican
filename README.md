@@ -56,13 +56,6 @@ mysql -u #user# -p
 CREATE DATABASE IF NOT EXISTS `meican2`;
 ```
 
-#####Install Composer
-
-```
-curl -sS https://getcomposer.org/installer | php
-php composer.phar global require "fxp/composer-asset-plugin:1.0.0”
-```
-
 #####Download and install MEICAN
 
 Get source code:
@@ -72,14 +65,33 @@ wget https://github.com/ufrgs-hyman/meican2/archive/#version#.tar.gz
 tar -zxvf #version#.tar.gz
 ```
 
+Configure database settings:
+
+```
+nano meican2-#version#/config/db.php
+```
+
+Install Composer 
+
+```
+curl -sS https://getcomposer.org/installer | php
+php composer.phar global require "fxp/composer-asset-plugin:1.0.0”
+```
+
 Install dependencies:
 
 ```
-cd meican2-#version#.tar.gz
+cd meican2-#version#
 php composer.phar install
 ```
 
 It is possible that before the installation you are prompted by a "access token" of GitHub. To get a valid "access token" you must have a user on GitHub and request one on: https://github.com/settings/tokens
+
+Create a simbolic link to app web folder on /var/www:
+
+```
+sudo ln -s /path/to/meican2-#version#/web /var/www/meican
+```
 
 #####Apache configuration
 
@@ -89,9 +101,11 @@ Enable the Rewrite mode:
 a2enmod rewrite
 ```
 
-Enable symbol links:
+Enable symbol links and change the document root:
 
 ```
+DocumentRoot /var/www/meican
+
 <Directory /var/www/meican>
     Options Indexes FollowSymLinks MultiViews
     AllowOverride All
