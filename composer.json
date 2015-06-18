@@ -27,7 +27,10 @@
         "process-timeout": 1800
     },
     "scripts": {
-         "post-install-cmd": [
+        "pre-update-cmd": [
+            "php yii migrate"
+        ],
+        "post-install-cmd": [
             "yii\\composer\\Installer::postCreateProject",
             "php yii migrate"
         ]
