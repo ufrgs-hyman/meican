@@ -52,7 +52,7 @@ class UrnController extends RbacController {
     		endforeach;
     		return $domains;
     	}
-    	else return null;
+    	else return $allDomains;
     }
     
     public function actionCreate(){

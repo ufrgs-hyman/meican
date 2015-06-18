@@ -20,7 +20,7 @@ class DeviceController extends RbacController {
         $domains = self::whichDomainsCan("topology/read");
 
         //Pega as redes destes dominios
-        $networks = Network::find()->where(['domain_id' => $domains[0]->id]);
+        $networks = Network::find()->where(['id' => '-1']);
         foreach ($domains as $domain){
         	$networks->union(Network::find()->where(['domain_id' => $domain->id]));
         }

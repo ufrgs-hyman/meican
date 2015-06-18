@@ -21,20 +21,19 @@ class NetworkController extends RbacController {
 		
 		//Pega os dominios que o usuário tem permissão
     	$domains = self::whichDomainsCan("topology/read");
-    	
+
     	//Pega as redes destes dominios
-    	$networks = Network::find()->where(['domain_id' => $domains[0]->id]);
-    	foreach ($domains as $domain){
-    		$networks->union(Network::find()->where(['domain_id' => $domain->id]));
-    	}
-    	
-    	$dataProvider = new ActiveDataProvider([
-    		'query' => $networks,
-    		'pagination' => false,
-    		'sort' => false,
-    	]);
-    	
-    	
+	    $networks = Network::find()->where(['id' => '-1']);
+	    foreach ($domains as $domain){
+	    	$networks->union(Network::find()->where(['domain_id' => $domain->id]));
+	    }
+	    
+	    $dataProvider = new ActiveDataProvider([
+	    		'query' => $networks,
+	    		'pagination' => false,
+	    		'sort' => false,
+	    ]);
+
         return $this->render('index', array(
         		'networks' => $dataProvider,
         ));
