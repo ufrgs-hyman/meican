@@ -14,11 +14,13 @@ return [
 		
 	'meican.nsa.id' => "",
 	
+	//only for automatedtests
+	//workaround for meican-console app
 	'meican.connection.requester.url' => '',	
 	
 	"perfsonar.importer.enabled" => true,
 	"perfsonar.default.url"	=> "",
 	
-	"provider.force.dummy" => false,
+	"provider.force.dummy" => true,
 
 ];

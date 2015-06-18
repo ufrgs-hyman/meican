@@ -8,14 +8,12 @@ $db = require(__DIR__ . '/db.php');
 return [
     'id' => 'meican-console',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'gii'],
-    'controllerNamespace' => 'app\commands',
+    'bootstrap' => ['log'],
     'modules' => [
     	'aaa' => 'app\modules\aaa\AaaModule',
     	'circuits' => 'app\modules\circuits\CircuitsModule',
     	'init' => 'app\modules\init\InitModule',
     	'topology' => 'app\modules\topology\TopologyModule',
-        'gii' => 'yii\gii\Module',
     ],
     'components' => [
         'cache' => [
