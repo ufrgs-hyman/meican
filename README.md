@@ -38,6 +38,7 @@ The following steps were performed on an Ubuntu 14.04.
 #####Prepare environment
 
 ```
+sudo apt-get update
 sudo apt-get install apache2 mysql-server php5 curl php5-mysql php5-curl
 ```
 
