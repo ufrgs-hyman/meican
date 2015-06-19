@@ -100,7 +100,7 @@
 <?php endforeach; ?>
 
 <br></br>
-<input class="delete" id="delete_button" type="button" value="<?= Yii::t('topology', 'Delete Selected'); ?>"/>
+<?php if($domains) echo '<input class="delete" id="delete_button" type="button" value="'.Yii::t('topology', 'Delete Selected').'"/>'; ?>
 
 <div style="display: none">
 <?php Dialog::begin([
