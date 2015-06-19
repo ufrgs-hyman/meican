@@ -26,7 +26,7 @@ var map;
 var markerCluster;
 var circuit;
 var currentMarkerType = "net";
-var markerWindow;
+var openedWindows = [];
 var MARKER_OPTIONS_NET = '' +
 '<div><button style="font-size: 11px; width: 48%;" id="set-as-source">' + tt('From here') + '</button>' +
 '<button style="font-size: 11px; width: 48%;" id="set-as-dest">' + tt('To here') + '</button></div><div style="height: 2px;"></div>' +
@@ -755,7 +755,7 @@ function initialize() {
 	);
 	
 	google.maps.event.addListener(map, 'click', function() {
-		closeWindow();
+		closeWindows();
 	});
 	
 	var markers = [];
@@ -883,7 +883,7 @@ function getValidMarkerPosition(markers, markerType, position) {
 function addMarkerListeners(markers, index) {
 	google.maps.event.addListener(markers[index], 'mouseover', function(key) {
 		return function(){
-			closeWindow();
+			closeWindows();
 			
 			var contentWindow;
 			
@@ -929,29 +929,30 @@ function addMarkerListeners(markers, index) {
 				content: '<div class = "MarkerPopUp" style="width: 230px;"><div class = "MarkerContext">' +
 					markers[key].info + "<br>" + contentWindow + '</div></div>'
 				});
+            openedWindows.push(markerWindow);
 			
 			google.maps.event.addListener(markerWindow, 'domready', function(marker){
 			    return function() { 
 		    		$('#set-as-source').on('click', function() {
-		    			closeWindow();
+		    			closeWindows();
 		    			
 		    			setEndPoint("src", marker);
 		    		});
 		    		
 		    		$('#set-as-waypoint').on('click', function() {
-		    			closeWindow();
+		    			closeWindows();
 		    			
 		    			addWayPoint(markers, marker);
 		    		});
 		    		
 		    		$('#set-as-dest').on('click', function() {
-		    			closeWindow();
+		    			closeWindows();
 		    			
 		    			setEndPoint('dst', marker);
 		    		});
 		    		
 		    		$('#set-as-intra').on('click', function() {
-		    			closeWindow();
+		    			closeWindows();
 		    			
 		    			deleteWayPoints();		    			
 		    			
@@ -960,19 +961,19 @@ function addMarkerListeners(markers, index) {
 		    		});
 		    		
 		    		$('#remove-waypoint').on('click', function() {
-		    			closeWindow();
+		    			closeWindows();
 		    			
 		    			deleteWayPoint(marker);
 		    		});
 		    		
 		    		$('#remove-endpoint').on('click', function() {
-		    			closeWindow();
+		    			closeWindows();
 		    			
 		    			removeEndPoint(marker.circuitMode);
 		    		});
 		    		
 		    		$('#remove-intra').on('click', function() {
-		    			closeWindow();
+		    			closeWindows();
 		    			
 		    			removeEndPoint("src");
 		    		});
@@ -987,7 +988,7 @@ function addMarkerListeners(markers, index) {
 /////////////// ALTERAR MARCADORES VISIVEIS /////////////////////
 
 function setMarkerType(markers, markerType) {
-	closeWindow();
+	closeWindows();
 	currentMarkerType = markerType;
 	removeEndPoint("src");
 	fillDomainSelect("src");
@@ -1054,9 +1055,10 @@ function loadDeviceMarkers(markers) {
 
 ////////// FECHA JANELA DO MARCADOR ///////////////
 
-function closeWindow() {
-	if (markerWindow) {
-		markerWindow.close();
+function closeWindows() {
+    var size = openedWindows.length;
+	for (var i = 0; i < size; i++) {
+		openedWindows[i].close();
 	}
 }
 
