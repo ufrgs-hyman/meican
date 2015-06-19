@@ -74,7 +74,7 @@
             			'template' => '{answer}',
             			'buttons' => [
 	           				'answer' => function ($url,$model) {
-            					return Html::button(Yii::t('circuits', 'Answer'), ['onclick' => "window.location='answer?id=$model->id&domain_id=$model->domain_id'"]);
+            					return Html::button(Yii::t('circuits', 'Answer'), ['onclick' => "window.location='answer?id=$model->id&domain=$model->domain'"]);
 			                },
 			            ],	
         			],

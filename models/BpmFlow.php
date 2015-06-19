@@ -7,9 +7,11 @@ use yii\data\ActiveDataProvider;
 use app\models\BpmFlow;
 use app\models\BpmWorkflow;
 use app\models\BpmNode;
+use app\models\Notification;
 use app\models\ConnectionAuth;
 use app\models\Connection;
 use app\models\Reservation;
+use app\components\DateUtils;
 
 
 define("authorized", 'AUTHORIZED');
@@ -21,7 +23,7 @@ define("denied", 'DENIED');
  * @property integer $id
  * @property integer $connection_id
  * @property integer $workflow_id
- * @property integer $domain_id
+ * @property string $domain
  * @property integer $node_id
  * @property string $type
  * @property string $value
@@ -49,9 +51,10 @@ class BpmFlow extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['connection_id', 'workflow_id', 'domain_id', 'node_id', 'type'], 'required'],
-            [['connection_id', 'workflow_id', 'domain_id', 'node_id'], 'integer'],
-            [['type', 'value', 'operator', 'status'], 'string']
+            [['connection_id', 'workflow_id', 'domain', 'node_id', 'type'], 'required'],
+            [['connection_id', 'workflow_id', 'node_id'], 'integer'],
+            [['type', 'value', 'operator', 'status'], 'string'],
+        	[['domain'], 'string', 'max' => 50]
         ];
     }
 
@@ -64,7 +67,7 @@ class BpmFlow extends \yii\db\ActiveRecord
             'id' => 'ID',
             'connection_id' => 'Connection ID',
             'workflow_id' => 'Workflow ID',
-            'domain_id' => 'Domain ID',
+            'domain' => 'Domain',
             'node_id' => 'Node ID',
             'type' => 'Type',
             'value' => 'Value',
@@ -100,17 +103,17 @@ class BpmFlow extends \yii\db\ActiveRecord
     /**
      * 
      * @param unknown $connection_id
-     * @param unknown $domain_id
+     * @param unknown $domainTop
      */
-    public static function startFlow($connection_id, $domain_id){   	
-    	$domain = Domain::findOne(['id' => $domain_id]);
-    	$workflow = BpmWorkflow::findOne(['domain_id' => $domain_id, 'active' => 1]);
+    public static function startFlow($connection_id, $domainTop){   	
+    	$domain = Domain::findOne(['topology' => $domainTop]);
+    	$workflow = BpmWorkflow::findOne(['domain' => $domainTop, 'active' => 1]);
     	
     	Yii::trace("!!!! INICIA WORKFLOW !!!! ");
     	Yii::trace("Connection ID: ".$connection_id);
-    	Yii::trace("Domain ID: ".$domain_id);
+    	Yii::trace("Domain: ".$domainTop);
     	
-    	if(isset($workflow)){
+    	if(isset($workflow) && isset($domain)){
     		Yii::trace("Workflow ID: ".$workflow->id);
     		
 	    	$initNode = BpmNode::findOne(['workflow_id' => $workflow->id, 'type' => 'New_Request']);
@@ -122,7 +125,7 @@ class BpmFlow extends \yii\db\ActiveRecord
 	    	$flowLine->value = $node->value;
 	    	$flowLine->workflow_id = $workflow->id;
 	    	$flowLine->connection_id = $connection_id;
-	    	$flowLine->domain_id = $domain_id;
+	    	$flowLine->domain = $domainTop;
 	    	if($flowLine->type == 'Request_Group_Authorization' || $flowLine->type == 'Request_User_Authorization') $flowLine->status = 'WAITING';
 	    	else $flowLine->status = 'READY';
 	    	if($node->operator != null) $flowLine->operator = $node->operator;    		
@@ -133,10 +136,13 @@ class BpmFlow extends \yii\db\ActiveRecord
     	}
     	else Yii::trace("Sem Workflow ATIVO.");
     	
-    	if($domain->default_policy == 'ACCEPT_ALL'){
+    	if(!$domain){
+    		Yii::trace("Dominio não existe mais na base. ACEITO.");
+    	}
+    	else if($domain->default_policy == 'ACCEPT_ALL'){
     		Yii::trace("ACEITO pela POLITICA PADRÃO.");
 	    	$auth = new ConnectionAuth();
-	    	$auth->domain_id = $domain_id;
+	    	$auth->domain = $domainTop;
 	    	$auth->status = 'AUTHORIZED';
 	    	$auth->type = 'WORKFLOW';
 	    	$auth->connection_id = $connection_id;
@@ -150,33 +156,32 @@ class BpmFlow extends \yii\db\ActiveRecord
 	    	if (!$conn->save()){
     		}
 			$auth = new ConnectionAuth();
-    		$auth->domain_id = $domain_id;
+    		$auth->domain = $domainTop;
     		$auth->status = 'DENIED';
     		$auth->type = 'WORKFLOW';
     		$auth->connection_id = $connection_id;
     		$auth->save();
     	}
-    	
     }
     
     /**
      * 
      * @param unknown $connection_id
-     * @param unknown $domain_id
+     * @param unknown $domainTop
      * @param unknown $asking
      */
-    public static function doRequest($connection_id, $domain_id, $asking){
+    public static function doRequest($connection_id, $domainTop, $asking){
     	Yii::trace("!!!! CONTINUA WORKFLOW CASO NECESSÁRIO !!!! ");
     	Yii::trace("Connection ID: ".$connection_id);
-    	Yii::trace("Domain ID: ".$domain_id);
-    	if(BpmFlow::find()->where(['domain_id' => $domain_id, 'connection_id' => $connection_id])->count() > 0){
-    		$flow = BpmFlow::findOne(['domain_id' => $domain_id, 'connection_id' => $connection_id]);
+    	Yii::trace("Domain: ".$domainTop);
+    	if(BpmFlow::find()->where(['domain' => $domainTop, 'connection_id' => $connection_id])->count() > 0){
+    		$flow = BpmFlow::findOne(['domain' => $domainTop, 'connection_id' => $connection_id]);
     		if($asking){
     			Yii::trace("Perguntas habilitadas");
     			$flow->status = 'READY';
     			$flow->save();
     		}
-    		while(BpmFlow::execute($connection_id, $domain_id));
+    		while(BpmFlow::execute($connection_id, $domainTop));
     	}
 
     }
@@ -184,21 +189,21 @@ class BpmFlow extends \yii\db\ActiveRecord
     /**
      * 
      * @param unknown $connection_id
-     * @param unknown $domain_id
+     * @param unknown $domainTop
      * @param unknown $response
      */
-    public static function response($connection_id, $domain_id, $response){
+    public static function response($connection_id, $domainTop, $response){
     	Yii::trace("!!!! RECEBEU RESPOSTA !!!! ");
     	Yii::trace("Connection ID: ".$connection_id);
-    	Yii::trace("Domain ID: ".$domain_id);
+    	Yii::trace("Domain: ".$domainTop);
     	Yii::trace("Response: ".$response);
     	
-    	$flow = BpmFlow::findOne(['domain_id' => $domain_id, 'connection_id' => $connection_id]);
+    	$flow = BpmFlow::findOne(['domain' => $domainTop, 'connection_id' => $connection_id]);
     	$flow->status = $response;
     	$flow->save();
     
     	//Flow loop
-	    while(BpmFlow::execute($connection_id, $domain_id));
+	    while(BpmFlow::execute($connection_id, $domainTop));
 	    
 	    Connection::continueWorkflows($connection_id);
 	    
@@ -207,14 +212,12 @@ class BpmFlow extends \yii\db\ActiveRecord
     /**
      * 
      * @param unknown $connection_id
-     * @param unknown $domain_id
+     * @param unknown $domainTop
      * @return boolean
      */
-    public static function execute($connection_id, $domain_id){
+    public static function execute($connection_id, $domainTop){
 
-    	$flows = BpmFlow::find()->where(['domain_id' => $domain_id, 'connection_id' => $connection_id]);
-    	
-    	
+    	$flows = BpmFlow::find()->where(['domain' => $domainTop, 'connection_id' => $connection_id]);
     	
     	if($flows->count() == 0) return false;
     	
@@ -315,7 +318,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     	if($node->value != null) $flowLine->value = $node->value;
     	$flowLine->workflow_id = $flow->workflow_id;
     	$flowLine->connection_id = $flow->connection_id;
-    	$flowLine->domain_id = $flow->domain_id;
+    	$flowLine->domain = $flow->domain;
     	if($flowLine->type == 'Request_Group_Authorization' || $flowLine->type == 'Request_User_Authorization') $flowLine->status = 'WAITING';
     	else $flowLine->status = 'READY';
     	if($node->operator != null) $flowLine->operator = $node->operator;
@@ -335,7 +338,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     	$connection_id = $flow->connection_id;
     	$flow->delete();
     	if($type != 'Accept_Automatically'){
-	    	if(BpmFlow::find()->where(['domain_id' => $flow->domain_id, 'connection_id' => $connection_id])->count() == 0){
+	    	if(BpmFlow::find()->where(['domain' => $flow->domain, 'connection_id' => $connection_id])->count() == 0){
 	    		BpmFlow::deleteAll(['connection_id' => $connection_id]);
 	    		$conn = Connection::findOne(['id' => $connection_id]);
 	    		$conn->auth_status = denied;
@@ -343,7 +346,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     				Yii::error('Unsuccesful save in Request');
     			}
 				$auth = new ConnectionAuth();
-    			$auth->domain_id = $flow->domain_id;
+    			$auth->domain = $flow->domain;
     			$auth->status = 'DENIED';
     			$auth->type = 'WORKFLOW';
     			$auth->manager_workflow_id = $flow->workflow_id;
@@ -353,7 +356,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     	}
     	else {
     		$auth = new ConnectionAuth();
-    		$auth->domain_id = $flow->domain_id;
+    		$auth->domain = $flow->domain;
     		$auth->status = 'AUTHORIZED';
     		$auth->type = 'WORKFLOW';
     		$auth->manager_workflow_id = $flow->workflow_id;
@@ -365,7 +368,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     public function createGroupAuth($flow, $reservation){
     	Yii::trace("Criando Request Group Authorization");
     	$auth = new ConnectionAuth();
-    	$auth->domain_id = $flow->domain_id;
+    	$auth->domain = $flow->domain;
     	$auth->status = 'WAITING';
     	$auth->type = 'GROUP';
     	$auth->manager_group_id = $flow->value;
@@ -377,12 +380,21 @@ class BpmFlow extends \yii\db\ActiveRecord
     public function createUserAuth($flow, $reservation){
     	Yii::trace("Criando Request User Authorization");
     	$auth = new ConnectionAuth();
-    	$auth->domain_id = $flow->domain_id;
+    	$auth->domain = $flow->domain;
     	$auth->status = 'WAITING';
     	$auth->type = 'USER';
     	$auth->manager_user_id = $flow->value;
     	$auth->connection_id = $flow->connection_id;
     	$auth->save();
+    	
+    	/*$not = new Notification();
+    	$not->user_id = $flow->value;
+    	$not->date = DateUtils::now();
+    	$not->type = 'AUTHORIZATION';
+    	$not->viewed = 0;
+    	$not->info = (string) $auth->id;
+    	$not->save();*/
+    	
     	return false;
     }
     
@@ -488,10 +500,8 @@ class BpmFlow extends \yii\db\ActiveRecord
     			$domain = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => $path_order])->domain;
     			break;
     	}
-    	
-    	$compareDomain = Domain::findOne(['topology' => $domain]);
-    	
-    	if(isset($compareDomain) && $flow->value == $compareDomain->id) $flow->status = 'YES';
+
+    	if(isset($compareDomain) && $flow->value == $compareDomain->$domain) $flow->status = 'YES';
     	else{
     		Yii::trace("Não passou em DOMAIN");
     		$flow->status = 'NO';

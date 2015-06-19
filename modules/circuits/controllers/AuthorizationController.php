@@ -48,16 +48,16 @@ class AuthorizationController extends RbacController {
     		else{
     			$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['>','start', DateUtils::now()])->one();
 	    		foreach($reservationsVisited as $res){
-	    			if($conn->reservation_id == $res[0] && $request->domain_id == $res[1]){
+	    			if($conn->reservation_id == $res[0] && $request->domain == $res[1]){
 	    				$uniq = false;
 	    			}
 	    		}
 	    		if($uniq){
 	    			$aux = [];
 	    			$aux[0] = $conn->reservation_id;;
-	    			$aux[1] = $request->domain_id;
+	    			$aux[1] = $request->domain;
 	    			$reservationsVisited[] = $aux;
-	    			$domain = Domain::findOne($request->domain_id);
+	    			$domain = Domain::findOne(['topology' => $request->domain]);
 	    			if(isset($domain))
     					$authorizations[] = new AuthorizationForm(Reservation::findOne(['id' => $conn->reservation_id]), $domain);
 	    		}
@@ -70,34 +70,36 @@ class AuthorizationController extends RbacController {
     		$groupRequests = ConnectionAuth::find()->where(['manager_group_id' => $role->getGroup()->id, 'status' => 'WAITING'])->all();
     		
     		foreach($groupRequests as $request){ //Passa por todos para testar se o dominio corresponde
-    			
-    			if($role->domain_id == NULL || $role->domain_id == $request->domain_id){
-	    			$uniq = true;
-	    			$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['<=','start', DateUtils::now()])->one();
-		    		if(isset($conn)){
-		    			$request->status='EXPIRED';
-		    			$request->save();
-		    			$conn->auth_status='EXPIRED';
-		    			$conn->save();
-		    		}
-	    			else{
-	    				$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['>','start', DateUtils::now()])->one();
-	    				foreach($reservationsVisited as $res){
-			    			if($conn->reservation_id == $res[0] && $request->domain_id == $res[1]){
-			    				$uniq = false;
-			    			}
+    			$domain = Domain::findOne(['topology' => $request->domain]);
+    			if($domain){
+    				//Reescrita necessária quando utilizar a tabela de notificações. Pode abstrair muita coisa e ler de la.
+	    			if($role->domain_id == NULL || $role->domain_id == $domain->id){
+		    			$uniq = true;
+		    			$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['<=','start', DateUtils::now()])->one();
+			    		if(isset($conn)){
+			    			$request->status='EXPIRED';
+			    			$request->save();
+			    			$conn->auth_status='EXPIRED';
+			    			$conn->save();
 			    		}
-			    		if($uniq){
-			    			$aux = [];
-			    			$aux[0] = $conn->reservation_id;;
-			    			$aux[1] = $request->domain_id;
-			    			$reservationsVisited[] = $aux;
-			    			$domain = Domain::findOne($request->domain_id);
-			    			if(isset($domain))
-		    					$authorizations[] = new AuthorizationForm(Reservation::findOne(['id' => $conn->reservation_id]), $domain);
+		    			else{
+		    				$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['>','start', DateUtils::now()])->one();
+		    				foreach($reservationsVisited as $res){
+				    			if($conn->reservation_id == $res[0] && $domain->id == $res[1]){
+				    				$uniq = false;
+				    			}
+				    		}
+				    		if($uniq){
+				    			$aux = [];
+				    			$aux[0] = $conn->reservation_id;;
+				    			$aux[1] = $request->domain->topology;
+				    			$reservationsVisited[] = $aux;
+				    			if(isset($domain))
+			    					$authorizations[] = new AuthorizationForm(Reservation::findOne(['id' => $conn->reservation_id]), $domain);
+			    			}
 		    			}
-	    			}
-	    		}
+		    		}
+    			}
     		}
     	}
 
@@ -113,56 +115,55 @@ class AuthorizationController extends RbacController {
     
     }
     
-    public function actionAnswer($id = null, $domain_id = null){
+    public function actionAnswer($id = null, $domain = null){
     	Yii::trace("Answer");
-    	if($id == null || $domain_id == null) $this->actionAuthorization();
+    	if($id == null || $domain == null) $this->actionAuthorization();
     	else{
-    		Yii::trace("Respondendo a reserva id: ".$id);
-    		$userId = Yii::$app->user->getId();
-    
-    		$reservation = Reservation::findOne(['id' => $id]);
-    
-    		$allRequest = null;
-    		$connections = Connection::find()->where(['reservation_id' => $id])->all();
-    		foreach($connections as $conn){
-    			if($allRequest == null) $allRequest = ConnectionAuth::find()->where(['connection_id' => $conn->id, 'domain_id' => $domain_id]);
-    			else $allRequest->union( ConnectionAuth::find()->where(['connection_id' => $conn->id, 'domain_id' => $domain_id]));
-    		}
-
-    		$allRequest = $allRequest->all();
-    		$domainRules = User::findOne(['id' => $userId])->getUserDomainRoles()->all();
-    		$requests = [];
-    		foreach($allRequest as $request){
-    			if($request->manager_user_id == $userId) $requests[$request->id] = $request;
-    			else{
-    				foreach($domainRules as $domainRule){
-    					$groupId = $domainRule->getGroup()->id;
-    					if($request->manager_group_id == $groupId) $requests[$request->id] = $request;
-    				}
-    			}
-    		}
-    
-    		$my_domain_name = Domain::findOne(['id' => $domain_id])->name;
-    		
-    		$events = [];
-    		foreach($requests as $request){
-    			$events[] = ['id' => $request->id, 'title' => "\n".$request->getConnection()->one()->getReservation()->one()->bandwidth." Mbps", 'start' => Yii::$app->formatter->asDatetime( $request->getConnection()->one()->start, "php:Y-m-d H:i:s"), 'end' => Yii::$app->formatter->asDatetime($request->getConnection()->one()->finish, "php:Y-m-d H:i:s")];
-    		}
-
-    		if(sizeof($requests)<=0) return $this->redirect('index');
-	    	else return $this->render('detailed', array(
-	    				'domain' => $domain_id,
+    		if(!Domain::findOne(['topology' => $domain])) $this->actionAuthorization();
+    		else{
+	    		Yii::trace("Respondendo a reserva id: ".$id);
+	    		$userId = Yii::$app->user->getId();
+	    
+	    		$reservation = Reservation::findOne(['id' => $id]);
+	    
+	    		$allRequest = null;
+	    		$connections = Connection::find()->where(['reservation_id' => $id])->all();
+	    		foreach($connections as $conn){
+	    			if($allRequest == null) $allRequest = ConnectionAuth::find()->where(['connection_id' => $conn->id, 'domain' => $domain]);
+	    			else $allRequest->union( ConnectionAuth::find()->where(['connection_id' => $conn->id, 'domain' => $domain]));
+	    		}
+	
+	    		$allRequest = $allRequest->all();
+	    		$domainRules = User::findOne(['id' => $userId])->getUserDomainRoles()->all();
+	    		$requests = [];
+	    		foreach($allRequest as $request){
+	    			if($request->manager_user_id == $userId) $requests[$request->id] = $request;
+	    			else{
+	    				foreach($domainRules as $domainRule){
+	    					$groupId = $domainRule->getGroup()->id;
+	    					if($request->manager_group_id == $groupId) $requests[$request->id] = $request;
+	    				}
+	    			}
+	    		}
+	    		$events = [];
+	    		foreach($requests as $request){
+	    			$events[] = ['id' => $request->id, 'title' => "\n".$request->getConnection()->one()->getReservation()->one()->bandwidth." Mbps", 'start' => Yii::$app->formatter->asDatetime( $request->getConnection()->one()->start, "php:Y-m-d H:i:s"), 'end' => Yii::$app->formatter->asDatetime($request->getConnection()->one()->finish, "php:Y-m-d H:i:s")];
+	    		}
+	
+	    		if(sizeof($requests)<=0) return $this->redirect('index');
+		    	else return $this->render('detailed', array(
+	    				'domain' => $domain,
 	    				'info' => $reservation,
 	    				'requests' => $requests,
 	    				'events' => $events
 	    		));
+    		}
     	}
     }
     
-    public function actionGetOthers($id = null, $reservationId = null, $type = null){
-    	if($id && $reservationId && $type){
-    		$domain = Domain::findOne(['id' => $id])->topology;
-	    	$connectionsPath = ConnectionPath::find()->select('DISTINCT `conn_id`')->where(['domain' => $domain])->all();
+    public function actionGetOthers($domainTop = null, $reservationId = null, $type = null){
+    	if($domainTop && $reservationId && $type){
+	    	$connectionsPath = ConnectionPath::find()->select('DISTINCT `conn_id`')->where(['domain' => $domainTop])->all();
 	    	$others = [];
     		foreach($connectionsPath as $path){
     			$con = Connection::findOne(['id' => $path->conn_id]);
@@ -176,7 +177,7 @@ class AuthorizationController extends RbacController {
     				//Se é a mesma reserva, testa para garantir que é de outro dominio antes de exibir
     				Yii::error($con->reservation_id." - ".$reservationId);
     				if($con->reservation_id == $reservationId){
-    					if(ConnectionAuth::findOne(['connection_id' => $con->id, 'status' => 'WAITING'])->domain_id != $id)
+    					if(ConnectionAuth::findOne(['connection_id' => $con->id, 'status' => 'WAITING'])->domain != $domainTop)
     						$others[] = ['id' => $con->id, 'title' => "\n".$con->getReservation()->one()->bandwidth." Mbps", 'start' => Yii::$app->formatter->asDatetime($con->start, "php:Y-m-d H:i:s"), 'end' => Yii::$app->formatter->asDatetime($con->finish, "php:Y-m-d H:i:s")];
     				}
     				else $others[] = ['id' => $con->id, 'title' => "\n".$con->getReservation()->one()->bandwidth." Mbps", 'start' => Yii::$app->formatter->asDatetime($con->start, "php:Y-m-d H:i:s"), 'end' => Yii::$app->formatter->asDatetime($con->finish, "php:Y-m-d H:i:s")];
@@ -196,19 +197,19 @@ class AuthorizationController extends RbacController {
     	}
     }
     
-    public function actionAcceptAll($id = null, $domain_id = null, $message = null){
+    public function actionAcceptAll($id = null, $domainTop = null, $message = null){
     	Yii::trace("Accept ALL");
     	Yii::trace("ID: ".$id);
     	Yii::trace("Msg: ".$message);
-    	if($id && $domain_id){
+    	if($id && $domainTop){
     		$userId = Yii::$app->user->getId();
     		$reservation = Reservation::findOne(['id' => $id]);
     		
     		$allRequest = null;
     		$connections = Connection::find()->where(['reservation_id' => $id])->all();
     		foreach($connections as $conn){
-    			if($allRequest == null) $allRequest = ConnectionAuth::find()->where(['connection_id' => $conn->id, 'domain_id' => $domain_id]);
-    			else $allRequest->union( ConnectionAuth::find()->where(['connection_id' => $conn->id, 'domain_id' => $domain_id]));
+    			if($allRequest == null) $allRequest = ConnectionAuth::find()->where(['connection_id' => $conn->id, 'domain' => $domainTop]);
+    			else $allRequest->union( ConnectionAuth::find()->where(['connection_id' => $conn->id, 'domain' => $domainTop]));
     		}
     		
     		$allRequest = $allRequest->all();
@@ -232,25 +233,25 @@ class AuthorizationController extends RbacController {
     				$req->save();
     		
     				$flow = new BpmFlow;
-    				$flow->response($req->connection_id, $req->domain_id, "YES");
+    				$flow->response($req->connection_id, $req->domain, "YES");
     			}
     		}
     	}
     }
     
-    public function actionRejectAll($id = null, $domain_id = null, $message = null){
+    public function actionRejectAll($id = null, $domainTop = null, $message = null){
     	Yii::trace("Reject ALL");
     	Yii::trace("Reservation ID: ".$id);
     	Yii::trace("Msg: ".$message);
-    	if($id && $domain_id){
+    	if($id && $domainTop){
     		$userId = Yii::$app->user->getId();
     		$reservation = Reservation::findOne(['id' => $id]);
     
     		$allRequest = null;
     		$connections = Connection::find()->where(['reservation_id' => $id])->all();
     		foreach($connections as $conn){
-    			if($allRequest == null) $allRequest = ConnectionAuth::find()->where(['connection_id' => $conn->id, 'domain_id' => $domain_id]);
-    			else $allRequest->union( ConnectionAuth::find()->where(['connection_id' => $conn->id, 'domain_id' => $domain_id]));
+    			if($allRequest == null) $allRequest = ConnectionAuth::find()->where(['connection_id' => $conn->id, 'domain' => $domainTop]);
+    			else $allRequest->union( ConnectionAuth::find()->where(['connection_id' => $conn->id, 'domain' => $domainTop]));
     		}
     
     		$allRequest = $allRequest->all();
@@ -274,7 +275,7 @@ class AuthorizationController extends RbacController {
     				$req->save();
     				
     				$flow = new BpmFlow;
-    				$flow->response($req->connection_id, $req->domain_id, "NO");
+    				$flow->response($req->connection_id, $req->domain, "NO");
     			}
     		}
     	}
@@ -292,7 +293,7 @@ class AuthorizationController extends RbacController {
     		$req->save();
     		
     		$flow = new BpmFlow;
-    		$flow->response($req->connection_id, $req->domain_id, "YES");	
+    		$flow->response($req->connection_id, $req->domain, "YES");	
     	}
     }
     
@@ -308,7 +309,7 @@ class AuthorizationController extends RbacController {
     		$req->save();
     		
     		$flow = new BpmFlow;
-    		$flow->response($req->connection_id, $req->domain_id, "NO");
+    		$flow->response($req->connection_id, $req->domain, "NO");
     	}
     }
     

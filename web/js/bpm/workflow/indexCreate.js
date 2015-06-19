@@ -39,18 +39,17 @@ $(document).ready(function() {
 		          {
 		        	  text: "Ok",
 				      click: function() {
-				    	  var params = "?domainId=".concat(selectBox.options[selectBox.selectedIndex].value);
+				    	  var params = "?domainTop=".concat(selectBox.options[selectBox.selectedIndex].value);
 				    	  $("#dialog").dialog("close");
 				    	  window.location="../workflow/create".concat(params);
 				      }
 		          }
 		       ]
 			});
-		} else if(selectBox.options.length == 1){
+		} else {
 			var params = "?domainId=".concat(selectBox.options[selectBox.selectedIndex].value);
 	  	  	$("#dialog").dialog("close");
 	  	  	window.location="../workflow/create".concat(params);
 		}
-		else window.location="../workflow/index";
 	});
 });

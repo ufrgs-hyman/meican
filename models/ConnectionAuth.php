@@ -11,7 +11,7 @@ use app\models\Group;
  * This is the model class for table "meican_connection_auth".
  *
  * @property integer $id
- * @property integer $domain_id
+ * @property string $domain
  * @property string $status
  * @property string $type
  * @property string $manager_message
@@ -42,10 +42,11 @@ class ConnectionAuth extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['domain_id', 'status', 'type', 'connection_id'], 'required'],
-            [['domain_id', 'manager_user_id', 'manager_group_id', 'manager_workflow_id', 'connection_id'], 'integer'],
+            [['domain', 'status', 'type', 'connection_id'], 'required'],
+            [['manager_user_id', 'manager_group_id', 'manager_workflow_id', 'connection_id'], 'integer'],
             [['status', 'type'], 'string'],
-            [['manager_message'], 'string', 'max' => 200]
+            [['manager_message'], 'string', 'max' => 200],
+        	[['domain'], 'string', 'max' => 50]
         ];
     }
 
@@ -56,7 +57,7 @@ class ConnectionAuth extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'domain_id' => 'Domain ID',
+            'domain' => 'Domain',
             'status' => 'Status',
             'type' => 'Type',
             'manager_message' => 'Manager Message',
@@ -80,7 +81,7 @@ class ConnectionAuth extends \yii\db\ActiveRecord
      */
     public function getDomain()
     {
-        return $this->hasOne(Domain::className(), ['id' => 'domain_id']);
+        return $this->hasOne(Domain::className(), ['topology' => 'domain']);
     }
 
     /**
@@ -114,16 +115,17 @@ class ConnectionAuth extends \yii\db\ActiveRecord
     	return $this->status == "AUTHORIZED" || $this->status == "DENIED" || $this->status == "EXPIRED";
     }
     
+
     public static function getNumberAuth(){
     	$auths = 0;
-    	 
+    
     	if(Yii::$app->user->isGuest) return $auths;
-    	
+    
     	$userId = Yii::$app->user->getId();
-    	 
+    
     	$authorizations = []; //Armazena os pedidos
     	$reservationsVisited = []; //Armazena as reservas ja incluidas nos pedidos e o dominio ao qual o pedido foi feito.
-
+    
     	//Pega todas requisições feitas para o usuário
     	$userRequests = ConnectionAuth::find()->where(['manager_user_id' => $userId, 'status' => 'WAITING'])->all();
     	foreach($userRequests as $request){ //Limpa mantendo apenas 1 por reserva
@@ -142,31 +144,31 @@ class ConnectionAuth extends \yii\db\ActiveRecord
     			$auths++;
     		}
     	}
-    	
+    
     	//Pega todos os papeis do usuário
     	$domainRoles = User::findOne(['id' => $userId])->getUserDomainRoles()->all();
     	foreach($domainRoles as $role){ //Passa por todos papeis
     		$groupRequests = ConnectionAuth::find()->where(['manager_group_id' => $role->getGroup()->id, 'status' => 'WAITING'])->all();
     		foreach($groupRequests as $request){ //Passa por todos para testar se o dominio corresponde
-	    		if($role->domain_id == NULL || $role->domain_id == $request->domain_id){
-	    			$uniq = true;
-	    			$conn = Connection::findOne([$request->connection_id]);
-	    			foreach($reservationsVisited as $res){
-		    			if($conn->reservation_id == $res[0] && $request->domain_id == $res[1]){
-		    				$uniq = false;
-		    			}
-		    		}
-		    		if($uniq){
-		    			$aux = [];
-		    			$aux[0] = $conn->reservation_id;;
-		    			$aux[1] = $request->domain_id;
-		    			$reservationsVisited[] = $aux;
-	    				$auths++;
-	    			}
-	    		}
+    			if($role->domain_id == NULL || $role->domain_id == $request->domain_id){
+    				$uniq = true;
+    				$conn = Connection::findOne([$request->connection_id]);
+    				foreach($reservationsVisited as $res){
+    					if($conn->reservation_id == $res[0] && $request->domain_id == $res[1]){
+    						$uniq = false;
+    					}
+    				}
+    				if($uniq){
+    					$aux = [];
+    					$aux[0] = $conn->reservation_id;;
+    					$aux[1] = $request->domain_id;
+    					$reservationsVisited[] = $aux;
+    					$auths++;
+    				}
+    			}
     		}
     	}
-    	
+    
     	return $auths;
     }
 }

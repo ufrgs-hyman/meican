@@ -74,9 +74,9 @@ class Connection extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'external_id' => Yii::t('circuits', 'Connection ID'),
-            'status' => Yii::t("circuits", 'Reservation'),
-            'dataplane_status' =>  Yii::t("circuits", 'Connectivity'),
-            'auth_status' =>  Yii::t("circuits", "Authorization"),
+            'status' => Yii::t("circuits", 'Reservation Status'),
+            'dataplane_status' =>  Yii::t("circuits", 'Connectivity Status'),
+            'auth_status' =>  Yii::t("circuits", "Authorization Status"),
             'start' =>  Yii::t("circuits", 'Start'),
             'finish' =>  Yii::t("circuits", 'Finish'),
             'reservation_id' => 'Reservation ID',
@@ -247,7 +247,7 @@ class Connection extends \yii\db\ActiveRecord
     		if(Connection::findOne(['id' => $id])->auth_status == 'DENIED') break; //Para quando ja negou.
     		else{
     			$domain = Domain::findOne(['topology' => $path->domain]);
-    			if(isset($domain)) BpmFlow::doRequest($id, $domain->id, $asking);
+    			if(isset($domain)) BpmFlow::doRequest($id, $domain->topology, $asking);
     		}
     		if(ConnectionAuth::find()->where(['connection_id' => $id, 'status' => 'WAITING'])->count() > 0) break; //Se tem uma pergunta ativa.
     	}
@@ -271,7 +271,7 @@ class Connection extends \yii\db\ActiveRecord
     	//Cria execução dos Workflows
     	foreach($paths as $path){ //Utiliza unique para não executar duas vezes em intradominios.
     		$domain = Domain::findOne(['topology' => $path->domain]);
-	    	if(isset($domain)) BpmFlow::startFlow($id, $domain->id);
+	    	if(isset($domain)) BpmFlow::startFlow($id, $domain->topology);
 	    	if(Connection::findOne(['id' => $id])->auth_status != 'WAITING') break; //Para quando ja negou.
     	}
 

@@ -68,7 +68,7 @@ $(document).ready(function() {
 
 	$('#calendar').fullCalendar('gotoDate', jsonEvents[0].start);
 
-	$.getJSON(baseUrl + "/circuits/authorization/get-others?id="+domain+"&reservationId="+reservationId+"&type="+1,
+	$.getJSON(baseUrl + "/circuits/authorization/get-others?domainTop="+domain+"&reservationId="+reservationId+"&type="+1,
 		function(data) {
 			eventsConfirmed = {
 	             events: data,
@@ -191,9 +191,9 @@ function reject(id){
 }
 
 /////////////////////// ACCEPT ALL //////////////////////
-function acceptAll(id, domainId){
+function acceptAll(id, domain){
 	$("#MessageImg").attr("src", baseUrl+"/images/hand_good.png");
-    $("#MessageLabel").html(tt("All request will be accepted. If you want, provide a message:"));
+    $("#MessageLabel").html(tt("All requests will be accepted. If you want, provide a message:"));
 
     $("#Message").val('');
 	$("#dialog").dialog("open");
@@ -204,7 +204,7 @@ function acceptAll(id, domainId){
           {
         	  text: "Ok",
 		      click: function() {
-		    	  var params = "id=".concat(id).concat("&domain_id=").concat(domainId);
+		    	  var params = "id=".concat(id).concat("&domainTop=").concat(domain);
 		    	  var message = $("#Message").val();
                   if (message && message != "") params += "&message=".concat(message);
 		    	  $.ajax({
@@ -231,7 +231,7 @@ function acceptAll(id, domainId){
 }
 
 /////////////////////// REJECT ALL //////////////////////
-function rejectAll(id, domainId){
+function rejectAll(id, domain){
 	$("#MessageImg").attr("src", baseUrl+"/images/hand_bad.png");
     $("#MessageLabel").html(tt("All requests will be rejected. If you want, provide a message:"));
 
@@ -244,7 +244,7 @@ function rejectAll(id, domainId){
           {
         	  text: "Ok",
 		      click: function() {
-		    	  var params = "id=".concat(id).concat("&domain_id=").concat(domainId);
+		    	  var params = "id=".concat(id).concat("&domainTop=").concat(domain);
 		    	  var message = $("#Message").val();
                   if (message && message != "") params += "&message=".concat(message);
 		    	  $.ajax({

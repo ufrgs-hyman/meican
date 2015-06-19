@@ -14,7 +14,7 @@ use app\components\DateUtils;
 /**
  * This is the model class for table "{{%bpm_workflow}}".
  *
- * @property integer $domain_id
+ * @property string $domain
  * @property string $name
  * @property string $json
  * @property integer $active
@@ -36,9 +36,9 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'domain_id', 'json', 'active'], 'required'],
-            [['domain_id', 'active'], 'integer'],
-            [['name'], 'string', 'max' => 50],
+            [['name', 'domain', 'json', 'active'], 'required'],
+            [['active'], 'integer'],
+            [['domain', 'name'], 'string', 'max' => 50],
         	[['json'], 'string'],
         ];
     }
@@ -51,7 +51,7 @@ class BpmWorkflow extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => Yii::t("bpm", 'Name'),
-            'domain_id' => Yii::t("bpm", 'Domain ID'),
+            'domain' => Yii::t("bpm", 'Domain'),
             'json' => Yii::t("bpm", 'Json Structure'),
         	'active' => Yii::t("bpm", 'Active'),
         ];
@@ -62,7 +62,7 @@ class BpmWorkflow extends \yii\db\ActiveRecord
      */
     public function getDomain()
     {
-        return $this->hasOne(Domain::className(), ['id' => 'domain_id']);
+        return $this->hasOne(Domain::className(), ['topology' => 'domain']);
     }
     
     /**
@@ -73,10 +73,13 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     public static function disable($id){
     	$workflow = BpmWorkflow::findOne(['id' => $id]);
     	$workflow->active = 0;
-    	$domain_id = $workflow->domain_id;
+    	$domain = Domain::findOne(['topology' => $workflow->domain]);
+    	
+    	if(!$domain) return false;
+    	
     	if(!$workflow->save()) return false;
     	
-    	Yii::trace($domain_id);
+    	Yii::trace($domain->name);
     	
     	// Procura por execuções em aberto envolvendo o workflow. 
     	$flows = BpmFlow::find()->where(['workflow_id' => $id])->all();
@@ -85,9 +88,9 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     		//Deleta o fluxo
     		$flow->delete();
     		//Deleta autorizações
-    		ConnectionAuth::deleteAll(['connection_id' => $conId, 'domain_id' => $domain_id]);
+    		ConnectionAuth::deleteAll(['connection_id' => $conId, 'domain' => $domain->topology]);
     		//Cria novo fluxo, com workflow desativado
-    		BpmFlow::startFlow($conId, $domain_id);
+    		BpmFlow::startFlow($conId, $domain->topology);
     		//Dispara continuidade dos workflows
     		Connection::continueWorkflows($conId, true);
     	}
@@ -115,13 +118,11 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     }
 
     /**
-     * 
      * @var $nodes
      */
     public $nodes;
     
     /**
-     * 
      * @param string $type
      */
     public function saveWorkflow($type=null) {
@@ -400,7 +401,7 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     	if($type == 'update'){
     		$workAux = BpmWorkflow::findOne(['id' => $id]);
     		if($workAux != null){
-    			$other = BpmWorkflow::findOne(['name' => $params['name'], 'domain_id' => $working->properties->domains_owner]);
+    			$other = BpmWorkflow::findOne(['name' => $params['name'], 'domain' => $working->properties->domains_owner]);
     			if(isset($other))
     				if($other->id != $id){
 	    				$response = array('error' => Yii::t("bpm", 'This name already exist in this Domain.'));
@@ -410,18 +411,18 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     			$work=$workAux;
     		}
     	}
-    	else if(BpmWorkflow::findOne(['name' => $params['name'], 'domain_id' => $working->properties->domains_owner])){
+    	else if(BpmWorkflow::findOne(['name' => $params['name'], 'domain' => $working->properties->domains_owner])){
     		$response = array('error' => Yii::t("bpm", 'This name already exist in this Domain.'));
     		echo json_encode($response);
     		return;
     	}
     	 
     	//Desativa o workflow que estava ativado, quando criando.
-    	$oldWorkflow = BpmWorkflow::findOne(['domain_id' => $working->properties->domains_owner, 'active' => 1]);
+    	$oldWorkflow = BpmWorkflow::findOne(['domain' => $working->properties->domains_owner, 'active' => 1]);
     	if($oldWorkflow && !($type == 'update' || $type == 'copy')) $oldWorkflow->active=0;
     	
     	$work->name = $params['name'];
-    	$work->domain_id = $working->properties->domains_owner;
+    	$work->domain = $working->properties->domains_owner;
     	
     	//Monta json
 		$request['params']['working'] = json_encode($working);
@@ -442,7 +443,7 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     	}
     
     	//Get workflow_id in DB
-    	$db_workflow_id = BpmWorkflow::findOne(['name' => $work->name, 'domain_id' => $working->properties->domains_owner])->id;
+    	$db_workflow_id = BpmWorkflow::findOne(['name' => $work->name, 'domain' => $working->properties->domains_owner])->id;
     
     	//Save nodes
     	BpmNode::deleteAll(['in', 'workflow_id', $work->id]);

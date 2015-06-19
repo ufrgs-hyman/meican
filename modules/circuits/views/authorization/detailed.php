@@ -20,11 +20,11 @@
 
 <script>
 	var jsonEvents = <?php echo json_encode($events); ?>;
-	var domain = <?php echo $domain; ?>;
+	var domain = <?php echo json_encode($domain); ?>;
 	var reservationId = <?php echo $info->id; ?>;
 </script>
 
-<h1><?= Yii::t('circuits', 'Reply request as ').Domain::findOne(['id' => $domain])->name ?></h1>
+<h1><?= Yii::t('circuits', 'Reply request as ').Domain::findOne(['topology' => $domain])->name ?></h1>
 
 <table id="table" style="width:100%">
 	<tr style="vertical-align: top; ">
@@ -100,8 +100,9 @@
 							break;
 						}
 					}
-					echo Html::button(Yii::t('circuits', 'Accept All'), ['disabled' => $notWaiting, 'onclick' => "acceptAll($info->id, $domain)"]);
-					echo Html::button(Yii::t('circuits', 'Reject All'), ['disabled' => $notWaiting, 'onclick' => "rejectAll($info->id, $domain)"]);
+					$domainTop = json_encode($domain);
+					echo Html::button(Yii::t('circuits', 'Accept All'), ['disabled' => $notWaiting, 'onclick' => "acceptAll($info->id, $domainTop)"]);
+					echo Html::button(Yii::t('circuits', 'Reject All'), ['disabled' => $notWaiting, 'onclick' => "rejectAll($info->id, $domainTop)"]);
 				?>
 			</div>
 			
