@@ -35,7 +35,7 @@ web/                css, images, javascripts
 
 ####Option 1
 
-Use the MEICAN Installer for Ubuntu (tested on 14.04).
+Use the [MEICAN Installer](https://github.com/ufrgs-hyman/meican2/raw/master/installer.sh) for Ubuntu (tested on 14.04).
 
 ####Option 2
 
