@@ -28,11 +28,14 @@
     },
     "scripts": {
         "pre-update-cmd": [
-            "php yii migrate"
+            "php yii circuits/service/crontab/stop",
+            "php yii migrate --interactive=0",
+            "php yii circuits/service/crontab/start"
         ],
         "post-install-cmd": [
             "yii\\composer\\Installer::postCreateProject",
-            "php yii migrate"
+            "php yii migrate --interactive=0",
+            "php yii circuits/service/crontab/start"
         ]
     },
     "extra": {

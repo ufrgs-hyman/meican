@@ -37,7 +37,6 @@ class AutomatedTestForm extends Model {
  			$this->reservation->bandwidth = 1;
  			$this->reservation->provider_id = $this->provider;
  			$this->reservation->request_user_id = Yii::$app->user->getId();
- 			$this->reservation->path_confirmed = false;
  			
  			if ($this->reservation->save()) {
  				$this->reservation->name .= $this->reservation->id;
@@ -45,28 +44,26 @@ class AutomatedTestForm extends Model {
  				
  				$path = new ReservationPath;
  				$path->reservation_id = $this->reservation->id;
- 				$srcUrn = Urn::findOne($this->src_port);
- 				$path->domain_id = $srcUrn->getDevice()->one()->getNetwork()->one()->domain_id;
- 				$path->src_urn_id = $this->src_port;
+ 				$urn = Urn::find()->where(['id' => $this->src_port])->one();
+ 				$path->setUrn($urn);
  				$path->path_order = 0;
- 				$path->src_vlan = $srcUrn->getVlanRanges()->one()->value;
+ 				$path->vlan = $urn->getVlanRanges()->one()->value;
  				
  				if (!$path->save()) {
  					Yii::trace($path->getErrors());
  				}
- 				
+
  				$path = new ReservationPath;
  				$path->reservation_id = $this->reservation->id;
- 				$dstUrn = Urn::findOne($this->dst_port);
- 				$path->domain_id = $dstUrn->getDevice()->one()->getNetwork()->one()->domain_id;
- 				$path->dst_urn_id = $this->dst_port;
+ 				$urn = Urn::find()->where(['id' => $this->dst_port])->one();
+ 				$path->setUrn($urn);
  				$path->path_order = 1;
- 				$path->dst_vlan = $dstUrn->getVlanRanges()->one()->value;
-
+ 				$path->vlan = $urn->getVlanRanges()->one()->value;
+ 				
  				if (!$path->save()) {
  					Yii::trace($path->getErrors());
  				}
- 				
+
  				$test = new AutomatedTest;
  				$test->frequency_type = $this->freq_type;
  				$test->crontab_frequency = $this->freq_value;
