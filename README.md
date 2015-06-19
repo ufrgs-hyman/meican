@@ -135,3 +135,5 @@ sudo service apache2 restart
 ```
 
 With this configuration, MEICAN will be available at http://localhost
+
+By default the fake provider is enabled. Disable this feature setting the param -provider.force.dummy- on config/params.php.
