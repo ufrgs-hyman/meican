@@ -33,7 +33,21 @@ web/                css, images, javascripts
 
 ##INSTALLATION GUIDE
 
-The following steps were performed on an Ubuntu 14.04.
+####Option 1
+
+Use the [MEICAN Installer](https://github.com/ufrgs-hyman/meican2/raw/master/installer.sh) for Ubuntu (tested on 14.04).
+
+```
+wget https://github.com/ufrgs-hyman/meican2/raw/master/installer.sh
+chmod +x installer.sh
+sudo ./installer.sh
+```
+
+####Option 2
+
+Follow the steps detailed below.
+
+This configuration was tested and performed on Ubuntu 14.04.
 
 #####Prepare environment
 
@@ -47,7 +61,7 @@ sudo apt-get install apache2 mysql-server php5 curl php5-mysql php5-curl
 While not mandatory, the phpMyAdmin installation is recommended for easy database management.
 
 ```
-sudo apt-get install phpMyAdmin
+sudo apt-get install phpmyadmin
 ```
 
 Or you can simply create a database via the command line.
@@ -59,14 +73,14 @@ CREATE DATABASE IF NOT EXISTS `meican2`;
 
 #####Download and install MEICAN
 
-Get compressed source code:
+Get a compressed specific version of the source code:
 
 ```
 wget https://github.com/ufrgs-hyman/meican2/archive/#version#.tar.gz
 tar -zxvf #version#.tar.gz
 ```
 
-or clone the Git repository:
+or clone the Git repository with the latest version:
 
 ```
 git clone https://github.com/ufrgs-hyman/meican2.git
@@ -107,12 +121,12 @@ Enable the Rewrite mode:
 sudo a2enmod rewrite
 ```
 
-Enable symbol links and change the document root:
+Enable symbolic links and change the document root:
 
 ```
 DocumentRoot /var/www/meican
 
-<Directory /var/www/meican>
+<Directory /var/www>
     Options Indexes FollowSymLinks MultiViews
     AllowOverride All
     Order deny,allow
@@ -127,3 +141,5 @@ sudo service apache2 restart
 ```
 
 With this configuration, MEICAN will be available at http://localhost
+
+By default the fake provider is enabled. Disable this feature setting the param -provider.force.dummy- on config/params.php.
