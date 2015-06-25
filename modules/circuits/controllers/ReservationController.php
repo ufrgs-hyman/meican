@@ -59,6 +59,19 @@ class ReservationController extends RbacController {
     	
     	$reservation = Reservation::findOne($id);
     	
+    	if($reservation){
+    		$connectionsExpired = $conn = Connection::find()->where(['reservation_id' => $reservation->id])->andWhere(['<=','start', DateUtils::now()])->all();
+	    	foreach($connectionsExpired as $connection){
+	    		$requests = ConnectionAuth::find()->where(['connection_id' => $connection->id, 'status' => 'WAITING'])->all();
+	    		foreach($requests as $request){
+	    			$request->status='EXPIRED';
+	    			$request->save();
+	    			$connection->auth_status='EXPIRED';
+	    			$connection->save();
+	    		}
+	    	}
+    	}
+    	
     	$connections = new ActiveDataProvider([
     			'query' => $reservation->getConnections(),
     			'sort' => false,
