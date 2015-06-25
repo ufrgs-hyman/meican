@@ -80,7 +80,7 @@ $(document).ready(function() {
 		}
 	);
 	
-	$.getJSON(baseUrl + "/circuits/authorization/get-others?id="+domain+"&reservationId="+reservationId+"&type="+2,
+	$.getJSON(baseUrl + "/circuits/authorization/get-others?domainTop="+domain+"&reservationId="+reservationId+"&type="+2,
 		function(data) {
 			eventsPending = {
 				events: data,

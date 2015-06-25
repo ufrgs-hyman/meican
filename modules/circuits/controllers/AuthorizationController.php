@@ -68,13 +68,11 @@ class AuthorizationController extends RbacController {
     	$domainRoles = User::findOne(['id' => $userId])->getUserDomainRoles()->all();
     	foreach($domainRoles as $role){ //Passa por todos papeis
     		$groupRequests = ConnectionAuth::find()->where(['manager_group_id' => $role->getGroup()->id, 'status' => 'WAITING'])->all();
-    		
-    		foreach($groupRequests as $request){ //Passa por todos para testar se o dominio corresponde
+    		foreach($groupRequests as $request){ //Passa por todas requisições para testar se o dominio corresponde
     			$domain = Domain::findOne(['topology' => $request->domain]);
     			if($domain){
-    				//Reescrita necessária quando utilizar a tabela de notificações. Pode abstrair muita coisa e ler de la.
 	    			if($role->domain_id == NULL || $role->domain_id == $domain->id){
-		    			$uniq = true;
+	    				$uniq = true;
 		    			$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['<=','start', DateUtils::now()])->one();
 			    		if(isset($conn)){
 			    			$request->status='EXPIRED';
@@ -85,14 +83,14 @@ class AuthorizationController extends RbacController {
 		    			else{
 		    				$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['>','start', DateUtils::now()])->one();
 		    				foreach($reservationsVisited as $res){
-				    			if($conn->reservation_id == $res[0] && $domain->id == $res[1]){
+				    			if($conn->reservation_id == $res[0] && $domain->topology == $res[1]){
 				    				$uniq = false;
 				    			}
 				    		}
 				    		if($uniq){
 				    			$aux = [];
 				    			$aux[0] = $conn->reservation_id;;
-				    			$aux[1] = $request->domain->topology;
+				    			$aux[1] = $request->domain;
 				    			$reservationsVisited[] = $aux;
 				    			if(isset($domain))
 			    					$authorizations[] = new AuthorizationForm(Reservation::findOne(['id' => $conn->reservation_id]), $domain);
@@ -311,10 +309,6 @@ class AuthorizationController extends RbacController {
     		$flow = new BpmFlow;
     		$flow->response($req->connection_id, $req->domain, "NO");
     	}
-    }
-    
-    public function actionGetNumberAuths(){
-    	echo ConnectionAuth::getNumberAuth();
     }
 
 }
