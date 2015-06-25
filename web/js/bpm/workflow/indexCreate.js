@@ -47,7 +47,7 @@ $(document).ready(function() {
 		       ]
 			});
 		} else {
-			var params = "?domainId=".concat(selectBox.options[selectBox.selectedIndex].value);
+			var params = "?domainTop=".concat(selectBox.options[selectBox.selectedIndex].value);
 	  	  	$("#dialog").dialog("close");
 	  	  	window.location="../workflow/create".concat(params);
 		}
