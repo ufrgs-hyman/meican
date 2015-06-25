@@ -235,6 +235,10 @@ return array(
 		
 		"Connectivity" => "Conectividade",
 		
+		"Connectivity Status" => "Status de Conectividade",
+		"Authorization Status" => "Status da Autorização",
+		"Reservation Status" => "Status da Reserva",
+		
 		"Source Domain" => "Domínio Origem",
 		"Destination Domain" => "Domínio Destino",
 		"Pending Authorization" => "Autorizações Pendentes",
