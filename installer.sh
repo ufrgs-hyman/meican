@@ -3,7 +3,7 @@ if [ "$EUID" -ne 0 ]
   then echo "Please run as root"
   exit
 fi
-echo "======== MEICAN Installer 2.1 ========="
+echo "======== MEICAN Installer 2.2 ========="
 echo
 echo "WARNING: Tested only on Ubuntu 14.04."
 echo "This script will install all dependencies for MEICAN project."
@@ -19,8 +19,8 @@ nano config/db.php
 curl -sS https://getcomposer.org/installer | php
 php composer.phar global require "fxp/composer-asset-plugin:1.0.0"
 php composer.phar install
-sudo ln -s "$(pwd)/web" /var/www/meican
-sudo cp -rf "$(pwd)/config/000-default.conf" /etc/apache2/sites-available/000-default.conf
+sudo ln -sfn "$(pwd)/web" /var/www/meican
+sudo cp -rf config/000-default.conf /etc/apache2/sites-available/000-default.conf
 sudo ln -s /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 sudo service apache2 restart
 echo "MEICAN installed successfully."
