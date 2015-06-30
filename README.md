@@ -35,10 +35,12 @@ web/                css, images, javascripts
 
 ####Option 1
 
-Use the [MEICAN Installer](https://github.com/ufrgs-hyman/meican2/raw/master/installer.sh) for Ubuntu (tested on 14.04).
+Download the source code and use the [MEICAN Installer](https://github.com/ufrgs-hyman/meican2/raw/master/installer.sh) for Ubuntu (tested on 14.04).
 
 ```
-wget https://github.com/ufrgs-hyman/meican2/raw/master/installer.sh
+wget https://github.com/ufrgs-hyman/meican2/archive/#version#.tar.gz
+tar -zxvf #version#.tar.gz
+cd meican2-#version#
 chmod +x installer.sh
 sudo ./installer.sh
 ```
