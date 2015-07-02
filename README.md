@@ -35,7 +35,7 @@ web/                css, images, javascripts
 
 ####Option 1
 
-Download the source code and use the MEICAN Installer for Ubuntu (tested on 14.04).
+[Download a specific release](https://github.com/ufrgs-hyman/meican2/releases) and use the MEICAN Installer for Ubuntu (tested on 14.04).
 
 ```
 wget https://github.com/ufrgs-hyman/meican2/archive/#version#.tar.gz
