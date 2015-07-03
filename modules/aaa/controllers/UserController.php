@@ -13,6 +13,7 @@ use app\models\UserDomainRole;
 use app\models\Domain;
 use app\models\Group;
 use app\controllers\RbacController;
+use app\models\Notification;
 use Yii;
 
 class UserController extends RbacController {
@@ -30,7 +31,7 @@ class UserController extends RbacController {
     }
     
     public function actionCreate() {
-    	self::canRedir("update");
+    	self::canRedir("create");
     	
     	$userForm = new UserForm;
     
@@ -40,6 +41,8 @@ class UserController extends RbacController {
     		
     		if($user->save()) {
     			Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User added successfully'));
+    			
+    			Notification::createNotificationsUserNewGroup($user->id, $userForm->group, $userForm->domain);
     			
     			return $this->redirect(array('index'));
     			
