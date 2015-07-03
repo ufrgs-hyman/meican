@@ -25,6 +25,13 @@ web/                css, images, javascripts
 
 ##REQUIREMENTS
 
+###Hardware
+
+- CPU 1+
+- Memory 2GB+
+
+###Software
+
 - Ubuntu 14.04 (or any other system with Crontab feature)
 - Apache 2.4+ (recommended)
 - MySQL 5+
