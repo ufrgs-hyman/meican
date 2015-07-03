@@ -23,7 +23,7 @@ use yii\helpers\Url;
             <?= $form->field($model,'password')->passwordInput(); ?>
 		</div>
 		<div class="submit">
-        	<input style="margin-left: 35%;" class="next ui-button ui-widget ui-state-default ui-corner-all" type="submit" name="submit_login" value="<?= Yii::t('init', 'Sign in') ?>" role="button" aria-disabled="false" tabindex="3"/>
+        	<input style="margin-left: 35%;" class="next ui-button ui-widget ui-state-default ui-corner-all" type="submit" id="submit_login" name="submit_login" value="<?= Yii::t('init', 'Sign in') ?>" role="button" aria-disabled="false" tabindex="3"/>
 		</div>
  	</div>
  	<div class="login"><?= Yii::t('init', 'Alternatively, 

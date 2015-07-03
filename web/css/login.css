@@ -181,3 +181,20 @@ div#login_form input[type="text"], div#login_form input[type="password"] {
 .main-info li{
     padding: 4px 0 4px 50px;
 }
+
+#cafe-button, #submit_login{
+	background: #EEE !important;
+	color: #27567C !important;
+	box-shadow: 2px 2px #27567C !important;
+	border-top: 1px solid #DDD !important;
+	border-left: 1px solid #DDD !important;
+}
+
+#cafe-button:hover, #submit_login:hover{
+	background: #DDD !important;
+}
+
+#cafe-button:active, #submit_login:active{
+	background: #DDD !important;
+	box-shadow: 1px 1px #27567C !important;
+}
