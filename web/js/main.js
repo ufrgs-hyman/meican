@@ -46,10 +46,10 @@ Timer of number auths icon
 function timerAuths() {
 	$.ajax({
 	    type: "GET",
-	    url: baseUrl + '/circuits/authorization/get-number-auths',
+	    url: baseUrl + '/notification/notification/get-number-notifications',
 	    success: function(data) {
-	    	if(data>0)$("#numberAuths").html("<div class='full'><span >"+data+"</span></div></li>");
-	    	else $("#numberAuths").html("<div class='empty'><span >"+data+"</span></div></li>");
+	    	if(data>0)$("#notification_link").html("<div class='full'><span >"+data+"</span></div></li>");
+	    	else $("#notification_link").html("<div class='empty'><span >"+data+"</span></div></li>");
 	    	t = setTimeout(function() {
 	    		timerAuths()
 	    	}, 60000);
@@ -66,14 +66,109 @@ function clearFlash(){
 }
 
 /* ====================================================================================================
-	Timer in menu bar
+	
 	================================================================================================= */
 
 function changePasswordUser() {
 	$('#changePasswordForm').slideToggle();
 }
 
+/* ====================================================================================================
+	Notification
+	================================================================================================= */
+
+var lastDate;
+var count;
+var waitingNext;
 $(document).ready(function() {
+	$("#notification_link").click(function(){
+		if($("#notification_container").is(":hidden")){
+			$("#notification_ul").html("");
+			document.getElementById("notification_li").className='show';
+			$("#notification_loader").show();
+			$.ajax({
+				type: "POST",
+				url: baseUrl + "/notification/notification/get-notifications",
+				cache: false,
+				success: function(html) {
+					
+					//Get the number of not displayed notifications
+					$.ajax({
+					    type: "GET",
+					    url: baseUrl + '/notification/notification/get-number-notifications',
+					    success: function(number) {
+					    	if(number>0)$("#notification_link").html("<div class='full'><span >"+number+"</span></div></li>");
+					    	else $("#notification_link").html("<div class='empty'><span >"+number+"</span></div></li>");
+					    }
+					});
+					
+					//Get the number of pending authorizations
+					$.ajax({
+						type: "POST",
+						url: baseUrl + "/notification/notification/get-number-authorizations",
+						cache: false,
+						success: function(number) {
+							$("#authN").html(number);
+						}
+					});
+					
+			    	var info = JSON.parse(html);
+			    	lastDate = info.date;
+			    	if(info.more == true) count = 6;
+			    	else count = -1;
+			    	
+					$("#notification_loader").hide();
+					$("#notification_ul").html(info.array);
+
+					waitingNext = false;
+				}
+			});
+			
+			
+			
+		}
+		else document.getElementById("notification_li").className='hidden';
+		
+		$("#notification_container").fadeToggle(300, function(){});
+		
+		return false;
+	});
+	
+	$('#notification_body').bind('scroll', function() {
+        if($(this).scrollTop() + $(this).innerHeight() >= this.scrollHeight && count>0 && !waitingNext) {
+        	waitingNext = true;
+        	$("#notification_loader").show();
+        	$.ajax({
+				type: "POST",
+				url: baseUrl + "/notification/notification/get-notifications",
+				data: "date=".concat(lastDate),
+				cache: false,
+				success: function(html) {
+					
+					var info = JSON.parse(html);
+			    	lastDate = info.date;
+					
+			    	if(info.more == true) count += 6;
+			    	else count = -1;
+			    	
+					$("#notification_loader").hide();
+					$("#notification_ul").append(info.array);
+					waitingNext = false;
+				}
+			});
+        }
+    })
+
+	//Document Click hiding the popup 
+	$(document).click(function(){
+		$("#notification_container").hide();
+		document.getElementById("notification_li").className='hidden';
+	});
+	
+	//Popup on click
+	$(".notifications").click(function(){
+	});
+	
 /* ====================================================================================================
 	Menu Dynamic Height
 	=================================================================================================*/
@@ -103,7 +198,7 @@ $(document).ready(function() {
         problem: 'Describe your problem'
     };
 	
-	$('.feedback_link, #MainOverlay, #closeButtonFeedback').click(function() {
+	$('.feedback_link, #closeButtonFeedback').click(function() {
 		$('.feedback-panel').css('top', '10px' );
         if ($('.feedback-panel').hasClass('open')) {
             $('.feedback-panel').slideUp(this.speed).removeClass('open');

@@ -18,6 +18,7 @@ $config = [
 		'init' => 'app\modules\init\InitModule',
 		'topology' => 'app\modules\topology\TopologyModule',
 		'bpm' => 'app\modules\bpm\BpmModule',
+    	'notification' => 'app\modules\notification\NotificationModule',
 		'gii' => 'yii\gii\Module',
 	],
     'components' => [
@@ -34,7 +35,7 @@ $config = [
     	],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '',
+            'cookieValidationKey' => 'gbvhguguyguiyghuohoiu',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -118,6 +119,14 @@ $config = [
 			        	'topology' => 'topology.php',
 			        ],
 		        ],
+        		'notification*' => [
+        			'class' => 'yii\i18n\PhpMessageSource',
+        			'basePath' => '@app/messages',
+        			'sourceLanguage' => 'en-US',
+        			'fileMap' => [
+        				'notification' => 'notification.php',
+        			],
+        		],
 	        ],
         ],
     ],
