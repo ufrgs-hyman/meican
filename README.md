@@ -82,7 +82,7 @@ CREATE DATABASE IF NOT EXISTS `meican2`;
 
 #####Download and install MEICAN
 
-[Get a compressed specific stable version](https://github.com/ufrgs-hyman/meican2/releases):
+[Get a stable version](https://github.com/ufrgs-hyman/meican2/releases):
 
 ```
 wget https://github.com/ufrgs-hyman/meican2/archive/#version#.tar.gz
