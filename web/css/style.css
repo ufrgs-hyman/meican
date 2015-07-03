@@ -667,10 +667,6 @@ td select {
     font-weight	: normal;
 }
 
-#menu ul ul a:hover {
-    background-color: #DFDFDF;
-}
-
 #menu li h3 span {
     position: absolute;
     margin-left: -18px;
