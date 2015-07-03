@@ -25,6 +25,14 @@ web/                css, images, javascripts
 
 ##REQUIREMENTS
 
+###Hardware
+
+- CPU 1+
+- Memory 2GB+
+- Storage 25GB+
+
+###Software
+
 - Ubuntu 14.04 (or any other system with Crontab feature)
 - Apache 2.4+ (recommended)
 - MySQL 5+
@@ -75,14 +83,14 @@ CREATE DATABASE IF NOT EXISTS `meican2`;
 
 #####Download and install MEICAN
 
-Get a compressed specific version of the source code:
+[Get a stable version](https://github.com/ufrgs-hyman/meican2/releases):
 
 ```
 wget https://github.com/ufrgs-hyman/meican2/archive/#version#.tar.gz
 tar -zxvf #version#.tar.gz
 ```
 
-or clone the Git repository with the latest version:
+or clone the Git repository with the latest version (MAY BE NOT STABLE):
 
 ```
 git clone https://github.com/ufrgs-hyman/meican2.git
