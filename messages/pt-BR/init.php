@@ -44,6 +44,7 @@ return array(
         'New Reservation' => 'Nova reserva',
         'Reservations' => 'Reservas',
         'Users' => 'Usuários',
+		'Authorizations' => 'Autorizações',
 		'Alternatively, you can access MEICAN using the Federated Academic Community (CAFé)' => "Alternativamente, você pode entrar utilizando a Comunidade Acadêmica Federada (CAFé)",		
         'Requests' => 'Requisições',
 		'Feedback sent. Thank you!' => 'Feedback enviado com sucesso. Obrigado!',
@@ -66,7 +67,7 @@ return array(
 		'An error occurred, please try again' => 'Ocorreu um erro, tenten novamente',
 		'Your password has been refreshed and sent your email' => 'Sua senha foi atualizada e enviada pra seu email',
 		
-		//DAQUI EM DIANTE TEM QUE ALTERAR QUANDO DIZER O HELP CORRETO
+		//DAQUI EM DIANTE TEM QUE ALTERAR QUANDO FIZER O HELP CORRETO
 		'Step-by-step:' => 'Passo a passo:',
 		'Click Reservations - New' => 'Clique em Reservas - Criar',
 		'Type a name for your reservation' => 'Insira um nome para sua reserva',
