@@ -29,6 +29,7 @@ web/                css, images, javascripts
 
 - CPU 1+
 - Memory 2GB+
+- Storage 25GB+
 
 ###Software
 
