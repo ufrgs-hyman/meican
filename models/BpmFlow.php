@@ -352,6 +352,8 @@ class BpmFlow extends \yii\db\ActiveRecord
     			$auth->manager_workflow_id = $flow->workflow_id;
     			$auth->connection_id = $connection_id;
     			$auth->save();
+    			
+    			Notification::createConnectionNotification($connection_id);
 	    	}
     	}
     	else {
@@ -367,6 +369,12 @@ class BpmFlow extends \yii\db\ActiveRecord
     
     public function createGroupAuth($flow, $reservation){
     	Yii::trace("Criando Request Group Authorization");
+    	
+    	//Confere se o grupo ja respondeu exatamente mesma requisição, se sim, não questiona novamente.
+    	$auth = ConnectionAuth::findOne(['type' => 'GROUP', 'domain' => $flow->domain, 'manager_group_id' => $flow->value, 'connection_id' => $flow->connection_id]);
+    	 
+    	if($auth) return true;
+    	
     	$auth = new ConnectionAuth();
     	$auth->domain = $flow->domain;
     	$auth->status = 'WAITING';
@@ -374,26 +382,36 @@ class BpmFlow extends \yii\db\ActiveRecord
     	$auth->manager_group_id = $flow->value;
     	$auth->connection_id = $flow->connection_id;
     	$auth->save();
+    	
+    	Notification::createGroupAuthNotification($flow->value, $flow->domain, $reservation->id, $auth->id);
+    	
     	return false;
     }
     
     public function createUserAuth($flow, $reservation){
     	Yii::trace("Criando Request User Authorization");
-    	$auth = new ConnectionAuth();
-    	$auth->domain = $flow->domain;
-    	$auth->status = 'WAITING';
-    	$auth->type = 'USER';
-    	$auth->manager_user_id = $flow->value;
-    	$auth->connection_id = $flow->connection_id;
-    	$auth->save();
     	
-    	/*$not = new Notification();
-    	$not->user_id = $flow->value;
-    	$not->date = DateUtils::now();
-    	$not->type = 'AUTHORIZATION';
-    	$not->viewed = 0;
-    	$not->info = (string) $auth->id;
-    	$not->save();*/
+    	//Confere se o usuário ja respondeu exatamente mesma requisição, se sim, não questiona novamente.
+    	$auth = ConnectionAuth::findOne(['type' => 'USER', 'domain' => $flow->domain, 'manager_user_id' => $flow->value, 'connection_id' => $flow->connection_id]);
+    	
+    	if($auth) return true;
+    	
+    	//Confere se usuário requisitante é o mesmo que deve responder. Se sim, não pergunta, considera aceito.
+    	if($flow->value == $reservation->request_user_id){
+    		$flow->status = 'YES';
+    		$flow->save();
+    		return true;
+    	}
+	    
+    	$auth = new ConnectionAuth();
+	    $auth->domain = $flow->domain;
+	    $auth->status = 'WAITING';
+	    $auth->type = 'USER';
+	    $auth->manager_user_id = $flow->value;
+	    $auth->connection_id = $flow->connection_id;
+	    $auth->save();
+	    
+	    Notification::createUserAuthNotification($flow->value, $flow->domain, $reservation->id, $auth->id);
     	
     	return false;
     }

@@ -17,6 +17,7 @@ use app\models\FlowPath;
 use app\models\User;
 use app\models\Domain;
 use yii\db\Query;
+use app\models\Notification;
 use app\modules\circuits\models\AuthorizationForm;
 
 use app\components\DateUtils;
@@ -44,6 +45,7 @@ class AuthorizationController extends RbacController {
     			$request->save();
     			$conn->auth_status='EXPIRED';
     			$conn->save();
+    			Notification::createConnectionNotification($conn->id);
     		}
     		else{
     			$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['>','start', DateUtils::now()])->one();
@@ -79,6 +81,7 @@ class AuthorizationController extends RbacController {
 			    			$request->save();
 			    			$conn->auth_status='EXPIRED';
 			    			$conn->save();
+			    			Notification::createConnectionNotification($conn->id);
 			    		}
 		    			else{
 		    				$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['>','start', DateUtils::now()])->one();

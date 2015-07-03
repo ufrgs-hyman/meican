@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use app\models\ConnectionAuth;
 use app\models\ConnectionPath;
+use app\models\Notification;
 
 /**
  * This is the model class for table "meican_connection".
@@ -143,6 +144,7 @@ class Connection extends \yii\db\ActiveRecord
 	public function confirmCancel() {
 		$this->status = self::STATUS_CANCELLED;
 		$this->save();
+		Notification::createConnectionNotification($this->id);
 	} 
 	
 	public function confirmCommit() {
@@ -164,26 +166,31 @@ class Connection extends \yii\db\ActiveRecord
 	public function confirmProvision() {
 		$this->status = self::STATUS_PROVISIONED;
 		$this->save();
+		Notification::createConnectionNotification($this->id);
 	}
 	
 	public function failedCreate() {
 		$this->status = self::STATUS_FAILED_CREATE;
 		$this->save();
+		Notification::createConnectionNotification($this->id);
 	}
 	
 	public function failedCreatePath() {
 		$this->status = self::STATUS_FAILED_CONFIRM;
 		$this->save();
+		Notification::createConnectionNotification($this->id);
 	}
 	
 	public function failedCommit() {
 		$this->status = self::STATUS_FAILED_SUBMIT;
 		$this->save();
+		Notification::createConnectionNotification($this->id);
 	}
 	
 	public function failedProvision() {
 		$this->status = self::STATUS_FAILED_PROVISION;
 		$this->save();
+		Notification::createConnectionNotification($this->id);
 	}
 	
 	public function failedCancel() {
@@ -235,6 +242,26 @@ class Connection extends \yii\db\ActiveRecord
     	return $this->status == "CANCELLED" || $this->status == "CANCEL REQUESTED";
     }
     
+    public function executeWorkflows($id){
+    	$paths = ConnectionPath::find()->select('DISTINCT `domain`')->where(['conn_id' => $id])->all();
+    	Yii::trace("Dominios envolvidos:");
+    	foreach($paths as $path) Yii::trace($path->domain);
+    
+    	//Cria execução dos Workflows
+    	foreach($paths as $path){ //Utiliza unique para não executar duas vezes em intradominios.
+    		$domain = Domain::findOne(['topology' => $path->domain]);
+    		if(isset($domain)) BpmFlow::startFlow($id, $domain->topology);
+    		if(Connection::findOne(['id' => $id])->auth_status != 'WAITING') break; //Para quando ja negou.
+    	}
+    
+    	//Executa primeira vez IMPEDINDO que sejam feitas perguntas.
+    	//Sai caso aceite, rejeite ou entre em modo de espera para perguntar.
+    	Connection::continueWorkflows($id, false);
+    	 
+    	//Executa segunda vez, liberando as perguntas.
+    	Connection::continueWorkflows($id);
+    }
+    
     public static function continueWorkflows($id, $asking = true){
     	Yii::trace("CONTINUA WORKFLOWS");
     	
@@ -254,35 +281,15 @@ class Connection extends \yii\db\ActiveRecord
     	
     	if(!$asking || ConnectionAuth::find()->where(['connection_id' => $id, 'status' => 'WAITING'])->count() > 0) return;
 
-    	if(Connection::findOne(['id' => $id])->auth_status == 'WAITING'){
-    		$conn = Connection::findOne(['id' => $id]);
+    	$conn = Connection::findOne(['id' => $id]);
+    	if($conn->auth_status == 'WAITING'){
     		$conn->auth_status = 'AUTHORIZED';
     		if (!$conn->save()){
     		}
-    		$conn->requestProvision();
+    		if(!$conn->isCancelStatus()) $conn->requestProvision();
     	}
     }
-    
-    public function executeWorkflows($id){
-    	$paths = ConnectionPath::find()->select('DISTINCT `domain`')->where(['conn_id' => $id])->all();
-    	Yii::trace("Dominios envolvidos:");
-    	foreach($paths as $path) Yii::trace($path->domain);
-    
-    	//Cria execução dos Workflows
-    	foreach($paths as $path){ //Utiliza unique para não executar duas vezes em intradominios.
-    		$domain = Domain::findOne(['topology' => $path->domain]);
-	    	if(isset($domain)) BpmFlow::startFlow($id, $domain->topology);
-	    	if(Connection::findOne(['id' => $id])->auth_status != 'WAITING') break; //Para quando ja negou.
-    	}
 
-    	//Executa primeira vez IMPEDINDO que sejam feitas perguntas.
-    	//Sai caso aceite, rejeite ou entre em modo de espera para perguntar.
-    	Connection::continueWorkflows($id, false);
-    	
-    	//Executa segunda vez, liberando as perguntas.
-    	Connection::continueWorkflows($id);
-    }
-    
     public function requestAuthorization() {
     	///// Connection aceita pelo Provider e
     	//// Path atualizado com sucesso

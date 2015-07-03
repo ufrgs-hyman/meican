@@ -23,6 +23,7 @@ use app\modules\circuits\models\ReservationForm;
 use app\models\BpmFlow;
 use app\models\ReservationPath;
 use app\models\User;
+use app\models\Notification;
 
 class ReservationController extends RbacController {
 	
@@ -68,6 +69,7 @@ class ReservationController extends RbacController {
 	    			$request->save();
 	    			$connection->auth_status='EXPIRED';
 	    			$connection->save();
+	    			Notification::createConnectionNotification($connection->id);
 	    		}
 	    	}
     	}
