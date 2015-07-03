@@ -43,7 +43,7 @@
 	
 		<?=
 		GridView::widget([
-			'options' => ['class' => 'list'],
+			'options' => ['class' => 'list-without-margin'],
 			'formatter' => new Formatter(['nullDisplay'=>'']),
 			'id' =>'grid'.$dom->getId(),
 			'emptyText' => Yii::t('topology', 'No URLs added to this domain'),

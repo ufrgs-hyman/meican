@@ -52,7 +52,7 @@
 	       
 	    <?=
 		GridView::widget([
-			'options' => ['class' => 'list'],
+			'options' => ['class' => 'list-without-margin'],
 			'dataProvider' => new ActiveDataProvider([
 	    		'query' => Device::find()->where(['network_id' => $net->id]),
 	    		'sort' => false,
