@@ -149,7 +149,8 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     				if(isset($module->value->post)) {
     					if($module->value->post->bandwidth != ""){
     						if(is_numeric($module->value->post->bandwidth)){
-    							$node->value = $module->value->post->bandwidth;
+    							$aux = $module->value->post->bandwidth;
+    							$node->value = $aux;
     							$node->operator = $module->value->post->operator;
     						}
     						else {
@@ -174,7 +175,7 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     				}
     			}
     			
-    			if($node->type == 8){ //Filter by duration
+    			else if($node->type == 8){ //Filter by duration
     				if(isset($module->value->post)) {
     					if($module->value->post->duration != ""){
     						if(is_numeric($module->value->post->duration)){
@@ -455,6 +456,7 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     		$nodeDB->index = $node->id;
     		if($node->value) $nodeDB->value = $node->value;
     		if($node->operator) $nodeDB->operator = $node->operator;
+    		
     		if (!$nodeDB->save()) {
     			BpmWorkflow::findOne(['id' => $db_workflow_id])->delete();
     			Yii::trace($nodeDB->getErrors());
