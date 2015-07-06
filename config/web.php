@@ -35,7 +35,7 @@ $config = [
     	],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '2GxWYZk6WGHGpPESApfnoUqaovUOTtjA',
+            'cookieValidationKey' => '',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -52,8 +52,8 @@ $config = [
             'class' => 'yii\swiftmailer\Mailer',
     		'transport' => [
     			'class' => 'Swift_SmtpTransport',
-    			'host' => 'smtp.inf.ufrgs.br',
-    			'username' => 'meican@inf.ufrgs.br',
+    			'host' => '',
+    			'username' => '',
     			'password' => '',
     			'port' => '465',
     			'encryption' => 'ssl',
