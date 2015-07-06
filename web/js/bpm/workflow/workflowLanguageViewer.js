@@ -293,7 +293,7 @@ modules: [
 		}
 	},
 	
-	{	name: "WeekDay",
+	/*{	name: "WeekDay",
 		container: {
 			icon: iconPath + "ico_weekday.png",
 			xtype: "WireIt.MeicanContainer",
@@ -366,7 +366,7 @@ modules: [
 			}, 		
 			]
 		}
-	},
+	},*/
 	
 	{	name: "Bandwidth",
 		container: {
@@ -556,7 +556,7 @@ modules: [
 		}
 	},
 	
-	{	name: "Hour",
+	/*{	name: "Hour",
 		container: {
 			xtype:"WireIt.MeicanContainer", 
 			image: imagePath + "schedule.png",
@@ -680,7 +680,7 @@ modules: [
 			}
 			]
 		}
-	},	
+	},*/	
 	
 	{	name: "Request_User_Authorization",
 		container: {
