@@ -126,7 +126,20 @@ class AuthorizationController extends RbacController {
 	    		$userId = Yii::$app->user->getId();
 	    
 	    		$reservation = Reservation::findOne(['id' => $id]);
-	    
+	    		
+	    		//Confere se alguma ja expirou
+	    		$connectionsExpired = $conn = Connection::find()->where(['reservation_id' => $reservation->id])->andWhere(['<=','start', DateUtils::now()])->all();
+	    		foreach($connectionsExpired as $connection){
+	    			$requests = ConnectionAuth::find()->where(['connection_id' => $connection->id, 'status' => 'WAITING'])->all();
+	    			foreach($requests as $request){
+	    				$request->status='EXPIRED';
+	    				$request->save();
+	    				$connection->auth_status='EXPIRED';
+	    				$connection->save();
+	    				Notification::createConnectionNotification($connection->id);
+	    			}
+	    		}
+
 	    		$allRequest = null;
 	    		$connections = Connection::find()->where(['reservation_id' => $id])->all();
 	    		foreach($connections as $conn){
