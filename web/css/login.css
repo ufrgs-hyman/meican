@@ -182,19 +182,23 @@ div#login_form input[type="text"], div#login_form input[type="password"] {
     padding: 4px 0 4px 50px;
 }
 
-#cafe-button, #submit_login{
+#cafe-button{
 	background: #EEE !important;
 	color: #27567C !important;
-	box-shadow: 2px 2px #27567C !important;
+	box-shadow: 0px 3px #27567C !important;
+	-webkit-box-shadow: 0px 3px #27567C !important;
 	border-top: 1px solid #DDD !important;
 	border-left: 1px solid #DDD !important;
+	border-right: 1px solid #DDD !important;
 }
 
-#cafe-button:hover, #submit_login:hover{
+#cafe-button:hover{
 	background: #DDD !important;
 }
 
-#cafe-button:active, #submit_login:active{
+#cafe-button:active{
 	background: #DDD !important;
-	box-shadow: 1px 1px #27567C !important;
+	box-shadow: 0px 1px #27567C !important;
+	-webkit-box-shadow: 0px 1px #27567C !important;
+	transform: translateY(2px);
 }

@@ -38,8 +38,8 @@ body, button, input, select, textarea { font-family: arial, sans-serif, helvetic
  * Also: hot pink!
 */
 
-::-moz-selection { background: #c00; color: #fff; text-shadow: none; }
-::selection { background: #c00; color: #fff; text-shadow: none; }
+::-moz-selection { background: #DFEAFF; text-shadow: none; }
+::selection { background: #DFEAFF; text-shadow: none; }
 
 /* =============================================================================
    Links
@@ -114,13 +114,6 @@ button, input, select, textarea { font-size: 100%; margin: 0; vertical-align: ba
 */
 
 button, input { line-height: normal; *overflow: visible; }
-
-/*
- * 1. Display hand cursor for clickable form elements
- * 2. Allow styling of clickable form elements in iOS
-*/
-
-button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; }
 
 /*
  * Consistent box sizing and appearance
@@ -301,7 +294,8 @@ table td.left {
 
 table td {
     font-size: 1em;
-    padding: 0.2em;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
     color: #3a5879;
     text-align: center;
 }
@@ -339,14 +333,12 @@ table th.large {
 
 .list table{
     width: 100%;
-    box-shadow: 2px 2px 4px #888;
     margin-bottom: 10px !important;
     margin-top: 10px !important;
 }
 
 .list-without-margin table {
     width: 100%;
-    box-shadow: 2px 2px 4px #888;
     margin-bottom: 10px !important;
 }
 
@@ -354,11 +346,24 @@ table th.large {
     cursor: auto;
 }
 
-.list table thead, .list-without-margin table thead { border: 1px solid #5b7399; background: #27567c url(meican3-theme/images/ui-bg_flat_75_27567c_40x100.png) 50% 50% repeat-x; color: #d8e7f3; font-weight: bold; }
-.list table thead a , .list-without-margin table thead a { color: #d8e7f3; }
+.list table thead, .list-without-margin table thead {
+	border: 1px double #27567c;
+	background: #27567c;
+	color: #d8e7f3;
+	font-weight: bold;
+	text-shadow: 0px 0px 1px black;
+}
+
+.list table thead tr, .list-without-margin table thead tr{
+	height: 25px !important;
+}
+
+.list table thead a , .list-without-margin table thead a {
+	color: #d8e7f3;
+}
 
 .list table tbody, .list-without-margin table tbody {
-    border: 1px solid #AAA;
+    border: 1px double #AAA !important;
 }
 
 table th.listHeader {
@@ -367,22 +372,23 @@ table th.listHeader {
 
 .list table tr > td:first-child, .list-without-margin table tr > td:first-child {
     width: 10px;
+    height: 25px;
 }
 
 .list table tfoot tr > td:last-child, .list-without-margin table tfoot tr > td:last-child {
     background-color: #ffffff;
+    height: 25px;
 }
 
-.list table tbody tr:nth-child(odd), .list-without-margin table tbody tr:nth-child(odd) {
-    background-color:#eee;
-}
-
-.list table tbody tr:nth-child(even), .list-without-margin table tbody tr:nth-child(even) {
-    background-color:#fff;
+.list table tbody tr, .list-without-margin table tbody tr {
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    height: 25px;
+    line-height: 15px;
 }
 
 .list table tbody tr:hover , .list-without-margin table tbody tr:hover {
-    background-color: #CCC !important;
+    background-color: #DFEAFF !important;
 }
 /*
 .list, .list-without-margin table tbody tr:hover {
@@ -390,7 +396,7 @@ table th.listHeader {
 }*/
 
 .list table tbody tr.checked-line, .list-without-margin table tbody tr.checked-line {
-    background-color: #FFC;
+    background-color: #eeeeee;
 }
 
 div.controls {
@@ -417,7 +423,6 @@ div.control_tab {
 
 .listPermissions {
     width: 100%;
-    box-shadow: 2px 2px 4px #888;
     margin: 10px 0;
 }
 
@@ -505,10 +510,6 @@ div#main #l3:link, div#main #l3:visited, div#main #l3:hover, div#main #l3:visite
     z-index: 5;
 }
 
-div.shadow {
-    box-shadow: 2px 2px 4px #888;
-}
-
 select:hover, select:select {
     background-color: white;
 }
@@ -525,7 +526,11 @@ select:hover, select:select {
     height: 24px;
     line-height: 16px;
     padding: 4px 8px;
-    margin: 0 2px;
+    margin-right: 3px;
+}
+
+.fc-popover {
+	box-shadow: none !important;
 }
 
 .controls a {
@@ -542,24 +547,39 @@ select:hover, select:select {
   background: #5381A6 !important;
   border: none !important;
   border-radius: 2px !important;
-  box-shadow: 2px 2px #1F3140 !important;
-  margin-bottom: 2px;
+  box-shadow: 0px 3px #27567C !important;
+  -webkit-box-shadow: 0px 3px #27567C !important;
+  margin-bottom: 3px;
 }
 
 .controls a:hover:enabled, input[type=submit]:hover:enabled, input[type=button]:hover:enabled, button:hover:enabled, .ui-dialog .ui-dialog-buttonpane button:hover:enabled {
   background: #4A7699 !important;
+  cursor: pointer;
 }
 
 .controls a:active, input[type=submit]:active, input[type=button]:active, button:active, .ui-dialog .ui-dialog-buttonpane button:active {
   background: #4A7699 !important;
-  box-shadow: 1px 1px #1F3140 !important;
-  transform: translateY(1px) translateX(1px);
+  box-shadow: 0px 1px #27567C !important;
+  -webkit-box-shadow: 0px 1px #27567C !important;
+  transform: translateY(2px);
+}
+
+.controls a:hover:disabled, input[type=submit]:hover:disabled, input[type=button]:hover:disabled, button:hover:disabled, .ui-dialog .ui-dialog-buttonpane button:hover:disabled {
+  cursor: default !important;
 }
 
 .fc .ui-state-default .ui-icon{
-	background-image: url("images/ui-icons_d8e7f3_256x240.png")
+	background-image: url("images/ui-icons_d8e7f3_256x240.png");
 }
 
+.ui-icon-to-button-without-background {
+	background-image: url("images/ui-icons_d8e7f3_256x240.png") !important;
+}
+
+.ui-transparent-button {
+	background: none !important;
+	border: none !important;
+}
 
 input[disabled], button[disabled], .ui-state-disabled, [disabled]{
     opacity: .50; filter:Alpha(Opacity=50); background-image: none; 
@@ -579,7 +599,10 @@ td select {
 
 #left-panel, #system_date {
     width: 130px;
-    border-right-width: thin;
+}
+
+#system_date, #menu {
+	border-right-width: thin;
     border-right-style: solid;
     border-right-color: #DDD;
 }
@@ -603,16 +626,6 @@ td select {
     width: 130px;
     float: left;
     background-color: #F4F4F4;
-}
-
-.captcha {
-	float: left;
-	margin: 10px 0 10px 180px;
-}
-
-.captcha a {
-	float: left;
-	margin-left: 0  !important;
 }
 
 .errorMessage {
@@ -716,7 +729,7 @@ td select {
 #info_box ul li {
     float: right;
     /*padding: 9px;*/
-    text-shadow: 1px 1px 0em black, -1px -1px #444;
+    text-shadow: 0px 0px 1px black;
     border-left-style:solid;
     border-left-color:#5B7399;
     border-left-width:thin;
@@ -845,13 +858,12 @@ h1 { /* Títulos principais */
 	z-index: 1;
 	position: absolute;
 	bottom: 0;
-    box-shadow: 7px 2px 7px #888;
     background-color: rgba(238,238,238,0.7);
     border: #BBB 1px; 
     border-image: initial;
     padding: 1em;
     width: 100%;
-    left: 131px;
+    left: 129px;
 }
 
 #bandwidth_bar {
@@ -861,8 +873,7 @@ h1 { /* Títulos principais */
     border-style: none solid;
     width:40px;
     height:80px;
-    margin: 1px auto;
-    box-shadow: 2px 0px 4px #888;
+    margin: 0px auto;
     position: relative;
 }
 
@@ -884,7 +895,6 @@ div#bandwidth_bar_text{
     z-index: 2;
     width: 100px;
     margin-left: -30px;
-    box-shadow: 2px 2px 4px #888;
 }
 
 #bandwidth_bar_inside {
@@ -905,10 +915,6 @@ div#bandwidth_bar_text{
     margin: auto auto;
 }
 
-.ui-spinner {
-	box-shadow: 2px 2px 4px #888;
-}
-
 #reservation-view-bandwidth-field {
     text-align: center;
     margin-left:0;
@@ -916,7 +922,6 @@ div#bandwidth_bar_text{
 }
 
 .shadow-box, .tab_content{
-    box-shadow: 2px 2px 4px #888; 
     background-color: #EEE;
 }
 
@@ -932,19 +937,28 @@ div#bandwidth_bar_text{
     float:left;
 }
 
+
 table.reservation-point{
     width: 167px; 
-    box-shadow: 2px 2px 4px #888; 
     height:200px;
-    border:0.1em; 
+    border:0.1em;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 table.reservation-point tbody{
     background-color: white;
+    border: 1px double #AAA;
 }
+
 
 table.reservation-point tbody tr{
     height:27px;
+    border-bottom: 1px solid #dddddd;
+}
+
+table.reservation-marker-type td {
+    border: 1px double #AAA;
 }
 
 table.reservation-point tbody td{
@@ -956,12 +970,12 @@ table.reservation-point tbody td{
     height: 22px;
 }
 
-table.reservation-point td, table.reservation-point th {
-    border: 1px solid #BBB;
-}
-
 .reservation-point thead{
-    background-color: #DDDDDD;
+    border: 1px double #27567c;
+	background: #27567c;
+	color: #d8e7f3;
+	font-weight: bold;
+	text-shadow: 0px 0px 1px black;
 }
 
 table.view-point{
@@ -970,6 +984,8 @@ table.view-point{
 
 table.reservation-marker-type {
     height:50px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 .recurrence-item{
@@ -988,12 +1004,13 @@ table.reservation-marker-type {
 }
 
 #res_name {
-    box-shadow: 2px 2px 4px #888;
 	padding-top: 2px;
 	padding-bottom: 2px;
 	padding-left: 10px;
 	padding-right: 2px;
 	font-size: 15px;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 #label_res_name {
@@ -1266,7 +1283,10 @@ input:-moz-placeholder { color:#ddd; }
                    left: 0;}
 
 /* TR overrides */
-span.ui-spinner { background: none; }
+span.ui-spinner {
+	background: none;
+}
+
 .ui-spinner .ui-icon-triangle-1-s {
     /* need to fix icons sprite */
     background-position:-65px -16px;
@@ -1274,11 +1294,11 @@ span.ui-spinner { background: none; }
 
 /* fix for hover state */
 .ui-spinner span.ui-icon {
-    background-image: url(meican3-theme/images/ui-icons_4f4f4f_256x240.png);
+    background-image: url(images/ui-icons_888888_256x240.png);
 }
 
 .ui-spinner .ui-state-hover span.ui-icon, .ui-spinner .ui-state-active span.ui-icon {
-    background-image: url(meican3-theme/images/ui-icons_ffffff_256x240.png);
+    background-image: url(images/ui-icons_454545_256x240.png);
 }
 
 /* fonte para todos os widgets */
@@ -1303,7 +1323,7 @@ span.ui-spinner { background: none; }
     position:absolute;
     top:-500px;
     right:20px;
-    z-index: 9999999;
+    z-index: 99;
 }
 
 .feedback-panel .tab_content{ 
@@ -1541,20 +1561,6 @@ form .error {
     border-color: red !important; }
 form #recaptcha_response_field {
     padding: 3px; }
-/*form input.submit, form a.submit_link {
-  color: white;
-  font-size: 130%;
-  font-weight: bold;
-  cursor: pointer;
-  overflow: visible;
-  padding: 1px 15px 1px;
-  margin-right: 5px;
-  background-color: #098bd6;
-  border-radius: 4px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border: 2px solid #0b77b7;
-  border-top-color: #5eb6e8; }*/
 
 #emotion_select {
     z-index: 100;

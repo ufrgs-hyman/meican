@@ -1,5 +1,5 @@
 #calendar .fc-view-container {
-  box-shadow: 2px 2px 4px #888;
+  /*box-shadow: 2px 2px 4px #888;*/
 }
 
 #calendar .ui-state-highlight {
@@ -11,7 +11,7 @@
 
 #calendar .ui-widget-header{
 	background: #27567c;
-	border: 0px;
+	border: 1px solid #27567c !important;
 }
 
 #table .float-left {

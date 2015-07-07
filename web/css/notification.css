@@ -37,7 +37,7 @@
 	margin: 0px;
 	padding: 0px;
 	position:relative;
-	z-index: 1000000;
+	z-index: 98;
 	height: 32px;
 	text-align: center;
 }
@@ -85,7 +85,8 @@
 #notification_container {
 	background-color: #ffffff;
 	border: 1px solid rgba(100, 100, 100, .4);
-	-webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+	-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+	box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 	overflow: visible;
 	position: absolute;
 	top: 42px;
