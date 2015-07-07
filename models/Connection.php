@@ -6,6 +6,7 @@ use Yii;
 use app\models\ConnectionAuth;
 use app\models\ConnectionPath;
 use app\models\Notification;
+use app\modules\circuits\controllers\ConnectionServiceRequester;
 
 /**
  * This is the model class for table "meican_connection".
@@ -75,9 +76,9 @@ class Connection extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'external_id' => Yii::t('circuits', 'Connection ID'),
-            'status' => Yii::t("circuits", 'Reservation Status'),
-            'dataplane_status' =>  Yii::t("circuits", 'Connectivity Status'),
-            'auth_status' =>  Yii::t("circuits", "Authorization Status"),
+            'status' => Yii::t("circuits", 'Reservation'),
+            'dataplane_status' =>  Yii::t("circuits", 'Connectivity'),
+            'auth_status' =>  Yii::t("circuits", "Authorization"),
             'start' =>  Yii::t("circuits", 'Start'),
             'finish' =>  Yii::t("circuits", 'Finish'),
             'reservation_id' => 'Reservation ID',
@@ -92,6 +93,24 @@ class Connection extends \yii\db\ActiveRecord
         return $this->hasOne(Reservation::className(), ['id' => 'reservation_id']);
     }
 
+    public function getPath($order) {
+        return ConnectionPath::find()->where(['conn_id'=>$this->id, 'path_order'=>$order]);
+    }
+    
+    public function getPaths() {
+        return ConnectionPath::find()->where(['conn_id'=>$this->id])->orderBy(['path_order'=> "SORT ASC"]);
+    }
+    
+    public function getFirstPath() {
+        return ConnectionPath::find()->where(['conn_id'=>$this->id,
+                'path_order'=> 0]);
+    }
+    
+    public function getLastPath() {
+        return ConnectionPath::find()->where(['conn_id'=>$this->id,
+                'path_order'=> ConnectionPath::find()->where(['conn_id'=>$this->id])->max('path_order')]);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -101,31 +120,31 @@ class Connection extends \yii\db\ActiveRecord
     }
     
     public function requestCreate() {
-    	$provider = $this->getReservation()->one()->getProvider()->one();
-    	$provider->requestCreate($this);
+    	$csR = new ConnectionServiceRequester($this);
+        $csR->requestCreate($this);
     }
     
     public function requestCommit() {
-    	$provider = $this->getReservation()->one()->getProvider()->one();
-    	$provider->requestCommit($this);
+        $csR = new ConnectionServiceRequester($this);
+        $csR->requestCommit($this);
     }
     
     public function requestReadPath() {
-    	$provider = $this->getReservation()->one()->getProvider()->one();
-    	$provider->requestReadPath($this);
+        $csR = new ConnectionServiceRequester($this);
+        $csR->requestReadPath($this);
     }
     
     public function requestProvision() {
-    	$provider = $this->getReservation()->one()->getProvider()->one();
-    	$provider->requestProvision($this);
+        $csR = new ConnectionServiceRequester($this);
+        $csR->requestProvision($this);
     }
     
     public function requestCancel() {
     	$this->status = self::STATUS_CANCEL_REQ;
     	$this->save();
     
-    	$provider = $this->getReservation()->one()->getProvider()->one();
-    	$provider->requestCancel($this);
+        $csR = new ConnectionServiceRequester($this);
+        $csR->requestCancel($this);
     }
     
     public function confirmCreate() {
@@ -294,10 +313,10 @@ class Connection extends \yii\db\ActiveRecord
     	///// Connection aceita pelo Provider e
     	//// Path atualizado com sucesso
 
-    	$this->executeWorkflows($this->id);
+    	//$this->executeWorkflows($this->id);
     	
-    	//$this->auth_status = 'AUTHORIZED';
-        //$this->save();
-    	//$this->requestProvision();
+    	$this->auth_status = 'AUTHORIZED';
+        $this->save();
+    	$this->requestProvision();
     }
 }

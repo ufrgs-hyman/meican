@@ -9,12 +9,26 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ *
+ * Identificador globalmente único da rede.
+ * O valor persistido não deve conter o prefixo 
+ * standard da OGF: 'urn:ogf:network:'. Ele é inserido
+ * quando mostrado ao usuário ou enviado a agentes externos.
+ *
+ * @property string $urn
+ *
+ * Localização aproximada
+ *
+ * @property string $address
+ *
+ * Coordenadas relativas a localização aproximada
+ *
  * @property double $latitude
  * @property double $longitude
  * @property integer $domain_id
  *
- * @property Device[] $devices
  * @property Domain $domain
+ * @property Port[] $ports
  */
 class Network extends \yii\db\ActiveRecord
 {
@@ -32,10 +46,13 @@ class Network extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'domain_id'], 'required'],
+            [['name', 'urn', 'domain_id'], 'required'],
             [['latitude', 'longitude'], 'number'],
             [['domain_id'], 'integer'],
-            [['name'], 'string', 'max' => 60]
+            [['address'], 'string', 'max' => 200],
+            [['name'], 'string', 'max' => 60],
+            [['urn'], 'string', 'max' => 250],
+            [['urn'], 'unique']
         ];
     }
 
@@ -45,12 +62,12 @@ class Network extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('topology', 'ID'),
-            'name' => Yii::t('topology', 'Name'),
-            'latitude' => Yii::t('topology', 'Latitude'),
-            'longitude' => Yii::t('topology', 'Longitude'),
-            'domain_id' => Yii::t('topology', 'Domain'),
-        		
+            'id' => Yii::t('circuits', 'ID'),
+            'name' => Yii::t('circuits', 'Name'),
+            'urn' => Yii::t('circuits', 'Urn'),
+            'latitude' => Yii::t('circuits', 'Latitude'),
+            'longitude' => Yii::t('circuits', 'Longitude'),
+            'domain_id' => Yii::t('circuits', 'Domain ID'),
         ];
     }
 
@@ -61,11 +78,16 @@ class Network extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Domain::className(), ['id' => 'domain_id']);
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDevices() {
-    	return $this->hasMany(Device::className(), ['network_id' => 'id']);
+    public function getPorts()
+    {
+        return $this->hasMany(Port::className(), ['network_id' => 'id']);
+    }
+
+    static function findByUrn($urn) {
+        return self::find()->where(['urn'=>$urn]);
     }
 }

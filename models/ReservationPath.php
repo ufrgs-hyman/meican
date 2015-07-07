@@ -5,16 +5,19 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%reservation_path}}".
+ * Classe que representa o Path requisitado em uma
+ * solicitação de reserva. Uma reserva apenas terá uma
+ * ReservationPath se for criada a partir do MEICAN.
+ *
+ * Reservas de outros requesters consultadas a partir
+ * de provedores serão associadas apenas às suas respectivas
+ * Connections e ConnectionsPaths.
  *
  * @property integer $reservation_id
  * @property integer $path_order
  * 
- * @property string $urn
+ * @property string $port_urn
  *  
- * @property string $domain
- * @property string $device
- * @property string $port
  * @property string $vlan
  *
  * @property Reservation $reservation
@@ -35,11 +38,10 @@ class ReservationPath extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['reservation_id', 'path_order', 'urn','domain', 'device', 'vlan'], 'required'],
+            [['reservation_id', 'path_order', 'port_urn', 'vlan'], 'required'],
             [['reservation_id', 'path_order'], 'integer'],
-            [['urn'], 'string', 'max' => 150],
-            [['domain', 'device', 'port'], 'string', 'max' => 50],
-            [['vlan'], 'string', 'max' => 20]
+            [['port_urn'], 'string', 'max' => 250],
+            [['vlan'], 'string', 'max' => 30]
         ];
     }
 
@@ -51,9 +53,7 @@ class ReservationPath extends \yii\db\ActiveRecord
         return [
             'reservation_id' => Yii::t('circuits', 'Reservation ID'),
             'path_order' => Yii::t('circuits', 'Path Order'),
-            'domain' => Yii::t('circuits', 'Domain'),
-            'device' => Yii::t('circuits', 'Device'),
-            'port' => Yii::t('circuits', 'Port'),
+            'port_urn' => Yii::t('circuits', 'Port'),
             'vlan' => Yii::t('circuits', 'Vlan'),
         ];
     }
@@ -65,21 +65,11 @@ class ReservationPath extends \yii\db\ActiveRecord
         return $this->hasOne(Reservation::className(), ['id' => 'reservation_id']);
     }
     
-    public function getUrn() {
-    	return Urn::findByValue($this->getUrnValue());
+    public function getPort() {
+    	return Port::findByUrn($this->port_urn);
     }
-    
-    public function getUrnValue() {
-    	return "urn:ogf:network:".$this->urn;
-    }
-    
-    public function setUrn($urn) {
-    	$dev = $urn->getDevice()->one();
-    	$net = $dev->getNetwork()->one();
-    	$dom = $net->getDomain()->one();
-    	$this->domain = $dom->topology;
-    	$this->device = $dev->node;
-    	$this->port = $urn->port;
-    	$this->urn = str_replace("urn:ogf:network:", "", $urn->value);
+
+    public function getFullPortUrn() {
+        return "urn:ogf:network:".$this->port_urn;
     }
 }

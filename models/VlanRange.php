@@ -9,9 +9,9 @@ use Yii;
  *
  * @property integer $id
  * @property string $value
- * @property integer $urn_id
+ * @property integer $port_id
  *
- * @property Urn $urn
+ * @property Port $port
  */
 class VlanRange extends \yii\db\ActiveRecord
 {
@@ -29,8 +29,8 @@ class VlanRange extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['value', 'urn_id'], 'required'],
-            [['urn_id'], 'integer'],
+            [['value', 'port_id'], 'required'],
+            [['port_id'], 'integer'],
             [['value'], 'string', 'max' => 30]
         ];
     }
@@ -43,7 +43,7 @@ class VlanRange extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'value' => Yii::t('topology', 'Value'),
-            'urn_id' => Yii::t('topology', 'Urn ID'),
+            'port_id' => Yii::t('topology', 'Port ID'),
         ];
     }
 
@@ -52,7 +52,7 @@ class VlanRange extends \yii\db\ActiveRecord
      */
     public function getUrn()
     {
-        return $this->hasOne(Urn::className(), ['id' => 'urn_id']);
+        return $this->hasOne(Urn::className(), ['id' => 'port_id']);
     }
     
     public function getValidVlan() {

@@ -3,8 +3,8 @@
 namespace app\models;
 
 use Yii;
-use app\modules\circuits\models\AggregatorConnection;
 use app\components\DateUtils;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "{{%reservation}}".
@@ -26,18 +26,14 @@ use app\components\DateUtils;
  * @property string $start
  * @property string $finish
  * 
- * Por definição, o provedor indica qual o 
- * Connection Service será utilizado para
- * gerir essa reserva.
- * A tabela provider, pode armazenar Aggregators e
- * Bridges, sendo que um Dominio possui uma e somente
- * uma Bridge.
- * Não confundir esse Provider com o Domain associado a
- * cada ReservationPath. Esse Provider é o provedor usado
- * na requisição. O Domain de um Path representa a Bridge
- * que gerencia aquele circuito parcial.
+ * Requester NSA ID que enviou a solicitação
  * 
- * @property integer $provider_id
+ * @property string $requester_nsa
+ *
+ * Provider NSA ID que recebeu a solicitação
+ * 
+ * @property string $provider_nsa
+ *
  * @property integer $request_user_id
  * 
  * @property AutomatedTest $automatedTest
@@ -65,11 +61,12 @@ class Reservation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'name', 'date', 'bandwidth', 'start', 'finish', 'provider_id', 'request_user_id'], 'required'],
+            [['type', 'name', 'date', 'bandwidth', 'start', 'finish', 'provider_nsa','requester_nsa'], 'required'],
             [['type'], 'string'],
-            [['bandwidth', 'provider_id', 'request_user_id'], 'integer'],
+            [['bandwidth', 'request_user_id'], 'integer'],
             [['start', 'finish', 'date'], 'safe'],
-            [['name'], 'string', 'max' => 50]
+            [['name'], 'string', 'max' => 50],
+            [['provider_nsa', 'requester_nsa'], 'string', 'max' => 200]
         ];
     }
 
@@ -86,7 +83,6 @@ class Reservation extends \yii\db\ActiveRecord
             'bandwidth' => Yii::t('circuits', 'Bandwidth (Mbps)'),
             'start' => Yii::t('circuits', 'Start'),
             'finish' => Yii::t('circuits', 'Finish'),
-            'provider_id' => Yii::t('circuits', 'Provider'),
             'request_user_id' => Yii::t('circuits', 'Requested by'),
         ];
     }
@@ -112,7 +108,7 @@ class Reservation extends \yii\db\ActiveRecord
      */
     public function getProvider()
     {
-        return $this->hasOne(Provider::className(), ['id' => 'provider_id']);
+        return $this->hasOne(Provider::className(), ['nsa' => 'provider_nsa']);
     }
 
     /**
@@ -160,13 +156,11 @@ class Reservation extends \yii\db\ActiveRecord
     }
     
     public function getSourceDomain() {
-    	$path = $this->getFirstPath()->one();
-    	return $path->domain;
+    	return $this->getConnections()->one()->getPath(0)->one()->domain;
     }
     
     public function getDestinationDomain() {
-    	$path = $this->getLastPath()->one();
-    	return $path->domain;
+    	return $this->getConnections()->one()->getLastPath()->one()->domain;
     }
     
     public function createConnections() {
@@ -215,65 +209,5 @@ class Reservation extends \yii\db\ActiveRecord
     		$periods[] = $per;
     		return $periods;
     	}
-    }
-
-    static function findAllActiveByDomains($domains) {
-        $validDomains = [];
-        foreach ($domains as $domain) {
-            $validDomains[] = $domain->topology;
-        }
-
-        $connPaths = ConnectionPath::find()->where(['in', 'domain', $validDomains])->select(["conn_id"])->distinct(true)->all();
-
-        $validConnPaths = [];
-        foreach ($connPaths as $connPath) {
-            $validConnPaths[] = $connPath->conn_id;
-        }
-
-        $validConnections = Connection::find()->where(['>=','finish', DateUtils::now()])->andWhere(['in', 'id', $validConnPaths])->andWhere(['status'=>[
-                "PENDING","CREATED","CONFIRMED","SUBMITTED","PROVISIONED"]])->select(["reservation_id"])->distinct(true)->all();
-
-        $validIds = [];
-        foreach ($validConnections as $conn) {
-            $validIds[] = $conn->reservation_id;
-        }
-        Yii::trace($validIds);
-
-        return self::find()->where(['in', 'id', $validIds])->andWhere(
-                        ['type'=>self::TYPE_NORMAL])->orderBy(['date'=>SORT_DESC]);
-    }
-
-    static function findAllTerminatedByDomains($domains) {
-        $validDomains = [];
-        foreach ($domains as $domain) {
-            $validDomains[] = $domain->topology;
-        }
-
-        Yii::trace($validDomains);
-
-        $connPaths = ConnectionPath::find()->where(['in', 'domain', $validDomains])->select(["conn_id"])->distinct(true)->all();
-
-        $validConnPaths = [];
-        foreach ($connPaths as $connPath) {
-            $validConnPaths[] = $connPath->conn_id;
-        }
-
-        $validConns = Connection::find()->where(['in','id',$validConnPaths])->select('reservation_id')->distinct(true)->all();
-
-        $validIds = [];
-        foreach ($validConns as $conn) {
-           $validIds[] = $conn->reservation_id;
-        }
-
-        $invalidConnections = Connection::find()->where(['>=','finish', DateUtils::now()])->andWhere(['status'=>[
-                "PENDING","CREATED","CONFIRMED","SUBMITTED","PROVISIONED"]])->select(["reservation_id"])->distinct(true)->all();
-
-        $invalidIds = [];
-        foreach ($invalidConnections as $conn) {
-           $invalidIds[] = $conn->reservation_id;
-        }
-
-        return self::find()->where(['not in', 'id', $invalidIds])->andWhere(['in', 'id', $validIds])->andWhere(
-                        ['type'=>self::TYPE_NORMAL])->orderBy(['date'=>SORT_DESC]);
     }
 }

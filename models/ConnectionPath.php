@@ -33,7 +33,7 @@ class ConnectionPath extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['conn_id', 'path_order', 'domain','src_urn', 'src_vlan', 'dst_urn', 'dst_vlan'], 'required'],
+            [['conn_id', 'path_order', 'domain', 'src_urn', 'src_vlan', 'dst_urn', 'dst_vlan'], 'required'],
             [['conn_id', 'path_order'], 'integer'],
             [['domain'], 'string', 'max' => 50],
             [['src_urn', 'dst_urn'], 'string', 'max' => 150],
@@ -61,20 +61,12 @@ class ConnectionPath extends \yii\db\ActiveRecord
         return $this->hasOne(Connection::className(), ['id' => 'conn_id']);
     }
     
-    public function getDestinationUrn() {
-    	return Urn::findByValue(self::toUrnValue($this->dst_urn));
+    public function getDestinationPort() {
+    	return Port::findByUrn($this->dst_urn);
     }
     
-    public function getSourceUrn() {
-    	return Urn::findByValue(self::toUrnValue($this->src_urn));
-    }
-    
-    public function setSourceUrn($value) {
-    	$this->src_urn = str_replace("urn:ogf:network:", "", $value);
-    }
-    
-    public function setDestinationUrn($value) {
-    	$this->dst_urn = str_replace("urn:ogf:network:", "", $value);
+    public function getSourcePort() {
+    	return Port::findByUrn($this->src_urn);
     }
     
     public function setSourceStp($stp) {
@@ -101,13 +93,17 @@ class ConnectionPath extends \yii\db\ActiveRecord
     	}
     }
     
-    static function toUrnValue($partialValue) {
-    	return "urn:ogf:network:".$partialValue;
-    }
-    
     public function setDomainByStp($stp) {
     	$stp = explode('?', $stp);
     	$domain = explode(':', $stp[0]);
     	$this->domain = $domain[3];
+    }
+
+    public function getFullSourcePortUrn() {
+        return "urn:ogf:network:".$this->src_urn;
+    }
+
+    public function getFullDestinationPortUrn() {
+        return "urn:ogf:network:".$this->dst_urn;
     }
 }
