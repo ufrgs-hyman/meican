@@ -11,7 +11,7 @@ $config = [
     'modules' => [
 	    'debug' => [
 	    	'class' => 'yii\debug\Module',
-	    	//'allowedIPs' => ['1.1.1.1']
+	    	//'allowedIPs' => ['143.54.12.245']
 	    ],
 	    'aaa' => 'app\modules\aaa\AaaModule',
 		'circuits' => 'app\modules\circuits\CircuitsModule',
@@ -35,7 +35,7 @@ $config = [
     	],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'gbvhguguyguiyghuohoiu',
+            'cookieValidationKey' => '',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -52,7 +52,7 @@ $config = [
             'class' => 'yii\swiftmailer\Mailer',
     		'transport' => [
     			'class' => 'Swift_SmtpTransport',
-    			'host' => 'smtp.inf.ufrgs.br',
+    			'host' => '',
     			'username' => '',
     			'password' => '',
     			'port' => '465',
