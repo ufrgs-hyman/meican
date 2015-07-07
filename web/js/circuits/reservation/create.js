@@ -158,10 +158,9 @@ function prepareBandwidthSpinner() {
         if (v > 100 || v < 0)
             return;
         var k = 2 * (50 - v);
-        $('#bandwidth_bar_inside').animate({
-            width: v + '%'
-        }, 100);
+        $('#bandwidth_bar_inside').width(v + '%');
     };
+
     $('#bandwidth').attr("min", 100).attr("max", 1000).attr("step", 100).
     		spinner({
     			spin: f,

@@ -13,7 +13,7 @@
 	])
 ?>
 
-<h1 style="clear: none; float: left; z-index: 999999; position: absolute;">
+<h1 style="clear: none; float: left; z-index: 90; position: absolute;">
 	<label id="label_res_name" for="res_name" style="width: 170px;"><?= Yii::t("circuits", "Reservation Name"); ?></label>
 	<input type="text" name="ReservationForm[name]" id="res_name" size="50" placeholder="<?= Yii::t("circuits", "Typing a name for the reservation will unlock the map"); ?>"/>
 </h1>
