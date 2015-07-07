@@ -1,7 +1,7 @@
 var fbdict = [];
 fbdict['pt-BR'] = [];
 
-fbdict['pt-BR']['Describe your idea'] = 'Descreve sua idéia';
+fbdict['pt-BR']['Describe your idea'] = 'Descreva sua idéia';
 fbdict['pt-BR']['Describe your question'] = 'Descreva sua dúvida';
 fbdict['pt-BR']['Describe your praise'] = 'Descreva seu elogio';
 fbdict['pt-BR']['Describe your problem'] = 'Descreva seu problema';

@@ -193,9 +193,9 @@ $(document).ready(function() {
     var tabWidth = $('a.feedback-link').outerWidth();
     var feedback_descrbs = {
         idea: fbtt('Describe your idea'),
-        question: 'Describe your question',
-        praise: 'Describe your praise',
-        problem: 'Describe your problem'
+        question: fbtt('Describe your question'),
+        praise: fbtt('Describe your praise'),
+        problem: fbtt('Describe your problem')
     };
 	
 	$('.feedback_link, #closeButtonFeedback').click(function() {
