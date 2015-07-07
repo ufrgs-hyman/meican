@@ -2,10 +2,10 @@
     <thead>
         <tr>
             <th colspan="2">
-            	<div class="ui-state-default ui-corner-all" id="<?= $prefix ?>-show-details" style="float: right; margin-right: 4px; cursor: pointer;">
+            	<div class="ui-state-default ui-corner-all ui-transparent-button" id="<?= $prefix ?>-show-details" style="float: right; margin-right: 4px; cursor: pointer;">
             		<span id="<?= $prefix ?>-show-details-icon" class="ui-icon ui-icon-carat-1-n" title="<?= "Toogle"; ?>"></span>
 			    </div>
-			    <div class="ui-state-default ui-corner-all" id="<?= $prefix; ?>-copy-urn" style="float: right; margin: 0 2px 0 4px; cursor: pointer;">
+			    <div class="ui-state-default ui-corner-all ui-transparent-button" id="<?= $prefix; ?>-copy-urn" style="float: right; margin: 0 2px 0 4px; cursor: pointer;">
 			        <span class="ui-icon ui-icon-link" title="<?= Yii::t("circuits", "Copy endpoint link"); ?>"></span>
 			    </div>
                 <span class="title"><?= $label; ?></span>

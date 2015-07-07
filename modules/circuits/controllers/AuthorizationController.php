@@ -198,6 +198,12 @@ class AuthorizationController extends RbacController {
     	}
     }
     
+    /**
+     * ACTION ACCEPT ALL
+     * @param string $id
+     * @param string $domainTop
+     * @param string $message
+     */
     public function actionAcceptAll($id = null, $domainTop = null, $message = null){
     	Yii::trace("Accept ALL");
     	Yii::trace("ID: ".$id);
@@ -227,7 +233,7 @@ class AuthorizationController extends RbacController {
     		}
     		
     		foreach($requests as $req){
-    			if($req->status != "AUTHORIZED" && $req->status != "DENIED"){
+    			if($req->status != "AUTHORIZED" && $req->status != "DENIED" && $req->status != "EXPIRED"){
     				if($req->type == "GROUP") $req->manager_user_id = Yii::$app->user->getId();
     				if($message) $req->manager_message = $message;
     				$req->status = 'AUTHORIZED';
@@ -240,6 +246,12 @@ class AuthorizationController extends RbacController {
     	}
     }
     
+    /**
+     * ACTION REJECT ALL
+     * @param string $id
+     * @param string $domainTop
+     * @param string $message
+     */
     public function actionRejectAll($id = null, $domainTop = null, $message = null){
     	Yii::trace("Reject ALL");
     	Yii::trace("Reservation ID: ".$id);
@@ -269,7 +281,7 @@ class AuthorizationController extends RbacController {
     		}
     		
     		foreach($requests as $req){
-    			if($req->status != "AUTHORIZED" && $req->status != "DENIED"){
+    			if($req->status != "AUTHORIZED" && $req->status != "DENIED" && $req->status != "EXPIRED"){
     				if($req->type == "GROUP") $req->manager_user_id = Yii::$app->user->getId();
     				if($message) $req->manager_message = $message;
     				$req->status = 'DENIED';
@@ -282,6 +294,11 @@ class AuthorizationController extends RbacController {
     	}
     }
     
+    /**
+     * ACTION ACCEPT
+     * @param string $id
+     * @param string $message
+     */
     public function actionAccept($id = null, $message = null){
     	Yii::trace("Accept");
     	Yii::trace("ID: ".$id);
@@ -298,6 +315,11 @@ class AuthorizationController extends RbacController {
     	}
     }
     
+    /**
+     * ACTION REJECT
+     * @param string $id
+     * @param string $message
+     */
     public function actionReject($id = null, $message = null){
     	Yii::trace("Reject");
     	Yii::trace("ID: ".$id);

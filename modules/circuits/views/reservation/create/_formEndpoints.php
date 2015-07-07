@@ -2,16 +2,16 @@
     <thead>
         <tr>
             <th colspan="2">
-            	<div class="ui-state-default ui-corner-all" id="<?= $prefix ?>-show-details" style="float: right; margin-right: 4px; cursor: pointer;">
+            	<div class="ui-state-default ui-corner-all ui-transparent-button" id="<?= $prefix ?>-show-details" style="float: right; margin-right: 4px; cursor: pointer;">
             		<span id="<?= $prefix ?>-show-details-icon" class="ui-icon ui-icon-carat-1-n" title="<?= "Toogle"; ?>"></span>
 			    </div>
-			    <div class="ui-state-default ui-corner-all" id="<?= $prefix ?>-select-current-host" style="float: right; margin-right: 2px; cursor: pointer;">
+			    <div class="ui-state-default ui-corner-all ui-transparent-button" id="<?= $prefix ?>-select-current-host" style="float: right; margin-right: 2px; cursor: pointer;">
 			        <span class="ui-icon ui-icon-home" title="<?= "Select current host"; ?>"></span>
 			    </div>
-			    <div class="ui-state-default ui-corner-all" id="<?= $prefix ?>-search-host" style="float: right; margin-right: 2px; cursor: pointer;">
+			    <div class="ui-state-default ui-corner-all ui-transparent-button" id="<?= $prefix ?>-search-host" style="float: right; margin-right: 2px; cursor: pointer;">
 			        <span class="ui-icon ui-icon-search" title="<?= "Search for endpoint"; ?>"></span>
 			    </div>
-			    <div class="ui-state-default ui-corner-all ui-state-disabled" id="<?= $prefix; ?>-copy-urn" style="float: right; margin: 0 2px 0 4px; cursor: pointer;">
+			    <div class="ui-state-default ui-corner-all ui-state-disabled ui-transparent-button" id="<?= $prefix; ?>-copy-urn" style="float: right; margin: 0 2px 0 4px; cursor: pointer;">
 			        <span class="ui-icon ui-icon-link" title="<?= "Copy endpoint link"; ?>"></span>
 			    </div>
                 <span class="title"><?= $label; ?></span>
