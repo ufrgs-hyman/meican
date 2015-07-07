@@ -77,6 +77,6 @@ use yii\helpers\Html;
 </p>
 
 <h1><?= Yii::t("init", 'Source code');?></h1>
-<p><?= Yii::t("init", 'The project is hosted by');?> <a href="https://github.com/ufrgs-hyman/meican" target="blank">GitHub</a>.</p>
+<p><?= Yii::t("init", 'The project is hosted by');?> <a href="https://github.com/ufrgs-hyman/meican2" target="blank">GitHub</a>.</p>
 
 </div>

@@ -9,10 +9,9 @@ use yii\web\Controller;
 use app\modules\circuits\CircuitsModule;
 use app\models\Connection;
 use app\models\ConnectionPath;
-use app\models\Urn;
+use app\models\Port;
 use app\models\Domain;
 use app\models\Provider;
-use app\models\Aggregator;
 
 /*
  * Serviço de Conexões.
@@ -47,19 +46,73 @@ class ConnectionController extends Controller {
 		$data = [];
 		 
 		foreach ($paths as $path) {
-			$dstUrn = $path->getDestinationUrn()->one();
-			$srcUrn = $path->getSourceUrn()->one();
+			$dstPort = $path->getDestinationPort()->one();
+			$srcPort = $path->getSourcePort()->one();
 			$data[] = [
 				'path_order' => $path->path_order, 
-				'src_urn_id'=> $srcUrn ? $srcUrn->id : null,
-				'dst_urn_id'=> $dstUrn ? $dstUrn->id : null];
+				'src_urn_id'=> $srcPort ? $srcPort->id : null,
+				'dst_urn_id'=> $dstPort ? $dstPort->id : null];
 		}
 		 
 		$data = json_encode($data);
 		Yii::trace($data);
 		return $data;
 	}
+
+	public function actionGetEndPoints($id) {
+    	$conn = Connection::findOne($id);
+    	$srcPath = $conn->getFirstPath()->one();
+    	$srcPort = $srcPath->getSourcePort()->one();
+    	$dstPath = $conn->getLastPath()->one();
+    	$dstPort = $dstPath->getDestinationPort()->one();
+    	
+    	$source = null;
+    	$dest = null;
+
+    	$dev = $srcPort ? $srcPort->getDevice()->one() : null;
+        $net = $srcPort ? $srcPort->getNetwork()->one() : null;
+    	
+    	$source["dom"] = $srcPath->domain;
+    	$source["net"] = $net ? $net->name: "";
+    	$source["dev"] = $dev ? $dev->name: "";
+    	$source["port"] = $srcPort ? $srcPort->name : "";
+    	$source["vlan"] = $srcPath->src_vlan;
+    	$source["urn"] = $srcPath->getFullSourcePortUrn();
+
+    	$dev = $dstPort ? $dstPort->getDevice()->one() : null;
+        $net = $dstPort ? $dstPort->getNetwork()->one() : null;
+    	
+    	$dest["dom"] = $dstPath->domain;
+    	$dest["net"] = $net ? $net->name: "";
+    	$dest["dev"] = $dev ? $dev->name: "";
+    	$dest["port"] = $dstPort ? $dstPort->name : "";
+    	$dest["vlan"] = $dstPath->dst_vlan;
+    	$dest["urn"] = $dstPath->getFullDestinationPortUrn();
+    	
+    	$data = json_encode(["src" => $source, "dst" => $dest]);
+    	Yii::trace($data);
+    	return $data;
+    }
 	
+    public function actionGetStp($id) {
+    	$port = Port::findOne($id);
+        $dev = $port->getDevice()->one();
+        $net = $port->getNetwork()->one();
+        $dom = $net->getDomain()->select(['name'])->one()->name;
+    	
+    	$data = [];
+    	$data['id'] = $id;
+    	$data["dom"] = $dom;
+    	$data["net"] = $net->name;
+    	$data["dev"] = $dev->name;
+    	$dev->latitude ? $data['lat'] = $dev->latitude : $data['lat'] = $net->latitude;
+    	$dev->longitude ? $data['lng'] = $dev->longitude : $data['lng'] = $net->longitude;
+    	
+    	$data = json_encode($data);
+    	Yii::trace($data);
+    	return $data;
+    }
+
 	//BUG cancelamento multiplo
 	public function actionCancel($connections) {
 		foreach (json_decode($connections) as $connId) {
@@ -100,7 +153,6 @@ class ConnectionController extends Controller {
 		
 		return "";
 	}
-
 	
 	//Errro conexào nao possui ID nesse momento
 	public function reserveFailed($responseObject){

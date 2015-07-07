@@ -14,6 +14,25 @@
 	<label id="label_res_name" for="res_name" style="width: 170px;"><?= Yii::t("topology", 'Topology Viewer'); ?></label>
 </h1>
 
-<div id="reservation-view-subtab-points" class="tab_subcontent" style="float: right; padding-left:2px;">
+<div id="subtab-points" class="tab_subcontent">
+	<table class="reservation-marker-type reservation-point view-point">
+	    <thead>
+	        <tr>
+	            <th colspan="2">
+	                <span class="title"><?= Yii::t("circuits", "Marker type"); ?></span>
+	            </th>
+	        </tr>
+	    </thead>
+		<tbody>
+		    <tr>
+		        <td>
+			    	<input id="marker-type-network" type="radio" name="marker-type" value="net"></input>
+			    	<label for="marker-type-network"> <?= Yii::t("circuits", "Network"); ?></label>
+			    	<input id="marker-type-device" type="radio" name="marker-type" value="dev" checked></input>
+			    	<label for="marker-type-device"> <?= Yii::t("circuits", "Device"); ?></label>
+			    </td>
+		    </tr>
+		</tbody>
+	</table>
 </div>
 

@@ -32,13 +32,14 @@ echo Menu::widget([
 		[
 			'label'=>'<h3><a href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('topology','Topologies').'</a></h3>',
 			'items'=>[
-				['label'=>Yii::t('topology','Aggregators'), 'url'=>['/topology/aggregator/index']],
 				['label'=>Yii::t('topology','Domains'), 'url'=>['/topology/domain/index']],
+				['label'=>Yii::t('topology','Providers'), 'url'=>['/topology/provider/index']],
 				['label'=>Yii::t('topology','Networks'), 'url'=>['/topology/network/index']],
 				['label'=>Yii::t('topology','Devices'), 'url'=>['/topology/device/index']],
-				['label'=>Yii::t('topology','URNs'), 'url'=>['/topology/urn/index']],
+				['label'=>Yii::t('topology','Ports'), 'url'=>['/topology/port/index']],
 				['label'=>Yii::t('topology','Viewer'), 'url'=>['/topology/viewer/index']],
-				['label'=>Yii::t('topology','Importer'), 'url'=>['/topology/import/index'], 'visible'=>RbacController::can('topology/update')],
+				['label'=>Yii::t('topology','Synchronizer'), 'url'=>['/topology/sync/index'], 'visible'=>RbacController::can('topology/update')],
+				['label'=>Yii::t('topology','Changes'), 'url'=>['/topology/sync/pending-changes'], 'visible'=>RbacController::can('topology/update')],
 				['label'=>Yii::t('topology','Automated Tests'),'url'=>['/circuits/automated-test/index'],'visible'=>RbacController::can('topology/update')]
 			],
 			'visible'=>RbacController::can('topology/read')

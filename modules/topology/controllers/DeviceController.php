@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\Device;
 use app\models\Network;
 use app\models\Domain;
+use app\models\Port;
 use yii\helpers\Json;
 use Yii;
 
@@ -107,21 +108,16 @@ class DeviceController extends RbacController {
     	return $temp;
     }
     
-    public function actionGetByNetwork($id){
-    	$data = Device::find()->where(['network_id'=>$id])->orderBy(['name'=>'SORT ASC'])->asArray()->select(['id','name'])->all();
+    public function actionGet($id) {
+        $data = Device::find()->asArray()->where(['id'=>$id])->one();
     
-    	$temp = Json::encode($data);
-    	Yii::trace($temp);
-    	return $temp;
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
     }
     
     public function actionGetByDomain($id, $cols=null){
-    	$nets = Network::find()->where(['domain_id' => $id])->select(['id'])->all();
-    	$query = Device::find()->orderBy(['name'=>'SORT ASC'])->asArray();
-    	
-    	foreach ($nets as $net) {
-    		$query->andWhere(['network_id'=>$net->id]);
-    	}
+    	$query = Device::find()->where(['domain_id' => $id])->orderBy(['name'=>'SORT ASC'])->asArray();
     	
     	$cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
     
@@ -129,9 +125,25 @@ class DeviceController extends RbacController {
     	Yii::trace($temp);
     	return $temp;
     }
+
+    public function actionGetByNetwork($id, $cols=null){
+        $ports = Port::find()->where(['network_id'=>$id])->select(['device_id'])->all();
+        $devs =[];
+        foreach ($ports as $port) {
+            $devs[] = $port->device_id;
+        }
+
+        $query = Device::find()->where(['in','id',$devs])->orderBy(['name'=>'SORT ASC'])->asArray();
+        
+        $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
+    
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
+    }
     
     public function actionGetAll() {
-    	$data = Device::find()->orderBy(['name'=>'SORT ASC'])->asArray()->select(['id','name','latitude','longitude','network_id'])->all();
+    	$data = Device::find()->orderBy(['name'=>'SORT ASC'])->asArray()->select(['id','name','latitude','longitude','domain_id'])->all();
     	
     	$temp = Json::encode($data);
     	Yii::trace($temp);
@@ -158,26 +170,9 @@ class DeviceController extends RbacController {
     	echo json_encode($array);
     }
     
-    /**
-     * The function receives a raw model array list and transforms into
-     * a valid format for a Dropdown List. Set to TRUE the null option to have
-     * a null selectable option in the menu
-     * 
-     * @param Array $modelList
-     * @param String $key
-     * @param String $value
-     * @param Boolean $nullOption
-     * @return Array $dropDown
-     */
-    protected function toDropDownFormat($modelList, $key, $value, $nullOption = FALSE){
-    	$dropDown = [];
-    	 
-    	if($nullOption)
-    		$dropDown[null] = null;
-    	foreach($modelList as $item){
-    		$dropDown[$item[$key]] = $item[$value];
-    	}
-    	 
-    	return $dropDown;
+    public function actionGetParentLocation($id) {
+        $temp = Json::encode(Device::findOneParentLocation($id));
+        Yii::trace($temp);
+        return $temp;
     }
 }

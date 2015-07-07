@@ -5,6 +5,7 @@ $(document).ready(function() {
 var map;
 var shift = 0.01;
 var markerWindow;
+var markers = [];
 
 ///////////// DESENHAR CIRCUITO NO MAPA ///////////////
 
@@ -53,116 +54,146 @@ function initialize() {
 	});
 	
 	var markers = [];
-	
-	$.ajax({
-		url: baseUrl+'/topology/viewer/get-sdps',
-		dataType: 'json',
-		method: "GET",
-		success: function(response) {
-			for (var key in response) {
-				addSdp(markers, response[key][0], response[key][1]);
-			}
-		}
-	});
+
+    if (false && $("input[name=marker-type]").val() == "net") {
+        $.ajax({
+            url: baseUrl+'/topology/viewer/get-sdps',
+            dataType: 'json',
+            method: "GET",
+            success: function(response) {
+                for (var key in response) {
+                    addSdp('network', response[key][0], response[key][1]);
+                }
+            }
+        });
+    } else {
+        $.ajax({
+            url: baseUrl+'/topology/viewer/get-device-links',
+            dataType: 'json',
+            method: "GET",
+            success: function(response) {
+                for (var key in response) {
+                    addSdp('device', response[key][0], response[key][1]);
+                }
+            }
+        });
+    }
 }
 
 //////////// ADICIONA MARCADORES NO MAPA /////////////////
 
-function addSdp(markers, srcNetId, dstNetId) {
+function addSdp(type, srcId, dstId) {
+    if (type == "device") {
+        url = type + '/get-parent-location';
+    } else {
+        url = type + '/get';
+    }
+
 	$.ajax({
-		url: baseUrl+'/topology/network/get',
+		url: baseUrl+'/topology/' + url,
 		dataType: 'json',
 		method: "GET",
 		data: {
-			id: srcNetId,
+			id: srcId,
 		},
-		success: function(net) {
-			marker = getNetworkMarker(markers, net.id);
-			
-			if (marker == null) {
-				var contentString = tt('Network') + ': <b>'+net.name+'</b><br><br><br>';
-	
-				if (net.latitude != null && net.longitude != null) {
-				var myLatlng = new google.maps.LatLng(net.latitude,net.longitude);
-				} else {
-				var myLatlng = new google.maps.LatLng(0, 0);
-				}
-				
-				var marker = new StyledMarker({
-					styleIcon: new StyledIcon(
-						StyledIconTypes.MARKER,
-							{
-								color: generateColor(net.domain_id),
-							}
-					),
-					position: getValidMarkerPosition(markers, myLatlng),
-					info: contentString,
-					id: net.id,
-				});
-				
-				var length = markers.push(marker);
-				
-				addMarkerListeners(markers, length - 1);
-				
-				marker.setMap(map);
-			} 
-			
-			addMarkerAndCircuit(markers, marker, dstNetId);
+		success: function(object) {
+            marker = getMarker(type, srcId);
+
+            if (marker == null) {
+    			var contentString = type + ': <b>'+object.name+'</b><br><br><br>';
+
+    			if (object.latitude != null && object.longitude != null) {
+    			var myLatlng = new google.maps.LatLng(object.latitude,object.longitude);
+    			} else {
+    			var myLatlng = new google.maps.LatLng(0, 0);
+    			}
+
+                    colorId = object.domain_id;
+    			
+    			var marker = new StyledMarker({
+    				styleIcon: new StyledIcon(
+    					StyledIconTypes.MARKER,
+    						{
+    							color: generateColor(colorId),
+    						}
+    				),
+    				position: getValidMarkerPosition(myLatlng),
+    				info: contentString,
+    				id: object.id,
+                    type: type,
+    			});
+    			
+    			var length = markers.push(marker);
+    			
+    			addMarkerListeners(length - 1);
+    			
+    			marker.setMap(map);
+            }
+
+            addMarkerAndCircuit(marker, dstId);
 		}
 	});
 }
 
-function addMarkerAndCircuit(markers, srcMarker, dstNetId) {
-	$.ajax({
-		url: baseUrl+'/topology/network/get',
-		dataType: 'json',
-		method: "GET",
-		data: {
-			id: dstNetId,
-		},
-		success: function(net) {
-			marker = getNetworkMarker(markers, net.id);
-			
-			if (marker == null) {
-			
-				var contentString = tt('Network') + ': <b>'+net.name+'</b><br><br><br>';
-	
-				if (net.latitude != null && net.longitude != null) {
-				var myLatlng = new google.maps.LatLng(net.latitude,net.longitude);
-				} else {
-				var myLatlng = new google.maps.LatLng(0, 0);
-				}
-				
-				var marker = new StyledMarker({
-					styleIcon: new StyledIcon(
-						StyledIconTypes.MARKER,
-							{
-								color: generateColor(net.domain_id),
-							}
-					),
-					position: getValidMarkerPosition(markers, myLatlng),
-					info: contentString,
-					id: net.id,
-				});
-				
-				var length = markers.push(marker);
-				
-				addMarkerListeners(markers, length - 1);
-			
-				marker.setMap(map);
-				
-			}
-			
-			drawCircuit(srcMarker, marker);
-		}
-	});
+function addMarkerAndCircuit(srcMarker, dstId) {
+     if (srcMarker.type == "device") {
+        url = srcMarker.type + '/get-parent-location';
+    } else {
+        url = srcMarker.type + '/get';
+    }
+
+    $.ajax({
+        url: baseUrl+'/topology/' + url,
+        dataType: 'json',
+        method: "GET",
+        data: {
+            id: dstId,
+        },
+        success: function(object) {
+            marker = getMarker(srcMarker.type, dstId);
+
+            if (marker == null) {
+
+                var contentString = srcMarker.type + ': <b>'+object.name+'</b><br><br><br>';
+    
+                if (object.latitude != null && object.longitude != null) {
+                var myLatlng = new google.maps.LatLng(object.latitude,object.longitude);
+                } else {
+                var myLatlng = new google.maps.LatLng(0, 0);
+                }
+
+                    colorId = object.domain_id;
+                
+                var marker = new StyledMarker({
+                    styleIcon: new StyledIcon(
+                        StyledIconTypes.MARKER,
+                            {
+                                color: generateColor(colorId),
+                            }
+                    ),
+                    position: getValidMarkerPosition(myLatlng),
+                    info: contentString,
+                    id: object.id,
+                    type: srcMarker.type,
+                });
+                
+                var length = markers.push(marker);
+                
+                addMarkerListeners(length - 1);
+            
+                marker.setMap(map);
+            }
+
+            drawCircuit(srcMarker, marker);
+        }
+    });
 }
 
-function getValidMarkerPosition(markers, position) {
+function getValidMarkerPosition(position) {
 	for(i = 0; i < markers.length; i++){
 		if ((markers[i].position.lat().toString().substring(0,6) == position.lat().toString().substring(0,6)) && 
 				(markers[i].position.lng().toString().substring(0,6) == position.lng().toString().substring(0,6))) {
-			return getValidMarkerPosition(markers, new google.maps.LatLng(position.lat(), position.lng() + shift));
+			return getValidMarkerPosition(new google.maps.LatLng(position.lat(), position.lng() + shift));
 		}
 	}
 	
@@ -177,7 +208,7 @@ function closeWindow() {
 
 //////////// LISTENERS DOS MARCADORES /////////////
 
-function addMarkerListeners(markers, index) {
+function addMarkerListeners(index) {
 	google.maps.event.addListener(markers[index], 'mouseover', function(key) {
 		return function(){
 			closeWindow();
@@ -205,9 +236,9 @@ function setMapBounds(path) {
     map.setZoom(map.getZoom() - 1);
 }
 
-function getNetworkMarker(markers, id) {
+function getMarker(type, id) {
 	for(i = 0; i < markers.length; i++){
-		if (markers[i].id == id) {
+		if (markers[i].type == type && markers[i].id == parseInt(id)) {
 			return markers[i];
 		}
 	}

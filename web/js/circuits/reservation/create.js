@@ -22,6 +22,7 @@ $(document).ready(function() {
 var sourceMarker;
 var destinMarker;
 var wayPoints = [];
+var listDomains;
 var map;
 var markerCluster;
 var circuit;
@@ -45,7 +46,6 @@ var MARKER_OPTIONS_INTRA = '' +
 '<button style="font-size: 11px; width: 98%;" id="remove-intra">' + tt('Remove intra-domain circuit') + '</button>';
 var devicesLoaded = false;
 var shift = 0.01;
-var count = shift;
 
 function prepareConfirmDialog() {
 	$("#confirm-dialog").dialog({
@@ -507,54 +507,67 @@ function fillNetworkSelect(endPointType, domainId, networkId) {
 	}
 }
 
-function fillDeviceSelect(endPointType, networkId, deviceId) {
+function fillDeviceSelect(endPointType, domainId, networkId, deviceId) {
 	clearSelect(endPointType, "device");
+    parent = null;
 	if (networkId != "null" && networkId != null && networkId != "") {
-		$("#"+ endPointType + "-device").append('<option value="null">' + tt('loading') + '</option>');
-		$.ajax({
-			url: baseUrl+'/topology/device/get-by-network',
-			dataType: 'json',
-			data: {
-				id: networkId,
-			},
-			success: function(response){
-				clearSelect(endPointType, "device");
-				$("#"+ endPointType + "-device").append('<option value="null">' + tt('select') + '</option>');
-				enableSelect(endPointType, "device");
-				for (var i = 0; i < response.length; i++) {
-					$("#"+ endPointType + "-device").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
-			    }
-				if (deviceId != null && deviceId != "") {
-					$("#"+ endPointType + "-device").val(deviceId);
-				}
-			}
-		});
-	} else {
+        parent = [];
+		parent[0] = "network";
+        parent[1] = networkId;
+	} else if (domainId != "null" && domainId != null && domainId != "") {
+        parent = [];
+        parent[0] = "domain";
+        parent[1] = domainId;
+    } 
+
+    if (parent) {
+        $("#"+ endPointType + "-device").append('<option value="null">' + tt('loading') + '</option>');
+        $.ajax({
+            url: baseUrl+'/topology/device/get-by-' + parent[0],
+            dataType: 'json',
+            data: {
+                id: parent[1],
+            },
+            success: function(response){
+                clearSelect(endPointType, "device");
+                $("#"+ endPointType + "-device").append('<option value="null">' + tt('select') + '</option>');
+                enableSelect(endPointType, "device");
+                for (var i = 0; i < response.length; i++) {
+                    $("#"+ endPointType + "-device").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
+                }
+                if (deviceId != null && deviceId != "") {
+                    $("#"+ endPointType + "-device").val(deviceId);
+                }
+            }
+        });
+    } else {
 		disableSelect(endPointType, "device");
 	}
 }
 
 function fillPortSelect(endPointType, deviceId) {
+    disableSelect(endPointType, "port");
 	clearSelect(endPointType, "port");
 	if (deviceId != "null" && deviceId != null) {
 		$("#"+ endPointType + "-port").append('<option value="null">' + tt('loading') + '</option>');
 		$.ajax({
-			url: baseUrl+'/topology/urn/get-by-device',
+			url: baseUrl+'/topology/port/get-by-device',
 			dataType: 'json',
 			data: {
 				id: deviceId,
-				cols: JSON.stringify(['id','port']),
+                type: 'NSI',
+				cols: JSON.stringify(['id','name']),
 			},
 			success: function(response){
 				clearSelect(endPointType, "port");
 				$("#"+ endPointType + "-port").append('<option value="null">' + tt('select') + '</option>');
 				enableSelect(endPointType, "port");
 				for (var i = 0; i < response.length; i++) {
-					var port = response[i].port;
+					var name = response[i].name;
 					if (response[i].port == "") {
-						port = tt("no name");
+						name = tt("no name");
 					}
-					$("#"+ endPointType + "-port").append('<option value="' + response[i].id + '">' + port + '</option>');
+					$("#"+ endPointType + "-port").append('<option value="' + response[i].id + '">' + name + '</option>');
 			    }
 			}
 		});
@@ -568,10 +581,10 @@ function fillVlanSelect(endPointType, portId) {
 	if (portId != "null" && portId != null) {
 		$("#"+ endPointType + "-vlan").append('<option value="null">' + tt('loading') + '</option>');
 		$.ajax({
-			url: baseUrl+'/topology/urn/get-vlan-ranges',
+			url: baseUrl+'/topology/port/get-vlan-ranges',
 			dataType: 'json',
 			data: {
-				urnId: portId,
+				id: portId,
 			},
 			success: function(response){
 				clearSelect(endPointType, "vlan");
@@ -601,30 +614,30 @@ function setNetworkSelected(endPointType, marker) {
 	if (marker) {
 		$("#"+ endPointType + "-domain").val(marker.domainId);
 		fillNetworkSelect(endPointType, marker.domainId, marker.id);
-		fillDeviceSelect(endPointType, marker.id);
+		fillDeviceSelect(endPointType, null, marker.id);
 	} else {
-		fillNetworkSelect(endPointType, null, null);
-		fillDeviceSelect(endPointType, null, null);
+		fillNetworkSelect(endPointType);
+		fillDeviceSelect(endPointType);
 	}
 	
-	fillPortSelect(endPointType, null);
-	fillVlanSelect(endPointType, null);
+	fillPortSelect(endPointType);
+	fillVlanSelect(endPointType);
 }
 
 function setDeviceSelected(endPointType, marker) {
 	if (marker) {
 		$("#"+ endPointType + "-domain").val(marker.domainId);
-		fillNetworkSelect(endPointType, marker.domainId, marker.networkId);
-		fillDeviceSelect(endPointType, marker.networkId, marker.id);
+		fillNetworkSelect(endPointType, marker.domainId);
+		fillDeviceSelect(endPointType, marker.domainId, null, marker.id);
 		fillPortSelect(endPointType, marker.id);
 	} else {
 		$("#"+ endPointType + "-domain").val("null");
-		fillNetworkSelect(endPointType, null, null);
-		fillDeviceSelect(endPointType, null, null);
-		fillPortSelect(endPointType, null);
+		fillNetworkSelect(endPointType);
+		fillDeviceSelect(endPointType);
+		fillPortSelect(endPointType);
 	}
 	
-	fillVlanSelect(endPointType, null);
+	fillVlanSelect(endPointType);
 }
 
 ///////////// DESENHAR CIRCUITO NO MAPA ///////////////
@@ -667,8 +680,8 @@ function drawCircuit() {
 	}
 }
 
-function setEndPoint(endPointType, marker) {
-	removeEndPoint(endPointType);
+function setMarkerEndPoint(endPointType, marker) {
+	removeMarkerEndPoint(endPointType);
 	
 	if (endPointType == "src") {
 		if (marker) {
@@ -687,40 +700,24 @@ function setEndPoint(endPointType, marker) {
 		marker.setMap(map);
 	}
 	
-	if (marker && marker.type == "net") {
-		setNetworkSelected(endPointType, marker);
-	} else {
-		setDeviceSelected(endPointType, marker);
-	}
-	
 	drawCircuit();
 }
 
-function removeEndPoint(endPointType) {
+function removeMarkerEndPoint(endPointType) {
 	if (endPointType == "src") {
 		if (sourceMarker) {
-			if (sourceMarker.circuitMode == "intra") {
-				sourceMarker.circuitMode = "dst";
-			} else {
-				sourceMarker.setMap(null);
-				markerCluster.addMarker(sourceMarker);
-				sourceMarker.circuitMode = "none";
-			}
+			sourceMarker.setMap(null);
+			markerCluster.addMarker(sourceMarker);
+			sourceMarker.circuitMode = "none";
 			sourceMarker = null;
 		} 
 		
 	} else if (destinMarker) {
-		if (destinMarker.circuitMode == "intra") {
-			destinMarker.circuitMode = "src";
-		} else {
-			destinMarker.setMap(null);
-			markerCluster.addMarker(destinMarker);
-			destinMarker.circuitMode = "none";
-		}
+		destinMarker.setMap(null);
+		markerCluster.addMarker(destinMarker);
+		destinMarker.circuitMode = "none";
 		destinMarker = null;
 	}
-	
-	setNetworkSelected(endPointType, null);
 	
 	drawCircuit();
 }
@@ -800,14 +797,14 @@ function initialize() {
 //////////// ADICIONA MARCADORES NO MAPA /////////////////
 
 function addNetworkMarker(markers, network) {
-	var contentString = tt('Network') + ': <b>'+network.name+'</b><br>';
+    var domainName = getDomainName(network.domain_id);
+	var contentString = tt('Domain') + ': <b>' + domainName + '</b><br>' + tt('Network') + ': <b>'+network.name+'</b><br>';
 	
 	if (network.latitude != null && network.longitude != null) {
 		var myLatlng = getValidMarkerPosition(markers, "net", new google.maps.LatLng(network.latitude, network.longitude));
 		
 	} else {
-		var myLatlng = new google.maps.LatLng(0, count);
-		count = count + shift;
+		var myLatlng = getValidMarkerPosition(markers, "net", new google.maps.LatLng(0, 0));
 	}
 	
 	var marker = new StyledMarker({
@@ -823,7 +820,6 @@ function addNetworkMarker(markers, network) {
 		id: network.id,
 		name: network.name,
 		domainId: network.domain_id,
-		deviceCounter: shift,
 		info: contentString,
 	});
 	
@@ -833,21 +829,20 @@ function addNetworkMarker(markers, network) {
 }
 
 function addDeviceMarker(markers, device) {
-	var network = getNetworkMarker(markers, device.network_id);
-	var contentString = tt('Network') + ': <b>'+network.name+'</b><br>' + tt('Device') + ': <b>' + device.name + '</b><br>';
+	var domainName = getDomainName(device.domain_id);
+	var contentString = tt('Domain') + ': <b>'+domainName+'</b><br>' + tt('Device') + ': <b>' + device.name + '</b><br>';
 	
 	if (device.latitude != null && device.longitude != null) {
-		var myLatlng = new google.maps.LatLng(device.latitude,device.longitude);
+		var myLatlng = getValidMarkerPosition(markers, "dev", new google.maps.LatLng(device.latitude, device.longitude));
 	} else {
-		var myLatlng = new google.maps.LatLng(network.getPosition().lat(), network.getPosition().lng() + network.deviceCounter);
-		network.deviceCounter += shift;
+		var myLatlng = getValidMarkerPosition(markers, "dev", new google.maps.LatLng(0, 0));
 	}
 	
 	var marker = new google.maps.Marker({
 		icon: {
 		    path: 'M 15 15 L 35 15 L 25 35 z',
 		    anchor: new google.maps.Point(25, 35),
-		    fillColor: '#' + generateColor(network.domainId),
+		    fillColor: '#' + generateColor(device.domain_id),
 		    fillOpacity: 1,
 		    strokeColor: 'black',
 		},
@@ -856,8 +851,7 @@ function addDeviceMarker(markers, device) {
 		circuitMode: "none",
 		id: device.id,
 		name: device.name,
-		domainId: network.domainId,
-		networkId: network.id,
+		domainId: device.domain_id,
 		info: contentString,
 	});
 	
@@ -935,7 +929,12 @@ function addMarkerListeners(markers, index) {
 		    		$('#set-as-source').on('click', function() {
 		    			closeWindows();
 		    			
-		    			setEndPoint("src", marker);
+		    			setMarkerEndPoint("src", marker);
+                        if (marker && marker.type == "net") {
+                            setNetworkSelected("src", marker);
+                        } else {
+                            setDeviceSelected("src", marker);
+                        }
 		    		});
 		    		
 		    		$('#set-as-waypoint').on('click', function() {
@@ -947,7 +946,12 @@ function addMarkerListeners(markers, index) {
 		    		$('#set-as-dest').on('click', function() {
 		    			closeWindows();
 		    			
-		    			setEndPoint('dst', marker);
+                        setMarkerEndPoint("dst", marker);
+                        if (marker && marker.type == "net") {
+                            setNetworkSelected("dst", marker);
+                        } else {
+                            setDeviceSelected("dst", marker);
+                        }
 		    		});
 		    		
 		    		$('#set-as-intra').on('click', function() {
@@ -955,8 +959,19 @@ function addMarkerListeners(markers, index) {
 		    			
 		    			deleteWayPoints();		    			
 		    			
-		    			setEndPoint("src", marker);
-		    			setEndPoint("dst", marker);
+                        setMarkerEndPoint("src", marker);
+                        if (marker && marker.type == "net") {
+                            setNetworkSelected("src", marker);
+                        } else {
+                            setDeviceSelected("src", marker);
+                        }
+
+                        setMarkerEndPoint("dst", marker);
+                        if (marker && marker.type == "net") {
+                            setNetworkSelected("dst", marker);
+                        } else {
+                            setDeviceSelected("dst", marker);
+                        }
 		    		});
 		    		
 		    		$('#remove-waypoint').on('click', function() {
@@ -968,13 +983,18 @@ function addMarkerListeners(markers, index) {
 		    		$('#remove-endpoint').on('click', function() {
 		    			closeWindows();
 		    			
-		    			removeEndPoint(marker.circuitMode);
+		    			removeMarkerEndPoint(marker.circuitMode);
+
+                        setNetworkSelected(marker.circuitMode, null);
 		    		});
 		    		
 		    		$('#remove-intra').on('click', function() {
 		    			closeWindows();
 		    			
-		    			removeEndPoint("src");
+		    			removeMarkerEndPoint("src");
+
+                        setNetworkSelected("src", null);
+                        setNetworkSelected("dst", null);
 		    		});
 			    }
 			}(markers[key]));
@@ -989,9 +1009,11 @@ function addMarkerListeners(markers, index) {
 function setMarkerType(markers, markerType) {
 	closeWindows();
 	currentMarkerType = markerType;
-	removeEndPoint("src");
+	removeMarkerEndPoint("src");
+    setNetworkSelected("src");
+    setNetworkSelected("dst");
 	fillDomainSelect("src");
-	removeEndPoint("dst");
+	removeMarkerEndPoint("dst");
 	fillDomainSelect("dst");
 	setMarkersVisible(markers, markerType);
 	if (markerType == "dev") {
@@ -1067,9 +1089,9 @@ function initSelect(endPointType, markers) {
 	fillDomainSelect(endPointType);
 	
 	$('#' + endPointType + '-domain').on('change', function() {
-		removeEndPoint(endPointType);
+		removeMarkerEndPoint(endPointType);
 		fillNetworkSelect(endPointType, this.value);
-		fillDeviceSelect(endPointType);
+		fillDeviceSelect(endPointType, this.value);
 		fillPortSelect(endPointType);
 		fillVlanSelect(endPointType);
 	});
@@ -1078,10 +1100,10 @@ function initSelect(endPointType, markers) {
 		if (currentMarkerType == "net") {
 			var marker = getNetworkMarker(markers, this.value);
 			
-			setEndPoint(endPointType, marker);
+			setMarkerEndPoint(endPointType, marker);
 		}
 		
-		fillDeviceSelect(endPointType, this.value);
+		fillDeviceSelect(endPointType, $('#' + endPointType + '-domain').val(), this.value);
 		fillPortSelect(endPointType);
 		fillVlanSelect(endPointType);
 	});
@@ -1090,7 +1112,7 @@ function initSelect(endPointType, markers) {
 		if (currentMarkerType == "dev") {
 			var marker = getDeviceMarker(markers, this.value);
 
-			setEndPoint(endPointType, marker);
+			setMarkerEndPoint(endPointType, marker);
 		}
 		
 		fillPortSelect(endPointType, this.value);
@@ -1140,6 +1162,30 @@ function getDeviceMarker(markers, id) {
 	}
 	
 	return null;
+}
+
+function getDomainName(id) {
+    if (!listDomains) {
+        $.ajax({
+            url: baseUrl+'/topology/domain/get-all',
+            data: {
+                cols: JSON.stringify(['id','name']),
+            },
+            async: false,
+            dataType: 'json',
+            success: function(domains) {
+                listDomains = domains;
+            },
+        });
+        return null;
+    }
+    size = listDomains.length;
+    for (var i = 0; i < size; i++) {
+        if (listDomains[i].id == id) {
+            return listDomains[i].name;
+        }
+    };
+    return null;
 }
 
 ////////// DEFINE ZOOM E LIMITES DO MAPA A PARTIR DE UM CAMINHO ////////

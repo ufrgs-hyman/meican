@@ -12,7 +12,7 @@
 
 <h1 style="clear: none; float: left; z-index: 999999; position: absolute;">
 	<data id="res-id" hidden><?= $reservation->id; ?></data>
-	<div class="reservation-name"><?= $reservation->name . " (" . ($reservation->getRequesterUser()->one()->login) . ")"?></div>
+	<div class="reservation-name"><?= $reservation->name; ?></div>
 </h1>
 
 <div id="subtab-points" class="tab_subcontent"">

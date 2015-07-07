@@ -6,10 +6,12 @@ use yii\base\Model;
 use app\models\Aggregator;
 use app\models\Reservation;
 use app\models\ReservationRecurrence;
-use app\models\Urn;
+use app\models\Port;
 use app\models\Device;
 use app\models\ReservationPath;
 use app\models\Connection;
+use app\models\Preference;
+
 use Yii;
 use app\components\DateUtils;
 
@@ -59,7 +61,8 @@ class ReservationForm extends Model {
  			$this->reservation->start = DateUtils::toUTC($this->start_date, $this->start_time);
  			$this->reservation->finish = DateUtils::toUTC($this->finish_date, $this->finish_time);
  			$this->reservation->bandwidth = $this->bandwidth;
- 			$this->reservation->provider_id = Aggregator::findDefault()->one()->id;
+ 			$this->reservation->requester_nsa = Preference::findOne(Preference::MEICAN_NSA)->value;
+ 			$this->reservation->provider_nsa = Preference::findOne(Preference::CIRCUITS_DEFAULT_PROVIDER_NSA)->value;
  			$this->reservation->request_user_id = Yii::$app->user->getId(); 			
  			
  			if ($this->reservation->save()) {
@@ -79,8 +82,7 @@ class ReservationForm extends Model {
  				
  				$path = new ReservationPath;
  				$path->reservation_id = $this->reservation->id;
- 				//$path->domain_id = Urn::findOne($this->src_port)->getDevice()->one()->getNetwork()->one()->domain_id;
- 				$path->setUrn(Urn::find()->where(['id' => $this->src_port])->one());
+ 				$path->port_urn = Port::find()->where(['id' => $this->src_port])->one()->urn;
  				$path->path_order = 0;
  				$path->vlan = $this->src_vlan;
  				
@@ -96,10 +98,9 @@ class ReservationForm extends Model {
  						$path->reservation_id = $this->reservation->id;
  						$path->path_order = $i + 1;
  						$dev = Device::findOne($this->way_dev[$i]);
- 						//$path->domain_id = $dev->getNetwork()->one()->domain_id;
- 						$urn = $dev->getUrns()->one();
- 						$path->setUrn($urn);
- 						$path->vlan = $urn->getVlanRanges()->one()->value;
+ 						$port = $port->getPorts()->one();
+ 						$path->port_urn($port->urn);
+ 						$path->vlan = $port->getVlanRanges()->one()->value;
  						
  						if (!$path->save()) {
  							Yii::trace($path->getErrors());
@@ -109,8 +110,7 @@ class ReservationForm extends Model {
  				
  				$path = new ReservationPath;
  				$path->reservation_id = $this->reservation->id;
- 				//$path->domain_id = Urn::findOne($this->dst_port)->getDevice()->one()->getNetwork()->one()->domain_id;
- 				$path->setUrn(Urn::find()->where(['id' => $this->dst_port])->one());
+ 				$path->port_urn = Port::find()->where(['id' => $this->dst_port])->one()->urn;
  				$path->path_order = $waySize + 1;
  				$path->vlan = $this->dst_vlan;
 

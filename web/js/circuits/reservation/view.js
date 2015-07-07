@@ -3,9 +3,9 @@ $(document).ready(function() {
 	
 	prepareRefreshButton();
 	prepareCancelDialog();
-	loadEndPointDetails();
 	
 	selectConn($("#connections-grid tbody").children().attr("data-key"));
+    loadEndPointDetails(selectedConn);
 	selectedConnIsApproved = isAuthorizationReceived();
 });
 
@@ -74,13 +74,13 @@ function selectConn(id) {
 	$("#connections-grid tbody").children("tr[data-key=" + selectedConn + "]").addClass("checked-line");
 }
 
-function loadEndPointDetails() {
+function loadEndPointDetails(connId) {
 	$.ajax({
-		url: baseUrl+'/circuits/reservation/get-end-points',
+		url: baseUrl+'/circuits/connection/get-end-points',
 		dataType: 'json',
 		method: "GET",
 		data: {
-			id: $("#res-id").text(),
+			id: connId,
 		},
 		success: function(response) {
 			fillEndPointDetails("src", response["src"]);
@@ -96,19 +96,25 @@ function fillEndPointDetails(endPointType, path) {
 		$("#" + endPointType + "-dom").text(path.dom.substr(0, 13) + "...");
 		$("#" + endPointType + "-dom").prop("title", path.dom);
 	}
-	if (path.net.length < 15) {
+    if (path.net == "") {
+        $("#" + endPointType + "-net").text(tt("unknown"));
+    } else if (path.net.length < 15) {
 		$("#" + endPointType + "-net").text(path.net);
 	} else {
 		$("#" + endPointType + "-net").text(path.net.substr(0, 13) + "...");
 		$("#" + endPointType + "-net").prop("title", path.net);
 	}
-	if (path.dev.length < 15) {
+	if (path.dev == "") {
+        $("#" + endPointType + "-dev").text(tt("unknown"));
+    } else if (path.dev.length < 15) {
 		$("#" + endPointType + "-dev").text(path.dev);
 	} else {
 		$("#" + endPointType + "-dev").text(path.dev.substr(0, 13) + "...");
 		$("#" + endPointType + "-dev").prop("title", path.dev);
 	}
-	if (path.port.length < 15) {
+	if (path.port == "") {
+        $("#" + endPointType + "-port").text(tt("unknown"));
+    } else if (path.port.length < 15) {
 		$("#" + endPointType + "-port").text(path.port);
 	} else {
 		$("#" + endPointType + "-port").text(path.port.substr(0, 13) + "...");
@@ -473,7 +479,7 @@ function setMapBoundsMarkersWhenReady(requiredMarkers) {
 
 function addWayPointMarker(urnId) {
 	$.ajax({
-		url: baseUrl+'/circuits/reservation/get-stp',
+		url: baseUrl+'/circuits/connection/get-stp',
 		dataType: 'json',
 		method: "GET",
 		data: {
@@ -487,7 +493,7 @@ function addWayPointMarker(urnId) {
 
 function addSourceMarker(urnId) {
 	$.ajax({
-		url: baseUrl+'/circuits/reservation/get-stp',
+		url: baseUrl+'/circuits/connection/get-stp',
 		dataType: 'json',
 		method: "GET",
 		data: {
@@ -501,7 +507,7 @@ function addSourceMarker(urnId) {
 
 function addDestinMarker(urnId, markers) {
 	$.ajax({
-		url: baseUrl+'/circuits/reservation/get-stp',
+		url: baseUrl+'/circuits/connection/get-stp',
 		dataType: 'json',
 		method: "GET",
 		data: {

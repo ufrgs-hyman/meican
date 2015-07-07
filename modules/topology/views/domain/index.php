@@ -50,14 +50,7 @@
 			        	'contentOptions'=>['style'=>'width: 15px;'],
 			        ),
 			        'name',
-	        		[
-	        			'label' => 'IDC URL',
-	        			'value' => function($dom){
-	        				return $dom->getProvider()->one() ? $dom->getProvider()->one()->connection_url : null;
-	        			}
-	        		],
-	        		'oscars_version',
-					'topology',
+			        'default_policy'
 				),
 		]);
 	?>
