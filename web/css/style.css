@@ -376,40 +376,15 @@ table th.listHeader {
     height: 25px;
 }
 
-
+.list table tbody tr, .list-without-margin table tbody tr {
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    height: 25px;
+    line-height: 15px;
 }
 
-
-.list table tbody tr:nth-child(odd), .list-without-margin table tbody tr:nth-child(odd) {
-    background-color:#eee;
-}
-
-.list table tbody tr.success:nth-child(odd)    {
-    background-color:#d1ffd1;
-}
-
-.list table tbody tr.success:nth-child(even)    {
-    background-color:#e4ffe4;
-}
-
-.list table tbody tr.error:nth-child(odd)    {
-    background-color:#ffdbdb;
-}
-
-.list table tbody tr.error:nth-child(even)    {
-    background-color:#ffe6e6;
-}
-
-.list table tbody tr:nth-child(even), .list-without-margin table tbody tr:nth-child(even) {
-    background-color:#fff;
-}
-
-.list table tbody tr:nth-child(odd)    {
-    background-color:#eee;
-}
-
-.list table tbody tr:hover {
-    background-color: #CCC !important; 
+.list table tbody tr:hover , .list-without-margin table tbody tr:hover {
+    background-color: #DFEAFF !important;
 }
 /*
 .list, .list-without-margin table tbody tr:hover {
@@ -1319,7 +1294,7 @@ span.ui-spinner {
 }
 
 .ui-spinner .ui-state-hover span.ui-icon, .ui-spinner .ui-state-active span.ui-icon {
-    background-image: url(images/ui-icons_888888_256x240.png);
+    background-image: url(images/ui-icons_454545_256x240.png);
 }
 
 /* fonte para todos os widgets */
