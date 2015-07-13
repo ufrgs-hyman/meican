@@ -7,18 +7,23 @@
 	use yii\widgets\ActiveForm;
 	use app\models\Reservation;
 	use app\models\Connection;
-	use app\models\ReservationPath;
+	use app\models\ConnectionPath;
 	use app\models\Urn;
 	use app\models\User;
+	
+	use yii\data\ArrayDataProvider;
 ?>
 
 <h1><?= Yii::t('circuits', 'Pending Authorization'); ?></h1>
 
-
 	<?=
 		GridView::widget([
 			'options' => ['class' => 'list'],
-			'dataProvider' => $data,
+			'dataProvider' => new ArrayDataProvider([
+    			'allModels' => $array,
+    			'sort' => false,
+    			'pagination' => false,
+    		]),
 			'formatter' => new Formatter(['nullDisplay'=>'']),
 			'id' => 'gridInfo',
 			'layout' => "{items}",
@@ -31,26 +36,28 @@
 	        		[
 		        		'label' => Yii::t('circuits', 'Source Domain'),
 		        		'value' => function($aut){
-		        			$path = ReservationPath::findOne(['reservation_id' => $aut->id, 'path_order' => 0]);
-		        			if($path){
-		        				return $path->domain;
-		        			}
-		        			else{
-		        				return Yii::t('circuits', 'deleted');
-		        			};
+		        			$connection_id = Connection::find()->where(['reservation_id' => $aut->id])->one()->id;
+		        			$path = ConnectionPath::findOne(['conn_id' => $connection_id, 'path_order' => 0]);
+				        	if($path){
+				        		return $path->domain;
+				        	}
+				        	else{
+				        		return Yii::t('circuits', 'deleted');
+				        	};
 		        		},
 		        		'contentOptions'=>['style'=>'min-width: 150px;']
 	        		],
 	        		[
 	        			'label' => Yii::t('circuits', 'Destination Domain'),
 	        			'value' => function($aut){
-	        				$path = ReservationPath::find()->where(['reservation_id' => $aut->id])->orderBy("path_order DESC")->one();
-	        				if($path){
-	        					return $path->domain;
-	        				}
-	        				else{
-	        					return Yii::t('circuits', 'deleted');
-	        				}
+	        				$connection_id = Connection::find()->where(['reservation_id' => $aut->id])->one()->id;
+		        			$path = ConnectionPath::find()->where(['conn_id' => $connection_id])->orderBy("path_order DESC")->one();
+				        	if($path){
+				        		return $path->domain;
+				        	}
+				        	else{
+				        		return Yii::t('circuits', 'deleted');
+				        	};
 	        			},
 	        			'contentOptions'=>['style'=>'min-width: 150px;']
 	        		],

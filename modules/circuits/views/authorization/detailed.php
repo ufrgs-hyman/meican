@@ -55,7 +55,7 @@
 			        ?></dd>
 			        <dt><?php echo Yii::t('circuits', 'Destination Domain').":"; ?></dt>
 			        <dd><?php
-			        	$path = ConnectionPath::find(['conn_id' => $connection_id])->orderBy("path_order DESC")->one();
+			        	$path = ConnectionPath::find()->where(['conn_id' => $connection_id])->orderBy("path_order DESC")->one();
 	        			if($path){
 			        		echo $path->domain;
 			        	}
@@ -65,7 +65,7 @@
 			        ?></dd>
 			        <dt><?php echo Yii::t('circuits', 'Destination Urn').":"; ?></dt>
 			        <dd><?php
-			        	$path = ConnectionPath::find(['conn_id' => $connection_id])->orderBy("path_order DESC")->one();
+			        	$path = ConnectionPath::find()->where(['conn_id' => $connection_id])->orderBy("path_order DESC")->one();
 	        			if($path){
 			        		echo $path->dst_urn;
 			        	}

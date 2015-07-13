@@ -104,14 +104,15 @@ class AuthorizationController extends RbacController {
     		}
     	}
 
-    	$dataProvider = new ArrayDataProvider([
+    	/*$dataProvider = new ArrayDataProvider([
     			'allModels' => $authorizations,
     			'sort' => false,
     			'pagination' => false,
-    	]);
+    	]);*/
     
     	return $this->render('index', array(
-    			'data' => $dataProvider,
+    			//'data' => $dataProvider,
+    			'array' => $authorizations,
     	));
     
     }
