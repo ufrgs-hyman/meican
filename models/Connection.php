@@ -45,6 +45,7 @@ class Connection extends \yii\db\ActiveRecord
 	const AUTH_STATUS_REJECTED = 	"DENIED";
 	const AUTH_STATUS_EXPIRED = 	"EXPIRED";
 	const AUTH_STATUS_UNEXECUTED = 	"UNEXECUTED";
+	const AUTH_STATUS_UNSOLICITED = "UNSOLICITED";
 	
     /**
      * @inheritdoc
@@ -247,6 +248,8 @@ class Connection extends \yii\db\ActiveRecord
     		case self::AUTH_STATUS_APPROVED : 	return Yii::t("circuits", "Approved");
     		case self::AUTH_STATUS_REJECTED : 	return Yii::t("circuits", "Rejected");
     		case self::AUTH_STATUS_EXPIRED : 	return Yii::t("circuits", "Expired");
+    		case self::AUTH_STATUS_UNEXECUTED : 	return Yii::t("circuits", "Unexecuted");
+    		case self::AUTH_STATUS_UNSOLICITED : 	return Yii::t("circuits", "Unsocilited");
     	}
     }
     
@@ -259,19 +262,23 @@ class Connection extends \yii\db\ActiveRecord
     }
     
     public function isCancelStatus() {
-    	return $this->status == "CANCELLED" || $this->status == "CANCEL REQUESTED";
+    	return $this->status == self::STATUS_CANCELLED || $this->status == self::STATUS_CANCEL_REQ;
     }
     
     public function executeWorkflows($id){
     	$paths = ConnectionPath::find()->select('DISTINCT `domain`')->where(['conn_id' => $id])->all();
     	Yii::trace("Dominios envolvidos:");
     	foreach($paths as $path) Yii::trace($path->domain);
+    	
+    	$conn = Connection::findOne(['id' => $id]);
+    	$conn->auth_status = self::AUTH_STATUS_PENDING;
+    	$conn->save();
     
     	//Cria execução dos Workflows
     	foreach($paths as $path){ //Utiliza unique para não executar duas vezes em intradominios.
     		$domain = Domain::findOne(['name' => $path->domain]);
     		if(isset($domain)) BpmFlow::startFlow($id, $domain->name);
-    		if(Connection::findOne(['id' => $id])->auth_status != 'WAITING') break; //Para quando ja negou.
+    		if(Connection::findOne(['id' => $id])->auth_status != self::AUTH_STATUS_PENDING) break; //Para quando ja negou.
     	}
     
     	//Executa primeira vez IMPEDINDO que sejam feitas perguntas.
@@ -291,19 +298,19 @@ class Connection extends \yii\db\ActiveRecord
     	
     	//Analisa se existem pedidos em espera. Neste momento, realiza as perguntas aos admins.
     	foreach($paths as $path){
-    		if(Connection::findOne(['id' => $id])->auth_status == 'DENIED') break; //Para quando ja negou.
+    		if(Connection::findOne(['id' => $id])->auth_status == self::AUTH_STATUS_REJECTED) break; //Para quando ja negou.
     		else{
     			$domain = Domain::findOne(['name' => $path->domain]);
     			if(isset($domain)) BpmFlow::doRequest($id, $domain->name, $asking);
     		}
-    		if(ConnectionAuth::find()->where(['connection_id' => $id, 'status' => 'WAITING'])->count() > 0) break; //Se tem uma pergunta ativa.
+    		if(ConnectionAuth::find()->where(['connection_id' => $id, 'status' => self::AUTH_STATUS_PENDING])->count() > 0) break; //Se tem uma pergunta ativa.
     	}
     	
-    	if(!$asking || ConnectionAuth::find()->where(['connection_id' => $id, 'status' => 'WAITING'])->count() > 0) return;
+    	if(!$asking || ConnectionAuth::find()->where(['connection_id' => $id, 'status' => self::AUTH_STATUS_PENDING])->count() > 0) return;
 
     	$conn = Connection::findOne(['id' => $id]);
-    	if($conn->auth_status == 'WAITING'){
-    		$conn->auth_status = 'AUTHORIZED';
+    	if($conn->auth_status == self::AUTH_STATUS_PENDING){
+    		$conn->auth_status = self::AUTH_STATUS_AUTHORIZED;
     		if (!$conn->save()){
     		}
     		if(!$conn->isCancelStatus()) $conn->requestProvision();

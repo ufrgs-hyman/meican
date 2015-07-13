@@ -178,9 +178,9 @@ class Reservation extends \yii\db\ActiveRecord
     		$conn->finish = $date->format('Y-m-d H:i');
     
     		$conn->reservation_id = $this->id;
-    		$conn->status = "PENDING";
-    		$conn->dataplane_status = "INACTIVE";
-    		$conn->auth_status = 'WAITING';
+    		$conn->status = Connection::STATUS_PENDING;
+    		$conn->dataplane_status = Connection::DATA_STATUS_INACTIVE;
+    		$conn->auth_status = Connection::AUTH_STATUS_UNEXECUTED;
     		$conn->save();
     	}
     }

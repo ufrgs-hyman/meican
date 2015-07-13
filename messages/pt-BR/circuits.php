@@ -232,6 +232,9 @@ return array(
 		"Waiting" => "Aguardando",
 		"Approved" => "Aprovada",
 		"Rejected" => "Rejeitada",
+		"Expired" => "Expirou",
+		"Unexecuted" => "Não executada",
+		"Unsolicited" => "Não solicitada",
 		
 		"Connectivity" => "Conectividade",
 		
@@ -252,6 +255,6 @@ return array(
 		"Accept All" => "Aceitar Tudo",
 		"Show others (Pending)" => "Mostrar outros (Pendentes)",
 		"Show others (Confirmed)" => "Mostrar outros (Confirmados)",
-		"Expired" => "Expirou",
+		
 );
 ?>

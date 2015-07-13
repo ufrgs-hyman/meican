@@ -37,6 +37,11 @@ define("denied", 'DENIED');
  */
 class BpmFlow extends \yii\db\ActiveRecord
 {
+	
+	const STATUS_WAITING = "WAITING";
+	const STATUS_READY = "READY";
+	const STATUS_YES = "YES";
+	const STATUS_NO = "NO";
     /**
      * @inheritdoc
      */
@@ -126,8 +131,8 @@ class BpmFlow extends \yii\db\ActiveRecord
 	    	$flowLine->workflow_id = $workflow->id;
 	    	$flowLine->connection_id = $connection_id;
 	    	$flowLine->domain = $domainTop;
-	    	if($flowLine->type == 'Request_Group_Authorization' || $flowLine->type == 'Request_User_Authorization') $flowLine->status = 'WAITING';
-	    	else $flowLine->status = 'READY';
+	    	if($flowLine->type == 'Request_Group_Authorization' || $flowLine->type == 'Request_User_Authorization') $flowLine->status = self::STATUS_WAITING;
+	    	else $flowLine->status = self::STATUS_READY;
 	    	if($node->operator != null) $flowLine->operator = $node->operator;    		
 	    	if (!$flowLine->save()){
 	    		Yii::$app->getSession()->setFlash('error', 'Unsuccessful save');
@@ -178,7 +183,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     		$flow = BpmFlow::findOne(['domain' => $domainTop, 'connection_id' => $connection_id]);
     		if($asking){
     			Yii::trace("Perguntas habilitadas");
-    			$flow->status = 'READY';
+    			$flow->status = self::STATUS_READY;
     			$flow->save();
     		}
     		while(BpmFlow::execute($connection_id, $domainTop));
@@ -229,56 +234,56 @@ class BpmFlow extends \yii\db\ActiveRecord
     			
     			//Domain
     			case 'Domain':
-    				if($flow->status == 'READY') BpmFlow::checkDomain($flow, $connection);
-    				if($flow->status != 'READY') BpmFlow::nextNodes($flow);
+    				if($flow->status == self::STATUS_READY) BpmFlow::checkDomain($flow, $connection);
+    				if($flow->status != self::STATUS_READY) BpmFlow::nextNodes($flow);
     				break;
     				
     			//User
     			case 'User':
-    				if($flow->status == 'READY') BpmFlow::checkUser($flow, $reservation);
-    				if($flow->status != 'READY') BpmFlow::nextNodes($flow);
+    				if($flow->status == self::STATUS_READY) BpmFlow::checkUser($flow, $reservation);
+    				if($flow->status != self::STATUS_READY) BpmFlow::nextNodes($flow);
     				break;
     				
     			//Bandwidth
     			case 'Bandwidth':
-    				if($flow->status == 'READY') BpmFlow::checkBandwidth($flow, $reservation);
-    				if($flow->status != 'READY') BpmFlow::nextNodes($flow);
+    				if($flow->status == self::STATUS_READY) BpmFlow::checkBandwidth($flow, $reservation);
+    				if($flow->status != self::STATUS_READY) BpmFlow::nextNodes($flow);
     				break;
     				
     			//Request_User_Authorization
     			case 'Request_User_Authorization':
-    				if($flow->status == 'WAITING') return false;
+    				if($flow->status == self::STATUS_WAITING) return false;
     				else{
-	    				if($flow->status == 'READY') return BpmFlow::createUserAuth($flow, $reservation);
-	    				if($flow->status != 'READY') BpmFlow::nextNodes($flow);
+	    				if($flow->status == self::STATUS_READY) return BpmFlow::createUserAuth($flow, $reservation);
+	    				if($flow->status != self::STATUS_READY) BpmFlow::nextNodes($flow);
     				}
     				break;
     				
     			//Request_Group_Autorization
     			case 'Request_Group_Authorization':
-    				if($flow->status == 'WAITING') return false;
+    				if($flow->status == self::STATUS_WAITING) return false;
     				else{
-	    				if($flow->status == 'READY') return BpmFlow::createGroupAuth($flow, $reservation);
-	    				if($flow->status != 'READY') BpmFlow::nextNodes($flow);
+	    				if($flow->status == self::STATUS_READY) return BpmFlow::createGroupAuth($flow, $reservation);
+	    				if($flow->status != self::STATUS_READY) BpmFlow::nextNodes($flow);
     				}
     				break;
     				
     			//Hour
     			case 'Hour':
-    				if($flow->status == 'READY') BpmFlow::checkHour($flow, $reservation);
-    				if($flow->status != 'READY') BpmFlow::nextNodes($flow);
+    				if($flow->status == self::STATUS_READY) BpmFlow::checkHour($flow, $reservation);
+    				if($flow->status != self::STATUS_READY) BpmFlow::nextNodes($flow);
     				break;
     				
     			//WeekDay
     			case 'WeekDay':
-    				if($flow->status == 'READY') BpmFlow::checkWeekday($flow, $connection);
-    				if($flow->status != 'READY') BpmFlow::nextNodes($flow);
+    				if($flow->status == self::STATUS_READY) BpmFlow::checkWeekday($flow, $connection);
+    				if($flow->status != self::STATUS_READY) BpmFlow::nextNodes($flow);
     				break;
     				
     			//Duration
     			case 'Duration':
-    				if($flow->status == 'READY') BpmFlow::checkDuration($flow, $connection);
-    				if($flow->status != 'READY') BpmFlow::nextNodes($flow);
+    				if($flow->status == self::STATUS_READY) BpmFlow::checkDuration($flow, $connection);
+    				if($flow->status != self::STATUS_READY) BpmFlow::nextNodes($flow);
     				break;
     			
     			//Accept_Automatically	
@@ -305,7 +310,7 @@ class BpmFlow extends \yii\db\ActiveRecord
      * @param BpmFlow $flow
      */
     public static function nextNodes($flow){
-    	if($flow->status == 'YES') $output_way ='output_yes';
+    	if($flow->status == self::STATUS_YES) $output_way ='output_yes';
     	else $output_way = 'output_no';
 
     	$actualNode = BpmNode::findOne(['id' => $flow->node_id]);
@@ -319,8 +324,8 @@ class BpmFlow extends \yii\db\ActiveRecord
     	$flowLine->workflow_id = $flow->workflow_id;
     	$flowLine->connection_id = $flow->connection_id;
     	$flowLine->domain = $flow->domain;
-    	if($flowLine->type == 'Request_Group_Authorization' || $flowLine->type == 'Request_User_Authorization') $flowLine->status = 'WAITING';
-    	else $flowLine->status = 'READY';
+    	if($flowLine->type == 'Request_Group_Authorization' || $flowLine->type == 'Request_User_Authorization') $flowLine->status = self::STATUS_WAITING;
+    	else $flowLine->status = self::STATUS_READY;
     	if($node->operator != null) $flowLine->operator = $node->operator;
     	$flowLine->validate();
     	if (!$flowLine->save()){
@@ -377,7 +382,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     	
     	$auth = new ConnectionAuth();
     	$auth->domain = $flow->domain;
-    	$auth->status = 'WAITING';
+    	$auth->status = self::STATUS_WAITING;
     	$auth->type = 'GROUP';
     	$auth->manager_group_id = $flow->value;
     	$auth->connection_id = $flow->connection_id;
@@ -398,14 +403,14 @@ class BpmFlow extends \yii\db\ActiveRecord
     	
     	//Confere se usuário requisitante é o mesmo que deve responder. Se sim, não pergunta, considera aceito.
     	if($flow->value == $reservation->request_user_id){
-    		$flow->status = 'YES';
+    		$flow->status = self::STATUS_YES;
     		$flow->save();
     		return true;
     	}
 	    
     	$auth = new ConnectionAuth();
 	    $auth->domain = $flow->domain;
-	    $auth->status = 'WAITING';
+	    $auth->status = self::STATUS_WAITING;
 	    $auth->type = 'USER';
 	    $auth->manager_user_id = $flow->value;
 	    $auth->connection_id = $flow->connection_id;
@@ -418,10 +423,10 @@ class BpmFlow extends \yii\db\ActiveRecord
     
     public function checkWeekday($flow, $connection){
     	Yii::trace("Testando Dia da Semana");
-    	if($flow->value == Yii::$app->formatter->asDate($connection->start, 'EEEE') && $flow->value == Yii::$app->formatter->asDate($connection->finish, 'EEEE')) $flow->status = 'YES'; //Standart exit way;
+    	if($flow->value == Yii::$app->formatter->asDate($connection->start, 'EEEE') && $flow->value == Yii::$app->formatter->asDate($connection->finish, 'EEEE')) $flow->status = self::STATUS_YES; //Standart exit way;
     	else{
     		Yii::trace("Não passou em DIA DA SEMANA");
-    		$flow->status = 'NO';
+    		$flow->status = self::STATUS_NO;
     	}
     }
     
@@ -468,10 +473,10 @@ class BpmFlow extends \yii\db\ActiveRecord
     			break;
     	}
     	 
-    	if($accept) $flow->status = 'YES';
+    	if($accept) $flow->status = self::STATUS_YES;
     	else{
     		Yii::trace("Não passou em DURAÇÃO");
-    		$flow->status = 'NO';
+    		$flow->status = self::STATUS_NO;
     	}
     }
 
@@ -487,12 +492,12 @@ class BpmFlow extends \yii\db\ActiveRecord
     			$thisDomain = Domain::findOne([$flow->domain_id]);
     			$cp = ConnectionPath::findOne(['conn_id' => $connection->id, 'domain' => $thisDomain->name]);
     			if(!isset($cp)){ //Se dominio deletado
-    				$flow->status = 'YES';
+    				$flow->status = self::STATUS_YES;
     				return;
     			}
     			$domain = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => $cp->path_order-1]);
     			if(!isset($domain)){ //Se dominio deletado
-    				$flow->status = 'YES';
+    				$flow->status = self::STATUS_YES;
     				return;
     			}
     			$domain = $domain->domain;
@@ -502,12 +507,12 @@ class BpmFlow extends \yii\db\ActiveRecord
     			$thisDomain = Domain::findOne([$flow->domain_id]);
     			$cp = ConnectionPath::findOne(['conn_id' => $connection->id, 'domain' => $thisDomain->name]);
     			if(!isset($cp)){ //Se dominio deletado
-    				$flow->status = 'YES';
+    				$flow->status = self::STATUS_YES;
     				return;
     			}
     			$domain = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => $cp->path_order+1])->domain;
     			if(!isset($domain)){ //Se dominio deletado
-    				$flow->status = 'YES';
+    				$flow->status = self::STATUS_YES;
     				return;
     			}
     			$domain = $domain->domain;
@@ -519,19 +524,19 @@ class BpmFlow extends \yii\db\ActiveRecord
     			break;
     	}
 
-    	if(isset($compareDomain) && $flow->value == $compareDomain->$domain) $flow->status = 'YES';
+    	if(isset($compareDomain) && $flow->value == $compareDomain->$domain) $flow->status = self::STATUS_YES;
     	else{
     		Yii::trace("Não passou em DOMAIN");
-    		$flow->status = 'NO';
+    		$flow->status = self::STATUS_NO;
     	}
     }
     
     public function checkUser($flow, $reservation){
     	Yii::trace("Testando User");
-    	if($flow->value == $reservation->request_user_id) $flow->status = 'YES';
+    	if($flow->value == $reservation->request_user_id) $flow->status = self::STATUS_YES;
     	else{
     		Yii::trace("Não passou em USER");
-    		$flow->status = 'NO';
+    		$flow->status = self::STATUS_NO;
     	}
     }
     
@@ -565,10 +570,10 @@ class BpmFlow extends \yii\db\ActiveRecord
     			break;
     	}
     	
-    	if($accept) $flow->status = 'YES';
+    	if($accept) $flow->status = self::STATUS_YES;
     	else{
     		Yii::trace("Não passou em BANDWIDTH");
-    		$flow->status = 'NO';
+    		$flow->status = self::STATUS_NO;
     	}
     }
     
@@ -657,10 +662,10 @@ class BpmFlow extends \yii\db\ActiveRecord
     	}
     	else $within_interval = false;
     
-    	if($within_interval) $flow->status = 'YES';
+    	if($within_interval) $flow->status = self::STATUS_YES;
     	else{
     		Yii::trace("Não passou em HORA");
-    		$flow->status = 'NO';
+    		$flow->status = self::STATUS_NO;
     	}
     }
 
