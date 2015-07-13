@@ -44,6 +44,7 @@ class Connection extends \yii\db\ActiveRecord
 	const AUTH_STATUS_APPROVED = 	"AUTHORIZED";
 	const AUTH_STATUS_REJECTED = 	"DENIED";
 	const AUTH_STATUS_EXPIRED = 	"EXPIRED";
+	const AUTH_STATUS_UNEXECUTED = 	"UNEXECUTED";
 	
     /**
      * @inheritdoc

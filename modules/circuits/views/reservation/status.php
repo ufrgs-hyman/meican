@@ -11,6 +11,7 @@
 	
 	use app\models\Domain;
 	use app\models\Reservation;
+	use app\models\Connection;
 	
 	use app\modules\circuits\assets\ListReservationAsset;
 	
@@ -74,12 +75,29 @@
 						'format' => 'html',
 						'value' => function($model) {
 							$conns = $model->getConnections()->select(['status', 'auth_status','dataplane_status'])->all();
-							$allStatus = "";
-							Yii::trace($conns);
-							foreach ($conns as $conn) {
-								$allStatus .= $conn->getStatus().", ".$conn->getAuthStatus().", ".$conn->getDataStatus()."<br>";
+
+							//Se for somente uma conexão, mostra os status
+							if(count($conns)<2) return $conns[0]->getStatus().", ".$conns[0]->getAuthStatus().", ".$conns[0]->getDataStatus();
+							
+							//Se forem varias, mostra um resumo
+							$provisioned = 0; $reject = 0; $pending = 0;
+							foreach($conns as $conn){
+								if($conn->status == Connection::STATUS_PROVISIONED) $provisioned++;
+								else if($conn->status == Connection::STATUS_FAILED_CREATE ||
+										$conn->status == Connection::STATUS_FAILED_CONFIRM ||
+										$conn->status == Connection::STATUS_FAILED_SUBMIT ||
+										$conn->status == Connection::STATUS_FAILED_PROVISION ||
+										$conn->auth_status == Connection::AUTH_STATUS_REJECTED ||
+										$conn->auth_status == Connection::AUTH_STATUS_EXPIRED
+								) $reject++;
+								else $pending++;
 							}
-							return $allStatus;
+							
+							$msg = Yii::t("notification", 'Provisioned:')." ".$provisioned.", ";
+							$msg .= Yii::t("notification", 'Rejected:')." ".$reject.", ";
+							$msg .= Yii::t("notification", 'Pending:')." ".$pending;
+							
+							return $msg;
 						},
 				),
 			),

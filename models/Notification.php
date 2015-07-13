@@ -21,28 +21,7 @@ use app\components\DateUtils;
  * @property User $id0
  */
 class Notification extends \yii\db\ActiveRecord
-{
-	
-	const STATUS_PENDING = 			"PENDING";
-	const STATUS_CREATED = 			"CREATED";
-	const STATUS_CONFIRMED = 		"CONFIRMED";
-	const STATUS_SUBMITTED = 		"SUBMITTED";
-	const STATUS_PROVISIONED = 		"PROVISIONED";
-	const STATUS_CANCEL_REQ = 		"CANCEL REQUESTED";
-	const STATUS_CANCELLED = 		"CANCELLED";
-	const STATUS_FAILED_CREATE = 	"FAILED ON CREATED";
-	const STATUS_FAILED_CONFIRM = 	"FAILED ON CONFIRM";
-	const STATUS_FAILED_SUBMIT = 	"FAILED ON SUBMIT";
-	const STATUS_FAILED_PROVISION = "FAILED ON PROVISION";
-	
-	const DATA_STATUS_ACTIVE = 		"ACTIVE";
-	const DATA_STATUS_INACTIVE = 	"INACTIVE";
-	
-	const AUTH_STATUS_PENDING = 	"WAITING";
-	const AUTH_STATUS_APPROVED = 	"AUTHORIZED";
-	const AUTH_STATUS_REJECTED = 	"DENIED";
-	const AUTH_STATUS_EXPIRED = 	"EXPIRED";
-	
+{	
 	const AUTH_TYPE_GROUP = 		"GROUP";
 	const AUTH_TYPE_WORKFLOW = 		"WORKFLOW";
 	
@@ -146,7 +125,7 @@ class Notification extends \yii\db\ActiveRecord
 		    			foreach($connections as $conn){ //Confere todas conexões da reserva conferindo se alguma ainda esta pendente
 		    				$auths = ConnectionAuth::find()->where(['domain' => $auth->domain, 'connection_id' => $conn->id])->all();
 		    				foreach($auths as $a){ //Confere as autorizaçòes daquela conexão
-		    					if($a->type != self::AUTH_TYPE_WORKFLOW && $a->status == self::AUTH_STATUS_PENDING){
+		    					if($a->type != self::AUTH_TYPE_WORKFLOW && $a->status == Connection::AUTH_STATUS_PENDING){
 		    						$answered = false;
 		    						break;
 		    					}
@@ -242,11 +221,11 @@ class Notification extends \yii\db\ActiveRecord
     		//Se tem dominio, procura só as relacionadas ao dominio do papel
     		if($domain_id){
     			$domain = Domain::findOne($domain_id);
-    			if($domain) $auths = ConnectionAuth::find()->where(['status' => self::AUTH_STATUS_PENDING, 'domain' => $domain->name, 'type' => self::AUTH_TYPE_GROUP, 'manager_group_id' => $group->id])->all();
+    			if($domain) $auths = ConnectionAuth::find()->where(['status' => Connection::AUTH_STATUS_PENDING, 'domain' => $domain->name, 'type' => self::AUTH_TYPE_GROUP, 'manager_group_id' => $group->id])->all();
     			else return;
     		}
     		//Se não possui domonio no papel, busca para todos dominios, pois é ANY
-    		else $auths = ConnectionAuth::find()->where(['status' => self::AUTH_STATUS_PENDING, 'type' => self::AUTH_TYPE_GROUP, 'manager_group_id' => $group->id])->all();
+    		else $auths = ConnectionAuth::find()->where(['status' => Connection::AUTH_STATUS_PENDING, 'type' => self::AUTH_TYPE_GROUP, 'manager_group_id' => $group->id])->all();
     		
     		//Passa por todas criando uma notificação
     		foreach($auths as $auth){
@@ -539,16 +518,16 @@ class Notification extends \yii\db\ActiveRecord
     	
     	//Se possui apenas uma conexão, então pode informar diretamente se foi aceito ou negado
     	if(count($connections)<2){
-    		$msg = Yii::t("notification", 'The circuit between')." <b>".$source." </b>".Yii::t("notification", 'and')." <b>".$destination."</b> ";
+    		$msg = Yii::t("notification", 'The connection between')." <b>".$source." </b>".Yii::t("notification", 'and')." <b>".$destination."</b> ";
     		$date = Yii::$app->formatter->asDatetime($notification->date);
     		$link = '/circuits/reservation/view?id='.$reservation->id;
     		
-    		if($connections[0]->status == self::STATUS_FAILED_CREATE ||
-    		   $connections[0]->status == self::STATUS_FAILED_CONFIRM ||
-    		   $connections[0]->status == self::STATUS_FAILED_SUBMIT ||
-    		   $connections[0]->status == self::STATUS_FAILED_PROVISION ||
-    		   $connections[0]->auth_status == self::AUTH_STATUS_REJECTED ||
-    		   $connections[0]->auth_status == self::AUTH_STATUS_EXPIRED
+    		if($connections[0]->status == Connection::STATUS_FAILED_CREATE ||
+    		   $connections[0]->status == Connection::STATUS_FAILED_CONFIRM ||
+    		   $connections[0]->status == Connection::STATUS_FAILED_SUBMIT ||
+    		   $connections[0]->status == Connection::STATUS_FAILED_PROVISION ||
+    		   $connections[0]->auth_status == Connection::AUTH_STATUS_REJECTED ||
+    		   $connections[0]->auth_status == Connection::AUTH_STATUS_EXPIRED
     		){
     			$msg .= " ".Yii::t("notification", 'can not be provisioned.');
     			$text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
@@ -567,18 +546,18 @@ class Notification extends \yii\db\ActiveRecord
     		//e pendentes (aglomera todos estados de processamento intermediário)
     		$provisioned = 0; $reject = 0; $pending = 0;
     		foreach($connections as $conn){
-    			if($conn->status == self::STATUS_PROVISIONED) $provisioned++;
-    			else if($conn->status == self::STATUS_FAILED_CREATE ||
-    					$conn->status == self::STATUS_FAILED_CONFIRM ||
-    					$conn->status == self::STATUS_FAILED_SUBMIT ||
-    					$conn->status == self::STATUS_FAILED_PROVISION ||
-    					$conn->auth_status == self::AUTH_STATUS_REJECTED ||
-    					$conn->auth_status == self::AUTH_STATUS_EXPIRED
+    			if($conn->status == Connection::STATUS_PROVISIONED) $provisioned++;
+    			else if($conn->status == Connection::STATUS_FAILED_CREATE ||
+    					$conn->status == Connection::STATUS_FAILED_CONFIRM ||
+    					$conn->status == Connection::STATUS_FAILED_SUBMIT ||
+    					$conn->status == Connection::STATUS_FAILED_PROVISION ||
+    					$conn->auth_status == Connection::AUTH_STATUS_REJECTED ||
+    					$conn->auth_status == Connection::AUTH_STATUS_EXPIRED
     					) $reject++;
     			else $pending++;
     		}
 
-    		$msg = Yii::t("notification", 'The status of circuits changed:')."<br />";
+    		$msg = Yii::t("notification", 'The status of connections changed:')."<br />";
     		$msg .= Yii::t("notification", 'Provisioned:')." ".$provisioned.", ";
     		$msg .= Yii::t("notification", 'Rejected:')." ".$reject.", ";
     		$msg .= Yii::t("notification", 'Pending:')." ".$pending;
@@ -615,7 +594,7 @@ class Notification extends \yii\db\ActiveRecord
     	$reservation = Reservation::findOne($connection->reservation_id);
     	
     	$title = Yii::t("notification", 'Pending authorization')." (".$auth->domain.")";
-	    $msg = Yii::t("notification", 'The circuit is from')." <b>".$source."</b> ".Yii::t("notification", 'to')." <b>".$destination."</b>";
+	    $msg = Yii::t("notification", 'The connection is from')." <b>".$source."</b> ".Yii::t("notification", 'to')." <b>".$destination."</b>";
 		$msg .= ". ".Yii::t("notification", 'The request bandwidth is')." ".$reservation->bandwidth." Mbps.";
 		$date = Yii::$app->formatter->asDatetime($notification->date);
 		
