@@ -11,6 +11,10 @@
     use yii\helpers\Html;
     
     use yii\widgets\ActiveForm;
+
+    use app\modules\topology\assets\ServiceAsset;
+    
+    ServiceAsset::register($this);
 ?>
 
 <h1><?= Yii::t("topology", "Provider details"); ?></h1>
@@ -31,19 +35,27 @@
 <?php
     $form = ActiveForm::begin([
             'method' => 'post',
-            'action' => ['delete'],
+            'action' => ['/topology/service/delete'],
             'id' => 'service-form',  
             'enableClientScript'=>false,
             'enableClientValidation' => false,
     ])
 ?>
     
-<?= $this->render('//formButtons'); ?>
+<div class="controls">
+    <?=
+    Html::a('Add', array('/topology/service/create', 'id'=>$model->id)); 
+    ?>
+    <?=
+    Html::submitButton('Delete', ['id'=>'deleteButton']);
+    ?>
+</div>
+
+<div style="clear: both"></div>
 
 <?=
     GridView::widget([
         'options' => ['class' => 'list'],
-        'layout' => "{items}",
         'dataProvider' => $services,
         'columns' => array(
                 array(
@@ -59,10 +71,23 @@
                     'class'=> LinkColumn::className(),
                     'image'=>'/images/edit_1.png',
                     'label' => '',
-                    'url' => 'update',
+                    'url' => '/topology/service/update',
                     'contentOptions'=>['style'=>'width: 15px;'],
                 ),
-                'type',
+                array(
+                    'class'=> LinkColumn::className(),
+                    'image'=>'/images/arrow_circle_double.png',
+                    'label' => '',
+                    'title'=>Yii::t("topology",'Add service to Topology Synchronizer'),
+                    'url' => '/topology/sync/add-service',
+                    'contentOptions'=>['style'=>'width: 15px;'],
+                ),
+                [
+                    'attribute' => 'type',
+                    'value' => function($model) {
+                        return $model->getType();
+                    }
+                ],
                 'url',
             ),
     ]);

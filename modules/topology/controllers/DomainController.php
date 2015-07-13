@@ -33,7 +33,9 @@ class DomainController extends RbacController {
     	$dataProvider = new ArrayDataProvider([
     			'allModels' => $domainsWithIds,
     			'sort' => false,
-    			'pagination' => false,
+    			'pagination' => [
+                  'pageSize' => 20,
+                ],
     	]);
     	
         return $this->render('index', array(

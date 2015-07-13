@@ -75,6 +75,23 @@ class Provider extends \yii\db\ActiveRecord
         return $this->hasMany(Reservation::className(), ['provider_id' => 'id']);
     }
 
+    static function getTypes() {
+        return [
+            ['id'=>self::TYPE_AGG, 'name'=>Yii::t('circuits', 'Aggregator')],
+            ['id'=>self::TYPE_UPA, 'name'=>Yii::t('circuits', 'Ultimate (uPA)')],
+            ['id'=>self::TYPE_DUMMY, 'name'=>Yii::t('circuits', 'Dummy')],
+        ];
+    }
+
+    public function getType() {
+        switch ($this->type) {
+            case self::TYPE_AGG: return Yii::t('circuits', 'Aggregator');
+            case self::TYPE_UPA: return Yii::t('circuits', 'Ultimate (uPA)');
+            case self::TYPE_DUMMY: return Yii::t('circuits', 'Dummy');
+            default: return Yii::t('topology', 'Unknown');
+        }
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

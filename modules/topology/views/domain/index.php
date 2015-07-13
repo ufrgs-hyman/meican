@@ -30,7 +30,6 @@
 			'dataProvider' => $domains,
 			'formatter' => new Formatter(['nullDisplay'=>'']),
 			'id' => 'gridDomains',
-			'layout' => "{items}",
 			'columns' => array(
 		    		array(
 		    			'class'=>CheckboxColumn::className(),
