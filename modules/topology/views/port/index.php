@@ -9,11 +9,11 @@
 	use yii\data\ActiveDataProvider;
 	use yii\data\ArrayDataProvider;
 	use yii\i18n\Formatter;
-	use app\models\Urn;
+	use app\models\Port;
 	use yii\jui\Dialog;
 	
-	use app\modules\topology\assets\UrnsAsset;
-	UrnsAsset::register($this);
+	use app\modules\topology\assets\PortAsset;
+	PortAsset::register($this);
 ?>
 
 
@@ -23,32 +23,32 @@
 	var selected_domain = <?php echo json_encode($selected_domain); ?>;
 </script>
 
-<h1><?php echo Yii::t('topology', 'URNs (Uniform resource name)'); ?></h1>
+<h1><?php echo Yii::t('topology', 'Ports'); ?></h1>
 	
 <?php foreach ($domains as $dom): ?>
-    <div id="domain<?php echo $dom->getId(); ?>">
+    <div id="domain<?php echo $dom->id; ?>">
 
-    	<h4><?=Html::img('@web'.'/images/minus.gif', ['id' => "collapseExpand".$dom->getId()]);?>
+    	<h4><?=Html::img('@web'.'/images/minus.gif', ['id' => "collapseExpand".$dom->id]);?>
         <?php
         	$text = Yii::t('topology', 'Domain')." ";
-            $text .= ($dom->getTopoId()) ? $dom->getDescr() : $dom->getDescr();
+            $text .= ($dom->name);
             echo $text;
         ?></h4>
 	            
-        <div id="collapsable<?php echo $dom->getId() ?>">                
+        <div id="collapsable<?php echo $dom->id ?>">                
                 
         <?php \yii\widgets\Pjax::begin([
-		    'id' => 'pjaxContainer'.$dom->getId(),
+		    'id' => 'pjaxContainer'.$dom->id,
 		]); ?>
 	
 		<?=
 		GridView::widget([
 			'options' => ['class' => 'list-without-margin'],
 			'formatter' => new Formatter(['nullDisplay'=>'']),
-			'id' =>'grid'.$dom->getId(),
-			'emptyText' => Yii::t('topology', 'No URLs added to this domain'),
+			'id' =>'grid'.$dom->id,
+			'emptyText' => Yii::t('topology', 'No Ports added to this domain'),
 			'dataProvider' => new ArrayDataProvider([
-				'models' => $dom->getUrns(),
+				'models' => $dom->getBiPorts(),
 				'key' => 'id',
 				'pagination' => false,
 			]),
@@ -62,30 +62,55 @@
 				],
 				[
 					'format' => 'raw',
-					'value' => function ($urn){
-						return Html::img('@web'.'/images/edit_1.png', ['title' => Yii::t('topology', 'Update'), 'onclick' => "editURN(this, $urn->id)"]);
+					'value' => function ($port){
+						return Html::img('@web'.'/images/edit_1.png', ['title' => Yii::t('topology', 'Update'), 'onclick' => "editPort(this, $port->id)"]);
 					},
 					'contentOptions'=>['style'=>'width: 15px; cursor: pointer;'],
 				],
 				[
 					'format' => 'raw',
-					'value' => function ($urn){
-						return Html::img('@web'.'/images/remove.png', ['title' => Yii::t('topology', 'Delete'), 'onclick' => "deleteURN($urn->id)"]);
+					'value' => function ($port){
+						return Html::img('@web'.'/images/remove.png', ['title' => Yii::t('topology', 'Delete'), 'onclick' => "deletePort($port->id)"]);
 					},
 					'contentOptions'=>['style'=>'width: 15px; cursor: pointer;']
 				],
 				[
+					'format' => 'raw',
 					'label' => Yii::t('topology', 'Network'),
-					'value'=> 'network',
-					'contentOptions'=>['style'=>'width: 110px; max-width: 110px;'],
+					'value' => function($port){
+						return $port->getNetwork()->one()->name;
+					}
 				],
-				'device',
-				'port',
-				'value',
-				'vlans',
+				[
+					'format' => 'raw',
+					'label' => Yii::t('topology', 'Device'),
+					'value' => function($port){
+						return $port->getDevice()->one()->name;
+					}
+				],
+				'name',
+				'urn',
+				[
+					'format' => 'raw',
+					'label' => Yii::t('topology', 'VLANs'),
+					'value' => function ($port){
+						$vlans ="";
+						$vlansArray = $port->getVlanRanges()->all();
+						$len = count($vlansArray);
+						$c = 0;
+						foreach ($vlansArray as $vlan):
+							$c++;
+							$vlans .= $vlan->value;
+							if($c < $len) $vlans .= ",";
+						endforeach;
+						return $vlans;
+					},
+				],
 				'max_capacity',
 				'min_capacity',
 				'granularity',
+				
+				
 	
 			),
 		]);
@@ -93,7 +118,7 @@
 			
 		<?php \yii\widgets\Pjax::end(); ?>
 	
-		<input class="add" type="button" id="add_button<?php echo $dom->getId(); ?>" value="<?= Yii::t('topology', 'Add Manual'); ?>" />
+		<input class="add" type="button" id="add_button<?php echo $dom->id; ?>" value="<?= Yii::t('topology', 'Add Manual'); ?>" />
 					
 	    </div> 
 	</div>
@@ -108,7 +133,7 @@
     	'clientOptions' => [
         	'modal' => true,
         	'autoOpen' => false,
-        	'title' => "URNs",
+        	'title' => "Ports",
     	],
 	]);
 

@@ -13,7 +13,6 @@ class AuthorizationForm extends Model {
 	public $bandwidth;
 	public $request_user_id;
 	public $domain;
-	public $domain_name;
 	public $type;
 	
 	public function __construct($reservation, $domain){
@@ -22,8 +21,7 @@ class AuthorizationForm extends Model {
 		$this->type = $reservation->type;
 		$this->bandwidth = $reservation->bandwidth;
 		$this->request_user_id = $reservation->request_user_id;
-		$this->domain = $domain->topology;
-		$this->domain_name = $domain->name;
+		$this->domain = $domain->name;
 	}
 	
 }

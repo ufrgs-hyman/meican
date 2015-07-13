@@ -53,7 +53,7 @@ class RoleController extends RbacController {
     			
     			//Cria notificação de novo papel
     			$domain = Domain::findOne($udr->domain_id);
-    			if($domain) Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->topology);
+    			if($domain) Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
     			else Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
     			
     			Yii::$app->getSession()->setFlash("success", Yii::t("aaa", 'Role created successfully'));
@@ -97,12 +97,12 @@ class RoleController extends RbacController {
     			
     			//Cria notificação do papel removido
     			$domain = Domain::findOne($domain_id);
-    			if($domain) Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_DEL_GROUP, $group->id, $domain->topology, $dateAux);
+    			if($domain) Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_DEL_GROUP, $group->id, $domain->name, $dateAux);
     			else Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_DEL_GROUP, $group->id, null, $dateAux);
     			
     			//Cria notificação do novo papel
     			$domain = Domain::findOne($udr->domain_id);
-    			if($domain) Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->topology);
+    			if($domain) Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
     			else Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
     			 
     			Yii::$app->getSession()->setFlash("success", Yii::t("aaa", 'Role updated successfully'));
@@ -143,7 +143,7 @@ class RoleController extends RbacController {
     			
     			//Notificação removido papel
     			$domain = Domain::findOne($udr->domain_id);
-    			if($domain) Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_DEL_GROUP, $udr->getGroup()->id, $domain->topology, $dateAux);
+    			if($domain) Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_DEL_GROUP, $udr->getGroup()->id, $domain->name, $dateAux);
     			else Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_DEL_GROUP, $udr->getGroup()->id, null, $dateAux);
 
     			if ($udr->delete()) {

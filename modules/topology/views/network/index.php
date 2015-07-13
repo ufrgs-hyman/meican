@@ -5,6 +5,8 @@
 	use yii\helpers\BaseHtml as Html;
 	use yii\widgets\ActiveForm;
 	
+	use yii\helpers\ArrayHelper;
+	
 	use app\components\LinkColumn;
 	use app\modules\topology\assets\NetworkAsset;
 	NetworkAsset::register($this);
@@ -28,8 +30,9 @@
 			'options' => ['class' => 'list'],
 			'formatter' => new Formatter(['nullDisplay'=>'']),
 			'dataProvider' => $networks,
+			'filterModel' => $searchModel,
 			'id' => 'gridNetowrks',
-			'layout' => "{items}",
+			'layout' => "{items}{pager}",
 			'columns' => array(
 		    		array(
 		    			'class'=>CheckboxColumn::className(),
@@ -49,20 +52,19 @@
 			        	'contentOptions'=>['style'=>'width: 15px;']
 			        ),
 			        'name',
+			        'urn',
 					'latitude',
 					'longitude',
-					[
-						'format' => 'html',
-						'label' => "#".Yii::t("topology", 'Devices'),
-						'value' => function($net){
-							return Html::a($net->getDevices()->count(), ['/topology/device', 'id' => $net->id]);
-						}
-					],
 					[
 						'label' => Yii::t("topology", 'Domain'),
 						'value' => function($net){
 							return $net->getDomain()->one()->name;
-						}
+						},
+						'filter' => Html::activeDropDownList($searchModel, 'domain_name',
+							ArrayHelper::map(
+								$allowedDomains, 'name', 'name'),
+							['class'=>'form-control','prompt' => Yii::t("topology", 'any')]		
+						),
 					],
 			),
 		]);

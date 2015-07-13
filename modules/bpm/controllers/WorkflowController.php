@@ -25,7 +25,7 @@ class WorkflowController extends RbacController {
     	$workflowsClean = [];
     	//Percorre todos os workflows
     	foreach($workflows->all() as $work){
-    		$domain = Domain::findOne(['topology' => $work->domain]);
+    		$domain = Domain::findOne(['name' => $work->domain]);
     		if($domain && self::can('workflow/read', $domain->id)) $workflowsClean[$work->id] = $work;
     	}
     	
@@ -47,7 +47,7 @@ class WorkflowController extends RbacController {
     
     public function actionCreate($domainTop = null){
     	if($domainTop){
-    		$domain = Domain::findOne(['topology' => $domainTop]);
+    		$domain = Domain::findOne(['name' => $domainTop]);
     		if($domain){
 	    		self::canRedir('workflow/create', $domain->id);
 		    	return $this->render('create', array(
@@ -64,7 +64,7 @@ class WorkflowController extends RbacController {
     	if($id){
     		$workflow = BpmWorkflow::findOne(['id' => $id]);
     		if($workflow){
-	    		$domain = Domain::findOne(['topology' => $workflow->domain]);
+	    		$domain = Domain::findOne(['name' => $workflow->domain]);
 	    		if($domain){
 		    		self::canRedir('workflow/update', $domain->id);
 		    		return $this->render('update', array(
@@ -80,7 +80,7 @@ class WorkflowController extends RbacController {
     	if($id){
     		$workflow = BpmWorkflow::findOne(['id' => $id]);
     		if($workflow){
-	    		$domain = Domain::findOne(['topology' => $workflow->domain]);
+	    		$domain = Domain::findOne(['name' => $workflow->domain]);
 	    		if($domain){
 		    		self::canRedir('workflow/update', $domain->id);
 		    		$workflow = BpmWorkflow::findOne(['id' => $id]);
@@ -96,7 +96,7 @@ class WorkflowController extends RbacController {
     
     public function actionEditorCreate($domainTop = null) {
     	if($domainTop){
-    		$domain = Domain::findOne(['topology' => $domainTop]);
+    		$domain = Domain::findOne(['name' => $domainTop]);
     		if($domain){
 	    		self::canRedir('workflow/create', $domain->id);
     	
@@ -106,7 +106,7 @@ class WorkflowController extends RbacController {
 		    	$domains = Domain::find()->orderBy(['name' => SORT_ASC])->all();
 		    	$allDomains = [];
 		    	foreach($domains as $dom){
-		    		$allDomains[$dom->topology] = $dom->name;
+		    		$allDomains[$dom->name] = $dom->name;
 		    	}
 
 		    	$roles = $domain->getUserDomainsRoles()->all();
@@ -140,16 +140,16 @@ class WorkflowController extends RbacController {
     	if($id){
     		$workflow = BpmWorkflow::findOne(['id' => $id]);
     		if($workflow){
-				$domain = Domain::findOne(['topology' => $workflow->domain]);
+				$domain = Domain::findOne(['name' => $workflow->domain]);
 		    	if($domain){
 			    	self::canRedir('workflow/update', $domain->id);
 			    	$ownerDomain = [];
-			    	$ownerDomain[$domain->topology] = $domain->name;
+			    	$ownerDomain[$domain->name] = $domain->name;
 			    	
 			    	$domains = Domain::find()->orderBy(['name' => SORT_ASC])->all();
 			    	$allDomains = [];
 			    	foreach($domains as $dom){
-			    		$allDomains[$dom->topology] = $dom->name;
+			    		$allDomains[$dom->name] = $dom->name;
 			    	}
 			    	 
 			    	$roles = $domain->getUserDomainsRoles()->all();
@@ -184,15 +184,15 @@ class WorkflowController extends RbacController {
     	if($id){
     		$workflow = BpmWorkflow::findOne(['id' => $id]);
     		if($workflow){
-				$domain = Domain::findOne(['topology' => $workflow->domain]);
+				$domain = Domain::findOne(['name' => $workflow->domain]);
 		    	if($domain){
 			    	$ownerDomain = [];
-			    	$ownerDomain[$domain->topology] = $domain->name;
+			    	$ownerDomain[$domain->name] = $domain->name;
 			    	 
 			    	$domains = Domain::find()->all();
 			    	$allDomains = [];
 			    	foreach($domains as $dom){
-			    		$allDomains[$dom->topology] = $dom->name;
+			    		$allDomains[$dom->name] = $dom->name;
 			    	}
 			    
 			    	$roles = $domain->getUserDomainsRoles()->all();
@@ -262,7 +262,7 @@ class WorkflowController extends RbacController {
     	if($id){
     		$workflow = BpmWorkflow::findOne(['id' => $id]);
     		if($workflow){
-				$domain = Domain::findOne(['topology' => $workflow->domain]);
+				$domain = Domain::findOne(['name' => $workflow->domain]);
 		    	if($domain){
 		    		$permission = self::can('workflow/delete', $domain->id);
 		    		if($permission){
@@ -286,7 +286,7 @@ class WorkflowController extends RbacController {
     	if($id){
     		$workflow = BpmWorkflow::findOne(['id' => $id]);
     		if($workflow){
-				$domain = Domain::findOne(['topology' => $workflow->domain]);
+				$domain = Domain::findOne(['name' => $workflow->domain]);
 		    	if($domain){
 		    		self::can('workflow/create', $domain->id, true);
 		    		BpmWorkflow::findOne(['id' => $id])->copy();
@@ -300,7 +300,7 @@ class WorkflowController extends RbacController {
     	if($id){
     		$activeWorkflow = BpmWorkflow::findOne(['id' => $id]);
     		if($activeWorkflow){
-				$domain = Domain::findOne(['topology' => $activeWorkflow->domain]);
+				$domain = Domain::findOne(['name' => $activeWorkflow->domain]);
 		    	if($domain){
 		    		self::canRedir('workflow/update', $domain->id);
 		    		
@@ -333,7 +333,7 @@ class WorkflowController extends RbacController {
     	if($id){
     		$workflow = BpmWorkflow::findOne(['id' => $id]);
     		if($workflow){
-				$domain = Domain::findOne(['topology' => $workflow->domain]);
+				$domain = Domain::findOne(['name' => $workflow->domain]);
 		    	if($domain){
 		    		$permission = self::can('workflow/delete', $domain->id);
 		    		if($permission){
@@ -352,7 +352,7 @@ class WorkflowController extends RbacController {
     public function actionIsActive($id = null){
     	if($id){
 	    	if(BpmWorkflow::findOne(['id' => $id])->active == 1){
-	    		$domain = Domain::findOne(['topology' => BpmWorkflow::findOne(['id' => $id])->domain]);
+	    		$domain = Domain::findOne(['name' => BpmWorkflow::findOne(['id' => $id])->domain]);
 	    		if($domain) echo json_encode($domain->name);
 	    		else echo 0;
 	    	}
@@ -375,7 +375,7 @@ class WorkflowController extends RbacController {
     	$domainsClean = [];
     	foreach($domains as $domain){
     			if(self::can('workflow/create', $domain->id))
-    				$domainsClean[$domain->topology] = $domain->name;
+    				$domainsClean[$domain->name] = $domain->name;
     	}
     	echo json_encode($domainsClean);
     }

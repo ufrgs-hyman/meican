@@ -62,7 +62,7 @@ class BpmWorkflow extends \yii\db\ActiveRecord
      */
     public function getDomain()
     {
-        return $this->hasOne(Domain::className(), ['topology' => 'domain']);
+        return $this->hasOne(Domain::className(), ['name' => 'domain']);
     }
     
     /**
@@ -73,7 +73,7 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     public static function disable($id){
     	$workflow = BpmWorkflow::findOne(['id' => $id]);
     	$workflow->active = 0;
-    	$domain = Domain::findOne(['topology' => $workflow->domain]);
+    	$domain = Domain::findOne(['name' => $workflow->domain]);
     	
     	if(!$domain) return false;
     	
@@ -88,9 +88,9 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     		//Deleta o fluxo
     		$flow->delete();
     		//Deleta autorizações
-    		ConnectionAuth::deleteAll(['connection_id' => $conId, 'domain' => $domain->topology]);
+    		ConnectionAuth::deleteAll(['connection_id' => $conId, 'domain' => $domain->name]);
     		//Cria novo fluxo, com workflow desativado
-    		BpmFlow::startFlow($conId, $domain->topology);
+    		BpmFlow::startFlow($conId, $domain->name);
     		//Dispara continuidade dos workflows
     		Connection::continueWorkflows($conId, true);
     	}

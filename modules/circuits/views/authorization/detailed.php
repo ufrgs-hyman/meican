@@ -8,7 +8,7 @@
 	use app\models\Reservation;
 	use app\models\Domain;
 	use app\models\Connection;
-	use app\models\ReservationPath;
+	use app\models\ConnectionPath;
 	use app\models\Urn;
 	use app\models\User;
 	use yii\data\ArrayDataProvider;
@@ -24,7 +24,7 @@
 	var reservationId = <?php echo $info->id; ?>;
 </script>
 
-<h1><?= Yii::t('circuits', 'Reply request as ').Domain::findOne(['topology' => $domain])->name ?></h1>
+<h1><?= Yii::t('circuits', 'Reply request as ').Domain::findOne(['name' => $domain])->name ?></h1>
 
 <table id="table" style="width:100%">
 	<tr style="vertical-align: top; ">
@@ -35,7 +35,7 @@
 			        <dd><?php echo $info->name; ?></dd>
 			        <dt><?php echo Yii::t('circuits', 'Source Domain').":"; ?></dt>
 			        <dd><?php
-			        	$path = ReservationPath::findOne(['reservation_id' => $info->id, 'path_order' => 0]);
+			        	$path = ConnectionPath::findOne(['conn_id' => $connection_id, 'path_order' => 0]);
 			        	if($path){
 			        		echo $path->domain;
 			        	}
@@ -45,9 +45,9 @@
 			        ?></dd>
 			        <dt><?php echo Yii::t('circuits', 'Source Urn').":"; ?></dt>
 			        <dd><?php
-			        	$path = ReservationPath::findOne(['reservation_id' => $info->id, 'path_order' => 0]);
+			        	$path = ConnectionPath::findOne(['conn_id' => $connection_id, 'path_order' => 0]);
 			        	if($path){
-			        		echo $path->urn;
+			        		echo $path->src_urn;
 			        	}
 			        	else{
 			        		return Yii::t('circuits', 'deleted');
@@ -55,7 +55,7 @@
 			        ?></dd>
 			        <dt><?php echo Yii::t('circuits', 'Destination Domain').":"; ?></dt>
 			        <dd><?php
-			        	$path = ReservationPath::find()->where(['reservation_id' => $info->id])->orderBy("path_order DESC")->one();
+			        	$path = ConnectionPath::find(['conn_id' => $connection_id])->orderBy("path_order DESC")->one();
 	        			if($path){
 			        		echo $path->domain;
 			        	}
@@ -65,9 +65,9 @@
 			        ?></dd>
 			        <dt><?php echo Yii::t('circuits', 'Destination Urn').":"; ?></dt>
 			        <dd><?php
-			        	$path = ReservationPath::find()->where(['reservation_id' => $info->id])->orderBy("path_order DESC")->one();
+			        	$path = ConnectionPath::find(['conn_id' => $connection_id])->orderBy("path_order DESC")->one();
 	        			if($path){
-			        		echo $path->urn;
+			        		echo $path->dst_urn;
 			        	}
 			        	else{
 			        		return Yii::t('circuits', 'deleted');

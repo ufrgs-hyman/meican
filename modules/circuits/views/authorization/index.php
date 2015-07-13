@@ -25,7 +25,7 @@
 			'columns' => array(
 					[
 						'label' => Yii::t('circuits', 'Reply request as '),
-						'value' => 'domain_name',
+						'value' => 'domain',
 						'contentOptions'=>['style'=>'min-width: 200px; font-weight: bold;']
 					],
 	        		[

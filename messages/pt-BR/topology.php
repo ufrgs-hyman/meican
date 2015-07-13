@@ -1,11 +1,6 @@
 <?php
 
 return array( 
-		"Aggregator {name} added successfully" => 'Aggregator {name} adicionado com sucesso',
-		"Aggregator {name} updated successfully"=> 'Aggregator {name} atualizado com sucesso',
-		"Aggregator {name} deleted successfully" => "Aggregator {name} removido com sucesso",
-		"Add aggregator" => "Adicionar aggregator",
-		"Update aggregator" => "Editar aggregator",
 		"Import the topology of this Aggregator" => "Importar a topologia deste Aggregator",
 		'Set as default provider for the next reservations'=> 'Definir como o provedor padrão para as próximas reservas',
 		'The new default provider is' => 'O novo provedor padrão é',
@@ -35,12 +30,16 @@ return array(
 		'Bridge {name} updated' => 'Bridge {name} atualizada',
 		'Network {name} inserted' => 'Rede {name} adicionada',
 		'Device {name} inserted' => 'Dispositivo {name} adicionado',
-		'URN {name} inserted' => 'URN {name} adicionada', 
-		'URN {name} updated' => 'URN {name} atualizada',
+		'Port {name} inserted' => 'Porta {name} adicionada', 
+		'Port {name} updated' => 'Porta {name} atualizada',
+		'You are not allowed for update on domain {domain}' => 'Você não tem permissão para editar no domínio {domain}',
+		'You are not allowed for update the domain {domain}' => 'Você não tem permissão para editar o domínio {domain}',
 		
-
+		'any' => 'todos',
+		
 		'Name' => 'Nome',
 		'Model' => 'Modelo',
+		'Address' => 'Endereço',
 		'Node' => 'Nodo',
 		'Network' => 'Rede',
 		'Domain' => 'Domínio',
@@ -85,17 +84,27 @@ return array(
 		'Add Device' => 'Adicionar Dispositivo',
 		'Update Device' => 'Editar Dispositivo',
 		'Trademark' => 'Marca',
-		'URNs (Uniform resource name)' => 'URNs',
-		'No URLs added to this domain' => 'Este domínio não possui URLs',
+		'Ports' => 'Portas',
+		'No Ports added to this domain' => 'Este domínio não possui portas',
 		'Description' => 'Descrição',
 		'Add Manual' => 'Adicionar manualmente',
 		'Delete Selected' => 'Excluir Selecionados',
-		'Successful delete URN {urn} from domain {domain}' => 'URN {urn} do domínio {domain} removida com sucesso',
+		'Successful delete Port {port} from domain {domain}' => 'Porta {port} do domínio {domain} removida com sucesso',
 		'#EndPoints' => '#Pontos Finais',
-		'URN {urn} not deleted. You are not allowed for delete on domain {domain}' => 'URN {urn} não foi removida. Você não está habilitado para remover no domínio {domain}',
+		'Port {port} not deleted. You are not allowed for delete on domain {domain}' => 'Porta {port} não foi removida. Você não está habilitado para remover no domínio {domain}',
 		'Device {device} not deleted. You are not allowed for delete on domain {domain}' => 'Dispositivo {device} não foi removido. Você não está habilitado para remover no domínio {domain}',
 		'Network {net} not deleted. You are not allowed for delete on domain {domain}' => 'Rede {net} não foi removida. Você não está habilitado para remover no domínio {domain}',
 		'You are not allowed for delete on domain {domain}' => 'Você não está habilitado para remover no domínio {domain}',
 
+		"Provider {name} added successfully" => 'Provedor {name} adicionado com sucesso',
+		"Provider {name} updated successfully"=> 'Provedor {name} atualizado com sucesso',
+		"Provider {name} deleted successfully" => "Provedor {name} removido com sucesso",
+		'Provider' => 'Provedor',
+		'Add Provider' => 'Adicionar Provedor',
+		'Update Provider' => 'Editar Provedor',
+		
+		'An error occurred while adding the discovery service' => 'Um erro ocorreu enquanto adicionava o serviço de descoberta',
+		'An error occurred while adding the connection service' => 'Um erro ocorreu enquanto adicionava o serviço de conexão',	
+			
 );
 ?>

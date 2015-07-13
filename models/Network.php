@@ -62,12 +62,12 @@ class Network extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('circuits', 'ID'),
-            'name' => Yii::t('circuits', 'Name'),
-            'urn' => Yii::t('circuits', 'Urn'),
-            'latitude' => Yii::t('circuits', 'Latitude'),
-            'longitude' => Yii::t('circuits', 'Longitude'),
-            'domain_id' => Yii::t('circuits', 'Domain ID'),
+            'id' => Yii::t('topology', 'ID'),
+            'name' => Yii::t('topology', 'Name'),
+            'urn' => Yii::t('topology', 'Urn'),
+            'latitude' => Yii::t('topology', 'Latitude'),
+            'longitude' => Yii::t('topology', 'Longitude'),
+            'domain_id' => Yii::t('topology', 'Domain ID'),
         ];
     }
 

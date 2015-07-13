@@ -11,61 +11,72 @@ use Yii;
  * @property string $name
  * @property string $default_policy
  *
- * @property BpmFlowControl[] $bpmFlowControls
- * @property BpmWorkflow[] $bpmWorkflows
+ * @property Device[] $devices
  * @property Network[] $networks
+ * @property UserDomain[] $userDomains
  */
-class Domain extends \yii\db\ActiveRecord {
+class Domain extends \yii\db\ActiveRecord
+{
 	
-	/**
-	 * @inheritdoc
-	 */
-	public static function tableName()
-	{
-		return 'meican_domain';
-	}
+	const ACCEPT_ALL = "ACCEPT_ALL";
+	const REJECT_ALL = "REJECT_ALL";
+	
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'meican_domain';
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function rules()
-	{
-		return [
-				[['name', 'default_policy'], 'required'],
-				[['default_policy'], 'string'],
-				[['name'], 'string', 'max' => 60],
-				[['name'], 'unique']
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['name'], 'required'],
+            [['default_policy'], 'string'],
+            [['name'], 'string', 'max' => 60],
+            [['name'], 'unique']
+        ];
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function attributeLabels()
-	{
-		return [
-				'id' => Yii::t('topology', 'ID'),
-				'name' => Yii::t('topology', 'Name'),
-				'default_policy' => Yii::t('topology', 'Default Policy'),
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'name' => Yii::t('topology', 'Name'),
+            'default_policy' => Yii::t('topology', 'Default Policy'),
+        ];
+    }
 
-	/**
-	 * @return \yii\db\ActiveQuery
-	 */
-	public function getNetworks()
-	{
-		return $this->hasMany(Network::className(), ['domain_id' => 'id']);
-	}
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDevices()
+    {
+        return $this->hasMany(Device::className(), ['domain_id' => 'id']);
+    }
 
-	/**
-	 * @return \yii\db\ActiveQuery
-	 */
-	public function getUserDomainsRoles()
-	{
-		return UserDomainRole::find()->where(['domain_id' => $this->id])->orWhere(['domain_id' => null]);
-		//return $this->hasMany(UserDomainRole::className(), ['domain_id' => 'id']);
-	}
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNetworks()
+    {
+        return $this->hasMany(Network::className(), ['domain_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserDomains()
+    {
+        return $this->hasMany(UserDomain::className(), ['domain_id' => 'id']);
+    }
 
     public function getOwnedWorkflows() {
     	return BpmWorkflow::find()->where(['domain_id'=>$this->id]);
@@ -74,4 +85,30 @@ class Domain extends \yii\db\ActiveRecord {
     public static function findByName($name) {
     	return Domain::find()->where(['name'=>$name]);
     }
+    
+    public function getPolicy(){
+    	if($this->default_policy == self::ACCEPT_ALL) return Yii::t('topology', 'Accept All');
+    	if($this->default_policy == self::REJECT_ALL) return Yii::t('topology', 'Reject All');
+    }
+    
+    public function getUserDomainsRoles()
+    {
+    	return UserDomainRole::find()->where(['domain_id' => $this->id])->orWhere(['domain_id' => null]);
+    	//return $this->hasMany(UserDomainRole::className(), ['domain_id' => 'id']);
+    }
+    
+    public function getBiPorts(){
+    	$portsArray = [];
+    	
+    	$devices = Device::find()->where(['domain_id' => $this->id])->all();
+    	
+    	foreach($devices as $device){
+    		$ports = Port::find()->where(['device_id' => $device->id, 'type' => Port::TYPE_NSI, 'directionality' => Port::DIR_BI])->all();
+    		foreach($ports as $port){
+    			$portsArray[$port->id] = $port;
+    		}
+    	}
+    	return $portsArray;  	
+    }
+        
 }

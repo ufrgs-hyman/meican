@@ -97,18 +97,18 @@ class Port extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('circuits', 'ID'),
-            'type' => Yii::t('circuits', 'Type'),
-            'directionality' => Yii::t('circuits', 'Directionality'),
-            'urn' => Yii::t('circuits', 'Urn'),
-            'name' => Yii::t('circuits', 'Name'),
-            'max_capacity' => Yii::t('circuits', 'Max Capacity'),
-            'min_capacity' => Yii::t('circuits', 'Min Capacity'),
-            'granularity' => Yii::t('circuits', 'Granularity'),
-            'biport_id' => Yii::t('circuits', 'Biport ID'),
-            'alias_id' => Yii::t('circuits', 'Alias ID'),
-            'device_id' => Yii::t('circuits', 'Device ID'),
-            'network_id' => Yii::t('circuits', 'Network ID'),
+            'id' => Yii::t('topology', 'ID'),
+            'type' => Yii::t('topology', 'Type'),
+            'directionality' => Yii::t('topology', 'Directionality'),
+            'urn' => Yii::t('topology', 'Urn'),
+            'name' => Yii::t('topology', 'Name'),
+            'max_capacity' => Yii::t('topology', 'Max Capacity (Mbps)'),
+            'min_capacity' => Yii::t('topology', 'Min Capacity (Mbps)'),
+            'granularity' => Yii::t('topology', 'Granularity (Mbps)'),
+            'biport_id' => Yii::t('topology', 'Biport ID'),
+            'alias_id' => Yii::t('topology', 'Alias ID'),
+            'device_id' => Yii::t('topology', 'Device'),
+            'network_id' => Yii::t('topology', 'Network'),
         ];
     }
 

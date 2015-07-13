@@ -5,10 +5,12 @@ namespace app\modules\topology\controllers;
 use yii\web\Controller;
 use app\controllers\RbacController;
 use yii\data\ActiveDataProvider;
+
 use app\models\Device;
-use app\models\Network;
-use app\models\Domain;
 use app\models\Port;
+
+use app\modules\topology\models\DeviceSearch;
+
 use yii\helpers\Json;
 use Yii;
 
@@ -17,18 +19,15 @@ class DeviceController extends RbacController {
     public function actionIndex($id = null) {
     	self::canRedir("topology/read");
     	
-        //Pega os dominios que o usuário tem permisão
-        $domains = self::whichDomainsCan("topology/read");
-
-        //Pega as redes destes dominios
-        $networks = Network::find()->where(['id' => '-1']);
-        foreach ($domains as $domain){
-        	$networks->union(Network::find()->where(['domain_id' => $domain->id]));
-        }
+        $searchModel = new DeviceSearch;
+	    $allowedDomains = self::whichDomainsCan('topology/read');
+	    $dataProvider = $searchModel->searchTerminatedByDomains(Yii::$app->request->get(),
+	    		$allowedDomains);
 
         return $this->render('index', array(
-        		'networks' => $networks->all(),
-        		'selected_network' => $id,
+        		'devices' => $dataProvider,
+        		'searchModel' => $searchModel,
+        		'allowedDomains' => $allowedDomains,
         ));
     }
     
@@ -58,7 +57,10 @@ class DeviceController extends RbacController {
     public function actionUpdate($id){
     	
 		$device = Device::findOne($id);
-    	self::canRedir('topology/update', $device->getNetwork()->one()->domain_id);
+    	if(!self::can("topology/update", $device->domain_id)){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed for update on domain {domain}', ['domain' => $device->getDomain()->one()->name]));
+    		return $this->redirect(array('index'));
+    	}
 
     	if($device->load($_POST)) {
     			if ($device->save()) {
@@ -85,11 +87,11 @@ class DeviceController extends RbacController {
 	    if(isset($_POST['delete'])){
     		foreach ($_POST['delete'] as $id) {
     			$device = Device::findOne($id);
-    			if(self::can('topology/delete', $device->getNetwork()->one()->domain_id)){
+    			if(self::can('topology/delete', $device->domain_id)){
 	    			if ($device->delete())	Yii::$app->getSession()->addFlash('success', Yii::t('topology', 'Device {name} deleted', ['name'=>$device->name]));
 	    			else Yii::$app->getSession()->setFlash('error', Yii::t('topology', 'Error deleting device {name}', ['name'=>$device->name]));
     			}
-    			else Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Device {device} not deleted. You are not allowed for delete on domain {domain}', ['device' => $device->name, 'domain' => $device->getNetwork()->one()->getDomain()->one()->name]));
+    			else Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Device {device} not deleted. You are not allowed for delete on domain {domain}', ['device' => $device->name, 'domain' => $device->getDomain()->one()->name]));
     		}
     	}
     
@@ -97,16 +99,6 @@ class DeviceController extends RbacController {
     }
     
     //REST
-    
-    public function actionGetNetworksByDomain(){
-    	$domainName = $_GET['domainName'];
-    	$domain = Domain::find()->where(['name' => $domainName])->one();
- 
-    	$networks = $domain->getNetworks()->all();
-    	$temp = Json::encode($networks);
-    	Yii::trace($temp);
-    	return $temp;
-    }
     
     public function actionGet($id) {
         $data = Device::find()->asArray()->where(['id'=>$id])->one();
@@ -126,48 +118,12 @@ class DeviceController extends RbacController {
     	return $temp;
     }
 
-    public function actionGetByNetwork($id, $cols=null){
-        $ports = Port::find()->where(['network_id'=>$id])->select(['device_id'])->all();
-        $devs =[];
-        foreach ($ports as $port) {
-            $devs[] = $port->device_id;
-        }
-
-        $query = Device::find()->where(['in','id',$devs])->orderBy(['name'=>'SORT ASC'])->asArray();
-        
-        $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
-    
-        $temp = Json::encode($data);
-        Yii::trace($temp);
-        return $temp;
-    }
-    
     public function actionGetAll() {
     	$data = Device::find()->orderBy(['name'=>'SORT ASC'])->asArray()->select(['id','name','latitude','longitude','domain_id'])->all();
     	
     	$temp = Json::encode($data);
     	Yii::trace($temp);
     	return $temp;
-    }
-    
-    public function actionGetNetworksId() {
-    	self::canRedir("topology/read");
-    	 
-    	//Pega os dominios que o usuário tem permisão
-    	$domains = self::whichDomainsCan("topology/read");
-    
-    	//Pega as redes destes dominios
-    	$networks = Network::find()->where(['domain_id' => $domains[0]->id]);
-    	foreach ($domains as $domain){
-    		$networks->union(Network::find()->where(['domain_id' => $domain->id]));
-    	}
-    	
-    	$array = [];
-    	foreach ($networks->all() as $net){
-    		$array[] = $net->id;
-    	}
-    	
-    	echo json_encode($array);
     }
     
     public function actionGetParentLocation($id) {

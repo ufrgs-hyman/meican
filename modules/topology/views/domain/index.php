@@ -50,7 +50,12 @@
 			        	'contentOptions'=>['style'=>'width: 15px;'],
 			        ),
 			        'name',
-			        'default_policy'
+			        [
+			        'label' => Yii::t('topology', 'Default Policy'),
+			        	'value' => function($dom){
+			        		return $dom->getPolicy();
+			        	},	
+					],
 				),
 		]);
 	?>

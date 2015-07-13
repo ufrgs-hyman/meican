@@ -10,6 +10,9 @@ use yii\data\ArrayDataProvider;
 use app\models\Network;
 use app\models\Domain;
 use app\models\Urn;
+
+use app\modules\topology\models\NetworkSearch;
+
 use yii\helpers\Json;
 use Yii;
 use yii\db\Query;
@@ -18,24 +21,16 @@ class NetworkController extends RbacController {
 	
 	public function actionIndex() {
 		self::canRedir("topology/read");
-		
-		//Pega os dominios que o usuário tem permissão
-    	$domains = self::whichDomainsCan("topology/read");
-
-    	//Pega as redes destes dominios
-	    $networks = Network::find()->where(['id' => '-1']);
-	    foreach ($domains as $domain){
-	    	$networks->union(Network::find()->where(['domain_id' => $domain->id]));
-	    }
 	    
-	    $dataProvider = new ActiveDataProvider([
-	    		'query' => $networks,
-	    		'pagination' => false,
-	    		'sort' => false,
-	    ]);
+	    $searchModel = new NetworkSearch;
+	    $allowedDomains = self::whichDomainsCan('topology/read');
+	    $dataProvider = $searchModel->searchTerminatedByDomains(Yii::$app->request->get(),
+	    		$allowedDomains);
 
         return $this->render('index', array(
         		'networks' => $dataProvider,
+        		'searchModel' => $searchModel,
+        		'allowedDomains' => $allowedDomains,
         ));
     }
     
@@ -65,7 +60,10 @@ class NetworkController extends RbacController {
     public function actionUpdate($id){
     	
     	$network = Network::findOne($id);
-    	self::canRedir("topology/update", $network->domain_id);
+    	if(!self::can("topology/update", $network->domain_id)){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed for update on domain {domain}', ['domain' => $network->getDomain()->one()->name]));
+    		return $this->redirect(array('index'));
+    	}
 
     	if($network->load($_POST)) {
     			if ($network->save()) {

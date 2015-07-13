@@ -242,7 +242,7 @@ class Notification extends \yii\db\ActiveRecord
     		//Se tem dominio, procura só as relacionadas ao dominio do papel
     		if($domain_id){
     			$domain = Domain::findOne($domain_id);
-    			if($domain) $auths = ConnectionAuth::find()->where(['status' => self::AUTH_STATUS_PENDING, 'domain' => $domain->topology, 'type' => self::AUTH_TYPE_GROUP, 'manager_group_id' => $group->id])->all();
+    			if($domain) $auths = ConnectionAuth::find()->where(['status' => self::AUTH_STATUS_PENDING, 'domain' => $domain->name, 'type' => self::AUTH_TYPE_GROUP, 'manager_group_id' => $group->id])->all();
     			else return;
     		}
     		//Se não possui domonio no papel, busca para todos dominios, pois é ANY
@@ -274,7 +274,7 @@ class Notification extends \yii\db\ActiveRecord
     		//Se tem domínio, procura só as relacionadas ao domínio do papel
     		if($domain_id){
     			$domain = Domain::findOne($domain_id);
-    			if($domain) $auths = ConnectionAuth::find()->where(['domain' => $domain->topology, 'type' => self::AUTH_TYPE_GROUP, 'manager_group_id' => $group->id])->all();
+    			if($domain) $auths = ConnectionAuth::find()->where(['domain' => $domain->name, 'type' => self::AUTH_TYPE_GROUP, 'manager_group_id' => $group->id])->all();
     			else return;
     		}
     		//Se não possui domínio no papel, busca para todos dominios, pois é ANY
@@ -353,7 +353,7 @@ class Notification extends \yii\db\ActiveRecord
     public static function createGroupAuthNotification($group_id, $domain, $reservation_id, $auth_id){
     	$group = Group::findOne($group_id);
     	 
-    	$domain = Domain::findOne(['topology' => $domain]);
+    	$domain = Domain::findOne(['name' => $domain]);
     	 
     	if(!$group || !$domain) return false;
     	 
@@ -367,7 +367,7 @@ class Notification extends \yii\db\ActiveRecord
     			foreach($notifications as $notification){
     				$cauth = ConnectionAuth::findOne($notification->info);
     				if($cauth){
-    					if($cauth->domain == $domain->topology){
+    					if($cauth->domain == $domain->name){
     						$conn = Connection::findOne($cauth->connection_id);
     						if($conn){
     							if($conn->reservation_id == $reservation_id){
@@ -480,7 +480,7 @@ class Notification extends \yii\db\ActiveRecord
     		case self::NOTICE_TYPE_ADD_GROUP:
     			$group = Group::findOne($data[1]);
     			//Se não possui dado extra é para todos, do contrario, possui dominio
-    			if(isset($data[2])) $domain = Domain::findOne(['topology' => $data[2]]);
+    			if(isset($data[2])) $domain = Domain::findOne(['name' => $data[2]]);
     			
     			$title = Yii::t("notification", 'Added to a group')." (".$group->name.")";
     			
@@ -497,7 +497,7 @@ class Notification extends \yii\db\ActiveRecord
     		//REMOVIDO DE UM GRUPO
     		case self::NOTICE_TYPE_DEL_GROUP:
     			$group = Group::findOne($data[1]);
-    			if(isset($data[2])) $domain = Domain::findOne(['topology' => $data[2]]);
+    			if(isset($data[2])) $domain = Domain::findOne(['name' => $data[2]]);
 
     			$title = Yii::t("notification", 'Removed from a group')." (".$group->name.")";
     			 
@@ -528,10 +528,10 @@ class Notification extends \yii\db\ActiveRecord
     	$reservation = Reservation::findOne($notification->info);
     	if(!$reservation) return "";
 
-    	$source = ReservationPath::findOne(['reservation_id' => $reservation->id, 'path_order' => 0])->domain;
-    	 
-    	$path_order = ReservationPath::find()->where(['reservation_id' => $reservation->id])->count()-1;
-    	$destination = ReservationPath::findOne(['reservation_id' => $reservation->id, 'path_order' => $path_order])->domain;
+    	$connection = Connection::find()->where(['reservation_id' => $reservation->id])->one();
+    	$source = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => 0])->domain;
+    	$path_order = ConnectionPath::find()->where(['conn_id' => $connection->id])->count()-1;
+    	$destination = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => $path_order])->domain;
     	 
     	$title = Yii::t("notification", 'Reservation')." (".$reservation->name.")";
     	
@@ -606,12 +606,13 @@ class Notification extends \yii\db\ActiveRecord
     	$auth = ConnectionAuth::findOne($auth_id);
     	if(!$auth) return "";
 
-    	$reservation = Reservation::findOne(Connection::findOne($auth->connection_id)->reservation_id);
+    	$connection = Connection::findOne($auth->connection_id);
     	
-    	$source = ReservationPath::findOne(['reservation_id' => $reservation->id, 'path_order' => 0])->domain;
+    	$source = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => 0])->domain;
+    	$path_order = ConnectionPath::find()->where(['conn_id' => $connection->id])->count()-1;
+    	$destination = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => $path_order])->domain;
     	
-    	$path_order = ReservationPath::find()->where(['reservation_id' => $reservation->id])->count()-1;
-    	$destination = ReservationPath::findOne(['reservation_id' => $reservation->id, 'path_order' => $path_order])->domain;
+    	$reservation = Reservation::findOne($connection->reservation_id);
     	
     	$title = Yii::t("notification", 'Pending authorization')." (".$auth->domain.")";
 	    $msg = Yii::t("notification", 'The circuit is from')." <b>".$source."</b> ".Yii::t("notification", 'to')." <b>".$destination."</b>";

@@ -268,8 +268,8 @@ class Connection extends \yii\db\ActiveRecord
     
     	//Cria execução dos Workflows
     	foreach($paths as $path){ //Utiliza unique para não executar duas vezes em intradominios.
-    		$domain = Domain::findOne(['topology' => $path->domain]);
-    		if(isset($domain)) BpmFlow::startFlow($id, $domain->topology);
+    		$domain = Domain::findOne(['name' => $path->domain]);
+    		if(isset($domain)) BpmFlow::startFlow($id, $domain->name);
     		if(Connection::findOne(['id' => $id])->auth_status != 'WAITING') break; //Para quando ja negou.
     	}
     
@@ -292,8 +292,8 @@ class Connection extends \yii\db\ActiveRecord
     	foreach($paths as $path){
     		if(Connection::findOne(['id' => $id])->auth_status == 'DENIED') break; //Para quando ja negou.
     		else{
-    			$domain = Domain::findOne(['topology' => $path->domain]);
-    			if(isset($domain)) BpmFlow::doRequest($id, $domain->topology, $asking);
+    			$domain = Domain::findOne(['name' => $path->domain]);
+    			if(isset($domain)) BpmFlow::doRequest($id, $domain->name, $asking);
     		}
     		if(ConnectionAuth::find()->where(['connection_id' => $id, 'status' => 'WAITING'])->count() > 0) break; //Se tem uma pergunta ativa.
     	}
@@ -313,10 +313,10 @@ class Connection extends \yii\db\ActiveRecord
     	///// Connection aceita pelo Provider e
     	//// Path atualizado com sucesso
 
-    	//$this->executeWorkflows($this->id);
+    	$this->executeWorkflows($this->id);
     	
-    	$this->auth_status = 'AUTHORIZED';
-        $this->save();
-    	$this->requestProvision();
+    	//$this->auth_status = 'AUTHORIZED';
+        //$this->save();
+    	//$this->requestProvision();
     }
 }

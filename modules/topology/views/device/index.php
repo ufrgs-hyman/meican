@@ -10,6 +10,8 @@
 
 	use app\modules\topology\assets\DeviceAsset;
 	
+	use yii\helpers\ArrayHelper;
+	
 	use yii\widgets\ActiveForm;
 	use yii\data\ActiveDataProvider;
 	use app\models\Device;
@@ -18,10 +20,6 @@
 ?>
 
 <h1><?= Yii::t('topology', 'Devices'); ?></h1>
-
-<script>
-	var selected_network = <?php echo json_encode($selected_network); ?>;
-</script>
 
 <?php
 	$form = ActiveForm::begin([
@@ -35,66 +33,60 @@
 	
 <?= $this->render('//formButtons'); ?>
 	
-<?php foreach ($networks as $net): ?>
-    <div id="network<?php echo $net->id; ?>">
-	
-	    <h4><?=Html::img('@web'.'/images/minus.gif', ['id' => "collapseExpand".$net->id]);?>
-	    <?php
-		    $text = Yii::t('topology', 'Domain')." ";
-		    $text .= $net->getDomain()->one()->name;
-	     	$text .= " - ".Yii::t('topology', 'Network')." ";
-	        $text .= $net->name;
-	        
-	        echo $text;
-	    ?></h4>
-	            
-	    <div id="collapsable<?php echo $net->id ?>">  
-	       
-	    <?=
+	<?=
 		GridView::widget([
-			'options' => ['class' => 'list-without-margin'],
-			'dataProvider' => new ActiveDataProvider([
-	    		'query' => Device::find()->where(['network_id' => $net->id]),
-	    		'sort' => false,
-	    		'pagination' => false,
-	    	]),
+			'options' => ['class' => 'list'],
 			'formatter' => new Formatter(['nullDisplay'=>'']),
-			'id' => 'gridDevices',
-			'layout' => "{items}",
+			'dataProvider' => $devices,
+			'filterModel' => $searchModel,
+			'id' => 'gridNetowrks',
+			'layout' => "{items}{pager}",
 			'columns' => array(
-		    	[
-		    		'class'=>CheckboxColumn::className(),
-				       'name'=>'delete',         
-				       'checkboxOptions'=>[
-				       	'class'=>'deleteCheckbox',
-				       ],
-				       'multiple'=> false,
-				       'contentOptions'=>['style'=>'width: 15px;'],
-			    ],
-			    [
-			       	'class'=> LinkColumn::className(),
-			       	'image'=>'/images/edit_1.png',
-			       	'label' => '',
-			       	'url' => 'update',
-			       	'title'=> Yii::t('topology', 'Update'),
-			       	'contentOptions'=>['style'=>'width: 15px;'],
-			    ],
-				'name',
-				'latitude',
-				'longitude',
-				[
-					'format' => 'html',
-					'label' => Yii::t('topology', '#EndPoints'),
-					'value' => function($dev){
-						return Html::a($dev->getUrns()->count(), ['/topology/urn', 'id' => $dev->getNetwork()->one()->domain_id]);
-					}
-				],
+		    		array(
+		    			'class'=>CheckboxColumn::className(),
+				        'name'=>'delete',         
+				        'checkboxOptions'=>[
+				        	'class'=>'deleteCheckbox',
+				        ],
+				        'multiple'=>false,
+				        'contentOptions'=>['style'=>'width: 15px;']
+			        ),
+			        array(
+			        	'class'=> LinkColumn::className(),
+			        	'image'=>'/images/edit_1.png',
+			        	'label' => '',
+			        	'title'=> Yii::t("topology", 'Update'),
+			        	'url' => '/topology/device/update',
+			        	'contentOptions'=>['style'=>'width: 15px;']
+			        ),
+			        'name',
+			        'ip',
+			        'address',
+					'latitude',
+					'longitude',
+					'node',
+					[
+						'label' => Yii::t("topology", 'Domain'),
+						'value' => function($dev){
+							return $dev->getDomain()->one()->name;
+						},
+						'filter' => Html::activeDropDownList($searchModel, 'domain_name',
+							ArrayHelper::map(
+								$allowedDomains, 'name', 'name'),
+							['class'=>'form-control','prompt' => Yii::t("topology", 'any')]	
+						),
+					],
+					[
+						'format' => 'html',
+						'label' => Yii::t('topology', '#EndPoints'),
+						'value' => function($dev){
+							return Html::a($dev->getPorts()->count(), ['/topology/port', 'id' => $dev->domain_id]);
+						}
+					],
 			),
 		]);
-		?>
-		</div> 
-	</div>      
-
-<?php endforeach; ?>
-
-<?php ActiveForm::end(); ?>
+	?>
+	
+	<?php
+	ActiveForm::end();
+?>

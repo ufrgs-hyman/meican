@@ -81,7 +81,7 @@ class ConnectionAuth extends \yii\db\ActiveRecord
      */
     public function getDomain()
     {
-        return $this->hasOne(Domain::className(), ['topology' => 'domain']);
+        return $this->hasOne(Domain::className(), ['name' => 'domain']);
     }
 
     /**

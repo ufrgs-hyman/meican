@@ -48,33 +48,17 @@ class DomainController extends RbacController {
     	
     	if($form->load($_POST)) {
     		if ($form->validate()) {
-    			$provider = $form->getProvider();
-    			
-    			if (!$provider->save()) {
-					foreach($provider->getErrors() as $attribute => $error) {
+				$dom = $form->getDomain();
+				 
+				if (!$dom->save()) {
+					foreach($dom->getErrors() as $attribute => $error) {
 						Yii::$app->getSession()->addFlash("error", $error[0]);
 					}
 				} else {
-					$dom = $form->getDomain();
-					$dom->setProvider($provider);
-					 
-					if (!$dom->save()) {
-						foreach($dom->getErrors() as $attribute => $error) {
-							Yii::$app->getSession()->addFlash("error", $error[0]);
-						}
-							
-						$provider->delete();
-					} else {
-						Yii::$app->getSession()->addFlash("success", Yii::t('topology', 'Domain {name} added successfully', ['name'=>$dom->name]));
-						return $this->redirect(array('index'));
-					}
+					Yii::$app->getSession()->addFlash("success", Yii::t('topology', 'Domain {name} added successfully', ['name'=>$dom->name]));
+					return $this->redirect(array('index'));
 				}
-    		} else {
-    			foreach($form->getErrors() as $attribute => $error) {
-    				Yii::$app->getSession()->addFlash("error", $error[0]);
-    			}
-    			$form->clearErrors();
-    		}
+			}
     	}
     	
     	return $this->render('create',[
@@ -83,7 +67,10 @@ class DomainController extends RbacController {
     }
     
     public function actionUpdate($id) {
-    	self::canRedir("topology/update", $id);
+    	if(!self::can("topology/update", $id)){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed for update the domain {domain}', ['domain' => Domain::findOne($id)->name]));
+    		return $this->redirect(array('index'));
+    	}
     	
     	$form = new DomainFormModel; 
     	$form->setFromRecord(Domain::findOne($id));

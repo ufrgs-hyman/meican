@@ -4,7 +4,7 @@ namespace app\modules\topology\assets;
 
 use yii\web\AssetBundle;
 
-class FormDeviceAsset extends AssetBundle
+class PortAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
@@ -12,7 +12,8 @@ class FormDeviceAsset extends AssetBundle
 
     ];
     public $js = [
-    	'js/topology/addDevice.js',
+    	'js/topology/port.js',
+    	'js/topology/port-i18n.js',
     ];
     public $depends = [
 		'yii\web\JqueryAsset',

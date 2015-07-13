@@ -59,15 +59,16 @@ class Device extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('circuits', 'ID'),
-            'name' => Yii::t('circuits', 'Name'),
-            'ip' => Yii::t('circuits', 'Ip'),
-            'trademark' => Yii::t('circuits', 'Trademark'),
-            'model' => Yii::t('circuits', 'Model'),
-            'latitude' => Yii::t('circuits', 'Latitude'),
-            'longitude' => Yii::t('circuits', 'Longitude'),
-            'node' => Yii::t('circuits', 'Node'),
-            'domain_id' => Yii::t('circuits', 'Domain ID'),
+            'id' => Yii::t('topology', 'ID'),
+            'name' => Yii::t('topology', 'Name'),
+            'ip' => Yii::t('topology', 'Ip'),
+            'trademark' => Yii::t('topology', 'Trademark'),
+            'model' => Yii::t('topology', 'Model'),
+        	'address' => Yii::t('topology', 'Address'),
+            'latitude' => Yii::t('topology', 'Latitude'),
+            'longitude' => Yii::t('topology', 'Longitude'),
+            'node' => Yii::t('topology', 'Node'),
+            'domain_id' => Yii::t('topology', 'Domain'),
         ];
     }
 

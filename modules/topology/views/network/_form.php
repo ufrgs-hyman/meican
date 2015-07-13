@@ -19,15 +19,19 @@
 		<?= $form->field($network, 'id')->hiddenInput()->label('');?>
 	</div>
 	<div class="form input">
-		<?= $form->field($network,'name')->textInput(['size'=>30,'maxlength'=>30]); ?>
-	</div>
-
-	<div class="form input">
-		<?= $form->field($network,'latitude')->textInput(['size'=>30,'maxlength'=>100]); ?>
+		<?= $form->field($network,'name')->textInput(['size'=>30,'maxlength'=>50]); ?>
 	</div>
 	
 	<div class="form input">
-		<?= $form->field($network,'longitude')->textInput(['size'=>30,'maxlength'=>100]); ?>
+		<?= $form->field($network,'urn')->textInput(['size'=>30,'maxlength'=>250]); ?>
+	</div>
+
+	<div class="form input">
+		<?= $form->field($network,'latitude')->textInput(['size'=>30,'maxlength'=>30]); ?>
+	</div>
+	
+	<div class="form input">
+		<?= $form->field($network,'longitude')->textInput(['size'=>30,'maxlength'=>30]); ?>
 	</div>
 
 	<div class="form input">

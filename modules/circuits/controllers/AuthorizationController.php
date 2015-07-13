@@ -59,7 +59,7 @@ class AuthorizationController extends RbacController {
 	    			$aux[0] = $conn->reservation_id;;
 	    			$aux[1] = $request->domain;
 	    			$reservationsVisited[] = $aux;
-	    			$domain = Domain::findOne(['topology' => $request->domain]);
+	    			$domain = Domain::findOne(['name' => $request->domain]);
 	    			if(isset($domain))
     					$authorizations[] = new AuthorizationForm(Reservation::findOne(['id' => $conn->reservation_id]), $domain);
 	    		}
@@ -71,7 +71,7 @@ class AuthorizationController extends RbacController {
     	foreach($domainRoles as $role){ //Passa por todos papeis
     		$groupRequests = ConnectionAuth::find()->where(['manager_group_id' => $role->getGroup()->id, 'status' => 'WAITING'])->all();
     		foreach($groupRequests as $request){ //Passa por todas requisições para testar se o dominio corresponde
-    			$domain = Domain::findOne(['topology' => $request->domain]);
+    			$domain = Domain::findOne(['name' => $request->domain]);
     			if($domain){
 	    			if($role->domain_id == NULL || $role->domain_id == $domain->id){
 	    				$uniq = true;
@@ -86,7 +86,7 @@ class AuthorizationController extends RbacController {
 		    			else{
 		    				$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['>','start', DateUtils::now()])->one();
 		    				foreach($reservationsVisited as $res){
-				    			if($conn->reservation_id == $res[0] && $domain->topology == $res[1]){
+				    			if($conn->reservation_id == $res[0] && $domain->name == $res[1]){
 				    				$uniq = false;
 				    			}
 				    		}
@@ -120,7 +120,7 @@ class AuthorizationController extends RbacController {
     	Yii::trace("Answer");
     	if($id == null || $domain == null) $this->actionAuthorization();
     	else{
-    		if(!Domain::findOne(['topology' => $domain])) $this->actionAuthorization();
+    		if(!Domain::findOne(['name' => $domain])) $this->actionAuthorization();
     		else{
 	    		Yii::trace("Respondendo a reserva id: ".$id);
 	    		$userId = Yii::$app->user->getId();
@@ -168,6 +168,7 @@ class AuthorizationController extends RbacController {
 		    	else return $this->render('detailed', array(
 	    				'domain' => $domain,
 	    				'info' => $reservation,
+		    			'connection_id' => Connection::find()->where(['reservation_id' => $id])->one()->id,
 	    				'requests' => $requests,
 	    				'events' => $events
 	    		));

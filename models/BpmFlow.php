@@ -106,7 +106,7 @@ class BpmFlow extends \yii\db\ActiveRecord
      * @param unknown $domainTop
      */
     public static function startFlow($connection_id, $domainTop){   	
-    	$domain = Domain::findOne(['topology' => $domainTop]);
+    	$domain = Domain::findOne(['name' => $domainTop]);
     	$workflow = BpmWorkflow::findOne(['domain' => $domainTop, 'active' => 1]);
     	
     	Yii::trace("!!!! INICIA WORKFLOW !!!! ");
@@ -485,7 +485,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     			
     		case 'previous':
     			$thisDomain = Domain::findOne([$flow->domain_id]);
-    			$cp = ConnectionPath::findOne(['conn_id' => $connection->id, 'domain' => $thisDomain->topology]);
+    			$cp = ConnectionPath::findOne(['conn_id' => $connection->id, 'domain' => $thisDomain->name]);
     			if(!isset($cp)){ //Se dominio deletado
     				$flow->status = 'YES';
     				return;
@@ -500,7 +500,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     			
     		case 'next':
     			$thisDomain = Domain::findOne([$flow->domain_id]);
-    			$cp = ConnectionPath::findOne(['conn_id' => $connection->id, 'domain' => $thisDomain->topology]);
+    			$cp = ConnectionPath::findOne(['conn_id' => $connection->id, 'domain' => $thisDomain->name]);
     			if(!isset($cp)){ //Se dominio deletado
     				$flow->status = 'YES';
     				return;
