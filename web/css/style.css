@@ -52,6 +52,22 @@ a:link, a:visited {
 	color: #27567C;
 }
 
+.list table tbody tr.success:nth-child(odd)    {
+    background-color:#d1ffd1;
+}
+
+.list table tbody tr.success:nth-child(even)    {
+    background-color:#e4ffe4;
+}
+
+.list table tbody tr.error:nth-child(odd)    {
+    background-color:#ffdbdb;
+}
+
+.list table tbody tr.error:nth-child(even)    {
+    background-color:#ffe6e6;
+}
+
 /* Improve readability when focused and hovered in all browsers: people.opera.com/patrickl/experiments/keyboard/test */
 a:hover, a:active { outline: 0; }
 
