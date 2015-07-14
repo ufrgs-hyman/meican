@@ -67,7 +67,7 @@ $(document).ready(function() {
 	});
 
 	$('#calendar').fullCalendar('gotoDate', jsonEvents[0].start);
-
+	
 	$.getJSON(baseUrl + "/circuits/authorization/get-others?domainTop="+domain+"&reservationId="+reservationId+"&type="+1,
 		function(data) {
 			eventsConfirmed = {
@@ -95,9 +95,11 @@ $(document).ready(function() {
 
 /////////////////////// TO DATE //////////////////////
 function toDate(id){
-	$('#calendar').fullCalendar('gotoDate', jsonEvents[id].start);
+	var element;
+	for(var i in jsonEvents) if(jsonEvents[i].id == id) element = jsonEvents[i];
+	$('#calendar').fullCalendar('gotoDate', element.start);
 	$(".fc-state-highlight").removeClass("fc-state-highlight");
-	$("[data-date='" + jsonEvents[id].start + "']").addClass("fc-state-highlight");
+	$("[data-date='" + element.start + "']").addClass("fc-state-highlight");
 }
 
 /////////////////////// ACCEPT //////////////////////

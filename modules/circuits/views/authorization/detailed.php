@@ -1,5 +1,6 @@
 <?php 
 	use yii\grid\GridView;
+	use yii\widgets\DetailView;
 	use yii\grid\CheckboxColumn;
 	use app\components\LinkColumn;
 	use yii\helpers\Html;
@@ -8,9 +9,7 @@
 	use app\models\Reservation;
 	use app\models\Domain;
 	use app\models\Connection;
-	use app\models\ConnectionPath;
-	use app\models\Urn;
-	use app\models\User;
+
 	use yii\data\ArrayDataProvider;
 	use yii\jui\Dialog;
 	
@@ -21,68 +20,31 @@
 <script>
 	var jsonEvents = <?php echo json_encode($events); ?>;
 	var domain = <?php echo json_encode($domain); ?>;
-	var reservationId = <?php echo $info->id; ?>;
+	var reservationId = <?php echo $info->reservation_id; ?>;
 </script>
 
 <h1><?= Yii::t('circuits', 'Reply request as ').Domain::findOne(['name' => $domain])->name ?></h1>
 
-<table id="table" style="width:100%">
+<table id="table" style="min-height: 225px; width:100%">
 	<tr style="vertical-align: top; ">
   		<td style="width: 50%; word-wrap: break-word; overflow-wrap: break-word;">
-			<h4 class="float-left">
-		    	<dl>
-			        <dt><?php echo Yii::t('circuits', 'Reservation name:'); ?></dt>
-			        <dd><?php echo $info->name; ?></dd>
-			        <dt><?php echo Yii::t('circuits', 'Source Domain').":"; ?></dt>
-			        <dd><?php
-			        	$path = ConnectionPath::findOne(['conn_id' => $connection_id, 'path_order' => 0]);
-			        	if($path){
-			        		echo $path->domain;
-			        	}
-			        	else{
-			        		return Yii::t('circuits', 'deleted');
-			        	};
-			        ?></dd>
-			        <dt><?php echo Yii::t('circuits', 'Source Urn').":"; ?></dt>
-			        <dd><?php
-			        	$path = ConnectionPath::findOne(['conn_id' => $connection_id, 'path_order' => 0]);
-			        	if($path){
-			        		echo $path->src_urn;
-			        	}
-			        	else{
-			        		return Yii::t('circuits', 'deleted');
-			        	};
-			        ?></dd>
-			        <dt><?php echo Yii::t('circuits', 'Destination Domain').":"; ?></dt>
-			        <dd><?php
-			        	$path = ConnectionPath::find()->where(['conn_id' => $connection_id])->orderBy("path_order DESC")->one();
-	        			if($path){
-			        		echo $path->domain;
-			        	}
-			        	else{
-			        		return Yii::t('circuits', 'deleted');
-			        	};
-			        ?></dd>
-			        <dt><?php echo Yii::t('circuits', 'Destination Urn').":"; ?></dt>
-			        <dd><?php
-			        	$path = ConnectionPath::find()->where(['conn_id' => $connection_id])->orderBy("path_order DESC")->one();
-	        			if($path){
-			        		echo $path->dst_urn;
-			        	}
-			        	else{
-			        		return Yii::t('circuits', 'deleted');
-			        	};
-			        ?></dd>
-			        <dt><?php echo Yii::t('circuits', 'Requester').":"; ?></dt>
-			        <dd><?php
-			        	echo User::findOne(['id' => $info->request_user_id])->name;
-			        ?></dd>
-			        <dt><?php echo Yii::t('circuits', 'Requested Bandwidth:'); ?></dt>
-			        <dd><?php
-			        	echo $info->bandwidth." Mbps";
-			        ?></dd>
-			    </dl>
-			</h4>
+			<div class="float-left">
+		    	<?= DetailView::widget([
+				    'options' => ['class' => 'list', 'style'=>'margin-top: 4px !important'],
+				    'model' => $info,
+				    'attributes' => [
+				        'reservation_name',
+						'source_domain',
+						'destination_domain',
+						'requester',
+						'bandwidth',
+						'port_in:html',
+						'port_out:html',
+				    ],
+				]); ?>
+		    	
+		    	
+			</div>
 		</td>
 		
 	  	<td style="width: 50%">
@@ -95,14 +57,14 @@
 				<?php
 					$notWaiting = true;
 					foreach($requests as $req){
-						if($req->status == "WAITING"){
+						if($req->status == Connection::AUTH_STATUS_PENDING){
 							$notWaiting = false;
 							break;
 						}
 					}
 					$domainTop = json_encode($domain);
-					echo Html::button(Yii::t('circuits', 'Accept All'), ['disabled' => $notWaiting, 'onclick' => "acceptAll($info->id, $domainTop)"]);
-					echo Html::button(Yii::t('circuits', 'Reject All'), ['disabled' => $notWaiting, 'onclick' => "rejectAll($info->id, $domainTop)"]);
+					echo Html::button(Yii::t('circuits', 'Accept All'), ['disabled' => $notWaiting, 'onclick' => "acceptAll($info->reservation_id, $domainTop)"]);
+					echo Html::button(Yii::t('circuits', 'Reject All'), ['disabled' => $notWaiting, 'onclick' => "rejectAll($info->reservation_id, $domainTop)"]);
 				?>
 			</div>
 			
@@ -111,21 +73,21 @@
 					'dataProvider' => new ArrayDataProvider([
 		    				'allModels' => $requests,
 		    				'sort' => false,
-		    				'pagination' => false,
+		    				'pagination' => [
+						        'pageSize' => 4,
+						    ],
 		    		]),
 					'formatter' => new Formatter(['nullDisplay'=>'']),
 					'id' => 'gridRequest',
 					'layout' => "{items}{pager}",
 					'rowOptions' => function ($model, $key, $index, $grid){
-						if($model->status == "AUTHORIZED"){
-							if($index % 2 == 0) return ['style'=>'background-color: #d9ffd9;', 'id' => $index, 'onclick' => 'toDate(id)'];
-							else return ['style'=>'background-color: #e4ffe4;', 'id' => $index, 'onclick' => 'toDate(id)'];
+						if($model->status == Connection::AUTH_STATUS_APPROVED){
+							return ['style'=>'background-color: #e4ffe4; border-bottom: 1px solid #d4eed4;', 'id' => $model['id'], 'onclick' => 'toDate(id)'];
 						}
-						else if($model->status == "DENIED"){
-							if($index % 2 == 0) return ['style'=>'background-color: #ffdbdb;', 'id' => $index, 'onclick' => 'toDate(id)'];
-							else return ['style'=>'background-color: #ffe6e6;', 'id' => $index, 'onclick' => 'toDate(id)'];
+						else if($model->status == Connection::AUTH_STATUS_REJECTED){
+							return ['style'=>'background-color: #ffe6e6; border-bottom: 1px solid #eed6d6', 'id' => $model['id'], 'onclick' => 'toDate(id)'];
 						}
-						else return ['id' => $index, 'onclick' => 'toDate(id)'];
+						else return ['id' => $model['id'], 'onclick' => 'toDate(id)'];
 					},
 					'columns' => array(
 							[
@@ -180,10 +142,7 @@
 							[
 								'label'=> Yii::t('circuits', 'Status'),
 								'value' => function($req){
-									if($req->status == "WAITING") return Yii::t('circuits', 'Waiting');
-									else if($req->status == "AUTHORIZED") return Yii::t('circuits', 'Approved');
-									else if($req->status == "DENIED") return Yii::t('circuits', 'Rejected');
-									else if($req->status == "EXPIRED") return Yii::t('circuits', 'Expired');
+									return $req->getStatus();
 								},
 								'contentOptions'=>['style'=>'min-width: 70px;']
 							],
@@ -202,8 +161,8 @@
     <td style="width: 100%">
 	    <div align="left" style="margin-bottom: 10px;">
 	    	<!-- <input type="checkbox" id="checkAgenda">Agenda</input> -->
-		    <input type="checkbox" id="checkPending" checked><?= Yii::t('circuits', 'Show others (Pending)'); ?></input>
-		    <input type="checkbox" id="checkConfirmed" checked><?= Yii::t('circuits', 'Show others (Confirmed)'); ?></input>
+		    <input style="margin-right: 5px;" type="checkbox" id="checkPending" checked><?= Yii::t('circuits', 'Show others (Pending)'); ?></input>
+		    <input style="margin-left: 10px; margin-right: 5px;" type="checkbox" id="checkConfirmed" checked><?= Yii::t('circuits', 'Show others (Confirmed)'); ?></input>
 	    </div>
 	    <?php echo \talma\widgets\FullCalendar::widget([
 			'id' => 'calendar',

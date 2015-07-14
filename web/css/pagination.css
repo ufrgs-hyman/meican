@@ -28,15 +28,19 @@
 .pagination .active a {
 	border: 1px solid #5b7399;
 	background: #27567c;
-	color: #ffffff;
+	color: #ffffff !important;
 }
 
 .pagination a:visited {
-	color: #27567c;
+	color: #408DCC;
+}
+
+.pagination a {
+	color: #408DCC !important;
 }
 
 .pagination .active a:visited {
-	color: #ffffff;
+	color: #ffffff !important;
 }
 
 .pagination span {

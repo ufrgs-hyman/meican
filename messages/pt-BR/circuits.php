@@ -255,6 +255,8 @@ return array(
 		"Accept All" => "Aceitar Tudo",
 		"Show others (Pending)" => "Mostrar outros (Pendentes)",
 		"Show others (Confirmed)" => "Mostrar outros (Confirmados)",
+		"Port In" => "Porta de Entrada",
+		"Port Out" => "Porta de Saída",
 		
 );
 ?>

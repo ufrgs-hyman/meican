@@ -19,6 +19,7 @@ use app\models\Domain;
 use yii\db\Query;
 use app\models\Notification;
 use app\modules\circuits\models\AuthorizationForm;
+use app\modules\circuits\models\AuthorizationDetailed;
 
 use app\components\DateUtils;
 
@@ -36,14 +37,14 @@ class AuthorizationController extends RbacController {
     	$reservationsVisited = []; //Armazena as reservas ja incluidas nos pedidos e o dominio ao qual o pedido foi feito.
 
     	//Pega todas requisições feitas para o usuário
-    	$userRequests = ConnectionAuth::find()->where(['manager_user_id' => $userId, 'status' => 'WAITING'])->all();
+    	$userRequests = ConnectionAuth::find()->where(['manager_user_id' => $userId, 'status' => Connection::AUTH_STATUS_PENDING])->all();
     	foreach($userRequests as $request){ //Limpa mantendo apenas 1 por reserva
     		$uniq = true;
     		$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['<=','start', DateUtils::now()])->one();
     		if(isset($conn)){
-    			$request->status='EXPIRED';
-    			$request->save();
-    			$conn->auth_status='EXPIRED';
+    			$request->status= Connection::AUTH_STATUS_EXPIRED;
+		    	$request->save();
+		    	$connection->auth_status= Connection::AUTH_STATUS_EXPIRED;
     			$conn->save();
     			Notification::createConnectionNotification($conn->id);
     		}
@@ -69,7 +70,7 @@ class AuthorizationController extends RbacController {
     	//Pega todos os papeis do usuário
     	$domainRoles = User::findOne(['id' => $userId])->getUserDomainRoles()->all();
     	foreach($domainRoles as $role){ //Passa por todos papeis
-    		$groupRequests = ConnectionAuth::find()->where(['manager_group_id' => $role->getGroup()->id, 'status' => 'WAITING'])->all();
+    		$groupRequests = ConnectionAuth::find()->where(['manager_group_id' => $role->getGroup()->id, 'status' => Connection::AUTH_STATUS_PENDING])->all();
     		foreach($groupRequests as $request){ //Passa por todas requisições para testar se o dominio corresponde
     			$domain = Domain::findOne(['name' => $request->domain]);
     			if($domain){
@@ -77,9 +78,9 @@ class AuthorizationController extends RbacController {
 	    				$uniq = true;
 		    			$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['<=','start', DateUtils::now()])->one();
 			    		if(isset($conn)){
-			    			$request->status='EXPIRED';
-			    			$request->save();
-			    			$conn->auth_status='EXPIRED';
+			    			$request->status= Connection::AUTH_STATUS_EXPIRED;
+		    				$request->save();
+		    				$connection->auth_status= Connection::AUTH_STATUS_EXPIRED;
 			    			$conn->save();
 			    			Notification::createConnectionNotification($conn->id);
 			    		}
@@ -103,15 +104,8 @@ class AuthorizationController extends RbacController {
     			}
     		}
     	}
-
-    	/*$dataProvider = new ArrayDataProvider([
-    			'allModels' => $authorizations,
-    			'sort' => false,
-    			'pagination' => false,
-    	]);*/
     
     	return $this->render('index', array(
-    			//'data' => $dataProvider,
     			'array' => $authorizations,
     	));
     
@@ -131,11 +125,11 @@ class AuthorizationController extends RbacController {
 	    		//Confere se alguma ja expirou
 	    		$connectionsExpired = $conn = Connection::find()->where(['reservation_id' => $reservation->id])->andWhere(['<=','start', DateUtils::now()])->all();
 	    		foreach($connectionsExpired as $connection){
-	    			$requests = ConnectionAuth::find()->where(['connection_id' => $connection->id, 'status' => 'WAITING'])->all();
+	    			$requests = ConnectionAuth::find()->where(['connection_id' => $connection->id, 'status' => Connection::AUTH_STATUS_PENDING])->all();
 	    			foreach($requests as $request){
-	    				$request->status='EXPIRED';
+	    				$request->status= Connection::AUTH_STATUS_EXPIRED;
 	    				$request->save();
-	    				$connection->auth_status='EXPIRED';
+	    				$connection->auth_status= Connection::AUTH_STATUS_EXPIRED;
 	    				$connection->save();
 	    				Notification::createConnectionNotification($connection->id);
 	    			}
@@ -164,12 +158,13 @@ class AuthorizationController extends RbacController {
 	    		foreach($requests as $request){
 	    			$events[] = ['id' => $request->id, 'title' => "\n".$request->getConnection()->one()->getReservation()->one()->bandwidth." Mbps", 'start' => Yii::$app->formatter->asDatetime( $request->getConnection()->one()->start, "php:Y-m-d H:i:s"), 'end' => Yii::$app->formatter->asDatetime($request->getConnection()->one()->finish, "php:Y-m-d H:i:s")];
 	    		}
+	    		
+	    		$info = new AuthorizationDetailed($reservation, Connection::find()->where(['reservation_id' => $id])->one()->id, $domain);
 	
 	    		if(sizeof($requests)<=0) return $this->redirect('index');
 		    	else return $this->render('detailed', array(
 	    				'domain' => $domain,
-	    				'info' => $reservation,
-		    			'connection_id' => Connection::find()->where(['reservation_id' => $id])->one()->id,
+		    			'info' => $info,
 	    				'requests' => $requests,
 	    				'events' => $events
 	    		));
@@ -184,16 +179,15 @@ class AuthorizationController extends RbacController {
     		foreach($connectionsPath as $path){
     			$con = Connection::findOne(['id' => $path->conn_id]);
     			//Tipo 1 significa que esta retornando os provisionados
-    			if($type == 1 && $con->status == "PROVISIONED"){
+    			if($type == 1 && $con->status == Connection::STATUS_PROVISIONED){
     				//Se é a mesma reserva, testa para garantir que é de outro dominio antes de exibir
     				if($con->reservation_id != $reservationId) $others[] = ['id' => $con->id, 'title' => "\n".$con->getReservation()->one()->bandwidth." Mbps", 'start' => Yii::$app->formatter->asDatetime($con->start, "php:Y-m-d H:i:s"), 'end' => Yii::$app->formatter->asDatetime($con->finish, "php:Y-m-d H:i:s")];			
     			}
     			//Tipo 2 signigica que esta retornando aqueles que ainda estão sendo processados
-    			else if($type == 2 && $con->status != "PROVISIONED" && $con->auth_status != "DENIED" && $con->auth_status != "EXPIRED"){
+    			else if($type == 2 && $con->status != Connection::STATUS_PROVISIONED && $con->auth_status == Connection::AUTH_STATUS_PENDING){
     				//Se é a mesma reserva, testa para garantir que é de outro dominio antes de exibir
-    				Yii::error($con->reservation_id." - ".$reservationId);
     				if($con->reservation_id == $reservationId){
-    					if(ConnectionAuth::findOne(['connection_id' => $con->id, 'status' => 'WAITING'])->domain != $domainTop)
+    					if(ConnectionAuth::findOne(['connection_id' => $con->id, 'status' => Connection::AUTH_STATUS_PENDING])->domain != $domainTop)
     						$others[] = ['id' => $con->id, 'title' => "\n".$con->getReservation()->one()->bandwidth." Mbps", 'start' => Yii::$app->formatter->asDatetime($con->start, "php:Y-m-d H:i:s"), 'end' => Yii::$app->formatter->asDatetime($con->finish, "php:Y-m-d H:i:s")];
     				}
     				else $others[] = ['id' => $con->id, 'title' => "\n".$con->getReservation()->one()->bandwidth." Mbps", 'start' => Yii::$app->formatter->asDatetime($con->start, "php:Y-m-d H:i:s"), 'end' => Yii::$app->formatter->asDatetime($con->finish, "php:Y-m-d H:i:s")];
@@ -207,8 +201,7 @@ class AuthorizationController extends RbacController {
     public function actionIsAnswered($id = null){
     	if($id){
     		$status = ConnectionAuth::findOne(['id' => $id])->status;
-    		Yii::trace($status);
-    		if($status=="WAITING") echo 0;
+    		if($status == Connection::AUTH_STATUS_PENDING) echo 0;
     		else echo 1;
     	}
     }
@@ -248,14 +241,14 @@ class AuthorizationController extends RbacController {
     		}
     		
     		foreach($requests as $req){
-    			if($req->status != "AUTHORIZED" && $req->status != "DENIED" && $req->status != "EXPIRED"){
-    				if($req->type == "GROUP") $req->manager_user_id = Yii::$app->user->getId();
+    			if($req->status == Connection::AUTH_STATUS_PENDING){
+    				if($req->type == ConnectionAuth::TYPE_GROUP) $req->manager_user_id = Yii::$app->user->getId();
     				if($message) $req->manager_message = $message;
-    				$req->status = 'AUTHORIZED';
+    				$req->status = Connection::AUTH_STATUS_APPROVED;
     				$req->save();
     		
     				$flow = new BpmFlow;
-    				$flow->response($req->connection_id, $req->domain, "YES");
+    				$flow->response($req->connection_id, $req->domain, BpmFlow::STATUS_YES);
     			}
     		}
     	}
@@ -296,14 +289,14 @@ class AuthorizationController extends RbacController {
     		}
     		
     		foreach($requests as $req){
-    			if($req->status != "AUTHORIZED" && $req->status != "DENIED" && $req->status != "EXPIRED"){
-    				if($req->type == "GROUP") $req->manager_user_id = Yii::$app->user->getId();
+    			if($req->status == Connection::AUTH_STATUS_PENDING){
+    				if($req->type == ConnectionAuth::TYPE_GROUP) $req->manager_user_id = Yii::$app->user->getId();
     				if($message) $req->manager_message = $message;
-    				$req->status = 'DENIED';
+    				$req->status = Connection::AUTH_STATUS_REJECTED;
     				$req->save();
-    				
+    			
     				$flow = new BpmFlow;
-    				$flow->response($req->connection_id, $req->domain, "NO");
+    				$flow->response($req->connection_id, $req->domain, BpmFlow::STATUS_NO);
     			}
     		}
     	}
@@ -320,13 +313,13 @@ class AuthorizationController extends RbacController {
     	Yii::trace("Msg: ".$message);
     	if($id){
     		$req = ConnectionAuth::findOne(['id' => $id]);
-    		if($req->type == "GROUP") $req->manager_user_id = Yii::$app->user->getId();
+    		if($req->type == ConnectionAuth::TYPE_GROUP) $req->manager_user_id = Yii::$app->user->getId();
     		if($message) $req->manager_message = $message;
-    		$req->status = 'AUTHORIZED';
+    		$req->status = Connection::AUTH_STATUS_APPROVED;
     		$req->save();
     		
     		$flow = new BpmFlow;
-    		$flow->response($req->connection_id, $req->domain, "YES");	
+    		$flow->response($req->connection_id, $req->domain, BpmFlow::STATUS_YES);	
     	}
     }
     
@@ -341,13 +334,13 @@ class AuthorizationController extends RbacController {
     	Yii::trace("Msg: ".$message);
     	if($id){
     		$req = ConnectionAuth::findOne(['id' => $id]);
-    		if($req->type == "GROUP") $req->manager_user_id = Yii::$app->user->getId();
+    		if($req->type == ConnectionAuth::TYPE_GROUP) $req->manager_user_id = Yii::$app->user->getId();
     		if($message != null) $req->manager_message = $message;
-    		$req->status = 'DENIED';
+    		$req->status = Connection::AUTH_STATUS_REJECTED;
     		$req->save();
     		
     		$flow = new BpmFlow;
-    		$flow->response($req->connection_id, $req->domain, "NO");
+    		$flow->response($req->connection_id, $req->domain, BpmFlow::STATUS_NO);
     	}
     }
 
