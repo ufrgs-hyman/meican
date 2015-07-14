@@ -13,10 +13,6 @@ use app\models\Connection;
 use app\models\Reservation;
 use app\components\DateUtils;
 
-
-define("authorized", 'AUTHORIZED');
-define("denied", 'DENIED');
-
 /**
  * This is the model class for table "meican_bpm_flow_control".
  *
@@ -144,12 +140,12 @@ class BpmFlow extends \yii\db\ActiveRecord
     	if(!$domain){
     		Yii::trace("Dominio não existe mais na base. ACEITO.");
     	}
-    	else if($domain->default_policy == 'ACCEPT_ALL'){
+    	else if($domain->default_policy == Domain::ACCEPT_ALL){
     		Yii::trace("ACEITO pela POLITICA PADRÃO.");
 	    	$auth = new ConnectionAuth();
 	    	$auth->domain = $domainTop;
-	    	$auth->status = 'AUTHORIZED';
-	    	$auth->type = 'WORKFLOW';
+	    	$auth->status = Connection::AUTH_STATUS_APPROVED;
+	    	$auth->type = ConnectionAuth::TYPE_WORKFLOW;
 	    	$auth->connection_id = $connection_id;
 	    	$auth->save();
     	}
@@ -157,13 +153,13 @@ class BpmFlow extends \yii\db\ActiveRecord
     		Yii::trace("NEGADO pela POLITICA PADRÃO.");
     		BpmFlow::deleteAll(['connection_id' => $connection_id]);
 	    	$conn = Connection::findOne(['id' => $connection_id]);
-	    	$conn->auth_status = denied;
+	    	$conn->auth_status = Connection::AUTH_STATUS_REJECTED;
 	    	if (!$conn->save()){
     		}
 			$auth = new ConnectionAuth();
     		$auth->domain = $domainTop;
-    		$auth->status = 'DENIED';
-    		$auth->type = 'WORKFLOW';
+    		$auth->status = Connection::AUTH_STATUS_REJECTED;
+    		$auth->type = ConnectionAuth::TYPE_WORKFLOW;
     		$auth->connection_id = $connection_id;
     		$auth->save();
     	}
@@ -346,14 +342,14 @@ class BpmFlow extends \yii\db\ActiveRecord
 	    	if(BpmFlow::find()->where(['domain' => $flow->domain, 'connection_id' => $connection_id])->count() == 0){
 	    		BpmFlow::deleteAll(['connection_id' => $connection_id]);
 	    		$conn = Connection::findOne(['id' => $connection_id]);
-	    		$conn->auth_status = denied;
+	    		$conn->auth_status = Connection::AUTH_STATUS_REJECTED;
 	    		if (!$conn->save()){
     				Yii::error('Unsuccesful save in Request');
     			}
 				$auth = new ConnectionAuth();
     			$auth->domain = $flow->domain;
-    			$auth->status = 'DENIED';
-    			$auth->type = 'WORKFLOW';
+    			$auth->status = Connection::AUTH_STATUS_REJECTED;
+    			$auth->type = ConnectionAuth::TYPE_WORKFLOW;;
     			$auth->manager_workflow_id = $flow->workflow_id;
     			$auth->connection_id = $connection_id;
     			$auth->save();
@@ -364,8 +360,8 @@ class BpmFlow extends \yii\db\ActiveRecord
     	else {
     		$auth = new ConnectionAuth();
     		$auth->domain = $flow->domain;
-    		$auth->status = 'AUTHORIZED';
-    		$auth->type = 'WORKFLOW';
+    		$auth->status = Connection::AUTH_STATUS_APPROVED;
+    		$auth->type = ConnectionAuth::TYPE_WORKFLOW;
     		$auth->manager_workflow_id = $flow->workflow_id;
     		$auth->connection_id = $connection_id;
     		$auth->save();
@@ -376,14 +372,14 @@ class BpmFlow extends \yii\db\ActiveRecord
     	Yii::trace("Criando Request Group Authorization");
     	
     	//Confere se o grupo ja respondeu exatamente mesma requisição, se sim, não questiona novamente.
-    	$auth = ConnectionAuth::findOne(['type' => 'GROUP', 'domain' => $flow->domain, 'manager_group_id' => $flow->value, 'connection_id' => $flow->connection_id]);
+    	$auth = ConnectionAuth::findOne(['type' => ConnectionAuth::TYPE_GROUP, 'domain' => $flow->domain, 'manager_group_id' => $flow->value, 'connection_id' => $flow->connection_id]);
     	 
     	if($auth) return true;
     	
     	$auth = new ConnectionAuth();
     	$auth->domain = $flow->domain;
     	$auth->status = self::STATUS_WAITING;
-    	$auth->type = 'GROUP';
+    	$auth->type = ConnectionAuth::TYPE_GROUP;
     	$auth->manager_group_id = $flow->value;
     	$auth->connection_id = $flow->connection_id;
     	$auth->save();
@@ -397,7 +393,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     	Yii::trace("Criando Request User Authorization");
     	
     	//Confere se o usuário ja respondeu exatamente mesma requisição, se sim, não questiona novamente.
-    	$auth = ConnectionAuth::findOne(['type' => 'USER', 'domain' => $flow->domain, 'manager_user_id' => $flow->value, 'connection_id' => $flow->connection_id]);
+    	$auth = ConnectionAuth::findOne(['type' => ConnectionAuth::TYPE_USER, 'domain' => $flow->domain, 'manager_user_id' => $flow->value, 'connection_id' => $flow->connection_id]);
     	
     	if($auth) return true;
     	
@@ -410,8 +406,8 @@ class BpmFlow extends \yii\db\ActiveRecord
 	    
     	$auth = new ConnectionAuth();
 	    $auth->domain = $flow->domain;
-	    $auth->status = self::STATUS_WAITING;
-	    $auth->type = 'USER';
+	    $auth->status = Connection::AUTH_STATUS_PENDING;
+	    $auth->type = ConnectionAuth::TYPE_USER;
 	    $auth->manager_user_id = $flow->value;
 	    $auth->connection_id = $flow->connection_id;
 	    $auth->save();

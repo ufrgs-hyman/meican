@@ -310,7 +310,7 @@ class Connection extends \yii\db\ActiveRecord
 
     	$conn = Connection::findOne(['id' => $id]);
     	if($conn->auth_status == self::AUTH_STATUS_PENDING){
-    		$conn->auth_status = self::AUTH_STATUS_AUTHORIZED;
+    		$conn->auth_status = self::AUTH_STATUS_APPROVED;
     		if (!$conn->save()){
     		}
     		if(!$conn->isCancelStatus()) $conn->requestProvision();

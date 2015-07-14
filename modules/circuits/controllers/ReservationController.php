@@ -64,11 +64,11 @@ class ReservationController extends RbacController {
     	if($reservation){
     		$connectionsExpired = $conn = Connection::find()->where(['reservation_id' => $reservation->id])->andWhere(['<=','start', DateUtils::now()])->all();
 	    	foreach($connectionsExpired as $connection){
-	    		$requests = ConnectionAuth::find()->where(['connection_id' => $connection->id, 'status' => 'WAITING'])->all();
+	    		$requests = ConnectionAuth::find()->where(['connection_id' => $connection->id, 'status' => Connection::AUTH_STATUS_PENDING])->all();
 	    		foreach($requests as $request){
-	    			$request->status='EXPIRED';
+	    			$request->status= Connection::AUTH_STATUS_EXPIRED;
 	    			$request->save();
-	    			$connection->auth_status='EXPIRED';
+	    			$connection->auth_status= Connection::AUTH_STATUS_EXPIRED;
 	    			$connection->save();
 	    			Notification::createConnectionNotification($connection->id);
 	    		}

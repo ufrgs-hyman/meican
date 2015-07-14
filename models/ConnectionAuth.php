@@ -28,6 +28,11 @@ use app\models\Group;
  */
 class ConnectionAuth extends \yii\db\ActiveRecord
 {
+	
+	const TYPE_USER = "USER";
+	const TYPE_GROUP = "GROUP";
+	const TYPE_WORKFLOW = "WORKFLOW";
+
     /**
      * @inheritdoc
      */
@@ -112,7 +117,16 @@ class ConnectionAuth extends \yii\db\ActiveRecord
      * @return boolean
      */
     public function isAnswered() {
-    	return $this->status == "AUTHORIZED" || $this->status == "DENIED" || $this->status == "EXPIRED";
+    	return !($this->status == Connection::AUTH_STATUS_PENDING);
+    }
+    
+    public function getStatus(){
+    	if($this->status == Connection::AUTH_STATUS_PENDING) return Yii::t('circuits', 'Waiting');
+    	else if($this->status == Connection::AUTH_STATUS_APPROVED) return Yii::t('circuits', 'Approved');
+    	else if($this->status == Connection::AUTH_STATUS_REJECTED) return Yii::t('circuits', 'Rejected');
+    	else if($this->status == Connection::AUTH_STATUS_EXPIRED) return Yii::t('circuits', 'Expired');
+    	else if($this->status == Connection::AUTH_STATUS_UNSOLICITED) return Yii::t('circuits', 'Unsolicited');
+    	else if($this->status == Connection::AUTH_STATUS_UNEXECUTED) return Yii::t('circuits', 'Unexecuted');
     }
     
 }
