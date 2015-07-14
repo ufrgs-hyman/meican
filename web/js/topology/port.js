@@ -156,9 +156,9 @@ function editPort(obj, id){
 						columns += '<td align="center" width="15px"><img title="'+tt('Cancel')+'" class="edit" alt="'+tt('Cancel')+'" border="0" id="editDelete' + domId + '" src="'+baseUrl+'/images/clear.png"/></td>';
 						columns += '<td align="center"><select id="editNetwork' + domId + '"/></td>';
 						columns += '<td align="center"><select id="editDevice' + domId + '"/></td>';
-						columns += '<td align="center"><input type="text" size="6" id="editName' + domId + '"/></td>';
-						columns += '<td align="center"><input type="text" size="60" id="editUrn' + domId + '"/></td>';
-						columns += '<td align="center"><input type="text" size="6" id="editVlan' + domId + '" placeholder = "1-2,5-6"/></td>';
+						columns += '<td align="center"><input type="text" size="11" id="editName' + domId + '"/></td>';
+						columns += '<td align="center"><input type="text" size="40" id="editUrn' + domId + '"/></td>';
+						columns += '<td align="center"><input type="text" size="8" id="editVlan' + domId + '" placeholder = "1-2,5-6"/></td>';
 						columns += '<td align="center"><input type="text" size="6" id="editMax_capacity' + domId + '"/></td>';
 						columns += '<td align="center"><input type="text" size="6" id="editMin_capacity' + domId + '"/></td>';
 						columns += '<td align="center"><input type="text" size="6" id="editGranularity' + domId + '"/></td></tr>';
@@ -346,9 +346,9 @@ function newPortLine(obj){
 					columns += '<td align="center" width="15px"><img title="'+tt('Confirm')+'" class="edit" alt="'+tt('Confirm')+'" border="0" id="delete' + obj + '" src="'+baseUrl+'/images/clear.png"/></td>';
 					columns += '<td align="center" width="100px"><select id="network' + obj + '"/></td>';
 					columns += '<td align="center" width="100px"><select id="device' + obj + '"/></td>';
-					columns += '<td align="center"><input type="text" size="6" id="name' + obj + '"/></td>';
-					columns += '<td align="center"><input type="text" size="60" id="urn' + obj + '"/></td>';
-					columns += '<td align="center"><input type="text" size="6" id="vlan' + obj + '" placeholder = "1-2,5-6"/></td>';
+					columns += '<td align="center"><input type="text" size="11" id="name' + obj + '"/></td>';
+					columns += '<td align="center"><input type="text" size="40" id="urn' + obj + '"/></td>';
+					columns += '<td align="center"><input type="text" size="8" id="vlan' + obj + '" placeholder = "1-2,5-6"/></td>';
 					columns += '<td align="center"><input type="text" size="6" id="max_capacity' + obj + '"/></td>';
 					columns += '<td align="center"><input type="text" size="6" id="min_capacity' + obj + '"/></td>';
 					columns += '<td align="center"><input type="text" size="6" id="granularity' + obj + '"/></td></tr>';
