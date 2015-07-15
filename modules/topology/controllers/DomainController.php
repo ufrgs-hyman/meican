@@ -25,13 +25,9 @@ class DomainController extends RbacController {
 
     	$domains = self::whichDomainsCan("topology/read");
 
-    	$domainsWithIds = [];
-    	foreach($domains as $domain){
-    		$domainsWithIds[$domain->id] = $domain;
-    	}
-
     	$dataProvider = new ArrayDataProvider([
-    			'allModels' => $domainsWithIds,
+    			'key'=>'id',
+    			'allModels' => $domains,
     			'sort' => false,
     			'pagination' => [
                   'pageSize' => 20,
@@ -46,11 +42,10 @@ class DomainController extends RbacController {
     public function actionCreate(){
     	self::canRedir("topology/create");
     	
-    	$form = new DomainFormModel;
+    	$dom = new Domain;
     	
-    	if($form->load($_POST)) {
-    		if ($form->validate()) {
-				$dom = $form->getDomain();
+    	if($dom->load($_POST)) {
+    		if ($dom->validate()) {
 				 
 				if (!$dom->save()) {
 					foreach($dom->getErrors() as $attribute => $error) {
@@ -64,7 +59,7 @@ class DomainController extends RbacController {
     	}
     	
     	return $this->render('create',[
-    			'domain' => $form,
+    			'domain' => $dom,
     	]);
     }
     
@@ -74,28 +69,17 @@ class DomainController extends RbacController {
     		return $this->redirect(array('index'));
     	}
     	
-    	$form = new DomainFormModel; 
-    	$form->setFromRecord(Domain::findOne($id));
+    	$dom = Domain::findOne($id);
     	
-    	if($form->load($_POST)) {
-    		if ($form->validate()) {
-    			$provider = $form->getProvider();
-    			
-    			if (!$provider->save()) {
-    				foreach($provider->getErrors() as $attribute => $error) {
+    	if($dom->load($_POST)) {
+    		if ($dom->validate()) {
+    			if (!$dom->save()) {
+    				foreach($dom->getErrors() as $attribute => $error) {
     					Yii::$app->getSession()->addFlash("error", $error[0]);
     				}
     			} else {
-    				$dom = $form->getDomain();
-    				
-    				if (!$dom->save()) {
-    					foreach($dom->getErrors() as $attribute => $error) {
-    						Yii::$app->getSession()->addFlash("error", $error[0]);
-    					}
-    				} else {
-    					Yii::$app->getSession()->addFlash("success", Yii::t('topology', 'Domain {name} updated successfully', ['name'=>$dom->name]));
-    					return $this->redirect(array('index'));
-    				}
+    				Yii::$app->getSession()->addFlash("success", Yii::t('topology', 'Domain {name} updated successfully', ['name'=>$dom->name]));
+    				return $this->redirect(array('index'));
     			}
     		} else {
     			foreach($form->getErrors() as $attribute => $error) {
@@ -106,7 +90,7 @@ class DomainController extends RbacController {
     	} 
 
     	return $this->render('update',[
-    			'domain' => $form,
+    			'domain' => $dom,
     	]);
     } 
 

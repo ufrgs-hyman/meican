@@ -91,6 +91,12 @@ class Domain extends \yii\db\ActiveRecord
     	if($this->default_policy == self::REJECT_ALL) return Yii::t('topology', 'Reject All');
     }
     
+    public function getPolicyOptions() {
+    	$options[self::ACCEPT_ALL] = Yii::t("topology", 'Accept All');
+    	$options[self::REJECT_ALL] = Yii::t("topology", 'Reject All');
+    	return $options;
+    }
+    
     public function getUserDomainsRoles()
     {
     	return UserDomainRole::find()->where(['domain_id' => $this->id])->orWhere(['domain_id' => null]);
