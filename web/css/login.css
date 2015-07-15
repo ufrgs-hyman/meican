@@ -184,9 +184,8 @@ div#login_form input[type="text"], div#login_form input[type="password"] {
 
 #cafe-button{
 	background: #EEE !important;
-	color: #27567C !important;
-	box-shadow: 0px 3px #27567C !important;
-	-webkit-box-shadow: 0px 3px #27567C !important;
+	box-shadow: 0px 3px #AAA !important;
+	-webkit-box-shadow: 0px 3px #AAA !important;
 	border-top: 1px solid #DDD !important;
 	border-left: 1px solid #DDD !important;
 	border-right: 1px solid #DDD !important;
