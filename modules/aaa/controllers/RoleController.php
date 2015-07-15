@@ -17,9 +17,6 @@ use Yii;
 
 class RoleController extends RbacController {
 	
-	const NOTICE_TYPE_ADD_GROUP = 	"ADD_GROUP";
-	const NOTICE_TYPE_DEL_GROUP = 	"DEL_GROUP";
-	
     public function actionIndex($id) {
     	self::canRedir("user/read");
     	
@@ -53,8 +50,8 @@ class RoleController extends RbacController {
     			
     			//Cria notificação de novo papel
     			$domain = Domain::findOne($udr->domain_id);
-    			if($domain) Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
-    			else Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
+    			if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
+    			else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
     			
     			Yii::$app->getSession()->setFlash("success", Yii::t("aaa", 'Role created successfully'));
     
@@ -97,13 +94,13 @@ class RoleController extends RbacController {
     			
     			//Cria notificação do papel removido
     			$domain = Domain::findOne($domain_id);
-    			if($domain) Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_DEL_GROUP, $group->id, $domain->name, $dateAux);
-    			else Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_DEL_GROUP, $group->id, null, $dateAux);
+    			if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $group->id, $domain->name, $dateAux);
+    			else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $group->id, null, $dateAux);
     			
     			//Cria notificação do novo papel
     			$domain = Domain::findOne($udr->domain_id);
-    			if($domain) Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
-    			else Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
+    			if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
+    			else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
     			 
     			Yii::$app->getSession()->setFlash("success", Yii::t("aaa", 'Role updated successfully'));
     			
@@ -143,8 +140,8 @@ class RoleController extends RbacController {
     			
     			//Notificação removido papel
     			$domain = Domain::findOne($udr->domain_id);
-    			if($domain) Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_DEL_GROUP, $udr->getGroup()->id, $domain->name, $dateAux);
-    			else Notification::createNoticeNotification($udr->user_id, self::NOTICE_TYPE_DEL_GROUP, $udr->getGroup()->id, null, $dateAux);
+    			if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $udr->getGroup()->id, $domain->name, $dateAux);
+    			else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $udr->getGroup()->id, null, $dateAux);
 
     			if ($udr->delete()) {
     				Yii::$app->getSession()->addFlash('success', Yii::t("aaa", 'The role associated with the domain {name} has been deleted', ['name'=> $domName]));
