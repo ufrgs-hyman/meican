@@ -77,7 +77,6 @@ MeicanAsset::register($this);
                     <br></br> 
 					<br></br>
                 </div>
-                <?= $this->render('feedback'); ?>
             </div>
             <div style="clear:both;"></div>
         </div>

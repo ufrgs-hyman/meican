@@ -14,7 +14,68 @@ use app\models\Notification;
 	<li><?= Html::a(Yii::t("init", "My account"),array('/aaa/user/account')); ?></li>
 	<li><?= Html::a(Yii::t("init", "Help"),array('/init/support/help')); ?></li>
 	<li><?= Html::a(Yii::t("init", "About"),array('/init/support/about')); ?></li>
-	<li class='feedback_link'><?= Html::a('Feedback'); ?></li>
+	<li id="feedback_link" class='feedback_link'>
+		<div id="feedback_li">
+			<?= Html::a('Feedback'); ?>
+		</div>
+		<div id="feedback_panel">
+		    <div id="emotion_select" class="pos_right" style="display: none;">
+		        <a href="#" class="happy"><img alt="Feedback-happy" src="http://assets1.getsatisfaction.com/images/emoticons/feedback-happy.png?355ab45"><?= Yii::t("init", 'Happy');?></a>
+		        <a href="#" class="silly"><img alt="Feedback-silly" src="http://assets4.getsatisfaction.com/images/emoticons/feedback-silly.png?355ab45"><?= Yii::t("init", 'Silly');?></a>
+		        <a href="#" class="indifferent"><img alt="Feedback-indifferent" src="http://assets4.getsatisfaction.com/images/emoticons/feedback-indifferent.png?355ab45"><?= Yii::t("init", 'Indifferent');?></a>
+		        <a href="#" class="sad"><img alt="Feedback-sad" src="http://assets3.getsatisfaction.com/images/emoticons/feedback-sad.png?355ab45"><?= Yii::t("init", 'Sad');?></a>
+		    </div>
+		    
+		    <form id="feedback_form">
+		        <h1><?= Yii::t("init", 'Send Us Feedback');?></h1>
+		
+		        <fieldset id="topic_details" class="ui-widget ui-corner-all">
+		
+		            <ul class="clearfix" id="feedback-tabs">
+		                <li class="idea active" style="">
+		                    <a href="#"><strong><?= Yii::t("init", 'Idea');?></strong></a>
+		                </li>
+		                <li class="question" style="">
+		                    <a href="#"><strong><?= Yii::t("init", 'Question');?></strong></a>
+		                </li>
+		                <li class="problem " style="">
+		                    <a href="#"><strong><?= Yii::t("init", 'Problem');?></strong></a>
+		                </li>
+		                <li class="praise last " style="">
+		                    <a href="#"><strong><?= Yii::t("init", 'Praise');?></strong></a>
+		                </li>
+		            </ul>
+		
+		            <div><input id="topic_style" name="topic_style" type="hidden" value="idea" class="ui-widget ui-widget-content"></div>
+		            
+		            <div class="row text_box">
+		                <textarea class="additional_detail text ui-widget ui-widget-content" id="topic_additional_detail" name="topic_additional_detail" rows="5" tabindex="1" placeholder="Describe your idea"></textarea>
+		            </div>
+		            
+		            <div class="row text_box">
+		                <input class="subject text ui-widget ui-widget-content" id="topic_subject" name="topic_subject" tabindex="2" type="text" placeholder="<?= Yii::t("init", 'Sum it up with a short title');?>"/>
+		            </div>
+		            
+		            <div class="row text_box" style="z-index:10">
+		                <div id="emotion_picker">
+		                    <input id="topic_emotitag_feeling" name="topic_emotitag_feeling" size="22" placeholder="<?= Yii::t("init", 'It makes me feel:');?>"/>
+		                	<a href="#" id="emotion_selected"><img alt="Feedback-happy" src="http://assets1.getsatisfaction.com/images/emoticons/feedback-happy.png?b829cae"></a>
+		                </div>
+		                <div>
+		                	<input id="topic_emotitag_face" name="topic_emotitag_face" type="hidden" class="ui-widget ui-widget-content">
+		                </div>
+		            </div>
+		            
+		            <div class="row clearfix" id="submit_row">
+		            	<?= Html::button(Yii::t('circuits', 'Answer'), ['onclick' => "sendFeedback()"]);?>
+		            </div>
+		            
+		        </fieldset>
+		
+		    </form>
+		    
+		</div>
+	</li>
 	<li id="notification_li">
 		<?php $nots = Notification::getNumberNotifications();	
 			if($nots > 0) echo "<div class='requests_info' id='notification_link'><div class='full'><span>$nots</span></div></div>";

@@ -1,0 +1,336 @@
+/* =============================================================================
+   Feedback
+   ========================================================================== */
+
+#feedback_link.hidden {background-color: #27567C!important;}
+#feedback_link.show {background-color: #1F4562!important;}
+#feedback_link:hover {background-color: #1F4562!important;}
+
+#feedback_link{
+	margin: 0px;
+	padding: 0px;
+	position:relative;
+	z-index: 98;
+	height: 32px;
+	text-align: center;
+}
+
+#feedback_li{
+	cursor: pointer;
+}
+
+#feedback_panel {
+	background-color: #ffffff !important;
+	border: 1px solid rgba(100, 100, 100, .4);
+	-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+	box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+	overflow: visible;
+	position: absolute;
+	top: 42px;
+	margin-left: -150px;
+	width: 380px;
+	z-index: -1;
+	display: none;
+	text-shadow: none !important;
+}
+
+#feedback_panel:before {
+	content: '';
+	display: block;
+	position: absolute;
+	color: transparent;
+	border: 10px solid black;
+	border-color: #1F4562 transparent transparent;
+	margin-top: -11px;
+	margin-left: 178px;
+}
+
+#feedback_panel a.feedback-tab {
+    background:transparent url(http://assets3.getsatisfaction.com/stylesheets/355ab458eb/feedbacktab.gif) no-repeat scroll 0 0;
+    border-width: 1px 1px 1px 0;
+    display:block;
+    height:99px;
+    left:51px;
+    bottom:21px;
+    position:relative;
+    float:right;
+    text-indent:-9999px;
+    width:30px;
+    outline:none;
+}
+
+#feedback_panel div, #feedback_panel span, #feedback_panel h6, #feedback_panel p, #feedback_panel blockquote, #feedback_panel a, #feedback_panel img, #feedback_panel dd, #feedback_panel ol, #feedback_panel ul, #feedback_panel li, #feedback_panel fieldset, #feedback_panel form, #feedback_panel label, #feedback_panel legend, #feedback_panel caption {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-weight: bold;
+}
+
+#feedback_panel h1{
+	margin: 5px;
+}
+
+.clearfix {
+    display: inline-block;
+}
+    
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+    
+* html .clearfix {
+    height: 1px;
+}
+    
+.clearfix {
+    display: block;
+}
+
+#feedback-tabs {
+    margin-bottom: 8px;
+    white-space: nowrap;
+}
+    
+#feedback-tabs li {
+    float: left;
+    padding: 0;
+    margin: 0;
+    margin-right: 1px;
+    list-style: none;
+    position: relative;
+}
+    
+#feedback-tabs li img {
+    display: none;
+}
+    
+#feedback-tabs li a {
+    display: block;
+    float: left !important;
+    text-decoration: none;
+    padding: 5px 10px 5px 30px;
+    border: 1px solid transparent;
+    background-repeat: no-repeat;
+    background-position: 8px 50%;
+}
+    
+#feedback-tabs li.active a {
+    color: #333333;
+    cursor: default;
+    background-color: white;
+    border-bottom: 1px solid white;
+}
+    
+#feedback-tabs li.active a strong {
+    text-decoration: none !important;
+}
+    
+#feedback-tabs li.active img {
+    top: 24px;
+    width: 13px;
+    height: 8px;
+    display: block;
+    position: absolute;
+}
+    
+#feedback-tabs li.idea a {
+    background-image: url(http://assets3.getsatisfaction.com/images/feedback_tab_idea.png);
+    width: 23px;
+}
+    
+#feedback-tabs li.idea img {
+    left: 27px; }
+    
+#feedback-tabs li.question a {
+    background-image: url(http://assets3.getsatisfaction.com/images/feedback_tab_question.png);
+    width: 50px;
+}
+    
+#feedback-tabs li.question img {
+    left: 42px;
+}
+    
+#feedback-tabs li.problem a {
+    background-image: url(http://assets3.getsatisfaction.com/images/feedback_tab_problem.png);
+	width: 50px;
+}
+    
+#feedback-tabs li.problem img {
+    left: 39px;
+}
+    
+#feedback-tabs li.praise a {
+    background-image: url(http://assets3.getsatisfaction.com/images/feedback_tab_praise.png);
+	width: 36px;
+}
+    
+#feedback-tabs li.praise img {
+    left: 34px;
+}
+    
+#feedback-tabs li.last {
+    margin-right: 0;
+}
+
+#topic_details {
+    margin: 0 -15px 10px;
+    padding: 0 15px;
+    display: inline-block;
+}
+
+#topic_details {
+    display: block;
+}
+    
+#topic_details .btn {
+    float: right;
+    margin-right: 0; }
+    
+#topic_details ul {
+    position: relative; }
+    
+#topic_details ul li {
+    margin-right: 5px;
+    margin-left: 5px;
+    float: left;
+    font-size: 100%;
+    font-weight: bold;
+    line-height: inherit;
+    text-shadow: none;
+    border: none;
+    z-index: +1;
+}
+    
+#topic_details ul li a {
+    color: #666666;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    border: 1px solid #cccccc;
+    background-color: #eeeeee;
+}
+    
+#topic_details ul li.on a {
+    margin-top: 0;
+    background-color: white;
+    border-bottom: 1px solid white; }
+    
+#topic_details ul li.on a:hover {
+    background: white;
+}
+
+#feedback_panel a {
+    outline: none;
+}
+
+#feedback_panel fieldset {
+    border: none;
+    width: 370px;
+    float: left;
+    margin: 6px;
+}
+    
+#feedback_panel .private *, fieldset .private * {
+    vertical-align: middle;
+}
+    
+#feedback_panel #details_optional, fieldset #details_optional {
+    color: #666666;
+    font-size: 120%;
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    font-size: 90%;
+    font-weight: bold;
+    z-index: 1; }
+    
+#feedback_panel .on, fieldset .on {
+    color: black !important;
+    background-image: url(http://assets3.getsatisfaction.com/images/feedback-arrow-up.png) !important;
+}
+    
+.text_box label.prompted {
+    color: #999999;
+    font-size: 120%;
+    cursor: text;
+    width: 95%;
+    overflow: hidden;
+    top: 7px;
+    left: 7px;
+    position: absolute;
+}
+    
+#topic_emotitag_feeling, .text_box textarea.text, .text_box input.text {
+    color: black;
+    font: 120% Arial, Helvetica, sans-serif;
+    margin-left: 5px;
+    margin-top: 10px;
+    width: 351px;
+    display: block;
+    border: 1px solid rgba(100, 100, 100, .4);
+	box-shadow: none;
+	padding: 2px;
+}
+    
+.text_box textarea.text {
+    height: 70px;
+    margin-top: -1px;
+}
+
+#submit_row{
+	margin: 5px !important;
+  	float: left;
+  	text-align: left;
+}
+
+#emotion_row{
+  	margin: 5px;
+  	margin-top: 10px;
+  	display: inline-block;
+}
+
+#emotion_selected{
+	float: left;
+	margin-top: 10px !important;
+}
+
+#topic_emotitag_feeling {
+	float: left;
+	width: 200px;
+	margin-top: 10px;
+}
+
+#emotion_select {
+    z-index: 100;
+    position: absolute;
+    margin-left: -6px;
+    background-color: white;
+    border: 1px solid rgba(100, 100, 100, .4) !important;
+	-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
+	left: 193px;
+	top: 182px;  
+}
+    
+#emotion_select a {
+    color: #333333;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 2px 12px 2px 6px;
+    display: block;
+}
+    
+#emotion_select a img {
+    margin-right: 2px;
+}
+    
+#emotion_select a:hover {
+    background-color: #DFEAFF !important;
+}
+    
+#emotion_select * {
+    vertical-align: middle; }

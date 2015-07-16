@@ -13,8 +13,9 @@ class MeicanAsset extends AssetBundle
         'css/jquery-ui.structure.min.css',
         'css/jquery-ui.theme.min.css',
         'css/style.css',
-    	'css/notification.css',
     	'css/pagination.css',
+    	'css/notification.css',
+    	'css/feedback.css',
     ];
     public $js = [
     	'js/jquery-ui.min.js',
