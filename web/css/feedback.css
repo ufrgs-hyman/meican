@@ -27,7 +27,7 @@
 	overflow: visible;
 	position: absolute;
 	top: 42px;
-	margin-left: -150px;
+	margin-left: -20px;
 	width: 380px;
 	z-index: -1;
 	display: none;
@@ -42,7 +42,7 @@
 	border: 10px solid black;
 	border-color: #1F4562 transparent transparent;
 	margin-top: -11px;
-	margin-left: 178px;
+	margin-left: 48px;
 }
 
 #feedback_panel a.feedback-tab {
@@ -277,7 +277,7 @@
 }
     
 .text_box textarea.text {
-    height: 70px;
+    height: 120px;
     margin-top: -1px;
 }
 
@@ -296,6 +296,7 @@
 #emotion_selected{
 	float: left;
 	margin-top: 10px !important;
+	margin-left: 10px !important;
 }
 
 #topic_emotitag_feeling {
@@ -312,8 +313,8 @@
     border: 1px solid rgba(100, 100, 100, .4) !important;
 	-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
 	box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
-	left: 193px;
-	top: 182px;  
+	left: 203px;
+	top: 232px;  
 }
     
 #emotion_select a {

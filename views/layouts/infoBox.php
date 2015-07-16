@@ -20,10 +20,10 @@ use app\models\Notification;
 		</div>
 		<div id="feedback_panel">
 		    <div id="emotion_select" class="pos_right" style="display: none;">
-		        <a href="#" class="happy"><img alt="Feedback-happy" src="http://assets1.getsatisfaction.com/images/emoticons/feedback-happy.png?355ab45"><?= Yii::t("init", 'Happy');?></a>
-		        <a href="#" class="silly"><img alt="Feedback-silly" src="http://assets4.getsatisfaction.com/images/emoticons/feedback-silly.png?355ab45"><?= Yii::t("init", 'Silly');?></a>
-		        <a href="#" class="indifferent"><img alt="Feedback-indifferent" src="http://assets4.getsatisfaction.com/images/emoticons/feedback-indifferent.png?355ab45"><?= Yii::t("init", 'Indifferent');?></a>
-		        <a href="#" class="sad"><img alt="Feedback-sad" src="http://assets3.getsatisfaction.com/images/emoticons/feedback-sad.png?355ab45"><?= Yii::t("init", 'Sad');?></a>
+		        <a href="#" class="happy"><?= Html::img('@web'.'/images/emotion_happy.png');?><?= Yii::t("init", 'Happy');?></a>
+		        <a href="#" class="silly"><?= Html::img('@web'.'/images/emotion_silly.png');?><?= Yii::t("init", 'Silly');?></a>
+		        <a href="#" class="indifferent"><?= Html::img('@web'.'/images/emotion_indifferent.png');?><?= Yii::t("init", 'Indifferent');?></a>
+		        <a href="#" class="sad"><?= Html::img('@web'.'/images/emotion_sad.png');?><?= Yii::t("init", 'Sad');?></a>
 		    </div>
 		    
 		    <form id="feedback_form">
@@ -59,7 +59,7 @@ use app\models\Notification;
 		            <div class="row text_box" style="z-index:10">
 		                <div id="emotion_picker">
 		                    <input id="topic_emotitag_feeling" name="topic_emotitag_feeling" size="22" placeholder="<?= Yii::t("init", 'It makes me feel:');?>"/>
-		                	<a href="#" id="emotion_selected"><img alt="Feedback-happy" src="http://assets1.getsatisfaction.com/images/emoticons/feedback-happy.png?b829cae"></a>
+		                	<a href="#" id="emotion_selected"><?= Html::img('@web'.'/images/emotion_happy.png', ['id' => "emotion_selected_img"]);?></a>
 		                </div>
 		                <div>
 		                	<input id="topic_emotitag_face" name="topic_emotitag_face" type="hidden" class="ui-widget ui-widget-content">

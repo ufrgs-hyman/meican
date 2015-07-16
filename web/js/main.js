@@ -209,11 +209,18 @@ $(document).ready(function() {
     };
     
     var feedback_felling = {
-            sad: fbtt('Sad'),
-            indifferent: fbtt('Indifferent'),
-            silly: fbtt('Silly'),
-            happy: fbtt('Happy')
-        };
+        sad: fbtt('Sad'),
+        indifferent: fbtt('Indifferent'),
+        silly: fbtt('Silly'),
+        happy: fbtt('Happy')
+    };
+    
+    var feedback_felling_img = {
+        sad: 'emotion_sad.png',
+        indifferent: 'emotion_indifferent.png',
+        silly: 'emotion_silly.png',
+        happy: 'emotion_happy.png'
+    };
 	
     $("#feedback_li").click(function(){
     	if(!$("#notification_container").is(":hidden")){
@@ -242,6 +249,7 @@ $(document).ready(function() {
     
     $('#emotion_select a').click(function(){
         $('#topic_emotitag_feeling').val(feedback_felling[$(this).attr('class')]);
+        document.getElementById("emotion_selected_img").src = baseUrl + "/images/".concat(feedback_felling_img[$(this).attr('class')]);
         $('#emotion_select').toggle();
         return false;
     });
