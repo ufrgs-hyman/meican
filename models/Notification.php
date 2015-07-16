@@ -22,9 +22,6 @@ use app\components\DateUtils;
  */
 class Notification extends \yii\db\ActiveRecord
 {	
-	const AUTH_TYPE_GROUP = 		"GROUP";
-	const AUTH_TYPE_WORKFLOW = 		"WORKFLOW";
-	
 	const TYPE_AUTHORIZATION = 		"AUTHORIZATION";
 	const TYPE_RESERVATION = 		"RESERVATION";
 	const TYPE_TOPOLOGY = 			"TOPOLOGY";
@@ -112,8 +109,8 @@ class Notification extends \yii\db\ActiveRecord
     public static function getNotifications($dateParam){
     	$userId = Yii::$app->user->getId();
 
-    	if(!$dateParam){    	
-    		//Limpa as notificações de requisição de autorização que ja foram respondidas
+    	if(!$dateParam){ //Caso seja a primeira solicitação  	
+    		//Limpa as notificações de autorização que ja foram respondidas
     		$notAuth = Notification::find()->where(['user_id' => $userId, 'type' => self::TYPE_AUTHORIZATION, 'viewed' => false])->all();
     		foreach($notAuth as $not){ //Confere todas notificações do tipo autorização
     			$auth = ConnectionAuth::findOne($not->info);
@@ -125,7 +122,7 @@ class Notification extends \yii\db\ActiveRecord
 		    			foreach($connections as $conn){ //Confere todas conexões da reserva conferindo se alguma ainda esta pendente
 		    				$auths = ConnectionAuth::find()->where(['domain' => $auth->domain, 'connection_id' => $conn->id])->all();
 		    				foreach($auths as $a){ //Confere as autorizaçòes daquela conexão
-		    					if($a->type != self::AUTH_TYPE_WORKFLOW && $a->status == Connection::AUTH_STATUS_PENDING){
+		    					if($a->type != ConnectionAuth::TYPE_WORKFLOW && $a->status == Connection::AUTH_STATUS_PENDING){
 		    						$answered = false;
 		    						break;
 		    					}
@@ -176,7 +173,11 @@ class Notification extends \yii\db\ActiveRecord
 	    				$notification->viewed = true;
 	    				$notification->save();
 	    				break;
-	    				
+	    			case self::TYPE_TOPOLOGY:
+	    				$msg = Notification::makeHtmlNotificationTopology($notification);
+	    				$notification->viewed = true;
+	    				$notification->save();
+	    				break;
 	    		}
 	    		$array .= $msg;
 	    		$date = $notification->date;
@@ -196,77 +197,6 @@ class Notification extends \yii\db\ActiveRecord
     	return $info;
     }
 
-    
-    
-    /********************************
-     *
-     * CHANGE GROUP NOTIFICATION
-     * 
-     ********************************/
-    
-    /**
-     * CREATE NOTIFICATIONS USER NEW GROUP
-     * @param string $user_id
-     * @param string $group_name
-     * @param string $domain_id
-     * Cria novas notificações quando usuário é adicionado a um grupo
-     */
-    public static function createNotificationsUserNewGroup($user_id, $group_name, $domain_id){
-    	$user = User::findOne($user_id);
-    	$group = Group::findOne(['role_name' => $group_name]);
-    	
-    	if($user && $group){
-    		Yii::trace("Criar notificações do grupo ".$group->name." para usuário ".$user->name);
-    		//Busca todas autorizações pendentes do grupo
-    		//Se tem dominio, procura só as relacionadas ao dominio do papel
-    		if($domain_id){
-    			$domain = Domain::findOne($domain_id);
-    			if($domain) $auths = ConnectionAuth::find()->where(['status' => Connection::AUTH_STATUS_PENDING, 'domain' => $domain->name, 'type' => self::AUTH_TYPE_GROUP, 'manager_group_id' => $group->id])->all();
-    			else return;
-    		}
-    		//Se não possui domonio no papel, busca para todos dominios, pois é ANY
-    		else $auths = ConnectionAuth::find()->where(['status' => Connection::AUTH_STATUS_PENDING, 'type' => self::AUTH_TYPE_GROUP, 'manager_group_id' => $group->id])->all();
-    		
-    		//Passa por todas criando uma notificação
-    		foreach($auths as $auth){
-    			$connection = Connection::findOne($auth->connection_id);
-    			$reservation = Reservation::findOne($connection->reservation_id);
-    			Notification::createUserAuthNotification($user->id, $auth->domain, $connection->reservation_id, $auth->id, $reservation->date);
-    		}
-    	}
-    }
-    
-    /**
-     * DELETE NOTIFICATIONS USER GROUP
-     * @param string $user_id
-     * @param string $group_name
-     * @param string $domain_id
-	 * Deleta as notificações quando usuário é removido de um grupo
-     */
-    public static function deleteNotificationsUserGroup($user_id, $group_name, $domain_id){
-    	$user = User::findOne($user_id);
-    	$group = Group::findOne(['role_name' => $group_name]);
-    	 
-    	if($user && $group){
-    		Yii::trace("Remover notificações do grupo ".$group->name." para usuário ".$user->name);
-    		//Busca todas autorizações do grupo
-    		//Se tem domínio, procura só as relacionadas ao domínio do papel
-    		if($domain_id){
-    			$domain = Domain::findOne($domain_id);
-    			if($domain) $auths = ConnectionAuth::find()->where(['domain' => $domain->name, 'type' => self::AUTH_TYPE_GROUP, 'manager_group_id' => $group->id])->all();
-    			else return;
-    		}
-    		//Se não possui domínio no papel, busca para todos dominios, pois é ANY
-    		else $auths = ConnectionAuth::find()->where(['type' => self::AUTH_TYPE_GROUP, 'manager_group_id' => $group->id])->all();
-    
-    		//Passa por todas criando uma notificação
-    		foreach($auths as $auth){
-    			$notification = Notification::findOne(['user_id' => $user_id, 'type' => self::TYPE_AUTHORIZATION, 'info' => $auth->id]);
-    			if($notification) $notification->delete();
-    		}
-    	}
-    }
-    
     /********************************
      *
      * CREATE NOTIFICATION
@@ -421,6 +351,8 @@ class Notification extends \yii\db\ActiveRecord
      * @param string $data2
      * @param string $date
      * Cria notificação de alguma noticia. Esta notificações não contém link
+     * Internamente ela possui um modelo particular, que armazena um JSON com tipo e e dados
+     * Para noticias diferentes, criar apenas novos tipos.
      */
     public static function createNoticeNotification($user_id, $type, $data, $data2 = null, $date = null){    	 
     	$notice = [];
@@ -436,6 +368,25 @@ class Notification extends \yii\db\ActiveRecord
     	$not->type = self::TYPE_NOTICE;
     	$not->viewed = 0;
     	$not->info = json_encode($notice); //Armazena todos dados em um JSON
+    	$not->save();
+    }
+    
+    /**
+     * CREATE TOPOLOGY NOTIFICAION
+     * @param string $user_id
+     * @param string $msg
+     * @param string $date
+     * Cria notificação de mudança na topologia. VERSÃO BETA
+     */
+    public static function createTopologyNotification($user_id, $msg, $date = null){
+    	$not = new Notification();
+    	$not->user_id = $user_id;
+    	//Pode receber uma data por parametro, neste caso, utiliza essa data como a data da criação da notificação
+    	if($date) $not->date = $date;
+    	else $not->date = DateUtils::now();
+    	$not->type = self::TYPE_TOPOLOGY;
+    	$not->viewed = 0;
+    	$not->info = $msg;
     	$not->save();
     }
     
@@ -608,5 +559,96 @@ class Notification extends \yii\db\ActiveRecord
 	    return '<li class="new">'.Html::a($html, array($link)).'</li>';
     }
     
+    /**
+     * MAKE HTML NOTIFICATION AUTHORIZATION
+     * @param string $notification
+     * @return string
+     */
+    public static function makeHtmlNotificationTopology($notification = null){
+    	if($notification == null) return "";
+    	$info = $notification->info;
+
+    	$title = Yii::t("notification", 'Topology Change');
+    	$msg = $info;
+    	$date = Yii::$app->formatter->asDatetime($notification->date);
+    
+    	$link = '/init';
+    
+    	$text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
+    
+    	$html = Notification::makeHtml('topology_changed.png', $text);
+    	 
+    	if($notification->viewed == true) return '<li>'.Html::a($html, array($link)).'</li>';
+    	return '<li class="new">'.Html::a($html, array($link)).'</li>';
+    }
+    
+    /********************************
+     *
+     * CHANGE GROUP NOTIFICATION
+     *
+     ********************************/
+    
+    /**
+     * CREATE NOTIFICATIONS USER NEW GROUP
+     * @param string $user_id
+     * @param string $group_name
+     * @param string $domain_id
+     * Cria novas notificações quando usuário é adicionado a um grupo
+     */
+    public static function createNotificationsUserNewGroup($user_id, $group_name, $domain_id){
+    	$user = User::findOne($user_id);
+    	$group = Group::findOne(['role_name' => $group_name]);
+    	 
+    	if($user && $group){
+    		Yii::trace("Criar notificações do grupo ".$group->name." para usuário ".$user->name);
+    		//Busca todas autorizações pendentes do grupo
+    		//Se tem dominio, procura só as relacionadas ao dominio do papel
+    		if($domain_id){
+    			$domain = Domain::findOne($domain_id);
+    			if($domain) $auths = ConnectionAuth::find()->where(['status' => Connection::AUTH_STATUS_PENDING, 'domain' => $domain->name, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
+    			else return;
+    		}
+    		//Se não possui domonio no papel, busca para todos dominios, pois é ANY
+    		else $auths = ConnectionAuth::find()->where(['status' => Connection::AUTH_STATUS_PENDING, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
+    
+    		//Passa por todas criando uma notificação
+    		foreach($auths as $auth){
+    			$connection = Connection::findOne($auth->connection_id);
+    			$reservation = Reservation::findOne($connection->reservation_id);
+    			Notification::createUserAuthNotification($user->id, $auth->domain, $connection->reservation_id, $auth->id, $reservation->date);
+    		}
+    	}
+    }
+    
+    /**
+     * DELETE NOTIFICATIONS USER GROUP
+     * @param string $user_id
+     * @param string $group_name
+     * @param string $domain_id
+     * Deleta as notificações quando usuário é removido de um grupo
+     */
+    public static function deleteNotificationsUserGroup($user_id, $group_name, $domain_id){
+    	$user = User::findOne($user_id);
+    	$group = Group::findOne(['role_name' => $group_name]);
+    
+    	if($user && $group){
+    		Yii::trace("Remover notificações do grupo ".$group->name." para usuário ".$user->name);
+    		//Busca todas autorizações do grupo
+    		//Se tem domínio, procura só as relacionadas ao domínio do papel
+    		if($domain_id){
+    			$domain = Domain::findOne($domain_id);
+    			if($domain) $auths = ConnectionAuth::find()->where(['domain' => $domain->name, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
+    			else return;
+    		}
+    		//Se não possui domínio no papel, busca para todos dominios, pois é ANY
+    		else $auths = ConnectionAuth::find()->where(['type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
+    
+    		//Passa por todas criando uma notificação
+    		foreach($auths as $auth){
+    			$notification = Notification::findOne(['user_id' => $user_id, 'type' => self::TYPE_AUTHORIZATION, 'info' => $auth->id]);
+    			if($notification) $notification->delete();
+    		}
+    	}
+    }
 
 }

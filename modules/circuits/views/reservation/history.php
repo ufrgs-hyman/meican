@@ -10,6 +10,7 @@
 	
 	use app\models\Domain;
 	use app\models\Reservation;
+	use app\models\Connection;
 	
 	use app\modules\circuits\assets\ListReservationAsset;
 	
