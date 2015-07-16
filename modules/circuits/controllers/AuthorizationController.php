@@ -44,7 +44,7 @@ class AuthorizationController extends RbacController {
     		if(isset($conn)){
     			$request->status= Connection::AUTH_STATUS_EXPIRED;
 		    	$request->save();
-		    	$connection->auth_status= Connection::AUTH_STATUS_EXPIRED;
+		    	$conn->auth_status= Connection::AUTH_STATUS_EXPIRED;
     			$conn->save();
     			Notification::createConnectionNotification($conn->id);
     		}
@@ -80,7 +80,7 @@ class AuthorizationController extends RbacController {
 			    		if(isset($conn)){
 			    			$request->status= Connection::AUTH_STATUS_EXPIRED;
 		    				$request->save();
-		    				$connection->auth_status= Connection::AUTH_STATUS_EXPIRED;
+		    				$conn->auth_status= Connection::AUTH_STATUS_EXPIRED;
 			    			$conn->save();
 			    			Notification::createConnectionNotification($conn->id);
 			    		}
