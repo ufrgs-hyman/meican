@@ -11,26 +11,22 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.5.0",
-        "yiisoft/yii2": "2.0.3",
-        "yiisoft/yii2-bootstrap": "2.0.3",
-        "yiisoft/yii2-swiftmailer": "2.0.3",
-        "yiisoft/yii2-jui": "2.0.3",
+        "yiisoft/yii2": "2.0.4",
+        "yiisoft/yii2-swiftmailer": "2.0.4",
+        "yiisoft/yii2-jui": "2.0.4",
         "thiagotalma/yii2-fullcalendar": "2.0.0"
     },
     "require-dev": {
-        "yiisoft/yii2-codeception": "2.0.3",
-        "yiisoft/yii2-debug": "2.0.3",
-        "yiisoft/yii2-gii": "2.0.3",
-        "yiisoft/yii2-faker": "2.0.3"
+        "yiisoft/yii2-codeception": "2.0.4",
+        "yiisoft/yii2-debug": "2.0.4",
+        "yiisoft/yii2-gii": "2.0.4"
     },
     "config": {
         "process-timeout": 1800
     },
     "scripts": {
         "pre-update-cmd": [
-            "php yii circuits/service/crontab/stop",
-            "php yii migrate --interactive=0",
-            "php yii circuits/service/crontab/start"
+            "php yii circuits/service/crontab/stop"            
         ],
         "post-install-cmd": [
             "yii\\composer\\Installer::postCreateProject",
