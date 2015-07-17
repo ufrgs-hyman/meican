@@ -123,6 +123,16 @@ class DomainController extends RbacController {
     	Yii::trace($temp);
     	return $temp;
     }
+
+    public function actionGet($id, $cols=null){
+        $query = Domain::find()->where(['id'=> $id])->asArray();
+
+        $cols ? $data = $query->select(json_decode($cols))->one() : $data = $query->one();
+    
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
+    }
     
     public function actionGetByNetwork($id){
     	$net = Network::findOne($id);

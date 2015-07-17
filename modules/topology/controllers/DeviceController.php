@@ -118,6 +118,22 @@ class DeviceController extends RbacController {
     	return $temp;
     }
 
+    public function actionGetByNetwork($id, $cols=null){
+        $query = Device::findBySql("
+            SELECT * 
+            FROM `meican_device` AS dev 
+            WHERE dev.id IN ( 
+                SELECT port.device_id 
+                FROM `meican_port` AS port 
+                WHERE port.network_id = :network)")->addParams([':network'=>$id])->orderBy(['name'=>'SORT ASC'])->asArray();
+        
+        $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
+    
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
+    }
+
     public function actionGetAll() {
     	$data = Device::find()->orderBy(['name'=>'SORT ASC'])->asArray()->select(['id','name','latitude','longitude','domain_id'])->all();
     	

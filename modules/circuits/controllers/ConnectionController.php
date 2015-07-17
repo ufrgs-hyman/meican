@@ -61,33 +61,51 @@ class ConnectionController extends Controller {
 
 	public function actionGetEndPoints($id) {
     	$conn = Connection::findOne($id);
-    	$srcPath = $conn->getFirstPath()->one();
-    	$srcPort = $srcPath->getSourcePort()->one();
-    	$dstPath = $conn->getLastPath()->one();
-    	$dstPort = $dstPath->getDestinationPort()->one();
+    	if ($conn->external_id) {
+    		$srcPath = $conn->getFirstPath()->one();
+	    	$srcPort = $srcPath->getSourcePort()->one();
+	    	$dstPath = $conn->getLastPath()->one();
+	    	$dstPort = $dstPath->getDestinationPort()->one();
+	    	$srcVlan = $srcPath->src_vlan;
+	    	$dstVlan = $dstPath->dst_vlan;
+	    	$srcPortUrn = $srcPath->getFullSourcePortUrn();
+	    	$dstPortUrn = $dstPath->getFullDestinationPortUrn();
+    	} else {
+    		$res = $conn->getReservation()->one();
+    		$srcPath = $res->getFirstPath()->one();
+	    	$srcPort = $srcPath->getPort()->one();
+	    	$dstPath = $res->getLastPath()->one();
+	    	$dstPort = $dstPath->getPort()->one();
+	    	$srcVlan = $srcPath->vlan;
+	    	$dstVlan = $dstPath->vlan;
+	    	$srcPortUrn = $srcPath->getFullPortUrn();
+	    	$dstPortUrn = $dstPath->getFullPortUrn();
+    	}
     	
     	$source = null;
     	$dest = null;
 
+
     	$dev = $srcPort ? $srcPort->getDevice()->one() : null;
         $net = $srcPort ? $srcPort->getNetwork()->one() : null;
+        $dom = $dev->getDomain()->one();
     	
-    	$source["dom"] = $srcPath->domain;
+    	$source["dom"] = $dom->name;
     	$source["net"] = $net ? $net->name: "";
     	$source["dev"] = $dev ? $dev->name: "";
     	$source["port"] = $srcPort ? $srcPort->name : "";
-    	$source["vlan"] = $srcPath->src_vlan;
-    	$source["urn"] = $srcPath->getFullSourcePortUrn();
+    	$source["vlan"] = $srcVlan;
+    	$source["urn"] = $srcPortUrn;
 
     	$dev = $dstPort ? $dstPort->getDevice()->one() : null;
         $net = $dstPort ? $dstPort->getNetwork()->one() : null;
     	
-    	$dest["dom"] = $dstPath->domain;
+    	$dest["dom"] = $dom->name;
     	$dest["net"] = $net ? $net->name: "";
     	$dest["dev"] = $dev ? $dev->name: "";
     	$dest["port"] = $dstPort ? $dstPort->name : "";
-    	$dest["vlan"] = $dstPath->dst_vlan;
-    	$dest["urn"] = $dstPath->getFullDestinationPortUrn();
+    	$dest["vlan"] = $dstVlan;
+    	$dest["urn"] = $dstPortUrn;
     	
     	$data = json_encode(["src" => $source, "dst" => $dest]);
     	Yii::trace($data);

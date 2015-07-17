@@ -10,20 +10,17 @@ use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 
 use app\controllers\RbacController;
-use app\components\AggregatorSoapClient;
 use app\components\DateUtils;
-use app\modules\circuits\models\AggregatorConnection;
 use app\models\Reservation;
 use app\models\Connection;
 use app\models\ConnectionAuth;
 use app\models\Port;
+use app\models\Domain;
 use app\models\Device;
 use app\models\Network;
 use app\modules\circuits\models\ReservationForm;
 use app\modules\circuits\models\ReservationSearch;
-use app\models\BpmFlow;
 use app\models\ReservationPath;
-use app\models\User;
 use app\models\Notification;
 
 class ReservationController extends RbacController {
@@ -33,7 +30,7 @@ class ReservationController extends RbacController {
     public function actionCreate() {
     	self::canRedir('reservation/create');
     	
-        return $this->render('create/create');
+        return $this->render('create/create',['domains'=>Domain::find()->asArray()->all()]);
     }
     
     public function actionRequest() {
@@ -121,8 +118,8 @@ class ReservationController extends RbacController {
         $data =[];
         
         foreach ($paths as $path) {
-            $urn = $path->getUrn()->one();
-            $data[] = ['path_order' => $path->path_order, 'urn_id'=> $urn ? $urn->id : null];
+            $port = $path->getPort()->select(['id'])->one();
+            $data[] = ['path_order' => $path->path_order, 'port_id'=> $port ? $port->id : null];
         }
         
         $data = json_encode($data);

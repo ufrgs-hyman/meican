@@ -13,16 +13,6 @@ use Yii;
 
 class ProviderController extends RbacController {
     
-    public function actionGetByDomains($domains) {
-        $doms = json_decode($domains);
-        
-        $providers = Provider::find()->asArray()->all();
-        
-        $temp = Json::encode($providers);
-        Yii::trace($temp);
-        return $temp;
-    }
-
     public function actionCreate() {
         $model = new Provider;
 
@@ -109,5 +99,27 @@ class ProviderController extends RbacController {
         }
     
         return $this->redirect(array('index'));
+    }
+
+    //////////////////////
+
+    public function actionGetByDomains($domains) {
+        $doms = json_decode($domains);
+        
+        
+        
+        $temp = Json::encode($providers);
+        Yii::trace($temp);
+        return $temp;
+    }
+
+    public function actionGetAll($cols=null) {
+        $query = Provider::find()->asArray()->orderBy(['nsa'=>'SORT ASC']);
+
+        $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
+        
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
     }
 }

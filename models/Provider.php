@@ -92,6 +92,14 @@ class Provider extends \yii\db\ActiveRecord
         }
     }
 
+    public function getTypeLabels() {
+        return [
+            self::TYPE_AGG => Yii::t('circuits', 'Aggregator'),
+            self::TYPE_UPA =>Yii::t('circuits', 'Ultimate (uPA)'),
+            self::TYPE_DUMMY=>Yii::t('circuits', 'Dummy'),
+        ];
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

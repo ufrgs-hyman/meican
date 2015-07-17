@@ -15,7 +15,7 @@
 	<div class="reservation-name"><?= $reservation->name; ?></div>
 </h1>
 
-<div id="subtab-points" class="tab_subcontent"">
+<div id="subtab-points" class="tab_subcontent">
 	<?= $this->render('_formEndpoints', array('label' => Yii::t("circuits", "Source"), 'prefix' => 'src', 
 	)); ?>
 	<div id="bandwidth_bar">
@@ -49,7 +49,7 @@
 						array(
 								'class'=>CheckboxColumn::className(),
 								'name'=>'selected_connections',
-								'checkboxOptions'=> function($model, $key, $index, $column) {
+								'checkboxOptions'=> function($model) {
     								return [
 										'disabled' => $model->isCancelStatus(),
 										'class'=>'connection-checkbox'
@@ -77,14 +77,18 @@
 							'value' => function($model){
 								return $model->getAuthStatus();
 							 },
-							'contentOptions'=> function ($model, $key, $index, $column){
+							'contentOptions'=> function ($model){
 								return ['class' => strtolower($model->auth_status)];
 							},
 						],
 						[
 							'attribute' => 'dataplane_status',
 							'value' => function($model){
-								return $model->getDataStatus(); },
+								return $model->getDataStatus(); 
+							},
+							'contentOptions'=> function ($model){
+								return ['class' => strtolower($model->dataplane_status)];
+							},
 						],
 						[
 							'header' => '<div style="padding-left:20px;height:16px;width:16px;"><img id="loader-img" src="'.Url::base().'/images/ajax-loader-blue.gif"></div>',
@@ -111,3 +115,4 @@
     <label><?= Yii::t("circuits", "Do you want to cancel this connection(s)?"); ?></label>
     <br/>
 </div>
+

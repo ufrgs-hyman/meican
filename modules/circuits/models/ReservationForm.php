@@ -61,8 +61,8 @@ class ReservationForm extends Model {
  			$this->reservation->start = DateUtils::toUTC($this->start_date, $this->start_time);
  			$this->reservation->finish = DateUtils::toUTC($this->finish_date, $this->finish_time);
  			$this->reservation->bandwidth = $this->bandwidth;
- 			$this->reservation->requester_nsa = Preference::findOne(Preference::MEICAN_NSA)->value;
- 			$this->reservation->provider_nsa = Preference::findOne(Preference::CIRCUITS_DEFAULT_PROVIDER_NSA)->value;
+ 			$this->reservation->requester_nsa = CircuitsPreference::findOne(CircuitsPreference::MEICAN_NSA)->value;
+ 			$this->reservation->provider_nsa = CircuitsPreference::findOne(CircuitsPreference::CIRCUITS_DEFAULT_PROVIDER_NSA)->value;
  			$this->reservation->request_user_id = Yii::$app->user->getId(); 			
  			
  			if ($this->reservation->save()) {

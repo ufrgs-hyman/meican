@@ -22,21 +22,22 @@ $(document).ready(function() {
 var sourceMarker;
 var destinMarker;
 var wayPoints = [];
-var listDomains;
+var domainsList;
 var map;
 var markerCluster;
 var circuit;
 var currentMarkerType = "net";
 var openedWindows = [];
+
 var MARKER_OPTIONS_NET = '' +
 '<div><button style="font-size: 11px; width: 48%;" id="set-as-source">' + tt('From here') + '</button>' +
 '<button style="font-size: 11px; width: 48%;" id="set-as-dest">' + tt('To here') + '</button></div><div style="height: 2px;"></div>' +
-'<div><button style="font-size: 11px; width: 48%;" id="set-as-waypoint">' + tt('Waypoint') + '</button>' +
-'<button style="font-size: 11px; width: 48%;" id="set-as-intra">' + tt('Intra-domain') + '</button></div>';
+//'<div><button style="font-size: 11px; width: 48%;" id="set-as-waypoint">' + tt('Waypoint') + '</button>' +
+'<button style="font-size: 11px; width: 97.5%;" id="set-as-intra">' + tt('Intra-domain') + '</button></div>';
 var MARKER_OPTIONS_DEV = '' +
 '<div><button style="font-size: 11px; width: 48%;" id="set-as-source">' + tt('From here') + '</button>' +
 '<button style="font-size: 11px; width: 48%;" id="set-as-dest">' + tt('To here') + '</button></div><div style="height: 2px;"></div>' +
-'<div><button style="font-size: 11px; width: 98%;" id="set-as-waypoint">' + tt('Set as waypoint') + '</button>' +
+//'<div><button style="font-size: 11px; width: 98%;" id="set-as-waypoint">' + tt('Set as waypoint') + '</button>' +
 '</div>';
 var MARKER_OPTIONS_END_POINT = '' +
 '<button style="font-size: 11px; width: 98%;" id="remove-endpoint">' + tt('Remove endpoint') + '</button>';
@@ -44,6 +45,7 @@ var MARKER_OPTIONS_WAY_POINT = '' +
 '<button style="font-size: 11px; width: 98%;" id="remove-waypoint">' + tt('Remove waypoint') + '</button>';
 var MARKER_OPTIONS_INTRA = '' +
 '<button style="font-size: 11px; width: 98%;" id="remove-intra">' + tt('Remove intra-domain circuit') + '</button>';
+
 var devicesLoaded = false;
 var shift = 0.01;
 
@@ -762,9 +764,10 @@ function initialize() {
 	$.ajax({
 		url: baseUrl+'/topology/network/get-all',
 		dataType: 'json',
+        data: {
+            cols: JSON.stringify(['id','name','latitude','longitude','domain_id']),
+        },
 		success: function(response){
-			count = shift;
-
 			for(index = 0; index < response.length; index++){
 				var network = response[index];
 				addNetworkMarker(markers, network);
@@ -797,40 +800,38 @@ function initialize() {
 //////////// ADICIONA MARCADORES NO MAPA /////////////////
 
 function addNetworkMarker(markers, network) {
-    var domainName = getDomainName(network.domain_id);
-	var contentString = tt('Domain') + ': <b>' + domainName + '</b><br>' + tt('Network') + ': <b>'+network.name+'</b><br>';
-	
-	if (network.latitude != null && network.longitude != null) {
-		var myLatlng = getValidMarkerPosition(markers, "net", new google.maps.LatLng(network.latitude, network.longitude));
-		
-	} else {
-		var myLatlng = getValidMarkerPosition(markers, "net", new google.maps.LatLng(0, 0));
-	}
-	
-	var marker = new StyledMarker({
-		styleIcon: new StyledIcon(
-			StyledIconTypes.MARKER,
-				{
-					color: generateColor(network.domain_id),
-				}
-		),
-		position: myLatlng,
-		type: "net",
-		circuitMode: "none",
-		id: network.id,
-		name: network.name,
-		domainId: network.domain_id,
-		info: contentString,
-	});
-	
-	var length = markers.push(marker);
-	
-	addMarkerListeners(markers, length - 1);
+    var contentString = tt('Domain') + ': <b>' + getDomainName(network.domain_id) + '</b><br>' + tt('Network') + ': <b>'+network.name+'</b><br>';
+
+    if (network.latitude != null && network.longitude != null) {
+        var myLatlng = getValidMarkerPosition(markers, "net", new google.maps.LatLng(network.latitude, network.longitude));
+        
+    } else {
+        var myLatlng = getValidMarkerPosition(markers, "net", new google.maps.LatLng(0, 0));
+    }
+    
+    var marker = new StyledMarker({
+        styleIcon: new StyledIcon(
+            StyledIconTypes.MARKER,
+                {
+                    color: generateColor(network.domain_id),
+                }
+        ),
+        position: myLatlng,
+        type: "net",
+        circuitMode: "none",
+        id: network.id,
+        name: network.name,
+        domainId: network.domain_id,
+        info: contentString,
+    });
+    
+    var length = markers.push(marker);
+    
+    addMarkerListeners(markers, length - 1);
 }
 
 function addDeviceMarker(markers, device) {
-	var domainName = getDomainName(device.domain_id);
-	var contentString = tt('Domain') + ': <b>'+domainName+'</b><br>' + tt('Device') + ': <b>' + device.name + '</b><br>';
+	var contentString = tt('Domain') + ': <b>'+getDomainName(device.domain_id)+'</b><br>' + tt('Device') + ': <b>' + device.name + '</b><br>';
 	
 	if (device.latitude != null && device.longitude != null) {
 		var myLatlng = getValidMarkerPosition(markers, "dev", new google.maps.LatLng(device.latitude, device.longitude));
@@ -1165,27 +1166,11 @@ function getDeviceMarker(markers, id) {
 }
 
 function getDomainName(id) {
-    if (!listDomains) {
-        $.ajax({
-            url: baseUrl+'/topology/domain/get-all',
-            data: {
-                cols: JSON.stringify(['id','name']),
-            },
-            async: false,
-            dataType: 'json',
-            success: function(domains) {
-                listDomains = domains;
-            },
-        });
-        return null;
-    }
-    size = listDomains.length;
-    for (var i = 0; i < size; i++) {
-        if (listDomains[i].id == id) {
-            return listDomains[i].name;
-        }
+    if (!domainsList) domainsList = JSON.parse($("#domains-list").text());
+    for (var i = 0; i < domainsList.length; i++) {
+        if(domainsList[i].id == id)
+        return domainsList[i].name;
     };
-    return null;
 }
 
 ////////// DEFINE ZOOM E LIMITES DO MAPA A PARTIR DE UM CAMINHO ////////

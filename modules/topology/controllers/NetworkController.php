@@ -100,8 +100,10 @@ class NetworkController extends RbacController {
     
     //RESTfull
     
-    public function actionGetAll(){
-    	$data = Network::find()->asArray()->all();
+    public function actionGetAll($cols=null){
+    	$query = Network::find()->asArray();
+
+        $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
     
     	$temp = Json::encode($data);
     	Yii::trace($temp);
@@ -123,8 +125,8 @@ class NetworkController extends RbacController {
     	return $temp;
     }
     
-    public function actionGetByUrn($id) {
-    	$data = Urn::find()->where(['id'=>$id])->select(['id', 'device_id'])->one()->getDevice()->select([
+    public function actionGetByPort($id) {
+    	$data = Port::find()->where(['id'=>$id])->select(['id', 'device_id'])->one()->getDevice()->select([
     			'id','network_id'])->one()->getNetwork()->one();
     	
     	$temp = Json::encode($data);

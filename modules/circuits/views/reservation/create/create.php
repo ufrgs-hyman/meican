@@ -80,6 +80,8 @@
     <label id="error-confirm-dialog" class="reservation-form-error"></label>
 </div>
 
+<label id="domains-list" hidden><?= json_encode($domains); ?></label>
+
 <?php
 	ActiveForm::end();
 ?>

@@ -2,9 +2,6 @@
     <thead>
         <tr>
             <th colspan="2">
-            	<div class="ui-state-default ui-corner-all ui-transparent-button" id="<?= $prefix ?>-show-details" style="float: right; margin-right: 4px; cursor: pointer;">
-            		<span id="<?= $prefix ?>-show-details-icon" class="ui-icon-to-button-without-background ui-icon ui-icon-carat-1-n" title="<?= "Toogle"; ?>"></span>
-			    </div>
 			    <div class="ui-state-default ui-corner-all ui-transparent-button" id="<?= $prefix ?>-select-current-host" style="float: right; margin-right: 2px; cursor: pointer;">
 			        <span class="ui-icon-to-button-without-background ui-icon ui-icon-home" title="<?= "Select current host"; ?>"></span>
 			    </div>

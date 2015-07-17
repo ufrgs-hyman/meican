@@ -72,4 +72,19 @@ class ServiceController extends RbacController {
     
         return $this->redirect(array('/topology/provider/view', 'id'=>$service->provider_id));
     }
+
+    public function actionGetCsByProviderNsa($nsa, $cols=null) {
+        $provider = Provider::findByNsa($nsa)->one();
+        if (!$provider) {
+            return [];
+        }
+
+        $query = $provider->getConnectionService()->asArray();
+
+        $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
+        
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
+    }
 }

@@ -24,8 +24,11 @@
     'model' => $model,
     'attributes' => [
         'name',               
-        'nsa',   
-        'type', 
+        'nsa',  
+        [            
+            'attribute'=> 'type',         
+            'value' => $model->getType(),
+        ], 
         'latitude',
         'longitude',
     ],
@@ -78,7 +81,7 @@
                     'class'=> LinkColumn::className(),
                     'image'=>'/images/arrow_circle_double.png',
                     'label' => '',
-                    'title'=>Yii::t("topology",'Add service to Topology Synchronizer'),
+                    'title'=>Yii::t("topology",'Create a Topology Synchronizer instance from this service'),
                     'url' => '/topology/sync/add-service',
                     'contentOptions'=>['style'=>'width: 15px;'],
                 ),

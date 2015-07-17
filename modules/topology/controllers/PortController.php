@@ -13,16 +13,6 @@ use app\models\Port;
 use Yii;
 use app\modules\topology\models\DomainForm;
 
-use yii\grid\GridView;
-use yii\grid\CheckboxColumn;
-use yii\grid\ActionColumn;
-use app\components\LinkColumn;
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-use yii\widgets\LinkPager;
-use yii\data\ArrayDataProvider;
-use yii\i18n\Formatter;
-
 use yii\helpers\Json;
 
 class PortController extends RbacController {

@@ -33,6 +33,16 @@ $(document).on('ready pjax:success', function() {
 		console.log("connection approved");
 		drawReservation(selectedConn, true);
 	}
+
+    for (var i = 0; i < circuits.length; i++) {
+        if (circuits[i].connId == selectedConn) {
+            circuits[i].setOptions(
+                {
+                    strokeColor: getSelectedConnCircuitColor()
+                });
+            break;
+        } 
+    }
 });
 
 var selectedConnIsApproved;
@@ -44,6 +54,14 @@ var markerWindow;
 var markers = [];
 var refresher;
 var circuits = [];
+
+function getSelectedConnCircuitColor() {
+    if (isActiveSelectedConn()) {
+        return "#1B8B1D"; 
+    } else {
+        return "#483D8B"; 
+    }
+} 
 
 function showCircuit(connId) {
 	var found = false;
@@ -66,6 +84,11 @@ function showCircuit(connId) {
 function isAuthorizationReceived() {
 	return $("#connections-grid tbody").
 			children("tr[data-key=" + selectedConn + "]").find("td.authorized").length > 0;
+}
+
+function isActiveSelectedConn() {
+    return $("#connections-grid tbody").
+            children("tr[data-key=" + selectedConn + "]").find("td.active").length > 0;
 }
 
 function selectConn(id) {
@@ -127,7 +150,7 @@ function fillEndPointDetails(endPointType, path) {
 }
 
 function prepareRefreshButton() {
-	refresher = setInterval(updateGridView, 8000);
+	refresher = setInterval(updateGridView, 30000);
 	
 	$("#refresh-button").click(function(){
 		if ($("#refresh-button").val() == "true") {
@@ -198,7 +221,7 @@ function enableAutoRefresh() {
 
 	updateGridView();
 	$("#refresh-button").val('true');
-	refresher = setInterval(updateGridView, 60000);
+	refresher = setInterval(updateGridView, 30000);
 	$("#refresh-button").text(tt("Disable auto refresh"));
 }
 
@@ -253,7 +276,8 @@ function openCopyUrnDialog(endPointType) {
 ///////////// DESENHAR CIRCUITO NO MAPA ///////////////
 
 function drawCircuit(requiredMarkers) {
-	strokeColor = "#483D8B"; 
+    strokeColor = getSelectedConnCircuitColor();
+    
 	strokeOpacity = 0.775;
 	
 	var path = [];
@@ -426,18 +450,18 @@ function drawReservation(connId, animate) {
 			},
 			success: function(response) {
 				var size = response.length;
-				addSourceMarker(response[0].urn_id);
+				addSourceMarker(response[0].port_id);
 				var requiredMarkers = [];
 
 				//aqui nao importa a ordem dos marcadores, pois nao ha circuito criado
-				requiredMarkers.push(response[0].urn_id);
-				addDestinMarker(response[size-1].urn_id);
-				requiredMarkers.push(response[size-1].urn_id);
+				requiredMarkers.push(response[0].port_id);
+				addDestinMarker(response[size-1].port_id);
+				requiredMarkers.push(response[size-1].port_id);
 				
 				for (var i = 1; i < size-1; i++) {
-					if (response[i].urn_id != null) {
-						addWayPointMarker(response[i].urn_id);
-						requiredMarkers.push(response[i].urn_id);
+					if (response[i].port_id != null) {
+						addWayPointMarker(response[i].port_id);
+						requiredMarkers.push(response[i].port_id);
 					}
 				}
 				

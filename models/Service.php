@@ -58,22 +58,32 @@ class Service extends \yii\db\ActiveRecord
 
     public function getType() {
         switch ($this->type) {
-            case self::TYPE_NSI_DISCOVERY: return Yii::t('topology', 'NSI Discovery Service');
-            case self::TYPE_NSI_TOPOLOGY: return Yii::t('topology', 'NSI Topology Description');
-            case self::TYPE_NSI_CONNECTION: return Yii::t('topology', 'NSI Connection Service');
-            case self::TYPE_NMWG_TOPOLOGY: return Yii::t('topology', 'NMWG Topology Description');
-            case self::TYPE_NMWG_TOPO_PERFSONAR: return Yii::t('topology', 'PerfSONAR Topology Service');
+            case self::TYPE_NSI_DISCOVERY: return self::getTypeLabels()[self::TYPE_NSI_DISCOVERY];
+            case self::TYPE_NSI_TOPOLOGY: return self::getTypeLabels()[self::TYPE_NSI_TOPOLOGY];
+            case self::TYPE_NSI_CONNECTION: return self::getTypeLabels()[self::TYPE_NSI_CONNECTION];
+            case self::TYPE_NMWG_TOPOLOGY: return self::getTypeLabels()[self::TYPE_NMWG_TOPOLOGY];
+            case self::TYPE_NMWG_TOPO_PERFSONAR: return self::getTypeLabels()[self::TYPE_NMWG_TOPO_PERFSONAR];
             default: return Yii::t('topology', 'Unknown');
         }
     }
 
+    static function getTypeLabels() {
+        return [
+            self::TYPE_NSI_DISCOVERY => Yii::t('topology', 'NSI Discovery Service'),
+            self::TYPE_NSI_TOPOLOGY => Yii::t('topology', 'NSI Topology Description'),
+            self::TYPE_NSI_CONNECTION => Yii::t('topology', 'NSI Connection Service'),
+            self::TYPE_NMWG_TOPOLOGY => Yii::t('topology', 'NMWG Topology Description'),
+            self::TYPE_NMWG_TOPO_PERFSONAR => Yii::t('topology', 'PerfSONAR Topology Service')
+        ];
+    }
+
     static function getTypes() {
         return [
-            ['id'=> self::TYPE_NSI_DISCOVERY, 'name'=> Yii::t('topology', 'NSI Discovery Service')],
-            ['id'=> self::TYPE_NSI_TOPOLOGY, 'name'=> Yii::t('topology', 'NSI Topology Description')],
-            ['id'=> self::TYPE_NSI_CONNECTION, 'name'=> Yii::t('topology', 'NSI Connection Service')],
-            ['id'=> self::TYPE_NMWG_TOPOLOGY, 'name'=> Yii::t('topology', 'NMWG Topology Description')],
-            ['id'=> self::TYPE_NMWG_TOPO_PERFSONAR, 'name'=> Yii::t('topology', 'PerfSONAR Topology Service')]
+            ['id'=> self::TYPE_NSI_DISCOVERY, 'name'=> self::getTypeLabels()[self::TYPE_NSI_DISCOVERY]],
+            ['id'=> self::TYPE_NSI_TOPOLOGY, 'name'=> self::getTypeLabels()[self::TYPE_NSI_TOPOLOGY]],
+            ['id'=> self::TYPE_NSI_CONNECTION, 'name'=> self::getTypeLabels()[self::TYPE_NSI_CONNECTION]],
+            ['id'=> self::TYPE_NMWG_TOPOLOGY, 'name'=> self::getTypeLabels()[self::TYPE_NMWG_TOPOLOGY]],
+            ['id'=> self::TYPE_NMWG_TOPO_PERFSONAR, 'name'=> self::getTypeLabels()[self::TYPE_NMWG_TOPO_PERFSONAR]]
         ];
     }
 
