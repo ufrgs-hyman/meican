@@ -17,7 +17,8 @@ echo Menu::widget([
 				['label'=>Yii::t('circuits','Create'), 'url'=>['/circuits/reservation/create']],
 				['label'=>Yii::t('circuits','Status'),'url'=>['/circuits/reservation/status']],
 				['label'=>Yii::t('circuits','History'),'url'=>['/circuits/reservation/history']],
-				['label'=>Yii::t('circuits','Authorization'),'url'=>['/circuits/authorization/index']]
+				['label'=>Yii::t('circuits','Authorization'),'url'=>['/circuits/authorization/index']],
+				['label'=>Yii::t('circuits','Configuration'),'url'=>['/circuits/configuration/index']]
 			],
 			'visible'=>RbacController::can('reservation/read')
 		],
@@ -39,7 +40,7 @@ echo Menu::widget([
 				['label'=>Yii::t('topology','Ports'), 'url'=>['/topology/port/index']],
 				['label'=>Yii::t('topology','Viewer'), 'url'=>['/topology/viewer/index']],
 				['label'=>Yii::t('topology','Synchronizer'), 'url'=>['/topology/sync/index'], 'visible'=>RbacController::can('topology/update')],
-				['label'=>Yii::t('topology','Changes'), 'url'=>['/topology/sync/pending-changes'], 'visible'=>RbacController::can('topology/update')],
+				['label'=>Yii::t('topology','Changes'), 'url'=>['/topology/change/applied'], 'visible'=>RbacController::can('topology/update')],
 				['label'=>Yii::t('topology','Automated Tests'),'url'=>['/circuits/automated-test/index'],'visible'=>RbacController::can('topology/update')]
 			],
 			'visible'=>RbacController::can('topology/read')

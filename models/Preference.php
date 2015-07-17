@@ -15,15 +15,6 @@ class Preference extends \yii\db\ActiveRecord
     //retorna o NSA que identifica a aplicação
     const MEICAN_NSA = "meican.nsa";
 
-    //retorna o NSA do provedor padrão atualmente configurado.
-    //o provedor pode não existir ou não ter o serviço necessário e
-    //nesse caso um erro será gerado. 
-    const CIRCUITS_DEFAULT_PROVIDER_NSA = "circuits.default.provider.nsa";
-
-    //retorna um booleano que informa se as portas unidirecionais estão
-    //disponíveis para novas reservas.
-    const CIRCUITS_UNIPORT_ENABLED = "circuits.uniport.enabled";
-
     /**
      * @inheritdoc
      */
@@ -38,7 +29,7 @@ class Preference extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'value'], 'required'],
+            [['name'], 'required'],
             [['value'], 'string'],
             [['name'], 'string', 'max' => 200]
         ];
@@ -53,5 +44,16 @@ class Preference extends \yii\db\ActiveRecord
             'name' => Yii::t('circuits', 'Name'),
             'value' => Yii::t('circuits', 'Value'),
         ];
+    }
+
+    static function getNames() {
+        return [self::MEICAN_NSA];
+    }
+
+    static function findAll($condition=null) {
+        if ($condition) {
+            return self::find()->where(['in', 'name', static::getNames()])->andWhere($condition)->all();
+        }
+        return self::find()->where(['in', 'name', static::getNames()])->all();
     }
 }
