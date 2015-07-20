@@ -6,19 +6,114 @@ var map;
 var shift = 0.01;
 var markerWindow;
 var markers = [];
+var domainsList;
+var links = [];
+var currentMarkerType = 'network';
+var devicesLoaded = false;
 
-///////////// DESENHAR CIRCUITO NO MAPA ///////////////
+$('#marker-type-network').on('change', function() {
+    setMarkerType("network");
+});
+    
+$('#marker-type-device').on('change', function() {
+    setMarkerType("device");
+});
+
+function setMarkerType(markerType) {
+    closeWindow();
+    currentMarkerType = markerType;
+    setMarkersVisible(markerType);
+    if (markerType == "device") {
+        if (!devicesLoaded) {
+            loadDeviceMarkers();
+            devicesLoaded = true;
+        } 
+    }
+}
+
+function setMarkersVisible(markerType) {
+    for(i = 0; i < markers.length; i++){ 
+        switch (markerType) {
+            case "network" : 
+                if (markers[i].type == "network") {
+                    markers[i].setVisible(true);
+                } else {
+                    markers[i].setVisible(false);
+                }
+                break;
+            case "device" :
+                if (markers[i].type == "device") {
+                    markers[i].setVisible(true);
+                } else {
+                    markers[i].setVisible(false);
+                }
+                break;
+            default : 
+                console.log("error?" + markerType);
+            }
+    }
+    for(i = 0; i < links.length; i++){ 
+        switch (markerType) {
+            case "network" : 
+                if (links[i].type == "network") {
+                    links[i].setVisible(true);
+                } else {
+                    links[i].setVisible(false);
+                }
+                break;
+            case "device" :
+                if (links[i].type == "device") {
+                    links[i].setVisible(true);
+                } else {
+                    links[i].setVisible(false);
+                }
+                break;
+            default : 
+                console.log("error?" + markerType);
+            }
+    }
+}
+
+////////////// ADICIONA MARCADORES DE DISPOSITIVOS ////////////////
+
+function loadDeviceMarkers() {
+    $.ajax({
+        url: baseUrl+'/topology/device/get-all',
+        dataType: 'json',
+        method: "GET",
+        success: function(response) {
+            var size = response.length;
+            for (var i = 0; i < size; i++) {
+                addMarker("device", response[i]);
+            };
+            $.ajax({
+                url: baseUrl+'/topology/viewer/get-device-links',
+                dataType: 'json',
+                method: "GET",
+                success: function(response) {
+                    var size = response.length;
+                    for (var key in response) {
+                        addCircuit('device', response[key][0], response[key][1]);
+                    }
+                }
+            });
+        }
+    });
+}
+
+///////////// DESENHAR LINK NO MAPA ///////////////
 
 function drawCircuit(source, destin) {
 	strokeColor = "#0000FF"; 
 	strokeOpacity = 0.2;
 	
-	circuit = new google.maps.Polyline({
+	link = new google.maps.Polyline({
         path: [source.position, destin.position],
         strokeColor: strokeColor,
         strokeOpacity: strokeOpacity,
         strokeWeight: 5,
         geodesic: false,
+        type: source.type,
     });
 	
 	/*google.maps.event.addListener(circuit, 'click', function(event) {
@@ -30,7 +125,8 @@ function drawCircuit(source, destin) {
 		markerWindow.open(map);
     });*/
 	
-    circuit.setMap(map);
+    link.setMap(map);
+    links.push(link);
 }
 
 //////////// INICIALIZA MAPA /////////////////
@@ -57,7 +153,7 @@ function initialize() {
 
     if (false && $("input[name=marker-type]").val() == "net") {
         $.ajax({
-            url: baseUrl+'/topology/viewer/get-sdps',
+            url: baseUrl+'/topology/device/get-sdps',
             dataType: 'json',
             method: "GET",
             success: function(response) {
@@ -68,125 +164,100 @@ function initialize() {
         });
     } else {
         $.ajax({
-            url: baseUrl+'/topology/viewer/get-device-links',
+            url: baseUrl+'/topology/network/get-all',
             dataType: 'json',
             method: "GET",
             success: function(response) {
-                for (var key in response) {
-                    addSdp('device', response[key][0], response[key][1]);
-                }
+                var size = response.length;
+                for (var i = 0; i < size; i++) {
+                    addMarker("network", response[i]);
+                };
+                $.ajax({
+                    url: baseUrl+'/topology/viewer/get-network-links',
+                    dataType: 'json',
+                    method: "GET",
+                    success: function(response) {
+                        var size = response.length;
+                        for (var key in response) {
+                            addCircuit('network', response[key][0], response[key][1]);
+                        }
+                    }
+                });
             }
         });
     }
+
+    
+}
+
+String.prototype.ucFirst = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
 //////////// ADICIONA MARCADORES NO MAPA /////////////////
 
-function addSdp(type, srcId, dstId) {
-    if (type == "device") {
-        url = type + '/get-parent-location';
-    } else {
-        url = type + '/get';
+function addMarker(type, object) {
+    domainName = getDomainName(object.domain_id);
+    if (object.name == "") {
+        object.name = 'default';
     }
 
-	$.ajax({
-		url: baseUrl+'/topology/' + url,
-		dataType: 'json',
-		method: "GET",
-		data: {
-			id: srcId,
-		},
-		success: function(object) {
-            marker = getMarker(type, srcId);
+    var network = null;
+    if (type == 'device') network = getNetworkMarkerByDomain(object.domain_id);
 
-            if (marker == null) {
-    			var contentString = type + ': <b>'+object.name+'</b><br><br><br>';
+    var contentString = 'Domain: ' + '<b>' + domainName + '</b><br>' + type.ucFirst() + ': <b>'+object.name+'</b><br><br><br>';
 
-    			if (object.latitude != null && object.longitude != null) {
-    			var myLatlng = new google.maps.LatLng(object.latitude,object.longitude);
-    			} else {
-    			var myLatlng = new google.maps.LatLng(0, 0);
-    			}
+    if (object.latitude != null && object.longitude != null) {
+        var myLatlng = new google.maps.LatLng(object.latitude,object.longitude);
+    } else if (network) {
+        var myLatlng = network.position;
+    } else {
+        var myLatlng = new google.maps.LatLng(0, 0);
+    }
 
-                    colorId = object.domain_id;
-    			
-    			var marker = new StyledMarker({
-    				styleIcon: new StyledIcon(
-    					StyledIconTypes.MARKER,
-    						{
-    							color: generateColor(colorId),
-    						}
-    				),
-    				position: getValidMarkerPosition(myLatlng),
-    				info: contentString,
-    				id: object.id,
-                    type: type,
-    			});
-    			
-    			var length = markers.push(marker);
-    			
-    			addMarkerListeners(length - 1);
-    			
-    			marker.setMap(map);
-            }
-
-            addMarkerAndCircuit(marker, dstId);
-		}
-	});
+    if (type == "network") {
+        var marker = new StyledMarker({
+            styleIcon: new StyledIcon(
+                StyledIconTypes.MARKER,
+                    {
+                        color: generateColor(object.domain_id),
+                    }
+            ),
+            position: getValidMarkerPosition(myLatlng),
+            info: contentString,
+            id: object.id,
+            domainId: object.domain_id,
+            type: type,
+        });
+    } else {
+        var marker = new google.maps.Marker({
+            icon: {
+                path: 'M 15 15 L 35 15 L 25 35 z',
+                anchor: new google.maps.Point(25, 35),
+                fillColor: '#' + generateColor(object.domain_id),
+                fillOpacity: 1,
+                strokeColor: 'black',
+            },
+            position: getValidMarkerPosition(myLatlng),
+            type: type,
+            id: object.id,
+            domainId: object.domain_id,
+            info: contentString,
+        });
+    }
+    
+    var length = markers.push(marker);
+    
+    addMarkerListeners(length - 1);
+    
+    marker.setMap(map);
 }
 
-function addMarkerAndCircuit(srcMarker, dstId) {
-     if (srcMarker.type == "device") {
-        url = srcMarker.type + '/get-parent-location';
-    } else {
-        url = srcMarker.type + '/get';
-    }
+function addCircuit(type, srcId, dstId) {
+    srcMarker = getMarker(type, srcId);
+    dstMarker = getMarker(type, dstId);
 
-    $.ajax({
-        url: baseUrl+'/topology/' + url,
-        dataType: 'json',
-        method: "GET",
-        data: {
-            id: dstId,
-        },
-        success: function(object) {
-            marker = getMarker(srcMarker.type, dstId);
-
-            if (marker == null) {
-
-                var contentString = srcMarker.type + ': <b>'+object.name+'</b><br><br><br>';
-    
-                if (object.latitude != null && object.longitude != null) {
-                var myLatlng = new google.maps.LatLng(object.latitude,object.longitude);
-                } else {
-                var myLatlng = new google.maps.LatLng(0, 0);
-                }
-
-                    colorId = object.domain_id;
-                
-                var marker = new StyledMarker({
-                    styleIcon: new StyledIcon(
-                        StyledIconTypes.MARKER,
-                            {
-                                color: generateColor(colorId),
-                            }
-                    ),
-                    position: getValidMarkerPosition(myLatlng),
-                    info: contentString,
-                    id: object.id,
-                    type: srcMarker.type,
-                });
-                
-                var length = markers.push(marker);
-                
-                addMarkerListeners(length - 1);
-            
-                marker.setMap(map);
-            }
-
-            drawCircuit(srcMarker, marker);
-        }
-    });
+    drawCircuit(srcMarker, dstMarker);
 }
 
 function getValidMarkerPosition(position) {
@@ -246,7 +317,27 @@ function getMarker(type, id) {
 	return null;
 }
 
+function getNetworkMarkerByDomain(domainId) {
+    for(i = 0; i < markers.length; i++){
+        if (markers[i].type == "network" && markers[i].domainId == domainId) {
+            return markers[i];
+        }
+    }
+    
+    return null;
+}
+
+function getDomainName(id) {
+    if (!domainsList) domainsList = JSON.parse($("#domains-list").text());
+    for (var i = 0; i < domainsList.length; i++) {
+        if(domainsList[i].id == id)
+        return domainsList[i].name;
+    };
+}
+
 function generateColor(domainId) {
+    domainId = fixDomainId(domainId);
+
     var firstColor = "3a5879";
     if (domainId == 0) {
         return firstColor;
@@ -271,6 +362,13 @@ function generateColor(domainId) {
         }
         return color;
     }
+}
+
+function fixDomainId(domainId) {
+    while(domainId > 50) {
+        return fixDomainId(domainId - 50);
+    }
+    return domainId;
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);

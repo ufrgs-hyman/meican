@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\data\ActiveDataProvider;
 use app\controllers\RbacController;
 
+use app\models\Domain;
 use app\models\Port;
 
 use Yii;
@@ -15,17 +16,19 @@ class ViewerController extends RbacController {
     public function actionIndex() {
     	self::canRedir("topology/read");
     	
-        return $this->render('index');
+        return $this->render('index', ['domains'=>Domain::find()->select(['id','name'])->asArray()->all()]);
     }
 
     //REST functions
     
-    public function actionGetSdps() {
-    	$urns = Port::find()->where(['not', ['alias_urn_id' => null]])->select(['id','device_id','alias_urn_id'])->all();
+    public function actionGetNetworkLinks() {
+    	$urns = Port::find()->where(['not', ['alias_id' => null]])->andWhere(
+            ['not',['network_id'=> null]])->select(['id','network_id','alias_id'])->all();
     	$sdpNets = [];
     	foreach ($urns as $urn) {
-    		$netId1 = $urn->getDevice()->select(['network_id'])->one()->network_id;
-    		$netId2 = $urn->getAlias()->select(['device_id'])->one()->getDevice()->select(['network_id'])->one()->network_id;
+    		$netId1 = $urn->network_id;
+    		$netId2 = $urn->getAlias()->select(
+                ['network_id'])->one()->network_id;
     		if ($netId1 <= $netId2) {
     			$sdpNets[$netId1."to".$netId2] = [$netId1, $netId2];
     		} else {
