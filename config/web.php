@@ -11,7 +11,6 @@ $config = [
     'modules' => [
 	    'debug' => [
 	    	'class' => 'yii\debug\Module',
-	    	//'allowedIPs' => ['143.54.12.245']
 	    ],
 	    'aaa' => 'app\modules\aaa\AaaModule',
 		'circuits' => 'app\modules\circuits\CircuitsModule',
@@ -60,11 +59,13 @@ $config = [
     		],
         ],
         'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'flushInterval' => 200, 
+            'traceLevel' => YII_DEBUG ? 1 : 0,
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning', 'trace'],
+                    'exportInterval' => 200, 
                 ],
             ],
         ],
