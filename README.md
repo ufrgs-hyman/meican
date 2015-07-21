@@ -152,4 +152,23 @@ sudo service apache2 restart
 
 With this configuration, MEICAN will be available at http://localhost
 
-By default the fake provider is enabled. Disable this feature setting the param -provider.force.dummy- on config/params.php.
+##ADDITIONAL PARAMETERS
+
+Now we need configure the NSA ID to identify MEICAN to other NSI providers:
+
+```
+'meican.nsa.id' => "urn:ogf:network:#DOMAIN#:#YEAR#:nsa:meican",
+```
+
+Located on certificates folder on project root, the application certificate must be setup also:
+
+```
+'meican.certificate.filename' => "meican.pem",
+'meican.certificate.passphrase' => "#CERTIFICATE-PASSWORD#",	
+```
+
+By default the fake provider is enabled. Disable this feature setting the param below:
+
+```
+"provider.force.dummy" => false,
+```
