@@ -10,8 +10,9 @@ class ViewerAsset extends AssetBundle
     public $baseUrl = '@web';
 
     public $js = [
+        'js/google/styled.marker.js',
     	'js/topology/viewer-i18n.js',
     	'js/topology/viewer.js',
-    	'js/google/styled.marker.js',
+        'js/maps/meican-maps.js',
     ];
 }
