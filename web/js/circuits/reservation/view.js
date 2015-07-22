@@ -181,6 +181,22 @@ function prepareCancelDialog() {
             		data: {
             			connections: JSON.stringify(keys),
             		},
+            		success: function() {
+            		},
+            		error: function() {
+            			$("#dialog").dialog("open");
+						$("#message").html(tt("You are not allowed for cancel connections in this domains."));
+						$("#dialog").dialog({
+							buttons: [
+								{
+									text: "Ok",
+								    click: function() {
+								  	  $(this).dialog( "close" );
+								    }
+								},
+							]
+						});
+            		}
             	});
             	
             	$("#cancel-button").attr("disabled", 'disabled');

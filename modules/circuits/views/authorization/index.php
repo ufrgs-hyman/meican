@@ -31,7 +31,8 @@
 					[
 						'label' => Yii::t('circuits', 'Reply request as '),
 						'value' => 'domain',
-						'contentOptions'=>['style'=>'min-width: 200px; font-weight: bold;']
+						'contentOptions'=>['style'=>'font-weight: bold;'],
+						'headerOptions'=>['style'=>'width: 23%;'],
 					],
 	        		[
 		        		'label' => Yii::t('circuits', 'Source Domain'),
@@ -45,7 +46,7 @@
 				        		return Yii::t('circuits', 'deleted');
 				        	};
 		        		},
-		        		'contentOptions'=>['style'=>'min-width: 150px;']
+		        		'headerOptions'=>['style'=>'width: 21%;'],
 	        		],
 	        		[
 	        			'label' => Yii::t('circuits', 'Destination Domain'),
@@ -59,7 +60,7 @@
 				        		return Yii::t('circuits', 'deleted');
 				        	};
 	        			},
-	        			'contentOptions'=>['style'=>'min-width: 150px;']
+	        			'headerOptions'=>['style'=>'width: 21%;'],
 	        		],
 	        		[
 	        			'label' => Yii::t('circuits', 'Requester'),
@@ -67,14 +68,14 @@
 	        				$user_id = $aut->request_user_id;
 	        				return User::findOne(['id' => $user_id])->name;
 	        			},
-	        			'contentOptions'=>['style'=>'min-width: 50px;']
+	        			'headerOptions'=>['style'=>'width: 12%;'],
 	        		],
 	        		[
 	        			'label' => Yii::t('circuits', 'Bandwidth'),
 	        			'value' => function($aut){
 	        				return $aut->bandwidth." Mbps";
 	        			},
-	        			'contentOptions'=>['style'=>'min-width: 50px;']
+	        			'headerOptions'=>['style'=>'width: 12%;'],
 	        		],
 	        		[
             			'class' => 'yii\grid\ActionColumn',
@@ -83,7 +84,8 @@
 	           				'answer' => function ($url,$model) {
             					return Html::button(Yii::t('circuits', 'Answer'), ['onclick' => "window.location='answer?id=$model->id&domain=$model->domain'"]);
 			                },
-			            ],	
+			            ],
+			            'headerOptions'=>['style'=>'width: 11%;'],
         			],
 
 	        	),

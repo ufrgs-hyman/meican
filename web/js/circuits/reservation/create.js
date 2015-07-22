@@ -66,7 +66,7 @@ function prepareConfirmDialog() {
             	        url: baseUrl + '/circuits/reservation/request',
             	        data: $("#reservation-form").serialize(),
             	        success: function (resId) {
-            	        	if (resId) {
+            	        	if (resId>0) {
             	        		$.ajax({
             	        			type: "POST",
             	        			url: baseUrl + '/circuits/reservation/confirm', 
@@ -75,6 +75,8 @@ function prepareConfirmDialog() {
             	        			}
                         	    });
                 	        	window.location.href = baseUrl + '/circuits/reservation/view?id=' + resId;
+            	        	} else if(resId==-1){
+            	        		showError(tt("You are not allowed for request a reservation in this domains."));
             	        	} else {
             	        		showError(tt("Error proccessing your request. Contact your administrator."));
             	        	}
@@ -145,6 +147,10 @@ function validateForm() {
 	}
 	
 	return isValid;
+}
+
+function allowed(){
+	
 }
 
 function showError(message) {

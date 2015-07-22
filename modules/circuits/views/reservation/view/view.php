@@ -5,6 +5,7 @@
 	use yii\grid\CheckboxColumn;
 	use yii\helpers\Url;
 	use yii\widgets\Pjax;
+	use yii\jui\Dialog;
 	
 	ViewReservationAsset::register($this);
 	GoogleMapsAsset::register($this);
@@ -114,5 +115,22 @@
 	<br>
     <label><?= Yii::t("circuits", "Do you want to cancel this connection(s)?"); ?></label>
     <br/>
+</div>
+
+<div style="display: none">
+<?php Dialog::begin([
+		'id' => 'dialog',
+    	'clientOptions' => [
+        	'modal' => true,
+        	'autoOpen' => false,
+        	'title' => "Reservation",
+    	],
+	]);
+
+	echo '<br></br>';
+    echo '<p style="text-align: left; height: 100%; width:100%;" id="message"></p>';
+    
+	Dialog::end(); 
+?>
 </div>
 

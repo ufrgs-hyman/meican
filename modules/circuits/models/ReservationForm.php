@@ -108,7 +108,7 @@ class ReservationForm extends Model {
  					}
  				}
  				
- 				$path = new ReservationPath;
+ 				$path = new ReservationPath; 
  				$path->reservation_id = $this->reservation->id;
  				$path->port_urn = Port::find()->where(['id' => $this->dst_port])->one()->urn;
  				$path->path_order = $waySize + 1;

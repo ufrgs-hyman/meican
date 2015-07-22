@@ -30,6 +30,7 @@ dict['pt-BR']['loading'] = 'aguarde';
 dict['pt-BR']['no name'] = 'sem nome';
 dict['pt-BR']['click to select device'] = 'selecione o dispositivo';
 dict['pt-BR']['Current host is not present in known topology'] = 'O domínio atual não está presente na topologia conhecida.';
+dict['pt-BR']['You are not allowed for request a reservation in this domains.'] = 'Você não tem permissão para solicitar reservas nestes domínios.';
 
 //datepicker
 dict['pt-BR'][['January','February','March','April','May','June','July','August','September','October','November','December']] = ['Janeiro',

@@ -12,6 +12,7 @@ use app\models\ConnectionPath;
 use app\models\Port;
 use app\models\Domain;
 use app\models\Provider;
+use app\controllers\RbacController;
 
 /*
  * Serviço de Conexões.
@@ -21,7 +22,7 @@ use app\models\Provider;
  * a recorrência de uma reserva.
  */
 
-class ConnectionController extends Controller {
+class ConnectionController extends RbacController {
 	
 	public $enableCsrfValidation = false;
 	
@@ -131,11 +132,35 @@ class ConnectionController extends Controller {
     	return $data;
     }
 
-	//BUG cancelamento multiplo
 	public function actionCancel($connections) {
+		$numDenied = 0;
+		
 		foreach (json_decode($connections) as $connId) {
 			$conn = Connection::findOne($connId);
-			if (isset($conn->external_id)) $conn->requestCancel();
+			if (isset($conn->external_id)){
+				$reservation = $conn->getReservation()->one();
+				$source = $conn->getFirstPath()->one()->getSourcePort()->one();
+				$destination = $conn->getLastPath()->one()->getDestinationPort()->one();
+				$permission = false;
+				if($source){ //Se tem permissão na origem
+					$source = $source->getDevice()->one();
+					if($source){
+						$domainId = $source->domain_id;
+						if(self::can('reservation/delete', $domainId)) $permission = true;
+					}
+				}
+				if($destination){ //Se tem permissão no destino
+					$destination = $destination->getDevice()->one();
+					if($destination){
+						$domainId = $destination->domain_id;
+						if(self::can('reservation/delete', $domainId)) $permission = true;
+					}
+				}
+				if(Yii::$app->user->getId() == $reservation->request_user_id) $permission = true; //Se é quem requisitou
+				
+				if($permission) ;//$conn->requestCancel();
+				else return false;
+			}
 		}
 		
 		return true;

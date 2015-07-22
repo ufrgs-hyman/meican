@@ -7,6 +7,8 @@ dict['pt-BR']['Close'] = 'Fechar';
 dict['pt-BR']['Network'] = 'Rede';
 dict['pt-BR']['Device'] = 'Dispositivo';
 dict['pt-BR']['Domain'] = 'Domínio';
+dict['pt-BR']['You are not allowed for cancel connections in this domains.'] = 'Você não tem permissão para cancelar conexões nestes domínios';
+
 
 dict['pt-BR'][''] = '';
 

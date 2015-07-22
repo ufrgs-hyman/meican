@@ -28,7 +28,11 @@ class ReservationController extends RbacController {
 	public $enableCsrfValidation = false;
 	
     public function actionCreate() {
-    	self::canRedir('reservation/create');
+    	/* Removido, pois tudo usuário passará a ter acesso ao mapa.
+    	 * As permissões passam a ser conferidas no momento em que ele efetivamente solicita a reserva,
+    	 * é necessário que o usuário tenho permissão de CREATE no dominio de origem ou destino.
+    	 */
+    	//self::canRedir('reservation/create');
     	
         return $this->render('create/create',['domains'=>Domain::find()->asArray()->all()]);
     }
@@ -36,11 +40,33 @@ class ReservationController extends RbacController {
     public function actionRequest() {
     	$form = new ReservationForm;
     	if ($form->load($_POST)) {
+    		
+    		//Confere se usuário tem permissão para reservas na origem OU no destino
+    		$source = Port::findOne(['id' => $form->src_port]);
+    		$destination = Port::findOne(['id' => $form->dst_port]);
+    		$permission = false;
+    		if($source){
+    			$source = $source->getDevice()->one();
+    			if($source){
+    				$domainId = $source->domain_id;
+    				if(self::can('reservation/create', $domainId)) $permission = true;
+    			}
+    		}
+    		if($destination){
+    			$destination = $destination->getDevice()->one();
+    			if($destination){
+    				$domainId = $destination->domain_id;
+    				if(self::can('reservation/create', $domainId)) $permission = true;
+    			}
+    		}
+    		if(!$permission){ //Se ele não tiver em nenhum dos dois, exibe aviso
+    			return -1;
+    		}
+
     		if ($form->save()) {
     			return $form->reservation->id;
     		}
     	}
-    	
     	return null;
     }
     
@@ -54,10 +80,12 @@ class ReservationController extends RbacController {
     }
     
     public function actionView($id) {
-    	self::canRedir('reservation/delete');
+    	// Removido pois testa se é o usuário que solicitou ou se tem permissão para cancelar na origem OU destino
+    	//self::can('reservation/delete');
     	
     	$reservation = Reservation::findOne($id);
     	
+    	//Confere se algum pedido de autorização da expirou
     	if($reservation){
     		$connectionsExpired = $conn = Connection::find()->where(['reservation_id' => $reservation->id])->andWhere(['<=','start', DateUtils::now()])->all();
 	    	foreach($connectionsExpired as $connection){
@@ -71,6 +99,30 @@ class ReservationController extends RbacController {
 	    		}
 	    	}
     	}
+		
+    	//Confere a permissão
+    	$source = $reservation->getFirstPath()->one()->getPort()->one();    	
+    	$destination = $reservation->getLastPath()->one()->getPort()->one();
+    	$permission = false;
+    	if($source){ //Se tem permissão na origem
+    		$source = $source->getDevice()->one();
+    		if($source){
+    			$domainId = $source->domain_id;
+    			if(self::can('reservation/read', $domainId)) $permission = true;
+    		}
+    	}
+    	if($destination){ //Se tem permissão no destino
+    		$destination = $destination->getDevice()->one();
+    		if($destination){
+    			$domainId = $destination->domain_id;
+    			if(self::can('reservation/read', $domainId)) $permission = true;
+    		}
+    	}
+    	if(Yii::$app->user->getId() == $reservation->request_user_id) $permission = true; //Se é quem requisitou
+    	if(!$permission){ //Se ele não tiver em nenhum dos dois e não for quem requisitou
+			return $this->goHome();
+    	}
+    		
     	
     	$connections = new ActiveDataProvider([
     			'query' => $reservation->getConnections(),

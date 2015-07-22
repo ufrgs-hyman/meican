@@ -20,7 +20,7 @@ echo Menu::widget([
 				['label'=>Yii::t('circuits','Authorization'),'url'=>['/circuits/authorization/index']],
 				['label'=>Yii::t('circuits','Configuration'),'url'=>['/circuits/configuration/index']]
 			],
-			'visible'=>RbacController::can('reservation/read')
+			//'visible'=>RbacController::can('reservation/read')
 		],
 		[
 			'label'=>'<h3><a href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('bpm','Workflows').'</a></h3>',
