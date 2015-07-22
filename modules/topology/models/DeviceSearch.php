@@ -42,7 +42,7 @@ class DeviceSearch extends Device {
         return parent::attributes();
     }
 
-    public function searchActiveByDomains($params, $domains) {
+    public function searchByDomains($params, $domains) {
         $validDomains = [];
         $this->load($params);
 
@@ -69,35 +69,5 @@ class DeviceSearch extends Device {
         ]);
 
         return $dataProvider;
-    }
-
-    public function searchTerminatedByDomains($params, $domains) {
-        $validDomains = [];
-        $this->load($params);
-
-        if ($this->domain_name) {
-            
-        	Yii::trace($this->domain_name);
-        	$domain = Domain::findOne(['name' => $this->domain_name]);
-        	
-        	$devices = Device::find()->where(['domain_id' => $domain->id]);
-
-        } else {
-            foreach ($domains as $domain) {
-                $validDomains[] = $domain->id;
-            }
-            $devices = Device::find()->where(['in', 'domain_id', $validDomains]);
-        }
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $devices,
-            'sort' => false,
-            /*'pagination' => [
-                'pageSize' => 20,
-            ]*/
-        ]);
-
-        return $dataProvider;
-
     }
 }

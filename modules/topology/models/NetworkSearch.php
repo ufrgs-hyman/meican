@@ -42,7 +42,7 @@ class NetworkSearch extends Network {
         return parent::attributes();
     }
 
-    public function searchActiveByDomains($params, $domains) {
+    public function searchByDomains($params, $domains) {
         $validDomains = [];
         $this->load($params);
 
@@ -62,41 +62,6 @@ class NetworkSearch extends Network {
             /*'pagination' => [
                 'pageSize' => 20,
             ]*/
-        ]);
-
-        return $dataProvider;
-    }
-
-    public function searchTerminatedByDomains($params, $domains) {
-        $validDomains = [];
-        $this->load($params);
-
-        if ($this->domain_name) {
-        	$domain = Domain::findOne(['name' => $this->domain_name]);
-        	$networks = Network::find()->where(['domain_id' => $domain->id]);
-        } else {
-            foreach ($domains as $domain) {
-                $validDomains[] = $domain->id;
-            }
-            $networks = Network::find()->where(['in', 'domain_id', $validDomains]);
-        }
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $networks,
-            'sort' => false,
-            /*'pagination' => [
-                'pageSize' => 20,
-            ]*/
-        ]);
-
-        return $dataProvider;
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'sort' => false,
-            'pagination' => [
-                'pageSize' => 20,
-            ]
         ]);
 
         return $dataProvider;

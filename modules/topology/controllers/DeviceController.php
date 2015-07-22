@@ -21,7 +21,7 @@ class DeviceController extends RbacController {
     	
         $searchModel = new DeviceSearch;
 	    $allowedDomains = self::whichDomainsCan('topology/read');
-	    $dataProvider = $searchModel->searchTerminatedByDomains(Yii::$app->request->get(),
+	    $dataProvider = $searchModel->searchByDomains(Yii::$app->request->get(),
 	    		$allowedDomains);
 
         return $this->render('index', array(
