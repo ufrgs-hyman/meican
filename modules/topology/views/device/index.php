@@ -42,29 +42,53 @@
 			'id' => 'gridNetowrks',
 			'layout' => "{items}{pager}",
 			'columns' => array(
-		    		array(
+		    		[
 		    			'class'=>CheckboxColumn::className(),
 				        'name'=>'delete',         
 				        'checkboxOptions'=>[
 				        	'class'=>'deleteCheckbox',
 				        ],
 				        'multiple'=>false,
-				        'contentOptions'=>['style'=>'width: 15px;']
-			        ),
-			        array(
+				        'headerOptions'=>['style'=>'width: 2%;'],
+			        ],
+			        [
 			        	'class'=> LinkColumn::className(),
 			        	'image'=>'/images/edit_1.png',
 			        	'label' => '',
 			        	'title'=> Yii::t("topology", 'Update'),
 			        	'url' => '/topology/device/update',
-			        	'contentOptions'=>['style'=>'width: 15px;']
-			        ),
-			        'name',
-			        'ip',
-			        'address',
-					'latitude',
-					'longitude',
-					'node',
+			        	'headerOptions'=>['style'=>'width: 2%;'],
+			        ],
+					[
+						'label' => Yii::t("topology", 'Name'),
+			        	'value' => 'name',
+						'headerOptions'=>['style'=>'width: 24%;'],
+					],
+					[
+						'label' => Yii::t("topology", 'Ip'),
+			        	'value' => 'ip',
+						'headerOptions'=>['style'=>'width: 8%;'],
+					],
+					[
+						'label' => Yii::t("topology", 'Address'),
+						'value' => 'address',
+						'headerOptions'=>['style'=>'width: 10%;'],
+					],
+					[
+						'label' => Yii::t("topology", 'Latitude'),
+						'value' => 'latitude',
+						'headerOptions'=>['style'=>'width: 8%;'],
+					],
+					[
+						'label' => Yii::t("topology", 'Longitude'),
+						'value' => 'longitude',
+						'headerOptions'=>['style'=>'width: 8%;'],
+					],
+					[
+						'label' => Yii::t("topology", 'Node'),
+						'value' => 'node',
+						'headerOptions'=>['style'=>'width: 9%;'],
+					],
 					[
 						'label' => Yii::t("topology", 'Domain'),
 						'value' => function($dev){
@@ -75,13 +99,15 @@
 								$allowedDomains, 'name', 'name'),
 							['class'=>'form-control','prompt' => Yii::t("topology", 'any')]	
 						),
+						'headerOptions'=>['style'=>'width: 23%;'],
 					],
 					[
 						'format' => 'html',
 						'label' => Yii::t('topology', '#EndPoints'),
 						'value' => function($dev){
 							return Html::a($dev->getPorts()->count(), ['/topology/port', 'id' => $dev->domain_id]);
-						}
+						},
+						'headerOptions'=>['style'=>'width: 4%;'],
 					],
 			),
 		]);

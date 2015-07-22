@@ -38,7 +38,7 @@
 				        	'class'=>'deleteCheckbox',
 				        ],
 				        'multiple'=>false,
-				        'contentOptions'=>['style'=>'width: 15px;'],
+				        'headerOptions'=>['style'=>'width: 2%;'],
 			        ),
 			        array(
 			        	'class'=> LinkColumn::className(),
@@ -46,14 +46,19 @@
 			        	'label' => '',
 			        	'title'=> Yii::t("topology", 'Update'),
 			        	'url' => '/topology/domain/update',
-			        	'contentOptions'=>['style'=>'width: 15px;'],
+			        	'headerOptions'=>['style'=>'width: 2%;'],
 			        ),
-			        'name',
+					[
+						'label' => Yii::t('topology', 'Name'),
+			        	'value' => 'name',
+						'headerOptions'=>['style'=>'width: 50%;'],
+					],
 			        [
-			        'label' => Yii::t('topology', 'Default Policy'),
+			        	'label' => Yii::t('topology', 'Default Policy'),
 			        	'value' => function($dom){
 			        		return $dom->getPolicy();
-			        	},	
+			        	},
+			        	'headerOptions'=>['style'=>'width: 46%;'],
 					],
 				),
 		]);

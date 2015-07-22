@@ -34,27 +34,43 @@
 			'id' => 'gridNetowrks',
 			'layout' => "{items}{pager}",
 			'columns' => array(
-		    		array(
+		    		[
 		    			'class'=>CheckboxColumn::className(),
 				        'name'=>'delete',         
 				        'checkboxOptions'=>[
 				        	'class'=>'deleteCheckbox',
 				        ],
 				        'multiple'=>false,
-				        'contentOptions'=>['style'=>'width: 15px;']
-			        ),
-			        array(
+				        'headerOptions'=>['style'=>'width: 2%;'],
+			        ],
+			        [
 			        	'class'=> LinkColumn::className(),
 			        	'image'=>'/images/edit_1.png',
 			        	'label' => '',
 			        	'title'=> Yii::t("topology", 'Update'),
 			        	'url' => '/topology/network/update',
-			        	'contentOptions'=>['style'=>'width: 15px;']
-			        ),
-			        'name',
-			        'urn',
-					'latitude',
-					'longitude',
+			        	'headerOptions'=>['style'=>'width: 2%;'],
+			        ],
+					[
+						'label' => Yii::t("topology", 'Name'),
+			        	'value' => 'name',
+						'headerOptions'=>['style'=>'width: 25%;'],
+					],
+					[
+						'label' => Yii::t("topology", 'Urn'),
+			        	'value' => 'urn',
+						'headerOptions'=>['style'=>'width: 30%;'],
+					],
+					[
+						'label' => Yii::t("topology", 'Latitude'),
+						'value' => 'latitude',
+						'headerOptions'=>['style'=>'width: 8%;'],
+					],
+					[
+						'label' => Yii::t("topology", 'Longitude'),
+						'value' => 'longitude',
+						'headerOptions'=>['style'=>'width: 8%;'],
+					],
 					[
 						'label' => Yii::t("topology", 'Domain'),
 						'value' => function($net){
@@ -65,6 +81,7 @@
 								$allowedDomains, 'name', 'name'),
 							['class'=>'form-control','prompt' => Yii::t("topology", 'any')]		
 						),
+						'headerOptions'=>['style'=>'width: 25%;'],
 					],
 			),
 		]);

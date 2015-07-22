@@ -58,38 +58,50 @@
 					'class'=>CheckboxColumn::className(),
 					'name'=>'deleteUrn',
 					'multiple'=>false,
-					'contentOptions'=>['style'=>'width: 15px;'],
+					'headerOptions'=>['style'=>'width: 2%;'],
 				],
 				[
 					'format' => 'raw',
 					'value' => function ($port){
 						return Html::img('@web'.'/images/edit_1.png', ['title' => Yii::t('topology', 'Update'), 'onclick' => "editPort(this, $port->id)"]);
 					},
-					'contentOptions'=>['style'=>'width: 15px; cursor: pointer;'],
+					'headerOptions'=>['style'=>'width: 2%;'],
+					'contentOptions'=>['style'=>'cursor: pointer;'],
 				],
 				[
 					'format' => 'raw',
 					'value' => function ($port){
 						return Html::img('@web'.'/images/remove.png', ['title' => Yii::t('topology', 'Delete'), 'onclick' => "deletePort($port->id)"]);
 					},
-					'contentOptions'=>['style'=>'width: 15px; cursor: pointer;']
+					'headerOptions'=>['style'=>'width: 2%;'],
+					'contentOptions'=>['style'=>'cursor: pointer;'],
 				],
 				[
 					'format' => 'raw',
 					'label' => Yii::t('topology', 'Network'),
 					'value' => function($port){
 						return $port->getNetwork()->one()->name;
-					}
+					},
+					'headerOptions'=>['style'=>'width: 8%;'],
 				],
 				[
 					'format' => 'raw',
 					'label' => Yii::t('topology', 'Device'),
 					'value' => function($port){
 						return $port->getDevice()->one()->name;
-					}
+					},
+					'headerOptions'=>['style'=>'width: 8%;'],
 				],
-				'name',
-				'urn',
+				[
+					'label' => Yii::t('topology', 'Name'),
+					'value' => 'name',
+					'headerOptions'=>['style'=>'width: 10%;'],
+				],
+				[
+					'label' => Yii::t('topology', 'Urn'),
+					'value' => 'urn',
+					'headerOptions'=>['style'=>'width: 30%;'],
+				],
 				[
 					'format' => 'raw',
 					'label' => Yii::t('topology', 'VLANs'),
@@ -105,13 +117,24 @@
 						endforeach;
 						return $vlans;
 					},
+					'headerOptions'=>['style'=>'width: 8%;'],
 				],
-				'max_capacity',
-				'min_capacity',
-				'granularity',
-				
-				
-	
+				[
+					'label' => Yii::t('topology', 'Max Capacity (Mbps)'),
+					'value' => 'max_capacity',
+					'headerOptions'=>['style'=>'width: 10%;'],
+				],
+				[
+					'label' => Yii::t('topology', 'Min Capacity (Mbps)'),
+					'value' => 'min_capacity',
+					'headerOptions'=>['style'=>'width: 10%;'],
+				],
+				[
+					'label' => Yii::t('topology', 'Granularity (Mbps)'),
+					'value' => 'granularity',
+					'headerOptions'=>['style'=>'width: 10%;'],
+				],
+
 			),
 		]);
 		?>
