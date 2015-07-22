@@ -150,9 +150,14 @@ Finally restart the Apache service:
 sudo service apache2 restart
 ```
 
-With this configuration, MEICAN will be available at http://localhost
+With this configuration, MEICAN will be available at http://localhost with one user created:
 
-###ADDITIONAL PARAMETERS
+```
+user: master
+pass: master
+```
+
+###PARAMETERS
 
 Location: config/params.php
 
