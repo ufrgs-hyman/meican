@@ -152,9 +152,11 @@ sudo service apache2 restart
 
 With this configuration, MEICAN will be available at http://localhost
 
-##ADDITIONAL PARAMETERS
+###ADDITIONAL PARAMETERS
 
-Now we need configure the NSA ID to identify MEICAN to other NSI providers:
+Location: config/params.php
+
+We need configure the NSA ID to identify MEICAN to other NSI providers:
 
 ```
 'meican.nsa.id' => "urn:ogf:network:#DOMAIN#:#YEAR#:nsa:meican",
