@@ -41,8 +41,21 @@ class AutomatedTestController extends RbacController {
 				return $form->reservation->id;
 			}
 		}
+
+		$this->checkRequesterUrl();
 		 
 		return null;
+	}
+
+	private function checkRequesterUrl() {
+		$pref = CircuitsPreference::findOne(CircuitsPreference::CIRCUITS_MEICAN_REQUESTER_URL);
+		if ($pref) {
+			$url = Url::toRoute("/circuits/requester", "http");
+			if ($pref->value != $url) {
+				$pref->value = $url;
+				$pref->save();
+			}
+		}
 	}
 	
 	public function actionUpdate($id) {

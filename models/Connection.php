@@ -6,7 +6,7 @@ use Yii;
 use app\models\ConnectionAuth;
 use app\models\ConnectionPath;
 use app\models\Notification;
-use app\modules\circuits\controllers\ConnectionServiceRequester;
+use app\modules\circuits\controllers\service\RequesterClient;
 
 /**
  * This is the model class for table "meican_connection".
@@ -113,6 +113,10 @@ class Connection extends \yii\db\ActiveRecord
                 'path_order'=> ConnectionPath::find()->where(['conn_id'=>$this->id])->max('path_order')]);
     }
 
+    public function getProvider() {
+        return $this->getReservation()->select(['provider_nsa'])->getProvider();
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -122,31 +126,31 @@ class Connection extends \yii\db\ActiveRecord
     }
     
     public function requestCreate() {
-    	$csR = new ConnectionServiceRequester($this);
-        $csR->requestCreate($this);
+    	$requester = new RequesterClient($this);
+        $requester->requestCreate();
     }
     
     public function requestCommit() {
-        $csR = new ConnectionServiceRequester($this);
-        $csR->requestCommit($this);
+        $requester = new RequesterClient($this);
+        $requester->requestCommit();
     }
     
     public function requestReadPath() {
-        $csR = new ConnectionServiceRequester($this);
-        $csR->requestReadPath($this);
+        $requester = new RequesterClient($this);
+        $requester->requestReadPath();
     }
     
     public function requestProvision() {
-        $csR = new ConnectionServiceRequester($this);
-        $csR->requestProvision($this);
+        $requester = new RequesterClient($this);
+        $requester->requestProvision();
     }
     
     public function requestCancel() {
     	$this->status = self::STATUS_CANCEL_REQ;
     	$this->save();
     
-        $csR = new ConnectionServiceRequester($this);
-        $csR->requestCancel($this);
+        $requester = new ConnectionServiceRequester($this);
+        $requester->requestCancel();
     }
     
     public function confirmCreate() {
