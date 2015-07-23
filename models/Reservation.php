@@ -156,11 +156,23 @@ class Reservation extends \yii\db\ActiveRecord
     }
     
     public function getSourceDomain() {
-    	return $this->getConnections()->one()->getPath(0)->one()->domain;
+    	$path = $this->getFirstPath()->one();
+    	if(!$path) return null;
+    	$port = $path->getPort()->one();
+    	if(!$port) return null;
+    	$device = $port->getDevice()->one();
+    	if(!$device) return null;
+    	return $device->getDomain()->one()->name;
     }
     
     public function getDestinationDomain() {
-    	return $this->getConnections()->one()->getLastPath()->one()->domain;
+    	$path = $this->getLastPath()->one();
+    	if(!$path) return null;
+    	$port = $path->getPort()->one();
+    	if(!$port) return null;
+    	$device = $port->getDevice()->one();
+    	if(!$device) return null;
+    	return $device->getDomain()->one()->name;
     }
     
     public function createConnections() {

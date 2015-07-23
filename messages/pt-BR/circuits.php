@@ -258,5 +258,6 @@ return array(
 		"Port In" => "Porta de Entrada",
 		"Port Out" => "Porta de Saída",
 		
+		"Mine" => "Minhas",
 );
 ?>

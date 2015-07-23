@@ -158,7 +158,10 @@ class ConnectionController extends RbacController {
 				}
 				if(Yii::$app->user->getId() == $reservation->request_user_id) $permission = true; //Se é quem requisitou
 				
-				if($permission) ;//$conn->requestCancel();
+				if($permission){
+					$conn->requestCancel();
+					return true;
+				}
 				else return false;
 			}
 		}
