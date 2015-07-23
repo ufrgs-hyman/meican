@@ -106,7 +106,7 @@ class Notification extends \yii\db\ActiveRecord
      * Retorna o html com até 6 notificações, ja formatado para ser exibido.
      * Quando recebe uma data de entrada, a utiliza como limite, e retorna apenas o que vem depois dela
      */
-    public static function getNotifications($dateParam){
+    public static function getNotifications($dateParam){    	
     	$userId = Yii::$app->user->getId();
 
     	if(!$dateParam){ //Caso seja a primeira solicitação  	
@@ -373,21 +373,33 @@ class Notification extends \yii\db\ActiveRecord
     
     /**
      * CREATE TOPOLOGY NOTIFICAION
-     * @param string $user_id
-     * @param string $msg
+     * @param string $msg (A tag no caso)
      * @param string $date
      * Cria notificação de mudança na topologia. VERSÃO BETA
      */
-    public static function createTopologyNotification($user_id, $msg, $date = null){
-    	$not = new Notification();
-    	$not->user_id = $user_id;
-    	//Pode receber uma data por parametro, neste caso, utiliza essa data como a data da criação da notificação
-    	if($date) $not->date = $date;
-    	else $not->date = DateUtils::now();
-    	$not->type = self::TYPE_TOPOLOGY;
-    	$not->viewed = 0;
-    	$not->info = $msg;
-    	$not->save();
+    public static function createTopologyNotification($msg, $date = null){
+    	$users = User::find()->all();
+    	foreach($users as $user){
+    		$not = Notification::findOne(['user_id' => $user->id, 'type' => self::TYPE_TOPOLOGY, 'info' => $msg]);
+    		if($not){
+    			//Pode receber uma data por parametro, neste caso, utiliza essa data como a data da criação da notificação
+    			if($date) $not->date = $date;
+    			else $not->date = DateUtils::now();
+    			$not->viewed = 0;
+    			$not->save();
+    		}
+    		else{
+		    	$not = new Notification();
+		    	$not->user_id = $user->id;
+		    	//Pode receber uma data por parametro, neste caso, utiliza essa data como a data da criação da notificação
+		    	if($date) $not->date = $date;
+		    	else $not->date = DateUtils::now();
+		    	$not->type = self::TYPE_TOPOLOGY;
+		    	$not->viewed = 0;
+		    	$not->info = $msg;
+		    	$not->save();
+    		}
+    	}
     }
     
     /********************************
@@ -560,7 +572,7 @@ class Notification extends \yii\db\ActiveRecord
     }
     
     /**
-     * MAKE HTML NOTIFICATION AUTHORIZATION
+     * MAKE HTML NOTIFICATION TOPOLOGY
      * @param string $notification
      * @return string
      */
@@ -569,7 +581,9 @@ class Notification extends \yii\db\ActiveRecord
     	$info = $notification->info;
 
     	$title = Yii::t("notification", 'Topology Change');
-    	$msg = $info;
+    	
+    	$userId = Yii::$app->user->getId();
+    	$msg = "BLA BLA BLA BLA BLA BLA BLA BLA BLA    = ".$info;
     	$date = Yii::$app->formatter->asDatetime($notification->date);
     
     	$link = '/init';
