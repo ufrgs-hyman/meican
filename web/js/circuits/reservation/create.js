@@ -27,7 +27,6 @@ var map;
 var markerCluster;
 var circuit;
 var currentMarkerType = "net";
-var openedWindows = [];
 
 var MARKER_OPTIONS_NET = '' +
 '<div><button style="font-size: 11px; width: 48%;" id="set-as-source">' + tt('From here') + '</button>' +
@@ -47,7 +46,6 @@ var MARKER_OPTIONS_INTRA = '' +
 '<button style="font-size: 11px; width: 98%;" id="remove-intra">' + tt('Remove intra-domain circuit') + '</button>';
 
 var devicesLoaded = false;
-var shift = 0.01;
 
 function prepareConfirmDialog() {
 	$("#confirm-dialog").dialog({
@@ -76,7 +74,7 @@ function prepareConfirmDialog() {
                         	    });
                 	        	window.location.href = baseUrl + '/circuits/reservation/view?id=' + resId;
             	        	} else if(resId==-1){
-            	        		showError(tt("You are not allowed for request a reservation in this domains."));
+            	        		showError(tt("You are not allowed to create a reservation involving these selected domains."));
             	        	} else {
             	        		showError(tt("Error proccessing your request. Contact your administrator."));
             	        	}
@@ -147,10 +145,6 @@ function validateForm() {
 	}
 	
 	return isValid;
-}
-
-function allowed(){
-	
 }
 
 function showError(message) {
@@ -320,11 +314,11 @@ function enableWayPointsSortable(markers) {
             var newWayPoints = [];
             if (currentMarkerType == "net") {
             	for (var i = 0; i < sortableOrder.length; i++) {
-                	newWayPoints[i] = getNetworkMarker(markers, parseInt(sortableOrder[i].replace("way","")));
+                	newWayPoints[i] = MeicanMaps.getMarker(markers, "net", parseInt(sortableOrder[i].replace("way","")));
                 }
             } else {
     			for (var i = 0; i < sortableOrder.length; i++) {
-                	newWayPoints[i] = getDeviceMarker(markers, parseInt(sortableOrder[i].split("-")[1]));
+                	newWayPoints[i] = MeicanMaps.getMarker(markers, "dev", parseInt(sortableOrder[i].split("-")[1]));
                 }
             }
 
@@ -337,7 +331,7 @@ function enableWayPointsSortable(markers) {
 }
 
 function prepareDialogDeviceSelect(markers, networkWayObject) {
-	var network = getNetworkMarker(markers, $(networkWayObject).attr("id").replace("way",""));
+	var network = getMarker(markers,'net', $(networkWayObject).attr("id").replace("way",""));
 	
 	if (network.id == $("#waypoint-network-id").text()) {
 		enableSelect("waypoint", "device");
@@ -408,7 +402,7 @@ function addWayPoint(markers, marker) {
 	    });
 		
 	} else {
-		var network = getNetworkMarker(markers, marker.networkId);
+		var network = getMarker(markers, 'net' ,marker.networkId);
 		
 		$("#waypoints_order").append("<li class='ui-state-default' id='way" + 
 				 network.id + "-" + marker.id + "'>" + network.name + " (" + marker.name + ")<input name='ReservationForm[way_dev][]' value='" + 
@@ -759,7 +753,7 @@ function initialize() {
 	);
 	
 	google.maps.event.addListener(map, 'click', function() {
-		closeWindows();
+		MeicanMaps.closeWindows();
 	});
 	
 	var markers = [];
@@ -809,20 +803,14 @@ function addNetworkMarker(markers, network) {
     var contentString = tt('Domain') + ': <b>' + getDomainName(network.domain_id) + '</b><br>' + tt('Network') + ': <b>'+network.name+'</b><br>';
 
     if (network.latitude != null && network.longitude != null) {
-        var myLatlng = getValidMarkerPosition(markers, "net", new google.maps.LatLng(network.latitude, network.longitude));
+        var myLatlng = new google.maps.LatLng(network.latitude, network.longitude);
         
     } else {
-        var myLatlng = getValidMarkerPosition(markers, "net", new google.maps.LatLng(0, 0));
+        var myLatlng = new google.maps.LatLng(0, 0);
     }
     
-    var marker = new StyledMarker({
-        styleIcon: new StyledIcon(
-            StyledIconTypes.MARKER,
-                {
-                    color: generateColor(network.domain_id),
-                }
-        ),
-        position: myLatlng,
+    var marker = MeicanMaps.NetworkMarker({
+        position: MeicanMaps.getValidMarkerPosition(markers, "net", myLatlng),
         type: "net",
         circuitMode: "none",
         id: network.id,
@@ -839,21 +827,18 @@ function addNetworkMarker(markers, network) {
 function addDeviceMarker(markers, device) {
 	var contentString = tt('Domain') + ': <b>'+getDomainName(device.domain_id)+'</b><br>' + tt('Device') + ': <b>' + device.name + '</b><br>';
 	
+    var network = MeicanMaps.getMarkerByDomain(markers, 'net', device.domain_id);
+
 	if (device.latitude != null && device.longitude != null) {
-		var myLatlng = getValidMarkerPosition(markers, "dev", new google.maps.LatLng(device.latitude, device.longitude));
-	} else {
-		var myLatlng = getValidMarkerPosition(markers, "dev", new google.maps.LatLng(0, 0));
+		var myLatlng = new google.maps.LatLng(device.latitude, device.longitude);
+	} else if (network) {
+        var myLatlng = network.position;
+    } else {
+		var myLatlng = new google.maps.LatLng(0, 0);
 	}
 	
-	var marker = new google.maps.Marker({
-		icon: {
-		    path: 'M 15 15 L 35 15 L 25 35 z',
-		    anchor: new google.maps.Point(25, 35),
-		    fillColor: '#' + generateColor(device.domain_id),
-		    fillOpacity: 1,
-		    strokeColor: 'black',
-		},
-		position: myLatlng,
+	var marker = MeicanMaps.DeviceMarker({
+		position: MeicanMaps.getValidMarkerPosition(markers, "dev", myLatlng),
 		type: "dev",
 		circuitMode: "none",
 		id: device.id,
@@ -867,23 +852,12 @@ function addDeviceMarker(markers, device) {
 	addMarkerListeners(markers, length - 1);
 }
 
-function getValidMarkerPosition(markers, markerType, position) {
-	for(i = 0; i < markers.length; i++){
-		if (markers[i].type == markerType && (markers[i].position.lat().toString().substring(0,6) == position.lat().toString().substring(0,6)) && 
-				(markers[i].position.lng().toString().substring(0,6) == position.lng().toString().substring(0,6))) {
-			return getValidMarkerPosition(markers, markerType, new google.maps.LatLng(position.lat(), position.lng() + shift));
-		}
-	}
-	
-	return position;
-}
-
 //////////// LISTENERS DOS MARCADORES /////////////
 
 function addMarkerListeners(markers, index) {
 	google.maps.event.addListener(markers[index], 'mouseover', function(key) {
 		return function(){
-			closeWindows();
+			MeicanMaps.closeWindows();
 			
 			var contentWindow;
 			
@@ -924,17 +898,12 @@ function addMarkerListeners(markers, index) {
 					}
 			}
 			
-			
-			markerWindow = new google.maps.InfoWindow({
-				content: '<div class = "MarkerPopUp" style="width: 230px;"><div class = "MarkerContext">' +
-					markers[key].info + "<br>" + contentWindow + '</div></div>'
-				});
-            openedWindows.push(markerWindow);
+			var markerWindow = MeicanMaps.openWindow(map, markers[key], contentWindow);
 			
 			google.maps.event.addListener(markerWindow, 'domready', function(marker){
 			    return function() { 
 		    		$('#set-as-source').on('click', function() {
-		    			closeWindows();
+		    			MeicanMaps.closeWindows();
 		    			
 		    			setMarkerEndPoint("src", marker);
                         if (marker && marker.type == "net") {
@@ -945,13 +914,13 @@ function addMarkerListeners(markers, index) {
 		    		});
 		    		
 		    		$('#set-as-waypoint').on('click', function() {
-		    			closeWindows();
+		    			MeicanMaps.closeWindows();
 		    			
 		    			addWayPoint(markers, marker);
 		    		});
 		    		
 		    		$('#set-as-dest').on('click', function() {
-		    			closeWindows();
+		    			MeicanMaps.closeWindows();
 		    			
                         setMarkerEndPoint("dst", marker);
                         if (marker && marker.type == "net") {
@@ -962,7 +931,7 @@ function addMarkerListeners(markers, index) {
 		    		});
 		    		
 		    		$('#set-as-intra').on('click', function() {
-		    			closeWindows();
+		    			MeicanMaps.closeWindows();
 		    			
 		    			deleteWayPoints();		    			
 		    			
@@ -982,13 +951,13 @@ function addMarkerListeners(markers, index) {
 		    		});
 		    		
 		    		$('#remove-waypoint').on('click', function() {
-		    			closeWindows();
+		    			MeicanMaps.closeWindows();
 		    			
 		    			deleteWayPoint(marker);
 		    		});
 		    		
 		    		$('#remove-endpoint').on('click', function() {
-		    			closeWindows();
+		    			MeicanMaps.closeWindows();
 		    			
 		    			removeMarkerEndPoint(marker.circuitMode);
 
@@ -996,7 +965,7 @@ function addMarkerListeners(markers, index) {
 		    		});
 		    		
 		    		$('#remove-intra').on('click', function() {
-		    			closeWindows();
+		    			MeicanMaps.closeWindows();
 		    			
 		    			removeMarkerEndPoint("src");
 
@@ -1014,7 +983,7 @@ function addMarkerListeners(markers, index) {
 /////////////// ALTERAR MARCADORES VISIVEIS /////////////////////
 
 function setMarkerType(markers, markerType) {
-	closeWindows();
+	MeicanMaps.closeWindows();
 	currentMarkerType = markerType;
 	removeMarkerEndPoint("src");
     setNetworkSelected("src");
@@ -1022,7 +991,8 @@ function setMarkerType(markers, markerType) {
 	fillDomainSelect("src");
 	removeMarkerEndPoint("dst");
 	fillDomainSelect("dst");
-	setMarkersVisible(markers, markerType);
+	MeicanMaps.setMarkerTypeVisible(markers, markerType);
+    markerCluster.repaint();
 	if (markerType == "dev") {
 		if (!devicesLoaded) {
 			loadDeviceMarkers(markers);
@@ -1032,30 +1002,6 @@ function setMarkerType(markers, markerType) {
 	deleteWayPoints();
 }
 
-function setMarkersVisible(markers, markerType) {
-	for(i = 0; i < markers.length; i++){ 
-		switch (markerType) {
-		case "net" : 
-			if (markers[i].type == "net") {
-				markers[i].setVisible(true);
-			} else {
-				markers[i].setVisible(false);
-			}
-			break;
-		case "dev" :
-			if (markers[i].type == "dev") {
-				markers[i].setVisible(true);
-			} else {
-				markers[i].setVisible(false);
-			}
-			break;
-		default : 
-			console.log("error?" + markerType);
-		}
-	}
-	markerCluster.repaint();
-}
-
 ////////////// ADICIONA MARCADORES DE DISPOSITIVOS ////////////////
 
 function loadDeviceMarkers(markers) {
@@ -1063,8 +1009,6 @@ function loadDeviceMarkers(markers) {
 		url: baseUrl+'/topology/device/get-all',
 		dataType: 'json',
 		success: function(response){
-			count = 0;
-			
 			var deviceMarkers = [];
 			
 			for(index = 0; index < response.length; index++){
@@ -1079,15 +1023,6 @@ function loadDeviceMarkers(markers) {
 		    alert(request + error + status);
 		}
 	});	
-}
-
-////////// FECHA JANELA DO MARCADOR ///////////////
-
-function closeWindows() {
-    var size = openedWindows.length;
-	for (var i = 0; i < size; i++) {
-		openedWindows[i].close();
-	}
 }
 
 ////////// INICIALIZA SELECT LISTENERS //////////////////
@@ -1105,7 +1040,7 @@ function initSelect(endPointType, markers) {
 	
 	$('#' + endPointType + '-network').on('change', function() {
 		if (currentMarkerType == "net") {
-			var marker = getNetworkMarker(markers, this.value);
+			var marker = getMarker(markers, 'net',this.value);
 			
 			setMarkerEndPoint(endPointType, marker);
 		}
@@ -1117,7 +1052,7 @@ function initSelect(endPointType, markers) {
 	
 	$('#' + endPointType + '-device').on('change', function() {
 		if (currentMarkerType == "dev") {
-			var marker = getDeviceMarker(markers, this.value);
+			var marker = getMarker(markers, 'dev',this.value);
 
 			setMarkerEndPoint(endPointType, marker);
 		}
@@ -1151,26 +1086,6 @@ function enableSelect(endPointType, object) {
 	}
 }
 
-function getNetworkMarker(markers, id) {
-	for(i = 0; i < markers.length; i++){
-		if (markers[i].type == "net" && markers[i].id == id) {
-			return markers[i];
-		}
-	}
-	
-	return null;
-}
-
-function getDeviceMarker(markers, id) {
-	for(i = 0; i < markers.length; i++){
-		if (markers[i].type == "dev" && markers[i].id == id) {
-			return markers[i];
-		}
-	}
-	
-	return null;
-}
-
 function getDomainName(id) {
     if (!domainsList) domainsList = JSON.parse($("#domains-list").text());
     for (var i = 0; i < domainsList.length; i++) {
@@ -1192,32 +1107,5 @@ function setMapBounds(path) {
 }
 
 ////////// GERA COR A PARTIR DE ID /////////////////////////////////////
-
-function generateColor(domainId) {
-    var firstColor = "3a5879";
-    if (domainId == 0) {
-        return firstColor;
-    } else {
-        var color = parseInt(firstColor, 16);
-        color += (domainId * parseInt("d19510", 16));
-        if ((color == "eee") && (color == "eeeeee")) {
-            color = "dddddd";
-            color = color.toString(16);
-        } else if (color > 0xFFFFFF) {
-            color = color.toString(16);
-            color = color.substring(1, color.length);
-            if(color.length > 6) {
-                var str = color.split("");
-                color = "";
-                for (var i=1; i<str.length; i++) {
-                    color = color + str[i];
-                }
-            }
-        } else {
-            color = color.toString(16);
-        }
-        return color;
-    }
-}
 
 google.maps.event.addDomListener(window, 'load', initialize);

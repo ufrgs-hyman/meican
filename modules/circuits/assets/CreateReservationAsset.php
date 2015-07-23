@@ -16,6 +16,7 @@ class CreateReservationAsset extends AssetBundle
     	'js/google/styled.marker.js',
     	'js/google/marker.clusterer.compiled.js',
     	'js/jquery.timepicker.min.js',
+        'js/maps/meican-maps.js',
     ];
     
     public $css = [

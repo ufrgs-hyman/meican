@@ -18,6 +18,7 @@ class ViewReservationAsset extends AssetBundle
     	'js/circuits/reservation/view.js',
     	'js/google/styled.marker.js',
     	'js/google/marker.clusterer.compiled.js',
+        'js/maps/meican-maps.js',
     ];
 }
 

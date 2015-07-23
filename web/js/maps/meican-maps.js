@@ -1,22 +1,24 @@
 var MeicanMaps = new function() {
-    this.DeviceMarker = function(options) {
+    this.DeviceMarker = function(options, color) {
+        if (!color) color = MeicanMaps.generateColor(options.domainId);
         return new google.maps.Marker({
             icon: {
                 path: 'M 15 15 L 35 15 L 25 35 z',
                 anchor: new google.maps.Point(25, 35),
-                fillColor: '#' + MeicanMaps.generateColor(options.domainId),
+                fillColor: '#' + color,
                 fillOpacity: 1,
                 strokeColor: 'black',
             },
             options
         });
     }
-    this.NetworkMarker = function(options) {
+    this.NetworkMarker = function(options, color) {
+        if (!color) color = MeicanMaps.generateColor(options.domainId);
         return new StyledMarker({
             styleIcon: new StyledIcon(
                 StyledIconTypes.MARKER,
                     {
-                        color: MeicanMaps.generateColor(options.domainId),
+                        color: color,
                     }
             ),
             options
@@ -61,11 +63,13 @@ var MeicanMaps = new function() {
 
     this.getValidMarkerPosition = function(markers, type, position) {
         size = markers.length;
+        lat = position.lat().toString().substring(0,6);
+        lng = position.lng().toString().substring(0,6);
+
         for(i = 0; i < size; i++){
             anotherLat = markers[i].position.lat().toString().substring(0,6);
             anotherLng = markers[i].position.lng().toString().substring(0,6);
-            lat = position.lat().toString().substring(0,6);
-            lng = position.lng().toString().substring(0,6);
+
             if (markers[i].type == type &&
                     anotherLat == lat && 
                     anotherLng == lng) {
@@ -85,15 +89,23 @@ var MeicanMaps = new function() {
 
     this.openedWindows = [];
 
-    this.openWindow = function(map, marker) {
+    this.openWindow = function(map, marker, extra) {
+        if (extra) {
+            extra = '<br>' + extra + '</div></div>';
+        } else {
+            extra = '</div></div>';
+        }
+
         markerWindow = new google.maps.InfoWindow({
             content: '<div class = "MarkerPopUp" style="width: 230px;"><div class = "MarkerContext">' +
-                marker.info + '</div></div>'
+                marker.info + extra
             });
 
         MeicanMaps.openedWindows.push(markerWindow);
         
         markerWindow.open(map, marker);
+
+        return markerWindow;
     }
 
     this.getMarker = function(markers, type, id) {
@@ -105,6 +117,16 @@ var MeicanMaps = new function() {
         
         return null;
     }
+
+    this.getMarkerByDomain = function(markers, type, domainId) {
+    for(i = 0; i < markers.length; i++){
+        if (markers[i].type == type && markers[i].domainId == domainId) {
+            return markers[i];
+        }
+    }
+    
+    return null;
+}
 
     this.setMarkerTypeVisible = function(markers, type) {
         var size = markers.length;

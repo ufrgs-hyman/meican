@@ -47,12 +47,11 @@ class ConnectionController extends RbacController {
 		$data = [];
 		 
 		foreach ($paths as $path) {
-			$dstPort = $path->getDestinationPort()->one();
-			$srcPort = $path->getSourcePort()->one();
+			$port = $path->getPort()->one();
 			$data[] = [
 				'path_order' => $path->path_order, 
-				'src_urn_id'=> $srcPort ? $srcPort->id : null,
-				'dst_urn_id'=> $dstPort ? $dstPort->id : null];
+				'port_id'=> $port ? $port->id : null
+			];
 		}
 		 
 		$data = json_encode($data);
@@ -64,28 +63,21 @@ class ConnectionController extends RbacController {
     	$conn = Connection::findOne($id);
     	if ($conn->external_id) {
     		$srcPath = $conn->getFirstPath()->one();
-	    	$srcPort = $srcPath->getSourcePort()->one();
 	    	$dstPath = $conn->getLastPath()->one();
-	    	$dstPort = $dstPath->getDestinationPort()->one();
-	    	$srcVlan = $srcPath->src_vlan;
-	    	$dstVlan = $dstPath->dst_vlan;
-	    	$srcPortUrn = $srcPath->getFullSourcePortUrn();
-	    	$dstPortUrn = $dstPath->getFullDestinationPortUrn();
     	} else {
     		$res = $conn->getReservation()->one();
     		$srcPath = $res->getFirstPath()->one();
-	    	$srcPort = $srcPath->getPort()->one();
 	    	$dstPath = $res->getLastPath()->one();
-	    	$dstPort = $dstPath->getPort()->one();
-	    	$srcVlan = $srcPath->vlan;
-	    	$dstVlan = $dstPath->vlan;
-	    	$srcPortUrn = $srcPath->getFullPortUrn();
-	    	$dstPortUrn = $dstPath->getFullPortUrn();
     	}
+    	$srcPort = $srcPath->getPort()->one();
+    	$dstPort = $dstPath->getPort()->one();
+    	$srcVlan = $srcPath->vlan;
+    	$dstVlan = $dstPath->vlan;
+    	$srcPortUrn = $srcPath->getFullPortUrn();
+    	$dstPortUrn = $dstPath->getFullPortUrn();
     	
     	$source = null;
     	$dest = null;
-
 
     	$dev = $srcPort ? $srcPort->getDevice()->one() : null;
         $net = $srcPort ? $srcPort->getNetwork()->one() : null;
@@ -259,6 +251,8 @@ class ConnectionController extends RbacController {
 		}
 		
 		Yii::trace(print_r($pathNodes,true));
+
+		$i = 0;
 		
 		foreach ($pathNodes as $pathNode) {
 			Yii::trace(print_r($pathNode,true));
@@ -275,12 +269,20 @@ class ConnectionController extends RbacController {
 				
 			$path = new ConnectionPath;
 			$path->conn_id = $conn->id;
-			$path->path_order = $pathNode->order;
+			$path->path_order = $i;
+			$i++;
 				
-			$path->setSourceStp($src->item(0)->nodeValue);
-			$path->setDomainByStp($src->item(0)->nodeValue);
-			$path->setDestinationStp($dst->item(0)->nodeValue);
-			
+			$path->setPortBySTP($src->item(0)->nodeValue);
+			$path->setDomainBySTP($src->item(0)->nodeValue);
+
+			$path = new ConnectionPath;
+			$path->conn_id = $conn->id;
+			$path->path_order = $i;
+			$i++;
+				
+			$path->setPortBySTP($dst->item(0)->nodeValue);
+			$path->setDomainBySTP($dst->item(0)->nodeValue);
+
 			if(!$path->save()) {
 				Yii::trace($path);
 				return false;

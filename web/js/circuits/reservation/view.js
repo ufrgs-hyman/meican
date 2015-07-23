@@ -48,9 +48,6 @@ $(document).on('ready pjax:success', function() {
 var selectedConnIsApproved;
 var selectedConn;
 var map;
-var shift = 0.01;
-var count = 0;
-var markerWindow;
 var markers = [];
 var refresher;
 var circuits = [];
@@ -404,7 +401,7 @@ function initialize() {
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 	
 	google.maps.event.addListener(map, 'click', function() {
-		closeWindow();
+		MeicanMaps.closeWindows();
 	});
 	
 	drawReservation(selectedConn);
@@ -428,28 +425,25 @@ function drawReservation(connId, animate) {
 
 				//a ordem dos marcadores aqui eh importante,
 				//pois eh a ordem do circuito
-				requiredMarkers.push(response[0].src_urn_id);
-
-				for (var i = 1; i < size-1; i++) {
-					if (response[i].src_urn_id != null) {
-						requiredMarkers.push(response[i].src_urn_id);
+				for (var i = 0; i < size; i++) {
+					if (response[i].port_id != null) {
+						requiredMarkers.push(response[i].port_id);
 					}
 				}
-				requiredMarkers.push(response[size-1].dst_urn_id);
 
 				showMarkers(requiredMarkers);
 
 				console.log(requiredMarkers);
 
-				addSourceMarker(response[0].src_urn_id);
+				addSourceMarker(response[0].port_id);
 				
 				for (var i = 1; i < size-1; i++) {
-					if (response[i].src_urn_id != null) {
-						addWayPointMarker(response[i].src_urn_id);
+					if (response[i].port_id != null) {
+						addWayPointMarker(response[i].port_id);
 					}
 				}
 				
-				addDestinMarker(response[size-1].dst_urn_id);
+				addDestinMarker(response[size-1].port_id);
 				
 				setMapBoundsMarkersWhenReady(requiredMarkers);
 				
@@ -583,9 +577,7 @@ function addMarker(stp, color) {
 	if (marker) return marker;
 	
 	var contentString = tt('Domain') + ': <b>'+stp.dom+'</b><br>' +
-						tt('Network') + ': <b>'+stp.net+'</b><br>' +
-						tt("Device") + ": <b>" + stp.dev + "</b><br>";
-						//"Port: <b>" + stp.port + "</b><br>";
+						tt("Device") + ": <b>" + stp.dev + "</b><br><br>";
 	
 	if (stp.lat != null && stp.lng != null) {
 		var myLatlng = new google.maps.LatLng(stp.lat,stp.lng);
@@ -593,17 +585,12 @@ function addMarker(stp, color) {
 		var myLatlng = new google.maps.LatLng(0, 0);
 	}
 	
-	var marker = new StyledMarker({
-		styleIcon: new StyledIcon(
-			StyledIconTypes.MARKER,
-				{
-					color: color,
-				}
-		),
-		position: getValidMarkerPosition(myLatlng),
+	var marker = MeicanMaps.DeviceMarker({
+		position: MeicanMaps.getValidMarkerPosition(markers, 'dev', myLatlng),
 		info: contentString,
+        type: 'dev',
 		id: stp.id
-	});
+	}, color);
 	
 	var length = markers.push(marker);
 	
@@ -632,38 +619,14 @@ function areMarkersReady(ids) {
 	return true;
 }
 
-function getValidMarkerPosition(position) {
-	for(i = 0; i < markers.length; i++){
-		if ((markers[i].position.lat().
-				toString().substring(0,6) == position.lat().toString().substring(0,6)) && 
-				(markers[i].position.lng().
-						toString().substring(0,6) == position.lng().toString().substring(0,6))) {
-			return getValidMarkerPosition(new google.maps.LatLng(position.lat(), position.lng() + shift));
-		}
-	}
-	
-	return position;
-}
-
-function closeWindow() {
-	if (markerWindow) {
-		markerWindow.close();
-	}
-}
-
 //////////// LISTENERS DOS MARCADORES /////////////
 
 function addMarkerListeners(index) {
 	google.maps.event.addListener(markers[index], 'mouseover', function(key) {
 		return function(){
-			closeWindow();
+			MeicanMaps.closeWindows();
 			
-			markerWindow = new google.maps.InfoWindow({
-				content: '<div class = "MarkerPopUp" style="width: 230px;"><div class = "MarkerContext">' +
-					markers[key].info + '</div></div>'
-				});
-			
-			markerWindow.open(map, markers[key]);
+			MeicanMaps.openWindow(map, markers[key]);
 		}
 	}(index));
 }
