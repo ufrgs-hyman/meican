@@ -331,7 +331,7 @@ function enableWayPointsSortable(markers) {
 }
 
 function prepareDialogDeviceSelect(markers, networkWayObject) {
-	var network = getMarker(markers,'net', $(networkWayObject).attr("id").replace("way",""));
+	var network = MeicanMaps.getMarker(markers,'net', $(networkWayObject).attr("id").replace("way",""));
 	
 	if (network.id == $("#waypoint-network-id").text()) {
 		enableSelect("waypoint", "device");
@@ -402,7 +402,7 @@ function addWayPoint(markers, marker) {
 	    });
 		
 	} else {
-		var network = getMarker(markers, 'net' ,marker.networkId);
+		var network = MeicanMaps.getMarker(markers, 'net' ,marker.networkId);
 		
 		$("#waypoints_order").append("<li class='ui-state-default' id='way" + 
 				 network.id + "-" + marker.id + "'>" + network.name + " (" + marker.name + ")<input name='ReservationForm[way_dev][]' value='" + 
@@ -535,6 +535,7 @@ function fillDeviceSelect(endPointType, domainId, networkId, deviceId) {
                 $("#"+ endPointType + "-device").append('<option value="null">' + tt('select') + '</option>');
                 enableSelect(endPointType, "device");
                 for (var i = 0; i < response.length; i++) {
+                    if (response[i].name == "") response[i].name = "default";
                     $("#"+ endPointType + "-device").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
                 }
                 if (deviceId != null && deviceId != "") {
@@ -814,7 +815,6 @@ function addNetworkMarker(markers, network) {
         type: "net",
         circuitMode: "none",
         id: network.id,
-        name: network.name,
         domainId: network.domain_id,
         info: contentString,
     });
@@ -825,6 +825,7 @@ function addNetworkMarker(markers, network) {
 }
 
 function addDeviceMarker(markers, device) {
+    if (device.name == "") device.name = "default";
 	var contentString = tt('Domain') + ': <b>'+getDomainName(device.domain_id)+'</b><br>' + tt('Device') + ': <b>' + device.name + '</b><br>';
 	
     var network = MeicanMaps.getMarkerByDomain(markers, 'net', device.domain_id);
@@ -842,7 +843,6 @@ function addDeviceMarker(markers, device) {
 		type: "dev",
 		circuitMode: "none",
 		id: device.id,
-		name: device.name,
 		domainId: device.domain_id,
 		info: contentString,
 	});
@@ -1040,7 +1040,7 @@ function initSelect(endPointType, markers) {
 	
 	$('#' + endPointType + '-network').on('change', function() {
 		if (currentMarkerType == "net") {
-			var marker = getMarker(markers, 'net',this.value);
+			var marker = MeicanMaps.getMarker(markers, 'net',this.value);
 			
 			setMarkerEndPoint(endPointType, marker);
 		}
@@ -1052,7 +1052,7 @@ function initSelect(endPointType, markers) {
 	
 	$('#' + endPointType + '-device').on('change', function() {
 		if (currentMarkerType == "dev") {
-			var marker = getMarker(markers, 'dev',this.value);
+			var marker = MeicanMaps.getMarker(markers, 'dev',this.value);
 
 			setMarkerEndPoint(endPointType, marker);
 		}
