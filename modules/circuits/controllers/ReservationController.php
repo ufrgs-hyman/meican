@@ -180,8 +180,8 @@ class ReservationController extends RbacController {
         $data =[];
         
         foreach ($paths as $path) {
-            $port = $path->getPort()->select(['id'])->one();
-            $data[] = ['path_order' => $path->path_order, 'port_id'=> $port ? $port->id : null];
+            $port = $path->getPort()->select(['id','device_id'])->one();
+            $data[] = ['path_order' => $path->path_order, 'device_id'=> $port ? $port->device_id : null];
         }
         
         $data = json_encode($data);

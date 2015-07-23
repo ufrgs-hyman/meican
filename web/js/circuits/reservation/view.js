@@ -117,7 +117,7 @@ function fillEndPointDetails(endPointType, path) {
 		$("#" + endPointType + "-dom").prop("title", path.dom);
 	}
     if (path.net == "") {
-        $("#" + endPointType + "-net").text(tt("unknown"));
+        $("#" + endPointType + "-net").text(tt("default"));
     } else if (path.net.length < 15) {
 		$("#" + endPointType + "-net").text(path.net);
 	} else {
@@ -125,7 +125,7 @@ function fillEndPointDetails(endPointType, path) {
 		$("#" + endPointType + "-net").prop("title", path.net);
 	}
 	if (path.dev == "") {
-        $("#" + endPointType + "-dev").text(tt("unknown"));
+        $("#" + endPointType + "-dev").text(tt("default"));
     } else if (path.dev.length < 15) {
 		$("#" + endPointType + "-dev").text(path.dev);
 	} else {
@@ -133,7 +133,7 @@ function fillEndPointDetails(endPointType, path) {
 		$("#" + endPointType + "-dev").prop("title", path.dev);
 	}
 	if (path.port == "") {
-        $("#" + endPointType + "-port").text(tt("unknown"));
+        $("#" + endPointType + "-port").text(tt("default"));
     } else if (path.port.length < 15) {
 		$("#" + endPointType + "-port").text(path.port);
 	} else {
@@ -426,8 +426,8 @@ function drawReservation(connId, animate) {
 				//a ordem dos marcadores aqui eh importante,
 				//pois eh a ordem do circuito
 				for (var i = 0; i < size; i++) {
-					if (response[i].port_id != null) {
-						requiredMarkers.push(response[i].port_id);
+					if (response[i].device_id != null) {
+						requiredMarkers.push(response[i].device_id);
 					}
 				}
 
@@ -435,15 +435,14 @@ function drawReservation(connId, animate) {
 
 				console.log(requiredMarkers);
 
-				addSourceMarker(response[0].port_id);
+				addSourceMarker(response[0].device_id);
+                addDestinMarker(response[size-1].device_id);
 				
 				for (var i = 1; i < size-1; i++) {
-					if (response[i].port_id != null) {
-						addWayPointMarker(response[i].port_id);
+					if (response[i].device_id != null) {
+						addWayPointMarker(response[i].device_id);
 					}
 				}
-				
-				addDestinMarker(response[size-1].port_id);
 				
 				setMapBoundsMarkersWhenReady(requiredMarkers);
 				
@@ -460,18 +459,19 @@ function drawReservation(connId, animate) {
 			},
 			success: function(response) {
 				var size = response.length;
-				addSourceMarker(response[0].port_id);
+				
 				var requiredMarkers = [];
 
 				//aqui nao importa a ordem dos marcadores, pois nao ha circuito criado
-				requiredMarkers.push(response[0].port_id);
-				addDestinMarker(response[size-1].port_id);
-				requiredMarkers.push(response[size-1].port_id);
+                addSourceMarker(response[0].device_id);
+				requiredMarkers.push(response[0].device_id);
+				addDestinMarker(response[size-1].device_id);
+				requiredMarkers.push(response[size-1].device_id);
 				
 				for (var i = 1; i < size-1; i++) {
-					if (response[i].port_id != null) {
-						addWayPointMarker(response[i].port_id);
-						requiredMarkers.push(response[i].port_id);
+					if (response[i].device_id != null) {
+						addWayPointMarker(response[i].device_id);
+						requiredMarkers.push(response[i].device_id);
 					}
 				}
 				
@@ -511,13 +511,16 @@ function setMapBoundsMarkersWhenReady(requiredMarkers) {
 	}
 }
 
-function addWayPointMarker(urnId) {
+function addWayPointMarker(devId) {
+    marker = MeicanMaps.getMarker(markers, 'dev', devId);
+    if (marker) return;
+
 	$.ajax({
 		url: baseUrl+'/circuits/connection/get-stp',
 		dataType: 'json',
 		method: "GET",
 		data: {
-			id: urnId,
+			id: devId,
 		},
 		success: function(response) {
 			addMarker(response, "00FF00");
@@ -525,13 +528,16 @@ function addWayPointMarker(urnId) {
 	});
 }
 
-function addSourceMarker(urnId) {
+function addSourceMarker(devId) {
+    marker = MeicanMaps.getMarker(markers, 'dev', devId);
+    if (marker) return;
+
 	$.ajax({
 		url: baseUrl+'/circuits/connection/get-stp',
 		dataType: 'json',
 		method: "GET",
 		data: {
-			id: urnId,
+			id: devId,
 		},
 		success: function(response) {
 			addMarker(response, "0000EE");
@@ -539,13 +545,16 @@ function addSourceMarker(urnId) {
 	});
 }
 
-function addDestinMarker(urnId, markers) {
+function addDestinMarker(devId) {
+    marker = MeicanMaps.getMarker(markers, 'dev', devId);
+    if (marker) return;
+
 	$.ajax({
 		url: baseUrl+'/circuits/connection/get-stp',
 		dataType: 'json',
 		method: "GET",
 		data: {
-			id: urnId,
+			id: devId,
 		},
 		success: function(response) {
 			addMarker(response, "FF0000");
@@ -572,15 +581,17 @@ function showMarkers(connIds) {
 
 //////////// ADICIONA MARCADORES NO MAPA /////////////////
 
-function addMarker(stp, color) {
-	marker = getMarkerById(stp.id);
+function addMarker(dev, color) {
+	marker = MeicanMaps.getMarker(markers, 'dev', dev.id);
 	if (marker) return marker;
+
+    if (dev.name == '') dev.name = "default";
 	
-	var contentString = tt('Domain') + ': <b>'+stp.dom+'</b><br>' +
-						tt("Device") + ": <b>" + stp.dev + "</b><br><br>";
+	var contentString = tt('Domain') + ': <b>'+dev.dom+'</b><br>' +
+						tt("Device") + ": <b>" + dev.name + "</b><br><br>";
 	
-	if (stp.lat != null && stp.lng != null) {
-		var myLatlng = new google.maps.LatLng(stp.lat,stp.lng);
+	if (dev.lat != null && dev.lng != null) {
+		var myLatlng = new google.maps.LatLng(dev.lat,dev.lng);
 	} else {
 		var myLatlng = new google.maps.LatLng(0, 0);
 	}
@@ -589,7 +600,7 @@ function addMarker(stp, color) {
 		position: MeicanMaps.getValidMarkerPosition(markers, 'dev', myLatlng),
 		info: contentString,
         type: 'dev',
-		id: stp.id
+		id: dev.id
 	}, color);
 	
 	var length = markers.push(marker);
@@ -625,7 +636,6 @@ function addMarkerListeners(index) {
 	google.maps.event.addListener(markers[index], 'mouseover', function(key) {
 		return function(){
 			MeicanMaps.closeWindows();
-			
 			MeicanMaps.openWindow(map, markers[key]);
 		}
 	}(index));

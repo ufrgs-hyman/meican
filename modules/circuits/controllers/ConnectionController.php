@@ -10,6 +10,7 @@ use app\modules\circuits\CircuitsModule;
 use app\models\Connection;
 use app\models\ConnectionPath;
 use app\models\Port;
+use app\models\Device;
 use app\models\Domain;
 use app\models\Provider;
 use app\controllers\RbacController;
@@ -47,10 +48,10 @@ class ConnectionController extends RbacController {
 		$data = [];
 		 
 		foreach ($paths as $path) {
-			$port = $path->getPort()->one();
+			$port = $path->getPort()->select(['id','device_id'])->one();
 			$data[] = [
 				'path_order' => $path->path_order, 
-				'port_id'=> $port ? $port->id : null
+				'device_id'=> $port ? $port->device_id : null
 			];
 		}
 		 
@@ -106,18 +107,15 @@ class ConnectionController extends RbacController {
     }
 	
     public function actionGetStp($id) {
-    	$port = Port::findOne($id);
-        $dev = $port->getDevice()->one();
-        $net = $port->getNetwork()->one();
-        $dom = $net->getDomain()->select(['name'])->one()->name;
+    	$dev = Device::findOneParentLocation($id);
+        $dom = $dev->getDomain()->select(['name'])->one()->name;
     	
     	$data = [];
     	$data['id'] = $id;
     	$data["dom"] = $dom;
-    	$data["net"] = $net->name;
-    	$data["dev"] = $dev->name;
-    	$dev->latitude ? $data['lat'] = $dev->latitude : $data['lat'] = $net->latitude;
-    	$dev->longitude ? $data['lng'] = $dev->longitude : $data['lng'] = $net->longitude;
+    	$data["name"] = $dev->name;
+    	$data['lat'] = $dev->latitude;
+    	$data['lng'] = $dev->longitude;
     	
     	$data = json_encode($data);
     	Yii::trace($data);
