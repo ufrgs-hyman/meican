@@ -182,10 +182,8 @@ class ConnectionServiceRequester {
                 $connPath->conn_id = $conn->id;
                 $connPath->domain = explode(":",$resPath->port_urn)[0];
                 $i++;
-                $connPath->src_urn = $resPath->port_urn;
-                $connPath->src_vlan = $resPath->vlan;
-                $connPath->dst_urn = $resPath->port_urn;
-                $connPath->dst_vlan = $resPath->vlan;
+                $connPath->port_urn = $resPath->port_urn;
+                $connPath->vlan = $resPath->vlan;
                 
                 $connPath->save();
             }
