@@ -33,6 +33,7 @@
 		GridView::widget([
 			'options' => ['class' => 'list'],
 			'dataProvider' => $data_user,
+			'filterModel' => $searchModel,
 			'columns' => array(
 					[
 						'class'=> LinkColumn::className(),
@@ -56,6 +57,11 @@
 						'value' => function($model) {
 							return $model->getSourceDomain();
 						},		
+						'filter' => Html::activeDropDownList($searchModel, 'src_domain', 
+	                        ArrayHelper::map(
+	                            Domain::find()->all(), 'name', 'name'),
+	                        ['class'=>'form-control','prompt' => Yii::t("topology", 'any')]
+						),
 						'headerOptions'=>['style'=>'width: 17%;'],
 					],
 					[
@@ -63,6 +69,11 @@
 						'value' => function($model) {
 							return $model->getDestinationDomain();
 						},
+						'filter' => Html::activeDropDownList($searchModel, 'dst_domain', 
+	                        ArrayHelper::map(
+	                            Domain::find()->all(), 'name', 'name'),
+	                        ['class'=>'form-control','prompt' => Yii::t("topology", 'any')]
+						),
 						'headerOptions'=>['style'=>'width: 17%;'],
 					],
 					[

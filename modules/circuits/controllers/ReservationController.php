@@ -14,6 +14,7 @@ use app\components\DateUtils;
 use app\models\Reservation;
 use app\models\Connection;
 use app\models\ConnectionAuth;
+use app\models\ConnectionPath;
 use app\models\Port;
 use app\models\Domain;
 use app\models\Device;
@@ -144,20 +145,8 @@ class ReservationController extends RbacController {
         $data_domain = $searchModel->searchActiveByDomains(Yii::$app->request->get(),
             $allowedDomains);
         
-        $user_reservations = Reservation::find()->where(['request_user_id' => Yii::$app->user->getId()])->all();
-        $validResIds = [];
-        foreach($user_reservations as $res){
-        	$conn = Connection::find()->where(['reservation_id' => $res->id])->andWhere(['>=','finish', DateUtils::now()])->one();
-        	if(isset($conn)) $validResIds[] = $res->id;
-        }
-
-        $data_user = new ActiveDataProvider([
-        	'query' => Reservation::find()->where(['in', 'id', $validResIds]),
-        	'sort' => false,
-        	'pagination' => [
-        		'pageSize' => 5,
-        	]
-        ]);
+        $data_user = $searchModel->searchUserActiveByDomains(Yii::$app->request->get(),
+        		Domain::find()->all());
 
         return $this->render('status', [
             'data_domain' => $data_domain,
@@ -173,27 +162,8 @@ class ReservationController extends RbacController {
         $data_domain = $searchModel->searchTerminatedByDomains(Yii::$app->request->get(),
             $allowedDomains);
 
-        $user_reservations = Reservation::find()->where(['request_user_id' => Yii::$app->user->getId()])->all();
-        $validResIds = [];
-        foreach($user_reservations as $res){
-        	$conn = Connection::findOne(['reservation_id' => $res->id]);
-        	
-        	$invalidConn = Connection::find()->where(['reservation_id' => $res->id])->andWhere(['>=','finish', DateUtils::now()])->andWhere(['status'=>[
-        			Connection::STATUS_PENDING,Connection::STATUS_CREATED,Connection::STATUS_CONFIRMED,Connection::STATUS_SUBMITTED,Connection::STATUS_PROVISIONED]])->one();
-        	
-        	Yii::trace($conn);
-        	Yii::trace($invalidConn);
-        
-        	if(isset($conn) && !isset($invalidConn)) $validResIds[] = $res->id;
-        }
-
-        $data_user = new ActiveDataProvider([
-        	'query' => Reservation::find()->where(['in', 'id', $validResIds]),
-        	'sort' => false,
-        	'pagination' => [
-        		'pageSize' => 5,
-        	]
-        ]);
+        $data_user = $searchModel->searchUserTerminatedByDomains(Yii::$app->request->get(),
+        		Domain::find()->all());
 
         return $this->render('status', [
             'data_domain' => $data_domain,
