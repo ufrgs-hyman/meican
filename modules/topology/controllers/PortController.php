@@ -220,8 +220,8 @@ class PortController extends RbacController {
 		echo json_encode($array);
 	}
     
-    public function actionGetByDevice($id, $type, $cols=null){
-        $query = Port::find()->where(['device_id'=>$id, 'type'=>$type, 'directionality'=> 'BI'])->asArray();
+    public function actionGetByDevice($id, $cols=null){
+        $query = Port::find()->where(['device_id'=>$id])->asArray();
         
         $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
 

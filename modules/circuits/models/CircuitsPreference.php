@@ -5,6 +5,7 @@ namespace app\modules\circuits\models;
 use Yii;
 use app\models\Preference;
 
+
 class CircuitsPreference extends Preference {
 
     //retorna o NSA do provedor padrão atualmente configurado.
@@ -20,12 +21,15 @@ class CircuitsPreference extends Preference {
     //disponíveis para novas reservas.
     const CIRCUITS_UNIPORT_ENABLED = "circuits.uniport.enabled";
 
+    const CIRCUITS_PROTOCOL = "circuits.protocol";
+
     static function getNames() {
         return array_merge(parent::getNames(),[
             static::CIRCUITS_UNIPORT_ENABLED,
             static::CIRCUITS_DEFAULT_PROVIDER_NSA,
             static::CIRCUITS_DEFAULT_CS_URL,
-            static::CIRCUITS_MEICAN_REQUESTER_URL
+            static::CIRCUITS_MEICAN_REQUESTER_URL,
+            static::CIRCUITS_PROTOCOL,
         ]);
     }
 }

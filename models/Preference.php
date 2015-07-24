@@ -56,4 +56,8 @@ class Preference extends \yii\db\ActiveRecord
         }
         return self::find()->where(['in', 'name', static::getNames()])->all();
     }
+
+    public function getBoolean() {
+        return $this->value == "true" ? true : false;
+    }
 }

@@ -6,6 +6,8 @@
     use yii\helpers\ArrayHelper;
     use app\models\Provider;
 
+    use app\modules\circuits\models\Protocol;
+
     use app\modules\circuits\assets\ConfigurationAsset;
     ConfigurationAsset::register($this);
 
@@ -26,7 +28,7 @@
     </div>
    
     <div class="form input" style="margin-bottom: 15px">
-        <?= $form->field($model,'protocol')->dropDownList(ArrayHelper::map([['id'=>null, 'name'=>"NSI Connection Service"]], 'id', 'name')); ?>
+        <?= $form->field($model,'protocol')->dropDownList(ArrayHelper::map(Protocol::getTypes(), 'id', 'name')); ?>
     </div>
 
     </font>

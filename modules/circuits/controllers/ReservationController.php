@@ -7,7 +7,6 @@ use Yii;
 use yii\web\Controller;
 use yii\helpers\Url;
 use yii\data\ActiveDataProvider;
-use yii\filters\AccessControl;
 
 use app\controllers\RbacController;
 use app\components\DateUtils;
@@ -19,10 +18,14 @@ use app\models\Port;
 use app\models\Domain;
 use app\models\Device;
 use app\models\Network;
+use app\modules\circuits\models\CircuitsPreference;
 use app\modules\circuits\models\ReservationForm;
+use app\modules\circuits\models\Protocol;
 use app\modules\circuits\models\ReservationSearch;
 use app\models\ReservationPath;
 use app\models\Notification;
+
+use yii\helpers\Json;
 
 class ReservationController extends RbacController {
 	
@@ -187,5 +190,23 @@ class ReservationController extends RbacController {
         $data = json_encode($data);
         Yii::trace($data);
         return $data;
+    }
+
+    public function actionGetPortByDevice($id, $cols=null) {
+        $query = Port::find()->where(['device_id'=>$id])->asArray();
+
+        if (!CircuitsPreference::findOne(CircuitsPreference::CIRCUITS_UNIPORT_ENABLED)->getBoolean()) {
+            $query->andWhere(['directionality'=>Port::DIR_BI]);
+        }
+
+        if (CircuitsPreference::findOne(CircuitsPreference::CIRCUITS_PROTOCOL)->value == Protocol::TYPE_NSI_CS_2_0) {
+            $query->andWhere(['type'=>Port::TYPE_NSI]);
+        }
+
+        $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
+
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
     }
 }

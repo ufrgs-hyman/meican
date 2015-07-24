@@ -16,8 +16,8 @@ class ConfigurationForm extends Model {
     
     public function rules() {
         return [
-            [['meicanNsa','uniportsEnabled', 'defaultProviderNsa', 'defaultCSUrl'], 'required'],
-            [['meicanNsa','uniportsEnabled','defaultProviderNsa','defaultCSUrl'], 'safe'],
+            [['meicanNsa','protocol','uniportsEnabled', 'defaultProviderNsa', 'defaultCSUrl'], 'required'],
+            [['meicanNsa','protocol','uniportsEnabled','defaultProviderNsa','defaultCSUrl'], 'safe'],
         ];
     }
 
@@ -28,6 +28,7 @@ class ConfigurationForm extends Model {
             'uniportsEnabled' => Yii::t('circuits', 'Portas Unidirecionais'),
             'defaultProviderNsa' => Yii::t('circuits', 'Provider NSA ID'),
             'defaultCSUrl' => Yii::t('circuits', 'Connection Service URL'),
+            'protocol' => Yii::t('circuits', 'Protocol'),
         ];
     }
 
@@ -45,6 +46,9 @@ class ConfigurationForm extends Model {
                     break;
                 case CircuitsPreference::CIRCUITS_UNIPORT_ENABLED:
                     $this->uniportsEnabled = $pref->value;                    
+                    break;
+                case CircuitsPreference::CIRCUITS_PROTOCOL:
+                    $this->protocol = $pref->value;                    
                     break;
                 
                 default:
@@ -68,6 +72,10 @@ class ConfigurationForm extends Model {
 
         $pref = CircuitsPreference::findOne(CircuitsPreference::CIRCUITS_UNIPORT_ENABLED);
         $pref->value = $this->uniportsEnabled;
+        if(!$pref->save()) return false;
+
+        $pref = CircuitsPreference::findOne(CircuitsPreference::CIRCUITS_PROTOCOL);
+        $pref->value = $this->protocol;
         if(!$pref->save()) return false;
 
         return true;

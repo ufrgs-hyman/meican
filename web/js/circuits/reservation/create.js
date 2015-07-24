@@ -554,11 +554,10 @@ function fillPortSelect(endPointType, deviceId) {
 	if (deviceId != "null" && deviceId != null) {
 		$("#"+ endPointType + "-port").append('<option value="null">' + tt('loading') + '</option>');
 		$.ajax({
-			url: baseUrl+'/topology/port/get-by-device',
+			url: baseUrl+'/circuits/reservation/get-port-by-device',
 			dataType: 'json',
 			data: {
 				id: deviceId,
-                type: 'NSI',
 				cols: JSON.stringify(['id','name']),
 			},
 			success: function(response){
