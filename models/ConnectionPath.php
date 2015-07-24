@@ -67,7 +67,7 @@ class ConnectionPath extends \yii\db\ActiveRecord
     
     public function setPortBySTP($stp) {
     	$src = explode('?', $stp);
-    	$this->urn = str_replace("urn:ogf:network:", "", $src[0]);
+    	$this->port_urn = str_replace("urn:ogf:network:", "", $src[0]);
     	
     	$vlan = explode("=", $src[1]);
     	if (isset($vlan[1]))

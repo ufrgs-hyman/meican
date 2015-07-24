@@ -31,15 +31,4 @@ ALTER TABLE `meican_notification` ADD INDEX(`user_id`);
 
         return false;
     }
-    
-    /*
-    // Use safeUp/safeDown to run migration code within a transaction
-    public function safeUp()
-    {
-    }
-    
-    public function safeDown()
-    {
-    }
-    */
 }

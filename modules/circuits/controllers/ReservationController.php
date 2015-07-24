@@ -103,6 +103,8 @@ class ReservationController extends RbacController {
 	    		}
 	    	}
     	}
+
+        /*RESERVATION PATH PODE NAO EXISTIR
 		
     	//Confere a permissão
     	$source = $reservation->getFirstPath()->one()->getPort()->one();    	
@@ -127,6 +129,7 @@ class ReservationController extends RbacController {
 			return $this->goHome();
     	}
     		
+            */
     	
     	$connections = new ActiveDataProvider([
     			'query' => $reservation->getConnections(),

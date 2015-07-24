@@ -20,15 +20,4 @@ ALTER TABLE `meican_connection` CHANGE `auth_status` `auth_status` ENUM('EXPIRED
 
         return false;
     }
-
-    /*
-    // Use safeUp/safeDown to run migration code within a transaction
-    public function safeUp()
-    {
-    }
-    
-    public function safeDown()
-    {
-    }
-    */
 }

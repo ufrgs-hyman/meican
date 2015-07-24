@@ -176,8 +176,8 @@ class Reservation extends \yii\db\ActiveRecord
     }
     
     public function createConnections() {
-    	$events = $this->getEvents();
-    	$paths = $this->getPaths();
+    	$events = $this->getAllEvents();
+    	$paths = $this->getPaths()->all();
     	Yii::trace($events);
     	foreach ($events as $event) {
     		$conn = new Connection;
@@ -193,11 +193,22 @@ class Reservation extends \yii\db\ActiveRecord
     		$conn->status = Connection::STATUS_PENDING;
     		$conn->dataplane_status = Connection::DATA_STATUS_INACTIVE;
     		$conn->auth_status = Connection::AUTH_STATUS_UNEXECUTED;
-    		$conn->save();
+
+            if($conn->save()) {
+                $i = 0;
+                foreach ($paths as $resPath) {
+                    $connPath = new ConnectionPath;
+                    $connPath->path_order = $i;
+                    $connPath->conn_id = $conn->id;
+                    $connPath->domain = explode(":",$resPath->port_urn)[0];
+                    $i++;
+                    $connPath->port_urn = $resPath->port_urn;
+                    $connPath->vlan = $resPath->vlan;
+                    
+                    $connPath->save();
+                }
+            }
     	}
-    }
-    
-    public function cancelConnections() {
     }
     
     public function confirm() {
@@ -208,7 +219,7 @@ class Reservation extends \yii\db\ActiveRecord
     	}
     }
     
-    public function getEvents() {
+    public function getAllEvents() {
     	$rec = $this->getRecurrence()->one();
     	if ($rec) {
     		return $rec->getEvents($this->start, $this->finish);

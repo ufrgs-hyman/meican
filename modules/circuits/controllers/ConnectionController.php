@@ -66,6 +66,7 @@ class ConnectionController extends RbacController {
 
     	$dev = $dstPort ? $dstPort->getDevice()->one() : null;
         $net = $dstPort ? $dstPort->getNetwork()->one() : null;
+        $dom = $dev->getDomain()->one();
     	
     	$dest["dom"] = $dom->name;
     	$dest["net"] = $net ? $net->name: "";

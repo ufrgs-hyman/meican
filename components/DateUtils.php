@@ -17,6 +17,12 @@ class DateUtils {
 		} else
 			return null;
 	}
+
+	static function toUTCfromGMT($gmt) {
+		$dateTime = new \DateTime($gmt);
+		$dateTime->setTimezone(new \DateTimeZone("UTC"));
+		return $dateTime->format("Y-m-d H:i:s");
+	}
 	
 	public static function now() {
 		$date = new \DateTime('now', new \DateTimeZone("UTC"));
