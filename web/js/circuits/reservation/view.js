@@ -530,7 +530,7 @@ function addWayPointMarker(devId) {
 
 function addSourceMarker(devId) {
     marker = MeicanMaps.getMarker(markers, 'dev', devId);
-    if (marker) return;
+    if (marker) return MeicanMaps.changeDeviceMarkerColor(marker, "0000EE");
 
 	$.ajax({
 		url: baseUrl+'/circuits/connection/get-stp',
@@ -547,7 +547,7 @@ function addSourceMarker(devId) {
 
 function addDestinMarker(devId) {
     marker = MeicanMaps.getMarker(markers, 'dev', devId);
-    if (marker) return;
+    if (marker) return MeicanMaps.changeDeviceMarkerColor(marker, "FF0000");
 
 	$.ajax({
 		url: baseUrl+'/circuits/connection/get-stp',

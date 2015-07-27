@@ -25,6 +25,17 @@ var MeicanMaps = new function() {
         });
     }
 
+    this.changeDeviceMarkerColor = function(marker, color) {
+        console.log("troca color");
+        marker.icon = {
+                path: 'M 15 15 L 35 15 L 25 35 z',
+                anchor: new google.maps.Point(25, 35),
+                fillColor: '#' + color,
+                fillOpacity: 1,
+                strokeColor: 'black',
+            };
+    } 
+
     this.generateColor = function(id) {
         id = MeicanMaps.temp_fixId(id);
 
@@ -97,7 +108,7 @@ var MeicanMaps = new function() {
         }
 
         markerWindow = new google.maps.InfoWindow({
-            content: '<div class = "MarkerPopUp" style="width: 230px;"><div class = "MarkerContext">' +
+            content: '<div class = "MarkerPopUp" style="width: 230px; line-height: 1.35; overflow: hidden; white-space: nowrap;"><div class = "MarkerContext">' +
                 marker.info + extra
             });
 

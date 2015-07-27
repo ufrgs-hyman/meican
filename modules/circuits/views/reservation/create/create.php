@@ -43,17 +43,34 @@
 <div id="waypoint-dialog" title="<?= Yii::t("circuits", "Configure waypoint"); ?>" hidden>
         <dl>
             <dt>
+                <label class="label-description"><?= Yii::t("circuits", "Domain"); ?>:</label>
+            </dt>
+            <dd>
+                <select style="width: 180px;" id="waypoint-domain" disabled></select>
+            </dd>
+            <dt>
                 <label class="label-description"><?= Yii::t("circuits", "Network"); ?>:</label>
             </dt>
             <dd>
-                <label id="waypoint-network"></label>
-                <label id='waypoint-network-id' hidden></label>
+                <select style="width: 180px;" id="waypoint-network" disabled></select>
             </dd>
             <dt>
                 <label class="label-description"><?= Yii::t("circuits", "Device"); ?>:</label>
             </dt>
             <dd>
-                <select id="waypoint-device" disabled></select>
+                <select style="width: 180px;" id="waypoint-device" disabled></select>
+            </dd>
+            <dt>
+                <label class="label-description"><?= Yii::t("circuits", "Port"); ?>:</label>
+            </dt>
+            <dd>
+                <select style="width: 180px;" id="waypoint-port" disabled></select>
+            </dd>
+            <dt>
+                <label class="label-description"><?= Yii::t("circuits", "VLAN"); ?>:</label>
+            </dt>
+            <dd>
+                <select style="width: 180px;" id="waypoint-vlan" disabled></select>
             </dd>
         </dl>
 </div>

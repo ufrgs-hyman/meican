@@ -13,6 +13,8 @@ use app\models\Port;
 use app\models\Device;
 use app\models\Domain;
 use app\models\Provider;
+use app\models\Reservation;
+use app\components\DateUtils;
 
 /*
  * Classe que implementa o módulo SoapServer do protocolo NSI Connection Service Requester 2.0
@@ -32,6 +34,12 @@ class RequesterController extends Controller {
     
     public function nsiHeader($params) {
         return "";
+    }
+
+    public function actionTest() {
+        $req = new RequesterClient;
+        $req->setAggHeader();
+        $req->querySummary();
     }
 
     public function dataPlaneStateChange($response) {
@@ -105,7 +113,84 @@ class RequesterController extends Controller {
     }
     
     public function querySummaryConfirmed($response) {
-        if($this->saveConnPath($response)) {
+        $reservation = $response->reservation;
+        Yii::trace(print_r($reservation,true));
+        foreach ($reservation as $connection) {
+            $conn = Connection::find()->where(['external_id'=>$connection->connectionId])->one();
+            if (!$conn) {
+                $res = new Reservation;
+                $res->type = Reservation::TYPE_NORMAL;
+                $res->name = $connection->description;
+                $res->date = DateUtils::now();
+                $res->start = DateUtils::toUTCfromGMT($connection->criteria->schedule->startTime);
+                $res->finish = DateUtils::toUTCfromGMT($connection->criteria->schedule->endTime);
+                $res->bandwidth = 1;
+                $res->requester_nsa = str_replace("urn:ogf:network:", "", $connection->requesterNSA);
+                $res->provider_nsa = "1";
+                $res->save();
+
+                $conn = new Connection;
+        
+                $conn->start = DateUtils::toUTCfromGMT($connection->criteria->schedule->startTime);
+                $conn->finish = DateUtils::toUTCfromGMT($connection->criteria->schedule->endTime);
+                $conn->external_id = $connection->connectionId;
+                $conn->reservation_id = $res->id;
+                $conn->status = Connection::STATUS_PROVISIONED;
+                $conn->dataplane_status = Connection::DATA_STATUS_INACTIVE;
+                $conn->auth_status = Connection::AUTH_STATUS_APPROVED;
+                $conn->save();
+
+                $pathNodes = $connection->criteria->children->child;
+                if (count($pathNodes) < 2) {
+                    $pathNodes = [$pathNodes];
+                }
+                
+                Yii::trace(print_r($pathNodes,true));
+
+                $i = 0;
+                
+                foreach ($pathNodes as $pathNode) {
+                    Yii::trace(print_r($pathNode,true));
+                    
+                    $pathNodeXml = $pathNode->any;
+                    $pathNodeXml = str_replace("<nsi_p2p:p2ps>","<p2p>", $pathNodeXml);
+                    $pathNodeXml = str_replace("</nsi_p2p:p2ps>","</p2p>", $pathNodeXml);
+                    $pathNodeXml = '<?xml version="1.0" encoding="UTF-8"?>'.$pathNodeXml;
+                    $xml = new \DOMDocument();
+                    $xml->loadXML($pathNodeXml);
+                    $parser = new \DOMXpath($xml);
+                    $src = $parser->query("//sourceSTP");
+                    $dst = $parser->query("//destSTP");
+                        
+                    $path = new ConnectionPath;
+                    $path->conn_id = $conn->id;
+                    $path->path_order = $i;
+                    $i++;
+                        
+                    $path->setPortBySTP($src->item(0)->nodeValue);
+                    $path->setDomainBySTP($src->item(0)->nodeValue);
+
+                    if(!$path->save()) {
+                        Yii::trace($path);
+                        return false;
+                    }
+
+                    $path = new ConnectionPath;
+                    $path->conn_id = $conn->id;
+                    $path->path_order = $i;
+                    $i++;
+                        
+                    $path->setPortBySTP($dst->item(0)->nodeValue);
+                    $path->setDomainBySTP($dst->item(0)->nodeValue);
+
+                    if(!$path->save()) {
+                        Yii::trace($path);
+                        return false;
+                    }
+                }
+            }
+        }
+        /*if($this->saveConnPath($response)) {
             $connection = Connection::find()->where(['external_id'=>$response->reservation->connectionId])->one();
             $connection->confirmReadPath();
             
@@ -113,7 +198,7 @@ class RequesterController extends Controller {
             
             /////Path invalido
             /////Inconsistencias na topologia
-        }
+        }*/
     }
     
     private function saveConnPath($response) {
@@ -225,7 +310,7 @@ class RequesterController extends Controller {
 $wsdl = Url::to('@web/wsdl/ogf_nsi_connection_requester_v2_0.wsdl', true);
 
 $requester = new \SoapServer($wsdl, array('encoding'=>'UTF-8'));
-$requester->setObject(new RequesterController('requester', CircuitsModule::getInstance()));
+$requester->setObject(new RequesterController('req', CircuitsModule::getInstance()));
 $requester->handle();
     
 ?>

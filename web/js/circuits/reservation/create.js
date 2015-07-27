@@ -27,16 +27,17 @@ var map;
 var markerCluster;
 var circuit;
 var currentMarkerType = "net";
+var devicesLoaded = false;
 
 var MARKER_OPTIONS_NET = '' +
-'<div><button style="font-size: 11px; width: 48%;" id="set-as-source">' + tt('From here') + '</button>' +
-'<button style="font-size: 11px; width: 48%;" id="set-as-dest">' + tt('To here') + '</button></div><div style="height: 2px;"></div>' +
-//'<div><button style="font-size: 11px; width: 48%;" id="set-as-waypoint">' + tt('Waypoint') + '</button>' +
-'<button style="font-size: 11px; width: 97.5%;" id="set-as-intra">' + tt('Intra-domain') + '</button></div>';
+'<div><button style="font-size: 11px; width: 48.25%;" id="set-as-source">' + tt('From here') + '</button>' +
+'<button style="font-size: 11px; width: 48.25%;" id="set-as-dest">' + tt('To here') + '</button></div><div style="height: 2px;"></div>' +
+'<div><button style="font-size: 11px; width: 48.25%;" id="set-as-waypoint">' + tt('Waypoint') + '</button>' +
+'<button style="font-size: 11px; width: 48.25%;" id="set-as-intra">' + tt('Intra-domain') + '</button></div>';
 var MARKER_OPTIONS_DEV = '' +
-'<div><button style="font-size: 11px; width: 48%;" id="set-as-source">' + tt('From here') + '</button>' +
-'<button style="font-size: 11px; width: 48%;" id="set-as-dest">' + tt('To here') + '</button></div><div style="height: 2px;"></div>' +
-//'<div><button style="font-size: 11px; width: 98%;" id="set-as-waypoint">' + tt('Set as waypoint') + '</button>' +
+'<div><button style="font-size: 11px; width: 48.25%;" id="set-as-source">' + tt('From here') + '</button>' +
+'<button style="font-size: 11px; width: 48.25%;" id="set-as-dest">' + tt('To here') + '</button></div><div style="height: 2px;"></div>' +
+'<div><button style="font-size: 11px; width: 98%;" id="set-as-waypoint">' + tt('Set as waypoint') + '</button>' +
 '</div>';
 var MARKER_OPTIONS_END_POINT = '' +
 '<button style="font-size: 11px; width: 98%;" id="remove-endpoint">' + tt('Remove endpoint') + '</button>';
@@ -44,8 +45,6 @@ var MARKER_OPTIONS_WAY_POINT = '' +
 '<button style="font-size: 11px; width: 98%;" id="remove-waypoint">' + tt('Remove waypoint') + '</button>';
 var MARKER_OPTIONS_INTRA = '' +
 '<button style="font-size: 11px; width: 98%;" id="remove-intra">' + tt('Remove intra-domain circuit') + '</button>';
-
-var devicesLoaded = false;
 
 function prepareConfirmDialog() {
 	$("#confirm-dialog").dialog({
@@ -312,14 +311,8 @@ function enableWayPointsSortable(markers) {
         update: function(event, ui) {
             var sortableOrder = $(this).sortable('toArray');
             var newWayPoints = [];
-            if (currentMarkerType == "net") {
-            	for (var i = 0; i < sortableOrder.length; i++) {
-                	newWayPoints[i] = MeicanMaps.getMarker(markers, "net", parseInt(sortableOrder[i].replace("way","")));
-                }
-            } else {
-    			for (var i = 0; i < sortableOrder.length; i++) {
-                	newWayPoints[i] = MeicanMaps.getMarker(markers, "dev", parseInt(sortableOrder[i].split("-")[1]));
-                }
+        	for (var i = 0; i < sortableOrder.length; i++) {
+            	newWayPoints[i] = MeicanMaps.getMarker(markers, currentMarkerType, parseInt(sortableOrder[i].replace("way","")));
             }
 
             wayPoints = newWayPoints;
@@ -330,35 +323,42 @@ function enableWayPointsSortable(markers) {
     }).css("display", "block");
 }
 
-function prepareDialogDeviceSelect(markers, networkWayObject) {
-	var network = MeicanMaps.getMarker(markers,'net', $(networkWayObject).attr("id").replace("way",""));
+function prepareDialogDeviceSelect(markers, wayObject) {
+    var object = MeicanMaps.getMarker(markers, currentMarkerType, $(wayObject).attr("id").replace("way",""));
 	
-	if (network.id == $("#waypoint-network-id").text()) {
-		enableSelect("waypoint", "device");
-		return;
-	}
-	
-	$("#waypoint-network-id").text(network.id);
-	
-    $("#waypoint-network").html(network.name);
-    
-    fillDeviceSelect('waypoint', network.id, $(networkWayObject).children(".device-id").val());
+    $("#waypoint-domain").val($(wayObject).children(".domain-id").val());
+
+    fillNetworkSelect('waypoint', $(wayObject).children(".domain-id").val(), $(wayObject).children(".network-id").val());
+    fillDeviceSelect('waypoint', $(wayObject).children(".domain-id").val(), $(wayObject).children(".network-id").val(), 
+        $(wayObject).children(".device-id").val());
+    fillPortSelect('waypoint', $(wayObject).children(".device-id").val(), $(wayObject).children(".port-id").val());
+
+    fillVlanSelect('waypoint', $(wayObject).children(".port-id").val(), $(wayObject).children(".vlan").val());
 }
 
-function setWayPointDevice(networkWayObject) {
+function setWayPointDevice(wayObject) {
 	var deviceId = $("#waypoint-device").val();
-	var networkName = $(networkWayObject).html().split("(")[0];
-	var rest = $(networkWayObject).html().split(")")[1];
+	var domainName = $(wayObject).html().split("(")[0];
+	var rest = $(wayObject).html().split(")")[1];
 	var deviceName = $("#waypoint-device").children("[value=" + deviceId + "]").text();
 	if (deviceId != "null") {
-		$(networkWayObject).html(networkName + "(" + deviceName + ")" + rest);
+		$(wayObject).html(domainName + "(" + deviceName + ")" + rest);
 	} else {
-		$(networkWayObject).html(networkName + "(" + tt("click to select device") + ")" + rest);
+		$(wayObject).html(domainName + "(" + tt("click to fill waypoint") + ")" + rest);
 	}
 	
-	$(networkWayObject).children(".device-id").val(deviceId);
+	$(wayObject).children(".domain-id").val($("#waypoint-domain").val());
+    $(wayObject).children(".network-id").val($("#waypoint-network").val());
+    $(wayObject).children(".device-id").val($("#waypoint-device").val());
+    $(wayObject).children(".port-id").val($("#waypoint-port").val());
+    $(wayObject).children(".vlan").val($("#waypoint-vlan").val());
+    console.log($(wayObject).children(".domain-id").val(),
+        $(wayObject).children(".network-id").val(),
+        $(wayObject).children(".device-id").val(),
+        $(wayObject).children(".port-id").val(),
+        $(wayObject).children(".vlan").val());
 	
-	disableSelect("waypoint", 'device');
+	//disableSelect("waypoint", 'device');
 }
 
 function addWayPoint(markers, marker) {
@@ -371,43 +371,48 @@ function addWayPoint(markers, marker) {
 	}
 	
 	wayPoints.push(marker);
+
+    var inputData = '';
+    if (marker.type == "net") {
+        inputData = '<input value="' + marker.id + '" type="text" class="network-id" hidden></input>' + 
+             '<input type="text" class="device-id" hidden></input>';
+    } else {
+        inputData = '<input type="text" class="network-id" hidden></input>' + 
+             '<input value="' + marker.id + '" type="text" class="device-id" hidden></input>';
+    }
 	
-	if (marker.type == "net") {
-		$("#waypoints_order").append("<li class='ui-state-default opener' id='way" + 
-        		 marker.id + "'>" + marker.name + " " + "(" + tt("click to select device") + ")" + "<input name='ReservationForm[way_dev][]' type='text' class='device-id' hidden></input></li>");
-		
-		$(".opener").click(function() {
-			var content = this;
-	        $("#waypoint-dialog").dialog({
-	        	autoOpen: false,
-	            modal: true,
-	            resizable: false,
-	            width: "auto",
-	            open: function(event, ui) {
-	            	prepareDialogDeviceSelect(markers, content);
-	            },
-	            buttons: [{
-	            	text: tt('Save'),
-	                click: function() {
-	                	setWayPointDevice(content);
-	            		$("#waypoint-dialog").dialog( "close" );
-	                }},{
-	            	text: tt('Cancel'),
-	                click: function() {
-	                	$("#waypoint-dialog").dialog( "close" );
-	                }
-	            }],
-	        });
-	        $("#waypoint-dialog").dialog("open");
-	    });
-		
-	} else {
-		var network = MeicanMaps.getMarker(markers, 'net' ,marker.networkId);
-		
-		$("#waypoints_order").append("<li class='ui-state-default' id='way" + 
-				 network.id + "-" + marker.id + "'>" + network.name + " (" + marker.name + ")<input name='ReservationForm[way_dev][]' value='" + 
-				 marker.id + "' type='text' class='device-id' hidden></input></li>");
-	}
+	$("#waypoints_order").append("<li class='ui-state-default opener' id='way" + 
+    		 marker.id + "'>" + getDomainName(marker.domainId) + " (" + tt("click to fill waypoint") + ")" + 
+             '<input value="' + marker.domainId + '" type="text" class="domain-id" hidden></input>' + 
+             inputData + 
+             '<input name="ReservationForm[waypoint][]" type="text" class="port-id" hidden></input>' + 
+             '<input name="ReservationForm[waypoint][]" type="text" class="vlan" hidden></input>' + 
+             '</li>');
+	
+	$(".opener").click(function() {
+		var content = this;
+        $("#waypoint-dialog").dialog({
+        	autoOpen: false,
+            modal: true,
+            resizable: false,
+            width: "auto",
+            open: function(event, ui) {
+            	prepareDialogDeviceSelect(markers, content);
+            },
+            buttons: [{
+            	text: tt('Save'),
+                click: function() {
+                	setWayPointDevice(content);
+            		$("#waypoint-dialog").dialog( "close" );
+                }},{
+            	text: tt('Cancel'),
+                click: function() {
+                	$("#waypoint-dialog").dialog( "close" );
+                }
+            }],
+        });
+        $("#waypoint-dialog").dialog("open");
+    });
 	
 	drawCircuit();
 }
@@ -418,11 +423,7 @@ function hideReservationTabs() {
 }
 
 function deleteWayPoint(marker) {
-	if (marker.type == "net") {
-		$("#way" + marker.id).remove();
-	} else {
-		$("#way" + marker.networkId + "-" + marker.id).remove();
-	}
+	$("#way" + marker.id).remove();
 	
 	for (var i = 0; i < wayPoints.length; i++) {
 		if (wayPoints[i] == marker) {
@@ -465,7 +466,7 @@ function deleteWayPoints() {
 
 function fillDomainSelect(endPointType) {
 	clearSelect(endPointType, "domain");
-	$("#"+ endPointType + "-domain").append('<option value="null">' + tt('loading') + '</option>');
+	$("#"+ endPointType + "-domain").append('<option value="">' + tt('loading') + '</option>');
 	$.ajax({
 		url: baseUrl+'/topology/domain/get-all',
 		data: {
@@ -474,7 +475,7 @@ function fillDomainSelect(endPointType) {
 		dataType: 'json',
 		success: function(domains){
 			clearSelect(endPointType, "domain");
-			$("#"+ endPointType + "-domain").append('<option value="null">' + tt('select') + '</option>');
+			$("#"+ endPointType + "-domain").append('<option value="">' + tt('select') + '</option>');
 			for (var i = 0; i < domains.length; i++) {
 				$("#"+ endPointType + "-domain").append('<option value="' + domains[i].id + '">' + domains[i].name + '</option>');
 			}
@@ -483,9 +484,10 @@ function fillDomainSelect(endPointType) {
 }
 
 function fillNetworkSelect(endPointType, domainId, networkId) {
+    disableSelect(endPointType, "network");
 	clearSelect(endPointType, "network");
-	if (domainId != "null" && domainId != null) {
-		$("#"+ endPointType + "-network").append('<option value="null">' + tt('loading') + '</option>');
+	if (domainId != "" && domainId != null) {
+		$("#"+ endPointType + "-network").append('<option value="">' + tt('loading') + '</option>');
 		$.ajax({
 			url: baseUrl+'/topology/network/get-by-domain',
 			data: {
@@ -494,7 +496,7 @@ function fillNetworkSelect(endPointType, domainId, networkId) {
 			dataType: 'json',
 			success: function(response){
 				clearSelect(endPointType, "network");
-				$("#"+ endPointType + "-network").append('<option value="null">' + tt('select') + '</option>');
+				$("#"+ endPointType + "-network").append('<option value="">' + tt('select') + '</option>');
 				enableSelect(endPointType, "network");
 				for (var i = 0; i < response.length; i++) {
 					$("#"+ endPointType + "-network").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
@@ -510,20 +512,21 @@ function fillNetworkSelect(endPointType, domainId, networkId) {
 }
 
 function fillDeviceSelect(endPointType, domainId, networkId, deviceId) {
+    disableSelect(endPointType, "device");
 	clearSelect(endPointType, "device");
     parent = null;
-	if (networkId != "null" && networkId != null && networkId != "") {
+	if (networkId != "" && networkId != null) {
         parent = [];
 		parent[0] = "network";
         parent[1] = networkId;
-	} else if (domainId != "null" && domainId != null && domainId != "") {
+	} else if (domainId != "" && domainId != null) {
         parent = [];
         parent[0] = "domain";
         parent[1] = domainId;
     } 
 
     if (parent) {
-        $("#"+ endPointType + "-device").append('<option value="null">' + tt('loading') + '</option>');
+        $("#"+ endPointType + "-device").append('<option value="">' + tt('loading') + '</option>');
         $.ajax({
             url: baseUrl+'/topology/device/get-by-' + parent[0],
             dataType: 'json',
@@ -532,7 +535,7 @@ function fillDeviceSelect(endPointType, domainId, networkId, deviceId) {
             },
             success: function(response){
                 clearSelect(endPointType, "device");
-                $("#"+ endPointType + "-device").append('<option value="null">' + tt('select') + '</option>');
+                $("#"+ endPointType + "-device").append('<option value="">' + tt('select') + '</option>');
                 enableSelect(endPointType, "device");
                 for (var i = 0; i < response.length; i++) {
                     if (response[i].name == "") response[i].name = "default";
@@ -548,11 +551,11 @@ function fillDeviceSelect(endPointType, domainId, networkId, deviceId) {
 	}
 }
 
-function fillPortSelect(endPointType, deviceId) {
+function fillPortSelect(endPointType, deviceId, portId) {
     disableSelect(endPointType, "port");
 	clearSelect(endPointType, "port");
-	if (deviceId != "null" && deviceId != null) {
-		$("#"+ endPointType + "-port").append('<option value="null">' + tt('loading') + '</option>');
+	if (deviceId != "" && deviceId != null) {
+		$("#"+ endPointType + "-port").append('<option value="">' + tt('loading') + '</option>');
 		$.ajax({
 			url: baseUrl+'/circuits/reservation/get-port-by-device',
 			dataType: 'json',
@@ -562,15 +565,16 @@ function fillPortSelect(endPointType, deviceId) {
 			},
 			success: function(response){
 				clearSelect(endPointType, "port");
-				$("#"+ endPointType + "-port").append('<option value="null">' + tt('select') + '</option>');
+				$("#"+ endPointType + "-port").append('<option value="">' + tt('select') + '</option>');
 				enableSelect(endPointType, "port");
 				for (var i = 0; i < response.length; i++) {
 					var name = response[i].name;
 					if (response[i].port == "") {
-						name = tt("no name");
+						name = tt("default");
 					}
 					$("#"+ endPointType + "-port").append('<option value="' + response[i].id + '">' + name + '</option>');
 			    }
+                if (portId != null && portId != "") $("#"+ endPointType + "-port").val(portId);
 			}
 		});
 	} else {
@@ -578,10 +582,11 @@ function fillPortSelect(endPointType, deviceId) {
 	} 
 }
 
-function fillVlanSelect(endPointType, portId) {
+function fillVlanSelect(endPointType, portId, vlan) {
+    disableSelect(endPointType, "vlan");
 	clearSelect(endPointType, "vlan");
 	if (portId != "null" && portId != null) {
-		$("#"+ endPointType + "-vlan").append('<option value="null">' + tt('loading') + '</option>');
+		$("#"+ endPointType + "-vlan").append('<option value="">' + tt('loading') + '</option>');
 		$.ajax({
 			url: baseUrl+'/topology/port/get-vlan-ranges',
 			dataType: 'json',
@@ -603,6 +608,9 @@ function fillVlanSelect(endPointType, portId) {
 					for (var j = low; j < high+1; j++) {
 						$("#"+ endPointType + "-vlan").append('<option value="' + j + '">' + j + '</option>');
 					}
+                    if (vlan != null && vlan != "") {
+                        $("#"+ endPointType + "-vlan").val(vlan);
+                    }
 			    }
 				enableSelect(endPointType, "vlan");
 			}
@@ -760,6 +768,7 @@ function initialize() {
 	
 	initSelect("src", markers);
 	initSelect("dst", markers);
+    initWaypointSelect();
 	
 	$.ajax({
 		url: baseUrl+'/topology/network/get-all',
@@ -844,6 +853,7 @@ function addDeviceMarker(markers, device) {
 		id: device.id,
 		domainId: device.domain_id,
 		info: contentString,
+        name: device.name
 	});
 	
 	var length = markers.push(marker);
@@ -1066,6 +1076,33 @@ function initSelect(endPointType, markers) {
 		}
 		fillVlanSelect(endPointType, this.value);
 	});
+}
+
+function initWaypointSelect() {
+    var endPointType = "waypoint"
+    fillDomainSelect(endPointType);
+    
+    $('#' + endPointType + '-domain').on('change', function() {
+        fillNetworkSelect(endPointType, this.value);
+        fillDeviceSelect(endPointType, this.value);
+        fillPortSelect(endPointType);
+        fillVlanSelect(endPointType);
+    });
+    
+    $('#' + endPointType + '-network').on('change', function() {
+        fillDeviceSelect(endPointType, $('#' + endPointType + '-domain').val(), this.value);
+        fillPortSelect(endPointType);
+        fillVlanSelect(endPointType);
+    });
+    
+    $('#' + endPointType + '-device').on('change', function() {
+        fillPortSelect(endPointType, this.value);
+        fillVlanSelect(endPointType);
+    });
+    
+    $('#' + endPointType + '-port').on('change', function() {
+        fillVlanSelect(endPointType, this.value);
+    });
 }
 
 function clearSelect(endPointType, object) {

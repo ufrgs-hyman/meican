@@ -26,23 +26,17 @@ class RequesterClient extends \SoapClient {
     public $conn;
     public $res;
 
-    function __construct($conn){
+    function __construct($conn=null){
         $this->conn = $conn;
-        $this->res = $conn->getReservation()->one();
+        if ($conn) $this->res = $conn->getReservation()->one();
         $csUrl = null;
         
         $defaultNsa = CircuitsPreference::findOne(CircuitsPreference::CIRCUITS_DEFAULT_PROVIDER_NSA)->value;
-        if ($this->res->provider_nsa == $defaultNsa) {
-            $csUrl = CircuitsPreference::findOne(CircuitsPreference::CIRCUITS_DEFAULT_CS_URL)->value;
+        if ($this->res && ($this->res->provider_nsa != $defaultNsa)) {
+            return new \Exception("Provider enabled is not equal the reservation provider.");
         }
 
-        if (!$csUrl) {
-            $prov = $this->res->getProvider()->one();
-            if ($prov) {
-                $csUrl = $prov->getConnectionService()->one();
-                if ($csUrl) $csUrl = $csUrl->url;
-            } 
-        }
+        $csUrl = CircuitsPreference::findOne(CircuitsPreference::CIRCUITS_DEFAULT_CS_URL)->value;
 
         if ($csUrl) {
             $this->wsdl = $csUrl."?wsdl";
@@ -57,7 +51,7 @@ class RequesterClient extends \SoapClient {
         $this->replyTo = $meicanRequesterUrl;
         $this->local_cert = realpath(__DIR__."/../../../../certificates/".\Yii::$app->params['meican.certificate.filename']);
         $this->cert_passphrase = Yii::$app->params['meican.certificate.passphrase'];
-        $this->providerNSA = $this->res->provider_nsa;
+        $this->providerNSA = "urn:ogf:network:".$defaultNsa;
 
         if (!$this->isDummy()) {
             $soapOptions = array(
@@ -144,7 +138,7 @@ class RequesterClient extends \SoapClient {
 
     function setAggHeader(){
         $ns = "http://schemas.ogf.org/nsi/2013/12/framework/headers";
-        $meicanNsa = CircuitsPreference::findOne(CircuitsPreference::MEICAN_NSA)->value;
+        $meicanNsa = "urn:ogf:network:".CircuitsPreference::findOne(CircuitsPreference::MEICAN_NSA)->value;
         $connection = new \SoapVar(array("Connection" => $meicanNsa), 
             SOAP_ENC_OBJECT, null, null, null, null);
 
@@ -324,19 +318,6 @@ class RequesterClient extends \SoapClient {
     
     public function requestReadPath() {
         if ($this->isDummy()) {
-            $resPaths = $this->conn->getReservation()->one()->getPaths()->all();
-            $i = 0;
-            foreach ($resPaths as $resPath) {
-                $connPath = new ConnectionPath;
-                $connPath->path_order = $i;
-                $connPath->conn_id = $this->conn->id;
-                $connPath->domain = explode(":",$resPath->port_urn)[0];
-                $i++;
-                $connPath->port_urn = $resPath->port_urn;
-                $connPath->vlan = $resPath->vlan;
-                
-                $connPath->save();
-            }
             $this->conn->confirmReadPath();
             return;
         }
