@@ -57,16 +57,11 @@ class AuthorizationDetailed extends Model {
 		if($user) $this->requester = $user->name;
 		
 		$this->bandwidth = $reservation->bandwidth." Mbps";
+
+		$paths_domain = ConnectionPath::find()->where(['conn_id' => $connection_id, 'domain' => $domain])->orderBy("path_order ASC")->all();
 		
-		$this->port_in = "";
-		$this->port_out = "";
-		$paths_domain = ConnectionPath::find()->where(['conn_id' => $connection_id, 'domain' => $domain])->all();
-		foreach($paths_domain as $path){
-			$this->port_in .= $path->src_urn."<br>";
-			$this->port_out .= $path->dst_urn."<br>";
-		}
-		
-		
+		$this->port_in = $paths_domain[0]->port_urn;
+		$this->port_out = $paths_domain[count($paths_domain)-1]->port_urn;
 	}
 	
 }
