@@ -117,9 +117,9 @@ function validateForm() {
     if ($("#waypoints_order").children('.ui-state-default').length > 0) {
     	var wayPointsItems = $("#waypoints_order").children();
     	for (var i = 0; i < wayPointsItems.length; i++) {
-    		var wayPoint = wayPointsItems.children()[0];
-    		if (wayPoint.value == 'null' || wayPoint.value == '') {
-    			errors += '<br>- ' + tt('Waypoint device information is required.');
+    		var wayPoint = wayPointsItems.children(".vlan").val();
+    		if (wayPoint == '') {
+    			errors += '<br>- ' + tt('Waypoint information is required.');
         		isValid = false;
     		}
         }
