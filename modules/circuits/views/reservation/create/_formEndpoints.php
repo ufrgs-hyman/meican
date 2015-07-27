@@ -2,10 +2,13 @@
     <thead>
         <tr>
             <th colspan="2">
-			    <div class="ui-state-default ui-corner-all ui-transparent-button" id="<?= $prefix ?>-select-current-host" style="float: right; margin-right: 2px; cursor: pointer;">
+            	<div class="ui-state-default ui-corner-all ui-transparent-button" id="<?= $prefix ?>-clear-endpoint" style="float: right; margin-right: 2px; cursor: pointer;">
+			        <span class="ui-icon-to-button-without-background ui-icon ui-icon-minusthick" title="<?= "Clear endpoint"; ?>"></span>
+			    </div>
+			    <div class="ui-state-default ui-corner-all ui-transparent-button" id="<?= $prefix ?>-select-current-host" style="float: right; margin-right: 2px; cursor: pointer;" disabled>
 			        <span class="ui-icon-to-button-without-background ui-icon ui-icon-home" title="<?= "Select current host"; ?>"></span>
 			    </div>
-			    <div class="ui-state-default ui-corner-all ui-transparent-button" id="<?= $prefix ?>-search-host" style="float: right; margin-right: 2px; cursor: pointer;">
+			    <div class="ui-state-default ui-corner-all ui-transparent-button" id="<?= $prefix ?>-search-host" style="float: right; margin-right: 2px; cursor: pointer;" disabled>
 			        <span class="ui-icon-to-button-without-background ui-icon ui-icon-search" title="<?= "Search for endpoint"; ?>"></span>
 			    </div>
 			    <div class="ui-state-default ui-corner-all ui-state-disabled ui-transparent-button" id="<?= $prefix; ?>-copy-urn" style="float: right; margin: 0 2px 0 4px; cursor: pointer;">
