@@ -13,10 +13,6 @@ class ListReservationAsset extends AssetBundle
    		'css/pagination.css',
     ];
     
-    public $js = [
-    		'js/circuits/list.js',
-    ];
-    
     public $depends = [
    		'yii\web\JqueryAsset',
     ];

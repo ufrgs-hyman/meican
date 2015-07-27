@@ -32,7 +32,7 @@ class ReservationController extends RbacController {
 	public $enableCsrfValidation = false;
 	
     public function actionCreate() {
-    	/* Removido, pois tudo usuário passará a ter acesso ao mapa.
+    	/* Removido, pois todo usuário passa a ter acesso ao mapa.
     	 * As permissões passam a ser conferidas no momento em que ele efetivamente solicita a reserva,
     	 * é necessário que o usuário tenho permissão de CREATE no dominio de origem ou destino.
     	 */
@@ -104,11 +104,11 @@ class ReservationController extends RbacController {
 	    	}
     	}
 
-        /*RESERVATION PATH PODE NAO EXISTIR
-		
     	//Confere a permissão
-    	$source = $reservation->getFirstPath()->one()->getPort()->one();    	
-    	$destination = $reservation->getLastPath()->one()->getPort()->one();
+    	$connection = $reservation->getConnections()->one();
+
+    	$source = $connection->getFirstPath()->one()->getPort()->one();    	
+    	$destination = $connection->getLastPath()->one()->getPort()->one();
     	$permission = false;
     	if($source){ //Se tem permissão na origem
     		$source = $source->getDevice()->one();
@@ -128,8 +128,7 @@ class ReservationController extends RbacController {
     	if(!$permission){ //Se ele não tiver em nenhum dos dois e não for quem requisitou
 			return $this->goHome();
     	}
-    		
-            */
+		 
     	
     	$connections = new ActiveDataProvider([
     			'query' => $reservation->getConnections(),
@@ -148,16 +147,13 @@ class ReservationController extends RbacController {
     public function actionStatus() {
         $searchModel = new ReservationSearch;
         $allowedDomains = self::whichDomainsCan('reservation/read');
-        $data_domain = $searchModel->searchActiveByDomains(Yii::$app->request->get(),
-            $allowedDomains);
-        
-        $data_user = $searchModel->searchUserActiveByDomains(Yii::$app->request->get(),
-        		Domain::find()->all());
+
+        $data = $searchModel->searchActiveByDomains(Yii::$app->request->get(),
+        		$allowedDomains);
 
         return $this->render('status', [
-            'data_domain' => $data_domain,
             'searchModel' => $searchModel,
-        	'data_user' => $data_user,
+        	'data' => $data,
             'allowedDomains' => $allowedDomains
         ]);
     }
@@ -165,17 +161,15 @@ class ReservationController extends RbacController {
     public function actionHistory() {
     	$searchModel = new ReservationSearch;
         $allowedDomains = self::whichDomainsCan('reservation/read');
-        $data_domain = $searchModel->searchTerminatedByDomains(Yii::$app->request->get(),
-            $allowedDomains);
 
-        $data_user = $searchModel->searchUserTerminatedByDomains(Yii::$app->request->get(),
-        		Domain::find()->all());
+        $data = $searchModel->searchTerminatedByDomains(Yii::$app->request->get(),
+        		$allowedDomains);
 
-        return $this->render('status', [
-            'data_domain' => $data_domain,
+        return $this->render('history', [
             'searchModel' => $searchModel,
-        	'data_user' => $data_user,
-            'allowedDomains' => $allowedDomains]);
+        	'data' => $data,
+            'allowedDomains' => $allowedDomains
+        ]);
     }
     
     //////REST functions
