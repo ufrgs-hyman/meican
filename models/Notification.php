@@ -179,10 +179,15 @@ class Notification extends \yii\db\ActiveRecord
 	    				$notification->save();
 	    				break;
 	    		}
-	    		$array .= $msg;
-	    		$date = $notification->date;
+	    		if($msg == ""){
+	    			$notification->delete();
+	    		}
+	    		else {
+		    		$array .= $msg;
+		    		$date = $notification->date;
+	    		}
     		}
-    		$max++;
+    		if($msg != "")$max++;
     		if($max == 7){
     			break;
     		}
