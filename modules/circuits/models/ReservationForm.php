@@ -30,7 +30,7 @@ class ReservationForm extends Model {
 	public $finish_time;
 	public $finish_date;
 	public $bandwidth;
-	public $way_dev;
+	public $waypoints;
 	
 	//reservation recurrence
 	public $rec_enabled;
@@ -49,7 +49,7 @@ class ReservationForm extends Model {
 			[['src_domain','src_port','dst_domain','dst_port', 'name', 'start_time','start_date', 
 				'finish_time','finish_date', 'bandwidth'], 'required'],
 			[['rec_enabled','rec_type', 'rec_interval', 'rec_weekdays', 'rec_finish_type', 'rec_finish_date', 
-				'rec_finish_occur_limit', 'way_dev', 'src_vlan', 'dst_vlan'], 'safe'],
+				'rec_finish_occur_limit', 'waypoints', 'src_vlan', 'dst_vlan'], 'safe'],
 		];
 	}
 	
@@ -91,16 +91,15 @@ class ReservationForm extends Model {
  				}
  				
  				$waySize = 0;
- 				if ($this->way_dev) {
- 					$waySize = count($this->way_dev);
+ 				if ($this->waypoints) {
+ 					$waySize = count($this->waypoints['port']);
  					for ($i = 0; $i < $waySize; $i++) {
  						$path = new ReservationPath;
  						$path->reservation_id = $this->reservation->id;
  						$path->path_order = $i + 1;
- 						$dev = Device::findOne($this->way_dev[$i]);
- 						$port = $port->getPorts()->one();
- 						$path->port_urn($port->urn);
- 						$path->vlan = $port->getVlanRanges()->one()->value;
+ 						$port = Port::findOne($this->waypoints['port'][$i]);
+ 						$path->port_urn = $port->urn;
+ 						$path->vlan = $this->waypoints['vlan'][$i];
  						
  						if (!$path->save()) {
  							Yii::trace($path->getErrors());
