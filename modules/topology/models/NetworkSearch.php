@@ -59,9 +59,9 @@ class NetworkSearch extends Network {
         $dataProvider = new ActiveDataProvider([
             'query' => $networks,
             'sort' => false,
-            /*'pagination' => [
-                'pageSize' => 20,
-            ]*/
+            'pagination' => [
+                'pageSize' => 15,
+            ]
         ]);
 
         return $dataProvider;

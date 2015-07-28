@@ -22,11 +22,13 @@
 			'dataProvider' => new ArrayDataProvider([
     			'allModels' => $array,
     			'sort' => false,
-    			'pagination' => false,
+    			'pagination' => [
+					'pageSize' => 15,
+			    ],
     		]),
 			'formatter' => new Formatter(['nullDisplay'=>'']),
 			'id' => 'gridInfo',
-			'layout' => "{items}",
+			'layout' => "{items}{summary}{pager}",
 			'columns' => array(
 					[
 						'label' => Yii::t('circuits', 'Reply request as '),

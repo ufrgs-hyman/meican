@@ -52,7 +52,6 @@
 				'key' => 'id',
 				'pagination' => false,
 			]),
-			'layout' => "{items}",
 			'columns' => array(
 				[
 					'class'=>CheckboxColumn::className(),

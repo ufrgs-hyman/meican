@@ -79,7 +79,7 @@
 		    		]),
 					'formatter' => new Formatter(['nullDisplay'=>'']),
 					'id' => 'gridRequest',
-					'layout' => "{items}{pager}",
+					'layout' => "{items}{summary}{pager}",
 					'rowOptions' => function ($model, $key, $index, $grid){
 						if($model->status == Connection::AUTH_STATUS_APPROVED){
 							return ['style'=>'background-color: #e4ffe4; border-bottom: 1px solid #d4eed4;', 'id' => $model['id'], 'onclick' => 'toDate(id)'];

@@ -37,12 +37,12 @@
 					'image'=>'/images/eye.png',
 					'label' => '',
 					'url' => 'view',
-					'headerOptions'=>['style'=>'width: 3%;'],
+					'headerOptions'=>['style'=>'width: 2%;'],
 				],
 				[
 					'label' => Yii::t('circuits', 'Name'),
 					'value' => 'name',
-					'headerOptions'=>['style'=>'width: 12%;'],
+					'headerOptions'=>['style'=>'width: 13%;'],
 				],
 				[
 					'attribute'=>'date',

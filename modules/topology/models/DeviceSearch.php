@@ -63,9 +63,9 @@ class DeviceSearch extends Device {
         $dataProvider = new ActiveDataProvider([
             'query' => $devices,
             'sort' => false,
-            /*'pagination' => [
-                'pageSize' => 20,
-            ]*/
+            'pagination' => [
+                'pageSize' => 15,
+            ]
         ]);
 
         return $dataProvider;

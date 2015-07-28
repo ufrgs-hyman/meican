@@ -32,7 +32,7 @@
 			'dataProvider' => $networks,
 			'filterModel' => $searchModel,
 			'id' => 'gridNetowrks',
-			'layout' => "{items}{pager}",
+			'layout' => "{items}{summary}{pager}",
 			'columns' => array(
 		    		[
 		    			'class'=>CheckboxColumn::className(),

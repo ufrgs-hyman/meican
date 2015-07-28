@@ -23,7 +23,7 @@
 		'dataProvider' => $workflows,
 		'formatter' => new Formatter(['nullDisplay'=>'']),
 		'id' => 'gridDevices',
-		'layout' => "{items}",
+		'layout' => "{items}{summary}{pager}",
 		'columns' => array(
 				[
 					'format' => 'raw',

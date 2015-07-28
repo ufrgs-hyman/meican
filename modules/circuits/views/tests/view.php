@@ -29,7 +29,7 @@
 						'id'=>'test-grid',
 						'class' => 'list'],
 				'dataProvider' => $data,
-				'summary' => false,
+				'layout' => "{items}{summary}{pager}",
 				'columns' => array(
 						array(
 								'class'=>CheckboxColumn::className(),
