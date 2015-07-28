@@ -7,14 +7,12 @@ use app\controllers\RbacController;
 ?>
 
 <div class="dashboard">
-		<?php if(RbacController::can("reservation/create")): ?>
         <div>
             <h2><?= Yii::t('init', 'New Reservation'); ?></h2>
             <a href="<?= Url::to(['/circuits/reservation/create']); ?>">
                 <img style="width: 128px; height:128px;" src="<?= Url::to('@web/images/dash_new_reservation.png'); ?>" alt="New Reservation"/>
             </a>
         </div>
-        <?php endif; ?>
         <?php if(RbacController::can("reservation/read")): ?>
          <div>
             <h2><?= Yii::t('init', 'Reservations'); ?></h2>
