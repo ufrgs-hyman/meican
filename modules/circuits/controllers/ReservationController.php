@@ -124,23 +124,7 @@ class ReservationController extends RbacController {
 	    	}
     	}
     	
-    	
-    	/*if($source){ //Se tem permissão na origem
-    		$source = $source->getDevice()->one();
-    		if($source){
-    			$domainId = $source->domain_id;
-    			if(self::can('reservation/read', $domainId)) $permission = true;
-    		}
-    	}
-    	if($destination){ //Se tem permissão no destino
-    		$destination = $destination->getDevice()->one();
-    		if($destination){
-    			$domainId = $destination->domain_id;
-    			if(self::can('reservation/read', $domainId)) $permission = true;
-    		}
-    	}*/
-    	
-    	if(!$permission){ //Se ele não tiver em nenhum dos dois e não for quem requisitou
+    	if(!$permission){ //Se ele não tiver permissão em nenhum domínio do path e não for quem requisitou
 			return $this->goHome();
     	}
 		 

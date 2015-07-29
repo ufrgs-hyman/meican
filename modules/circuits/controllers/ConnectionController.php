@@ -10,6 +10,7 @@ use app\models\Port;
 use app\models\Device;
 use app\models\Domain;
 use app\models\Provider;
+use app\models\Reservation;
 use app\controllers\RbacController;
 
 
@@ -102,26 +103,20 @@ class ConnectionController extends RbacController {
 		foreach (json_decode($connections) as $connId) {
 			$conn = Connection::findOne($connId);
 			if (isset($conn->external_id)){
-				$reservation = $conn->getReservation()->one();
-				$source = $conn->getFirstPath()->one()->getSourcePort()->one();
-				$destination = $conn->getLastPath()->one()->getDestinationPort()->one();
-				$permission = false;
-				if($source){ //Se tem permissão na origem
-					$source = $source->getDevice()->one();
-					if($source){
-						$domainId = $source->domain_id;
-						if(self::can('reservation/delete', $domainId)) $permission = true;
-					}
-				}
-				if($destination){ //Se tem permissão no destino
-					$destination = $destination->getDevice()->one();
-					if($destination){
-						$domainId = $destination->domain_id;
-						if(self::can('reservation/delete', $domainId)) $permission = true;
-					}
-				}
-				if(Yii::$app->user->getId() == $reservation->request_user_id) $permission = true; //Se é quem requisitou
-				
+		    	$permission = false;
+		    	$reservation = Reservation::findOne(['id' => $conn->reservation_id]);
+		    	if(Yii::$app->user->getId() == $reservation->request_user_id) $permission = true; //Se é quem requisitou
+		    	else {
+		    		$domains_name = [];
+		    		foreach(self::whichDomainsCan('reservation/read') as $domain) $domains_name[] = $domain->name;
+		    		
+		    		$paths = ConnectionPath::find()
+				    		 ->where(['in', 'domain', $domains_name])
+				    		 ->andWhere(['conn_id' => $conn])
+				    		 ->select(["conn_id"])->distinct(true)->one();
+		    		 
+		    		if(!empty($paths)) $permission = true;
+		    	}
 				if($permission){
 					$conn->requestCancel();
 					return true;

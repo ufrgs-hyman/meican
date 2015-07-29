@@ -149,7 +149,7 @@ class Connection extends \yii\db\ActiveRecord
     	$this->status = self::STATUS_CANCEL_REQ;
     	$this->save();
     
-        $requester = new ConnectionServiceRequester($this);
+        $requester = new RequesterClient($this);
         $requester->requestCancel();
     }
     
