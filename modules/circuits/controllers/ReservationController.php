@@ -105,12 +105,27 @@ class ReservationController extends RbacController {
     	}
 
     	//Confere a permissão
-    	$connection = $reservation->getConnections()->one();
-
-    	$source = $connection->getFirstPath()->one()->getPort()->one();    	
-    	$destination = $connection->getLastPath()->one()->getPort()->one();
+    	$domains_name = [];
+    	foreach(self::whichDomainsCan('reservation/read') as $domain) $domains_name[] = $domain->name;
     	$permission = false;
-    	if($source){ //Se tem permissão na origem
+    	if(Yii::$app->user->getId() == $reservation->request_user_id) $permission = true; //Se é quem requisitou
+    	else {
+    		$conns = Connection::find()->where(['reservation_id' => $reservation->id])->select(["id"])->all();
+	    	if(!empty($conns)){
+	    		$conn_ids = [];
+	    		foreach($conns as $conn) $conn_ids[] = $conn->id;
+	    	
+	    		$paths = ConnectionPath::find()
+			    		 ->where(['in', 'domain', $domains_name])
+			    		 ->andWhere(['in', 'conn_id', $conn_ids])
+			    		 ->select(["conn_id"])->distinct(true)->one();
+	    		 
+	    		if(!empty($paths)) $permission = true;
+	    	}
+    	}
+    	
+    	
+    	/*if($source){ //Se tem permissão na origem
     		$source = $source->getDevice()->one();
     		if($source){
     			$domainId = $source->domain_id;
@@ -123,8 +138,8 @@ class ReservationController extends RbacController {
     			$domainId = $destination->domain_id;
     			if(self::can('reservation/read', $domainId)) $permission = true;
     		}
-    	}
-    	if(Yii::$app->user->getId() == $reservation->request_user_id) $permission = true; //Se é quem requisitou
+    	}*/
+    	
     	if(!$permission){ //Se ele não tiver em nenhum dos dois e não for quem requisitou
 			return $this->goHome();
     	}
