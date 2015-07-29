@@ -513,9 +513,7 @@ function fillNetworkSelect(endPointType, domainId, networkId, initDisabled) {
 				}
 			}
 		});
-	} else {
-		disableSelect(endPointType, "network");
-	}
+	} 
 }
 
 function fillDeviceSelect(endPointType, domainId, networkId, deviceId, initDisabled) {
@@ -553,9 +551,7 @@ function fillDeviceSelect(endPointType, domainId, networkId, deviceId, initDisab
                 }
             }
         });
-    } else {
-		disableSelect(endPointType, "device");
-	}
+    } 
 }
 
 function fillPortSelect(endPointType, deviceId, portId) {
@@ -584,8 +580,6 @@ function fillPortSelect(endPointType, deviceId, portId) {
                 if (portId != null && portId != "") $("#"+ endPointType + "-port").val(portId);
 			}
 		});
-	} else {
-		disableSelect(endPointType, "port");
 	} 
 }
 
@@ -595,35 +589,39 @@ function fillVlanSelect(endPointType, portId, vlan) {
 	if (portId != "" && portId != null) {
 		$("#"+ endPointType + "-vlan").append('<option value="">' + tt('loading') + '</option>');
 		$.ajax({
-			url: baseUrl+'/topology/port/get-vlan-ranges',
+			url: baseUrl+'/topology/port/get-vlan-range',
 			dataType: 'json',
 			data: {
 				id: portId,
 			},
 			success: function(response){
 				clearSelect(endPointType, "vlan");
-				$("#"+ endPointType + "-vlan").append('<option value="' + response[0].value + '">' + tt("any") + '</option>');
-				
-				for (var i = 0; i < response.length; i++) {
-					var interval = response[i].value.split("-");
-					var low = parseInt(interval[0]);
-					var high = low;
-					if (interval.length > 1) {
-						high = parseInt(interval[1]);
-					}
-					
-					for (var j = low; j < high+1; j++) {
-						$("#"+ endPointType + "-vlan").append('<option value="' + j + '">' + j + '</option>');
-					}
+				var ranges = response.split(",");
+
+				for (var i = 0; i < ranges.length; i++) {
+                    var interval = ranges[i].split("-");
+                    if (interval.length > 1)
+                        $("#"+ endPointType + "-vlan").append('<option value="' + ranges[i] + '">' + ranges[i] + '</option>');
+			    }
+
+                for (var i = 0; i < ranges.length; i++) {
+                    var interval = response.split("-");
+                    var low = parseInt(interval[0]);
+                    var high = low;
+                    if (interval.length > 1) {
+                        high = parseInt(interval[1]);
+                    }
+                    
+                    for (var j = low; j < high+1; j++) {
+                        $("#"+ endPointType + "-vlan").append('<option value="' + j + '">' + j + '</option>');
+                    }
                     if (vlan != null && vlan != "") {
                         $("#"+ endPointType + "-vlan").val(vlan);
                     }
-			    }
+                }
 				enableSelect(endPointType, "vlan");
 			}
 		});
-	} else {
-		disableSelect(endPointType, "vlan");
 	}
 }
 
@@ -783,7 +781,7 @@ function initialize() {
     initWaypointSelect();
 	
 	$.ajax({
-		url: baseUrl+'/topology/network/get-all',
+		url: baseUrl+'/topology/network/get-all-parent-location',
 		dataType: 'json',
         data: {
             cols: JSON.stringify(['id','name','latitude','longitude','domain_id']),

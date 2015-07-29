@@ -95,16 +95,21 @@ class Device extends \yii\db\ActiveRecord
     }
 
     static function findOneParentLocation($id) {
-        $dev = Device::findOne($id);
+        $dev = Device::find()->where(['id'=>$id])->select(['id','name','latitude','longitude','domain_id'])->one();
         if (!$dev) return null;
         if ($dev->latitude != null) return $dev;
         foreach ($dev->getPorts()->select(['network_id'])->distinct(true)->all() as $port) {
-            $net = $port->getNetwork()->one();
-            if ($net && $net->latitude) {
-                $dev->latitude = $net->latitude;
-                $dev->longitude = $net->longitude;
+            $net = $port->getNetwork()->select(['latitude','longitude'])->asArray()->one();
+            if ($net && $net['latitude']) {
+                $dev->latitude = $net['latitude'];
+                $dev->longitude = $net['longitude'];
                 return $dev;
             }
+        }
+        $prov = Provider::find()->where(['domain_id'=>$dev->domain_id])->select(['latitude','longitude'])->asArray()->one();
+        if($prov) {
+            $dev->latitude = $prov['latitude'];
+            $dev->longitude = $prov['longitude'];
         }
 
         return $dev;

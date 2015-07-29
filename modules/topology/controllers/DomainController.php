@@ -142,15 +142,4 @@ class DomainController extends RbacController {
     	Yii::trace($temp);
     	return $temp;
     }
-    
-    public function actionGetByUrn($id, $cols=null) {
-    	$urn = Urn::findOne($id);
-    	$cols ? $data = $urn->getDevice()->one()->
-    		getNetwork()->one()->getDomain()->select($cols)->one() : $data = $urn->getDevice()->one()->
-    			getNetwork()->one()->getDomain()->one();
-    	
-    	$temp = Json::encode($data);
-    	Yii::trace($temp);
-    	return $temp;
-    }
 }

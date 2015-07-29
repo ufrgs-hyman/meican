@@ -73,6 +73,8 @@ class ServiceController extends RbacController {
         return $this->redirect(array('/topology/provider/view', 'id'=>$service->provider_id));
     }
 
+    /////////////////
+
     public function actionGetCsByProviderNsa($nsa, $cols=null) {
         $provider = Provider::findByNsa($nsa)->one();
         if (!$provider) {

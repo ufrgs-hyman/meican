@@ -16,11 +16,11 @@ use Yii;
  */
 class Service extends \yii\db\ActiveRecord
 {
-    const TYPE_NSI_DISCOVERY = "NSI_DISCOVERY";
-    const TYPE_NSI_TOPOLOGY = "NSI_TOPOLOGY";
-    const TYPE_NSI_CONNECTION = "NSI_CONNECTION";
-    const TYPE_NMWG_TOPOLOGY = 'NMWG_TOPOLOGY';
-    const TYPE_NMWG_TOPO_PERFSONAR = 'NMWG_TOPO_PERFSONAR';
+    const TYPE_NSI_DS_1_0 = "NSI_DS_1_0";
+    const TYPE_NSI_TD_2_0 = "NSI_TD_2_0";
+    const TYPE_NSI_CSP_2_0 = "NSI_CSP_2_0";
+    const TYPE_NMWG_TD_1_0 = 'NMWG_TD_1_0';
+    const TYPE_PERFSONAR_TS_1_0 = 'PERFSONAR_TS_1_0';
 
     /**
      * @inheritdoc
@@ -58,32 +58,32 @@ class Service extends \yii\db\ActiveRecord
 
     public function getType() {
         switch ($this->type) {
-            case self::TYPE_NSI_DISCOVERY: return self::getTypeLabels()[self::TYPE_NSI_DISCOVERY];
-            case self::TYPE_NSI_TOPOLOGY: return self::getTypeLabels()[self::TYPE_NSI_TOPOLOGY];
-            case self::TYPE_NSI_CONNECTION: return self::getTypeLabels()[self::TYPE_NSI_CONNECTION];
-            case self::TYPE_NMWG_TOPOLOGY: return self::getTypeLabels()[self::TYPE_NMWG_TOPOLOGY];
-            case self::TYPE_NMWG_TOPO_PERFSONAR: return self::getTypeLabels()[self::TYPE_NMWG_TOPO_PERFSONAR];
+            case self::TYPE_NSI_DS_1_0: return self::getTypeLabels()[self::TYPE_NSI_DS_1_0];
+            case self::TYPE_NSI_TD_2_0: return self::getTypeLabels()[self::TYPE_NSI_TD_2_0];
+            case self::TYPE_NSI_CSP_2_0: return self::getTypeLabels()[self::TYPE_NSI_CSP_2_0];
+            case self::TYPE_NMWG_TD_1_0: return self::getTypeLabels()[self::TYPE_NMWG_TD_1_0];
+            case self::TYPE_PERFSONAR_TS_1_0: return self::getTypeLabels()[self::TYPE_PERFSONAR_TS_1_0];
             default: return Yii::t('topology', 'Unknown');
         }
     }
 
     static function getTypeLabels() {
         return [
-            self::TYPE_NSI_DISCOVERY => Yii::t('topology', 'NSI Discovery Service'),
-            self::TYPE_NSI_TOPOLOGY => Yii::t('topology', 'NSI Topology Description'),
-            self::TYPE_NSI_CONNECTION => Yii::t('topology', 'NSI Connection Service'),
-            self::TYPE_NMWG_TOPOLOGY => Yii::t('topology', 'NMWG Topology Description'),
-            self::TYPE_NMWG_TOPO_PERFSONAR => Yii::t('topology', 'PerfSONAR Topology Service')
+            self::TYPE_NSI_DS_1_0 => Yii::t('topology', 'NSI Discovery Service 1.0'),
+            self::TYPE_NSI_TD_2_0 => Yii::t('topology', 'NSI Topology Description 2.0'),
+            self::TYPE_NSI_CSP_2_0 => Yii::t('topology', 'NSI Connection Service 2.0'),
+            self::TYPE_NMWG_TD_1_0 => Yii::t('topology', 'NMWG Topology Description 1.0'),
+            self::TYPE_PERFSONAR_TS_1_0 => Yii::t('topology', 'PerfSONAR Topology Service 1.0')
         ];
     }
 
     static function getTypes() {
         return [
-            ['id'=> self::TYPE_NSI_DISCOVERY, 'name'=> self::getTypeLabels()[self::TYPE_NSI_DISCOVERY]],
-            ['id'=> self::TYPE_NSI_TOPOLOGY, 'name'=> self::getTypeLabels()[self::TYPE_NSI_TOPOLOGY]],
-            ['id'=> self::TYPE_NSI_CONNECTION, 'name'=> self::getTypeLabels()[self::TYPE_NSI_CONNECTION]],
-            ['id'=> self::TYPE_NMWG_TOPOLOGY, 'name'=> self::getTypeLabels()[self::TYPE_NMWG_TOPOLOGY]],
-            ['id'=> self::TYPE_NMWG_TOPO_PERFSONAR, 'name'=> self::getTypeLabels()[self::TYPE_NMWG_TOPO_PERFSONAR]]
+            ['id'=> self::TYPE_NSI_DS_1_0, 'name'=> self::getTypeLabels()[self::TYPE_NSI_DS_1_0]],
+            ['id'=> self::TYPE_NSI_TD_2_0, 'name'=> self::getTypeLabels()[self::TYPE_NSI_TD_2_0]],
+            ['id'=> self::TYPE_NSI_CSP_2_0, 'name'=> self::getTypeLabels()[self::TYPE_NSI_CSP_2_0]],
+            ['id'=> self::TYPE_NMWG_TD_1_0, 'name'=> self::getTypeLabels()[self::TYPE_NMWG_TD_1_0]],
+            ['id'=> self::TYPE_PERFSONAR_TS_1_0, 'name'=> self::getTypeLabels()[self::TYPE_PERFSONAR_TS_1_0]]
         ];
     }
 

@@ -45,6 +45,7 @@ class Provider extends \yii\db\ActiveRecord
         return [
             [['type', 'name', 'nsa'], 'required'],
             [['type'], 'string'],
+            [['domain_id'], 'integer'],
             [['latitude', 'longitude'], 'number'],
             [['name'], 'string', 'max' => 100],
             [['nsa'], 'string', 'max' => 200],
@@ -109,7 +110,7 @@ class Provider extends \yii\db\ActiveRecord
     }
 
     public function getConnectionService() {
-        return $this->getServices()->andWhere(['type'=>Service::TYPE_NSI_CONNECTION]);
+        return $this->getServices()->andWhere(['type'=>Service::TYPE_NSI_CSP_2_0]);
     }
 
     static function findByNsa($nsa) {

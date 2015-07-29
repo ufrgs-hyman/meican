@@ -9,13 +9,12 @@ use yii\data\ArrayDataProvider;
 
 use app\models\Network;
 use app\models\Domain;
-use app\models\Urn;
+use app\models\Provider;
 
 use app\modules\topology\models\NetworkSearch;
 
 use yii\helpers\Json;
 use Yii;
-use yii\db\Query;
 
 class NetworkController extends RbacController {
 	
@@ -101,13 +100,31 @@ class NetworkController extends RbacController {
     //RESTfull
     
     public function actionGetAll($cols=null){
-    	$query = Network::find()->asArray();
+    	$query = Network::find()->orderBy(['name'=> "SORT ASC"])->asArray();
 
         $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
     
     	$temp = Json::encode($data);
     	Yii::trace($temp);
     	return $temp;
+    }
+
+    public function actionGetAllParentLocation($cols=null){
+        $query = Network::find()->orderBy(['name'=> "SORT ASC"])->asArray();
+
+        $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
+
+        foreach ($data as &$net) {
+            if ($net['latitude'] == null) {
+                $prov = Provider::find()->where(['domain_id'=>$net['domain_id']])->select(['latitude','longitude'])->asArray()->one();
+                $net['latitude'] = $prov['latitude'];
+                $net['longitude'] = $prov['longitude'];
+            }
+        }
+    
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
     }
     
     public function actionGetByDomain($id){

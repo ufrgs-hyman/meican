@@ -411,74 +411,65 @@ function initialize() {
 }
 
 function drawReservation(connId, animate) {
-	if (selectedConnIsApproved) {
-		$.ajax({
-			url: baseUrl+'/circuits/connection/get-ordered-paths',
-			dataType: 'json',
-			method: "GET",
-			data: {
-				id: connId,
-			},
-			success: function(response) {
-				var size = response.length;
-				var requiredMarkers = [];
+	$.ajax({
+		url: baseUrl+'/circuits/connection/get-ordered-paths',
+		dataType: 'json',
+		method: "GET",
+		data: {
+			id: connId,
+		},
+		success: function(response) {
+            if (selectedConnIsApproved) {
+                var size = response.length;
+                var requiredMarkers = [];
 
-				//a ordem dos marcadores aqui eh importante,
-				//pois eh a ordem do circuito
-				for (var i = 0; i < size; i++) {
-					if (response[i].device_id != null) {
-						requiredMarkers.push(response[i].device_id);
-					}
-				}
+                //a ordem dos marcadores aqui eh importante,
+                //pois eh a ordem do circuito
+                for (var i = 0; i < size; i++) {
+                    if (response[i].device_id != null) {
+                        requiredMarkers.push(response[i].device_id);
+                    }
+                }
 
-				showMarkers(requiredMarkers);
+                showMarkers(requiredMarkers);
 
-				console.log(requiredMarkers);
+                console.log(requiredMarkers);
 
-				addSourceMarker(response[0].device_id);
-                addDestinMarker(response[size-1].device_id);
-				
-				for (var i = 1; i < size-1; i++) {
-					if (response[i].device_id != null) {
-						addWayPointMarker(response[i].device_id);
-					}
-				}
-				
-				setMapBoundsMarkersWhenReady(requiredMarkers);
-				
-				drawCircuitWhenReady(requiredMarkers, animate);
-			}
-		});
-	} else {
-		$.ajax({
-			url: baseUrl+'/circuits/reservation/get-ordered-paths',
-			dataType: 'json',
-			method: "GET",
-			data: {
-				id: $("#res-id").text(),
-			},
-			success: function(response) {
-				var size = response.length;
-				
-				var requiredMarkers = [];
-
-				//aqui nao importa a ordem dos marcadores, pois nao ha circuito criado
                 addSourceMarker(response[0].device_id);
-				requiredMarkers.push(response[0].device_id);
-				addDestinMarker(response[size-1].device_id);
-				requiredMarkers.push(response[size-1].device_id);
-				
-				for (var i = 1; i < size-1; i++) {
-					if (response[i].device_id != null) {
-						addWayPointMarker(response[i].device_id);
-						requiredMarkers.push(response[i].device_id);
-					}
-				}
-				
-				setMapBoundsMarkersWhenReady(requiredMarkers);
-			}
-		});
-	}
+                addDestinMarker(response[size-1].device_id);
+                
+                for (var i = 1; i < size-1; i++) {
+                    if (response[i].device_id != null) {
+                        addWayPointMarker(response[i].device_id);
+                    }
+                }
+                
+                setMapBoundsMarkersWhenReady(requiredMarkers);
+                
+                drawCircuitWhenReady(requiredMarkers, animate);
+                
+            } else {
+                var size = response.length;
+            
+                var requiredMarkers = [];
+
+                //aqui nao importa a ordem dos marcadores, pois nao ha circuito criado
+                addSourceMarker(response[0].device_id);
+                requiredMarkers.push(response[0].device_id);
+                addDestinMarker(response[size-1].device_id);
+                requiredMarkers.push(response[size-1].device_id);
+                
+                for (var i = 1; i < size-1; i++) {
+                    if (response[i].device_id != null) {
+                        addWayPointMarker(response[i].device_id);
+                        requiredMarkers.push(response[i].device_id);
+                    }
+                }
+                
+                setMapBoundsMarkersWhenReady(requiredMarkers);
+            }
+		}
+	});
 }
 
 function drawCircuitWhenReady(requiredMarkers, animate) {

@@ -29,6 +29,7 @@ use Yii;
  * @property integer $max_capacity
  * @property integer $min_capacity
  * @property integer $granularity
+ * @property string $vlan_range
  *
  * Portas unidirecionais do tipo NSI devem ter associadas
  * portas bidirecionais.
@@ -56,7 +57,6 @@ use Yii;
  * @property Device $device
  * @property Network $network
  * @property Port $alias
- * @property VlanRange[] $vlanRanges
  */
 class Port extends \yii\db\ActiveRecord
 {
@@ -84,6 +84,7 @@ class Port extends \yii\db\ActiveRecord
         return [
             [['type', 'directionality', 'urn', 'name', 'device_id'], 'required'],
             [['type', 'directionality'], 'string'],
+            [['vlan_range'], 'string'],
             [['max_capacity', 'min_capacity', 'granularity', 'biport_id', 'alias_id', 'device_id', 'network_id'], 'integer'],
             [['urn'], 'string', 'max' => 250],
             [['name'], 'string', 'max' => 100],
@@ -148,34 +149,6 @@ class Port extends \yii\db\ActiveRecord
         return $this->hasOne(Port::className(), ['id' => 'alias_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getVlanRanges() {
-        return $this->hasMany(VlanRange::className(), ['port_id' => 'id']);
-    }
-
-    public function updateVlans($vlanRanges) {
-        $this->removeVlans();
-         
-        $rangesArray = explode(",", $vlanRanges);
-        foreach ($rangesArray as $range) {
-                $vlan = new VlanRange;
-                $vlan->value = $range;
-                $vlan->port_id = $this->id;
-                if(!$vlan->save()) {
-                    Yii::trace("Erro ao salvar vlan range");
-                }
-        }
-    }
-    
-    public function removeVlans() {
-        $vlans = VlanRange::findAll(['port_id' => $this->id]);
-        foreach ($vlans as $vlan) {
-            $vlan->delete();
-        }
-    }
-    
     public static function findByUrn($urn) {
         return self::find()->where(['urn'=>$urn]);
     }
@@ -188,9 +161,9 @@ class Port extends \yii\db\ActiveRecord
         $this->device_id = $dev->id;
     }
 
-    public function getInboundPortVlanRanges() {
-        $inboundPort = $this->getUniPorts()->andWhere(['directionality'=>self::DIR_UNI_IN])->one();
-        if ($inboundPort) return $inboundPort->getVlanRanges();
+    public function getInboundPortVlanRange() {
+        $inboundPort = $this->getUniPorts()->andWhere(['directionality'=>self::DIR_UNI_IN])->select(['vlan_range'])->one();
+        if ($inboundPort) return $inboundPort->vlan_range;
         return null;
     }
 }

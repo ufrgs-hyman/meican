@@ -24,8 +24,9 @@ class DateUtils {
 		return $dateTime->format("Y-m-d H:i:s");
 	}
 	
-	public static function now() {
+	public static function now($modify=null) {
 		$date = new \DateTime('now', new \DateTimeZone("UTC"));
+    	if($modify) $date->modify($modify);
     	$now = $date->format('Y-m-d H:i:s');
     	return $now;
 	}

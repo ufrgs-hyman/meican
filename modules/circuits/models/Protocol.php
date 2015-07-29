@@ -3,14 +3,13 @@
 namespace app\modules\circuits\models;
 
 use Yii;
+use app\models\Service;
 
 class Protocol {
 
-    const TYPE_NSI_CS_2_0 = "nsi.cs.2.0";
-
     static function getTypes() {
         return [
-            ['id'=> self::TYPE_NSI_CS_2_0, 'name'=> "NSI Connection Service 2.0"],
+            ['id'=> Service::TYPE_NSI_CSP_2_0, 'name'=> Service::getTypeLabels()[Service::TYPE_NSI_CSP_2_0]],
         ];
     }
 }

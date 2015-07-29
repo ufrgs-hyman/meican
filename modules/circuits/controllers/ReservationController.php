@@ -18,6 +18,7 @@ use app\models\Port;
 use app\models\Domain;
 use app\models\Device;
 use app\models\Network;
+use app\models\Service;
 use app\modules\circuits\models\CircuitsPreference;
 use app\modules\circuits\models\ReservationForm;
 use app\modules\circuits\models\Protocol;
@@ -28,8 +29,8 @@ use app\models\Notification;
 use yii\helpers\Json;
 
 class ReservationController extends RbacController {
-	
-	public $enableCsrfValidation = false;
+
+    public $enableCsrfValidation = false;
 	
     public function actionCreate() {
     	/* Removido, pois todo usuário passa a ter acesso ao mapa.
@@ -173,29 +174,14 @@ class ReservationController extends RbacController {
     
     //////REST functions
 
-    public function actionGetOrderedPaths($id) {
-        $paths = ReservationPath::find()->where(['reservation_id'=>$id])->orderBy(['path_order'=> "SORT_ASC"])->all();
-        
-        $data =[];
-        
-        foreach ($paths as $path) {
-            $port = $path->getPort()->select(['id','device_id'])->one();
-            $data[] = ['path_order' => $path->path_order, 'device_id'=> $port ? $port->device_id : null];
-        }
-        
-        $data = json_encode($data);
-        Yii::trace($data);
-        return $data;
-    }
-
     public function actionGetPortByDevice($id, $cols=null) {
-        $query = Port::find()->where(['device_id'=>$id])->asArray();
+        $query = Port::find()->where(['device_id'=>$id])->orderBy(['name'=>'SORT ASC'])->asArray();
 
         if (!CircuitsPreference::findOne(CircuitsPreference::CIRCUITS_UNIPORT_ENABLED)->getBoolean()) {
             $query->andWhere(['directionality'=>Port::DIR_BI]);
         }
 
-        if (CircuitsPreference::findOne(CircuitsPreference::CIRCUITS_PROTOCOL)->value == Protocol::TYPE_NSI_CS_2_0) {
+        if (CircuitsPreference::findOne(CircuitsPreference::CIRCUITS_PROTOCOL)->value == Service::TYPE_NSI_CSP_2_0) {
             $query->andWhere(['type'=>Port::TYPE_NSI]);
         }
 

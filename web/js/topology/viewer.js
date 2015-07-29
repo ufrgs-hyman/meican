@@ -47,6 +47,9 @@ function loadDeviceMarkers() {
         url: baseUrl+'/topology/device/get-all',
         dataType: 'json',
         method: "GET",
+        data: {
+            cols: JSON.stringify(['id','name','latitude','longitude','domain_id'])
+        },
         success: function(response) {
             var size = response.length;
             for (var i = 0; i < size; i++) {
@@ -115,8 +118,11 @@ function initialize() {
 	});
 	
     $.ajax({
-        url: baseUrl+'/topology/network/get-all',
+        url: baseUrl+'/topology/network/get-all-parent-location',
         dataType: 'json',
+        data: {
+            cols: JSON.stringify(['id','name','latitude','longitude','domain_id'])
+        },
         method: "GET",
         success: function(response) {
             var size = response.length;

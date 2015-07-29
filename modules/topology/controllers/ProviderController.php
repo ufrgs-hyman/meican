@@ -106,8 +106,6 @@ class ProviderController extends RbacController {
     public function actionGetByDomains($domains) {
         $doms = json_decode($domains);
         
-        
-        
         $temp = Json::encode($providers);
         Yii::trace($temp);
         return $temp;
