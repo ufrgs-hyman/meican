@@ -46,18 +46,14 @@ class PortController extends RbacController {
 				$port->max_capacity = $_POST['max_capacity'];
 				$port->min_capacity = $_POST['min_capacity'];
 				$port->granularity = $_POST['granularity'];
+				$port->vlan_range = $_POST['vlan'];
 	
 				$port->network_id = Network::find()->where(['name' => $_POST['network']])->andWhere(['domain_id' => $domainId])->one()->id;
 				
 				$port->device_id = Device::find()->where(['name' => $_POST['device']])->andWhere(['domain_id' => $domainId])->one()->id;
 	
-				if ($port->save()) {
-					$port->updateVlans($_POST['vlan']);
-					echo "ok";
-				}
-				else{
-					echo "error";
-				}
+				if ($port->save()) echo "ok";
+				else echo "error";
 			}
 	
 		}
@@ -81,18 +77,14 @@ class PortController extends RbacController {
 				$port->max_capacity = $_POST['max_capacity'];
 				$port->min_capacity = $_POST['min_capacity'];
 				$port->granularity = $_POST['granularity'];
+				$port->vlan_range = $_POST['vlan'];
 	
 				$port->network_id = Network::find()->where(['name' => $_POST['network']])->andWhere(['domain_id' => $domainId])->one()->id;
 				
 				$port->device_id = Device::find()->where(['name' => $_POST['device']])->andWhere(['domain_id' => $domainId])->one()->id;
 	
-				if ($port->save()) {
-					$port->updateVlans($_POST['vlan']);
-					echo "ok";
-				}
-				else{
-					echo "error";
-				}
+				if ($port->save()) echo "ok";
+				else echo "error";
 			}
 			else echo false;
 		}
@@ -173,10 +165,11 @@ class PortController extends RbacController {
 
 	public function actionGetVlan(){
 		$port = Port::findOne($_GET['id']);
-		$data = $port->getVlanRanges()->asArray()->all();
-	
+		if($port->vlan_range) $data = $port->vlan_range;
+		else $data = $port->getInboundPortVlanRange();
+		
 		$temp = Json::encode($data);
-		Yii::error($temp);
+		
 		return $temp;
 	}
 	

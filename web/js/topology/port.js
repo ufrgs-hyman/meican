@@ -183,12 +183,7 @@ function editPort(obj, id){
 					    
 					    $.getJSON(baseUrl + "/topology/port/get-vlan?id="+id, 
 								function(data) {
-					    			var string = "";
-					    			for (var i = 0; i < data.length; i++) { 
-					    			    string = string.concat(data[i].value);
-					    			    if(i < data.length-1) string = string.concat(",");
-					    			}
-					    			document.getElementById("editVlan".concat(domId)).value = string;
+					    			document.getElementById("editVlan".concat(domId)).value = data;
 								}
 						);
 						

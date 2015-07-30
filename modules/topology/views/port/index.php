@@ -52,6 +52,7 @@
 				'key' => 'id',
 				'pagination' => false,
 			]),
+			'layout' => '{items}',
 			'columns' => array(
 				[
 					'class'=>CheckboxColumn::className(),
@@ -105,16 +106,8 @@
 					'format' => 'raw',
 					'label' => Yii::t('topology', 'VLANs'),
 					'value' => function ($port){
-						$vlans ="";
-						$vlansArray = $port->getVlanRanges()->all();
-						$len = count($vlansArray);
-						$c = 0;
-						foreach ($vlansArray as $vlan):
-							$c++;
-							$vlans .= $vlan->value;
-							if($c < $len) $vlans .= ",";
-						endforeach;
-						return $vlans;
+						if($port->vlan_range) return $port->vlan_range;
+						return $port->getInboundPortVlanRange();
 					},
 					'headerOptions'=>['style'=>'width: 8%;'],
 				],
