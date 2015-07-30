@@ -11,9 +11,6 @@ class IndexCreateAsset extends AssetBundle
 			'js/bpm/workflow/indexCreate.js',
 			'js/bpm/workflow/bpm-i18n.js',
 	];
-	public $css = [
-			'css/dialogWithoutClose.css',
-	];
 	public $depends = [
 			'yii\web\JqueryAsset',
 	];

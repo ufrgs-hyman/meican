@@ -7,9 +7,6 @@ class IndexAsset extends AssetBundle
 {
 	public $basePath = '@webroot';
 	public $baseUrl = '@web';
-	public $css = [
-			'css/dialogWithoutClose.css',
-	];
 	public $js = [
 			'js/bpm/workflow/index.js',
 			'js/bpm/workflow/bpm-i18n.js',

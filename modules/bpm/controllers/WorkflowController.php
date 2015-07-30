@@ -13,30 +13,20 @@ use app\models\User;
 use app\models\UserDomainRole;
 use app\models\BpmWorkflow;
 use app\components\DateUtils;
+use app\modules\bpm\models\WorkflowSearch;
 
 class WorkflowController extends RbacController {
 	
 	public $enableCsrfValidation = false;
 	
     public function actionIndex() {
-    	$workflows = BpmWorkflow::find()->orderBy(['domain' => SORT_ASC]);
+    	$searchModel = new WorkflowSearch;
+    	$allowedDomains = self::whichDomainsCan('workflow/read');
+    	$data = $searchModel->searchByDomains(Yii::$app->request->get(), $allowedDomains);
 
-    	//Vetor para armazenar os workflows que o usuário tem permissão para ver
-    	$workflowsClean = [];
-    	//Percorre todos os workflows
-    	foreach($workflows->all() as $work){
-    		$domain = Domain::findOne(['name' => $work->domain]);
-    		if($domain && self::can('workflow/read', $domain->id)) $workflowsClean[$work->id] = $work;
-    	}
-    	
-    	$dataProvider = new ArrayDataProvider([
-    			'allModels' => $workflowsClean,
-    			'sort' => false,
-    			'pagination' => false,
-    	]);
-    	
     	return $this->render('index', array(
-    			'workflows' => $dataProvider
+    			'searchModel' => $searchModel,
+    			'data' => $data,
     	));
     }
     

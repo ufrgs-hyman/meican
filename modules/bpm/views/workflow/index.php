@@ -8,6 +8,8 @@
 	use yii\data\ActiveDataProvider;
 	use app\models\BpmWorkflow;
 	
+	use yii\helpers\ArrayHelper;
+	
 	use app\modules\bpm\assets\IndexAsset;
 	IndexAsset::register($this);
 ?>
@@ -20,7 +22,8 @@
 <?=
 	GridView::widget([
 		'options' => ['class' => 'list'],
-		'dataProvider' => $workflows,
+		'dataProvider' => $data,
+		'filterModel' => $searchModel,
 		'formatter' => new Formatter(['nullDisplay'=>'']),
 		'id' => 'gridDevices',
 		'layout' => "{items}{summary}{pager}",
@@ -30,14 +33,15 @@
 					'value' => function ($work){
 						return Html::img('@web'.'/images/remove.png', ['title'=> Yii::t("bpm", 'Delete Workflow'), 'onclick' => "deleteWorkflow($work->id)"]);
 					},
-					'contentOptions'=>['style'=>'width: 15px; cursor: pointer;']
+					'contentOptions'=>['style'=>'cursor: pointer;'],
+					'headerOptions'=>['style'=>'width: 2%;'],
 				],
 				[
 					'class'=> LinkColumn::className(),
 					'image'=>'/images/eye.png',
 					'title'=> Yii::t("bpm", 'View Workflow'),
 					'url' => '/bpm/workflow/viewer',
-					'contentOptions'=>['style'=>'width: 15px;'],
+					'headerOptions'=>['style'=>'width: 2%;'],
 				],
 				[
 					'format' => 'raw',
@@ -45,15 +49,16 @@
 						return Html::img('@web'.'/images/edit_1.png', ['title' => Yii::t("bpm", 'Update Workflow'), 'onclick' => "update($work->id)"]);
 					},
 					'contentOptions' => function ($work){
-						return ['style'=>'width: 15px; cursor: pointer;', "disabled"=> !$work->isDisabled()];
+						return ['style'=>'cursor: pointer;', "disabled"=> !$work->isDisabled()];
 		        	},
+		        	'headerOptions'=>['style'=>'width: 2%;'],
 				],
 		        [
 		        	'class'=> LinkColumn::className(),
 		        	'image'=>'/images/copy2.png',
 		        	'title'=> Yii::t("bpm", 'Create a copy of Workflow'),
 		        	'url' => '/bpm/workflow/copy',
-		        	'contentOptions'=>['style'=>'width: 15px;'],
+		        	'headerOptions'=>['style'=>'width: 2%;'],
         		],
 		        [
 		        	'format' => 'raw',
@@ -61,8 +66,9 @@
 		        		return Html::img('@web'.'/images/desactivate1.png', ['title' => Yii::t("bpm", 'Disable Workflow'), 'onclick' => "disableWorkflow($work->id)"]);
 		        	},
 		        	'contentOptions' => function ($work){
-		        		return ['style'=>'width: 15px; cursor: pointer;', "disabled"=> $work->isDisabled()];
+		        		return ['style'=>'cursor: pointer;', "disabled"=> $work->isDisabled()];
 		        	},
+		        	'headerOptions'=>['style'=>'width: 2%;'],
 		        ],
 		        [
 	        		'class'=> LinkColumn::className(),
@@ -70,15 +76,24 @@
 		        	'title'=> Yii::t("bpm", 'Enable Workflow'),
 	        		'url' => '/bpm/workflow/active',
 	        		'contentOptions' => function ($work){
-	        			return ['style'=>'width: 15px;', "disabled"=> !$work->isDisabled()];
+	        			return ["disabled"=> !$work->isDisabled()];
 	        		},
+	        		'headerOptions'=>['style'=>'width: 2%;'],
 		        ],
-				'name',
+		        [
+					'label' => Yii::t("bpm", 'Name'),
+					'value' => 'name',
+		        	'headerOptions'=>['style'=>'width: 35%;'],
+		        ],
 				[
 					'label' => Yii::t("bpm", 'Domain'),
-					'value' => function($work){
-						return strtoupper($work->getDomain()->one()->name);
-					}
+					'value' => 'domain',
+					'filter' => Html::activeDropDownList($searchModel, 'domain',
+							ArrayHelper::map(
+								BpmWorkflow::find()->select(["domain"])->distinct(true)->orderBy(['domain'=>SORT_ASC])->asArray()->all(), 'domain', 'domain'),
+							['class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
+					),
+					'headerOptions'=>['style'=>'width: 35%;'],
 				],
 				[
 					'format' => 'raw',
@@ -87,6 +102,11 @@
 						if($work->active==1) return Yii::t("bpm", "Enabled");
 						else return Yii::t("bpm", "Disabled");
 					},
+					'filter' => Html::activeDropDownList($searchModel, 'status',
+							["enabled" => Yii::t("bpm", "Enabled"), "disabled"=> Yii::t("bpm", "Disabled")],
+							['class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
+					),
+					'headerOptions'=>['style'=>'width: 18%;'],
 				],
 				
 			),

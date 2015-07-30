@@ -108,11 +108,11 @@ class ConnectionController extends RbacController {
 		    	if(Yii::$app->user->getId() == $reservation->request_user_id) $permission = true; //Se é quem requisitou
 		    	else {
 		    		$domains_name = [];
-		    		foreach(self::whichDomainsCan('reservation/read') as $domain) $domains_name[] = $domain->name;
+		    		foreach(self::whichDomainsCan('reservation/delete') as $domain) $domains_name[] = $domain->name;
 		    		
 		    		$paths = ConnectionPath::find()
 				    		 ->where(['in', 'domain', $domains_name])
-				    		 ->andWhere(['conn_id' => $conn])
+				    		 ->andWhere(['conn_id' => $conn->id])
 				    		 ->select(["conn_id"])->distinct(true)->one();
 		    		 
 		    		if(!empty($paths)) $permission = true;

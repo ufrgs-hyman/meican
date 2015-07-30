@@ -8,8 +8,11 @@
 	use app\models\Reservation;
 	use app\models\Connection;
 	use app\models\ConnectionPath;
+	use app\models\ConnectionAuth;
 	use app\models\Urn;
 	use app\models\User;
+	
+	use yii\helpers\ArrayHelper;
 	
 	use yii\data\ArrayDataProvider;
 ?>
@@ -19,49 +22,55 @@
 	<?=
 		GridView::widget([
 			'options' => ['class' => 'list'],
-			'dataProvider' => new ArrayDataProvider([
-    			'allModels' => $array,
-    			'sort' => false,
-    			'pagination' => [
-					'pageSize' => 15,
-			    ],
-    		]),
+			'dataProvider' => $data,
 			'formatter' => new Formatter(['nullDisplay'=>'']),
 			'id' => 'gridInfo',
+			'filterModel' => $searchModel,
 			'layout' => "{items}{summary}{pager}",
 			'columns' => array(
 					[
 						'label' => Yii::t('circuits', 'Reply request as '),
 						'value' => 'domain',
+						'filter' => Html::activeDropDownList($searchModel, 'domain',
+								ArrayHelper::map(
+										ConnectionAuth::find()->select(["domain"])->distinct(true)->orderBy(['domain'=>SORT_ASC])->asArray()->all(), 'domain', 'domain'),
+								['class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
+						),
 						'contentOptions'=>['style'=>'font-weight: bold;'],
 						'headerOptions'=>['style'=>'width: 23%;'],
 					],
 	        		[
 		        		'label' => Yii::t('circuits', 'Source Domain'),
 		        		'value' => function($aut){
-		        			$connection_id = Connection::find()->where(['reservation_id' => $aut->id])->one()->id;
-		        			$path = ConnectionPath::findOne(['conn_id' => $connection_id, 'path_order' => 0]);
-				        	if($path){
-				        		return $path->domain;
+	        				if($aut->source){
+				        		return $aut->source;
 				        	}
 				        	else{
 				        		return Yii::t('circuits', 'deleted');
 				        	};
 		        		},
+		        		'filter' => Html::activeDropDownList($searchModel, 'src_domain',
+		        				ArrayHelper::map(
+		        						ConnectionPath::find()->select(["domain"])->distinct(true)->orderBy(['domain'=>SORT_ASC])->asArray()->all(), 'domain', 'domain'),
+		        				['class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
+		        		),
 		        		'headerOptions'=>['style'=>'width: 21%;'],
 	        		],
 	        		[
 	        			'label' => Yii::t('circuits', 'Destination Domain'),
 	        			'value' => function($aut){
-	        				$connection_id = Connection::find()->where(['reservation_id' => $aut->id])->one()->id;
-		        			$path = ConnectionPath::find()->where(['conn_id' => $connection_id])->orderBy("path_order DESC")->one();
-				        	if($path){
-				        		return $path->domain;
+				        	if($aut->destination){
+				        		return $aut->destination;
 				        	}
 				        	else{
 				        		return Yii::t('circuits', 'deleted');
 				        	};
 	        			},
+	        			'filter' => Html::activeDropDownList($searchModel, 'dst_domain',
+	        					ArrayHelper::map(
+	        							ConnectionPath::find()->select(["domain"])->distinct(true)->orderBy(['domain'=>SORT_ASC])->asArray()->all(), 'domain', 'domain'),
+	        					['class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
+	        			),
 	        			'headerOptions'=>['style'=>'width: 21%;'],
 	        		],
 	        		[

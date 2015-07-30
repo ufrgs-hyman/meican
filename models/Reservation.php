@@ -156,23 +156,19 @@ class Reservation extends \yii\db\ActiveRecord
     }
     
     public function getSourceDomain() {
-    	$path = $this->getFirstPath()->one();
+		$connection = Connection::find()->where(['reservation_id' => $this->id])->one();
+		if(!$connection) return null;
+		$path = $connection->getFirstPath()->one();
     	if(!$path) return null;
-    	$port = $path->getPort()->one();
-    	if(!$port) return null;
-    	$device = $port->getDevice()->one();
-    	if(!$device) return null;
-    	return $device->getDomain()->one()->name;
+		return $path->domain;
     }
     
     public function getDestinationDomain() {
-    	$path = $this->getLastPath()->one();
+    	$connection = Connection::find()->where(['reservation_id' => $this->id])->one();
+		if(!$connection) return null;
+		$path = $connection->getLastPath()->one();
     	if(!$path) return null;
-    	$port = $path->getPort()->one();
-    	if(!$port) return null;
-    	$device = $port->getDevice()->one();
-    	if(!$device) return null;
-    	return $device->getDomain()->one()->name;
+		return $path->domain;
     }
     
     public function createConnections() {
