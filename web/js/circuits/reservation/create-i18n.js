@@ -7,7 +7,7 @@ dict['pt-BR']['Network'] = 'Rede';
 dict['pt-BR']['Device'] = 'Dispositivo';
 dict['pt-BR']['From here'] = 'A partir daqui';
 dict['pt-BR']['To here'] = 'Até aqui';
-dict['pt-BR']['Set as waypoint'] = 'Definir como intermediário';
+dict['pt-BR']['Add waypoint'] = 'Adicionar intermediário';
 dict['pt-BR']['Waypoint'] = 'Intermediário';
 dict['pt-BR']['Intra-domain'] = 'Intradomínio';
 dict['pt-BR']['Remove endpoint'] = 'Remover ponto final';
@@ -30,7 +30,7 @@ dict['pt-BR']['loading'] = 'aguarde';
 dict['pt-BR']['no name'] = 'sem nome';
 dict['pt-BR']['click to select device'] = 'selecione o dispositivo';
 dict['pt-BR']['Current host is not present in known topology'] = 'O domínio atual não está presente na topologia conhecida.';
-dict['pt-BR']['You are not allowed for request a reservation in this domains.'] = 'Você não tem permissão para solicitar reservas nestes domínios.';
+dict['pt-BR']['You are not allowed to create a reservation involving these selected domains.'] = 'Você não tem permissão para solicitar reservas envolvendo os domínios selecionados.';
 
 //datepicker
 dict['pt-BR'][['January','February','March','April','May','June','July','August','September','October','November','December']] = ['Janeiro',
@@ -76,6 +76,6 @@ dict['pt-BR']['error'] = 'erro';
 dict['pt-BR'][''] = '';
 
 function tt(obj){
-	if(language == 'pt-BR') return dict['pt-BR'][obj];
+	if(language == 'pt-BR' && dict['pt-BR'][obj]) return dict['pt-BR'][obj];
 	else return obj;
 }

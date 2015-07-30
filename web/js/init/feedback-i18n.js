@@ -13,6 +13,6 @@ fbdict['pt-BR']['Silly'] = 'Bobo';
 fbdict['pt-BR']['Happy'] = 'Feliz';
 
 function fbtt(obj){
-	if(language == 'pt-BR') return fbdict['pt-BR'][obj];
+	if(language == 'pt-BR' && fbdict['pt-BR'][obj]) return fbdict['pt-BR'][obj];
 	else return obj;
 }
