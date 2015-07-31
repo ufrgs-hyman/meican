@@ -117,3 +117,19 @@ function disableWorkflow(id){
 	);
 }
 
+/////////////////////// ENABLE //////////////////////
+function enableWorkflow(id){
+	$.getJSON(baseUrl + "/bpm/workflow/is-active?id="+id, 
+		function(data) {
+			if(!data){
+				$.ajax({
+					type: "GET",
+					url: baseUrl + "/bpm/workflow/active",
+					data: "id=".concat(id),
+					cache: false,
+				}); 
+			}
+		}
+	);
+}
+

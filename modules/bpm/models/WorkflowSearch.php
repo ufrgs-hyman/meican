@@ -50,15 +50,15 @@ class WorkflowSearch extends BpmWorkflow{
     	foreach($allowed_domains as $domain) $domains_name[] = $domain->name;
     	
     	if($this->status && $this->domain){
-    		if($this->status == "enabled") $workflows = BpmWorkflow::find()->where(['domain' => $this->domain])->andWhere(['active' => BpmWorkflow::STATUS_ENABLED])->orderBy(['domain' => SORT_ASC]);
-    		else $workflows = BpmWorkflow::find()->where(['domain' => $this->domain])->andWhere(['active' => BpmWorkflow::STATUS_DISABLED])->orderBy(['domain' => SORT_ASC]);
+    		if($this->status == "enabled") $workflows = BpmWorkflow::find()->where(['domain' => $this->domain])->andWhere(['in', 'domain', $domains_name])->andWhere(['active' => BpmWorkflow::STATUS_ENABLED])->orderBy(['domain' => SORT_ASC]);
+    		else $workflows = BpmWorkflow::find()->where(['domain' => $this->domain])->andWhere(['in', 'domain', $domains_name])->andWhere(['active' => BpmWorkflow::STATUS_DISABLED])->orderBy(['domain' => SORT_ASC]);
     	}
     	else if($this->domain){
-    		$workflows = BpmWorkflow::find()->where(['domain' => $this->domain])->orderBy(['domain' => SORT_ASC]);
+    		$workflows = BpmWorkflow::find()->where(['domain' => $this->domain])->andWhere(['in', 'domain', $domains_name])->orderBy(['domain' => SORT_ASC]);
     	}
     	else if($this->status){
-    		if($this->status == "enabled") $workflows = BpmWorkflow::find()->where(['in', 'domain', $domains_name])->andWhere(['active' => BpmWorkflow::STATUS_ENABLED])->orderBy(['domain' => SORT_ASC]);
-    		else $workflows = BpmWorkflow::find()->where(['in', 'domain', $domains_name])->andWhere(['active' => BpmWorkflow::STATUS_DISABLED])->orderBy(['domain' => SORT_ASC]);
+    		if($this->status == "enabled") $workflows = BpmWorkflow::find()->where(['in', 'domain', $domains_name])->andWhere(['in', 'domain', $domains_name])->andWhere(['active' => BpmWorkflow::STATUS_ENABLED])->orderBy(['domain' => SORT_ASC]);
+    		else $workflows = BpmWorkflow::find()->where(['in', 'domain', $domains_name])->andWhere(['in', 'domain', $domains_name])->andWhere(['active' => BpmWorkflow::STATUS_DISABLED])->orderBy(['domain' => SORT_ASC]);
     	}
     	else {
     		$workflows = BpmWorkflow::find()->where(['in', 'domain', $domains_name])->orderBy(['domain' => SORT_ASC]);

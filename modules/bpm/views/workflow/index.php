@@ -71,14 +71,14 @@
 		        	'headerOptions'=>['style'=>'width: 2%;'],
 		        ],
 		        [
-	        		'class'=> LinkColumn::className(),
-	        		'image'=>'/images/accept.png',
-		        	'title'=> Yii::t("bpm", 'Enable Workflow'),
-	        		'url' => '/bpm/workflow/active',
-	        		'contentOptions' => function ($work){
-	        			return ["disabled"=> !$work->isDisabled()];
-	        		},
-	        		'headerOptions'=>['style'=>'width: 2%;'],
+			        'format' => 'raw',
+			        'value' => function ($work){
+			        	return Html::img('@web'.'/images/accept.png', ['title' => Yii::t("bpm", 'Enable Workflow'), 'onclick' => "enableWorkflow($work->id)"]);
+			        },
+			        'contentOptions' => function ($work){
+			        	return ['style'=>'cursor: pointer;', "disabled"=> !$work->isDisabled()];
+			        },
+			        'headerOptions'=>['style'=>'width: 2%;'],
 		        ],
 		        [
 					'label' => Yii::t("bpm", 'Name'),

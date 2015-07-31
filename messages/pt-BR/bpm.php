@@ -50,7 +50,11 @@ return array(
 		'Filter by domain' => 'Filtrar por domínio',
 		'Unsuccessful enable the workflow {workflow} from Domain {domain}' => 'Não ativou o workflow {workflow} do domínio {domain}',
 		'Unsuccessful disable the workflow {workflow} from Domain {domain}' => 'Não desativou o workflow {workflow} do domínio {domain}',
-		'You don`t have permission for domain {domain}' => 'Você não tem permissão para o domínio {domain}',
+		'You don`t allowed to enable/disable in domain {domain}' => 'Você não tem permissão para ativar/desativar no domínio {domain}',
+		'You don`t allowed to delete in domain {domain}' => 'Você não tem permissão para deletar no domínio {domain}',
+		'You don`t allowed to edit in domain {domain}' => 'Você não tem permissão para editar no domínio {domain}',
+		'You don`t allowed to create in domain {domain}' => 'Você não tem permissão para criar no domínio {domain}',
+		'You don`t allowed to read in domain {domain}' => 'Você não tem permissão para ler no domínio {domain}',
 		
 );
 
