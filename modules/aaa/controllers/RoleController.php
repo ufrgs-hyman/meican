@@ -18,7 +18,9 @@ use Yii;
 class RoleController extends RbacController {
 	
     public function actionIndex($id) {
-    	self::canRedir("user/read");
+    	if(!self::can("user/read")){ //Se ele não tiver permissão em nenhum domínio
+			return $this->goHome();
+		}
     	
     	$user = User::findOne($id);
     	
@@ -31,11 +33,14 @@ class RoleController extends RbacController {
     }
     
     public function actionCreate($id) {
-    	self::canRedir("user/update");
+    	if(!self::can("user/create")){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create roles'));
+    		return $this->redirect(array('index', 'id'=>$id));
+    	}
     	
     	$udr = new UserDomainRole;
     	$udr->user_id = $id;
-    	$domains = $udr->getValidDomains(); 
+    	$domains = $udr->getValidDomains(self::whichDomainsCan('user/create'));
     	
     	if (count($domains) < 1) {
     		Yii::$app->getSession()->setFlash("warning", Yii::t("aaa", 'This user has all possibles valid roles'));
@@ -72,7 +77,10 @@ class RoleController extends RbacController {
     }
     
     public function actionUpdate($id) {
-    	self::canRedir("user/update");
+    	if(!self::can("user/update")){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update roles'));
+    		return $this->redirect(array('index', 'id'=>$id));
+    	}
     	
     	$udr = UserDomainRole::findOne($id);
     	$udr->getGroup();
@@ -111,22 +119,26 @@ class RoleController extends RbacController {
     				Yii::$app->getSession()->setFlash("error", $error[0]);
     			}
     		}
-    	} 
-    	 
+    	}
+
     	return $this->render('update',array(
     			'udr' => $udr,
-    			'groups' => UserDomainRole::getGroups(),
-    			'domains' => $udr->getValidDomains(true)
+    			'groups' => $udr->getGroups(),
+    			'domains' => $udr->getValidDomains(self::whichDomainsCan('user/create'), true)
     	));
     }
     
     public function actionDelete() {
-    	self::canRedir("user/delete");
-    	
     	if(isset($_POST['delete'])){
     		$date = new \DateTime('now', new \DateTimeZone("UTC"));
     		foreach ($_POST['delete'] as $udrId) {
     			$udr = UserDomainRole::findOne($udrId);
+    			
+    			if(!self::can("user/update")){
+    				Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update roles'));
+    				return $this->redirect(array('index','id'=>$udr->user_id));
+    			}
+    			
     			$dom = $udr->getDomain();
     			$domName = Yii::t("aaa", 'Any');
     			if ($dom) $domName = $dom->name;

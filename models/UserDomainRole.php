@@ -65,8 +65,8 @@ class UserDomainRole extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id'])->one();
     }
     
-    public function getValidDomains($isUpdate = false) {
-    	$domains = self::getDomains();
+    public function getValidDomains($allowed_domains, $isUpdate = false) {
+    	$domains = self::getDomains($allowed_domains);
     	$udrs = self::findAll(['user_id'=>$this->user_id]);
     	foreach ($domains as $key => $dom) {
     		foreach ($udrs as $udr) {
@@ -76,17 +76,18 @@ class UserDomainRole extends \yii\db\ActiveRecord
     		}
     	}
     	if ($isUpdate) {
-    		$domName = Yii::t("aaa" , "Any");
     		if ($this->getDomain()) {
     			$domName = $this->getDomain()->name;
     		}
-    		return array_merge([['id'=>$this->domain_id,'name'=>$domName]], $domains);
+    		if(isset($domName)) return array_merge([['id'=>$this->domain_id,'name'=>$domName]], $domains);
     	}
     	return $domains;
     }
     
-    static function getDomains() {
-    	return array_merge([['id'=>null,'name'=>Yii::t("aaa" , "Any")]], Domain::find()->orderBy(['name'=> "SORT ASC"])->asArray()->all());
+    static function getDomains($allowed_domains) {
+    	$domains_name = [];
+    	foreach($allowed_domains as $domain) $domains_name[] = $domain->name;
+    	return Domain::find()->where(['in', 'name', $domains_name])->orderBy(['name'=> "SORT ASC"])->asArray()->all();
     }
     
     static function getGroups() {

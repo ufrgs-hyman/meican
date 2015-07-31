@@ -19,7 +19,9 @@ use Yii;
 class UserController extends RbacController {
 	
 	public function actionIndex() {
-		self::canRedir("read");
+		if(!self::can("user/read")){ //Se ele não tiver permissão em nenhum domínio
+			return $this->goHome();
+		}
 		
 		$dataProvider = new ActiveDataProvider([
 				'query' => User::find(),
@@ -31,7 +33,10 @@ class UserController extends RbacController {
     }
     
     public function actionCreate() {
-    	self::canRedir("create");
+    	if(!self::can("user/create")){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create users'));
+    		return $this->redirect(array('index'));
+    	}
     	
     	$userForm = new UserForm;
     
@@ -57,16 +62,19 @@ class UserController extends RbacController {
     		}
     		$userForm->clearErrors();
     	}
-    
+
     	return $this->render('create',array(
     			'user' => $userForm,
-    			'domains' => UserDomainRole::getDomains(),
+    			'domains' => self::whichDomainsCan('user/create'),
     			'groups' => UserDomainRole::getGroups()
     	));
     }
     
     public function actionUpdate($id) {
-    	self::canRedir("update");
+    	if(!self::can("user/update")){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update users'));
+    		return $this->redirect(array('index'));
+    	}
     	
     	$user = User::findOne($id);
     	$userForm = new UserForm;
@@ -106,7 +114,10 @@ class UserController extends RbacController {
     }
     
     public function actionDelete() {
-    	self::canRedir("delete");
+    	if(!self::can("user/delete")){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to delete users'));
+    		return $this->redirect(array('index'));
+    	}
     	
     	if(isset($_POST['delete'])){
     		foreach ($_POST['delete'] as $userId) {

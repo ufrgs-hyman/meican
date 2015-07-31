@@ -11,7 +11,9 @@ use Yii;
 class GroupController extends RbacController {
 	
     public function actionIndex() {
-    	self::canRedir("read");
+    	if(!self::can("group/read")){ //Se ele não tiver permissão em nenhum domínio
+			return $this->goHome();
+		}
     	
     	$dataProvider = new ActiveDataProvider([
     			'query' => Group::find(),
@@ -23,7 +25,10 @@ class GroupController extends RbacController {
     }
     
     public function actionCreate() {
-    	self::canRedir("create");
+    	if(!self::can("group/create")){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create groups'));
+    		return $this->redirect(array('index'));
+    	}
     	
     	$group = new Group;
     
@@ -56,7 +61,10 @@ class GroupController extends RbacController {
     }
     
     public function actionUpdate($id) {
-    	self::canRedir("update");
+    	if(!self::can("group/update")){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update groups'));
+    		return $this->redirect(array('index'));
+    	}
     	
     	$group = Group::findOne($id);
     	$childsChecked = $group->getPermissions();
@@ -91,8 +99,11 @@ class GroupController extends RbacController {
     }
     
     public function actionDelete(){
-    	self::canRedir("delete");
-    	
+    	if(!self::can("group/delete")){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to delete groups'));
+    		return $this->redirect(array('index'));
+    	}
+    		
     	if(isset($_POST['delete'])){
     		foreach ($_POST['delete'] as $groupId) {
     			$group = Group::findOne($groupId);

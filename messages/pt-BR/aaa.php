@@ -85,6 +85,15 @@ return array(
 		"New User" => "Novo Usuário",
 		"Access Roles" => "Perfis de Acesso",
 		"Any" => "Qualquer",
+		'You are not allowed to create users' => 'Você não tem permissão para criar usuários',
+		'You are not allowed to update users' => 'Você não tem permissão para editar usuários',
+		'You are not allowed to delete users' => 'Você não tem permissão para deletar usuários',
+		'You are not allowed to create roles' => 'Você não tem permissão para criar perfis',
+		'You are not allowed to update roles' => 'Você não tem permissão para editar perfis',
+		'You are not allowed to delete roles' => 'Você não tem permissão para deletar perfis',
+		'You are not allowed to create groups' => 'Você não tem permissão para criar grupos',
+		'You are not allowed to update groups' => 'Você não tem permissão para editar grupos',
+		'You are not allowed to delete groups' => 'Você não tem permissão para deletar grupos',
 );
 
 ?>
