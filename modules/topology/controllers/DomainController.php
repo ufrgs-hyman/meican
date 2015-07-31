@@ -21,7 +21,9 @@ use app\models\BpmWorkflow;
 class DomainController extends RbacController {
 	
     public function actionIndex() {
-    	self::canRedir("topology/read");
+    	if(!self::can("topology/read")){ //Se ele não tiver permissão em nenhum domínio
+			return $this->goHome();
+		}
 
     	$domains = self::whichDomainsCan("topology/read");
 
@@ -40,7 +42,11 @@ class DomainController extends RbacController {
     }
 
     public function actionCreate(){
-    	self::canRedir("topology/create");
+    	$permission = self::can('topology/create');
+		if(!$permission){
+			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add domains'));
+    		return $this->redirect(array('index'));
+	    }
     	
     	$dom = new Domain;
     	
@@ -65,7 +71,7 @@ class DomainController extends RbacController {
     
     public function actionUpdate($id) {
     	if(!self::can("topology/update", $id)){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed for update the domain {domain}', ['domain' => Domain::findOne($id)->name]));
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update the domain {domain}', ['domain' => Domain::findOne($id)->name]));
     		return $this->redirect(array('index'));
     	}
     	
@@ -94,9 +100,7 @@ class DomainController extends RbacController {
     	]);
     } 
 
-    public function actionDelete() {
-    	self::canRedir("topology/delete");
-    	
+    public function actionDelete() {    	
     	if(isset($_POST['delete'])){
     		foreach ($_POST['delete'] as $domainId) {
     			$dom = Domain::findOne($domainId);
@@ -107,7 +111,7 @@ class DomainController extends RbacController {
 	    				Yii::$app->getSession()->setFlash('error', Yii::t('topology', 'Error deleting domain {name}', ['name'=>$dom->name]));
 	    			}
     			}
-    			else Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed for delete on domain {domain}', ['domain' => $dom->name]));
+    			else Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to delete on domain {domain}', ['domain' => $dom->name]));
     		}
     	}
     

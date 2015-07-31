@@ -19,8 +19,10 @@ use Yii;
 class NetworkController extends RbacController {
 	
 	public function actionIndex() {
-		self::canRedir("topology/read");
-	    
+		if(!self::can("topology/read")){ //Se ele não tiver permissão em nenhum domínio
+			return $this->goHome();
+		}
+		
 	    $searchModel = new NetworkSearch;
 	    $allowedDomains = self::whichDomainsCan('topology/read');
 	    $dataProvider = $searchModel->searchByDomains(Yii::$app->request->get(),
@@ -34,7 +36,10 @@ class NetworkController extends RbacController {
     }
     
     public function actionCreate(){
-    	self::canRedir("topology/create");
+    	if(!self::can("topology/create")){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add networks'));
+    		return $this->redirect(array('index'));
+    	}
     	
     	$network = new Network;
     	 
@@ -56,11 +61,10 @@ class NetworkController extends RbacController {
     	]);
     }
     
-    public function actionUpdate($id){
-    	
+    public function actionUpdate($id){	
     	$network = Network::findOne($id);
     	if(!self::can("topology/update", $network->domain_id)){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed for update on domain {domain}', ['domain' => $network->getDomain()->one()->name]));
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update on domain {domain}', ['domain' => $network->getDomain()->one()->name]));
     		return $this->redirect(array('index'));
     	}
 
@@ -90,7 +94,7 @@ class NetworkController extends RbacController {
 	    			if ($network->delete()) Yii::$app->getSession()->addFlash('success', Yii::t('topology', 'Network {name} deleted', ['name'=>$network->name]));
 	    			else Yii::$app->getSession()->setFlash('error', Yii::t('topology', 'Error deleting network {name}', ['name'=>$network->name]));
     			}
-    			else Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Network {net} not deleted. You are not allowed for delete on domain {domain}', ['net' => $network->name, 'domain' => $network->getDomain()->one()->name]));
+    			else Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Network {net} not deleted. You are not allowed to delete on domain {domain}', ['net' => $network->name, 'domain' => $network->getDomain()->one()->name]));
     		}
     	}
     

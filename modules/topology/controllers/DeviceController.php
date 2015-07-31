@@ -17,7 +17,9 @@ use Yii;
 class DeviceController extends RbacController {
 	
     public function actionIndex($id = null) {
-    	self::canRedir("topology/read");
+    	if(!self::can("topology/read")){ //Se ele não tiver permissão em nenhum domínio
+			return $this->goHome();
+		}
     	
         $searchModel = new DeviceSearch;
 	    $allowedDomains = self::whichDomainsCan('topology/read');
@@ -32,7 +34,10 @@ class DeviceController extends RbacController {
     }
     
     public function actionCreate(){
-    	self::canRedir("topology/create");
+    	if(!self::can("topology/create")){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add devices'));
+    		return $this->redirect(array('index'));
+    	}
     	
     	$device = new Device;
     	 
@@ -58,7 +63,7 @@ class DeviceController extends RbacController {
     	
 		$device = Device::findOne($id);
     	if(!self::can("topology/update", $device->domain_id)){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed for update on domain {domain}', ['domain' => $device->getDomain()->one()->name]));
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update on domain {domain}', ['domain' => $device->getDomain()->one()->name]));
     		return $this->redirect(array('index'));
     	}
 
@@ -82,8 +87,6 @@ class DeviceController extends RbacController {
     }
 
     public function actionDelete(){
-    	self::canRedir("topology/delete");
-    	
 	    if(isset($_POST['delete'])){
     		foreach ($_POST['delete'] as $id) {
     			$device = Device::findOne($id);
@@ -91,7 +94,7 @@ class DeviceController extends RbacController {
 	    			if ($device->delete())	Yii::$app->getSession()->addFlash('success', Yii::t('topology', 'Device {name} deleted', ['name'=>$device->name]));
 	    			else Yii::$app->getSession()->setFlash('error', Yii::t('topology', 'Error deleting device {name}', ['name'=>$device->name]));
     			}
-    			else Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Device {device} not deleted. You are not allowed for delete on domain {domain}', ['device' => $device->name, 'domain' => $device->getDomain()->one()->name]));
+    			else Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Device {device} not deleted. You are not allowed to delete on domain {domain}', ['device' => $device->name, 'domain' => $device->getDomain()->one()->name]));
     		}
     	}
     

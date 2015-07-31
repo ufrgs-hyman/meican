@@ -31,7 +31,11 @@ class WorkflowController extends RbacController {
     }
     
     public function actionNew() {
-    	self::canRedir('workflow/create');
+    	$permission = self::can('workflow/create');
+		if(!$permission){
+			Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to create workflows'));
+	    	return $this->redirect(array('/bpm/workflow/index'));
+	    }
     	return $this->render('indexCreate');
     }
     

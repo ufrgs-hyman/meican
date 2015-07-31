@@ -55,6 +55,7 @@ return array(
 		'You don`t allowed to edit in domain {domain}' => 'Você não tem permissão para editar no domínio {domain}',
 		'You don`t allowed to create in domain {domain}' => 'Você não tem permissão para criar no domínio {domain}',
 		'You don`t allowed to read in domain {domain}' => 'Você não tem permissão para ler no domínio {domain}',
+		'You don`t allowed to create workflows' => 'Você não tem permissão criar workflows',
 		
 );
 
