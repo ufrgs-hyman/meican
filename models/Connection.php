@@ -148,6 +148,9 @@ class Connection extends \yii\db\ActiveRecord
     public function requestCancel() {
     	$this->status = self::STATUS_CANCEL_REQ;
     	$this->save();
+    	
+    	//Cancela possivel pedido de autorização pendente
+    	ConnectionAuth::cancelConnAuthRequest($this->id);
     
         $requester = new RequesterClient($this);
         $requester->requestCancel();
@@ -319,6 +322,10 @@ class Connection extends \yii\db\ActiveRecord
     		}
     		if(!$conn->isCancelStatus()) $conn->requestProvision();
     	}
+    	
+    	//Remove fluxos não finalizados
+    	BpmFlow::removeFlows($id);
+    	
     }
 
     public function requestAuthorization() {

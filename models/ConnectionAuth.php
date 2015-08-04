@@ -129,4 +129,22 @@ class ConnectionAuth extends \yii\db\ActiveRecord
     	else if($this->status == Connection::AUTH_STATUS_UNEXECUTED) return Yii::t('circuits', 'Unexecuted');
     }
     
+    public function changeStatusToExpired(){
+    	$this->status = Connection::AUTH_STATUS_EXPIRED;
+    	$this->save();
+    	
+    	BpmFlow::removeFlows($this->connection_id);
+    }
+    
+    public static function cancelConnAuthRequest($connId){
+    	$types = [self::TYPE_USER, self::TYPE_GROUP];
+    	$auth = ConnectionAuth::find()->where(['connection_id' => $connId, 'status' => Connection::AUTH_STATUS_PENDING])->andWhere(['in', 'type', $types])->one();
+    	if($auth){
+    		$auth->changeStatusToExpired();
+    		$connection = Connection::findOne($connId);
+    		$connection->auth_status= Connection::AUTH_STATUS_EXPIRED;
+    		$connection->save();
+    	}
+    }
+    
 }

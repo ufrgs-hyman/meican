@@ -101,6 +101,13 @@ class BpmFlow extends \yii\db\ActiveRecord
         return $this->hasOne(BpmWorkflow::className(), ['id' => 'workflow_id']);
     }
     
+    public function removeFlows($connection_id){
+    	$flows = BpmFlow::find()->where(['connection_id' => $connection_id])->all();
+    	foreach($flows as $flow){
+    		$flow->delete();
+    	}
+    }
+    
     /**
      * 
      * @param unknown $connection_id

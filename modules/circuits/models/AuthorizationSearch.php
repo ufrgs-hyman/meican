@@ -73,8 +73,7 @@ class AuthorizationSearch extends AuthorizationForm{
     		$uniq = true;
     		$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['<=','start', DateUtils::now()])->one();
     		if(isset($conn)){
-    			$request->status= Connection::AUTH_STATUS_EXPIRED;
-    			$request->save();
+    			$request->changeStatusToExpired();
     			$conn->auth_status= Connection::AUTH_STATUS_EXPIRED;
     			$conn->save();
     			Notification::createConnectionNotification($conn->id);
@@ -118,8 +117,7 @@ class AuthorizationSearch extends AuthorizationForm{
     					$uniq = true;
     					$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['<=','start', DateUtils::now()])->one();
     					if(isset($conn)){
-    						$request->status= Connection::AUTH_STATUS_EXPIRED;
-    						$request->save();
+    						$request->changeStatusToExpired();
     						$conn->auth_status= Connection::AUTH_STATUS_EXPIRED;
     						$conn->save();
     						Notification::createConnectionNotification($conn->id);

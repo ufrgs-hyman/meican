@@ -57,8 +57,7 @@ class AuthorizationController extends RbacController {
 	    		foreach($connectionsExpired as $connection){
 	    			$requests = ConnectionAuth::find()->where(['connection_id' => $connection->id, 'status' => Connection::AUTH_STATUS_PENDING])->all();
 	    			foreach($requests as $request){
-	    				$request->status= Connection::AUTH_STATUS_EXPIRED;
-	    				$request->save();
+	    				$request->changeStatusToExpired();
 	    				$connection->auth_status= Connection::AUTH_STATUS_EXPIRED;
 	    				$connection->save();
 	    				Notification::createConnectionNotification($connection->id);
