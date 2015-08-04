@@ -32,7 +32,7 @@ class DomainController extends RbacController {
     			'allModels' => $domains,
     			'sort' => false,
     			'pagination' => [
-                  'pageSize' => 20,
+                  'pageSize' => 15,
                 ],
     	]);
     	

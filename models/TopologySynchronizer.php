@@ -208,19 +208,40 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
                         $change->save();
                     }
 
-                    foreach ($nsaData['services'] as $serviceUrl => $serviceType) {
-                        if ($provider) {
-                            $service = $provider->getServices()->andWhere(['url'=>$serviceUrl])->one();
-                            if ($service) continue;
-                        }
+                    if ($provider) $oldServices = $provider->getServices();
+                    $newServices = [];
 
+                    foreach ($nsaData['services'] as $serviceUrl => $serviceType) {
+                        $service = Service::findOneByUrl($serviceUrl);
+                        if (!$service) {
+                            $change = $this->buildChange();
+                            $change->type = TopologyChange::TYPE_CREATE;
+                            $change->domain = $domainName;
+                            $change->item_type = TopologyChange::ITEM_TYPE_SERVICE;
+                            $change->data = json_encode([
+                                'provName'=>$nsaData['name'],
+                                'provNsa'=>$nsaId,
+                                'type'=>$serviceType,
+                                'url'=>$serviceUrl]);
+
+                            $change->save();
+                        } else {
+                            $newServices[] = $service->id;
+                        }
+                    }
+
+                    $oldServices = $oldServices->andWhere(['not in', 'id', $newServices])
+                        ->select(['id'])
+                        ->asArray()
+                        ->all();
+
+                    foreach ($oldServices as $invalidService) {
                         $change = $this->buildChange();
-                        $change->type = TopologyChange::TYPE_CREATE;
+                        $change->type = TopologyChange::TYPE_DELETE;
                         $change->domain = $domainName;
+                        $change->item_id = $invalidService['id'];
                         $change->item_type = TopologyChange::ITEM_TYPE_SERVICE;
-                        $change->data = json_encode(['provName'=>$nsaData['name'],'provNsa'=>$nsaId,
-                            'type'=>$serviceType,
-                            'url'=>$serviceUrl]);
+                        $change->data = json_encode([''=>'']);
 
                         $change->save();
                     }

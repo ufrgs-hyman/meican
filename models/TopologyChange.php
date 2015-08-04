@@ -109,7 +109,7 @@ class TopologyChange extends \yii\db\ActiveRecord
             'query' => $query,
             'sort' => false,
             'pagination' => [
-                'pageSize' => 20,
+                'pageSize' => 15,
             ]
         ]);
 
@@ -132,7 +132,7 @@ class TopologyChange extends \yii\db\ActiveRecord
             'query' => $query,
             'sort' => ['defaultOrder' => ['applied_at'=>SORT_DESC]],
             'pagination' => [
-                'pageSize' => 20,
+                'pageSize' => 15,
             ]
         ]);
 
@@ -157,22 +157,18 @@ class TopologyChange extends \yii\db\ActiveRecord
                 break;
             case self::ITEM_TYPE_PROVIDER:
                 $provData = $data;
+                $dom = Domain::findOneByName($this->domain);
                 if ($this->item_id) {
                     $prov = Provider::findOne($this->item_id);
-                    $prov->name = $provData->name;
-                    $prov->type = $provData->type;
-                    $prov->latitude = $provData->lat;
-                    $prov->longitude = $provData->lng;
                 } else {
-                    $dom = Domain::findByName($this->domain)->one();
                     $prov = new Provider;
-                    $prov->name = $provData->name;
-                    $prov->type = $provData->type;
                     $prov->nsa = $provData->nsa;
-                    $prov->latitude = $provData->lat;
-                    $prov->longitude = $provData->lng;
-                    $prov->domain_id = $dom->id;
                 }
+                $prov->name = $provData->name;
+                $prov->type = $provData->type;
+                $prov->latitude = $provData->lat;
+                $prov->longitude = $provData->lng;
+                $prov->domain_id = $dom->id;
 
                 if($prov->save()) {
                     $this->setApplied();
@@ -184,22 +180,38 @@ class TopologyChange extends \yii\db\ActiveRecord
 
             case self::ITEM_TYPE_SERVICE:
                 $serviceData = $data;
-                $prov = Provider::findByNsa($serviceData->provNsa)->one();
-                if ($prov) {
-                    $service = new Service;
-                    $service->provider_id = $prov->id;
-                    $service->type = $serviceData->type;
-                    $service->url = $serviceData->url;
-                } else {
-                    break;
-                }
+                
+                switch ($this->type) {
+                    case self::TYPE_DELETE:
+                        $service = Service::findOne($this->item_id);
+                        if($service && $service->delete()) {
+                            $this->setApplied();
+                            return $this->save();
+                        } else {
+                            $this->error = "Service not found";
+                        }
+                        break;
+                    case self::TYPE_CREATE:
+                        $prov = Provider::findOneByNsa($serviceData->provNsa);
+                        if ($prov) {
+                            $service = new Service;
+                            $service->provider_id = $prov->id;
+                            $service->type = $serviceData->type;
+                            $service->url = $serviceData->url;
 
-                if($service->save()) {
-                    $this->setApplied();
-                    return $this->save();
+                            if($service->save()) {
+                                $this->setApplied();
+                                return $this->save();
+                            } else {
+                                $this->error = json_encode($service->getErrors());
+                            }
+                        } else {
+                            $this->error = "Provider not found";
+                        }
+                        break;
+                    default:
                 }
-
-                $this->error = json_encode($service->getErrors());
+                
                 break;
 
             case self::ITEM_TYPE_NETWORK: 
@@ -440,9 +452,7 @@ class TopologyChange extends \yii\db\ActiveRecord
                 switch ($this->item_type) {
                     case self::ITEM_TYPE_DOMAIN: return "";
                     case self::ITEM_TYPE_PROVIDER: return "";
-                    case self::ITEM_TYPE_SERVICE: return Yii::t('topology', 
-                            '<b>Provider</b>: {provName}', 
-                            ['provName'=> $data->provName]);
+                    case self::ITEM_TYPE_SERVICE: return "";
                     case self::ITEM_TYPE_NETWORK: return "";
                     case self::ITEM_TYPE_DEVICE: return "";
                     case self::ITEM_TYPE_BIPORT: return "";

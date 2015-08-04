@@ -85,6 +85,10 @@ class Domain extends \yii\db\ActiveRecord
     public static function findByName($name) {
     	return Domain::find()->where(['name'=>$name]);
     }
+
+    static function findOneByName($name) {
+        return Domain::find()->where(['name'=>$name])->one();
+    }
     
     public function getPolicy(){
     	if($this->default_policy == self::ACCEPT_ALL) return Yii::t('topology', 'Accept All');

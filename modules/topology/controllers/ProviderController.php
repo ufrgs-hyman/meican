@@ -57,7 +57,7 @@ class ProviderController extends RbacController {
         $dataProvider = new ActiveDataProvider([
                 'query' => Provider::find()->orderBy('name'),
                 'pagination' => [
-                  'pageSize' => 20,
+                  'pageSize' => 15,
                 ],
                 'sort' => false,
         ]);

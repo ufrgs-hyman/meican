@@ -94,4 +94,8 @@ class Service extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Provider::className(), ['id' => 'provider_id']);
     }
+
+    static function findOneByUrl($url) {
+        return self::find()->where(['url'=>$url])->one();
+    }
 }

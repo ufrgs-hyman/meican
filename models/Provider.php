@@ -117,6 +117,10 @@ class Provider extends \yii\db\ActiveRecord
         return self::find()->where(['nsa'=>$nsa]);
     }
 
+    static function findOneByNsa($nsa) {
+        return self::find()->where(['nsa'=>$nsa])->one();
+    }
+
     public function isDummy() {
         return Yii::$app->params["provider.force.dummy"] || ($this->type == self::TYPE_DUMMY);
     }
