@@ -230,20 +230,22 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
                         }
                     }
 
-                    $oldServices = $oldServices->andWhere(['not in', 'id', $newServices])
+                    if($provider) {
+                        $oldServices = $oldServices->andWhere(['not in', 'id', $newServices])
                         ->select(['id'])
                         ->asArray()
                         ->all();
 
-                    foreach ($oldServices as $invalidService) {
-                        $change = $this->buildChange();
-                        $change->type = TopologyChange::TYPE_DELETE;
-                        $change->domain = $domainName;
-                        $change->item_id = $invalidService['id'];
-                        $change->item_type = TopologyChange::ITEM_TYPE_SERVICE;
-                        $change->data = json_encode([''=>'']);
+                        foreach ($oldServices as $invalidService) {
+                            $change = $this->buildChange();
+                            $change->type = TopologyChange::TYPE_DELETE;
+                            $change->domain = $domainName;
+                            $change->item_id = $invalidService['id'];
+                            $change->item_type = TopologyChange::ITEM_TYPE_SERVICE;
+                            $change->data = json_encode([''=>'']);
 
-                        $change->save();
+                            $change->save();
+                        }
                     }
                 }
             }
