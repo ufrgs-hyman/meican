@@ -4,7 +4,8 @@
 	use yii\jui\DatePicker;
 	use yii\helpers\Html;
 ?>
-
+<label for="name" class="label-description"><?= Yii::t("circuits", "Reservation name"); ?>: </label>
+<input type="text" size="45" id="name" name="ReservationForm[name]"/><br><br>
 <label for="start-time" class="label-description"><?= Yii::t("circuits", "Start"); ?>: </label>
 <input type="text" size="7" id="start-time" class="hourPicker" name="ReservationForm[start_time]"/>
 

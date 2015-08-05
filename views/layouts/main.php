@@ -45,7 +45,6 @@ MeicanAsset::register($this);
         		<?= $this->render('infoBox'); ?>
         	</div>
             <div id="workspace">
-            	<div class="tab-overlay fade-overlay" style="display: hidden;"> </div>
 				<div id="map-canvas" style="width:100%; height:100%; float:left; overflow:hidden; display:none;"></div>
                 <div id="main">
                 	<?php

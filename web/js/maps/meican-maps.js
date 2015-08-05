@@ -1,28 +1,30 @@
 var MeicanMaps = new function() {
     this.DeviceMarker = function(options, color) {
         if (!color) color = MeicanMaps.generateColor(options.domainId);
-        return new google.maps.Marker({
+        var marker =  new google.maps.Marker({
             icon: {
                 path: 'M 15 15 L 35 15 L 25 35 z',
                 anchor: new google.maps.Point(25, 35),
                 fillColor: '#' + color,
                 fillOpacity: 1,
                 strokeColor: 'black',
-            },
-            options
+            }
         });
+        marker.setOptions(options);
+        return marker;
     }
     this.NetworkMarker = function(options, color) {
         if (!color) color = MeicanMaps.generateColor(options.domainId);
-        return new StyledMarker({
+        var marker = new StyledMarker({
             styleIcon: new StyledIcon(
                 StyledIconTypes.MARKER,
                     {
                         color: color,
                     }
-            ),
-            options
+            )
         });
+        marker.setOptions(options);
+        return marker;
     }
 
     this.changeDeviceMarkerColor = function(marker, color) {
@@ -127,6 +129,18 @@ var MeicanMaps = new function() {
         }
         
         return null;
+    }
+
+    this.searchMarkerByName = function (markers, type, name) {
+        results = [];
+        name = name.toLowerCase();
+        for(i = 0; i < markers.length; i++){
+            if (markers[i].type == type && ((markers[i].name.toLowerCase()).indexOf(name) > -1)) {
+                results.push(markers[i]);
+            }
+        }
+        
+        return results;
     }
 
     this.getMarkerByDomain = function(markers, type, domainId) {

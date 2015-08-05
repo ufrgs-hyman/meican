@@ -1,7 +1,8 @@
 <?php 
 	use app\modules\circuits\assets\CreateReservationAsset;
-	use app\modules\circuits\assets\GoogleMapsAsset;
+	use app\assets\GoogleMapsAsset;
 	use yii\widgets\ActiveForm;
+    use yii\jui\AutoComplete;
 	
 	CreateReservationAsset::register($this);
 	GoogleMapsAsset::register($this);
@@ -14,8 +15,8 @@
 ?>
 
 <h1 style="clear: none; float: left; z-index: 90; position: absolute;">
-	<label id="label_res_name" for="res_name" style="width: 170px;"><?= Yii::t("circuits", "Reservation Name"); ?></label>
-	<input type="text" name="ReservationForm[name]" id="res_name" size="50" placeholder="<?= Yii::t("circuits", "Typing a name for the reservation will unlock the map"); ?>"/>
+	<input type="text" id="search-box" size="40"/>
+    <button id="search-button"><span class="ui-icon-to-button-without-background ui-icon ui-icon-search" style="margin-left: 35%;"></span></button>
 </h1>
 
 <div id="subtab-points" class="tab_subcontent">

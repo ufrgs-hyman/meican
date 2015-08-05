@@ -1017,7 +1017,7 @@ table.reservation-marker-type {
 	width: 70px;
 }
 
-#res_name {
+#search-box {
 	padding-top: 2px;
 	padding-bottom: 2px;
 	padding-left: 10px;
@@ -1027,9 +1027,11 @@ table.reservation-marker-type {
 	-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
-#label_res_name {
-    text-shadow: 1px 1px 1px #FFF;
-    color: #27567C;
+#search-button {
+    height: 27px;
+    float: right;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
+    -webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
 }
 
 .reservation-point .title{

@@ -1,6 +1,6 @@
 <?php 
 	use app\modules\circuits\assets\ViewReservationAsset;
-	use app\modules\circuits\assets\GoogleMapsAsset;
+	use app\assets\GoogleMapsAsset;
 	use yii\grid\GridView;
 	use yii\grid\CheckboxColumn;
 	use yii\helpers\Url;
