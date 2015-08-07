@@ -14,10 +14,10 @@
 	])
 ?>
 
-<h1 style="clear: none; float: left; z-index: 90; position: absolute;">
-	<input type="text" id="search-box" size="40"/>
+<div id="search-row" style="margin-left: 20px; margin-top:15px;" hidden>
+    <input type="text" id="search-box" size="40" autofocus>
     <button id="search-button"><span class="ui-icon-to-button-without-background ui-icon ui-icon-search" style="margin-left: 35%;"></span></button>
-</h1>
+</div>
 
 <div id="subtab-points" class="tab_subcontent">
 	<?= $this->render('_selectMarkerType', array('type' => 'network')); ?>
