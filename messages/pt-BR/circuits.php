@@ -147,7 +147,7 @@ return array(
 		"From Here" => "A partir daqui",
 		"To Here" => "Até aqui",
 		"Reservation" => "Reserva",
-		"deleted" => "excluído",
+		"deleted" => "removido",
 		"No reservation was cancelled" => "Nenhuma reserva foi cancelada",
 		"One reservation was cancelled" => "Uma reserva foi cancelada",
 		"reservations were cancelled" => "reservas foram canceladas",

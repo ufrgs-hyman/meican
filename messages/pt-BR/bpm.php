@@ -35,7 +35,7 @@ return array(
 		'Disable Workflow' => 'Desativar workflow',
 		'Enable Workflow' => 'Ativar Workflow',
 		'View Workflow' => 'Visualizar Workflow',
-		'Delete Workflow' => 'Excluir Workflow',
+		'Delete Workflow' => 'Remover Workflow',
 		'Update Workflow' => 'Editar Workflow',
 		'Create a copy of Workflow' => 'Criar uma cópia deste Workflow',
 		'Arriving a new request' => 'Chegada de uma nova requisição',

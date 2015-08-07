@@ -61,7 +61,7 @@ return array(
 		"Create" => "Criar",
 		"Read" => "Ler",
 		"Update" => "Editar",
-		"Delete" => "Excluir",
+		"Delete" => "Remover",
 		"User {user} deleted successfully" => "Usuário {user} removido com sucesso",
 		"Do you confirm?" => "Confirma?",
 		"Edit group" => "Editar grupo",
