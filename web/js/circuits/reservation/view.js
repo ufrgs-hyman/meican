@@ -47,8 +47,7 @@ $(document).on('ready pjax:success', function() {
 
 var selectedConnIsApproved;
 var selectedConn;
-var map;
-var markers = [];
+var meicanMap;
 var refresher;
 var circuits = [];
 
@@ -296,7 +295,7 @@ function drawCircuit(requiredMarkers) {
 	var path = [];
 
 	for (var k = 0; k < requiredMarkers.length; k++) {
-		path.push(getMarkerById(requiredMarkers[k]).position);
+		path.push(meicanMap.getMarker('dev',requiredMarkers[k]).position);
 	}
 	
 	if (path.length > 1) {
@@ -309,7 +308,7 @@ function drawCircuit(requiredMarkers) {
 	        strokeWeight: 5,
 	        geodesic: false,
 	    });
-		circuit.setMap(map);
+		circuit.setMap(meicanMap.getMap());
 
 		circuits.push(circuit);
 	}
@@ -318,11 +317,13 @@ function drawCircuit(requiredMarkers) {
 function drawCircuitAnimated(requiredMarkers) {
 	if (requiredMarkers.length > 2) {
 		for (var i = 0; i < requiredMarkers.length - 1; i++) {
-			drawPath(requiredMarkers, getPathData(getMarkerById(requiredMarkers[i]), getMarkerById(requiredMarkers[i + 1])), 1); 
+			drawPath(requiredMarkers, getPathData(
+                meicanMap.getMarker('dev',requiredMarkers[i]), meicanMap.getMarker('dev',requiredMarkers[i + 1])), 1); 
 		}
 		
 	} else {
-		drawPath(requiredMarkers, getPathData(getMarkerById(requiredMarkers[0]), getMarkerById(requiredMarkers[1])), 1); 
+		drawPath(requiredMarkers, getPathData(
+            meicanMap.getMarker('dev',requiredMarkers[0]), meicanMap.getMarker('dev',requiredMarkers[1])), 1); 
 	}
 }
 
@@ -334,7 +335,7 @@ function getPathData(source,destin){
     for(var i=1;i<=90;i++){  
     	
     	//sem geodesic
-    	var projection = map.getProjection();
+    	var projection = meicanMap.getMap().getProjection();
         var pointFrom = projection.fromLatLngToPoint( source.position );
         var pointTo = projection.fromLatLngToPoint( destin.position );
         
@@ -372,7 +373,7 @@ function drawPath(requiredMarkers, path, index, polyline){
  	         strokeWeight: 5,
  	         geodesic: false,
         });  
-		polyline.setMap(map);  
+		polyline.setMap(meicanMap.getMap());  
 		circuits.push(polyline);
 	}
    
@@ -387,22 +388,8 @@ function drawPath(requiredMarkers, path, index, polyline){
 //////////// INICIALIZA MAPA /////////////////
 
 function initialize() {
-	var myLatlng = new google.maps.LatLng(0,0);
-	var mapOptions = {
-			zoom: 3,
-			minZoom: 2,
-			maxZoom: 15,
-			center: myLatlng,
-			streetViewControl: false,
-			panControl: false,
-			zoomControl: false,
-			mapTypeControl: false,
-	};
-	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-	
-	google.maps.event.addListener(map, 'click', function() {
-		MeicanMaps.closeWindows();
-	});
+	meicanMap = new MeicanMap;
+    meicanMap.buildMap("map-canvas");
 	
 	drawReservation(selectedConn);
 	
@@ -433,7 +420,7 @@ function drawReservation(connId, animate) {
 
                 showMarkers(requiredMarkers);
 
-                console.log(requiredMarkers);
+                //console.log(requiredMarkers);
 
                 addSourceMarker(response[0].device_id);
                 addDestinMarker(response[size-1].device_id);
@@ -474,7 +461,7 @@ function drawReservation(connId, animate) {
 
 function drawCircuitWhenReady(requiredMarkers, animate) {
 	if (areMarkersReady(requiredMarkers)) {
-		console.log("drew");
+		//console.log("drew");
 		if (animate) {
 			drawCircuitAnimated(requiredMarkers);
 		} else {
@@ -489,10 +476,11 @@ function drawCircuitWhenReady(requiredMarkers, animate) {
 
 function setMapBoundsMarkersWhenReady(requiredMarkers) {
 	if (areMarkersReady(requiredMarkers)) {
-		console.log("setbounds");
+		//console.log("setbounds");
 		var path = [];
-		for(i = 0; i < requiredMarkers.length; i++){
-			path.push(getMarkerById(requiredMarkers[i]).position);
+        var size = requiredMarkers.length;
+		for(var i = 0; i < size; i++){
+			path.push(meicanMap.getMarker('dev',requiredMarkers[i]).position);
 		}
 		setMapBounds(path);
 	} else {
@@ -503,7 +491,7 @@ function setMapBoundsMarkersWhenReady(requiredMarkers) {
 }
 
 function addWayPointMarker(devId) {
-    marker = MeicanMaps.getMarker(markers, 'dev', devId);
+    marker = meicanMap.getMarker('dev', devId);
     if (marker) return;
 
 	$.ajax({
@@ -520,8 +508,8 @@ function addWayPointMarker(devId) {
 }
 
 function addSourceMarker(devId) {
-    marker = MeicanMaps.getMarker(markers, 'dev', devId);
-    if (marker) return MeicanMaps.changeDeviceMarkerColor(marker, "0000EE");
+    marker = meicanMap.getMarker('dev', devId);
+    if (marker) return meicanMap.changeDeviceMarkerColor(marker, "0000EE");
 
 	$.ajax({
 		url: baseUrl+'/circuits/connection/get-stp',
@@ -537,8 +525,8 @@ function addSourceMarker(devId) {
 }
 
 function addDestinMarker(devId) {
-    marker = MeicanMaps.getMarker(markers, 'dev', devId);
-    if (marker) return MeicanMaps.changeDeviceMarkerColor(marker, "FF0000");
+    marker = meicanMap.getMarker('dev', devId);
+    if (marker) return meicanMap.changeDeviceMarkerColor(marker, "FF0000");
 
 	$.ajax({
 		url: baseUrl+'/circuits/connection/get-stp',
@@ -554,26 +542,27 @@ function addDestinMarker(devId) {
 }
 
 function showMarkers(connIds) {
-	for (var i = 0; i < markers.length; i++) {
+    var size = meicanMap.getMarkers().length;
+	for (var i = 0; i < size; i++) {
 		var found = false;
 		for (var k = 0; k < connIds.length; k++) {
-			console.log(markers[i].id, connIds[k]);
-			if (markers[i].id == connIds[k]) {
-				markers[i].setVisible(true);
+			console.log(meicanMap.getMarkers()[i].id, connIds[k]);
+			if (meicanMap.getMarkers()[i].id == connIds[k]) {
+				meicanMap.getMarkers()[i].setVisible(true);
 				found = true;
 				break;
 			} 
 		}
 
 		if (!found) 
-			markers[i].setVisible(false);
+			meicanMap.getMarkers()[i].setVisible(false);
 	}
 }
 
 //////////// ADICIONA MARCADORES NO MAPA /////////////////
 
 function addMarker(dev, color) {
-	marker = MeicanMaps.getMarker(markers, 'dev', dev.id);
+	marker = meicanMap.getMarker('dev', dev.id);
 	if (marker) return marker;
 
     if (dev.name == '') dev.name = "default";
@@ -587,33 +576,24 @@ function addMarker(dev, color) {
 		var myLatlng = new google.maps.LatLng(0, 0);
 	}
 	
-	var marker = MeicanMaps.DeviceMarker({
-		position: MeicanMaps.getValidMarkerPosition(markers, 'dev', myLatlng),
+	var marker = meicanMap.DeviceMarker({
+		position: meicanMap.getValidMarkerPosition('dev', myLatlng),
 		info: contentString,
         type: 'dev',
 		id: dev.id
 	}, color);
 	
-	var length = markers.push(marker);
+	meicanMap.addMarker(marker);
 	
-	addMarkerListeners(length - 1);
+	addMarkerListeners(marker);
 	
-	marker.setMap(map);
-}
-
-function getMarkerById(id) {
-	for (var i = 0; i < markers.length; i++) {
-		if (markers[i].id == id) {
-			return markers[i];
-		}
-	}
-	
-	return null;
+	marker.setMap(meicanMap.getMap());
 }
 
 function areMarkersReady(ids) {
 	for (var i = 0; i < ids.length; i++) {
-		if (getMarkerById(ids[i]) === null) {
+        var marker = meicanMap.getMarker('dev',ids[i]);
+		if (marker === null) {
 			return false;
 		}
 	}
@@ -623,26 +603,25 @@ function areMarkersReady(ids) {
 
 //////////// LISTENERS DOS MARCADORES /////////////
 
-function addMarkerListeners(index) {
-	google.maps.event.addListener(markers[index], 'mouseover', function(key) {
-		return function(){
-			MeicanMaps.closeWindows();
-			MeicanMaps.openWindow(map, markers[key]);
-		}
-	}(index));
+function addMarkerListeners(marker) {
+	google.maps.event.addListener(marker, 'mouseover', function() {
+		meicanMap.closeWindows();
+		meicanMap.openWindow(marker);
+	});
 }
 
 ////////// DEFINE ZOOM E LIMITES DO MAPA A PARTIR DE UM CAMINHO ////////
 
 function setMapBounds(path) {
+    //console.log(path);
     if (path.length < 2) return;
     polylineBounds = new google.maps.LatLngBounds();
-    for (i = 0; i < path.length; i++) {
+    for (var i = 0; i < path.length; i++) {
     	polylineBounds.extend(path[i]);
     }
-    map.fitBounds(polylineBounds);
-    map.setCenter(polylineBounds.getCenter());
-    map.setZoom(map.getZoom() - 1);
+    meicanMap.getMap().fitBounds(polylineBounds);
+    meicanMap.getMap().setCenter(polylineBounds.getCenter());
+    meicanMap.getMap().setZoom(meicanMap.getMap().getZoom() - 1);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);

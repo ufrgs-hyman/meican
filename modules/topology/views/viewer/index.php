@@ -10,9 +10,10 @@
 	GoogleMapsAsset::register($this);
 ?>
 
-<h1 style="clear: none; float: left; z-index: 999999; position: absolute;">
-	<label id="label_res_name" for="res_name" style="width: 170px;"><?= Yii::t("topology", 'Topology Viewer'); ?></label>
-</h1>
+<div id="search-row" style="margin-left: 20px; margin-top:15px;" hidden>
+    <input type="text" id="search-box" size="40">
+    <button id="search-button"><span class="ui-icon-to-button-without-background ui-icon ui-icon-search" style="margin-left: 35%;"></span></button>
+</div>
 
 <div id="subtab-points" class="tab_subcontent">
 	<table class="reservation-marker-type reservation-point view-point">

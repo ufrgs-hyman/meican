@@ -15,7 +15,7 @@
 ?>
 
 <div id="search-row" style="margin-left: 20px; margin-top:15px;" hidden>
-    <input type="text" id="search-box" size="40" autofocus>
+    <input type="text" id="search-box" size="40">
     <button id="search-button"><span class="ui-icon-to-button-without-background ui-icon ui-icon-search" style="margin-left: 35%;"></span></button>
 </div>
 

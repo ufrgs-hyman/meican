@@ -2,8 +2,7 @@ $(document).ready(function() {
 	$('#map-canvas').show();
 });
 
-var map;
-var markers = [];
+var meicanMap;
 var domainsList;
 var links = [];
 var currentMarkerType = 'network';
@@ -18,9 +17,9 @@ $('#marker-type-device').on('change', function() {
 });
 
 function setMarkerType(markerType) {
-    MeicanMaps.closeWindows();
+    meicanMap.closeWindows();
     currentMarkerType = markerType;
-    MeicanMaps.setMarkerTypeVisible(markers, markerType);
+    meicanMap.setMarkerTypeVisible(markerType);
     setLinkTypeVisible(markerType);
     if (markerType == "device") {
         if (!devicesLoaded) {
@@ -31,7 +30,7 @@ function setMarkerType(markerType) {
 }
 
 function setLinkTypeVisible(markerType) {
-    for(i = 0; i < links.length; i++){ 
+    for(var i = 0; i < links.length; i++){ 
         if (links[i].type == markerType) {
             links[i].setVisible(true);
         } else {
@@ -94,29 +93,17 @@ function drawCircuit(source, destin) {
 		markerWindow.open(map);
     });*/
 	
-    link.setMap(map);
+    link.setMap(meicanMap.getMap());
     links.push(link);
 }
 
 //////////// INICIALIZA MAPA /////////////////
 
 function initialize() {
-	var mapOptions = {
-			zoom: 3,
-			minZoom: 2,
-			maxZoom: 15,
-			center: new google.maps.LatLng(0,0),
-			streetViewControl: false,
-			panControl: false,
-			zoomControl: false,
-			mapTypeControl: false,
-	};
-	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-	
-	google.maps.event.addListener(map, 'click', function() {
-		MeicanMaps.closeWindows();
-	});
-	
+	meicanMap = new MeicanMap;
+    meicanMap.buildMap("map-canvas");
+    meicanMap.buildSearchBox("search-row", "search-box", 'search-button');
+
     $.ajax({
         url: baseUrl+'/topology/network/get-all-parent-location',
         dataType: 'json',
@@ -166,16 +153,16 @@ function addMarker(type, object) {
     }
 
     if (type == "network") {
-        var marker = MeicanMaps.NetworkMarker({
-            position: MeicanMaps.getValidMarkerPosition(markers, type, myLatlng),
+        var marker = meicanMap.NetworkMarker({
+            position: meicanMap.getValidMarkerPosition(type, myLatlng),
             info: contentString,
             id: object.id,
             domainId: object.domain_id,
             type: type,
         });
     } else {
-        var marker = MeicanMaps.DeviceMarker({
-            position: MeicanMaps.getValidMarkerPosition(markers, type, myLatlng),
+        var marker = meicanMap.DeviceMarker({
+            position: meicanMap.getValidMarkerPosition(type, myLatlng),
             type: type,
             id: object.id,
             domainId: object.domain_id,
@@ -183,29 +170,27 @@ function addMarker(type, object) {
         });
     }
     
-    var length = markers.push(marker);
+    meicanMap.addMarker(marker);
     
-    addMarkerListeners(length - 1);
+    addMarkerListeners(marker);
     
-    marker.setMap(map);
+    marker.setMap(meicanMap.getMap());
 }
 
 function addCircuit(type, srcId, dstId) {
-    srcMarker = MeicanMaps.getMarker(markers, type, srcId);
-    dstMarker = MeicanMaps.getMarker(markers, type, dstId);
+    srcMarker = meicanMap.getMarker(type, srcId);
+    dstMarker = meicanMap.getMarker(type, dstId);
 
     drawCircuit(srcMarker, dstMarker);
 }
 
 //////////// LISTENERS DOS MARCADORES /////////////
 
-function addMarkerListeners(index) {
-	google.maps.event.addListener(markers[index], 'mouseover', function(key) {
-		return function(){
-			MeicanMaps.closeWindows(open);
-			MeicanMaps.openWindow(map, markers[key]);
-		}
-	}(index));
+function addMarkerListeners(marker) {
+	google.maps.event.addListener(marker, 'mouseover', function() {
+		meicanMap.closeWindows();
+		meicanMap.openWindow(marker);
+	});
 }
 
 ////////// DEFINE ZOOM E LIMITES DO MAPA A PARTIR DE UM CAMINHO ////////
@@ -213,22 +198,16 @@ function addMarkerListeners(index) {
 function setMapBounds(path) {
     if (path.length < 2) return;
     polylineBounds = new google.maps.LatLngBounds();
-    for (i = 0; i < path.length; i++) {
+    for (var i = 0; i < path.length; i++) {
     	polylineBounds.extend(path[i]);
     }
-    map.fitBounds(polylineBounds);
-    map.setCenter(polylineBounds.getCenter());
-    map.setZoom(map.getZoom() - 1);
+    meicanMap.getMap().fitBounds(polylineBounds);
+    meicanMap.getMap().setCenter(polylineBounds.getCenter());
+    meicanMap.getMap().setZoom(meicanMap.getMap().getZoom() - 1);
 }
 
 function getNetworkMarkerByDomain(domainId) {
-    for(i = 0; i < markers.length; i++){
-        if (markers[i].type == "network" && markers[i].domainId == domainId) {
-            return markers[i];
-        }
-    }
-    
-    return null;
+    return meicanMap.getMarkerByDomain("network", domainId);
 }
 
 function getDomainName(id) {

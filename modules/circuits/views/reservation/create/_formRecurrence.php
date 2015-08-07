@@ -43,10 +43,12 @@ DatePicker::widget([
 
 &nbsp;&nbsp;&nbsp;
 <input type="checkbox" name="ReservationForm[rec_enabled]" id="recurrence_enabled"></input><label for="recurrence_enabled"> <?= Yii::t("circuits", "Repeat..."); ?></label>
+<br>
+<div id="slide" style="display:none;">
 
-<div id="recurrence" style="display:none;">
+<div id="recurrence">
 
-	<h3><?= Yii::t("circuits", "Recurrence pattern"); ?></h3>
+	<br><label class="label-description"><?= Yii::t("circuits", "Recurrence pattern"); ?>: </label><br><br>
 	<div class="recurrence-item">
     	<?=  
     		Html::radioList('ReservationForm[rec_type]', 'D', 
@@ -80,7 +82,7 @@ DatePicker::widget([
 					<input type="checkbox" name="ReservationForm[rec_weekdays][]" value="TU" title="Tuesday" id="Tuesday"/><label for="Tuesday"><?= Yii::t("circuits", "Tue"); ?></label>
 				</td>
 				<td class="recurrence_table">
-					<input type="checkbox" name="ReservationForm[rec_weekdays][]" value="WE" title="Wednesday"" id="Wednesday"/><label for="Wednesday"><?= Yii::t("circuits", "Wed"); ?></label>
+					<input type="checkbox" name="ReservationForm[rec_weekdays][]" value="WE" title="Wednesday" id="Wednesday"/><label for="Wednesday"><?= Yii::t("circuits", "Wed"); ?></label>
 				</td>
 			</tr>
 			<tr>
@@ -99,7 +101,7 @@ DatePicker::widget([
 	
 	<div style="clear: both;"></div>
     
-    <h3><?= Yii::t("circuits", "Range of recurrence"); ?></h3>
+    <br><label class="label-description"><?= Yii::t("circuits", "Range of recurrence"); ?>: </label><br><br>
     
     <div class="recurrence-item">
         <?= Yii::t("circuits", "Starts on"); ?>:
@@ -180,4 +182,6 @@ DatePicker::widget([
 		    </td>
 	    </tr>
 	</table>
+</div>
+
 </div>

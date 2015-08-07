@@ -13,6 +13,6 @@ class ViewerAsset extends AssetBundle
         'js/google/styled.marker.js',
     	'js/topology/viewer-i18n.js',
     	'js/topology/viewer.js',
-        'js/maps/meican-maps.js',
+        'js/maps/meican-map.js',
     ];
 }

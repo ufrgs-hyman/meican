@@ -45,18 +45,6 @@ function initializationOfView(){
 	  
 	$("#summary").html(summary);
 	
-	$('#recurrence_enabled').on('change', function() {
-		if ($("#recurrence_enabled").prop("checked")) {
-			$("#recurrence").slideDown(400, function(){
-				$(window).trigger('resize');
-		    });
-		} else {
-			$("#recurrence").slideUp(400, function(){
-		        $(window).trigger('resize');
-		    });
-		}
-	});
-	
 	/** Radioboxes "Everyday","Weekly" and "Monthly" **/
 	$("input[name$='ReservationForm[rec_type]']").click(function() {
 		var value = $(this).val();
