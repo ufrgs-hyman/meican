@@ -37,7 +37,7 @@
 
 <div id="reservation-tab">
 	<div id="recurrence-date-time"><?= $this->render('_formRecurrence'); ?><br><button id="request-button"><?= Yii::t("circuits", "Request reservation"); ?></button></div>
-	<div id="reservation-waypoints" hidden><?= $this->render('_formWaypoints'); ?></div>
+	<div id="reservation-waypoints"><?= $this->render('_formWaypoints'); ?></div>
 	<div id="reservation-request"></div>
 </div>
 

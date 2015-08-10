@@ -330,11 +330,12 @@ function addWayPoint(marker) {
 	markerCluster.removeMarker(marker);
 	marker.setMap(meicanMap.getMap());
 	
-	if (wayPoints.length < 1) {
-		$("#reservation-waypoints").slideDown(1);
-	}
+	//if (wayPoints.length < 1) {
+	//	$("#reservation-waypoints").slideDown(1);
+	//}
 	
 	wayPoints.push(marker);
+    $("#waypoints-size").text(wayPoints.length);
 
     var inputData = '';
     if (marker.type == "net") {
@@ -390,11 +391,6 @@ function addWayPoint(marker) {
 	drawCircuit();
 }
 
-function hideReservationTabs() {
-	$("#reservation-tab").fadeOut();
-	$(".reservation-point").fadeOut();
-}
-
 function deleteWayPoint(wayObject) {
 	var marker = meicanMap.getMarker(currentMarkerType, $(wayObject).attr("id").replace("way",""));
     marker.circuitPoints--;
@@ -405,10 +401,12 @@ function deleteWayPoint(wayObject) {
 			break;
 		}
 	}
+
+    $("#waypoints-size").text(wayPoints.length);
 	
-	if (wayPoints.length < 1) {
-		$("#reservation-waypoints").hide();
-	}
+	//if (wayPoints.length < 1) {
+	//	$("#reservation-waypoints").hide();
+	//}
 
     if (marker.circuitPoints == 0) {
         marker.setMap(null);
@@ -432,9 +430,11 @@ function deleteWayPoints() {
 		marker = wayPoints.pop();
 	}
 	
-	if (wayPoints.length < 1) {
-		$("#reservation-waypoints").hide();
-	}
+	//if (wayPoints.length < 1) {
+	//	$("#reservation-waypoints").hide();
+	//}
+
+    $("#waypoints-size").text(wayPoints.length);
 	
 	drawCircuit();
 }
@@ -721,10 +721,16 @@ function closeTab() {
     $("#slide").slideUp(400, function(){
         $(window).trigger('resize');
     });
+    $("#waypoints_order").slideUp(400, function(){
+        $(window).trigger('resize');
+    });
 }
 
 function openTab() {
     $("#slide").slideDown(400, function(){
+        $(window).trigger('resize');
+    });
+    $("#waypoints_order").slideDown(400, function(){
         $(window).trigger('resize');
     });
 }
