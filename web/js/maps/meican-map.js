@@ -317,9 +317,11 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
 
                 currentMap._map.fitBounds(bounds);
                 currentMap._map.setZoom(11);
+                
                 if(openWindowFunction) {
                     openWindowFunction(ui.item.marker);
                 } else {
+                    currentMap.closeWindows();
                     currentMap.openWindow(ui.item.marker);
                 }
         }

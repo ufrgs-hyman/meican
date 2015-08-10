@@ -125,6 +125,8 @@ function initialize() {
                     for (var key in response) {
                         addCircuit('net', response[key][0], response[key][1]);
                     }
+                    setMarkerType("dev");
+                    $("#marker-type-device").attr("checked", "checked");
                 }
             });
         }
