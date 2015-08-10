@@ -1,7 +1,7 @@
-/*!
+/**
  * MeicanMap 1.0
  *
- * Copyright (c) 2015, Maurício Quatrin Guerreiro @mqgmaster
+ * @copyright (c) 2015, Maurício Quatrin Guerreiro @mqgmaster
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -147,7 +147,9 @@ MeicanMap.prototype.openWindow = function(marker, extra) {
 
     markerWindow = new google.maps.InfoWindow({
         content: '<div class = "MarkerPopUp" style="width: 230px; line-height: 1.35; overflow: hidden; white-space: nowrap;"><div class = "MarkerContext">' +
-            marker.info + extra
+            'Domain: ' + '<b>' + (marker.domainName ? marker.domainName : this.getDomainName(marker.domainId)) + '</b><br>' + 
+            (marker.type == "dev" ? 'Device' : "Network") + ': <b>'+marker.name+'</b><br>' +
+            extra
         });
 
     this._openedWindows.push(markerWindow);
@@ -168,13 +170,27 @@ MeicanMap.prototype.getMarker = function(type, id) {
     return null;
 }
 
-MeicanMap.prototype.searchMarkerByName = function (type, name) {
+MeicanMap.prototype.searchMarkerByNameOrDomain = function (type, name) {
     results = [];
     name = name.toLowerCase();
+    var domainId;
+
+    if (!domainsList) domainsList = JSON.parse($("#domains-list").text());
+    for (var i = 0; i < domainsList.length; i++) {
+        if(domainsList[i].name.toLowerCase() == name){
+            domainId = domainsList[i].id;
+            break;
+        }
+    };
+
     var size = this._markers.length;
     for(var i = 0; i < size; i++){
-        if (this._markers[i].type == type && ((this._markers[i].name.toLowerCase()).indexOf(name) > -1)) {
-            results.push(this._markers[i]);
+        if (this._markers[i].type == type) {
+            if ((this._markers[i].name.toLowerCase()).indexOf(name) > -1) {
+                results.push(this._markers[i]);
+            } else if (domainId == this._markers[i].domainId) {
+                results.push(this._markers[i]);
+            }
         }
     }
     
@@ -247,6 +263,14 @@ MeicanMap.prototype.addMarker = function(marker) {
     this._markers.push(marker);
 }
 
+MeicanMap.prototype.getDomainName = function(id) {
+    if (!domainsList) domainsList = JSON.parse($("#domains-list").text());
+    for (var i = 0; i < domainsList.length; i++) {
+        if(domainsList[i].id == id)
+        return domainsList[i].name;
+    };
+}
+
 MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWindowFunction) {
     this._map.controls[google.maps.ControlPosition.TOP_LEFT].push(
         document.getElementById(divId));
@@ -286,18 +310,24 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
                 });
                 break;
             case 'dev':
+            case 'port':
                 var bounds = new google.maps.LatLngBounds();
 
                 bounds.extend(ui.item.marker.getPosition()); 
 
                 currentMap._map.fitBounds(bounds);
                 currentMap._map.setZoom(11);
-                //openWindowFunction(markers, ui.item.marker);
+                if(openWindowFunction) {
+                    openWindowFunction(ui.item.marker);
+                } else {
+                    currentMap.openWindow(ui.item.marker);
+                }
         }
     }, 
     source: function (request, response) {
         var term = request.term;
         var previous = this.previous;
+        var pendingSources = 2;
         
         if(!term.trim()) return;
 
@@ -305,6 +335,54 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
             response(currentMap._searchSource);
             return;
         }
+        currentMap._searchSource = [];
+        currentMap._fillSearchSource = response;
+
+        $.ajax({
+            type: "GET",
+            url: baseUrl + '/topology/viewer/search',
+            data: {
+                term: term
+            },
+            dataType: 'json',
+            success: function (response) {
+                console.log(response);
+
+                var size = response.length;
+                for (var i = 0; i < size; i++) {
+                    currentMap._searchSource.push(
+                        {
+                            label: response[i].name,
+                            value: response[i].name,
+                            type: 'port',
+                            marker: currentMap.getMarker('dev', response[i].device_id)
+                        }
+                    );
+
+                    if(i == 5) break;
+                };
+
+                var devs = currentMap.searchMarkerByNameOrDomain('dev', request.term); 
+                var size = devs.length;
+                for (var i = 0; i < size; i++) {
+                    currentMap._searchSource.push(
+                        {
+                            label: devs[i].name,
+                            value: devs[i].name,
+                            type: 'dev',
+                            marker: devs[i]
+                        }
+                    );
+
+                    if(i == 10) break;
+                };
+
+                pendingSources--;
+                if (pendingSources == 0) {
+                    return currentMap._fillSearchSource(currentMap._searchSource);
+                }
+            }
+        });
 
         var query = {
             input: request.term,
@@ -313,23 +391,6 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
         if(!currentMap._autoCompleteService) currentMap._autoCompleteService = new google.maps.places.AutocompleteService();
 
         currentMap._autoCompleteService.getPlacePredictions(query, function(results, status) {
-            currentMap._searchSource = [];
-
-            var devs = currentMap.searchMarkerByName('dev', request.term); 
-            var size = devs.length;
-            for (var i = 0; i < size; i++) {
-                currentMap._searchSource.push(
-                    {
-                        label: devs[i].name,
-                        type: 'dev',
-                        marker: devs[i]
-                    }
-                );
-
-                if(i == 10) return currentMap._fillSearchSource(currentMap._searchSource);
-            };
-
-            //searchSource = $.ui.autocomplete.filter(searchSource, searchTerm);
             console.log(results, status);
 
             if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -345,10 +406,11 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
                 }
             }
 
-            currentMap._fillSearchSource(currentMap._searchSource);
+            pendingSources--;
+            if (pendingSources == 0) {
+                return currentMap._fillSearchSource(currentMap._searchSource);
+            }
         });
-
-        currentMap._fillSearchSource = response;
     },
     minLength: 1
     }).autocomplete( "instance" )._renderItem = function( ul, item ) {
@@ -366,7 +428,14 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
             return $( "<li></li>" ).data("item.autocomplete", item)
                 .append( '<b><span style="font-size: 13px; margin: 5px;">' + item.label + "</span></b>" + 
                     (item.label ? '<span style="font-size: 11px; color: #999"> ' + "Device" + "</span>"  : "") +
-                    (item.label ? '<span style="font-size: 11px; color: #999"> from ' + "domainName" + "</span>" : ""))
+                    (item.label ? '<span style="font-size: 11px; color: #999"> from ' + currentMap.getDomainName(item.marker.domainId) + "</span>" : ""))
+                .appendTo( ul );
+        case "port" :
+            return $( "<li></li>" ).data("item.autocomplete", item)
+                .append( '<b><span style="font-size: 13px; margin: 5px;">' + item.label + "</span></b>" + 
+                    '<span style="font-size: 11px; color: #999"> ' + "Port" + "</span>" +
+                    '<span style="font-size: 11px; color: #999"> on Device ' + item.marker.name + "</span>" +
+                    '<span style="font-size: 11px; color: #999"> from ' + currentMap.getDomainName(item.marker.domainId) + "</span>")
                 .appendTo( ul );
       }
     };

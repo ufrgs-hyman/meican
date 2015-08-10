@@ -54,4 +54,16 @@ class ViewerController extends RbacController {
         Yii::trace($deviceLinks);
         return json_encode($deviceLinks);
     }
+
+    public function actionSearch($term) {
+        $term = str_replace("urn:ogf:network:", "", $term);
+        $ports = Port::findBySql(
+            "SELECT `name`, `device_id` 
+            FROM `meican_port` 
+            WHERE ((`urn` COLLATE UTF8_GENERAL_CI LIKE :term) 
+            OR (`name` LIKE :term)) AND `directionality` = 'BI' AND `type` = 'NSI'
+            LIMIT 5")->addParams([':term'=>'%'.$term.'%'])->asArray()->all();
+        Yii::trace($ports);
+        return json_encode($ports);
+    }
 }

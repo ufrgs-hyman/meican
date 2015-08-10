@@ -5,15 +5,15 @@ $(document).ready(function() {
 var meicanMap;
 var domainsList;
 var links = [];
-var currentMarkerType = 'network';
+var currentMarkerType = 'net';
 var devicesLoaded = false;
 
 $('#marker-type-network').on('change', function() {
-    setMarkerType("network");
+    setMarkerType("net");
 });
     
 $('#marker-type-device').on('change', function() {
-    setMarkerType("device");
+    setMarkerType("dev");
 });
 
 function setMarkerType(markerType) {
@@ -21,7 +21,7 @@ function setMarkerType(markerType) {
     currentMarkerType = markerType;
     meicanMap.setMarkerTypeVisible(markerType);
     setLinkTypeVisible(markerType);
-    if (markerType == "device") {
+    if (markerType == "dev") {
         if (!devicesLoaded) {
             loadDeviceMarkers();
             devicesLoaded = true;
@@ -52,7 +52,7 @@ function loadDeviceMarkers() {
         success: function(response) {
             var size = response.length;
             for (var i = 0; i < size; i++) {
-                addMarker("device", response[i]);
+                addMarker("dev", response[i]);
             };
             $.ajax({
                 url: baseUrl+'/topology/viewer/get-device-links',
@@ -61,7 +61,7 @@ function loadDeviceMarkers() {
                 success: function(response) {
                     var size = response.length;
                     for (var key in response) {
-                        addCircuit('device', response[key][0], response[key][1]);
+                        addCircuit('dev', response[key][0], response[key][1]);
                     }
                 }
             });
@@ -114,7 +114,7 @@ function initialize() {
         success: function(response) {
             var size = response.length;
             for (var i = 0; i < size; i++) {
-                addMarker("network", response[i]);
+                addMarker("net", response[i]);
             };
             $.ajax({
                 url: baseUrl+'/topology/viewer/get-network-links',
@@ -123,7 +123,7 @@ function initialize() {
                 success: function(response) {
                     var size = response.length;
                     for (var key in response) {
-                        addCircuit('network', response[key][0], response[key][1]);
+                        addCircuit('net', response[key][0], response[key][1]);
                     }
                 }
             });
@@ -134,15 +134,12 @@ function initialize() {
 //////////// ADICIONA MARCADORES NO MAPA /////////////////
 
 function addMarker(type, object) {
-    domainName = getDomainName(object.domain_id);
     if (object.name == "") {
         object.name = 'default';
     }
 
     var network = null;
-    if (type == 'device') network = getNetworkMarkerByDomain(object.domain_id);
-
-    var contentString = 'Domain: ' + '<b>' + domainName + '</b><br>' + type.ucFirst() + ': <b>'+object.name+'</b><br><br><br>';
+    if (type == 'dev') network = meicanMap.getMarkerByDomain('net',object.domain_id);
 
     if (object.latitude != null && object.longitude != null) {
         var myLatlng = new google.maps.LatLng(object.latitude,object.longitude);
@@ -152,21 +149,21 @@ function addMarker(type, object) {
         var myLatlng = new google.maps.LatLng(0, 0);
     }
 
-    if (type == "network") {
+    if (type == "net") {
         var marker = meicanMap.NetworkMarker({
             position: meicanMap.getValidMarkerPosition(type, myLatlng),
-            info: contentString,
             id: object.id,
             domainId: object.domain_id,
-            type: type,
+            name: object.name,
+            type: "net",
         });
     } else {
         var marker = meicanMap.DeviceMarker({
             position: meicanMap.getValidMarkerPosition(type, myLatlng),
-            type: type,
+            type: "dev",
             id: object.id,
             domainId: object.domain_id,
-            info: contentString,
+            name: object.name,
         });
     }
     
@@ -204,18 +201,6 @@ function setMapBounds(path) {
     meicanMap.getMap().fitBounds(polylineBounds);
     meicanMap.getMap().setCenter(polylineBounds.getCenter());
     meicanMap.getMap().setZoom(meicanMap.getMap().getZoom() - 1);
-}
-
-function getNetworkMarkerByDomain(domainId) {
-    return meicanMap.getMarkerByDomain("network", domainId);
-}
-
-function getDomainName(id) {
-    if (!domainsList) domainsList = JSON.parse($("#domains-list").text());
-    for (var i = 0; i < domainsList.length; i++) {
-        if(domainsList[i].id == id)
-        return domainsList[i].name;
-    };
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);

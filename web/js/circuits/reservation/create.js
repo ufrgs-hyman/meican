@@ -21,20 +21,20 @@ var currentMarkerType = "net";
 var devicesLoaded = false;
 
 var MARKER_OPTIONS_NET = '' +
-'<div><button style="font-size: 11px; width: 48.25%;" id="set-as-source">' + tt('From here') + '</button>' +
-'<button style="font-size: 11px; width: 48.25%;" id="set-as-dest">' + tt('To here') + '</button></div><div style="height: 2px;"></div>' +
-'<div><button style="font-size: 11px; width: 48.25%;" id="add-waypoint">' + tt('Add waypoint') + '</button>' +
-'<button style="font-size: 11px; width: 48.25%;" id="set-as-intra">' + tt('Intra-domain') + '</button></div>';
+'<div><button style="font-size: 10px; height: 22px; width: 48.25%;" id="set-as-source">' + tt('From here') + '</button>' +
+'<button style="font-size: 10px; height: 22px; width: 48.25%;" id="set-as-dest">' + tt('To here') + '</button></div><div style="height: 2px;"></div>' +
+'<div><button style="font-size: 10px; height: 22px; width: 48.25%;" id="add-waypoint">' + tt('Add waypoint') + '</button>' +
+'<button style="font-size: 10px; height: 22px; width: 48.25%;" id="set-as-intra">' + tt('Intra-domain') + '</button></div>';
 var MARKER_OPTIONS_DEV = '' +
-'<div><button style="font-size: 11px; width: 48.25%;" id="set-as-source">' + tt('From here') + '</button>' +
-'<button style="font-size: 11px; width: 48.25%;" id="set-as-dest">' + tt('To here') + '</button></div><div style="height: 2px;"></div>' +
-'<div><button style="font-size: 11px; width: 98%;" id="add-waypoint">' + tt('Add waypoint') + '</button>' +
+'<div><button style="font-size: 10px; height: 22px; width: 48.25%;" id="set-as-source">' + tt('From here') + '</button>' +
+'<button style="font-size: 10px; height: 22px; width: 48.25%;" id="set-as-dest">' + tt('To here') + '</button></div><div style="height: 2px;"></div>' +
+'<div><button style="font-size: 10px; height: 22px; width: 98%;" id="add-waypoint">' + tt('Add waypoint') + '</button>' +
 '</div>';
 var MARKER_OPTIONS_END_POINT = '' +
-'<div><button style="font-size: 11px; width: 98%;" id="remove-endpoint">' + tt('Remove endpoint') + '</button></div><div style="height: 2px;"></div>' +
-'<div><button style="font-size: 11px; width: 98%;" id="add-waypoint">' + tt('Add waypoint') + '</button></div>';
+'<div><button style="font-size: 10px; height: 22px; width: 98%;" id="remove-endpoint">' + tt('Remove endpoint') + '</button></div><div style="height: 2px;"></div>' +
+'<div><button style="font-size: 10px; height: 22px; width: 98%;" id="add-waypoint">' + tt('Add waypoint') + '</button></div>';
 var MARKER_OPTIONS_INTRA = '' +
-'<button style="font-size: 11px; width: 98%;" id="remove-intra">' + tt('Remove intra-domain circuit') + '</button>';
+'<button style="font-size: 10px; height: 22px; width: 98%;" id="remove-intra">' + tt('Remove intra-domain circuit') + '</button>';
 
 
 
@@ -346,7 +346,7 @@ function addWayPoint(marker) {
     }
 	
 	$("#waypoints_order").append("<li class='ui-state-default opener' id='way" + 
-    		 marker.id + "'>" + getDomainName(marker.domainId) + " (" + tt("click to fill waypoint") + ")" + 
+    		 marker.id + "'>" + meicanMap.getDomainName(marker.domainId) + " (" + tt("click to fill waypoint") + ")" + 
              '<input value="' + marker.domainId + '" type="text" class="domain-id" hidden></input>' + 
              inputData + 
              '<input name="ReservationForm[waypoints][port][]" type="text" class="port-id" hidden></input>' + 
@@ -362,6 +362,10 @@ function addWayPoint(marker) {
             width: "auto",
             open: function(event, ui) {
             	prepareDialogDeviceSelect(content);
+                disableTabSlide();
+            },
+            close: function(event, ui) {
+                enableTabSlide();
             },
             buttons: [{
                 text: tt('Remove'),
@@ -709,42 +713,49 @@ function removeMarkerEndPoint(endPointType) {
 	drawCircuit();
 }
 
+function enableTabSlide() {
+    $('#reservation-tab').hoverIntent(openTab, closeTab);
+}
+
+function closeTab() {
+    $("#slide").slideUp(400, function(){
+        $(window).trigger('resize');
+    });
+}
+
+function openTab() {
+    $("#slide").slideDown(400, function(){
+        $(window).trigger('resize');
+    });
+}
+
+function disableTabSlide() {
+    $("#reservation-tab").unbind("mouseenter").unbind("mouseleave");
+    $("#reservation-tab").removeProp('hoverIntent_t');
+    $("#reservation-tab").removeProp('hoverIntent_s');
+}
+
 //////////// INICIALIZA MAPA /////////////////
 
 function initialize() {
-	meicanMap = new MeicanMap;
-  meicanMap.buildMap('map-canvas');
+    meicanMap = new MeicanMap;
+    meicanMap.buildMap('map-canvas');
 
-  meicanMap.buildSearchBox("search-row", "search-box", 'search-button');
+    meicanMap.buildSearchBox("search-row", "search-box", 'search-button', function(marker) {
+        Manager.openWindow(marker);
+    });
 
-  $('#reservation-tab').hoverIntent(function(){
-          $("#slide").slideDown(400, function(){
-              $(window).trigger('resize');
-          });
-      }, function(){
-          $("#slide").slideUp(400, function(){
-              $(window).trigger('resize');
-          });
-  });
+    enableTabSlide();
 
-  $("#reservation-tab").on("focusin", function () {
-      $("#slide").slideDown(400, function(){
-          $(window).trigger('resize');
-      });
-      $("#reservation-tab").unbind('mouseenter mouseleave');
-  });
+    $("#reservation-tab").on("focusin", function () {
+        openTab();
+        disableTabSlide();
+    });
 
-  $("#reservation-tab").on("focusout", function () {
-      $('#reservation-tab').hoverIntent(function(){
-          $("#slide").slideDown(400, function(){
-              $(window).trigger('resize');
-          });
-      }, function(){
-          $("#slide").slideUp(400, function(){
-              $(window).trigger('resize');
-          });
-      });
-  });
+    $("#reservation-tab").on("focusout", function () {
+        enableTabSlide();
+        console.log('blur');
+    });
 
 	var markerClustererOptions = {
 			gridSize: 10, 
@@ -759,27 +770,15 @@ function initialize() {
 	);
 	
 	google.maps.event.addListener(meicanMap.getMap(), 'click', function() {
-		  meicanMap.closeWindows();
-      $("#src-domain").focus();
-      
-      $('#reservation-tab').hoverIntent(function(){
-        $("#slide").slideDown(400, function(){
-            $(window).trigger('resize');
-        });
-      }, function(){
-          $("#slide").slideUp(400, function(){
-              $(window).trigger('resize');
-          });
-      });
+		meicanMap.closeWindows();
+        $("#src-domain").focus();
 
-      $("#slide").slideUp(400, function(){
-          $(window).trigger('resize');
-      });
+        closeTab();
 	});
 
 	initSelect("src");
 	initSelect("dst");
-  initWaypointSelect();
+    initWaypointSelect();
 	
 	$.ajax({
 		url: baseUrl+'/topology/network/get-all-parent-location',
@@ -814,14 +813,12 @@ function initialize() {
 	
 	enableWayPointsSortable();
 	initEndPointButtons("src");
-  initEndPointButtons('dst');
+    initEndPointButtons('dst');
 }
 
 //////////// ADICIONA MARCADORES NO MAPA /////////////////
 
 function addNetworkMarker(network) {
-    var contentString = tt('Domain') + ': <b>' + getDomainName(network.domain_id) + '</b><br>' + tt('Network') + ': <b>'+network.name+'</b><br>';
-
     if (network.latitude != null && network.longitude != null) {
         var myLatlng = new google.maps.LatLng(network.latitude, network.longitude);
         
@@ -836,7 +833,7 @@ function addNetworkMarker(network) {
         circuitMode: 'none',
         id: network.id,
         domainId: network.domain_id,
-        info: contentString,
+        name: network.name
     });
     
     meicanMap.addMarker(marker);
@@ -848,7 +845,6 @@ function addNetworkMarker(network) {
 
 function addDeviceMarker(device) {
     if (device.name == "") device.name = "default";
-  	var contentString = tt('Domain') + ': <b>'+getDomainName(device.domain_id)+'</b><br>' + tt('Device') + ': <b>' + device.name + '</b><br>';
   	
     var network = meicanMap.getMarkerByDomain('net', device.domain_id);
 
@@ -861,13 +857,12 @@ function addDeviceMarker(device) {
   	}
 	
   	var marker = meicanMap.DeviceMarker({
-    		position: meicanMap.getValidMarkerPosition("dev", myLatlng),
-    		type: "dev",
-    		circuitPoints: 0,
+		position: meicanMap.getValidMarkerPosition("dev", myLatlng),
+		type: "dev",
+		circuitPoints: 0,
         circuitMode: "none",
-    		id: device.id,
-    		domainId: device.domain_id,
-    		info: contentString,
+		id: device.id,
+		domainId: device.domain_id,
         name: device.name
   	});
 	
@@ -1123,14 +1118,6 @@ function enableSelect(endPointType, object) {
   	if ($('#' + endPointType + '-' + object).val() != null && $('#' + endPointType + '-' + object) != "null") {
   		$('#' + endPointType + '-' + object).prop('disabled', false);
   	}
-}
-
-function getDomainName(id) {
-    if (!domainsList) domainsList = JSON.parse($("#domains-list").text());
-    for (var i = 0; i < domainsList.length; i++) {
-        if(domainsList[i].id == id)
-        return domainsList[i].name;
-    };
 }
 
 ////////// DEFINE ZOOM E LIMITES DO MAPA A PARTIR DE UM CAMINHO ////////

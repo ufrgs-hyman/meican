@@ -27,9 +27,9 @@
 		<tbody>
 		    <tr>
 		        <td>
-			    	<input id="marker-type-network" type="radio" name="marker-type" value="network" checked></input>
+			    	<input id="marker-type-network" type="radio" name="marker-type" value="net" checked></input>
 			    	<label for="marker-type-network"> <?= Yii::t("circuits", "Network"); ?></label>
-			    	<input id="marker-type-device" type="radio" name="marker-type" value="device"></input>
+			    	<input id="marker-type-device" type="radio" name="marker-type" value="dev"></input>
 			    	<label for="marker-type-device"> <?= Yii::t("circuits", "Device"); ?></label>
 			    </td>
 		    </tr>

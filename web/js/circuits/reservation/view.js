@@ -567,9 +567,6 @@ function addMarker(dev, color) {
 
     if (dev.name == '') dev.name = "default";
 	
-	var contentString = tt('Domain') + ': <b>'+dev.dom+'</b><br>' +
-						tt("Device") + ": <b>" + dev.name + "</b><br><br>";
-	
 	if (dev.lat != null && dev.lng != null) {
 		var myLatlng = new google.maps.LatLng(dev.lat,dev.lng);
 	} else {
@@ -578,9 +575,9 @@ function addMarker(dev, color) {
 	
 	var marker = meicanMap.DeviceMarker({
 		position: meicanMap.getValidMarkerPosition('dev', myLatlng),
-		info: contentString,
         type: 'dev',
-		id: dev.id
+		id: dev.id,
+        domainName: dev.dom
 	}, color);
 	
 	meicanMap.addMarker(marker);
