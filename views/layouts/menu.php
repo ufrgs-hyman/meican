@@ -41,9 +41,15 @@ echo Menu::widget([
 				['label'=>Yii::t('topology','Viewer'), 'url'=>['/topology/viewer/index']],
 				['label'=>Yii::t('topology','Synchronizer'), 'url'=>['/topology/sync/index'], 'visible'=>RbacController::can('topology/update')],
 				['label'=>Yii::t('topology','Changes'), 'url'=>['/topology/change/applied'], 'visible'=>RbacController::can('topology/update')],
-				['label'=>Yii::t('topology','Automated Tests'),'url'=>['/circuits/automated-test/index'],'visible'=>RbacController::can('topology/update')]
 			],
 			'visible'=>RbacController::can('topology/read')
+		],
+		[
+			'label'=>'<h3><a href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('aaa','Automated Tests').'</a></h3>',
+			'items'=>[
+					['label'=>Yii::t('topology','Create'),'url'=>['/circuits/automated-test/create']],
+					['label'=>Yii::t('topology','Status'),'url'=>['/circuits/automated-test/index']]
+			],
 		],
 		[
 			'label'=>'<h3><a href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('aaa','Users').'</a></h3>',

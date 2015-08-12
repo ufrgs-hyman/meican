@@ -199,7 +199,7 @@ class CrontabManager {
                 $this->_comments = array();
                 $jobs[] = $job;
             } catch (\Exception $exc) {
-                if (preg_match('/^\s*\#/', $line)) {
+                if (preg_match('/^\s*\@/', $line)) {
                     $this->_comments[] = trim($line);
                 } elseif (trim($line) == '') {
                     $this->_comments = array();
@@ -430,7 +430,7 @@ class CrontabManager {
      * @return array
      */
     private function _addBlock(array $contents, $file, $hash) {
-        $pre = sprintf('# ' . $this->_beginBlock, $hash);
+        $pre = sprintf('@ ' . $this->_beginBlock, $hash);
         $pre .= sprintf(' ' . $this->_before, $file);
         $contents[] = $pre;
         $contents[] = '';
@@ -442,7 +442,7 @@ class CrontabManager {
         }
 
         $contents[] = '';
-        $after = sprintf('# ' . $this->_endBlock, $hash);
+        $after = sprintf('@ ' . $this->_endBlock, $hash);
         $after .= ' ' . $this->_after;
         $contents[] = $after;
 
@@ -456,8 +456,8 @@ class CrontabManager {
      * @return array
      */
     private function _removeBlock(array $contents, $hash) {
-        $from = sprintf('# ' . $this->_beginBlock, $hash);
-        $to = sprintf('# ' . $this->_endBlock, $hash);
+        $from = sprintf('@ ' . $this->_beginBlock, $hash);
+        $to = sprintf('@ ' . $this->_endBlock, $hash);
         $cut = false;
         $toCut = array();
         foreach ($contents as $no => $line) {

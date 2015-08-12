@@ -25,6 +25,7 @@ return [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning', 'trace'],
+                    'logFile' => dirname(__DIR__).'/runtime/logs/console.log',
                 ],
             ],
         ],

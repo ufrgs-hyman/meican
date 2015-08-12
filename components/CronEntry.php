@@ -135,8 +135,8 @@ class CronEntry
      */
     private function _parse($jobSpec)
     {
-        $regex = '/^\s*(([^\s\#]+)\s+([^\s\#]+)\s+([^\s\#]+)\s+([^\s\#]+)\s+' .
-            '([^\s\#]+))\s+([^\#]+)(?:#(.*))?$/';
+        $regex = '/^\s*(([^\s\@]+)\s+([^\s\@]+)\s+([^\s\@]+)\s+([^\s\@]+)\s+' .
+            '([^\s\@]+))\s+([^\@]+)(?:@(.*))?$/';
         if (!preg_match($regex, $jobSpec, $match)) {
             throw new \InvalidArgumentException('$jobSpec must be crontab compatibile entry');
         }
@@ -357,7 +357,7 @@ class CronEntry
             if (!empty($comments)) {
                 $comments .= "\n";
             }
-            $entry = $comments . $entry . " # ";
+            $entry = $comments . $entry . " @ ";
             if ($this->lineComment) {
                 $entry .= $this->lineComment . ' ';
             }
@@ -394,8 +394,8 @@ class CronEntry
     {
         $fixed = array();
         foreach ($comments as $comment) {
-            if (!preg_match('/^\s*#/', $comment)) {
-                $comment = '# ' . $comment;
+            if (!preg_match('/^\s*@/', $comment)) {
+                $comment = '@ ' . $comment;
             }
             $fixed[] = $comment;
         }
