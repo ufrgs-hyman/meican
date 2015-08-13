@@ -8,20 +8,24 @@ use app\components\DateUtils;
 
 use app\modules\topology\models\NSIParser;
 use app\modules\topology\models\NMWGParser;
+use app\modules\topology\models\TopologyNotification;
 
 /**
  * This is the model class for table "{{%topo_synchronizer}}".
  *
  * @property integer $id
- * @property string $sync_date
  * @property string $type
- * @property integer $enabled
+ * @property string $provider_nsa
+ * @property integer $cron_id
+ * @property integer $subscribed
  * @property string $name
  * @property string $url
  */
 class TopologySynchronizer extends \yii\db\ActiveRecord
 {
     public $parser;
+    public $syncEvent;
+    public $detectedChanges = false;
     /**
      * @inheritdoc
      */
@@ -36,13 +40,12 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'enabled', 'auto_apply', 'name', 'url'], 'required'],
-            [['url'], 'unique'],
-            [['sync_date'], 'safe'],
+            [['type', 'subscribed', 'auto_apply', 'name', 'url'], 'required'],
+            [['provider_nsa'], 'unique', 'message'=> 'Only one Discovery Service is allowed for each NSI Provider. The NSA ID "{value}" has already in use.'],
             [['type'], 'string'],
-            [['auto_apply' ,'enabled'], 'integer'],
+            [['auto_apply' ,'subscribed'], 'boolean'],
             [['name'], 'string', 'max' => 200],
-            [['url'], 'string', 'max' => 300]
+            [['url', 'provider_nsa'], 'string', 'max' => 300]
         ];
     }
 
@@ -53,25 +56,39 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('topology', 'ID'),
-            'sync_date' => Yii::t('topology', 'Last Sync'),
             'auto_apply' => Yii::t('topology', 'Auto Apply Changes'),
             'type' => Yii::t('topology', 'Type'),
-            'enabled' => Yii::t('topology', 'Auto Sync'),
+            'subscribed' => Yii::t('topology', 'Subscribe to Updates'),
             'name' => Yii::t('topology', 'Name'),
             'url' => Yii::t('topology', 'URL'),
+            'provider_nsa' => Yii::t('topology', 'Provider NSA ID'),
         ];
     }
 
+    public function getEvents() {
+        return TopologySyncEvent::find()->where(['sync_id'=> $this->id])->orderBy(['started_at'=> SORT_DESC]);
+    }
+
+    public function getLastSyncDate() {
+        $event = $this->getEvents()->select(['started_at'])->asArray()->one();
+        return $event ? $event['started_at'] : null;
+    }
+
+    public function isAutoSyncEnabled() {
+        return Cron::existsSyncTask($this->id);
+    }
+
     public function buildChange() {
+        if(!$this->detectedChanges) $this->detectedChanges = true;
         $change = new TopologyChange;
-        $change->sync_id = $this->id;
+        $change->sync_event_id = $this->syncEvent->id;
         $change->status = TopologyChange::STATUS_PENDING;
         return $change;
     }
 
-    public function deletePendingChanges() {
+   /* public function deletePendingChanges() {
         return TopologyChange::deleteAll(['status'=> TopologyChange::STATUS_PENDING, 'sync_id'=>$this->id]);
-    }
+    }*/
 
     public function getType() {
         switch ($this->type) {
@@ -92,17 +109,33 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
         ];
     }
 
+    static function findOneByNsa($nsa) {
+        return self::find()->where(['provider_nsa'=>$nsa])->one();
+    }
+
     static function findOneByNotification($xml) {
         $parser = new NSIParser; 
         $parser->loadXml($xml);
-        $sync = TopologySynchronizer::findOne(1);
-        $sync->parser = $parser;
-        return $sync;
+        if($parser->isTD()) {
+            $parser->parseNotification();
+            $sync = self::findOneByNsa($parser->getData()['local']['nsa']);
+            if ($sync) {
+                $parser->parseTopology();
+                $sync->parser = $parser;
+                return $sync;
+            }
+        }
+
+        return null;
     }
 
     public function execute() {
-        $this->sync_date = DateUtils::now();
-        $this->save();
+        $this->syncEvent = new TopologySyncEvent;
+        $this->syncEvent->started_at = DateUtils::now();
+        $this->syncEvent->progress = 0;
+        $this->syncEvent->sync_id = $this->id;
+        $this->syncEvent->status = TopologySyncEvent::STATUS_INPROGRESS;
+        $this->syncEvent->save();
 
         if (!$this->parser) {
 
@@ -111,24 +144,38 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
                 case Service::TYPE_NSI_TD_2_0: 
                     $this->parser = new NSIParser; 
                     $this->parser->loadFile($this->url);
+                    if (!$this->parser->isTD()) {
+                        $this->syncEvent->status = TopologySyncEvent::STATUS_FAILED;
+                        $this->syncEvent->save();
+                        return;
+                    }
+                    $this->parser->parseTopology();
                     //Yii::trace($topo->getData());
                     break;
 
                 case Service::TYPE_NMWG_TD_1_0: 
                 case Service::TYPE_PERFSONAR_TS_1_0: 
-                    $this->parser = new NMWGParser($this->url);
-                    $this->parser->loadFile();
+                    $this->parser = new NMWGParser;
+                    $this->parser->loadFile($this->url);
+                    if (!$this->parser->isTD()) {
+                        $this->syncEvent->status = TopologySyncEvent::STATUS_FAILED;
+                        $this->syncEvent->save();
+                        return;
+                    }
+                    $this->parser->parseTopology();
                     //Yii::trace($topo->getData());
                     break;
             }
         }
 
-        $this->deletePendingChanges();
+        //$this->deletePendingChanges();
         $this->synchronize();
 
         if ($this->auto_apply) {
             $this->applyChanges();
         }
+
+        if($this->detectedChanges) TopologyNotification::create(1, $this->syncEvent->id);
     }
 
     public function applyChanges() {
@@ -155,7 +202,8 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
     }
 
     private function applyChangesByType($type) {
-        $changes = TopologyChange::find()->where(['sync_id'=>$this->id, 'status'=>TopologyChange::STATUS_PENDING,'item_type'=>$type])->all();
+        $changes = TopologyChange::find()->where(
+            ['sync_event_id'=>$this->syncEvent->id, 'status'=>TopologyChange::STATUS_PENDING,'item_type'=>$type])->all();
         foreach ($changes as $change) {
             $change->apply();
         }

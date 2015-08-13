@@ -51,6 +51,13 @@
                     'url' => 'update',
                     'headerOptions'=>['style'=>'width: 2%;'],
                 ),
+                array(
+                    'class'=> LinkColumn::className(),
+                    'image'=>'/images/eye.png',
+                    'label' => '',
+                    'url' => '/topology/change/pending',
+                    'headerOptions'=>['style'=>'width: 2%;'],
+                ),
                 [
                     'format' => 'raw',
                     'value' => function ($model){
@@ -66,18 +73,29 @@
                     }
                 ],
                 [
-                    'attribute'=> 'enabled',
+                    'header' => 'Auto Sync',
+                    'value' => function ($model){
+                        return $model->isAutoSyncEnabled() ? Yii::t("topology", "Enabled") : "";
+                    },
+                ],
+                [
+                    'attribute'=> 'subscribed',
                     'value' => function($model) {
-                        return $model->enabled ? Yii::t("topology", "Enabled") : Yii::t("topology", "Disabled");
+                        return $model->subscribed ? Yii::t("topology", "Enabled") : "";
                     }
                 ],
                 [
                     'attribute'=> 'auto_apply',
                     'value' => function($model) {
-                        return $model->auto_apply ? Yii::t("topology", "Enabled") : Yii::t("topology", "Disabled");
+                        return $model->auto_apply ? Yii::t("topology", "Enabled") : "";
                     }
                 ],
-                "sync_date:datetime",
+                [
+                    'header' => 'Last Sync',
+                    'value' => function ($model){
+                        return $model->getLastSyncDate();
+                    },
+                ],
             ),
     ]);
 ?>

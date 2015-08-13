@@ -6,6 +6,8 @@ use yii\data\ActiveDataProvider;
 
 use app\controllers\RbacController;
 use app\models\TopologySynchronizer;
+use app\modules\topology\models\SyncForm;
+use app\modules\topology\models\NSIParser;
 use app\models\TopologyChange;
 use app\models\Service;
 
@@ -58,11 +60,11 @@ class SyncController extends RbacController {
     public function actionCreate(){
         self::canRedir("topology/create");
         
-        $sync = new TopologySynchronizer;
+        $sync = new SyncForm;
         
         if($sync->load($_POST)) {
-            $sync->enabled = true;
             if ($sync->save()) {
+                $sync->saveCron();
                 Yii::$app->getSession()->addFlash("success", Yii::t("topology", "Synchronizer instance {name} added successfully", ['name'=>$sync->name]));
                 return $this->redirect(array('index'));
             } else {
@@ -81,10 +83,11 @@ class SyncController extends RbacController {
     public function actionUpdate($id){
         self::canRedir("topology/update");
 
-        $sync = TopologySynchronizer::findOne($id);
+        $sync = SyncForm::build($id);
         
         if($sync->load($_POST)) {
             if ($sync->save()) {
+                $sync->saveCron();
                 Yii::$app->getSession()->addFlash("success", Yii::t("topology", "Synchronizer instance {name} updated successfully", ['name'=>$sync->name]));
                 return $this->redirect(array('index'));
             } else {
