@@ -11,7 +11,7 @@ use app\components\DateUtils;
  * This is the model class for table "{{%topo_change}}".
  *
  * @property integer $id
- * @property integer $sync_id
+ * @property integer $sync_event_id
  * @property string $domain
  * @property string $status
  * @property string $type
@@ -56,8 +56,8 @@ class TopologyChange extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sync_id', 'domain', 'status', 'type', 'item_type', 'data'], 'required'],
-            [['sync_id', 'item_id'], 'integer'],
+            [['sync_event_id', 'domain', 'status', 'type', 'item_type', 'data'], 'required'],
+            [['sync_event_id', 'item_id'], 'integer'],
             [['status', 'type', 'item_type', 'data', 'error'], 'string'],
             [['applied_at'], 'safe'],
             [['domain'], 'string', 'max' => 100]
@@ -71,7 +71,7 @@ class TopologyChange extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('circuits', 'ID'),
-            'sync_id' => Yii::t('circuits', 'Sync ID'),
+            'sync_event_id' => Yii::t('circuits', 'Sync ID'),
             'domain' => Yii::t('circuits', 'Domain'),
             'status' => Yii::t('circuits', 'Status'),
             'type' => Yii::t('circuits', 'Type'),
@@ -81,14 +81,6 @@ class TopologyChange extends \yii\db\ActiveRecord
             'applied_at' => Yii::t('circuits', 'Applied At'),
             'error' => Yii::t('circuits', 'Error'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSynchronizer()
-    {
-        return $this->hasOne(TopologySynchronizer::className(), ['id' => 'sync_id']);
     }
 
     public function searchPending($params, $syncId = null) {
@@ -103,7 +95,7 @@ class TopologyChange extends \yii\db\ActiveRecord
         $query->andFilterWhere(['item_type' => $this->item_type]);
         $query->andFilterWhere(['type' => $this->type]);
 
-        if ($syncId) $query->andFilterWhere(['sync_id' => $syncId]);
+        if ($syncEventId) $query->andFilterWhere(['sync_event_id' => $syncEventId]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

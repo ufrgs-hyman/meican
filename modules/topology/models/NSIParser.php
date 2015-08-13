@@ -6,26 +6,74 @@ class NSIParser {
 
 	private $topology = array();
 	private $errors = array();
-	private $xml;
 	private $xpath;
+	private $url;
+	private $xml;
+	private $cert_file;
+	private $cert_password;
+	private $error;
 
-	//function __construct($discoveryUrl, $certName, $certPass){
-	//	$this->url = $discoveryUrl;
-	//	$this->cert_password = $certPass;
-	//	$this->cert_file = realpath(__DIR__."/../../../certificates/".$certName);
+	//function __construct($url) { //$certName, $certPass){
+	//	$this->url = $url;
+		//$this->cert_password = $certPass;
+		//$this->cert_file = realpath(__DIR__."/".$certName);
 	//}
 
 	function loadXml($input) {
-		$this->xml = new \DOMDocument();
-		$this->xml->loadXML($input);
-		$this->xpath = new \DOMXpath($this->xml);
-
-		$this->parseNotification();
+		try {
+			$this->xml = new \DOMDocument();
+			$this->xml->loadXML($input);
+			$this->xpath = new \DOMXpath($this->xml);
+		} catch (\Exception $e) {
+			$this->error = true;
+		}
+	}
+	
+	function isDS() {
+		if ($this->error) return false;
+		$previousUrl = $this->url;
+		$this->loadFile($this->url."/subscriptions");
+		
+		$xmlns = "http://schemas.ogf.org/nsi/2014/02/discovery/types";
+		$tagName = "subscriptions";
+		$isValid = false;
+		foreach ($this->xml->getElementsByTagNameNS($xmlns, $tagName)
+				as $sub) {
+			$isValid = true;	
+		}
+		
+		$this->loadFile($previousUrl);
+		
+		return $isValid && $this->isTD();
+	}
+	
+	function isTD() {
+		if ($this->error) return false;
+		$xmlns = "http://schemas.ogf.org/nml/2013/05/base#";
+		$tagName = "Topology";
+		foreach ($this->xml->getElementsByTagNameNS($xmlns, $tagName)
+				as $sub) {
+			return true;	
+		}
+		
+		$xmlns = "http://schemas.ogf.org/nsi/2014/02/discovery/nsa";
+		$tagName = "nsa";
+		foreach ($this->xml->getElementsByTagNameNS($xmlns, $tagName)
+				as $sub) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	function parseTopology() {
 		$this->parseNets();
 		$this->parseProviderData();
 	}
 
 	function loadFile($url) {
+		$this->url = $url;
+		
 		$ch = curl_init();
 
 		$options = array(
@@ -37,7 +85,7 @@ class NSIParser {
 
 				CURLOPT_USERAGENT => 'Meican',
 				//CURLOPT_VERBOSE        => true,
-				CURLOPT_URL => $url,
+				CURLOPT_URL => $this->url,
 				//CURLOPT_SSLCERT => $this->cert_file,
 				//CURLOPT_SSLCERTPASSWD => $this->cert_password,
 		);
@@ -189,6 +237,22 @@ class NSIParser {
 			$this->topology["local"]["nsa"] = str_replace(
 					"urn:ogf:network:","",$notNode->getAttribute('providerId'));
 			return;
+		}
+	}
+	
+	function parseLocalProvider() {
+		$xmlns = "http://schemas.ogf.org/nsi/2014/02/discovery/types";
+		$tagName = "local";
+		foreach ($this->xml->getElementsByTagNameNS($xmlns, $tagName)
+				as $local) {
+			$documents = $this->xpath->query(".//".
+					$local->prefix.":document", $local);
+			if($documents) {
+				foreach ($documents as $document) {
+					$this->topology["local"]["nsa"] = str_replace(
+							"urn:ogf:network:","",$document->getAttribute('id'));
+				}
+			}
 		}
 	}
 

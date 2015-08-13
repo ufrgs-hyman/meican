@@ -8,6 +8,8 @@ use app\models\Reservation;
 use app\models\ReservationPath;
 use app\components\DateUtils;
 
+use app\modules\topology\models\TopologyNotification;
+
 /**
  * This is the model class for table "meican_notification".
  *
@@ -174,7 +176,7 @@ class Notification extends \yii\db\ActiveRecord
 	    				$notification->save();
 	    				break;
 	    			case self::TYPE_TOPOLOGY:
-	    				$msg = Notification::makeHtmlNotificationTopology($notification);
+	    				$msg = TopologyNotification::makeHtml($notification);
 	    				$notification->viewed = true;
 	    				$notification->save();
 	    				break;

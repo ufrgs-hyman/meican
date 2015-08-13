@@ -6,17 +6,16 @@ namespace app\modules\topology\models;
 use app\components\PerfsonarSoapClient;
 
 class NMWGParser {
-
-	private $topology = array();
+    
+    private $topology = array();
     private $errors = array();
     private $xpath;
     private $url;
+    private $xml;
+    private $error;
     
-    function __construct($discoveryUrl){
-        $this->url = $discoveryUrl;
-    }
-
-    function loadFile() {
+    function loadFile($url) {
+        $this->url = $url;
         $ch = curl_init();
 
         $options = array(
@@ -37,17 +36,31 @@ class NMWGParser {
     }
 
     function loadXml($input) {
-        $xml = new \SimpleXMLElement($input);
-        $namespaces = $xml->getNameSpaces(true);
-        $xml = new \DOMDocument();
-        $xml->loadXML($input);
-        $this->xpath = new \DOMXpath($xml);
-            
-        foreach ($namespaces as $ns) {
-            $this->xpath->registerNamespace('x', $ns);
-
-            $this->parseDomains();
+        try {
+            $this->xml = new \DOMDocument();
+            $this->xml->loadXML($input);
+            $this->xpath = new \DOMXpath($this->xml);
+        } catch (\Exception $e) {
+            $this->error = true;
         }
+    }
+    
+    function parseTopology() {
+        $this->xpath->registerNamespace('x', "http://ogf.org/schema/network/topology/ctrlPlane/20080828/");
+    
+        $this->parseDomains();
+    }
+    
+    function isTD() {
+        if ($this->error) return false;
+        $xmlns = "http://ogf.org/schema/network/topology/ctrlPlane/20080828/";
+        $tagName = "topology";
+        foreach ($this->xml->getElementsByTagNameNS($xmlns, $tagName)
+                as $topology) {
+            return true;
+        }
+
+        return false;
     }
 
     function loadFromDiscovery() {
