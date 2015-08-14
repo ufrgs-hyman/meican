@@ -69,14 +69,14 @@
                         'class'=>'deleteCheckbox',
                     ],
                     'multiple'=>false,
-                    'contentOptions'=>['style'=>'width: 15px;'],
+                    'headerOptions'=>['style'=>'width: 2%;'],
                 ),
                 array(
                     'class'=> LinkColumn::className(),
                     'image'=>'/images/edit_1.png',
                     'label' => '',
                     'url' => '/topology/service/update',
-                    'contentOptions'=>['style'=>'width: 15px;'],
+                    'headerOptions'=>['style'=>'width: 2%;'],
                 ),
                 array(
                     'class'=> LinkColumn::className(),
@@ -84,7 +84,7 @@
                     'label' => '',
                     'title'=>Yii::t("topology",'Create a Topology Synchronizer instance from this service'),
                     'url' => '/topology/sync/add-service',
-                    'contentOptions'=>['style'=>'width: 15px;'],
+                    'headerOptions'=>['style'=>'width: 2%;'],
                 ),
                 [
                     'attribute' => 'type',

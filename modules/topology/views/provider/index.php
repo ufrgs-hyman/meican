@@ -39,14 +39,14 @@
                         'class'=>'deleteCheckbox',
                     ],
                     'multiple'=>false,
-                    'contentOptions'=>['style'=>'width: 15px;'],
+                    'headerOptions'=>['style'=>'width: 2%;'],
                 ),
                 array(
                     'class'=> LinkColumn::className(),
                     'image'=>'/images/edit_1.png',
                     'label' => '',
                     'url' => 'update',
-                    'contentOptions'=>['style'=>'width: 15px;'],
+                    'headerOptions'=>['style'=>'width: 2%;'],
                 ),
                 array(
                     'class'=> LinkColumn::className(),
@@ -54,7 +54,7 @@
                     'label' => '',
                     'title'=>Yii::t("topology",'Show details and services of this provider'),
                     'url' => 'view',
-                    'contentOptions'=>['style'=>'width: 15px;'],
+                    'headerOptions'=>['style'=>'width: 2%;'],
                 ),
                 'name',
                 [
