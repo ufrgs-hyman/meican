@@ -103,7 +103,7 @@ class Domain extends \yii\db\ActiveRecord
     
     public function getUserDomainsRoles()
     {
-    	return UserDomainRole::find()->where(['domain_id' => $this->id])->orWhere(['domain_id' => null]);
+    	return UserDomainRole::find()->where(['domain' => $this->name])->orWhere(['domain' => null]);
     	//return $this->hasMany(UserDomainRole::className(), ['domain_id' => 'id']);
     }
     

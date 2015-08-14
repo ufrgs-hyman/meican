@@ -99,7 +99,7 @@ function deletePort(obj){
 							}
 							else {
 								$("#dialog").dialog("open");
-								$("#message").html(tt('This operation is not allowed'));
+								$("#message").html(tt('You are not allowed for this action'));
 								$("#dialog").dialog({
 									buttons: [
 										{
@@ -302,7 +302,7 @@ function editPort(obj, id){
 			}
 			else {
 				$("#dialog").dialog("open");
-				$("#message").html(tt('This operation is not allowed'));
+				$("#message").html(tt('You are not allowed for this action'));
 				$("#dialog").dialog({
 					buttons: [
 						{
@@ -444,7 +444,7 @@ function newPortLine(obj){
 			}
 			else {
 				$("#dialog").dialog("open");
-				$("#message").html(tt('This operation is not allowed'));
+				$("#message").html(tt('You are not allowed for this action'));
 				$("#dialog").dialog({
 					buttons: [
 						{

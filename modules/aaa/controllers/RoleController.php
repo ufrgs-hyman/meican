@@ -18,43 +18,59 @@ use Yii;
 class RoleController extends RbacController {
 	
     public function actionIndex($id) {
-    	if(!self::can("user/read")){ //Se ele não tiver permissão em nenhum domínio
+    	if(!self::can("role/read") && !self::can("user/update")){ //Se ele não tiver permissão em nenhum domínio
 			return $this->goHome();
 		}
-    	
-    	$user = User::findOne($id);
+
+		$user = User::findOne($id);
+		
+		if(self::can("user/update"))
+			$roles = $user->getUserDomainRoles();
+		else{
+	    	$domainNames = [];
+	    	foreach(self::whichDomainsCan("role/read") as $domain) $domainNames[] = $domain->name;
+	    	$roles = UserDomainRole::find()->where(['in', 'domain', $domainNames])->andWhere(['user_id' => $id]);
+		}
+
+    	$dataProvider = new ActiveDataProvider([
+    			'query' => $roles,
+    			'sort' => false,
+    			'pagination' => [
+    					'pageSize' => 15,
+    			],
+    	]);
     	
     	return $this->render('index',array(
     			'user' => $user,
-    			'userDomainRoles'=> new ActiveDataProvider([
-    					'query' => $user->getUserDomainRoles(),
-    					])
+    			'userDomainRoles'=> $dataProvider,
     	));
     }
     
     public function actionCreate($id) {
-    	if(!self::can("user/create")){
+    	if(!self::can("role/create") && !self::can("user/update")){
     		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create roles'));
     		return $this->redirect(array('index', 'id'=>$id));
     	}
     	
     	$udr = new UserDomainRole;
     	$udr->user_id = $id;
-    	$domains = $udr->getValidDomains(self::whichDomainsCan('user/create'));
-    	
-    	if (count($domains) < 1) {
-    		Yii::$app->getSession()->setFlash("warning", Yii::t("aaa", 'This user has all possibles valid roles'));
+    	$domains = self::whichDomainsCan('role/create');
+
+    	if(isset($_POST["UserDomainRole"])) {
     		
-    		return $this->redirect(array('index', 'id'=>$id));
-    	}
-    
-    	if($udr->load($_POST)) {
+    		$form = $_POST["UserDomainRole"];
+    		
+    		$udr->_groupRoleName = $form["_groupRoleName"];
+    		$roleDomain = $form['domain'];
+    		if($roleDomain == "") $udr->domain = null;
+    		else $udr->domain = $roleDomain;
+    		
     		if($udr->save()) {
     			//Cria notificações relativas ao novo papel
-    			Notification::createNotificationsUserNewGroup($udr->user_id, $udr->_groupRoleName, $udr->domain_id);
+    			Notification::createNotificationsUserNewGroup($udr->user_id, $udr->_groupRoleName, $udr->domain);
     			
     			//Cria notificação de novo papel
-    			$domain = Domain::findOne($udr->domain_id);
+    			$domain = Domain::findOne(['name' => $udr->domain]);
     			if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
     			else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
     			
@@ -68,32 +84,57 @@ class RoleController extends RbacController {
     			}
     		}
     	}
+    	
+    	$systemGroups = [];
+    	$anyDomain = [];
+    	if(self::can("user/update")){
+    		$groups = $udr->getGroups();
+    		$anyDomain = [null=>Yii::t("aaa" , "any")];
+    		$domains = Domain::find()->orderBy(['name' => SORT_ASC])->asArray()->all();
+    		$sysGroups = $udr->getSystemGroupsNoArray();
+			foreach($sysGroups as $g){
+				$systemGroups[] = $g->role_name;
+			}
+    	}
+    	else $groups = $udr->getDomainGroups();
     
     	return $this->render('create',array(
     			'udr' => $udr,
-    			'groups' => UserDomainRole::getGroups(),
+    			'groups' => $groups,
     			'domains' => $domains,
+    			'systemGroups' => $systemGroups,
+    			'anyDomain' => $anyDomain,
     	));
     }
     
     public function actionUpdate($id) {
-    	if(!self::can("user/update")){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update roles'));
-    		return $this->redirect(array('index', 'id'=>$id));
-    	}
-    	
     	$udr = UserDomainRole::findOne($id);
+    	
+    	if(!self::can("role/update") && !self::can("user/update")){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update roles'));
+    		return $this->redirect(array('index', 'id'=>$udr->user_id));
+    	}
+
     	$udr->getGroup();
 
     	$group = $udr->getGroup();
-    	$domain_id = $udr->domain_id;
     	
-    	if($udr->load($_POST)) {
+    	Yii::error($_POST);
+    	
+    	if(isset($_POST["UserDomainRole"])) {
+    		
+    		$form = $_POST["UserDomainRole"];
+    		
+    		$udr->_groupRoleName = $form["_groupRoleName"];
+    		$roleDomain = $form['domain'];
+    		if($roleDomain == "") $udr->domain = null;
+    		else $udr->domain = $roleDomain;
+    		
     		if($udr->save()) {
     			//Remove notificações relativas ao antigo papel
-    			Notification::deleteNotificationsUserGroup($udr->user_id, $group->role_name, $domain_id);
+    			Notification::deleteNotificationsUserGroup($udr->user_id, $group->role_name, $udr->domain);
     			//Cria notificações relativas ao novo papel
-    			Notification::createNotificationsUserNewGroup($udr->user_id, $udr->_groupRoleName, $udr->domain_id);
+    			Notification::createNotificationsUserNewGroup($udr->user_id, $udr->_groupRoleName, $udr->domain);
     			
     			//Pequena maquipulação do horário para que não fiquem as duas notificações com o mesmo horário.
     			$dateAux = new \DateTime('now', new \DateTimeZone("UTC"));
@@ -101,12 +142,12 @@ class RoleController extends RbacController {
     			$dateAux = $dateAux->format("Y-m-d H:i:s");
     			
     			//Cria notificação do papel removido
-    			$domain = Domain::findOne($domain_id);
+    			$domain = Domain::findOne(['name' => $udr->domain]);
     			if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $group->id, $domain->name, $dateAux);
     			else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $group->id, null, $dateAux);
     			
     			//Cria notificação do novo papel
-    			$domain = Domain::findOne($udr->domain_id);
+    			$domain = Domain::findOne(['name' => $udr->domain]);
     			if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
     			else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
     			 
@@ -120,11 +161,36 @@ class RoleController extends RbacController {
     			}
     		}
     	}
+    	
+    	$anyDomain = [];
+    	$systemGroups = [];
+    	if(self::can("user/update")){
+    		$groups = $udr->getGroups();
+    		$anyDomain = [null=>Yii::t("aaa" , "any")];
+    		$domains = Domain::find()->orderBy(['name' => SORT_ASC])->asArray()->all();
+    		$sysGroups = $udr->getSystemGroupsNoArray();
+			foreach($sysGroups as $g){
+				$systemGroups[] = $g->role_name;
+			}
+    	}
+    	else{
+    		if(!self::can("role/update", $udr->domain)){
+    			Yii::$app->getSession()->setFlash("warning", Yii::t("aaa", 'You are not allowed to update this role'));
+    			return $this->redirect(array('index', 'id'=>$udr->user_id));
+    		}
+    		else if($udr->domain == null && !self::can("user/update")){
+    			Yii::$app->getSession()->setFlash("warning", Yii::t("aaa", 'You are not allowed to update this role'));
+    			return $this->redirect(array('index', 'id'=>$udr->user_id));
+    		}
+    		$groups = $udr->getDomainGroups();
+    	}
 
     	return $this->render('update',array(
     			'udr' => $udr,
-    			'groups' => $udr->getGroups(),
-    			'domains' => $udr->getValidDomains(self::whichDomainsCan('user/create'), true)
+    			'groups' => $groups,
+    			'domains' => $domains,
+    			'systemGroups' => $systemGroups,
+    			'anyDomain' => $anyDomain,
     	));
     }
     
@@ -134,24 +200,26 @@ class RoleController extends RbacController {
     		foreach ($_POST['delete'] as $udrId) {
     			$udr = UserDomainRole::findOne($udrId);
     			
-    			if(!self::can("user/update")){
+    			if(!self::can("role/delete") && !self::can("user/update")){
     				Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update roles'));
     				return $this->redirect(array('index','id'=>$udr->user_id));
     			}
     			
     			$dom = $udr->getDomain();
-    			$domName = Yii::t("aaa", 'Any');
+    			$domName = Yii::t("aaa", 'any');
     			if ($dom) $domName = $dom->name;
+    			
+    			$domain = Domain::findOne(['name' => $udr->domain]);
 
     			//Remove notificações relativas ao antigo papel
-    			Notification::deleteNotificationsUserGroup($udr->user_id, $udr->getGroup()->role_name, $udr->domain_id);
+    			if($domain) Notification::deleteNotificationsUserGroup($udr->user_id, $udr->getGroup()->role_name, $domain->name);
     			
     			//Pequena maquipulação do horário para que não fiquem as duas notificações com o mesmo horário.
     			$date->modify('-1 second');
     			$dateAux = $date->format("Y-m-d H:i:s");
     			
     			//Notificação removido papel
-    			$domain = Domain::findOne($udr->domain_id);
+    			$domain = Domain::findOne(['name' => $udr->domain]);
     			if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $udr->getGroup()->id, $domain->name, $dateAux);
     			else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $udr->getGroup()->id, null, $dateAux);
 

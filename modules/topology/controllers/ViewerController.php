@@ -14,7 +14,9 @@ use Yii;
 class ViewerController extends RbacController {
 	
     public function actionIndex() {
-    	self::canRedir("topology/read");
+    	if(!self::can("domainTopology/read") && !self::can("domain/read")){
+    		return $this->goHome();
+    	}
     	
         return $this->render('index', ['domains'=>Domain::find()->select(['id','name'])->asArray()->all()]);
     }

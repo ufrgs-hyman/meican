@@ -21,7 +21,7 @@ dict['pt-BR']['Please insert a Vlan'] = 'Por favor, insira uma Vlan';
 dict['pt-BR']['Please insert a valid value for max capacity'] = 'Por favor, insira um valor válido para capacidade máxima';
 dict['pt-BR']['Please insert a valid value for min capacity'] = 'Por favor, insira um valor válido para capacidade mínima';
 dict['pt-BR']['Please insert a valid value for granularity'] = 'Por favor, insira um valor válido para granularidade';
-dict['pt-BR']['This operation is not allowed'] = 'Está operação não está habilitada';
+dict['pt-BR']['You are not allowed for this action'] = 'Você não tem permissão para esta ação';
 dict['pt-BR'][''] = '';
 dict['pt-BR'][''] = '';
 

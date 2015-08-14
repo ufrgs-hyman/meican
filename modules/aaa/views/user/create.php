@@ -35,21 +35,7 @@ $form=ActiveForm::begin(array(
 		</div>
 	</font>
 	</h4>
-	
-	<h1><?= Yii::t('aaa', 'Access Role'); ?></h1>
-	
-	<h4>
-	<font color="#3a5879">
-		<div class="form input">
-			<?= $form->field($user,'domain')->dropDownList(ArrayHelper::map($domains, 'id', 'name')); ?>
-		</div>
-	
-		<div class="form input">
-			<?= $form->field($user,'group')->dropDownList(ArrayHelper::map($groups, 'role_name', 'name')); ?>
-		</div>
-	</font>
-	</h4>
-	
+
 	<div class="buttonsForm">
 		<?= Html::submitButton(Yii::t('aaa', 'Create')); ?>
 		<a href="<?= Url::toRoute('index');?>"><?= Html::Button(Yii::t('aaa', 'Cancel')); ?></a>

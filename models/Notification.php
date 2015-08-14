@@ -276,7 +276,7 @@ class Notification extends \yii\db\ActiveRecord
     	//Confere todos papeis associados ao grupo
     	$roles = UserDomainRole::findByGroup($group);
     	foreach($roles->all() as $role){
-    		if($role->domain_id == null || $role->domain_id == $domain->id){ //Se papel for para todos dominios ou para dominio espeficido
+    		if($role->domain == null || $role->domain == $domain->name){ //Se papel for para todos dominios ou para dominio espeficido
     			//Confere se já foi feita uma notificação de algum circuito desta reserva, se sim, reutiliza a mesma notificação
     			$not = null;
     			$notifications = Notification::find()->where(['user_id' => $role->user_id, 'type' => self::TYPE_AUTHORIZATION])->all();
@@ -428,8 +428,12 @@ class Notification extends \yii\db\ActiveRecord
     		//ADICIONADO A UM GRUPO
     		case self::NOTICE_TYPE_ADD_GROUP:
     			$group = Group::findOne($data[1]);
+    			if(!$group) return "";
     			//Se não possui dado extra é para todos, do contrario, possui dominio
-    			if(isset($data[2])) $domain = Domain::findOne(['name' => $data[2]]);
+    			if(isset($data[2])){
+    				$domain = Domain::findOne(['name' => $data[2]]);
+    				if(!$domain) return "";
+    			}
     			
     			$title = Yii::t("notification", 'Added to a group')." (".$group->name.")";
     			
@@ -446,8 +450,13 @@ class Notification extends \yii\db\ActiveRecord
     		//REMOVIDO DE UM GRUPO
     		case self::NOTICE_TYPE_DEL_GROUP:
     			$group = Group::findOne($data[1]);
-    			if(isset($data[2])) $domain = Domain::findOne(['name' => $data[2]]);
-
+    			if(!$group) return "";
+    			//Se não possui dado extra é para todos, do contrario, possui dominio
+    			if(isset($data[2])){
+    				$domain = Domain::findOne(['name' => $data[2]]);
+    				if(!$domain) return "";
+    			}
+    			
     			$title = Yii::t("notification", 'Removed from a group')." (".$group->name.")";
     			 
     			$msg = Yii::t("notification", 'You were removed from the group')." <b>".$group->name."</b>";

@@ -43,7 +43,7 @@ class WorkflowController extends RbacController {
     	if($domainTop){
     		$domain = Domain::findOne(['name' => $domainTop]);
     		if($domain){
-    			$permission = self::can('workflow/create', $domain->id);
+    			$permission = self::can('workflow/create', $domain->name);
 			    if(!$permission){
 			    	Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to create in domain {domain}', ['domain' => $domain->name]));
 			    	return $this->redirect(array('/bpm/workflow/index'));
@@ -64,7 +64,7 @@ class WorkflowController extends RbacController {
     		if($workflow){
 	    		$domain = Domain::findOne(['name' => $workflow->domain]);
 	    		if($domain){
-	    			$permission = self::can('workflow/update', $domain->id);
+	    			$permission = self::can('workflow/update', $domain->name);
 			    	if(!$permission){
 			    		Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to edit in domain {domain}', ['domain' => $domain->name]));
 			    		return $this->redirect(array('/bpm/workflow/index'));
@@ -84,7 +84,7 @@ class WorkflowController extends RbacController {
     		if($workflow){
 	    		$domain = Domain::findOne(['name' => $workflow->domain]);
 	    		if($domain){
-	    			$permission = self::can('workflow/read', $domain->id);
+	    			$permission = self::can('workflow/read', $domain->name);
 		    		if(!$permission){
 		    			Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to read in domain {domain}', ['domain' => $domain->name]));
 		    			return $this->redirect(array('/bpm/workflow/index'));
@@ -104,7 +104,7 @@ class WorkflowController extends RbacController {
     	if($domainTop){
     		$domain = Domain::findOne(['name' => $domainTop]);
     		if($domain){
-    			$permission = self::can('workflow/create', $domain->id);
+    			$permission = self::can('workflow/create', $domain->name);
 			    if(!$permission){
 			    	Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to create in domain {domain}', ['domain' => $domain->name]));
 			    	return $this->redirect(array('/bpm/workflow/index'));
@@ -121,14 +121,19 @@ class WorkflowController extends RbacController {
 
 		    	$roles = $domain->getUserDomainsRoles()->all();
 		    	
-		    	$usersNames = [];
+		    	$adminsNames = [];
 		    	foreach($roles as $role):
-		    		$usersNames[$role->getUser()->id] = $role->getUser()->name;
+		    		$adminsNames[$role->getUser()->id] = $role->getUser()->name;
+		    	endforeach;
+		    	
+		    	$usersNames = [];
+		    	foreach(User::find()->all() as $user):
+		    		$usersNames[$user->id] = $user->name;
 		    	endforeach;
 		    	
 		    	$groupsNames = [];
-		    	foreach($roles as $role):
-			    	$groupsNames[$role->getGroup()->id] = $role->getGroup()->name;
+		    	foreach(Group::find()->all() as $group):
+			    	$groupsNames[$group->id] = $group->name;
 		    	endforeach;
 		    	
 		    	Yii::trace($roles);
@@ -140,6 +145,7 @@ class WorkflowController extends RbacController {
 		    			'domains' => $allDomains,
 		    			'groups' => $groupsNames,
 		    			'users' => $usersNames,
+		    			'admins' => $adminsNames,
 		    	));
     		} else return $this->redirect(array('/bpm/workflow/index'));
     	} else return $this->redirect(array('/bpm/workflow/index'));
@@ -152,7 +158,7 @@ class WorkflowController extends RbacController {
     		if($workflow){
 				$domain = Domain::findOne(['name' => $workflow->domain]);
 		    	if($domain){
-			    	$permission = self::can('workflow/update', $domain->id);
+			    	$permission = self::can('workflow/update', $domain->name);
 			    	if(!$permission){
 			    		Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to edit in domain {domain}', ['domain' => $domain->name]));
 			    		return $this->redirect(array('/bpm/workflow/index'));
@@ -165,17 +171,22 @@ class WorkflowController extends RbacController {
 			    	foreach($domains as $dom){
 			    		$allDomains[$dom->name] = $dom->name;
 			    	}
-			    	 
+			    	
 			    	$roles = $domain->getUserDomainsRoles()->all();
+			    	 
+			    	$adminsNames = [];
+			    	foreach($roles as $role):
+			    		$adminsNames[$role->getUser()->id] = $role->getUser()->name;
+			    	endforeach;
 			    	
 			    	$usersNames = [];
-			    	foreach($roles as $role):
-			    		$usersNames[$role->getUser()->id] = $role->getUser()->name;
+			    	foreach(User::find()->all() as $user):
+			    		$usersNames[$user->id] = $user->name;
 			    	endforeach;
 			    	
 			    	$groupsNames = [];
-			    	foreach($roles as $role):
-				    	$groupsNames[$role->getGroup()->id] = $role->getGroup()->name;
+			    	foreach(Group::find()->all() as $group):
+				    	$groupsNames[$group->id] = $group->name;
 			    	endforeach;
 			    	
 			    	Yii::trace($roles);
@@ -183,11 +194,12 @@ class WorkflowController extends RbacController {
 			    	Yii::trace($groupsNames);
 			    	 
 			    	return $this->renderPartial('editor', array(
-			    			'owner_domain' => $ownerDomain,
-			    			'domains' => $allDomains,
-			    			'groups' => $groupsNames,
-			    			'users' => $usersNames,
-			    			'id' => $_GET['id'],
+		    			'owner_domain' => $ownerDomain,
+		    			'domains' => $allDomains,
+		    			'groups' => $groupsNames,
+		    			'users' => $usersNames,
+		    			'admins' => $adminsNames,
+			    		'id' => $_GET['id'],
 			    	));
 		    	} else return $this->redirect(array('/bpm/workflow/index'));
     		} else return $this->redirect(array('/bpm/workflow/index'));
@@ -200,7 +212,7 @@ class WorkflowController extends RbacController {
     		if($workflow){
 				$domain = Domain::findOne(['name' => $workflow->domain]);
 		    	if($domain){
-		    		$permission = self::can('workflow/read', $domain->id);
+		    		$permission = self::can('workflow/read', $domain->name);
 		    		if(!$permission){
 		    			Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to read in domain {domain}', ['domain' => $domain->name]));
 		    			return $this->redirect(array('/bpm/workflow/index'));
@@ -216,27 +228,33 @@ class WorkflowController extends RbacController {
 			    	}
 			    
 			    	$roles = $domain->getUserDomainsRoles()->all();
-			    	 
+
+			    	$adminsNames = [];
+			    	foreach($roles as $role):
+			    		$adminsNames[$role->getUser()->id] = $role->getUser()->name;
+			    	endforeach;
+			    	
 			    	$usersNames = [];
-			    	foreach($roles as $role):
-			    	$usersNames[$role->getUser()->id] = $role->getUser()->name;
+			    	foreach(User::find()->all() as $user):
+			    		$usersNames[$user->id] = $user->name;
 			    	endforeach;
-			    	 
+			    	
 			    	$groupsNames = [];
-			    	foreach($roles as $role):
-			    	$groupsNames[$role->getGroup()->id] = $role->getGroup()->name;
+			    	foreach(Group::find()->all() as $group):
+				    	$groupsNames[$group->id] = $group->name;
 			    	endforeach;
-			    	 
+			    	
 			    	Yii::trace($roles);
 			    	Yii::trace($usersNames);
 			    	Yii::trace($groupsNames);
-			    
+			    	 
 			    	return $this->renderPartial('viewer', array(
-			    			'owner_domain' => $ownerDomain,
-			    			'domains' => $allDomains,
-			    			'groups' => $groupsNames,
-			    			'users' => $usersNames,
-			    			'id' => $_GET['id'],
+		    			'owner_domain' => $ownerDomain,
+		    			'domains' => $allDomains,
+		    			'groups' => $groupsNames,
+		    			'users' => $usersNames,
+		    			'admins' => $adminsNames,
+			    		'id' => $_GET['id'],
 			    	));
 				} else return $this->redirect(array('/bpm/workflow/index'));
     		} else return $this->redirect(array('/bpm/workflow/index'));
@@ -284,7 +302,7 @@ class WorkflowController extends RbacController {
     		if($workflow){
 				$domain = Domain::findOne(['name' => $workflow->domain]);
 		    	if($domain){
-		    		$permission = self::can('workflow/delete', $domain->id);
+		    		$permission = self::can('workflow/delete', $domain->name);
 		    		if($permission){
 			    		if(BpmWorkflow::findOne(['id' => $id])->active == 0){
 			    			BpmWorkflow::deleteAll(['in', 'id', $id]);
@@ -308,7 +326,7 @@ class WorkflowController extends RbacController {
     		if($workflow){
 				$domain = Domain::findOne(['name' => $workflow->domain]);
 		    	if($domain){
-			    	$permission = self::can('workflow/create', $domain->id);
+			    	$permission = self::can('workflow/create', $domain->name);
 				    if(!$permission){
 				    	Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to create in domain {domain}', ['domain' => $domain->name]));
 				    	return $this->redirect(array('/bpm/workflow/index'));
@@ -326,7 +344,7 @@ class WorkflowController extends RbacController {
     		if($activeWorkflow){
 				$domain = Domain::findOne(['name' => $activeWorkflow->domain]);
 		    	if($domain){
-		    		$permission = self::can('workflow/delete', $domain->id);
+		    		$permission = self::can('workflow/delete', $domain->name);
 		    		if($permission){
 			    		$oldWorkflow = BpmWorkflow::findOne(['domain' => $activeWorkflow->domain, 'active' => 1]);
 			    	
@@ -361,7 +379,7 @@ class WorkflowController extends RbacController {
     		if($workflow){
 				$domain = Domain::findOne(['name' => $workflow->domain]);
 		    	if($domain){
-		    		$permission = self::can('workflow/delete', $domain->id);
+		    		$permission = self::can('workflow/delete', $domain->name);
 		    		if($permission){
 			    		if (!BpmWorkflow::disable($id)){
 			    			Yii::$app->getSession()->setFlash('error', Yii::t("bpm", 'Unsuccessful disable the workflow {workflow} form domain {domain}', ['workflow' => $workflow->name, 'domain' => $workflow->getDomain()->one()->name]));
@@ -400,7 +418,7 @@ class WorkflowController extends RbacController {
     	$domains = Domain::find()->orderBy(['name' => SORT_ASC])->all();
     	$domainsClean = [];
     	foreach($domains as $domain){
-    			if(self::can('workflow/create', $domain->id))
+    			if(self::can('workflow/create', $domain->name))
     				$domainsClean[$domain->name] = $domain->name;
     	}
     	echo json_encode($domainsClean);

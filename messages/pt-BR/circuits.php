@@ -259,5 +259,8 @@ return array(
 		"Port Out" => "Porta de Saída",
 		
 		"Mine" => "Minhas",
+		
+		"You don`t allowed to update the configurations" => "Você não tem permissão para editar as configurações",
+		"Configurations saved successfully" => "Configurações editadas com sucesso",
 );
 ?>

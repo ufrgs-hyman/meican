@@ -91,7 +91,7 @@
 					'filter' => Html::activeDropDownList($searchModel, 'domain',
 							ArrayHelper::map(
 								BpmWorkflow::find()->select(["domain"])->distinct(true)->orderBy(['domain'=>SORT_ASC])->asArray()->all(), 'domain', 'domain'),
-							['class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
+							['class'=>'form-control','prompt' => Yii::t("bpm", 'any')]
 					),
 					'headerOptions'=>['style'=>'width: 35%;'],
 				],

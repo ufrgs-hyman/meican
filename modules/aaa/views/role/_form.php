@@ -19,11 +19,11 @@ $form=ActiveForm::begin(array(
 	<h4>
 	<font color="#3a5879">
 		<div class="form input">
-			<?= $form->field($udr,'domain_id')->dropDownList(ArrayHelper::map($domains, 'id', 'name')); ?>
-		</div>
-	
-		<div class="form input">
 			<?= $form->field($udr,'_groupRoleName')->dropDownList(ArrayHelper::map($groups, 'role_name', 'name')); ?>
+		</div>
+		
+		<div id="domain-select" class="form input">
+			<?= $form->field($udr,'domain')->dropDownList(array_merge($anyDomain, ArrayHelper::map($domains, 'name', 'name'))); ?>
 		</div>
 	</font>
 	</h4>

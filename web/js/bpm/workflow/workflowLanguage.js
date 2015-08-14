@@ -16,6 +16,13 @@ for (k in users) {
 	users_values.push(users[k]);
 }
 
+var admins = admins ? admins : [];
+var admins_keys = [], admins_values = [];
+for (k in admins) {
+	admins_keys.push(k);
+	admins_values.push(admins[k]);
+}
+
 var groups = groups ? groups : [];
 var groups_keys = [], groups_values = [];
 for (k in groups) {
@@ -755,8 +762,8 @@ modules: [
 			            inputParams: 
 			            {	label: "", 
 			                name: "title", 
-			                selectValues: users_keys,
-	                        selectOptions: users_values
+			                selectValues: admins_keys,
+	                        selectOptions: admins_values
 			            }
 			        },
 					animColors:{

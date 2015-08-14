@@ -5,6 +5,7 @@
 	var owner_domains = <?php echo json_encode($owner_domain); ?>;
     var domains = <?php echo json_encode($domains); ?>;
     var users = <?php echo json_encode($users); ?>;
+    var admins = <?php echo json_encode($admins); ?>;
     var groups = <?php echo json_encode($groups); ?>;
     var language = '<?= $_GET['lang']; ?>';
 </script>

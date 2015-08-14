@@ -11,7 +11,7 @@ use Yii;
 class GroupController extends RbacController {
 	
     public function actionIndex() {
-    	if(!self::can("group/read")){ //Se ele não tiver permissão em nenhum domínio
+    	if(!self::can("group/read")){ //Se ele não tiver permissão
 			return $this->goHome();
 		}
     	
@@ -29,15 +29,24 @@ class GroupController extends RbacController {
     		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create groups'));
     		return $this->redirect(array('index'));
     	}
-    	
+
     	$group = new Group;
     
     	if($group->load($_POST)) {
     		if($group->save()) {
-    			if (isset($_POST['Permissions']) && $group->setPermissions($_POST['Permissions'])) {
-    				Yii::$app->getSession()->setFlash('success', Yii::t("aaa", 'Group created successfully'));
-    			} else {
-    				Yii::$app->getSession()->setFlash('warning', Yii::t("aaa", 'Group created. None permissions?'));
+    			if($group->type == Group::TYPE_SYSTEM){
+	    			if (isset($_POST['Permissions1']) && $group->setPermissions($_POST['Permissions1'])) {
+	    				Yii::$app->getSession()->setFlash('success', Yii::t("aaa", 'Group created successfully'));
+	    			} else {
+	    				Yii::$app->getSession()->setFlash('warning', Yii::t("aaa", 'Group created. None permissions?'));
+	    			}
+    			}
+    			else{
+    				if (isset($_POST['Permissions']) && $group->setPermissions($_POST['Permissions'])) {
+    					Yii::$app->getSession()->setFlash('success', Yii::t("aaa", 'Group created successfully'));
+    				} else {
+    					Yii::$app->getSession()->setFlash('warning', Yii::t("aaa", 'Group created. None permissions?'));
+    				}
     			}
     						
     			return $this->redirect(array('index'));
@@ -52,11 +61,19 @@ class GroupController extends RbacController {
     	return $this->render('create',array(
     			'group' => $group,
     			'apps' => array(
-    					'reservation'=>Yii::t("aaa", 'Reservations'),
-    					'workflow'=>Yii::t("aaa", 'Workflows'), 
-    					'topology'=>Yii::t("aaa", 'Topologies'),
-    					'user'=>Yii::t("aaa", 'Users'),
-    					'group'=>Yii::t("aaa", 'Groups')),
+    				'reservation'=>Yii::t("aaa", 'Reservations'),
+    				'workflow'=>Yii::t("aaa", 'Workflows'), 
+    				'domainTopology'=>Yii::t("aaa","Domain's Topology"),
+    				'test'=>Yii::t("aaa", 'Automated Tests'),
+    				'role'=>Yii::t("aaa", 'Roles'),
+    			),
+    			'root' => array(
+    				'configuration'=>Yii::t("aaa", 'Reservations Configuration'),
+    				'synchronizer'=>Yii::t("aaa", 'Synchronizer'), 
+    				'domain'=>Yii::t("aaa", 'Domains'),
+    				'group'=>Yii::t("aaa", 'Groups'),
+    				'user'=>Yii::t("aaa", 'Users'),
+    			),
     	));
     }
     
@@ -70,30 +87,47 @@ class GroupController extends RbacController {
     	$childsChecked = $group->getPermissions();
     
     	if($group->load($_POST)) {
-    		if(isset($_POST['Permissions'])) {
-    			if ($group->save() && $group->setPermissions($_POST['Permissions'])) {
-    				Yii::$app->getSession()->setFlash('success', Yii::t("aaa", 'Group updated successfully'));
-    			} else {
-    				Yii::$app->getSession()->setFlash('warning', Yii::t("aaa", 'Group updated successfully. None permissions?'));
-    			}
-    					
-    			return $this->redirect(array('index'));
+    		if ($group->save()){
+	    		if($group->type == Group::TYPE_SYSTEM){
+	    			if (isset($_POST['Permissions1']) && $group->setPermissions($_POST['Permissions1'])) {
+	    				Yii::$app->getSession()->setFlash('success', Yii::t("aaa", 'Group updated successfully'));
+	    			} else {
+	    				Yii::$app->getSession()->setFlash('warning', Yii::t("aaa", 'Group updated. None permissions?'));
+	    			}
+	    		}
+	    		else{
+	    			if (isset($_POST['Permissions']) && $group->setPermissions($_POST['Permissions'])) {
+	    				Yii::$app->getSession()->setFlash('success', Yii::t("aaa", 'Group updated successfully'));
+	    			} else {
+	    				Yii::$app->getSession()->setFlash('warning', Yii::t("aaa", 'Group updated. None permissions?'));
+	    			}
+	    		}
+	    		return $this->redirect(array('index'));
     		}
     		else {
     			foreach($group->getErrors() as $attribute => $error) {
     				Yii::$app->getSession()->setFlash("error", $error[0]);
     			}
     		}
+    		
     	}
     
     	return $this->render('update',array(
     			'group' => $group,
     			'apps' => array(
-    					'reservation'=>Yii::t("aaa", 'Reservations'),
-    					'workflow'=>Yii::t("aaa", 'Workflows'), 
-    					'topology'=>Yii::t("aaa", 'Topologies'),
-    					'user'=>Yii::t("aaa", 'Users'),
-    					'group'=>Yii::t("aaa", 'Groups')),
+    				'reservation'=>Yii::t("aaa", 'Reservations'),
+    				'workflow'=>Yii::t("aaa", 'Workflows'), 
+    				'domainTopology'=>Yii::t("aaa","Domain's Topology"),
+    				'test'=>Yii::t("aaa", 'Automated Tests'),
+    				'role'=>Yii::t("aaa", 'Roles'),
+    			),
+    			'root' => array(
+    				'configuration'=>Yii::t("aaa", 'Reservations Configuration'),
+    				'synchronizer'=>Yii::t("aaa", 'Synchronizer'), 
+    				'domain'=>Yii::t("aaa", 'Domains'),
+    				'group'=>Yii::t("aaa", 'Groups'),
+    				'user'=>Yii::t("aaa", 'Users'),
+    			),
     			'childsChecked' => $childsChecked
     	));
     }

@@ -18,13 +18,12 @@ use yii\helpers\Json;
 class PortController extends RbacController {
 	
 	public function actionIndex($id = null){
-		self::canRedir("topology/read");
-		 
-		//Pega os dominios que o usuário tem permissão
-		$domains = self::whichDomainsCan("topology/read");
+		if(!self::can("domainTopology/read")){ //Se ele não tiver permissão em nenhum domínio
+			return $this->goHome();
+		}
 		 
 		return $this->render('index', array(
-				'domains' =>self::whichDomainsCan("topology/read"),
+				'domains' =>self::whichDomainsCan("domainTopology/read"),
 				'selected_domain' => $id,
 		));
 	}
@@ -34,8 +33,8 @@ class PortController extends RbacController {
 	
 		if(isset($_POST['name'])) {
 
-			$domainId = Network::find()->where(['name' => $_POST['network']])->one()->domain_id;
-			$permission = self::can('topology/create', $domainId);
+			$domain = Network::find()->where(['name' => $_POST['network']])->one()->getDomain()->one();
+			$permission = self::can('domainTopology/update', $domain->name);
 	
 			if($permission){
 				$port->type = 'NSI';
@@ -48,9 +47,9 @@ class PortController extends RbacController {
 				$port->granularity = $_POST['granularity'];
 				$port->vlan_range = $_POST['vlan'];
 	
-				$port->network_id = Network::find()->where(['name' => $_POST['network']])->andWhere(['domain_id' => $domainId])->one()->id;
+				$port->network_id = Network::find()->where(['name' => $_POST['network']])->andWhere(['domain_id' => $domain->id])->one()->id;
 				
-				$port->device_id = Device::find()->where(['name' => $_POST['device']])->andWhere(['domain_id' => $domainId])->one()->id;
+				$port->device_id = Device::find()->where(['name' => $_POST['device']])->andWhere(['domain_id' => $domain->id])->one()->id;
 	
 				if ($port->save()) echo "ok";
 				else echo "error";
@@ -65,8 +64,8 @@ class PortController extends RbacController {
 		if(isset($_POST['name'])) {
 			$port = Port::find()->where(['id' => $_POST['id']])->one();
 	
-			$domainId = Network::find()->where(['name' => $_POST['network']])->one()->domain_id;
-			$permission = self::can('topology/update', $domainId);
+			$domain = Network::find()->where(['name' => $_POST['network']])->one()->getDomain()->one();
+			$permission = self::can('domainTopology/update', $domain->name);
 	
 			if($permission){
 				$port->type = 'NSI';
@@ -79,9 +78,9 @@ class PortController extends RbacController {
 				$port->granularity = $_POST['granularity'];
 				$port->vlan_range = $_POST['vlan'];
 	
-				$port->network_id = Network::find()->where(['name' => $_POST['network']])->andWhere(['domain_id' => $domainId])->one()->id;
+				$port->network_id = Network::find()->where(['name' => $_POST['network']])->andWhere(['domain_id' => $domain->id])->one()->id;
 				
-				$port->device_id = Device::find()->where(['name' => $_POST['device']])->andWhere(['domain_id' => $domainId])->one()->id;
+				$port->device_id = Device::find()->where(['name' => $_POST['device']])->andWhere(['domain_id' => $domain->id])->one()->id;
 	
 				if ($port->save()) echo "ok";
 				else echo "error";
@@ -94,7 +93,7 @@ class PortController extends RbacController {
 		if(isset($_POST['id'])){
 			$ids = $_POST['id'];
 			$port = Port::findOne(['id' => $_POST['id']]);
-			if(self::can('topology/delete', $port->getDevice()->one()->domain_id)){
+			if(self::can('domainTopology/delete', $port->getDevice()->one()->getDomain()->one()->name)){
 				$domain_id = $port->getDevice()->one()->domain_id;
 				$port->delete();
 				echo ($domain_id);
@@ -109,13 +108,13 @@ class PortController extends RbacController {
 			$ids = $_REQUEST['itens'];
 			foreach($ids as $id){
 				$port = Port::findOne(['id' => $id]);
-				if(self::can('topology/delete', $port->getDevice()->one()->domain_id)){
+				if(self::can('domainTopology/delete', $port->getDevice()->one()->getDomain()->one()->name)){
 					Yii::$app->getSession()->addFlash('success', Yii::t('topology', 'Successful delete port {port} from domain {domain}', ['port' => $port->name, 'domain' => $port->getDevice()->one()->getDomain()->one()->name]));
 					$domain_id = $port->getDevice()->one()->domain_id;
 					$port->delete();
 				}
 				else{
-					Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Port {port} not deleted. You are not allowed for delete on domain {domain}', ['port' => $port->name, 'domain' => $port->getDevice()->one()->getDomain()->one()->name]));
+					Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Port {port} not deleted. You are not allowed to delete on domain {domain}', ['port' => $port->name, 'domain' => $port->getDevice()->one()->getDomain()->one()->name]));
 				}
 			}
 		}
@@ -131,7 +130,7 @@ class PortController extends RbacController {
 	}
 	
 	public function actionGetDomainsId(){
-		$domains = self::whichDomainsCan("topology/read");
+		$domains = self::whichDomainsCan("domainTopology/read");
 	
 		foreach ($domains as $dom):
 		$array[] = $dom->id;
@@ -176,14 +175,14 @@ class PortController extends RbacController {
 	public function actionCanUpdate(){
 		if(isset($_POST['id'])) {
 			$id = $_POST['id'];
-			echo self::can('topology/update', Port::findOne(['id' => $id])->getDevice()->one()->domain_id);
+			echo self::can('domainTopology/update', Port::findOne(['id' => $id])->getDevice()->one()->getDomain()->one()->name);
 		}
 		else echo false;
 	}
 	
 	public function actionCanCreate(){
 		if(isset($_POST['id'])) {
-			echo self::can('topology/create', $_POST['id']);
+			echo self::can('domainTopology/create', Domain::findOne($_POST['id'])->name);
 		}
 		else echo false;
 	}

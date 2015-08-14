@@ -106,7 +106,7 @@ abstract class RbacController extends Controller {
      * 						deve ser redirecionado para a página de erro padrão (403).
      * 
      */
-    static function can($permissions = null, $domainId = null, $redirect = false) {
+    static function can($permissions = null, $domain = null, $redirect = false) {
     	if (!is_array($permissions)) {
     		if ($permissions)
     		$permissions = [$permissions];
@@ -114,19 +114,23 @@ abstract class RbacController extends Controller {
     	
     	$userId = Yii::$app->user->getId();
     	
-    	if($domainId != null) {
-    		$role = UserDomainRole::find()->where([
+    	if($domain != null) {
+    		$roles = UserDomainRole::find()->where([
     				'user_id' => $userId,
-    				'domain_id' => $domainId
-    				])->one();
+    				'domain' => $domain
+    				])->all();
     		
-    		if (self::checkPermission($permissions, $role)) return true;
-    	
-    		$role = UserDomainRole::find()->where([
+    		foreach($roles as $role){
+    			if (self::checkPermission($permissions, $role)) return true;
+    		}
+    		
+    		$roles = UserDomainRole::find()->where([
     				'user_id' => $userId,
-    				'domain_id' => null])->one();
-    		 
-    		if (self::checkPermission($permissions, $role)) return true;
+    				'domain' => null])->all();
+    		
+    		foreach($roles as $role){
+    			if (self::checkPermission($permissions, $role)) return true;
+    		}
     	} else {
     		$roles = UserDomainRole::find()->where([
     				'user_id' => $userId])->all();
@@ -144,15 +148,15 @@ abstract class RbacController extends Controller {
     	throw new \yii\web\HttpException(403);
     }
     
-    static function canRedir($permissions = null, $domainId = null) {
-    	self::can($permissions, $domainId, true);
+    static function canRedir($permissions = null, $domain = null) {
+    	self::can($permissions, $domain, true);
     }
     
     static function whichDomainsCan($permissions = null) {
     	$domains = Domain::find()->orderBy(['name' => SORT_ASC])->all();
     	$canDomains = [];
     	foreach($domains as $domain){
-    		if(self::can($permissions, $domain->id)) $canDomains[] = $domain;
+    		if(self::can($permissions, $domain->name)) $canDomains[] = $domain;
     	}
     	return $canDomains;
     }

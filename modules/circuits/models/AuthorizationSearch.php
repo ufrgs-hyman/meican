@@ -113,7 +113,7 @@ class AuthorizationSearch extends AuthorizationForm{
     		foreach($groupRequests as $request){ //Passa por todas requisições para testar se o dominio corresponde
     			$domain = Domain::findOne(['name' => $request->domain]);
     			if($domain){
-    				if($role->domain_id == NULL || $role->domain_id == $domain->id){
+    				if($role->domain == NULL || $role->domain == $domain->name){
     					$uniq = true;
     					$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['<=','start', DateUtils::now()])->one();
     					if(isset($conn)){

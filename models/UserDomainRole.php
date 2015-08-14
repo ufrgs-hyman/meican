@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "{{%user_domain}}".
  *
  * @property integer $user_id
- * @property integer $domain_id
+ * @property string $domain
  *
  * @property Domain $domain
  * @property User $user
@@ -33,7 +33,8 @@ class UserDomainRole extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', '_groupRoleName'], 'required'],
-            [['user_id', 'domain_id'], 'integer'],
+            [['user_id'], 'integer'],
+        	[['domain'], 'string', 'max' => 60],
         ];
     }
 
@@ -44,7 +45,7 @@ class UserDomainRole extends \yii\db\ActiveRecord
     {
         return [
             'user_id' => 'User',
-            'domain_id' => Yii::t("aaa", "Domain"),
+            'domain' => Yii::t("aaa", "Domain"),
             '_groupRoleName'	=> Yii::t("aaa", "Group"),
         ];
     }
@@ -54,7 +55,7 @@ class UserDomainRole extends \yii\db\ActiveRecord
      */
     public function getDomain()
     {
-        return $this->hasOne(Domain::className(), ['id' => 'domain_id'])->one();
+        return $this->hasOne(Domain::className(), ['name' => 'domain'])->one();
     }
 
     /**
@@ -66,11 +67,12 @@ class UserDomainRole extends \yii\db\ActiveRecord
     }
     
     public function getValidDomains($allowed_domains, $isUpdate = false) {
+    	
     	$domains = self::getDomains($allowed_domains);
     	$udrs = self::findAll(['user_id'=>$this->user_id]);
     	foreach ($domains as $key => $dom) {
     		foreach ($udrs as $udr) {
-    			if ($dom['id'] == $udr->domain_id) {
+    			if ($dom['id'] == $udr->domain) {
     				unset($domains[$key]);
     			}
     		}
@@ -79,7 +81,7 @@ class UserDomainRole extends \yii\db\ActiveRecord
     		if ($this->getDomain()) {
     			$domName = $this->getDomain()->name;
     		}
-    		if(isset($domName)) return array_merge([['id'=>$this->domain_id,'name'=>$domName]], $domains);
+    		if(isset($domName)) return array_merge([['id'=>$this->domain,'name'=>$domName]], $domains);
     	}
     	return $domains;
     }
@@ -91,7 +93,19 @@ class UserDomainRole extends \yii\db\ActiveRecord
     }
     
     static function getGroups() {
-    	return Group::find()->asArray()->all();
+    	return Group::find()->orderBy(['name' => SORT_ASC])->asArray()->all();
+    }
+    
+    static function getDomainGroups() {
+    	return Group::find()->where(['type' => Group::TYPE_DOMAIN])->orderBy(['name' => SORT_ASC])->asArray()->all();
+    }
+    
+    static function getSystemGroups() {
+    	return Group::find()->where(['type' => Group::TYPE_SYSTEM])->orderBy(['name' => SORT_ASC])->asArray()->all();
+    }
+    
+    static function getSystemGroupsNoArray() {
+    	return Group::find()->where(['type' => Group::TYPE_SYSTEM])->orderBy(['name' => SORT_ASC])->all();
     }
     
     static function getGroupsNoArray() {

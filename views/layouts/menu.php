@@ -18,43 +18,43 @@ echo Menu::widget([
 				['label'=>Yii::t('circuits','Status'),'url'=>['/circuits/reservation/status']],
 				['label'=>Yii::t('circuits','History'),'url'=>['/circuits/reservation/history']],
 				['label'=>Yii::t('circuits','Authorization'),'url'=>['/circuits/authorization/index']],
-				['label'=>Yii::t('circuits','Configuration'),'url'=>['/circuits/configuration/index']]
-			],
-			//'visible'=>RbacController::can('reservation/read')
+				['label'=>Yii::t('circuits','Configuration'),'url'=>['/circuits/configuration/index'], 'visible'=>RbacController::can('configuration/read')]
+			]
 		],
 		[
 			'label'=>'<h3><a href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('bpm','Workflows').'</a></h3>',
 			'items'=>[
-				['label'=>Yii::t('bpm','New'), 'url'=>['/bpm/workflow/new']],
+				['label'=>Yii::t('bpm','New'), 'url'=>['/bpm/workflow/new'], 'visible'=> RbacController::can('workflow/create')],
 				['label'=>Yii::t('bpm','Status'), 'url'=>['/bpm/workflow/index']],
 			],
-			'visible'=>RbacController::can('workflow/read')
+			'visible'=> RbacController::can('workflow/read')
 		],
 		[
 			'label'=>'<h3><a href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('topology','Topologies').'</a></h3>',
 			'items'=>[
-				['label'=>Yii::t('topology','Domains'), 'url'=>['/topology/domain/index']],
-				['label'=>Yii::t('topology','Providers'), 'url'=>['/topology/provider/index']],
-				['label'=>Yii::t('topology','Networks'), 'url'=>['/topology/network/index']],
-				['label'=>Yii::t('topology','Devices'), 'url'=>['/topology/device/index']],
-				['label'=>Yii::t('topology','Ports'), 'url'=>['/topology/port/index']],
-				['label'=>Yii::t('topology','Viewer'), 'url'=>['/topology/viewer/index']],
-				['label'=>Yii::t('topology','Synchronizer'), 'url'=>['/topology/sync/index'], 'visible'=>RbacController::can('topology/update')],
-				['label'=>Yii::t('topology','Changes'), 'url'=>['/topology/change/applied'], 'visible'=>RbacController::can('topology/update')],
+				['label'=>Yii::t('topology','Domains'), 'url'=>['/topology/domain/index'], 'visible'=>RbacController::can('domain/read')],
+				['label'=>Yii::t('topology','Providers'), 'url'=>['/topology/provider/index'], 'visible'=>RbacController::can('domainTopology/read')],
+				['label'=>Yii::t('topology','Networks'), 'url'=>['/topology/network/index'], 'visible'=>RbacController::can('domainTopology/read')],
+				['label'=>Yii::t('topology','Devices'), 'url'=>['/topology/device/index'], 'visible'=>RbacController::can('domainTopology/read')],
+				['label'=>Yii::t('topology','Ports'), 'url'=>['/topology/port/index'], 'visible'=>RbacController::can('domainTopology/read')],
+				['label'=>Yii::t('topology','Viewer'), 'url'=>['/topology/viewer/index'], 'visible'=>(RbacController::can("domainTopology/read") && RbacController::can("domain/read"))],
+				['label'=>Yii::t('topology','Synchronizer'), 'url'=>['/topology/sync/index'], 'visible'=>RbacController::can('synchronizer/read')],
+				['label'=>Yii::t('topology','Changes'), 'url'=>['/topology/change/applied'], 'visible'=>RbacController::can('domainTopology/update')],
 			],
-			'visible'=>RbacController::can('topology/read')
+			'visible'=>(RbacController::can('domainTopology/read') || RbacController::can('synchronizer/read'))
 		],
 		[
 			'label'=>'<h3><a href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('aaa','Automated Tests').'</a></h3>',
 			'items'=>[
-					['label'=>Yii::t('topology','Create'),'url'=>['/circuits/automated-test/create']],
-					['label'=>Yii::t('topology','Status'),'url'=>['/circuits/automated-test/index']]
+					['label'=>Yii::t('topology','Create'),'url'=>['/circuits/automated-test/create'], 'visible'=>RbacController::can('test/create')],
+					['label'=>Yii::t('topology','Status'),'url'=>['/circuits/automated-test/index'], 'visible'=>RbacController::can('test/read')]
 			],
+			'visible'=>(RbacController::can('test/read') || RbacController::can('test/create'))
 		],
 		[
 			'label'=>'<h3><a href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('aaa','Users').'</a></h3>',
 			'items'=>[
-					['label'=>Yii::t('aaa','Users'), 'url'=>['/aaa/user/index'], 'visible'=>RbacController::can('user/read')],
+					['label'=>Yii::t('aaa','Users'), 'url'=>['/aaa/user/index'], 'visible'=>(RbacController::can('user/read') || RbacController::can('role/read'))],
 					['label'=>Yii::t('aaa','Groups'), 'url'=>['/aaa/group/index'], 'visible'=>RbacController::can('group/read')],
 			],
 		],

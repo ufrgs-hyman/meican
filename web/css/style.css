@@ -1,4 +1,4 @@
-/* 
+/*
     Document   : Meican 2 CSS Styles
 */
 /* =============================================================================
@@ -563,6 +563,7 @@ select:hover, select:select {
   border-radius: 2px !important;
   box-shadow: 0px 3px #27567C !important;
   -webkit-box-shadow: 0px 3px #27567C !important;
+  -moz-box-shadow: 0px 1px #27567C !important;
   margin-bottom: 3px;
 }
 
@@ -575,7 +576,12 @@ select:hover, select:select {
   background: #4A7699 !important;
   box-shadow: 0px 1px #27567C !important;
   -webkit-box-shadow: 0px 1px #27567C !important;
+  -moz-box-shadow: 0px 1px #27567C !important;
   transform: translateY(2px);
+  -webkit-transform: translateY(2px);
+  -ms-transform: translateY(2px);
+  -moz-transform: translateY(2px);
+  -o-transform: translateY(2px);
 }
 
 .controls a:hover:disabled, input[type=submit]:hover:disabled, input[type=button]:hover:disabled, button:hover:disabled, .ui-dialog .ui-dialog-buttonpane button:hover:disabled {
@@ -1028,10 +1034,24 @@ table.reservation-marker-type {
 }
 
 #search-button {
-    height: 27px;
-    float: right;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
-    -webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
+  height: 27px;
+  float: right;
+  margin: 0px !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+}
+
+#search-button:hover:enabled{
+	
+}
+
+#search-button:active{
+  transform: none !important;
+  -webkit-transform: none !important;
+  -ms-transform: none !important;
+  -moz-transform: none !important;
+  -o-transform: none !important;
 }
 
 .reservation-point .title{
@@ -1526,8 +1546,7 @@ form div.form {
 }
 
 #waypoints_order li:hover {
-    background: #F44; 
-    color: white; 
+	border: 1px solid #27567C;
     text-shadow: none;
 }
 

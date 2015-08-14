@@ -32,9 +32,9 @@ return array(
 		'Device {name} inserted' => 'Dispositivo {name} adicionado',
 		'Port {name} inserted' => 'Porta {name} adicionada', 
 		'Port {name} updated' => 'Porta {name} editada',
-		'You are not allowed to update on domain {domain}' => 'Você não tem permissão para editar no domínio {domain}',
-		'You are not allowed to update the domain {domain}' => 'Você não tem permissão para editar o domínio {domain}',
+		'You are not allowed to update domains' => 'Você não tem permissão para editar domínios',
 		'You are not allowed to add domains' => 'Você não tem permissão para adicionar domínios',
+		'You are not allowed to delete domains' => 'Você não tem permissão para remover domínios',
 		'You are not allowed to add networks' => 'Você não tem permissão para adicionar redes',
 		'You are not allowed to add devices' => 'Você não tem permissão para adicionar dispositivos',
 		
@@ -98,6 +98,10 @@ return array(
 		'Device {device} not deleted. You are not allowed to delete on domain {domain}' => 'Dispositivo {device} não foi removido. Você não tem permissão para remover no domínio {domain}',
 		'Network {net} not deleted. You are not allowed to delete on domain {domain}' => 'Rede {net} não foi removida. Você não tem permissão para remover no domínio {domain}',
 		'You are not allowed to delete on domain {domain}' => 'Você não tem permissão para remover no domínio {domain}',
+		'You are not allowed to update on domain {domain}' => 'Você não tem permissão para editar no domínio {domain}',
+		'You are not allowed to add synchronizers' => 'Você não tem permissão para adicionar sincronizadores',
+		'You are not allowed to update synchronizers' => 'Você não tem permissão para editar sincronizadores',
+		'You are not allowed to delete synchronizers' => 'Você não tem permissão para remover sincronizadores',
 
 		"Provider {name} added successfully" => 'Provedor {name} adicionado com sucesso',
 		"Provider {name} updated successfully"=> 'Provedor {name} editado com sucesso',

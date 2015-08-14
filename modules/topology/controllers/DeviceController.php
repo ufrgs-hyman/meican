@@ -17,12 +17,12 @@ use Yii;
 class DeviceController extends RbacController {
 	
     public function actionIndex($id = null) {
-    	if(!self::can("topology/read")){ //Se ele não tiver permissão em nenhum domínio
+    	if(!self::can("domainTopology/read")){ //Se ele não tiver permissão em nenhum domínio
 			return $this->goHome();
 		}
     	
         $searchModel = new DeviceSearch;
-	    $allowedDomains = self::whichDomainsCan('topology/read');
+	    $allowedDomains = self::whichDomainsCan('domainTopology/read');
 	    $dataProvider = $searchModel->searchByDomains(Yii::$app->request->get(),
 	    		$allowedDomains);
 
@@ -34,7 +34,7 @@ class DeviceController extends RbacController {
     }
     
     public function actionCreate(){
-    	if(!self::can("topology/create")){
+    	if(!self::can("domainTopology/create")){
     		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add devices'));
     		return $this->redirect(array('index'));
     	}
@@ -55,14 +55,14 @@ class DeviceController extends RbacController {
 
     	return $this->render('create',[
     			'device' => $device,
-    			'domains' => self::whichDomainsCan('topology/create'),
+    			'domains' => self::whichDomainsCan('domainTopology/create'),
     	]);
     }
     
     public function actionUpdate($id){
     	
 		$device = Device::findOne($id);
-    	if(!self::can("topology/update", $device->domain_id)){
+    	if(!self::can("domainTopology/update", $device->getDomain()->one()->name)){
     		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update on domain {domain}', ['domain' => $device->getDomain()->one()->name]));
     		return $this->redirect(array('index'));
     	}
@@ -78,11 +78,10 @@ class DeviceController extends RbacController {
     					$device->clearErrors();
     			}
     	}
-    	$domains = self::whichDomainsCan('topology/update');
     	
     	return $this->render('update',[
     			'device' => $device,
-    			'domains' => $domains,
+    			'domains' => self::whichDomainsCan('domainTopology/update'),
     	]);
     }
 
@@ -90,7 +89,7 @@ class DeviceController extends RbacController {
 	    if(isset($_POST['delete'])){
     		foreach ($_POST['delete'] as $id) {
     			$device = Device::findOne($id);
-    			if(self::can('topology/delete', $device->domain_id)){
+    			if(self::can('domainTopology/delete', $device->getDomain()->one()->name)){
 	    			if ($device->delete())	Yii::$app->getSession()->addFlash('success', Yii::t('topology', 'Device {name} deleted', ['name'=>$device->name]));
 	    			else Yii::$app->getSession()->setFlash('error', Yii::t('topology', 'Error deleting device {name}', ['name'=>$device->name]));
     			}

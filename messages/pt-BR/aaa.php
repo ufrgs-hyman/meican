@@ -84,7 +84,8 @@ return array(
 		"User added successfully" => "Usuário adicionado com sucesso",
 		"New User" => "Novo Usuário",
 		"Access Roles" => "Perfis de Acesso",
-		"Any" => "Qualquer",
+		"any" => "qualquer",
+		'Back' => 'Voltar',
 		'You are not allowed to create users' => 'Você não tem permissão para criar usuários',
 		'You are not allowed to update users' => 'Você não tem permissão para editar usuários',
 		'You are not allowed to delete users' => 'Você não tem permissão para deletar usuários',
@@ -94,6 +95,15 @@ return array(
 		'You are not allowed to create groups' => 'Você não tem permissão para criar grupos',
 		'You are not allowed to update groups' => 'Você não tem permissão para editar grupos',
 		'You are not allowed to delete groups' => 'Você não tem permissão para deletar grupos',
+		'You are not allowed to update this role' => 'Você não tem permissão para editar este perfil',
+		'Roles' => 'Perfis',
+		'System' => 'Sistema',
+		'Reservations Configuration' => 'Configuração das Reservas',
+		'Synchronizer' => 'Sincronizador',
+		"Domain's Topology" => "Topologia do Domínio",
+		'Automated Tests' => "Testes Automatizados",
+		
+		
 );
 
 ?>

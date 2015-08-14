@@ -19,12 +19,12 @@ use Yii;
 class NetworkController extends RbacController {
 	
 	public function actionIndex() {
-		if(!self::can("topology/read")){ //Se ele não tiver permissão em nenhum domínio
+		if(!self::can("domainTopology/read")){ //Se ele não tiver permissão em nenhum domínio
 			return $this->goHome();
 		}
 		
 	    $searchModel = new NetworkSearch;
-	    $allowedDomains = self::whichDomainsCan('topology/read');
+	    $allowedDomains = self::whichDomainsCan('domainTopology/read');
 	    $dataProvider = $searchModel->searchByDomains(Yii::$app->request->get(),
 	    		$allowedDomains);
 
@@ -36,7 +36,7 @@ class NetworkController extends RbacController {
     }
     
     public function actionCreate(){
-    	if(!self::can("topology/create")){
+    	if(!self::can("domainTopology/create")){
     		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add networks'));
     		return $this->redirect(array('index'));
     	}
@@ -56,14 +56,14 @@ class NetworkController extends RbacController {
     	}
     	 
     	return $this->render('create',[
-    			'domains' => self::whichDomainsCan('topology/create'),
+    			'domains' => self::whichDomainsCan('domainTopology/create'),
     			'network' => $network,
     	]);
     }
     
     public function actionUpdate($id){	
     	$network = Network::findOne($id);
-    	if(!self::can("topology/update", $network->domain_id)){
+    	if(!self::can("domainTopology/update", $network->getDomain()->one()->name)){
     		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update on domain {domain}', ['domain' => $network->getDomain()->one()->name]));
     		return $this->redirect(array('index'));
     	}
@@ -81,7 +81,7 @@ class NetworkController extends RbacController {
     	}
     	
     	return $this->render('update',[
-    			'domains' => Domain::find()->select(['id','name'])->all(),
+    			'domains' => self::whichDomainsCan('domainTopology/update'),
     			'network' => $network,
     			]);
     }
@@ -90,7 +90,7 @@ class NetworkController extends RbacController {
     	if(isset($_POST['delete'])){
     		foreach ($_POST['delete'] as $id) {
     			$network = Network::findOne($id);
-    			if(self::can("topology/delete", $network->domain_id)){
+    			if(self::can("domainTopology/delete", $network->getDomain()->one()->name)){
 	    			if ($network->delete()) Yii::$app->getSession()->addFlash('success', Yii::t('topology', 'Network {name} deleted', ['name'=>$network->name]));
 	    			else Yii::$app->getSession()->setFlash('error', Yii::t('topology', 'Error deleting network {name}', ['name'=>$network->name]));
     			}

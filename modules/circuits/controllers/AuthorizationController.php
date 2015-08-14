@@ -72,12 +72,12 @@ class AuthorizationController extends RbacController {
 	    		}
 	
 	    		$allRequest = $allRequest->all();
-	    		$domainRules = User::findOne(['id' => $userId])->getUserDomainRoles()->all();
+	    		$domainRoles = User::findOne(['id' => $userId])->getUserDomainRoles()->all();
 	    		$requests = [];
 	    		foreach($allRequest as $request){
 	    			if($request->manager_user_id == $userId) $requests[$request->id] = $request;
 	    			else{
-	    				foreach($domainRules as $domainRule){
+	    				foreach($domainRoles as $domainRule){
 	    					$groupId = $domainRule->getGroup()->id;
 	    					if($request->manager_group_id == $groupId) $requests[$request->id] = $request;
 	    				}
@@ -157,12 +157,12 @@ class AuthorizationController extends RbacController {
     		}
     		
     		$allRequest = $allRequest->all();
-    		$domainRules = User::findOne(['id' => $userId])->getUserDomainRoles()->all();
+    		$domainRoles = User::findOne(['id' => $userId])->getUserDomainRoles()->all();
     		$requests = [];
     		foreach($allRequest as $request){
     			if($request->manager_user_id == $userId) $requests[$request->id] = $request;
     			else{
-    				foreach($domainRules as $domainRule){
+    				foreach($domainRoles as $domainRule){
     					$groupId = $domainRule->getGroup()->id;
     					if($request->manager_group_id == $groupId) $requests[$request->id] = $request;
     				}
@@ -205,12 +205,12 @@ class AuthorizationController extends RbacController {
     		}
     
     		$allRequest = $allRequest->all();
-    		$domainRules = User::findOne(['id' => $userId])->getUserDomainRoles()->all();
+    		$domainRoles = User::findOne(['id' => $userId])->getUserDomainRoles()->all();
     		$requests = [];
     		foreach($allRequest as $request){
     			if($request->manager_user_id == $userId) $requests[$request->id] = $request;
     			else{
-    				foreach($domainRules as $domainRule){
+    				foreach($domainRoles as $domainRule){
     					$groupId = $domainRule->getGroup()->id;
     					if($request->manager_group_id == $groupId) $requests[$request->id] = $request;
     				}

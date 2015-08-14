@@ -16,7 +16,9 @@ use Yii;
 class SyncController extends RbacController {
     
     public function actionIndex() {
-        self::canRedir("topology/read");
+    	if(!self::can("synchronizer/read")){ //Se ele não tiver permissão em nenhum domínio
+			return $this->goHome();
+		}
         
         $dataProvider = new ActiveDataProvider([
                 'query' => TopologySynchronizer::find(),
@@ -51,14 +53,21 @@ class SyncController extends RbacController {
     }
 
     public function actionExecute($id) { 
-        $sync = TopologySynchronizer::findOne($id);
+    	if(!self::can("synchronizer/read")){ //Se ele não tiver permissão em nenhum domínio
+    		return $this->goHome();
+    	}
+    	
+    	$sync = TopologySynchronizer::findOne($id);
         $sync->execute();
         
         return true;
     }
 
     public function actionCreate(){
-        self::canRedir("topology/create");
+    	if(!self::can("synchronizer/create")){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add synchronizers'));
+    		return $this->redirect(array('index'));
+    	}
         
         $sync = new SyncForm;
         
@@ -81,7 +90,10 @@ class SyncController extends RbacController {
     }
     
     public function actionUpdate($id){
-        self::canRedir("topology/update");
+    	if(!self::can("synchronizer/update")){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update synchronizers'));
+    		return $this->redirect(array('index'));
+    	}
 
         $sync = SyncForm::build($id);
         
@@ -104,7 +116,10 @@ class SyncController extends RbacController {
     }
     
     public function actionDelete() {
-        self::canRedir("topology/delete");
+    	if(!self::can("synchronizer/delete")){
+    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to delete synchronizers'));
+    		return $this->redirect(array('index'));
+    	}
         
         if(isset($_POST['delete'])){
             foreach ($_POST['delete'] as $id) {

@@ -53,15 +53,15 @@ class ReservationController extends RbacController {
     		if($source){
     			$source = $source->getDevice()->one();
     			if($source){
-    				$domainId = $source->domain_id;
-    				if(self::can('reservation/create', $domainId)) $permission = true;
+    				$domain = $source->getDomain()->one();
+    				if($domain && self::can('reservation/create', $domain->name)) $permission = true;
     			}
     		}
     		if($destination){
     			$destination = $destination->getDevice()->one();
     			if($destination){
-    				$domainId = $destination->domain_id;
-    				if(self::can('reservation/create', $domainId)) $permission = true;
+    				$domain = $destination->getDomain()->one();
+    				if($domain &&self::can('reservation/create', $domain->name)) $permission = true;
     			}
     		}
     		if(!$permission){ //Se ele não tiver em nenhum dos dois, exibe aviso

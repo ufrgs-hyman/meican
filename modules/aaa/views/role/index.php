@@ -7,6 +7,7 @@ use yii\grid\CheckboxColumn;
 use app\components\LinkColumn;
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 use app\modules\aaa\assets\RoleAsset;
 
@@ -65,12 +66,12 @@ $form = ActiveForm::begin([
 				'contentOptions'=>['style'=>'width: 15px;'],
 			),
 			[
-				'attribute' => 'domain_id', 
+				'attribute' => 'domain', 
 				'format' => 'raw',
 				'value' => function($model) { 
 					$dom = $model->getDomain();
 					if ($dom) return $dom->name;
-					return Yii::t("aaa", "Any");
+					return Yii::t("aaa", "any");
 				 }
 			],
 			[
@@ -85,3 +86,7 @@ $form = ActiveForm::begin([
 	
 	ActiveForm::end();
 ?>
+
+<div>
+	<a href="<?= Url::toRoute('user/index');?>"><?= Html::Button(Yii::t('aaa', 'Back')); ?></a>
+</div>

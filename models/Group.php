@@ -10,12 +10,17 @@ use Yii;
  * @property integer $id
  * @property string $role_name
  * @property string $name
+ * @property string $type
  */
 class Group extends \yii\db\ActiveRecord
 {
     const GUEST_GROUP_ROLE = "g1";
+    
+    const TYPE_DOMAIN = "DOMAIN";
+    const TYPE_SYSTEM = "SYSTEM";
 	
 	public $_role;
+	
     /**
      * @inheritdoc
      */
@@ -30,8 +35,8 @@ class Group extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['name'], 'string', 'max' => 50],
+            [['name', 'type'], 'required'],
+            [['name', 'type'], 'string', 'max' => 50],
             [['role_name'], 'unique'],
         ];
     }
@@ -44,6 +49,7 @@ class Group extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => Yii::t("aaa", 'Name'),
+        	'type' => Yii::t("aaa", 'Tipo'),
         ];
     }
     
@@ -75,7 +81,7 @@ class Group extends \yii\db\ActiveRecord
     		$auth->removeChildren($role);
     	}
     	
-    	foreach($_POST['Permissions'] as $permission) {
+    	foreach($permissions as $permission) {
     		$action = $auth->getPermission($permission);
     		if ($action === null) {
     			$action = $auth->createPermission($permission);
@@ -102,7 +108,7 @@ class Group extends \yii\db\ActiveRecord
     	if ($isNewRecord) {
 	    	$auth = Yii::$app->authManager;
 	    	$this->_role = 1;
-	    	
+
 	    	while ($this->_role != null) {
 	    		$this->role_name = Yii::$app->getSecurity()->generateRandomString();
 	    		

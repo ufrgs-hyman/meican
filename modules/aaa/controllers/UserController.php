@@ -19,7 +19,7 @@ use Yii;
 class UserController extends RbacController {
 	
 	public function actionIndex() {
-		if(!self::can("user/read")){ //Se ele não tiver permissão em nenhum domínio
+		if(!self::can("user/read") && !self::can("role/read")){ //Se ele não tiver permissão em nenhum domínio
 			return $this->goHome();
 		}
 		
@@ -65,8 +65,6 @@ class UserController extends RbacController {
 
     	return $this->render('create',array(
     			'user' => $userForm,
-    			'domains' => self::whichDomainsCan('user/create'),
-    			'groups' => UserDomainRole::getGroups()
     	));
     }
     
