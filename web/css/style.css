@@ -786,8 +786,8 @@ td select {
 #subtab-points {
 	z-index: 2;
 	position: absolute;
-	right: 20px;
-    top: 45px;
+	right: 15px;
+    top: 48px;
     float: right; 
     padding-left:2px;
 }

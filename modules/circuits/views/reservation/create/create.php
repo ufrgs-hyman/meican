@@ -14,16 +14,30 @@
 	])
 ?>
 
-<div id="search-row" style="margin-left: 20px; margin-top:15px;" hidden>
-    <div id="testeteste">
+<div id="search-row" style="margin-left: 15px; margin-top:15px;" hidden>
+    <div id="testeteste"> <?php //VERIFICAR, está gerando um bloco fantasma no mapa ?>
     	<input type="text" id="search-box" size="40">
     	<button id="search-button"><span class="ui-icon-to-button-without-background ui-icon ui-icon-search" style="margin-left: 35%;"></span></button>
 	</div>
 </div>
 
+<div id="map-type-box" style="margin-left: 10px; margin-top:15px;" hidden>
+    <select id="map-type-select" style="width: 85px;">
+      <option value="r">Map</option>
+      <option value="t">Terrain</option>
+      <option value="s">Satellite</option>
+      <option value="h">Hybrid</option>
+    </select>
+</div>
+
+<div id="marker-type-box" style="margin-left: 10px; margin-top:15px;" hidden>
+    <select id="marker-type-select" style="width: 90px;">
+      <option value="dev">Devices</option>
+      <option value="net">Networks</option>
+    </select>
+</div>
+
 <div id="subtab-points" class="tab_subcontent">
-	<?= $this->render('_selectMarkerType', array('type' => 'network')); ?>
-	<br>
 	<?= $this->render('_formEndpoints', array('label' => Yii::t("circuits", "Source"), 'prefix' => 'src')); ?>
 	<div id="bandwidth_bar">
 		<div id="bandwidth_bar_text" style="width:0px;">

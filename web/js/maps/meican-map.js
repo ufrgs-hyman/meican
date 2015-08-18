@@ -271,6 +271,41 @@ MeicanMap.prototype.getDomainName = function(id) {
     };
 }
 
+MeicanMap.prototype.buildMapTypeBox = function(divId, selectId) {
+    this._map.controls[google.maps.ControlPosition.TOP_LEFT].push(
+        document.getElementById(divId));
+
+    $("#" + divId).show();
+
+    var currentMap = this;
+
+    $( "#" + selectId ).selectmenu({
+        select: function( event, ui ) {
+            switch(ui.item.value) {
+                case "r" : currentMap._map.setMapTypeId(google.maps.MapTypeId.ROADMAP); break;
+                case "h" : currentMap._map.setMapTypeId(google.maps.MapTypeId.HYBRID); break;
+                case "s" : currentMap._map.setMapTypeId(google.maps.MapTypeId.SATELLITE); break;
+                case "t" : currentMap._map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
+            }
+        }
+    });
+}
+
+MeicanMap.prototype.buildMarkerTypeBox = function(divId, selectId, setMarkerTypeFunc) {
+    this._map.controls[google.maps.ControlPosition.TOP_LEFT].push(
+        document.getElementById(divId));
+
+    $("#" + divId).show();
+
+    var currentMap = this;
+
+    $( "#" + selectId ).selectmenu({
+        select: function( event, ui ) {
+            setMarkerTypeFunc(ui.item.value);
+        }
+    });
+}
+
 MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWindowFunction) {
     this._map.controls[google.maps.ControlPosition.TOP_LEFT].push(
         document.getElementById(divId));

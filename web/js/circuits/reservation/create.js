@@ -189,7 +189,7 @@ function enableBandwidthSpinner() {
 
 function initEndPointButtons(endPointType) {
     $('#' + endPointType + '-clear-endpoint').click(function() {
-		    removeMarkerEndPoint(endPointType);
+		removeMarkerEndPoint(endPointType);
         setNetworkSelected(endPointType);
         $('#' + endPointType + '-domain').val("");
     });
@@ -200,7 +200,7 @@ function initEndPointButtons(endPointType) {
     });
     
     $('#' + endPointType + '-copy-urn').click(function() {
-    	  openCopyUrnDialog(endPointType);
+    	openCopyUrnDialog(endPointType);
     });
     
     $("#copy-urn-dialog").dialog({
@@ -750,6 +750,9 @@ function initialize() {
     meicanMap.buildSearchBox("search-row", "search-box", 'search-button', function(marker) {
         Manager.openWindow(marker);
     });
+
+    meicanMap.buildMapTypeBox("map-type-box", 'map-type-select');
+    meicanMap.buildMarkerTypeBox("marker-type-box", 'marker-type-select', setMarkerType);
 
     enableTabSlide();
 

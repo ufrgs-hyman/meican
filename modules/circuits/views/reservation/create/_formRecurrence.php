@@ -7,6 +7,48 @@
 
 <div id="slide" style="display:none;">
 
+<label for="name" class="label-description"><?= Yii::t("circuits", "Reservation name"); ?>: </label>
+<input type="text" size="45" id="name" name="ReservationForm[name]"/><br><br>
+
+<label for="start-time" class="label-description"><?= Yii::t("circuits", "Start"); ?>: </label>
+<input type="text" size="7" id="start-time" class="hourPicker" name="ReservationForm[start_time]"/>
+
+<?= 
+
+DatePicker::widget([
+        'name' => 'ReservationForm[start_date]',
+        'dateFormat' => 'dd/mm/yy',
+        'options' => array(
+            'class' => 'recurrence-datepicker',
+            'id' => 'start-date',
+            'size' => 9,
+            'readonly' => true
+        ),
+]);
+
+?>
+
+<label for="finish-time" class="label-description"><?= Yii::t("circuits", "Finish"); ?>:</label>
+<input type="text" size="7" id="finish-time" class="hourPicker" name="ReservationForm[finish_time]"/>
+
+<?=
+    /** DATEPICKER **/
+    DatePicker::widget([
+        'name' => 'ReservationForm[finish_date]',
+        'dateFormat' => 'dd/mm/yy',
+        'options' => array(
+            'class' => 'recurrence-datepicker',
+            'id' => 'finish-date',
+            'size' => 9,
+            'readonly' => true
+        ),
+    ]);
+?>
+
+&nbsp;&nbsp;&nbsp;
+<input type="checkbox" name="ReservationForm[rec_enabled]" id="recurrence_enabled"></input><label for="recurrence_enabled"> <?= Yii::t("circuits", "Repeat..."); ?></label>
+<br><br>
+
 <div id="recurrence">
 
 	<label class="label-description"><?= Yii::t("circuits", "Recurrence pattern"); ?>: </label><br><br>
@@ -114,76 +156,37 @@
     
 </div>
 
-<div style="padding-top:1em;">  
-	<table id="reservation-summary-table">
-		<tr>
-			<td>          
-		    <p style="display:inline; color:#3a5879; font-weight: bold"><?= Yii::t("circuits", "Summary"); ?></p>:
-		    </td>
-		    <td>
-			    <label id="duration" str="<?= Yii::t("circuits", "Duration"); ?>: "></label>
-			</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>
-			    <!-- label for summary of circuit without recurrence, time when it would be active -->
-			    <label id="summary"></label>
-			    
-			    <!-- set of labels to describe the recurrence summary -->
-			    <label id="short_desc"></label>
-			    <label id="Sunday_desc"></label>
-			    <label id="Monday_desc"></label>
-			    <label id="Tuesday_desc"></label>
-			    <label id="Wednesday_desc"></label>
-			    <label id="Thursday_desc"></label>
-			    <label id="Friday_desc"></label>
-			    <label id="Saturday_desc"></label>
-			    <label id="until_desc"></label>
-		    </td>
-	    </tr>
-	</table>
-</div>
 <br>
+
 </div>
 
-<label for="name" class="label-description"><?= Yii::t("circuits", "Reservation name"); ?>: </label>
-<input type="text" size="45" id="name" name="ReservationForm[name]"/><br><br>
-<label for="start-time" class="label-description"><?= Yii::t("circuits", "Start"); ?>: </label>
-<input type="text" size="7" id="start-time" class="hourPicker" name="ReservationForm[start_time]"/>
-
-<?= 
-
-DatePicker::widget([
-        'name' => 'ReservationForm[start_date]',
-        'dateFormat' => 'dd/mm/yy',
-        'options' => array(
-            'class' => 'recurrence-datepicker',
-            'id' => 'start-date',
-            'size' => 9,
-            'readonly' => true
-        ),
-]);
-
-?>
-
-<label for="finish-time" class="label-description"><?= Yii::t("circuits", "Finish"); ?>:</label>
-<input type="text" size="7" id="finish-time" class="hourPicker" name="ReservationForm[finish_time]"/>
-
-<?=
-    /** DATEPICKER **/
-    DatePicker::widget([
-        'name' => 'ReservationForm[finish_date]',
-        'dateFormat' => 'dd/mm/yy',
-        'options' => array(
-            'class' => 'recurrence-datepicker',
-            'id' => 'finish-date',
-            'size' => 9,
-            'readonly' => true
-        ),
-    ]);
-?>
-
-&nbsp;&nbsp;&nbsp;
-<input type="checkbox" name="ReservationForm[rec_enabled]" id="recurrence_enabled"></input><label for="recurrence_enabled"> <?= Yii::t("circuits", "Repeat..."); ?></label>
-<br>
+<div>  
+    <table id="reservation-summary-table">
+        <tr>
+            <td>          
+            <p style="display:inline; color:#3a5879; font-weight: bold"><?= Yii::t("circuits", "Summary"); ?></p>:
+            </td>
+            <td>
+                <label id="duration" str="<?= Yii::t("circuits", "Duration"); ?>: "></label>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <!-- label for summary of circuit without recurrence, time when it would be active -->
+                <label id="summary"></label>
+                
+                <!-- set of labels to describe the recurrence summary -->
+                <label id="short_desc"></label>
+                <label id="Sunday_desc"></label>
+                <label id="Monday_desc"></label>
+                <label id="Tuesday_desc"></label>
+                <label id="Wednesday_desc"></label>
+                <label id="Thursday_desc"></label>
+                <label id="Friday_desc"></label>
+                <label id="Saturday_desc"></label>
+                <label id="until_desc"></label>
+            </td>
+        </tr>
+    </table>
+</div>
