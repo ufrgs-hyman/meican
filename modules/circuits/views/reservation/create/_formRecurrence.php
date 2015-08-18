@@ -4,51 +4,12 @@
 	use yii\jui\DatePicker;
 	use yii\helpers\Html;
 ?>
-<label for="name" class="label-description"><?= Yii::t("circuits", "Reservation name"); ?>: </label>
-<input type="text" size="45" id="name" name="ReservationForm[name]"/><br><br>
-<label for="start-time" class="label-description"><?= Yii::t("circuits", "Start"); ?>: </label>
-<input type="text" size="7" id="start-time" class="hourPicker" name="ReservationForm[start_time]"/>
 
-<?= 
-
-DatePicker::widget([
-		'name' => 'ReservationForm[start_date]',
-		'dateFormat' => 'dd/mm/yy',
-		'options' => array(
-			'class' => 'recurrence-datepicker',
-			'id' => 'start-date',
-			'size' => 9,
-			'readonly' => true
-		),
-]);
-
-?>
-
-<label for="finish-time" class="label-description"><?= Yii::t("circuits", "Finish"); ?>:</label>
-<input type="text" size="7" id="finish-time" class="hourPicker" name="ReservationForm[finish_time]"/>
-
-<?=
-	/** DATEPICKER **/
-	DatePicker::widget([
-		'name' => 'ReservationForm[finish_date]',
-		'dateFormat' => 'dd/mm/yy',
-		'options' => array(
-			'class' => 'recurrence-datepicker',
-			'id' => 'finish-date',
-			'size' => 9,
-			'readonly' => true
-		),
-	]);
-?>
-
-&nbsp;&nbsp;&nbsp;
-<input type="checkbox" name="ReservationForm[rec_enabled]" id="recurrence_enabled"></input><label for="recurrence_enabled"> <?= Yii::t("circuits", "Repeat..."); ?></label>
-<br>
 <div id="slide" style="display:none;">
 
 <div id="recurrence">
 
-	<br><label class="label-description"><?= Yii::t("circuits", "Recurrence pattern"); ?>: </label><br><br>
+	<label class="label-description"><?= Yii::t("circuits", "Recurrence pattern"); ?>: </label><br><br>
 	<div class="recurrence-item">
     	<?=  
     		Html::radioList('ReservationForm[rec_type]', 'D', 
@@ -183,5 +144,46 @@ DatePicker::widget([
 	    </tr>
 	</table>
 </div>
-
+<br>
 </div>
+
+<label for="name" class="label-description"><?= Yii::t("circuits", "Reservation name"); ?>: </label>
+<input type="text" size="45" id="name" name="ReservationForm[name]"/><br><br>
+<label for="start-time" class="label-description"><?= Yii::t("circuits", "Start"); ?>: </label>
+<input type="text" size="7" id="start-time" class="hourPicker" name="ReservationForm[start_time]"/>
+
+<?= 
+
+DatePicker::widget([
+        'name' => 'ReservationForm[start_date]',
+        'dateFormat' => 'dd/mm/yy',
+        'options' => array(
+            'class' => 'recurrence-datepicker',
+            'id' => 'start-date',
+            'size' => 9,
+            'readonly' => true
+        ),
+]);
+
+?>
+
+<label for="finish-time" class="label-description"><?= Yii::t("circuits", "Finish"); ?>:</label>
+<input type="text" size="7" id="finish-time" class="hourPicker" name="ReservationForm[finish_time]"/>
+
+<?=
+    /** DATEPICKER **/
+    DatePicker::widget([
+        'name' => 'ReservationForm[finish_date]',
+        'dateFormat' => 'dd/mm/yy',
+        'options' => array(
+            'class' => 'recurrence-datepicker',
+            'id' => 'finish-date',
+            'size' => 9,
+            'readonly' => true
+        ),
+    ]);
+?>
+
+&nbsp;&nbsp;&nbsp;
+<input type="checkbox" name="ReservationForm[rec_enabled]" id="recurrence_enabled"></input><label for="recurrence_enabled"> <?= Yii::t("circuits", "Repeat..."); ?></label>
+<br>

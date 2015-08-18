@@ -177,7 +177,7 @@ MeicanMap.prototype.searchMarkerByNameOrDomain = function (type, name) {
 
     if (!domainsList) domainsList = JSON.parse($("#domains-list").text());
     for (var i = 0; i < domainsList.length; i++) {
-        if(domainsList[i].name.toLowerCase() == name){
+        if(domainsList[i].name.toLowerCase().indexOf(name) > -1){
             domainId = domainsList[i].id;
             break;
         }

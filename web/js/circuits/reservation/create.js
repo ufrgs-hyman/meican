@@ -1,13 +1,13 @@
 $(document).ready(function() {
-	  $('#map-canvas').show();   
+    $('#map-canvas').show();   
     
     prepareConfirmDialog();
     prepareBandwidthSpinner();
     
     $(".hourPicker").timepicker({
-		    timeFormat: "H:i",
+		timeFormat: "H:i",
         step: 30,
-	  });
+	});
 });
 
 var meicanMap;
