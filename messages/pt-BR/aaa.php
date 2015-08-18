@@ -102,6 +102,7 @@ return array(
 		'Synchronizer' => 'Sincronizador',
 		"Domain's Topology" => "Topologia do Domínio",
 		'Automated Tests' => "Testes Automatizados",
+		'Reservations with Waypoints' => 'Reservas com Intermediários',
 		
 		
 );

@@ -62,6 +62,7 @@ class GroupController extends RbacController {
     			'group' => $group,
     			'apps' => array(
     				'reservation'=>Yii::t("aaa", 'Reservations'),
+    				'waypoint'=>Yii::t("aaa", 'Reservations with Waypoints'),
     				'workflow'=>Yii::t("aaa", 'Workflows'), 
     				'domainTopology'=>Yii::t("aaa","Domain's Topology"),
     				'test'=>Yii::t("aaa", 'Automated Tests'),
@@ -116,6 +117,7 @@ class GroupController extends RbacController {
     			'group' => $group,
     			'apps' => array(
     				'reservation'=>Yii::t("aaa", 'Reservations'),
+    				'waypoint'=>Yii::t("aaa", 'Reservations with Waypoints'),
     				'workflow'=>Yii::t("aaa", 'Workflows'), 
     				'domainTopology'=>Yii::t("aaa","Domain's Topology"),
     				'test'=>Yii::t("aaa", 'Automated Tests'),
