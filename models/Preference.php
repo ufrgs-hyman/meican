@@ -60,4 +60,8 @@ class Preference extends \yii\db\ActiveRecord
     public function getBoolean() {
         return $this->value == "true" ? true : false;
     }
+
+    static function findOneValue($name) {
+        return self::findOne($name)->value;
+    }
 }

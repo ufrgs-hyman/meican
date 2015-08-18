@@ -29,8 +29,8 @@
     </div>
 
     <div id="subscribed-row" class="form input" <?= ($model->type == Service::TYPE_NSI_DS_1_0) ? "" : "hidden" ?>>
-        <?= $form->field($model,'subscribed')->dropDownList(ArrayHelper::map(
-            [['id'=>false, 'name'=>'Disabled'],['id'=>true,'name'=>'Enabled']], 'id', 'name')); ?>
+        <?= $form->field($model,'subscribe_enabled')->dropDownList(ArrayHelper::map(
+            [['id'=>false, 'name'=>'Disabled'],['id'=>true,'name'=>'Enabled']], 'id', 'name'))->label("Subscribe to Updates"); ?>
     </div>
 
     <div class="form input">

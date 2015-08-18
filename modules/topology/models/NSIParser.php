@@ -229,14 +229,29 @@ class NSIParser {
 		}
 	}
 	
-	function parseNotification() {
+	function parseSubscriptions() {
+		$xmlns = "http://schemas.ogf.org/nsi/2014/02/discovery/types";
+		$tagName = "subscription";
+		foreach ($this->xml->getElementsByTagNameNS($xmlns, $tagName)
+				as $subNode) {
+			$this->topology["subs"][$subNode->getAttribute('id')] = [];
+			$reqIdNode = $this->xpath->query(".//requesterId", $subNode);
+			$this->topology["subs"][$subNode->getAttribute('id')]
+				['requesterId'] = $reqIdNode->item(0)->nodeValue;
+			$callbackNode = $this->xpath->query(".//callback", $subNode);
+			$this->topology["subs"][$subNode->getAttribute('id')]
+				['callback'] = $callbackNode->item(0)->nodeValue;
+		}
+	}
+	
+	function parseNotifications() {
 		$xmlns = "http://schemas.ogf.org/nsi/2014/02/discovery/types";
 		$tagName = "notifications";
 		foreach ($this->xml->getElementsByTagNameNS($xmlns, $tagName)
 				as $notNode) {
-			$this->topology["local"]["nsa"] = str_replace(
-					"urn:ogf:network:","",$notNode->getAttribute('providerId'));
-			return;
+			$this->topology["nots"][$notNode->getAttribute('id')] 
+				['providerId'] = str_replace(
+				"urn:ogf:network:","",$notNode->getAttribute('providerId'));
 		}
 	}
 	

@@ -79,9 +79,9 @@
                     },
                 ],
                 [
-                    'attribute'=> 'subscribed',
+                    'attribute'=> 'subscription_id',
                     'value' => function($model) {
-                        return $model->subscribed ? Yii::t("topology", "Enabled") : "";
+                        return $model->subscription_id ? Yii::t("topology", "Enabled") : "";
                     }
                 ],
                 [

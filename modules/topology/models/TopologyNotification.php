@@ -38,7 +38,7 @@ class TopologyNotification {
         $changes = TopologyChange::find()
             ->where(['sync_event_id'=>$eventId])->asArray()->groupBy(['domain'])->select(['domain'])->all();
 
-        $title = Yii::t("notification", 'Topologies');
+        $title = Yii::t("notification", 'Topology change');
         if (count($changes) > 1) {
             $msg = "The topology of <b>".count($changes)."</b> domains has been synchronized. <b>".
             $appliedChangesSize."</b> changes were applied".($pendingChangesSize > 0 ? ' and <b>'.$pendingChangesSize.'</b> are pending.' : '.');

@@ -17,7 +17,7 @@ use app\modules\topology\models\TopologyNotification;
  * @property string $type
  * @property string $provider_nsa
  * @property integer $cron_id
- * @property integer $subscribed
+ * @property string $subscription_id
  * @property string $name
  * @property string $url
  */
@@ -26,6 +26,7 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
     public $parser;
     public $syncEvent;
     public $detectedChanges = false;
+
     /**
      * @inheritdoc
      */
@@ -40,11 +41,11 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'subscribed', 'auto_apply', 'name', 'url'], 'required'],
+            [['type', 'auto_apply', 'name', 'url'], 'required'],
             [['provider_nsa'], 'unique', 'message'=> 'Only one Discovery Service is allowed for each NSI Provider. The NSA ID "{value}" has already in use.'],
             [['type'], 'string'],
-            [['auto_apply' ,'subscribed'], 'boolean'],
-            [['name'], 'string', 'max' => 200],
+            [['auto_apply'], 'boolean'],
+            [['name', 'subscription_id'], 'string', 'max' => 200],
             [['url', 'provider_nsa'], 'string', 'max' => 300]
         ];
     }
@@ -58,7 +59,7 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
             'id' => Yii::t('topology', 'ID'),
             'auto_apply' => Yii::t('topology', 'Auto Apply Changes'),
             'type' => Yii::t('topology', 'Type'),
-            'subscribed' => Yii::t('topology', 'Subscribe to Updates'),
+            'subscription_id' => Yii::t('topology', 'Subscribe to Updates'),
             'name' => Yii::t('topology', 'Name'),
             'url' => Yii::t('topology', 'URL'),
             'provider_nsa' => Yii::t('topology', 'Provider NSA ID'),
@@ -111,22 +112,6 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
 
     static function findOneByNsa($nsa) {
         return self::find()->where(['provider_nsa'=>$nsa])->one();
-    }
-
-    static function findOneByNotification($xml) {
-        $parser = new NSIParser; 
-        $parser->loadXml($xml);
-        if($parser->isTD()) {
-            $parser->parseNotification();
-            $sync = self::findOneByNsa($parser->getData()['local']['nsa']);
-            if ($sync) {
-                $parser->parseTopology();
-                $sync->parser = $parser;
-                return $sync;
-            }
-        }
-
-        return null;
     }
 
     public function execute() {

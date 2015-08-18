@@ -8,12 +8,13 @@ use app\models\TopologySynchronizer;
 use app\models\Cron;
 use app\models\Service;
 use app\modules\topology\models\NSIParser;
-use yii\base\Model;
+use app\modules\topology\controllers\services\DiscoveryClient;
 
 class SyncForm extends TopologySynchronizer {
 
     public $freq;
     public $freq_enabled;
+    public $subscribe_enabled;
 
     /**
      * @inheritdoc
@@ -22,9 +23,9 @@ class SyncForm extends TopologySynchronizer {
     {
         return array_merge([
             [['freq'], 'safe'],
-            [['freq_enabled'], 'integer'],
+            [['freq_enabled'], 'boolean'],
             [['url'], 'validateUrl'],
-            [['subscribed'], 'validateSubscribe']
+            [['subscribe_enabled'], 'validateSubscribe']
         ], parent::rules());
     }
 
@@ -40,9 +41,12 @@ class SyncForm extends TopologySynchronizer {
             case Service::TYPE_NSI_TD_2_0: 
             case Service::TYPE_NMWG_TD_1_0: 
             case Service::TYPE_PERFSONAR_TS_1_0: 
-                $this->subscribed = false;
+                $this->subscription_id = null;
                 $this->provider_nsa = null;
             case Service::TYPE_NSI_DS_1_0: 
+                if ($this->subscribe_enabled) {
+                    $this->subscription_id = DiscoveryClient::subscribe($this->url);
+                }
         }
         return true;
     }
@@ -88,6 +92,9 @@ class SyncForm extends TopologySynchronizer {
             $sync->freq = $cron->freq;
             $sync->freq_enabled = true;
         }
+
+        if ($sync->subscription_id) 
+            $sync->subscribe_enabled = true;
 
         return $sync;
     }

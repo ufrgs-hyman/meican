@@ -239,4 +239,4 @@
 	<label id="weekly-label" hidden><?= Yii::t("circuits", "Weekly"); ?></label>
 	<label id="monthly-label" hidden><?= Yii::t("circuits", "Monthly"); ?></label>
 	<label id="domains" hidden><?= $domains; ?>
-	</label>
+</label>
