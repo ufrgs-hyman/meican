@@ -34,6 +34,7 @@ function MeicanMap() {
     this._fillSearchSource;          // searchbox fill source function
     this._markers = [];              // markers container
     this._openedWindows = [];        // opened marker windows
+    this._currentMarkerType;         // current marker type visible
 };
 
 MeicanMap.prototype.DeviceMarker = function(options, color) {
@@ -210,6 +211,7 @@ MeicanMap.prototype.getMarkerByDomain = function(type, domainId) {
 
 MeicanMap.prototype.setMarkerTypeVisible = function(type) {
     var size = this._markers.length;
+    this._currentMarkerType = type;
     for(var i = 0; i < size; i++){ 
         if (this._markers[i].type == type) {
             this._markers[i].setVisible(true);
@@ -344,6 +346,7 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
                     }
                 });
                 break;
+            case 'net':
             case 'dev':
             case 'port':
                 var bounds = new google.maps.LatLngBounds();
@@ -399,20 +402,20 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
                     if(i == 5) break;
                 };
 
-                var devs = currentMap.searchMarkerByNameOrDomain('dev', request.term); 
-                var size = devs.length;
+                var markers = currentMap.searchMarkerByNameOrDomain(currentMap._currentMarkerType, request.term); 
+                var size = markers.length;
                 for (var i = 0; i < size; i++) {
                     currentMap._searchSource.push(
                         {
-                            label: devs[i].name,
-                            value: devs[i].name,
-                            type: 'dev',
-                            marker: devs[i]
+                            label: markers[i].name,
+                            value: markers[i].name,
+                            type: currentMap._currentMarkerType,
+                            marker: markers[i]
                         }
                     );
 
                     if(i == 10) break;
-                };
+                }
 
                 pendingSources--;
                 if (pendingSources == 0) {
@@ -465,6 +468,12 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
             return $( "<li></li>" ).data("item.autocomplete", item)
                 .append( '<b><span style="font-size: 13px; margin: 5px;">' + item.label + "</span></b>" + 
                     (item.label ? '<span style="font-size: 11px; color: #999"> ' + "Device" + "</span>"  : "") +
+                    (item.label ? '<span style="font-size: 11px; color: #999"> from ' + currentMap.getDomainName(item.marker.domainId) + "</span>" : ""))
+                .appendTo( ul );
+        case "net" :
+            return $( "<li></li>" ).data("item.autocomplete", item)
+                .append( '<b><span style="font-size: 13px; margin: 5px;">' + item.label + "</span></b>" + 
+                    (item.label ? '<span style="font-size: 11px; color: #999"> ' + "Network" + "</span>"  : "") +
                     (item.label ? '<span style="font-size: 11px; color: #999"> from ' + currentMap.getDomainName(item.marker.domainId) + "</span>" : ""))
                 .appendTo( ul );
         case "port" :
