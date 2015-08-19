@@ -17,7 +17,6 @@ var wayPoints = [];
 var domainsList;
 var markerCluster;
 var circuit;
-var currentMarkerType = "net";
 var devicesLoaded = false;
 
 var MARKER_OPTIONS_NET = '' +
@@ -35,7 +34,6 @@ var MARKER_OPTIONS_END_POINT = '' +
 '<div><button style="font-size: 10px; height: 22px; width: 98%;" id="add-waypoint">' + tt('Add waypoint') + '</button></div>';
 var MARKER_OPTIONS_INTRA = '' +
 '<button style="font-size: 10px; height: 22px; width: 98%;" id="remove-intra">' + tt('Remove intra-domain circuit') + '</button>';
-
 
 
 function prepareConfirmDialog() {
@@ -174,15 +172,15 @@ function disableBandwidthSpinner() {
 }
 
 function enableBandwidthSpinner() {
-        //var bmin_tmp = (src_min_cap >= dst_min_cap) ? src_min_cap : dst_min_cap;
-        //var bmax_tmp = (src_max_cap <= dst_max_cap) ? src_max_cap : dst_max_cap;
-        //var bdiv_tmp = (src_div_cap == dst_div_cap) ? src_div_cap : band_div;
-        $('#bandwidth').spinner({
-            min: 100,
-            max: 1000,
-            step: 100
-        }).spinner("enable").disabled(false).trigger('click');
-        $("#bandwidth").trigger("change");
+    //var bmin_tmp = (src_min_cap >= dst_min_cap) ? src_min_cap : dst_min_cap;
+    //var bmax_tmp = (src_max_cap <= dst_max_cap) ? src_max_cap : dst_max_cap;
+    //var bdiv_tmp = (src_div_cap == dst_div_cap) ? src_div_cap : band_div;
+    $('#bandwidth').spinner({
+        min: 100,
+        max: 1000,
+        step: 100
+    }).spinner("enable").disabled(false).trigger('click');
+    $("#bandwidth").trigger("change");
 }
 
 /////////////// botoes superiores da tabela origem destino /////////
@@ -219,7 +217,7 @@ function findCurrentHostMarker() {
   	var currentHost = document.URL;
   	currentHost = currentHost.split("/")[2].split(".");
   	
-  	if (currentMarkerType == "net") {
+  	if (meicanMap.getCurrentMarkerType() == "net") {
   		for (var i = 0; i < meicanMap.getMarkers().length; i++) {
   	    	if (meicanMap.getMarkers()[i].type == "net") {
   	    		var domain = meicanMap.getMarkers()[i].name; /////// ARRRUMA
@@ -270,7 +268,7 @@ function enableWayPointsSortable() {
             var sortableOrder = $(this).sortable('toArray');
             var newWayPoints = [];
         	for (var i = 0; i < sortableOrder.length; i++) {
-            	newWayPoints[i] = meicanMap.getMarker(currentMarkerType, parseInt(sortableOrder[i].replace("way","")));
+            	newWayPoints[i] = meicanMap.getMarker(meicanMap.getCurrentMarkerType(), parseInt(sortableOrder[i].replace("way","")));
             }
 
             wayPoints = newWayPoints;
@@ -282,11 +280,11 @@ function enableWayPointsSortable() {
 }
 
 function prepareDialogDeviceSelect(wayObject) {
-    var object = meicanMap.getMarker(currentMarkerType, $(wayObject).attr("id").replace("way",""));
+    var object = meicanMap.getMarker(meicanMap.getCurrentMarkerType(), $(wayObject).attr("id").replace("way",""));
 	
     $("#waypoint-domain").val($(wayObject).children(".domain-id").val());
 
-    if (currentMarkerType == "net") {
+    if (meicanMap.getCurrentMarkerType() == "net") {
         fillNetworkSelect('waypoint', $(wayObject).children(".domain-id").val(), $(wayObject).children(".network-id").val(), true);
         fillDeviceSelect('waypoint', $(wayObject).children(".domain-id").val(), $(wayObject).children(".network-id").val(), 
         $(wayObject).children(".device-id").val());
@@ -392,7 +390,7 @@ function addWayPoint(marker) {
 }
 
 function deleteWayPoint(wayObject) {
-	var marker = meicanMap.getMarker(currentMarkerType, $(wayObject).attr("id").replace("way",""));
+	var marker = meicanMap.getMarker(meicanMap.getCurrentMarkerType(), $(wayObject).attr("id").replace("way",""));
     marker.circuitPoints--;
 	
 	for (var i = 0; i < wayPoints.length; i++) {
@@ -812,14 +810,6 @@ function initialize() {
 		}
 	});
 	
-	$('#marker-type-network').on('change', function() {
-		setMarkerType("net");
-	});
-	
-	$('#marker-type-device').on('change', function() {
-		setMarkerType("dev");
-	});
-	
 	enableWayPointsSortable();
 	initEndPointButtons("src");
     initEndPointButtons('dst');
@@ -1000,7 +990,6 @@ var Manager = new function() {
 
 function setMarkerType(markerType) {
     meicanMap.closeWindows();
-    currentMarkerType = markerType;
     removeMarkerEndPoint("src");
     setNetworkSelected("src");
     setNetworkSelected("dst");
@@ -1008,7 +997,7 @@ function setMarkerType(markerType) {
     removeMarkerEndPoint("dst");
     fillDomainSelect("dst");
     meicanMap.setMarkerTypeVisible(markerType);
-      markerCluster.repaint();
+    markerCluster.repaint();
     if (markerType == "dev") {
     	if (!devicesLoaded) {
     		loadDeviceMarkers();
@@ -1050,41 +1039,41 @@ function initSelect(endPointType) {
   	fillDomainSelect(endPointType);
   	
   	$('#' + endPointType + '-domain').on('change', function() {
-    		removeMarkerEndPoint(endPointType);
-    		fillNetworkSelect(endPointType, this.value);
-    		fillDeviceSelect(endPointType, this.value);
-    		fillPortSelect(endPointType);
-    		fillVlanSelect(endPointType);
+		removeMarkerEndPoint(endPointType);
+		fillNetworkSelect(endPointType, this.value);
+		fillDeviceSelect(endPointType, this.value);
+		fillPortSelect(endPointType);
+		fillVlanSelect(endPointType);
   	});
   	
   	$('#' + endPointType + '-network').on('change', function() {
-    		if (currentMarkerType == "net") {
-    			var marker = meicanMap.getMarker('net',this.value);
-    			
-    			setMarkerEndPoint(endPointType, marker);
-    		}
-    		
-    		fillDeviceSelect(endPointType, $('#' + endPointType + '-domain').val(), this.value);
-    		fillPortSelect(endPointType);
-    		fillVlanSelect(endPointType);
+		if (meicanMap.getCurrentMarkerType() == "net") {
+			var marker = meicanMap.getMarker("net",this.value);
+			
+			setMarkerEndPoint(endPointType, marker);
+		}
+		
+		fillDeviceSelect(endPointType, $('#' + endPointType + '-domain').val(), this.value);
+		fillPortSelect(endPointType);
+		fillVlanSelect(endPointType);
   	});
   	
   	$('#' + endPointType + '-device').on('change', function() {
-    		if (currentMarkerType == "dev") {
-    			var marker = meicanMap.getMarker('dev',this.value);
+		if (meicanMap.getCurrentMarkerType() == "dev") {
+			var marker = meicanMap.getMarker('dev',this.value);
 
-    			setMarkerEndPoint(endPointType, marker);
-    		}
-    		
-    		fillPortSelect(endPointType, this.value);
-    		fillVlanSelect(endPointType);
+			setMarkerEndPoint(endPointType, marker);
+		}
+		
+		fillPortSelect(endPointType, this.value);
+		fillVlanSelect(endPointType);
   	});
   	
   	$('#' + endPointType + '-port').on('change', function() {
-    		if (this.value != "null") {
-    			$('#' + endPointType + "-copy-urn").removeClass("ui-state-disabled");
-    		}
-    		fillVlanSelect(endPointType, this.value);
+		if (this.value != "null") {
+			$('#' + endPointType + "-copy-urn").removeClass("ui-state-disabled");
+		}
+		fillVlanSelect(endPointType, this.value);
   	});
 }
 

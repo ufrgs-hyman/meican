@@ -60,7 +60,26 @@ class DiscoveryClient {
         }
     }
 
-    static function unsubscribe() {
+    static function unsubscribe($url, $subId) {
+        $ch = curl_init();
+         
+        $options = array(
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_SSL_VERIFYHOST => false,
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_CUSTOMREQUEST => 'DELETE',
+                CURLOPT_HTTPHEADER => array(
+                        'Accept-encoding: application/xml;charset=utf-8',
+                        'Content-Type: application/xml;charset=utf-8'),
+                CURLOPT_USERAGENT => 'Meican',
+                CURLOPT_URL => $url.'/subscriptions/'.$subId,
+        );
+         
+        curl_setopt_array($ch , $options);
+         
+        $output = curl_exec($ch);
+        Yii::trace($output);
 
+        curl_close($ch);
     }
 }

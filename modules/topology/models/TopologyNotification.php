@@ -49,7 +49,7 @@ class TopologyNotification {
         
         $date = Yii::$app->formatter->asDatetime($notification->date);
     
-        $link = '/topology/change/applied';
+        $link = '/topology/change/applied?eventId='.$eventId;
     
         $text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
     

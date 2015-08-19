@@ -171,6 +171,10 @@ MeicanMap.prototype.getMarker = function(type, id) {
     return null;
 }
 
+MeicanMap.prototype.getCurrentMarkerType = function() {
+    return this._currentMarkerType;
+}
+
 MeicanMap.prototype.searchMarkerByNameOrDomain = function (type, name) {
     results = [];
     name = name.toLowerCase();
@@ -319,6 +323,10 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
     });
 
     $("#" + divId).show();
+
+    $("#" + buttonId).on('click', function() {
+        $("#" + inputId).autocomplete("search", $("#"+inputId).val());
+    });
 
     $( "#" + inputId ).autocomplete({
     autoFocus: true,

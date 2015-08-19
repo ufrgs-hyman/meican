@@ -83,7 +83,7 @@ class TopologyChange extends \yii\db\ActiveRecord
         ];
     }
 
-    public function searchPending($params, $syncId = null) {
+    public function searchPending($params, $eventId = null) {
         $query = self::find();
 
         // load the search form data and validate
@@ -94,8 +94,7 @@ class TopologyChange extends \yii\db\ActiveRecord
         $query->andFilterWhere(['domain' => $this->domain]);
         $query->andFilterWhere(['item_type' => $this->item_type]);
         $query->andFilterWhere(['type' => $this->type]);
-
-        if ($syncEventId) $query->andFilterWhere(['sync_event_id' => $syncEventId]);
+        $query->andFilterWhere(['sync_event_id' => $eventId]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -108,7 +107,7 @@ class TopologyChange extends \yii\db\ActiveRecord
         return $dataProvider;
     }
 
-    public function searchApplied($params) {
+    public function searchApplied($params, $eventId = null) {
         $query = self::find();
 
         // load the search form data and validate
@@ -116,6 +115,7 @@ class TopologyChange extends \yii\db\ActiveRecord
 
         // adjust the query by adding the filters
         $query->andFilterWhere(['status'=>TopologyChange::STATUS_APPLIED]);
+        $query->andFilterWhere(['sync_event_id' => $eventId]);
         $query->andFilterWhere(['domain' => $this->domain]);
         $query->andFilterWhere(['item_type' => $this->item_type]);
         $query->andFilterWhere(['type' => $this->type]);

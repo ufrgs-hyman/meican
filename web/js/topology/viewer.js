@@ -5,20 +5,10 @@ $(document).ready(function() {
 var meicanMap;
 var domainsList;
 var links = [];
-var currentMarkerType = 'net';
 var devicesLoaded = false;
-
-$('#marker-type-network').on('change', function() {
-    setMarkerType("net");
-});
-    
-$('#marker-type-device').on('change', function() {
-    setMarkerType("dev");
-});
 
 function setMarkerType(markerType) {
     meicanMap.closeWindows();
-    currentMarkerType = markerType;
     meicanMap.setMarkerTypeVisible(markerType);
     setLinkTypeVisible(markerType);
     if (markerType == "dev") {
@@ -103,6 +93,8 @@ function initialize() {
 	meicanMap = new MeicanMap;
     meicanMap.buildMap("map-canvas");
     meicanMap.buildSearchBox("search-row", "search-box", 'search-button');
+    meicanMap.buildMapTypeBox("map-type-box", 'map-type-select');
+    meicanMap.buildMarkerTypeBox("marker-type-box", 'marker-type-select', setMarkerType);
 
     $.ajax({
         url: baseUrl+'/topology/network/get-all-parent-location',
