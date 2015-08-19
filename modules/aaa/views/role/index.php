@@ -86,7 +86,3 @@ $form = ActiveForm::begin([
 	
 	ActiveForm::end();
 ?>
-
-<div>
-	<a href="<?= Url::toRoute('user/index');?>"><?= Html::Button(Yii::t('aaa', 'Back')); ?></a>
-</div>
