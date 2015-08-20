@@ -52,21 +52,29 @@
 			    	'id' => 'pjaxContainer',
 				]);
 			?>
-			
-			<div id="auth_controls">
-				<?php
-					$notWaiting = true;
-					foreach($requests as $req){
-						if($req->status == Connection::AUTH_STATUS_PENDING){
-							$notWaiting = false;
-							break;
+			<table style="width: 100%;">
+			<tr>
+				<td id="auth_controls" style="text-align: left; width: 66%; padding: 0px;">
+					<?php
+						$notWaiting = true;
+						foreach($requests as $req){
+							if($req->status == Connection::AUTH_STATUS_PENDING){
+								$notWaiting = false;
+								break;
+							}
 						}
-					}
-					$domainTop = json_encode($domain);
-					echo Html::button(Yii::t('circuits', 'Accept All'), ['disabled' => $notWaiting, 'onclick' => "acceptAll($info->reservation_id, $domainTop)"]);
-					echo Html::button(Yii::t('circuits', 'Reject All'), ['disabled' => $notWaiting, 'onclick' => "rejectAll($info->reservation_id, $domainTop)"]);
-				?>
-			</div>
+						$domainTop = json_encode($domain);
+						echo Html::button(Yii::t('circuits', 'Accept All'), ['disabled' => $notWaiting, 'onclick' => "acceptAll($info->reservation_id, $domainTop)"]);
+						echo Html::button(Yii::t('circuits', 'Reject All'), ['disabled' => $notWaiting, 'onclick' => "rejectAll($info->reservation_id, $domainTop)"]);
+					?>
+				</td>
+				<td id="map_controls" style="text-align: right; width: 33%;">
+					<?php
+						echo Html::a(Yii::t('circuits', 'See Map'), ['/circuits/reservation/view', 'id' => $info->reservation_id]);
+					?>
+				</td>
+				</tr>
+			</table>
 			
 			<?= GridView::widget([
 					'options' => ['class' => 'list'],

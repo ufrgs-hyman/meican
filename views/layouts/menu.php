@@ -24,7 +24,7 @@ echo Menu::widget([
 		[
 			'label'=>'<h3><a href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('bpm','Workflows').'</a></h3>',
 			'items'=>[
-				['label'=>Yii::t('bpm','New'), 'url'=>['/bpm/workflow/new'], 'visible'=> RbacController::can('workflow/create')],
+				['label'=>Yii::t('bpm','Create'), 'url'=>['/bpm/workflow/new'], 'visible'=> RbacController::can('workflow/create')],
 				['label'=>Yii::t('bpm','Status'), 'url'=>['/bpm/workflow/index']],
 			],
 			'visible'=> RbacController::can('workflow/read')

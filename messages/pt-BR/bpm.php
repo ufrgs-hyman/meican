@@ -5,6 +5,7 @@ return array(
 		'workflow' => 'workflow',
 		//'Status' => 'Estado',
 		'New' => 'Novo',
+		'Create' => 'Criar',
 		'Enabled' => 'Ativado',
 		'Disabled' => 'Desativado',
 		'Name' => 'Nome',

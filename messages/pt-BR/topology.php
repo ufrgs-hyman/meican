@@ -39,6 +39,7 @@ return array(
 		'You are not allowed to add devices' => 'Você não tem permissão para adicionar dispositivos',
 		
 		'any' => 'qualquer',
+		'Create' => 'Criar',
 		
 		'Name' => 'Nome',
 		'Model' => 'Modelo',

@@ -262,5 +262,9 @@ return array(
 		
 		"You don`t allowed to update the configurations" => "Você não tem permissão para editar as configurações",
 		"Configurations saved successfully" => "Configurações editadas com sucesso",
+		
+		
+		'See Map' => "Ver Mapa",
+		'Configuration' => "Configuração"
 );
 ?>
