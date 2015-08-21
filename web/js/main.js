@@ -48,6 +48,7 @@ function timerAuths() {
 	    type: "GET",
 	    url: baseUrl + '/notification/notification/get-number-notifications',
 	    success: function(data) {
+            $("#notification_link").trigger('notify', data);
 	    	if(data>0)$("#notification_link").html("<div class='full'><span >"+data+"</span></div></li>");
 	    	else $("#notification_link").html("<div class='empty'><span >"+data+"</span></div></li>");
 	    	t = setTimeout(function() {

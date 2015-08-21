@@ -31,4 +31,9 @@
     </select>
 </div>
 
+<div id="refresh-box" style="margin-left: 10px; margin-top:15px;" hidden>
+    <button id="refresh-button">Refresh</button>
+</div>
+
+
 <label id="domains-list" hidden><?= json_encode($domains); ?></label>

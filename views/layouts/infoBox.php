@@ -69,7 +69,7 @@ use app\models\Notification;
 		            <div class="row clearfix" id="submit_row">
 		            	<?= Html::button(Yii::t('circuits', 'Answer'), ['onclick' => "sendFeedback()"]);?>
 		            </div>
-		            
+
 		        </fieldset>
 		
 		    </form>

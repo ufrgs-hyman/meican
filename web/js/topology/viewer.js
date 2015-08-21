@@ -6,6 +6,7 @@ var meicanMap;
 var domainsList;
 var links = [];
 var devicesLoaded = false;
+var notsSize;
 
 function setMarkerType(markerType) {
     meicanMap.closeWindows();
@@ -95,7 +96,41 @@ function initialize() {
     meicanMap.buildSearchBox("search-row", "search-box", 'search-button');
     meicanMap.buildMapTypeBox("map-type-box", 'map-type-select');
     meicanMap.buildMarkerTypeBox("marker-type-box", 'marker-type-select', setMarkerType);
+    meicanMap.getMap().controls[google.maps.ControlPosition.TOP_LEFT].push(
+        document.getElementById("refresh-box"));
 
+    $("#refresh-box").show();
+
+    $("#refresh-button").on("click", function() {
+        meicanMap.removeMarkers();
+        var size = links.length;
+        for (var i = 0; i < size; i++) {
+            links[i].setMap(null);
+        }
+        links = [];
+        devicesLoaded = false;
+        loadNetworks();
+    });
+
+    $("#notification_link").on("notify",function(event, length){
+        if (notsSize != length) {
+            console.log('notify', notsSize,length);
+            notsSize = length;
+            meicanMap.removeMarkers();
+            var size = links.length;
+            for (var i = 0; i < size; i++) {
+                links[i].setMap(null);
+            }
+            links = [];
+            devicesLoaded = false;
+            loadNetworks();
+        } 
+    });
+
+    loadNetworks();
+}
+
+function loadNetworks() {
     $.ajax({
         url: baseUrl+'/topology/network/get-all-parent-location',
         dataType: 'json',
@@ -118,7 +153,6 @@ function initialize() {
                         addCircuit('net', response[key][0], response[key][1]);
                     }
                     setMarkerType("dev");
-                    $("#marker-type-device").attr("checked", "checked");
                 }
             });
         }
