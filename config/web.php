@@ -6,7 +6,7 @@ $config = [
     'id' => 'meican',
     'name'=>'MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['debug','session'],
+    'bootstrap' => ['log', 'debug','session'],
     'defaultRoute' => 'init',
     'modules' => [
 	    'debug' => [
@@ -59,13 +59,13 @@ $config = [
     		],
         ],
         'log' => [
-            'flushInterval' => 200, 
+            'flushInterval' => 1000, 
             'traceLevel' => YII_DEBUG ? 1 : 0,
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning', 'trace'],
-                    'exportInterval' => 200, 
+                    'exportInterval' => 1000, 
                 ],
             ],
         ],
