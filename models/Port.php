@@ -149,8 +149,12 @@ class Port extends \yii\db\ActiveRecord
         return $this->hasOne(Port::className(), ['id' => 'alias_id']);
     }
 
-    public static function findByUrn($urn) {
+    static function findByUrn($urn) {
         return self::find()->where(['urn'=>$urn]);
+    }
+
+    static function findOneByUrn($urn) {
+        return self::find()->where(['urn'=>$urn])->one();
     }
     
     public function setAlias($port) {

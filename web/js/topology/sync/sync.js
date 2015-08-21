@@ -23,7 +23,7 @@ $(document).ready(function() {
                 id: context.parent().parent().parent().attr('data-key'),
             },
             success: function(response) {
-                window.location.href = baseUrl + "/topology/change/pending?id=" + context.parent().parent().parent().attr('data-key');
+                window.location.href = baseUrl + "/topology/change/pending?eventId=" + response;
             },
             error: function(response) {
                 $("#loading-dialog").html('<br><div class="error">Error. Contact your administrator.</div><br>');

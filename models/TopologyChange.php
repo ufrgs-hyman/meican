@@ -90,7 +90,7 @@ class TopologyChange extends \yii\db\ActiveRecord
         $this->load($params);
 
         // adjust the query by adding the filters
-        $query->andFilterWhere(['status'=>TopologyChange::STATUS_PENDING]);
+        $query->andFilterWhere(['in','status',[TopologyChange::STATUS_PENDING, TopologyChange::STATUS_FAILED]]);
         $query->andFilterWhere(['domain' => $this->domain]);
         $query->andFilterWhere(['item_type' => $this->item_type]);
         $query->andFilterWhere(['type' => $this->type]);
@@ -133,63 +133,85 @@ class TopologyChange extends \yii\db\ActiveRecord
 
     public function apply() {
         $data = json_decode($this->data);
+
         switch ($this->item_type) {
             case self::ITEM_TYPE_DOMAIN:
                 $dom = new Domain;
                 $dom->name = $this->domain;
-                $dom->default_policy = "ACCEPT_ALL";
+                $dom->default_policy = Domain::ACCEPT_ALL;
 
                 if($dom->save()) {
                     $this->setApplied();
                     return $this->save();
+                } else {
+                    $this->error = json_encode($dom->getErrors());
                 }
-
-                $this->error = json_encode($dom->getErrors());
 
                 break;
             case self::ITEM_TYPE_PROVIDER:
-                $provData = $data;
-                $dom = Domain::findOneByName($this->domain);
-                if ($this->item_id) {
-                    $prov = Provider::findOne($this->item_id);
-                } else {
-                    $prov = new Provider;
-                    $prov->nsa = $provData->nsa;
-                }
-                $prov->name = $provData->name;
-                $prov->type = $provData->type;
-                $prov->latitude = $provData->lat;
-                $prov->longitude = $provData->lng;
-                $prov->domain_id = $dom->id;
-
-                if($prov->save()) {
-                    $this->setApplied();
-                    return $this->save();
-                }
-
-                $this->error = json_encode($prov->getErrors());
-                break;
-
-            case self::ITEM_TYPE_SERVICE:
-                $serviceData = $data;
-                
                 switch ($this->type) {
-                    case self::TYPE_DELETE:
-                        $service = Service::findOne($this->item_id);
-                        if($service && $service->delete()) {
-                            $this->setApplied();
-                            return $this->save();
-                        } else {
-                            $this->error = "Service not found";
-                        }
-                        break;
                     case self::TYPE_CREATE:
-                        $prov = Provider::findOneByNsa($serviceData->provNsa);
+                        $dom = Domain::findOneByName($this->domain);
+                        if ($dom) {
+                            $prov = new Provider;
+                            $prov->nsa = $data->nsa;
+                            $prov->name = $data->name;
+                            $prov->type = $data->type;
+                            $prov->latitude = $data->lat;
+                            $prov->longitude = $data->lng;
+                            $prov->domain_id = $dom->id;
+
+                            if($prov->save()) {
+                                $this->setApplied();
+                                return $this->save();
+                            } else {
+                                $this->error = json_encode($prov->getErrors());
+                            }
+                        } else {
+                            $this->error = "domain does not exist";
+                        }
+
+                        break;
+                    case self::TYPE_UPDATE:
+                        $dom = Domain::findOneByName($this->domain);
+                        if ($dom) {
+                            $prov = Provider::findOne($this->item_id);
+                            if($prov) {
+                                $prov->name = $data->name;
+                                $prov->type = $data->type;
+                                $prov->latitude = $data->lat;
+                                $prov->longitude = $data->lng;
+                                $prov->domain_id = $dom->id;
+
+                                if($prov->save()) {
+                                    $this->setApplied();
+                                    return $this->save();
+                                } else {
+                                    $this->error = json_encode($prov->getErrors());
+                                }
+                            } else {
+                                $this->error = "provider does not exist";
+                            }
+                        } else {
+                            $this->error = "domain does not exist";
+                        }
+                        
+                        break;
+                    case self::TYPE_DELETE:
+                        $this->error = "invalid action";
+                        break;
+                }
+                
+                break;
+            case self::ITEM_TYPE_SERVICE:
+                switch ($this->type) {
+                    case self::TYPE_CREATE:
+                        $prov = Provider::findOneByNsa($data->provNsa);
                         if ($prov) {
                             $service = new Service;
                             $service->provider_id = $prov->id;
-                            $service->type = $serviceData->type;
-                            $service->url = $serviceData->url;
+                            $service->type = $data->type;
+                            $service->url = $data->url;
 
                             if($service->save()) {
                                 $this->setApplied();
@@ -200,175 +222,307 @@ class TopologyChange extends \yii\db\ActiveRecord
                         } else {
                             $this->error = "Provider not found";
                         }
+
                         break;
-                    default:
+
+                    case self::TYPE_UPDATE:
+                        $this->error = "Invalid action";
+                        break;
+
+                    case self::TYPE_DELETE:
+                        $service = Service::findOne($this->item_id);
+                        if($service) {
+                            if ($service->delete()) {
+                                $this->setApplied();
+                                return $this->save();
+                            } else {
+                                $this->error = "Error deleting";
+                            }
+                        } else {
+                            $this->error = "Service not found";
+                        }
+                        break;    
                 }
                 
                 break;
-
             case self::ITEM_TYPE_NETWORK: 
-                $netData = $data;
-                if ($this->item_id) {
-                    $net = Network::findOne($this->item_id);
-                    $net->latitude = $netData->lat;
-                    $net->longitude = $netData->lng;
-                    $net->name = $netData->name;
-                } else {
-                    $net = new Network;
-                    $net->domain_id = Domain::findByName($this->domain)->one()->id;
-                    $net->latitude = $netData->lat;
-                    $net->longitude = $netData->lng;
-                    $net->name = $netData->name;
-                    $net->urn = $netData->urn;
-                }
-                if($net->save()) {
-                    $this->setApplied();
-                    return $this->save();
+                switch ($this->type) {
+                    case self::TYPE_CREATE:
+                        $dom = Domain::findOneByName($this->domain);
+                        if($dom) {
+                            $net = new Network;
+                            $net->latitude = $data->lat;
+                            $net->longitude = $data->lng;
+                            $net->name = $data->name;
+                            $net->urn = $data->urn;
+                            $net->domain_id = $dom->id;
+
+                            if($net->save()) {
+                                $this->setApplied();
+                                return $this->save();
+                            } else {
+                                $this->error = json_encode($net->getErrors());
+                            }
+                        } else {
+                            $this->error = "domain not found";
+                        }
+
+                        break;
+
+                    case self::TYPE_UPDATE:
+                        $net = Network::findOne($this->item_id);
+                        if ($net) {
+                            $net->latitude = $data->lat;
+                            $net->longitude = $data->lng;
+                            $net->name = $data->name;
+
+                            if($net->save()) {
+                                $this->setApplied();
+                                return $this->save();
+                            } else {
+                                $this->error = json_encode($net->getErrors());
+                            }
+                        } else {
+                            $this->error = "network not found";
+                        }
+                        
+                        break;
+
+                    case self::TYPE_DELETE:
+                        $this->error = "invalid action";
+                        break;    
                 }
 
-                $this->error = json_encode($net->getErrors());
                 break;
-
             case self::ITEM_TYPE_DEVICE: 
-                $devData = $data;
-                if ($this->item_id) {
-                    $dev = Device::findOne($this->item_id);
-                    $dev->latitude = $devData->lat;
-                    $dev->longitude = $devData->lng;
-                    $dev->address = $devData->address;
-                } else {
-                    //NECESSARIO pq o parser nao analisa esse caso
-                    $dev = Device::findOneByDomainAndNode($this->domain, $devData->node);
-                    if ($dev) {
-                        $dev->latitude = $devData->lat;
-                        $dev->longitude = $devData->lng;
-                        $dev->address = $devData->address;
-                    } else {
-                        $dev = new Device;
-                        $dev->domain_id = Domain::findByName($this->domain)->one()->id;
-                        $dev->latitude = $devData->lat;
-                        $dev->longitude = $devData->lng;
-                        $dev->node = $devData->node;
-                        $dev->name = $dev->node;
-                        $dev->address = $devData->address;
-                    }
-                }
-                if($dev->save()) {
-                    $this->setApplied();
-                    return $this->save();
-                }
+                switch ($this->type) {
+                    case self::TYPE_CREATE:
+                        //NECESSARIO pq o parser nao analisa esse caso VERIFICAR
+                       /* $dev = Device::findOneByDomainAndNode($this->domain, $data->node);
+                        if ($dev) {
+                            $dev->latitude = $data->lat;
+                            $dev->longitude = $data->lng;
+                            $dev->address = $data->address;
+                        } else {*/
+                             //}
 
-                $this->error = json_encode($dev->getErrors());
+                        $dom = Domain::findOneByName($this->domain);
+
+                        if ($dom) {
+                            $dev = new Device;
+                            $dev->domain_id = $dom->id;
+                            $dev->latitude = $data->lat;
+                            $dev->longitude = $data->lng;
+                            $dev->node = $data->node;
+                            $dev->name = $dev->node;
+                            $dev->address = $data->address;
+
+                            if($dev->save()) {
+                                $this->setApplied();
+                                return $this->save();
+                            } else {
+                                $this->error = json_encode($dev->getErrors());
+                            }
+                        } else {
+                            $this->error = 'domain not found';
+                        }
+
+                        break;
+
+                    case self::TYPE_UPDATE:
+                        $dev = Device::findOne($this->item_id);
+
+                        if ($dev) {
+                            $dev->latitude = $data->lat;
+                            $dev->longitude = $data->lng;
+                            $dev->address = $data->address;
+                            if($dev->save()) {
+                                $this->setApplied();
+                                return $this->save();
+                            } else {
+                                $this->error = json_encode($dev->getErrors());
+                            }
+
+                        } else {
+                            $this->error = 'device not found';
+                        }
+
+                        break;
+                    case self::TYPE_DELETE:
+                        $dev = Device::findOne($this->item_id);
+                        if($dev) {
+                            if ($dev->delete()) {
+                                $this->setApplied();
+                                return $this->save();
+                            } else {
+                                $this->error = 'error deleting';
+                            }
+                        } else {
+                            $this->error = 'device not found';
+                        }
+                }
 
                 break;
             case self::ITEM_TYPE_BIPORT:
-                $portData = $data;
                 switch ($this->type) {
-                    case self::TYPE_DELETE:
-                        $port = Port::findOne($this->item_id);
-                        if ($port && $port->delete()) {
-                            $this->setApplied();
-                            return $this->save();
-                        }
-                    default:
-                        if ($this->item_id) {
-                            $port = Port::findOne($this->data);
-                        } else {
+                    case self::TYPE_CREATE:
+                        $dev = Device::findOneByDomainAndNode($this->domain, $data->node);
+                        if ($dev) {
                             $port = new Port;
-                            $dev = Device::findOneByDomainAndNode($this->domain, $portData->node);
-                            if ($dev) {
-                                $port->type = $portData->type;
-                                $port->directionality = Port::DIR_BI;
-                                $port->urn = $portData->urn;
-                                $port->name = $portData->name;
-                                $port->max_capacity = $portData->cap_max;
-                                $port->min_capacity = $portData->cap_min;
-                                $port->granularity = $portData->granu;
-                                $port->vlan_range = $portData->vlan;
+                            $port->type = $data->type;
+                            $port->directionality = Port::DIR_BI;
+                            $port->urn = $data->urn;
+                            $port->name = $data->name;
+                            $port->max_capacity = $data->cap_max;
+                            $port->min_capacity = $data->cap_min;
+                            $port->granularity = $data->granu;
+                            $port->vlan_range = $data->vlan;
+                            $port->device_id = $dev->id;
 
-                                $net = Network::findByUrn($portData->netUrn)->one();
+                            if ($data->netUrn) {
+                                $net = Network::findByUrn($data->netUrn)->one();
                                 if ($net) $port->network_id = $net->id;
-
-                                $port->device_id = $dev->id;
-                            } else {
-                                break;
                             }
-                            
-                        }
-                        if($port->save()) {
-                            $this->setApplied();
-                            return $this->save();
-                        } 
-                        
-                        $this->error = json_encode($port->getErrors());
-                }
 
-                break;
-
-            case self::ITEM_TYPE_UNIPORT:
-                $portData = $data;
-                if ($this->item_id) {
-                    $port = Port::findOne($this->data);
-                } else {
-                    $port = new Port;
-                    $dev = Device::findOneByDomainAndNode($this->domain, $portData->node);
-                    $biPortUrn = Port::findOne(['urn'=> $portData->biPortUrn]);
-                    if ($dev && $biPortUrn) {
-                        $port->type = Port::TYPE_NSI;
-                        if ($portData->dir == "IN") {
-                            $port->directionality = Port::DIR_UNI_IN;
-                        } else {
-                            $port->directionality = Port::DIR_UNI_OUT;
-                        }
-
-                        $port->urn = $portData->urn;
-                        $port->name = $portData->name;
-                        $port->max_capacity = $portData->cap_max;
-                        $port->min_capacity = $portData->cap_min;
-                        $port->granularity = $portData->granu;
-                        $port->biport_id = $biPortUrn->id;
-                        $port->vlan_range = $portData->vlan;
-
-                        $net = Network::findByUrn($portData->netUrn)->one();
-                        if ($net) $port->network_id = $net->id;
-
-                        $port->device_id = $dev->id;
-
-                    } else {
-                        break;
-                    }
-                }
-
-                if($port->save()) {
-                    $this->setApplied();
-                    return $this->save();
-                } 
-
-                $this->error = json_encode($port->getErrors());
-
-                break;
-
-            case self::ITEM_TYPE_LINK:
-                $linkData = $data;
-                if ($this->item_id) {
-                } else {
-                    $port = Port::findByUrn($linkData->urn)->one();
-                    if ($port) {
-                        $dstPort = Port::findByUrn($linkData->dst_urn)->one();
-                        if ($dstPort) {
-                            $port->setAlias($dstPort);
                             if($port->save()) {
                                 $this->setApplied();
                                 return $this->save();
+                            } else {
+                                $this->error = json_encode($port->getErrors());
+                            }
+                        } 
+                        break;
+                    case self::TYPE_UPDATE:
+                        $port = Port::findOne($this->item_id);
+                        if ($port) {
+                            $port->name = $data->name;
+                            $port->max_capacity = $data->cap_max;
+                            $port->min_capacity = $data->cap_min;
+                            $port->granularity = $data->granu;
+                            $port->vlan_range = $data->vlan;
+
+                            if($port->save()) {
+                                $this->setApplied();
+                                return $this->save();
+                            } else {
+                                $this->error = json_encode($port->getErrors());
+                            }
+                        } else {
+                            $this->error = "port not found";
+                        }
+                        
+                        break;
+                    case self::TYPE_DELETE:
+                        $port = Port::findOne($this->item_id);
+                        if ($port) {
+                            if($port->delete()) {
+                                $this->setApplied();
+                                return $this->save();
+                            } else {
+                                $this->error = 'error deleting';
+                            }
+                        } else {
+                            $this->error = 'port not found';
+                        }
+                }
+
+                break;
+            case self::ITEM_TYPE_UNIPORT:
+                switch ($this->type) {
+                    case self::TYPE_CREATE:
+                        $dev = Device::findOneByDomainAndNode($this->domain, $data->node);
+                        $biPortUrn = Port::findOne(['urn'=> $data->biPortUrn]);
+                        if ($dev && $biPortUrn) {
+                            $port = new Port;
+                            $port->type = Port::TYPE_NSI;
+                            if ($data->dir == "IN") {
+                                $port->directionality = Port::DIR_UNI_IN;
+                            } else {
+                                $port->directionality = Port::DIR_UNI_OUT;
                             }
 
-                            $this->error = json_encode($port->getErrors());
+                            $port->urn = $data->urn;
+                            $port->name = $data->name;
+                            $port->max_capacity = $data->cap_max;
+                            $port->min_capacity = $data->cap_min;
+                            $port->granularity = $data->granu;
+                            $port->biport_id = $biPortUrn->id;
+                            $port->vlan_range = $data->vlan;
+                            $port->device_id = $dev->id;
+
+                            if ($data->netUrn) {
+                                $net = Network::findByUrn($data->netUrn)->one();
+                                if ($net) $port->network_id = $net->id;
+                            }
+
+                            if($port->save()) {
+                                $this->setApplied();
+                                return $this->save();
+                            } else {
+                                $this->error = json_encode($port->getErrors());
+                            }
+                        } 
+                        break;
+                    case self::TYPE_UPDATE:
+                        $port = Port::findOne($this->item_id);
+                        if ($port) {
+                            $port->name = $data->name;
+                            $port->max_capacity = $data->cap_max;
+                            $port->min_capacity = $data->cap_min;
+                            $port->granularity = $data->granu;
+                            $port->vlan_range = $data->vlan;
+
+                            if($port->save()) {
+                                $this->setApplied();
+                                return $this->save();
+                            } else {
+                                $this->error = json_encode($port->getErrors());
+                            }
                         } else {
-                            $this->error = "The destination port does not exist.";
+                            $this->error = "port not found";
                         }
-                    } else {
-                        $this->error = "The source port does not exist.";
-                    }
+                        
+                        break;
+                    case self::TYPE_DELETE:
+                        $port = Port::findOne($this->item_id);
+                        if ($port) {
+                            if($port->delete()) {
+                                $this->setApplied();
+                                return $this->save();
+                            } else {
+                                $this->error = 'error deleting';
+                            }
+                        } else {
+                            $this->error = 'port not found';
+                        }
+                }
+
+                break;
+            case self::ITEM_TYPE_LINK:
+                switch ($this->type) {
+                    case self::TYPE_CREATE:
+                        $port = Port::findOneByUrn($data->urn);
+                        if ($port) {
+                            $dstPort = Port::findOneByUrn($data->dst_urn);
+                            if ($dstPort) {
+                                $port->setAlias($dstPort);
+                                if($port->save()) {
+                                    $this->setApplied();
+                                    return $this->save();
+                                } else {
+                                    $this->error = json_encode($port->getErrors());
+                                }
+                                
+                            } else {
+                                $this->error = "destin port not found";
+                            }
+                        } else {
+                            $this->error = "source port not found";
+                        }
+                        break;
+                    case self::TYPE_UPDATE:
+                        break;
+                    case self::TYPE_DELETE:
                 }
                 break;
             default:
@@ -482,8 +636,10 @@ class TopologyChange extends \yii\db\ActiveRecord
                             ['name' => $data->name, 'type'=>$data->type]);
                     case self::ITEM_TYPE_SERVICE: return Yii::t('topology', 'Domain');
                     case self::ITEM_TYPE_NETWORK: return Yii::t('topology', 'Network');
-                    case self::ITEM_TYPE_DEVICE: return Yii::t('topology', 'Device');
-                    case self::ITEM_TYPE_BIPORT: return Yii::t('topology', 'Port');
+                    case self::ITEM_TYPE_DEVICE: return $data->node;
+                    case self::ITEM_TYPE_BIPORT: 
+                        $port = Port::findOne($this->item_id);
+                        return $port ? $port->name : '';
                     case self::ITEM_TYPE_UNIPORT: return Yii::t('topology', 'Port');
                     default: return Yii::t('topology', 'Error');
                 }
@@ -502,10 +658,10 @@ class TopologyChange extends \yii\db\ActiveRecord
                     case self::ITEM_TYPE_NETWORK: return Yii::t('topology', 'Network');
                     case self::ITEM_TYPE_DEVICE: 
                         $dev = Device::findOne($this->item_id);
-                        return Yii::t('topology', 'From: <b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
-                            [
-                            'lat'=> $dev->latitude ? $dev->latitude : Yii::t('topology', 'undefined'), 
-                            'lng'=> $dev->longitude ? $dev->longitude : Yii::t('topology', 'undefined')]).'<br>'.
+                        return Yii::t('topology', '<b>Device</b>: {node}  - <b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
+                            [ 'node'=> $dev ? $dev->node : Yii::t('topology', 'undefined'),
+                            'lat'=> $dev ? $dev->latitude : Yii::t('topology', 'undefined'), 
+                            'lng'=> $dev ? $dev->longitude : Yii::t('topology', 'undefined')]).'<br>'.
                             Yii::t('topology', 'To: <b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
                             ['lat'=> $data->lat, 'lng'=>$data->lng]);
                     case self::ITEM_TYPE_BIPORT: return Yii::t('topology', 'Port');

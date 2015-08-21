@@ -63,4 +63,36 @@ class TopologySyncEvent extends \yii\db\ActiveRecord
     {
         return $this->hasOne(TopologySynchronizer::className(), ['id' => 'sync_id']);
     }
+
+    public function applyChanges() {
+        //NECESSARIO POR UM BUG NO CONTROLE DE MEMORIA DO YII
+        //ELE NAO LIBERA A MEMORIA USADA NO LOG DE CADA APPLYCHANGE E ACABA EM FATAL ERROR
+        $log = Yii::$app->log;
+        foreach ($log->targets as $logTarget) { 
+            $logTarget->enabled = false;
+        }
+        
+        $this->applyChangesByType(TopologyChange::ITEM_TYPE_DOMAIN);
+        $this->applyChangesByType(TopologyChange::ITEM_TYPE_PROVIDER);
+        $this->applyChangesByType(TopologyChange::ITEM_TYPE_SERVICE);
+        $this->applyChangesByType(TopologyChange::ITEM_TYPE_NETWORK);
+        $this->applyChangesByType(TopologyChange::ITEM_TYPE_DEVICE);
+        $this->applyChangesByType(TopologyChange::ITEM_TYPE_BIPORT);
+        $this->applyChangesByType(TopologyChange::ITEM_TYPE_UNIPORT);
+        $this->applyChangesByType(TopologyChange::ITEM_TYPE_LINK);
+
+        $log = Yii::$app->log;
+        foreach ($log->targets as $logTarget) { 
+            $logTarget->enabled = true;
+        }
+    }
+
+    private function applyChangesByType($type) {
+        $changes = TopologyChange::find()
+            ->where(['sync_event_id'=>$this->id, 'item_type'=>$type])
+            ->andWhere(['in','status',[TopologyChange::STATUS_FAILED,TopologyChange::STATUS_PENDING]])->all();
+        foreach ($changes as $change) {
+            $change->apply();
+        }
+    }
 }

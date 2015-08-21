@@ -25,6 +25,8 @@ class DiscoveryController extends Controller {
     public function actionNotification() {
         $sync = $this->getSynchronizer(Yii::$app->request->getRawBody());
         if ($sync) $sync->execute();
+
+        return "";
     }
 
     private function getSynchronizer($notificationXml) {

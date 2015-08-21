@@ -15,8 +15,7 @@ use Yii;
  * @property Network[] $networks
  * @property UserDomain[] $userDomains
  */
-class Domain extends \yii\db\ActiveRecord
-{
+class Domain extends \yii\db\ActiveRecord {
 	
 	const ACCEPT_ALL = "ACCEPT_ALL";
 	const REJECT_ALL = "REJECT_ALL";

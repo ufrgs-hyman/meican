@@ -53,7 +53,7 @@ class TopologyNotification {
     
         $text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
     
-        $html = Notification::makeHtml('topology_changed.png', $text);
+        $html = Notification::makeHtml('topology.png', $text);
          
         if($notification->viewed == true) return '<li>'.Html::a($html, array($link)).'</li>';
         return '<li class="new">'.Html::a($html, array($link)).'</li>';

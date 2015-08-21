@@ -5,11 +5,10 @@
     use app\components\LinkColumn;
     
     use yii\helpers\Html;
+    use yii\helpers\Url;
     
     use yii\widgets\ActiveForm;
 
-    use yii\jui\ProgressBar;
-    
     use app\modules\topology\assets\SyncAsset;
     
     SyncAsset::register($this);
@@ -51,13 +50,15 @@
                     'url' => 'update',
                     'headerOptions'=>['style'=>'width: 2%;'],
                 ),
-                array(
-                    'class'=> LinkColumn::className(),
-                    'image'=>'/images/eye.png',
-                    'label' => '',
-                    'url' => '/topology/change/pending',
+                [
+                    'format' => 'raw',
+                    'value' => function ($model){
+                        $event = $model->getEvents()->asArray()->one();
+                        return '<a href="'.Url::toRoute(["/topology/change/pending",'eventId'=>$event ? $event['id'] : '']).'">'.
+                            Html::img('@web/images/eye.png')."</a>";
+                    },
                     'headerOptions'=>['style'=>'width: 2%;'],
-                ),
+                ],
                 [
                     'format' => 'raw',
                     'value' => function ($model){

@@ -87,10 +87,6 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
         return $change;
     }
 
-   /* public function deletePendingChanges() {
-        return TopologyChange::deleteAll(['status'=> TopologyChange::STATUS_PENDING, 'sync_id'=>$this->id]);
-    }*/
-
     public function getType() {
         switch ($this->type) {
             case Service::TYPE_NSI_DS_1_0: return Service::getTypeLabels()[Service::TYPE_NSI_DS_1_0];
@@ -153,52 +149,21 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
             }
         }
 
-        //$this->deletePendingChanges();
         $this->synchronize();
 
         if ($this->auto_apply) {
-            $this->applyChanges();
+            $this->syncEvent->applyChanges();
         }
 
         if($this->detectedChanges) TopologyNotification::create(1, $this->syncEvent->id);
-    }
-
-    public function applyChanges() {
-        //NECESSARIO POR UM BUG NO CONTROLE DE MEMORIA DO YII
-        //ELE NAO LIBERA A MEMORIA USADA NO LOG DE CADA APPLYCHANGE E ACABA EM FATAL ERROR
-        $log = Yii::$app->log;
-        foreach ($log->targets as $logTarget) { 
-            $logTarget->enabled = false;
-        }
-        
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_DOMAIN);
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_PROVIDER);
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_SERVICE);
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_NETWORK);
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_DEVICE);
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_BIPORT);
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_UNIPORT);
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_LINK);
-
-        $log = Yii::$app->log;
-        foreach ($log->targets as $logTarget) { 
-            $logTarget->enabled = true;
-        }
-    }
-
-    private function applyChangesByType($type) {
-        $changes = TopologyChange::find()->where(
-            ['sync_event_id'=>$this->syncEvent->id, 'status'=>TopologyChange::STATUS_PENDING,'item_type'=>$type])->all();
-        foreach ($changes as $change) {
-            $change->apply();
-        }
     }
 
     //Cria changes a partir de mudanças percebidas pelo Sync
     private function synchronize() {
         foreach ($this->parser->getData()['domains'] as $domainName => $domainData) {
             $domain = Domain::findByName($domainName)->one();
-            
+            $domainId = null;
+
             if ($domain == null) {
                 $change = $this->buildChange();
                 $change->domain = $domainName;
@@ -207,7 +172,7 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
                 $change->type = TopologyChange::TYPE_CREATE;
                 $change->save();
             } else {
-                //comparar?
+                $domainId = $domain->id;
             }
             
             if ($this->parser instanceof NSIParser && isset($domainData['nsa'])) {
@@ -286,18 +251,18 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
             //PERFSONAR
             if ($this->parser instanceof NMWGParser) {
                 if (isset($domainData['devices'])) {
-                    $this->importDevices($domainData["devices"], $domainName);
+                    $this->importDevices($domainData["devices"], $domainName, $domainId);
                 }
             //NSI
             } else {
                 if (isset($domainData['nets'])) {
-                    $this->importNetworks($domainData["nets"], $domainName);
+                    $this->importNetworks($domainData["nets"], $domainName, $domainId);
                 }
             }
         }
     }
 
-    private function importNetworks($netsArray, $domainName) {
+    private function importNetworks($netsArray, $domainName, $domainId) {
         foreach ($netsArray as $netUrn => $netData) {
             $network = Network::findByUrn($netUrn)->one();
             if (!$network) {
@@ -328,29 +293,41 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
             }
 
             if (isset($netData['devices'])) {
-                $this->importDevices($netData["devices"], $domainName, $netUrn);
+                $this->importDevices($netData["devices"], $domainName, $domainId, $netUrn);
             }
         }
     }
     
-    private function importDevices($devicesArray, $domainName, $netUrn=null) {
+    private function importDevices($devicesArray, $domainName, $domainId, $netUrn=null) {
+
+        //VERIFICA PORTAS
         $validBiPorts = [];
         if ($this->parser instanceof NMWGParser) {
-                $type = Port::TYPE_NMWG;
-                $invalidBiPorts = Port::find()->where(['type'=>$type]);
+            $type = Port::TYPE_NMWG;
+            //$invalidBiPorts = Port::find()->where(['type'=>$type]);
+            $invalidBiPorts = false;
+
+        } else {
+            $type = Port::TYPE_NSI;
+            $net = Network::findByUrn($netUrn)->one();
+            if ($net) {
+                $invalidBiPorts = Port::find()->where(['type'=>$type, 'directionality'=> Port::DIR_BI, 'network_id'=>$net->id]);
             } else {
-                $type = Port::TYPE_NSI;
-                $net = Network::findByUrn($netUrn)->one();
-                if ($net) {
-                    $invalidBiPorts = Port::find()->where(['type'=>$type, 'directionality'=> Port::DIR_BI, 'network_id'=>$net->id]);
-                } else {
-                    $invalidBiPorts = false;
-                }
+                $invalidBiPorts = false;
             }
+        }
+
+        //VERIFICA DEVICES
+        $validDevices = [];
+        if ($this->parser instanceof NSIParser && $domainId) {
+            $invalidDevices = Device::find()->where(['domain_id'=>$domainId]);
+        } else {
+            $invalidDevices = false;
+        }
 
         foreach ($devicesArray as $deviceNode => $deviceData) {
             $device = Device::findOneByDomainAndNode($domainName, $deviceNode);
-    
+
             if(!$device) {
                 $change = $this->buildChange();
                 $change->type = TopologyChange::TYPE_CREATE;
@@ -364,6 +341,8 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
                 $change->save();
 
             } else {
+                $validDevices[] = $device->id;
+
                 if (isset($deviceData['lat']) && isset($deviceData['lng']) && 
                     (intval($device->latitude) != intval($deviceData['lat']) ||
                         intval($device->longitude) != intval($deviceData['lng']))) {
@@ -502,6 +481,21 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
                 $change->item_type = TopologyChange::ITEM_TYPE_BIPORT;
                 $change->item_id = $port->id;
                 $change->data = json_encode(["node"=>$port]);
+
+                $change->save();
+            } 
+        }
+
+        if ($invalidDevices) {
+            $invalidDevices = $invalidDevices->andWhere(['not in', 'id', $validDevices])->all();
+
+            foreach ($invalidDevices as $device) {
+                $change = $this->buildChange();
+                $change->type = TopologyChange::TYPE_DELETE;
+                $change->domain = $domainName;
+                $change->item_type = TopologyChange::ITEM_TYPE_DEVICE;
+                $change->item_id = $device->id;
+                $change->data = json_encode(["node"=>$device->node]);
 
                 $change->save();
             } 

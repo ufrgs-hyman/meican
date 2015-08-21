@@ -269,12 +269,20 @@ MeicanMap.prototype.addMarker = function(marker) {
     this._markers.push(marker);
 }
 
+MeicanMap.prototype.removeMarkers = function() {
+    var size = this._markers.length;
+    for (var i = 0; i < size; i++) {
+        this._markers[i].setMap(null);
+    }
+    this._markers = [];
+}
+
 MeicanMap.prototype.getDomainName = function(id) {
     if (!domainsList) domainsList = JSON.parse($("#domains-list").text());
     for (var i = 0; i < domainsList.length; i++) {
         if(domainsList[i].id == id)
         return domainsList[i].name;
-    };
+    }
 }
 
 MeicanMap.prototype.buildMapTypeBox = function(divId, selectId) {

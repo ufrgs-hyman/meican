@@ -60,7 +60,7 @@ class SyncController extends RbacController {
     	$sync = TopologySynchronizer::findOne($id);
         $sync->execute();
         
-        return true;
+        return $sync->syncEvent ? $sync->syncEvent->id : false;
     }
 
     public function actionCreate(){
