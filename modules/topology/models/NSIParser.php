@@ -9,15 +9,7 @@ class NSIParser {
 	private $xpath;
 	private $url;
 	private $xml;
-	private $cert_file;
-	private $cert_password;
 	private $error;
-
-	//function __construct($url) { //$certName, $certPass){
-	//	$this->url = $url;
-		//$this->cert_password = $certPass;
-		//$this->cert_file = realpath(__DIR__."/".$certName);
-	//}
 
 	function loadXml($input) {
 		try {
@@ -86,8 +78,6 @@ class NSIParser {
 				CURLOPT_USERAGENT => 'Meican',
 				//CURLOPT_VERBOSE        => true,
 				CURLOPT_URL => $this->url,
-				//CURLOPT_SSLCERT => $this->cert_file,
-				//CURLOPT_SSLCERTPASSWD => $this->cert_password,
 		);
 
 		curl_setopt_array($ch , $options);
@@ -114,12 +104,31 @@ class NSIParser {
 		$this->topology["domains"][$domainName]["nsa"][$nsa]["lng"] = $lng;
 	}
 	
+	function addDevice($netNode, $deviceName, $lat, $lng, $address) {
+		$netUrn = str_replace("urn:ogf:network:","",$netNode->getAttribute('id'));
+		$id = explode(":", $netUrn);
+		//         0   1     2         3        4    5
+		//	      urn:ogf:network:cipo.rnp.br:2014::POA
+		
+		$domainName = $id[0];
+		$this->topology["domains"][
+			$domainName]["nets"][$netUrn]["devices"][
+			$deviceName]['lat'] = $lat;
+		$this->topology["domains"][
+			$domainName]["nets"][$netUrn]["devices"][
+			$deviceName]['lng'] = $lng;
+		$this->topology["domains"][
+			$domainName]["nets"][$netUrn]["devices"][
+			$deviceName]['address'] = $address;
+	}
+	
 	function addProviderService($domainName, $nsa, $service) {
 		$nsa = str_replace("urn:ogf:network:","",$nsa);
 		$this->topology["domains"][$domainName]["nsa"][$nsa]["services"][$service['url']] = $service['type'];
 	}
 
-	function addPort($netId, $netName, $biPortId, $biportName, $portId, $portType, $vlan, $alias) {
+	function addPort($netId, $netName, $biPortId, $biportName, $portId, $portType, 
+			$vlan, $alias, $deviceName = null) {
 		$netUrn = str_replace("urn:ogf:network:","",$netId);
 		$portUrn = str_replace("urn:ogf:network:","",$portId);
 		$biPortUrn = str_replace("urn:ogf:network:","",$biPortId);
@@ -139,27 +148,27 @@ class NSIParser {
 		
 		$devicePortArray = explode(":", $devicePort);
 		if (count($devicePortArray) > 1) {
-			$deviceName = $devicePortArray[0];
+			$deviceName = $deviceName ? $deviceName : $devicePortArray[0];
 			$devicePortArray[0] = "";
 			$devicePortArray = implode(":", $devicePortArray);
 			$portName = substr($devicePortArray, 1);
 		} else {
-			$deviceName = "";
+			$deviceName = $domainName;
 			$portName = implode(":", $devicePortArray);
 		}
 
 		if (!isset($this->topology["domains"][
 				$domainName]["nets"][$netUrn]["devices"][
-						$deviceName]["biports"][$biPortUrn])) {
+				$deviceName]["biports"][$biPortUrn])) {
 			$this->topology["domains"][
-					$domainName]["nets"][$netUrn]["name"] = $netName;
+				$domainName]["nets"][$netUrn]["name"] = $netName;
 			$this->topology["domains"][
-					$domainName]["nets"][$netUrn]["devices"][
-							$deviceName]["biports"][$biPortUrn] = array();
-					if (!$biportName) $biportName = $portName;
+				$domainName]["nets"][$netUrn]["devices"][
+				$deviceName]["biports"][$biPortUrn] = array();
+			if (!$biportName) $biportName = $portName;
 			$this->topology["domains"][
-					$domainName]["nets"][$netUrn]["devices"][
-							$deviceName]["biports"][$biPortUrn]["port"] = $biportName;
+				$domainName]["nets"][$netUrn]["devices"][
+				$deviceName]["biports"][$biPortUrn]["port"] = $biportName;
 		} 
 		
 		$devicePort = str_replace($netId.":", "", $portId);
@@ -317,9 +326,36 @@ class NSIParser {
 						$portId,
 						$this->parseUniPortType($netNode, $portId),
 						$vlanAndAlias[0],
-						$vlanAndAlias[1]);
+						$vlanAndAlias[1],
+						$this->parseDevice($netNode, $portId));
 			}
 		}
+	}
+	
+	function parseDevice($netNode, $portId) {
+		$deviceNodes = $this->xpath->query(".//x:Node", $netNode);
+		if($deviceNodes)
+			foreach ($deviceNodes as $deviceNode) {
+				$relationNodes = $this->xpath->query(".//x:Relation", $deviceNode);
+				if($relationNodes)
+					foreach ($relationNodes as $relationNode) {
+						foreach ($relationNode->childNodes as $portNode) {
+							if($portId == $portNode->getAttribute('id')) {
+								$longitudeNode = $this->xpath->query(".//longitude", $deviceNode);
+								$latitudeNode = $this->xpath->query(".//latitude", $deviceNode);
+								$addressNode = $this->xpath->query(".//address", $deviceNode);
+								$nameNode = $this->xpath->query(".//x:name", $deviceNode);
+								$this->addDevice($netNode, $nameNode->item(0)->nodeValue, 
+									$latitudeNode->item(0) ? $latitudeNode->item(0)->nodeValue : null, 
+									$longitudeNode->item(0) ? $longitudeNode->item(0)->nodeValue : null, 
+									$addressNode->item(0) ? $addressNode->item(0)->nodeValue : null);
+								return $nameNode->item(0)->nodeValue;
+							}
+						}	
+					}
+			}
+		
+		return null;
 	}
 	
 	function parseAlias($portNode) {

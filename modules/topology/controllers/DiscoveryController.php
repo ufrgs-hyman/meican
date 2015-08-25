@@ -23,6 +23,7 @@ class DiscoveryController extends Controller {
     public $enableCsrfValidation = false;
     
     public function actionNotification() {
+        Yii::trace("recebeu");
         $sync = $this->getSynchronizer(Yii::$app->request->getRawBody());
         if ($sync) $sync->execute();
 
@@ -34,9 +35,11 @@ class DiscoveryController extends Controller {
         $parser->loadXml($notificationXml);
         if($parser->isTD()) {
             $parser->parseNotifications();
+            Yii::trace($parser->getData());
             foreach ($parser->getData()['nots'] as $subId => $not) {
                 $sync = TopologySynchronizer::find()->where(['provider_nsa' => $not['providerId']])->andWhere(['subscription_id'=> $subId])->one();
                 if ($sync) {
+                    Yii::trace("achou sync ativo, sincronizando...");
                     $parser->parseTopology();
                     $sync->parser = $parser;
                     return $sync;
