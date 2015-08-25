@@ -5,6 +5,7 @@ return [
 		
 	"google.analytics.enabled" => false,
 	"google.analytics.key" => "",
+    "google.maps.key" => false,
 
 	'meican.certificate.filename' => "",
 	'meican.certificate.passphrase' => "",	
