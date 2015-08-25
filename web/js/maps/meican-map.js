@@ -250,6 +250,8 @@ MeicanMap.prototype.buildMap = function(divId) {
         }
     ]);
 
+    $('#' + divId).show();   
+
     var currentMap = this;
 
     google.maps.event.addListener(this._map, 'click', function() {
@@ -326,11 +328,15 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
 
     var currentMap = this;
 
-    google.maps.event.addListenerOnce(this._map,'tilesloaded',function(){
-       $("#" + inputId).focus();
+    google.maps.event.addListenerOnce(this._map,'bounds_changed',function(){
+        document.getElementById(divId).style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+        document.getElementById(divId).style.webkitBoxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+        $("#" + divId).show();
     });
 
-    $("#" + divId).show();
+    google.maps.event.addListenerOnce(this._map,'idle',function(){
+        $("#" + inputId).focus();
+    });
 
     $("#" + buttonId).on('click', function() {
         $("#" + inputId).autocomplete("search", $("#"+inputId).val());
