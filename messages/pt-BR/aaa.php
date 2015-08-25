@@ -103,6 +103,7 @@ return array(
 		"Domain's Topology" => "Topologia do Domínio",
 		'Automated Tests' => "Testes Automatizados",
 		'Reservations with Waypoints' => 'Reservas com Intermediários',
+		'#Roles in Domain' => '#Perfis no Domínio',
 		
 		
 );

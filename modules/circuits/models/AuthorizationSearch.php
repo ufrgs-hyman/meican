@@ -54,10 +54,6 @@ class AuthorizationSearch extends AuthorizationForm{
     public function searchByDomains($params){
     	$this->load($params);
     	
-    	Yii::error($this->domain);
-    	Yii::error($this->src_domain);
-    	Yii::error($this->dst_domain);
-    	
     	$userId = Yii::$app->user->getId();
     
     	$now = DateUtils::now();

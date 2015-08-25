@@ -4,6 +4,7 @@ namespace app\modules\aaa\controllers;
 
 use app\modules\aaa\models\UserForm;
 use app\modules\aaa\models\AccountForm;
+use app\modules\aaa\models\UserSearch;
 use yii\web\Controller;
 use yii\helpers\Url;
 use yii\data\ActiveDataProvider;
@@ -19,17 +20,24 @@ use Yii;
 class UserController extends RbacController {
 	
 	public function actionIndex() {
-		if(!self::can("user/read") && !self::can("role/read")){ //Se ele não tiver permissão em nenhum domínio
-			return $this->goHome();
+		if(self::can("user/read")){
+			$allowedDomains = Domain::find()->orderBy(['name' => SORT_ASC])->all();
+			$searchModel = new UserSearch;
+			$data = $searchModel->searchByDomains(Yii::$app->request->get(), $allowedDomains, true);
 		}
-		
-		$dataProvider = new ActiveDataProvider([
-				'query' => User::find(),
-				]);
-		
-        return $this->render('index', array(
-                'users' => $dataProvider
-        ));
+		else if(self::can("role/read")){
+			$allowedDomains = self::whichDomainsCan('role/read');
+			$searchModel = new UserSearch;
+			$data = $searchModel->searchByDomains(Yii::$app->request->get(), $allowedDomains, false);
+		}
+		else return $this->goHome();
+
+		return $this->render('index', array(
+				'searchModel' => $searchModel,
+				'users' => $data,
+				'domains' => $allowedDomains,
+		));
+
     }
     
     public function actionCreate() {

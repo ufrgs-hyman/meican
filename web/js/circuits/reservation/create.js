@@ -803,12 +803,15 @@ function initialize() {
 			
 			setMarkerType("dev");
 			$("#marker-type-device").attr("checked", "checked");
+			document.getElementById("search-row-shadow").style.display = 'block';
 		},
 		error: function (request, status, error) {
 		    alert(request + error + status);
 		 
 		}
 	});
+	
+	
 	
 	enableWayPointsSortable();
 	initEndPointButtons("src");
