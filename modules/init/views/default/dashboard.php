@@ -21,7 +21,7 @@ use app\controllers\RbacController;
             </a>
         </div>
         <?php endif; ?>
-        <?php if(RbacController::can("user/read")): ?>
+        <?php if(RbacController::can('user/read') || RbacController::can('role/read')): ?>
          <div>
             <h2><?= Yii::t('init', 'Users'); ?></h2>
             <a href="<?= Url::to(['/aaa/user']); ?>">
