@@ -37,9 +37,9 @@ echo Menu::widget([
 				['label'=>Yii::t('topology','Networks'), 'url'=>['/topology/network/index'], 'visible'=>RbacController::can('domainTopology/read')],
 				['label'=>Yii::t('topology','Devices'), 'url'=>['/topology/device/index'], 'visible'=>RbacController::can('domainTopology/read')],
 				['label'=>Yii::t('topology','Ports'), 'url'=>['/topology/port/index'], 'visible'=>RbacController::can('domainTopology/read')],
-				['label'=>Yii::t('topology','Viewer'), 'url'=>['/topology/viewer/index'], 'visible'=>(RbacController::can("domainTopology/read") && RbacController::can("domain/read"))],
+				['label'=>Yii::t('topology','Viewer'), 'url'=>['/topology/viewer/index'], 'visible'=>(RbacController::can("domainTopology/read") || RbacController::can("domain/read"))],
 				['label'=>Yii::t('topology','Synchronizer'), 'url'=>['/topology/sync/index'], 'visible'=>RbacController::can('synchronizer/read')],
-				['label'=>Yii::t('topology','Changes'), 'url'=>['/topology/change/applied'], 'visible'=>RbacController::can('domainTopology/update')],
+				['label'=>Yii::t('topology','Changes'), 'url'=>['/topology/change/applied'], 'visible'=>(RbacController::can('domainTopology/update') || RbacController::can("domain/read"))],
 			],
 			'visible'=>(RbacController::can('domainTopology/read') || RbacController::can('synchronizer/read'))
 		],
