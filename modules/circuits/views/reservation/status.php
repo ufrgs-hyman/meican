@@ -3,6 +3,7 @@
 	
 	use yii\helpers\Html;
 	use yii\helpers\ArrayHelper;
+	use yii\helpers\Url;
 	
 	use yii\widgets\ActiveForm;
 	use yii\widgets\Pjax;
@@ -15,14 +16,16 @@
 	use app\models\User;
 	use app\models\ConnectionPath;
 	
-	use app\modules\circuits\assets\ListReservationAsset;
-	
-	use yii\jui\Tabs;
-	
-	ListReservationAsset::register($this);
+	use app\modules\circuits\assets\StatusReservationAsset;
+
+	StatusReservationAsset::register($this);
 ?>
 
 <h1><?= Yii::t('circuits', "Active or pending reservations"); ?></h1>
+
+<div class="controls">
+	<button id="refresh-button" value="true"><?= Yii::t("circuits", "Enable auto refresh"); ?></button>
+</div>
 
 <?php Pjax::begin([
             'id' => 'pjax-status',
@@ -31,7 +34,9 @@
 
 <?=
 	GridView::widget([
-		'options' => ['class' => 'list'],
+		'options' => [
+				'id'=>'grid',
+				'class' => 'list'],
 		'dataProvider' => $data,
 		'filterModel' => $searchModel,
 		'layout' => "{items}{summary}{pager}",

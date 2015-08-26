@@ -4,7 +4,7 @@ namespace app\modules\circuits\assets;
 
 use yii\web\AssetBundle;
 
-class ListReservationAsset extends AssetBundle
+class HistoryReservationAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';

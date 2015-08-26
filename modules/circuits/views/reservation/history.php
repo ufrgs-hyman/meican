@@ -14,9 +14,9 @@
 	use app\models\User;
 	use app\models\ConnectionPath;
 	
-	use app\modules\circuits\assets\ListReservationAsset;
+	use app\modules\circuits\assets\HistoryReservationAsset;
 	
-	ListReservationAsset::register($this);
+	HistoryReservationAsset::register($this);
 ?>
 
 <h1><?= Yii::t('circuits', "History reservations"); ?></h1>

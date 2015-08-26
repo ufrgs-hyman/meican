@@ -191,6 +191,7 @@ return array(
 		"End" => "Fim",
 		"Automated Tests" => "Testes Automatizados",
 		"Disable auto refresh" => "Desativar auto-atualização",
+		"Enable auto refresh" => "Ativar auto-atualização",
 		"Frequency Type" => "Tipo de Frequência",
 		"Last execution" => "Última execução",
 		"Last result" => "Último resultado",
