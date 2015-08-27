@@ -20,23 +20,25 @@ class DiscoveryClient {
     
     static function subscribe($url) {
         $ch = curl_init();
+
+        $message = '<?xml version="1.0" encoding="UTF-8"?><tns:subscriptionRequest '.
+                    'xmlns:tns="http://schemas.ogf.org/nsi/2014/02/discovery/types">'.
+                '<requesterId>urn:ogf:network:'.Preference::findOneValue(Preference::MEICAN_NSA).'</requesterId>'.
+                //'<callback>'.Url::toRoute("/topology/discovery/notification", "http").'</callback>'.
+                '<callback>http://meican-cipo.inf.ufrgs.br/meican22/web/topology/discovery/notification</callback>'.
+                '<filter>'.
+                    '<include>'.
+                        '<event>All</event>'.
+                    '</include>'.
+                '</filter>'.
+                '</tns:subscriptionRequest>';
          
         $options = array(
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_SSL_VERIFYHOST => false,
                 CURLOPT_SSL_VERIFYPEER => false,
                 CURLOPT_POST            => 1,
-                CURLOPT_POSTFIELDS  => '<?xml version="1.0" encoding="UTF-8"?><tns:subscriptionRequest '.
-                    'xmlns:tns="http://schemas.ogf.org/nsi/2014/02/discovery/types">'.
-                '<requesterId>'.Preference::findOneValue(Preference::MEICAN_NSA).'</requesterId>'.
-                //'<callback>'.Url::toRoute("/topology/discovery/notification", "http").'</callback>'.
-                '<callback>http://143.52.12.245/meican2/web/topology/discovery/notification</callback>'.
-                '<filter>'.
-                    '<include>'.
-                        '<event>All</event>'.
-                    '</include>'.
-                '</filter>'.
-                '</tns:subscriptionRequest>',
+                CURLOPT_POSTFIELDS  => $message,
                 CURLOPT_HTTPHEADER => array(
                         'Accept-encoding: application/xml;charset=utf-8',
                         'Content-Type: application/xml;charset=utf-8'),
@@ -45,7 +47,8 @@ class DiscoveryClient {
         );
          
         curl_setopt_array($ch , $options);
-         
+
+        Yii::trace($message);
         $output = curl_exec($ch);
         Yii::trace($output);
 

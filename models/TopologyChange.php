@@ -521,8 +521,39 @@ class TopologyChange extends \yii\db\ActiveRecord
                         }
                         break;
                     case self::TYPE_UPDATE:
+                        $port = Port::findOneByUrn($data->urn);
+                        if ($port) {
+                            $dstPort = Port::findOneByUrn($data->dst_urn);
+                            if ($dstPort) {
+                                $port->setAlias($dstPort);
+                                if($port->save()) {
+                                    $this->setApplied();
+                                    return $this->save();
+                                } else {
+                                    $this->error = json_encode($port->getErrors());
+                                }
+                                
+                            } else {
+                                $this->error = "destin port not found";
+                            }
+                        } else {
+                            $this->error = "source port not found";
+                        }
+
                         break;
                     case self::TYPE_DELETE:
+                        $port = Port::findOne($this->item_id);
+                        if ($port) {
+                            $port->alias_id = null;
+                            if ($port->save()) {
+                                $this->setApplied();
+                                return $this->save();
+                            } else {
+                                $this->error = json_encode($port->getErrors());
+                            }
+                        } else {
+                            $this->error = "source port not found";
+                        }
                 }
                 break;
             default:
@@ -570,8 +601,21 @@ class TopologyChange extends \yii\db\ActiveRecord
             ['id' => self::TYPE_DELETE, 'name' => Yii::t('topology', 'Delete')]];
     }
 
+    static function getItemTypes() {
+        return [
+            ['id' => self::ITEM_TYPE_DOMAIN, 'name' => Yii::t('topology', 'Domain')],
+            ['id' => self::ITEM_TYPE_PROVIDER, 'name' => Yii::t('topology', 'Provider')],
+            ['id' => self::ITEM_TYPE_SERVICE, 'name' => Yii::t('topology', 'Service')],
+            ['id' => self::ITEM_TYPE_NETWORK, 'name' => Yii::t('topology', 'Network')],
+            ['id' => self::ITEM_TYPE_DEVICE, 'name' => Yii::t('topology', 'Device')],
+            ['id' => self::ITEM_TYPE_BIPORT, 'name' => Yii::t('topology', 'Bidirectional Port')],
+            ['id' => self::ITEM_TYPE_UNIPORT, 'name' => Yii::t('topology', 'Unidirectional Port')],
+            ['id' => self::ITEM_TYPE_LINK, 'name' => Yii::t('topology', 'Link')]];
+    }
+
     public function getParentInfo() {
         $data = json_decode($this->data);
+
         switch ($this->type) {
             case self::TYPE_CREATE:
             case self::TYPE_UPDATE:
@@ -605,28 +649,21 @@ class TopologyChange extends \yii\db\ActiveRecord
                     case self::ITEM_TYPE_UNIPORT: return Yii::t('topology', 
                             '<b>Port</b>: {biPort} on <b>Device</b>: {node}', 
                             ['node'=> $data->node == "" ? "default" : $data->node, 'biPort'=>$data->biPort]);
-                    case self::ITEM_TYPE_LINK: return Yii::t('topology', 
+                    case self::ITEM_TYPE_LINK: 
+                        $port = Port::findOne($this->item_id);
+                        if($port)
+                        $dev = $port->getDevice()->select(['name'])->asArray()->one();
+                        return $port ? Yii::t('topology', 
                             '<b>Port</b>: {port} on <b>Device</b>: {node}', 
-                            ['node'=> $data->node == "" ? "default" : $data->node, 'port'=>$data->port]);
+                            ['node'=> $dev ? $dev['name'] : '', 'port'=>$port->name]) : Yii::t('topology', 'undefined');
                     default: return Yii::t('topology', 'Error');
                 }
         }
     }
 
-    static function getItemTypes() {
-        return [
-            ['id' => self::ITEM_TYPE_DOMAIN, 'name' => Yii::t('topology', 'Domain')],
-            ['id' => self::ITEM_TYPE_PROVIDER, 'name' => Yii::t('topology', 'Provider')],
-            ['id' => self::ITEM_TYPE_SERVICE, 'name' => Yii::t('topology', 'Service')],
-            ['id' => self::ITEM_TYPE_NETWORK, 'name' => Yii::t('topology', 'Network')],
-            ['id' => self::ITEM_TYPE_DEVICE, 'name' => Yii::t('topology', 'Device')],
-            ['id' => self::ITEM_TYPE_BIPORT, 'name' => Yii::t('topology', 'Bidirectional Port')],
-            ['id' => self::ITEM_TYPE_UNIPORT, 'name' => Yii::t('topology', 'Unidirectional Port')],
-            ['id' => self::ITEM_TYPE_LINK, 'name' => Yii::t('topology', 'Link')]];
-    }
-
     public function getDetails() {
         $data = json_decode($this->data);
+
         switch ($this->type) {
             case self::TYPE_DELETE:
                 switch ($this->item_type) {
@@ -641,6 +678,7 @@ class TopologyChange extends \yii\db\ActiveRecord
                         $port = Port::findOne($this->item_id);
                         return $port ? $port->name : '';
                     case self::ITEM_TYPE_UNIPORT: return Yii::t('topology', 'Port');
+                    case self::ITEM_TYPE_LINK: return '';
                     default: return Yii::t('topology', 'Error');
                 }
             case self::TYPE_UPDATE:
@@ -666,6 +704,9 @@ class TopologyChange extends \yii\db\ActiveRecord
                             ['lat'=> $data->lat, 'lng'=>$data->lng]);
                     case self::ITEM_TYPE_BIPORT: return Yii::t('topology', 'Port');
                     case self::ITEM_TYPE_UNIPORT: return Yii::t('topology', 'Port');
+                    case self::ITEM_TYPE_LINK: 
+                        return Yii::t('topology', '<b>Link to Port</b>: {dst_urn}', 
+                            ['dst_urn'=> $data->dst_urn]);
                     default: return Yii::t('topology', 'Error');
                 }
             case self::TYPE_CREATE:

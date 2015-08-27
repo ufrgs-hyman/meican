@@ -348,7 +348,7 @@ class NSIParser {
 								$this->addDevice($netNode, $nameNode->item(0)->nodeValue, 
 									$latitudeNode->item(0) ? $latitudeNode->item(0)->nodeValue : null, 
 									$longitudeNode->item(0) ? $longitudeNode->item(0)->nodeValue : null, 
-									$addressNode->item(0) ? $addressNode->item(0)->nodeValue : null);
+									$addressNode->item(0) ? urldecode($addressNode->item(0)->nodeValue) : null);
 								return $nameNode->item(0)->nodeValue;
 							}
 						}	

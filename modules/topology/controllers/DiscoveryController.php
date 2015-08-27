@@ -36,8 +36,10 @@ class DiscoveryController extends Controller {
         if($parser->isTD()) {
             $parser->parseNotifications();
             Yii::trace($parser->getData());
-            foreach ($parser->getData()['nots'] as $subId => $not) {
-                $sync = TopologySynchronizer::find()->where(['provider_nsa' => $not['providerId']])->andWhere(['subscription_id'=> $subId])->one();
+            foreach ($parser->getData()['nots'] as $subId => $notsData) {
+                $sync = TopologySynchronizer::find()
+                    ->where(['provider_nsa' => $notsData['providerId']])
+                    ->andWhere(['subscription_id'=> $subId])->one();
                 if ($sync) {
                     Yii::trace("achou sync ativo, sincronizando...");
                     $parser->parseTopology();
