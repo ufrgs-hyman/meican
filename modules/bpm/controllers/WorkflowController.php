@@ -132,7 +132,7 @@ class WorkflowController extends RbacController {
 		    	endforeach;
 		    	
 		    	$groupsNames = [];
-		    	foreach(Group::find()->all() as $group):
+		    	foreach(Group::find()->where(['type' => Group::TYPE_DOMAIN])->all() as $group):
 			    	$groupsNames[$group->id] = $group->name;
 		    	endforeach;
 		    	

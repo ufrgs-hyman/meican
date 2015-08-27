@@ -12,6 +12,7 @@ use app\models\ConnectionAuth;
 use app\models\Connection;
 use app\models\Reservation;
 use app\components\DateUtils;
+use app\congtrollers\RbacController;
 
 /**
  * This is the model class for table "meican_bpm_flow_control".
@@ -244,6 +245,12 @@ class BpmFlow extends \yii\db\ActiveRecord
     			//User
     			case 'User':
     				if($flow->status == self::STATUS_READY) BpmFlow::checkUser($flow, $reservation);
+    				if($flow->status != self::STATUS_READY) BpmFlow::nextNodes($flow);
+    				break;
+    				
+    			//User
+    			case 'Group':
+    				if($flow->status == self::STATUS_READY) BpmFlow::checkGroup($flow, $reservation);
     				if($flow->status != self::STATUS_READY) BpmFlow::nextNodes($flow);
     				break;
     				
@@ -492,8 +499,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     			break;
     			
     		case 'previous':
-    			$thisDomain = Domain::findOne([$flow->domain_id]);
-    			$cp = ConnectionPath::findOne(['conn_id' => $connection->id, 'domain' => $thisDomain->name]);
+    			$cp = ConnectionPath::findOne(['conn_id' => $connection->id, 'domain' => $flow->domain]);
     			if(!isset($cp)){ //Se dominio deletado
     				$flow->status = self::STATUS_YES;
     				return;
@@ -507,8 +513,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     			break;
     			
     		case 'next':
-    			$thisDomain = Domain::findOne([$flow->domain_id]);
-    			$cp = ConnectionPath::findOne(['conn_id' => $connection->id, 'domain' => $thisDomain->name]);
+    			$cp = ConnectionPath::findOne(['conn_id' => $connection->id, 'domain' => $flow->domain]);
     			if(!isset($cp)){ //Se dominio deletado
     				$flow->status = self::STATUS_YES;
     				return;
@@ -527,7 +532,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     			break;
     	}
 
-    	if(isset($compareDomain) && $flow->value == $compareDomain->$domain) $flow->status = self::STATUS_YES;
+    	if(isset($domain) && $flow->value == $domain) $flow->status = self::STATUS_YES;
     	else{
     		Yii::trace("Não passou em DOMAIN");
     		$flow->status = self::STATUS_NO;
@@ -541,6 +546,26 @@ class BpmFlow extends \yii\db\ActiveRecord
     		Yii::trace("Não passou em USER");
     		$flow->status = self::STATUS_NO;
     	}
+    }
+    
+    public function checkGroup($flow, $reservation){
+    	Yii::trace("Testando Grupo");
+    	$user = User::findOne($reservation->request_user_id);
+
+    	$roles = $user->getUserDomainRoles()->all();
+    	
+    	foreach($roles as $role){
+    		$group = $role->getGroup();
+    		if($role->domain == null || $role->domain == $flow->domain){
+	    		if($flow->value == $group->id){
+	    			$flow->status = self::STATUS_YES;
+	    			return;
+	    		}
+    		}
+    	}
+    	
+    	Yii::trace("Não passou em GROUP");
+    	$flow->status = self::STATUS_NO;
     }
     
     public function checkBandwidth($flow, $reservation){

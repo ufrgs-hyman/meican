@@ -54,7 +54,7 @@ div.WireIt-Container-closebutton {
     height: 40px;
 }
 
-.WiringEditor-module-Duration .body, .WiringEditor-module-WeekDay .body, .WiringEditor-module-Hour .body, .WiringEditor-module-Domain .body, .WiringEditor-module-User .body, .WiringEditor-module-Bandwidth .body, .WiringEditor-module-Request_Group_Authorization .body, .WiringEditor-module-Request_User_Authorization .body{
+.WiringEditor-module-Duration .body, .WiringEditor-module-Group .body, .WiringEditor-module-WeekDay .body, .WiringEditor-module-Hour .body, .WiringEditor-module-Domain .body, .WiringEditor-module-User .body, .WiringEditor-module-Bandwidth .body, .WiringEditor-module-Request_Group_Authorization .body, .WiringEditor-module-Request_User_Authorization .body{
     width: 57px;
     height: 40px;
 }

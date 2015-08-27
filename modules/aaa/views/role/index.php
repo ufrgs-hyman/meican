@@ -9,6 +9,7 @@ use app\components\LinkColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+use app\models\Group;
 use app\modules\aaa\assets\RoleAsset;
 
 RoleAsset::register($this);
@@ -68,10 +69,16 @@ $form = ActiveForm::begin([
 			[
 				'attribute' => 'domain', 
 				'format' => 'raw',
-				'value' => function($model) { 
-					$dom = $model->getDomain();
-					if ($dom) return $dom->name;
-					return Yii::t("aaa", "any");
+				'value' => function($model) {
+					$type = $model->getGroup()->type;
+					if($type == Group::TYPE_DOMAIN){
+						$dom = $model->getDomain();
+						if ($dom) return $dom->name;
+						return Yii::t("aaa", "any");
+					}
+					else {
+						return "";
+					}
 				 }
 			],
 			[

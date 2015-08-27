@@ -314,6 +314,79 @@ modules: [
 		}
 	},
 	
+	{	name: "Group",
+		container: {
+			xtype:"WireIt.MeicanContainer", 
+			image: imagePath + "request_group.png",
+			icon: iconPath + "ico_request_group.png",
+
+			terminals: [
+	        {	name: "_INPUT",
+	        	ddConfig: {
+	        	      type: "input",
+	        	      allowedTypes: ["output"]
+	        	},
+	        	nMaxWires: "1",
+	        	wireConfig: {"drawingMethod": "arrows"},
+	           	direction: [-1,0],
+	            offsetPosition: {
+	                left: -15, 
+	                top: 9
+	            }
+	        },
+	
+	        {	name: "_OUTPUT_YES",
+	        	ddConfig: {
+	        	      type: "output",
+	        	      allowedTypes: ["input"]
+	        	},
+	        	direction: [1,0],
+	        	nMaxWires: "1",
+	        	wireConfig: { "drawingMethod": "arrows"},
+	        	offsetPosition: {
+	        		left: 55, 
+	        		top: -3
+	        	}
+	        },
+	        
+	        {	name: "_OUTPUT_NO",
+	        	ddConfig: {
+	        	      type: "output",
+	        	      allowedTypes: ["input"]
+	        	},
+			    direction: [1,1],
+			    nMaxWires: "1",
+			    wireConfig: { "drawingMethod": "arrows"},
+			    offsetPosition: {
+			        left: 55, 
+			        top: 21
+			    }
+	        }
+	        ],
+	        
+	        fields: [
+	        {	type: "inplaceedit", 
+			    inputParams: {
+			        name: "post",
+			        editorField:{
+			            type: "select", 
+			            inputParams: 
+			            {	label: "", 
+			                name: "title", 
+			                selectValues: groups_keys,
+	                        selectOptions: groups_values
+			            }
+			        },
+			        animColors:{
+			        	from:"#FFFF99",
+			        	to:"#DDDDFF"
+			        }
+			    }
+	        }, 		
+	        ],
+		}
+	},
+	
 	/*{	name: "WeekDay",
 		container: {
 			icon: iconPath + "ico_weekday.png",

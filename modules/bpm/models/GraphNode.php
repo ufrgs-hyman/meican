@@ -26,6 +26,7 @@ class GraphNode{
 	 * 6 - Hour
 	 * 7 - WeekDay
 	 * 8 - Duration
+	 * 9 - Group
 	 * 20 - Accept_Automatically
 	 * 30 - Deny_Automatically
 	 */
@@ -114,6 +115,9 @@ class GraphNode{
 			case "Duration":
 				$this->type = 8;
 				break;
+			case "Group":
+				$this->type = 9;
+				break;
 			case "Accept_Automatically":
 				$this->type = 20;
 				break;
@@ -151,6 +155,9 @@ class GraphNode{
 				break;
 			case 'Hour':
 				return "Filter by schedule";
+				break;
+			case 'Group':
+				return "Filter by group";
 				break;
 			case 'WeekDay':
 				return "Filter by week day";
