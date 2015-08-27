@@ -18,7 +18,6 @@ class GoogleMapsAsset extends AssetBundle
     }
 
     static function getMapsKey() {
-        return '';
         if (Yii::$app->params['google.maps.key']) {
             return '&key='.\Yii::$app->params['google.maps.key'];
         }

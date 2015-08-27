@@ -75,14 +75,19 @@ function drawCircuit(source, destin) {
         type: source.type,
     });
 	
-	/*google.maps.event.addListener(circuit, 'click', function(event) {
-		markerWindow = new google.maps.InfoWindow({
-			content: '<div class = "MarkerPopUp" style="width: 230px;"><div class = "MarkerContext">' +
-				'what i say?</div></div>'
-			});
-		markerWindow.position = google.maps.geometry.spherical.interpolate(circuit.path[0], circuit.path[1], 0.5);  
-		markerWindow.open(map);
-    });*/
+	google.maps.event.addListener(link, 'click', function(event) {
+        var srcDomain = meicanMap.getDomainName(source.domainId);
+        var dstDomain = meicanMap.getDomainName(destin.domainId);
+        meicanMap.closeWindows();
+        var infoWin = new google.maps.InfoWindow({
+            content: "Link between <b>" + 
+                ((source.name == srcDomain) ? srcDomain : srcDomain + " (" + source.name + ")") + '</b> and <b>' + 
+                ((destin.name == dstDomain) ? dstDomain : dstDomain + " (" + destin.name + ")")  + "</b>",
+            position: event.latLng,
+        });
+        infoWin.open(meicanMap.getMap());
+        meicanMap.addWindow(infoWin);
+    });
 	
     link.setMap(meicanMap.getMap());
     links.push(link);
@@ -126,8 +131,6 @@ function initialize() {
             loadNetworks();
         } 
     });
-
-    loadNetworks();
 }
 
 function loadNetworks() {
@@ -162,10 +165,6 @@ function loadNetworks() {
 //////////// ADICIONA MARCADORES NO MAPA /////////////////
 
 function addMarker(type, object) {
-    if (object.name == "") {
-        object.name = 'default';
-    }
-
     var network = null;
     if (type == 'dev') network = meicanMap.getMarkerByDomain('net',object.domain_id);
 

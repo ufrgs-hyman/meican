@@ -139,6 +139,10 @@ MeicanMap.prototype.closeWindows = function() {
     }
 }
 
+MeicanMap.prototype.addWindow = function(infoWindow) {
+    this._openedWindows.push(infoWindow);
+}
+
 MeicanMap.prototype.openWindow = function(marker, extra) {
     if (extra) {
         extra = '<br>' + extra + '</div></div>';
@@ -243,10 +247,10 @@ MeicanMap.prototype.buildMap = function(divId) {
     this._map = new google.maps.Map(document.getElementById(divId), mapOptions);
     this._map.set('styles', [
         {
-          featureType: 'poi',
-          stylers: [
-            { visibility: 'off' }
-          ]
+            featureType: 'poi',
+            stylers: [
+                { visibility: 'off' }
+            ]
         }
     ]);
 
@@ -287,6 +291,43 @@ MeicanMap.prototype.getDomainName = function(id) {
     }
 }
 
+MeicanMap.prototype.disableMapLabels = function () {
+    this._map.set('styles', [
+        {
+            featureType: 'poi',
+            stylers: [
+                { visibility: 'off' }
+            ]
+        },
+        {
+            featureType: "all",
+            elementType: "labels",
+            stylers: [
+                { visibility: "off" }
+            ]
+        },
+        {
+            "featureType": "road.highway",
+            "elementType": "geometry",
+            "stylers": [
+              { "color": "#ffffff" }
+            ]
+        }
+    ]);
+} 
+
+MeicanMap.prototype.enableMapLabels = function () {
+    this._map.set('styles', [
+        {
+            featureType: 'poi',
+            stylers: [
+                { visibility: 'off' }
+            ]
+        },
+
+    ]);
+} 
+
 MeicanMap.prototype.buildMapTypeBox = function(divId, selectId) {
     this._map.controls[google.maps.ControlPosition.TOP_LEFT].push(
         document.getElementById(divId));
@@ -298,10 +339,26 @@ MeicanMap.prototype.buildMapTypeBox = function(divId, selectId) {
     $( "#" + selectId ).selectmenu({
         select: function( event, ui ) {
             switch(ui.item.value) {
-                case "r" : currentMap._map.setMapTypeId(google.maps.MapTypeId.ROADMAP); break;
-                case "h" : currentMap._map.setMapTypeId(google.maps.MapTypeId.HYBRID); break;
-                case "s" : currentMap._map.setMapTypeId(google.maps.MapTypeId.SATELLITE); break;
-                case "t" : currentMap._map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
+                case "r" : 
+                    currentMap._map.setMapTypeId(google.maps.MapTypeId.ROADMAP); 
+                    currentMap.enableMapLabels();
+                    break;
+                case "cr" : 
+                    currentMap._map.setMapTypeId(google.maps.MapTypeId.ROADMAP); 
+                    currentMap.disableMapLabels();
+                    break;
+                case "t" : 
+                    currentMap._map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
+                    currentMap.enableMapLabels(); 
+                    break;
+                case "h" : 
+                    currentMap._map.setMapTypeId(google.maps.MapTypeId.HYBRID); 
+                    currentMap.enableMapLabels();
+                    break;
+                case "s" : 
+                    currentMap._map.setMapTypeId(google.maps.MapTypeId.SATELLITE); 
+                    currentMap.enableMapLabels();
+                    break;
             }
         }
     });

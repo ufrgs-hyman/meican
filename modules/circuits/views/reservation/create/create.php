@@ -22,6 +22,7 @@
 <div id="map-type-box" style="margin-left: 10px; margin-top:15px;" hidden>
     <select id="map-type-select" style="width: 85px;">
       <option value="r">Map</option>
+      <option value="cr">Clean</option>
       <option value="t">Terrain</option>
       <option value="s">Satellite</option>
       <option value="h">Hybrid</option>
