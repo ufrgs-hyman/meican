@@ -36,7 +36,6 @@ class SyncController extends RbacController {
 
         if ($service) {
             $sync = new TopologySynchronizer;
-            $sync->enabled = 1;
             $sync->url = $service->url;
             $sync->type = $service->type;
             $sync->name = $service->getType();
