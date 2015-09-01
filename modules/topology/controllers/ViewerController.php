@@ -60,7 +60,7 @@ class ViewerController extends RbacController {
     public function actionSearch($term) {
         $term = str_replace("urn:ogf:network:", "", $term);
         $ports = Port::findBySql(
-            "SELECT `name`, `device_id` 
+            "SELECT `name`, `device_id`, `network_id` 
             FROM `meican_port` 
             WHERE ((`urn` COLLATE UTF8_GENERAL_CI LIKE :term) 
             OR (`name` LIKE :term)) AND `directionality` = 'BI' AND `type` = 'NSI'
