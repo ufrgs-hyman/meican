@@ -24,8 +24,7 @@ class DiscoveryClient {
         $message = '<?xml version="1.0" encoding="UTF-8"?><tns:subscriptionRequest '.
                     'xmlns:tns="http://schemas.ogf.org/nsi/2014/02/discovery/types">'.
                 '<requesterId>urn:ogf:network:'.Preference::findOneValue(Preference::MEICAN_NSA).'</requesterId>'.
-                //'<callback>'.Url::toRoute("/topology/discovery/notification", "http").'</callback>'.
-                '<callback>http://meican-cipo.inf.ufrgs.br/meican2/topology/discovery/notification</callback>'.
+                '<callback>'.Url::toRoute("/topology/discovery/notification", "http").'</callback>'.
                 '<filter>'.
                     '<include>'.
                         '<event>All</event>'.

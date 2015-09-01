@@ -25,7 +25,10 @@ class DiscoveryController extends Controller {
     public function actionNotification() {
         Yii::trace("recebeu");
         $sync = $this->getSynchronizer(Yii::$app->request->getRawBody());
-        if ($sync) $sync->execute();
+        if ($sync) {
+            Yii::$app->response->setStatusCode(202);
+            $sync->execute();
+        }
 
         return "";
     }
