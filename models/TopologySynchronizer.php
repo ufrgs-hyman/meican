@@ -265,22 +265,22 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
             } else {
                 if (isset($domainData['nets'])) {
                     $this->importNetworks($domainData["nets"], $domainName, $invalidDevices);
+
+                    if ($invalidDevices) {
+                        $invalidDevices = $invalidDevices->select(['id','node'])->asArray()->all();
+
+                        foreach ($invalidDevices as $device) {
+                            $change = $this->buildChange();
+                            $change->type = TopologyChange::TYPE_DELETE;
+                            $change->domain = $domainName;
+                            $change->item_type = TopologyChange::ITEM_TYPE_DEVICE;
+                            $change->item_id = $device['id'];
+                            $change->data = json_encode(["node"=>$device['node']]);
+
+                            $change->save();
+                        } 
+                    }
                 }
-            }
-
-            if ($invalidDevices) {
-                $invalidDevices = $invalidDevices->select(['id','node'])->asArray()->all();
-
-                foreach ($invalidDevices as $device) {
-                    $change = $this->buildChange();
-                    $change->type = TopologyChange::TYPE_DELETE;
-                    $change->domain = $domainName;
-                    $change->item_type = TopologyChange::ITEM_TYPE_DEVICE;
-                    $change->item_id = $device['id'];
-                    $change->data = json_encode(["node"=>$device['node']]);
-
-                    $change->save();
-                } 
             }
         }
     }

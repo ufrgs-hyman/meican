@@ -43,6 +43,7 @@ class SyncForm extends TopologySynchronizer {
             case Service::TYPE_PERFSONAR_TS_1_0: 
                 $this->subscription_id = null;
                 $this->provider_nsa = null;
+                break;
             case Service::TYPE_NSI_DS_1_0: 
                 if ($this->subscribe_enabled && $this->subscription_id == null) {
                     $this->subscription_id = DiscoveryClient::subscribe($this->url);
