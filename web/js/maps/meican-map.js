@@ -67,7 +67,7 @@ MeicanMap.prototype.NetworkMarker = function(options, color) {
 }
 
 MeicanMap.prototype.changeDeviceMarkerColor = function(marker, color) {
-    console.log("troca color");
+    //console.log("troca color");
     marker.icon = {
             path: 'M 15 15 L 35 15 L 25 35 z',
             anchor: new google.maps.Point(25, 35),
@@ -403,7 +403,7 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
     autoFocus: true,
     delay: 200,   
     select: function (event, ui) {
-      console.log(ui.item);
+      //console.log(ui.item);
 
         switch (ui.item.type) {
             case 'place':
@@ -465,18 +465,26 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
             },
             dataType: 'json',
             success: function (response) {
-                console.log(response);
+                //console.log(response);
 
                 var size = response.length;
                 for (var i = 0; i < size; i++) {
-                    currentMap._searchSource.push(
-                        {
-                            label: response[i].name,
-                            value: response[i].name,
-                            type: 'port',
-                            marker: currentMap.getMarker('dev', response[i].device_id)
-                        }
-                    );
+                    var marker = null;
+                    if (currentMap._currentMarkerType == 'dev') {
+                        marker = currentMap.getMarker(currentMap._currentMarkerType, response[i].device_id);
+                    } else if(response[i].network_id) {
+                        marker = currentMap.getMarker(currentMap._currentMarkerType, response[i].network_id);
+                    }
+
+                    if (marker)
+                        currentMap._searchSource.push(
+                            {
+                                label: response[i].name,
+                                value: response[i].name,
+                                type: 'port',
+                                marker: marker
+                            }
+                        );
 
                     if(i == 5) break;
                 };
@@ -510,7 +518,7 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
         if(!currentMap._autoCompleteService) currentMap._autoCompleteService = new google.maps.places.AutocompleteService();
 
         currentMap._autoCompleteService.getPlacePredictions(query, function(results, status) {
-            console.log(results, status);
+            //console.log(results, status);
 
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 for (var i = 0; i < results.length; i++) {
@@ -559,7 +567,7 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
             return $( "<li></li>" ).data("item.autocomplete", item)
                 .append( '<b><span style="font-size: 13px; margin: 5px;">' + item.label + "</span></b>" + 
                     '<span style="font-size: 11px; color: #999"> ' + "Port" + "</span>" +
-                    '<span style="font-size: 11px; color: #999"> on Device ' + item.marker.name + "</span>" +
+                    ((currentMap._currentMarkerType == 'dev') ? '<span style="font-size: 11px; color: #999"> on Device ' + item.marker.name + "</span>" : '') +
                     '<span style="font-size: 11px; color: #999"> from ' + currentMap.getDomainName(item.marker.domainId) + "</span>")
                 .appendTo( ul );
       }

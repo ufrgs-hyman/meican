@@ -131,6 +131,8 @@ function initialize() {
             loadNetworks();
         } 
     });
+
+    loadNetworks();
 }
 
 function loadNetworks() {

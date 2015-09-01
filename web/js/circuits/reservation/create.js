@@ -759,7 +759,6 @@ function initialize() {
 
     $("#reservation-tab").on("focusout", function () {
         enableTabSlide();
-        console.log('blur');
     });
 
 	var markerClustererOptions = {
