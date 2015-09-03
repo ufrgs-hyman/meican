@@ -7,6 +7,7 @@
     var users = <?php echo json_encode($users); ?>;
     var admins = <?php echo json_encode($admins); ?>;
     var groups = <?php echo json_encode($groups); ?>;
+    var devices = <?php echo json_encode($devices); ?>;
     var language = '<?= $_GET['lang']; ?>';
 </script>
 

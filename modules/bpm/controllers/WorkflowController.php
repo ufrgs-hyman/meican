@@ -7,12 +7,15 @@ use app\controllers\RbacController;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\web\Controller;
+use app\components\DateUtils;
+
 use app\models\Domain;
 use app\models\Group;
 use app\models\User;
 use app\models\UserDomainRole;
 use app\models\BpmWorkflow;
-use app\components\DateUtils;
+use app\models\Device;
+
 use app\modules\bpm\models\WorkflowSearch;
 
 class WorkflowController extends RbacController {
@@ -126,7 +129,6 @@ class WorkflowController extends RbacController {
 		    		$adminsNames[$role->getUser()->id] = $role->getUser()->name;
 		    	endforeach;
 		    	
-		    	$usersNames = [];
 		    	foreach(User::find()->all() as $user):
 		    		$usersNames[$user->id] = $user->name;
 		    	endforeach;
@@ -136,9 +138,15 @@ class WorkflowController extends RbacController {
 			    	$groupsNames[$group->id] = $group->name;
 		    	endforeach;
 		    	
+		    	$devicesNames = [];
+		    	foreach(Device::find()->where(['domain_id' => $domain->id])->all() as $device):
+		    	$devicesNames[$device->id] = $device->name;
+		    	endforeach;
+		    	
 		    	Yii::trace($roles);
 		    	Yii::trace($usersNames);
 		    	Yii::trace($groupsNames);
+		    	Yii::trace($devicesNames);
 		    	 
 		    	return $this->renderPartial('editor', array(
 		    			'owner_domain' => $ownerDomain,
@@ -146,6 +154,7 @@ class WorkflowController extends RbacController {
 		    			'groups' => $groupsNames,
 		    			'users' => $usersNames,
 		    			'admins' => $adminsNames,
+		    			'devices' => $devicesNames,
 		    	));
     		} else return $this->redirect(array('/bpm/workflow/index'));
     	} else return $this->redirect(array('/bpm/workflow/index'));
@@ -179,19 +188,24 @@ class WorkflowController extends RbacController {
 			    		$adminsNames[$role->getUser()->id] = $role->getUser()->name;
 			    	endforeach;
 			    	
-			    	$usersNames = [];
 			    	foreach(User::find()->all() as $user):
 			    		$usersNames[$user->id] = $user->name;
 			    	endforeach;
 			    	
 			    	$groupsNames = [];
-			    	foreach(Group::find()->all() as $group):
+			    	foreach(Group::find()->where(['type' => Group::TYPE_DOMAIN])->all() as $group):
 				    	$groupsNames[$group->id] = $group->name;
+			    	endforeach;
+			    	
+			    	$devicesNames = [];
+			    	foreach(Device::find()->where(['domain_id' => $domain->id])->all() as $device):
+			    	$devicesNames[$device->id] = $device->name;
 			    	endforeach;
 			    	
 			    	Yii::trace($roles);
 			    	Yii::trace($usersNames);
 			    	Yii::trace($groupsNames);
+			    	Yii::trace($devicesNames);
 			    	 
 			    	return $this->renderPartial('editor', array(
 		    			'owner_domain' => $ownerDomain,
@@ -199,6 +213,7 @@ class WorkflowController extends RbacController {
 		    			'groups' => $groupsNames,
 		    			'users' => $usersNames,
 		    			'admins' => $adminsNames,
+			    		'devices' => $devicesNames,
 			    		'id' => $_GET['id'],
 			    	));
 		    	} else return $this->redirect(array('/bpm/workflow/index'));
@@ -234,19 +249,24 @@ class WorkflowController extends RbacController {
 			    		$adminsNames[$role->getUser()->id] = $role->getUser()->name;
 			    	endforeach;
 			    	
-			    	$usersNames = [];
 			    	foreach(User::find()->all() as $user):
 			    		$usersNames[$user->id] = $user->name;
 			    	endforeach;
 			    	
 			    	$groupsNames = [];
-			    	foreach(Group::find()->all() as $group):
+			    	foreach(Group::find()->where(['type' => Group::TYPE_DOMAIN])->all() as $group):
 				    	$groupsNames[$group->id] = $group->name;
+			    	endforeach;
+			    	
+			    	$devicesNames = [];
+			    	foreach(Device::find()->where(['domain_id' => $domain->id])->all() as $device):
+			    	$devicesNames[$device->id] = $device->name;
 			    	endforeach;
 			    	
 			    	Yii::trace($roles);
 			    	Yii::trace($usersNames);
 			    	Yii::trace($groupsNames);
+			    	Yii::trace($devicesNames);
 			    	 
 			    	return $this->renderPartial('viewer', array(
 		    			'owner_domain' => $ownerDomain,
@@ -254,6 +274,7 @@ class WorkflowController extends RbacController {
 		    			'groups' => $groupsNames,
 		    			'users' => $usersNames,
 		    			'admins' => $adminsNames,
+			    		'devices' => $devicesNames,
 			    		'id' => $_GET['id'],
 			    	));
 				} else return $this->redirect(array('/bpm/workflow/index'));

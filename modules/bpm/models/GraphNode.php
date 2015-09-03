@@ -27,6 +27,7 @@ class GraphNode{
 	 * 7 - WeekDay
 	 * 8 - Duration
 	 * 9 - Group
+	 * 10 - Device
 	 * 20 - Accept_Automatically
 	 * 30 - Deny_Automatically
 	 */
@@ -118,6 +119,9 @@ class GraphNode{
 			case "Group":
 				$this->type = 9;
 				break;
+			case "Device":
+				$this->type = 10;
+				break;
 			case "Accept_Automatically":
 				$this->type = 20;
 				break;
@@ -164,6 +168,9 @@ class GraphNode{
 				break;
 			case 'Duration':
 				return "Filter by duration";
+				break;
+			case 'Device':
+				return "Filter by device";
 				break;
 		}
 	}

@@ -137,4 +137,9 @@ class Group extends \yii\db\ActiveRecord
     	 
     	return parent::afterSave($isNewRecord, $changedAttributes);
     }
+    
+    public function getType(){
+    	if(self::TYPE_DOMAIN == $this->type) return Yii::t("aaa", 'Domain');
+    	else return Yii::t("aaa", 'System');
+    }
 }

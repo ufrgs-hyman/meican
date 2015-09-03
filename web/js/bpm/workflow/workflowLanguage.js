@@ -30,6 +30,13 @@ for (k in groups) {
 	groups_values.push(groups[k]);
 }
 
+var devices = devices ? devices : [];
+var devices_keys = [], devices_values = [];
+for (k in devices) {
+	devices_keys.push(k);
+	devices_values.push(devices[k]);
+}
+
 var owner_domains = owner_domains ? owner_domains : [];
 var owner_keys = [], owner_values = [];
 for (k in owner_domains) {
@@ -226,7 +233,7 @@ modules: [
 					    visuType: 'func', 
 					    func: function(val) {
 					        //console.debug(val);
-					        return val.dom_operator + "   " + val.value;
+					        return val.dom_operator + ": " + val.value;
 					    }
 					},
 	        		animColors:{
@@ -238,7 +245,6 @@ modules: [
 	        ],
 	    }
 	},
-
 	
 	{	name: "User",
 		container: {
@@ -317,8 +323,8 @@ modules: [
 	{	name: "Group",
 		container: {
 			xtype:"WireIt.MeicanContainer", 
-			image: imagePath + "request_group.png",
-			icon: iconPath + "ico_request_group.png",
+			image: imagePath + "group.png",
+			icon: iconPath + "ico_group.png",
 
 			terminals: [
 	        {	name: "_INPUT",
@@ -387,14 +393,14 @@ modules: [
 		}
 	},
 	
-	/*{	name: "WeekDay",
-		container: {
-			icon: iconPath + "ico_weekday.png",
-			xtype: "WireIt.MeicanContainer",
-			image: imagePath + "weekday.png",
-			propertiesForm: [],
-	   				
-			terminals: [
+	{	name: "Device",
+	    container: {
+	    	xtype:"WireIt.MeicanContainer", 
+	        icon: iconPath + "ico_device.png",
+	        image: imagePath + "device.png",
+	        propertiesForm: [],
+		   				
+	        terminals: [
 	        {	name: "_INPUT",
 	        	ddConfig: {
 	        	      type: "input",
@@ -437,30 +443,29 @@ modules: [
 			    }
 	        }
 	        ],
-
-			fields: [
-			{	type: "inplaceedit", 
-				inputParams: {
-					name: "post",
-					editorField:{
-						type: "select", 
-						inputParams: 
-						{	 
-							name: "day",
-							selectValues: weekday_keys,
-	                        selectOptions: weekday_values
-							
-						}
-					},
-					animColors:{
-						from:"#FFFF99", 
-						to:"#DDDDFF"
-					}
-				}
-			}, 		
-			]
-		}
-	},*/
+	        		
+	        fields: [
+	     	{	type: "inplaceedit", 
+	     		inputParams: {
+	     			name: "post",
+ 			        editorField:{
+ 			            type: "select", 
+ 			            inputParams: 
+ 			            {	label: "", 
+ 			                name: "title", 
+ 			                selectValues: devices_keys,
+ 	                        selectOptions: devices_values
+ 			            }
+ 			        },
+ 			        animColors:{
+ 			        	from:"#FFFF99",
+ 			        	to:"#DDDDFF"
+ 			        }
+ 			    }
+	     	},
+	     	],
+	    }
+	},
 	
 	{	name: "Bandwidth",
 		container: {
@@ -649,6 +654,81 @@ modules: [
 			]
 		}
 	},
+	
+	/*{	name: "WeekDay",
+		container: {
+			icon: iconPath + "ico_weekday.png",
+			xtype: "WireIt.MeicanContainer",
+			image: imagePath + "weekday.png",
+			propertiesForm: [],
+	   				
+			terminals: [
+	        {	name: "_INPUT",
+	        	ddConfig: {
+	        	      type: "input",
+	        	      allowedTypes: ["output"]
+	        	},
+	        	nMaxWires: "1",
+	        	wireConfig: {"drawingMethod": "arrows"},
+	           	direction: [-1,0],
+	            offsetPosition: {
+	                left: -15, 
+	                top: 9
+	            }
+	        },
+	
+	        {	name: "_OUTPUT_YES",
+	        	ddConfig: {
+	        	      type: "output",
+	        	      allowedTypes: ["input"]
+	        	},
+	        	direction: [1,0],
+	        	nMaxWires: "1",
+	        	wireConfig: { "drawingMethod": "arrows"},
+	        	offsetPosition: {
+	        		left: 55, 
+	        		top: -3
+	        	}
+	        },
+	        
+	        {	name: "_OUTPUT_NO",
+	        	ddConfig: {
+	        	      type: "output",
+	        	      allowedTypes: ["input"]
+	        	},
+			    direction: [1,1],
+			    nMaxWires: "1",
+			    wireConfig: { "drawingMethod": "arrows"},
+			    offsetPosition: {
+			        left: 55, 
+			        top: 21
+			    }
+	        }
+	        ],
+
+			fields: [
+			{	type: "inplaceedit", 
+				inputParams: {
+					name: "post",
+					editorField:{
+						type: "select", 
+						inputParams: 
+						{	 
+							name: "day",
+							selectValues: weekday_keys,
+	                        selectOptions: weekday_values
+							
+						}
+					},
+					animColors:{
+						from:"#FFFF99", 
+						to:"#DDDDFF"
+					}
+				}
+			}, 		
+			]
+		}
+	},*/
 	
 	/*{	name: "Hour",
 		container: {

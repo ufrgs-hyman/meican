@@ -49,6 +49,8 @@ return array(
 		'Filter by schedule' => 'Filtrar por horário',
 		'Filter by week day' => 'Filtrar por dia da semana',
 		'Filter by domain' => 'Filtrar por domínio',
+		'Filter by group' => 'Filtrar por grupo',
+		'Filter by device' => 'Filtrar por dispositivo',
 		'Unsuccessful enable the workflow {workflow} from Domain {domain}' => 'Não ativou o workflow {workflow} do domínio {domain}',
 		'Unsuccessful disable the workflow {workflow} from Domain {domain}' => 'Não desativou o workflow {workflow} do domínio {domain}',
 		'You don`t allowed to enable/disable in domain {domain}' => 'Você não tem permissão para ativar/desativar no domínio {domain}',

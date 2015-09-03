@@ -48,6 +48,12 @@ GroupAsset::register($this);
 				'contentOptions'=>['style'=>'width: 15px;'],
 			),
 				'name',
+			[
+				'label' => 'Tipo',
+				'value' => function($group){
+					return $group->getType();
+				}
+			],
 			),
 	]);
 	

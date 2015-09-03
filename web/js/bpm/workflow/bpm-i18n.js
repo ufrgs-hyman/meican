@@ -28,6 +28,8 @@ dict['pt-BR']['Friday'] = 'Sexta-feira';
 dict['pt-BR']['Saturday'] = 'Sábado';
 dict['pt-BR']['minutes'] = 'minutos';
 dict['pt-BR']['hours'] = 'horas';
+dict['pt-BR']['first'] = 'primeiro';
+dict['pt-BR']['last'] = 'último';
 
 dict['pt-BR'][''] = '';
 

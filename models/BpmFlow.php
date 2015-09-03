@@ -248,7 +248,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     				if($flow->status != self::STATUS_READY) BpmFlow::nextNodes($flow);
     				break;
     				
-    			//User
+    			//Group
     			case 'Group':
     				if($flow->status == self::STATUS_READY) BpmFlow::checkGroup($flow, $reservation);
     				if($flow->status != self::STATUS_READY) BpmFlow::nextNodes($flow);
@@ -293,6 +293,12 @@ class BpmFlow extends \yii\db\ActiveRecord
     			//Duration
     			case 'Duration':
     				if($flow->status == self::STATUS_READY) BpmFlow::checkDuration($flow, $connection);
+    				if($flow->status != self::STATUS_READY) BpmFlow::nextNodes($flow);
+    				break;
+    				
+    			//Domain
+    			case 'Device':
+    				if($flow->status == self::STATUS_READY) BpmFlow::checkDevice($flow, $connection);
     				if($flow->status != self::STATUS_READY) BpmFlow::nextNodes($flow);
     				break;
     			
@@ -490,6 +496,28 @@ class BpmFlow extends \yii\db\ActiveRecord
     	}
     }
 
+    public function checkDevice($flow, $connection){
+    	Yii::trace("Testando Device");
+    	$haveDevice = false;
+    	$paths = ConnectionPath::find()->where(['conn_id' => $connection->id, 'domain' => $flow->domain])->all();
+    	
+    	foreach($paths as $path){
+    		$port = Port::findOne(['urn' => $path->port_urn]);
+    		if(isset($port)){
+    			$device = $port->getDevice()->one();
+    			if(isset($device))
+    				if($device->id == $flow->value) $haveDevice = true;
+    		}
+    		
+    		if($haveDevice == true) {
+	    		$flow->status = self::STATUS_YES;
+	    		return;
+	    	}
+    	}
+    	
+    	Yii::trace("Não passou em DEVICE");
+    	$flow->status = self::STATUS_NO;
+    }
 
     public function checkDomain($flow, $connection){
     	Yii::trace("Testando Domain");
