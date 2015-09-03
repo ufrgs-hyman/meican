@@ -45,7 +45,7 @@ class TopologyNotification {
         } else if (count($changes) == 1){
             $msg = "The <b>".$changes[0]['domain']."</b> topology has been synchronized. <b>".
             $appliedChangesSize."</b> changes were applied".($pendingChangesSize > 0 ? ' and <b>'.$pendingChangesSize.'</b> are pending.' : '.');
-        } else return "error";
+        } else return "";
         
         $date = Yii::$app->formatter->asDatetime($notification->date);
     

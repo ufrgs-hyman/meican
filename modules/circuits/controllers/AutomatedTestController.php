@@ -14,9 +14,8 @@ class AutomatedTestController extends RbacController {
 	
 	public $enableCsrfValidation = false;
 
-	///WORKAROUND PROBLEMA DA TOPOLOGIA DINAMICA NAS RESERVAS
 	public function actionIndex() {
-		self::canRedir('topology/create');
+		//self::canRedir('topology/create');
 		
 		foreach (AutomatedTest::find()->all() as $test) {
 			$test->deleteIfInvalid();
@@ -73,7 +72,7 @@ class AutomatedTestController extends RbacController {
 	}
 	
 	public function actionDelete() {
-		if(!self::can('topology/delete')) return false;
+		//if(!self::can('topology/delete')) return false;
 		
 		if(isset($_POST["ids"])) {
 			foreach (json_decode($_POST["ids"]) as $testId) {

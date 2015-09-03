@@ -25,7 +25,7 @@ class ConfigurationForm extends Model {
     {
         return [
             'meicanNsa' => Yii::t('circuits', 'MEICAN NSA ID'),
-            'uniportsEnabled' => Yii::t('circuits', 'Portas Unidirecionais'),
+            'uniportsEnabled' => Yii::t('circuits', 'Unidirectional Ports'),
             'defaultProviderNsa' => Yii::t('circuits', 'Provider NSA ID'),
             'defaultCSUrl' => Yii::t('circuits', 'Connection Service URL'),
             'protocol' => Yii::t('circuits', 'Protocol'),
