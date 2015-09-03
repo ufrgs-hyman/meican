@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\init\controllers\service;
+namespace app\modules\init\controllers\services;
 
 use yii\console\Controller;
 use Yii;
@@ -18,14 +18,14 @@ class CrontabController extends Controller {
     }
 
     private function getExecutionPath($taskId) {
-        return Yii::$app->basePath."/yii init/service/crontab/task ".$taskId;
+        return Yii::$app->basePath."/yii init/services/crontab/task ".$taskId;
     }
     
     public function actionStart() {
         $crontab = new CrontabManager();
         $job = $crontab->newJob();
         $job->on('* * * * *');
-        $job->doJob(Yii::$app->basePath."/yii init/service/crontab/listener");
+        $job->doJob(Yii::$app->basePath."/yii init/services/crontab/listener");
         $crontab->add($job);
         $crontab->save(false);
         echo "MEICAN Crontab Service Started\n";

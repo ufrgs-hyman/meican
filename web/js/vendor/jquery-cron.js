@@ -1,4 +1,6 @@
 /*
+ * Updated to I18N Support
+ * 
  * jQuery gentleSelect plugin (version 0.1.4.1)
  * http://shawnchin.github.com/jquery-cron
  *
@@ -115,11 +117,12 @@
     // options for days of month
     var str_opt_dom = "";
     for (var i = 1; i < 32; i++) {
-        if (i == 1 || i == 21 || i == 31) { var suffix = "st"; }
+        /*if (i == 1 || i == 21 || i == 31) { var suffix = "st"; }
         else if (i == 2 || i == 22) { var suffix = "nd"; }
         else if (i == 3 || i == 23) { var suffix = "rd"; }
         else { var suffix = "th"; }
-        str_opt_dom += "<option value='"+i+"'>" + i + suffix + "</option>\n";
+        str_opt_dom += "<option value='"+i+"'>" + i + suffix + "</option>\n";*/
+        str_opt_dom += "<option value='"+i+"'>" + i + "</option>\n";
     }
 
     // options for months
@@ -128,7 +131,8 @@
                   "May", "June", "July", "August",
                   "September", "October", "November", "December"];
     for (var i = 0; i < months.length; i++) {
-        str_opt_month += "<option value='"+(i+1)+"'>" + months[i] + "</option>\n";
+        console.log(tt(months[i]))
+        str_opt_month += "<option value='"+(i+1)+"'>" + tt(months[i]) + "</option>\n";
     }
 
     // options for day of week
@@ -136,19 +140,20 @@
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
                 "Friday", "Saturday"];
     for (var i = 0; i < days.length; i++) {
-        str_opt_dow += "<option value='"+i+"'>" + days[i] + "</option>\n";
+        str_opt_dow += "<option value='"+i+"'>" + tt(days[i]) + "</option>\n";
     }
 
     // options for period
     var str_opt_period = "";
-    var periods = ["minute", "hour", "day", "week", "month", "year"];
+    //var periods = ["minute", "hour", "day", "week", "month", "year"];    REMOVIDO
+    var periods = ["hour", "day", "week", "month", "year"];
     for (var i = 0; i < periods.length; i++) {
-        str_opt_period += "<option value='"+periods[i]+"'>" + periods[i] + "</option>\n";
+        str_opt_period += "<option value='"+periods[i]+"'>" + tt(periods[i]) + "</option>\n";
     }
 
     // display matrix
     var toDisplay = {
-        "minute" : [],
+        //"minute" : [],    REMOVIDO
         "hour"   : ["mins"],
         "day"    : ["time"],
         "week"   : ["dow", "time"],
@@ -157,7 +162,7 @@
     };
 
     var combinations = {
-        "minute" : /^(\*\s){4}\*$/,                    // "* * * * *"
+        //"minute" : /^(\*\s){4}\*$/,                    // "* * * * *"      REMOVIDO
         "hour"   : /^\d{1,2}\s(\*\s){3}\*$/,           // "? * * * *"
         "day"    : /^(\d{1,2}\s){2}(\*\s){2}\*$/,      // "? ? * * *"
         "week"   : /^(\d{1,2}\s){2}(\*\s){2}\d{1,2}$/, // "? ? * * ?"
@@ -306,7 +311,7 @@
             }
 
             block["period"] = $("<span class='cron-period'>"
-                    + "Every <select name='cron-period'>" + custom_periods
+                    + tt("Every") + " <select name='cron-period'>" + custom_periods
                     + str_opt_period + "</select> </span>")
                 .appendTo(this)
                 .data("root", this);
@@ -317,7 +322,7 @@
             if (o.useGentleSelect) select.gentleSelect(eo);
 
             block["dom"] = $("<span class='cron-block cron-block-dom'>"
-                    + " on the <select name='cron-dom'>" + str_opt_dom
+                    + " " + tt("on day") + " <select name='cron-dom'>" + str_opt_dom
                     + "</select> </span>")
                 .appendTo(this)
                 .data("root", this);
@@ -326,7 +331,7 @@
             if (o.useGentleSelect) select.gentleSelect(o.domOpts);
 
             block["month"] = $("<span class='cron-block cron-block-month'>"
-                    + " of <select name='cron-month'>" + str_opt_month
+                    + " " + tt("of") + " <select name='cron-month'>" + str_opt_month
                     + "</select> </span>")
                 .appendTo(this)
                 .data("root", this);
@@ -335,8 +340,8 @@
             if (o.useGentleSelect) select.gentleSelect(o.monthOpts);
 
             block["mins"] = $("<span class='cron-block cron-block-mins'>"
-                    + " at <select name='cron-mins'>" + str_opt_mih
-                    + "</select> minutes past the hour </span>")
+                    + " " + tt("on minute") + " <select name='cron-mins'>" + str_opt_mih
+                    + "</select> </span>")
                 .appendTo(this)
                 .data("root", this);
 
@@ -344,7 +349,7 @@
             if (o.useGentleSelect) select.gentleSelect(o.minuteOpts);
 
             block["dow"] = $("<span class='cron-block cron-block-dow'>"
-                    + " on <select name='cron-dow'>" + str_opt_dow
+                    + " " + tt("on") + " <select name='cron-dow'>" + str_opt_dow
                     + "</select> </span>")
                 .appendTo(this)
                 .data("root", this);
@@ -353,7 +358,7 @@
             if (o.useGentleSelect) select.gentleSelect(o.dowOpts);
 
             block["time"] = $("<span class='cron-block cron-block-time'>"
-                    + " at <select name='cron-time-hour' class='cron-time-hour'>" + str_opt_hid
+                    + " " + tt("at") + " <select name='cron-time-hour' class='cron-time-hour'>" + str_opt_hid
                     + "</select>:<select name='cron-time-min' class='cron-time-min'>" + str_opt_mih
                     + " </span>")
                 .appendTo(this)
