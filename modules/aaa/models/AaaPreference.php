@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\circuits\models;
+namespace app\modules\aaa\models;
 
 use Yii;
 use app\models\Preference;
@@ -23,6 +23,10 @@ class AaaPreference extends Preference {
             static::AAA_FEDERATION_ENABLED,
             static::AAA_FEDERATION_GROUP,
         ]);
+    }
+
+    static function isFederationEnabled(){
+        return (self::findOneValue(self::AAA_FEDERATION_ENABLED) === 'true');
     }
 }
 

@@ -5,7 +5,7 @@ namespace app\modules\aaa\controllers;
 use yii\web\Controller;
 use app\controllers\RbacController;
 use app\modules\aaa\models\ConfigurationForm;
-use app\modules\aaa\models\FederationPreference;
+use app\modules\aaa\models\AaaPreference;
 use Yii;
 
 class ConfigurationController extends RbacController {
@@ -16,7 +16,7 @@ class ConfigurationController extends RbacController {
     	}
     		
         $config = new ConfigurationForm;
-        $config->setPreferences(FederationPreference::findAll());
+        $config->setPreferences(AaaPreference::findAll());
 
         if ($config->load($_POST)) {
         	if(!self::can('configuration/update')){

@@ -31,13 +31,13 @@ class ConfigurationForm extends Model {
     public function setPreferences($prefs) {
         foreach ($prefs as $pref) {
             switch ($pref->name) {
-                case FederationPreference::FEDERATION_GROUP:
+                case AaaPreference::AAA_FEDERATION_GROUP:
                     $this->group = $pref->value;                    
                     break;
-                case FederationPreference::FEDERATION_DOMAIN:
+                case AaaPreference::AAA_FEDERATION_DOMAIN:
                     $this->domain = $pref->value;                
                     break;
-                case FederationPreference::FEDERATION_STATUS:
+                case AaaPreference::AAA_FEDERATION_ENABLED:
                     $this->status = $pref->value;                     
                     break;
                 default:
@@ -47,15 +47,15 @@ class ConfigurationForm extends Model {
     }
 
     public function save() {
-        $pref = FederationPreference::findOne(FederationPreference::FEDERATION_GROUP);
+        $pref = AaaPreference::findOne(AaaPreference::AAA_FEDERATION_GROUP);
         $pref->value = $this->group;
         if(!$pref->save()) return false;
 
-        $pref = FederationPreference::findOne(FederationPreference::FEDERATION_DOMAIN);
+        $pref = AaaPreference::findOne(AaaPreference::AAA_FEDERATION_DOMAIN);
         $pref->value = $this->domain;
         if(!$pref->save()) return false;
 
-        $pref = FederationPreference::findOne(FederationPreference::FEDERATION_STATUS);
+        $pref = AaaPreference::findOne(AaaPreference::AAA_FEDERATION_ENABLED);
         $pref->value = $this->status;
         if(!$pref->save()) return false;
 
