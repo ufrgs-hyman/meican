@@ -104,6 +104,10 @@ return array(
 		'Automated Tests' => "Testes Automatizados",
 		'Reservations with Waypoints' => 'Reservas com Intermediários',
 		'#Roles in Domain' => '#Perfis no Domínio',
+		'Configuration' => 'Configuração',
+		'Federation Configuration' => 'Configuração de Federação',
+		'Enabled' => 'Ativada',
+		'Disabled' => 'Desativada',
 		
 		
 );

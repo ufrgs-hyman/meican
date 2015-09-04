@@ -2,6 +2,8 @@
 
 namespace app\modules\aaa\controllers;
 
+use app\models\Preference;
+
 use app\modules\aaa\models\UserForm;
 use app\modules\aaa\models\AccountForm;
 use app\modules\aaa\models\UserSearch;
@@ -51,7 +53,7 @@ class UserController extends RbacController {
     	if($userForm->load($_POST) && $userForm->validate()) {
     		$user = new User;
     		$user->setFromUserForm($userForm);
-    		
+
     		if($user->save()) {
     			Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User added successfully'));
     			

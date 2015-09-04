@@ -14,6 +14,15 @@ class Preference extends \yii\db\ActiveRecord
 {
     //retorna o NSA que identifica a aplicação
     const MEICAN_NSA = "meican.nsa";
+    
+    //retorna o Status da federação
+    const FEDERATION_STATUS = "aaa.federation.enabled";
+    
+    //retorna o Grupo em que os usuários vindos da federeção são adicionados
+    const FEDERATION_GROUP = "aaa.federation.group";
+    
+    //retorna o Dominio para o qual usuários vindo da federeção tem seu perfil associados
+    const FEDERATION_DOMAIN = "aaa.federation.domain";
 
     /**
      * @inheritdoc
@@ -63,5 +72,9 @@ class Preference extends \yii\db\ActiveRecord
 
     static function findOneValue($name) {
         return self::findOne($name)->value;
+    }
+    
+    static function isFederationEnabled(){
+    	return (self::findOne(self::FEDERATION_STATUS)->value === 'true');
     }
 }

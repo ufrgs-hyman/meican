@@ -26,12 +26,14 @@ use yii\helpers\Url;
         	<input style="margin-left: 35%;" class="next ui-button ui-widget ui-state-default ui-corner-all" type="submit" id="submit_login" name="submit_login" value="<?= Yii::t('init', 'Sign in') ?>" role="button" aria-disabled="false" tabindex="3"/>
 		</div>
  	</div>
- 	<div class="login"><?= Yii::t('init', 'Alternatively, 
-    you can access MEICAN using the Federated Academic Community (CAFe):'); ?>
-    </div>
-    <div style="margin-top: 10px;">
-    		<button id="cafe-button" style="margin-left: 34%; width: 80px; height: 32px;">
-                <img alt="Cafe" width="100%" src="<?= Url::base(); ?>/images/cafe.png">
-            </button>
-    </div>
+ 	
+ 	<?php if($federation){
+	 	echo "<div class='login'>".Yii::t('init', 'Alternatively, you can access MEICAN using the Federated Academic Community (CAFe):')."</div>";
+	    echo '<div style="margin-top: 10px;">
+	    		<button id="cafe-button" style="margin-left: 34%; width: 80px; height: 32px;">
+	                <img alt="Cafe" width="100%" src="'.Url::base().'/images/cafe.png">
+	            </button>
+	    </div>';
+    }?>
+
 <?php ActiveForm::end(); ?>

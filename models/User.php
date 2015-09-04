@@ -21,7 +21,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
 	public $_settings;
 	public $_groupRoleName;
-	public $_domainId;
+	public $_domain;
     /**
      * @inheritdoc
      */
@@ -151,10 +151,12 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
     public function setFromData($login, $password, $name, $email, 
-        $groupRoleName, $domainId = null) {
+        $groupRoleName, $domain = null) {
         $this->login = $login;
         $this->authkey = Yii::$app->getSecurity()->generateRandomString();
         $this->password = Yii::$app->getSecurity()->generatePasswordHash($password);
+        $this->_groupRoleName = $groupRoleName;
+        $this->_domain = $domain;
         
         $this->_settings = $this->getUserSettings()->one();
         if (!$this->_settings) $this->_settings = new UserSettings;
@@ -168,6 +170,14 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     	if ($isNewRecord) {
     		$this->_settings->id = $this->id;
     		$this->_settings->save();
+    		
+    		if(isset($this->_groupRoleName)){
+    			$userDomainRole = new UserDomainRole;
+	    		$userDomainRole->user_id = $this->id;
+	    		$userDomainRole->domain = $this->_domain;
+	    		$userDomainRole->_groupRoleName = $this->_groupRoleName;
+	    		$userDomainRole->save();
+    		}
     	}
     
     	return parent::afterSave($isNewRecord, $changedAttributes);

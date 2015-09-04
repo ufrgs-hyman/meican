@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use yii\web\Controller;
 use app\models\User;
 use app\models\Group;
+use app\models\Preference;
 use app\modules\init\models\LoginForm;
 use app\modules\init\models\CafeUserForm;
 use app\modules\init\models\ForgotPasswordForm;
@@ -31,7 +32,8 @@ class LoginController extends Controller {
         }
         	
         return $this->render('login', array(
-          	'model'=>$model
+          	'model'=>$model,
+        	'federation' => Preference::isFederationEnabled(),
         ));
 	}
 	 
@@ -84,7 +86,7 @@ class LoginController extends Controller {
 			$data = Yii::$app->session["data_from_cafe"];
 			$data = json_decode($data);
 			$user->setFromData($cafeUser->login, $cafeUser->password, $data->name,
-				$data->email, Group::GUEST_GROUP_ROLE);
+				$data->email, Preference::findOneValue(Preference::FEDERATION_GROUP), Preference::findOneValue(Preference::FEDERATION_DOMAIN));
 			if($user->save()) {
 				$loginForm = new LoginForm;
 			 	$loginForm->createSession($user);

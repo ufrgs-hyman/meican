@@ -56,6 +56,7 @@ echo Menu::widget([
 			'items'=>[
 					['label'=>Yii::t('aaa','Users'), 'url'=>['/aaa/user/index'], 'visible'=>(RbacController::can('user/read') || RbacController::can('role/read'))],
 					['label'=>Yii::t('aaa','Groups'), 'url'=>['/aaa/group/index'], 'visible'=>RbacController::can('group/read')],
+					['label'=>Yii::t('aaa','Configuration'), 'url'=>['/aaa/configuration/index'], 'visible'=>RbacController::can('group/update')],
 			],
 		],
 		[
