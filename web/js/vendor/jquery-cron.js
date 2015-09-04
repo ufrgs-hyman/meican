@@ -131,7 +131,6 @@
                   "May", "June", "July", "August",
                   "September", "October", "November", "December"];
     for (var i = 0; i < months.length; i++) {
-        console.log(tt(months[i]))
         str_opt_month += "<option value='"+(i+1)+"'>" + tt(months[i]) + "</option>\n";
     }
 

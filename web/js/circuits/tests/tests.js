@@ -7,10 +7,26 @@ $(document).on('ready pjax:success', function() {
 	});
 	
 	$("#test-grid").on("click",'img.edit-button',  function() {
-		if ($(this).attr("disabled") != "disabled") { 
-			edit(this);
-			clearCheckbox();
-		}
+		edit(this);
+
+		var rowNode = this;
+		$('#test-dialog').dialog({
+			title: "Update",
+			width: 360,
+			height: 300,
+			modal: true,
+			buttons: [{
+				text: tt("Save"),
+				click: function() {
+					save(rowNode);
+		        }},
+		        {
+		        text: tt("Cancel"),
+		        click: function() {
+		          	$(this).dialog('close');
+		        }
+		    }],
+		});
 	});
 });
 
@@ -18,14 +34,60 @@ $(document).ready(function() {
 	prepareRefreshButton();
 	
 	$("#add-button").click(function() {
-		add();
-		$("#test-grid img.edit-button").attr("disabled", "disabled");
+		prepareCreate();
+		$('#test-dialog').dialog({
+			title: "Create",
+			width: 360,
+			height: 300,
+			modal: true,
+			buttons: [{
+				text: tt("Save"),
+				click: function() {
+					create();
+		        }},
+		        {
+		        text: tt("Cancel"),
+		        click: function() {
+		          	$(this).dialog('close');
+		        }
+		    }],
+		});
+		return false;
 	});	
+
+	domains = JSON.parse($("#domains").text());
+
+	initEndPointSelects("src", domains);
+    initEndPointSelects("dst", domains);
+
+	$("#tabs").tabs();
+	$('#cron-widget').cron({
+        initial: "0 12 * * *",
+        onChange: function() {
+            $("#cron-value").val($(this).cron("value"));
+        },
+    });
 });
+
+function prepareCreate() {
+	$('#tabs').tabs("option", "active", 0);
+	domains = JSON.parse($("#domains").text());
+	enableSelect("src", 'domain');
+	enableSelect("dst", 'domain');
+	$("#src-domain").val("");
+	$("#dst-domain").val("");
+	fillDeviceSelect("src");
+	fillNetworkSelect("src");
+	fillPortSelect("src");
+	fillVlanSelect("src");
+	fillDeviceSelect("dst");
+	fillNetworkSelect("dst");
+	fillPortSelect("dst");
+	fillVlanSelect("dst");
+}
 
 function submitDeleteForm() {
 	deleteChecked();
-	enableMainButtons();
 }
 
 function clearCheckbox() {
@@ -33,97 +95,32 @@ function clearCheckbox() {
 	$('#delete-button').hide();
 }
 
-function add() {
-	disableMainButtons();
-	
-	var columns = '<tr data-key="new">';
-    
-	columns += '<td><a href="#"><img onclick="create()" src="'+baseUrl+'/images/ok.png"/></a></td>';
-	columns += '<td><img onclick="cancelAdd()" alt="clear" border="0" id="delete" src="'+baseUrl+'/images/clear.png"/></td>';
-    columns += '<td>' + tt("New") + '</td>';
-    columns += '<td>' + tt("None") + '</td>';
-    columns += '<td>' + tt("Never") + '</td>';
-    
-    columns += '<td><select id="src-domain-new"></select></td>';
-    
-    columns += '<td><select disabled id="src-device-new"/></td>';
-    
-    columns += '<td><select name="AutomatedTestForm[src_port]" disabled id="src-port-new"/></td>';
-    
-    columns += '<td><select id="dst-domain-new"></select></td>';
-    columns += '<td><select disabled id="dst-device-new"/></td>';
-    columns += '<td><select name="AutomatedTestForm[dst_port]" disabled id="dst-port-new"/></td>';
-    columns += '<td><select name="AutomatedTestForm[provider]" disabled id="provider-select-new"/></td>';
-    columns += '<td><select class="freq-type" name="AutomatedTestForm[freq_type]" id="freq-type-new"></select></td>';
-    columns += '<td><input type="text" value="" name="AutomatedTestForm[freq_value]" id="freq-value-new" hidden></input></td>';
-    columns += '<td></td></tr>';
-    
-    if($("#test-grid tr[data-key]").length == 0) {
-    	$("#test-grid tbody tr").hide();
-    }
-    $('#test-grid tbody').append(columns);
-    domains = JSON.parse($("#domains").text());
-    initEndPointSelects("src", domains, "new");
-    initEndPointSelects("dst", domains, "new");
-    initFrequencySelect("new");
-}
-
-function cancelAdd() {
-	enableMainButtons();
-	$("#test-grid img.edit-button").attr("disabled", false);
-	
-	$('#test-grid tr[data-key=' + '"new"]').remove();
-	if($("#test-grid tr[data-key]").length == 0) {
-    	$("#test-grid tbody tr").show();
-    }
-}
-
-function cancelEdit(row) {
-	enableMainButtons();
-	$("#test-grid img.edit-button").attr("disabled", false);
-	
-	rowId = $(row).parent().parent().parent().attr('data-key');
-	oldRow = $("#original-" + rowId).html();
-	$(row).parent().parent().parent().replaceWith(oldRow);
-}
-
-function enableMainButtons() {
-	$("#refresh-button").attr("disabled", false);
-	$("#add-button").attr("disabled", false);
-}
-
-function disableMainButtons() {
-	disableAutoRefresh(true);
-	$("#add-button").attr("disabled", "disabled");
-}
-
 function edit(row) {
-	disableMainButtons();
-	$("#test-grid img.edit-button").attr("disabled", "disabled");
-	
+	$('#tabs').tabs("option", "active", 0);
 	rowId = $(row).parent().parent().parent().attr('data-key');
 	rowChilds = $(row).parent().parent().parent().children();
 	
-	domains = JSON.parse($("#domains").text());
-	$(rowChilds[14]).html('<label id="original-' + rowId + '" hidden></label>');
-	$(row).parent().parent().parent().clone().appendTo( "#original-" + rowId );
-	$(rowChilds[0]).html('<a href="#"><img onclick="save(this)" src="'+baseUrl+'/images/ok.png"/></a>');
-	$(rowChilds[1]).html('<a href="#"><img onclick="cancelEdit(this)" src="'+baseUrl+'/images/clear.png"/></a>');
-	$(rowChilds[12]).html('<select class="freq-type" name="AutomatedTestForm[freq_type]" id="freq-type-' + rowId + '"></select></td>');
-	$(rowChilds[13]).html('<input type="text" name="AutomatedTestForm[freq_value]" value="' + getData('freq-value', rowId) + '" id="freq-value-' + rowId + '" hidden></input>');
-	
-    initEndPointSelects("src", domains, rowId);
-    initEndPointSelects("dst", domains, rowId);
-    fillDeviceSelect("src", getData("src-domain", rowId), rowId, true);
-	fillPortSelect("src", getData("src-device", rowId), rowId, true);
-	fillDeviceSelect("dst", getData("dst-domain", rowId), rowId, true);
-	fillPortSelect("dst", getData("dst-device", rowId), rowId, true);
-	fillProviderSelect(getData('src-domain', rowId), getData('dst-domain', rowId), rowId, true);
-    initFrequencySelect(rowId, true);
+    fillDomainSelect("src", JSON.parse($("#domains").text()), getData("src-domain", rowId), true);
+    clearSelect("src", 'network');
+	clearSelect("dst", 'network');
+	disableSelect("dst",'network');
+	disableSelect("src", 'network');
+	fillDeviceSelect("src", getData("src-domain", rowId), null, getData("src-device", rowId), true);
+	fillPortSelect("src", getData("src-device", rowId), getData("src-port", rowId), true);
+	fillVlanSelect("src", getData("src-port", rowId), getData("src-vlan", rowId), true);
+	fillDomainSelect("dst", JSON.parse($("#domains").text()), getData("dst-domain", rowId), true);
+	fillDeviceSelect("dst", getData("dst-domain", rowId), null, getData("dst-device", rowId), true);
+	fillPortSelect("dst", getData("dst-device", rowId), getData("dst-port", rowId), true);
+	fillVlanSelect("dst", getData("dst-port", rowId), getData("dst-vlan", rowId), true);
+	$("#cron-widget").cron("value", getData("cron-value", rowId));
+}
+
+function getData(object, rowId) {
+	return $('#test-grid tr[data-key="' + rowId + '"] td.' + object)[0].getAttribute('data');
 }
 
 function prepareRefreshButton() {
-	refresher = setInterval(updateGridView, 5000);
+	refresher = setInterval(updateGridView, 60000);
 	
 	$("#refresh-button").click(function(){
 		if ($("#refresh-button").val() == "false") {
@@ -131,11 +128,11 @@ function prepareRefreshButton() {
 		} else {
 			disableAutoRefresh();
 		}
+		return false;
 	});
 }
 
 function disableAutoRefresh(disableButton) {
-	$("#loader-img").hide();
 	if (disableButton) 
 		$("#refresh-button").attr("disabled", "disabled");
 
@@ -146,7 +143,6 @@ function disableAutoRefresh(disableButton) {
 
 function enableAutoRefresh() {
 	$("#deleteButton").hide();
-	$("#loader-img").show();
 	
 	$("#refresh-button").attr("disabled", false);
 	updateGridView();
@@ -163,17 +159,13 @@ function updateGridView() {
 }
 
 function create() {
-	//Verify if all the mandatory fields are completed. If they're ed, the informations will be saved. 
-	//The mandatory fields are: Source -> Domain and device, Destin -> Domain and device and
-	//Frequency -> Type and String
-	if(createValidate()) {
+	if(validateForm()) {
 		$.ajax({
 	        type: "POST",
 	        url: baseUrl + '/circuits/automated-test/create',
-	        data: $("#automated-test-form").serialize(),
+	        data: $("#test-details-form").serialize(),
 	        success: function (response) {
-	        	enableAutoRefresh();
-	        	$("#add-button").attr("disabled", false);
+	        	$("#test-dialog").dialog("close");
 	        },
 	    });
 	} else {
@@ -181,25 +173,13 @@ function create() {
 	}
 }
 
-function createValidate() {
-	console.log($("#src-domain-new").val(), 
-			$("#src-device-new").val(),
-			$("#src-port-new").val(),
-			$("#dst-domain-new").val(),
-			$("#dst-device-new").val(),
-			$("#dst-port-new").val(),
-			$("#provider-select-new").val(),
-			$("#freq-value-new").val(),
-			$("#freq-type-new").val());
-	if ($("#src-domain-new").val() == "null" || 
-			$("#src-device-new").val() == "null" ||
-			$("#src-port-new").val() == "null" ||
-			$("#dst-domain-new").val() == "null" || 
-			$("#dst-device-new").val() == "null" ||
-			$("#dst-port-new").val() == "null" ||
-			$("#provider-select-new").val() == "null" ||
-			$("#freq-value-new").val() == "" ||
-			$("#freq-type-new").val() == "null") {
+function validateForm() {
+	console.log($("#src-vlan").val(), 
+			$("#dst-vlan").val(),
+			$("#cron-widget").cron("value"));
+	if ($("#src-vlan").val() == "" || 
+			$("#dst-vlan").val() == "" ||
+			$("#cron-widget").cron("value") == "") {
 		return false;
 	}
 	return true;
@@ -207,26 +187,18 @@ function createValidate() {
 
 function save(row) {
 	rowId = $(row).parent().parent().parent().attr('data-key');
-	if (updateValidate(rowId)) {
+	if (validateForm()) {
 		$.ajax({
 	        type: "POST",
 	        url: baseUrl + '/circuits/automated-test/update?id=' + rowId,
-	        data: $("#automated-test-form").serialize(),
+	        data: $("#test-details-form").serialize(),
 	        success: function (response) {
-	        	enableAutoRefresh();
-	        	$("#add-button").attr("disabled", false);
+	        	$("#test-dialog").dialog("close");
 	        },
 	    });
 	} else {
 		alert("Invalid input");
 	}
-}
-
-function updateValidate(row) {
-	if ($("#freq-value-" + rowId).val() == "" || 
-			$("#freq-type-" + rowId).val() == "null") return false;
-	
-	return true;
 }
 
 function deleteChecked() {
@@ -241,224 +213,186 @@ function deleteChecked() {
 			ids: JSON.stringify(keys),
 		},
 		success: function (response) {
-        	enableAutoRefresh();
         },
 	});
 }
 
-function initFrequencySelect(rowId, currentEnabled) {
-	$("#freq-type-" + rowId).append('<option value="null">' + tt("select") + '</option>');
-	
-	$("#freq-type-" + rowId).append('<option value="daily">' + $("#daily-label").text() + '</option>');
-	$("#freq-type-" + rowId).append('<option value="weekly">' + $("#weekly-label").text() + '</option>');
-	$("#freq-type-" + rowId).append('<option value="monthly">' + $("#monthly-label").text() + '</option>');
-	if (currentEnabled != null) {
-		$("#freq-type-" + rowId).val(getData("freq-type", rowId).toLowerCase());
-	}
-	
-	$(".hourPicker").timepicker({
-		timeFormat: "H:i",
-        step: 30,
-	});
-	
-	$("#freq-type-" + rowId).on('change', function() {
-		initFrequencyDialog(this.value, rowId);
-	});
-}
-
-function getData(object, rowId) {
-	return $('#test-grid tr[data-key="' + rowId + '"] td.' + object)[0].getAttribute('data');
-}
-
-function fillProviderSelect(srcDomainId, dstDomainId, rowId, currentEnabled) {
-	clearSelect("provider", "select", rowId);
-	if (srcDomainId != "null" && dstDomainId != "null") {
-		$("#provider-select-" + rowId).append('<option value="null">' + tt("loading") + '</option>');
-		$.ajax({
-			url: baseUrl+'/topology/provider/get-by-domains',
-			dataType: 'json',
-			data: {
-				domains: JSON.stringify([srcDomainId, dstDomainId]),
-			},
-			success: function(response){
-				clearSelect("provider", "select", rowId);
-				$("#provider-select-" + rowId).append('<option value="null">' + tt("select") + '</option>');
-				enableSelect("provider", "select", rowId);
-				for (var i = 0; i < response.length; i++) {
-					$("#provider-select-" + rowId).append('<option value="' + response[i].id + '">' + 
-							response[i].nsa.split(":")[3] + " - " + 
-							response[i].type.charAt(0) + response[i].type.slice(1).toLowerCase() + '</option>');
-			    }
-				if (currentEnabled != null) {
-					$("#provider-select-" + rowId).val(getData("provider", rowId));
-				}
-			}
-		});
-	} else {
-		disableSelect("provider", "select", rowId);
-	}
-}
-
-function fillDomainSelect(endPointType, domains, rowId) {
-	clearSelect(endPointType, "domain", rowId);
-	$("#"+ endPointType + "-domain-" + rowId).append('<option value="null">' + tt("select") + '</option>');
+function fillDomainSelect(endPointType, domains, domainId, initDisabled) {
+	disableSelect(endPointType, "domain");
+	$("#"+ endPointType + "-domain").append('<option value="">' + tt('select') + '</option>');
 	for (var i = 0; i < domains.length; i++) {
-		$("#"+ endPointType + "-domain-" + rowId).append('<option value="' + domains[i].id + '">' + domains[i].name + '</option>');
+		$("#"+ endPointType + "-domain").append('<option value="' + domains[i].id + '">' + domains[i].name + '</option>');
 	}
-	if (rowId != "new") {
-		$("#"+ endPointType + "-domain-" + rowId).val(getData(endPointType + "-domain", rowId));
+	if (domainId != null) {
+		$("#"+ endPointType + "-domain").val(domainId);
 	}
+	if(!initDisabled) enableSelect(endPointType, "domain");
 }
 
-function fillDeviceSelect(endPointType, domainId, rowId, currentEnabled) {
-	clearSelect(endPointType, "device", rowId);
-	if (domainId != "null" && domainId != null) {
-		$("#"+ endPointType + "-device-" + rowId).append('<option value="null">' + tt("loading") + '</option>');
+function fillNetworkSelect(endPointType, domainId, networkId, initDisabled) {
+    disableSelect(endPointType, "network");
+	clearSelect(endPointType, "network");
+	if (domainId != "" && domainId != null) {
+		$("#"+ endPointType + "-network").append('<option value="">' + tt('loading') + '</option>');
 		$.ajax({
-			url: baseUrl+'/topology/device/get-by-domain',
-			dataType: 'json',
+			url: baseUrl+'/topology/network/get-by-domain',
 			data: {
 				id: domainId,
 			},
-			success: function(response){
-				clearSelect(endPointType, "device", rowId);
-				$("#"+ endPointType + "-device-" + rowId).append('<option value="null">' + tt("select") + '</option>');
-				enableSelect(endPointType, "device", rowId);
-				for (var i = 0; i < response.length; i++) {
-					$("#"+ endPointType + "-device-" + rowId).append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
-			    }
-				if (currentEnabled != null) {
-					$("#"+ endPointType + "-device-" + rowId).val(getData(endPointType + "-device", rowId));
-				}
-			}
-		});
-	} else {
-		disableSelect(endPointType, "device", rowId);
-	}
-}
-
-function fillPortSelect(endPointType, deviceId, rowId, currentEnabled) {
-	clearSelect(endPointType, "port", rowId);
-	if (deviceId != "null" && deviceId != null) {
-		$("#"+ endPointType + "-port-" + rowId).append('<option value="null">' + tt("loading") + '</option>');
-		$.ajax({
-			url: baseUrl+'/topology/urn/get-by-device',
 			dataType: 'json',
-			data: {
-				id: deviceId,
-				cols: JSON.stringify(['id','port']),
-			},
 			success: function(response){
-				clearSelect(endPointType, "port", rowId);
-				$("#"+ endPointType + "-port").append('<option value="null">' + tt("select") + '</option>');
-				enableSelect(endPointType, "port", rowId);
+				clearSelect(endPointType, "network");
+				$("#"+ endPointType + "-network").append('<option value="">' + tt('select') + '</option>');
 				for (var i = 0; i < response.length; i++) {
-					var port = response[i].port;
-					if (response[i].port == "") {
-						port = tt("no name");
-					}
-					$("#"+ endPointType + "-port-" + rowId).append('<option value="' + response[i].id + '">' + port + '</option>');
+					$("#"+ endPointType + "-network").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
 			    }
-				if (currentEnabled != null) {
-					$("#"+ endPointType + "-port-" + rowId).val(getData(endPointType + "-port", rowId));
+				if (networkId != null) {
+					$("#"+ endPointType + "-network").val(networkId);
 				}
+				if (!initDisabled) enableSelect(endPointType, "network");
 			}
 		});
-	} else {
-		disableSelect(endPointType, "port", rowId);
 	} 
 }
 
-function initEndPointSelects(endPointType, domains, rowId) {
-	fillDomainSelect(endPointType, domains, rowId);
+function fillDeviceSelect(endPointType, domainId, networkId, deviceId, initDisabled) {
+    disableSelect(endPointType, "device");
+	clearSelect(endPointType, "device");
+    parent = null;
+	if (networkId != "" && networkId != null) {
+        parent = [];
+		parent[0] = "network";
+        parent[1] = networkId;
+	} else if (domainId != "" && domainId != null) {
+        parent = [];
+        parent[0] = "domain";
+        parent[1] = domainId;
+    } 
+
+    if (parent) {
+        $("#"+ endPointType + "-device").append('<option value="">' + tt('loading') + '</option>');
+        $.ajax({
+            url: baseUrl+'/topology/device/get-by-' + parent[0],
+            dataType: 'json',
+            data: {
+                id: parent[1],
+            },
+            success: function(response){
+                clearSelect(endPointType, "device");
+                $("#"+ endPointType + "-device").append('<option value="">' + tt('select') + '</option>');
+                for (var i = 0; i < response.length; i++) {
+                    if (response[i].name == "") response[i].name = "default";
+                    $("#"+ endPointType + "-device").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
+                }
+                if (deviceId != null && deviceId != "") {
+                    $("#"+ endPointType + "-device").val(deviceId);
+                }
+                if (!initDisabled) enableSelect(endPointType, "device");
+            }
+        });
+    } 
+}
+
+function fillPortSelect(endPointType, deviceId, portId, initDisabled) {
+    disableSelect(endPointType, "port");
+	clearSelect(endPointType, "port");
+	if (deviceId != "" && deviceId != null) {
+		$("#"+ endPointType + "-port").append('<option value="">' + tt('loading') + '</option>');
+		$.ajax({
+			url: baseUrl+'/circuits/reservation/get-port-by-device',
+			dataType: 'json',
+			data: {
+				id: deviceId,
+				cols: JSON.stringify(['id','name']),
+			},
+			success: function(response){
+				clearSelect(endPointType, "port");
+				$("#"+ endPointType + "-port").append('<option value="">' + tt('select') + '</option>');
+				for (var i = 0; i < response.length; i++) {
+					var name = response[i].name;
+					if (response[i].port == "") {
+						name = tt("default");
+					}
+					$("#"+ endPointType + "-port").append('<option value="' + response[i].id + '">' + name + '</option>');
+			    }
+                if (portId != null && portId != "") $("#"+ endPointType + "-port").val(portId);
+                if (!initDisabled) enableSelect(endPointType, "port");
+			}
+		});
+	} 
+}
+
+function fillVlanSelect(endPointType, portId, vlan, initDisabled) {
+    disableSelect(endPointType, "vlan");
+	clearSelect(endPointType, "vlan");
+	if (portId != "" && portId != null) {
+		$("#"+ endPointType + "-vlan").append('<option value="">' + tt('loading') + '</option>');
+		$.ajax({
+			url: baseUrl+'/topology/port/get-vlan-range',
+			dataType: 'json',
+			data: {
+				id: portId,
+			},
+			success: function(response){
+				clearSelect(endPointType, "vlan");
+                if(response) {
+    				var ranges = response.split(",");
+    				for (var i = 0; i < ranges.length; i++) {
+                        var interval = ranges[i].split("-");
+                        if (interval.length > 1)
+                            $("#"+ endPointType + "-vlan").append('<option value="' + ranges[i] + '">' + ranges[i] + '</option>');
+    			    }
+
+                    for (var i = 0; i < ranges.length; i++) {
+                        var interval = response.split("-");
+                        var low = parseInt(interval[0]);
+                        var high = low;
+                        if (interval.length > 1) {
+                            high = parseInt(interval[1]);
+                        }
+                        
+                        for (var j = low; j < high+1; j++) {
+                            $("#"+ endPointType + "-vlan").append('<option value="' + j + '">' + j + '</option>');
+                        }
+                        if (vlan != null && vlan != "") {
+                            $("#"+ endPointType + "-vlan").val(vlan);
+                        }
+                    }
+    				if (!initDisabled) enableSelect(endPointType, "vlan");
+                }
+			}
+		});
+	}
+}
+
+function initEndPointSelects(endPointType, domains) {
+	fillDomainSelect(endPointType, domains);
 	
-	$('#' + endPointType + '-domain-' + rowId).on('change', function() {
-		fillDeviceSelect(endPointType, this.value, rowId);
-		fillPortSelect(endPointType, null, rowId);
-		fillProviderSelect($('#src-domain-' + rowId).val(), $('#dst-domain-' + rowId).val(), rowId);
+	$('#' + endPointType + '-domain').on('change', function() {
+		fillDeviceSelect(endPointType, this.value);
+		fillNetworkSelect(endPointType, this.value);
+		fillPortSelect(endPointType);
+		fillVlanSelect(endPointType);
 	});
 	
-	$('#' + endPointType + '-device-' + rowId).on('change', function() {
-		fillPortSelect(endPointType, this.value, rowId);
+	$('#' + endPointType + '-device').on('change', function() {
+		fillPortSelect(endPointType, this.value);
+	});
+
+	$('#' + endPointType + '-port').on('change', function() {
+		fillVlanSelect(endPointType, this.value);
 	});
 }
 
-function clearSelect(endPointType, object, rowId) {
-	$('#' + endPointType + '-' + object + '-' + rowId).children().remove();
+function clearSelect(endPointType, object) {
+	$('#' + endPointType + '-' + object).children().remove();
 }
 
-function disableSelect(endPointType, object, rowId) {
-	$('#' + endPointType + '-' + object + '-' + rowId).prop('disabled', true);
+function disableSelect(endPointType, object) {
+	$('#' + endPointType + '-' + object).prop('disabled', true);
 }
 
-function enableSelect(endPointType, object, rowId) {
-	$('#' + endPointType + '-' + object + '-' + rowId).prop('disabled', false);
+function enableSelect(endPointType, object) {
+	$('#' + endPointType + '-' + object).prop('disabled', false);
 }
 
-function initFrequencyDialog(type, rowId){	
-	$('#'+type+'-form').dialog({
-		width: 300,
-		modal: true,
-		buttons: [{
-			text: tt("Save"),
-			click: function() {
-	        	if (type == 'daily') {
-	        		var time = $('#dailyTime').val();
-	        		var res = time.split(":");
-	        		
-	        		var min = res[1];
-	        		var hour = res[0];
-	        		$('#freq-value-' + rowId).val(min+' '+hour+' * * *');
-	        		
-	        		$(this).dialog('close');
-	        	}
-	        	if (type == 'weekly') {
-	        		var time = $('#weeklyTime').val();
-	        		var res = time.split(":");
-	        		
-	        		var min = res[1];
-	        		var hour = res[0];
-	        		var days = '';
-	        		
-	        		var countDays = $('.weekDays:checked').size();
-	        		var counter = 1;
-	        		
-	        		if (countDays == 0) {
-	        			alert('Preencha os dias da semana desejados');
-	        		}
-	        		else {
-		        		$('.weekDays:checked').each(function() {
-		        			if (counter < countDays)
-		        				days += this.value+',';
-		        			else 
-		        				days += this.value;
-		        			
-		        			counter++;
-		        		});
-	        		}
-
-	        		$('#freq-value-' + rowId).val(min+' '+hour+' * * '+days);
-	        		
-	        		$(this).dialog('close');
-	        	}
-	        	if (type == 'monthly') {
-	        		var time = $('#monthlyTime').val();
-	        		var res = time.split(":");
-	        		
-	        		var min = res[1];
-	        		var hour = res[0];
-	        		
-	        		var day = $('#month-day-freq-select').val();
-	        		
-	        		$('#freq-value-' + rowId).val(min+' '+hour+' '+day+' * *');
-	        		
-	        		$(this).dialog('close');
-	        	}
-	        }},{
-	        text: tt("Cancel"),
-	        click: function() {
-	          $(this).dialog('close');
-	        }
-	      }],
-	});
-}

@@ -4,9 +4,16 @@ namespace app\models;
 
 use Yii;
 use app\components\DateUtils;
+use app\modules\circuits\models\AutomatedTest;
 
 /**
  * This is the model class for table "{{%cron}}".
+ *
+ * Essa classe representa um objeto do tipo Cron,
+ * também chamado de Tarefa Agendada. O Meican possui
+ * um serviço Crontab que gerencia cada um dos Crons 
+ * existentes no sistema. Atualmente podem ser agendados
+ * testes automatizados e sincronizações.
  *
  * @property integer $id
  * @property string $external_id
@@ -64,8 +71,12 @@ class Cron extends \yii\db\ActiveRecord
         return self::find()->where(['task_type'=>self::TYPE_SYNC, 'task_id'=>$id])->one();
     }
 
+    static function findTestTask($id) {
+        return self::find()->where(['task_type'=>self::TYPE_TEST, 'task_id'=>$id]);
+    }
+
     static function findOneTestTask($id) {
-        return self::find()->where(['task_type'=>self::TYPE_TEST, 'task_id'=>$id])->one();
+        return self::findTestTask($id)->one();
     }
 
     static function existsSyncTask($id) {
@@ -88,6 +99,14 @@ class Cron extends \yii\db\ActiveRecord
                 }
                 break;
             case self::TYPE_TEST:
+                $res = AutomatedTest::findOne($this->task_id);
+                if ($res) {
+                    $res->execute();
+                } else {
+                    $this->status = self::STATUS_DELETED;
+                    $this->save();
+                }
+                break;
         }
     }
 }

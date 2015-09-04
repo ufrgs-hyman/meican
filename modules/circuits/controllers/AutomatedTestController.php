@@ -3,47 +3,47 @@
 namespace app\modules\circuits\controllers;
 
 use yii\web\Controller;
+use yii\helpers\Url;
 use app\controllers\RbacController;
 use Yii;
-use app\models\AutomatedTest;
+use app\models\Reservation;
 use app\models\Domain;
+use app\models\Cron;
 use yii\data\ActiveDataProvider;
+use app\modules\circuits\models\CircuitsPreference;
 use app\modules\circuits\models\AutomatedTestForm;
+use app\modules\circuits\models\AutomatedTest;
 
 class AutomatedTestController extends RbacController {
-	
-	public $enableCsrfValidation = false;
 
-	public function actionIndex() {
-		//self::canRedir('topology/create');
-		
-		foreach (AutomatedTest::find()->all() as $test) {
-			$test->deleteIfInvalid();
-		}
-		
+	public $enableCsrfValidation = false;
+	
+	public function actionIndex($mode = "read") {
 		$data = new ActiveDataProvider([
-    			'query' => AutomatedTest::find()->where(['<>', 'status', AutomatedTest::STATUS_DELETED]),
-    			'sort' => false,
-    			]);
+    		'query' => AutomatedTest::find()->where(['type'=> Reservation::TYPE_TEST]),
+    		'sort' => false,
+    	]);
 			
-		return $this->render('/tests/view', array(
-				'data' => $data,
-				'start_time' => "14:00",
-				'domains' => json_encode(Domain::find()->orderBy(['name'=> "SORT ASC"])->asArray()->select(['id','name'])->all()),
+		return $this->render('/tests/status', array(
+			'data' => $data,
+			'domains' => json_encode(Domain::find()->orderBy(['name'=> "SORT ASC"])->asArray()->select(['id','name'])->all()),
 		));
 	}
 	
 	public function actionCreate() {
-		$form = new AutomatedTestForm;
-		if ($form->load($_POST)) {
-			if ($form->save()) {
-				return $form->reservation->id;
+		if(Yii::$app->request->isAjax) {
+			$form = new AutomatedTestForm;
+			if ($form->load($_POST)) {
+				if ($form->save()) {
+					$this->checkRequesterUrl();
+					return true;
+				}
 			}
+			 
+			return null;
+		} else {
+			return $this->actionIndex("create");
 		}
-
-		$this->checkRequesterUrl();
-		 
-		return null;
 	}
 
 	private function checkRequesterUrl() {
@@ -60,26 +60,20 @@ class AutomatedTestController extends RbacController {
 	public function actionUpdate($id) {
 		$form = new AutomatedTestForm;
 		if ($form->load($_POST)) {
-			$test = AutomatedTest::findOne($id);
-			$test->frequency_type = $form->freq_type;
-			$test->crontab_frequency = $form->freq_value;
-			$test->status = AutomatedTest::STATUS_PROCESSING;
-			$test->crontab_changed = 1;
-			$test->save();
+			$cron = Cron::findOneTestTask($id);
+			$cron->freq = $form->cron_value;
+			$cron->status = Cron::STATUS_PROCESSING;
+			if ($cron->save()) return true;
 		}
 			
-		return null;
+		return false;
 	}
 	
 	public function actionDelete() {
-		//if(!self::can('topology/delete')) return false;
-		
 		if(isset($_POST["ids"])) {
 			foreach (json_decode($_POST["ids"]) as $testId) {
 				$test = AutomatedTest::findOne($testId);
-				$test->status = AutomatedTest::STATUS_DELETED;
-				$test->crontab_changed = true;
-				if(!$test->save()) {
+				if(!$test->delete()) {
 					return false;
 				}
 			}

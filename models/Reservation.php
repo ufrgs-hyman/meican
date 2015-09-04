@@ -147,12 +147,12 @@ class Reservation extends \yii\db\ActiveRecord
     
     public function getDestinationUrn() {
     	$path = $this->getLastPath()->one();
-    	return $path ? $path->getUrn() : null;
+    	return $path ? $path->port_urn : null;
     }
     
     public function getSourceUrn() {
     	$path = $this->getFirstPath()->one();
-    	return $path ? $path->getUrn() : null;
+    	return $path ? $path->port_urn : null;
     }
     
     public function getSourceDomain() {

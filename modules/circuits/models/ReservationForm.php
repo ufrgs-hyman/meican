@@ -19,10 +19,10 @@ class ReservationForm extends Model {
 	
 	//request reservation
 	public $src_domain;
-	public $src_port; // URN ID
+	public $src_port; 
 	public $src_vlan;
 	public $dst_domain;
-	public $dst_port; // URN ID
+	public $dst_port; 
 	public $dst_vlan;
 	public $name;
 	public $start_time;
@@ -61,8 +61,8 @@ class ReservationForm extends Model {
  			$this->reservation->start = DateUtils::toUTC($this->start_date, $this->start_time);
  			$this->reservation->finish = DateUtils::toUTC($this->finish_date, $this->finish_time);
  			$this->reservation->bandwidth = $this->bandwidth;
- 			$this->reservation->requester_nsa = CircuitsPreference::findOne(CircuitsPreference::MEICAN_NSA)->value;
- 			$this->reservation->provider_nsa = CircuitsPreference::findOne(CircuitsPreference::CIRCUITS_DEFAULT_PROVIDER_NSA)->value;
+ 			$this->reservation->requester_nsa = CircuitsPreference::findOneValue(CircuitsPreference::MEICAN_NSA);
+ 			$this->reservation->provider_nsa = CircuitsPreference::findOneValue(CircuitsPreference::CIRCUITS_DEFAULT_PROVIDER_NSA);
  			$this->reservation->request_user_id = Yii::$app->user->getId(); 			
  			
  			if ($this->reservation->save()) {

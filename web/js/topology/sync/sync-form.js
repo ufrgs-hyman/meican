@@ -4,7 +4,6 @@ $(document).ready(function() {
         onChange: function() {
             $('#syncform-freq').val($(this).cron("value"));
         },
-        minuteOpts : false,
     });
 });
 
