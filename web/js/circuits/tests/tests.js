@@ -34,24 +34,7 @@ $(document).ready(function() {
 	prepareRefreshButton();
 	
 	$("#add-button").click(function() {
-		prepareCreate();
-		$('#test-dialog').dialog({
-			title: "Create",
-			width: 360,
-			height: 300,
-			modal: true,
-			buttons: [{
-				text: tt("Save"),
-				click: function() {
-					create();
-		        }},
-		        {
-		        text: tt("Cancel"),
-		        click: function() {
-		          	$(this).dialog('close');
-		        }
-		    }],
-		});
+		openCreateDialog();
 		return false;
 	});	
 
@@ -67,9 +50,33 @@ $(document).ready(function() {
             $("#cron-value").val($(this).cron("value"));
         },
     });
+
+    if($("#at-mode").attr("value") == "create") openCreateDialog();
 });
 
+function openCreateDialog() {
+	prepareCreate();
+	$('#test-dialog').dialog({
+		title: "Create",
+		width: 360,
+		height: 300,
+		modal: true,
+		buttons: [{
+			text: tt("Save"),
+			click: function() {
+				create();
+	        }},
+	        {
+	        text: tt("Cancel"),
+	        click: function() {
+	          	$(this).dialog('close');
+	        }
+	    }],
+	});
+}
+
 function prepareCreate() {
+	$( "#tabs" ).tabs( { disabled: [] } );
 	$('#tabs').tabs("option", "active", 0);
 	domains = JSON.parse($("#domains").text());
 	enableSelect("src", 'domain');
@@ -96,22 +103,10 @@ function clearCheckbox() {
 }
 
 function edit(row) {
-	$('#tabs').tabs("option", "active", 0);
+	$( "#tabs" ).tabs( { disabled: [0, 1] } );
+	$('#tabs').tabs("option", "active", 2);
 	rowId = $(row).parent().parent().parent().attr('data-key');
-	rowChilds = $(row).parent().parent().parent().children();
 	
-    fillDomainSelect("src", JSON.parse($("#domains").text()), getData("src-domain", rowId), true);
-    clearSelect("src", 'network');
-	clearSelect("dst", 'network');
-	disableSelect("dst",'network');
-	disableSelect("src", 'network');
-	fillDeviceSelect("src", getData("src-domain", rowId), null, getData("src-device", rowId), true);
-	fillPortSelect("src", getData("src-device", rowId), getData("src-port", rowId), true);
-	fillVlanSelect("src", getData("src-port", rowId), getData("src-vlan", rowId), true);
-	fillDomainSelect("dst", JSON.parse($("#domains").text()), getData("dst-domain", rowId), true);
-	fillDeviceSelect("dst", getData("dst-domain", rowId), null, getData("dst-device", rowId), true);
-	fillPortSelect("dst", getData("dst-device", rowId), getData("dst-port", rowId), true);
-	fillVlanSelect("dst", getData("dst-port", rowId), getData("dst-vlan", rowId), true);
 	$("#cron-widget").cron("value", getData("cron-value", rowId));
 }
 
@@ -120,8 +115,6 @@ function getData(object, rowId) {
 }
 
 function prepareRefreshButton() {
-	refresher = setInterval(updateGridView, 60000);
-	
 	$("#refresh-button").click(function(){
 		if ($("#refresh-button").val() == "false") {
 			enableAutoRefresh();
@@ -165,40 +158,43 @@ function create() {
 	        url: baseUrl + '/circuits/automated-test/create',
 	        data: $("#test-details-form").serialize(),
 	        success: function (response) {
-	        	$("#test-dialog").dialog("close");
+	        	window.location.href = baseUrl + "/circuits/automated-test";
 	        },
 	    });
-	} else {
-		alert("Invalid input");
-	}
+	} 
 }
 
 function validateForm() {
-	console.log($("#src-vlan").val(), 
-			$("#dst-vlan").val(),
-			$("#cron-widget").cron("value"));
-	if ($("#src-vlan").val() == "" || 
-			$("#dst-vlan").val() == "" ||
-			$("#cron-widget").cron("value") == "") {
+	return validateInput("src-domain") &&
+		validateInput("src-device") &&
+		validateInput("src-port") &&
+		validateInput("src-vlan") &&
+		validateInput("dst-domain") &&
+		validateInput("dst-device") &&
+		validateInput("dst-port") &&
+		validateInput("dst-vlan");
+}
+
+function validateInput(elementId) {
+	if (!$("#" + elementId).val() || $("#" + elementId).val() == "") {
+		$("#" + elementId).animate({backgroundColor: "#CC0000"});
+		$("#" + elementId).animate({backgroundColor: "blank"});
+		$('#tabs').tabs("option", "active", $("#" + elementId).parent().parent().parent().attr("id").split('-')[1]);
 		return false;
-	}
+	} 
 	return true;
 }
 
 function save(row) {
 	rowId = $(row).parent().parent().parent().attr('data-key');
-	if (validateForm()) {
-		$.ajax({
-	        type: "POST",
-	        url: baseUrl + '/circuits/automated-test/update?id=' + rowId,
-	        data: $("#test-details-form").serialize(),
-	        success: function (response) {
-	        	$("#test-dialog").dialog("close");
-	        },
-	    });
-	} else {
-		alert("Invalid input");
-	}
+	$.ajax({
+        type: "POST",
+        url: baseUrl + '/circuits/automated-test/update?id=' + rowId,
+        data: $("#test-details-form").serialize(),
+        success: function (response) {
+        	window.location.href = baseUrl + "/circuits/automated-test";
+        },
+    });
 }
 
 function deleteChecked() {

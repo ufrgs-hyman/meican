@@ -10,11 +10,13 @@ use Yii;
 
 class AutomatedTest extends Reservation {
 
+    const AT_PREFIX = "MeicanAT";
+
     function getCron() {
         return Cron::findTestTask($this->id);
     }
-    
-    public function getConnectionStatus() {
+
+    function getConnectionStatus() {
         $conn = Connection::find()->where([
                 'id'=> Connection::find()->where([
                         'reservation_id'=>$this->id])->max("id")])->select(['status'])->one();
@@ -33,7 +35,7 @@ class AutomatedTest extends Reservation {
         }
     }
     
-    public function getStatus() {
+    function getStatus() {
         switch ($this->getCron()->one()->status) {
             case Cron::STATUS_ENABLED: return Yii::t("circuits","Enabled");
             case Cron::STATUS_DISABLED: return Yii::t("circuits","Disabled");
@@ -41,7 +43,7 @@ class AutomatedTest extends Reservation {
         }
     }
     
-    public function execute() {
+    function execute() {
         $date = new \DateTime();
         $date->modify('+10 minutes');
         $this->start = $date->format('Y-m-d H:i:s');

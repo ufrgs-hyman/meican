@@ -23,6 +23,7 @@
 <button id="add-button"><?= Yii::t("circuits", "Add"); ?></button>
 <button id="refresh-button"><?= Yii::t("circuits", "Disable auto refresh"); ?></button>
 <button id="deleteButton" style="display: none;"><?= Yii::t("circuits", "Delete"); ?></button>
+<data id="at-mode" value="<?= $mode ?>"></data>
 
 <?php Pjax::begin([
     'id' => 'test-pjax',
@@ -54,73 +55,30 @@
 					},
 					'headerOptions'=>['style'=>'width: 2%;'],
 				],
-				
 				[
-					'header' => '<div style="margin-top:24px;">'.Yii::t("circuits", "Domain").'</div>',
+					'header' => Yii::t("circuits", "Source"),
 					'value' => function($model){
-						return $model->getSourceDomain()->one()->name; 
-					},
-					'contentOptions'=> function ($model){
-						return [
-							'class'=> "src-domain",
-							'data'=>$model->getSourceDomain()->one()->id];
+						return $model->getFirstPath()->one()->port_urn; 
 					},
 				],
+                [
+                    'header' => Yii::t("circuits", "Source VLAN"),
+                    'value' => function($model){
+                        return $model->getFirstPath()->one()->vlan; 
+                    },
+                ],
 				[
-				    'header' => Yii::t("circuits", "Source").'<div style="margin-top:10px;">'.Yii::t("circuits", "Device").'</div>',
+					'header' => Yii::t("circuits", "Destination"),
 					'value' => function($model){
-						return $model->getSourceDevice()->select(['id', 'name'])->one()->name;
-					},
-					'contentOptions'=> function ($model){
-						return [
-							'class' => "src-device",
-							'data'=>$model->getSourceDevice()->select(['id', 'name'])->one()->id];
+						return $model->getLastPath()->one()->port_urn; 
 					},
 				],
-				[
-					'header' => '<div style="margin-top:24px;">'.Yii::t("circuits", "Port").'</div>',
-					'value' => function($model){
-						return $model->getSourcePort()->select(['id','name'])->one()->name;
-					},
-					'contentOptions'=> function ($model){
-						return [
-							'class' => 'src-port',
-							'data'=>$model->getSourcePort()->select(['id','name'])->one()->id];
-					},
-				],
-				[
-					'header' => '<div style="margin-top:24px;">'.Yii::t("circuits", "Domain").'</div>',
-					'value' => function($model){
-						return $model->getDestinationDomain()->one()->name; 
-					},
-					'contentOptions'=> function ($model){
-						return [
-							'class' => 'dst-domain',
-							'data'=>$model->getDestinationDomain()->one()->id];
-					},
-				],
-				[
-					'header' => Yii::t("circuits", "Destination").'<div style="margin-top:10px;">'.Yii::t("circuits", "Device").'</div>',
-					'value' => function($model){
-						return $model->getDestinationDevice()->select(['id', 'name'])->one()->name;
-					},
-					'contentOptions'=> function ($model){
-						return [
-							'class'=> 'dst-device',
-							'data'=>$model->getDestinationDevice()->select(['id', 'name'])->one()->id];
-					},
-				],
-				[
-					'header' => '<div style="margin-top:24px;">'.Yii::t("circuits", "Port").'</div>',
-					'value' => function($model){
-						return $model->getDestinationPort()->select(['id','name'])->one()->name;
-					},
-					'contentOptions'=> function ($model){
-						return [
-							'class' => 'dst-port',
-							'data'=>$model->getDestinationPort()->select(['id','name'])->one()->id];
-					},
-				],
+                [
+                    'header' => Yii::t("circuits", "Destination VLAN"),
+                    'value' => function($model){
+                        return $model->getLastPath()->one()->vlan; 
+                    },
+                ],
 				[
 					'header' => '',
 					'value' => function($model){
@@ -137,22 +95,12 @@
 					'value' => function ($model) {
 						return $model->getStatus();
 					},
-					'contentOptions'=> function ($model){
-						return [
-							'class' => 'src-vlan',
-							'data'=>$model->getSourceVlanValue()];
-					},
 				],
 				[
 					'attribute' => 'last_run_at',
 					'value' => function ($model) {
 						$cron = $model->getCron()->one();
 						return $cron->last_run_at ? Yii::$app->formatter->asDatetime($cron->last_run_at) : Yii::t("circuits", "Never");
-					},
-					'contentOptions'=> function ($model){
-						return [
-							'class' => 'dst-vlan',
-							'data'=>$model->getDestinationVlanValue()];
 					},
 				],
 				[
@@ -178,11 +126,11 @@
 	]); ?>
 	<div id="tabs">
 	  <ul>
-	    <li><a href="#tabs-1">Source</a></li>
-	    <li><a href="#tabs-2">Destination</a></li>
-	    <li><a href="#tabs-3">Recurrence</a></li>
+	    <li><a href="#tabs-0">Source</a></li>
+	    <li><a href="#tabs-1">Destination</a></li>
+	    <li><a href="#tabs-2">Recurrence</a></li>
 	  </ul>
-	  <div id="tabs-1">
+	  <div id="tabs-0">
 	  	<p>
 	    <dl>
             <dt>
@@ -218,7 +166,7 @@
          </dl>
      	</p>
 	  </div>
-	  <div id="tabs-2">
+	  <div id="tabs-1">
 	  	<p>
 	  	<dl>
 	  	    <dt>
@@ -254,8 +202,9 @@
         </dl>
     	</p>
 	  </div>
-	  <div id="tabs-3">
-	  	<p><div class="label-description" id="cron-widget"></div></p><input id="cron-value" name="AutomatedTestForm[cron_value]" hidden/></div>
+	  <div id="tabs-2">
+	  	<p><div class="label-description" id="cron-widget"></div></p>
+        <input id="cron-value" name="AutomatedTestForm[cron_value]" hidden/>
 	  </div>
 	</div>
 

@@ -29,7 +29,7 @@ class AutomatedTestForm extends Model {
 	public function save() {
  			$this->reservation = new Reservation;
  			$this->reservation->type = Reservation::TYPE_TEST;
- 			$this->reservation->name = "MeicanAT";
+ 			$this->reservation->name = AutomatedTest::AT_PREFIX;
  			$this->reservation->date = DateUtils::now();
  			$this->reservation->start = DateUtils::now();
  			$this->reservation->finish =  DateUtils::now();
@@ -44,7 +44,7 @@ class AutomatedTestForm extends Model {
  				
  				$path = new ReservationPath;
  				$path->reservation_id = $this->reservation->id;
- 				$path->port_urn = Port::find()->where(['id' => $this->src_port])->one()->urn;
+ 				$path->port_urn = Port::findOne($this->src_port)->urn;
  				$path->path_order = 0;
  				$path->vlan = $this->src_vlan;
  				
@@ -55,7 +55,7 @@ class AutomatedTestForm extends Model {
 
  				$path = new ReservationPath;
  				$path->reservation_id = $this->reservation->id;
- 				$path->port_urn = Port::find()->where(['id' => $this->dst_port])->one()->urn;
+ 				$path->port_urn = Port::findOne($this->dst_port)->urn;
  				$path->path_order = 1;
  				$path->vlan = $this->dst_vlan;
  				

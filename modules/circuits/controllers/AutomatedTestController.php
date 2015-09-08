@@ -26,6 +26,7 @@ class AutomatedTestController extends RbacController {
 			
 		return $this->render('/tests/status', array(
 			'data' => $data,
+			'mode' => $mode,
 			'domains' => json_encode(Domain::find()->orderBy(['name'=> "SORT ASC"])->asArray()->select(['id','name'])->all()),
 		));
 	}
@@ -34,13 +35,13 @@ class AutomatedTestController extends RbacController {
 		if(Yii::$app->request->isAjax) {
 			$form = new AutomatedTestForm;
 			if ($form->load($_POST)) {
-				if ($form->save()) {
+				if ($form->validate() && $form->save()) {
 					$this->checkRequesterUrl();
 					return true;
 				}
 			}
 			 
-			return null;
+			return false;
 		} else {
 			return $this->actionIndex("create");
 		}
