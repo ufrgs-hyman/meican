@@ -11,7 +11,8 @@ class SyncFormAsset extends AssetBundle
 
     public $js = [
         'js/topology/sync/sync-form.js',
-        'js/vendor/jquery-cron.js'
+        'js/vendor/jquery-cron-i18n.js',
+        'js/vendor/jquery-cron.js',
     ];
 
     public $depends = [

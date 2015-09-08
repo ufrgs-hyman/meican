@@ -21,7 +21,7 @@
     ChangeAsset::register($this);
 ?>
 
-<h1><?= "Pending Topology Changes" ?></h1>
+<h1><?= Yii::t('topology',"Pending changes"); ?></h1>
 
 <button style="margin-bottom:10px;" id="apply-all">Apply all changes</button>
 <label id="sync-event-id" hidden><?= $eventId; ?></label>

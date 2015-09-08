@@ -21,7 +21,7 @@
     ChangeAsset::register($this);
 ?>
 
-<h1><?= "Applied Topology Changes" ?></h1>
+<h1><?= Yii::t('topology',"Applied changes") ?></h1>
 
 <?php Pjax::begin([
             'id' => 'pjax-changes',

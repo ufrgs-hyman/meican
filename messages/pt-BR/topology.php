@@ -121,7 +121,17 @@ return array(
 		'Update Provider' => 'Editar Provedor',
 		
 		'An error occurred while adding the discovery service' => 'Um erro ocorreu enquanto adicionava o serviço de descoberta',
-		'An error occurred while adding the connection service' => 'Um erro ocorreu enquanto adicionava o serviço de conexão',	
-			
+		'An error occurred while adding the connection service' => 'Um erro ocorreu enquanto adicionava o serviço de conexão',
+
+
+		'Changes' => "Alterações",
+		'Synchronizer' => 'Sincronizador',	
+		'Add topology provider' => 'Adicionar provedor de topologia',
+		'Update topology provider' => 'Editar provedor de topologia',
+		'Pending changes' => 'Alterações pendentes',
+		'Applied changes' => 'Alterações aplicadas',
+		'Type' => 'Tipo',
+		'Auto Apply Changes' => 'Aplicar alterações automaticamente',
+		'Enable Auto Sync' => 'Ativar sincronização automática',
 );
 ?>

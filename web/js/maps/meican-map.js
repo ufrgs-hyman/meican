@@ -234,7 +234,7 @@ MeicanMap.prototype.buildMap = function(divId) {
         zoom: 3,
         minZoom: 3,
         maxZoom: 15,
-        center: new google.maps.LatLng(0,0),
+        center: new google.maps.LatLng(22.2033311,-96.8483379),
         streetViewControl: false,
         panControl: false,
         zoomControl: true,

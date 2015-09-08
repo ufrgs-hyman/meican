@@ -14,7 +14,7 @@
     SyncAsset::register($this);
 ?>
 
-<h1><?= "Topology Synchronizer instances" ?></h1>
+<h1><?= Yii::t('topology',"Synchronizer") ?></h1>
 <?php
     $form = ActiveForm::begin([
             'method' => 'post',
@@ -25,7 +25,15 @@
     ])
 ?>
     
-<?= $this->render('//formButtons'); ?>
+<div class="controls">
+    <?= Html::a(Yii::t('topology',"Add topology provider"), array('create')); 
+    ?>
+    <?=
+    Html::submitButton('Delete', ['id'=>'deleteButton']);
+    ?>
+</div>
+
+<div style="clear: both"></div>
 
 <?=
     GridView::widget([

@@ -78,14 +78,6 @@
                     'url' => '/topology/service/update',
                     'headerOptions'=>['style'=>'width: 2%;'],
                 ),
-                array(
-                    'class'=> LinkColumn::className(),
-                    'image'=>'/images/arrow_circle_double.png',
-                    'label' => '',
-                    'title'=>Yii::t("topology",'Create a Topology Synchronizer instance from this service'),
-                    'url' => '/topology/sync/add-service',
-                    'headerOptions'=>['style'=>'width: 2%;'],
-                ),
                 [
                     'attribute' => 'type',
                     'value' => function($model) {

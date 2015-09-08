@@ -1,4 +1,4 @@
-<h1><?= Yii::t("topology", "Add synchronizer instance"); ?></h1>
+<h1><?= Yii::t("topology", "Add topology provider"); ?></h1>
 
 <?=
     $this->render('_form', array(

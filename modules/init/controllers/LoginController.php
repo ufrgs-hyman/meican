@@ -41,9 +41,6 @@ class LoginController extends Controller {
 	 
 	public function actionLogout() {
 		Yii::$app->user->logout();
-		//$base = Url::base();
-		//$base = explode("/");
-		//$this->redirect("/Shibboleth.sso/Logout?return=".Url::home());
 		return $this->goHome();
 	}
 	
