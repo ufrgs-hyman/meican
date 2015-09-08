@@ -14,6 +14,10 @@ use Yii;
 class ChangeController extends RbacController {
 
     public function actionPending($eventId) {
+    	if(!self::can("synchronizer/read")){
+    		return $this->goHome();
+    	}
+    	
         $searchModel = new TopologyChange;
         $dataProvider = $searchModel->searchPending(Yii::$app->request->get(), $eventId);
 
@@ -24,6 +28,10 @@ class ChangeController extends RbacController {
     }   
 
     public function actionApplied($eventId=null) {
+    	if(!self::can("synchronizer/read")){
+    		return $this->goHome();
+    	}
+    	
         $searchModel = new TopologyChange;
         $dataProvider = $searchModel->searchApplied(Yii::$app->request->get(), $eventId);
 

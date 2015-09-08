@@ -17,7 +17,7 @@ use Yii;
 class DeviceController extends RbacController {
 	
     public function actionIndex($id = null) {
-    	if(!self::can("domainTopology/read")){ //Se ele não tiver permissão em nenhum domínio
+    	if(!self::can("domainTopology/read")){
 			return $this->goHome();
 		}
     	
@@ -33,10 +33,13 @@ class DeviceController extends RbacController {
         ));
     }
     
-    public function actionCreate(){
-    	if(!self::can("domainTopology/create")){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add devices'));
-    		return $this->redirect(array('index'));
+    public function actionCreate(){    	
+    	if(!self::can('domainTopology/create')){
+    		if(!self::can("domainTopology/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add devices'));
+    			return $this->redirect(array('index'));
+    		}
     	}
     	
     	$device = new Device;
@@ -59,12 +62,21 @@ class DeviceController extends RbacController {
     	]);
     }
     
-    public function actionUpdate($id){
-    	
+    public function actionUpdate($id){	
 		$device = Device::findOne($id);
+    	if(!isset($device)){
+    		if(!self::can("domainTopology/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Device not found'));
+    			return $this->redirect(array('index'));
+    		}
+    	}
     	if(!self::can("domainTopology/update", $device->getDomain()->one()->name)){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update on domain {domain}', ['domain' => $device->getDomain()->one()->name]));
-    		return $this->redirect(array('index'));
+    		if(!self::can("domainTopology/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update on domain {domain}', ['domain' => $device->getDomain()->one()->name]));
+    			return $this->redirect(array('index'));
+    		}
     	}
 
     	if($device->load($_POST)) {

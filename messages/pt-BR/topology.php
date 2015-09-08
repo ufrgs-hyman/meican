@@ -37,6 +37,9 @@ return array(
 		'You are not allowed to delete domains' => 'Você não tem permissão para remover domínios',
 		'You are not allowed to add networks' => 'Você não tem permissão para adicionar redes',
 		'You are not allowed to add devices' => 'Você não tem permissão para adicionar dispositivos',
+		'You are not allowed to update providers' => 'Você não tem permissão para editar provedores',
+		'You are not allowed to add providers' => 'Você não tem permissão para adicionar provedores',
+		'You are not allowed to delete providers' => 'Você não tem permissão para remover provedores',
 		
 		'any' => 'qualquer',
 		'Create' => 'Criar',
@@ -103,6 +106,12 @@ return array(
 		'You are not allowed to add synchronizers' => 'Você não tem permissão para adicionar sincronizadores',
 		'You are not allowed to update synchronizers' => 'Você não tem permissão para editar sincronizadores',
 		'You are not allowed to delete synchronizers' => 'Você não tem permissão para remover sincronizadores',
+		
+		'Domain not found' => 'Domínio não encontrado',
+		'Network not found' => 'Rede não encontrada',
+		'Device not found' => 'Dispositivo não encontrado',
+		'Provider not found' => 'Provedor não encontrado',
+		'Synchronizer not found' => 'Sincronizador não encontrado',
 
 		"Provider {name} added successfully" => 'Provedor {name} adicionado com sucesso',
 		"Provider {name} updated successfully"=> 'Provedor {name} editado com sucesso',

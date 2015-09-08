@@ -11,6 +11,8 @@ use app\models\Preference;
 use app\modules\init\models\LoginForm;
 use app\modules\init\models\CafeUserForm;
 use app\modules\init\models\ForgotPasswordForm;
+use app\modules\aaa\models\AaaPreference;
+
 
 class LoginController extends Controller {
 	
@@ -33,7 +35,7 @@ class LoginController extends Controller {
         	
         return $this->render('login', array(
           	'model'=>$model,
-        	'federation' => Preference::isFederationEnabled(),
+        	'federation' => AaaPreference::isFederationEnabled(),
         ));
 	}
 	 

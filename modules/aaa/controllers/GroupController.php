@@ -26,8 +26,11 @@ class GroupController extends RbacController {
     
     public function actionCreate() {
     	if(!self::can("group/create")){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create groups'));
-    		return $this->redirect(array('index'));
+    		if(!self::can("group/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create groups'));
+    			return $this->redirect(array('index'));
+    		}
     	}
 
     	$group = new Group;
@@ -80,11 +83,23 @@ class GroupController extends RbacController {
     
     public function actionUpdate($id) {
     	if(!self::can("group/update")){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update groups'));
-    		return $this->redirect(array('index'));
+    		if(!self::can("group/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update groups'));
+    			return $this->redirect(array('index'));
+    		}
     	}
     	
     	$group = Group::findOne($id);
+    	
+    	if(!$group){
+    		if(!self::can("group/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Group not found'));
+    			return $this->redirect(array('index'));
+    		}
+    	}
+    	
     	$childsChecked = $group->getPermissions();
     
     	if($group->load($_POST)) {

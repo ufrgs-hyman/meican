@@ -91,6 +91,9 @@ class SyncForm extends TopologySynchronizer {
 
     static function build($syncId) {
         $sync = self::findOne($syncId);
+        
+        if(!isset($sync)) return false;
+        
         $cron = Cron::findOneSyncTask($sync->id);
         if($cron) {
             $sync->freq = $cron->freq;

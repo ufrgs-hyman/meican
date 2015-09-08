@@ -14,7 +14,15 @@ use Yii;
 class ProviderController extends RbacController {
     
     public function actionCreate() {
-        $model = new Provider;
+    	if(!self::can("domain/create")){
+    		if(!self::can("domain/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add providers'));
+    			return $this->redirect(array('index'));
+    		}
+    	}
+    	
+    	$model = new Provider;
 
         if($model->load($_POST)) {
             if ($model->save()) {
@@ -34,7 +42,23 @@ class ProviderController extends RbacController {
     }
 
     public function actionUpdate($id) {
+    	if(!self::can("domain/update")){
+    		if(!self::can("domain/read")) return $this->goHome();
+			else{
+				Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update providers'));
+    			return $this->redirect(array('index'));
+			}
+    	}
+    	
         $model = Provider::findOne($id);
+        
+        if(!isset($model)){
+        	if(!self::can("domain/read")) return $this->goHome();
+        	else{
+        		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Provider not found'));
+        		return $this->redirect(array('index'));
+        	}
+        }
 
         if($model->load($_POST)) {
             if ($model->save()) {
@@ -54,6 +78,10 @@ class ProviderController extends RbacController {
     }
 
     public function actionIndex() {
+    	if(!self::can("domain/read")){
+    		return $this->goHome();
+    	}
+    	
         $dataProvider = new ActiveDataProvider([
                 'query' => Provider::find()->orderBy('name'),
                 'pagination' => [
@@ -68,7 +96,19 @@ class ProviderController extends RbacController {
     }
 
     public function actionView($id) {
+    	if(!self::can("domain/read")){
+    		return $this->goHome();
+    	}
+    	
         $prov = Provider::findOne($id);
+        
+        if(!isset($prov)){
+        	if(!self::can("domain/read")) return $this->goHome();
+        	else{
+        		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Provider not find'));
+        		return $this->redirect(array('index'));
+        	}
+        }
 
         $dataProvider = new ActiveDataProvider([
                 'query' => $prov->getServices(),
@@ -85,7 +125,13 @@ class ProviderController extends RbacController {
     }
 
     public function actionDelete() {
-        self::canRedir("topology/delete");
+    	if(!self::can("domain/delete")){
+    		if(!self::can("domain/read")) return $this->goHome();
+			else{
+				Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to delete providers'));
+    			return $this->redirect(array('index'));
+			}
+    	}
         
         if(isset($_POST['delete'])){
             foreach ($_POST['delete'] as $id) {

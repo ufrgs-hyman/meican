@@ -44,8 +44,11 @@ class UserController extends RbacController {
     
     public function actionCreate() {
     	if(!self::can("user/create")){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create users'));
-    		return $this->redirect(array('index'));
+    		if(!self::can("user/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create users'));
+    			return $this->redirect(array('index'));
+    		}
     	}
     	
     	$userForm = new UserForm;
@@ -80,11 +83,23 @@ class UserController extends RbacController {
     
     public function actionUpdate($id) {
     	if(!self::can("user/update")){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update users'));
-    		return $this->redirect(array('index'));
+    		if(!self::can("user/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update users'));
+    			return $this->redirect(array('index'));
+    		}
     	}
     	
     	$user = User::findOne($id);
+    	
+    	if(!$user){
+    		if(!self::can("user/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'User not found'));
+    			return $this->redirect(array('index'));
+    		}
+    	}
+    	
     	$userForm = new UserForm;
     
     	if($userForm->load($_POST)) {

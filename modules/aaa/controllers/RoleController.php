@@ -18,11 +18,19 @@ use Yii;
 class RoleController extends RbacController {
 	
     public function actionIndex($id) {
-    	if(!self::can("role/read") && !self::can("user/update")){ //Se ele não tiver permissão em nenhum domínio
+    	if(!self::can("role/read") && !self::can("user/update")){
 			return $this->goHome();
 		}
 
 		$user = User::findOne($id);
+		
+		if(!$user){
+			if(!self::can("user/read") && !self::can("role/read")) return $this->goHome();
+			else{
+				Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'User not found'));
+				return $this->redirect(array('/aaa/user/index'));
+			}
+		}
 		
 		if(self::can("user/update"))
 			$roles = $user->getUserDomainRoles();
@@ -48,10 +56,13 @@ class RoleController extends RbacController {
     
     public function actionCreate($id) {
     	if(!self::can("role/create") && !self::can("user/update")){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create roles'));
-    		return $this->redirect(array('index', 'id'=>$id));
+    		if(!self::can("user/read") && !self::can("role/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create roles'));
+    			return $this->redirect(array('index', 'id'=>$id));
+    		}
     	}
-    	
+
     	$udr = new UserDomainRole;
     	$udr->user_id = $id;
     	$domains = self::whichDomainsCan('role/create');
@@ -109,17 +120,25 @@ class RoleController extends RbacController {
     
     public function actionUpdate($id) {
     	$udr = UserDomainRole::findOne($id);
-    	
+
+    	if(!$udr){
+    		if(!self::can("user/read") && !self::can("role/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Role not found'));
+    			return $this->redirect(array('index', 'id'=>$id));
+    		}
+    	}
     	if(!self::can("role/update") && !self::can("user/update")){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update roles'));
-    		return $this->redirect(array('index', 'id'=>$udr->user_id));
+    		if(!self::can("user/read") && !self::can("role/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update roles'));
+    			return $this->redirect(array('index', 'id'=>$id));
+    		}
     	}
 
     	$udr->getGroup();
 
     	$group = $udr->getGroup();
-    	
-    	Yii::error($_POST);
     	
     	if(isset($_POST["UserDomainRole"])) {
     		

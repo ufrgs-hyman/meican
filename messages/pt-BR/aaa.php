@@ -108,6 +108,9 @@ return array(
 		'Federation Configuration' => 'Configuração de Federação',
 		'Enabled' => 'Ativada',
 		'Disabled' => 'Desativada',
+		'Group not found' => 'Grupo não encontrado',
+		'User not found' => 'Usuário não encontrado',
+		'Role not found' => 'Perfil não encontrado',
 		
 		
 );

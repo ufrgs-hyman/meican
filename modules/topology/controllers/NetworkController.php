@@ -19,7 +19,7 @@ use Yii;
 class NetworkController extends RbacController {
 	
 	public function actionIndex() {
-		if(!self::can("domainTopology/read")){ //Se ele não tiver permissão em nenhum domínio
+		if(!self::can("domainTopology/read")){
 			return $this->goHome();
 		}
 		
@@ -36,9 +36,12 @@ class NetworkController extends RbacController {
     }
     
     public function actionCreate(){
-    	if(!self::can("domainTopology/create")){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add networks'));
-    		return $this->redirect(array('index'));
+    	if(!self::can('domainTopology/create')){
+    		if(!self::can("domainTopology/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add networks'));
+    			return $this->redirect(array('index'));
+    		}
     	}
     	
     	$network = new Network;
@@ -63,9 +66,19 @@ class NetworkController extends RbacController {
     
     public function actionUpdate($id){	
     	$network = Network::findOne($id);
+    	if(!isset($network)){
+    		if(!self::can("domainTopology/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Network not found'));
+    			return $this->redirect(array('index'));
+    		}
+    	}
     	if(!self::can("domainTopology/update", $network->getDomain()->one()->name)){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update on domain {domain}', ['domain' => $network->getDomain()->one()->name]));
-    		return $this->redirect(array('index'));
+    		if(!self::can("domainTopology/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update on domain {domain}', ['domain' => $network->getDomain()->one()->name]));
+    			return $this->redirect(array('index'));
+    		}
     	}
 
     	if($network->load($_POST)) {

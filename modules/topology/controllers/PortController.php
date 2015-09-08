@@ -18,7 +18,7 @@ use yii\helpers\Json;
 class PortController extends RbacController {
 	
 	public function actionIndex($id = null){
-		if(!self::can("domainTopology/read")){ //Se ele não tiver permissão em nenhum domínio
+		if(!self::can("domainTopology/read")){
 			return $this->goHome();
 		}
 		 
@@ -32,11 +32,9 @@ class PortController extends RbacController {
 		$port = new Port;
 	
 		if(isset($_POST['name'])) {
-
 			$domain = Network::find()->where(['name' => $_POST['network']])->one()->getDomain()->one();
-			$permission = self::can('domainTopology/update', $domain->name);
-	
-			if($permission){
+
+			if(self::can('domainTopology/update', $domain->name)){
 				$port->type = 'NSI';
 				$port->directionality = 'BI';
 				
@@ -65,9 +63,8 @@ class PortController extends RbacController {
 			$port = Port::find()->where(['id' => $_POST['id']])->one();
 	
 			$domain = Network::find()->where(['name' => $_POST['network']])->one()->getDomain()->one();
-			$permission = self::can('domainTopology/update', $domain->name);
 	
-			if($permission){
+			if(self::can('domainTopology/update', $domain->name)){
 				$port->type = 'NSI';
 				$port->directionality = 'BI';
 				

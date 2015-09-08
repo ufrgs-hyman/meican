@@ -23,8 +23,11 @@ class WorkflowController extends RbacController {
 	public $enableCsrfValidation = false;
 	
     public function actionIndex() {
-    	$searchModel = new WorkflowSearch;
     	$allowedDomains = self::whichDomainsCan('workflow/read');
+    	
+    	if(count($allowedDomains) < 1)return $this->goHome();
+    	
+    	$searchModel = new WorkflowSearch;
     	$data = $searchModel->searchByDomains(Yii::$app->request->get(), $allowedDomains);
 
     	return $this->render('index', array(
@@ -34,11 +37,13 @@ class WorkflowController extends RbacController {
     }
     
     public function actionNew() {
-    	$permission = self::can('workflow/create');
-		if(!$permission){
-			Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to create workflows'));
-	    	return $this->redirect(array('/bpm/workflow/index'));
-	    }
+		if(!self::can('workflow/create')){
+			if(!self::can("workflow/read"))	return $this->goHome();
+			else{
+				Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to create workflows'));
+				return $this->redirect(array('/bpm/workflow/index'));
+			}	    
+		}
     	return $this->render('indexCreate');
     }
     
@@ -46,19 +51,21 @@ class WorkflowController extends RbacController {
     	if($domainTop){
     		$domain = Domain::findOne(['name' => $domainTop]);
     		if($domain){
-    			$permission = self::can('workflow/create', $domain->name);
-			    if(!$permission){
-			    	Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to create in domain {domain}', ['domain' => $domain->name]));
-			    	return $this->redirect(array('/bpm/workflow/index'));
-			    }
+			    if(!self::can('workflow/create', $domain->name)){
+			    	if(!self::can("workflow/read")) return $this->goHome();
+            		else{
+            			Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to create in domain {domain}', ['domain' => $domain->name]));
+            			return $this->redirect(array('/bpm/workflow/index'));
+            		}
+            	}
 		    	return $this->render('create', array(
 		    		'domainTop' => $domainTop,
 	    			'domainName' => $domain->name,
 		    	));
-    		}
-    		else return $this->redirect(array('/bpm/workflow/index'));
-    	}
-	    else return $this->redirect(array('/bpm/workflow/index'));
+    		};
+    	};
+    	if(!self::can("workflow/read")) return $this->goHome();
+    	else return $this->redirect(array('/bpm/workflow/index'));
     }
     
     public function actionUpdate($id = null){
@@ -67,18 +74,22 @@ class WorkflowController extends RbacController {
     		if($workflow){
 	    		$domain = Domain::findOne(['name' => $workflow->domain]);
 	    		if($domain){
-	    			$permission = self::can('workflow/update', $domain->name);
-			    	if(!$permission){
-			    		Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to edit in domain {domain}', ['domain' => $domain->name]));
-			    		return $this->redirect(array('/bpm/workflow/index'));
+			    	if(!self::can('workflow/update', $domain->name)){
+			    		if(!self::can("workflow/read")) return $this->goHome();
+            			else{
+            				Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to edit in domain {domain}', ['domain' => $domain->name]));
+            				return $this->redirect(array('/bpm/workflow/index'));
+            			}
 			    	}
 		    		return $this->render('update', array(
 		    				'id' => $id,
 		    				'domainName' => $domain->name,
 		    		));
-		    	} else return $this->redirect(array('/bpm/workflow/index'));
-    		} else return $this->redirect(array('/bpm/workflow/index'));
-    	} else return $this->redirect(array('/bpm/workflow/index'));
+		    	};
+    		};
+    	};
+    	if(!self::can("workflow/read")) return $this->goHome();
+    	else return $this->redirect(array('/bpm/workflow/index'));
     }
     
     public function actionViewer($id = null){
@@ -87,10 +98,12 @@ class WorkflowController extends RbacController {
     		if($workflow){
 	    		$domain = Domain::findOne(['name' => $workflow->domain]);
 	    		if($domain){
-	    			$permission = self::can('workflow/read', $domain->name);
-		    		if(!$permission){
-		    			Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to read in domain {domain}', ['domain' => $domain->name]));
-		    			return $this->redirect(array('/bpm/workflow/index'));
+		    		if(!self::can('workflow/read', $domain->name)){
+		    			if(!self::can("workflow/read")) return $this->goHome();
+            			else{
+            				Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to read in domain {domain}', ['domain' => $domain->name]));
+            				return $this->redirect(array('/bpm/workflow/index'));
+            			}
 		    		}
 		    		$workflow = BpmWorkflow::findOne(['id' => $id]);
 		    		return $this->render('indexViewer', array(
@@ -98,19 +111,23 @@ class WorkflowController extends RbacController {
 		    				'domainName' => $domain->name,
 		    				'workName' => $workflow->name,
 		    		));
-	    		} else return $this->redirect(array('/bpm/workflow/index'));
-    		} else return $this->redirect(array('/bpm/workflow/index'));
-    	} else return $this->redirect(array('/bpm/workflow/index'));
+	    		};
+    		};
+    	};
+    	if(!self::can("workflow/read")) return $this->goHome();
+    	else return $this->redirect(array('/bpm/workflow/index'));
     }
     
     public function actionEditorCreate($domainTop = null) {
     	if($domainTop){
     		$domain = Domain::findOne(['name' => $domainTop]);
     		if($domain){
-    			$permission = self::can('workflow/create', $domain->name);
-			    if(!$permission){
-			    	Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to create in domain {domain}', ['domain' => $domain->name]));
-			    	return $this->redirect(array('/bpm/workflow/index'));
+			    if(!self::can('workflow/create', $domain->name)){
+			    	if(!self::can("workflow/read")) return $this->goHome();
+            		else{
+            			Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to create in domain {domain}', ['domain' => $domain->name]));
+            			return $this->redirect(array('/bpm/workflow/index'));
+            		}
 			    }
     	
 		    	$ownerDomain = [];
@@ -156,9 +173,10 @@ class WorkflowController extends RbacController {
 		    			'admins' => $adminsNames,
 		    			'devices' => $devicesNames,
 		    	));
-    		} else return $this->redirect(array('/bpm/workflow/index'));
-    	} else return $this->redirect(array('/bpm/workflow/index'));
-
+    		};
+    	};
+    	if(!self::can("workflow/read")) return $this->goHome();
+    	else return $this->redirect(array('/bpm/workflow/index'));
     }
     
     public function actionEditorUpdate($id = null) {
@@ -167,10 +185,12 @@ class WorkflowController extends RbacController {
     		if($workflow){
 				$domain = Domain::findOne(['name' => $workflow->domain]);
 		    	if($domain){
-			    	$permission = self::can('workflow/update', $domain->name);
-			    	if(!$permission){
-			    		Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to edit in domain {domain}', ['domain' => $domain->name]));
-			    		return $this->redirect(array('/bpm/workflow/index'));
+			    	if(!self::can('workflow/update', $domain->name)){
+			    		if(!self::can("workflow/read")) return $this->goHome();
+            			else{
+            				Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to edit in domain {domain}', ['domain' => $domain->name]));
+            				return $this->redirect(array('/bpm/workflow/index'));
+            			}
 			    	}
 			    	$ownerDomain = [];
 			    	$ownerDomain[$domain->name] = $domain->name;
@@ -216,9 +236,11 @@ class WorkflowController extends RbacController {
 			    		'devices' => $devicesNames,
 			    		'id' => $_GET['id'],
 			    	));
-		    	} else return $this->redirect(array('/bpm/workflow/index'));
-    		} else return $this->redirect(array('/bpm/workflow/index'));
-	    } else return $this->redirect(array('/bpm/workflow/index'));
+		    	};
+    		};
+	    };
+	    if(!self::can("workflow/read")) return $this->goHome();
+	    else return $this->redirect(array('/bpm/workflow/index'));
     }
     
     public function actionEditorViewer($id = null) {
@@ -227,10 +249,12 @@ class WorkflowController extends RbacController {
     		if($workflow){
 				$domain = Domain::findOne(['name' => $workflow->domain]);
 		    	if($domain){
-		    		$permission = self::can('workflow/read', $domain->name);
-		    		if(!$permission){
-		    			Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to read in domain {domain}', ['domain' => $domain->name]));
-		    			return $this->redirect(array('/bpm/workflow/index'));
+		    		if(!self::can('workflow/read', $domain->name)){
+		    			if(!self::can("workflow/read")) return $this->goHome();
+            			else{
+            				Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to read in domain {domain}', ['domain' => $domain->name]));
+            				return $this->redirect(array('/bpm/workflow/index'));
+            			}
 		    		}
 		    		
 			    	$ownerDomain = [];
@@ -277,9 +301,11 @@ class WorkflowController extends RbacController {
 			    		'devices' => $devicesNames,
 			    		'id' => $_GET['id'],
 			    	));
-				} else return $this->redirect(array('/bpm/workflow/index'));
-    		} else return $this->redirect(array('/bpm/workflow/index'));
-	    } else return $this->redirect(array('/bpm/workflow/index'));
+				};
+    		};
+	    };
+	    if(!self::can("workflow/read")) return $this->goHome();
+	    else return $this->redirect(array('/bpm/workflow/index'));
     }
     
     public function actionLoadWorkflow() {
@@ -323,8 +349,7 @@ class WorkflowController extends RbacController {
     		if($workflow){
 				$domain = Domain::findOne(['name' => $workflow->domain]);
 		    	if($domain){
-		    		$permission = self::can('workflow/delete', $domain->name);
-		    		if($permission){
+		    		if(self::can('workflow/delete', $domain->name)){
 			    		if(BpmWorkflow::findOne(['id' => $id])->active == 0){
 			    			BpmWorkflow::deleteAll(['in', 'id', $id]);
 			    		}
@@ -333,12 +358,13 @@ class WorkflowController extends RbacController {
 			    			BpmWorkflow::deleteAll(['in', 'id', $id]);
 			    		}
 		    		}
-		    		else Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to delete in domain {domain}', ['domain' => BpmWorkflow::findOne(['id' => $id])->getDomain()->one()->name]));
+		    		else Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to delete in domain {domain}', ['domain' => BpmWorkflow::findOne(['id' => $id])->getDomain()->one()->name]));
 		    	}
     		}
     	}
     	
-    	return $this->redirect(array('/bpm/workflow/index'));
+    	if(!self::can("workflow/read")) return $this->goHome();
+        else return $this->redirect(array('/bpm/workflow/index'));
     }
     
     public function actionCopy($id = null) {
@@ -347,16 +373,17 @@ class WorkflowController extends RbacController {
     		if($workflow){
 				$domain = Domain::findOne(['name' => $workflow->domain]);
 		    	if($domain){
-			    	$permission = self::can('workflow/create', $domain->name);
-				    if(!$permission){
-				    	Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to create in domain {domain}', ['domain' => $domain->name]));
-				    	return $this->redirect(array('/bpm/workflow/index'));
+				    if(!self::can('workflow/create', $domain->name)){
+				    	Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to create in domain {domain}', ['domain' => $domain->name]));
+				    	if(!self::can("workflow/read")) return $this->goHome();
+            			else return $this->redirect(array('/bpm/workflow/index'));
 				    }
 		    		BpmWorkflow::findOne(['id' => $id])->copy();
 		    	}
     		}
     	}
-    	return $this->redirect(array('/bpm/workflow/index'));
+    	if(!self::can("workflow/read")) return $this->goHome();
+        else return $this->redirect(array('/bpm/workflow/index'));
     }
     
     public function actionActive($id = null) {
@@ -365,8 +392,7 @@ class WorkflowController extends RbacController {
     		if($activeWorkflow){
 				$domain = Domain::findOne(['name' => $activeWorkflow->domain]);
 		    	if($domain){
-		    		$permission = self::can('workflow/delete', $domain->name);
-		    		if($permission){
+		    		if(self::can('workflow/delete', $domain->name)){
 			    		$oldWorkflow = BpmWorkflow::findOne(['domain' => $activeWorkflow->domain, 'active' => 1]);
 			    	
 			    		if($oldWorkflow){
@@ -386,12 +412,13 @@ class WorkflowController extends RbacController {
 			    			}
 			    		}
 		    		}
-		    		else Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to enable/disable in domain {domain}', ['domain' => BpmWorkflow::findOne(['id' => $id])->getDomain()->one()->name]));
+		    		else Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to enable/disable in domain {domain}', ['domain' => BpmWorkflow::findOne(['id' => $id])->getDomain()->one()->name]));
 		    	}
     		}
     	}
     	
-    	return $this->redirect(array('/bpm/workflow/index'));
+    	if(!self::can("workflow/read")) return $this->goHome();
+        else return $this->redirect(array('/bpm/workflow/index'));
     }
     
     public function actionDisable($id = null) {
@@ -400,17 +427,17 @@ class WorkflowController extends RbacController {
     		if($workflow){
 				$domain = Domain::findOne(['name' => $workflow->domain]);
 		    	if($domain){
-		    		$permission = self::can('workflow/delete', $domain->name);
-		    		if($permission){
+		    		if(self::can('workflow/delete', $domain->name)){
 			    		if (!BpmWorkflow::disable($id)){
 			    			Yii::$app->getSession()->setFlash('error', Yii::t("bpm", 'Unsuccessful disable the workflow {workflow} form domain {domain}', ['workflow' => $workflow->name, 'domain' => $workflow->getDomain()->one()->name]));
 			    		}
 					}
-		    		else Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You don`t allowed to enable/disable in domain {domain}', ['domain' => BpmWorkflow::findOne(['id' => $id])->getDomain()->one()->name]));
+		    		else Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to enable/disable in domain {domain}', ['domain' => BpmWorkflow::findOne(['id' => $id])->getDomain()->one()->name]));
 		    	}
     		}
     	}
-    	return $this->redirect(array('/bpm/workflow/index'));
+    	if(!self::can("workflow/read")) return $this->goHome();
+        else return $this->redirect(array('/bpm/workflow/index'));
     }
     
     

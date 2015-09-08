@@ -21,7 +21,7 @@ use app\models\BpmWorkflow;
 class DomainController extends RbacController {
 	
     public function actionIndex() {
-    	if(!self::can("domain/read")){ //Se ele não tiver permissão em nenhum domínio
+    	if(!self::can("domain/read")){
 			return $this->goHome();
 		}
 		
@@ -42,10 +42,12 @@ class DomainController extends RbacController {
     }
 
     public function actionCreate(){
-    	$permission = self::can('domain/create');
-		if(!$permission){
-			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add domains'));
-    		return $this->redirect(array('index'));
+		if(!self::can('domain/create')){
+			if(!self::can("domain/read")) return $this->goHome();
+			else{
+				Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add domains'));
+				return $this->redirect(array('index'));
+			}
 	    }
     	
     	$dom = new Domain;
@@ -71,11 +73,22 @@ class DomainController extends RbacController {
     
     public function actionUpdate($id) {
     	if(!self::can("domain/update")){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update domains'));
-    		return $this->redirect(array('index'));
+    		if(!self::can("domain/read")) return $this->goHome();
+			else{
+				Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update domains'));
+    			return $this->redirect(array('index'));
+			}
     	}
     	
     	$dom = Domain::findOne($id);
+    	
+    	if(!isset($dom)){
+    		if(!self::can("domain/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Domain not found'));
+    			return $this->redirect(array('index'));
+    		}
+    	}
     	
     	if($dom->load($_POST)) {
     		if ($dom->validate()) {

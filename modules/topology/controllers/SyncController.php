@@ -16,7 +16,7 @@ use Yii;
 class SyncController extends RbacController {
     
     public function actionIndex() {
-    	if(!self::can("synchronizer/read")){ //Se ele não tiver permissão em nenhum domínio
+    	if(!self::can("synchronizer/read")){
 			return $this->goHome();
 		}
         
@@ -52,7 +52,7 @@ class SyncController extends RbacController {
     }
 
     public function actionExecute($id) { 
-    	if(!self::can("synchronizer/read")){ //Se ele não tiver permissão em nenhum domínio
+    	if(!self::can("synchronizer/read")){
     		return $this->goHome();
     	}
     	
@@ -64,10 +64,13 @@ class SyncController extends RbacController {
 
     public function actionCreate(){
     	if(!self::can("synchronizer/create")){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add synchronizers'));
-    		return $this->redirect(array('index'));
+    		if(!self::can("synchronizer/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add synchronizers'));
+    			return $this->redirect(array('index'));
+    		}
     	}
-        
+
         $sync = new SyncForm;
         
         if($sync->load($_POST)) {
@@ -90,11 +93,22 @@ class SyncController extends RbacController {
     
     public function actionUpdate($id){
     	if(!self::can("synchronizer/update")){
-    		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update synchronizers'));
-    		return $this->redirect(array('index'));
+    		if(!self::can("synchronizer/read")) return $this->goHome();
+    		else{
+    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update synchronizers'));
+    			return $this->redirect(array('index'));
+    		}
     	}
 
         $sync = SyncForm::build($id);
+        
+        if(!$sync){
+        	if(!self::can("synchronizer/read")) return $this->goHome();
+        	else{
+        		Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Synchronizer not found'));
+        		return $this->redirect(array('index'));
+        	}
+        }
         
         if($sync->load($_POST)) {
             if ($sync->save()) {

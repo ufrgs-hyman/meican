@@ -261,9 +261,12 @@ return array(
 		
 		"Mine" => "Minhas",
 		
-		"You don`t allowed to update the configurations" => "Você não tem permissão para editar as configurações",
+		"You are not allowed to update the configurations" => "Você não tem permissão para editar as configurações",
 		"Configurations saved successfully" => "Configurações editadas com sucesso",
 		
+		'You are not allowed to create automated tests' => 'Você não tem permissão para editar testes automatizados',
+		'You are not allowed to delete automated tests' => 'Você não tem permissão para remover testes automatizados',
+		'You are not allowed to create a automated test involving these selected domains' => 'Você não tem permissão para criar um teste automatizado envolvendo os domínios selecionados',
 		
 		'See Map' => "Ver Mapa",
 		'Configuration' => "Configuração"
