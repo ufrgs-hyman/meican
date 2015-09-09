@@ -1,5 +1,5 @@
 /*
- * Updated to I18N Support
+ * Updated to Meican I18N Support (meican-i18n is required)
  * 
  * jQuery gentleSelect plugin (version 0.1.4.1)
  * http://shawnchin.github.com/jquery-cron
@@ -131,7 +131,7 @@
                   "May", "June", "July", "August",
                   "September", "October", "November", "December"];
     for (var i = 0; i < months.length; i++) {
-        str_opt_month += "<option value='"+(i+1)+"'>" + tt(months[i]) + "</option>\n";
+        str_opt_month += "<option value='"+(i+1)+"'>" + I18N.t(months[i]) + "</option>\n";
     }
 
     // options for day of week
@@ -139,7 +139,7 @@
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
                 "Friday", "Saturday"];
     for (var i = 0; i < days.length; i++) {
-        str_opt_dow += "<option value='"+i+"'>" + tt(days[i]) + "</option>\n";
+        str_opt_dow += "<option value='"+i+"'>" + I18N.t(days[i]) + "</option>\n";
     }
 
     // options for period
@@ -147,7 +147,7 @@
     //var periods = ["minute", "hour", "day", "week", "month", "year"];    REMOVIDO
     var periods = ["hour", "day", "week", "month", "year"];
     for (var i = 0; i < periods.length; i++) {
-        str_opt_period += "<option value='"+periods[i]+"'>" + tt(periods[i]) + "</option>\n";
+        str_opt_period += "<option value='"+periods[i]+"'>" + I18N.t(periods[i]) + "</option>\n";
     }
 
     // display matrix
@@ -310,7 +310,7 @@
             }
 
             block["period"] = $("<span class='cron-period'>"
-                    + tt("Every") + " <select name='cron-period'>" + custom_periods
+                    + I18N.t("Every") + " <select name='cron-period'>" + custom_periods
                     + str_opt_period + "</select> </span>")
                 .appendTo(this)
                 .data("root", this);
@@ -321,7 +321,7 @@
             if (o.useGentleSelect) select.gentleSelect(eo);
 
             block["dom"] = $("<span class='cron-block cron-block-dom'>"
-                    + " " + tt("on day") + " <select name='cron-dom'>" + str_opt_dom
+                    + " " + I18N.t("on day") + " <select name='cron-dom'>" + str_opt_dom
                     + "</select> </span>")
                 .appendTo(this)
                 .data("root", this);
@@ -330,7 +330,7 @@
             if (o.useGentleSelect) select.gentleSelect(o.domOpts);
 
             block["month"] = $("<span class='cron-block cron-block-month'>"
-                    + " " + tt("of") + " <select name='cron-month'>" + str_opt_month
+                    + " " + I18N.t("of") + " <select name='cron-month'>" + str_opt_month
                     + "</select> </span>")
                 .appendTo(this)
                 .data("root", this);
@@ -339,7 +339,7 @@
             if (o.useGentleSelect) select.gentleSelect(o.monthOpts);
 
             block["mins"] = $("<span class='cron-block cron-block-mins'>"
-                    + " " + tt("on minute") + " <select name='cron-mins'>" + str_opt_mih
+                    + " " + I18N.t("on minute") + " <select name='cron-mins'>" + str_opt_mih
                     + "</select> </span>")
                 .appendTo(this)
                 .data("root", this);
@@ -348,7 +348,7 @@
             if (o.useGentleSelect) select.gentleSelect(o.minuteOpts);
 
             block["dow"] = $("<span class='cron-block cron-block-dow'>"
-                    + " " + tt("on") + " <select name='cron-dow'>" + str_opt_dow
+                    + " " + I18N.t("on") + " <select name='cron-dow'>" + str_opt_dow
                     + "</select> </span>")
                 .appendTo(this)
                 .data("root", this);
@@ -357,7 +357,7 @@
             if (o.useGentleSelect) select.gentleSelect(o.dowOpts);
 
             block["time"] = $("<span class='cron-block cron-block-time'>"
-                    + " " + tt("at") + " <select name='cron-time-hour' class='cron-time-hour'>" + str_opt_hid
+                    + " " + I18N.t("at") + " <select name='cron-time-hour' class='cron-time-hour'>" + str_opt_hid
                     + "</select>:<select name='cron-time-min' class='cron-time-min'>" + str_opt_mih
                     + " </span>")
                 .appendTo(this)
