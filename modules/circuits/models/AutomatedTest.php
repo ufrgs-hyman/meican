@@ -12,6 +12,13 @@ class AutomatedTest extends Reservation {
 
     const AT_PREFIX = "MeicanAT";
 
+    public function attributeLabels() {
+
+        return array_merge(parent::attributeLabels(),[
+            'last_run_at' => Yii::t('circuits', 'Última execução'),
+        ]);
+    }
+
     function getCron() {
         return Cron::findTestTask($this->id);
     }

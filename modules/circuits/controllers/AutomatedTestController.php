@@ -17,13 +17,16 @@ use app\modules\circuits\models\AutomatedTest;
 class AutomatedTestController extends RbacController {
 
 	public $enableCsrfValidation = false;
-	
+
 	public function actionIndex($mode = "read") {
 		$data = new ActiveDataProvider([
     		'query' => AutomatedTest::find()->where(['type'=> Reservation::TYPE_TEST]),
+    		'pagination' => [
+                  'pageSize' => 15,
+                ],
     		'sort' => false,
     	]);
-			
+
 		return $this->render('/tests/status', array(
 			'data' => $data,
 			'mode' => $mode,
@@ -37,6 +40,7 @@ class AutomatedTestController extends RbacController {
 			if ($form->load($_POST)) {
 				if ($form->validate() && $form->save()) {
 					$this->checkRequesterUrl();
+					Yii::$app->getSession()->addFlash("success", Yii::t("circuits", "Automated Test added successfully"));
 					return true;
 				}
 			}
@@ -64,7 +68,10 @@ class AutomatedTestController extends RbacController {
 			$cron = Cron::findOneTestTask($id);
 			$cron->freq = $form->cron_value;
 			$cron->status = Cron::STATUS_PROCESSING;
-			if ($cron->save()) return true;
+			if ($cron->save()) {
+				Yii::$app->getSession()->addFlash("success", Yii::t("circuits", "Automated Test updated successfully"));
+				return true;
+			}
 		}
 			
 		return false;
@@ -75,7 +82,10 @@ class AutomatedTestController extends RbacController {
 			foreach (json_decode($_POST["ids"]) as $testId) {
 				$test = AutomatedTest::findOne($testId);
 				if(!$test->delete()) {
+					Yii::$app->getSession()->addFlash("error", Yii::t("circuits", "Error deleting Automated Test"));
 					return false;
+				} else {
+					Yii::$app->getSession()->addFlash("success", Yii::t("circuits", "Automated Test deleted successfully"));
 				}
 			}
 			

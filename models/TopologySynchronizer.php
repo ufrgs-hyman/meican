@@ -57,9 +57,9 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('topology', 'ID'),
-            'auto_apply' => Yii::t('topology', 'Auto Apply Changes'),
+            'auto_apply' => Yii::t('topology', 'Auto apply changes'),
             'type' => Yii::t('topology', 'Type'),
-            'subscription_id' => Yii::t('topology', 'Subscribe to Updates'),
+            'subscription_id' => Yii::t('topology', 'Get notifications'),
             'name' => Yii::t('topology', 'Name'),
             'url' => Yii::t('topology', 'URL'),
             'provider_nsa' => Yii::t('topology', 'Provider NSA ID'),

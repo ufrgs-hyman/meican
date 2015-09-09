@@ -269,6 +269,12 @@ return array(
 		'You are not allowed to create a automated test involving these selected domains' => 'Você não tem permissão para criar um teste automatizado envolvendo os domínios selecionados',
 		
 		'See Map' => "Ver Mapa",
-		'Configuration' => "Configuração"
+		'Configuration' => "Configuração",
+		'Source VLAN' => 'VLAN de origem',
+		'Destination VLAN' => 'VLAN de destino' ,
+		'Automated Test added successfully' => 'Teste automatizado adicionado com sucesso',
+		'Automated Test updated successfully' => 'Teste automatizado editado com sucesso',
+		'Automated Test deleted successfully' => 'Teste automatizado removido com sucesso',
+		'Error deleting Automated Test' => 'Erro ao deletar teste automatizado',
 );
 ?>

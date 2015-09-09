@@ -13,7 +13,7 @@ use yii\data\ActiveDataProvider;
  * 
  * Indica o tipo da reserva, TEST ou NORMAL.
  * Se TEST, será gerida pelo Meican, sendo recriada
- * com a frequencia indicada pelo AutomatedTest associado.
+ * com a frequencia indicada pelo Cron associado.
  * Reservas desse tipo não são efetivamente provisionadas.
  * Dessa forma não há alocamento de recursos.
  * Se NORMAL, a reserva será efetiva, dessa forma serão
@@ -36,7 +36,6 @@ use yii\data\ActiveDataProvider;
  *
  * @property integer $request_user_id
  * 
- * @property AutomatedTest $automatedTest
  * @property Connection[] $connections
  * @property Provider $provider
  * @property User $requesterUser

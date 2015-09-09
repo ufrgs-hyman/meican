@@ -70,16 +70,16 @@ class TopologyChange extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('circuits', 'ID'),
-            'sync_event_id' => Yii::t('circuits', 'Sync ID'),
-            'domain' => Yii::t('circuits', 'Domain'),
-            'status' => Yii::t('circuits', 'Status'),
-            'type' => Yii::t('circuits', 'Type'),
-            'item_type' => Yii::t('circuits', 'Element'),
-            'item_id' => Yii::t('circuits', 'Item ID'),
-            'data' => Yii::t('circuits', 'Element details'),
-            'applied_at' => Yii::t('circuits', 'Applied At'),
-            'error' => Yii::t('circuits', 'Error'),
+            'id' => Yii::t('topology', 'ID'),
+            'sync_event_id' => Yii::t('topology', 'Sync ID'),
+            'domain' => Yii::t('topology', 'Domain'),
+            'status' => Yii::t('topology', 'Status'),
+            'type' => Yii::t('topology', 'Type'),
+            'item_type' => Yii::t('topology', 'Element'),
+            'item_id' => Yii::t('topology', 'Item ID'),
+            'data' => Yii::t('topology', 'Element details'),
+            'applied_at' => Yii::t('topology', 'Applied at'),
+            'error' => Yii::t('topology', 'Error'),
         ];
     }
 
@@ -686,10 +686,7 @@ class TopologyChange extends \yii\db\ActiveRecord
                     case self::ITEM_TYPE_DOMAIN: return Yii::t('topology', 'Domain');
                     case self::ITEM_TYPE_PROVIDER: 
                             $prov = Provider::findOne($this->item_id);
-                            return Yii::t('topology', 'From: <b>Provider</b>: {name}, <b>Type</b>: {type}, <b>Latitude</b>: {lat}'.
-                                ', <b>Longitude</b>: {lng}<br>', 
-                            ['name' => $prov->name, 'type'=>$prov->type, 'lat'=> $prov->latitude, 'lng'=>$prov->longitude]).
-                            Yii::t('topology', 'To: <b>Provider</b>: {name}, <b>Type</b>: {type}, <b>Latitude</b>: {lat}'.
+                            return Yii::t('topology', 'To: <b>Provider</b>: {name}, <b>Type</b>: {type}, <b>Latitude</b>: {lat}'.
                                 ', <b>Longitude</b>: {lng}', 
                             ['name' => $data->name, 'type'=>$data->type, 'lat'=> $data->lat, 'lng'=>$data->lng]);
                     case self::ITEM_TYPE_SERVICE: return Yii::t('topology', 'Domain');
@@ -697,11 +694,7 @@ class TopologyChange extends \yii\db\ActiveRecord
                     case self::ITEM_TYPE_DEVICE: 
                         $dev = Device::findOne($this->item_id);
                         return Yii::t('topology', '<b>Device</b>: {node}  - <b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
-                            [ 'node'=> $dev ? $dev->node : Yii::t('topology', 'undefined'),
-                            'lat'=> $dev ? $dev->latitude : Yii::t('topology', 'undefined'), 
-                            'lng'=> $dev ? $dev->longitude : Yii::t('topology', 'undefined')]).'<br>'.
-                            Yii::t('topology', 'To: <b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
-                            ['lat'=> $data->lat, 'lng'=>$data->lng]);
+                            ['node'=> $data->node, 'lat'=> $data->lat, 'lng'=>$data->lng]);
                     case self::ITEM_TYPE_BIPORT: return Yii::t('topology', 'Port');
                     case self::ITEM_TYPE_UNIPORT: return Yii::t('topology', 'Port');
                     case self::ITEM_TYPE_LINK: 

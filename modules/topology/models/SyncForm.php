@@ -32,7 +32,8 @@ class SyncForm extends TopologySynchronizer {
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(),[
-            'freq_enabled' => Yii::t('topology', 'Enable Auto Sync'),
+            'freq_enabled' => Yii::t('topology', 'Enable recurrence sync'),
+            'subscribe_enabled' => Yii::t('topology', 'Get notifications')
         ]);
     }
 
