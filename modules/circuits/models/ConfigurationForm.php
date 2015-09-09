@@ -16,6 +16,7 @@ class ConfigurationForm extends Model {
     
     public function rules() {
         return [
+            [['meicanNsa','defaultProviderNsa'], 'validateUrn'],
             [['meicanNsa','protocol','uniportsEnabled', 'defaultProviderNsa', 'defaultCSUrl'], 'required'],
             [['meicanNsa','protocol','uniportsEnabled','defaultProviderNsa','defaultCSUrl'], 'safe'],
         ];
@@ -31,6 +32,10 @@ class ConfigurationForm extends Model {
             'protocol' => Yii::t('circuits', 'Protocol'),
         ];
     }
+
+    public function validateUrn($attr, $param) {
+        $this->$attr = trim(str_replace("urn:ogf:network:","",$this->$attr));
+    } 
 
     public function setPreferences($prefs) {
         foreach ($prefs as $pref) {
