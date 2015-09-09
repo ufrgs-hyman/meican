@@ -49,10 +49,10 @@ class Service extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('circuits', 'ID'),
-            'provider_id' => Yii::t('circuits', 'Provider ID'),
-            'type' => Yii::t('circuits', 'Type'),
-            'url' => Yii::t('circuits', 'URL'),
+            'id' => Yii::t('topology', 'ID'),
+            'provider_id' => Yii::t('topology', 'Provider ID'),
+            'type' => Yii::t('topology', 'Type'),
+            'url' => Yii::t('topology', 'URL'),
         ];
     }
 

@@ -100,6 +100,9 @@ return array(
 		"Provider {name} added successfully" => 'Provedor {name} adicionado com sucesso',
 		"Provider {name} updated successfully"=> 'Provedor {name} editado com sucesso',
 		"Provider {name} deleted successfully" => "Provedor {name} removido com sucesso",
+		"Service {type} added successfully" => 'Serviço {type} adicionado com sucesso',
+		"Service {type} updated successfully"=> 'Serviço {type} editado com sucesso',
+		"Service {type} deleted successfully" => "Serviço {type} removido com sucesso",
 		'Provider' => 'Provedor',
 		'Add Provider' => 'Adicionar Provedor',
 		'Update Provider' => 'Editar Provedor',
@@ -126,5 +129,14 @@ return array(
 		'Element' => 'Elemento',
 		'Parent' => 'Elemento superior',
 		'Element details' => 'Detalhes do elemento',
+
+		'Providers' => "Provedores",
+		'Services' => 'Serviços',
+		'Add' => 'Adicionar',
+		'Add provider' => 'Adicionar provedor',
+		'Update provider' => 'Editar provedor',
+		'Update service' => 'Editar serviço',
+		'Add service' => 'Adicionar serviço',
+		'Show details and services of this provider'=>'Ver detalhes e serviços deste provedor',
 );
 ?>

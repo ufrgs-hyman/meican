@@ -17,7 +17,7 @@
     ServiceAsset::register($this);
 ?>
 
-<h1><?= Yii::t("topology", "Provider details"); ?></h1>
+<h1><?= Yii::t("topology", "Provider"); ?></h1>
 
 <?= DetailView::widget([
     'options' => ['class' => 'list'],
@@ -31,10 +31,14 @@
         ], 
         'latitude',
         'longitude',
+        [            
+            'attribute'=> 'domain_id',         
+            'value' => $model->getDomainName(),
+        ],
     ],
 ]); ?>
 
-<h1><?= "Services" ?></h1>
+<h1><?= Yii::t("topology", "Services"); ?></h1>
 <?php
     $form = ActiveForm::begin([
             'method' => 'post',
@@ -47,10 +51,10 @@
     
 <div class="controls">
     <?=
-    Html::a('Add', array('/topology/service/create', 'id'=>$model->id)); 
+    Html::a(Yii::t("init", "Add"), array('/topology/service/create', 'id'=>$model->id)); 
     ?>
     <?=
-    Html::submitButton('Delete', ['id'=>'deleteButton']);
+    Html::submitButton(Yii::t("init", "Delete"), ['id'=>'deleteButton']);
     ?>
 </div>
 

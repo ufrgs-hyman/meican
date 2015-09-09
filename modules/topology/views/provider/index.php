@@ -13,7 +13,7 @@
     ProviderAsset::register($this);
 ?>
 
-<h1><?= "Providers" ?></h1>
+<h1><?= Yii::t('topology',"Providers"); ?></h1>
 <?php
     $form = ActiveForm::begin([
             'method' => 'post',

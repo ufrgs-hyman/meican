@@ -5,6 +5,7 @@
     use yii\helpers\Url;
     use yii\helpers\ArrayHelper;
 
+    use app\models\Domain;
     use app\models\Provider;
 ?>
 
@@ -34,6 +35,10 @@
 
     <div class="form input">
         <?= $form->field($model,'longitude')->textInput(['size'=>20]); ?>
+    </div>
+
+    <div class="form input">
+       <?= $form->field($model,'domain_id')->dropDownList(ArrayHelper::map(Domain::find()->select(['id','name'])->asArray()->all(), 'id', 'name')); ?>
     </div>
     
     </font>

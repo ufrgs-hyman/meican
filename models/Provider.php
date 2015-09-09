@@ -43,7 +43,7 @@ class Provider extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'name', 'nsa'], 'required'],
+            [['type', 'name', 'nsa','domain_id'], 'required'],
             [['type'], 'string'],
             [['domain_id'], 'integer'],
             [['latitude', 'longitude'], 'number'],
@@ -59,12 +59,13 @@ class Provider extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('circuits', 'ID'),
-            'type' => Yii::t('circuits', 'Type'),
-            'name' => Yii::t('circuits', 'Name'),
-            'nsa' => Yii::t('circuits', 'NSA ID'),
-            'latitude' => Yii::t('circuits', 'Latitude'),
-            'longitude' => Yii::t('circuits', 'Longitude'),
+            'id' => Yii::t('topology', 'ID'),
+            'type' => Yii::t('topology', 'Type'),
+            'name' => Yii::t('topology', 'Name'),
+            'nsa' => Yii::t('topology', 'NSA ID'),
+            'latitude' => Yii::t('topology', 'Latitude'),
+            'longitude' => Yii::t('topology', 'Longitude'),
+            'domain_id' => Yii::t("topology", 'Domain'),
         ];
     }
 
@@ -123,5 +124,9 @@ class Provider extends \yii\db\ActiveRecord
 
     public function isDummy() {
         return Yii::$app->params["provider.force.dummy"] || ($this->type == self::TYPE_DUMMY);
+    }
+
+    public function getDomainName() {
+        return Domain::findOne($this->domain_id)->name;
     }
 }
