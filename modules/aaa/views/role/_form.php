@@ -19,7 +19,7 @@ $form=ActiveForm::begin(array(
 	<h4>
 	<font color="#3a5879">
 		<div class="form input">
-			<?= $form->field($udr,'_groupRoleName')->dropDownList(ArrayHelper::map($groups, 'role_name', 'name')); ?>
+			<?= $form->field($udr,'_groupRoleName')->dropDownList($groups); ?>
 		</div>
 		
 		<div id="domain-select" class="form input">

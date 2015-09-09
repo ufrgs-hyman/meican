@@ -100,6 +100,10 @@ class UserDomainRole extends \yii\db\ActiveRecord
     	return Group::find()->where(['type' => Group::TYPE_DOMAIN])->orderBy(['name' => SORT_ASC])->asArray()->all();
     }
     
+    static function getDomainGroupsNoArray() {
+    	return Group::find()->where(['type' => Group::TYPE_DOMAIN])->orderBy(['name' => SORT_ASC])->all();
+    }
+    
     static function getSystemGroups() {
     	return Group::find()->where(['type' => Group::TYPE_SYSTEM])->orderBy(['name' => SORT_ASC])->asArray()->all();
     }

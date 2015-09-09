@@ -99,7 +99,11 @@ class RoleController extends RbacController {
     	$systemGroups = [];
     	$anyDomain = [];
     	if(self::can("user/update")){
-    		$groups = $udr->getGroups();
+    		$groups = [];
+    		foreach($udr->getGroupsNoArray() as $group){
+    			$groups[$group->role_name] = $group->name." (".$group->getType().")";
+    		}
+    		
     		$anyDomain = [null=>Yii::t("aaa" , "any")];
     		$domains = Domain::find()->orderBy(['name' => SORT_ASC])->asArray()->all();
     		$sysGroups = $udr->getSystemGroupsNoArray();
@@ -107,7 +111,12 @@ class RoleController extends RbacController {
 				$systemGroups[] = $g->role_name;
 			}
     	}
-    	else $groups = $udr->getDomainGroups();
+    	else{
+    		$groups = [];
+    		foreach($udr->getDomainGroupsNoArray() as $group){
+    			$groups[$group->role_name] = $group->name;
+    		}
+    	}
     
     	return $this->render('create',array(
     			'udr' => $udr,
