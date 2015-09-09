@@ -26,10 +26,10 @@
 ?>
     
 <div class="controls">
-    <?= Html::a(Yii::t('topology',"Add topology provider"), array('create')); 
+    <?= Html::a(Yii::t('topology',"Add instance"), array('create')); 
     ?>
     <?=
-    Html::submitButton('Delete', ['id'=>'deleteButton']);
+    Html::submitButton(Yii::t('topology',"Delete"), ['id'=>'deleteButton']);
     ?>
 </div>
 
@@ -82,7 +82,7 @@
                     }
                 ],
                 [
-                    'header' => 'Auto Sync',
+                    'header' => Yii::t("topology", "Recurrence"),
                     'value' => function ($model){
                         return $model->isAutoSyncEnabled() ? Yii::t("topology", "Enabled") : "";
                     },
@@ -100,7 +100,7 @@
                     }
                 ],
                 [
-                    'header' => 'Last Sync',
+                    'header' =>Yii::t("topology", "Last sync"),
                     'value' => function ($model){
                         return $model->getLastSyncDate();
                     },

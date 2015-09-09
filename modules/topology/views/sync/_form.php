@@ -28,18 +28,19 @@
        <?= $form->field($model,'type')->dropDownList(ArrayHelper::map(TopologySynchronizer::getTypes(), 'id', 'name')); ?>
     </div>
 
-    <div id="subscribed-row" class="form input" <?= ($model->type == Service::TYPE_NSI_DS_1_0) ? "" : "hidden" ?>>
+    <div id="subscribed-row" class="form input" <?= ($model->type == Service::TYPE_NSI_DS_1_0) ? "" : "disabled" ?>>
         <?= $form->field($model,'subscribe_enabled')->dropDownList(ArrayHelper::map(
-            [['id'=>false, 'name'=>'Disabled'],['id'=>true,'name'=>'Enabled']], 'id', 'name'))->label("Subscribe to Updates"); ?>
-    </div>
-
-    <div class="form input">
-        <?= $form->field($model,'url')->textInput(['size'=>80]); ?>
+            [['id'=>false, 'name'=>Yii::t("topology", 'Disabled')],['id'=>true,'name'=>Yii::t("topology", 'Enabled')]], 'id', 'name'), 
+                ['disabled'=>($model->type == Service::TYPE_NSI_DS_1_0) ? false : true]); ?>
     </div>
 
     <div class="form input">
         <?= $form->field($model,'auto_apply')->dropDownList(ArrayHelper::map(
-            [['id'=>false, 'name'=>'Disabled'],['id'=>true,'name'=>'Enabled']], 'id', 'name')); ?>
+            [['id'=>false, 'name'=>Yii::t("topology", 'Disabled')],['id'=>true,'name'=>Yii::t("topology", 'Enabled')]], 'id', 'name')); ?>
+    </div>
+
+    <div class="form input">
+        <?= $form->field($model,'url')->textInput(['size'=>80]); ?>
     </div>
 
     <div id="changePasswordOption">
