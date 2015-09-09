@@ -264,7 +264,8 @@ $(document).ready(function() {
 /* ====================================================================================================
 	Menu
 	=================================================================================================*/
-    $('#menu ul li h3').parent().find('ul').css('display', 'block');
+    //$('#menu ul li h3').parent().find('ul').css('display', 'none');
+    //$("#menu-" + window.location.href.split(baseUrl + "/")[1].split("/")[0]).parent().parent().find('ul').css('display', 'block');
     
     $('#menu ul li h3').click(function() {
     	if ($(this).parent().find('ul').is(':visible')) {

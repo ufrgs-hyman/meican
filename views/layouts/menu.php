@@ -8,10 +8,10 @@ echo Menu::widget([
 		[
 			'label' => '<h3>'.Yii::t('init','Dashboard').'</h3>', 
 			'url' => ['/init'],
-			'linkOptions' => ['class' => 'top']
+			'linkOptions' => ['class' => 'top'],
 		],
 		[
-			'label' => '<h3><a href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('circuits','Reservations').'</a></h3>',
+			'label' => '<h3><a id="menu-circuits" href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('circuits','Reservations').'</a></h3>',
 			'linkOptions' => ['class' => 'top'],
 			'items' => [
 				['label'=>Yii::t('circuits','Create'), 'url'=>['/circuits/reservation/create']],
@@ -22,7 +22,7 @@ echo Menu::widget([
 			]
 		],
 		[
-			'label'=>'<h3><a href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('bpm','Workflows').'</a></h3>',
+			'label'=>'<h3><a id="menu-bpm" href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('bpm','Workflows').'</a></h3>',
 			'items'=>[
 				['label'=>Yii::t('bpm','Create'), 'url'=>['/bpm/workflow/new'], 'visible'=> RbacController::can('workflow/create')],
 				['label'=>Yii::t('bpm','Status'), 'url'=>['/bpm/workflow/index']],
@@ -30,7 +30,7 @@ echo Menu::widget([
 			'visible'=> RbacController::can('workflow/read')
 		],
 		[
-			'label'=>'<h3><a href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('topology','Topologies').'</a></h3>',
+			'label'=>'<h3><a id="menu-topology" href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('topology','Topologies').'</a></h3>',
 			'items'=>[
 				['label'=>Yii::t('topology','Domains'), 'url'=>['/topology/domain/index'], 'visible'=>RbacController::can('domain/read')],
 				['label'=>Yii::t('topology','Providers'), 'url'=>['/topology/provider/index'], 'visible'=>RbacController::can('domainTopology/read')],
@@ -44,7 +44,7 @@ echo Menu::widget([
 			'visible'=>(RbacController::can('domainTopology/read') || RbacController::can('synchronizer/read'))
 		],
 		[
-			'label'=>'<h3><a href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('aaa','Automated Tests').'</a></h3>',
+			'label'=>'<h3><a id="menu-circuits" href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('aaa','Automated Tests').'</a></h3>',
 			'items'=>[
 					['label'=>Yii::t('topology','Create'),'url'=>['/circuits/automated-test/create'], 'visible'=>RbacController::can('test/create')],
 					['label'=>Yii::t('topology','Status'),'url'=>['/circuits/automated-test/index'], 'visible'=>RbacController::can('test/read')]
@@ -52,7 +52,7 @@ echo Menu::widget([
 			'visible'=>(RbacController::can('test/read') || RbacController::can('test/create'))
 		],
 		[
-			'label'=>'<h3><a href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('aaa','Users').'</a></h3>',
+			'label'=>'<h3><a id="menu-aaa" href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('aaa','Users').'</a></h3>',
 			'items'=>[
 					['label'=>Yii::t('aaa','Users'), 'url'=>['/aaa/user/index'], 'visible'=>(RbacController::can('user/read') || RbacController::can('role/read'))],
 					['label'=>Yii::t('aaa','Groups'), 'url'=>['/aaa/group/index'], 'visible'=>RbacController::can('group/read')],

@@ -11,17 +11,17 @@ $(document).on('ready pjax:success', function() {
 
 		var rowNode = this;
 		$('#test-dialog').dialog({
-			title: "Update",
+			title: I18N.t("Update"),
 			width: 360,
 			height: 300,
 			modal: true,
 			buttons: [{
-				text: tt("Save"),
+				text: I18N.t("Save"),
 				click: function() {
 					save(rowNode);
 		        }},
 		        {
-		        text: tt("Cancel"),
+		        text: I18N.t("Cancel") + " (ESC)",
 		        click: function() {
 		          	$(this).dialog('close');
 		        }
@@ -57,17 +57,17 @@ $(document).ready(function() {
 function openCreateDialog() {
 	prepareCreate();
 	$('#test-dialog').dialog({
-		title: "Create",
+		title: I18N.t("Create"),
 		width: 360,
 		height: 300,
 		modal: true,
 		buttons: [{
-			text: tt("Save"),
+			text: I18N.t("Save"),
 			click: function() {
 				create();
 	        }},
 	        {
-	        text: tt("Cancel"),
+	        text: I18N.t("Cancel") + " (ESC)",
 	        click: function() {
 	          	$(this).dialog('close');
 	        }
@@ -97,6 +97,23 @@ function submitDeleteForm() {
 	deleteChecked();
 }
 
+function deleteChecked() {
+    var item = document.getElementById("test-grid");
+    var keys = $(item).yiiGridView('getSelectedRows');
+    
+    $.ajax({
+        type: "POST",
+        url: baseUrl+'/circuits/automated-test/delete',
+        dataType: 'json',
+        data: {
+            ids: JSON.stringify(keys),
+        },
+        success: function (response) {
+            window.location.reload(true);
+        },
+    });
+}
+
 function clearCheckbox() {
 	$("#test-grid :checked").removeAttr('checked');
 	$('#delete-button').hide();
@@ -116,10 +133,10 @@ function getData(object, rowId) {
 
 function prepareRefreshButton() {
 	$("#refresh-button").click(function(){
-		if ($("#refresh-button").val() == "false") {
-			enableAutoRefresh();
-		} else {
+		if ($("#refresh-button").val() == "true") {
 			disableAutoRefresh();
+		} else {
+            enableAutoRefresh();
 		}
 		return false;
 	});
@@ -131,7 +148,7 @@ function disableAutoRefresh(disableButton) {
 
 	$("#refresh-button").val('false');
 	clearInterval(refresher);
-	$("#refresh-button").text(tt("Enable auto refresh"));
+	$("#refresh-button").text(I18N.t("Enable auto refresh"));
 }
 
 function enableAutoRefresh() {
@@ -141,7 +158,7 @@ function enableAutoRefresh() {
 	updateGridView();
 	$("#refresh-button").val('true');
 	refresher = setInterval(updateGridView, 60000);
-	$("#refresh-button").text(tt("Disable auto refresh"));
+	$("#refresh-button").text(I18N.t("Disable auto refresh"));
 }
 
 function updateGridView() {
@@ -197,25 +214,9 @@ function save(row) {
     });
 }
 
-function deleteChecked() {
-	var item = document.getElementById("test-grid");
-	var keys = $(item).yiiGridView('getSelectedRows');
-	
-	$.ajax({
-		type: "POST",
-		url: baseUrl+'/circuits/automated-test/delete',
-		dataType: 'json',
-		data: {
-			ids: JSON.stringify(keys),
-		},
-		success: function (response) {
-        },
-	});
-}
-
 function fillDomainSelect(endPointType, domains, domainId, initDisabled) {
 	disableSelect(endPointType, "domain");
-	$("#"+ endPointType + "-domain").append('<option value="">' + tt('select') + '</option>');
+	$("#"+ endPointType + "-domain").append('<option value="">' + I18N.t('select') + '</option>');
 	for (var i = 0; i < domains.length; i++) {
 		$("#"+ endPointType + "-domain").append('<option value="' + domains[i].id + '">' + domains[i].name + '</option>');
 	}
@@ -229,7 +230,7 @@ function fillNetworkSelect(endPointType, domainId, networkId, initDisabled) {
     disableSelect(endPointType, "network");
 	clearSelect(endPointType, "network");
 	if (domainId != "" && domainId != null) {
-		$("#"+ endPointType + "-network").append('<option value="">' + tt('loading') + '</option>');
+		$("#"+ endPointType + "-network").append('<option value="">' + I18N.t('loading') + '</option>');
 		$.ajax({
 			url: baseUrl+'/topology/network/get-by-domain',
 			data: {
@@ -238,7 +239,7 @@ function fillNetworkSelect(endPointType, domainId, networkId, initDisabled) {
 			dataType: 'json',
 			success: function(response){
 				clearSelect(endPointType, "network");
-				$("#"+ endPointType + "-network").append('<option value="">' + tt('select') + '</option>');
+				$("#"+ endPointType + "-network").append('<option value="">' + I18N.t('select') + '</option>');
 				for (var i = 0; i < response.length; i++) {
 					$("#"+ endPointType + "-network").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
 			    }
@@ -266,7 +267,7 @@ function fillDeviceSelect(endPointType, domainId, networkId, deviceId, initDisab
     } 
 
     if (parent) {
-        $("#"+ endPointType + "-device").append('<option value="">' + tt('loading') + '</option>');
+        $("#"+ endPointType + "-device").append('<option value="">' + I18N.t('loading') + '</option>');
         $.ajax({
             url: baseUrl+'/topology/device/get-by-' + parent[0],
             dataType: 'json',
@@ -275,7 +276,7 @@ function fillDeviceSelect(endPointType, domainId, networkId, deviceId, initDisab
             },
             success: function(response){
                 clearSelect(endPointType, "device");
-                $("#"+ endPointType + "-device").append('<option value="">' + tt('select') + '</option>');
+                $("#"+ endPointType + "-device").append('<option value="">' + I18N.t('select') + '</option>');
                 for (var i = 0; i < response.length; i++) {
                     if (response[i].name == "") response[i].name = "default";
                     $("#"+ endPointType + "-device").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
@@ -293,7 +294,7 @@ function fillPortSelect(endPointType, deviceId, portId, initDisabled) {
     disableSelect(endPointType, "port");
 	clearSelect(endPointType, "port");
 	if (deviceId != "" && deviceId != null) {
-		$("#"+ endPointType + "-port").append('<option value="">' + tt('loading') + '</option>');
+		$("#"+ endPointType + "-port").append('<option value="">' + I18N.t('loading') + '</option>');
 		$.ajax({
 			url: baseUrl+'/circuits/reservation/get-port-by-device',
 			dataType: 'json',
@@ -303,13 +304,9 @@ function fillPortSelect(endPointType, deviceId, portId, initDisabled) {
 			},
 			success: function(response){
 				clearSelect(endPointType, "port");
-				$("#"+ endPointType + "-port").append('<option value="">' + tt('select') + '</option>');
+				$("#"+ endPointType + "-port").append('<option value="">' + I18N.t('select') + '</option>');
 				for (var i = 0; i < response.length; i++) {
-					var name = response[i].name;
-					if (response[i].port == "") {
-						name = tt("default");
-					}
-					$("#"+ endPointType + "-port").append('<option value="' + response[i].id + '">' + name + '</option>');
+					$("#"+ endPointType + "-port").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
 			    }
                 if (portId != null && portId != "") $("#"+ endPointType + "-port").val(portId);
                 if (!initDisabled) enableSelect(endPointType, "port");
@@ -322,7 +319,7 @@ function fillVlanSelect(endPointType, portId, vlan, initDisabled) {
     disableSelect(endPointType, "vlan");
 	clearSelect(endPointType, "vlan");
 	if (portId != "" && portId != null) {
-		$("#"+ endPointType + "-vlan").append('<option value="">' + tt('loading') + '</option>');
+		$("#"+ endPointType + "-vlan").append('<option value="">' + I18N.t('loading') + '</option>');
 		$.ajax({
 			url: baseUrl+'/topology/port/get-vlan-range',
 			dataType: 'json',

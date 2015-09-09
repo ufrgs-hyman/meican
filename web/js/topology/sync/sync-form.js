@@ -16,9 +16,6 @@ $("#syncform-type").on("change", function() {
 });
 
 function setVisibleDSOptions() {
-    if ($("#syncform-type").val() != 'NSI_DS_1_0') {
-        $("#subscribed-row").hide();
-    } else {
-        $("#subscribed-row").show();
-    }
+    $("#subscribed-row").attr("disabled", $("#syncform-type").val() != 'NSI_DS_1_0');
+    $("#syncform-subscribe_enabled").attr("disabled", $("#syncform-type").val() != 'NSI_DS_1_0');
 }
