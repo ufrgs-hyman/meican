@@ -91,6 +91,7 @@ $(document).ready(function() {
 		}
 		if($("#notification_container").is(":hidden")){
 			$("#notification_ul").html("");
+			count = 0;
 			document.getElementById("notification_li").className='show';
 			$("#notification_loader").show();
 			$.ajax({

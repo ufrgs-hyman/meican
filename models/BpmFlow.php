@@ -473,11 +473,17 @@ class BpmFlow extends \yii\db\ActiveRecord
     			break;
     	
     		case '<= ':
-    			if($time <= $value[0]) $accept = true;
+    			if($time <= $value[0]){
+    				if($value[1] == "hours"){
+    					if($mins == 0) $accept = true;
+    				}
+    				else $accept = true;
+    			}
     			break;
     			 
     		case '> ':
     			if($time > $value[0]) $accept = true;
+    			else if($value[1] == "hours" && $time == $value[0] && $mins > 0) $accept = true;
     			break;
     	
     		case '>= ':
@@ -485,7 +491,12 @@ class BpmFlow extends \yii\db\ActiveRecord
     			break;
     	
     		case '== ':
-    			if($time == $value[0]) $accept = true;
+    			if($time == $value[0]){
+    				if($value[1] == "hours"){
+    					if($mins == 0) $accept = true;
+    				}
+    				else $accept = true;
+    			}
     			break;
     	}
     	 
@@ -546,7 +557,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     				$flow->status = self::STATUS_YES;
     				return;
     			}
-    			$domain = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => $cp->path_order+1])->domain;
+    			$domain = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => $cp->path_order+1]);
     			if(!isset($domain)){ //Se dominio deletado
     				$flow->status = self::STATUS_YES;
     				return;
@@ -555,7 +566,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     			break;
     			
     		case 'destination':
-    			$path_order = ReservationPath::find()->where(['conn_id' => $connection->id])->count()-1;
+    			$path_order = ConnectionPath::find()->where(['conn_id' => $connection->id])->count()-1;
     			$domain = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => $path_order])->domain;
     			break;
     	}
