@@ -25,6 +25,7 @@ use Yii;
  */
 class Provider extends \yii\db\ActiveRecord
 {
+    const TYPE_DUMMY = "DUMMY";
     const TYPE_UPA = "UPA";
     const TYPE_AGG = "AGG";
     
@@ -80,6 +81,7 @@ class Provider extends \yii\db\ActiveRecord
         return [
             ['id'=>self::TYPE_AGG, 'name'=>Yii::t('circuits', 'Aggregator')],
             ['id'=>self::TYPE_UPA, 'name'=>Yii::t('circuits', 'Ultimate (uPA)')],
+            ['id'=>self::TYPE_DUMMY, 'name'=>Yii::t('circuits', 'Dummy')],
         ];
     }
 
@@ -87,6 +89,7 @@ class Provider extends \yii\db\ActiveRecord
         switch ($this->type) {
             case self::TYPE_AGG: return Yii::t('circuits', 'Aggregator');
             case self::TYPE_UPA: return Yii::t('circuits', 'Ultimate (uPA)');
+            case self::TYPE_DUMMY: return Yii::t('circuits', 'Dummy');
             default: return Yii::t('topology', 'Unknown');
         }
     }
@@ -95,6 +98,7 @@ class Provider extends \yii\db\ActiveRecord
         return [
             self::TYPE_AGG => Yii::t('circuits', 'Aggregator'),
             self::TYPE_UPA =>Yii::t('circuits', 'Ultimate (uPA)'),
+            self::TYPE_DUMMY=>Yii::t('circuits', 'Dummy'),
         ];
     }
 
@@ -119,7 +123,7 @@ class Provider extends \yii\db\ActiveRecord
     }
 
     public function isDummy() {
-        return Yii::$app->params["provider.force.dummy"];
+        return Yii::$app->params["provider.force.dummy"] || ($this->type == self::TYPE_DUMMY);
     }
 
     public function getDomainName() {

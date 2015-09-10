@@ -326,6 +326,10 @@ function addWayPoint(marker) {
 	markerCluster.removeMarker(marker);
 	marker.setMap(meicanMap.getMap());
 	
+	//if (wayPoints.length < 1) {
+	//	$("#reservation-waypoints").slideDown(1);
+	//}
+	
 	wayPoints.push(marker);
     $("#waypoints-size").text(wayPoints.length);
 
@@ -710,19 +714,19 @@ function enableTabSlide() {
 }
 
 function closeTab() {
-    $("#slide").slideUp(500, function(){
+    $("#slide").slideUp(400, function(){
         $(window).trigger('resize');
     });
-    $("#waypoints_order").slideUp(500, function(){
+    $("#waypoints_order").slideUp(400, function(){
         $(window).trigger('resize');
     });
 }
 
 function openTab() {
-    $("#slide").slideDown(500, function(){
+    $("#slide").slideDown(400, function(){
         $(window).trigger('resize');
     });
-    $("#waypoints_order").slideDown(500, function(){
+    $("#waypoints_order").slideDown(400, function(){
         $(window).trigger('resize');
     });
 }

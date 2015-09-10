@@ -11,7 +11,6 @@ $config = [
     'modules' => [
 	    'debug' => [
 	    	'class' => 'yii\debug\Module',
-	    	//'allowedIPs' => ['143.54.12.245']
 	    ],
 	    'aaa' => 'app\modules\aaa\AaaModule',
 		'circuits' => 'app\modules\circuits\CircuitsModule',
@@ -22,17 +21,6 @@ $config = [
 		'gii' => 'yii\gii\Module',
 	],
     'components' => [
-        'assetManager' => [
-            'bundles' => [ 
-                'yii\jui\JuiAsset' => [
-                    'css' => [],
-                    'js' => [],
-                    'depends' => [
-                        'app\assets\MeicanJuiAsset',
-                    ]
-                ]
-            ],
-        ],
     	'urlManager' => [
 	    	'class' => 'yii\web\UrlManager',
 	    	'enablePrettyUrl' => true,
@@ -40,13 +28,13 @@ $config = [
     	],
     	'session' => [
 	    	'class' => 'yii\web\Session',
-	    	'cookieParams' => ['httpOnly' => true, 'lifetime'=> 3600],
+	    	'cookieParams' => ['httponly' => true, 'lifetime'=> 3600],
 	    	'timeout' => 3600,
 	    	'useCookies' => true,
     	],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'sdfsdfddsfds',
+            'cookieValidationKey' => '',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',

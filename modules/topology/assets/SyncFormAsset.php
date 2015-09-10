@@ -10,12 +10,14 @@ class SyncFormAsset extends AssetBundle
     public $baseUrl = '@web';
 
     public $js = [
+        'js/meican-i18n.js',
         'js/topology/sync/sync-form.js',
+        'js/vendor/jquery-cron-i18n.js',
+        'js/vendor/jquery-cron.js',
     ];
 
     public $depends = [
-        'app\assets\MeicanAsset',
-        'app\assets\CronPickerAsset',
+        'yii\web\JqueryAsset',
     ];
 }
 

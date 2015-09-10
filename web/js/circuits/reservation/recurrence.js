@@ -1,17 +1,5 @@
 $(document).ready(function() {
 	initializationOfView();
-
-	$('#recurrence_enabled').on('change', function() {
-		if($("#recurrence_enabled").is(":checked")) {
-			$("#recurrence").slideDown(500, function(){
-		        $(window).trigger('resize');
-		    });
-		} else {
-			$("#recurrence").slideUp(500, function(){
-		        $(window).trigger('resize');
-		    });
-		}
-	});
 });
 
 function initializationOfView(){

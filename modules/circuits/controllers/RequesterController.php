@@ -2,7 +2,7 @@
 
 namespace app\modules\circuits\controllers;
 
-use app\modules\circuits\controllers\services\RequesterClient;
+use app\modules\circuits\controllers\service\RequesterClient;
 use yii\helpers\Url;
 use Yii;
 use yii\web\Controller;
@@ -113,7 +113,7 @@ class RequesterController extends Controller {
     }
     
     public function querySummaryConfirmed($response) {
-        /*$reservation = $response->reservation;
+        $reservation = $response->reservation;
         Yii::trace(print_r($reservation,true));
         foreach ($reservation as $connection) {
             $conn = Connection::find()->where(['external_id'=>$connection->connectionId])->one();
@@ -189,8 +189,8 @@ class RequesterController extends Controller {
                     }
                 }
             }
-        }*/
-        if($this->saveConnPath($response)) {
+        }
+        /*if($this->saveConnPath($response)) {
             $connection = Connection::find()->where(['external_id'=>$response->reservation->connectionId])->one();
             $connection->confirmReadPath();
             
@@ -198,7 +198,7 @@ class RequesterController extends Controller {
             
             /////Path invalido
             /////Inconsistencias na topologia
-        }
+        }*/
     }
     
     private function saveConnPath($response) {
