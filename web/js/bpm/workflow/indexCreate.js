@@ -30,20 +30,19 @@ $(document).ready(function() {
 					dialogClass: "no-close",
 					buttons: [
 			          {
-			        	  text: tt("Cancel"),
-					      click: function() {
-					    	  window.location="../workflow/index";
-					      }
-			          },
-					    
-			          {
 			        	  text: "Ok",
 					      click: function() {
 					    	  var params = "?domainTop=".concat(selectBox.options[selectBox.selectedIndex].value);
 					    	  $("#dialog").dialog("close");
 					    	  window.location="../workflow/create".concat(params);
 					      }
-			          }
+			          },
+			          {
+			        	  text: tt("Cancel"),
+					      click: function() {
+					    	  window.location="../workflow/index";
+					      }
+			          },
 			       ]
 				});
 			} else if(selectBox.options.length == 1){

@@ -9,6 +9,7 @@ use app\models\ReservationPath;
 use app\models\Cron;
 use Yii;
 use app\components\DateUtils;
+use app\controllers\RbacController;
 
 class AutomatedTestForm extends Model {
 	
@@ -37,6 +38,29 @@ class AutomatedTestForm extends Model {
  			$this->reservation->requester_nsa = CircuitsPreference::findOneValue(CircuitsPreference::MEICAN_NSA);
  			$this->reservation->provider_nsa = CircuitsPreference::findOneValue(CircuitsPreference::CIRCUITS_DEFAULT_PROVIDER_NSA);
  			$this->reservation->request_user_id = Yii::$app->user->getId();
+ 			
+ 			//Confere se usuário tem permissão para testar na origem OU no destino
+ 			$source = Port::findOne(['id' => $this->src_port]);
+ 			$destination = Port::findOne(['id' => $this->dst_port]);
+ 			$permission = false;
+ 			if($source){
+ 				$source = $source->getDevice()->one();
+ 				if($source){
+ 					$domain = $source->getDomain()->one();
+ 					if($domain && RbacController::can('test/create', $domain->name)) $permission = true;
+ 				}
+ 			}
+ 			if($destination){
+ 				$destination = $destination->getDevice()->one();
+ 				if($destination){
+ 					$domain = $destination->getDomain()->one();
+ 					if($domain && RbacController::can('test/create', $domain->name)) $permission = true;
+ 				}
+ 			}
+ 			if(!$permission){
+ 				Yii::$app->getSession()->addFlash("warning", Yii::t("circuits", "You are not allowed to create a automated test involving these selected domains"));
+				return false;
+ 			}
  			
  			if ($this->reservation->save()) {
  				$this->reservation->name .= $this->reservation->id;

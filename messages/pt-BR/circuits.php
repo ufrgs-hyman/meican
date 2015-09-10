@@ -267,6 +267,8 @@ return array(
 		'You are not allowed to create automated tests' => 'Você não tem permissão para editar testes automatizados',
 		'You are not allowed to delete automated tests' => 'Você não tem permissão para remover testes automatizados',
 		'You are not allowed to create a automated test involving these selected domains' => 'Você não tem permissão para criar um teste automatizado envolvendo os domínios selecionados',
+		'You are not allowed to delete automated tests involving these selected domains' => 'Você não tem permissão para remover testes automatizados envolvendo os domínios selecionados',
+		'You are not allowed to update a automated test involving these selected domains' => 'Você não tem permissão para editar um teste automatizado envolvendo os domínios selecionados',
 		
 		'See Map' => "Ver Mapa",
 		'Configuration' => "Configuração",

@@ -32,7 +32,7 @@ class RoleController extends RbacController {
 			}
 		}
 		
-		if(self::can("user/update"))
+		if(self::can("user/read"))
 			$roles = $user->getUserDomainRoles();
 		else{
 	    	$domainNames = [];
@@ -134,14 +134,14 @@ class RoleController extends RbacController {
     		if(!self::can("user/read") && !self::can("role/read")) return $this->goHome();
     		else{
     			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Role not found'));
-    			return $this->redirect(array('index', 'id'=>$id));
+    			return $this->redirect(array('index', 'id'=> $udr->user_id));
     		}
     	}
     	if(!self::can("role/update") && !self::can("user/update")){
     		if(!self::can("user/read") && !self::can("role/read")) return $this->goHome();
     		else{
     			Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update roles'));
-    			return $this->redirect(array('index', 'id'=>$id));
+    			return $this->redirect(array('index', 'id'=> $udr->user_id));
     		}
     	}
 
@@ -190,10 +190,14 @@ class RoleController extends RbacController {
     		}
     	}
     	
+    $systemGroups = [];
     	$anyDomain = [];
-    	$systemGroups = [];
     	if(self::can("user/update")){
-    		$groups = $udr->getGroups();
+    		$groups = [];
+    		foreach($udr->getGroupsNoArray() as $group){
+    			$groups[$group->role_name] = $group->name." (".$group->getType().")";
+    		}
+    		
     		$anyDomain = [null=>Yii::t("aaa" , "any")];
     		$domains = Domain::find()->orderBy(['name' => SORT_ASC])->asArray()->all();
     		$sysGroups = $udr->getSystemGroupsNoArray();
@@ -204,13 +208,16 @@ class RoleController extends RbacController {
     	else{
     		if(!self::can("role/update", $udr->domain)){
     			Yii::$app->getSession()->setFlash("warning", Yii::t("aaa", 'You are not allowed to update this role'));
-    			return $this->redirect(array('index', 'id'=>$udr->user_id));
+    			return $this->redirect(array('index', 'id'=> $udr->user_id));
     		}
     		else if($udr->domain == null && !self::can("user/update")){
     			Yii::$app->getSession()->setFlash("warning", Yii::t("aaa", 'You are not allowed to update this role'));
-    			return $this->redirect(array('index', 'id'=>$udr->user_id));
+    			return $this->redirect(array('index', 'id'=> $udr->user_id));
     		}
-    		$groups = $udr->getDomainGroups();
+    		$groups = [];
+    		foreach($udr->getDomainGroupsNoArray() as $group){
+    			$groups[$group->role_name] = $group->name;
+    		}
     	}
 
     	return $this->render('update',array(

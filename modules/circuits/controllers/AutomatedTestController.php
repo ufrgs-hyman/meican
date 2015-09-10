@@ -8,6 +8,7 @@ use app\controllers\RbacController;
 use Yii;
 use app\models\Reservation;
 use app\models\Domain;
+use app\models\Port;
 use app\models\Cron;
 use yii\data\ActiveDataProvider;
 use app\modules\circuits\models\CircuitsPreference;
@@ -65,6 +66,19 @@ class AutomatedTestController extends RbacController {
 	public function actionUpdate($id) {
 		$form = new AutomatedTestForm;
 		if ($form->load($_POST)) {
+			$test = AutomatedTest::findOne($id);
+				
+			//Confere se usuário tem permissão para editar teste na origem OU no destino
+	 		$source = $test->getSourceDomain()->one();
+	 		$destination = $test->getDestinationDomain()->one();
+	 		$permission = false;
+	 		if($source && RbacController::can('test/delete', $source->name)) $permission = true;
+	 		if($destination && RbacController::can('test/delete', $destination->name)) $permission = true;
+			if(!$permission){
+				Yii::$app->getSession()->addFlash("warning", Yii::t("circuits", "You are not allowed to update a automated test involving these selected domains"));
+				return false;
+			}
+			
 			$cron = Cron::findOneTestTask($id);
 			$cron->freq = $form->cron_value;
 			$cron->status = Cron::STATUS_PROCESSING;
@@ -81,9 +95,22 @@ class AutomatedTestController extends RbacController {
 		if(isset($_POST["ids"])) {
 			foreach (json_decode($_POST["ids"]) as $testId) {
 				$test = AutomatedTest::findOne($testId);
+				
+				//Confere se usuário tem permissão para remover teste na origem OU no destino
+	 			$source = $test->getSourceDomain()->one();
+	 			$destination = $test->getDestinationDomain()->one();
+	 			$permission = false;
+	 			if($source && RbacController::can('test/delete', $source->name)) $permission = true;
+	 			if($destination && RbacController::can('test/delete', $destination->name)) $permission = true;
+	 			
+	 			if(!$permission){
+	 				Yii::$app->getSession()->addFlash("warning", Yii::t("circuits", "You are not allowed to delete automated tests involving these selected domains"));
+					return true;
+	 			}
+	 			
 				if(!$test->delete()) {
 					Yii::$app->getSession()->addFlash("error", Yii::t("circuits", "Error deleting Automated Test"));
-					return false;
+					return true;
 				} else {
 					Yii::$app->getSession()->addFlash("success", Yii::t("circuits", "Automated Test deleted successfully"));
 				}

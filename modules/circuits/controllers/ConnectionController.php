@@ -114,7 +114,7 @@ class ConnectionController extends RbacController {
 				    		 ->where(['in', 'domain', $domains_name])
 				    		 ->andWhere(['conn_id' => $conn->id])
 				    		 ->select(["conn_id"])->distinct(true)->one();
-		    		 
+		    		
 		    		if(!empty($paths)) $permission = true;
 		    	}
 				if($permission){
