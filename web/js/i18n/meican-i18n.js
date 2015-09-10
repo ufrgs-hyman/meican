@@ -15,6 +15,6 @@ MeicanI18N.prototype.add = function(key, value) {
 }
 
 MeicanI18N.prototype.t = function(key) {
-    if(language && this._dic[language]) return this._dic[language][key];
+    if(language && this._dic && this._dic[language] && this._dic[language][key]) return this._dic[language][key];
     else return key;
 } 
