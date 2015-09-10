@@ -4,11 +4,11 @@ return [
 	"meican.version" => "2.2.0",
 		
 	"google.analytics.enabled" => false,
-	"google.analytics.key" => "UA-64193376-1",
+	"google.analytics.key" => "",
     "google.maps.key" => false,
 
-	'meican.certificate.filename' => "meican.pem",
-	'meican.certificate.passphrase' => "futurarnp",	
+	'meican.certificate.filename' => "",
+	'meican.certificate.passphrase' => "",	
 		
 	"provider.force.dummy" => true,
 
