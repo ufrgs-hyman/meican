@@ -97,35 +97,27 @@ class ConnectionController extends RbacController {
     	return $data;
     }
 
-	public function actionCancel($connections) {
-		$numDenied = 0;
-		
-		foreach (json_decode($connections) as $connId) {
-			$conn = Connection::findOne($connId);
-			if (isset($conn->external_id)){
-		    	$permission = false;
-		    	$reservation = Reservation::findOne(['id' => $conn->reservation_id]);
-		    	if(Yii::$app->user->getId() == $reservation->request_user_id) $permission = true; //Se é quem requisitou
-		    	else {
-		    		$domains_name = [];
-		    		foreach(self::whichDomainsCan('reservation/delete') as $domain) $domains_name[] = $domain->name;
-		    		
-		    		$paths = ConnectionPath::find()
-				    		 ->where(['in', 'domain', $domains_name])
-				    		 ->andWhere(['conn_id' => $conn->id])
-				    		 ->select(["conn_id"])->distinct(true)->one();
-		    		
-		    		if(!empty($paths)) $permission = true;
-		    	}
-				if($permission){
-					$conn->requestCancel();
-					return true;
-				}
-				else return false;
-			}
+	public function actionCancel($id) {
+		$conn = Connection::findOne($id);
+    	$permission = false;
+    	$reservation = Reservation::findOne(['id' => $conn->reservation_id]);
+    	if(Yii::$app->user->getId() == $reservation->request_user_id) $permission = true; //Se é quem requisitou
+    	else {
+    		$domains_name = [];
+    		foreach(self::whichDomainsCan('reservation/delete') as $domain) $domains_name[] = $domain->name;
+    		
+    		$paths = ConnectionPath::find()
+		    		 ->where(['in', 'domain', $domains_name])
+		    		 ->andWhere(['conn_id' => $conn->id])
+		    		 ->select(["conn_id"])->distinct(true)->one();
+    		
+    		if(!empty($paths)) $permission = true;
+    	}
+		if($permission){
+			$conn->requestCancel();
+			return true;
 		}
-		
-		return true;
+		else return false;
 	}
 }
 
