@@ -360,7 +360,7 @@ MeicanMap.prototype.buildMapTypeBox = function(divId, selectId) {
                     currentMap.enableMapLabels();
                     break;
             }
-        }
+        },
     });
 }
 

@@ -1348,7 +1348,13 @@ span.ui-spinner {
     font-weight: 400;
 }
 
+.ui-selectmenu-button span.ui-selectmenu-text {
+    font-size: 11px;
+}
 
+.ui-menu-item {
+    font-size: 11px;
+}
 
 form .notification {
     width: 322px;
