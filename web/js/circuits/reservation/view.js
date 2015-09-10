@@ -532,8 +532,6 @@ function addMarker(dev, color) {
 	marker = meicanMap.getMarker('dev', dev.id);
 	if (marker) return marker;
 
-    if (dev.name == '') dev.name = "default";
-	
 	if (dev.lat != null && dev.lng != null) {
 		var myLatlng = new google.maps.LatLng(dev.lat,dev.lng);
 	} else {
@@ -544,7 +542,8 @@ function addMarker(dev, color) {
 		position: meicanMap.getValidMarkerPosition('dev', myLatlng),
         type: 'dev',
 		id: dev.id,
-        domainName: dev.dom
+        domainName: dev.dom,
+        name: dev.name
 	}, color);
 	
 	meicanMap.addMarker(marker);

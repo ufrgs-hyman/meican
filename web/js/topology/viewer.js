@@ -101,8 +101,8 @@ function initialize() {
     meicanMap.buildSearchBox("search-row", "search-box", 'search-button');
     meicanMap.buildMapTypeBox("map-type-box", 'map-type-select');
     meicanMap.buildMarkerTypeBox("marker-type-box", 'marker-type-select', setMarkerType);
-    meicanMap.getMap().controls[google.maps.ControlPosition.TOP_LEFT].push(
-        document.getElementById("refresh-box"));
+    /*meicanMap.getMap().controls[google.maps.ControlPosition.TOP_LEFT].push(
+        document.getElementById("refresh-box"));*/
 
     $("#refresh-box").show();
 
@@ -117,7 +117,7 @@ function initialize() {
         loadNetworks();
     });
 
-    $("#notification_link").on("notify",function(event, length){
+    /*$("#notification_link").on("notify",function(event, length){
         if (notsSize != length) {
             console.log('notify', notsSize,length);
             notsSize = length;
@@ -130,7 +130,7 @@ function initialize() {
             devicesLoaded = false;
             loadNetworks();
         } 
-    });
+    });*/
 
     loadNetworks();
 }
