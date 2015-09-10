@@ -1,6 +1,4 @@
 <?php 
-	/** Importing Classes **/
-	use yii\widgets\MaskedInput;
 	use yii\jui\DatePicker;
 	use yii\helpers\Html;
 ?>
@@ -47,9 +45,9 @@ DatePicker::widget([
 
 &nbsp;&nbsp;&nbsp;
 <input type="checkbox" name="ReservationForm[rec_enabled]" id="recurrence_enabled"></input><label for="recurrence_enabled"> <?= Yii::t("circuits", "Repeat..."); ?></label>
-<br><br>
+<br>
 
-<div id="recurrence">
+<div id="recurrence" hidden><br>
 
 	<label class="label-description"><?= Yii::t("circuits", "Recurrence pattern"); ?>: </label><br><br>
 	<div class="recurrence-item">

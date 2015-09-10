@@ -13,18 +13,15 @@ class CreateReservationAsset extends AssetBundle
     	'js/circuits/reservation/create-i18n.js',
     	'js/circuits/reservation/create.js',
     	'js/circuits/reservation/recurrence.js',
-    	'js/google/styled.marker.js',
-    	'js/google/marker.clusterer.compiled.js',
-    	'js/jquery.timepicker.min.js',
-        'js/maps/meican-map.js',
         'js/vendor/jquery.hoverIntent.minified.js',
     ];
     
     public $css = [
-   		'css/jquery.timepicker.css',
     ];
     
     public $depends = [
-    	'yii\web\JqueryAsset',
+    	'app\assets\MeicanAsset',
+        'app\assets\MeicanMapAsset',
+        'app\assets\TimePickerAsset',
     ];
 }

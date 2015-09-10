@@ -12,20 +12,22 @@ $(document).ready(function() {
 $(document).on('ready pjax:success', function() {
 	selectConn(selectedConn);
 	
-	$('#connections-grid').on("click", '.connection-checkbox', function() {
-		disableAutoRefresh();
+	$('#connections-grid').on("click", '.cancel-button', function() {
 		
-		if($(':checkbox:checked').length > 0) { 
-			$('#cancel-button').removeAttr("disabled");
-		} else {
-			$('#cancel-button').attr("disabled", "disabled");
-		}
+        if ($(this).attr("disabled") != 'disabled') {
+            disableAutoRefresh();
+            $("#cancel-dialog").data('connId', $(this).parent().parent().parent().attr('data-key')).dialog("open");
+        }
+            
+        return false;
 	});
 	
 	$('#connections-grid tbody tr').on("click", function() {
-		selectConn($(this).attr("data-key"));
-		selectedConnIsApproved = isAuthorizationReceived();
-		showCircuit(selectedConn);
+        if(selectedConn != $(this).attr("data-key")) {
+            selectConn($(this).attr("data-key"));
+            selectedConnIsApproved = isAuthorizationReceived();
+            showCircuit(selectedConn);
+        }
 	});
 	
 	if (!selectedConnIsApproved && isAuthorizationReceived()) {
@@ -115,25 +117,19 @@ function fillEndPointDetails(endPointType, path) {
 		$("#" + endPointType + "-dom").text(path.dom.substr(0, 13) + "...");
 		$("#" + endPointType + "-dom").prop("title", path.dom);
 	}
-    if (path.net == "") {
-        $("#" + endPointType + "-net").text(tt("default"));
-    } else if (path.net.length < 15) {
+    if (path.net.length < 15) {
 		$("#" + endPointType + "-net").text(path.net);
 	} else {
 		$("#" + endPointType + "-net").text(path.net.substr(0, 13) + "...");
 		$("#" + endPointType + "-net").prop("title", path.net);
 	}
-	if (path.dev == "") {
-        $("#" + endPointType + "-dev").text(tt("default"));
-    } else if (path.dev.length < 15) {
+	if (path.dev.length < 15) {
 		$("#" + endPointType + "-dev").text(path.dev);
 	} else {
 		$("#" + endPointType + "-dev").text(path.dev.substr(0, 13) + "...");
 		$("#" + endPointType + "-dev").prop("title", path.dev);
 	}
-	if (path.port == "") {
-        $("#" + endPointType + "-port").text(tt("default"));
-    } else if (path.port.length < 15) {
+	if (path.port.length < 15) {
 		$("#" + endPointType + "-port").text(path.port);
 	} else {
 		$("#" + endPointType + "-port").text(path.port.substr(0, 13) + "...");
@@ -165,23 +161,22 @@ function prepareCancelDialog() {
         width: "200",
         buttons: [{
         	id:"yes-button",
-            text: "Yes",
+            text: I18N.t("Yes"),
             click: function() {
+                var connId = $("#cancel-dialog").data('connId');
             	$("#cancel-dialog").dialog( "close" );
-            	var item = document.getElementById("connections-grid");
-            	var keys = $(item).yiiGridView('getSelectedRows');
             	
             	$.ajax({
             		url: baseUrl+'/circuits/connection/cancel',
             		dataType: 'json',
             		data: {
-            			connections: JSON.stringify(keys),
+            			id: connId,
             		},
             		success: function() {
             		},
             		error: function() {
             			$("#dialog").dialog("open");
-						$("#message").html(tt("You are not allowed for cancel connections in this domains."));
+						$("#message").html(I18N.t("You are not allowed for cancel connections in this domains."));
 						$("#dialog").dialog({
 							buttons: [
 								{
@@ -195,46 +190,32 @@ function prepareCancelDialog() {
             		}
             	});
             	
-            	$("#cancel-button").attr("disabled", 'disabled');
             	enableAutoRefresh();
         	}
         },{
-            text: "No",
+            text: I18N.t("No") + " (ESC)",
             click: function() {
+                console.log(I18N.t("Yes"))
             	$("#cancel-dialog").dialog( "close" );
-            	$("#cancel-button").attr("disabled", false);
             }
         }],
         close: function() {
         	$("#yes-button").attr("disabled", false);
-        	$("#cancel-button").attr("disabled", false);
         }
-    });
-    
-    $("#cancel-button").click(function() {
-    	disableAutoRefresh();
-    	$("#cancel-dialog").dialog("open");
-    	$("#cancel-button").attr("disabled", 'disabled');
-    	return false;
     });
 }
 
 function disableAutoRefresh() {
-	$("#loader-img").hide();
-
 	$("#refresh-button").val('false');
 	clearInterval(refresher);
-	$("#refresh-button").text(tt("Enable auto refresh"));
+	$("#refresh-button").text(I18N.t("Enable auto refresh"));
 }
 
 function enableAutoRefresh() {
-	$("#loader-img").show();
-	$("#cancel-button").attr("disabled", 'disabled');
-
 	updateGridView();
 	$("#refresh-button").val('true');
 	refresher = setInterval(updateGridView, 30000);
-	$("#refresh-button").text(tt("Disable auto refresh"));
+	$("#refresh-button").text(I18N.t("Disable auto refresh"));
 }
 
 function updateGridView() {
@@ -246,20 +227,7 @@ function updateGridView() {
 
 /////////////// botoes superiores da tabela origem destino /////////
 
-function toggleEndPointDetails(endPointType) {
-	$('#' + endPointType + '-net-row').toggle();
-	$('#' + endPointType + '-dev-row').toggle();
-	$('#' + endPointType + '-port-row').toggle();
-	$('#' + endPointType + '-vlan-row').toggle();
-}
-
 function initEndPointButtons(endPointType) {
-	$('#' + endPointType + '-show-details').click(function() {
-		toggleEndPointDetails(endPointType);
-		$('#' + endPointType + '-show-details-icon').toggleClass("ui-icon-carat-1-n");
-		$('#' + endPointType + '-show-details-icon').toggleClass("ui-icon-carat-1-s");
-    });
-	
     $('#' + endPointType + '-copy-urn').click(function() {
     	openCopyUrnDialog(endPointType);
     });
@@ -271,7 +239,7 @@ function initEndPointButtons(endPointType) {
         width: "auto",
         height: "auto",
         buttons: [{
-            text: tt("Close"),
+            text: I18N.t("Close"),
             click: function() {
             	$("#copy-urn-dialog").dialog( "close" );
             }
@@ -282,7 +250,6 @@ function initEndPointButtons(endPointType) {
 function openCopyUrnDialog(endPointType) {
 	$("#copy-urn-field").val($("#"+ endPointType+ "-urn").text());
 	$("#copy-urn-dialog").dialog("open");
-	
 }
 
 ///////////// DESENHAR CIRCUITO NO MAPA ///////////////

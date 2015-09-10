@@ -10,15 +10,17 @@ class ViewReservationAsset extends AssetBundle
     public $baseUrl = '@web';
     
     public $css = [
-   		'css/pagination.css',
     ];
     
     public $js = [
     	'js/circuits/reservation/view-i18n.js',
     	'js/circuits/reservation/view.js',
-    	'js/google/styled.marker.js',
-    	'js/google/marker.clusterer.compiled.js',
-        'js/maps/meican-map.js',
+    	
+    ];
+
+    public $depends = [
+        'app\assets\MeicanAsset',
+        'app\assets\MeicanMapAsset'
     ];
 }
 

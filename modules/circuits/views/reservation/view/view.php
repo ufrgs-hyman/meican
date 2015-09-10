@@ -1,14 +1,13 @@
 <?php 
 	use app\modules\circuits\assets\ViewReservationAsset;
-	use app\assets\GoogleMapsAsset;
 	use yii\grid\GridView;
 	use yii\grid\CheckboxColumn;
 	use yii\helpers\Url;
 	use yii\widgets\Pjax;
 	use yii\jui\Dialog;
+	use yii\helpers\Html;
 	
 	ViewReservationAsset::register($this);
-	GoogleMapsAsset::register($this);
 ?>
 
 <h1 style="clear: none; float: left; z-index: 999999; position: absolute;">
@@ -33,7 +32,6 @@
 	<div id="reservation-connections">
 		<div class="controls">
         	<button id="refresh-button" value="true"><?= Yii::t("circuits", "Disable auto refresh"); ?></button>
-            <button disabled="disabled" id="cancel-button"><?= Yii::t("circuits", "Cancel connections"); ?></button>
         </div>
         <?php Pjax::begin([
 		    'id' => 'connections-pjax',
@@ -47,31 +45,36 @@
 				'dataProvider' => $connections,
 				'summary' => false,
 				'columns' => array(
-						array(
-								'class'=>CheckboxColumn::className(),
-								'name'=>'selected_connections',
-								'checkboxOptions'=> function($model) {
-    								return [
-										'disabled' => $model->isCancelStatus(),
-										'class'=>'connection-checkbox'
-									];
-								},
-								'multiple'=>false,
-						),
-						'external_id',
+						[
+							'format' => 'raw',
+							'value' => function ($model){
+								return '<a href="#">'.Html::img('@web/images/delete_2.png', [
+									'class' => "cancel-button",
+									'disabled' => $model->isCancelStatus(),
+									])."</a>";
+							},
+							'headerOptions'=>['style'=>'width: 10%;'],		
+						],
+						[
+							'attribute' => 'external_id',
+							'headerOptions'=>['style'=>'width: 15%;'],		
+						],
 						[
 							'attribute' => 'start',
 							'format' 	=> 'datetime',		
+							'headerOptions'=>['style'=>'width: 15%;'],
 						],
 						[
 							'attribute' => 'finish',
-							'format' 	=> 'datetime',		
+							'format' 	=> 'datetime',	
+							'headerOptions'=>['style'=>'width: 15%;'],
 						],
 						[
 							'attribute' => 'status',
 							'value' => function($model){
 								return $model->getStatus(); 
 							},
+							'headerOptions'=>['style'=>'width: 15%;'],
 						],
 						[
 							'attribute' => 'auth_status',
@@ -81,6 +84,7 @@
 							'contentOptions'=> function ($model){
 								return ['class' => strtolower($model->auth_status)];
 							},
+							'headerOptions'=>['style'=>'width: 15%;'],
 						],
 						[
 							'attribute' => 'dataplane_status',
@@ -90,19 +94,13 @@
 							'contentOptions'=> function ($model){
 								return ['class' => strtolower($model->dataplane_status)];
 							},
-						],
-						[
-							'header' => '<div style="padding-left:20px;height:16px;width:16px;"><img id="loader-img" src="'.Url::base().'/images/ajax-loader-blue.gif"></div>',
-							'value' => function(){
-								return ''; },
+							'headerOptions'=>['style'=>'width: 15%;'],
 						],
 					),
 			]);
 		?>
 		<?php Pjax::end(); ?>
 	</div>
-	<div id="reservation-waypoints" hidden><?= $this->render('_formWaypoints'); ?></div>
-	<div id="reservation-request"></div>
 </div>
 
 <div id="copy-urn-dialog" title="<?= Yii::t("circuits", "Copy the endpoint identifier");?>" hidden>
@@ -113,7 +111,7 @@
 
 <div id="cancel-dialog" title="<?= Yii::t("circuits", "Cancel"); ?>" hidden>
 	<br>
-    <label><?= Yii::t("circuits", "Do you want to cancel this connection(s)?"); ?></label>
+    <label><?= Yii::t("circuits", "Do you want to cancel this connection?"); ?></label>
     <br/>
 </div>
 
