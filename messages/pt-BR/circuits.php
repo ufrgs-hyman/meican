@@ -5,7 +5,7 @@ return array(
 		"Connection ID" => "Identificador",
 		"Authorization" => "Autorização",
 		"Reservation" => "Reserva",
-		"Do you want to cancel this connection(s)?" => "Você tem certeza que deseja cancelar essa(s) conexõe(s)?",
+		"Do you want to cancel this connection?" => "Você tem certeza que deseja cancelar essa conexão?",
 		"Daily" => "Diária",
 		"Request reservation" => "Requisitar reserva",
 		"Marker type" => "Tipo de marcador",
@@ -278,5 +278,11 @@ return array(
 		'Automated Test updated successfully' => 'Teste automatizado editado com sucesso',
 		'Automated Test deleted successfully' => 'Teste automatizado removido com sucesso',
 		'Error deleting Automated Test' => 'Erro ao deletar teste automatizado',
+
+		'Map' => 'Mapa',
+		'Clean' => 'Clean',
+		'Terrain' => 'Terreno',
+		'Satellite' => 'Satélite',
+		'Hybrid' => 'Híbrido',
 );
 ?>

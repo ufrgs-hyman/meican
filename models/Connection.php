@@ -6,7 +6,7 @@ use Yii;
 use app\models\ConnectionAuth;
 use app\models\ConnectionPath;
 use app\models\Notification;
-use app\modules\circuits\controllers\service\RequesterClient;
+use app\modules\circuits\controllers\services\RequesterClient;
 
 /**
  * This is the model class for table "meican_connection".

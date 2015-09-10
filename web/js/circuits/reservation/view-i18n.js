@@ -1,18 +1,11 @@
-var dict = [];
-dict['pt-BR'] = [];
+I18N.begin('pt-BR');
+I18N.add('Disable auto refresh', 'Desativar auto-atualização');
+I18N.add('Enable auto refresh', 'Ativar auto-atualização');
+I18N.add('Close', 'Fechar');
+I18N.add('Network', 'Rede');
+I18N.add('Yes', 'Sim');
+I18N.add('No', 'Não');
+I18N.add('Device', 'Dispositivo');
+I18N.add('Domain', 'Domínio');
+I18N.add('You are not allowed for cancel connections in this domains.', 'Você não tem permissão para cancelar conexões nestes domínios');
 
-dict['pt-BR']['Disable auto refresh'] = 'Desativar auto-atualização';
-dict['pt-BR']['Enable auto refresh'] = 'Ativar auto-atualização';
-dict['pt-BR']['Close'] = 'Fechar';
-dict['pt-BR']['Network'] = 'Rede';
-dict['pt-BR']['Device'] = 'Dispositivo';
-dict['pt-BR']['Domain'] = 'Domínio';
-dict['pt-BR']['You are not allowed for cancel connections in this domains.'] = 'Você não tem permissão para cancelar conexões nestes domínios';
-
-
-dict['pt-BR'][''] = '';
-
-function tt(obj){
-	if(language == 'pt-BR' && dict['pt-BR'][obj]) return dict['pt-BR'][obj];
-	else return obj;
-}
