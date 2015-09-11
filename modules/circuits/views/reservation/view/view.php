@@ -53,28 +53,28 @@
 									'disabled' => $model->isCancelStatus(),
 									])."</a>";
 							},
-							'headerOptions'=>['style'=>'width: 10%;'],		
+							'headerOptions'=>['style'=>'width: 7%;'],		
 						],
 						[
 							'attribute' => 'external_id',
-							'headerOptions'=>['style'=>'width: 15%;'],		
+							'headerOptions'=>['style'=>'width: 29%;'],		
 						],
 						[
 							'attribute' => 'start',
 							'format' 	=> 'datetime',		
-							'headerOptions'=>['style'=>'width: 15%;'],
+							'headerOptions'=>['style'=>'width: 14%;'],
 						],
 						[
 							'attribute' => 'finish',
 							'format' 	=> 'datetime',	
-							'headerOptions'=>['style'=>'width: 15%;'],
+							'headerOptions'=>['style'=>'width: 14%;'],
 						],
 						[
 							'attribute' => 'status',
 							'value' => function($model){
 								return $model->getStatus(); 
 							},
-							'headerOptions'=>['style'=>'width: 15%;'],
+							'headerOptions'=>['style'=>'width: 12%;'],
 						],
 						[
 							'attribute' => 'auth_status',
@@ -84,7 +84,7 @@
 							'contentOptions'=> function ($model){
 								return ['class' => strtolower($model->auth_status)];
 							},
-							'headerOptions'=>['style'=>'width: 15%;'],
+							'headerOptions'=>['style'=>'width: 12%;'],
 						],
 						[
 							'attribute' => 'dataplane_status',
@@ -94,7 +94,7 @@
 							'contentOptions'=> function ($model){
 								return ['class' => strtolower($model->dataplane_status)];
 							},
-							'headerOptions'=>['style'=>'width: 15%;'],
+							'headerOptions'=>['style'=>'width: 12%;'],
 						],
 					),
 			]);

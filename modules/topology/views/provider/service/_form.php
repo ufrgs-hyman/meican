@@ -29,7 +29,6 @@
 
     <div class="buttonsForm">
         <?= Html::submitButton(Yii::t("topology", 'Save')); ?>
-        <a href="<?= Url::toRoute(['index']);?>"><?= Html::Button(Yii::t("topology", 'Cancel')); ?></a>
     </div>
 
     
