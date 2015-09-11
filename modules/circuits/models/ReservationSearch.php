@@ -176,7 +176,7 @@ class ReservationSearch extends Reservation {
     	}
 
     	$dataProvider = new ActiveDataProvider([
-    			'query' => Reservation::find()->where(['in', 'id', $validResIds]),
+    			'query' => Reservation::find()->where(['in', 'id', $validResIds])->orderBy(['date'=>SORT_DESC]),
     			'sort' => false,
     			'pagination' => [
     					'pageSize' => 15,
@@ -301,7 +301,7 @@ class ReservationSearch extends Reservation {
     	}
 
     	$dataProvider = new ActiveDataProvider([
-    			'query' => Reservation::find()->where(['in', 'id', $validResIds]),
+    			'query' => Reservation::find()->where(['in', 'id', $validResIds])->orderBy(['date'=>SORT_DESC]),
     			'sort' => false,
     			'pagination' => [
     					'pageSize' => 15,
