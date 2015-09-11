@@ -142,7 +142,7 @@ function fillEndPointDetails(endPointType, path) {
 }
 
 function prepareRefreshButton() {
-	refresher = setInterval(updateGridView, 30000);
+	refresher = setInterval(updateGridView, 10000);
 	
 	$("#refresh-button").click(function(){
 		if ($("#refresh-button").val() == "true") {
@@ -173,6 +173,7 @@ function prepareCancelDialog() {
             			id: connId,
             		},
             		success: function() {
+                        enableAutoRefresh();
             		},
             		error: function() {
             			$("#dialog").dialog("open");
@@ -189,13 +190,10 @@ function prepareCancelDialog() {
 						});
             		}
             	});
-            	
-            	enableAutoRefresh();
         	}
         },{
             text: I18N.t("No") + " (ESC)",
             click: function() {
-                console.log(I18N.t("Yes"))
             	$("#cancel-dialog").dialog( "close" );
             }
         }],
@@ -214,7 +212,7 @@ function disableAutoRefresh() {
 function enableAutoRefresh() {
 	updateGridView();
 	$("#refresh-button").val('true');
-	refresher = setInterval(updateGridView, 30000);
+	refresher = setInterval(updateGridView, 10000);
 	$("#refresh-button").text(I18N.t("Disable auto refresh"));
 }
 
