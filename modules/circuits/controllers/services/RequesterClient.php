@@ -310,7 +310,7 @@ class RequesterClient extends \SoapClient {
         
         try{
             $this->terminate($params);
-            Yii::trace($client->__getLastResponse());
+            Yii::trace($this->__getLastResponse());
         }catch(SoapFault $error){
             return false;
         }

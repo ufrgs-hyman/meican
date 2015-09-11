@@ -203,6 +203,14 @@ class RequesterController extends Controller {
     
     private function saveConnPath($response) {
         $conn = Connection::find()->where(['external_id'=>$response->reservation->connectionId])->one();
+
+        //clean old paths
+        $oldPaths = $conn->getPaths()->all();
+        foreach ($oldPaths as $oldPath) {
+            $oldPath->delete();
+        }
+
+        //save new paths
         $pathNodes = $response->reservation->criteria->children->child;
         if (count($pathNodes) < 2) {
             $pathNodes = [$pathNodes];
@@ -232,6 +240,11 @@ class RequesterController extends Controller {
                 
             $path->setPortBySTP($src->item(0)->nodeValue);
             $path->setDomainBySTP($src->item(0)->nodeValue);
+
+            if(!$path->save()) {
+                Yii::trace($path);
+                return false;
+            }
 
             $path = new ConnectionPath;
             $path->conn_id = $conn->id;
