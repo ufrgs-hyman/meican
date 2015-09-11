@@ -505,6 +505,8 @@ class Notification extends \yii\db\ActiveRecord
     		   $connections[0]->status == Connection::STATUS_FAILED_CONFIRM ||
     		   $connections[0]->status == Connection::STATUS_FAILED_SUBMIT ||
     		   $connections[0]->status == Connection::STATUS_FAILED_PROVISION ||
+    		   $connections[0]->status == Connection::STATUS_CANCELLED ||
+    		   $connections[0]->status == Connection::STATUS_CANCEL_REQ ||	
     		   $connections[0]->auth_status == Connection::AUTH_STATUS_REJECTED ||
     		   $connections[0]->auth_status == Connection::AUTH_STATUS_EXPIRED
     		){
@@ -530,6 +532,8 @@ class Notification extends \yii\db\ActiveRecord
     					$conn->status == Connection::STATUS_FAILED_CONFIRM ||
     					$conn->status == Connection::STATUS_FAILED_SUBMIT ||
     					$conn->status == Connection::STATUS_FAILED_PROVISION ||
+    					$conn->status == Connection::STATUS_CANCELLED ||
+    					$conn->status == Connection::STATUS_CANCEL_REQ ||
     					$conn->auth_status == Connection::AUTH_STATUS_REJECTED ||
     					$conn->auth_status == Connection::AUTH_STATUS_EXPIRED
     					) $reject++;
