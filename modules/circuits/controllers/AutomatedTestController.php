@@ -48,7 +48,7 @@ class AutomatedTestController extends RbacController {
 			 
 			return false;
 		} else {
-			return $this->actionIndex("create");
+			return $this->redirect(["index",'mode'=>'create']);
 		}
 	}
 
