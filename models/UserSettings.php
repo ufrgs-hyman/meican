@@ -37,6 +37,7 @@ class UserSettings extends \yii\db\ActiveRecord
             [['date_format'], 'string', 'max' => 10],
             [['name'], 'string', 'max' => 100],
             [['email'], 'string', 'max' => 60],
+        	[['email'], 'email'],
         ];
     }
 
