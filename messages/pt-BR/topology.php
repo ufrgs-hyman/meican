@@ -118,7 +118,7 @@ return array(
 		'Applied changes' => 'Alterações aplicadas',
 		'Type' => 'Tipo',
 		'Auto apply changes' => 'Auto-aplicar alterações',
-		'Enable recurrence sync' => 'Ativar sincronização recorrente',
+		'Recurrence sync' => 'Sincronização recorrente',
 		'Get notifications' => 'Receber notificações',
 		'Enabled' => 'Ativado',
 		'Disabled' => 'Desativado',
@@ -138,5 +138,6 @@ return array(
 		'Update service' => 'Editar serviço',
 		'Add service' => 'Adicionar serviço',
 		'Show details and services of this provider'=>'Ver detalhes e serviços deste provedor',
+		'Set recurrence' => 'Definir recorrência',
 );
 ?>

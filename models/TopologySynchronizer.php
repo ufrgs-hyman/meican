@@ -92,7 +92,7 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
             case Service::TYPE_NSI_DS_1_0: return Service::getTypeLabels()[Service::TYPE_NSI_DS_1_0];
             case Service::TYPE_NSI_TD_2_0: return Service::getTypeLabels()[Service::TYPE_NSI_TD_2_0];
             case Service::TYPE_NMWG_TD_1_0: return Service::getTypeLabels()[Service::TYPE_NMWG_TD_1_0];
-            case Service::TYPE_PERFSONAR_TS_1_0: return Service::getTypeLabels()[Service::TYPE_PERFSONAR_TS_1_0];
+            //case Service::TYPE_PERFSONAR_TS_1_0: return Service::getTypeLabels()[Service::TYPE_PERFSONAR_TS_1_0];
             default: return Yii::t('topology', 'Unknown');
         }
     }
@@ -102,7 +102,7 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
             ['id'=> Service::TYPE_NSI_TD_2_0, 'name'=> Service::getTypeLabels()[Service::TYPE_NSI_TD_2_0]],
             ['id'=> Service::TYPE_NSI_DS_1_0, 'name'=> Service::getTypeLabels()[Service::TYPE_NSI_DS_1_0]],
             ['id'=> Service::TYPE_NMWG_TD_1_0, 'name'=> Service::getTypeLabels()[Service::TYPE_NMWG_TD_1_0]],
-            ['id'=> Service::TYPE_PERFSONAR_TS_1_0, 'name'=> Service::getTypeLabels()[Service::TYPE_PERFSONAR_TS_1_0]],
+            //['id'=> Service::TYPE_PERFSONAR_TS_1_0, 'name'=> Service::getTypeLabels()[Service::TYPE_PERFSONAR_TS_1_0]],
         ];
     }
 
