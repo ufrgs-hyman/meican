@@ -55,7 +55,9 @@ class LoginController extends Controller {
 				$model->addError($model->login, Yii::t('init', 'Please, check the captcha'));
 				return $this->render('forgotPassword', array('model'=>$model));
 			}
-			$response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LdhOQgTAAAAAJ1f7mAaPpNvNHaGkZcKW8CPVIxv&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
+			$response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret="
+				.Yii::$app->params["google.recaptcha.secret.key"]
+				."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
 			if($response){
 				if($model->checkCamps()){
 					if($model->sendEmail()){

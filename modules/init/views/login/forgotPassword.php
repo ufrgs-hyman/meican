@@ -36,7 +36,7 @@ var RecaptchaOptions = {
             <?= $form->field($model,'email') ?>
 		</div>
 
-		<div data-theme="clean" data-type="image" style="padding-top: 15px; transform:scale(0.91); transform-origin:0 0" class="g-recaptcha" data-sitekey="6LdhOQgTAAAAAKxJtikzjEJ3uXxOE3a5qW9WMVjz"></div>
+		<div data-theme="clean" data-type="image" style="padding-top: 15px; transform:scale(0.91); transform-origin:0 0" class="g-recaptcha" data-sitekey="<?= Yii::$app->params["google.recaptcha.site.key"] ?>"></div>
 
 		<div class="submit">
         	<input class="next ui-button ui-widget ui-state-default ui-corner-all" type="submit" name="submit_password" value="<?= Yii::t('init', 'Send me') ?>" role="button" aria-disabled="false" tabindex="3"/>
