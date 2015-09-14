@@ -66,18 +66,55 @@ return array(
 		'Please insert your user or email' => 'Por favor, insira seu usuário ou email',
 		'An error occurred, please try again' => 'Ocorreu um erro, tenten novamente',
 		'Your password has been refreshed and sent your email' => 'Sua senha foi atualizada e enviada pra seu email',
-		
-		//DAQUI EM DIANTE TEM QUE ALTERAR QUANDO FIZER O HELP CORRETO
-		'Step-by-step:' => 'Passo a passo:',
-		'Click Reservations - New' => 'Clique em Reservas - Criar',
-		'Type a name for your reservation' => 'Insira um nome para sua reserva',
-		'Select start and destination endpoints by placing the mouse over them on the map' => 'Selecione os pontos de origem e destino colocando o mouse sobre eles no mapa',
-		'Complete the required (port and VLAN) information on the right side of the screen' => 'Complete as informações necessárias (porta e VLAN) no menu ao lado direito da tela',
-        'From the bottom of the screen select the period of time you want the circuit to be active (recurrence options can be selected)' => 'Na parte inferior da tela selecione o periodo de tempo que o circuito deve estar ativo (opções de recorrência podem ser selecionadas)',
-		'Click Request Reservation and Confirm' => 'Clique em Requisitar Reserva e Confirme',
 		'Please, check the captcha' => 'Por favor, complete o captcha',
 		
+		//RESERVATION CREATE
+		'Reservation' => 'Reserva',
+		'MEICAN allows network end-users to request, in a more user-friendly way, dedicated virtual circuits in Dynamic Circuits Networks (DCN). With MEICAN, you can create a circuit reservation using a map that contains networks and devices.' => 'O MEICAN permite que usuários finais da rede requisitem, em um ambiente mais amigável, circuitos virtuais dedicados em Dynamic Circuits Networks (DCN). Com o Meican, você pode criar uma reserva de circuito utilizando um mapa que contém as redes e os dispositivos.',
+		'Moreover, you can specify the device, port, VLAN tag, bandwidth, and the period during which the circuit will be activated.' => 'Além disso, você pode especificar dispositivo, porta, VLAN, largura de banda, período em que o circuito ficará ativo e recorrência do circuito.',
+		'Step-by-step:' => 'Passo a passo:',
+		'Click Reservations - New' => 'Clique em Reservas - Criar',
+		'From the bottom of the screen type a name for your reservation' => 'Na parte inferior da tela insira um nome para sua reserva',
+		'Select start and destination endpoints (you can search at the top screen) by placing the mouse over them on the map' => 'Selecione os pontos de origem e destino (você pode pesquisar no topo da tela) colocando o mouse sobre eles no mapa',
+		'Complete the required (port and VLAN) information on the right side of the screen' => 'Complete as informações necessárias (porta e VLAN) no menu ao lado direito da tela',
+        'Select the period of time you want the circuit to be active (recurrence options can be selected)' => 'Selecione o periodo de tempo que o circuito deve estar ativo (opções de recorrência podem ser selecionadas)',
+		'Click Request Reservation and Confirm' => 'Clique em Requisitar Reserva e Confirme',
+		'Check the summary' => 'Verifique o resumo',
+		
+		//RESERVATION STATUS
+		'Reservation Status' => 'Status da Reserva',
+		'You can see the status of reservations for to track progress. When you created a reservation, you are automatically redirected to status page of the created reservation.' => 'Você pode ver o status das reservas para acompanhar o progresso. Quando você cria uma reserva, você é redirecionado automaticamente para a pagina de status da reserva criada.',
+		'Click Reservations - Status' => 'Clique em Reserva - Status',
+		'For see the details in map, click in the eye icon' => 'Para ver detalhadamente no mapa, clique no icone de olho',
+		'Status should switch quickly to SUBMITTED' => 'O statu deve mudar rapidamente para SUBMETIDO',
+		'If authorization needs to be manually evaluated you should see WAITING AUTHORIZATION in the Authorization field (see Authorization)' => 'Se for necessária a autorização manual você deve ver AGUARDANDO AUTORIZAÇÃO no campo Autorização (ver Autorização)',
+		'When the reservation is authorized Status will switch to PROVISIONED and Authorization to AUTHORIZED' => 'Quando a reserva é autorizada o status muda para PROVISIONADA e a autorização para APROVADA',
+		
+		//AUTHORIZATION
+		'Authorization' => 'Autorização',
+		'In some cases, the reservations need to be authorized by administrators and MEICAN enables them to accomplish these authorizations.' => 'Em alguns casos, a reserva precisa ser autorizada manualmente por um administrador e o MEICAN permite que eles realizem estás autorizações.',
+		'Administrators can accept or reject users requests and leave an observation using a intelligent mechanism.' => 'Administradores podem aceitar ou rejeitar as requisições dos usuários e deixar uma mensagem através de um mecanismo inteligente.',
+		'Click Reservations - Authorization. Alternatively you can use the exclamation (!) sign with the number of notifications at the top part of the screen, them click in See Authorizations' => 'Clique em Reservas - Autorização. Alternativamente você pode clicar sobre o sinal de exclamação (!) com o número de notificações no topo da tela, então clique em Ver Autorizações',
+		'Select a reservation by clicking Answer' => 'Selecione a reserva clicando em Rerponder',
+		'Either accept or reject a reservation request by clicking the thumbs up or down icon and providing an appropriate message to the requester user, if you want. Alternatively you can Accept/Reject All requests at once (useful when many requests are performed through recurrence)' => 'Aceite ou rejeite uma requisição de circuito clicando sobre a imagem de positivo ou negativo e insira uma mensagem apropriada para o usuário de requisitou, caso deseje. Alternativamente você pode Aceitar/Rejeitar Todos de uma vez (útil quando uma reserva possui muitos circuitos devido a recorrência)',
+		'You should notice the status change to AUTHORIZED or DENIED at the list on right' => 'Você deve o status mudando para Autorizado ou Negado na parte direita da lista',
 
+		//Workflows
+		'Authorization workflows can be used to automate the decision-making process along the multiple domains where end-users circuits pass through.' => 'Workflows de autorização podem ser usados para automatizar o processo de tomada de decisão ao longo dos domínios que fazem parte do circuito.',
+		'Editors users can design workflows to filter by bandwidth, involving domains, devices, duration, requester user and groups. Also, can request that a user or group to authorize manually.' => 'Usuários editores podem projetar workflows que filtrem por largura de banda, domínios envolvidos, dispositivo, duração, usuário e grupo requisitante. Além disso, podem solicitar que um usuário ou grupo autorize manualmente.',
+		'Step-by-step to Menage:' => 'Passo a passo para Gerenciar:',
+		'Click Workflows - Status' => 'Clique em Workflows - Status',
+		'You can Remove, Edit, Copy, Enable and Disable a workflow by click on respective icons. (just remember that only one workflow can be active per domain at a time)' => 'Você pode remover, editar, copiar, ativar e desativar um workflow clicando nos respectivos icones. (Lembre-se que apenas um workflow pode estar ativo por domínio ao mesmo tempo)',
+		'Step-by-step to Create:' => 'Passo a passo para Criar:',
+		'Click Workflows - New' => 'Clique em Workflows - Novo',
+		'If you are allowed for create workflows in more of one domain, you need select one of this domains' => 'Se você tem permissão para criar workflows em mais de um domínio, seleciona o domínio para o qual deseja criar',
+		'Type a name for your workflow' => 'Defina um nome para ser workflow',
+		'Drag units, drop and link them' => 'Pegue, solte e ligue unidades',
+		'Click Save. If your workflow have any problem, you will receive a warning message' => 'Clique em salvar. Se existir algum problema em seu workflow, você recebera uma mensagem de aviso',
+		
+		
+		
+		
 );
 
 ?>
