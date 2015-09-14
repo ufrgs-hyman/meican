@@ -112,9 +112,34 @@ return array(
 		'Drag units, drop and link them' => 'Pegue, solte e ligue unidades',
 		'Click Save. If your workflow have any problem, you will receive a warning message' => 'Clique em salvar. Se existir algum problema em seu workflow, você recebera uma mensagem de aviso',
 		
+		'Automated Tests' => 'Testes Automatizados',
+		'This functionality perform tests on two endpoints to find errors, make logs, and report them to the administrators.'=> 'Essa funcionalidade possibilita a realização de testes entre dois pontos com o objetivo de encontrar erros para reportar ao admnistrador.',
+		'To verify the state of the network, MEICAN allows administrators to program automated tests in the network environment.'=> 'Para verificar o estado da rede, o MEICAN permite que os administradores programem estes testes da rede a partir de recorrências.',
+		'Step-by-step to create a Automated Test:' => 'Passo-a-passo para criar um Teste Automatizado:',
+		'Select a port and a VLAN as source.' => 'Selecione uma porta e uma VLAN para identificar a origem.',
+		'Select a port and a VLAN as destination.' => 'Selecione uma porta e uma VLAN para identificar o destino.',
+		'Select the recurrence of the test.' => 'Selecione a recorrência do teste.',
+		'Click Save and wait the schedule processing (two minutes).' => 'Clique em Salvar e aguarde o processamento do agendamento (cerca de dois minutos).',
+
+		'Topology Viewer' => 'Visualizador de Topologia',
+		'The Topology Viewer is a dynamic way to view the DCN network topology known by the application.' => 'O Visualizador é uma forma dinâmica de visualizar a topologia da rede DCN conhecida pela aplicação.',
+		'It shows devices or networks geographically located on a map with their respective links (blue lines). Clicking on a link is possible to know the elements connected by it.' => 'Ele mostra dispositivos ou redes geográficamente localizados em um mapa junto aos seus respectivos enlaces (linhas azuis). Ao clicar em um enlace é possível conhecer os elementos conectados por ele.',
+		'The search field at the top of the map is extremely useful for fetching elements and find out who are connected. Moreover, we can know which domains a hypothetical circuit must pass to be provisioned.' => 'O campo de busca localizado na parte superior do mapa mostra-se extramente útil para buscar elementos e descobrir com quem estão conectados. Além disso, podemos saber por quais domínios um hipotético circuito deve passar para ser provisionado.',
 		
-		
-		
+		'Topology Synchronizer' => 'Sincronizador de Topologia',
+		'The Topology Synchronizer is the element that communicates with the pre-specified topology provider to perform the update of the application topology to ensure that future reservations will not fail by inconsistencies in a, by example, identifier of a network element.' => 'O Sincronizador é o elemento que a partir da comunicação com os provedores de topologia previamente especificados efetua a atualização da topologia da aplicação de forma a garantir que futuras reservas não sejam impossibilitadas por incosistências na identificação de um elemento da rede.',
+		'Step-by-step to create a Synchronizer instance:' => 'Passo-a-passo parar criar uma instância do Sincronizador:',
+		'Click Add instance' => 'Clique em Adicionar instância.',
+		'Set a name' => 'Defina um nome.',
+		'Select the type of the topology provider.' => 'Defina o tipo do provedor de topologia.',
+		'Enable or disable the Auto apply changes.' => 'Selecione se deseja que as alterações sejam automaticamente aplicadas.',
+		'Enable or disable the Recurrence sync.' => 'Selecione se deseja que o sincronizador seja executado automaticamente de forma recorrente',
+		'Set the URL of the topology provider.' => 'Forneça a URL do provedor de topologia.',
+		'Click Save' => 'Clique em Salvar',
+		'To execute a Synchronizer instance:' => 'Para executar uma instância do Sincronizador:',
+		'Click on Sync icon {icon} on Synchronizer instances list.' => 'Clique no ícone de sincronização na lista de instâncias.',
+		'Wait the processing.' => 'Aguarde o processamento',
+		'Verify the changes on notifications or on Topology Viewer.' => 'Verifique as alterações nas notificações ou no Visualizador de Topologia.'
 );
 
 ?>

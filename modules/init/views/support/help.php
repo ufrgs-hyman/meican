@@ -118,15 +118,65 @@ use yii\helpers\Html;
 	</div>
 	
 	<div class="content_info">
-	    <div class="text_info"><h1>Automated Tests</h1></div>
+	    <div class="text_info"><h1><?=Yii::t("init", "Automated Tests");?></h1></div>
 	    <div class="left_info">
 	        <div class="info_div_text">
-	                <p>To verify the state of the network, MEICAN allows administrators to program automated tests in the network environment.</p>
-	                <p>This functionality perform tests on two endpoints to find errors, make logs, and report them to the administrators.</p>
+                <p><?= Yii::t("init", 'This functionality perform tests on two endpoints to find errors, make logs, and report them to the administrators.'); ?></p>
+                <p><?= Yii::t("init", 'To verify the state of the network, MEICAN allows administrators to program automated tests in the network environment.'); ?></p>
+                <p><?= Yii::t("init", 'Step-by-step to create a Automated Test:'); ?></p>
+				<ul>
+					<li><?= Yii::t("init", 'Select a port and a VLAN as source.'); ?></li>
+					<li><?= Yii::t("init", 'Select a port and a VLAN as destination.'); ?></li>
+				  	<li><?= Yii::t("init", 'Select the recurrence of the test.'); ?></li>
+				  	<li><?= Yii::t("init", 'Click Save and wait the schedule processing (two minutes).'); ?></li>
+				</ul>
 	        </div>        
 	    </div>    
 	    <div class="right_info"  style="margin-bottom: 100px;">
 	    	<?= Html::img("@web/images/help/".Yii::$app->language."/automated_test.png", ['class'=>'info_img']); ?>   
+	    </div>
+	</div>
+
+	<div class="content_info">
+	    <div class="text_info"><h1><?=Yii::t("init", "Topology Viewer");?></h1></div>
+	    <div class="left_info">   
+	    	<?= Html::img("@web/images/help/".Yii::$app->language."/viewer.png", ['class'=>'info_img']); ?>   
+	    </div>
+	    <div class="right_info">
+	  	  	<div class="info_div_text">
+	  	  		<p><?= Yii::t("init", 'The Topology Viewer is a dynamic way to view the DCN network topology known by the application.'); ?></p>
+				<p><?= Yii::t("init", 'It shows devices or networks geographically located on a map with their respective links (blue lines). Clicking on a link is possible to know the elements connected by it.'); ?></p>
+				<p><?= Yii::t("init", 'The search field at the top of the map is extremely useful for fetching elements and find out who are connected. Moreover, we can know which domains a hypothetical circuit must pass to be provisioned.'); ?></p>
+            </div>
+    	</div>
+	</div>
+
+	<div class="content_info">
+	    <div class="text_info"><h1><?=Yii::t("init", "Topology Synchronizer");?></h1></div>
+	    <div class="left_info">
+	        <div class="info_div_text">
+				<p><?= Yii::t("init", 'The Topology Synchronizer is the element that communicates with the pre-specified topology provider to perform the update of the application topology to ensure that future reservations will not fail by inconsistencies in a, by example, identifier of a network element.'); ?></p>
+				<p><?= Yii::t("init", 'Step-by-step to create a Synchronizer instance:'); ?></p>
+				<ul>
+					<li><?= Yii::t("init", 'Click Add instance'); ?></li>
+					<li><?= Yii::t("init", 'Set a name'); ?></li>
+				  	<li><?= Yii::t("init", 'Select the type of the topology provider.'); ?></li>
+				  	<li><?= Yii::t("init", 'Enable or disable the Auto apply changes.'); ?></li>
+				  	<li><?= Yii::t("init", 'Enable or disable the Recurrence sync.'); ?></li>
+				  	<li><?= Yii::t("init", 'Set the URL of the topology provider.'); ?></li>
+				  	<li><?= Yii::t("init", 'Click Save'); ?></li>
+				</ul>
+				<p><?= Yii::t("init", 'To execute a Synchronizer instance:'); ?></p>
+				<ul>
+					<li><?= Yii::t("init", 'Click on Sync icon {icon} on Synchronizer instances list.', ['icon'=>
+						Html::img("@web/images/arrow_circle_double.png")]); ?></li>
+					<li><?= Yii::t("init", 'Wait the processing.'); ?></li>
+				  	<li><?= Yii::t("init", 'Verify the changes on notifications or on Topology Viewer.'); ?></li>
+				</ul>
+            </div>       
+	    </div>    
+	    <div class="right_info"  style="margin-bottom: 100px;">
+	    	<?= Html::img("@web/images/help/".Yii::$app->language."/synchronizer.png", ['class'=>'info_img']); ?>   
 	    </div>
 	</div>
 </div>
