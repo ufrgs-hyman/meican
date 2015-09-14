@@ -51,7 +51,7 @@ class LoginController extends Controller {
 			
 		if($model->load($_POST)) {
 			if(isset($_POST['g-recaptcha-response'])) $captcha=$_POST['g-recaptcha-response'];
-			if(!$captcha){
+			if(!isset($captcha) || !$captcha){
 				$model->addError($model->login, Yii::t('init', 'Please, check the captcha'));
 				return $this->render('forgotPassword', array('model'=>$model));
 			}
