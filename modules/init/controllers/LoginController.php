@@ -85,7 +85,9 @@ class LoginController extends Controller {
 			$data = Yii::$app->session["data_from_cafe"];
 			$data = json_decode($data);
 			$user->setFromData($cafeUser->login, $cafeUser->password, $data->name,
-				$data->email, Preference::findOneValue(Preference::FEDERATION_GROUP), Preference::findOneValue(Preference::FEDERATION_DOMAIN));
+				$data->email, 
+				Preference::findOneValue(AaaPreference::AAA_FEDERATION_GROUP), 
+				Preference::findOneValue(AaaPreference::AAA_FEDERATION_DOMAIN));
 			if($user->save()) {
 				$loginForm = new LoginForm;
 			 	$loginForm->createSession($user);
