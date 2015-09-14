@@ -40,18 +40,22 @@
     </div>
 
     <div class="form input">
-        <?= $form->field($model,'url')->textInput(['size'=>80]); ?>
+        <?php echo $form->field($model,'freq_enabled')->dropDownList(ArrayHelper::map(
+            [['id'=>false, 'name'=>Yii::t("topology", 'Disabled')],['id'=>true,'name'=>Yii::t("topology", 'Enabled')]], 'id', 'name'));
+            echo '<a id="cron-open-link" style="float: left;
+    width: 130px;
+    margin-left: 0px;
+    margin-right: 10px;
+    text-align: right;
+    font-size: 100%;" href="#">'.Yii::t("topology", "Set recurrence").'</a>'; ?>
     </div>
 
-    <div id="changePasswordOption">
-        <?= $form->field($model, 'freq_enabled')->checkBox(); ?>
+    <div class="form input">
+        <?= $form->field($model,'url')->textInput(['size'=>80]); ?>
     </div>
 
     <div class="form input">
         <?= $form->field($model,'freq')->hiddenInput()->label(""); ?>
-    </div>
-        
-    <div id="cron-freq" <?= $model->freq_enabled ? "" : "hidden" ?>>
     </div>
 
     </font>
@@ -64,3 +68,7 @@
 
     
 <?php ActiveForm::end(); ?>
+
+<div id="cron-dialog" hidden>
+    <div class="label-description" id="cron-widget"></div>
+</div>

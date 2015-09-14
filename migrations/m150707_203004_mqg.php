@@ -8,7 +8,7 @@ class m150707_203004_mqg extends Migration
     public function up()
     {
         $this->execute("
-            ALTER DATABASE `meican2` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;");
+            ALTER DATABASE DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;");
         $this->execute("
             CREATE TABLE IF NOT EXISTS `meican_connection_log` (
             `id` int(11) NOT NULL,

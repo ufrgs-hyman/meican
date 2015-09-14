@@ -11,6 +11,7 @@ class SyncFormAsset extends AssetBundle
 
     public $js = [
         'js/topology/sync/sync-form.js',
+        'js/topology/sync/sync-form-i18n.js',
     ];
 
     public $depends = [
