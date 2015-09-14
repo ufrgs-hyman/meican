@@ -49,7 +49,7 @@ class Group extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => Yii::t("aaa", 'Name'),
-        	'type' => Yii::t("aaa", 'Tipo'),
+        	'type' => Yii::t("aaa", 'Type'),
         ];
     }
     

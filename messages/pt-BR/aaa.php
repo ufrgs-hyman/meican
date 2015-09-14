@@ -86,6 +86,7 @@ return array(
 		"Access Roles" => "Perfis de Acesso",
 		"any" => "qualquer",
 		'Back' => 'Voltar',
+		'Type' => 'Tipo',
 		'You are not allowed to create users' => 'Você não tem permissão para criar usuários',
 		'You are not allowed to update users' => 'Você não tem permissão para editar usuários',
 		'You are not allowed to delete users' => 'Você não tem permissão para deletar usuários',
