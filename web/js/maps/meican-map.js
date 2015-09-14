@@ -554,21 +554,24 @@ MeicanMap.prototype.buildSearchBox = function(divId, inputId, buttonId, openWind
         case "dev" :
             return $( "<li></li>" ).data("item.autocomplete", item)
                 .append( '<b><span style="font-size: 13px; margin: 5px;">' + item.label + "</span></b>" + 
-                    (item.label ? '<span style="font-size: 11px; color: #999"> ' + "Device" + "</span>"  : "") +
-                    (item.label ? '<span style="font-size: 11px; color: #999"> from ' + currentMap.getDomainName(item.marker.domainId) + "</span>" : ""))
+                    (item.label ? '<span style="font-size: 11px; color: #999"> ' + I18N.t("Device") + "</span>"  : "") +
+                    (item.label ? '<span style="font-size: 11px; color: #999"> ' + I18N.t('from') + ' ' + 
+                    currentMap.getDomainName(item.marker.domainId) + "</span>" : ""))
                 .appendTo( ul );
         case "net" :
             return $( "<li></li>" ).data("item.autocomplete", item)
                 .append( '<b><span style="font-size: 13px; margin: 5px;">' + item.label + "</span></b>" + 
-                    (item.label ? '<span style="font-size: 11px; color: #999"> ' + "Network" + "</span>"  : "") +
+                    (item.label ? '<span style="font-size: 11px; color: #999"> ' + I18N.t("Network") + "</span>"  : "") +
                     (item.label ? '<span style="font-size: 11px; color: #999"> from ' + currentMap.getDomainName(item.marker.domainId) + "</span>" : ""))
                 .appendTo( ul );
         case "port" :
             return $( "<li></li>" ).data("item.autocomplete", item)
                 .append( '<b><span style="font-size: 13px; margin: 5px;">' + item.label + "</span></b>" + 
-                    '<span style="font-size: 11px; color: #999"> ' + "Port" + "</span>" +
-                    ((currentMap._currentMarkerType == 'dev') ? '<span style="font-size: 11px; color: #999"> on Device ' + item.marker.name + "</span>" : '') +
-                    '<span style="font-size: 11px; color: #999"> from ' + currentMap.getDomainName(item.marker.domainId) + "</span>")
+                    '<span style="font-size: 11px; color: #999"> ' + I18N.t("Port") + "</span>" +
+                    ((currentMap._currentMarkerType == 'dev') ? '<span style="font-size: 11px; color: #999"> ' + I18N.t('on Device') + 
+                    ' ' + item.marker.name + "</span>" : '') +
+                    '<span style="font-size: 11px; color: #999"> ' + I18N.t('from') + ' ' + 
+                    currentMap.getDomainName(item.marker.domainId) + "</span>")
                 .appendTo( ul );
       }
     };
