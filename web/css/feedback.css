@@ -27,7 +27,7 @@
 	overflow: visible;
 	position: absolute;
 	top: 42px;
-	margin-left: -20px;
+	margin-left: -50px;
 	width: 380px;
 	z-index: -1;
 	display: none;
@@ -42,7 +42,7 @@
 	border: 10px solid black;
 	border-color: #1F4562 transparent transparent;
 	margin-top: -11px;
-	margin-left: 48px;
+	margin-left: 78px;
 }
 
 #feedback_panel a.feedback-tab {
