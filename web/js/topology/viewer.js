@@ -104,7 +104,7 @@ function initialize() {
     /*meicanMap.getMap().controls[google.maps.ControlPosition.TOP_LEFT].push(
         document.getElementById("refresh-box"));*/
 
-    $("#refresh-box").show();
+    /*$("#refresh-box").show();
 
     $("#refresh-button").on("click", function() {
         meicanMap.removeMarkers();
@@ -115,7 +115,7 @@ function initialize() {
         links = [];
         devicesLoaded = false;
         loadNetworks();
-    });
+    });*/
 
     /*$("#notification_link").on("notify",function(event, length){
         if (notsSize != length) {
