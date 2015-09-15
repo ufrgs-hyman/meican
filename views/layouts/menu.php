@@ -64,11 +64,11 @@ echo Menu::widget([
 			'items'=>[
 				[
 					'label'=>Yii::t('init','Console Central'), 
-					'url'=>'http://logs.cipo.rnp.br/console/',
+					'url'=>'http://monitora.cipo.rnp.br/console/',
 				],
 				[
 					'label'=>Yii::t('init','Monitoring'),
-					'url'=>'http://monitoramento.cipo.rnp.br/', 
+					'url'=>'http://monitora.cipo.rnp.br/', 
 				],
 				[
 					'label'=>Yii::t('init','Weathermap'),

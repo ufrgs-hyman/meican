@@ -232,9 +232,9 @@ MeicanMap.prototype.setMarkerTypeVisible = function(type) {
 MeicanMap.prototype.buildMap = function(divId) {
     var mapOptions = {
         zoom: 3,
-        minZoom: 3,
+        minZoom: 2,
         maxZoom: 15,
-        center: new google.maps.LatLng(22.2033311,-96.8483379),
+        center: new google.maps.LatLng(-6.6388011,-49.5877372),
         streetViewControl: false,
         panControl: false,
         zoomControl: true,
