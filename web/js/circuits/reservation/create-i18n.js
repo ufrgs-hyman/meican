@@ -71,6 +71,10 @@ dict['pt-BR'][['Thursday']] = ['Quinta'];
 dict['pt-BR'][['Friday']] = ['Sexta'];
 dict['pt-BR'][['Saturday']] = ['Sábado'];
 
+dict['pt-BR']['A reservation name is required.'] = ['O nome da reserva é obrigatório.'];
+dict['pt-BR']['Waypoint information is required.'] = ['Informações de intermediário incompletas.'];
+dict['pt-BR']['click to fill waypoint'] = ['clique para completar informações'];
+
 dict['pt-BR']['error'] = 'erro';
 
 dict['pt-BR'][''] = '';
