@@ -161,13 +161,7 @@ pass: master
 
 Location: config/params.php
 
-We need configure the NSA ID to identify MEICAN to other NSI providers:
-
-```
-'meican.nsa.id' => "urn:ogf:network:#DOMAIN#:#YEAR#:nsa:meican",
-```
-
-Located on certificates folder on project root, the application certificate must be setup also:
+Located on certificates folder on project root, the application certificate must be defined:
 
 ```
 'meican.certificate.filename' => "meican.pem",
@@ -179,3 +173,15 @@ By default the fake provider is enabled. Disable this feature setting the param 
 ```
 "provider.force.dummy" => false,
 ```
+
+###CONFIGURATION
+
+We need set the MEICAN NSA ID to identify that application by other NSI providers. Access the application and enter to Reservations > Configuration and set the MEICAN NSA ID field with a valid id:
+
+```
+"urn:ogf:network:#DOMAIN#:#YEAR#:nsa:meican",
+```
+
+If the fake provider has been disabled, we need to define a true provider to receive the MEICAN requests. On the same configuration page (Reservations > Configuration) you can set the Provider NSA ID and the URL of the Connection Service.
+
+
