@@ -84,7 +84,7 @@ class Notification extends \yii\db\ActiveRecord
     public static function getNumberNotifications(){
     	$nots = 0;
     
-    	if(Yii::$app->user->isGuest) return $auths;
+    	if(Yii::$app->user->isGuest) return $nots;
     
     	$userId = Yii::$app->user->getId();
     
@@ -94,7 +94,7 @@ class Notification extends \yii\db\ActiveRecord
     public static function getNumberAuthorizations(){
     	$auths = 0;
     
-    	if(Yii::$app->user->isGuest) return $auths;
+    	if(Yii::$app->user->isGuest) return $nots;
     	 
     	$userId = Yii::$app->user->getId();
     

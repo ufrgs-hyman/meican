@@ -47,10 +47,11 @@ function timerAuths() {
 	$.ajax({
 	    type: "GET",
 	    url: baseUrl + '/notification/notification/get-number-notifications',
-	    success: function(data) {
-            $("#notification_link").trigger('notify', data);
-	    	if(data>0)$("#notification_link").html("<div class='full'><span >"+data+"</span></div></li>");
-	    	else $("#notification_link").html("<div class='empty'><span >"+data+"</span></div></li>");
+	    success: function(number) {
+            $("#notification_link").trigger('notify', number);
+            if(number>9) $("#notification_link").html("<div class='full'><span >9+</span></div></li>");
+	    	else if(number>0) $("#notification_link").html("<div class='full'><span >"+number+"</span></div></li>");
+	    	else $("#notification_link").html("<div class='empty'><span >"+number+"</span></div></li>");
 	    	t = setTimeout(function() {
 	    		timerAuths()
 	    	}, 60000);
@@ -105,7 +106,8 @@ $(document).ready(function() {
 					    type: "GET",
 					    url: baseUrl + '/notification/notification/get-number-notifications',
 					    success: function(number) {
-					    	if(number>0)$("#notification_link").html("<div class='full'><span >"+number+"</span></div></li>");
+					    	if(number>9) $("#notification_link").html("<div class='full'><span >9+</span></div></li>");
+					    	else if(number>0) $("#notification_link").html("<div class='full'><span >"+number+"</span></div></li>");
 					    	else $("#notification_link").html("<div class='empty'><span >"+number+"</span></div></li>");
 					    }
 					});
