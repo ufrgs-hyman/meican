@@ -29,133 +29,30 @@ web/                css, images, javascripts
 
 - CPU 1+
 - Memory 2GB+
-- Storage 25GB+
+- Storage 20GB+
 
 ###Software
 
-- Ubuntu 14.04 (or any other system with Crontab feature)
-- Apache 2.4+ (recommended)
+- Ubuntu 14.04/CentOS 6.7/Any other OS with Crontab feature
+- Apache 2.2+ (recommended)
 - MySQL 5+
 - PHP 5.5+
 - cURL
 
 ##INSTALLATION GUIDE
 
-####Option 1
+####[CentOS 6.7](https://github.com/ufrgs-hyman/meican2/wiki/CentOS-6.7-installation-guide)
 
-[Download a specific release](https://github.com/ufrgs-hyman/meican2/releases) and use the MEICAN Installer for Ubuntu (tested on 14.04).
+####[Ubuntu 14.04](https://github.com/ufrgs-hyman/meican2/wiki/Ubuntu-14.04-installation-guide)
 
-```
-wget https://github.com/ufrgs-hyman/meican2/archive/#version#.tar.gz
-tar -zxvf #version#.tar.gz
-cd meican2-#version#
-chmod +x installer.sh
-sudo ./installer.sh
-```
-
-####Option 2
-
-Follow the steps detailed below.
-
-This configuration was tested and performed on Ubuntu 14.04.
-
-#####Prepare environment
-
-```
-sudo apt-get update
-sudo apt-get install apache2 mysql-server php5 curl php5-mysql php5-curl
-```
-
-#####Setup database
-
-While not mandatory, the phpMyAdmin installation is recommended for easy database management.
-
-```
-sudo apt-get install phpmyadmin
-```
-
-Or you can simply create a database via the command line.
-
-```
-mysql -u #user# -p
-CREATE DATABASE IF NOT EXISTS `meican2`;
-```
-
-#####Download and install MEICAN
-
-[Get a stable version](https://github.com/ufrgs-hyman/meican2/releases):
-
-```
-wget https://github.com/ufrgs-hyman/meican2/archive/#version#.tar.gz
-tar -zxvf #version#.tar.gz
-```
-
-or clone the Git repository with the latest version (MAY BE NOT STABLE):
-
-```
-git clone https://github.com/ufrgs-hyman/meican2.git
-```
-
-Configure database settings:
-
-```
-nano #meican-folder#/config/db.php
-```
-
-On source code folder (#meican-folder#) install the [Composer](https://getcomposer.org)
-
-```
-curl -sS https://getcomposer.org/installer | php
-php composer.phar global require "fxp/composer-asset-plugin:1.0.0”
-```
-
-Install MEICAN and all dependencies:
-
-```
-php composer.phar install
-```
-
-It is possible that before the installation you are prompted by a "access token" of GitHub. You must have a user on GitHub to get a valid token on: https://github.com/settings/tokens
-
-Create a simbolic link to app web folder on /var/www:
-
-```
-sudo ln -s /path/to/#meican-folder#/web /var/www/meican
-```
-
-#####Apache configuration
-
-Enable the Rewrite mode:
-
-```
-sudo a2enmod rewrite
-```
-
-Enable symbolic links and change the document root:
-
-```
-DocumentRoot /var/www/meican
-
-<Directory /var/www>
-    Options Indexes FollowSymLinks MultiViews
-    AllowOverride All
-    Order deny,allow
-    Allow from all
-</Directory>
-```
-
-Finally restart the Apache service:
-
-```
-sudo service apache2 restart
-```
-
-With this configuration, MEICAN will be available at http://localhost with one user created:
+After that installation, MEICAN will be available at localhost with one user created:
 
 ```
 user: master
 pass: master
 ```
+
+Next step is set some parameters and configure the application.
 
 ###PARAMETERS
 
@@ -174,6 +71,13 @@ By default the fake provider is enabled. Disable this feature setting the param 
 "provider.force.dummy" => false,
 ```
 
+For the pass recovery form, the application uses the [Google reCAPTCHA API](https://www.google.com/recaptcha). The keys must be set:
+
+```
+"google.recaptcha.secret.key" => "",
+"google.recaptcha.site.key" => "",
+```
+
 ###CONFIGURATION
 
 We need set the MEICAN NSA ID to identify that application by other NSI providers. Access the application and enter to Reservations > Configuration and set the MEICAN NSA ID field with a valid id:
@@ -183,5 +87,3 @@ urn:ogf:network:#DOMAIN#:#YEAR#:nsa:meican
 ```
 
 If the fake provider has been disabled, we need to define a true provider to receive the MEICAN requests. On the same configuration page (Reservations > Configuration) you can set the Provider NSA ID and the URL of the Connection Service.
-
-
