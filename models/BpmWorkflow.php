@@ -82,9 +82,7 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     	if(!$domain) return false;
     	
     	if(!$workflow->save()) return false;
-    	
-    	Yii::trace($domain->name);
-    	
+
     	// Procura por execuções em aberto envolvendo o workflow. 
     	$flows = BpmFlow::find()->where(['workflow_id' => $id])->all();
     	foreach($flows as $flow){
@@ -99,7 +97,6 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     		Connection::continueWorkflows($conId, true);
     	}
 
-    	Yii::trace("desativou corretamente");
     	return true;
     }
     
@@ -421,13 +418,10 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     		echo json_encode($response);
     		return;
     	}
-    	 
-    	//Desativa o workflow que estava ativado, quando criando.
-    	$oldWorkflow = BpmWorkflow::findOne(['domain' => $working->properties->domains_owner, 'active' => 1]);
-    	if($oldWorkflow && !($type == 'update' || $type == 'copy')) $oldWorkflow->active=0;
-    	
+
     	$work->name = $params['name'];
     	$work->domain = $working->properties->domains_owner;
+    	$work->active = 0;
     	
     	//Monta json
 		$request['params']['working'] = json_encode($working);
@@ -436,9 +430,6 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     	if($type != 'copy') $work->json = json_encode($request);
     	else $work->json = $json_aux;
     	
-    	if(!$type) $work->active = 1;
-    	else $work->active = 0;
-
     	if (!$work->save()) {
     		$response = array('error' => "Not saved.");
     		Yii::trace($work);
@@ -483,8 +474,6 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     				return;
     			}
     	}
-    	
-    	if($oldWorkflow) $oldWorkflow->save();
     	
     	$response = array('error' => null);
     	echo json_encode($response);
