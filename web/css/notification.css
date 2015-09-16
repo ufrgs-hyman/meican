@@ -53,8 +53,8 @@
 	text-align: center;
 	position: absolute;
 	width: 10px;
-	margin-left: -5px !important;
-	margin-top: -9px !important;
+	right: 4px !important;
+	top: 7px !important;
 	text-shadow: none !important;
 }
 
@@ -78,7 +78,7 @@
     font-size: 9px;
     height: 14px;
     margin: 16px 15px;
-    width: 16px;
+    width: 17px;
     padding: 0px 0px 0px 0px;
 }
 

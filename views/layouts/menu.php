@@ -33,7 +33,7 @@ echo Menu::widget([
 			'label'=>'<h3><a id="menu-topology" href="#" class="top"><span class="ui-icon ui-icon-circle-arrow-s"></span>'.Yii::t('topology','Topologies').'</a></h3>',
 			'items'=>[
 				['label'=>Yii::t('topology','Domains'), 'url'=>['/topology/domain/index'], 'visible'=>RbacController::can('domain/read')],
-				['label'=>Yii::t('topology','Providers'), 'url'=>['/topology/provider/index'], 'visible'=>RbacController::can('domainTopology/read')],
+				['label'=>Yii::t('topology','Providers'), 'url'=>['/topology/provider/index'], 'visible'=>RbacController::can('domain/read')],
 				['label'=>Yii::t('topology','Networks'), 'url'=>['/topology/network/index'], 'visible'=>RbacController::can('domainTopology/read')],
 				['label'=>Yii::t('topology','Devices'), 'url'=>['/topology/device/index'], 'visible'=>RbacController::can('domainTopology/read')],
 				['label'=>Yii::t('topology','Ports'), 'url'=>['/topology/port/index'], 'visible'=>RbacController::can('domainTopology/read')],
