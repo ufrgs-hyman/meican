@@ -629,6 +629,8 @@ td select {
 
 #left-panel {
     float: left;
+    height: 100%;
+    position: relative;
     background-color: #F4F4F4;
 }
 
@@ -669,8 +671,8 @@ td select {
 }
 
 #menu {
-    height:100%;
-    overflow: auto;
+    overflow-y:scroll;
+    height: calc(100% - 64px) !important;
 }
 
 #menu ul {
