@@ -21,6 +21,7 @@ return array(
 		'Added to a group' => 'Adicionado a um grupo',
 		'Removed from a group' => 'Removido de um grupo',
 		'You have been added to group' => 'Você foi adicionado ao grupo',
+		'with system permissions' => 'com permissões de sistema',
 		'of the domain' => 'do domínio',
 		'of all domains.' => 'de todos domínios.',
 		'You were removed from the group' => 'Você foi removido do grupo',

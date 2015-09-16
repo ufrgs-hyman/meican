@@ -4,8 +4,11 @@ return array(
 		'Role updated successfully' => 'Perfil editado com sucesso',
 		"This user has all possibles valid roles" => "Não é possível adicionar um novo perfil. Este usuário já possui todos os perfis disponíveis nesse momento.",
 		"Error deleting group" => "Erro ao remover o grupo",
+		'Error deleting the system role' => 'Erro ao remover o grupo de sistema',
+		'Error deleting the role associated with the domain' => 'Erro ao remover o perfil associado com o domínio',
 		"Role created successfully" => "Perfil adicionado com sucesso",
 		'The role associated with the domain {name} has been deleted' => 'O perfil associado ao domínio {name} foi removido com sucesso',
+		'The system role has been deleted' => 'O perfil de sistema foi removido com sucesso',
 		"Group {name} deleted successfully" => "Grupo {name} removido com sucesso",
 		"Group updated successfully" => 'Grupo editado com sucesso',
 		"Group updated successfully. None permissions?" => "Grupo editado com sucesso. Grupo sem permissões?",
@@ -112,6 +115,7 @@ return array(
 		'Group not found' => 'Grupo não encontrado',
 		'User not found' => 'Usuário não encontrado',
 		'Role not found' => 'Perfil não encontrado',
+		'The user already has this profile' => 'O usuário ja possui este perfil',
 		
 		
 );

@@ -618,7 +618,7 @@ td select {
    ========================================================================== */
 
 #left-panel, #system_date {
-    width: 130px;
+    width: 132px;
 }
 
 #system_date, #menu {
@@ -631,22 +631,6 @@ td select {
     float: left;
     height: 100%;
     position: relative;
-    background-color: #F4F4F4;
-}
-
-#left-panel2 {
-    width: 130px;
-    border-right-width: thin;
-    border-right-style: solid;
-    border-right-color: #DDD;
-    float: left;
-    background-color: #F4F4F4;
-    height: 100%;
-}
-
-#left-panel-forgot {
-    width: 130px;
-    float: left;
     background-color: #F4F4F4;
 }
 
@@ -671,7 +655,7 @@ td select {
 }
 
 #menu {
-    overflow-y:scroll;
+    overflow-y: auto;
     height: calc(100% - 64px) !important;
 }
 
@@ -885,7 +869,7 @@ h1 { /* Títulos principais */
     border-image: initial;
     padding: 1em;
     width: 100%;
-    left: 129px;
+    left: 131px;
 }
 
 #bandwidth_bar {
@@ -1405,18 +1389,11 @@ form #recaptcha_response_field {
 #emotion_select * {
     vertical-align: middle; }
 
-
-
 ::-webkit-scrollbar {
     width: 5px;
 }
-/*
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-}*/
 
-::-webkit-scrollbar-thumb {
-    /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);*/
+::-webkit-scrollbar-thumb{
     background-color: gray;
 }
 

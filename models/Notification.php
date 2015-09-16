@@ -438,9 +438,14 @@ class Notification extends \yii\db\ActiveRecord
     			$title = Yii::t("notification", 'Added to a group')." (".$group->name.")";
     			
     			$msg = Yii::t("notification", 'You have been added to group')." <b>".$group->name."</b>";
-    			if(isset($domain)) $msg .= " ".Yii::t("notification", 'of the domain')." <b>".$domain->name."</b>.";
-    			else if(!isset($data[2])) $msg .= " ".Yii::t("notification", 'of all domains.');
-    			else $msg .= ".";
+    			if($group->type==Group::TYPE_DOMAIN){
+    				if(isset($domain)) $msg .= " ".Yii::t("notification", 'of the domain')." <b>".$domain->name."</b>.";
+    				else if(!isset($data[2])) $msg .= " ".Yii::t("notification", 'of all domains.');
+    				else $msg .= ".";
+    			}
+    			else {
+    				$msg .= " ".Yii::t("notification", 'with system permissions');
+    			}
     			
     			$date = Yii::$app->formatter->asDatetime($notification->date);
     			
@@ -460,9 +465,14 @@ class Notification extends \yii\db\ActiveRecord
     			$title = Yii::t("notification", 'Removed from a group')." (".$group->name.")";
     			 
     			$msg = Yii::t("notification", 'You were removed from the group')." <b>".$group->name."</b>";
-    			if(isset($domain)) $msg .= " ".Yii::t("notification", 'of the domain')." <b>".$domain->name."</b>.";
-    			else if(!isset($data[2])) $msg .= " ".Yii::t("notification", 'of all domains.');
-    			else $msg .= ".";
+    			if($group->type==Group::TYPE_DOMAIN){
+    				if(isset($domain)) $msg .= " ".Yii::t("notification", 'of the domain')." <b>".$domain->name."</b>.";
+    				else if(!isset($data[2])) $msg .= " ".Yii::t("notification", 'of all domains.');
+    				else $msg .= ".";
+    			}
+    			else {
+    				$msg .= " ".Yii::t("notification", 'with system permissions');
+    			}
     			 
     			$date = Yii::$app->formatter->asDatetime($notification->date);
     			 
@@ -589,31 +599,6 @@ class Notification extends \yii\db\ActiveRecord
 	    
 	    if($notification->viewed == true) return '<li>'.Html::a($html, array($link)).'</li>';
 	    return '<li class="new">'.Html::a($html, array($link)).'</li>';
-    }
-    
-    /**
-     * MAKE HTML NOTIFICATION TOPOLOGY
-     * @param string $notification
-     * @return string
-     */
-    public static function makeHtmlNotificationTopology($notification = null){
-    	if($notification == null) return "";
-    	$info = $notification->info;
-
-    	$title = Yii::t("notification", 'Topology Change');
-    	
-    	$userId = Yii::$app->user->getId();
-    	$msg = "BLA BLA BLA BLA BLA BLA BLA BLA BLA    = ".$info;
-    	$date = Yii::$app->formatter->asDatetime($notification->date);
-    
-    	$link = '/init';
-    
-    	$text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
-    
-    	$html = Notification::makeHtml('topology_changed.png', $text);
-    	 
-    	if($notification->viewed == true) return '<li>'.Html::a($html, array($link)).'</li>';
-    	return '<li class="new">'.Html::a($html, array($link)).'</li>';
     }
     
     /********************************

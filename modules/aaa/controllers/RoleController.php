@@ -76,23 +76,36 @@ class RoleController extends RbacController {
     		if($roleDomain == "") $udr->domain = null;
     		else $udr->domain = $roleDomain;
     		
-    		if($udr->save()) {
-    			//Cria notificações relativas ao novo papel
-    			Notification::createNotificationsUserNewGroup($udr->user_id, $udr->_groupRoleName, $udr->domain);
-    			
-    			//Cria notificação de novo papel
-    			$domain = Domain::findOne(['name' => $udr->domain]);
-    			if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
-    			else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
-    			
-    			Yii::$app->getSession()->setFlash("success", Yii::t("aaa", 'Role created successfully'));
-    
-    			return $this->redirect(array('index', 'id'=>$id));
-    
-    		} else {
-    			foreach($udr->getErrors() as $attribute => $error) {
-    				Yii::$app->getSession()->setFlash("error", $error[0]);
+    		$alreadyHas = false;
+    		$roles = UserDomainRole::find()->where(['domain' => $udr->domain, 'user_id' => $udr->user_id])->all();
+    		foreach($roles as $role){
+    			if($role->getGroup()->role_name == $udr->_groupRoleName){
+    				$alreadyHas = true;
+    				break;
     			}
+    		}
+    		if($alreadyHas){
+    			Yii::$app->getSession()->setFlash("warning", Yii::t("aaa", 'The user already has this profile'));
+    		}
+    		else {
+	    		if($udr->save()) {
+	    			//Cria notificações relativas ao novo papel
+	    			Notification::createNotificationsUserNewGroup($udr->user_id, $udr->_groupRoleName, $udr->domain);
+	    			
+	    			//Cria notificação de novo papel
+	    			$domain = Domain::findOne(['name' => $udr->domain]);
+	    			if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
+	    			else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
+	    			
+	    			Yii::$app->getSession()->setFlash("success", Yii::t("aaa", 'Role created successfully'));
+	    
+	    			return $this->redirect(array('index', 'id'=>$id));
+	    
+	    		} else {
+	    			foreach($udr->getErrors() as $attribute => $error) {
+	    				Yii::$app->getSession()->setFlash("error", $error[0]);
+	    			}
+	    		}
     		}
     	}
     	
@@ -158,35 +171,48 @@ class RoleController extends RbacController {
     		if($roleDomain == "") $udr->domain = null;
     		else $udr->domain = $roleDomain;
     		
-    		if($udr->save()) {
-    			//Remove notificações relativas ao antigo papel
-    			Notification::deleteNotificationsUserGroup($udr->user_id, $group->role_name, $udr->domain);
-    			//Cria notificações relativas ao novo papel
-    			Notification::createNotificationsUserNewGroup($udr->user_id, $udr->_groupRoleName, $udr->domain);
-    			
-    			//Pequena maquipulação do horário para que não fiquem as duas notificações com o mesmo horário.
-    			$dateAux = new \DateTime('now', new \DateTimeZone("UTC"));
-    			$dateAux->modify('-1 second');
-    			$dateAux = $dateAux->format("Y-m-d H:i:s");
-    			
-    			//Cria notificação do papel removido
-    			$domain = Domain::findOne(['name' => $udr->domain]);
-    			if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $group->id, $domain->name, $dateAux);
-    			else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $group->id, null, $dateAux);
-    			
-    			//Cria notificação do novo papel
-    			$domain = Domain::findOne(['name' => $udr->domain]);
-    			if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
-    			else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
-    			 
-    			Yii::$app->getSession()->setFlash("success", Yii::t("aaa", 'Role updated successfully'));
-    			
-    			return $this->redirect(array('index', 'id'=>$udr->user_id));
-    			 
-    		} else {
-    			foreach($udr->getErrors() as $attribute => $error) {
-    				Yii::$app->getSession()->setFlash("error", $error[0]);
+    		$alreadyHas = false;
+    		$roles = UserDomainRole::find()->where(['domain' => $udr->domain, 'user_id' => $udr->user_id])->all();
+    		foreach($roles as $role){
+    			if($role->getGroup()->role_name == $udr->_groupRoleName){
+    				$alreadyHas = true;
+    				break;
     			}
+    		}
+    		if($alreadyHas){
+    			Yii::$app->getSession()->setFlash("warning", Yii::t("aaa", 'The user already has this profile'));
+    		}
+    		else {
+	    		if($udr->save()) {
+	    			//Remove notificações relativas ao antigo papel
+	    			Notification::deleteNotificationsUserGroup($udr->user_id, $group->role_name, $udr->domain);
+	    			//Cria notificações relativas ao novo papel
+	    			Notification::createNotificationsUserNewGroup($udr->user_id, $udr->_groupRoleName, $udr->domain);
+	    			
+	    			//Pequena maquipulação do horário para que não fiquem as duas notificações com o mesmo horário.
+	    			$dateAux = new \DateTime('now', new \DateTimeZone("UTC"));
+	    			$dateAux->modify('-1 second');
+	    			$dateAux = $dateAux->format("Y-m-d H:i:s");
+	    			
+	    			//Cria notificação do papel removido
+	    			$domain = Domain::findOne(['name' => $udr->domain]);
+	    			if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $group->id, $domain->name, $dateAux);
+	    			else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $group->id, null, $dateAux);
+	    			
+	    			//Cria notificação do novo papel
+	    			$domain = Domain::findOne(['name' => $udr->domain]);
+	    			if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
+	    			else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
+	    			 
+	    			Yii::$app->getSession()->setFlash("success", Yii::t("aaa", 'Role updated successfully'));
+	    			
+	    			return $this->redirect(array('index', 'id'=>$udr->user_id));
+	    			 
+	    		} else {
+	    			foreach($udr->getErrors() as $attribute => $error) {
+	    				Yii::$app->getSession()->setFlash("error", $error[0]);
+	    			}
+	    		}
     		}
     	}
     	
@@ -236,7 +262,7 @@ class RoleController extends RbacController {
     			$udr = UserDomainRole::findOne($udrId);
     			
     			if(!self::can("role/delete") && !self::can("user/update")){
-    				Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update roles'));
+    				Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to delete roles'));
     				return $this->redirect(array('index','id'=>$udr->user_id));
     			}
     			
@@ -258,10 +284,16 @@ class RoleController extends RbacController {
     			if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $udr->getGroup()->id, $domain->name, $dateAux);
     			else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $udr->getGroup()->id, null, $dateAux);
 
+    			$groupType = Group::TYPE_DOMAIN; 
+    			$group = $udr->getGroup();
+    			if($group) $groupType = $group->type;
+    			
     			if ($udr->delete()) {
-    				Yii::$app->getSession()->addFlash('success', Yii::t("aaa", 'The role associated with the domain {name} has been deleted', ['name'=> $domName]));
+    				if($groupType == Group::TYPE_DOMAIN) Yii::$app->getSession()->addFlash('success', Yii::t("aaa", 'The role associated with the domain {name} has been deleted', ['name'=> $domName]));
+    				else Yii::$app->getSession()->addFlash('success', Yii::t("aaa", 'The system role has been deleted'));
     			} else {
-    				Yii::$app->getSession()->setFlash('error', Yii::t("aaa", 'Error deleting the role associated with the domain ').' '.$domName);
+    				if($groupType == Group::TYPE_DOMAIN) Yii::$app->getSession()->setFlash('error', Yii::t("aaa", 'Error deleting the role associated with the domain').' '.$domName);
+    				else Yii::$app->getSession()->addFlash('success', Yii::t("aaa", 'Error deleting the system role'));
     			}
     		}
     		return $this->redirect(array('index','id'=>$udr->user_id));
