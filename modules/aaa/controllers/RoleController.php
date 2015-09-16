@@ -270,10 +270,10 @@ class RoleController extends RbacController {
     			$domName = Yii::t("aaa", 'any');
     			if ($dom) $domName = $dom->name;
     			
-    			$domain = Domain::findOne(['name' => $udr->domain]);
-
     			//Remove notificações relativas ao antigo papel
+    			$domain = Domain::findOne(['name' => $udr->domain]);
     			if($domain) Notification::deleteNotificationsUserGroup($udr->user_id, $udr->getGroup()->role_name, $domain->name);
+    			else Notification::deleteNotificationsUserGroup($udr->user_id, $udr->getGroup()->role_name, null);
     			
     			//Pequena maquipulação do horário para que não fiquem as duas notificações com o mesmo horário.
     			$date->modify('-1 second');
