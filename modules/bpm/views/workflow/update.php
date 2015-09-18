@@ -2,6 +2,7 @@
 
 use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\jui\Dialog;
 
 use app\modules\bpm\assets\UpdateAsset;
 UpdateAsset::register($this);
@@ -21,4 +22,21 @@ UpdateAsset::register($this);
 <div class="controls">
     <input type="button" id="button_save" class="save" value=<?= Yii::t("bpm", "Save");?>>
     <input type="button" id="button_cancel" class="cancel" value=<?= Yii::t("bpm", "Cancel");?>>
+</div>
+
+<div style="display: none">
+<?php Dialog::begin([
+		'id' => 'dialog',
+    	'clientOptions' => [
+        	'modal' => true,
+        	'autoOpen' => false,
+        	'title' => "Workflows",
+    	],
+	]);
+
+	echo '<br></br>';
+    echo '<p style="text-align: left; height: 100%; width:100%;" id="message"></p>';
+    
+	Dialog::end(); 
+?>
 </div>

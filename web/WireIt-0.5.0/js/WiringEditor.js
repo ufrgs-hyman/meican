@@ -311,7 +311,18 @@ WireIt.WiringEditor.prototype = {
 			var value = this.getValue();
 
 			if(value.name === "") {
-				alert(tt("Please, choose a name."));
+				window.parent.$("#message").html(tt("Please, choose a name."));
+        		window.parent.$("#dialog").dialog({
+					buttons: [
+						{
+							text: "Ok",
+						    click: function() {
+						    	window.parent.$(this).dialog( "close" );
+						    }
+						},
+					]
+				});
+        		window.parent.$("#dialog").dialog("open");
 				return;
 			}
 			
@@ -333,7 +344,18 @@ WireIt.WiringEditor.prototype = {
 		var value = this.getValue();
 
 		if(value.name === "") {
-			alert(tt("Please, choose a name."));
+			window.parent.$("#message").html(tt("Please, choose a name."));
+    		window.parent.$("#dialog").dialog({
+				buttons: [
+					{
+						text: "Ok",
+					    click: function() {
+					    	window.parent.$(this).dialog( "close" );
+					    }
+					},
+				]
+			});
+    		window.parent.$("#dialog").dialog("open");
 			return;
 		}
 		

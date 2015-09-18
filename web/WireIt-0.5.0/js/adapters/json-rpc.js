@@ -46,7 +46,20 @@ WireIt.WiringEditor.adapters.JsonRpc = {
 			cache: false,
 			success: function(response) {
 				r = YAHOO.lang.JSON.parse(response);
-            	if(r['error']!=null) alert(r['error']);
+            	if(r['error']!=null){
+            		window.parent.$("#message").html(r['error']);
+            		window.parent.$("#dialog").dialog({
+						buttons: [
+							{
+								text: "Ok",
+							    click: function() {
+							    	window.parent.$(this).dialog( "close" );
+							    }
+							},
+						]
+					});
+            		window.parent.$("#dialog").dialog("open");
+            	}
                 callbacks.success.call(callbacks.scope, r.result);
                 if(r['error']==null) window.top.location.href="../workflow/index";
 			}
@@ -68,7 +81,20 @@ WireIt.WiringEditor.adapters.JsonRpc = {
 			cache: false,
 			success: function(response) {
                 r = YAHOO.lang.JSON.parse(response);
-            	if(r['error']!=null) alert(r['error']);
+            	if(r['error']!=null){
+            		window.parent.$("#message").html(r['error']);
+            		window.parent.$("#dialog").dialog({
+						buttons: [
+							{
+								text: "Ok",
+							    click: function() {
+							    	window.parent.$(this).dialog( "close" );
+							    }
+							},
+						]
+					});
+            		window.parent.$("#dialog").dialog("open");
+            	}
                 callbacks.success.call(callbacks.scope, r.result);
                 if(r['error']==null) window.top.location.href="../workflow/index";
 			}

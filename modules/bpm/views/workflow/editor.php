@@ -1,5 +1,6 @@
-<?php use yii\helpers\Html;
-use yii\helpers\Url;
+<?php 
+	use yii\helpers\Html;
+	use yii\helpers\Url;
 ?>
 
 <script>

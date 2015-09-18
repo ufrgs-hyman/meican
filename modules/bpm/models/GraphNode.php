@@ -134,22 +134,22 @@ class GraphNode{
 	public function getRealName(){
 		switch($this->name){
 			case 'New_Request':
-				return "Arriving a new request";
+				return "Arriving a New Request";
 				break;
 			case 'Domain':
-				return "Filter by domain";
+				return "Filter by Domain";
 				break;
 			case 'User':
-				return "Filter by requesting user";
+				return "Filter by Requesting User";
 				break;
 			case 'Bandwidth':
-				return "Filter by requested bandwidth";
+				return "Filter by Requested Bandwidth";
 				break;
 			case 'Request_User_Authorization':
-				return "Request authorization to single administrator";
+				return "Request Authorization to User";
 				break;
 			case 'Request_Group_Authorization':
-				return "Request authorization to administrators group";
+				return "Request Authorization to Group";
 				break;
 			case 'Accept_Automatically':
 				return "Authorization Accepted";
@@ -158,19 +158,19 @@ class GraphNode{
 				return "Authorization Denied";
 				break;
 			case 'Hour':
-				return "Filter by schedule";
+				return "Filter by Schedule";
 				break;
 			case 'Group':
-				return "Filter by group";
+				return "Filter by Group";
 				break;
 			case 'WeekDay':
-				return "Filter by week day";
+				return "Filter by Week Day";
 				break;
 			case 'Duration':
-				return "Filter by duration";
+				return "Filter by Duration";
 				break;
 			case 'Device':
-				return "Filter by device";
+				return "Filter by Device";
 				break;
 		}
 	}
