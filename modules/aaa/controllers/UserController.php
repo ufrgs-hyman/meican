@@ -55,17 +55,22 @@ class UserController extends RbacController {
     
     	if($userForm->load($_POST) && $userForm->validate()) {
     		$user = new User;
-    		$user->setFromUserForm($userForm);
-
-    		if($user->save()) {
-    			Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User added successfully'));
-    			
-    			Notification::createNotificationsUserNewGroup($user->id, $userForm->group, $userForm->domain);
-    			
-    			return $this->redirect(array('index'));
-    			
-    		} else {
-    			foreach($user->getErrors() as $attribute => $error) {
+    		$errors = $user->setFromUserForm($userForm);
+    		if(!$errors){
+	    		if($user->save()) {
+	    			Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User added successfully'));
+	    			
+	    			Notification::createNotificationsUserNewGroup($user->id, $userForm->group, $userForm->domain);
+	    			
+	    			return $this->redirect(array('index'));
+	    		} else {
+	    			foreach($user->getErrors() as $attribute => $error) {
+	    				Yii::$app->getSession()->addFlash("error", $error[0]);
+	    			}
+	    		}
+    		}
+    		else {
+    			foreach($errors as $attribute => $error) {
     				Yii::$app->getSession()->addFlash("error", $error[0]);
     			}
     		}
@@ -108,6 +113,7 @@ class UserController extends RbacController {
     				$settings = $user->getUserSettings()->one();
     				if ($userForm->updateSettings($settings)) {
     					Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User updated successfully'));
+    					return $this->redirect(array('index'));
     				} else {
     					foreach($settings->getErrors() as $attribute => $error) {
     						Yii::$app->getSession()->addFlash("error", $error[0]);

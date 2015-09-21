@@ -148,6 +148,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     	$this->_settings->date_format = 'dd/mm/yyyy';
     	$this->_settings->name = $form->name;
     	$this->_settings->email = $form->email;
+    	
+    	if(!$this->_settings->validate()) return $this->_settings->getErrors();
+    	return false;
     }
 
     public function setFromData($login, $password, $name, $email, 
