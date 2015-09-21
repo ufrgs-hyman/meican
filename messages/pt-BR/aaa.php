@@ -116,6 +116,7 @@ return array(
 		'User not found' => 'Usuário não encontrado',
 		'Role not found' => 'Perfil não encontrado',
 		'The user already has this profile' => 'O usuário ja possui este perfil',
+		'Domains' => 'Domínios',
 		
 		
 );
