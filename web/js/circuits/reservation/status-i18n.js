@@ -1,8 +1,8 @@
 var dict = [];
 dict['pt-BR'] = [];
 
-dict['pt-BR']['Disable auto refresh'] = 'Desativar auto-atualização';
-dict['pt-BR']['Enable auto refresh'] = 'Ativar auto-atualização';
+dict['pt-BR']['Disable auto refresh'] = 'Desativar autoatualização';
+dict['pt-BR']['Enable auto refresh'] = 'Ativar autoatualização';
 
 dict['pt-BR'][''] = '';
 

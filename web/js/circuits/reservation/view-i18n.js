@@ -1,6 +1,6 @@
 I18N.begin('pt-BR');
-I18N.add('Disable auto refresh', 'Desativar auto-atualização');
-I18N.add('Enable auto refresh', 'Ativar auto-atualização');
+I18N.add('Disable auto refresh', 'Desativar autoatualização');
+I18N.add('Enable auto refresh', 'Ativar autoatualização');
 I18N.add('Close', 'Fechar');
 I18N.add('Network', 'Rede');
 I18N.add('Yes', 'Sim');
