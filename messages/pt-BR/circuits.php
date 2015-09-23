@@ -248,7 +248,6 @@ return array(
 		"Pending Authorization" => "Autorizações Pendentes",
 		"Requester" => "Requisitante",
 		"Answer" => "Responder",
-		"Bandwidth" => "Banda",
 		"Reply request as " => "Respondendo como ",
 		"Reservation name:" => "Nome da Reserva:",
 		"Requested Bandwidth:" => "Banda Requisitada:",

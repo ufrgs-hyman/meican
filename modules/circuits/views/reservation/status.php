@@ -84,7 +84,9 @@
 				],
 				[
 					'label' => Yii::t('circuits', 'Bandwidth'),
-					'value' => 'bandwidth',
+					'value' => function($res){
+						return $res->bandwidth." Mbps";
+					},
 					'headerOptions'=>['style'=>'width: 7%;'],
 				],
 				[
