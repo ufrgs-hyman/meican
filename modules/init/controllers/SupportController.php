@@ -50,10 +50,10 @@ class SupportController extends RbacController {
 		Yii::trace($body);
 	
 		$mail = Yii::$app->mailer->compose()
-		->setFrom('meican@inf.ufrgs.br')
-		->setTo('meican@inf.ufrgs.br')
-		->setSubject('Feedback Meican')
-		->setTextBody($body);
+			->setFrom(Yii::$app->params['mailer.destination'])
+			->setTo(Yii::$app->params['mailer.destination'])
+			->setSubject('Feedback Meican')
+			->setTextBody($body);
 		
 		if ($mail->send())
 			echo Yii::t("init", 'Feedback sent. Thank you!');
