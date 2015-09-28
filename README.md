@@ -61,21 +61,44 @@ Location: config/params.php
 Located on certificates folder on project root, the application certificate must be defined:
 
 ```
-'meican.certificate.filename' => "meican.pem",
-'meican.certificate.passphrase' => "#CERTIFICATE-PASSWORD#",	
+'meican.certificate.filename' => 'meican.pem',
+'meican.certificate.passphrase' => '#CERTIFICATE-PASSWORD#',	
 ```
 
 By default the fake provider is enabled. Disable this feature setting the param below:
 
 ```
-"provider.force.dummy" => false,
+'provider.force.dummy' => false,
 ```
 
 For the pass recovery form, the application uses the [Google reCAPTCHA API](https://www.google.com/recaptcha). The keys must be set:
 
 ```
-"google.recaptcha.secret.key" => "",
-"google.recaptcha.site.key" => "",
+'google.recaptcha.secret.key' => '',
+'google.recaptcha.site.key' => '',
+```
+
+The feedback system requires a valid source email, destination email and a valid SMTP server:
+
+```
+'mailer.source' => 'meican@inf.ufrgs.br',
+'mailer.destination' => 'meican@inf.ufrgs.br',
+```
+
+The SMTP server is defined in a separated file. It requires a host, user and password.
+
+Location: config/mailer.php
+
+```
+'class' => 'yii\swiftmailer\Mailer',
+'transport' => [
+    'class' => 'Swift_SmtpTransport',
+    'host' => '',
+    'username' => '',
+    'password' => '',
+    'port' => '465',
+    'encryption' => 'ssl',
+],
 ```
 
 ###CONFIGURATION
