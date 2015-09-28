@@ -46,7 +46,7 @@ $config = [
     	],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '',
+            'cookieValidationKey' => 'asdadasdas',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -59,17 +59,7 @@ $config = [
         'errorHandler' => [
             'errorAction' => 'init/default/error',
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-    		'transport' => [
-    			'class' => 'Swift_SmtpTransport',
-    			'host' => '',
-    			'username' => '',
-    			'password' => '',
-    			'port' => '465',
-    			'encryption' => 'ssl',
-    		],
-        ],
+        'mailer' => require(__DIR__ . '/mailer.php'),
         'log' => [
             'flushInterval' => 1000, 
             'traceLevel' => YII_DEBUG ? 1 : 0,
