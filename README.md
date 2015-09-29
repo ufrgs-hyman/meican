@@ -81,7 +81,7 @@ For the pass recovery form, the application uses the [Google reCAPTCHA API](http
 The feedback system requires a valid destination email and a valid SMTP server:
 
 ```
-'mailer.destination' => 'meican@inf.ufrgs.br',
+'mailer.destination' => 'meican@example.com',
 ```
 
 The SMTP server is defined in a separated file. It requires a host, user and password.
