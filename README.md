@@ -89,15 +89,9 @@ The SMTP server is defined in a separated file. It requires a host, user and pas
 Location: config/mailer.php
 
 ```
-'class' => 'yii\swiftmailer\Mailer',
-'transport' => [
-    'class' => 'Swift_SmtpTransport',
-    'host' => '',
-    'username' => '',
-    'password' => '',
-    'port' => '465',
-    'encryption' => 'ssl',
-],
+'host' => '',
+'username' => '',
+'password' => '',
 ```
 
 ###CONFIGURATION
