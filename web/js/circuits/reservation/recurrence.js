@@ -15,8 +15,9 @@ $(document).ready(function() {
 });
 
 function initializationOfView(){
-	var currentdate = new Date();
-	currentdate.setMinutes(currentdate.getMinutes()+30);
+	var currentdate = new Date();	
+	if(currentdate.getHours()==23 && currentdate.getMinutes() >= 30) currentdate.setMinutes(currentdate.getMinutes()+(59-currentdate.getMinutes()));
+	else currentdate.setMinutes(currentdate.getMinutes()+30);
 	  	  
 	var hours = currentdate.getHours(),
 	  	minutes = currentdate.getMinutes();
