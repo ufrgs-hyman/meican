@@ -25,7 +25,6 @@
 
 <button style="margin-bottom:10px;" id="apply-all">Apply all changes</button>
 <label id="sync-event-id" hidden><?= $eventId; ?></label>
-    
 <?php Pjax::begin([
     'id' => 'pjax-changes',
     'enablePushState' => false,
@@ -116,4 +115,4 @@
 
 <?php Pjax::end(); ?>
 
-<div id="loading-dialog" hidden>
+<div id="loading-dialog" hidden></div>
