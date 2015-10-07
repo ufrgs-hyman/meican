@@ -42,10 +42,11 @@
 		'layout' => "{items}{summary}{pager}",
 		'columns' => array(
 				[
-					'class'=> LinkColumn::className(),
-					'image'=>'/images/eye.png',
-					'label' => '',
-					'url' => 'view',
+					'format' => 'raw',
+					'value' => function ($res){
+						return Html::img('@web'.'/images/eye.png', ['onclick' => "view($res->id)"]);
+					},
+					'contentOptions'=>['style'=>'cursor: pointer;'],
 					'headerOptions'=>['style'=>'width: 2%;'],
 				],
 				[

@@ -21,11 +21,6 @@
 
 <h1><?= Yii::t('circuits', "History reservations"); ?></h1>
 
-<?php Pjax::begin([
-            'id' => 'pjax-status',
-            'enablePushState' => false,
-]); ?>
-
 <?=
 	GridView::widget([
 		'options' => ['class' => 'list'],
@@ -128,5 +123,3 @@
 			),
 	]);
 ?>
-
-<?php Pjax::end(); ?>

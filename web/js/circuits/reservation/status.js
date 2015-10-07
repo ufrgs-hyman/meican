@@ -37,3 +37,7 @@ function updateGridView() {
 	$.pjax.defaults.timeout = false;
 	$('#grid').yiiGridView('applyFilter');
 }
+
+function view(id){
+	window.location = baseUrl+ "/circuits/reservation/view?id="+id;
+}
