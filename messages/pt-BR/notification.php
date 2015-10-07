@@ -25,6 +25,14 @@ return array(
 		'of the domain' => 'do domínio',
 		'of all domains.' => 'de todos domínios.',
 		'You were removed from the group' => 'Você foi removido do grupo',
+		'Topology change' => 'Mudança na Topologia',
+		'The topology of' => 'A topologia de',
+		'domains has been synchronized.' => 'domínios foram sincronizadas.',
+		'changes were applied' => 'alterações foram aplicadas',
+		'and' => 'e',
+		'are pending.' => 'estão pendentes.',
+		'The' => 'O',
+		'topology has been synchronized' => 'teve a topologia sincronizada'
 		
 );
 
