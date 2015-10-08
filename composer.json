@@ -1,6 +1,6 @@
 {
-    "name": "meican2",
-    "description": "MEICAN 2",
+    "name": "ufrgs-hyman/meican2",
+    "description": "Web NMS to request circuits and manage topologies in DCNs",
     "keywords": ["meican", "dynamic", "circuit", "network", "reservation", "topology", "nsi"],
     "homepage": "http://meican.cipo.rnp.br/",
     "type": "project",
