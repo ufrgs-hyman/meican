@@ -117,7 +117,7 @@ return array(
 		'Pending changes' => 'Alterações pendentes',
 		'Applied changes' => 'Alterações aplicadas',
 		'Type' => 'Tipo',
-		'Auto apply changes' => 'Auto-aplicar alterações',
+		'Auto apply changes' => 'Autoaplicar alterações',
 		'Recurrence sync' => 'Sincronização recorrente',
 		'Get notifications' => 'Receber notificações',
 		'Enabled' => 'Ativado',
