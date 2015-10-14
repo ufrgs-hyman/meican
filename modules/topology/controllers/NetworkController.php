@@ -83,7 +83,7 @@ class NetworkController extends RbacController {
 
     	if($network->load($_POST)) {
     			if ($network->save()) {
-    				Yii::$app->getSession()->addFlash("success", "Network ".$network->name." updated successfully");
+    				Yii::$app->getSession()->addFlash("success", Yii::t('topology', 'Network {name} updated successfully', ['name'=>$network->name]));
     				return $this->redirect(array('index'));
     			} else {
     				foreach($network->getErrors() as $attribute => $error) {
