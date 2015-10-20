@@ -22,12 +22,12 @@
 <script src="../../js/jquery-ui.js"></script>
 <script src="../../js/jquery-ui.min.js"></script>
 
-<!-- YUI -->
-<link rel="stylesheet" type="text/css" href="../../WireIt-0.5.0/lib/yui/reset-fonts-grids/reset-fonts-grids.css" />
-<link rel="stylesheet" type="text/css" href="../../WireIt-0.5.0/lib/yui/assets/skins/sam/skin.css" />
+<!-- YUI CSS -->
+<link rel="stylesheet" type="text/css" href="../../WireIt-0.5.0/lib/inputex/lib/yui/reset-fonts-grids/reset-fonts-grids.css" />
+<link rel="stylesheet" type="text/css" href="../../WireIt-0.5.0/lib/inputex/lib/yui/assets/skins/sam/skin.css" />
 
 <!-- InputEx CSS -->
-<link type='text/css' rel='stylesheet' href='../../WireIt-0.5.0/lib/inputex/css/inputEx.css' />
+<link rel='stylesheet' type='text/css' href='../../WireIt-0.5.0/lib/inputex/css/inputEx.css' />
 
 <!-- YUI-accordion CSS -->
 <link rel="stylesheet" type="text/css" href="../../WireIt-0.5.0/lib/accordionview/assets/skins/sam/accordionview.css" />
@@ -40,33 +40,32 @@
 <link rel="stylesheet" type="text/css" href="../../css/workflow/workflow.css" />
 
 <!-- YUI -->
-<script type="text/javascript" src="../../WireIt-0.5.0/lib/yui/utilities/utilities.js"></script>
-<script type="text/javascript" src="../../WireIt-0.5.0/lib/yui/resize/resize-min.js"></script>
-<script type="text/javascript" src="../../WireIt-0.5.0/lib/yui/layout/layout-min.js"></script>
-<script type="text/javascript" src="../../WireIt-0.5.0/lib/yui/container/container-min.js"></script>
-<script type="text/javascript" src="../../WireIt-0.5.0/lib/yui/json/json-min.js"></script>
-<script type="text/javascript" src="../../WireIt-0.5.0/lib/yui/button/button-min.js"></script>
-<script type="text/javascript" src="../../WireIt-0.5.0/lib/yui/tabview/tabview-min.js"></script>
+<script type="text/javascript" src="../../WireIt-0.5.0/lib/inputex/lib/yui/utilities/utilities.js"></script>
+<script type="text/javascript" src="../../WireIt-0.5.0/lib/inputex/lib/yui/resize/resize-min.js"></script>
+<script type="text/javascript" src="../../WireIt-0.5.0/lib/inputex/lib/yui/layout/layout-min.js"></script>
+<script type="text/javascript" src="../../WireIt-0.5.0/lib/inputex/lib/yui/container/container-min.js"></script>
+<script type="text/javascript" src="../../WireIt-0.5.0/lib/inputex/lib/yui/json/json-min.js"></script>
+<script type="text/javascript" src="../../WireIt-0.5.0/lib/inputex/lib/yui/button/button-min.js"></script>
+<script type="text/javascript" src="../../WireIt-0.5.0/lib/inputex/lib/yui/tabview/tabview-min.js"></script>
 
 <!-- InputEx with wirable options -->
-<script src="../../WireIt-0.5.0/lib/inputex/js/inputex.js"  type='text/javascript'></script>
-<script src="../../WireIt-0.5.0/lib/inputex/js/Field.js"  type='text/javascript'></script>
-<script src="../../WireIt-0.5.0/js/util/inputex/WirableField-beta.js" type="text/javascript"></script>
-<script src="../../WireIt-0.5.0/lib/inputex/js/Group.js"  type='text/javascript'></script>
-<script src="../../WireIt-0.5.0/lib/inputex/js/Visus.js"  type='text/javascript'></script>
-<script src="../../WireIt-0.5.0/lib/inputex/js/fields/StringField.js"  type='text/javascript'></script>
-<script src="../../WireIt-0.5.0/lib/inputex/js/fields/Textarea.js"  type='text/javascript'></script>
-<script src="../../WireIt-0.5.0/lib/inputex/js/fields/SelectField.js"  type='text/javascript'></script>
-<script src="../../WireIt-0.5.0/lib/inputex/js/fields/EmailField.js"  type='text/javascript'></script>
-<script src="../../WireIt-0.5.0/lib/inputex/js/fields/UrlField.js"  type='text/javascript'></script>
-<script src="../../WireIt-0.5.0/lib/inputex/js/fields/ListField.js"  type='text/javascript'></script>
-<script src="../../WireIt-0.5.0/lib/inputex/js/fields/CheckBox.js"  type='text/javascript'></script>
-<script src="../../WireIt-0.5.0/lib/inputex/js/fields/InPlaceEdit.js"  type='text/javascript'></script>
-<script src="../../WireIt-0.5.0/lib/inputex/js/fields/HiddenField.js"  type='text/javascript'></script>
-
-<script src="../../WireIt-0.5.0/lib/inputex/js/fields/CombineField.js"  type='text/javascript'></script>
-<script src="../../WireIt-0.5.0/lib/inputex/js/fields/TimeField.js"  type='text/javascript'></script>
-<script src="../../WireIt-0.5.0/lib/inputex/js/fields/IntegerField.js"  type='text/javascript'></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/inputex.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/Field.js"></script>
+<script type="text/javascript" src="../../WireIt-0.5.0/js/util/inputex/WirableField-beta.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/Group.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/Visus.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/StringField.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/Textarea.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/SelectField.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/EmailField.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/UrlField.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/ListField.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/CheckBox.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/InPlaceEdit.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/HiddenField.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/CombineField.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/TimeField.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/IntegerField.js"></script>
 
 <!-- YUI-Accordion -->
 <script src="../../WireIt-0.5.0/lib/accordionview/accordionview-min.js"  type='text/javascript'></script>
