@@ -121,8 +121,8 @@ function validateForm() {
 		errors += '<br>- ' + tt('The start time or the finish time are invalid.');
 		isValid = false;
 	}
-	if (isNaN($("#bandwidth").val()) || parseInt($("#bandwidth").val()) > 1000 || parseInt($("#bandwidth").val()) < 1) {
-		errors += '<br>- ' + tt('The bandwidth must be between 1 and 1000.');
+	if (isNaN($("#bandwidth").val()) || parseInt($("#bandwidth").val()) > 10000 || parseInt($("#bandwidth").val()) < 1) {
+		errors += '<br>- ' + tt('The bandwidth must be between 1 and 10000.');
 		isValid = false;
 	}
   if (!($("#name").val().trim())) {
@@ -154,7 +154,7 @@ function prepareBandwidthSpinner() {
         $('#bandwidth_bar_inside').width(v + '%');
     };
 
-    $('#bandwidth').attr("min", 100).attr("max", 1000).attr("step", 100).
+    $('#bandwidth').attr("min", 100).attr("max", 10000).attr("step", 100).
     		spinner({
     			spin: f,
 				stop: f
@@ -170,12 +170,9 @@ function disableBandwidthSpinner() {
 }
 
 function enableBandwidthSpinner() {
-    //var bmin_tmp = (src_min_cap >= dst_min_cap) ? src_min_cap : dst_min_cap;
-    //var bmax_tmp = (src_max_cap <= dst_max_cap) ? src_max_cap : dst_max_cap;
-    //var bdiv_tmp = (src_div_cap == dst_div_cap) ? src_div_cap : band_div;
     $('#bandwidth').spinner({
         min: 100,
-        max: 1000,
+        max: 10000,
         step: 100
     }).spinner("enable").disabled(false).trigger('click');
     $("#bandwidth").trigger("change");
