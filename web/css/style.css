@@ -890,7 +890,7 @@ div#bandwidth_bar_text{
     top: 32%;
     z-index: 2;
     width: 120px;
-    margin-left: -40px;
+    margin-left: -42px;
 }
 
 #reservation-view-bandwidth-bar {
@@ -1090,11 +1090,11 @@ table.reservation-marker-type {
 #bandwidth_un{
     position: absolute;
     bottom: 4px;
-    left: 60px;
+    left: 66px;
 }
 
 #bandwidth{
-    width:64px;
+    width:66px;
     border: 0;
     padding-left: 3px;
     padding-right: 2px;
