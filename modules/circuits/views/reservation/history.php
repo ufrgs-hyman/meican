@@ -80,7 +80,9 @@
 					'label' => Yii::t('circuits', 'Requester'),
 					'value' => function($res){
 	        			$user_id = $res->request_user_id;
-	        			return User::findOne(['id' => $user_id])->name;
+	        			$user = User::findOne(['id' => $user_id]);
+	        			if($user)return $user->name;
+	        			return null;
 	        		},
 					'filter' => Html::activeDropDownList($searchModel, 'request_user',
 						ArrayHelper::map(
