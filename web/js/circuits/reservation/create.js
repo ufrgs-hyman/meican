@@ -564,7 +564,7 @@ function fillVlanSelect(endPointType, portId, vlan) {
     			    }
 
                     for (var i = 0; i < ranges.length; i++) {
-                        var interval = response.split("-");
+                        var interval = ranges[i].split("-");
                         var low = parseInt(interval[0]);
                         var high = low;
                         if (interval.length > 1) {
