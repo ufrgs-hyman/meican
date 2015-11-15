@@ -569,11 +569,13 @@ function fillVlanSelect(endPointType, portId, vlan) {
                         var high = low;
                         if (interval.length > 1) {
                             high = parseInt(interval[1]);
+                            for (var j = low; j < high+1; j++) {
+	                        $("#"+ endPointType + "-vlan").append('<option value="' + j + '">' + j + '</option>');
+	                    }
+                        } else {
+                            $("#"+ endPointType + "-vlan").append('<option value="' + low + '">' + low + '</option>');
                         }
                         
-                        for (var j = low; j < high+1; j++) {
-                            $("#"+ endPointType + "-vlan").append('<option value="' + j + '">' + j + '</option>');
-                        }
                         if (vlan != null && vlan != "") {
                             $("#"+ endPointType + "-vlan").val(vlan);
                         }
