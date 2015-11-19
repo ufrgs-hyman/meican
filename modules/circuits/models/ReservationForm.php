@@ -31,6 +31,7 @@ class ReservationForm extends Model {
 	public $finish_date;
 	public $bandwidth;
 	public $waypoints;
+	public $pro_enabled;
 	
 	//reservation recurrence
 	public $rec_enabled;

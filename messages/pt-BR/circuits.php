@@ -283,5 +283,7 @@ return array(
 		'Terrain' => 'Terreno',
 		'Satellite' => 'Satélite',
 		'Hybrid' => 'Híbrido',
+		
+		'Protected' => 'Protegido',
 );
 ?>
