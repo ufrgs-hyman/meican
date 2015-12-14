@@ -2,14 +2,16 @@
 use yii\helpers\Html;
 use app\assets\MeicanAsset;
 use yii\helpers\Url;
+use app\components\AnalyticsWidget;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 MeicanAsset::register($this);
+
 ?>
-<?php $this->beginPage() ?>
 <!doctype html>
+<?php $this->beginPage() ?>
 <html>
     <head>
         <meta charset="utf-8"/>
@@ -25,9 +27,7 @@ MeicanAsset::register($this);
     <?php $this->head() ?>
 </head>
 <body>
-
 <?php $this->beginBody() ?>
-    <body>
         <div class="fade-overlay" id="MainOverlay"> </div>
         <div id="left-panel">
             <div id="logo">
@@ -45,7 +45,7 @@ MeicanAsset::register($this);
         		<?= $this->render('infoBox'); ?>
         	</div>
             <div id="workspace">
-				<div id="map-canvas" style="width:100%; height:100%; float:left; overflow:hidden; display:none;"></div>
+				<div id="map-canvas" style="width:100%; height:100%; float:left; overflow:hidden; display:none;"></div>                    
                 <div id="main">
                 	<?php
                 		//Messages to inform user actions
@@ -88,17 +88,8 @@ MeicanAsset::register($this);
 
 <?php $this->endBody() ?>
 </body>
-<?php if (Yii::$app->params['google.analytics.enabled']): ?>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', '<?= Yii::$app->params['google.analytics.key'];?>', 'auto');
-  ga('send', 'pageview');
+<?= AnalyticsWidget::build(); ?>
 
-</script>
-<?php endif; ?>
 </html>
 <?php $this->endPage() ?>
