@@ -64,31 +64,29 @@ $form=ActiveForm::begin(array(
 		<h4>
 		<font color="#3a5879">
 			<div class="form input">
-			        <?= $form->field($user, 'language')->dropDownList(
+			    <?= $form->field($user, 'language')->dropDownList(
               		array('en-US' => Yii::t('aaa', 'English'), 'pt-BR' => Yii::t('aaa', 'Portuguese')));
               	?>
 			</div>
 			
 			<div class="form input">
-			        <?= $form->field($user, 'dateFormat', [
-					    'inputOptions' => [
-					        'disabled' => true,
-					    ],
-					])->dropDownList(
-			        		array('America/Sao Paulo' => 'America/Sao Paulo'))->label(Yii::t('aaa', 'Time Zone'));
+		        <?php 	
+		        	$zones = DateTimeZone::listIdentifiers();
+		        	foreach ($zones as &$zone) {
+		        		$zone = str_replace("_", " ", $zone);
+		        	}
+
+		        	echo $form->field($user, 'timeZone')->dropDownList(array_combine(
+			        	DateTimeZone::listIdentifiers(),$zones))->label(Yii::t('aaa', 'Time Zone'));
               	?>                	
 			</div>
 			
 			<div class="form input">
-			        <?= $form->field($user, 'dateFormat', [
-					    'inputOptions' => [
-					        'disabled' => true,
-					    ],
-					])->dropDownList(
+			        <?= $form->field($user, 'dateFormat')->dropDownList(
 			        		array(
-							'dd/mm/yyyy' => Yii::t('aaa', 'dd/mm/yyyy'), 
-							'mm/dd/yyyy' => Yii::t('aaa', 'mm/dd/yyyy'), 
-							'yyyy/mm/dd' => Yii::t('aaa', 'yyyy/mm/dd')));
+							'dd/MM/yyyy HH:mm' => Yii::t('aaa', 'dd/mm/yyyy'), 
+							'MM/dd/yyyy HH:mm' => Yii::t('aaa', 'mm/dd/yyyy'), 
+							'yyyy/MM/dd HH:mm' => Yii::t('aaa', 'yyyy/mm/dd')));
               	?>              	
 			</div>
 		</font> 

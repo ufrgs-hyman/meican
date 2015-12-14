@@ -76,10 +76,6 @@ $config = [
 	        'class' => 'yii\rbac\DbManager',
 	        'defaultRoles' => ['guest'],
         ],
-        'formatter' => [
-	        'timeZone' => 'America/Sao_Paulo',
-	        'datetimeFormat' => 'dd/MM/yyyy HH:mm',
-        ],
         'i18n' => [
         	'translations' => [
 	        	'aaa*' => [

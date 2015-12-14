@@ -19,12 +19,13 @@ class AccountForm extends Model {
 	public $name;
 	public $language;
 	public $dateFormat;
+	public $timeZone;
 
 	/**
 	 */
 	public function rules()	{
 		return [
-			[['name', 'language', 'email'], 'required'],
+			[['name', 'language', 'email', 'dateFormat', 'timeZone'], 'required'],
 			['newPass', 'compare', 'compareAttribute'=> 'newPassConfirm'],
 			[['isChangedPass','currentPass','newPass', 'newPassConfirm'], 'validatePass'],
 			[['login'], 'safe']
@@ -43,6 +44,7 @@ class AccountForm extends Model {
 			'name' => Yii::t('aaa', 'Name'),
 			'email' => Yii::t('aaa', 'Email'),
 			'dateFormat' => Yii::t('aaa', 'Date Format'),
+			'timeZone' => Yii::t('aaa', 'Time Zone'),
 		];
 	}
 	
@@ -53,6 +55,7 @@ class AccountForm extends Model {
 		$this->email = $sets->email;
 		$this->language = $sets->language;
 		$this->dateFormat = $sets->date_format;
+		$this->timeZone = $sets->time_zone;
 	}
 	
 	public function validatePass($attr, $params) {
@@ -84,13 +87,12 @@ class AccountForm extends Model {
 	
 	public function updateSettings($settings) {
 		$settings->language = $this->language;
-		$cookies = Yii::$app->response->cookies;
-		$cookies->add(new \yii\web\Cookie([
-		    'name' => 'language',
-		    'value' => $this->language,
-		]));
+		Yii::$app->session["language"] = $this->language;
+		Yii::$app->session["date.format"] = $this->dateFormat;
+		Yii::$app->session["time.zone"] = $this->timeZone;
 		
-		//$settings->date_format = $this->dateFormat;
+		$settings->time_zone = $this->timeZone;
+		$settings->date_format = $this->dateFormat;
 		$settings->name = $this->name;
 		$settings->email = $this->email;
 		

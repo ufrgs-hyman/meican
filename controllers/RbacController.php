@@ -43,10 +43,10 @@ abstract class RbacController extends Controller {
     
 	public function init() {
         parent::init();
-        
-		$cookies = Yii::$app->request->cookies;
 		
-		Yii::$app->language = $cookies->getValue('language', 'en-US');
+		Yii::$app->language = Yii::$app->session->get('language', 'en-US');
+        Yii::$app->formatter->datetimeFormat = Yii::$app->session->get('date.format', 'dd/MM/yyyy HH:mm');
+        Yii::$app->formatter->timeZone = Yii::$app->session->get('time.zone', 'America/Sao_Paulo');
     } 
     
     static function asyncActionBegin() {

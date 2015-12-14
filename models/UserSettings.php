@@ -10,9 +10,11 @@ use Yii;
  * @property integer $id
  * @property string $language
  * @property string $date_format
+ * @property string $time_zone
  * @property integer $user_id
  * @property string $name
  * @property string $email
+ * @property string $topo_viewer
  *
  * @property User $user
  */
@@ -32,9 +34,9 @@ class UserSettings extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['language', 'date_format', 'name','email'], 'required'],
+            [['language','name','email'], 'required'],
             [['language'], 'string'],
-            [['date_format'], 'string', 'max' => 10],
+            [['date_format', 'time_zone', 'topo_viewer'], 'string', 'max' => 40],
             [['name'], 'string', 'max' => 100],
             [['email'], 'string', 'max' => 60],
         	[['email'], 'email'],
@@ -50,6 +52,7 @@ class UserSettings extends \yii\db\ActiveRecord
             'id' => 'ID',
             'language' => 'Language',
             'date_format' => 'Date Format',
+            'time_zone' => 'Time Zone',
             'name' => 'Name',
             'email' => 'E-mail',
         ];
