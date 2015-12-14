@@ -9,6 +9,9 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ * @property integer $graph_x
+ * @property integer $graph_y
+ * @property string $color
  * @property string $default_policy
  *
  * @property Device[] $devices
@@ -34,9 +37,11 @@ class Domain extends \yii\db\ActiveRecord {
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'color'], 'required'],
             [['default_policy'], 'string'],
             [['name'], 'string', 'max' => 60],
+            [['color'], 'string', 'max' => 10],
+            [['graph_x', 'graph_y'], 'integer'],
             [['name'], 'unique']
         ];
     }
@@ -49,6 +54,7 @@ class Domain extends \yii\db\ActiveRecord {
         return [
             'id' => 'ID',
             'name' => Yii::t('topology', 'Name'),
+            'color' => Yii::t('topology', 'Color'),
             'default_policy' => Yii::t('topology', 'Default Policy'),
         ];
     }
@@ -103,7 +109,6 @@ class Domain extends \yii\db\ActiveRecord {
     public function getUserDomainsRoles()
     {
     	return UserDomainRole::find()->where(['domain' => $this->name])->orWhere(['domain' => null]);
-    	//return $this->hasMany(UserDomainRole::className(), ['domain_id' => 'id']);
     }
     
     public function getBiPorts(){

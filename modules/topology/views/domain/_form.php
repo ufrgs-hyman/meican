@@ -3,6 +3,9 @@
 	use yii\helpers\Html;
 	use yii\helpers\Url;
 	use yii\helpers\ArrayHelper;
+	use app\modules\topology\assets\domain\FormAsset;
+
+	FormAsset::register($this);
 ?>
 
 <?php $form= ActiveForm::begin([
@@ -23,6 +26,11 @@
 		<?php echo $form->field($domain,'default_policy')->dropDownList($domain->getPolicyOptions());
 			if(Yii::$app->language == 'pt-BR') echo '<label style="padding-left: 5px" class="form-group">'.Yii::t("topology", "Overwritten by Workflows").'</label>';
 			else echo '<label class="form-group">'.Yii::t("topology", "Overwritten by Workflows").'</label>'; ?>
+	</div>
+
+	<div class="form input">
+		<?= $form->field($domain,'color')->hiddenInput(); ?>
+		<input type='text' id="color" hidden>
 	</div>
 	
 	</h4>

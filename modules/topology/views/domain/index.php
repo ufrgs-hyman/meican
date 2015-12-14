@@ -6,9 +6,9 @@
 	use yii\i18n\Formatter;
 	use yii\widgets\ActiveForm;
 	
-	use app\modules\topology\assets\DomainAsset;
+	use app\modules\topology\assets\domain\IndexAsset;
 	
-	DomainAsset::register($this);
+	IndexAsset::register($this);
 ?>
 
 <h1><?= Yii::t('topology', 'Domains'); ?></h1>
