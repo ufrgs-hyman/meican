@@ -12,7 +12,6 @@ var meicanMap;
 var sourceMarker;
 var destinMarker;
 var wayPoints = [];
-var domainsList;
 var markerCluster;
 var circuit;
 var devicesLoaded = false;
@@ -336,7 +335,7 @@ function addWayPoint(marker) {
     }
 	
 	$("#waypoints_order").append("<li class='ui-state-default opener' id='way" + 
-    		 marker.id + "'>" + meicanMap.getDomainName(marker.domainId) + " (" + tt("click to fill waypoint") + ")" + 
+    		 marker.id + "'>" + meicanMap.getDomain(marker.domainId).name + " (" + tt("click to fill waypoint") + ")" + 
              '<input value="' + marker.domainId + '" type="text" class="domain-id" hidden></input>' + 
              inputData + 
              '<input name="ReservationForm[waypoints][port][]" type="text" class="port-id" hidden></input>' + 
@@ -393,10 +392,6 @@ function deleteWayPoint(wayObject) {
 
     $("#waypoints-size").text(wayPoints.length);
 	
-	//if (wayPoints.length < 1) {
-	//	$("#reservation-waypoints").hide();
-	//}
-
     if (marker.circuitPoints == 0) {
         marker.setMap(null);
         markerCluster.addMarker(marker);
@@ -419,10 +414,6 @@ function deleteWayPoints() {
 		marker = wayPoints.pop();
 	}
 	
-	//if (wayPoints.length < 1) {
-	//	$("#reservation-waypoints").hide();
-	//}
-
     $("#waypoints-size").text(wayPoints.length);
 	
 	drawCircuit();
@@ -736,6 +727,23 @@ function disableTabSlide() {
 
 function initialize() {
     meicanMap = new MeicanMap;
+    $.ajax({
+        url: baseUrl+'/topology/domain/get-all',
+        dataType: 'json',
+        data: {
+            cols: JSON.stringify(['id','name','color']),
+        },
+        success: function(response){
+            meicanMap.setDomains(response);
+            initAll();
+        },
+        error: function (request, status, error) {
+            alert(error);
+        }
+    });
+}
+
+function initAll() {
     meicanMap.buildMap('map-canvas');
 
     meicanMap.buildSearchBox("search-row", "search-box", 'search-button', function(marker) {
@@ -756,52 +764,52 @@ function initialize() {
         enableTabSlide();
     });
 
-	var markerClustererOptions = {
-			gridSize: 10, 
-			maxZoom: 10,
-			ignoreHidden: true
-		};
-	
-	markerCluster = new MarkerClusterer(
-			meicanMap.getMap(), 
-			null, 
-			markerClustererOptions
-	);
-	
-	google.maps.event.addListener(meicanMap.getMap(), 'click', function() {
-		meicanMap.closeWindows();
+    var markerClustererOptions = {
+            gridSize: 10, 
+            maxZoom: 10,
+            ignoreHidden: true
+        };
+    
+    markerCluster = new MarkerClusterer(
+            meicanMap.getMap(), 
+            null, 
+            markerClustererOptions
+    );
+    
+    google.maps.event.addListener(meicanMap.getMap(), 'click', function() {
+        meicanMap.closeWindows();
         $("#src-domain").focus();
 
         closeTab();
-	});
+    });
 
-	initSelect("src");
-	initSelect("dst");
+    initSelect("src");
+    initSelect("dst");
     initWaypointSelect();
-	
-	$.ajax({
-		url: baseUrl+'/topology/network/get-all-parent-location',
-		dataType: 'json',
+    
+    $.ajax({
+        url: baseUrl+'/topology/network/get-all',
+        dataType: 'json',
         data: {
             cols: JSON.stringify(['id','name','latitude','longitude','domain_id']),
         },
-		success: function(response){
-			for(var index = 0; index < response.length; index++){
-				var network = response[index];
-				addNetworkMarker(network);
-			}
-			
-			markerCluster.addMarkers(meicanMap.getMarkers());
-			
-			setMarkerType("dev");
-		},
-		error: function (request, status, error) {
-		    alert(request + error + status);
-		}
-	});
-	
-	enableWayPointsSortable();
-	initEndPointButtons("src");
+        success: function(response){
+            for(var index = 0; index < response.length; index++){
+                var network = response[index];
+                addNetworkMarker(network);
+            }
+            
+            markerCluster.addMarkers(meicanMap.getMarkers());
+            
+            setMarkerType("dev");
+        },
+        error: function (request, status, error) {
+            alert(request + error + status);
+        }
+    });
+    
+    enableWayPointsSortable();
+    initEndPointButtons("src");
     initEndPointButtons('dst');
 }
 
@@ -822,7 +830,7 @@ function addNetworkMarker(network) {
         circuitMode: 'none',
         id: network.id,
         domainId: network.domain_id,
-        name: network.name
+        name: network.name,
     });
     
     meicanMap.addMarker(marker);

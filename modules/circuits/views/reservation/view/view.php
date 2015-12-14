@@ -12,7 +12,23 @@
 
 <h1 style="clear: none; float: left; z-index: 999999; position: absolute;">
 	<data id="res-id" hidden><?= $reservation->id; ?></data>
-	<div class="reservation-name"><?= $reservation->name; ?></div>
+	<select id="viewer-type-select" class="select-menu" style="width: 80px;" hidden>
+        <optgroup label="<?= Yii::t("topology", "Map"); ?>">
+            <option value="m-s"><?= Yii::t("topology", "Map"); ?></option>
+            <option value="m-c"><?= Yii::t("topology", "Clean"); ?></option>
+            <option value="m-t"><?= Yii::t("topology", "Terrain"); ?></option>
+            <option value="m-s"><?= Yii::t("topology", "Satellite"); ?></option>
+            <option value="m-h"><?= Yii::t("topology", "Hybrid"); ?></option>
+        </optgroup>
+        <optgroup label="<?= Yii::t("topology", "Graph"); ?>">
+            <option value="g-s"><?= Yii::t("topology", "Graph"); ?></option>
+        </optgroup>
+    </select>
+    <select id="node-type-select" class="select-menu" style="width: 95px;" hidden>
+            <option value="dev"><?= Yii::t("topology", "Devices"); ?></option>
+            <option value="port"><?= Yii::t("topology", "Ports (only graph)"); ?></option>
+    </select>
+    </div>
 </h1>
 
 <div id="subtab-points" class="tab_subcontent">

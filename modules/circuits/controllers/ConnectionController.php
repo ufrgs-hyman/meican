@@ -16,7 +16,7 @@ use app\controllers\RbacController;
 
 class ConnectionController extends RbacController {
 	
-	public function actionGetOrderedPaths($id) {
+	public function actionGetOrderedPathsOld($id) {
 		$paths = ConnectionPath::find()->where(['conn_id'=>$id])->orderBy(['path_order'=> "SORT_ASC"])->all();
 		 
 		$data = [];
@@ -33,6 +33,27 @@ class ConnectionController extends RbacController {
 		Yii::trace($data);
 		return $data;
 	}
+
+    public function actionGetOrderedPaths($id) {
+        $paths = ConnectionPath::find()->where(['conn_id'=>$id])->orderBy(['path_order'=> "SORT_ASC"])->all();
+         
+        $data = [];
+         
+        foreach ($paths as $path) {
+            $port = $path->getPort()->select(['id','urn','device_id'])->one();
+            $data[] = [
+                'path_order' => $path->path_order, 
+                'device_id'=> $port ? $port->device_id : null,
+                'port_id' => $port ? $port->id : null,
+                'port_urn' => $port ? $port->urn : null,
+                'domain' => $path->domain
+            ];
+        }
+         
+        $data = json_encode($data);
+        Yii::trace($data);
+        return $data;
+    }
 
 	public function actionGetEndPoints($id) {
     	$conn = Connection::findOne($id);

@@ -139,9 +139,9 @@ return array(
 		'Add service' => 'Adicionar serviço',
 		'Show details and services of this provider'=>'Ver detalhes e serviços deste provedor',
 		'Set recurrence' => 'Definir recorrência',
-		
 		'Synchronizer instance {name} added successfully' => 'Instância de sincronização {name} adicionada com sucesso',
 		'Synchronizer instance {name} updated successfully' => 'Instância de sincronização {name} atualizada com sucesso',
 		'Synchronizer instance {name} deleted successfully' => 'Instância de sincronização {name} removida com sucesso',
+		'Graph' => 'Grafo',
 );
 ?>

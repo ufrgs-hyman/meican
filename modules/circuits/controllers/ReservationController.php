@@ -84,6 +84,8 @@ class ReservationController extends RbacController {
 		return "";
     }
     
+    //Verificar, pois a cada atualizacao da pagina ele vai verificar as autorizações, 
+    //isso está fora do contexto dessa função. Deveria ser feito por workflows.
     public function actionView($id) {
     	// Removido pois testa se é o usuário que solicitou ou se tem permissão para cancelar na origem OU destino
     	//self::can('reservation/delete');
@@ -135,12 +137,29 @@ class ReservationController extends RbacController {
     			'pagination' => [
 			        'pageSize' => 5,
 			    ]
-    			]);
+    	]);
     	
     	return $this->render('view/view',[
     			'reservation' => $reservation,
     			'connections' => $connections,
-    		]);
+    	]);
+    }
+
+    public function actionViewGraph($id) {
+        $reservation = Reservation::findOne($id);
+        
+        $connections = new ActiveDataProvider([
+                'query' => $reservation->getConnections(),
+                'sort' => false,
+                'pagination' => [
+                    'pageSize' => 5,
+                ]
+        ]);
+        
+        return $this->render('view/graph',[
+                'reservation' => $reservation,
+                'connections' => $connections,
+        ]);
     }
     
     public function actionStatus() {

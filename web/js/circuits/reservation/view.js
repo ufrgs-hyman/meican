@@ -1,6 +1,6 @@
+var markerCluster;
+
 $(document).ready(function() {
-	$('#map-canvas').show();
-	
 	prepareRefreshButton();
 	prepareCancelDialog();
 	
@@ -8,6 +8,9 @@ $(document).ready(function() {
     loadEndPointDetails(selectedConn);
 	selectedConnIsApproved = isAuthorizationReceived();
 });
+
+$("#viewer-type-select").selectmenu();
+$("#node-type-select").selectmenu();
 
 $(document).on('ready pjax:success', function() {
 	selectConn(selectedConn);
@@ -355,6 +358,18 @@ function drawPath(requiredMarkers, path, index, polyline){
 function initialize() {
 	meicanMap = new MeicanMap;
     meicanMap.buildMap("map-canvas");
+
+    var markerClustererOptions = {
+            gridSize: 10, 
+            maxZoom: 10,
+            ignoreHidden: true
+        };
+    
+    markerCluster = new MarkerClusterer(
+            meicanMap.getMap(), 
+            null, 
+            markerClustererOptions
+    );
 	
 	drawReservation(selectedConn);
 	
@@ -467,7 +482,7 @@ function addWayPointMarker(devId) {
 			id: devId,
 		},
 		success: function(response) {
-			addMarker(response, "00FF00");
+			addMarker(response, "#00FF00");
 		}
 	});
 }
@@ -484,7 +499,7 @@ function addSourceMarker(devId) {
 			id: devId,
 		},
 		success: function(response) {
-			addMarker(response, "0000EE");
+			addMarker(response, "#0000EE");
 		}
 	});
 }
@@ -501,7 +516,7 @@ function addDestinMarker(devId) {
 			id: devId,
 		},
 		success: function(response) {
-			addMarker(response, "FF0000");
+			addMarker(response, "#FF0000");
 		}
 	});
 }
@@ -545,6 +560,7 @@ function addMarker(dev, color) {
 	}, color);
 	
 	meicanMap.addMarker(marker);
+    markerCluster.addMarker(marker);
 	
 	addMarkerListeners(marker);
 	
