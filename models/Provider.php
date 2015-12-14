@@ -98,11 +98,7 @@ class Provider extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getServices()
-    {
+    public function getServices() {
         return $this->hasMany(Service::className(), ['provider_id' => 'id']);
     }
 
@@ -124,5 +120,9 @@ class Provider extends \yii\db\ActiveRecord
 
     public function getDomainName() {
         return Domain::findOne($this->domain_id)->name;
+    }
+
+    public function getPeerings() {
+        return $this->hasMany(ProviderPeering::className(), ['provider_id' => 'id']);
     }
 }
