@@ -149,6 +149,10 @@ class Port extends \yii\db\ActiveRecord
         return $this->hasOne(Port::className(), ['id' => 'alias_id']);
     }
 
+    static function findOneArraySelect($id, $array) {
+        return self::find()->where(['id'=>$id])->asArray()->select($array)->one();
+    }
+
     static function findByUrn($urn) {
         return self::find()->where(['urn'=>$urn]);
     }

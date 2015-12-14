@@ -55,14 +55,10 @@ class LoginForm extends Model {
 		if ($result) {
 			Yii::$app->session["user.login"] = $user->login;
 			Yii::$app->session["user.name"] = $sets->name;
-			Yii::$app->language = $sets->language;
-			$cookies = Yii::$app->response->cookies;
-			$cookies->add(new \yii\web\Cookie([
-					'name' => 'language',
-					'value' => $sets->language,
-					]));
-			//Yii::$app->formatter->datetimeFormat = 'MM/dd/yyyy HH:mm';
-			//Yii::trace(Yii::$app->formatter->datetimeFormat, $sets->date_format);
+			Yii::$app->session["language"] = $sets->language;
+			Yii::$app->session["date.format"] = $sets->date_format;
+			Yii::$app->session["time.zone"] = $sets->time_zone;
+			Yii::$app->session["topo.viewer"] = $sets->topo_viewer;
 		}
 		return $result;
 	}

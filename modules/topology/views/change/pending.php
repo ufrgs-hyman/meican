@@ -101,11 +101,13 @@
                     'headerOptions'=>['style'=>'width: 45%;'],
                 ],
                 [
-                    'header' => '',
+                    'header' => 'Status',
                     'filter' => false,
                     'format' => 'raw',
                     'value' => function($model) {
-                        return $model->error ? '<label class="error" hidden>Error: '.$model->error."</label>" : "";
+                        if(isset($model->error)) {
+                            return '<a href="#" title="'.$model->error.'">Failed</a>';
+                        } else return "";
                     },
                     'headerOptions'=>['style'=>'width: 5%;'],
                 ],

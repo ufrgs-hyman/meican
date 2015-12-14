@@ -187,10 +187,19 @@ html, body {
     text-align: center;
 }
 
+#map-canvas {
+    background-color: #dddddd;
+}
+
 #markerMap{
 	display: block;
 	min-width: 150px;
 	overflow: hidden;
+}
+
+.marker-icon-svg {
+    height: 0px;
+    width: 0px;
 }
 
 #flash_box .success {

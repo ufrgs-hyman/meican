@@ -14,11 +14,11 @@ use app\modules\topology\models\TopologyNotification;
  * This is the model class for table "{{%topo_synchronizer}}".
  *
  * @property integer $id
+ * @property string $name
+ * @property string $protocol
  * @property string $type
  * @property string $provider_nsa
- * @property integer $cron_id
  * @property string $subscription_id
- * @property string $name
  * @property string $url
  */
 class TopologySynchronizer extends \yii\db\ActiveRecord
@@ -26,6 +26,11 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
     public $parser;
     public $syncEvent;
     public $detectedChanges = false;
+
+    const PROTOCOL_HTTP = "HTTP";
+    const PROTOCOL_NSI_DS = "NSI_DS_1_0";
+    const DESC_TYPE_NSI = "NSI_TD_2_0_NSAD_1_0";
+    const DESC_TYPE_NMWG = "NMWG_TD_3_0";
 
     /**
      * @inheritdoc
@@ -41,7 +46,7 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'auto_apply', 'name', 'url'], 'required'],
+            [['type', 'auto_apply', 'name', 'url', 'protocol'], 'required'],
             [['provider_nsa'], 'unique', 'message'=> 'Only one Discovery Service is allowed for each NSI Provider. The NSA ID "{value}" has already in use.'],
             [['type'], 'string'],
             [['auto_apply'], 'boolean'],
@@ -57,9 +62,9 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('topology', 'ID'),
-            'auto_apply' => Yii::t('topology', 'Auto apply changes'),
+            'auto_apply' => Yii::t('topology', 'Apply changes'),
             'type' => Yii::t('topology', 'Type'),
-            'subscription_id' => Yii::t('topology', 'Get notifications'),
+            'subscription_id' => Yii::t('topology', 'Autosync by notification'),
             'name' => Yii::t('topology', 'Name'),
             'url' => Yii::t('topology', 'URL'),
             'provider_nsa' => Yii::t('topology', 'Provider NSA ID'),
@@ -87,22 +92,33 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
         return $change;
     }
 
+    public function getProtocol() {
+        switch ($this->protocol) {
+            case self::PROTOCOL_NSI_DS:
+                return Yii::t('topology', 'NSI Discovery Service 1.0');
+            case self::PROTOCOL_HTTP:
+                return Yii::t('topology', 'HTTP');
+        }
+    }
+
+    static function getProtocols() {
+        return [
+            ['id'=> self::PROTOCOL_NSI_DS, 'name'=> Yii::t('topology', 'NSI Discovery Service 1.0')],
+            ['id'=> self::PROTOCOL_HTTP, 'name'=> Yii::t('topology', 'HTTP')],
+        ];
+    }
+
     public function getType() {
         switch ($this->type) {
-            case Service::TYPE_NSI_DS_1_0: return Service::getTypeLabels()[Service::TYPE_NSI_DS_1_0];
-            case Service::TYPE_NSI_TD_2_0: return Service::getTypeLabels()[Service::TYPE_NSI_TD_2_0];
-            case Service::TYPE_NMWG_TD_1_0: return Service::getTypeLabels()[Service::TYPE_NMWG_TD_1_0];
-            //case Service::TYPE_PERFSONAR_TS_1_0: return Service::getTypeLabels()[Service::TYPE_PERFSONAR_TS_1_0];
-            default: return Yii::t('topology', 'Unknown');
+            case self::DESC_TYPE_NSI: return Yii::t('topology', 'NSI Topology 2.0');
+            case self::DESC_TYPE_NMWG: return Yii::t('topology', 'NMWG Topology 3.0');
         }
     }
 
     static function getTypes() {
         return [
-            ['id'=> Service::TYPE_NSI_TD_2_0, 'name'=> Service::getTypeLabels()[Service::TYPE_NSI_TD_2_0]],
-            ['id'=> Service::TYPE_NSI_DS_1_0, 'name'=> Service::getTypeLabels()[Service::TYPE_NSI_DS_1_0]],
-            ['id'=> Service::TYPE_NMWG_TD_1_0, 'name'=> Service::getTypeLabels()[Service::TYPE_NMWG_TD_1_0]],
-            //['id'=> Service::TYPE_PERFSONAR_TS_1_0, 'name'=> Service::getTypeLabels()[Service::TYPE_PERFSONAR_TS_1_0]],
+            ['id'=> self::DESC_TYPE_NSI, 'name'=> Yii::t('topology', 'NSI Topology 2.0')],
+            ['id'=> self::DESC_TYPE_NMWG, 'name'=> Yii::t('topology', 'NMWG Topology 3.0')],
         ];
     }
 
@@ -121,8 +137,7 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
         if (!$this->parser) {
 
             switch ($this->type) {
-                case Service::TYPE_NSI_DS_1_0: 
-                case Service::TYPE_NSI_TD_2_0: 
+                case self::DESC_TYPE_NSI: 
                     $this->parser = new NSIParser; 
                     $this->parser->loadFile($this->url);
                     if (!$this->parser->isTD()) {
@@ -134,8 +149,7 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
                     //Yii::trace($topo->getData());
                     break;
 
-                case Service::TYPE_NMWG_TD_1_0: 
-                case Service::TYPE_PERFSONAR_TS_1_0: 
+                case self::DESC_TYPE_NMWG: 
                     $this->parser = new NMWGParser;
                     $this->parser->loadFile($this->url);
                     if (!$this->parser->isTD()) {
@@ -212,10 +226,39 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
                             'nsa'=>$nsaId]);
 
                         $change->save();
-                    }
+                    }                    
 
-                    if ($provider) $oldServices = $provider->getServices();
+                    if ($provider) {
+                        $oldPeerings = $provider->getPeerings();
+                        $oldServices = $provider->getServices();
+                    }
+                    $newPeerings = [];
                     $newServices = [];
+
+                    if(isset($nsaData['peerings'])) {
+                        foreach ($nsaData['peerings'] as $dstNsaId) {
+                            if ($provider) {
+                                $dstProv = Provider::findOneByNsa($dstNsaId);
+                                if ($dstProv) {
+                                    $peering = ProviderPeering::findOne(['src_id'=> $provider->id, 'dst_id'=>$dstProv->id]);
+                                    if ($peering) {
+                                        //$newPeerings[] = $peering->id;
+                                        continue;
+                                    }
+                                }
+                            } 
+
+                            $change = $this->buildChange();
+                            $change->type = TopologyChange::TYPE_CREATE;
+                            $change->domain = $domainName;
+                            $change->item_type = TopologyChange::ITEM_TYPE_PEERING;
+                            $change->data = json_encode([
+                                'srcNsaId'=>$nsaId,
+                                'dstNsaId'=>$dstNsaId]);
+
+                            $change->save();
+                        }
+                    }
 
                     foreach ($nsaData['services'] as $serviceUrl => $serviceType) {
                         $service = Service::findOneByUrl($serviceUrl);
@@ -464,6 +507,20 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
                             ]);
             
                             $change->save();
+                        } else {
+                            //update port
+                            if(isset($uniPortData["vlan"]) && $uniport->vlan_range != $uniPortData['vlan']) {
+                                $change = $this->buildChange();
+                                $change->type = TopologyChange::TYPE_UPDATE;
+                                $change->domain = $domainName;
+                                $change->item_type = TopologyChange::ITEM_TYPE_UNIPORT;
+                                $change->item_id = $uniport->id;
+
+                                $change->data = json_encode([
+                                    'vlan'=> $uniPortData["vlan"]
+                                ]);
+                                $change->save();
+                            }
                         }
 
                         if (isset($uniPortData['aliasUrn'])) {
@@ -483,6 +540,7 @@ class TopologySynchronizer extends \yii\db\ActiveRecord
 
                                 $change->save();
                             }
+
                         } elseif($uniport && $uniport->alias_id) {
                             $change = $this->buildChange();
                             $change->type = TopologyChange::TYPE_DELETE;

@@ -74,6 +74,7 @@ class TopologySyncEvent extends \yii\db\ActiveRecord
         
         $this->applyChangesByType(TopologyChange::ITEM_TYPE_DOMAIN);
         $this->applyChangesByType(TopologyChange::ITEM_TYPE_PROVIDER);
+        $this->applyChangesByType(TopologyChange::ITEM_TYPE_PEERING);
         $this->applyChangesByType(TopologyChange::ITEM_TYPE_SERVICE);
         $this->applyChangesByType(TopologyChange::ITEM_TYPE_NETWORK);
         $this->applyChangesByType(TopologyChange::ITEM_TYPE_DEVICE);

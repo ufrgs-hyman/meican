@@ -96,11 +96,24 @@ function drawCircuit(source, destin) {
 //////////// INICIALIZA MAPA /////////////////
 
 function initialize() {
-	meicanMap = new MeicanMap;
-    meicanMap.buildMap("map-canvas");
-    meicanMap.buildSearchBox("search-row", "search-box", 'search-button');
-    meicanMap.buildMapTypeBox("map-type-box", 'map-type-select');
-    meicanMap.buildMarkerTypeBox("marker-type-box", 'marker-type-select', setMarkerType);
+    $.ajax({
+        url: baseUrl+'/topology/domain/get-all',
+        dataType: 'json',
+        data: {
+            cols: JSON.stringify(['id','name','color'])
+        },
+        method: "GET",
+        success: function(response) {
+            meicanMap = new MeicanMap;
+            meicanMap.setDomains(response);
+            meicanMap.buildMap("map-canvas");
+            meicanMap.buildSearchBox("search-row", "search-box", 'search-button');
+            meicanMap.buildMapTypeBox("map-type-box", 'map-type-select');
+            meicanMap.buildMarkerTypeBox("marker-type-box", 'marker-type-select', setMarkerType);
+            loadNetworks();
+        }
+    });
+	
     /*meicanMap.getMap().controls[google.maps.ControlPosition.TOP_LEFT].push(
         document.getElementById("refresh-box"));*/
 
@@ -131,8 +144,6 @@ function initialize() {
             loadNetworks();
         } 
     });*/
-
-    loadNetworks();
 }
 
 function loadNetworks() {

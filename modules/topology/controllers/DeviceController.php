@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 
 use app\models\Device;
 use app\models\Port;
+use app\models\Domain;
 
 use app\modules\topology\models\DeviceSearch;
 
@@ -158,6 +159,20 @@ class DeviceController extends RbacController {
     	$temp = Json::encode($data);
     	Yii::trace($temp);
     	return $temp;
+    }
+
+    public function actionGetAllColor($cols=null) {
+        $query = Device::find()->orderBy(['name'=>'SORT ASC'])->asArray();
+
+        $cols ? $data = $query->select(array_merge(json_decode($cols), ['domain_id']))->all() : $data = $query->all();
+
+        foreach ($data as &$dev) {
+            $dev['color'] = Domain::find()->where(['id'=>$dev['domain_id']])->select(['color'])->asArray()->one()['color'];
+        }
+        
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
     }
     
     public function actionGetParentLocation($id) {

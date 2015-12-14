@@ -32,19 +32,13 @@ class SyncForm extends TopologySynchronizer {
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(),[
-            'freq_enabled' => Yii::t('topology', 'Recurrence sync'),
-            'subscribe_enabled' => Yii::t('topology', 'Get notifications')
+            'freq_enabled' => Yii::t('topology', 'Autosync by recurrence'),
+            'subscribe_enabled' => Yii::t('topology', 'Autosync by notification')
         ]);
     }
 
     public function validateSubscribe($att, $params) {
-        switch ($this->type) {
-            case Service::TYPE_NSI_TD_2_0: 
-            case Service::TYPE_NMWG_TD_1_0: 
-            case Service::TYPE_PERFSONAR_TS_1_0: 
-                $this->subscription_id = null;
-                $this->provider_nsa = null;
-                break;
+        switch ($this->protocol) {
             case Service::TYPE_NSI_DS_1_0: 
                 if ($this->subscribe_enabled && $this->subscription_id == null) {
                     $this->subscription_id = DiscoveryClient::subscribe($this->url);
@@ -52,31 +46,40 @@ class SyncForm extends TopologySynchronizer {
                     DiscoveryClient::unsubscribe($this->url, $this->subscription_id);
                     $this->subscription_id = null;
                 }
+                break;
+            default: 
+                $this->subscription_id = null;
+                $this->provider_nsa = null;
+                break;
         }
         return true;
     }
 
     public function validateUrl($att, $params) {
         switch ($this->type) {
-            case Service::TYPE_NSI_DS_1_0: 
+            case TopologySynchronizer::DESC_TYPE_NSI:
                 $parser = new NSIParser;  
                 $parser->loadFile($this->url);
-                if (!$parser->isDS()) {
-                    $this->addError('', 'The inserted URL does not contain a valid service. Please try again.');
-                    return false;
+                switch ($this->protocol) {
+                    case TopologySynchronizer::PROTOCOL_HTTP:
+                        if (!$parser->isTD()) {
+                            $this->addError('', 'The inserted URL does not contain a valid service. Please try again.');
+                            return false;
+                        }
+                        return true;
+                        break;
+                    case TopologySynchronizer::PROTOCOL_NSI_DS:
+                        if (!$parser->isDS()) {
+                            $this->addError('', 'The inserted URL does not contain a valid service. Please try again.');
+                            return false;
+                        }
+                        $parser->parseLocalProvider();
+                        $this->provider_nsa = $parser->getData()['local']['nsa'];
+                        return true;
                 }
-                $parser->parseLocalProvider();
-                $this->provider_nsa = $parser->getData()['local']['nsa'];
-                return true;
-            case Service::TYPE_NSI_TD_2_0: 
-                $parser = new NSIParser;  
-                $parser->loadFile($this->url);
-                if (!$parser->isTD()) {
-                    $this->addError('', 'The inserted URL does not contain a valid service. Please try again.');
-                    return false;
-                }
-                return true;
-            case Service::TYPE_NMWG_TD_1_0: 
+                break;
+                
+            case TopologySynchronizer::DESC_TYPE_NMWG: 
                 $parser = new NMWGParser;  
                 $parser->loadFile($this->url);
                 if (!$parser->isTD()) {
@@ -84,9 +87,6 @@ class SyncForm extends TopologySynchronizer {
                     return false;
                 }
                 return true;
-            case Service::TYPE_PERFSONAR_TS_1_0: 
-                $this->addError('', 'The inserted URL does not contain a valid service. Please try again.');
-                return false;
         }
     }
 

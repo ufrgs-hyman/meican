@@ -27,11 +27,11 @@ $('#cron-open-link').click(function() {
         });
 });
 
-$("#syncform-type").on("change", function() {
+$("#syncform-protocol").on("change", function() {
     setVisibleDSOptions();
 });
 
 function setVisibleDSOptions() {
-    $("#subscribed-row").attr("disabled", $("#syncform-type").val() != 'NSI_DS_1_0');
-    $("#syncform-subscribe_enabled").attr("disabled", $("#syncform-type").val() != 'NSI_DS_1_0');
+    $("#subscribed-row").attr("disabled", $("#syncform-protocol").val() != 'NSI_DS_1_0');
+    $("#syncform-subscribe_enabled").attr("disabled", $("#syncform-protocol").val() != 'NSI_DS_1_0');
 }

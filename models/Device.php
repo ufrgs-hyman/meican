@@ -21,6 +21,8 @@ use Yii;
  *
  * @property double $latitude
  * @property double $longitude
+ * @property integer $graph_x
+ * @property integer $graph_y
  * @property string $node
  * @property integer $domain_id
  *
@@ -45,7 +47,7 @@ class Device extends \yii\db\ActiveRecord
         return [
             [['latitude', 'longitude'], 'number'],
             [['domain_id'], 'required'],
-            [['domain_id'], 'integer'],
+            [['domain_id','graph_x','graph_y'], 'integer'],
             [['name', 'trademark', 'model', 'node'], 'string', 'max' => 50],
             [['ip'], 'string', 'max' => 16],
             [['address'], 'string', 'max' => 200],
@@ -86,6 +88,11 @@ class Device extends \yii\db\ActiveRecord
     public function getPorts()
     {
         return $this->hasMany(Port::className(), ['device_id' => 'id']);
+    }
+
+    //findOne com asArray e select integrados
+    static function findOneArraySelect($id, $array) {
+        return self::find()->where(['id'=>$id])->asArray()->select($array)->one();
     }
 
     static function findOneByDomainAndNode($domainName, $node) {

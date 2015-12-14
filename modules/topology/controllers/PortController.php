@@ -116,6 +116,8 @@ class PortController extends RbacController {
 			}
 		}
 	}
+
+	///REST
 	
 	public function actionGetDomainId(){
 		$portId = $_POST['portId'];
@@ -218,6 +220,16 @@ class PortController extends RbacController {
         Yii::trace($temp);
         return $temp;
     }
+
+    public function actionGetAllBidirectional($cols=null) {
+    	$query = Port::find()->where(['directionality'=> Port::DIR_BI])->asArray();
+        
+        $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
+
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
+    }
     
     public function actionGet($id, $cols=null) {
         $cols ? $port = Port::find()->where(
@@ -233,6 +245,20 @@ class PortController extends RbacController {
         $data = $port->vlan_range;
         if(!$data) $data = $port->getInboundPortVlanRange();
 
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
+    }
+
+    public function actionGetAllColor($cols=null) {
+        $query = Port::find()->orderBy(['name'=>'SORT ASC'])->asArray();
+
+        $cols ? $data = $query->select(array_merge(json_decode($cols), ['device_id']))->all() : $data = $query->all();
+
+        foreach ($data as &$port) {
+            $port['color'] = Domain::find()->where(['id'=>$dev['domain_id']])->select(['color'])->asArray()->one()['color'];
+        }
+        
         $temp = Json::encode($data);
         Yii::trace($temp);
         return $temp;

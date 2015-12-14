@@ -25,18 +25,17 @@
     </div>
 
     <div class="form input">
+       <?= $form->field($model,'protocol')->dropDownList(ArrayHelper::map(TopologySynchronizer::getProtocols(), 'id', 'name')); ?>
+    </div>
+
+    <div class="form input">
        <?= $form->field($model,'type')->dropDownList(ArrayHelper::map(TopologySynchronizer::getTypes(), 'id', 'name')); ?>
     </div>
 
     <div id="subscribed-row" class="form input" <?= ($model->type == Service::TYPE_NSI_DS_1_0) ? "" : "disabled" ?>>
         <?= $form->field($model,'subscribe_enabled')->dropDownList(ArrayHelper::map(
             [['id'=>false, 'name'=>Yii::t("topology", 'Disabled')],['id'=>true,'name'=>Yii::t("topology", 'Enabled')]], 'id', 'name'), 
-                ['disabled'=>($model->type == Service::TYPE_NSI_DS_1_0) ? false : true]); ?>
-    </div>
-
-    <div class="form input">
-        <?= $form->field($model,'auto_apply')->dropDownList(ArrayHelper::map(
-            [['id'=>false, 'name'=>Yii::t("topology", 'Disabled')],['id'=>true,'name'=>Yii::t("topology", 'Enabled')]], 'id', 'name')); ?>
+                ['disabled'=>($model->protocol == Service::TYPE_NSI_DS_1_0) ? false : true]); ?>
     </div>
 
     <div class="form input">
@@ -51,7 +50,12 @@
     </div>
 
     <div class="form input">
-        <?= $form->field($model,'url')->textInput(['size'=>80]); ?>
+        <?= $form->field($model,'auto_apply')->dropDownList(ArrayHelper::map(
+            [['id'=>false, 'name'=>Yii::t("topology", 'Manually')],['id'=>true,'name'=>Yii::t("topology", 'Automatically')]], 'id', 'name')); ?>
+    </div>
+
+    <div class="form input">
+        <?= $form->field($model,'url')->textInput(['size'=>50]); ?>
     </div>
 
     <div class="form input">

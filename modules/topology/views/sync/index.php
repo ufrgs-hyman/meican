@@ -76,13 +76,19 @@
                 ],
                 "name",
                 [
+                    'attribute'=> 'protocol',
+                    'value' => function($model) {
+                        return $model->getProtocol();
+                    }
+                ],
+                [
                     'attribute'=> 'type',
                     'value' => function($model) {
                         return $model->getType();
                     }
                 ],
                 [
-                    'header' => Yii::t("topology", "Recurrence"),
+                    'header' => Yii::t("topology", "Autosync by recurrence"),
                     'value' => function ($model){
                         return $model->isAutoSyncEnabled() ? Yii::t("topology", "Enabled") : "";
                     },
@@ -96,7 +102,7 @@
                 [
                     'attribute'=> 'auto_apply',
                     'value' => function($model) {
-                        return $model->auto_apply ? Yii::t("topology", "Enabled") : "";
+                        return $model->auto_apply ? Yii::t("topology", "Automatically") : Yii::t("topology", "Manually");
                     }
                 ],
                 [

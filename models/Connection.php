@@ -229,15 +229,15 @@ class Connection extends \yii\db\ActiveRecord
     public function getStatus() {
     	switch($this->status) {
     		case self::STATUS_PENDING: 			return Yii::t("circuits", "Pending");
-			case self::STATUS_CREATED : 		return Yii::t("circuits", "Requesting path");
-			case self::STATUS_CONFIRMED : 		return Yii::t("circuits", "Path found");
+			case self::STATUS_CREATED : 		return Yii::t("circuits", "Checking resources");
+			case self::STATUS_CONFIRMED : 		return Yii::t("circuits", "Preparing resources");
 			case self::STATUS_SUBMITTED : 		return Yii::t("circuits", "Waiting authorization");
 			case self::STATUS_PROVISIONED : 	return Yii::t("circuits", "Provisioned");
 			case self::STATUS_CANCEL_REQ : 		return Yii::t("circuits", "Cancel requested");
 			case self::STATUS_CANCELLED : 		return Yii::t("circuits", "Cancelled");
-			case self::STATUS_FAILED_CREATE: 	return Yii::t("circuits", "Request rejected");
-			case self::STATUS_FAILED_CONFIRM : 	return Yii::t("circuits", "Path not found");
-			case self::STATUS_FAILED_SUBMIT : 	return Yii::t("circuits", "Confirm failed");
+			case self::STATUS_FAILED_CREATE: 	return Yii::t("circuits", "Rejected by provider");
+			case self::STATUS_FAILED_CONFIRM : 	return Yii::t("circuits", "Resources unavailable");
+			case self::STATUS_FAILED_SUBMIT : 	return Yii::t("circuits", "Preparing failed");
 			case self::STATUS_FAILED_PROVISION :return Yii::t("circuits", "Provision failed");
     	}
     }
