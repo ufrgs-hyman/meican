@@ -17,6 +17,7 @@ class NSIParser {
 			$this->xml = new \DOMDocument();
 			$this->xml->loadXML($input);
 			$this->xpath = new \DOMXpath($this->xml);
+			$this->checkEncoding();
 		} catch (\Exception $e) {
 			$this->error = true;
 		}
@@ -60,6 +61,49 @@ class NSIParser {
 		} elseif($this->isTD()) {
 			$this->parseNetworks($this->xml);
 			$this->parseProviders($this->xml);
+		}
+	}
+
+	function checkEncoding() {
+		$xmlns = "http://schemas.ogf.org/nsi/2014/02/discovery/types";
+		$tagName = "document";
+		foreach ($this->xml->getElementsByTagNameNS($xmlns, $tagName) 
+				as $docNode) {
+			$docTypeNode = $this->xpath->query(".//type", $docNode);
+			$docContentNode = $this->xpath->query(".//content", $docNode);
+
+	 		if($docContentNode->item(0)->getAttribute("contentType") == "application/x-gzip" && 
+	 				$docContentNode->item(0)->getAttribute('contentTransferEncoding') == "base64") {
+	 			$contentDOM = new \DOMDocument();
+				$contentDOM->loadXML(gzdecode(base64_decode($docContentNode->item(0)->nodeValue)));
+				switch ($docTypeNode->item(0)->nodeValue) {
+				 	case "vnd.ogf.nsi.topology.v2+xml":
+						$xmlns = "http://schemas.ogf.org/nml/2013/05/base#";
+						$tagName = "Topology";
+						foreach ($contentDOM->getElementsByTagNameNS($xmlns, $tagName)
+								as $netNode) {
+							$node = $this->xml->importNode($netNode, true);
+							$docContentNode->item(0)->nodeValue = "";
+							$docContentNode->item(0)->removeAttribute("contentType");
+							$docContentNode->item(0)->removeAttribute('contentTransferEncoding');
+							$docContentNode->item(0)->appendChild($node);
+						}
+				 		break;
+				 	case "vnd.ogf.nsi.nsa.v1+xml":
+				 		$xmlns = "http://schemas.ogf.org/nsi/2014/02/discovery/nsa";
+						$tagName = "nsa";
+						foreach ($contentDOM->getElementsByTagNameNS($xmlns, $tagName)
+								as $nsaNode) {
+							$node = $this->xml->importNode($nsaNode, true);
+							$docContentNode->item(0)->nodeValue = "";
+							$docContentNode->item(0)->removeAttribute("contentType");
+							$docContentNode->item(0)->removeAttribute('contentTransferEncoding');
+							$docContentNode->item(0)->appendChild($node);
+						}
+				 	default:
+				 		break;
+				}
+			}
 		}
 	}
 
@@ -208,37 +252,20 @@ class NSIParser {
 			if(in_array($docNode->getAttribute('id'), $this->docs)) continue;
 			$this->docs[] = $docNode->getAttribute('id');
 			$docTypeNode = $this->xpath->query(".//type", $docNode);
+			$docContentNode = $this->xpath->query(".//content", $docNode);
 
 			switch ($docTypeNode->item(0)->nodeValue) {
 			 	case "vnd.ogf.nsi.topology.v2+xml":
-			 		$docContentNode = $this->xpath->query(".//content", $docNode);
-			 		if($docContentNode->item(0)->getAttribute("contentType") == "application/x-gzip" && 
-			 			$docContentNode->item(0)->getAttribute('contentTransferEncoding') == "base64") {
-			 			$this->parseNetworksXML(gzdecode(base64_decode($docContentNode->item(0)->nodeValue)));
-			 		} else {
-			 			$this->parseNetworks($docNode);
-			 		}
+		 			$this->parseNetworks($docNode);
 			 		break;
 			 	case "vnd.ogf.nsi.nsa.v1+xml":
-			 		$docContentNode = $this->xpath->query(".//content", $docNode);
-			 		if($docContentNode->item(0)->getAttribute("contentType") == "application/x-gzip" && 
-			 			$docContentNode->item(0)->getAttribute('contentTransferEncoding') == "base64") {
-			 			$this->parseProvidersXML(gzdecode(base64_decode($docContentNode->item(0)->nodeValue)));
-			 		} else {
-			 			$this->parseProviders($docNode);
-			 		}
+		 			$this->parseProviders($docNode);
 			 	default:
 			 		break;
 			}
 		}
 	}
 
-	function parseNetworksXML($string) {
-		$dom = new \DOMDocument();
-		$dom->loadXML($string);
-		$this->parseNetworks($dom);
-	}
-	
 	function parseNetworks($dom) {
 		$xmlns = "http://schemas.ogf.org/nml/2013/05/base#";
 		$tagName = "Topology";
@@ -247,9 +274,8 @@ class NSIParser {
 			if($netNode->prefix != "") $netNode->prefix .= ":";
 			$netId = $netNode->getAttribute('id');
 			$netUrn = str_replace("urn:ogf:network:","",$netId);
-			$xpath = new \DOMXpath($dom);
-			$xpath->registerNamespace('x', $xmlns);
-			$netNameNode = $xpath->query(".//x:name", $netNode);
+			$this->xpath->registerNamespace('x', $xmlns);
+			$netNameNode = $this->xpath->query(".//x:name", $netNode);
 			if ($netNameNode->item(0)) {
 				$netName = $netNameNode->item(0)->nodeValue;
 			} else {
@@ -262,9 +288,9 @@ class NSIParser {
 			
 			$domainName = $id[3];
 			
-			$longitudeNode = $xpath->query(".//longitude", $netNode);
-			$latitudeNode = $xpath->query(".//latitude", $netNode);
-			$addressNode = $xpath->query(".//address", $netNode);
+			$longitudeNode = $this->xpath->query(".//longitude", $netNode);
+			$latitudeNode = $this->xpath->query(".//latitude", $netNode);
+			$addressNode = $this->xpath->query(".//address", $netNode);
 			
 			if($longitudeNode->item(0)) {
 				$this->topology["domains"][
@@ -278,7 +304,7 @@ class NSIParser {
 			$this->topology["domains"][
 					$domainName]["nets"][$netUrn]["name"] = $netName;
 			
-			$this->parseBiPorts($netNode, $netId, $netName, $xpath);
+			$this->parseBiPorts($netNode, $netId, $netName);
 		}
 	}
 	
@@ -324,8 +350,8 @@ class NSIParser {
 		}
 	}
 
-	function parseBiPorts($netNode, $netId, $netName, $xpath) {
-		$biPortNodes = $xpath->query(".//x:BidirectionalPort", $netNode);
+	function parseBiPorts($netNode, $netId, $netName) {
+		$biPortNodes = $this->xpath->query(".//x:BidirectionalPort", $netNode);
 		if($biPortNodes) {
 			foreach ($biPortNodes as $biPortNode) {
 				$biPortId = $biPortNode->getAttribute('id');
@@ -336,20 +362,20 @@ class NSIParser {
 					continue;
 				}
 				
-				$biportNameNode = $xpath->query(".//x:name", $biPortNode);
+				$biportNameNode = $this->xpath->query(".//x:name", $biPortNode);
 				if ($biportNameNode->item(0)) {
 					$biportName = $biportNameNode->item(0)->nodeValue;
 				} else {
 					$biportName = null;
 				}
 
-				$this->parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName, $xpath);
+				$this->parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName);
 			}
 		}
 	}
 
-	function parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName, $xpath) {
-		$portNodes = $xpath->query(".//x:PortGroup", $biPortNode);
+	function parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName) {
+		$portNodes = $this->xpath->query(".//x:PortGroup", $biPortNode);
 		if($portNodes) {
 			foreach ($portNodes as $portNode) {
 				$portId = $portNode->getAttribute('id');
@@ -360,7 +386,7 @@ class NSIParser {
 					continue;
 				}
 
-				$vlanAndAlias = $this->parseVlanAndAlias($netNode, $portId, $xpath);
+				$vlanAndAlias = $this->parseVlanAndAlias($netNode, $portId);
 				
 				$this->addPort(
 						$netId,
@@ -368,27 +394,27 @@ class NSIParser {
 						$biPortId,
 						$biportName,
 						$portId,
-						$this->parseUniPortType($netNode, $portId, $xpath),
+						$this->parseUniPortType($netNode, $portId),
 						$vlanAndAlias[0],
 						$vlanAndAlias[1],
-						$this->parseDevice($netNode, $portId, $xpath));
+						$this->parseDevice($netNode, $portId));
 			}
 		}
 	}
 	
-	function parseDevice($netNode, $portId, $xpath) {
-		$deviceNodes = $xpath->query(".//x:Node", $netNode);
+	function parseDevice($netNode, $portId) {
+		$deviceNodes = $this->xpath->query(".//x:Node", $netNode);
 		if($deviceNodes)
 			foreach ($deviceNodes as $deviceNode) {
-				$relationNodes = $xpath->query(".//x:Relation", $deviceNode);
+				$relationNodes = $this->xpath->query(".//x:Relation", $deviceNode);
 				if($relationNodes)
 					foreach ($relationNodes as $relationNode) {
 						foreach ($relationNode->childNodes as $portNode) {
 							if($portId == $portNode->getAttribute('id')) {
-								$longitudeNode = $xpath->query(".//longitude", $deviceNode);
-								$latitudeNode = $xpath->query(".//latitude", $deviceNode);
-								$addressNode = $xpath->query(".//address", $deviceNode);
-								$nameNode = $xpath->query(".//x:name", $deviceNode);
+								$longitudeNode = $this->xpath->query(".//longitude", $deviceNode);
+								$latitudeNode = $this->xpath->query(".//latitude", $deviceNode);
+								$addressNode = $this->xpath->query(".//address", $deviceNode);
+								$nameNode = $this->xpath->query(".//x:name", $deviceNode);
 								$this->addDevice($netNode, $nameNode->item(0)->nodeValue, 
 									$latitudeNode->item(0) ? $latitudeNode->item(0)->nodeValue : null, 
 									$longitudeNode->item(0) ? $longitudeNode->item(0)->nodeValue : null, 
@@ -402,10 +428,10 @@ class NSIParser {
 		return null;
 	}
 	
-	function parseAlias($portNode, $xpath) {
-		$relationNodes = $xpath->query(".//x:Relation", $portNode);
+	function parseAlias($portNode) {
+		$relationNodes = $this->xpath->query(".//x:Relation", $portNode);
 		foreach ($relationNodes as $relationNode) {
-			$portNodes = $xpath->query(".//x:PortGroup", $relationNode);
+			$portNodes = $this->xpath->query(".//x:PortGroup", $relationNode);
 			foreach ($portNodes as $portNode) {
 				$portId = $portNode->getAttribute('id');
 				$id = explode(":", $portId);
@@ -419,10 +445,10 @@ class NSIParser {
 		return null;
 	}
 	
-	function parseVlanAndAlias($netNode, $portId, $xpath) {
-		$relationNodes = $xpath->query(".//x:Relation", $netNode);
+	function parseVlanAndAlias($netNode, $portId) {
+		$relationNodes = $this->xpath->query(".//x:Relation", $netNode);
 		foreach ($relationNodes as $relationNode) {
-			$portNodes = $xpath->query(".//x:PortGroup", $relationNode);
+			$portNodes = $this->xpath->query(".//x:PortGroup", $relationNode);
 			if($portNodes) {
 				foreach ($portNodes as $portNode) {
 					$id = $portNode->getAttribute('id');
@@ -435,11 +461,11 @@ class NSIParser {
 
 					if ($id === $portId) {
 						
-						$vlanRangeNode = $xpath->query(".//x:LabelGroup", $portNode);
+						$vlanRangeNode = $this->xpath->query(".//x:LabelGroup", $portNode);
 
 						if($vlanRangeNode->item(0)) {
 							return [$vlanRangeNode->item(0)->nodeValue, 
-									$this->parseAlias($portNode, $xpath)];
+									$this->parseAlias($portNode)];
 						} else {
 							continue;
 						}
@@ -450,10 +476,10 @@ class NSIParser {
 		return null;
 	}
 	
-	function parseUniPortType($netNode, $portId, $xpath) {
-		$relationNodes = $xpath->query(".//x:Relation", $netNode);
+	function parseUniPortType($netNode, $portId) {
+		$relationNodes = $this->xpath->query(".//x:Relation", $netNode);
 		foreach ($relationNodes as $relationNode) {
-			$portNodes = $xpath->query(".//x:PortGroup", $relationNode);
+			$portNodes = $this->xpath->query(".//x:PortGroup", $relationNode);
 			if($portNodes) {
 				foreach ($portNodes as $portNode) {
 					$id = $portNode->getAttribute('id');
@@ -479,27 +505,20 @@ class NSIParser {
 		return null;
 	}
 
-	function parseProvidersXML($string) {
-		$dom = new \DOMDocument();
-		$dom->loadXML($string);
-		$this->parseProviders($dom);
-	}
-
-	function parseProviders($dom) {
+	function parseProviders($docNode) {
 		$xmlns = "http://schemas.ogf.org/nsi/2014/02/discovery/nsa";
 		$tagName = "nsa";
-		foreach ($dom->getElementsByTagNameNS($xmlns, $tagName)
+		foreach ($docNode->getElementsByTagNameNS($xmlns, $tagName)
 				as $nsaNode) {
 			$idString = $nsaNode->getAttribute('id');
 			$id = explode(":", $idString);
 			$domainName = $id[3];
-			$xpath = new \DOMXpath($dom);
-			$nameNode = $xpath->query(".//name", $nsaNode);
-			$longitudeNode = $xpath->query(".//longitude", $nsaNode);
-			$latitudeNode = $xpath->query(".//latitude", $nsaNode);
-			$interfaceNodes = $xpath->query(".//interface", $nsaNode);
-			$featureNodes = $xpath->query(".//feature", $nsaNode);
-			$peeringNodes = $xpath->query(".//peersWith", $nsaNode);
+			$nameNode = $this->xpath->query(".//name", $nsaNode);
+			$longitudeNode = $this->xpath->query(".//longitude", $nsaNode);
+			$latitudeNode = $this->xpath->query(".//latitude", $nsaNode);
+			$interfaceNodes = $this->xpath->query(".//interface", $nsaNode);
+			$featureNodes = $this->xpath->query(".//feature", $nsaNode);
+			$peeringNodes = $this->xpath->query(".//peersWith", $nsaNode);
 			$type = null;
 			$lat = null;
 			$lng = null;
@@ -521,8 +540,8 @@ class NSIParser {
 			}
 			
 			foreach ($interfaceNodes as $interfaceNode) {
-				$serviceType = $xpath->query(".//type", $interfaceNode);
-				$serviceUrl = $xpath->query(".//href", $interfaceNode);
+				$serviceType = $this->xpath->query(".//type", $interfaceNode);
+				$serviceUrl = $this->xpath->query(".//href", $interfaceNode);
 				
 				$service = [];
 				if ($serviceType->item(0)) {
