@@ -1,0 +1,11 @@
+.color-picker .sp-preview {
+    height: 13px;
+}
+
+.color-picker .sp-dd {
+    padding: initial;
+}
+
+.color-picker .sp-input {
+    height: 15px;
+}
