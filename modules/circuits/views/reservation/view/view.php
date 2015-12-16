@@ -57,15 +57,15 @@
 									'disabled' => $model->isCancelStatus(),
 									])."</a>";
 							},
-							'headerOptions'=>['style'=>'width: 7%;'],		
+							'headerOptions'=>['style'=>'width: 4%;'],		
 						],
 						[
 							'attribute' => 'gri',
-							'headerOptions'=>['style'=>'width: 10%;'],		
+							'headerOptions'=>['style'=>'width: 15%;'],		
 						],
 						[
 							'attribute' => 'external_id',
-							'headerOptions'=>['style'=>'width: 10%;'],		
+							'headerOptions'=>['style'=>'width: 21%;'],		
 						],
 						[
 							'attribute' => 'protected',
