@@ -11,6 +11,10 @@
 	])
 ?>
 
+<script>
+	var max_bandwidth = <?php echo json_encode(null);//Futuramente, utilizar uma função para buscar o limite do usuário ?>;
+</script>
+
 <div id="search-row" style="margin-left: 15px; margin-top:15px;" hidden>
 	<input type="text" id="search-box" size="40">
 	<button id="search-button"><span class="ui-icon-to-button-without-background ui-icon ui-icon-search" style="margin-left: 35%;"></span></button>
@@ -27,7 +31,7 @@
 			</div>
 			<label id="bandwidth_un" for="bandwidth">Mbps</label>
 		</div>
-		<div id="bandwidth_bar_inside"></div>
+		<div id="bandwidth_bar_inside" style="display: none;"></div>
 	</div>
 	<?= $this->render('_formEndpoints', array('label' => Yii::t("circuits", "Destination"), 'prefix' => 'dst')); ?>
 </div>

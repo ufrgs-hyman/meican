@@ -5,11 +5,21 @@
 
 <div id="slide" style="display:none;">
 
-<label for="name" class="label-description"><?= Yii::t("circuits", "Reservation name"); ?>: </label>
-<input type="text" size="45" id="name" name="ReservationForm[name]"/>
+<label for="name" style="display: inline-block; width: 110px;" class="label-description"><?= Yii::t("circuits", "Reservation name"); ?>: </label>
+<input type="text" id="name" style="display: inline-block; width: 300px;" name="ReservationForm[name]"/>
 <br><br>
-<label for="start-time" class="label-description"><?= Yii::t("circuits", "Start"); ?>: </label>
-<input type="text" size="7" id="start-time" class="hourPicker" name="ReservationForm[start_time]"/>
+
+<div id="gri_protected">
+<label for="gri" style="display: inline-block; width: 40px;" class="label-description"><?= Yii::t("circuits", "GRI"); ?>: </label>
+<input type="text" id="gri" style="display: inline-block; width: 280px;" name="ReservationForm[gri]"></input>
+&nbsp;&nbsp;&nbsp;
+<input type="checkbox" name="ReservationForm[pro_enabled]" id="protected_enabled"></input><label for="protected_enabled"> <?= Yii::t("circuits", "Protected"); ?></label>
+</div>
+
+<br>
+
+<label for="start-time" style="display: inline-block; width: 40px;" class="label-description"><?= Yii::t("circuits", "Start"); ?>: </label>
+<input type="text" style="display: inline-block; width: 40px;" id="start-time" class="hourPicker" name="ReservationForm[start_time]"/>
 
 <?= 
 
@@ -19,15 +29,14 @@ DatePicker::widget([
         'options' => array(
             'class' => 'recurrence-datepicker',
             'id' => 'start-date',
-            'size' => 9,
             'readonly' => true
         ),
 ]);
 
 ?>
 
-<label for="finish-time" class="label-description"><?= Yii::t("circuits", "Finish"); ?>:</label>
-<input type="text" size="7" id="finish-time" class="hourPicker" name="ReservationForm[finish_time]"/>
+<label for="finish-time" style="display: inline-block; width: 40px;" class="label-description"><?= Yii::t("circuits", "Finish"); ?>:</label>
+<input type="text" style="display: inline-block; width: 40px;" id="finish-time" class="hourPicker" name="ReservationForm[finish_time]"/>
 
 <?=
     /** DATEPICKER **/
@@ -37,14 +46,10 @@ DatePicker::widget([
         'options' => array(
             'class' => 'recurrence-datepicker',
             'id' => 'finish-date',
-            'size' => 9,
             'readonly' => true
         ),
     ]);
 ?>
-
-<br><br>
-<input type="checkbox" name="ReservationForm[pro_enabled]" id="protected_enabled"></input><label for="protected_enabled"> <?= Yii::t("circuits", "Protected"); ?></label>
 &nbsp;&nbsp;&nbsp;
 <input type="checkbox" name="ReservationForm[rec_enabled]" id="recurrence_enabled"></input><label for="recurrence_enabled"> <?= Yii::t("circuits", "Repeat..."); ?></label>
 <br>

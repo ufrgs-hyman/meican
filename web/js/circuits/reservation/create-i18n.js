@@ -74,6 +74,7 @@ dict['pt-BR'][['Saturday']] = ['Sábado'];
 dict['pt-BR']['A reservation name is required.'] = ['O nome da reserva é obrigatório.'];
 dict['pt-BR']['Waypoint information is required.'] = ['Informações de intermediário incompletas.'];
 dict['pt-BR']['click to fill waypoint'] = ['clique para completar informações'];
+dict['pt-BR']['The GRI cannot be longer than 30 characters.'] = ['A GRI não pode ser maior que 30 caracteres.'];
 
 dict['pt-BR']['error'] = 'erro';
 

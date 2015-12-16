@@ -124,10 +124,14 @@ function validateForm() {
 		errors += '<br>- ' + tt('The bandwidth must be between 1 and 10000.');
 		isValid = false;
 	}
-  if (!($("#name").val().trim())) {
-    errors += '<br>- ' + tt('A reservation name is required.');
-    isValid = false;
-  }
+	if (!($("#name").val().trim())) {
+	    errors += '<br>- ' + tt('A reservation name is required.');
+	    isValid = false;
+	}
+	if ($("#gri").val() && $("#gri").val().length > 30) {
+		errors += '<br>- ' + tt('The GRI cannot be longer than 30 characters.');
+		isValid = false;
+    }
 	
 	if(!isValid) {
 		showError(tt('Error(s) found') + ":<br>"+errors);
@@ -145,6 +149,8 @@ function showError(message) {
 ///////// inicializa bandwith spinner /////////////
 
 function prepareBandwidthSpinner() {
+	if(max_bandwidth) document.getElementById('bandwidth_bar_inside').style.display = 'block';
+	
 	var f = function() {
         var v = ($("#bandwidth").val() / $("#bandwidth").attr('aria-valuemax')) * 100;
         if (v > 100 || v < 0)
@@ -153,7 +159,7 @@ function prepareBandwidthSpinner() {
         $('#bandwidth_bar_inside').width(v + '%');
     };
 
-    $('#bandwidth').attr("min", 100).attr("max", 10000).attr("step", 100).
+    $('#bandwidth').attr("min", 100).attr("max", max_bandwidth).attr("step", 100).
     		spinner({
     			spin: f,
 				stop: f
@@ -171,7 +177,7 @@ function disableBandwidthSpinner() {
 function enableBandwidthSpinner() {
     $('#bandwidth').spinner({
         min: 100,
-        max: 10000,
+        max: max_bandwidth,
         step: 100
     }).spinner("enable").disabled(false).trigger('click');
     $("#bandwidth").trigger("change");
