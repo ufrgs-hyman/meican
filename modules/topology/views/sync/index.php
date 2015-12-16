@@ -107,6 +107,7 @@
                 ],
                 [
                     'header' =>Yii::t("topology", "Last sync"),
+                    'format' => 'datetime',
                     'value' => function ($model){
                         return $model->getLastSyncDate();
                     },

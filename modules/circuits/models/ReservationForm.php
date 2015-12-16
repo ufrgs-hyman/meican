@@ -3,7 +3,6 @@
 namespace app\modules\circuits\models;
 
 use yii\base\Model;
-use app\models\Aggregator;
 use app\models\Reservation;
 use app\models\ReservationRecurrence;
 use app\models\Port;
@@ -25,6 +24,7 @@ class ReservationForm extends Model {
 	public $dst_port; 
 	public $dst_vlan;
 	public $name;
+	public $gri;
 	public $start_time;
 	public $start_date;
 	public $finish_time;
@@ -32,7 +32,6 @@ class ReservationForm extends Model {
 	public $bandwidth;
 	public $waypoints;
 	public $pro_enabled;
-	public $gri;
 	
 	//reservation recurrence
 	public $rec_enabled;
@@ -49,16 +48,18 @@ class ReservationForm extends Model {
 	public function rules()	{
 		return [
 			[['src_domain','src_port','dst_domain','dst_port', 'name', 'start_time','start_date', 
-				'finish_time','finish_date', 'bandwidth'], 'required'],
+				'finish_time','finish_date', 'bandwidth', 'src_vlan', 'dst_vlan', 'pro_enabled'], 'required'],
 			[['rec_enabled','rec_type', 'rec_interval', 'rec_weekdays', 'rec_finish_type', 'rec_finish_date', 
-				'rec_finish_occur_limit', 'waypoints', 'src_vlan', 'dst_vlan'], 'safe'],
+				'rec_finish_occur_limit', 'waypoints', 'gri'], 'safe'],
 		];
 	}
 	
 	public function save() {
  			$this->reservation = new Reservation;
  			$this->reservation->type = Reservation::TYPE_NORMAL;
+ 			$this->reservation->gri = str_replace(" ", "", $this->gri);
  			$this->reservation->name = $this->name;
+ 			$this->reservation->protected = $this->pro_enabled ? 1 : 0;
  			$this->reservation->date = DateUtils::now();
  			$this->reservation->start = DateUtils::toUTC($this->start_date, $this->start_time);
  			$this->reservation->finish = DateUtils::toUTC($this->finish_date, $this->finish_time);

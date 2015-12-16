@@ -84,6 +84,8 @@ class Connection extends \yii\db\ActiveRecord
             'start' =>  Yii::t("circuits", 'Start'),
             'finish' =>  Yii::t("circuits", 'Finish'),
             'reservation_id' => 'Reservation ID',
+            'gri' => "GRI",
+            'protected' => Yii::t("circuits", 'Protection'),
         ];
     }
 

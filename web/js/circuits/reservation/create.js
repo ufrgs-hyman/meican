@@ -120,8 +120,8 @@ function validateForm() {
 		errors += '<br>- ' + tt('The start time or the finish time are invalid.');
 		isValid = false;
 	}
-	if (isNaN($("#bandwidth").val()) || parseInt($("#bandwidth").val()) > 10000 || parseInt($("#bandwidth").val()) < 1) {
-		errors += '<br>- ' + tt('The bandwidth must be between 1 and 10000.');
+	if ($("#bandwidth").val().length < 1 || isNaN($("#bandwidth").val()) || parseInt($("#bandwidth").val()) < 1) {
+		errors += '<br>- ' + tt('The bandwidth is required.');
 		isValid = false;
 	}
 	if (!($("#name").val().trim())) {

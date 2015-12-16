@@ -60,25 +60,36 @@
 							'headerOptions'=>['style'=>'width: 7%;'],		
 						],
 						[
+							'attribute' => 'gri',
+							'headerOptions'=>['style'=>'width: 10%;'],		
+						],
+						[
 							'attribute' => 'external_id',
-							'headerOptions'=>['style'=>'width: 29%;'],		
+							'headerOptions'=>['style'=>'width: 10%;'],		
+						],
+						[
+							'attribute' => 'protected',
+							'value' => function($model){
+								return $model->protected == 1 ? "Protected" : "Unprotected"; 
+							},
+							'headerOptions'=>['style'=>'width: 10%;'],		
 						],
 						[
 							'attribute' => 'start',
 							'format' 	=> 'datetime',		
-							'headerOptions'=>['style'=>'width: 14%;'],
+							'headerOptions'=>['style'=>'width: 10%;'],
 						],
 						[
 							'attribute' => 'finish',
 							'format' 	=> 'datetime',	
-							'headerOptions'=>['style'=>'width: 14%;'],
+							'headerOptions'=>['style'=>'width: 10%;'],
 						],
 						[
 							'attribute' => 'status',
 							'value' => function($model){
 								return $model->getStatus(); 
 							},
-							'headerOptions'=>['style'=>'width: 12%;'],
+							'headerOptions'=>['style'=>'width: 10%;'],
 						],
 						[
 							'attribute' => 'auth_status',
@@ -88,7 +99,7 @@
 							'contentOptions'=> function ($model){
 								return ['class' => strtolower($model->auth_status)];
 							},
-							'headerOptions'=>['style'=>'width: 12%;'],
+							'headerOptions'=>['style'=>'width: 10%;'],
 						],
 						[
 							'attribute' => 'dataplane_status',
@@ -98,7 +109,7 @@
 							'contentOptions'=> function ($model){
 								return ['class' => strtolower($model->dataplane_status)];
 							},
-							'headerOptions'=>['style'=>'width: 12%;'],
+							'headerOptions'=>['style'=>'width: 10%;'],
 						],
 					),
 			]);

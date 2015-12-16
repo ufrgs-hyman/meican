@@ -184,7 +184,7 @@ class RequesterClient extends \SoapClient {
         
         $directionality = "Bidirectional";
         $symmetricPath = "true";
-        $parameter = "PROTECTED";
+        $parameter = ($this->res->protected == 1) ? "PROTECTED" : "UNPROTECTED";
         $serviceType = "http://services.ogf.org/nsi/2013/12/descriptions/EVTS.A-GOLE";
         $firstPath = $this->res->getFirstPath()->one();
         $lastPath = $this->res->getLastPath()->one();
@@ -248,15 +248,13 @@ class RequesterClient extends \SoapClient {
         
             $criteria = new \SoapVar($criteria, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
         
-            /** Tirando os espaços do Global Reservation ID, pois não é permitido **/
-            $globalReservationId = str_replace(" ", "", $this->res->name);
-        
-            $params = array(
-                    "globalReservationId" => $globalReservationId, //Reservation name
-                    "description" => $this->res->name,
-                    "criteria" => $criteria
-            );
-        
+            $params = [];
+            if ($this->res->gri) {
+                $params["globalReservationId"] = $this->res->gri;
+            }
+            $params["description"] = $this->res->name;
+            $params["criteria"] = $criteria;
+
             $this->setAggHeader();
             
             try{
