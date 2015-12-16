@@ -22,7 +22,11 @@
         <div id="reservation-view-bandwidth-bar">
             <input type="text" id="reservation-view-bandwidth-field" value="<?php echo $reservation->bandwidth . " " . "Mbps" ?>" disabled="disabled" class="ui-widget ui-spinner-input"/>
         </div>
-        <div id="bandwidth_bar_inside" style="width: <?= round($reservation->bandwidth * 100 / 10000); ?>%"></div>
+        <?php
+       		$max_bandwidth = null; //Futuramente, buscar a banda maxima possivel pro circuito
+        	if($max_bandwidth != null)
+        		echo '<div id="bandwidth_bar_inside" style="width:'.round($reservation->bandwidth * 100 / $max_bandwidth).'%"></div>';
+        ?>
     </div>
 	<?= $this->render('_formEndpoints', array('label' => Yii::t("circuits", "Destination"), 'prefix' => 'dst',
 	)); ?>

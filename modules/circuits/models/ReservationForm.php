@@ -32,6 +32,7 @@ class ReservationForm extends Model {
 	public $bandwidth;
 	public $waypoints;
 	public $pro_enabled;
+	public $gri;
 	
 	//reservation recurrence
 	public $rec_enabled;
