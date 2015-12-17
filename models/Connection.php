@@ -138,8 +138,12 @@ class Connection extends \yii\db\ActiveRecord
     }
     
     public function requestReadPath() {
+        $this->requestSummary();
+    }
+
+    public function requestSummary() {
         $requester = new RequesterClient($this);
-        $requester->requestReadPath();
+        $requester->requestSummary();
     }
     
     public function requestProvision() {
@@ -185,9 +189,9 @@ class Connection extends \yii\db\ActiveRecord
 		$this->requestReadPath();
 	}
 	
-	//path confirmado. Se for uma reserva normal, solicitar autorizacao para provisionamento
+	//circuito confirmado e caminho disponivel. Se for uma reserva normal em submissao, solicitar autorizacao para provisionamento
 	public function confirmReadPath() {
-		if ($this->getReservation()->one()->type == Reservation::TYPE_NORMAL) {	
+		if ($this->status == self::STATUS_SUBMITTED && $this->getReservation()->one()->type == Reservation::TYPE_NORMAL) {	
 			
 			$this->requestAuthorization();
 		} 
@@ -232,7 +236,7 @@ class Connection extends \yii\db\ActiveRecord
     	switch($this->status) {
     		case self::STATUS_PENDING: 			return Yii::t("circuits", "Pending");
 			case self::STATUS_CREATED : 		return Yii::t("circuits", "Checking resources");
-			case self::STATUS_CONFIRMED : 		return Yii::t("circuits", "Preparing resources");
+			case self::STATUS_CONFIRMED : 		return Yii::t("circuits", "Getting path info");
 			case self::STATUS_SUBMITTED : 		return Yii::t("circuits", "Waiting authorization");
 			case self::STATUS_PROVISIONED : 	return Yii::t("circuits", "Provisioned");
 			case self::STATUS_CANCEL_REQ : 		return Yii::t("circuits", "Cancel requested");

@@ -190,20 +190,28 @@ class RequesterController extends Controller {
                 }
             }
         }*/
-        if($this->saveConnPath($response)) {
-            $connection = Connection::find()->where(['external_id'=>$response->reservation->connectionId])->one();
-            $connection->confirmReadPath();
-            
-        } else {
-            
-            /////Path invalido
-            /////Inconsistencias na topologia
+        $conn = Connection::find()->where(['external_id'=>$response->reservation->connectionId])->one();
+
+        if ($conn)
+            if($conn->status == Connection::STATUS_SUBMITTED) {
+
+                if($this->saveConnPath($conn, $response)) {
+                    $conn->confirmReadPath();
+                
+                } else {
+                    
+                    /////Path invalido
+                    /////Inconsistencias na topologia
+                }
+
+            //atualizar info da reserva
+            } else {
+                
+            }
         }
     }
     
-    private function saveConnPath($response) {
-        $conn = Connection::find()->where(['external_id'=>$response->reservation->connectionId])->one();
-
+    private function saveConnPath($conn, $response) {
         //clean old paths
         $oldPaths = $conn->getPaths()->all();
         foreach ($oldPaths as $oldPath) {

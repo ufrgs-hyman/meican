@@ -314,9 +314,9 @@ class RequesterClient extends \SoapClient {
         }
     }
     
-    public function requestReadPath() {
+    public function requestSummary() {
         if ($this->isDummy()) {
-            $this->conn->confirmReadPath();
+            $this->conn->confirmSummary();
             return;
         }
         
