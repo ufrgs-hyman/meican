@@ -192,7 +192,7 @@ class RequesterController extends Controller {
         }*/
         $conn = Connection::find()->where(['external_id'=>$response->reservation->connectionId])->one();
 
-        if ($conn)
+        if ($conn) {
             if($conn->status == Connection::STATUS_SUBMITTED) {
 
                 if($this->saveConnPath($conn, $response)) {
@@ -206,7 +206,7 @@ class RequesterController extends Controller {
 
             //atualizar info da reserva
             } else {
-                
+
             }
         }
     }
