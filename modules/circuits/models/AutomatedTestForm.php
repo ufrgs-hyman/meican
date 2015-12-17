@@ -35,6 +35,7 @@ class AutomatedTestForm extends Model {
  			$this->reservation->start = DateUtils::now();
  			$this->reservation->finish =  DateUtils::now();
  			$this->reservation->bandwidth = 1;
+ 			$this->reservation->protected = 0;
  			$this->reservation->requester_nsa = CircuitsPreference::findOneValue(CircuitsPreference::MEICAN_NSA);
  			$this->reservation->provider_nsa = CircuitsPreference::findOneValue(CircuitsPreference::CIRCUITS_DEFAULT_PROVIDER_NSA);
  			$this->reservation->request_user_id = Yii::$app->user->getId();
