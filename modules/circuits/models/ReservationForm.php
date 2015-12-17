@@ -57,7 +57,7 @@ class ReservationForm extends Model {
 	public function save() {
  			$this->reservation = new Reservation;
  			$this->reservation->type = Reservation::TYPE_NORMAL;
- 			$this->reservation->gri = str_replace(" ", "", $this->gri);
+ 			$this->reservation->gri = trim($this->gri) == "" ? null : str_replace(" ", "", $this->gri);
  			$this->reservation->name = $this->name;
  			$this->reservation->protected = $this->pro_enabled ? 1 : 0;
  			$this->reservation->date = DateUtils::now();

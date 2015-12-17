@@ -206,7 +206,8 @@ class RequesterController extends Controller {
 
             //atualizar info da reserva
             } else {
-
+                $conn->setActiveDataStatus($response->reservation->connectionStates->dataPlaneStatus->active);
+                $conn->save();
             }
         }
     }
