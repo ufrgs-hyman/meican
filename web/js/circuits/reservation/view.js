@@ -375,6 +375,16 @@ function initialize() {
 	
 	initEndPointButtons("src");
     initEndPointButtons('dst');
+
+    $.ajax({
+        url: baseUrl+'/circuits/reservation/request-update',
+        dataType: 'json',
+        data: {
+            id: $("#res-id").text(),
+        },
+        success: function() {
+        }
+    });
 }
 
 function drawReservation(connId, animate) {

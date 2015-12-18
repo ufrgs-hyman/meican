@@ -192,6 +192,14 @@ class ReservationController extends RbacController {
     
     //////REST functions
 
+    public function actionRequestUpdate($id) {
+        self::asyncActionBegin();
+        $res = Reservation::findOne($id);
+        foreach ($res->getConnections() as $conn) {
+            $conn->requestSummary();
+        }
+    }
+
     public function actionGetPortByDevice($id, $cols=null) {
         $query = Port::find()->where(['device_id'=>$id])->orderBy(['name'=>'SORT ASC'])->asArray();
 

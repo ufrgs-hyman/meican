@@ -137,10 +137,6 @@ class Connection extends \yii\db\ActiveRecord
         $requester->requestCommit();
     }
     
-    public function requestReadPath() {
-        $this->requestSummary();
-    }
-
     public function requestSummary() {
         $requester = new RequesterClient($this);
         $requester->requestSummary();
@@ -186,11 +182,11 @@ class Connection extends \yii\db\ActiveRecord
 		$this->save();
 		
 		//Depois de submetido podemos solicitar o caminho encontrado pelo provider
-		$this->requestReadPath();
+		$this->requestSummary();
 	}
 	
 	//circuito confirmado e caminho disponivel. Se for uma reserva normal em submissao, solicitar autorizacao para provisionamento
-	public function confirmReadPath() {
+	public function confirmSummary() {
 		if ($this->status == self::STATUS_SUBMITTED && $this->getReservation()->one()->type == Reservation::TYPE_NORMAL) {	
 			
 			$this->requestAuthorization();

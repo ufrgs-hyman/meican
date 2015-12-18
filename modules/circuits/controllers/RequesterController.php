@@ -196,7 +196,7 @@ class RequesterController extends Controller {
             if($conn->status == Connection::STATUS_SUBMITTED) {
 
                 if($this->saveConnPath($conn, $response)) {
-                    $conn->confirmReadPath();
+                    $conn->confirmSummary();
                 
                 } else {
                     
