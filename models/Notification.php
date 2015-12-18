@@ -323,6 +323,7 @@ class Notification extends \yii\db\ActiveRecord
     	if(!$connection) return;
     	$reservation = Reservation::findOne($connection->reservation_id);
     	if(!$reservation) return;
+    	if($reservation->type == Reservation::TYPE_TEST) return;
     	
     	//Confere se já foi feita uma notificação de algum circuito desta reserva, se sim, reutiliza a mesma notificação
     	$not = null;
