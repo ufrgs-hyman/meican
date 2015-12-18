@@ -195,7 +195,7 @@ class ReservationController extends RbacController {
     public function actionRequestUpdate($id) {
         self::asyncActionBegin();
         $res = Reservation::findOne($id);
-        foreach ($res->getConnections() as $conn) {
+        foreach ($res->getConnections()->all() as $conn) {
             $conn->requestSummary();
         }
     }
