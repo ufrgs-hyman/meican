@@ -43,7 +43,7 @@ class RequesterClient extends \SoapClient {
         }
         
         if (Yii::$app->id == "meican-console") {
-            $meicanRequesterUrl = CircuitsPreference::findOne(CircuitsPreference::CIRCUITS_MEICAN_REQUESTER_URL);
+            $meicanRequesterUrl = CircuitsPreference::findOne(CircuitsPreference::CIRCUITS_MEICAN_REQUESTER_URL)->value;
         } else {
             $meicanRequesterUrl = Url::toRoute("/circuits/requester", "http");
         }
