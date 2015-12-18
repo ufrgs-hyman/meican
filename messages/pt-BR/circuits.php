@@ -284,6 +284,17 @@ return array(
 		'Satellite' => 'Satélite',
 		'Hybrid' => 'Híbrido',
 		
+		'Protection' => 'Proteção',
 		'Protected' => 'Protegido',
+		'Unprotected' => 'Desprotegido',
+		
+		'NSI Connection Service' => 'Serviço de Conexão NSI',
+        'Unidirectional Ports' => 'Portas Unidirecionais',
+        'Provider NSA ID' => 'Provedor NSA ID',
+        'Connection Service URL' => 'URL Serviço de Conexão',
+        'Protocol' => 'Protocolo',
+		
+		'Disabled' => 'Desativadas',
+		'Enabled' => 'Ativadas',
 );
 ?>

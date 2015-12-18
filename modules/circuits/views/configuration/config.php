@@ -45,7 +45,7 @@
     </div>
 
     <div class="form input" disabled>
-        <?= $form->field($model,'uniportsEnabled')->dropDownList(ArrayHelper::map([['id'=>'false', 'name'=>"Disabled"],['id'=>'true','name'=>'Enabled']], 'id', 'name'), ['disabled'=>true]); ?>
+        <?= $form->field($model,'uniportsEnabled')->dropDownList(ArrayHelper::map([['id'=>'false', 'name'=>Yii::t('circuits', 'Disabled')],['id'=>'true','name'=>Yii::t('circuits', 'Enabled')]], 'id', 'name'), ['disabled'=>true]); ?>
     </div>
 
     </font>
