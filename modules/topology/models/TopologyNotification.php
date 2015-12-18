@@ -40,11 +40,11 @@ class TopologyNotification {
 
         $title = Yii::t("notification", 'Topology change');
         if (count($changes) > 1) {
-            $msg = Yii::t("notification", 'The topology of')." <b>".count($changes)."</b> ".Yii::t("notification", 'domains has been synchronized.')." <b>".
-            $appliedChangesSize."</b> ".Yii::t("notification", 'changes were applied').' '.($pendingChangesSize > 0 ? Yii::t("notification", 'and')." <b>".$pendingChangesSize."</b> ".Yii::t("notification", 'are pending.') : '.');
+            $msg = Yii::t("notification", 'The topologies of')." <b>".count($changes)."</b> ".Yii::t("notification", 'domains has been updated.')." <b>".
+            $appliedChangesSize."</b> ".Yii::t("notification", 'changes were applied.').' '.($pendingChangesSize > 0 ? " <b>".$pendingChangesSize."</b> ".Yii::t("notification", 'are pending.') : '.');
         } else if (count($changes) == 1){
-            $msg = Yii::t("notification", 'The')." <b>".$changes[0]['domain']."</b> ".Yii::t("notification", 'topology has been synchronized')." <b>".
-            $appliedChangesSize."</b> ".Yii::t("notification", 'changes were applied').' '.($pendingChangesSize > 0 ? Yii::t("notification", 'and')." <b>".$pendingChangesSize."</b> ".Yii::t("notification", 'are pending.') : '.');
+            $msg = Yii::t("notification", 'The')." <b>".$changes[0]['domain']."</b> ".Yii::t("notification", 'topology has been updated.')." <b>".
+            $appliedChangesSize."</b> ".Yii::t("notification", 'changes were applied.').' '.($pendingChangesSize > 0 ? " <b>".$pendingChangesSize."</b> ".Yii::t("notification", 'are pending.') : '.');
         } else return "";
         
         $date = Yii::$app->formatter->asDatetime($notification->date);
