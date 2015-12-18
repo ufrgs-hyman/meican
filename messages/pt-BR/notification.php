@@ -28,7 +28,7 @@ return array(
 		'Topology change' => 'Topologia atualizada',
 		'The topologies of' => 'As topologias de',
 		'domains has been updated.' => 'domínios foram atualizadas.',
-		'changes were applied.' => 'alterações foram aplicadas',
+		'changes were applied.' => 'alterações foram aplicadas.',
 		'and' => 'e',
 		'are pending.' => 'estão pendentes.',
 		'The' => 'O',
