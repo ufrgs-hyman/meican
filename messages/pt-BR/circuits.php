@@ -294,7 +294,7 @@ return array(
         'Connection Service URL' => 'URL Serviço de Conexão',
         'Protocol' => 'Protocolo',
 		
-		'Disabled' => 'Desativadas',
-		'Enabled' => 'Ativadas',
+		'Disabled' => 'Desativado',
+		'Enabled' => 'Ativado',
 );
 ?>
