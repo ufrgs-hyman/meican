@@ -196,7 +196,8 @@ class ReservationController extends RbacController {
         self::asyncActionBegin();
         $res = Reservation::findOne($id);
         foreach ($res->getConnections()->all() as $conn) {
-            $conn->requestSummary();
+            if($conn->status != Connection::STATUS_PENDING)
+                $conn->requestSummary();
         }
     }
 
