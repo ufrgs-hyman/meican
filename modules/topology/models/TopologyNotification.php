@@ -30,7 +30,7 @@ class TopologyNotification {
             ->where(['sync_event_id'=>$eventId])->count();
 
         $pendingChangesSize = TopologyChange::find()
-            ->where(['sync_event_id'=>$eventId])->where(['status', 'in', [TopologyChange::STATUS_PENDING, TopologyChange::STATUS_FAILED])->count();
+            ->where(['sync_event_id'=>$eventId])->andWhere(['in', 'status', [TopologyChange::STATUS_PENDING, TopologyChange::STATUS_FAILED])->count();
 
         $appliedChangesSize = TopologyChange::find()
             ->where(['sync_event_id'=>$eventId, 'status'=>TopologyChange::STATUS_APPLIED])->count();
