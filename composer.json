@@ -14,7 +14,10 @@
         "yiisoft/yii2": "2.0.6",
         "yiisoft/yii2-swiftmailer": "2.0.4",
         "yiisoft/yii2-jui": "2.0.4",
-        "thiagotalma/yii2-fullcalendar": "2.0.0"
+        "thiagotalma/yii2-fullcalendar": "2.0.0",
+        "npm-asset/vis": "4.11.0",
+        "npm-asset/leaflet": "0.7.7",
+        "bower-asset/spectrum": "1.8.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "2.0.4",

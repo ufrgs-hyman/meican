@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e6f3edd613ed51152499e95aa5371af7",
-    "content-hash": "52675a063d2dff5bd2942733ed8cd171",
+    "hash": "43d0db5e73d89f37b11401cf43df392c",
+    "content-hash": "ab720a3221361d145d1511bc7f4bdd76",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -157,17 +157,53 @@
             }
         },
         {
-            "name": "bower-asset/yii2-pjax",
-            "version": "v2.0.4",
+            "name": "bower-asset/spectrum",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/yiisoft/jquery-pjax.git",
-                "reference": "3f20897307cca046fca5323b318475ae9dac0ca0"
+                "url": "https://github.com/bgrins/spectrum.git",
+                "reference": "98454b55521cfb495f628db28af01100c029ef76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/3f20897307cca046fca5323b318475ae9dac0ca0",
-                "reference": "3f20897307cca046fca5323b318475ae9dac0ca0",
+                "url": "https://api.github.com/repos/bgrins/spectrum/zipball/98454b55521cfb495f628db28af01100c029ef76",
+                "reference": "98454b55521cfb495f628db28af01100c029ef76",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.7.2"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "./spectrum.css",
+                    "./spectrum.js"
+                ],
+                "bower-asset-ignore": [
+                    ".gitignore",
+                    ".travis.yml",
+                    "build/",
+                    "docs/",
+                    "example/",
+                    "Gruntfile.js",
+                    "LICENSE",
+                    "README.md",
+                    "test/"
+                ]
+            }
+        },
+        {
+            "name": "bower-asset/yii2-pjax",
+            "version": "v2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/jquery-pjax.git",
+                "reference": "6818718408086db6bdcf33649cecb86b6b4f9b67"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/6818718408086db6bdcf33649cecb86b6b4f9b67",
+                "reference": "6818718408086db6bdcf33649cecb86b6b4f9b67",
                 "shasum": ""
             },
             "require": {
@@ -292,6 +328,122 @@
                 "html"
             ],
             "time": "2013-11-30 08:25:19"
+        },
+        {
+            "name": "npm-asset/leaflet",
+            "version": "0.7.7",
+            "dist": {
+                "type": "tar",
+                "url": "http://registry.npmjs.org/leaflet/-/leaflet-0.7.7.tgz",
+                "reference": null,
+                "shasum": "1e352ba54e63d076451fa363c900890cb2cf75ee"
+            },
+            "require-dev": {
+                "npm-asset/copyfiles": ">=0.2.1,<0.3.0",
+                "npm-asset/happen": "~0.2.0",
+                "npm-asset/jake": "~8.0.12",
+                "npm-asset/jshint": "~2.8.0",
+                "npm-asset/karma": "~0.13.14",
+                "npm-asset/karma-chrome-launcher": ">=0.2.1,<0.3.0",
+                "npm-asset/karma-coverage": "~0.5.3",
+                "npm-asset/karma-mocha": "~0.2.0",
+                "npm-asset/karma-phantomjs-launcher": ">=0.2.1,<0.3.0",
+                "npm-asset/mocha": "~2.3.3",
+                "npm-asset/tin": ">=0.5.0,<0.6.0",
+                "npm-asset/uglify-js": "~2.5.0"
+            },
+            "type": "npm-asset-library",
+            "extra": {
+                "npm-asset-bugs": {
+                    "url": "https://github.com/Leaflet/Leaflet/issues"
+                },
+                "npm-asset-main": "dist/leaflet-src.js",
+                "npm-asset-directories": [],
+                "npm-asset-repository": {
+                    "type": "git",
+                    "url": "git://github.com/Leaflet/Leaflet.git"
+                },
+                "npm-asset-scripts": {
+                    "test": "jake test",
+                    "build": "jake build",
+                    "release": "./build/publish.sh"
+                }
+            },
+            "description": "JavaScript library for mobile-friendly interactive maps",
+            "homepage": "https://github.com/Leaflet/Leaflet#readme",
+            "keywords": [
+                "gis",
+                "map"
+            ]
+        },
+        {
+            "name": "npm-asset/vis",
+            "version": "4.11.0",
+            "dist": {
+                "type": "tar",
+                "url": "http://registry.npmjs.org/vis/-/vis-4.11.0.tgz",
+                "reference": null,
+                "shasum": "581da4f9cc858ea34df7649f95fb7e8614d28cb7"
+            },
+            "require-dev": {
+                "npm-asset/babel": ">=5.1.11,<6.0.0",
+                "npm-asset/babel-loader": ">=5.0.0,<6.0.0",
+                "npm-asset/babelify": ">=6.0.2,<7.0.0",
+                "npm-asset/clean-css": ">=3.2.1,<4.0.0",
+                "npm-asset/emitter-component": ">=1.1.1,<2.0.0",
+                "npm-asset/gulp": ">=3.8.11,<4.0.0",
+                "npm-asset/gulp-concat": ">=2.5.2,<3.0.0",
+                "npm-asset/gulp-minify-css": ">=1.0.0,<2.0.0",
+                "npm-asset/gulp-rename": ">=1.2.2,<2.0.0",
+                "npm-asset/gulp-util": ">=3.0.4,<4.0.0",
+                "npm-asset/hammerjs": ">=2.0.4,<3.0.0",
+                "npm-asset/keycharm": ">=0.2.0,<0.3.0",
+                "npm-asset/merge-stream": ">=0.1.7,<0.2.0",
+                "npm-asset/mocha": ">=2.2.4,<3.0.0",
+                "npm-asset/moment": ">=2.10.2,<3.0.0",
+                "npm-asset/propagating-hammerjs": ">=1.4.3,<2.0.0",
+                "npm-asset/rimraf": ">=2.3.2,<3.0.0",
+                "npm-asset/uglify-js": ">=2.4.20,<3.0.0",
+                "npm-asset/uuid": ">=2.0.1,<3.0.0",
+                "npm-asset/webpack": ">=1.8.5,<2.0.0",
+                "npm-asset/yargs": ">=3.7.2,<4.0.0"
+            },
+            "type": "npm-asset-library",
+            "extra": {
+                "npm-asset-bugs": {
+                    "url": "https://github.com/almende/vis/issues"
+                },
+                "npm-asset-main": "./dist/vis.min.js",
+                "npm-asset-directories": [],
+                "npm-asset-repository": {
+                    "type": "git",
+                    "url": "git://github.com/almende/vis.git"
+                },
+                "npm-asset-scripts": {
+                    "test": "mocha",
+                    "build": "gulp",
+                    "watch": "gulp watch",
+                    "watch-dev": "gulp watch --bundle"
+                }
+            },
+            "license": [
+                "(Apache-2.0 OR MIT)"
+            ],
+            "description": "A dynamic, browser-based visualization library.",
+            "homepage": "http://visjs.org/",
+            "keywords": [
+                "browser",
+                "browser based",
+                "chart",
+                "graph",
+                "javascript",
+                "linechart",
+                "network",
+                "timeline",
+                "vis",
+                "visualization",
+                "web based"
+            ]
         },
         {
             "name": "swiftmailer/swiftmailer",

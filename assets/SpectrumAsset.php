@@ -6,15 +6,14 @@ use yii\web\AssetBundle;
 
 class SpectrumAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $sourcePath = '@bower/spectrum';
     
     public $js = [
-        'js/vendor/spectrum.js',
+        'spectrum.js',
     ];
     
     public $css = [
-        'css/vendor/spectrum.css',
+        'spectrum.css',
     ];
     
     public $depends = [
