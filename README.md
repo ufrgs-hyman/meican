@@ -41,9 +41,7 @@ web/                css, images, javascripts
 
 ##INSTALLATION GUIDE
 
-####[CentOS 6.7](https://github.com/ufrgs-hyman/meican2/wiki/CentOS-6.7-installation-guide)
-
-####[Ubuntu 14.04](https://github.com/ufrgs-hyman/meican2/wiki/Ubuntu-14.04-installation-guide)
+There is two specific installation guides, one for [CentOS 6.7](https://github.com/ufrgs-hyman/meican2/wiki/CentOS-6.7-installation-guide) and another for [Ubuntu 14.04](https://github.com/ufrgs-hyman/meican2/wiki/Ubuntu-14.04-installation-guide).
 
 ##CONFIGURATION GUIDE
 
