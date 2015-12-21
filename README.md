@@ -33,7 +33,7 @@ web/                css, images, javascripts
 
 ###Software
 
-- Ubuntu 14.04/CentOS 6.7/Any other OS with Crontab feature
+- Ubuntu 14/CentOS 6/Any other OS with Crontab feature
 - Apache 2.2+ (recommended)
 - MySQL 5+
 - PHP 5.5+
@@ -41,7 +41,7 @@ web/                css, images, javascripts
 
 ##INSTALLATION GUIDE
 
-There is two specific installation guides, one for [CentOS 6.7](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide-en/installation-centos.md) and another for [Ubuntu 14.04](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide-en/installation-ubuntu.md).
+There is two specific installation guides, one for [CentOS 6](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide-en/installation-centos.md) and another for [Ubuntu 14](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide-en/installation-ubuntu.md).
 
 ##CONFIGURATION GUIDE
 
