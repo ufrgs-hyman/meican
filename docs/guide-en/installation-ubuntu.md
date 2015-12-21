@@ -1,4 +1,4 @@
-##INSTALLATION GUIDE - CentOS
+##INSTALLATION GUIDE - Ubuntu
 
 Follow the steps detailed below.
 
