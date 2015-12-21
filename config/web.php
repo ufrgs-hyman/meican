@@ -23,6 +23,7 @@ $config = [
 	],
     'components' => [
         'assetManager' => [
+            'appendTimestamp' => true,
             'bundles' => [ 
                 'yii\jui\JuiAsset' => [
                     'css' => [],
