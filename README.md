@@ -45,4 +45,4 @@ There is two specific installation guides, one for [CentOS 6.7](https://github.c
 
 ##CONFIGURATION GUIDE
 
-The documentation is [here](https://github.com/ufrgs-hyman/meican2/wiki/CentOS-6.7-installation-guide).
+The documentation is [here](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide-en/configuration.md).
