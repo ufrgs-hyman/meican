@@ -42,7 +42,7 @@ Location: config/mailer.php
 'password' => '',
 ```
 
-###CONFIGURATION
+###APPLICATION NSA ID
 
 We need set the MEICAN NSA ID to identify that application by other NSI providers. Access the application and enter to Reservations > Configuration and set the MEICAN NSA ID field with a valid id:
 
@@ -50,4 +50,6 @@ We need set the MEICAN NSA ID to identify that application by other NSI provider
 urn:ogf:network:#DOMAIN#:#YEAR#:nsa:meican
 ```
 
-If the fake provider has been disabled, we need to define a true provider to receive the MEICAN requests. On the same configuration page (Reservations > Configuration) you can set the Provider NSA ID and the URL of the Connection Service.
+###DEFAULT PROVIDER
+
+If the fake provider has been disabled, we need to define a real provider to receive the MEICAN requests. On the same configuration page (Reservations > Configuration) you can set the Provider NSA ID and the URL of the Connection Service.
