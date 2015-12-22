@@ -13,12 +13,12 @@ $config = [
 	    	'class' => 'yii\debug\Module',
 	    	//'allowedIPs' => ['143.54.12.245']
 	    ],
-	    'aaa' => 'app\modules\aaa\AaaModule',
-		'circuits' => 'app\modules\circuits\CircuitsModule',
-		'init' => 'app\modules\init\InitModule',
-		'topology' => 'app\modules\topology\TopologyModule',
-		'bpm' => 'app\modules\bpm\BpmModule',
-    	'notification' => 'app\modules\notification\NotificationModule',
+	    'aaa' => 'meican\modules\aaa\AaaModule',
+		'circuits' => 'meican\modules\circuits\CircuitsModule',
+		'init' => 'meican\modules\init\InitModule',
+		'topology' => 'meican\modules\topology\TopologyModule',
+		'bpm' => 'meican\modules\bpm\BpmModule',
+    	'notification' => 'meican\modules\notification\NotificationModule',
 		'gii' => 'yii\gii\Module',
 	],
     'aliases' => [
@@ -32,7 +32,7 @@ $config = [
                     'css' => [],
                     'js' => [],
                     'depends' => [
-                        'app\assets\MeicanJuiAsset',
+                        'meican\assets\MeicanJuiAsset',
                     ]
                 ]
             ],
@@ -56,7 +56,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'meican\models\User',
             'enableAutoLogin' => true,
             'loginUrl' => ['init/login']
         ],
