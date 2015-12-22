@@ -16,9 +16,7 @@ use app\modules\aaa\models\AaaPreference;
 
 class LoginController extends Controller {
 	
-	public $layout = 'loginLayout';
-	
-	private $_id;
+	public $layout = 'init-layout';
 	
 	public function actionIndex() {
 		if (!\Yii::$app->user->isGuest) {
@@ -33,7 +31,7 @@ class LoginController extends Controller {
         	}
         }
         	
-        return $this->render('login', array(
+        return $this->render('index', array(
           	'model'=>$model,
         	'federation' => AaaPreference::isFederationEnabled(),
         ));

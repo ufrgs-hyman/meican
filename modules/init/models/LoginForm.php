@@ -26,7 +26,7 @@ class LoginForm extends Model {
 	
 	public function attributeLabels() {
 		return [
-			'login'=>Yii::t('init', 'User'),
+			'login'=>Yii::t('init', 'Username'),
 			"password"=>Yii::t('init', 'Password'),
 		];
 	}
