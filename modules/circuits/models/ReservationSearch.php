@@ -1,14 +1,14 @@
 <?php
 
-namespace app\modules\circuits\models;
+namespace meican\modules\circuits\models;
 
 use Yii;
-use app\components\DateUtils;
+use meican\components\DateUtils;
 use yii\data\ActiveDataProvider;
-use app\models\Reservation;
-use app\models\ConnectionPath;
-use app\models\Connection;
-use app\models\User;
+use meican\models\Reservation;
+use meican\models\ConnectionPath;
+use meican\models\Connection;
+use meican\models\User;
 use yii\base\Model;
 
 /**

@@ -1,28 +1,28 @@
 <?php
 
-namespace app\modules\circuits\controllers;
+namespace meican\modules\circuits\controllers;
 
 use yii\web\Controller;
-use app\controllers\RbacController;
+use meican\controllers\RbacController;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
-use app\models\Reservation;
-use app\models\ReservationPath;
-use app\models\Connection;
-use app\models\ConnectionAuth;
-use app\models\ConnectionPath;
-use app\models\BpmFlow;
-use app\models\FlowPath;
-use app\models\User;
-use app\models\Domain;
+use meican\models\Reservation;
+use meican\models\ReservationPath;
+use meican\models\Connection;
+use meican\models\ConnectionAuth;
+use meican\models\ConnectionPath;
+use meican\models\BpmFlow;
+use meican\models\FlowPath;
+use meican\models\User;
+use meican\models\Domain;
 use yii\db\Query;
-use app\models\Notification;
-use app\modules\circuits\models\AuthorizationForm;
-use app\modules\circuits\models\AuthorizationDetailed;
-use app\modules\circuits\models\AuthorizationSearch;
+use meican\models\Notification;
+use meican\modules\circuits\models\AuthorizationForm;
+use meican\modules\circuits\models\AuthorizationDetailed;
+use meican\modules\circuits\models\AuthorizationSearch;
 
-use app\components\DateUtils;
+use meican\components\DateUtils;
 
 class AuthorizationController extends RbacController {
 	

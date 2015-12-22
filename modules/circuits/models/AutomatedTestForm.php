@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\circuits\models;
+namespace meican\modules\circuits\models;
 
 use yii\base\Model;
-use app\models\Reservation;
-use app\models\Port;
-use app\models\ReservationPath;
-use app\models\Cron;
+use meican\models\Reservation;
+use meican\models\Port;
+use meican\models\ReservationPath;
+use meican\models\Cron;
 use Yii;
-use app\components\DateUtils;
-use app\controllers\RbacController;
+use meican\components\DateUtils;
+use meican\controllers\RbacController;
 
 class AutomatedTestForm extends Model {
 	

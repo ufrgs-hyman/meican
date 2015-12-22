@@ -4,11 +4,11 @@
     use yii\helpers\Html;
     use yii\helpers\Url;
     use yii\helpers\ArrayHelper;
-    use app\models\Provider;
+    use meican\models\Provider;
 
-    use app\modules\circuits\models\Protocol;
+    use meican\modules\circuits\models\Protocol;
 
-    use app\modules\circuits\assets\ConfigurationAsset;
+    use meican\modules\circuits\assets\ConfigurationAsset;
     ConfigurationAsset::register($this);
 
 ?>

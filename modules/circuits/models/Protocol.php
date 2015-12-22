@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\circuits\models;
+namespace meican\modules\circuits\models;
 
 use Yii;
-use app\models\Service;
+use meican\models\Service;
 
 class Protocol {
 

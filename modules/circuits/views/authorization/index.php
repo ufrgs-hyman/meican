@@ -1,16 +1,16 @@
 <?php 
 	use yii\grid\GridView;
 	use yii\grid\CheckboxColumn;
-	use app\components\LinkColumn;
+	use meican\components\LinkColumn;
 	use yii\helpers\Html;
 	use yii\i18n\Formatter;
 	use yii\widgets\ActiveForm;
-	use app\models\Reservation;
-	use app\models\Connection;
-	use app\models\ConnectionPath;
-	use app\models\ConnectionAuth;
-	use app\models\Urn;
-	use app\models\User;
+	use meican\models\Reservation;
+	use meican\models\Connection;
+	use meican\models\ConnectionPath;
+	use meican\models\ConnectionAuth;
+	use meican\models\Urn;
+	use meican\models\User;
 	
 	use yii\helpers\ArrayHelper;
 	

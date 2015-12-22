@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\circuits\assets;
+namespace meican\modules\circuits\assets;
 
 use yii\web\AssetBundle;
 

@@ -6,15 +6,15 @@
 	use yii\widgets\ActiveForm;
 	use yii\widgets\Pjax;
 
-	use app\components\LinkColumn;
+	use meican\components\LinkColumn;
 	
-	use app\models\Domain;
-	use app\models\Reservation;
-	use app\models\Connection;
-	use app\models\User;
-	use app\models\ConnectionPath;
+	use meican\models\Domain;
+	use meican\models\Reservation;
+	use meican\models\Connection;
+	use meican\models\User;
+	use meican\models\ConnectionPath;
 	
-	use app\modules\circuits\assets\HistoryReservationAsset;
+	use meican\modules\circuits\assets\HistoryReservationAsset;
 	
 	HistoryReservationAsset::register($this);
 ?>

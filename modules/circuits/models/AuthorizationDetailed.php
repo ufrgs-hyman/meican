@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\circuits\models;
+namespace meican\modules\circuits\models;
 
 use yii\base\Model;
-use app\models\Reservation;
-use app\models\ConnectionPath;
-use app\models\Urn;
-use app\models\User;
+use meican\models\Reservation;
+use meican\models\ConnectionPath;
+use meican\models\Urn;
+use meican\models\User;
 use Yii;
 
 class AuthorizationDetailed extends Model {

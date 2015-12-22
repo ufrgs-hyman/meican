@@ -1,5 +1,5 @@
 <?php 
-	use app\modules\circuits\assets\CreateReservationAsset;
+	use meican\modules\circuits\assets\CreateReservationAsset;
 	use yii\widgets\ActiveForm;
 	
 	CreateReservationAsset::register($this);

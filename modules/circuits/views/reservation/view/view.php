@@ -1,5 +1,5 @@
 <?php 
-	use app\modules\circuits\assets\ViewReservationAsset;
+	use meican\modules\circuits\assets\ViewReservationAsset;
 	use yii\grid\GridView;
 	use yii\grid\CheckboxColumn;
 	use yii\helpers\Url;

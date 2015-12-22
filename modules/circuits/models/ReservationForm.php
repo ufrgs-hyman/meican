@@ -1,18 +1,18 @@
 <?php
 
-namespace app\modules\circuits\models;
+namespace meican\modules\circuits\models;
 
 use yii\base\Model;
-use app\models\Reservation;
-use app\models\ReservationRecurrence;
-use app\models\Port;
-use app\models\Device;
-use app\models\ReservationPath;
-use app\models\Connection;
-use app\models\Preference;
+use meican\models\Reservation;
+use meican\models\ReservationRecurrence;
+use meican\models\Port;
+use meican\models\Device;
+use meican\models\ReservationPath;
+use meican\models\Connection;
+use meican\models\Preference;
 
 use Yii;
-use app\components\DateUtils;
+use meican\components\DateUtils;
 
 class ReservationForm extends Model {
 	

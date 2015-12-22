@@ -1,11 +1,11 @@
 <?php
 
-namespace app\modules\circuits\controllers;
+namespace meican\modules\circuits\controllers;
 
 use yii\web\Controller;
-use app\controllers\RbacController;
-use app\modules\circuits\models\ConfigurationForm;
-use app\modules\circuits\models\CircuitsPreference;
+use meican\controllers\RbacController;
+use meican\modules\circuits\models\ConfigurationForm;
+use meican\modules\circuits\models\CircuitsPreference;
 use Yii;
 
 class ConfigurationController extends RbacController {

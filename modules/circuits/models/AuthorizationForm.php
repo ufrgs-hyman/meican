@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\circuits\models;
+namespace meican\modules\circuits\models;
 
 use yii\base\Model;
-use app\models\Reservation;
+use meican\models\Reservation;
 use Yii;
 
 class AuthorizationForm extends Model {

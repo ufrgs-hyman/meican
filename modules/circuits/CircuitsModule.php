@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\circuits;
+namespace meican\modules\circuits;
 
 use Yii;
 
 class CircuitsModule extends \yii\base\Module
 {
-    public $controllerNamespace = 'app\modules\circuits\controllers';
+    public $controllerNamespace = 'meican\modules\circuits\controllers';
 
     public function init()
     {

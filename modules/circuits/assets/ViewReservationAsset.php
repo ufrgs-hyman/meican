@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\circuits\assets;
+namespace meican\modules\circuits\assets;
 
 use yii\web\AssetBundle;
 
@@ -19,8 +19,8 @@ class ViewReservationAsset extends AssetBundle
     ];
 
     public $depends = [
-        'app\assets\MeicanAsset',
-        'app\assets\MeicanMapAsset'
+        'meican\assets\MeicanAsset',
+        'meican\assets\MeicanMapAsset'
     ];
 }
 

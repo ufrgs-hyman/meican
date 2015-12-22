@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\circuits\models;
+namespace meican\modules\circuits\models;
 
-use app\models\Reservation;
-use app\models\Cron;
-use app\models\Connection;
+use meican\models\Reservation;
+use meican\models\Cron;
+use meican\models\Connection;
 
 use Yii;
 

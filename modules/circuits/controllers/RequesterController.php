@@ -1,20 +1,20 @@
 <?php
 
-namespace app\modules\circuits\controllers;
+namespace meican\modules\circuits\controllers;
 
-use app\modules\circuits\controllers\services\RequesterClient;
+use meican\modules\circuits\controllers\services\RequesterClient;
 use yii\helpers\Url;
 use Yii;
 use yii\web\Controller;
-use app\modules\circuits\CircuitsModule;
-use app\models\Connection;
-use app\models\ConnectionPath;
-use app\models\Port;
-use app\models\Device;
-use app\models\Domain;
-use app\models\Provider;
-use app\models\Reservation;
-use app\components\DateUtils;
+use meican\modules\circuits\CircuitsModule;
+use meican\models\Connection;
+use meican\models\ConnectionPath;
+use meican\models\Port;
+use meican\models\Device;
+use meican\models\Domain;
+use meican\models\Provider;
+use meican\models\Reservation;
+use meican\components\DateUtils;
 
 /*
  * Classe que implementa o módulo SoapServer do protocolo NSI Connection Service Requester 2.0

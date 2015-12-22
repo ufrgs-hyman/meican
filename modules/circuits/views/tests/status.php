@@ -7,7 +7,7 @@
 	use yii\helpers\Html;
 	use yii\widgets\ActiveForm;
 	
-	use app\modules\circuits\assets\AutomatedTestAsset;
+	use meican\modules\circuits\assets\AutomatedTestAsset;
 	
 	AutomatedTestAsset::register($this);
 

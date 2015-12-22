@@ -1,19 +1,19 @@
 <?php
 
-namespace app\modules\circuits\controllers;
+namespace meican\modules\circuits\controllers;
 
 use yii\web\Controller;
 use yii\helpers\Url;
-use app\controllers\RbacController;
+use meican\controllers\RbacController;
 use Yii;
-use app\models\Reservation;
-use app\models\Domain;
-use app\models\Port;
-use app\models\Cron;
+use meican\models\Reservation;
+use meican\models\Domain;
+use meican\models\Port;
+use meican\models\Cron;
 use yii\data\ActiveDataProvider;
-use app\modules\circuits\models\CircuitsPreference;
-use app\modules\circuits\models\AutomatedTestForm;
-use app\modules\circuits\models\AutomatedTest;
+use meican\modules\circuits\models\CircuitsPreference;
+use meican\modules\circuits\models\AutomatedTestForm;
+use meican\modules\circuits\models\AutomatedTest;
 
 class AutomatedTestController extends RbacController {
 

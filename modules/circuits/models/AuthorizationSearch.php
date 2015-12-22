@@ -1,20 +1,20 @@
 <?php
 
-namespace app\modules\circuits\models;
+namespace meican\modules\circuits\models;
 
 use Yii;
-use app\components\DateUtils;
+use meican\components\DateUtils;
 use yii\data\ActiveDataProvider;
-use app\models\Reservation;
-use app\models\Domain;
-use app\models\ConnectionAuth;
-use app\models\Connection;
-use app\models\User;
-use app\models\Notification;
+use meican\models\Reservation;
+use meican\models\Domain;
+use meican\models\ConnectionAuth;
+use meican\models\Connection;
+use meican\models\User;
+use meican\models\Notification;
 use yii\base\Model;
 use yii\data\ArrayDataProvider;
 
-use app\modules\circuits\models\AuthorizationForm;
+use meican\modules\circuits\models\AuthorizationForm;
 
 /**
  */

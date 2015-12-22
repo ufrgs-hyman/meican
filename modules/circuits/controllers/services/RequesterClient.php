@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\circuits\controllers\services;
+namespace meican\modules\circuits\controllers\services;
 
 use yii\helpers\Url;
-use app\models\Connection;
-use app\models\ConnectionPath;
-use app\models\ConnectionLog;
-use app\models\Provider;
-use app\modules\circuits\models\CircuitsPreference;
+use meican\models\Connection;
+use meican\models\ConnectionPath;
+use meican\models\ConnectionLog;
+use meican\models\Provider;
+use meican\modules\circuits\models\CircuitsPreference;
 use Yii;
 
 /*

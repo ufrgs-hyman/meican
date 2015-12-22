@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\circuits\controllers;
+namespace meican\modules\circuits\controllers;
 
 use Yii;
 
@@ -8,23 +8,23 @@ use yii\web\Controller;
 use yii\helpers\Url;
 use yii\data\ActiveDataProvider;
 
-use app\controllers\RbacController;
-use app\components\DateUtils;
-use app\models\Reservation;
-use app\models\Connection;
-use app\models\ConnectionAuth;
-use app\models\ConnectionPath;
-use app\models\Port;
-use app\models\Domain;
-use app\models\Device;
-use app\models\Network;
-use app\models\Service;
-use app\modules\circuits\models\CircuitsPreference;
-use app\modules\circuits\models\ReservationForm;
-use app\modules\circuits\models\Protocol;
-use app\modules\circuits\models\ReservationSearch;
-use app\models\ReservationPath;
-use app\models\Notification;
+use meican\controllers\RbacController;
+use meican\components\DateUtils;
+use meican\models\Reservation;
+use meican\models\Connection;
+use meican\models\ConnectionAuth;
+use meican\models\ConnectionPath;
+use meican\models\Port;
+use meican\models\Domain;
+use meican\models\Device;
+use meican\models\Network;
+use meican\models\Service;
+use meican\modules\circuits\models\CircuitsPreference;
+use meican\modules\circuits\models\ReservationForm;
+use meican\modules\circuits\models\Protocol;
+use meican\modules\circuits\models\ReservationSearch;
+use meican\models\ReservationPath;
+use meican\models\Notification;
 
 use yii\helpers\Json;
 
