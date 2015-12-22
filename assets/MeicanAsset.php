@@ -1,6 +1,6 @@
 <?php
 
-namespace app\assets;
+namespace meican\assets;
 
 use yii\web\AssetBundle;
 
@@ -23,7 +23,7 @@ class MeicanAsset extends AssetBundle
     
     public $depends = [
     	'yii\web\JqueryAsset',
-        'app\assets\MeicanJuiAsset',
-        'app\assets\MeicanI18NAsset',
+        'meican\assets\MeicanJuiAsset',
+        'meican\assets\MeicanI18NAsset',
     ];
 }

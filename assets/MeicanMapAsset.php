@@ -1,6 +1,6 @@
 <?php
 
-namespace app\assets;
+namespace meican\assets;
 
 use yii\web\AssetBundle;
 
@@ -20,7 +20,7 @@ class MeicanMapAsset extends AssetBundle
     ];
     
     public $depends = [
-        'app\assets\GoogleMapsAsset',
-        'app\assets\MeicanI18NAsset',
+        'meican\assets\GoogleMapsAsset',
+        'meican\assets\MeicanI18NAsset',
     ];
 }
