@@ -4,13 +4,13 @@ use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use yii\grid\CheckboxColumn;
 
-use app\components\LinkColumn;
+use meican\components\LinkColumn;
 
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-use app\models\Group;
-use app\modules\aaa\assets\RoleAsset;
+use meican\models\Group;
+use meican\modules\aaa\assets\RoleAsset;
 
 RoleAsset::register($this);
 

@@ -2,7 +2,7 @@
 use yii\widgets\ActiveForm;
 use yii\widgets\ActiveField;
 use yii\helpers\Html;
-use app\modules\aaa\assets\AccountAsset;
+use meican\modules\aaa\assets\AccountAsset;
 
 AccountAsset::register($this);
 

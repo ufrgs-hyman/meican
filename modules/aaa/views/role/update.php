@@ -1,5 +1,5 @@
 <?php
-	use app\modules\aaa\assets\RoleCreateEditAsset;
+	use meican\modules\aaa\assets\RoleCreateEditAsset;
 	
 	RoleCreateEditAsset::register($this);
 ?>

@@ -1,18 +1,18 @@
 <?php
 
-namespace app\modules\aaa\controllers;
+namespace meican\modules\aaa\controllers;
 
-use app\modules\aaa\models\UserForm;
-use app\modules\aaa\models\AccountForm;
+use meican\modules\aaa\models\UserForm;
+use meican\modules\aaa\models\AccountForm;
 use yii\web\Controller;
 use yii\data\ActiveDataProvider;
-use app\models\User;
-use app\models\UserSettings;
-use app\models\UserDomainRole;
-use app\models\Domain;
-use app\models\Group;
-use app\controllers\RbacController;
-use app\models\Notification;
+use meican\models\User;
+use meican\models\UserSettings;
+use meican\models\UserDomainRole;
+use meican\models\Domain;
+use meican\models\Group;
+use meican\controllers\RbacController;
+use meican\models\Notification;
 use Yii;
 
 class RoleController extends RbacController {

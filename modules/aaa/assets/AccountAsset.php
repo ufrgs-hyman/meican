@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\aaa\assets;
+namespace meican\modules\aaa\assets;
 
 use yii\web\AssetBundle;
 
@@ -14,6 +14,6 @@ class AccountAsset extends AssetBundle
     ];
     
     public $depends = [
-    	'app\assets\MeicanAsset',
+    	'meican\assets\MeicanAsset',
 	];
 }

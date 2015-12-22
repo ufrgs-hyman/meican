@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\aaa\controllers;
+namespace meican\modules\aaa\controllers;
 
-use app\controllers\RbacController;
+use meican\controllers\RbacController;
 use yii\data\ActiveDataProvider;
-use app\models\Group;
+use meican\models\Group;
 use yii\web\Controller;
 use Yii;
 

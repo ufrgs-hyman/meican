@@ -1,6 +1,6 @@
 <?php
 
-use app\modules\aaa\assets\GroupCreateEditAsset;
+use meican\modules\aaa\assets\GroupCreateEditAsset;
 
 GroupCreateEditAsset::register($this);
 

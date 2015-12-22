@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\aaa\assets;
+namespace meican\modules\aaa\assets;
 
 use yii\web\AssetBundle;
 

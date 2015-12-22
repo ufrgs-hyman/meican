@@ -1,22 +1,22 @@
 <?php
 
-namespace app\modules\aaa\controllers;
+namespace meican\modules\aaa\controllers;
 
-use app\models\Preference;
+use meican\models\Preference;
 
-use app\modules\aaa\models\UserForm;
-use app\modules\aaa\models\AccountForm;
-use app\modules\aaa\models\UserSearch;
+use meican\modules\aaa\models\UserForm;
+use meican\modules\aaa\models\AccountForm;
+use meican\modules\aaa\models\UserSearch;
 use yii\web\Controller;
 use yii\helpers\Url;
 use yii\data\ActiveDataProvider;
-use app\models\User;
-use app\models\UserSettings;
-use app\models\UserDomainRole;
-use app\models\Domain;
-use app\models\Group;
-use app\controllers\RbacController;
-use app\models\Notification;
+use meican\models\User;
+use meican\models\UserSettings;
+use meican\models\UserDomainRole;
+use meican\models\Domain;
+use meican\models\Group;
+use meican\controllers\RbacController;
+use meican\models\Notification;
 use Yii;
 
 class UserController extends RbacController {

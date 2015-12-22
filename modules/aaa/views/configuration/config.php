@@ -4,8 +4,8 @@
     use yii\helpers\Html;
     use yii\helpers\Url;
     use yii\helpers\ArrayHelper;
-    use app\models\UserDomainRole;
-    use app\models\Domain;
+    use meican\models\UserDomainRole;
+    use meican\models\Domain;
 ?>
 
 <h1><?= Yii::t('aaa', 'Federation Configuration'); ?></h1>

@@ -5,9 +5,9 @@ use yii\helpers\Url;
 use yii\grid\GridView;
 use yii\grid\CheckboxColumn;
 
-use app\components\LinkColumn;
+use meican\components\LinkColumn;
 
-use app\modules\aaa\assets\GroupAsset;
+use meican\modules\aaa\assets\GroupAsset;
 
 GroupAsset::register($this);
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\aaa;
+namespace meican\modules\aaa;
 
 class AaaModule extends \yii\base\Module
 {
-    public $controllerNamespace = 'app\modules\aaa\controllers';
+    public $controllerNamespace = 'meican\modules\aaa\controllers';
 
     public function init()
     {

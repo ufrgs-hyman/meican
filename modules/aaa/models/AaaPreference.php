@@ -1,9 +1,9 @@
 <?php
 
-namespace app\modules\aaa\models;
+namespace meican\modules\aaa\models;
 
 use Yii;
-use app\models\Preference;
+use meican\models\Preference;
 
 
 class AaaPreference extends Preference {
