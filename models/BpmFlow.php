@@ -1,18 +1,11 @@
 <?php
 
-namespace app\models;
+namespace meican\models;
 
 use Yii;
 use yii\data\ActiveDataProvider;
-use app\models\BpmFlow;
-use app\models\BpmWorkflow;
-use app\models\BpmNode;
-use app\models\Notification;
-use app\models\ConnectionAuth;
-use app\models\Connection;
-use app\models\Reservation;
-use app\components\DateUtils;
-use app\congtrollers\RbacController;
+use meican\components\DateUtils;
+use meican\congtrollers\RbacController;
 
 /**
  * This is the model class for table "meican_bpm_flow_control".

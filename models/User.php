@@ -1,10 +1,9 @@
 <?php
 
-namespace app\models;
+namespace meican\models;
 
 use Yii;
 use yii\web\IdentityInterface;
-use app\models\UserDomainRole;
 
 /**
  * This is the model class for table "{{%user}}".

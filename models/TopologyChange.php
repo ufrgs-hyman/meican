@@ -1,12 +1,12 @@
 <?php
 
-namespace app\models;
+namespace meican\models;
 
 use Yii;
 
 use yii\data\ActiveDataProvider;
-use app\components\DateUtils;
-use app\components\ColorUtils;
+use meican\components\DateUtils;
+use meican\components\ColorUtils;
 
 /**
  * This is the model class for table "{{%topo_change}}".

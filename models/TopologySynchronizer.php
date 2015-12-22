@@ -1,14 +1,14 @@
 <?php
 
-namespace app\models;
+namespace meican\models;
 
 use Yii;
 
-use app\components\DateUtils;
+use meican\components\DateUtils;
 
-use app\modules\topology\models\NSIParser;
-use app\modules\topology\models\NMWGParser;
-use app\modules\topology\models\TopologyNotification;
+use meican\modules\topology\models\NSIParser;
+use meican\modules\topology\models\NMWGParser;
+use meican\modules\topology\models\TopologyNotification;
 
 /**
  * This is the model class for table "{{%topo_synchronizer}}".

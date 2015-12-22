@@ -1,11 +1,11 @@
 <?php
 
-namespace app\controllers;
+namespace meican\controllers;
 
 use yii\web\Controller;
 use yii\filters\AccessControl;
-use app\models\UserDomainRole;
-use app\models\Domain;
+use meican\models\UserDomainRole;
+use meican\models\Domain;
 use Yii;
 
 /**

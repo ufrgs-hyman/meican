@@ -1,11 +1,8 @@
 <?php
 
-namespace app\models;
+namespace meican\models;
 
 use Yii;
-use app\models\Connection;
-use app\models\User;
-use app\models\Group;
 
 /**
  * This is the model class for table "meican_connection_auth".

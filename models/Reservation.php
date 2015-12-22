@@ -1,9 +1,9 @@
 <?php
 
-namespace app\models;
+namespace meican\models;
 
 use Yii;
-use app\components\DateUtils;
+use meican\components\DateUtils;
 use yii\data\ActiveDataProvider;
 
 /**

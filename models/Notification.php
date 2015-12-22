@@ -1,14 +1,11 @@
 <?php
 
-namespace app\models;
+namespace meican\models;
 
 use Yii;
 use yii\helpers\Html;
-use app\models\Reservation;
-use app\models\ReservationPath;
-use app\components\DateUtils;
-
-use app\modules\topology\models\TopologyNotification;
+use meican\components\DateUtils;
+use meican\modules\topology\models\TopologyNotification;
 
 /**
  * This is the model class for table "meican_notification".

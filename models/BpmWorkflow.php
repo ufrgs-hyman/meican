@@ -1,15 +1,10 @@
 <?php
 
-namespace app\models;
+namespace meican\models;
 
 use Yii;
-use app\models\Domain;
-use app\models\Group;
-use app\models\User;
-use app\models\BpmNode;
-use app\models\Wire;
-use app\modules\bpm\models\GraphNode;
-use app\components\DateUtils;
+use meican\modules\bpm\models\GraphNode;
+use meican\components\DateUtils;
 
 /**
  * This is the model class for table "{{%bpm_workflow}}".

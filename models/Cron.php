@@ -1,10 +1,10 @@
 <?php
 
-namespace app\models;
+namespace meican\models;
 
 use Yii;
-use app\components\DateUtils;
-use app\modules\circuits\models\AutomatedTest;
+use meican\components\DateUtils;
+use meican\modules\circuits\models\AutomatedTest;
 
 /**
  * This is the model class for table "{{%cron}}".
