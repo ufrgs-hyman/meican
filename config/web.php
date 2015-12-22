@@ -4,7 +4,7 @@ $params = require(__DIR__ . '/params.php');
 
 $config = [
     'id' => 'meican',
-    'name'=>'MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks',
+    'name'=>'MEICAN',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'debug','session'],
     'defaultRoute' => 'init',
@@ -21,6 +21,9 @@ $config = [
     	'notification' => 'app\modules\notification\NotificationModule',
 		'gii' => 'yii\gii\Module',
 	],
+    'aliases' => [
+        '@meican' => '@app',
+    ],
     'components' => [
         'assetManager' => [
             'appendTimestamp' => true,

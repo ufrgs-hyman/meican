@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "meican.version" => "2.2.1",
+    "meican.version" => "2.3.0",
 
     "google.analytics.enabled" => false,
     "google.analytics.key" => "",

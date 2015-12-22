@@ -6,7 +6,15 @@ use app\controllers\RbacController;
 
 ?>
 
-<div class="dashboard">
+<section class="content-header">
+  <h1>
+    Dashboard
+  </h1>
+</section>
+
+<section class="content">
+
+  <div class="dashboard">
         <div>
             <h2><?= Yii::t('init', 'New Reservation'); ?></h2>
             <a href="<?= Url::to(['/circuits/reservation/create']); ?>">
@@ -37,4 +45,7 @@ use app\controllers\RbacController;
             </a>
         </div>
         <?php endif; ?>
-</div>
+    </div>
+
+</section>
+

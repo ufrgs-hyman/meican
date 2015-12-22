@@ -4,9 +4,9 @@ namespace app\modules\init\controllers;
 
 use Yii;
 
-use app\controllers\RbacController;
+use yii\web\Controller;
 
-class DefaultController extends RbacController {
+class DefaultController extends Controller {
 	
 	public function actions()
 	{

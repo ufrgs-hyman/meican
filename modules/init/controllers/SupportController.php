@@ -11,7 +11,7 @@ use app\models\User;
 
 use yii\helpers\Url;
 
-class SupportController extends RbacController {
+class SupportController extends Controller {
 	
 	public $enableCsrfValidation = false;
 	
