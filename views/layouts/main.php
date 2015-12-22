@@ -1,95 +1,97 @@
 <?php
 use yii\helpers\Html;
-use app\assets\MeicanAsset;
+use meican\assets\LayoutAsset;
 use yii\helpers\Url;
-use app\components\AnalyticsWidget;
+use meican\components\AnalyticsWidget;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-MeicanAsset::register($this);
+LayoutAsset::register($this);
 
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <?php $this->beginPage() ?>
 <html>
-    <head>
-        <meta charset="utf-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-        <title><?= Html::encode(Yii::$app->name); ?></title>
-        <meta name="viewport" content="width=device-width,initial-scale=1"/>
-        <link rel="shortcut icon" href="<?= Url::base(); ?>/images/favicon.ico" type="image/x-icon" />
-        
-		<script type="text/javascript">
-			window.baseUrl = "<?= Url::base(); ?>";
-			var language = "<?= Yii::$app->language; ?>";
-		</script>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title><?= Html::encode(Yii::$app->name); ?></title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <script type="text/javascript">
+      window.baseUrl = "<?= Url::base(); ?>";
+      var language = "<?= Yii::$app->language; ?>";
+    </script>
     <?php $this->head() ?>
 </head>
-<body>
+<body class="sidebar-mini skin-blue-light">
 <?php $this->beginBody() ?>
-        <div class="fade-overlay" id="MainOverlay"> </div>
-        <div id="left-panel">
-            <div id="logo">
-            	<img src="<?= Url::base(); ?>/images/meican_branco.png" class="logo" alt="MEICAN"/>
-            </div>
-            <div id="menu">
-            	<?= $this->render('menu'); ?>
-            </div>            
-            <div id="system_date">
-            </div>
-        </div>
+<div class="wrapper">
 
-        <div id="canvas">
-        	<div id="info_box">
-        		<?= $this->render('infoBox'); ?>
-        	</div>
-            <div id="workspace">
-				<div id="map-canvas" style="width:100%; height:100%; float:left; overflow:hidden; display:none;"></div>                    
-                <div id="main">
-                	<?php
-                		//Messages to inform user actions
-						$flashMessages = Yii::$app->getSession()->getAllFlashes();
-						if ($flashMessages) {
-						    echo '<div id="flash_box" class="ui-widget">';
-						    foreach($flashMessages as $key => $messages) {
-								if (is_array($messages)) {
-									foreach ($messages as $message) {
-										showMessage($key, $message);
-									}
-								} else {
-									showMessage($key, $messages);
-								}
-						    }
-						    echo '</div>';
-						}
+  <!-- Main Header -->
+  <header class="main-header">
 
-						function showMessage($class, $message) {
-							echo '<div class="'.$class.'"><p>';
-							echo '<span class="ui-icon ui-icon-closethick close-button" onclick="this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);">x</span>';
-							echo $message;
-							echo '</p></div>';
-						}
-					?>
-					
-                    <?= $content ?> 
-                    <br></br> 
-					<br></br>
-                </div>
-            </div>
-            <div style="clear:both;"></div>
-        </div>
-        
-        <div id="main-dialog" title="<?= Yii::t('init', 'Confirm'); ?>" hidden>
-        <br><?= Yii::t('init', 'The selected items will be deleted.'); ?><br><?= Yii::t('init', 'Do you confirm?'); ?>
-        <label id="yes-button-label" hidden><?= Yii::t('init', 'Yes'); ?></label>
-        <label id="no-button-label" hidden><?= Yii::t('init', 'No'); ?></label>
-        </div>
+    <!-- Logo -->
+    <a href="#" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><?= Html::img(Url::base()."/images/meican_logo_23.png"); ?></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><?= Html::img(Url::base()."/images/meican_branco.png"); ?></span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <?= $this->render('navbar-menu'); ?>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <?= $this->render('sidebar-menu'); ?>
+      <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. -->
+  <div class="content-wrapper">
+    <?= $content; ?>
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 2.3.0
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2015 <a href="#">MEICAN</a>.</strong> All rights reserved.
+  </footer>
+
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
 
 <?php $this->endBody() ?>
-</body>
-
 <?= AnalyticsWidget::build(); ?>
-
-</html>
+</body>
 <?php $this->endPage() ?>
+</html>
