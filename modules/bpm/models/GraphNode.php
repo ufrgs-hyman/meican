@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\bpm\models;
+namespace meican\modules\bpm\models;
 
 use Yii;
 

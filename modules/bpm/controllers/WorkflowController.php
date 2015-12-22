@@ -1,22 +1,22 @@
 <?php
 
-namespace app\modules\bpm\controllers;
+namespace meican\modules\bpm\controllers;
 
 use Yii;
-use app\controllers\RbacController;
+use meican\controllers\RbacController;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\web\Controller;
-use app\components\DateUtils;
+use meican\components\DateUtils;
 
-use app\models\Domain;
-use app\models\Group;
-use app\models\User;
-use app\models\UserDomainRole;
-use app\models\BpmWorkflow;
-use app\models\Device;
+use meican\models\Domain;
+use meican\models\Group;
+use meican\models\User;
+use meican\models\UserDomainRole;
+use meican\models\BpmWorkflow;
+use meican\models\Device;
 
-use app\modules\bpm\models\WorkflowSearch;
+use meican\modules\bpm\models\WorkflowSearch;
 
 class WorkflowController extends RbacController {
 	

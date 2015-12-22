@@ -2,7 +2,7 @@
 	use yii\jui\Dialog;
 	use yii\helpers\Html;
 	
-	use app\modules\bpm\assets\IndexCreateAsset;
+	use meican\modules\bpm\assets\IndexCreateAsset;
 	IndexCreateAsset::register($this);
 ?>
 

@@ -4,7 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\jui\Dialog;
 
-use app\modules\bpm\assets\UpdateAsset;
+use meican\modules\bpm\assets\UpdateAsset;
 UpdateAsset::register($this);
 
 ?>

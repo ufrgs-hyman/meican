@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\bpm;
+namespace meican\modules\bpm;
 
 class BpmModule extends \yii\base\Module
 {
-    public $controllerNamespace = 'app\modules\bpm\controllers';
+    public $controllerNamespace = 'meican\modules\bpm\controllers';
 
     public function init()
     {

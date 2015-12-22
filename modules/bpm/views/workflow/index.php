@@ -2,15 +2,15 @@
 	use yii\grid\GridView;
 	use yii\grid\CheckboxColumn;
 	use yii\jui\Dialog;
-	use app\components\LinkColumn;
+	use meican\components\LinkColumn;
 	use yii\helpers\Html;
 	use yii\i18n\Formatter;
 	use yii\data\ActiveDataProvider;
-	use app\models\BpmWorkflow;
+	use meican\models\BpmWorkflow;
 	
 	use yii\helpers\ArrayHelper;
 	
-	use app\modules\bpm\assets\IndexAsset;
+	use meican\modules\bpm\assets\IndexAsset;
 	IndexAsset::register($this);
 ?>
 

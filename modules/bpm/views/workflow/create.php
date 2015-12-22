@@ -4,7 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\jui\Dialog;
 
-use app\modules\bpm\assets\CreateAsset;
+use meican\modules\bpm\assets\CreateAsset;
 CreateAsset::register($this);
 
 ?>

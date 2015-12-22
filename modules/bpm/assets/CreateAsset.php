@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\bpm\assets;
+namespace meican\modules\bpm\assets;
 
 use yii\web\AssetBundle;
 

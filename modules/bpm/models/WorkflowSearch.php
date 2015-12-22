@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\bpm\models;
+namespace meican\modules\bpm\models;
 
 use Yii;
-use app\models\Domain;
+use meican\models\Domain;
 use yii\data\ActiveDataProvider;
 use yii\base\Model;
 
-use app\models\BpmWorkflow;
+use meican\models\BpmWorkflow;
 
 /**
  */
