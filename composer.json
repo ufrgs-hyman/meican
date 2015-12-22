@@ -22,7 +22,8 @@
         "bower-asset/slimscroll": "1.3.7",
         "bower-asset/bootstrap" : "3.3.5",
         "bower-asset/fontawesome" : "4.4.0",
-        "bower-asset/ionicons" : "2.0.1"
+        "bower-asset/ionicons" : "2.0.1",
+        "bower-asset/icheck" : "1.0.2"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "2.0.4",
