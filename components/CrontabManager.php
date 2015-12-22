@@ -28,7 +28,7 @@
  *
  */
 
-namespace app\components;
+namespace meican\components;
 
 /**
  * Crontab manager implementation

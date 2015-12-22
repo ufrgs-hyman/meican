@@ -27,7 +27,7 @@
  *
  */
 
-namespace app\components;
+namespace meican\components;
 
 /**
  * Crontab Entry object
