@@ -2,17 +2,17 @@
 	use yii\grid\GridView;
 	use yii\grid\CheckboxColumn;
 	use yii\grid\ActionColumn;
-	use app\components\LinkColumn;
+	use meican\components\LinkColumn;
 	use yii\helpers\Html;
 	use yii\widgets\ActiveForm;
 	use yii\widgets\LinkPager;
 	use yii\data\ActiveDataProvider;
 	use yii\data\ArrayDataProvider;
 	use yii\i18n\Formatter;
-	use app\models\Port;
+	use meican\models\Port;
 	use yii\jui\Dialog;
 	
-	use app\modules\topology\assets\PortAsset;
+	use meican\modules\topology\assets\PortAsset;
 	PortAsset::register($this);
 ?>
 

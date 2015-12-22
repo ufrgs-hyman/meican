@@ -1,17 +1,17 @@
 <?php
 
-namespace app\modules\topology\controllers;
+namespace meican\modules\topology\controllers;
 
 use yii\web\Controller;
-use app\controllers\RbacController;
+use meican\controllers\RbacController;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 
-use app\models\Network;
-use app\models\Domain;
-use app\models\Provider;
+use meican\models\Network;
+use meican\models\Domain;
+use meican\models\Provider;
 
-use app\modules\topology\models\NetworkSearch;
+use meican\modules\topology\models\NetworkSearch;
 
 use yii\helpers\Json;
 use Yii;

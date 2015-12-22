@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\topology\controllers\services;
+namespace meican\modules\topology\controllers\services;
 
 use Yii;
 
-use app\models\TopologySynchronizer;
-use app\modules\topology\models\NSIParser;
-use app\models\Preference;
+use meican\models\TopologySynchronizer;
+use meican\modules\topology\models\NSIParser;
+use meican\models\Preference;
 use yii\helpers\Url;
 
 /*

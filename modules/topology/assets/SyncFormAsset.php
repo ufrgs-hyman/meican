@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\topology\assets;
+namespace meican\modules\topology\assets;
 
 use yii\web\AssetBundle;
 
@@ -15,8 +15,8 @@ class SyncFormAsset extends AssetBundle
     ];
 
     public $depends = [
-        'app\assets\MeicanAsset',
-        'app\assets\CronPickerAsset',
+        'meican\assets\MeicanAsset',
+        'meican\assets\CronPickerAsset',
     ];
 }
 

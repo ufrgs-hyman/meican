@@ -3,7 +3,7 @@
 	use yii\helpers\Html;
 	use yii\helpers\Url;
 	use yii\helpers\ArrayHelper;
-	use app\modules\topology\assets\domain\FormAsset;
+	use meican\modules\topology\assets\domain\FormAsset;
 
 	FormAsset::register($this);
 ?>

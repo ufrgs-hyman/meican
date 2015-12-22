@@ -4,10 +4,10 @@
 
     use yii\data\ActiveDataProvider;
 
-    use app\models\TopologyChange;
-    use app\models\Domain;
+    use meican\models\TopologyChange;
+    use meican\models\Domain;
     
-    use app\components\LinkColumn;
+    use meican\components\LinkColumn;
     
     use yii\helpers\Html;
     use yii\helpers\ArrayHelper;
@@ -16,7 +16,7 @@
 
     use yii\widgets\Pjax;
 
-    use app\modules\topology\assets\ChangeAsset;
+    use meican\modules\topology\assets\ChangeAsset;
     
     ChangeAsset::register($this);
 ?>

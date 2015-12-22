@@ -1,16 +1,16 @@
 <?php
 
-namespace app\modules\topology\controllers;
+namespace meican\modules\topology\controllers;
 
 use yii\web\Controller;
-use app\controllers\RbacController;
+use meican\controllers\RbacController;
 use yii\data\ActiveDataProvider;
 
-use app\models\Device;
-use app\models\Port;
-use app\models\Domain;
+use meican\models\Device;
+use meican\models\Port;
+use meican\models\Domain;
 
-use app\modules\topology\models\DeviceSearch;
+use meican\modules\topology\models\DeviceSearch;
 
 use yii\helpers\Json;
 use Yii;

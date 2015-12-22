@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\topology\assets;
+namespace meican\modules\topology\assets;
 
 use yii\web\AssetBundle;
 
@@ -15,7 +15,7 @@ class ViewerAsset extends AssetBundle
     ];
 
     public $depends = [
-        'app\assets\MeicanAsset',
-        'app\assets\MeicanMapAsset',
+        'meican\assets\MeicanAsset',
+        'meican\assets\MeicanMapAsset',
     ];
 }

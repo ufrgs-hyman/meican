@@ -1,14 +1,14 @@
 <?php
 
-namespace app\modules\topology\models;
+namespace meican\modules\topology\models;
 
 use Yii;
 use yii\data\ActiveDataProvider;
-use app\models\TopologySynchronizer;
-use app\models\Cron;
-use app\models\Service;
-use app\modules\topology\models\NSIParser;
-use app\modules\topology\controllers\services\DiscoveryClient;
+use meican\models\TopologySynchronizer;
+use meican\models\Cron;
+use meican\models\Service;
+use meican\modules\topology\models\NSIParser;
+use meican\modules\topology\controllers\services\DiscoveryClient;
 
 class SyncForm extends TopologySynchronizer {
 

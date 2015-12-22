@@ -5,7 +5,7 @@
     use yii\helpers\Url;
     use yii\helpers\ArrayHelper;
 
-    use app\models\Service;
+    use meican\models\Service;
 ?>
 
 <?php $form= ActiveForm::begin([

@@ -7,8 +7,8 @@
 	
 	use yii\helpers\ArrayHelper;
 	
-	use app\components\LinkColumn;
-	use app\modules\topology\assets\NetworkAsset;
+	use meican\components\LinkColumn;
+	use meican\modules\topology\assets\NetworkAsset;
 	NetworkAsset::register($this);
 ?>
 

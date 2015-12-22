@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\topology\assets\domain;
+namespace meican\modules\topology\assets\domain;
 
 use yii\web\AssetBundle;
 
@@ -18,6 +18,6 @@ class FormAsset extends AssetBundle
     ];
 
     public $depends = [
-        'app\assets\SpectrumAsset',
+        'meican\assets\SpectrumAsset',
     ];
 }

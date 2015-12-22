@@ -2,14 +2,14 @@
     use yii\grid\GridView;
     use yii\grid\CheckboxColumn;
     
-    use app\components\LinkColumn;
+    use meican\components\LinkColumn;
     
     use yii\helpers\Html;
     use yii\helpers\Url;
     
     use yii\widgets\ActiveForm;
 
-    use app\modules\topology\assets\SyncAsset;
+    use meican\modules\topology\assets\SyncAsset;
     
     SyncAsset::register($this);
 ?>

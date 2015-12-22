@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\topology;
+namespace meican\modules\topology;
 
 class TopologyModule extends \yii\base\Module
 {
-    public $controllerNamespace = 'app\modules\topology\controllers';
+    public $controllerNamespace = 'meican\modules\topology\controllers';
 
     public function init()
     {

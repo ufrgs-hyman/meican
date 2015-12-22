@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\topology\assets;
+namespace meican\modules\topology\assets;
 
 use yii\web\AssetBundle;
 

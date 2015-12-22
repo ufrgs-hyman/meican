@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\topology\models;
+namespace meican\modules\topology\models;
 
 use Yii;
-use app\components\DateUtils;
+use meican\components\DateUtils;
 use yii\data\ActiveDataProvider;
-use app\models\Device;
-use app\models\Domain;
+use meican\models\Device;
+use meican\models\Domain;
 use yii\base\Model;
 
 /**

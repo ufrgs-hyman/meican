@@ -1,14 +1,14 @@
 <?php
 
-namespace app\modules\topology\controllers;
+namespace meican\modules\topology\controllers;
 
 use yii\web\Controller;
 use yii\data\ActiveDataProvider;
-use app\controllers\RbacController;
+use meican\controllers\RbacController;
 
-use app\models\Domain;
-use app\models\Service;
-use app\models\Provider;
+use meican\models\Domain;
+use meican\models\Service;
+use meican\models\Provider;
 use yii\helpers\Json;
 use Yii;
 

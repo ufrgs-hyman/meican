@@ -5,9 +5,9 @@
     use yii\helpers\Url;
     use yii\helpers\ArrayHelper;
 
-    use app\models\Service;
-    use app\models\TopologySynchronizer;
-    use app\modules\topology\assets\SyncFormAsset;
+    use meican\models\Service;
+    use meican\models\TopologySynchronizer;
+    use meican\modules\topology\assets\SyncFormAsset;
 
     SyncFormAsset::register($this);
 ?>

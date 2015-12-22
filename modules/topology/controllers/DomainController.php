@@ -1,22 +1,22 @@
 <?php
 
-namespace app\modules\topology\controllers;
+namespace meican\modules\topology\controllers;
 
 use yii\web\Controller;
-use app\controllers\RbacController;
+use meican\controllers\RbacController;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use Yii;
 use yii\helpers\Json;
 
-use app\models\Network;
-use app\models\Domain;
-use app\models\Provider;
-use app\modules\topology\models\DomainFormModel;
-use app\models\Urn;
-use app\models\Aggregator;
+use meican\models\Network;
+use meican\models\Domain;
+use meican\models\Provider;
+use meican\modules\topology\models\DomainFormModel;
+use meican\models\Urn;
+use meican\models\Aggregator;
 
-use app\models\BpmWorkflow;
+use meican\models\BpmWorkflow;
 
 class DomainController extends RbacController {
 	

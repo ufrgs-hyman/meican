@@ -6,13 +6,13 @@
 
     use yii\grid\CheckboxColumn;
     
-    use app\components\LinkColumn;
+    use meican\components\LinkColumn;
     
     use yii\helpers\Html;
     
     use yii\widgets\ActiveForm;
 
-    use app\modules\topology\assets\ServiceAsset;
+    use meican\modules\topology\assets\ServiceAsset;
     
     ServiceAsset::register($this);
 ?>

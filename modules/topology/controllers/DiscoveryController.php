@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\topology\controllers;
+namespace meican\modules\topology\controllers;
 
 use yii\web\Controller;
 use Yii;
 
-use app\models\TopologySynchronizer;
-use app\modules\topology\models\NSIParser;
+use meican\models\TopologySynchronizer;
+use meican\modules\topology\models\NSIParser;
 
 /*
  * Classe que implementa o módulo Servidor do protocolo NSI Document Distribution Service (DDS), 

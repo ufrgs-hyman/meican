@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\topology\controllers;
+namespace meican\modules\topology\controllers;
 
 use yii\data\ActiveDataProvider;
 
-use app\controllers\RbacController;
-use app\models\TopologySynchronizer;
-use app\modules\topology\models\SyncForm;
-use app\modules\topology\models\NSIParser;
-use app\models\TopologyChange;
-use app\models\Service;
+use meican\controllers\RbacController;
+use meican\models\TopologySynchronizer;
+use meican\modules\topology\models\SyncForm;
+use meican\modules\topology\models\NSIParser;
+use meican\models\TopologyChange;
+use meican\models\Service;
 
 use Yii;
 
