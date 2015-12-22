@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\init\models;
+namespace meican\modules\init\models;
 
 use yii\base\Model;
 use Yii;
-use app\models\User;
+use meican\models\User;
 
 /**
  * LoginForm class.

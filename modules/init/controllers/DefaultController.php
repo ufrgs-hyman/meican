@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\init\controllers;
+namespace meican\modules\init\controllers;
 
 use Yii;
 

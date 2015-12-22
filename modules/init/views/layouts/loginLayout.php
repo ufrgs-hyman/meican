@@ -2,8 +2,8 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use app\components\AnalyticsWidget;
-use app\modules\init\assets\LoginAsset;
+use meican\components\AnalyticsWidget;
+use meican\modules\init\assets\LoginAsset;
 
 LoginAsset::register($this);
 

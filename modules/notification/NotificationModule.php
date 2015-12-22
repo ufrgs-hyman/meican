@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\notification;
+namespace meican\modules\notification;
 
 class NotificationModule extends \yii\base\Module
 {
-    public $controllerNamespace = 'app\modules\notification\controllers';
+    public $controllerNamespace = 'meican\modules\notification\controllers';
 
     public function init()
     {

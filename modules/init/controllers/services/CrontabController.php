@@ -1,11 +1,11 @@
 <?php
 
-namespace app\modules\init\controllers\services;
+namespace meican\modules\init\controllers\services;
 
 use yii\console\Controller;
 use Yii;
-use app\components\CrontabManager;
-use app\models\Cron;
+use meican\components\CrontabManager;
+use meican\models\Cron;
 
 class CrontabController extends Controller {
     

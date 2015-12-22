@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\init\controllers;
+namespace meican\modules\init\controllers;
 
 use Yii;
 
 use yii\web\Controller;
-use app\controllers\RbacController;
-use app\components\DateUtils;
-use app\models\User;
+use meican\controllers\RbacController;
+use meican\components\DateUtils;
+use meican\models\User;
 
 use yii\helpers\Url;
 

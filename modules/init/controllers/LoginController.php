@@ -1,17 +1,17 @@
 <?php
 
-namespace app\modules\init\controllers;
+namespace meican\modules\init\controllers;
 
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
-use app\models\User;
-use app\models\Group;
-use app\models\Preference;
-use app\modules\init\models\LoginForm;
-use app\modules\init\models\CafeUserForm;
-use app\modules\init\models\ForgotPasswordForm;
-use app\modules\aaa\models\AaaPreference;
+use meican\models\User;
+use meican\models\Group;
+use meican\models\Preference;
+use meican\modules\init\models\LoginForm;
+use meican\modules\init\models\CafeUserForm;
+use meican\modules\init\models\ForgotPasswordForm;
+use meican\modules\aaa\models\AaaPreference;
 
 
 class LoginController extends Controller {

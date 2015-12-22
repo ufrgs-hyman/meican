@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 
-use app\modules\init\assets\SupportAsset;
+use meican\modules\init\assets\SupportAsset;
 
 SupportAsset::register($this);
 
