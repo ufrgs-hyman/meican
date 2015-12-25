@@ -4,16 +4,16 @@ namespace meican\assets;
 
 use yii\web\AssetBundle;
 
-class TimePickerAsset extends AssetBundle
+class BootstrapAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/timepicker';
+    public $sourcePath = '@bower/bootstrap/dist';
     
     public $js = [
-        'jquery.timepicker.min.js',
+        'js/bootstrap.min.js',
     ];
     
     public $css = [
-        'jquery.timepicker.css',
+        'css/bootstrap.min.css',
     ];
     
     public $depends = [
