@@ -19,13 +19,14 @@ class AccountForm extends Model {
 	public $name;
 	public $language;
 	public $dateFormat;
+	public $timeFormat;
 	public $timeZone;
 
 	/**
 	 */
 	public function rules()	{
 		return [
-			[['name', 'language', 'email', 'dateFormat', 'timeZone'], 'required'],
+			[['name', 'language', 'email', 'dateFormat', 'timeFormat', 'timeZone'], 'required'],
 			['newPass', 'compare', 'compareAttribute'=> 'newPassConfirm'],
 			[['isChangedPass','currentPass','newPass', 'newPassConfirm'], 'validatePass'],
 			[['login'], 'safe']
@@ -34,7 +35,7 @@ class AccountForm extends Model {
 	
 	public function attributeLabels() {
 		return [
-			'login'=>Yii::t('aaa', 'User'),
+			'login'=>Yii::t('aaa', 'Login'),
 			"password"=>Yii::t('aaa', 'Password'),
 			"isChangedPass" => Yii::t('aaa', 'I want change my password'),
 			"newPass" => Yii::t('aaa', 'New password'),
@@ -45,17 +46,17 @@ class AccountForm extends Model {
 			'email' => Yii::t('aaa', 'Email'),
 			'dateFormat' => Yii::t('aaa', 'Date Format'),
 			'timeZone' => Yii::t('aaa', 'Time Zone'),
+			'timeFormat' => Yii::t("aaa", "Time Format")
 		];
 	}
 	
 	public function setFromRecord($record) {
 		$this->login = $record->login;
-		$sets = $record->getUserSettings()->one();
-		$this->name = $sets->name;
-		$this->email = $sets->email;
-		$this->language = $sets->language;
-		$this->dateFormat = $sets->date_format;
-		$this->timeZone = $sets->time_zone;
+		$this->name = $record->name;
+		$this->email = $record->email;
+		$this->language = $record->language;
+		$this->dateFormat = $record->date_format;
+		$this->timeZone = $record->time_zone;
 	}
 	
 	public function validatePass($attr, $params) {
@@ -81,22 +82,15 @@ class AccountForm extends Model {
 		if ($this->isChangedPass) {
 			$user->password = Yii::$app->getSecurity()->generatePasswordHash($this->newPass);
 		}
+
+		$user->name = $this->name;
+		$user->email = $this->email;
+		$user->language = $this->language;
+		$user->date_format = $this->dateFormat;
+		$user->time_format = $this->timeFormat;
+		$user->time_zone = $this->timeZone;
 		
 		return $user->save();
-	}
-	
-	public function updateSettings($settings) {
-		$settings->language = $this->language;
-		Yii::$app->session["language"] = $this->language;
-		Yii::$app->session["date.format"] = $this->dateFormat;
-		Yii::$app->session["time.zone"] = $this->timeZone;
-		
-		$settings->time_zone = $this->timeZone;
-		$settings->date_format = $this->dateFormat;
-		$settings->name = $this->name;
-		$settings->email = $this->email;
-		
-		return $settings->save();
 	}
 	
 	public function clearPass() {

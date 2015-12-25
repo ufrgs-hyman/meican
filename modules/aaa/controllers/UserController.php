@@ -2,21 +2,24 @@
 
 namespace meican\modules\aaa\controllers;
 
-use meican\models\Preference;
+use yii\web\Controller;
+use yii\helpers\Url;
+use yii\data\ActiveDataProvider;
 
 use meican\modules\aaa\models\UserForm;
 use meican\modules\aaa\models\AccountForm;
 use meican\modules\aaa\models\UserSearch;
-use yii\web\Controller;
-use yii\helpers\Url;
-use yii\data\ActiveDataProvider;
+
+use meican\models\Preference;
 use meican\models\User;
 use meican\models\UserSettings;
 use meican\models\UserDomainRole;
 use meican\models\Domain;
 use meican\models\Group;
-use meican\controllers\RbacController;
 use meican\models\Notification;
+
+use meican\controllers\RbacController;
+
 use Yii;
 
 class UserController extends RbacController {
@@ -172,26 +175,10 @@ class UserController extends RbacController {
     	$user = User::findOne($userId);
 		$account = new AccountForm;
     	
-    	//Standard configurations
-    	$size = 80; //In pixels
-    	$defaultImage = 'mm';
-    	$maximumRating = 'g';
-    
-    	$avatarUrl = "http://www.gravatar.com/avatar/";
-    	$avatarUrl .= md5(strtolower(trim("test")));
-    	$avatarUrl .= "?s=$size&d=$defaultImage&r=$maximumRating";
-    
     	if($account->load($_POST)) {
     		if ($account->validate()) {
     			if ($account->updateUser($user)) {
-    				$settings = $user->getUserSettings()->one();
-	    			if ($account->updateSettings($settings)) {
 	    				$this->redirect(["account", 'lang'=>true]);
-	    			} else {
-	    				foreach($settings->getErrors() as $attribute => $error) {
-	    					Yii::$app->getSession()->addFlash("error", $error[0]);
-	    				}
-	    			}
     			} else {
     				foreach($user->getErrors() as $attribute => $error) {
     					Yii::$app->getSession()->addFlash("error", $error[0]);
@@ -213,7 +200,6 @@ class UserController extends RbacController {
     	$account->clearPass();
     	
     	return $this->render('account', array(
-    			'avatarUrl'=>$avatarUrl,
     			'user'=>$account,
     	));
     }

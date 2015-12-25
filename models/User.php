@@ -12,8 +12,13 @@ use yii\web\IdentityInterface;
  * @property string $login
  * @property string $password
  * @property string $authkey
+ * @property string $email
+ * @property string $name
+ * @property string $language
+ * @property string $date_format
+ * @property string $time_format
+ * @property string $time_zone
  *
- * @property Request[] $requests
  * @property UserSettings $usersettings
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
@@ -35,12 +40,19 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['login', 'password', 'authkey'], 'required'],
+            [['login', 'password', 'authkey','language','name','email','date_format','time_format','time_zone'], 'required'],
+            [['language'], 'string'],
+            [['time_format'], 'string', 'max' => 10],
+            [['date_format'], 'string', 'max' => 20],
             [['login'], 'string', 'max' => 30],
+            [['time_zone'], 'string', 'max' => 40],
+            [['email'], 'string', 'max' => 60],
+            [['email'], 'email'],
             [['password'], 'string', 'max' => 200],
-            [['authkey'], 'string', 'max' => 100],
+            [['authkey', 'name'], 'string', 'max' => 100],
             [['login'], 'unique'],
-            [['authkey'], 'unique']
+            [['email'], 'unique'],
+            [['authkey'], 'unique'],
         ];
     }
 
@@ -60,21 +72,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRequests()
-    {
-        return $this->hasMany(Request::className(), ['response_user_id' => 'id']);
-    }
-
-    /**
      * @return UserSettings objeto associado ao usuario.
      */
     public function getUserSettings()
     {
     	return $this->hasOne(UserSettings::className(), ['id' => 'id']);
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -83,18 +87,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     	return $this->hasMany(UserDomainRole::className(), ['user_id' => 'id']);
     }
 
-    /**
-     * findOne segue o padrão do yii2 e retorna nulo em caso de não encontrar nenhum item
-     */
     static function findOneByEmail($email) {
-        $sets = UserSettings::findByEmail($email)->one();
-        if ($sets) return $sets->getUser()->one();
-        return null;
+        return self::find()->where(['email'=> $email])->one();
     }
-    
-    /**
-     * TODO revisar, nao segue o padrao yii2
-     */
+
     public static function findByUsername($username) {
     	return static::findOne(['login' => $username]);
     }
@@ -103,16 +99,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     	return static::findOne($id);
     }
     
+    /**
+     * login by token disabled
+     */
     public static function findIdentityByAccessToken($token, $type = null) {
-    	return static::findOne(['authkey' => $token]);
-    }
-    
-    public function getName() {
-    	return $this->getUserSettings()->one()->name;
-    }
-    
-    public function getEmail() {
-    	return $this->getUserSettings()->one()->email;
+    	return null;
     }
     
     public function getId() {
@@ -140,16 +131,12 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     	$this->authkey = Yii::$app->getSecurity()->generateRandomString();
     	$this->password = Yii::$app->getSecurity()->generatePasswordHash($form->password);
     	
-    	//Save user settings with default
-    	$this->_settings = $this->getUserSettings()->one();
-    	if (!$this->_settings) $this->_settings = new UserSettings;
-    	$this->_settings->language = 'en-US';
-    	$this->_settings->date_format = 'dd/mm/yyyy';
-    	$this->_settings->name = $form->name;
-    	$this->_settings->email = $form->email;
+    	$this->language = 'en-US';
+    	$this->date_format = 'dd/mm/yyyy';
+    	$this->name = $form->name;
+    	$this->email = $form->email;
     	
-    	if(!$this->_settings->validate()) return $this->_settings->getErrors();
-    	return false;
+    	return true;
     }
 
     public function setFromData($login, $password, $name, $email, 
@@ -160,19 +147,14 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         $this->_groupRoleName = $groupRoleName;
         $this->_domain = $domain;
         
-        $this->_settings = $this->getUserSettings()->one();
-        if (!$this->_settings) $this->_settings = new UserSettings;
-        $this->_settings->language = 'en-US';
-        $this->_settings->date_format = 'dd/mm/yyyy';
-        $this->_settings->name = $name;
-        $this->_settings->email = $email;
+        $this->language = 'en-US';
+        $this->date_format = 'dd/mm/yyyy';
+        $this->name = $name;
+        $this->email = $email;
     }
     
     public function afterSave($isNewRecord, $changedAttributes) {
     	if ($isNewRecord) {
-    		$this->_settings->id = $this->id;
-    		$this->_settings->save();
-    		
     		if(isset($this->_groupRoleName)){
     			$userDomainRole = new UserDomainRole;
 	    		$userDomainRole->user_id = $this->id;
