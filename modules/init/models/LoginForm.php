@@ -26,7 +26,7 @@ class LoginForm extends Model {
 	
 	public function attributeLabels() {
 		return [
-			'login'=>Yii::t('init', 'Username'),
+			'login'=>Yii::t('init', 'Login'),
 			"password"=>Yii::t('init', 'Password'),
 		];
 	}
@@ -50,17 +50,7 @@ class LoginForm extends Model {
 	
 	public function createSession($user) {
 		$duration = 3600; // one hour
-		$sets = $user->getUserSettings()->one();
-		$result = Yii::$app->user->login($user, $duration);
-		if ($result) {
-			Yii::$app->session["user.login"] = $user->login;
-			Yii::$app->session["user.name"] = $sets->name;
-			Yii::$app->session["language"] = $sets->language;
-			Yii::$app->session["date.format"] = $sets->date_format;
-			Yii::$app->session["time.zone"] = $sets->time_zone;
-			Yii::$app->session["topo.viewer"] = $sets->topo_viewer;
-		}
-		return $result;
+		return Yii::$app->user->login($user, $duration);
 	}
 	
 	public function getUser() {

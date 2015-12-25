@@ -6,19 +6,9 @@ use meican\modules\init\assets\SupportAsset;
 
 SupportAsset::register($this);
 
+$this->params['header'] = ["About", ['Home', 'About']];
+
 ?>
-
-<!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        About
-        <small>Home > About</small>
-      </h1>
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-
       <div class="row">
         <!-- left column -->
         <div class="col-md-6">
@@ -163,6 +153,3 @@ SupportAsset::register($this);
         </div>
         <!--/.col (right) -->
       </div>
-
-    </section>
-    <!-- /.content -->

@@ -13,7 +13,7 @@ class IcheckAsset extends AssetBundle
     ];
     
     public $css = [
-        'skins/square/blue.css',
+        'skins/minimal/blue.css',
     ];
     
     public $depends = [

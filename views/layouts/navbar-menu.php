@@ -22,7 +22,7 @@ use yii\helpers\Url;
             <a href="#">
               <div class="pull-left">
                 <!-- User Image -->
-                <?= Html::img(Url::base()."/23/dist/img/avatar5.png", ['class'=> 'img-circle']); ?>
+                <?= Html::img("@web/images/avatar.png", ['class'=> 'img-circle']); ?>
               </div>
               <!-- Message title and timestamp -->
               <h4>
@@ -75,39 +75,25 @@ use yii\helpers\Url;
     <!-- Menu Toggle Button -->
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       <!-- The user image in the navbar-->
-      <?= Html::img(Url::base()."/23/dist/img/avatar5.png", ['class'=> 'user-image']); ?>
+      <?= Html::img("@web/images/avatar.png", ['class'=> 'user-image']); ?>
       <!-- hidden-xs hides the username on small devices so only the image appears. -->
-      <span class="hidden-xs">Guest</span>
+      <span class="hidden-xs"><?= \Yii::$app->user->getIdentity()->name; ?></span>
     </a>
     <ul class="dropdown-menu">
       <!-- The user image in the menu -->
       <li class="user-header">
-        <?= Html::img(Url::base()."/23/dist/img/avatar5.png", ['class'=> 'img-circle']); ?>
+        <?= Html::img("@web/images/avatar.png", ['class'=> 'img-circle']); ?>
 
         <p>
-          Guest
-          <small>Member since Nov. 2012</small>
+          <?= \Yii::$app->user->getIdentity()->name; ?>
+          <small><?= \Yii::$app->user->getIdentity()->email; ?></small>
         </p>
       </li>
-      <!-- Menu Body -->
-      <li class="user-body">
-        <div class="row">
-          <div class="col-xs-4 text-center">
-            <a href="#">Preferences</a>
-          </div>
-          <div class="col-xs-4 text-center">
-            <a href="#">Option</a>
-          </div>
-          <div class="col-xs-4 text-center">
-            <a href="#">Option</a>
-          </div>
-        </div>
-        <!-- /.row -->
-      </li>
+      
       <!-- Menu Footer-->
       <li class="user-footer">
         <div class="pull-left">
-          <a href="#" class="btn btn-default btn-flat">Profile</a>
+          <a href="<?= Url::toRoute(['/aaa/user/account']); ?>" class="btn btn-default btn-flat">My account</a>
         </div>
         <div class="pull-right">
           <a href="#" class="btn btn-default btn-flat">Sign out</a>

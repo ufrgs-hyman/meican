@@ -1,6 +1,6 @@
 <?php
 
-namespace app\assets;
+namespace meican\assets;
 
 use yii\web\AssetBundle;
 
@@ -10,9 +10,9 @@ class MeicanJuiAsset extends AssetBundle
     public $baseUrl = '@web';
 
     public $css = [
-        'css/jquery-ui.min.css',
-        'css/jquery-ui.structure.min.css',
-        'css/jquery-ui.theme.min.css',
+        //'css/jquery-ui.min.css',
+        //'css/jquery-ui.structure.min.css',
+        //'css/jquery-ui.theme.min.css',
     ];
     
     public $js = [

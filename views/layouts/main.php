@@ -32,7 +32,7 @@ LayoutAsset::register($this);
     </script>
     <?php $this->head() ?>
 </head>
-<body class="sidebar-mini skin-blue-light">
+<body class="fixed sidebar-mini skin-blue-light">
 <?php $this->beginBody() ?>
 <div class="wrapper">
 
@@ -72,7 +72,28 @@ LayoutAsset::register($this);
 
   <!-- Content Wrapper. -->
   <div class="content-wrapper">
-    <?= $content; ?>
+    <?php 
+        $route = '';
+        if (isset($this->params['header'])) {
+            for ($i=1; $i < count($this->params['header'][1]); $i++) { 
+                $route = $this->params['header'][1][0]." > ".$this->params['header'][1][$i];
+            }
+            echo '<!-- Content Header (Page header) -->
+              <section class="content-header">
+                <h1>
+                  '.$this->params['header'][0].'
+                  <small>'.$route.'</small>
+                </h1>
+              </section>';
+        } 
+        if (!isset($this->params['hide-content-section'])) {
+            echo '<section class="content">';
+            echo $content;
+            echo '</section>';
+        } else {
+            echo $content;
+        }
+    ?>
   </div>
   <!-- /.content-wrapper -->
 
