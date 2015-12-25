@@ -23,7 +23,9 @@
         "bower-asset/bootstrap" : "3.3.5",
         "bower-asset/fontawesome" : "4.4.0",
         "bower-asset/ionicons" : "2.0.1",
-        "bower-asset/icheck" : "1.0.2"
+        "bower-asset/icheck" : "1.0.2",
+        "bower-asset/jquery-hoverIntent" : "1.8.1",
+        "bower-asset/timepicker" : "1.6.3"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "2.0.4",

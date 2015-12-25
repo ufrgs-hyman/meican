@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f27e66f2ec0f3c6734aa46f9552385b6",
-    "content-hash": "11882f1561769847d049f1e2514eae5d",
+    "hash": "cafffb1fe059b383a03b096a2df36a1e",
+    "content-hash": "4faed69ab18e311c7f1ecee3627d0c5f",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -229,6 +229,41 @@
             ]
         },
         {
+            "name": "bower-asset/jquery-hoverintent",
+            "version": "v1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/briancherne/jquery-hoverIntent.git",
+                "reference": "2d648374402f0c4b4406cd8d8e62fc0f74f95936"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/briancherne/jquery-hoverIntent/zipball/2d648374402f0c4b4406cd8d8e62fc0f74f95936",
+                "reference": "2d648374402f0c4b4406cd8d8e62fc0f74f95936",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.9.1"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "jquery.hoverIntent.js"
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A jQuery plug-in that attempts to determine the user's intent on mouseover. To delay or prevent the accidental firing of callbacks.",
+            "keywords": [
+                "delay",
+                "hover",
+                "hoverintent",
+                "intent",
+                "jquery",
+                "mouseover",
+                "plugin"
+            ]
+        },
+        {
             "name": "bower-asset/jquery-ui",
             "version": "1.11.4",
             "source": {
@@ -384,6 +419,40 @@
                     "test/"
                 ]
             }
+        },
+        {
+            "name": "bower-asset/timepicker",
+            "version": "1.6.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jonthornton/jquery-timepicker.git",
+                "reference": "a40064a8b6ecf6c71b80be8f927d52c4eadd79d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jonthornton/jquery-timepicker/zipball/a40064a8b6ecf6c71b80be8f927d52c4eadd79d8",
+                "reference": "a40064a8b6ecf6c71b80be8f927d52c4eadd79d8",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.7"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "./jquery.timepicker.js",
+                    "./jquery.timepicker.css"
+                ]
+            },
+            "license": [
+                "http://opensource.org/licenses/MIT"
+            ],
+            "description": "A jQuery timepicker plugin inspired by Google Calendar.",
+            "keywords": [
+                "google calendar",
+                "picker",
+                "time"
+            ]
         },
         {
             "name": "bower-asset/yii2-pjax",
