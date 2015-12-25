@@ -9,11 +9,14 @@ return [
     'id' => 'meican-console',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'aliases' => [
+        '@meican' => '@app',
+    ],
     'modules' => [
-    	'aaa' => 'app\modules\aaa\AaaModule',
-    	'circuits' => 'app\modules\circuits\CircuitsModule',
-    	'init' => 'app\modules\init\InitModule',
-    	'topology' => 'app\modules\topology\TopologyModule',
+    	'aaa' => 'meican\modules\aaa\AaaModule',
+    	'circuits' => 'meican\modules\circuits\CircuitsModule',
+    	'init' => 'meican\modules\init\InitModule',
+    	'topology' => 'meican\modules\topology\TopologyModule',
     ],
     'components' => [
         'cache' => [

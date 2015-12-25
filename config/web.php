@@ -58,7 +58,7 @@ $config = [
         'user' => [
             'identityClass' => 'meican\models\User',
             'enableAutoLogin' => true,
-            'loginUrl' => ['init/login']
+            'loginUrl' => ['aaa/login']
         ],
         'errorHandler' => [
             'errorAction' => 'init/default/error',
