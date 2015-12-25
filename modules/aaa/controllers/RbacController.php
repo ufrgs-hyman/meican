@@ -1,6 +1,6 @@
 <?php
 
-namespace meican\controllers;
+namespace meican\modules\aaa\controllers;
 
 use yii\web\Controller;
 use yii\filters\AccessControl;
@@ -44,9 +44,9 @@ abstract class RbacController extends Controller {
 	public function init() {
         parent::init();
 		
-		Yii::$app->language = Yii::$app->session->get('language', 'en-US');
-        Yii::$app->formatter->datetimeFormat = Yii::$app->session->get('date.format', 'dd/MM/yyyy HH:mm');
-        Yii::$app->formatter->timeZone = Yii::$app->session->get('time.zone', 'America/Sao_Paulo');
+		Yii::$app->language = Yii::$app->user->isGuest ? "en-US" : Yii::$app->user->getIdentity()->language;
+        Yii::$app->formatter->datetimeFormat = Yii::$app->user->isGuest ? "dd/MM/yyyy HH:mm" : Yii::$app->user->getIdentity()->date_format." ".Yii::$app->user->getIdentity()->time_format;
+        Yii::$app->formatter->timeZone = Yii::$app->user->isGuest ? 'America/Sao_Paulo' : Yii::$app->user->getIdentity()->time_zone;
     } 
     
     static function asyncActionBegin() {

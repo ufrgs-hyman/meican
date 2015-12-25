@@ -1,13 +1,13 @@
 <?php
 use yii\helpers\Html;
-use meican\modules\init\assets\InitAsset;
+use meican\assets\layout\LayoutAsset;
 use yii\helpers\Url;
 use meican\components\AnalyticsWidget;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-InitAsset::register($this);
+LayoutAsset::register($this);
 
 ?>
 <!DOCTYPE html>

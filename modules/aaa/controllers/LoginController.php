@@ -1,6 +1,6 @@
 <?php
 
-namespace meican\modules\init\controllers;
+namespace meican\modules\aaa\controllers;
 
 use Yii;
 use yii\helpers\Url;
@@ -8,11 +8,10 @@ use yii\web\Controller;
 use meican\models\User;
 use meican\models\Group;
 use meican\models\Preference;
-use meican\modules\init\models\LoginForm;
-use meican\modules\init\models\CafeUserForm;
-use meican\modules\init\models\ForgotPasswordForm;
+use meican\modules\aaa\models\LoginForm;
+use meican\modules\aaa\models\CafeUserForm;
+use meican\modules\aaa\models\ForgotPasswordForm;
 use meican\modules\aaa\models\AaaPreference;
-
 
 class LoginController extends Controller {
 	

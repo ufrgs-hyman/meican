@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use meican\controllers\RbacController;
+use meican\modules\aaa\controllers\RbacController;
 
 ?>
 

@@ -101,8 +101,8 @@ use yii\helpers\Url;
       </li>
     </ul>
   </li>
-  <li><?= Html::a(Yii::t("init", "Sign out"),array('/init/login/logout')); ?></li>
+  <li><?= Html::a(Yii::t("init", "Sign out"),array('/aaa/login/logout')); ?></li>
   <?php else: ?>
-  <li><?= Html::a(Yii::t("init", "Sign in"),array('/init/login')); ?></li>
+  <li><?= Html::a(Yii::t("init", "Sign in"),array('/aaa/login')); ?></li>
   <?php endif; ?>
 </ul>

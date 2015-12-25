@@ -1,6 +1,6 @@
 <?php 
 use meican\components\widgets\MenuWidget;
-use meican\controllers\RbacController;
+use meican\modules\aaa\controllers\RbacController;
 
 echo MenuWidget::widget([
     'options' => ['class' => 'sidebar-menu'],

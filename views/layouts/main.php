@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use meican\assets\LayoutAsset;
+use meican\assets\layout\LayoutAsset;
 use yii\helpers\Url;
 use meican\components\AnalyticsWidget;
 

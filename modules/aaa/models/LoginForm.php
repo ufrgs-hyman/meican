@@ -1,6 +1,6 @@
 <?php
 
-namespace meican\modules\init\models;
+namespace meican\modules\aaa\models;
 
 use yii\base\Model;
 use Yii;

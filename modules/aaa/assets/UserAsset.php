@@ -6,14 +6,12 @@ use yii\web\AssetBundle;
 
 class UserAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $sourcePath = '@meican/modules/aaa/assets';
 
     public $js = [
-    	'js/aaa/user.js',
+    	'js/user.js',
     ];
     
     public $depends = [
-    	'yii\web\JqueryAsset',
     ];
 }
