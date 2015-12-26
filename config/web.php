@@ -8,6 +8,9 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'debug','session'],
     'defaultRoute' => 'init',
+    'aliases' => [
+        '@meican' => '@app',
+    ],
     'modules' => [
 	    'debug' => [
 	    	'class' => 'yii\debug\Module',
@@ -21,9 +24,6 @@ $config = [
     	'notification' => 'meican\modules\notification\NotificationModule',
 		'gii' => 'yii\gii\Module',
 	],
-    'aliases' => [
-        '@meican' => '@app',
-    ],
     'components' => [
         'assetManager' => [
             'appendTimestamp' => true,
@@ -84,48 +84,42 @@ $config = [
         	'translations' => [
 	        	'aaa*' => [
 		        	'class' => 'yii\i18n\PhpMessageSource',
-		        	'basePath' => '@app/messages',
-			        'sourceLanguage' => 'en-US',
+		        	'basePath' => '@app/modules/aaa/messages',
 			        'fileMap' => [
 				        'aaa' => 'aaa.php',
 			        ],
 				],
 		        'init*' => [
 			        'class' => 'yii\i18n\PhpMessageSource',
-			        'basePath' => '@app/messages',
-			        'sourceLanguage' => 'en-US',
+			        'basePath' => '@app/modules/init/messages',
 			        'fileMap' => [
 				        'init' => 'init.php',
 			        ],
 		        ],
 		        'bpm*' => [
 			        'class' => 'yii\i18n\PhpMessageSource',
-			        'basePath' => '@app/messages',
-			        'sourceLanguage' => 'en-US',
+			        'basePath' => '@app/modules/bpm/messages',
 			        'fileMap' => [
 			        	'bpm' => 'bpm.php',
 		        	],
 		        ],
 		        'circuits*' => [
 			        'class' => 'yii\i18n\PhpMessageSource',
-			        'basePath' => '@app/messages',
-			        'sourceLanguage' => 'en-US',
+			        'basePath' => '@app/modules/circuits/messages',
 			        'fileMap' => [
 			        	'circuits' => 'circuits.php',
 			        ],
 		        ],
 		        'topology*' => [
 			        'class' => 'yii\i18n\PhpMessageSource',
-			        'basePath' => '@app/messages',
-			        'sourceLanguage' => 'en-US',
+			        'basePath' => '@app/modules/topology/messages',
 			        'fileMap' => [
 			        	'topology' => 'topology.php',
 			        ],
 		        ],
         		'notification*' => [
         			'class' => 'yii\i18n\PhpMessageSource',
-        			'basePath' => '@app/messages',
-        			'sourceLanguage' => 'en-US',
+        			'basePath' => '@app/modules/notification/messages',
         			'fileMap' => [
         				'notification' => 'notification.php',
         			],

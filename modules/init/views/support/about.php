@@ -2,10 +2,6 @@
 
 use yii\helpers\Html;
 
-use meican\modules\init\assets\SupportAsset;
-
-SupportAsset::register($this);
-
 $this->params['header'] = ["About", ['Home', 'About']];
 
 ?>

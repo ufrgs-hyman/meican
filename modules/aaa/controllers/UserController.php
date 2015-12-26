@@ -18,7 +18,7 @@ use meican\models\Domain;
 use meican\models\Group;
 use meican\models\Notification;
 
-use meican\controllers\RbacController;
+use meican\modules\aaa\controllers\RbacController;
 
 use Yii;
 

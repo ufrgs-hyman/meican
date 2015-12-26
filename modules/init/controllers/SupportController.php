@@ -5,7 +5,6 @@ namespace meican\modules\init\controllers;
 use Yii;
 
 use yii\web\Controller;
-use meican\controllers\RbacController;
 use meican\components\DateUtils;
 use meican\models\User;
 
