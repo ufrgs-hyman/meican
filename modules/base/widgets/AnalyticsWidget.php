@@ -1,6 +1,6 @@
 <?php 
 
-namespace meican\components;
+namespace meican\base\widgets;
 
 use Yii;
 

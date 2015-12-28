@@ -1,5 +1,5 @@
 <?php
-namespace meican\components\widgets;
+namespace meican\base\widgets;
 
 use Yii;
 use yii\helpers\ArrayHelper;

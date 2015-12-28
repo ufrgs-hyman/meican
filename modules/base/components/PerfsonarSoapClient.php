@@ -1,6 +1,6 @@
 <?php
 
-namespace meican\components;
+namespace meican\base\components;
 
 class PerfsonarSoapClient extends \SoapClient {
 	

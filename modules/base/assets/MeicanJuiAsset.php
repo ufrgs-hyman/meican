@@ -16,7 +16,7 @@ class MeicanJuiAsset extends AssetBundle
     ];
     
     public $js = [
-        'js/jquery-ui.min.js',
+        //'js/jquery-ui.min.js',
     ];
     
     public $depends = [
