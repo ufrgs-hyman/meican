@@ -1,1 +1,1 @@
-##MEICAN Module - BPM
+##MEICAN BPM Module
