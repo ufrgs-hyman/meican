@@ -14,9 +14,9 @@ $this->params['header'] = ["About", ['Home', 'About']];
             </div>
             <div class="box-body">
                 <p><?= Html::img("@web/images/meican_new.png", ['style'=>'width: 300px;','title' => 'MEICAN']); ?></p>
-                <p><b>Management Environment of Inter-domain Circuits for Advanced Networks</b> <?= Yii::t("init", 'is a Web application that enables users to request VCs between well-defined end-points that, depending on operation policies and human authorisation located in the intermediate domains that connect source and destination end-points.'); ?></p>
-                <p><?= Yii::t("init", 'Our solution uses Business Process Management (BPM) concepts for managing the VCs establishment process, since VC requested by end-user to network devices configurations.'); ?></p>
-                <p><?= Yii::t("init", 'The main contribution of the proposed solution is to provide dynamic authorization strategies composed for policies and human support.'); ?></p>
+                <p><b>Management Environment of Inter-domain Circuits for Advanced Networks</b> <?= Yii::t("home", 'is a Web application that enables users to request VCs between well-defined end-points that, depending on operation policies and human authorisation located in the intermediate domains that connect source and destination end-points.'); ?></p>
+                <p><?= Yii::t("home", 'Our solution uses Business Process Management (BPM) concepts for managing the VCs establishment process, since VC requested by end-user to network devices configurations.'); ?></p>
+                <p><?= Yii::t("home", 'The main contribution of the proposed solution is to provide dynamic authorization strategies composed for policies and human support.'); ?></p>
             </div>
           </div>
           <!-- /.box -->
@@ -26,16 +26,16 @@ $this->params['header'] = ["About", ['Home', 'About']];
               <h3 class="box-title">Information</h3>
             </div>
             <div class="box-body">
-              <b><?= Yii::t("init", 'Version');?></b>
-              <p><?= Yii::$app->params['meican.version']; ?></p>
+              <b><?= Yii::t("home", 'Version');?></b>
+              <p><?= Yii::$app->params['version']; ?></p>
 
-              <b><?= Yii::t("init", 'Documentation'); ?></b>
-              <p><?= Yii::t("init", 'The documentation is only in portuguese and is available on <a href="{url}" target="blank">RNP Wiki</a>.</p>', ['url'=> 'https://wiki.rnp.br/display/secipo/Guia+MEICAN']); ?>
+              <b><?= Yii::t("home", 'Documentation'); ?></b>
+              <p><?= Yii::t("home", 'The documentation is only in portuguese and is available on <a href="{url}" target="blank">RNP Wiki</a>.</p>', ['url'=> 'https://wiki.rnp.br/display/secipo/Guia+MEICAN']); ?>
 
-              <b><?= Yii::t("init", 'License'); ?></b>
-              <p><?= Yii::t("init", 'MEICAN is licenced under BSD2 License.');?></p>
-              <b><?= Yii::t("init", 'Source code');?></b>
-              <p><?= Yii::t("init", 'The project is hosted by');?> <a href="https://github.com/ufrgs-hyman/meican2" target="blank">GitHub</a>.</p>
+              <b><?= Yii::t("home", 'License'); ?></b>
+              <p><?= Yii::t("home", 'MEICAN is licenced under BSD2 License.');?></p>
+              <b><?= Yii::t("home", 'Source code');?></b>
+              <p><?= Yii::t("home", 'The project is hosted by');?> <a href="https://github.com/ufrgs-hyman/meican2" target="blank">GitHub</a>.</p>
             </div>
             <!-- /.box-body -->
           </div>
@@ -61,7 +61,7 @@ $this->params['header'] = ["About", ['Home', 'About']];
                 <a href="https://networks.inf.ufrgs.br" target="_blank"><?= Html::img("@web/images/networks.jpg", 
                 ['style'=>'height: 60px;','title' => 'UFRGS Computer Networks Group']); ?></a></p>
 
-                <b><?= Yii::t("init", 'UFRGS Developers'); ?></b>
+                <b><?= Yii::t("home", 'UFRGS Developers'); ?></b>
                 <p>
                 <table>
                 <tr>
@@ -72,7 +72,7 @@ $this->params['header'] = ["About", ['Home', 'About']];
                 </tr>
                 </table>
                 </p>
-                <b><?= Yii::t("init", 'UFRGS Coordinators'); ?></b>
+                <b><?= Yii::t("home", 'UFRGS Coordinators'); ?></b>
                 <p>
                 <table>
                 <tr>
@@ -85,7 +85,7 @@ $this->params['header'] = ["About", ['Home', 'About']];
                     <td>Juliano Araujo Wickboldt (jwickboldt at inf.ufrgs.br) <a target="_blank" href="https://github.com/julianowick"><i class="fa fa-github"></i></a></td>
                 </tr>
                 </table></p>
-                <b><?= Yii::t("init", 'RNP Coordinators'); ?></b>
+                <b><?= Yii::t("home", 'RNP Coordinators'); ?></b>
                 <p>
                 <table>               
                 <tr>
@@ -96,7 +96,7 @@ $this->params['header'] = ["About", ['Home', 'About']];
                 </tr>
                 </table></p>
                 
-                <p><b><?= Yii::t("init", 'Previous developers');?></b></p>
+                <p><b><?= Yii::t("home", 'Previous developers');?></b></p>
                 <p>
                 <table>
                 <tr>
