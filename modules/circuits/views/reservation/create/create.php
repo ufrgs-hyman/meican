@@ -1,8 +1,8 @@
 <?php 
-	use meican\modules\circuits\assets\CreateReservationAsset;
+	use meican\circuits\assets\reservation\CreateAsset;
 	use yii\widgets\ActiveForm;
 	
-	CreateReservationAsset::register($this);
+	CreateAsset::register($this);
 
 	$form = ActiveForm::begin([
 			'method' => 'post',

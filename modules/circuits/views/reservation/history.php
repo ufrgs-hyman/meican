@@ -1,22 +1,16 @@
 <?php 
 	use yii\grid\GridView;
-	
 	use yii\helpers\Html;
 	use yii\helpers\ArrayHelper;
 	use yii\widgets\ActiveForm;
 	use yii\widgets\Pjax;
 
-	use meican\components\LinkColumn;
-	
-	use meican\models\Domain;
-	use meican\models\Reservation;
-	use meican\models\Connection;
-	use meican\models\User;
-	use meican\models\ConnectionPath;
-	
-	use meican\modules\circuits\assets\HistoryReservationAsset;
-	
-	HistoryReservationAsset::register($this);
+	use meican\base\components\LinkColumn;
+	use meican\aaa\models\User;
+	use meican\topology\models\Domain;
+	use meican\circuits\models\Reservation;
+	use meican\circuits\models\Connection;
+	use meican\circuits\models\ConnectionPath;
 ?>
 
 <h1><?= Yii::t('circuits', "History reservations"); ?></h1>

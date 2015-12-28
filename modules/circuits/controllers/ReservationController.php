@@ -1,32 +1,29 @@
 <?php
 
-namespace meican\modules\circuits\controllers;
+namespace meican\circuits\controllers;
 
 use Yii;
-
-use yii\web\Controller;
 use yii\helpers\Url;
 use yii\data\ActiveDataProvider;
-
-use meican\controllers\RbacController;
-use meican\components\DateUtils;
-use meican\models\Reservation;
-use meican\models\Connection;
-use meican\models\ConnectionAuth;
-use meican\models\ConnectionPath;
-use meican\models\Port;
-use meican\models\Domain;
-use meican\models\Device;
-use meican\models\Network;
-use meican\models\Service;
-use meican\modules\circuits\models\CircuitsPreference;
-use meican\modules\circuits\models\ReservationForm;
-use meican\modules\circuits\models\Protocol;
-use meican\modules\circuits\models\ReservationSearch;
-use meican\models\ReservationPath;
-use meican\models\Notification;
-
 use yii\helpers\Json;
+
+use meican\aaa\controllers\RbacController;
+use meican\base\components\DateUtils;
+use meican\circuits\models\Reservation;
+use meican\circuits\models\Connection;
+use meican\circuits\models\ConnectionAuth;
+use meican\circuits\models\ConnectionPath;
+use meican\circuits\models\CircuitsPreference;
+use meican\circuits\models\Protocol;
+use meican\circuits\models\ReservationPath;
+use meican\circuits\forms\ReservationForm;
+use meican\circuits\forms\ReservationSearch;
+use meican\topology\models\Port;
+use meican\topology\models\Domain;
+use meican\topology\models\Device;
+use meican\topology\models\Network;
+use meican\topology\models\Service;
+use meican\notification\models\Notification;
 
 class ReservationController extends RbacController {
 

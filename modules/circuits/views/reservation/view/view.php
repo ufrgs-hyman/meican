@@ -1,13 +1,14 @@
 <?php 
-	use meican\modules\circuits\assets\ViewReservationAsset;
 	use yii\grid\GridView;
 	use yii\grid\CheckboxColumn;
 	use yii\helpers\Url;
 	use yii\widgets\Pjax;
 	use yii\jui\Dialog;
 	use yii\helpers\Html;
+
+	use meican\circuits\assets\reservation\ViewAsset;
 	
-	ViewReservationAsset::register($this);
+	ViewAsset::register($this);
 ?>
 
 <h1 style="clear: none; float: left; z-index: 999999; position: absolute;">

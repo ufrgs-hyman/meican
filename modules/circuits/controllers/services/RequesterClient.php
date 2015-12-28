@@ -1,14 +1,15 @@
 <?php
 
-namespace meican\modules\circuits\controllers\services;
+namespace meican\circuits\controllers\services;
 
 use yii\helpers\Url;
-use meican\models\Connection;
-use meican\models\ConnectionPath;
-use meican\models\ConnectionLog;
-use meican\models\Provider;
-use meican\modules\circuits\models\CircuitsPreference;
 use Yii;
+
+use meican\circuits\models\Connection;
+use meican\circuits\models\ConnectionPath;
+use meican\circuits\models\ConnectionLog;
+use meican\circuits\models\Provider;
+use meican\circuits\models\CircuitsPreference;
 
 /*
  * Classe que implementa o módulo SoapClient do protocolo NSI Connection Service Requester 2.0

@@ -1,10 +1,10 @@
 <?php
 
-namespace meican\modules\circuits\models;
+namespace meican\circuits\models;
 
 use Yii;
-use meican\models\Preference;
 
+use meican\base\models\Preference;
 
 class CircuitsPreference extends Preference {
 

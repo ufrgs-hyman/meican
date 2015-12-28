@@ -2,18 +2,18 @@
 	use yii\grid\GridView;
 	use yii\widgets\DetailView;
 	use yii\grid\CheckboxColumn;
-	use meican\components\LinkColumn;
 	use yii\helpers\Html;
 	use yii\i18n\Formatter;
 	use yii\widgets\ActiveForm;
-	use meican\models\Reservation;
-	use meican\models\Domain;
-	use meican\models\Connection;
-
 	use yii\data\ArrayDataProvider;
 	use yii\jui\Dialog;
-	
-	use meican\modules\circuits\assets\AuthorizationAsset;
+
+	use meican\base\components\LinkColumn;	
+	use meican\topology\models\Domain;
+	use meican\circuits\models\Reservation;
+	use meican\circuits\models\Connection;	
+	use meican\circuits\assets\AuthorizationAsset;
+
 	AuthorizationAsset::register($this);
 ?>
 

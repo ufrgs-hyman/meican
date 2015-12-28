@@ -1,18 +1,18 @@
 <?php
 
-namespace meican\modules\circuits\controllers;
+namespace meican\circuits\controllers;
 
 use yii\helpers\Url;
 use Yii;
-use meican\models\Connection;
-use meican\models\ConnectionPath;
-use meican\models\Port;
-use meican\models\Device;
-use meican\models\Domain;
-use meican\models\Provider;
-use meican\models\Reservation;
-use meican\controllers\RbacController;
 
+use meican\circuits\models\Connection;
+use meican\circuits\models\ConnectionPath;
+use meican\circuits\models\Reservation;
+use meican\topology\models\Port;
+use meican\topology\models\Device;
+use meican\topology\models\Domain;
+use meican\topology\models\Provider;
+use meican\aaa\controllers\RbacController;
 
 class ConnectionController extends RbacController {
 	

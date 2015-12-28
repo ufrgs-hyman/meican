@@ -1,20 +1,21 @@
 <?php
 
-namespace meican\modules\circuits\controllers;
+namespace meican\circuits\controllers;
 
-use meican\modules\circuits\controllers\services\RequesterClient;
 use yii\helpers\Url;
 use Yii;
 use yii\web\Controller;
-use meican\modules\circuits\CircuitsModule;
-use meican\models\Connection;
-use meican\models\ConnectionPath;
-use meican\models\Port;
-use meican\models\Device;
-use meican\models\Domain;
-use meican\models\Provider;
-use meican\models\Reservation;
-use meican\components\DateUtils;
+
+use meican\circuits\controllers\services\RequesterClient;
+use meican\circuits\Module;
+use meican\circuits\models\Connection;
+use meican\circuits\models\ConnectionPath;
+use meican\circuits\models\Reservation;
+use meican\topology\models\Port;
+use meican\topology\models\Device;
+use meican\topology\models\Domain;
+use meican\topology\models\Provider;
+use meican\base\components\DateUtils;
 
 /*
  * Classe que implementa o módulo SoapServer do protocolo NSI Connection Service Requester 2.0
@@ -332,7 +333,7 @@ class RequesterController extends Controller {
 $wsdl = Url::to('@web/wsdl/ogf_nsi_connection_requester_v2_0.wsdl', true);
 
 $requester = new \SoapServer($wsdl, array('encoding'=>'UTF-8'));
-$requester->setObject(new RequesterController('req', CircuitsModule::getInstance()));
+$requester->setObject(new RequesterController('req', Module::getInstance()));
 $requester->handle();
     
 ?>

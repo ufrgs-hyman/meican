@@ -1,12 +1,10 @@
 <?php
 
-namespace meican\modules\circuits\models;
-
-use meican\models\Reservation;
-use meican\models\Cron;
-use meican\models\Connection;
+namespace meican\circuits\models;
 
 use Yii;
+
+use meican\base\models\Cron;
 
 class AutomatedTest extends Reservation {
 

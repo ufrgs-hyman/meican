@@ -1,1 +1,1 @@
-##MEICAN Module - Circuits
+##MEICAN Circuits Module

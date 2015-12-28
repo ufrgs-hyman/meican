@@ -1,28 +1,27 @@
 <?php
 
-namespace meican\modules\circuits\controllers;
+namespace meican\circuits\controllers;
 
-use yii\web\Controller;
-use meican\controllers\RbacController;
+
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
-use meican\models\Reservation;
-use meican\models\ReservationPath;
-use meican\models\Connection;
-use meican\models\ConnectionAuth;
-use meican\models\ConnectionPath;
-use meican\models\BpmFlow;
-use meican\models\FlowPath;
-use meican\models\User;
-use meican\models\Domain;
 use yii\db\Query;
-use meican\models\Notification;
-use meican\modules\circuits\models\AuthorizationForm;
-use meican\modules\circuits\models\AuthorizationDetailed;
-use meican\modules\circuits\models\AuthorizationSearch;
 
-use meican\components\DateUtils;
+use meican\aaa\controllers\RbacController;
+use meican\aaa\models\User;
+use meican\circuits\models\Reservation;
+use meican\circuits\models\ReservationPath;
+use meican\circuits\models\Connection;
+use meican\circuits\models\ConnectionAuth;
+use meican\circuits\models\ConnectionPath;
+use meican\circuits\forms\AuthorizationForm;
+use meican\circuits\forms\AuthorizationDetailed;
+use meican\circuits\forms\AuthorizationSearch;
+use meican\bpm\models\BpmFlow;
+use meican\topology\models\Domain;
+use meican\notification\models\Notification;
+use meican\base\components\DateUtils;
 
 class AuthorizationController extends RbacController {
 	
