@@ -24,6 +24,6 @@
 
       session_start();
       $_SESSION['data_from_cafe'] = $data;
-      header('Location: '."https://meican.cipo.rnp.br/init/login/cafe", true, 302);
+      header('Location: '."https://meican.cipo.rnp.br/aaa/login/cafe", true, 302);
 ?>
 
