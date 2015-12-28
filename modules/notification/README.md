@@ -1,1 +1,1 @@
-##MEICAN Module - Notification
+##MEICAN Notification Module

@@ -1,12 +1,12 @@
 <?php
 
-namespace meican\modules\notification\controllers;
+namespace meican\notification\controllers;
 
 use Yii;
-use meican\controllers\RbacController;
-use meican\models\Notification;
-use meican\models\Connection;
-use meican\models\ConnectionAuth;
+use meican\aaa\controllers\RbacController;
+use meican\notification\models\Notification;
+use meican\circuits\models\Connection;
+use meican\circuits\models\ConnectionAuth;
 use yii\helpers\Html;
 use yii\data\ActiveDataProvider;
 
