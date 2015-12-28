@@ -32,7 +32,7 @@ use yii\helpers\Html;
             </div>
             <!-- /.col -->
             <div class="col-xs-4">
-              <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-flat form-control', 'name' => 'login-button']) ?>
+              <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-flat form-control', 'name' => 'login-button','value'=>'submit']) ?>
             </div>
         </div>
         <div class="text-center">

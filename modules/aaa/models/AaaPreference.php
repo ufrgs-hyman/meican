@@ -1,10 +1,10 @@
 <?php
 
-namespace meican\modules\aaa\models;
+namespace meican\aaa\models;
 
 use Yii;
-use meican\models\Preference;
 
+use meican\base\models\Preference;
 
 class AaaPreference extends Preference {
 

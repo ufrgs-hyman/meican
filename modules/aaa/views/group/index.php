@@ -5,11 +5,10 @@ use yii\helpers\Url;
 use yii\grid\GridView;
 use yii\grid\CheckboxColumn;
 
-use meican\components\LinkColumn;
+use meican\base\components\LinkColumn;
+use meican\aaa\assets\group\IndexAsset;
 
-use meican\modules\aaa\assets\GroupAsset;
-
-GroupAsset::register($this);
+IndexAsset::register($this);
 
 ?>
 

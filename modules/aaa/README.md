@@ -1,5 +1,5 @@
-##MEICAN Module - AAA
+##MEICAN AAA Module
 
-Authorization - Users rbac system
-Authentication - Users login system
-Accounting - Users info system
+Authorization - RBAC system
+Authentication - User login system
+Accounting - User profile system

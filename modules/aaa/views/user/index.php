@@ -6,15 +6,10 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\grid\CheckboxColumn;
-use meican\models\UserDomainRole;
-
-use meican\components\LinkColumn;
-
 use yii\helpers\ArrayHelper;
 
-use meican\modules\aaa\assets\UserAsset;
-
-UserAsset::register($this);
+use meican\aaa\models\UserDomainRole;
+use meican\base\components\LinkColumn;
 
 ?>
 

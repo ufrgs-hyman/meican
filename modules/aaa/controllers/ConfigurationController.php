@@ -1,12 +1,12 @@
 <?php
 
-namespace meican\modules\aaa\controllers;
+namespace meican\aaa\controllers;
 
-use yii\web\Controller;
-use meican\controllers\RbacController;
-use meican\modules\aaa\models\ConfigurationForm;
-use meican\modules\aaa\models\AaaPreference;
 use Yii;
+
+use meican\aaa\controllers\RbacController;
+use meican\aaa\forms\ConfigurationForm;
+use meican\aaa\models\AaaPreference;
 
 class ConfigurationController extends RbacController {
     

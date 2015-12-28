@@ -3,16 +3,14 @@
 use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use yii\grid\CheckboxColumn;
-
-use meican\components\LinkColumn;
-
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-use meican\models\Group;
-use meican\modules\aaa\assets\RoleAsset;
+use meican\base\components\LinkColumn;
+use meican\aaa\models\Group;
+use meican\aaa\assets\role\IndexAsset;
 
-RoleAsset::register($this);
+IndexAsset::register($this);
 
 ?>
 

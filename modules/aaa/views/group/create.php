@@ -1,8 +1,8 @@
 <?php
 
-use meican\modules\aaa\assets\GroupCreateEditAsset;
+use meican\aaa\assets\group\CreateEditAsset;
 
-GroupCreateEditAsset::register($this);
+CreateEditAsset::register($this);
 
 ?>
 

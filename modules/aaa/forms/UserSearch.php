@@ -1,16 +1,16 @@
 <?php
 
-namespace meican\modules\aaa\models;
+namespace meican\aaa\forms;
 
 use Yii;
-use meican\models\User;
-use meican\modules\aaa\models\UserSearchForm;
-use meican\models\UserDomainRole;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\base\Model;
 
-use meican\models\BpmWorkflow;
+use meican\aaa\models\User;
+use meican\aaa\forms\UserSearchForm;
+use meican\aaa\models\UserDomainRole;
+use meican\bpm\models\BpmWorkflow;
 
 /**
  */

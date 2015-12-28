@@ -1,12 +1,13 @@
 <?php
 
-namespace meican\modules\aaa\controllers;
+namespace meican\aaa\controllers;
 
 use yii\web\Controller;
 use yii\filters\AccessControl;
-use meican\models\UserDomainRole;
-use meican\models\Domain;
 use Yii;
+
+use meican\aaa\models\UserDomainRole;
+use meican\topology\models\Domain;
 
 /**
  * RbacController

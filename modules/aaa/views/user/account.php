@@ -2,7 +2,8 @@
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Button;
 use yii\helpers\Html;
-use meican\modules\aaa\assets\account\AccountAsset;
+
+use meican\aaa\assets\AccountAsset;
 
 $this->params['header'] = ["My account", ['Home', 'My account']];
 

@@ -1,10 +1,11 @@
 <?php
 
-namespace meican\modules\aaa\models;
+namespace meican\aaa\forms;
 
 use yii\base\Model;
 use Yii;
-use meican\models\User;
+
+use meican\aaa\models\User;
 
 /**
  * LoginForm class.
@@ -26,8 +27,8 @@ class LoginForm extends Model {
 	
 	public function attributeLabels() {
 		return [
-			'login'=>Yii::t('init', 'Login'),
-			"password"=>Yii::t('init', 'Password'),
+			'login'=>Yii::t('aaa', 'Login'),
+			"password"=>Yii::t('aaa', 'Password'),
 		];
 	}
 	

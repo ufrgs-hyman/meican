@@ -1,10 +1,11 @@
 <?php
 
-namespace meican\modules\init\models;
+namespace meican\aaa\forms;
 
 use yii\base\Model;
 use Yii;
-use meican\models\User;
+
+use meican\aaa\models\User;
 
 /**
  */

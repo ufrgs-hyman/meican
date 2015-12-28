@@ -1,6 +1,6 @@
 <?php
 
-namespace meican\models;
+namespace meican\aaa\models;
 
 use Yii;
 

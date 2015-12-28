@@ -1,7 +1,7 @@
 <?php
-	use meican\modules\aaa\assets\RoleCreateEditAsset;
+	use meican\aaa\assets\role\CreateEditAsset;
 	
-	RoleCreateEditAsset::register($this);
+	CreateEditAsset::register($this);
 ?>
 
 <script>

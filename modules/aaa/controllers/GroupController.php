@@ -1,12 +1,12 @@
 <?php
 
-namespace meican\modules\aaa\controllers;
+namespace meican\aaa\controllers;
 
-use meican\controllers\RbacController;
 use yii\data\ActiveDataProvider;
-use meican\models\Group;
-use yii\web\Controller;
 use Yii;
+
+use meican\aaa\models\Group;
+use meican\aaa\controllers\RbacController;
 
 class GroupController extends RbacController {
 	

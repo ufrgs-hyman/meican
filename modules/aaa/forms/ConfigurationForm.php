@@ -1,10 +1,12 @@
 <?php
 
-namespace meican\modules\aaa\models;
+namespace meican\aaa\forms;
 
 use yii\base\Model;
 use Yii;
-use meican\components\DateUtils;
+
+use meican\aaa\models\AaaPreference;
+use meican\base\components\DateUtils;
 
 class ConfigurationForm extends Model {
     

@@ -2,7 +2,8 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use meican\models\Group;
+
+use meican\aaa\models\Group;
 
 $form=ActiveForm::begin(array(
 	'enableAjaxValidation'=>false,

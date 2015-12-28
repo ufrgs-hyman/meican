@@ -6,8 +6,8 @@ use yii\grid\CheckboxColumn;
 use yii\grid\LinkColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use meican\components\DropDownUtils;
-use meican\models\Domain;
+
+use meican\topology\models\Domain;
 
 ?>
 
