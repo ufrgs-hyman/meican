@@ -1,6 +1,6 @@
 <?php
 
-namespace meican\assets;
+namespace meican\base\assets\google;
 
 use yii\web\AssetBundle;
 use Yii;

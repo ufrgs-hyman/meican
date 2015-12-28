@@ -1,7 +1,8 @@
 <?php
 use yii\helpers\Html;
-use meican\base\assets\layout\LayoutAsset;
 use yii\helpers\Url;
+
+use meican\base\assets\layout\LayoutAsset;
 use meican\base\widgets\AnalyticsWidget;
 
 /* @var $this \yii\web\View */
@@ -19,7 +20,7 @@ LayoutAsset::register($this);
   <title><?= Html::encode(Yii::$app->name); ?></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
+  <link rel="shortcut icon" href="<?= Url::base(); ?>/images/favicon.ico" type="image/x-icon" />
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
