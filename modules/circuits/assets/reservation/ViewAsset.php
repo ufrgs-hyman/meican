@@ -18,8 +18,7 @@ class ViewAsset extends AssetBundle
     ];
 
     public $depends = [
-        'meican\assets\MeicanAsset',
-        'meican\assets\MeicanMapAsset'
+        'meican\base\assets\MeicanMapAsset'
     ];
 }
 

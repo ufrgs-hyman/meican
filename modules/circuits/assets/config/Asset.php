@@ -4,7 +4,7 @@ namespace meican\circuits\assets\config;
 
 use yii\web\AssetBundle;
 
-class ConfigurationAsset extends AssetBundle
+class Asset extends AssetBundle
 {
     public $sourcePath = '@meican/circuits/assets/config/public';
     

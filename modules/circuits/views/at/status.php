@@ -7,9 +7,9 @@
 	use yii\helpers\Html;
 	use yii\widgets\ActiveForm;
 	
-	use meican\modules\circuits\assets\AutomatedTestAsset;
+	use meican\modules\circuits\assets\at\Asset;
 	
-	AutomatedTestAsset::register($this);
+	Asset::register($this);
 
 	$form = ActiveForm::begin([
 			'method' => 'post',

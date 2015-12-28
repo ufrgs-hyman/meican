@@ -10,13 +10,13 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
-        '@meican' => '@app',
+        '@meican' => '@app/modules',
     ],
     'modules' => [
-    	'aaa' => 'meican\modules\aaa\AaaModule',
-    	'circuits' => 'meican\modules\circuits\CircuitsModule',
-    	'init' => 'meican\modules\init\InitModule',
-    	'topology' => 'meican\modules\topology\TopologyModule',
+    	'aaa' => 'meican\aaa\Module',
+    	'circuits' => 'meican\circuits\Module',
+    	'scheduler' => 'meican\scheduler\Module',
+    	'topology' => 'meican\topology\Module',
     ],
     'components' => [
         'cache' => [

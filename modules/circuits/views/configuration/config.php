@@ -7,9 +7,9 @@
 
     use meican\topology\models\Provider;
     use meican\circuits\models\Protocol;
-    use meican\circuits\assets\config\ConfigurationAsset;
+    use meican\circuits\assets\config\Asset;
 
-    ConfigurationAsset::register($this);
+    Asset::register($this);
 
 ?>
 

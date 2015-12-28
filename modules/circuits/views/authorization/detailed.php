@@ -12,9 +12,9 @@
 	use meican\topology\models\Domain;
 	use meican\circuits\models\Reservation;
 	use meican\circuits\models\Connection;	
-	use meican\circuits\assets\AuthorizationAsset;
+	use meican\circuits\assets\authorization\Asset;
 
-	AuthorizationAsset::register($this);
+	Asset::register($this);
 ?>
 
 <script>
