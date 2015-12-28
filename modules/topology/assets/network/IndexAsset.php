@@ -1,20 +1,17 @@
 <?php
 
-namespace meican\topology\assets\sync;
+namespace meican\topology\assets\network;
 
 use yii\web\AssetBundle;
 
-class ChangeAsset extends AssetBundle
+class IndexAsset extends AssetBundle
 {
     public $sourcePath = '@meican/topology/assets/public';
 
     public $js = [
-        'sync/changes.js',
+    	'network/network.js',
     ];
-
     public $depends = [
-        'yii\web\JqueryAsset',
+		'yii\web\JqueryAsset',
     ];
 }
-
-?>

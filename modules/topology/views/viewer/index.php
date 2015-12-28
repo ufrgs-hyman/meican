@@ -1,11 +1,11 @@
 <?php 
-	use meican\modules\topology\assets\ViewerAsset;
 	use yii\grid\GridView;
 	use yii\grid\CheckboxColumn;
 	use yii\helpers\Url;
 	use yii\widgets\Pjax;
 	
-	ViewerAsset::register($this);
+	use meican\topology\assets\viewer\IndexAsset;
+	IndexAsset::register($this);
 ?>
 
 <div id="search-row" style="margin-left: 15px; margin-top:15px;" hidden>

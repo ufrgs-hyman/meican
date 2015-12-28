@@ -1,6 +1,6 @@
 <?php
 
-namespace meican\topology\assets\domain;
+namespace meican\topology\assets\viewer;
 
 use yii\web\AssetBundle;
 
@@ -9,9 +9,11 @@ class IndexAsset extends AssetBundle
     public $sourcePath = '@meican/topology/assets/public';
 
     public $js = [
-        'domain/index.js',
+    	'viewer/viewer-i18n.js',
+    	'viewer/viewer.js',
     ];
 
     public $depends = [
+        'meican\base\assets\map\MeicanMapAsset',
     ];
 }

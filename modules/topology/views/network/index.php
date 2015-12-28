@@ -4,12 +4,11 @@
 	use yii\i18n\Formatter;
 	use yii\helpers\BaseHtml as Html;
 	use yii\widgets\ActiveForm;
-	
 	use yii\helpers\ArrayHelper;
 	
-	use meican\components\LinkColumn;
-	use meican\modules\topology\assets\NetworkAsset;
-	NetworkAsset::register($this);
+	use meican\base\components\LinkColumn;
+	use meican\topology\assets\network\IndexAsset;
+	IndexAsset::register($this);
 ?>
 
 <h1><?= Yii::t('topology', 'Networks'); ?></h1>

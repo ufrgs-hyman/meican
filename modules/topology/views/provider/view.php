@@ -3,18 +3,14 @@
     use yii\grid\GridView;
     use yii\widgets\DetailView;
     use yii\helpers\Url;
-
+    use yii\helpers\Html;
+    use yii\widgets\ActiveForm;
     use yii\grid\CheckboxColumn;
     
-    use meican\components\LinkColumn;
+    use meican\base\components\LinkColumn;
+    use meican\topology\assets\service\IndexAsset;
     
-    use yii\helpers\Html;
-    
-    use yii\widgets\ActiveForm;
-
-    use meican\modules\topology\assets\ServiceAsset;
-    
-    ServiceAsset::register($this);
+    IndexAsset::register($this);
 ?>
 
 <h1><?= Yii::t("topology", "Provider"); ?></h1>

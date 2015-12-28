@@ -1,22 +1,17 @@
 <?php 
 	use yii\grid\GridView;
 	use yii\grid\CheckboxColumn;
-	
-	use meican\components\LinkColumn;
-	
 	use yii\helpers\Html;
-	
 	use yii\i18n\Formatter;
-
-	use meican\modules\topology\assets\DeviceAsset;
-	
 	use yii\helpers\ArrayHelper;
-	
 	use yii\widgets\ActiveForm;
 	use yii\data\ActiveDataProvider;
-	use meican\models\Device;
+
+	use meican\base\components\LinkColumn;
+	use meican\topology\assets\device\IndexAsset;
+	use meican\topology\models\Device;
 	
-	DeviceAsset::register($this);
+	IndexAsset::register($this);
 ?>
 
 <h1><?= Yii::t('topology', 'Devices'); ?></h1>

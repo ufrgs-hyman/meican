@@ -5,8 +5,8 @@
     use yii\helpers\Url;
     use yii\helpers\ArrayHelper;
 
-    use meican\models\Domain;
-    use meican\models\Provider;
+    use meican\topology\models\Domain;
+    use meican\topology\models\Provider;
 ?>
 
 <?php $form= ActiveForm::begin([

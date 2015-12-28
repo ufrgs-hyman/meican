@@ -1,20 +1,17 @@
 <?php
 
-namespace meican\topology\assets\sync;
+namespace meican\topology\assets\device;
 
 use yii\web\AssetBundle;
 
-class ChangeAsset extends AssetBundle
+class IndexAsset extends AssetBundle
 {
     public $sourcePath = '@meican/topology/assets/public';
 
     public $js = [
-        'sync/changes.js',
+    	'device/device.js',
     ];
-
     public $depends = [
-        'yii\web\JqueryAsset',
+    	'yii\web\JqueryAsset',
     ];
 }
-
-?>

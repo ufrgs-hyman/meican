@@ -1,6 +1,6 @@
 <?php
 
-namespace meican\topology\assets\domain;
+namespace meican\topology\assets\provider;
 
 use yii\web\AssetBundle;
 
@@ -9,9 +9,6 @@ class IndexAsset extends AssetBundle
     public $sourcePath = '@meican/topology/assets/public';
 
     public $js = [
-        'domain/index.js',
-    ];
-
-    public $depends = [
+    	'provider/provider.js',
     ];
 }

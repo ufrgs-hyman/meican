@@ -1,16 +1,13 @@
 <?php 
     use yii\grid\GridView;
     use yii\grid\CheckboxColumn;
-    
-    use meican\components\LinkColumn;
-    
     use yii\helpers\Html;
-    
     use yii\widgets\ActiveForm;
     
-    use meican\modules\topology\assets\ProviderAsset;
+    use meican\base\components\LinkColumn;
+    use meican\topology\assets\provider\IndexAsset;
     
-    ProviderAsset::register($this);
+    IndexAsset::register($this);
 ?>
 
 <h1><?= Yii::t('topology',"Providers"); ?></h1>

@@ -1,16 +1,15 @@
 <?php
 
-namespace meican\modules\topology\assets;
+namespace meican\topology\assets\sync;
 
 use yii\web\AssetBundle;
 
 class SyncAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $sourcePath = '@meican/topology/assets/public';
 
     public $js = [
-        'js/topology/sync/sync.js'
+        'sync/sync.js'
     ];
 
     public $depends = [
