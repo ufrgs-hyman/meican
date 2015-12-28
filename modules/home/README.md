@@ -1,1 +1,1 @@
-##MEICAN Module - Init
+##MEICAN Home Module

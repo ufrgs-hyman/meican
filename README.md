@@ -7,20 +7,30 @@ MEICAN 2 is a complete rewrite of its previous version. The system meets the dem
 ##DIRECTORY STRUCTURE
 
 ```
-assets/             global assets directory
-certificates/       certificates used by application
-components/         reused or third-party php scripts
-config/             application configuration
-controllers/        global controllers, e.g. RBAC
-mail/               layouts and templates for mail sender
-messages/           i18N translations
-migrations/         database version control
-models/             database models
-modules/            application modules, e.g. circuits or topology
+certificates/       	application certificates
+config/             	application configuration
+mail/               	layouts and templates for mail sender
+migrations/         	database version control
+modules/            	application modules
+	aaa/				AAA Module
+	base/				Base Module
+	bpm/				BPM Module
+	circuits/			Circuits Module
+	home				Home Module
+	notification/		Notification Module
+	scheduler/			Scheduler Module
+	topology/			Topology Module
+		assets/			assets classes and their css, js and images
+		components/		independent submodules or third part classes
+		controllers/	containing controller class files
+		forms/			form models for views
+		messages/		I18N internationalization files
+		models/			database or standard models, e.g., DAO classes
+		views/			views and layout files
 runtime/            folder for logging and debug features
 tests/              test scripts
 views/              global views, layouts or templates
-web/                css, images, javascripts
+web/                web accessible files, e.g., assets cache, wsdl files.
 ```
 
 ##REQUIREMENTS
