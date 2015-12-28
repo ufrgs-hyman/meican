@@ -16,7 +16,7 @@ use meican\aaa\models\AaaPreference;
 
 class LoginController extends Controller {
 	
-	public $layout = 'init-layout';
+	public $layout = 'login-layout';
 	
 	public function actionIndex() {
 		if (!\Yii::$app->user->isGuest) {
