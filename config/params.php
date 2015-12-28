@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "meican.version" => "2.3.0",
+    "version" => "2.3.0",
 
     "google.analytics.enabled" => false,
     "google.analytics.key" => "",
@@ -11,8 +11,8 @@ return [
 
     'mailer.destination' => 'meican@inf.ufrgs.br',
 
-    'meican.certificate.filename' => "",
-    'meican.certificate.passphrase' => "",	
+    'certificate.filename' => "",
+    'certificate.passphrase' => "",	
 
     "provider.force.dummy" => true,
 

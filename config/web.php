@@ -8,31 +8,33 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'debug','session'],
     'defaultRoute' => 'init',
-    'aliases' => [
-        '@meican' => '@app',
-    ],
     'modules' => [
 	    'debug' => [
 	    	'class' => 'yii\debug\Module',
 	    	//'allowedIPs' => ['143.54.12.245']
 	    ],
-	    'aaa' => 'meican\modules\aaa\AaaModule',
-		'circuits' => 'meican\modules\circuits\CircuitsModule',
-		'init' => 'meican\modules\init\InitModule',
-		'topology' => 'meican\modules\topology\TopologyModule',
-		'bpm' => 'meican\modules\bpm\BpmModule',
-    	'notification' => 'meican\modules\notification\NotificationModule',
+	    'aaa' => 'meican\aaa\Module',
+        'base' => 'meican\base\Module',
+		'circuits' => 'meican\circuits\Module',
+		'home' => 'meican\home\Module',
+        'scheduler' => 'meican\scheduler\Module',
+		'topology' => 'meican\topology\Module',
+		'bpm' => 'meican\bpm\Module',
+    	'notification' => 'meican\notification\Module',
 		'gii' => 'yii\gii\Module',
 	],
+    'aliases' => [
+        '@meican' => '@app/modules',
+    ],
     'components' => [
         'assetManager' => [
-            'appendTimestamp' => true,
+            'forceCopy' => true,
             'bundles' => [ 
                 'yii\jui\JuiAsset' => [
                     'css' => [],
                     'js' => [],
                     'depends' => [
-                        'meican\assets\MeicanJuiAsset',
+                        'meican\base\assets\MeicanJuiAsset',
                     ]
                 ]
             ],
@@ -56,12 +58,12 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'meican\models\User',
+            'identityClass' => 'meican\aaa\models\User',
             'enableAutoLogin' => true,
             'loginUrl' => ['aaa/login']
         ],
         'errorHandler' => [
-            'errorAction' => 'init/default/error',
+            'errorAction' => 'home/default/error',
         ],
         'mailer' => require(__DIR__ . '/mailer.php'),
         'log' => [
@@ -84,42 +86,42 @@ $config = [
         	'translations' => [
 	        	'aaa*' => [
 		        	'class' => 'yii\i18n\PhpMessageSource',
-		        	'basePath' => '@app/modules/aaa/messages',
+		        	'basePath' => '@meican/aaa/messages',
 			        'fileMap' => [
 				        'aaa' => 'aaa.php',
 			        ],
 				],
-		        'init*' => [
+		        'home*' => [
 			        'class' => 'yii\i18n\PhpMessageSource',
-			        'basePath' => '@app/modules/init/messages',
+			        'basePath' => '@meican/home/messages',
 			        'fileMap' => [
-				        'init' => 'init.php',
+				        'home' => 'home.php',
 			        ],
 		        ],
 		        'bpm*' => [
 			        'class' => 'yii\i18n\PhpMessageSource',
-			        'basePath' => '@app/modules/bpm/messages',
+			        'basePath' => '@meican/bpm/messages',
 			        'fileMap' => [
 			        	'bpm' => 'bpm.php',
 		        	],
 		        ],
 		        'circuits*' => [
 			        'class' => 'yii\i18n\PhpMessageSource',
-			        'basePath' => '@app/modules/circuits/messages',
+			        'basePath' => '@meican/circuits/messages',
 			        'fileMap' => [
 			        	'circuits' => 'circuits.php',
 			        ],
 		        ],
 		        'topology*' => [
 			        'class' => 'yii\i18n\PhpMessageSource',
-			        'basePath' => '@app/modules/topology/messages',
+			        'basePath' => '@meican/topology/messages',
 			        'fileMap' => [
 			        	'topology' => 'topology.php',
 			        ],
 		        ],
         		'notification*' => [
         			'class' => 'yii\i18n\PhpMessageSource',
-        			'basePath' => '@app/modules/notification/messages',
+        			'basePath' => '@meican/notification/messages',
         			'fileMap' => [
         				'notification' => 'notification.php',
         			],
