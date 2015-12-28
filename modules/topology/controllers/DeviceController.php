@@ -1,19 +1,17 @@
 <?php
 
-namespace meican\modules\topology\controllers;
+namespace meican\topology\controllers;
 
-use yii\web\Controller;
-use meican\controllers\RbacController;
 use yii\data\ActiveDataProvider;
-
-use meican\models\Device;
-use meican\models\Port;
-use meican\models\Domain;
-
-use meican\modules\topology\models\DeviceSearch;
-
 use yii\helpers\Json;
 use Yii;
+
+use meican\aaa\controllers\RbacController;
+use meican\topology\models\Device;
+use meican\topology\models\Port;
+use meican\topology\models\Domain;
+use meican\topology\forms\DeviceSearch;
+
 
 class DeviceController extends RbacController {
 	

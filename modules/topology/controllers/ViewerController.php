@@ -1,15 +1,12 @@
 <?php
 
-namespace meican\modules\topology\controllers;
+namespace meican\topology\controllers;
 
-use yii\web\Controller;
 use yii\data\ActiveDataProvider;
-use meican\controllers\RbacController;
 
-use meican\models\Domain;
-use meican\models\Port;
-
-use Yii;
+use meican\aaa\controllers\RbacController;
+use meican\topology\models\Domain;
+use meican\topology\models\Port;
 
 class ViewerController extends RbacController {
 	

@@ -1,19 +1,17 @@
 <?php
 
-namespace meican\modules\topology\assets\domain;
+namespace meican\topology\assets\domain;
 
 use yii\web\AssetBundle;
 
 class IndexAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $sourcePath = '@meican/topology/assets/domain/public';
 
     public $js = [
-        'js/topology/domain/index.js',
+        'index.js',
     ];
 
     public $depends = [
-        'meican\assets\SpectrumAsset',
     ];
 }

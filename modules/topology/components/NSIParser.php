@@ -1,6 +1,6 @@
 <?php
 
-namespace meican\modules\topology\models;
+namespace meican\topology\components;
 
 class NSIParser {
 

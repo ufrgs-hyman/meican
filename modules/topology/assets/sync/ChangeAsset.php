@@ -1,16 +1,15 @@
 <?php
 
-namespace meican\modules\topology\assets;
+namespace meican\topology\assets;
 
 use yii\web\AssetBundle;
 
 class ChangeAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $sourcePath = '@meican/topology/assets/sync/public';
 
     public $js = [
-        'js/topology/sync/changes.js',
+        'changes.js',
     ];
 
     public $depends = [

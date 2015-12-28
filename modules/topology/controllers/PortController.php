@@ -1,19 +1,16 @@
 <?php
 
-namespace meican\modules\topology\controllers;
+namespace meican\topology\controllers;
 
-use yii\web\Controller;
-use meican\controllers\RbacController;
+use Yii;
+use yii\helpers\Json;
 use yii\data\ActiveDataProvider;
 
-use meican\models\Device;
-use meican\models\Network;
-use meican\models\Domain;
-use meican\models\Port;
-use Yii;
-use meican\modules\topology\models\DomainForm;
-
-use yii\helpers\Json;
+use meican\topology\models\Device;
+use meican\topology\models\Network;
+use meican\topology\models\Domain;
+use meican\topology\models\Port;
+use meican\aaa\controllers\RbacController;
 
 class PortController extends RbacController {
 	

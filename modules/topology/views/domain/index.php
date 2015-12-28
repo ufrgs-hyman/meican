@@ -1,12 +1,12 @@
 <?php 
 	use yii\grid\GridView;
 	use yii\grid\CheckboxColumn;
-	use meican\components\LinkColumn;
 	use yii\helpers\Html;
 	use yii\i18n\Formatter;
 	use yii\widgets\ActiveForm;
-	
-	use meican\modules\topology\assets\domain\IndexAsset;
+
+	use meican\base\components\LinkColumn;
+	use meican\topology\assets\domain\IndexAsset;
 	
 	IndexAsset::register($this);
 ?>

@@ -1,15 +1,15 @@
 <?php
 
-namespace meican\modules\topology\controllers;
+namespace meican\topology\controllers;
 
 use yii\data\ActiveDataProvider;
-
-use meican\controllers\RbacController;
-use meican\models\TopologySynchronizer;
-use meican\models\TopologyChange;
-use meican\models\TopologySyncEvent;
-
 use Yii;
+
+use meican\aaa\controllers\RbacController;
+use meican\topology\models\TopologySynchronizer;
+use meican\topology\models\TopologyChange;
+use meican\topology\models\TopologySyncEvent;
+
 
 class ChangeController extends RbacController {
 

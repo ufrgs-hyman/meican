@@ -1,12 +1,13 @@
 <?php
 
-namespace meican\modules\topology\models;
+namespace meican\topology\models;
 
 use Yii;
 use yii\helpers\Html;
-use meican\models\Notification;
-use meican\components\DateUtils;
-use meican\models\TopologyChange;
+
+use meican\notification\models\Notification;
+use meican\base\components\DateUtils;
+use meican\topology\models\TopologyChange;
 
 class TopologyNotification {   
 

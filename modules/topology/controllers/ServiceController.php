@@ -1,16 +1,15 @@
 <?php
 
-namespace meican\modules\topology\controllers;
+namespace meican\topology\controllers;
 
-use yii\web\Controller;
-use yii\data\ActiveDataProvider;
-use meican\controllers\RbacController;
-
-use meican\models\Domain;
-use meican\models\Service;
-use meican\models\Provider;
 use yii\helpers\Json;
 use Yii;
+use yii\data\ActiveDataProvider;
+
+use meican\aaa\controllers\RbacController;
+use meican\topology\models\Domain;
+use meican\topology\models\Service;
+use meican\topology\models\Provider;
 
 class ServiceController extends RbacController {
     

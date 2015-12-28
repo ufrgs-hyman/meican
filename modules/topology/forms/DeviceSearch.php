@@ -1,17 +1,18 @@
 <?php
 
-namespace meican\modules\topology\models;
+namespace meican\topology\forms;
 
 use Yii;
-use meican\components\DateUtils;
 use yii\data\ActiveDataProvider;
-use meican\models\Network;
-use meican\models\Domain;
 use yii\base\Model;
+
+use meican\base\components\DateUtils;
+use meican\topology\models\Device;
+use meican\topology\models\Domain;
 
 /**
  */
-class NetworkSearch extends Network {
+class DeviceSearch extends Device {
 
     public $domain_name;
 
@@ -47,17 +48,21 @@ class NetworkSearch extends Network {
         $this->load($params);
 
         if ($this->domain_name) {
+            
+        	Yii::trace($this->domain_name);
         	$domain = Domain::findOne(['name' => $this->domain_name]);
-        	$networks = Network::find()->where(['domain_id' => $domain->id]);
+        	
+        	$devices = Device::find()->where(['domain_id' => $domain->id]);
+
         } else {
             foreach ($domains as $domain) {
                 $validDomains[] = $domain->id;
             }
-            $networks = Network::find()->where(['in', 'domain_id', $validDomains]);
+            $devices = Device::find()->where(['in', 'domain_id', $validDomains]);
         }
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $networks,
+            'query' => $devices,
             'sort' => false,
             'pagination' => [
                 'pageSize' => 15,

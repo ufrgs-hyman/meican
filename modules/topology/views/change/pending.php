@@ -1,22 +1,16 @@
 <?php 
     use yii\grid\GridView;
     use yii\grid\CheckboxColumn;
-
     use yii\data\ActiveDataProvider;
-
-    use meican\models\TopologyChange;
-    use meican\models\Domain;
-    
-    use meican\components\LinkColumn;
-    
     use yii\helpers\Html;
     use yii\helpers\ArrayHelper;
-    
     use yii\widgets\ActiveForm;
-
     use yii\widgets\Pjax;
 
-    use meican\modules\topology\assets\ChangeAsset;
+    use meican\topology\models\TopologyChange;
+    use meican\topology\models\Domain;
+    use meican\base\components\LinkColumn;
+    use meican\topology\assets\sync\ChangeAsset;
     
     ChangeAsset::register($this);
 ?>

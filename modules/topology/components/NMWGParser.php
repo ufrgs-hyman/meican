@@ -1,9 +1,6 @@
 <?php
-//ESTRUTURA DA TOPOLOGIA
 
-namespace meican\modules\topology\models;
-
-use meican\components\PerfsonarSoapClient;
+namespace meican\topology\components;
 
 class NMWGParser {
     
