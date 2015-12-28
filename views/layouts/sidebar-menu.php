@@ -1,13 +1,13 @@
 <?php 
-use meican\components\widgets\MenuWidget;
-use meican\modules\aaa\controllers\RbacController;
+use meican\base\widgets\MenuWidget;
+use meican\aaa\controllers\RbacController;
 
 echo MenuWidget::widget([
     'options' => ['class' => 'sidebar-menu'],
     'items' => [
         [
-            'label' => Yii::t('init','Dashboard'), 
-            'url' => ['/init'],
+            'label' => Yii::t('home','Dashboard'), 
+            'url' => ['/home'],
             'icon' => 'fa fa-home'
         ],
         [
@@ -69,20 +69,20 @@ echo MenuWidget::widget([
             ],
         ],
         [
-            'label'=>Yii::t('init','External Access'),
+            'label'=>Yii::t('home','External Access'),
             'url' => "#",
             'icon' => 'fa fa-external-link',
             'items'=>[
                 [
-                    'label'=>Yii::t('init','Console Central'), 
+                    'label'=>Yii::t('home','Console Central'), 
                     'url'=>'http://monitora.cipo.rnp.br/console/',
                 ],
                 [
-                    'label'=>Yii::t('init','Monitoring'),
+                    'label'=>Yii::t('home','Monitoring'),
                     'url'=>'http://monitora.cipo.rnp.br/', 
                 ],
                 [
-                    'label'=>Yii::t('init','Weathermap'),
+                    'label'=>Yii::t('home','Weathermap'),
                     'url'=>'http://weathermap.cipo.rnp.br/',
                 ],
             ]

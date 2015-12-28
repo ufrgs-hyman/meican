@@ -66,8 +66,8 @@ use yii\helpers\Url;
     </ul>
   </li>
   <?php endif; ?>
-  <li><?= Html::a(Yii::t("init", "About"),array('/init/support/about')); ?></li>
-  <li><?= Html::a(Yii::t("init", "Help"),array('/init/support/help')); ?></li>
+  <li><?= Html::a(Yii::t("home", "About"),array('/home/support/about')); ?></li>
+  <li><?= Html::a(Yii::t("home", "Help"),array('/home/support/help')); ?></li>
 
   <?php if (!\Yii::$app->user->isGuest): ?>
   <!-- User Account Menu -->
@@ -101,8 +101,8 @@ use yii\helpers\Url;
       </li>
     </ul>
   </li>
-  <li><?= Html::a(Yii::t("init", "Sign out"),array('/aaa/login/logout')); ?></li>
+  <li><?= Html::a(Yii::t("home", "Sign out"),array('/aaa/login/logout')); ?></li>
   <?php else: ?>
-  <li><?= Html::a(Yii::t("init", "Sign in"),array('/aaa/login')); ?></li>
+  <li><?= Html::a(Yii::t("home", "Sign in"),array('/aaa/login')); ?></li>
   <?php endif; ?>
 </ul>

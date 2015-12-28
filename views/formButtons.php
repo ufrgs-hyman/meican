@@ -9,11 +9,11 @@ use yii\helpers\Html;
 		//$module = ucfirst($this->module->getName());
 
 		//if(Yii::app()->user->checkAccess('create'.$module)) {
-			Html::a(Yii::t('init', 'Add'), array('create')); 
+			Html::a(Yii::t('home', 'Add'), array('create')); 
 		//}
 	?>
 	<?=
-		Html::submitButton(Yii::t('init', 'Delete'), ['id'=>'deleteButton',]); 	
+		Html::submitButton(Yii::t('home', 'Delete'), ['id'=>'deleteButton',]); 	
 	?>
 </div>
 

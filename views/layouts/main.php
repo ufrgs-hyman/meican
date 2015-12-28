@@ -1,8 +1,8 @@
 <?php
 use yii\helpers\Html;
-use meican\assets\layout\LayoutAsset;
+use meican\base\assets\layout\LayoutAsset;
 use yii\helpers\Url;
-use meican\components\AnalyticsWidget;
+use meican\base\widgets\AnalyticsWidget;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
