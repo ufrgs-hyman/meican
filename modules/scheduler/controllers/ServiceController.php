@@ -1,6 +1,6 @@
 <?php
 
-namespace meican\scheduler\controllers\services;
+namespace meican\scheduler\controllers;
 
 use yii\console\Controller;
 use Yii;
@@ -8,7 +8,7 @@ use Yii;
 use meican\scheduler\components\CrontabManager;
 use meican\scheduler\models\Cron;
 
-class CrontabController extends Controller {
+class ServiceController extends Controller {
     
     public function beforeAction($action) {
         if (parent::beforeAction($action)) {
@@ -29,7 +29,7 @@ class CrontabController extends Controller {
         $job->doJob(Yii::$app->basePath."/yii init/services/crontab/listener");
         $crontab->add($job);
         $crontab->save(false);
-        echo "MEICAN Crontab Service Started\n";
+        echo "MEICAN Scheduler Service Started\n";
     }
     
     public function actionStop() {
@@ -40,7 +40,7 @@ class CrontabController extends Controller {
         $crontab->add($job);
         $crontab->save(false);
         $this->delete($job->id);
-        echo "MEICAN Crontab Service Stopped\n";
+        echo "MEICAN Scheduler Service Stopped\n";
     }
     
     public function actionListener() {

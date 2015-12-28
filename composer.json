@@ -39,7 +39,7 @@
         "post-install-cmd": [
             "yii\\composer\\Installer::postCreateProject",
             "php yii migrate --interactive=0",
-            "php yii init/services/crontab/start"
+            "php yii scheduler/service/start"
         ]
     },
     "extra": {
