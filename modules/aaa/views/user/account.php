@@ -3,11 +3,11 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Button;
 use yii\helpers\Html;
 
-use meican\aaa\assets\AccountAsset;
+use meican\aaa\assets\account\Asset;
 
 $this->params['header'] = ["My account", ['Home', 'My account']];
 
-AccountAsset::register($this);
+Asset::register($this);
 
 $form=ActiveForm::begin(array(
 	'id'=>'account-form',

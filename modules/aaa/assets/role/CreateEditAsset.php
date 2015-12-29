@@ -6,13 +6,13 @@ use yii\web\AssetBundle;
 
 class CreateEditAsset extends AssetBundle
 {
-    public $sourcePath = '@meican/aaa/assets/public';
+    public $sourcePath = '@meican/aaa/assets/role/public';
 
     public $js = [
-    	'role/roleCreateEdit.js',
+    	'roleCreateEdit.js',
     ];
     
     public $depends = [
-		'yii\web\JqueryAsset',
+		'meican\base\assets\layout\Asset',
     ];
 }

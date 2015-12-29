@@ -4,7 +4,7 @@ namespace meican\base\assets\layout;
 
 use yii\web\AssetBundle;
 
-class LayoutAsset extends AssetBundle
+class Asset extends AssetBundle
 {
     public $sourcePath = '@meican/base/assets/layout/public';
 

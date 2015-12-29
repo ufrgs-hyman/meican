@@ -6,16 +6,13 @@ use yii\web\AssetBundle;
 
 class IndexAsset extends AssetBundle
 {
-    public $sourcePath = '@meican/aaa/assets/public';
+    public $sourcePath = '@meican/aaa/assets/role/public';
 
     public $js = [
-    	'role/role.js',
+    	'role.js',
     ];
     
-    public $css = [ 
-    ];
-
     public $depends = [
-		'yii\web\JqueryAsset',
+		'meican\base\assets\layout\Asset',
     ];
 }

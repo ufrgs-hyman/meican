@@ -28,7 +28,8 @@ $config = [
     ],
     'components' => [
         'assetManager' => [
-            'forceCopy' => true,
+            'linkAssets' => true,
+            'appendTimestamp' => true,
             'bundles' => [ 
                 'yii\jui\JuiAsset' => [
                     'css' => [],

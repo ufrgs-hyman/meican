@@ -6,14 +6,14 @@ use yii\web\AssetBundle;
 
 class SyncAsset extends AssetBundle
 {
-    public $sourcePath = '@meican/topology/assets/public';
+    public $sourcePath = '@meican/topology/assets/sync/public';
 
     public $js = [
-        'sync/sync.js'
+        'sync.js'
     ];
 
     public $depends = [
-        'yii\web\JqueryAsset',
+		'meican\base\assets\layout\Asset',
     ];
 }
 

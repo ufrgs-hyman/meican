@@ -2,13 +2,13 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-use meican\base\assets\layout\LayoutAsset;
+use meican\base\assets\layout\Asset;
 use meican\base\widgets\AnalyticsWidget;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-LayoutAsset::register($this);
+Asset::register($this);
 
 ?>
 <!DOCTYPE html>

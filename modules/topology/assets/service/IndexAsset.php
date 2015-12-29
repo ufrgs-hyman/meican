@@ -6,9 +6,13 @@ use yii\web\AssetBundle;
 
 class IndexAsset extends AssetBundle
 {
-    public $sourcePath = '@meican/topology/assets/public';
+    public $sourcePath = '@meican/topology/assets/service/public';
 
     public $js = [
-        'service/service.js',
+        'service.js',
+    ];
+
+    public $depends = [
+		'meican\base\assets\layout\Asset',
     ];
 }
