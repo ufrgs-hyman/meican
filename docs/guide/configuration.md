@@ -9,8 +9,8 @@ Location: config/params.php
 Located on certificates folder on project root, the application certificate must be defined:
 
 ```
-'meican.certificate.filename' => 'meican.pem',
-'meican.certificate.passphrase' => '#CERTIFICATE-PASSWORD#',    
+'certificate.filename' => 'meican.pem',
+'certificate.pass' => '#CERTIFICATE-PASSWORD#',    
 ```
 
 By default the fake provider is enabled. Disable this feature setting the param below:

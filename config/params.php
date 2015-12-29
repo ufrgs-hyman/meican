@@ -12,7 +12,7 @@ return [
     'mailer.destination' => 'meican@inf.ufrgs.br',
 
     'certificate.filename' => "",
-    'certificate.passphrase' => "",	
+    'certificate.pass' => "",	
 
     "provider.force.dummy" => true,
 
