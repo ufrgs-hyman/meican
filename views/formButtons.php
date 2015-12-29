@@ -1,20 +1,10 @@
 <?php 
 
-use yii\helpers\Html;
+use yii\helpers\Url;
 
 ?>
 
-<div class="controls">
-	<?=
-		//$module = ucfirst($this->module->getName());
-
-		//if(Yii::app()->user->checkAccess('create'.$module)) {
-			Html::a(Yii::t('home', 'Add'), array('create')); 
-		//}
-	?>
-	<?=
-		Html::submitButton(Yii::t('home', 'Delete'), ['id'=>'deleteButton',]); 	
-	?>
+<div>
+	<a class="btn btn-primary" href="<?= Url::toRoute("create"); ?>">Add</a>
+	<button id="delete-button" type="submit" class="btn btn-warning">Delete</button>
 </div>
-
-<div style="clear: both"></div>

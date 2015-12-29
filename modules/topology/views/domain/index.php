@@ -9,61 +9,66 @@
 	use meican\topology\assets\domain\IndexAsset;
 	
 	IndexAsset::register($this);
+
+$this->params['header'] = ["Domains", ['Home', 'Topology']];
+
 ?>
 
-<h1><?= Yii::t('topology', 'Domains'); ?></h1>
-
-<?php
-	$form = ActiveForm::begin([
-			'method' => 'post',
-			'action' => ['delete'],
-			'id' => 'domain-form',
-			'enableClientScript'=>false,
-			'enableClientValidation' => false,
-	]);
-	
- 	echo $this->render('//formButtons'); ?>
-
-	<?=
-		GridView::widget([
-			'options' => ['class' => 'list'],
-			'dataProvider' => $domains,
-			'formatter' => new Formatter(['nullDisplay'=>'']),
-			'id' => 'gridDomains',
-			'layout' => "{items}{summary}{pager}",
-			'columns' => array(
-		    		array(
-		    			'class'=>CheckboxColumn::className(),
-				        'name'=>'delete',         
-				        'checkboxOptions'=>[
-				        	'class'=>'deleteCheckbox',
-				        ],
-				        'multiple'=>false,
-				        'headerOptions'=>['style'=>'width: 2%;'],
-			        ),
-			        array(
-			        	'class'=> LinkColumn::className(),
-			        	'image'=>'/images/edit_1.png',
-			        	'label' => '',
-			        	'title'=> Yii::t("topology", 'Update'),
-			        	'url' => '/topology/domain/update',
-			        	'headerOptions'=>['style'=>'width: 2%;'],
-			        ),
-					[
-						'label' => Yii::t('topology', 'Name'),
-			        	'value' => 'name',
-						'headerOptions'=>['style'=>'width: 50%;'],
-					],
-			        [
-			        	'label' => Yii::t('topology', 'Default Policy'),
-			        	'value' => function($dom){
-			        		return $dom->getPolicy();
-			        	},
-			        	'headerOptions'=>['style'=>'width: 46%;'],
-					],
-				),
-		]);
-	?>
-	<?php	
-		ActiveForm::end();
-	?>
+<div class="box box-default">
+	<div class="box-header with-border">
+	  <?= $this->render('//formButtons'); ?>
+	</div>
+	<div class="box-body">
+		<?php
+			$form = ActiveForm::begin([
+					'method' => 'post',
+					'action' => ['delete'],
+					'id' => 'domain-form',
+					'enableClientScript'=>false,
+					'enableClientValidation' => false,
+			]);
+			
+		?>
+		<?=
+			GridView::widget([
+				'dataProvider' => $domains,
+				'id' => 'gridDomains',
+				'layout' => "{items}{summary}{pager}",
+				'columns' => array(
+			    		array(
+			    			'class'=>CheckboxColumn::className(),
+					        'name'=>'delete',         
+					        'checkboxOptions'=>[
+					        	'class'=>'deleteCheckbox',
+					        ],
+					        'multiple'=>false,
+					        'headerOptions'=>['style'=>'width: 2%;'],
+				        ),
+				        array(
+				        	'class'=> LinkColumn::className(),
+				        	'image'=>'/images/edit_1.png',
+				        	'label' => '',
+				        	'title'=> Yii::t("topology", 'Update'),
+				        	'url' => '/topology/domain/update',
+				        	'headerOptions'=>['style'=>'width: 2%;'],
+				        ),
+						[
+							'label' => Yii::t('topology', 'Name'),
+				        	'value' => 'name',
+							'headerOptions'=>['style'=>'width: 50%;'],
+						],
+				        [
+				        	'label' => Yii::t('topology', 'Default Policy'),
+				        	'value' => function($dom){
+				        		return $dom->getPolicy();
+				        	},
+				        	'headerOptions'=>['style'=>'width: 46%;'],
+						],
+					),
+			]);
+		?>
+		<?php	
+			ActiveForm::end();
+		?>
+	</div>
+</div>
