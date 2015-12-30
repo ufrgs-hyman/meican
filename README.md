@@ -51,11 +51,11 @@ web/                web accessible files, e.g., assets cache, wsdl files.
 
 ##INSTALLATION GUIDE
 
-There is two specific installation guides, one for [CentOS 6](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide-en/installation-centos.md) and another for [Ubuntu 14](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide-en/installation-ubuntu.md).
+There is two specific installation guides, one for [CentOS 6](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide/installation-centos.md) and another for [Ubuntu 14](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide/installation-ubuntu.md).
 
 ##CONFIGURATION GUIDE
 
-The documentation is [here](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide-en/configuration.md).
+The documentation is [here](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide/configuration.md).
 
 ##USER GUIDE
 
