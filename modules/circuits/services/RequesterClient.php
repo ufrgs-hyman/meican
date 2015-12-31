@@ -1,6 +1,6 @@
 <?php
 
-namespace meican\circuits\controllers\services;
+namespace meican\circuits\services;
 
 use yii\helpers\Url;
 use Yii;

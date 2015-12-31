@@ -1,6 +1,6 @@
 <?php
 
-namespace meican\topology\controllers\services;
+namespace meican\topology\services;
 
 use Yii;
 use yii\helpers\Url;
