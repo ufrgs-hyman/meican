@@ -13,15 +13,15 @@ $config = [
 	    	'class' => 'yii\debug\Module',
 	    	//'allowedIPs' => ['143.54.12.245']
 	    ],
-	    'aaa' => 'meican\aaa\Module',
+        'aaa' => 'meican\aaa\Module',
         'base' => 'meican\base\Module',
-		'circuits' => 'meican\circuits\Module',
-		'home' => 'meican\home\Module',
+        'circuits' => 'meican\circuits\Module',
+        'home' => 'meican\home\Module',
         'scheduler' => 'meican\scheduler\Module',
-		'topology' => 'meican\topology\Module',
-		'bpm' => 'meican\bpm\Module',
-    	'notification' => 'meican\notification\Module',
-		'gii' => 'yii\gii\Module',
+        'topology' => 'meican\topology\Module',
+        'bpm' => 'meican\bpm\Module',
+        'notification' => 'meican\notification\Module',
+        'gii' => 'yii\gii\Module',
 	],
     'aliases' => [
         '@meican' => '@app/modules',
@@ -47,13 +47,13 @@ $config = [
     	],
     	'session' => [
 	    	'class' => 'yii\web\Session',
-	    	'cookieParams' => ['httpOnly' => true, 'lifetime'=> 3600],
-	    	'timeout' => 3600,
-	    	'useCookies' => true,
+	    	//'cookieParams' => ['httpOnly' => true, 'lifetime'=> 3600],
+	    	//'timeout' => 3600,
+	    	//'useCookies' => true,
     	],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'asdadasdas',
+            'cookieValidationKey' => '',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -68,13 +68,12 @@ $config = [
         ],
         'mailer' => require(__DIR__ . '/mailer.php'),
         'log' => [
-            'flushInterval' => 1000, 
             'traceLevel' => YII_DEBUG ? 1 : 0,
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning', 'trace'],
-                    'exportInterval' => 1000, 
+                    'logFile' => dirname(__DIR__).'/runtime/logs/web.log',
                 ],
             ],
         ],

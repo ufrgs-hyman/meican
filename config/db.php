@@ -6,5 +6,5 @@ return [
     'username' => 'root',
     'password' => 'root',
     'charset' => 'utf8',
-	'tablePrefix' => 'meican_',
+    'tablePrefix' => 'meican_',
 ];
