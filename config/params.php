@@ -1,8 +1,6 @@
 <?php
 
 return [
-    "version" => "2.3.0",
-
     "google.analytics.enabled" => false,
     "google.analytics.key" => "",
     "google.maps.key" => false,
@@ -15,5 +13,4 @@ return [
     'certificate.pass' => "",	
 
     "provider.force.dummy" => true,
-
 ];

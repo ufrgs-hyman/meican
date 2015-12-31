@@ -27,7 +27,7 @@ $this->params['header'] = ["About", ['Home', 'About']];
             </div>
             <div class="box-body">
               <b><?= Yii::t("home", 'Version');?></b>
-              <p><?= Yii::$app->params['version']; ?></p>
+              <p><?= Yii::$app->version; ?></p>
 
               <b><?= Yii::t("home", 'Documentation'); ?></b>
               <p><?= Yii::t("home", 'The documentation is only in portuguese and is available on <a href="{url}" target="blank">RNP Wiki</a>.</p>', ['url'=> 'https://wiki.rnp.br/display/secipo/Guia+MEICAN']); ?>

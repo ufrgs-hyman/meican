@@ -5,6 +5,7 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'meican',
     'name'=>'MEICAN',
+    'version' => '2.3.0',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'debug','session'],
     'defaultRoute' => 'home',
