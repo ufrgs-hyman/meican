@@ -4,9 +4,9 @@ namespace meican\home\controllers;
 
 use Yii;
 
-use yii\web\Controller;
+use meican\base\BaseController;
 
-class DefaultController extends Controller {
+class DefaultController extends BaseController {
 	
 	public function actions()
 	{
