@@ -3,7 +3,7 @@
 namespace meican\notification\controllers;
 
 use Yii;
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 use meican\notification\models\Notification;
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionAuth;

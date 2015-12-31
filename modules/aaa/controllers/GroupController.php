@@ -6,7 +6,7 @@ use yii\data\ActiveDataProvider;
 use Yii;
 
 use meican\aaa\models\Group;
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 
 class GroupController extends RbacController {
 	

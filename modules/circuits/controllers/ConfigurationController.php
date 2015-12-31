@@ -4,7 +4,7 @@ namespace meican\circuits\controllers;
 
 use Yii;
 
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 use meican\circuits\forms\ConfigurationForm;
 use meican\circuits\models\CircuitsPreference;
 

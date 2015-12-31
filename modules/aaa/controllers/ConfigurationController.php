@@ -4,7 +4,7 @@ namespace meican\aaa\controllers;
 
 use Yii;
 
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 use meican\aaa\forms\ConfigurationForm;
 use meican\aaa\models\AaaPreference;
 

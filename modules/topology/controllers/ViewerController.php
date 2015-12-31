@@ -4,7 +4,7 @@ namespace meican\topology\controllers;
 
 use yii\data\ActiveDataProvider;
 
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 use meican\topology\models\Domain;
 use meican\topology\models\Port;
 

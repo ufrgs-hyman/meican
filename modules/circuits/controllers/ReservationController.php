@@ -7,7 +7,7 @@ use yii\helpers\Url;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Json;
 
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 use meican\base\components\DateUtils;
 use meican\circuits\models\Reservation;
 use meican\circuits\models\Connection;

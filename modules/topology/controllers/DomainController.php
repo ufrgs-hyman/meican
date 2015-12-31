@@ -7,7 +7,7 @@ use yii\data\ArrayDataProvider;
 use Yii;
 use yii\helpers\Json;
 
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 use meican\topology\models\Network;
 use meican\topology\models\Domain;
 use meican\topology\models\Provider;

@@ -12,7 +12,7 @@ use meican\aaa\models\UserSettings;
 use meican\aaa\models\UserDomainRole;
 use meican\topology\models\Domain;
 use meican\aaa\models\Group;
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 use meican\notification\models\Notification;
 
 class RoleController extends RbacController {

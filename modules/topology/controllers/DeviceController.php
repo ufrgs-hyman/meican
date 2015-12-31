@@ -6,7 +6,7 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\Json;
 use Yii;
 
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 use meican\topology\models\Device;
 use meican\topology\models\Port;
 use meican\topology\models\Domain;

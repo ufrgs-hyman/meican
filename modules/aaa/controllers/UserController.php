@@ -6,17 +6,17 @@ use yii\helpers\Url;
 use yii\data\ActiveDataProvider;
 use Yii;
 
+use meican\base\models\Preference;
 use meican\aaa\forms\UserForm;
 use meican\aaa\forms\AccountForm;
 use meican\aaa\forms\UserSearch;
-use meican\base\models\Preference;
 use meican\aaa\models\User;
 use meican\aaa\models\UserSettings;
 use meican\aaa\models\UserDomainRole;
-use meican\topology\models\Domain;
 use meican\aaa\models\Group;
+use meican\aaa\RbacController;
 use meican\notification\models\Notification;
-use meican\aaa\controllers\RbacController;
+use meican\topology\models\Domain;
 
 class UserController extends RbacController {
 	

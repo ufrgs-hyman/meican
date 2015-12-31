@@ -12,7 +12,7 @@ use meican\topology\models\Port;
 use meican\topology\models\Device;
 use meican\topology\models\Domain;
 use meican\topology\models\Provider;
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 
 class ConnectionController extends RbacController {
 	

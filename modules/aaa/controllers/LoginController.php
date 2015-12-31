@@ -4,8 +4,8 @@ namespace meican\aaa\controllers;
 
 use Yii;
 use yii\helpers\Url;
-use yii\web\Controller;
 
+use meican\base\BaseController;
 use meican\aaa\models\User;
 use meican\aaa\models\Group;
 use meican\base\models\Preference;
@@ -14,7 +14,7 @@ use meican\aaa\forms\CafeUserForm;
 use meican\aaa\forms\ForgotPasswordForm;
 use meican\aaa\models\AaaPreference;
 
-class LoginController extends Controller {
+class LoginController extends BaseController {
 	
 	public $layout = 'login-layout';
 	

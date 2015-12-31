@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 
 ?>
 

@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\Url;
 use yii\data\ActiveDataProvider;
 
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 use meican\circuits\models\Reservation;
 use meican\topology\models\Domain;
 use meican\topology\models\Port;

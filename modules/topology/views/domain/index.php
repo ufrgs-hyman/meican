@@ -16,7 +16,7 @@ $this->params['header'] = ["Domains", ['Home', 'Topology']];
 
 <div class="box box-default">
 	<div class="box-header with-border">
-	  <?= $this->render('//formButtons'); ?>
+	  <?= $this->render('@meican/base/views/formButtons'); ?>
 	</div>
 	<div class="box-body">
 		<?php

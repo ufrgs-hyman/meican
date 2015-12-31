@@ -4,12 +4,12 @@ namespace meican\home\controllers;
 
 use Yii;
 use yii\helpers\Url;
-use yii\web\Controller;
 
+use meican\base\BaseController;
 use meican\base\components\DateUtils;
 use meican\aaa\models\User;
 
-class SupportController extends Controller {
+class SupportController extends BaseController {
 	
 	public $enableCsrfValidation = false;
 	

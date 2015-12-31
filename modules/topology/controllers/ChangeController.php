@@ -5,7 +5,7 @@ namespace meican\topology\controllers;
 use yii\data\ActiveDataProvider;
 use Yii;
 
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 use meican\topology\models\TopologySynchronizer;
 use meican\topology\models\TopologyChange;
 use meican\topology\models\TopologySyncEvent;

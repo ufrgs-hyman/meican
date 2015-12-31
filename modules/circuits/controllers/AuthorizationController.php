@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\db\Query;
 
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 use meican\aaa\models\User;
 use meican\circuits\models\Reservation;
 use meican\circuits\models\ReservationPath;

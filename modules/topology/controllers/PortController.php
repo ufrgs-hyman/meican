@@ -10,7 +10,7 @@ use meican\topology\models\Device;
 use meican\topology\models\Network;
 use meican\topology\models\Domain;
 use meican\topology\models\Port;
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 
 class PortController extends RbacController {
 	
