@@ -162,36 +162,35 @@ class UserController extends RbacController {
     }
     
     public function actionAccount($lang=null) {
-		if ($lang) {
-			Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User settings updated successfully'));
-		}    	
+        if ($lang) {
+            Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User settings updated successfully'));
+        }    	
     	
-    	$userId = Yii::$app->user->id;
-    
-    	$user = User::findOne($userId);
-		$account = new AccountForm;
-    	
-    	if($account->load($_POST)) {
-    		if ($account->validate()) {
-    			if ($account->updateUser($user)) {
-	    				$this->redirect(["account", 'lang'=>true]);
-    			} else {
-    				foreach($user->getErrors() as $attribute => $error) {
-    					Yii::$app->getSession()->addFlash("error", $error[0]);
-    				}
-    			}
-    		}
-    		else {
-    			foreach($account->getErrors() as $attribute => $error) {
-    				Yii::$app->getSession()->addFlash("error", $error[0]);
-    			}
-    			$account->clearErrors();
-    		}
-    
-    	} else {
-    		$account = new AccountForm;
-    		$account->setFromRecord($user);
-    	}
+        $userId = Yii::$app->user->id;
+
+        $user = User::findOne($userId);
+        $account = new AccountForm;
+
+        if($account->load($_POST)) {
+            if ($account->validate()) {
+                if ($account->updateUser($user)) {
+                    $this->redirect(["account", 'lang'=>true]);
+                } else {
+                    foreach($user->getErrors() as $attribute => $error) {
+                        Yii::$app->getSession()->addFlash("error", $error[0]);
+                    }
+                }
+            } else {
+                foreach($account->getErrors() as $attribute => $error) {
+                    Yii::$app->getSession()->addFlash("error", $error[0]);
+                }
+                $account->clearErrors();
+            }
+
+        } else {
+            $account = new AccountForm;
+            $account->setFromRecord($user);
+        }
     
     	$account->clearPass();
     	

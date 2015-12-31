@@ -32,20 +32,20 @@ abstract class RbacController extends Controller {
                         'roles' => ['?'], 	//Visitantes - Acesso negado antes mesmo de passar pelo RBAC
                     ],
                     [
-	                    'allow' => true,
-	                    'roles' => ['@'], 	//Usuarios logados - acesso permitido.
-                    					 	//Subcontrolador ou view deve chamar "can" para
-                    					 	//permissoes mais especificas de cada perfil
-        			],
-        		],
-        	],
+                        'allow' => true,
+                        'roles' => ['@'], 	//Usuarios logados - acesso permitido.
+                        				 	//Subcontrolador ou view deve chamar "can" para
+                        				 	//permissoes mais especificas de cada perfil
+                    ],
+                ],
+            ],
         ];
     }
     
 	public function init() {
         parent::init();
 		
-		Yii::$app->language = Yii::$app->user->isGuest ? "en-US" : Yii::$app->user->getIdentity()->language;
+        Yii::$app->language = Yii::$app->user->isGuest ? "en-US" : Yii::$app->user->getIdentity()->language;
         Yii::$app->formatter->datetimeFormat = Yii::$app->user->isGuest ? "dd/MM/yyyy HH:mm" : Yii::$app->user->getIdentity()->date_format." ".Yii::$app->user->getIdentity()->time_format;
         Yii::$app->formatter->timeZone = Yii::$app->user->isGuest ? 'America/Sao_Paulo' : Yii::$app->user->getIdentity()->time_zone;
     } 
@@ -56,8 +56,8 @@ abstract class RbacController extends Controller {
     
     static private function checkPermission($permissions, $role) {
     	if (!$role) {
-    		Yii::trace("Perfil inexistente?");
-    		return false;
+            Yii::trace("Perfil inexistente?");
+            return false;
     	}
     	$roleId = $role->id;
     	
