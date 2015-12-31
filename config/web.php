@@ -22,7 +22,7 @@ $config = [
         'bpm' => 'meican\bpm\Module',
         'notification' => 'meican\notification\Module',
         'gii' => 'yii\gii\Module',
-	],
+    ],
     'aliases' => [
         '@meican' => '@app/modules',
     ],
