@@ -6,7 +6,7 @@ use yii\web\AssetBundle;
 
 class Asset extends AssetBundle
 {
-	public $sourcePath = '@meican/aaa/assets/account/public';
+    public $sourcePath = '@meican/aaa/assets/account/public';
 	
     public $js = [
     	'account.js',
@@ -14,5 +14,5 @@ class Asset extends AssetBundle
     
     public $depends = [
     	'meican\base\assets\layout\Asset',
-	];
+    ];
 }
