@@ -1,46 +1,43 @@
 <?php 
-	use yii\widgets\ActiveForm;
-	use yii\helpers\Html;
+	use yii\bootstrap\ActiveForm;
+	use yii\bootstrap\Html;
 	use yii\helpers\Url;
 	use yii\helpers\ArrayHelper;
 
 	use meican\topology\assets\domain\FormAsset;
 
 	FormAsset::register($this);
+
+	$this->params['header'] = [Yii::t('topology', 'Domains'), ['Home', 'Topology', 'Domains']];
 ?>
 
 <?php $form= ActiveForm::begin([
 	'id'=>'domain-form',
-	'enableAjaxValidation'=>false,
 	'method' => 'post',
-	'enableClientValidation' => false,
+	'layout' => 'horizontal'
 ]); ?>
 
-	<h4>
-	<font color="#3a5879">
-	
-	<div class="form input">
-		<?= $form->field($domain,'name')->textInput(['size'=>30,'maxlength'=>60]); ?>
+<div class="box box-default">
+	<div class="box-header with-border">
+	  <h3 class="box-title"><?= $this->params['box-title']; ?></h3>
 	</div>
-
-	<div class="form input">
-		<?php echo $form->field($domain,'default_policy')->dropDownList($domain->getPolicyOptions());
-			if(Yii::$app->language == 'pt-BR') echo '<label style="padding-left: 5px" class="form-group">'.Yii::t("topology", "Overwritten by Workflows").'</label>';
-			else echo '<label class="form-group">'.Yii::t("topology", "Overwritten by Workflows").'</label>'; ?>
+	<div class="box-body">
+    	<?= $form->field($domain,'name')->textInput(['size'=>30,'maxlength'=>60]); ?>
+		<?= $form->field($domain,'default_policy')->dropDownList($domain->getPolicyOptions()); ?>
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-6">
+				<?= $form->field($domain,'color')->hiddenInput(); ?>
+				<input type='text' id="color" hidden>
+			</div>
+		</div>
 	</div>
-
-	<div class="form input">
-		<?= $form->field($domain,'color')->hiddenInput(); ?>
-		<input type='text' id="color" hidden>
+	<div class="box-footer">
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-6">
+				<button type="submit" class="btn btn-primary"><?= Yii::t("topology", 'Save'); ?></button>
+			</div>
+		</div>
 	</div>
-	
-	</h4>
-	</font>
-	
-	<div class="buttonsForm">
-		<?= Html::submitButton(Yii::t("topology", 'Save')) ?>
-		<a href="<?= Url::toRoute(['index']);?>"><?= Html::Button(Yii::t("topology", 'Cancel')); ?></a>
-	</div>
-
+</div>
 
 <?php ActiveForm::end(); ?>

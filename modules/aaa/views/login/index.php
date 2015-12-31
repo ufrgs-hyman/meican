@@ -1,7 +1,7 @@
 <?php
 
 use yii\bootstrap\ActiveForm;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 
 use meican\aaa\assets\login\Asset;
 
@@ -15,7 +15,10 @@ Asset::register($this);
   </div>
   <!-- /.login-logo -->
     <div class="login-box-body">
-      <?php $form = ActiveForm::begin(); ?>
+      <?php $form = ActiveForm::begin(array(
+          'id'=>'login-form',
+          'enableClientValidation'=>false,
+      )); ?>
       <p class="login-box-msg">Sign in to access the service</p>
       <div class="form-group has-feedback">
           <?= $form->field($model, 'login', ['inputOptions' => ['class' => 'form-control', 'placeholder' => 'Login']])->label(false) ?>
@@ -36,7 +39,7 @@ Asset::register($this);
           </div>
           <!-- /.col -->
           <div class="col-xs-4">
-            <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-flat form-control', 'name' => 'login-button','value'=>'submit']) ?>
+            <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-flat form-control']) ?>
           </div>
       </div>
       <div class="text-center">

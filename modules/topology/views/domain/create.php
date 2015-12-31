@@ -1,7 +1,6 @@
-<h1><?= Yii::t('topology', 'Add Domain');?></h1>
+<?php $this->params['box-title'] = Yii::t('topology', 'Add Domain'); ?>
 
-<?=
-	$this->render('_form', array(
+<?= $this->render('_form', array(
 		'domain' => $domain, 
 	)); 
 ?>

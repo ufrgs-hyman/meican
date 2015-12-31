@@ -14,14 +14,14 @@ class Asset extends AssetBundle
     ];
     
     public $js = [
-        'layout.js'
+        'layout.js',
     ];
     
     public $depends = [
+        'meican\base\assets\layout\IcheckConfigAsset',
         'meican\base\assets\BootstrapAsset',
         'meican\base\assets\SlimScrollAsset',
         'meican\base\assets\FontAwesomeAsset',
         'meican\base\assets\IoniconsAsset',
-        'meican\base\assets\IcheckAsset'
     ];
 }
