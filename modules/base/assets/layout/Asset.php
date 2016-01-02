@@ -10,7 +10,7 @@ class Asset extends AssetBundle
 
     public $css = [
         'layout.css',
-        'theme.css'
+        'theme.css',
     ];
     
     public $js = [
@@ -19,7 +19,7 @@ class Asset extends AssetBundle
     
     public $depends = [
         'meican\base\assets\layout\IcheckConfigAsset',
-        'meican\base\assets\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
         'meican\base\assets\SlimScrollAsset',
         'meican\base\assets\FontAwesomeAsset',
         'meican\base\assets\IoniconsAsset',
