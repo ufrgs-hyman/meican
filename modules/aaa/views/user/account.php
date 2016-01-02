@@ -3,11 +3,11 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Button;
 use yii\helpers\Html;
 
-use meican\aaa\assets\account\Asset;
+use meican\aaa\assets\user\AccountAsset;
 
 $this->params['header'] = ["My account", ['Home', 'My account']];
 
-Asset::register($this);
+AccountAsset::register($this);
 
 $form=ActiveForm::begin(array(
 	'id'=>'account-form',
@@ -26,9 +26,7 @@ $form=ActiveForm::begin(array(
 					<?= $form->field($user, 'name'); ?>
 			        <?= $form->field($user, 'email'); ?>  
 			        
-			        <div id="changePasswordOption">
-						<?= $form->field($user, 'isChangedPass')->checkBox(); ?>
-					</div>
+					<?= $form->field($user, 'isChangedPass')->checkBox(); ?>
 
 		    		<div id="changePasswordForm" style="display: none;">
 						<?= $form->field($user, 'currentPass')->passwordInput(); ?>

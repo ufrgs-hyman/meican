@@ -1,12 +1,12 @@
 <?php
 
-namespace meican\aaa\assets\account;
+namespace meican\aaa\assets\user;
 
 use yii\web\AssetBundle;
 
-class Asset extends AssetBundle
+class AccountAsset extends AssetBundle
 {
-    public $sourcePath = '@meican/aaa/assets/account/public';
+    public $sourcePath = '@meican/aaa/assets/user/public';
 	
     public $js = [
     	'account.js',
