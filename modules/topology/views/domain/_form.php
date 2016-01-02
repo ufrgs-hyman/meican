@@ -24,12 +24,7 @@
 	<div class="box-body">
     	<?= $form->field($domain,'name')->textInput(['size'=>30,'maxlength'=>60]); ?>
 		<?= $form->field($domain,'default_policy')->dropDownList($domain->getPolicyOptions()); ?>
-		<div class="form-group">
-			<div class="col-sm-offset-3 col-sm-6">
-				<?= $form->field($domain,'color')->hiddenInput(); ?>
-				<input type='text' id="color" hidden>
-			</div>
-		</div>
+		<?= $form->field($domain,'color')->hiddenInput(); ?>
 	</div>
 	<div class="box-footer">
 		<div class="form-group">

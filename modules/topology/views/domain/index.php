@@ -16,7 +16,7 @@ $this->params['header'] = ["Domains", ['Home', 'Topology']];
 
 <div class="box box-default">
 	<div class="box-header with-border">
-	  <?= $this->render('@meican/base/views/formButtons'); ?>
+	  <?= $this->render('@meican/base/views/_grid-buttons'); ?>
 	</div>
 	<div class="box-body">
 		<?php
@@ -32,14 +32,14 @@ $this->params['header'] = ["Domains", ['Home', 'Topology']];
 		<?=
 			GridView::widget([
 				'dataProvider' => $domains,
-				'id' => 'gridDomains',
+				'id' => 'grid',
 				'layout' => "{items}{summary}{pager}",
 				'columns' => array(
 			    		array(
 			    			'class'=>CheckboxColumn::className(),
 					        'name'=>'delete',         
 					        'checkboxOptions'=>[
-					        	'class'=>'deleteCheckbox',
+					        	'class'=>'delete-cb',
 					        ],
 					        'multiple'=>false,
 					        'headerOptions'=>['style'=>'width: 2%;'],

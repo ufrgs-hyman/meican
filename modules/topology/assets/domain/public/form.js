@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    $("#color").spectrum({
+    if($("#domain-color").val() == '') $("#domain-color").val('#000');
+    $("#domain-color").spectrum({
         color: $("#domain-color").val(),
         showInput: true,
         className: "color-picker",

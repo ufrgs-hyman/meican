@@ -4,7 +4,7 @@ namespace meican\circuits\models;
 
 use Yii;
 
-use meican\base\models\Cron;
+use meican\scheduler\models\Cron;
 
 class AutomatedTest extends Reservation {
 
