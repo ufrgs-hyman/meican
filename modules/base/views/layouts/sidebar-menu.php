@@ -1,8 +1,8 @@
 <?php 
-use meican\base\widgets\MenuWidget;
+use meican\base\widgets\Menu;
 use meican\aaa\RbacController;
 
-echo MenuWidget::widget([
+echo Menu::widget([
     'options' => ['class' => 'sidebar-menu'],
     'items' => [
         [
@@ -76,14 +76,17 @@ echo MenuWidget::widget([
                 [
                     'label'=>Yii::t('home','Console Central'), 
                     'url'=>'http://monitora.cipo.rnp.br/console/',
+                    'target' => '_blank',
                 ],
                 [
                     'label'=>Yii::t('home','Monitoring'),
                     'url'=>'http://monitora.cipo.rnp.br/', 
+                    'target' => '_blank',
                 ],
                 [
                     'label'=>Yii::t('home','Weathermap'),
                     'url'=>'http://weathermap.cipo.rnp.br/',
+                    'target' => '_blank',
                 ],
             ]
         ],

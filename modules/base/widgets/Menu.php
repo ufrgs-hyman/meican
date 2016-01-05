@@ -9,12 +9,12 @@ use yii\helpers\Html;
  * Class Menu
  * Theme menu widget.
  */
-class MenuWidget extends \yii\widgets\Menu
+class Menu extends \yii\widgets\Menu
 {
     /**
      * @inheritdoc
      */
-    public $linkTemplate = '<a href="{url}">{icon} {label}</a>';
+    public $linkTemplate = '<a {target} href="{url}">{icon} {label}</a>';
     public $submenuTemplate = "\n<ul class='treeview-menu' {show}>\n{items}\n</ul>\n";
     public $activateParents = true;
     /**
@@ -31,11 +31,13 @@ class MenuWidget extends \yii\widgets\Menu
             $replace = !empty($item['icon']) ? [
                 '{url}' => Url::to($item['url']),
                 '{label}' => '<span>'.$item['label'].'</span>',
-                '{icon}' => '<i class="' . $item['icon'] . '"></i> '
+                '{icon}' => '<i class="' . $item['icon'] . '"></i> ',
+                '{target}' => isset($item['target']) ? 'target="'.$item['target'].'"' : null,
             ] : [
                 '{url}' => Url::to($item['url']),
                 '{label}' => '<span>'.$item['label'].'</span>',
                 '{icon}' => null,
+                '{target}' => isset($item['target']) ? 'target="'.$item['target'].'"' : null,
             ];
             return strtr($template, $replace);
         } else {

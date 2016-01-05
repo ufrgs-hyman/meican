@@ -4,7 +4,7 @@ namespace meican\base\widgets;
 
 use Yii;
 
-class AnalyticsWidget {
+class Analytics {
 
     static function build() {
             if (Yii::$app->params['google.analytics.enabled']) {

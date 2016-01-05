@@ -29,7 +29,6 @@ modules/            	application modules
 		views/			views and layout files
 runtime/            folder for logging and debug features
 tests/              test scripts
-views/              global views, layouts or templates
 web/                web accessible files, e.g., assets cache, wsdl files.
 ```
 

@@ -3,7 +3,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 use meican\base\assets\layout\Asset;
-use meican\base\widgets\AnalyticsWidget;
+use meican\base\widgets\Analytics;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -36,7 +36,7 @@ Asset::register($this);
 <!-- /.login-box -->
 
 <?php $this->endBody() ?>
-<?= AnalyticsWidget::build(); ?>
+<?= Analytics::build(); ?>
 </body>
 <?php $this->endPage() ?>
 </html>
