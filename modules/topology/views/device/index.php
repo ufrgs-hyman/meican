@@ -1,21 +1,25 @@
 <?php 
 	use yii\grid\GridView;
 	use yii\grid\CheckboxColumn;
-	use yii\helpers\Html;
-	use yii\i18n\Formatter;
+	use yii\bootstrap\Html;
 	use yii\helpers\ArrayHelper;
-	use yii\widgets\ActiveForm;
-	use yii\data\ActiveDataProvider;
+	use yii\bootstrap\ActiveForm;
 
+	use meican\base\widgets\GridButtons;
 	use meican\base\components\LinkColumn;
 	use meican\topology\assets\device\IndexAsset;
 	use meican\topology\models\Device;
 	
 	IndexAsset::register($this);
+
+	$this->params['header'] = ["Devices", ['Home', 'Topology']];
 ?>
 
-<h1><?= Yii::t('topology', 'Devices'); ?></h1>
-
+<div class="box box-default">
+	<div class="box-header with-border">
+	  	<?= GridButtons::widget(); ?>
+	</div>
+	<div class="box-body">
 <?php
 	$form = ActiveForm::begin([
 			'method' => 'post',
@@ -23,15 +27,9 @@
 			'id' => 'device-form',	
 			'enableClientScript'=>false,
 			'enableClientValidation' => false,
-	])
-?>
-	
-<?= $this->render('//formButtons'); ?>
-	
-	<?=
-		GridView::widget([
+	]);
+	echo GridView::widget([
 			'options' => ['class' => 'list'],
-			'formatter' => new Formatter(['nullDisplay'=>'']),
 			'dataProvider' => $devices,
 			'filterModel' => $searchModel,
 			'id' => 'gridNetowrks',
@@ -40,9 +38,6 @@
 		    		[
 		    			'class'=>CheckboxColumn::className(),
 				        'name'=>'delete',         
-				        'checkboxOptions'=>[
-				        	'class'=>'deleteCheckbox',
-				        ],
 				        'multiple'=>false,
 				        'headerOptions'=>['style'=>'width: 2%;'],
 			        ],
@@ -106,8 +101,10 @@
 					],
 			),
 		]);
-	?>
+?>
 	
-	<?php
+<?php
 	ActiveForm::end();
 ?>
+	</div>
+</div>
