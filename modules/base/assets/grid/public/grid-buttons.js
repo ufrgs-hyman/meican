@@ -5,10 +5,12 @@ $("#delete-grid-btn").click(function() {
     else {
         $("#error-grid-modal").modal("show");
     }
+    return false;
 });
 
 $("#cancel-grid-btn").click(function() {
     $("#delete-grid-modal").modal("hide");
+    return false;
 });
 
 $("#confirm-grid-btn").click(function (){
@@ -17,5 +19,6 @@ $("#confirm-grid-btn").click(function (){
 
 $("#close-grid-btn").click(function (){
     $("#error-grid-modal").modal("hide");
+    return false;
 });
 

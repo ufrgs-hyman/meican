@@ -1,37 +1,38 @@
 <?php 
 
-use yii\helpers\Url;
-use yii\bootstrap\Modal;
-use yii\bootstrap\Button;
+    use yii\bootstrap\Modal;
 
-use meican\base\assets\grid\ButtonsAsset;
+    use meican\base\assets\grid\ButtonsAsset;
 
-ButtonsAsset::register($this);
+    ButtonsAsset::register($this);
 
 ?>
 
 <div>
-	<a class="btn btn-primary" href="<?= Url::toRoute("create"); ?>">Add</a>
+	<a class="btn btn-primary" href="<?= $addUrl; ?>">Add</a>
     <a id="delete-grid-btn" class="btn btn-warning">Delete</a>
 </div>
 
-<?php Modal::begin([
-    'id' => 'delete-grid-modal',
-    'headerOptions' => ['hidden'=>'hidden'],
-    'footer' => '<button id="cancel-grid-btn" class="btn btn-default">Cancel</button> <button id="confirm-grid-btn" class="grid-btn btn btn-danger">Delete</button>',
-]);
+<?php 
 
-echo 'Do you want delete the selected items?';
+    Modal::begin([
+        'id' => 'delete-grid-modal',
+        'headerOptions' => ['hidden'=>'hidden'],
+        'footer' => '<button id="cancel-grid-btn" class="btn btn-default">Cancel</button> <button id="confirm-grid-btn" class="grid-btn btn btn-danger">Delete</button>',
+    ]);
 
-Modal::end(); ?>
+    echo 'Do you want delete the selected items?';
 
-<?php Modal::begin([
-    'id' => 'error-grid-modal',
-    'headerOptions' => ['hidden'=>'hidden'],
-    'footer' => '<button id="close-grid-btn" class="grid-btn btn btn-default">Close</button>',
-]);
+    Modal::end(); 
 
-echo 'Please, select a item.';
+    Modal::begin([
+        'id' => 'error-grid-modal',
+        'headerOptions' => ['hidden'=>'hidden'],
+        'footer' => '<button id="close-grid-btn" class="grid-btn btn btn-default">Close</button>',
+    ]);
 
-Modal::end(); ?>
+    echo 'Please, select a item.';
 
+    Modal::end(); 
+
+?>
