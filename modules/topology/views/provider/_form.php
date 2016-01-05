@@ -1,53 +1,41 @@
 <?php 
 
-    use yii\widgets\ActiveForm;
-    use yii\helpers\Html;
+    use yii\bootstrap\ActiveForm;
+    use yii\bootstrap\Html;
     use yii\helpers\Url;
     use yii\helpers\ArrayHelper;
 
     use meican\topology\models\Domain;
     use meican\topology\models\Provider;
+
+    $this->params['header'] = ["Providers", ['Home', 'Topology']];
+
+    $form= ActiveForm::begin([
+        'id'        => 'provider-form',
+        'method'    => 'post',
+        'layout'    => 'horizontal'
+    ]);
 ?>
 
-<?php $form= ActiveForm::begin([
-    'id'=>'provider-form',
-    'method' => 'post',
-    'enableClientValidation' => false,
-]); ?>
-    <h4>
-    <font color="#3a5879">
-
-    <div class="form input">
+<div class="box box-default">
+    <div class="box-header with-border">
+        <h3 class="box-title"><?= $this->params['box-title']; ?></h3>
+    </div>
+    <div class="box-body">
         <?= $form->field($model,'name')->textInput(['size'=>50]); ?>
-    </div>
-
-    <div class="form input">
         <?= $form->field($model,'nsa')->textInput(['size'=>50]); ?>
-    </div>
-    
-    <div class="form input">
        <?= $form->field($model,'type')->dropDownList(ArrayHelper::map(Provider::getTypes(), 'id', 'name')); ?>
-    </div>
-
-    <div class="form input">
         <?= $form->field($model,'latitude')->textInput(['size'=>20]); ?>
-    </div>
-
-    <div class="form input">
         <?= $form->field($model,'longitude')->textInput(['size'=>20]); ?>
-    </div>
-
-    <div class="form input">
        <?= $form->field($model,'domain_id')->dropDownList(ArrayHelper::map(Domain::find()->select(['id','name'])->asArray()->all(), 'id', 'name')); ?>
     </div>
-    
-    </font>
-    </h4>
-
-    <div class="buttonsForm">
-        <?= Html::submitButton(Yii::t("topology", 'Save')); ?>
-        <a href="<?= Url::toRoute(['index']);?>"><?= Html::Button(Yii::t("topology", 'Cancel')); ?></a>
+    <div class="box-footer">
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-6">
+                <button type="submit" class="btn btn-primary"><?= Yii::t("topology", 'Save'); ?></button>
+            </div>
+        </div>
     </div>
+</div>
 
-    
 <?php ActiveForm::end(); ?>

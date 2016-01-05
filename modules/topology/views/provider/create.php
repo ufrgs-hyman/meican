@@ -1,4 +1,4 @@
-<h1><?= Yii::t("topology", "Add provider"); ?></h1>
+<?php $this->params['box-title'] = Yii::t('topology', 'Add Provider'); ?>
 
 <?=
     $this->render('_form', array(

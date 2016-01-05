@@ -1,30 +1,33 @@
 <?php 
     use yii\grid\GridView;
     use yii\grid\CheckboxColumn;
-    use yii\helpers\Html;
-    use yii\widgets\ActiveForm;
+    use yii\bootstrap\Html;
+    use yii\bootstrap\ActiveForm;
     
+    use meican\base\widgets\GridButtons;
     use meican\base\components\LinkColumn;
     use meican\topology\assets\provider\IndexAsset;
     
     IndexAsset::register($this);
+
+    $this->params['header'] = ["Providers", ['Home', 'Topology']];
 ?>
 
-<h1><?= Yii::t('topology',"Providers"); ?></h1>
+<div class="box box-default">
+    <div class="box-header with-border">
+        <?= GridButtons::widget(); ?>
+    </div>
+    <div class="box-body">
+
 <?php
     $form = ActiveForm::begin([
-            'method' => 'post',
-            'action' => ['delete'],
-            'id' => 'provider-form',  
-            'enableClientScript'=>false,
-            'enableClientValidation' => false,
-    ])
-?>
-    
-<?= $this->render('//formButtons'); ?>
-
-<?=
-    GridView::widget([
+        'method' => 'post',
+        'action' => ['delete'],
+        'id' => 'provider-form',  
+        'enableClientScript'=>false,
+        'enableClientValidation' => false,
+    ]);
+    echo GridView::widget([
         'options' => ['class' => 'list'],
         'dataProvider' => $providers,
     	'layout' => "{items}{summary}{pager}",
@@ -65,8 +68,9 @@
                 'longitude',
             ),
     ]);
-?>
 
-<?php
     ActiveForm::end();
 ?>
+
+    </div>
+</div>
