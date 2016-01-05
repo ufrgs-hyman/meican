@@ -1,4 +1,4 @@
-<h1><?= Yii::t('topology', 'Add Network');?></h1>
+<?php $this->params['box-title'] = Yii::t('topology', 'Add Network'); ?>
 
 <?=
 	$this->render('_form', array(
