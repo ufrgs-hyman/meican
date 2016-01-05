@@ -12,14 +12,14 @@
 ?>
 
 <?php $form= ActiveForm::begin([
-	'id'=>'domain-form',
-	'method' => 'post',
-	'layout' => 'horizontal'
+	'id'		=> 'domain-form',
+	'method' 	=> 'post',
+	'layout' 	=> 'horizontal'
 ]); ?>
 
 <div class="box box-default">
 	<div class="box-header with-border">
-	  <h3 class="box-title"><?= $this->params['box-title']; ?></h3>
+		<h3 class="box-title"><?= $this->params['box-title']; ?></h3>
 	</div>
 	<div class="box-body">
     	<?= $form->field($domain,'name')->textInput(['size'=>30,'maxlength'=>60]); ?>

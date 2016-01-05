@@ -1,10 +1,9 @@
 <?php 
 	use yii\grid\GridView;
 	use yii\grid\CheckboxColumn;
-	use yii\helpers\Html;
-	use yii\i18n\Formatter;
 	use yii\widgets\ActiveForm;
 
+	use meican\base\widgets\GridButtons;
 	use meican\base\components\LinkColumn;
 	use meican\topology\assets\domain\IndexAsset;
 	
@@ -16,16 +15,16 @@ $this->params['header'] = ["Domains", ['Home', 'Topology']];
 
 <div class="box box-default">
 	<div class="box-header with-border">
-	  <?= $this->render('@meican/base/views/_grid-buttons'); ?>
+	  	<?= GridButtons::widget(); ?>
 	</div>
 	<div class="box-body">
 		<?php
 			$form = ActiveForm::begin([
-					'method' => 'post',
-					'action' => ['delete'],
-					'id' => 'domain-form',
-					'enableClientScript'=>false,
-					'enableClientValidation' => false,
+				'method' => 'post',
+				'action' => ['delete'],
+				'id' => 'domain-form',
+				'enableClientScript'=>false,
+            	'enableClientValidation' => false,
 			]);
 			
 		?>
@@ -38,9 +37,6 @@ $this->params['header'] = ["Domains", ['Home', 'Topology']];
 			    		array(
 			    			'class'=>CheckboxColumn::className(),
 					        'name'=>'delete',         
-					        'checkboxOptions'=>[
-					        	'class'=>'delete-cb',
-					        ],
 					        'multiple'=>false,
 					        'headerOptions'=>['style'=>'width: 2%;'],
 				        ),
