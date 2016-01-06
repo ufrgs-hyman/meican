@@ -13,10 +13,10 @@ return [
         '@meican' => '@app/modules',
     ],
     'modules' => [
-    	'aaa' => 'meican\aaa\Module',
-    	'circuits' => 'meican\circuits\Module',
-    	'scheduler' => 'meican\scheduler\Module',
-    	'topology' => 'meican\topology\Module',
+        'aaa' => 'meican\aaa\Module',
+        'circuits' => 'meican\circuits\Module',
+        'scheduler' => 'meican\scheduler\Module',
+        'topology' => 'meican\topology\Module',
     ],
     'components' => [
         'cache' => [
