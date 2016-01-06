@@ -4,6 +4,8 @@ namespace meican\aaa\models;
 
 use Yii;
 
+use meican\topology\models\Domain;
+
 /**
  * This is the model class for table "{{%user_domain}}".
  *

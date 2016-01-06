@@ -1,19 +1,19 @@
 <?php 
 
-    use yii\grid\GridView;
-    use yii\widgets\DetailView;
-    use yii\helpers\Url;
-    use yii\bootstrap\Html;
-    use yii\bootstrap\ActiveForm;
-    use yii\grid\CheckboxColumn;
+use yii\grid\GridView;
+use yii\widgets\DetailView;
+use yii\helpers\Url;
+use yii\bootstrap\Html;
+use yii\bootstrap\ActiveForm;
+use yii\grid\CheckboxColumn;
 
-    use meican\base\widgets\GridButtons;
-    use meican\base\components\LinkColumn;
-    use meican\topology\assets\service\IndexAsset;
-    
-    IndexAsset::register($this);
+use meican\base\widgets\GridButtons;
+use meican\base\components\LinkColumn;
+use meican\topology\assets\service\IndexAsset;
 
-    $this->params['header'] = [$model->name, ['Home', 'Topology']];
+IndexAsset::register($this);
+
+$this->params['header'] = [$model->name, ['Home', 'Topology']];
 
 ?>
 
@@ -51,45 +51,47 @@
             </div>
             <div class="box-body">
                 <?php
-                    $form = ActiveForm::begin([
-                        'method' => 'post',
-                        'action' => ['/topology/service/delete'],
-                        'id' => 'service-form',  
-                        'enableClientScript'=>false,
-                        'enableClientValidation' => false,
-                    ]);
 
-                    echo GridButtons::widget([
-                        'addRoute'=>['/topology/service/create', 'id'=>$model->id]]).'<br>';
+                $form = ActiveForm::begin([
+                    'method' => 'post',
+                    'action' => ['/topology/service/delete'],
+                    'id' => 'service-form',  
+                    'enableClientScript'=>false,
+                    'enableClientValidation' => false,
+                ]);
 
-                    echo GridView::widget([
-                        'dataProvider' => $services,
-                        'layout' => "{items}{summary}{pager}",
-                        'columns' => array(
-                                array(
-                                    'class'=>CheckboxColumn::className(),
-                                    'name'=>'delete',         
-                                    'multiple'=>false,
-                                    'headerOptions'=>['style'=>'width: 2%;'],
-                                ),
-                                array(
-                                    'class'=> LinkColumn::className(),
-                                    'image'=>'/images/edit_1.png',
-                                    'label' => '',
-                                    'url' => '/topology/service/update',
-                                    'headerOptions'=>['style'=>'width: 2%;'],
-                                ),
-                                [
-                                    'attribute' => 'type',
-                                    'value' => function($model) {
-                                        return $model->getType();
-                                    }
-                                ],
-                                'url',
+                echo GridButtons::widget([
+                    'addRoute'=>['/topology/service/create', 'id'=>$model->id]]).'<br>';
+
+                echo GridView::widget([
+                    'dataProvider' => $services,
+                    'layout' => "{items}{summary}{pager}",
+                    'columns' => array(
+                            array(
+                                'class'=>CheckboxColumn::className(),
+                                'name'=>'delete',         
+                                'multiple'=>false,
+                                'headerOptions'=>['style'=>'width: 2%;'],
                             ),
-                    ]);
+                            array(
+                                'class'=> LinkColumn::className(),
+                                'image'=>'/images/edit_1.png',
+                                'label' => '',
+                                'url' => '/topology/service/update',
+                                'headerOptions'=>['style'=>'width: 2%;'],
+                            ),
+                            [
+                                'attribute' => 'type',
+                                'value' => function($model) {
+                                    return $model->getType();
+                                }
+                            ],
+                            'url',
+                        ),
+                ]);
 
-                    ActiveForm::end();
+                ActiveForm::end();
+            
                 ?>
             </div>
         </div>

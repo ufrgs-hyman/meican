@@ -7,6 +7,11 @@ use yii\helpers\Html;
 
 use meican\base\components\DateUtils;
 use meican\topology\models\TopologyNotification;
+use meican\circuits\models\ConnectionAuth;
+use meican\circuits\models\ConnectionPath;
+use meican\circuits\models\Connection;
+use meican\aaa\models\User;
+use meican\aaa\models\Group;
 
 /**
  * This is the model class for table "meican_notification".
@@ -21,14 +26,14 @@ use meican\topology\models\TopologyNotification;
  * @property User $id0
  */
 class Notification extends \yii\db\ActiveRecord
-{	
-	const TYPE_AUTHORIZATION = 		"AUTHORIZATION";
-	const TYPE_RESERVATION = 		"RESERVATION";
-	const TYPE_TOPOLOGY = 			"TOPOLOGY";
-	const TYPE_NOTICE = 			"NOTICE";
-	
-	const NOTICE_TYPE_ADD_GROUP = 	"ADD_GROUP";
-	const NOTICE_TYPE_DEL_GROUP = 	"DEL_GROUP";
+{    
+    const TYPE_AUTHORIZATION =         "AUTHORIZATION";
+    const TYPE_RESERVATION =         "RESERVATION";
+    const TYPE_TOPOLOGY =             "TOPOLOGY";
+    const TYPE_NOTICE =             "NOTICE";
+    
+    const NOTICE_TYPE_ADD_GROUP =     "ADD_GROUP";
+    const NOTICE_TYPE_DEL_GROUP =     "DEL_GROUP";
 
     /**
      * @inheritdoc
@@ -76,27 +81,27 @@ class Notification extends \yii\db\ActiveRecord
     }
     
     public static function makeHtml($image, $text){
-    	return '<table><tr><td class="image">'.Html::img('@web'.'/images/'.$image).'</td><td>'.$text.'</td></tr></table>';
+        return '<table><tr><td class="image">'.Html::img('@web'.'/images/'.$image).'</td><td>'.$text.'</td></tr></table>';
     }
     
     public static function getNumberNotifications(){
-    	$nots = 0;
+        $nots = 0;
     
-    	if(Yii::$app->user->isGuest) return $nots;
+        if(Yii::$app->user->isGuest) return $nots;
     
-    	$userId = Yii::$app->user->getId();
+        $userId = Yii::$app->user->getId();
     
-    	return Notification::find()->where(['user_id' => $userId, 'viewed' => 0])->count();
+        return Notification::find()->where(['user_id' => $userId, 'viewed' => 0])->count();
     }
     
     public static function getNumberAuthorizations(){
-    	$auths = 0;
+        $auths = 0;
     
-    	if(Yii::$app->user->isGuest) return $nots;
-    	 
-    	$userId = Yii::$app->user->getId();
+        if(Yii::$app->user->isGuest) return $nots;
+         
+        $userId = Yii::$app->user->getId();
     
-    	return Notification::find()->where(['user_id' => $userId, 'viewed' => 0, 'type' => self::TYPE_AUTHORIZATION])->count();
+        return Notification::find()->where(['user_id' => $userId, 'viewed' => 0, 'type' => self::TYPE_AUTHORIZATION])->count();
     }
     
     /**
@@ -106,100 +111,100 @@ class Notification extends \yii\db\ActiveRecord
      * Retorna o html com até 6 notificações, ja formatado para ser exibido.
      * Quando recebe uma data de entrada, a utiliza como limite, e retorna apenas o que vem depois dela
      */
-    public static function getNotifications($dateParam){    	
-    	$userId = Yii::$app->user->getId();
+    public static function getNotifications($dateParam){        
+        $userId = Yii::$app->user->getId();
 
-    	if(!$dateParam){ //Caso seja a primeira solicitação  	
-    		//Limpa as notificações de autorização que ja foram respondidas
-    		$notAuth = Notification::find()->where(['user_id' => $userId, 'type' => self::TYPE_AUTHORIZATION, 'viewed' => false])->all();
-    		foreach($notAuth as $not){ //Confere todas notificações do tipo autorização
-    			$auth = ConnectionAuth::findOne($not->info);
-    			if($auth){
-	    			$connection = Connection::findOne($auth->connection_id);
-	    			if($connection){
-		    			$connections = Connection::find()->where(['reservation_id' => $connection->reservation_id])->all();
-		    			$answered = true;
-		    			foreach($connections as $conn){ //Confere todas conexões da reserva conferindo se alguma ainda esta pendente
-		    				$auths = ConnectionAuth::find()->where(['domain' => $auth->domain, 'connection_id' => $conn->id])->all();
-		    				foreach($auths as $a){ //Confere as autorizaçòes daquela conexão
-		    					if($a->type != ConnectionAuth::TYPE_WORKFLOW && $a->status == Connection::AUTH_STATUS_PENDING){
-		    						$answered = false;
-		    						break;
-		    					}
-		    				}
-		    				if($answered == false) break;
-		    			}
-		    			if($answered){ //Se ja foi respondida modifica notificação para visualizada
-		    				$not->viewed = true;
-		    				$not->save();
-		    			}
-    				}
-    			}
-    		}
-    	}
+        if(!$dateParam){ //Caso seja a primeira solicitação      
+            //Limpa as notificações de autorização que ja foram respondidas
+            $notAuth = Notification::find()->where(['user_id' => $userId, 'type' => self::TYPE_AUTHORIZATION, 'viewed' => false])->all();
+            foreach($notAuth as $not){ //Confere todas notificações do tipo autorização
+                $auth = ConnectionAuth::findOne($not->info);
+                if($auth){
+                    $connection = Connection::findOne($auth->connection_id);
+                    if($connection){
+                        $connections = Connection::find()->where(['reservation_id' => $connection->reservation_id])->all();
+                        $answered = true;
+                        foreach($connections as $conn){ //Confere todas conexões da reserva conferindo se alguma ainda esta pendente
+                            $auths = ConnectionAuth::find()->where(['domain' => $auth->domain, 'connection_id' => $conn->id])->all();
+                            foreach($auths as $a){ //Confere as autorizaçòes daquela conexão
+                                if($a->type != ConnectionAuth::TYPE_WORKFLOW && $a->status == Connection::AUTH_STATUS_PENDING){
+                                    $answered = false;
+                                    break;
+                                }
+                            }
+                            if($answered == false) break;
+                        }
+                        if($answered){ //Se ja foi respondida modifica notificação para visualizada
+                            $not->viewed = true;
+                            $not->save();
+                        }
+                    }
+                }
+            }
+        }
 
-    	$array = "";
-    	$max = 0;
-    	$date=null;
-    	
-    	//Le todas reservas anteriores a data limite, ou todas reservas, caso não exista uma data limite
-    	if($dateParam) $notifications = Notification::find()->where(['user_id' => $userId])->andWhere(['<','date', $_POST['date']])->orderBy(['date' => SORT_DESC])->all();
-    	else $notifications = Notification::find()->where(['user_id' => $userId])->orderBy(['date' => SORT_DESC])->all();
-    	
-    	//Se não contem, gera aviso de que o usuário não possui notificações
-    	if(count($notifications) == 0){
-    		$info = [];
-    		$info['date'] = null;
-    		$info['array'] = "<li style='text-align: center;'><span style='float: none !important;'><h2>".Yii::t("notification", 'You don`t have notifications yet.')."</h2></span></li>";
-    		$info['more'] = false;
-    		return $info;
-    	}
-    	
-    	//Percorre as notificações gerando o HTML
-    	foreach($notifications as $notification){
-    		if($max<6){
-    			$msg = "";
-	    		switch ($notification->type) {
-	    			case self::TYPE_AUTHORIZATION:
-	    				$msg = Notification::makeHtmlNotificationAuth($notification);
-	    				break;
-	    			case self::TYPE_RESERVATION:
-	    				$msg = Notification::makeHtmlNotificationReservation($notification);
-	    				$notification->viewed = true;
-	    				$notification->save();
-	    				break;
-	    			case self::TYPE_NOTICE:
-	    				$msg = Notification::makeHtmlNotificationNotice($notification);
-	    				$notification->viewed = true;
-	    				$notification->save();
-	    				break;
-	    			case self::TYPE_TOPOLOGY:
-	    				$msg = TopologyNotification::makeHtml($notification);
-	    				$notification->viewed = true;
-	    				$notification->save();
-	    				break;
-	    		}
-	    		if($msg == ""){
-	    			$notification->delete();
-	    		}
-	    		else {
-		    		$array .= $msg;
-		    		$date = $notification->date;
-	    		}
-    		}
-    		if($msg != "")$max++;
-    		if($max == 7){
-    			break;
-    		}
-    	}
-    	
-    	$info = [];
-    	$info['date'] = $date; //Data da ultima notificação retornada, utilizada como limite para ler as proximas em leituras futuras
-    	$info['array'] = $array; //HTML a ser exibido
-    	if($max == 7) $info['more'] = true; //Flag para informar ao JS se existem mais notificações
-    	else $info['more'] = false;
+        $array = "";
+        $max = 0;
+        $date=null;
+        
+        //Le todas reservas anteriores a data limite, ou todas reservas, caso não exista uma data limite
+        if($dateParam) $notifications = Notification::find()->where(['user_id' => $userId])->andWhere(['<','date', $_POST['date']])->orderBy(['date' => SORT_DESC])->all();
+        else $notifications = Notification::find()->where(['user_id' => $userId])->orderBy(['date' => SORT_DESC])->all();
+        
+        //Se não contem, gera aviso de que o usuário não possui notificações
+        if(count($notifications) == 0){
+            $info = [];
+            $info['date'] = null;
+            $info['array'] = "<li style='text-align: center;'><span style='float: none !important;'><h2>".Yii::t("notification", 'You don`t have notifications yet.')."</h2></span></li>";
+            $info['more'] = false;
+            return $info;
+        }
+        
+        //Percorre as notificações gerando o HTML
+        foreach($notifications as $notification){
+            if($max<6){
+                $msg = "";
+                switch ($notification->type) {
+                    case self::TYPE_AUTHORIZATION:
+                        $msg = Notification::makeHtmlNotificationAuth($notification);
+                        break;
+                    case self::TYPE_RESERVATION:
+                        $msg = Notification::makeHtmlNotificationReservation($notification);
+                        $notification->viewed = true;
+                        $notification->save();
+                        break;
+                    case self::TYPE_NOTICE:
+                        $msg = Notification::makeHtmlNotificationNotice($notification);
+                        $notification->viewed = true;
+                        $notification->save();
+                        break;
+                    case self::TYPE_TOPOLOGY:
+                        $msg = TopologyNotification::makeHtml($notification);
+                        $notification->viewed = true;
+                        $notification->save();
+                        break;
+                }
+                if($msg == ""){
+                    $notification->delete();
+                }
+                else {
+                    $array .= $msg;
+                    $date = $notification->date;
+                }
+            }
+            if($msg != "")$max++;
+            if($max == 7){
+                break;
+            }
+        }
+        
+        $info = [];
+        $info['date'] = $date; //Data da ultima notificação retornada, utilizada como limite para ler as proximas em leituras futuras
+        $info['array'] = $array; //HTML a ser exibido
+        if($max == 7) $info['more'] = true; //Flag para informar ao JS se existem mais notificações
+        else $info['more'] = false;
 
-    	return $info;
+        return $info;
     }
 
     /********************************
@@ -218,42 +223,42 @@ class Notification extends \yii\db\ActiveRecord
      * Cria notificação sobre pedido de autorização para usuário
      */
     public static function createUserAuthNotification($user_id, $domain, $reservation_id, $auth_id, $date = null){
-	    //Confere se já foi feita uma notificação de algum circuito desta reserva, se sim, reutiliza a mesma notificação
-    	$not = null;
-	    $notifications = Notification::find()->where(['user_id' => $user_id, 'type' => self::TYPE_AUTHORIZATION])->all();
-	    foreach($notifications as $notification){ //Passa por todas notificações
-	    	$cauth = ConnectionAuth::findOne($notification->info);
-	    	if($cauth){
-	    		if($cauth->domain == $domain){
-	    			$conn = Connection::findOne($cauth->connection_id);
-	    			if($conn){
-	    				if($conn->reservation_id == $reservation_id){
-	    					$not = $notification;
-	    					break;
-	    				}
-	    			}
-	    		}
-	    	}
-	    }
-	     
-	    if($not){ //Se ja existe, atualiza e coloca nova data
-	    	//Pode receber uma data por parametro, neste caso, utiliza essa data como a data da criação da notificação
-	    	if($date) $not->date = $date;
-	    	else $not->date = DateUtils::now();
-	    	$not->viewed = 0;
-	    	$not->save();
-	    }
-	    else{ //Se é nova, cria notificação
-	    	$not = new Notification();
-	    	$not->user_id = $user_id;
-	    	//Pode receber uma data por parametro, neste caso, utiliza essa data como a data da criação da notificação
-	    	if($date) $not->date = $date;
-	    	else $not->date = DateUtils::now();
-	    	$not->type = self::TYPE_AUTHORIZATION;
-	    	$not->viewed = 0;
-	    	$not->info = (string) $auth_id;
-	    	$not->save();
-	    }
+        //Confere se já foi feita uma notificação de algum circuito desta reserva, se sim, reutiliza a mesma notificação
+        $not = null;
+        $notifications = Notification::find()->where(['user_id' => $user_id, 'type' => self::TYPE_AUTHORIZATION])->all();
+        foreach($notifications as $notification){ //Passa por todas notificações
+            $cauth = ConnectionAuth::findOne($notification->info);
+            if($cauth){
+                if($cauth->domain == $domain){
+                    $conn = Connection::findOne($cauth->connection_id);
+                    if($conn){
+                        if($conn->reservation_id == $reservation_id){
+                            $not = $notification;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+         
+        if($not){ //Se ja existe, atualiza e coloca nova data
+            //Pode receber uma data por parametro, neste caso, utiliza essa data como a data da criação da notificação
+            if($date) $not->date = $date;
+            else $not->date = DateUtils::now();
+            $not->viewed = 0;
+            $not->save();
+        }
+        else{ //Se é nova, cria notificação
+            $not = new Notification();
+            $not->user_id = $user_id;
+            //Pode receber uma data por parametro, neste caso, utiliza essa data como a data da criação da notificação
+            if($date) $not->date = $date;
+            else $not->date = DateUtils::now();
+            $not->type = self::TYPE_AUTHORIZATION;
+            $not->viewed = 0;
+            $not->info = (string) $auth_id;
+            $not->save();
+        }
     }
     
     /**
@@ -265,50 +270,50 @@ class Notification extends \yii\db\ActiveRecord
      * @return boolean
      */
     public static function createGroupAuthNotification($group_id, $domain, $reservation_id, $auth_id){
-    	$group = Group::findOne($group_id);
-    	 
-    	$domain = Domain::findOne(['name' => $domain]);
-    	 
-    	if(!$group || !$domain) return false;
-    	 
-    	//Confere todos papeis associados ao grupo
-    	$roles = UserDomainRole::findByGroup($group);
-    	foreach($roles->all() as $role){
-    		if($role->domain == null || $role->domain == $domain->name){ //Se papel for para todos dominios ou para dominio espeficido
-    			//Confere se já foi feita uma notificação de algum circuito desta reserva, se sim, reutiliza a mesma notificação
-    			$not = null;
-    			$notifications = Notification::find()->where(['user_id' => $role->user_id, 'type' => self::TYPE_AUTHORIZATION])->all();
-    			foreach($notifications as $notification){
-    				$cauth = ConnectionAuth::findOne($notification->info);
-    				if($cauth){
-    					if($cauth->domain == $domain->name){
-    						$conn = Connection::findOne($cauth->connection_id);
-    						if($conn){
-    							if($conn->reservation_id == $reservation_id){
-    								$not = $notification;
-    								break;
-    							}
-    						}
-    					}
-    				}
-    			}
-    	
-    			if($not){ //Se já existe, atualiza e coloca nova data
-    				$not->date = DateUtils::now();
-    				$not->viewed = 0;
-    				$not->save();
-    			}
-    			else{ //Se for nova, cria notificação
-    				$not = new Notification();
-    				$not->user_id = $role->user_id;
-    				$not->date = DateUtils::now();
-    				$not->type = self::TYPE_AUTHORIZATION;
-    				$not->viewed = 0;
-    				$not->info = (string) $auth_id;
-    				$not->save();
-    			}
-    		}
-    	}
+        $group = Group::findOne($group_id);
+         
+        $domain = Domain::findOne(['name' => $domain]);
+         
+        if(!$group || !$domain) return false;
+         
+        //Confere todos papeis associados ao grupo
+        $roles = UserDomainRole::findByGroup($group);
+        foreach($roles->all() as $role){
+            if($role->domain == null || $role->domain == $domain->name){ //Se papel for para todos dominios ou para dominio espeficido
+                //Confere se já foi feita uma notificação de algum circuito desta reserva, se sim, reutiliza a mesma notificação
+                $not = null;
+                $notifications = Notification::find()->where(['user_id' => $role->user_id, 'type' => self::TYPE_AUTHORIZATION])->all();
+                foreach($notifications as $notification){
+                    $cauth = ConnectionAuth::findOne($notification->info);
+                    if($cauth){
+                        if($cauth->domain == $domain->name){
+                            $conn = Connection::findOne($cauth->connection_id);
+                            if($conn){
+                                if($conn->reservation_id == $reservation_id){
+                                    $not = $notification;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+        
+                if($not){ //Se já existe, atualiza e coloca nova data
+                    $not->date = DateUtils::now();
+                    $not->viewed = 0;
+                    $not->save();
+                }
+                else{ //Se for nova, cria notificação
+                    $not = new Notification();
+                    $not->user_id = $role->user_id;
+                    $not->date = DateUtils::now();
+                    $not->type = self::TYPE_AUTHORIZATION;
+                    $not->viewed = 0;
+                    $not->info = (string) $auth_id;
+                    $not->save();
+                }
+            }
+        }
     }
     
     /**
@@ -317,36 +322,36 @@ class Notification extends \yii\db\ActiveRecord
      * Cria notificação sobre mudança no status das conexões de uma reserva
      */
     public static function createConnectionNotification($connection_id){
-    	$connection = Connection::findOne($connection_id);
-    	if(!$connection) return;
-    	$reservation = Reservation::findOne($connection->reservation_id);
-    	if(!$reservation) return;
-    	if($reservation->type == Reservation::TYPE_TEST) return;
-    	
-    	//Confere se já foi feita uma notificação de algum circuito desta reserva, se sim, reutiliza a mesma notificação
-    	$not = null;
-    	$notifications = Notification::find()->where(['user_id' => $reservation->request_user_id, 'type' => self::TYPE_RESERVATION])->all();
-    	foreach($notifications as $notification){
-    		if($notification->info == $reservation->id){
-    			$not = $notification;
-    			break;
-    		}
-    	}
-    	
-    	if($not){ //Se já existe, atualiza e coloca nova data
-    		$not->date = DateUtils::now();
-    		$not->viewed = 0;
-    		$not->save();
-    	}
-    	else{ //Se for nova, cria notificação
-    		$not = new Notification();
-    		$not->user_id = $reservation->request_user_id;
-    		$not->date = DateUtils::now();
-    		$not->type = self::TYPE_RESERVATION;
-    		$not->viewed = 0;
-    		$not->info = (string) $reservation->id;
-    		$not->save();
-    	}
+        $connection = Connection::findOne($connection_id);
+        if(!$connection) return;
+        $reservation = Reservation::findOne($connection->reservation_id);
+        if(!$reservation) return;
+        if($reservation->type == Reservation::TYPE_TEST) return;
+        
+        //Confere se já foi feita uma notificação de algum circuito desta reserva, se sim, reutiliza a mesma notificação
+        $not = null;
+        $notifications = Notification::find()->where(['user_id' => $reservation->request_user_id, 'type' => self::TYPE_RESERVATION])->all();
+        foreach($notifications as $notification){
+            if($notification->info == $reservation->id){
+                $not = $notification;
+                break;
+            }
+        }
+        
+        if($not){ //Se já existe, atualiza e coloca nova data
+            $not->date = DateUtils::now();
+            $not->viewed = 0;
+            $not->save();
+        }
+        else{ //Se for nova, cria notificação
+            $not = new Notification();
+            $not->user_id = $reservation->request_user_id;
+            $not->date = DateUtils::now();
+            $not->type = self::TYPE_RESERVATION;
+            $not->viewed = 0;
+            $not->info = (string) $reservation->id;
+            $not->save();
+        }
     }
     
     /**
@@ -360,21 +365,21 @@ class Notification extends \yii\db\ActiveRecord
      * Internamente ela possui um modelo particular, que armazena um JSON com tipo e e dados
      * Para noticias diferentes, criar apenas novos tipos.
      */
-    public static function createNoticeNotification($user_id, $type, $data, $data2 = null, $date = null){    	 
-    	$notice = [];
-    	$notice[0] = $type; //Tipo da noticia
-    	$notice[1] = $data; //Espaço para armaeznar info
-    	if($data2) $notice[2] = $data2; //Espaço extra opcional para armazenar mais info
-    	
-    	$not = new Notification();
-    	$not->user_id = $user_id;
-    	//Pode receber uma data por parametro, neste caso, utiliza essa data como a data da criação da notificação
-    	if($date) $not->date = $date;
-    	else $not->date = DateUtils::now();
-    	$not->type = self::TYPE_NOTICE;
-    	$not->viewed = 0;
-    	$not->info = json_encode($notice); //Armazena todos dados em um JSON
-    	$not->save();
+    public static function createNoticeNotification($user_id, $type, $data, $data2 = null, $date = null){         
+        $notice = [];
+        $notice[0] = $type; //Tipo da noticia
+        $notice[1] = $data; //Espaço para armaeznar info
+        if($data2) $notice[2] = $data2; //Espaço extra opcional para armazenar mais info
+        
+        $not = new Notification();
+        $not->user_id = $user_id;
+        //Pode receber uma data por parametro, neste caso, utiliza essa data como a data da criação da notificação
+        if($date) $not->date = $date;
+        else $not->date = DateUtils::now();
+        $not->type = self::TYPE_NOTICE;
+        $not->viewed = 0;
+        $not->info = json_encode($notice); //Armazena todos dados em um JSON
+        $not->save();
     }
     
     /**
@@ -384,28 +389,28 @@ class Notification extends \yii\db\ActiveRecord
      * Cria notificação de mudança na topologia. VERSÃO BETA
      */
     public static function createTopologyNotification($msg, $date = null){
-    	$users = User::find()->all();
-    	foreach($users as $user){
-    		$not = Notification::findOne(['user_id' => $user->id, 'type' => self::TYPE_TOPOLOGY, 'info' => $msg]);
-    		if($not){
-    			//Pode receber uma data por parametro, neste caso, utiliza essa data como a data da criação da notificação
-    			if($date) $not->date = $date;
-    			else $not->date = DateUtils::now();
-    			$not->viewed = 0;
-    			$not->save();
-    		}
-    		else{
-		    	$not = new Notification();
-		    	$not->user_id = $user->id;
-		    	//Pode receber uma data por parametro, neste caso, utiliza essa data como a data da criação da notificação
-		    	if($date) $not->date = $date;
-		    	else $not->date = DateUtils::now();
-		    	$not->type = self::TYPE_TOPOLOGY;
-		    	$not->viewed = 0;
-		    	$not->info = $msg;
-		    	$not->save();
-    		}
-    	}
+        $users = User::find()->all();
+        foreach($users as $user){
+            $not = Notification::findOne(['user_id' => $user->id, 'type' => self::TYPE_TOPOLOGY, 'info' => $msg]);
+            if($not){
+                //Pode receber uma data por parametro, neste caso, utiliza essa data como a data da criação da notificação
+                if($date) $not->date = $date;
+                else $not->date = DateUtils::now();
+                $not->viewed = 0;
+                $not->save();
+            }
+            else{
+                $not = new Notification();
+                $not->user_id = $user->id;
+                //Pode receber uma data por parametro, neste caso, utiliza essa data como a data da criação da notificação
+                if($date) $not->date = $date;
+                else $not->date = DateUtils::now();
+                $not->type = self::TYPE_TOPOLOGY;
+                $not->viewed = 0;
+                $not->info = $msg;
+                $not->save();
+            }
+        }
     }
     
     /********************************
@@ -420,69 +425,69 @@ class Notification extends \yii\db\ActiveRecord
      * @return string
      */
     public static function makeHtmlNotificationNotice($notification = null){
-    	if($notification == null) return "";
-    	$data = json_decode($notification->info);
-    	$type = $data[0];
-    	switch($type){
-    		//ADICIONADO A UM GRUPO
-    		case self::NOTICE_TYPE_ADD_GROUP:
-    			$group = Group::findOne($data[1]);
-    			if(!$group) return "";
-    			//Se não possui dado extra é para todos, do contrario, possui dominio
-    			if(isset($data[2])){
-    				$domain = Domain::findOne(['name' => $data[2]]);
-    				if(!$domain) return "";
-    			}
-    			
-    			$title = Yii::t("notification", 'Added to a group')." (".$group->name.")";
-    			
-    			$msg = Yii::t("notification", 'You have been added to group')." <b>".$group->name."</b>";
-    			if($group->type==Group::TYPE_DOMAIN){
-    				if(isset($domain)) $msg .= " ".Yii::t("notification", 'of the domain')." <b>".$domain->name."</b>.";
-    				else if(!isset($data[2])) $msg .= " ".Yii::t("notification", 'of all domains.');
-    				else $msg .= ".";
-    			}
-    			else {
-    				$msg .= " ".Yii::t("notification", 'with system permissions');
-    			}
-    			
-    			$date = Yii::$app->formatter->asDatetime($notification->date);
-    			
-    			$text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
-    			break;
-    		
-    		//REMOVIDO DE UM GRUPO
-    		case self::NOTICE_TYPE_DEL_GROUP:
-    			$group = Group::findOne($data[1]);
-    			if(!$group) return "";
-    			//Se não possui dado extra é para todos, do contrario, possui dominio
-    			if(isset($data[2])){
-    				$domain = Domain::findOne(['name' => $data[2]]);
-    				if(!$domain) return "";
-    			}
-    			
-    			$title = Yii::t("notification", 'Removed from a group')." (".$group->name.")";
-    			 
-    			$msg = Yii::t("notification", 'You were removed from the group')." <b>".$group->name."</b>";
-    			if($group->type==Group::TYPE_DOMAIN){
-    				if(isset($domain)) $msg .= " ".Yii::t("notification", 'of the domain')." <b>".$domain->name."</b>.";
-    				else if(!isset($data[2])) $msg .= " ".Yii::t("notification", 'of all domains.');
-    				else $msg .= ".";
-    			}
-    			else {
-    				$msg .= " ".Yii::t("notification", 'with system permissions');
-    			}
-    			 
-    			$date = Yii::$app->formatter->asDatetime($notification->date);
-    			 
-    			$text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
-    			break;
-    	}
+        if($notification == null) return "";
+        $data = json_decode($notification->info);
+        $type = $data[0];
+        switch($type){
+            //ADICIONADO A UM GRUPO
+            case self::NOTICE_TYPE_ADD_GROUP:
+                $group = Group::findOne($data[1]);
+                if(!$group) return "";
+                //Se não possui dado extra é para todos, do contrario, possui dominio
+                if(isset($data[2])){
+                    $domain = Domain::findOne(['name' => $data[2]]);
+                    if(!$domain) return "";
+                }
+                
+                $title = Yii::t("notification", 'Added to a group')." (".$group->name.")";
+                
+                $msg = Yii::t("notification", 'You have been added to group')." <b>".$group->name."</b>";
+                if($group->type==Group::TYPE_DOMAIN){
+                    if(isset($domain)) $msg .= " ".Yii::t("notification", 'of the domain')." <b>".$domain->name."</b>.";
+                    else if(!isset($data[2])) $msg .= " ".Yii::t("notification", 'of all domains.');
+                    else $msg .= ".";
+                }
+                else {
+                    $msg .= " ".Yii::t("notification", 'with system permissions');
+                }
+                
+                $date = Yii::$app->formatter->asDatetime($notification->date);
+                
+                $text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
+                break;
+            
+            //REMOVIDO DE UM GRUPO
+            case self::NOTICE_TYPE_DEL_GROUP:
+                $group = Group::findOne($data[1]);
+                if(!$group) return "";
+                //Se não possui dado extra é para todos, do contrario, possui dominio
+                if(isset($data[2])){
+                    $domain = Domain::findOne(['name' => $data[2]]);
+                    if(!$domain) return "";
+                }
+                
+                $title = Yii::t("notification", 'Removed from a group')." (".$group->name.")";
+                 
+                $msg = Yii::t("notification", 'You were removed from the group')." <b>".$group->name."</b>";
+                if($group->type==Group::TYPE_DOMAIN){
+                    if(isset($domain)) $msg .= " ".Yii::t("notification", 'of the domain')." <b>".$domain->name."</b>.";
+                    else if(!isset($data[2])) $msg .= " ".Yii::t("notification", 'of all domains.');
+                    else $msg .= ".";
+                }
+                else {
+                    $msg .= " ".Yii::t("notification", 'with system permissions');
+                }
+                 
+                $date = Yii::$app->formatter->asDatetime($notification->date);
+                 
+                $text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
+                break;
+        }
 
-    	$html = Notification::makeHtml('notice.png', $text);
-    	 
-    	if($notification->viewed == true) return '<li>'.$html.'</li>';
-    	return '<li class="new">'.$html.'</li>';
+        $html = Notification::makeHtml('notice.png', $text);
+         
+        if($notification->viewed == true) return '<li>'.$html.'</li>';
+        return '<li class="new">'.$html.'</li>';
     }
     
     /**
@@ -491,78 +496,78 @@ class Notification extends \yii\db\ActiveRecord
      * @return string
      */
     public static function makeHtmlNotificationReservation($notification = null){
-    	if($notification == null) return "";
-    	$reservation = Reservation::findOne($notification->info);
-    	if(!$reservation) return "";
+        if($notification == null) return "";
+        $reservation = Reservation::findOne($notification->info);
+        if(!$reservation) return "";
 
-    	$connection = Connection::find()->where(['reservation_id' => $reservation->id])->one();
-    	$source = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => 0])->domain;
-    	$path_order = ConnectionPath::find()->where(['conn_id' => $connection->id])->count()-1;
-    	$destination = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => $path_order])->domain;
-    	 
-    	$title = Yii::t("notification", 'Reservation')." (".$reservation->name.")";
-    	
-    	$connections = Connection::find()->where(['reservation_id' => $reservation->id])->all();
-    	
-    	//Se possui apenas uma conexão, então pode informar diretamente se foi aceito ou negado
-    	if(count($connections)<2){
-    		$msg = Yii::t("notification", 'The connection between')." <b>".$source." </b>".Yii::t("notification", 'and')." <b>".$destination."</b> ";
-    		$date = Yii::$app->formatter->asDatetime($notification->date);
-    		$link = '/circuits/reservation/view?id='.$reservation->id;
-    		
-    		if($connections[0]->status == Connection::STATUS_FAILED_CREATE ||
-    		   $connections[0]->status == Connection::STATUS_FAILED_CONFIRM ||
-    		   $connections[0]->status == Connection::STATUS_FAILED_SUBMIT ||
-    		   $connections[0]->status == Connection::STATUS_FAILED_PROVISION ||
-    		   $connections[0]->status == Connection::STATUS_CANCELLED ||
-    		   $connections[0]->status == Connection::STATUS_CANCEL_REQ ||	
-    		   $connections[0]->auth_status == Connection::AUTH_STATUS_REJECTED ||
-    		   $connections[0]->auth_status == Connection::AUTH_STATUS_EXPIRED
-    		){
-    			$msg .= " ".Yii::t("notification", 'can not be provisioned.');
-    			$text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
-    			$html = Notification::makeHtml('circuit_reject.png', $text);
-    		}
-    		else{
-    			$msg .= " ".Yii::t("notification", 'was provisioned.');
-    			$text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
-    			$html = Notification::makeHtml('circuit_accept.png', $text);
-    		}
-    	}
-    	
-    	//Se possui mais, informa um resumo do status atual da reserva
-    	else{
-    		//Conta o número de provisionadas, rejeitadas (aglomera todos estados em que não vai ser gerado o circuito)
-    		//e pendentes (aglomera todos estados de processamento intermediário)
-    		$provisioned = 0; $reject = 0; $pending = 0;
-    		foreach($connections as $conn){
-    			if($conn->status == Connection::STATUS_PROVISIONED) $provisioned++;
-    			else if($conn->status == Connection::STATUS_FAILED_CREATE ||
-    					$conn->status == Connection::STATUS_FAILED_CONFIRM ||
-    					$conn->status == Connection::STATUS_FAILED_SUBMIT ||
-    					$conn->status == Connection::STATUS_FAILED_PROVISION ||
-    					$conn->status == Connection::STATUS_CANCELLED ||
-    					$conn->status == Connection::STATUS_CANCEL_REQ ||
-    					$conn->auth_status == Connection::AUTH_STATUS_REJECTED ||
-    					$conn->auth_status == Connection::AUTH_STATUS_EXPIRED
-    					) $reject++;
-    			else $pending++;
-    		}
+        $connection = Connection::find()->where(['reservation_id' => $reservation->id])->one();
+        $source = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => 0])->domain;
+        $path_order = ConnectionPath::find()->where(['conn_id' => $connection->id])->count()-1;
+        $destination = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => $path_order])->domain;
+         
+        $title = Yii::t("notification", 'Reservation')." (".$reservation->name.")";
+        
+        $connections = Connection::find()->where(['reservation_id' => $reservation->id])->all();
+        
+        //Se possui apenas uma conexão, então pode informar diretamente se foi aceito ou negado
+        if(count($connections)<2){
+            $msg = Yii::t("notification", 'The connection between')." <b>".$source." </b>".Yii::t("notification", 'and')." <b>".$destination."</b> ";
+            $date = Yii::$app->formatter->asDatetime($notification->date);
+            $link = '/circuits/reservation/view?id='.$reservation->id;
+            
+            if($connections[0]->status == Connection::STATUS_FAILED_CREATE ||
+               $connections[0]->status == Connection::STATUS_FAILED_CONFIRM ||
+               $connections[0]->status == Connection::STATUS_FAILED_SUBMIT ||
+               $connections[0]->status == Connection::STATUS_FAILED_PROVISION ||
+               $connections[0]->status == Connection::STATUS_CANCELLED ||
+               $connections[0]->status == Connection::STATUS_CANCEL_REQ ||    
+               $connections[0]->auth_status == Connection::AUTH_STATUS_REJECTED ||
+               $connections[0]->auth_status == Connection::AUTH_STATUS_EXPIRED
+            ){
+                $msg .= " ".Yii::t("notification", 'can not be provisioned.');
+                $text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
+                $html = Notification::makeHtml('circuit_reject.png', $text);
+            }
+            else{
+                $msg .= " ".Yii::t("notification", 'was provisioned.');
+                $text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
+                $html = Notification::makeHtml('circuit_accept.png', $text);
+            }
+        }
+        
+        //Se possui mais, informa um resumo do status atual da reserva
+        else{
+            //Conta o número de provisionadas, rejeitadas (aglomera todos estados em que não vai ser gerado o circuito)
+            //e pendentes (aglomera todos estados de processamento intermediário)
+            $provisioned = 0; $reject = 0; $pending = 0;
+            foreach($connections as $conn){
+                if($conn->status == Connection::STATUS_PROVISIONED) $provisioned++;
+                else if($conn->status == Connection::STATUS_FAILED_CREATE ||
+                        $conn->status == Connection::STATUS_FAILED_CONFIRM ||
+                        $conn->status == Connection::STATUS_FAILED_SUBMIT ||
+                        $conn->status == Connection::STATUS_FAILED_PROVISION ||
+                        $conn->status == Connection::STATUS_CANCELLED ||
+                        $conn->status == Connection::STATUS_CANCEL_REQ ||
+                        $conn->auth_status == Connection::AUTH_STATUS_REJECTED ||
+                        $conn->auth_status == Connection::AUTH_STATUS_EXPIRED
+                        ) $reject++;
+                else $pending++;
+            }
 
-    		$msg = Yii::t("notification", 'The status of connections changed:')."<br />";
-    		$msg .= Yii::t("notification", 'Provisioned:')." ".$provisioned.", ";
-    		$msg .= Yii::t("notification", 'Rejected:')." ".$reject.", ";
-    		$msg .= Yii::t("notification", 'Pending:')." ".$pending;
-    		
-    		$date = Yii::$app->formatter->asDatetime($notification->date);
-    		$link = '/circuits/reservation/view?id='.$reservation->id;
-    		
-    		$text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
-    		$html = Notification::makeHtml('circuit_changed.png', $text);
-    	}
-    	
-    	if($notification->viewed == true) return '<li>'.Html::a($html, array($link)).'</li>';
-    	return '<li class="new">'.Html::a($html, array($link)).'</li>';
+            $msg = Yii::t("notification", 'The status of connections changed:')."<br />";
+            $msg .= Yii::t("notification", 'Provisioned:')." ".$provisioned.", ";
+            $msg .= Yii::t("notification", 'Rejected:')." ".$reject.", ";
+            $msg .= Yii::t("notification", 'Pending:')." ".$pending;
+            
+            $date = Yii::$app->formatter->asDatetime($notification->date);
+            $link = '/circuits/reservation/view?id='.$reservation->id;
+            
+            $text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
+            $html = Notification::makeHtml('circuit_changed.png', $text);
+        }
+        
+        if($notification->viewed == true) return '<li>'.Html::a($html, array($link)).'</li>';
+        return '<li class="new">'.Html::a($html, array($link)).'</li>';
     }
     
     /**
@@ -571,33 +576,33 @@ class Notification extends \yii\db\ActiveRecord
      * @return string
      */
     public static function makeHtmlNotificationAuth($notification = null){
-    	if($notification == null) return "";
-    	$auth_id = $notification->info;
-    	if($auth_id == null) return "";
-    	$auth = ConnectionAuth::findOne($auth_id);
-    	if(!$auth) return "";
+        if($notification == null) return "";
+        $auth_id = $notification->info;
+        if($auth_id == null) return "";
+        $auth = ConnectionAuth::findOne($auth_id);
+        if(!$auth) return "";
 
-    	$connection = Connection::findOne($auth->connection_id);
-    	
-    	$source = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => 0])->domain;
-    	$path_order = ConnectionPath::find()->where(['conn_id' => $connection->id])->count()-1;
-    	$destination = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => $path_order])->domain;
-    	
-    	$reservation = Reservation::findOne($connection->reservation_id);
-    	
-    	$title = Yii::t("notification", 'Pending authorization')." (".$auth->domain.")";
-	    $msg = Yii::t("notification", 'The connection is from')." <b>".$source."</b> ".Yii::t("notification", 'to')." <b>".$destination."</b>";
-		$msg .= ". ".Yii::t("notification", 'The request bandwidth is')." ".$reservation->bandwidth." Mbps.";
-		$date = Yii::$app->formatter->asDatetime($notification->date);
-		
-		$link = '/circuits/authorization/answer?id='.$reservation->id.'&domain='.$auth->domain;
+        $connection = Connection::findOne($auth->connection_id);
+        
+        $source = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => 0])->domain;
+        $path_order = ConnectionPath::find()->where(['conn_id' => $connection->id])->count()-1;
+        $destination = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => $path_order])->domain;
+        
+        $reservation = Reservation::findOne($connection->reservation_id);
+        
+        $title = Yii::t("notification", 'Pending authorization')." (".$auth->domain.")";
+        $msg = Yii::t("notification", 'The connection is from')." <b>".$source."</b> ".Yii::t("notification", 'to')." <b>".$destination."</b>";
+        $msg .= ". ".Yii::t("notification", 'The request bandwidth is')." ".$reservation->bandwidth." Mbps.";
+        $date = Yii::$app->formatter->asDatetime($notification->date);
+        
+        $link = '/circuits/authorization/answer?id='.$reservation->id.'&domain='.$auth->domain;
 
-	    $text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
+        $text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
 
-	    $html = Notification::makeHtml('pending_authorization.png', $text);
-	    
-	    if($notification->viewed == true) return '<li>'.Html::a($html, array($link)).'</li>';
-	    return '<li class="new">'.Html::a($html, array($link)).'</li>';
+        $html = Notification::makeHtml('pending_authorization.png', $text);
+        
+        if($notification->viewed == true) return '<li>'.Html::a($html, array($link)).'</li>';
+        return '<li class="new">'.Html::a($html, array($link)).'</li>';
     }
     
     /********************************
@@ -614,28 +619,28 @@ class Notification extends \yii\db\ActiveRecord
      * Cria novas notificações quando usuário é adicionado a um grupo
      */
     public static function createNotificationsUserNewGroup($user_id, $group_name, $domain_id){
-    	$user = User::findOne($user_id);
-    	$group = Group::findOne(['role_name' => $group_name]);
-    	 
-    	if($user && $group){
-    		Yii::trace("Criar notificações do grupo ".$group->name." para usuário ".$user->name);
-    		//Busca todas autorizações pendentes do grupo
-    		//Se tem dominio, procura só as relacionadas ao dominio do papel
-    		if($domain_id){
-    			$domain = Domain::findOne($domain_id);
-    			if($domain) $auths = ConnectionAuth::find()->where(['status' => Connection::AUTH_STATUS_PENDING, 'domain' => $domain->name, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
-    			else return;
-    		}
-    		//Se não possui domonio no papel, busca para todos dominios, pois é ANY
-    		else $auths = ConnectionAuth::find()->where(['status' => Connection::AUTH_STATUS_PENDING, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
+        $user = User::findOne($user_id);
+        $group = Group::findOne(['role_name' => $group_name]);
+         
+        if($user && $group){
+            Yii::trace("Criar notificações do grupo ".$group->name." para usuário ".$user->name);
+            //Busca todas autorizações pendentes do grupo
+            //Se tem dominio, procura só as relacionadas ao dominio do papel
+            if($domain_id){
+                $domain = Domain::findOne($domain_id);
+                if($domain) $auths = ConnectionAuth::find()->where(['status' => Connection::AUTH_STATUS_PENDING, 'domain' => $domain->name, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
+                else return;
+            }
+            //Se não possui domonio no papel, busca para todos dominios, pois é ANY
+            else $auths = ConnectionAuth::find()->where(['status' => Connection::AUTH_STATUS_PENDING, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
     
-    		//Passa por todas criando uma notificação
-    		foreach($auths as $auth){
-    			$connection = Connection::findOne($auth->connection_id);
-    			$reservation = Reservation::findOne($connection->reservation_id);
-    			Notification::createUserAuthNotification($user->id, $auth->domain, $connection->reservation_id, $auth->id, $reservation->date);
-    		}
-    	}
+            //Passa por todas criando uma notificação
+            foreach($auths as $auth){
+                $connection = Connection::findOne($auth->connection_id);
+                $reservation = Reservation::findOne($connection->reservation_id);
+                Notification::createUserAuthNotification($user->id, $auth->domain, $connection->reservation_id, $auth->id, $reservation->date);
+            }
+        }
     }
     
     /**
@@ -646,27 +651,27 @@ class Notification extends \yii\db\ActiveRecord
      * Deleta as notificações quando usuário é removido de um grupo
      */
     public static function deleteNotificationsUserGroup($user_id, $group_name, $domain_id){
-    	$user = User::findOne($user_id);
-    	$group = Group::findOne(['role_name' => $group_name]);
+        $user = User::findOne($user_id);
+        $group = Group::findOne(['role_name' => $group_name]);
     
-    	if($user && $group){
-    		Yii::trace("Remover notificações do grupo ".$group->name." para usuário ".$user->name);
-    		//Busca todas autorizações do grupo
-    		//Se tem domínio, procura só as relacionadas ao domínio do papel
-    		if($domain_id){
-    			$domain = Domain::findOne($domain_id);
-    			if($domain) $auths = ConnectionAuth::find()->where(['domain' => $domain->name, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
-    			else return;
-    		}
-    		//Se não possui domínio no papel, busca para todos dominios, pois é ANY
-    		else $auths = ConnectionAuth::find()->where(['type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
+        if($user && $group){
+            Yii::trace("Remover notificações do grupo ".$group->name." para usuário ".$user->name);
+            //Busca todas autorizações do grupo
+            //Se tem domínio, procura só as relacionadas ao domínio do papel
+            if($domain_id){
+                $domain = Domain::findOne($domain_id);
+                if($domain) $auths = ConnectionAuth::find()->where(['domain' => $domain->name, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
+                else return;
+            }
+            //Se não possui domínio no papel, busca para todos dominios, pois é ANY
+            else $auths = ConnectionAuth::find()->where(['type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
     
-    		//Passa por todas criando uma notificação
-    		foreach($auths as $auth){
-    			$notification = Notification::findOne(['user_id' => $user_id, 'type' => self::TYPE_AUTHORIZATION, 'info' => $auth->id]);
-    			if($notification) $notification->delete();
-    		}
-    	}
+            //Passa por todas criando uma notificação
+            foreach($auths as $auth){
+                $notification = Notification::findOne(['user_id' => $user_id, 'type' => self::TYPE_AUTHORIZATION, 'info' => $auth->id]);
+                if($notification) $notification->delete();
+            }
+        }
     }
 
 }
