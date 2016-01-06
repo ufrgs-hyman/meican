@@ -75,10 +75,10 @@ Asset::register($this);
   <!-- Content Wrapper. -->
   <div class="content-wrapper">
     <?php 
-        $route = '';
         if (isset($this->params['header'])) {
+            $route = $this->params['header'][1][0];
             for ($i=1; $i < count($this->params['header'][1]); $i++) { 
-                $route = $this->params['header'][1][0]." > ".$this->params['header'][1][$i];
+                $route .= " > ".$this->params['header'][1][$i];
             }
             echo '<!-- Content Header (Page header) -->
               <section class="content-header">
