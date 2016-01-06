@@ -9,10 +9,10 @@ class CreateEditAsset extends AssetBundle
     public $sourcePath = '@meican/aaa/assets/group/public';
 
     public $js = [
-    	'groupCreateEdit.js',
+        'groupCreateEdit.js',
     ];
     
     public $depends = [
-    	'meican\base\assets\layout\Asset',
+        'meican\base\assets\layout\Asset',
     ];
 }

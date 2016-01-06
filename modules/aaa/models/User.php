@@ -23,9 +23,9 @@ use yii\web\IdentityInterface;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
-	public $_settings;
-	public $_groupRoleName;
-	public $_domain;
+    public $_settings;
+    public $_groupRoleName;
+    public $_domain;
     /**
      * @inheritdoc
      */
@@ -76,7 +76,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getUserSettings()
     {
-    	return $this->hasOne(UserSettings::className(), ['id' => 'id']);
+        return $this->hasOne(UserSettings::className(), ['id' => 'id']);
     }
 
     /**
@@ -84,7 +84,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getUserDomainRoles()
     {
-    	return $this->hasMany(UserDomainRole::className(), ['user_id' => 'id']);
+        return $this->hasMany(UserDomainRole::className(), ['user_id' => 'id']);
     }
 
     static function findOneByEmail($email) {
@@ -92,51 +92,51 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
     public static function findByUsername($username) {
-    	return static::findOne(['login' => $username]);
+        return static::findOne(['login' => $username]);
     }
     
     public static function findIdentity($id) {
-    	return static::findOne($id);
+        return static::findOne($id);
     }
     
     /**
      * login by token disabled
      */
     public static function findIdentityByAccessToken($token, $type = null) {
-    	return null;
+        return null;
     }
     
     public function getId() {
-    	return $this->id;
+        return $this->id;
     }
     
     public function getAuthKey() {
-    	return $this->authkey;
+        return $this->authkey;
     }
     
     public function validateAuthKey($authKey) {
-    	return $this->authkey === $authKey;
+        return $this->authkey === $authKey;
     }
     
     public function isValidPassword($password) {
-    	if(Yii::$app->getSecurity()->validatePassword($password, $this->password)) {
-    		return true;
-    	} else {
-    		return false;
-    	}
+        if(Yii::$app->getSecurity()->validatePassword($password, $this->password)) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     public function setFromUserForm($form) {
-    	$this->login = $form->login;
-    	$this->authkey = Yii::$app->getSecurity()->generateRandomString();
-    	$this->password = Yii::$app->getSecurity()->generatePasswordHash($form->password);
-    	
-    	$this->language = 'en-US';
-    	$this->date_format = 'dd/mm/yyyy';
-    	$this->name = $form->name;
-    	$this->email = $form->email;
-    	
-    	return true;
+        $this->login = $form->login;
+        $this->authkey = Yii::$app->getSecurity()->generateRandomString();
+        $this->password = Yii::$app->getSecurity()->generatePasswordHash($form->password);
+        
+        $this->language = 'en-US';
+        $this->date_format = 'dd/mm/yyyy';
+        $this->name = $form->name;
+        $this->email = $form->email;
+        
+        return true;
     }
 
     public function setFromData($login, $password, $name, $email, 
@@ -154,16 +154,16 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     }
     
     public function afterSave($isNewRecord, $changedAttributes) {
-    	if ($isNewRecord) {
-    		if(isset($this->_groupRoleName)){
-    			$userDomainRole = new UserDomainRole;
-	    		$userDomainRole->user_id = $this->id;
-	    		$userDomainRole->domain = $this->_domain;
-	    		$userDomainRole->_groupRoleName = $this->_groupRoleName;
-	    		$userDomainRole->save();
-    		}
-    	}
+        if ($isNewRecord) {
+            if(isset($this->_groupRoleName)){
+                $userDomainRole = new UserDomainRole;
+                $userDomainRole->user_id = $this->id;
+                $userDomainRole->domain = $this->_domain;
+                $userDomainRole->_groupRoleName = $this->_groupRoleName;
+                $userDomainRole->save();
+            }
+        }
     
-    	return parent::afterSave($isNewRecord, $changedAttributes);
+        return parent::afterSave($isNewRecord, $changedAttributes);
     }
 }
