@@ -6,7 +6,7 @@
     use yii\bootstrap\Html;
     use yii\bootstrap\ActiveForm;
     use yii\grid\CheckboxColumn;
-    
+
     use meican\base\widgets\GridButtons;
     use meican\base\components\LinkColumn;
     use meican\topology\assets\service\IndexAsset;
@@ -25,23 +25,22 @@
             </div>
             <div class="box-body">
                 <?= DetailView::widget([
-                        'model' => $model,
-                        'attributes' => [
-                            'name',               
-                            'nsa',  
-                            [            
-                                'attribute'=> 'type',         
-                                'value' => $model->getType(),
-                            ], 
-                            'latitude',
-                            'longitude',
-                            [            
-                                'attribute'=> 'domain_id',         
-                                'value' => $model->getDomainName(),
-                            ],
+                    'model' => $model,
+                    'attributes' => [
+                        'name',               
+                        'nsa',  
+                        [            
+                            'attribute'=> 'type',         
+                            'value' => $model->getType(),
+                        ], 
+                        'latitude',
+                        'longitude',
+                        [            
+                            'attribute'=> 'domain_id',         
+                            'value' => $model->getDomainName(),
                         ],
-                    ]);
-                ?>
+                    ],
+                ]); ?>
             </div>
         </div>
     </div>

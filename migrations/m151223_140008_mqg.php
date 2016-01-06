@@ -38,6 +38,9 @@ class m151223_140008_mqg extends Migration
             UPDATE `meican_user` SET `language`=(SELECT `language` FROM `meican_user_settings` WHERE `id`=`meican_user`.`id`) WHERE 1
             ");
         $this->execute("
+            UPDATE `meican_user_settings` SET `time_zone`='UTC' WHERE `time_zone` IS NULL;
+            ");
+        $this->execute("
             UPDATE `meican_user` SET `time_zone`=(SELECT `time_zone` FROM `meican_user_settings` WHERE `id`=`meican_user`.`id`) WHERE 1
             ");
         $this->execute("
