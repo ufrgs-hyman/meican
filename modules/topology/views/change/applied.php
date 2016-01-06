@@ -1,15 +1,17 @@
 <?php 
-    use yii\grid\GridView;
-    use yii\grid\CheckboxColumn;
-    use yii\data\ActiveDataProvider;
-    use yii\helpers\Html;
-    use yii\helpers\ArrayHelper;
-    use yii\widgets\ActiveForm;
-    use yii\widgets\Pjax;
 
-    use meican\topology\models\TopologyChange;
-    use meican\topology\models\Domain;
-    use meican\base\components\LinkColumn;
+use yii\grid\GridView;
+use yii\grid\CheckboxColumn;
+use yii\data\ActiveDataProvider;
+use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
+
+use meican\topology\models\TopologyChange;
+use meican\topology\models\Domain;
+use meican\base\components\LinkColumn;
+    
 ?>
 
 <h1><?= Yii::t('topology',"Applied changes") ?></h1>

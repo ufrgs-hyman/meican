@@ -30,7 +30,7 @@
     echo GridView::widget([
         'options' => ['class' => 'list'],
         'dataProvider' => $providers,
-    	'layout' => "{items}{summary}{pager}",
+        'layout' => "{items}{summary}{pager}",
         'columns' => array(
                 array(
                     'class'=>CheckboxColumn::className(),
