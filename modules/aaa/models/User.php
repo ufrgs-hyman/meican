@@ -40,7 +40,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['login', 'password', 'authkey','language','name','email','date_format','time_format','time_zone'], 'required'],
+            [['login', 'password', 'authkey','language','name','email',
+            'date_format','time_format','time_zone'], 'required'],
             [['language'], 'string'],
             [['time_format'], 'string', 'max' => 10],
             [['date_format'], 'string', 'max' => 20],
@@ -82,7 +83,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUserDomainRoles()
+    public function getRoles()
     {
         return $this->hasMany(UserDomainRole::className(), ['user_id' => 'id']);
     }
@@ -126,19 +127,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         }
     }
     
-    public function setFromUserForm($form) {
-        $this->login = $form->login;
-        $this->authkey = Yii::$app->getSecurity()->generateRandomString();
-        $this->password = Yii::$app->getSecurity()->generatePasswordHash($form->password);
-        
-        $this->language = 'en-US';
-        $this->date_format = 'dd/mm/yyyy';
-        $this->name = $form->name;
-        $this->email = $form->email;
-        
-        return true;
-    }
-
     public function setFromData($login, $password, $name, $email, 
         $groupRoleName, $domain = null) {
         $this->login = $login;
@@ -149,6 +137,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         
         $this->language = 'en-US';
         $this->date_format = 'dd/mm/yyyy';
+        $this->time_format = "HH:mm";
+        $this->time_zone = 'UTC';
         $this->name = $name;
         $this->email = $email;
     }

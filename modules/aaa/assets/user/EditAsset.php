@@ -4,7 +4,7 @@ namespace meican\aaa\assets\user;
 
 use yii\web\AssetBundle;
 
-class AccountAsset extends AssetBundle
+class EditAsset extends AssetBundle
 {
     public $sourcePath = '@meican/aaa/assets/user/public';
 	

@@ -40,6 +40,23 @@ class UserController extends RbacController {
         ));
 
     }
+
+    public function actionView($id) {
+        $user = User::findOne($id);
+        
+        $rolesProvider = new ActiveDataProvider([
+                'query' => $user->getRoles(),
+                'pagination' => [
+                  'pageSize' => 10,
+                ],
+                'sort' => false,
+        ]);
+        
+        return $this->render('view', array(
+                'model' => $user,
+                'rolesProvider' => $rolesProvider
+        ));
+    }
     
     public function actionCreate() {
         if(!self::can("user/create")){
@@ -51,25 +68,18 @@ class UserController extends RbacController {
         }
         
         $userForm = new UserForm;
+        $userForm->scenario = UserForm::SCENARIO_CREATE;
     
         if($userForm->load($_POST) && $userForm->validate()) {
             $user = new User;
-            $errors = $user->setFromUserForm($userForm);
-            if(!$errors){
-                if($user->save()) {
-                    Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User added successfully'));
-                    
-                    Notification::createNotificationsUserNewGroup($user->id, $userForm->group, $userForm->domain);
-                    
-                    return $this->redirect(array('index'));
-                } else {
-                    foreach($user->getErrors() as $attribute => $error) {
-                        Yii::$app->getSession()->addFlash("error", $error[0]);
-                    }
-                }
-            }
-            else {
-                foreach($errors as $attribute => $error) {
+            
+            if($userForm->createUser($user)){
+                Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User added successfully'));
+                
+                return $this->redirect(array('index'));
+
+            } else {
+                foreach($user->getErrors() as $attribute => $error) {
                     Yii::$app->getSession()->addFlash("error", $error[0]);
                 }
             }
@@ -77,16 +87,29 @@ class UserController extends RbacController {
             foreach($userForm->getErrors() as $attribute => $error) {
                 Yii::$app->getSession()->addFlash("error", $error[0]);
             }
-            $userForm->clearErrors();
         }
 
         return $this->render('create',array(
                 'user' => $userForm,
         ));
     }
-    
+
+    public function actionUpdateMyAccount() {
+        $user = User::findOne(Yii::$app->user->id);
+        $userForm = new UserForm;
+        $userForm->scenario = UserForm::SCENARIO_UPDATE_ACCOUNT;
+        return $this->edit($user, $userForm);
+    }
+
     public function actionUpdate($id) {
-        if(!self::can("user/update")){
+        $user = User::findOne($id);
+        $userForm = new UserForm;
+        $userForm->scenario = UserForm::SCENARIO_UPDATE;
+        return $this->edit($user, $userForm);
+    }
+    
+    private function edit($user, $userForm) {
+        /*if(!self::can("user/update")){
             if(!self::can("user/read")) return $this->goHome();
             else{
                 Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update users'));
@@ -94,30 +117,19 @@ class UserController extends RbacController {
             }
         }
         
-        $user = User::findOne($id);
-        
         if(!$user){
             if(!self::can("user/read")) return $this->goHome();
             else{
                 Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'User not found'));
                 return $this->redirect(array('index'));
             }
-        }
+        }*/
         
-        $userForm = new UserForm;
-    
         if($userForm->load($_POST)) {
             if ($userForm->validate()) {
                 if ($userForm->updateUser($user)) {
-                    $settings = $user->getUserSettings()->one();
-                    if ($userForm->updateSettings($settings)) {
-                        Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User updated successfully'));
-                        return $this->redirect(array('index'));
-                    } else {
-                        foreach($settings->getErrors() as $attribute => $error) {
-                            Yii::$app->getSession()->addFlash("error", $error[0]);
-                        }
-                    }
+                    Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User updated successfully'));
+                    return $this->redirect(array('index'));
                 } else {
                     foreach($user->getErrors() as $attribute => $error) {
                         Yii::$app->getSession()->addFlash("error", $error[0]);
@@ -160,42 +172,21 @@ class UserController extends RbacController {
          
         return $this->redirect(array('index'));
     }
-    
-    public function actionAccount($lang=null) {
-        if ($lang) {
-            Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User settings updated successfully'));
-        }        
-        
-        $userId = Yii::$app->user->id;
 
-        $user = User::findOne($userId);
-        $account = new AccountForm;
+    public function actionAccount() {
+        $user = User::findOne(Yii::$app->user->id);
 
-        if($account->load($_POST)) {
-            if ($account->validate()) {
-                if ($account->updateUser($user)) {
-                    $this->redirect(["account", 'lang'=>true]);
-                } else {
-                    foreach($user->getErrors() as $attribute => $error) {
-                        Yii::$app->getSession()->addFlash("error", $error[0]);
-                    }
-                }
-            } else {
-                foreach($account->getErrors() as $attribute => $error) {
-                    Yii::$app->getSession()->addFlash("error", $error[0]);
-                }
-                $account->clearErrors();
-            }
-
-        } else {
-            $account = new AccountForm;
-            $account->setFromRecord($user);
-        }
-    
-        $account->clearPass();
+        $rolesProvider = new ActiveDataProvider([
+                'query' => $user->getRoles(),
+                'pagination' => [
+                  'pageSize' => 10,
+                ],
+                'sort' => false,
+        ]);
         
         return $this->render('account', array(
-                'user'=>$account,
+                'model' => $user,
+                'rolesProvider' => $rolesProvider
         ));
     }
 }

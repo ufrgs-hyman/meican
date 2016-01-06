@@ -9,8 +9,11 @@ use yii\grid\CheckboxColumn;
 use meican\aaa\models\Group;
 use meican\base\widgets\GridButtons;
 use meican\base\components\LinkColumn;
+//use meican\topology\assets\service\IndexAsset;
 
-$this->params['header'] = ["My account", ['Home']];
+//IndexAsset::register($this);
+
+$this->params['header'] = [$model->name, ['Home', 'Users']];
 
 ?>
 
@@ -24,7 +27,7 @@ $this->params['header'] = ["My account", ['Home']];
                 <?= $this->render("_profile", ['model'=>$model]); ?>
             </div>
             <div class="box-footer">
-                <a href="<?= Url::to("update-my-account") ?>" class="btn btn-default"><i class="fa fa-pencil"></i> Edit</a>
+                <a href="<?= Url::to(["update", 'id'=>$model->id]) ?>" class="btn btn-default"><i class="fa fa-pencil"></i> Edit</a>
             </div>   
         </div>
     </div>
@@ -36,10 +39,34 @@ $this->params['header'] = ["My account", ['Home']];
             <div class="box-body">
                 <?php
 
+                $form = ActiveForm::begin([
+                    'method' => 'post',
+                    'action' => ['/topology/service/delete'],
+                    'id' => 'role-form',  
+                    'enableClientScript'=>false,
+                    'enableClientValidation' => false,
+                ]);
+
+                echo GridButtons::widget([
+                    'addRoute'=>['/aaa/role/create', 'id'=>$model->id]]).'<br>';
+
                 echo GridView::widget([
                     'dataProvider' => $rolesProvider,
                     'layout' => "{items}{summary}{pager}",
                     'columns' => array(
+                        array(
+                            'class'=>CheckboxColumn::className(),
+                            'name'=>'delete',         
+                            'multiple'=>false,
+                            'headerOptions'=>['style'=>'width: 2%;'],
+                        ),
+                        array(
+                            'class'=> LinkColumn::className(),
+                            'image'=>'/images/edit_1.png',
+                            'label' => '',
+                            'url' => '/aaa/role/update',
+                            'headerOptions'=>['style'=>'width: 2%;'],
+                        ),
                         [
                             'attribute' => 'domain', 
                             'format' => 'raw',
@@ -65,8 +92,12 @@ $this->params['header'] = ["My account", ['Home']];
                     ),
                 ]);
 
+                ActiveForm::end();
+            
                 ?>
             </div>
         </div>
     </div>
 </div>
+
+        
