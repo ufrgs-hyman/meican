@@ -20,15 +20,16 @@ $this->params['header'] = ["Domains", ['Home', 'Topology']];
     </div>
     <div class="box-body">
         <?php
-            $form = ActiveForm::begin([
-                'method' => 'post',
-                'action' => ['delete'],
-                'id' => 'domain-form',
-                'enableClientScript'=>false,
-                'enableClientValidation' => false,
-            ]);
-        ?>
-        <?= GridView::widget([
+
+        $form = ActiveForm::begin([
+            'method' => 'post',
+            'action' => ['delete'],
+            'id' => 'domain-form',
+            'enableClientScript'=>false,
+            'enableClientValidation' => false,
+        ]);
+        
+        echo GridView::widget([
             'dataProvider' => $domains,
             'id' => 'grid',
             'layout' => "{items}{summary}{pager}",
@@ -63,7 +64,7 @@ $this->params['header'] = ["Domains", ['Home', 'Topology']];
         ]); 
 
         ActiveForm::end();
-        
+
         ?>
     </div>
 </div>
