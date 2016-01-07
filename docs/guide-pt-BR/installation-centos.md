@@ -4,7 +4,7 @@ Siga as etapas detalhadas a seguir.
 
 Esta configuração foi testada e realizada no CentOS 6.7.
 
-#####Preparar ambiente
+#####Preparar o ambiente
 
 ```
 yum update
@@ -72,7 +72,7 @@ ou, você pode efetuar o download da última versão (TALVEZ NÃO ESTÁVEL) do s
 git clone https://github.com/ufrgs-hyman/meican2.git
 ```
 
-Agora precisamos definir junto ao MEICAN, as configurações do banco de dados local. Para isso deve-se acessar o seguinte arquivo:
+Agora precisamos definir junto ao MEICAN as configurações do banco de dados local. Para isso deve-se acessar o seguinte arquivo:
 
 ```
 nano #meican-folder#/config/db.php
