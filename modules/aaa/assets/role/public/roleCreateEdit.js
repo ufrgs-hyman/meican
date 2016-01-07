@@ -1,19 +1,5 @@
 $(document).ready(function() {
-	/*var value = $( "#userdomainrole-_grouprolename option:selected" ).val();
-	if(systemGroups.indexOf(value) != -1){
-		$("#userdomainrole-domain option:first-child").attr("selected", true);
-		$('#domain-select').attr('disabled', 'disabled');
-	}
-	else $('#domain-select').removeAttr('disabled');
 	
-	$('#userdomainrole-_grouprolename').change(function () {
-		var value = $( "#userdomainrole-_grouprolename option:selected" ).val();
-		if(systemGroups.indexOf(value) != -1){
-			$("#userdomainrole-domain option:first-child").attr("selected", true);
-			$('#domain-select').attr('disabled', 'disabled');
-		}
-		else $('#domain-select').removeAttr('disabled');
-	})*/
 });
 
 $("#delete-role-grid-btn").click(function() {
@@ -36,6 +22,8 @@ $("#add-role-grid-btn").click(function() {
                 $("#add-role-modal").modal("hide");
                 return false;
             });
+            
+            monitorGroupType();
         }
     });
     return false;
@@ -52,6 +40,8 @@ $("#role-grid").on("click",'img.edit-role-grid-btn',  function() {
                 $("#edit-role-modal").modal("hide");
                 return false;
             });
+            
+            monitorGroupType();
         }
     });
     return false;
@@ -83,4 +73,22 @@ $("#delete-role-btn").click(function (){
 
 function submitDeleteForm() {
     $("#role-grid-form").submit();
+}
+
+function monitorGroupType(){
+	var value = $("#userdomainrole-_grouprolename option:selected" ).val();
+    if(systemGroups.indexOf(value) != -1){
+		$("#userdomainrole-domain option:first-child").attr("selected", true);
+		$('#userdomainrole-domain').attr('disabled', 'disabled');
+	}
+	else $('#userdomainrole-domain').removeAttr('disabled');
+	
+	$("#userdomainrole-_grouprolename").on("change", function (){
+		var value = $( "#userdomainrole-_grouprolename option:selected" ).val();
+		if(systemGroups.indexOf(value) != -1){
+			$("#userdomainrole-domain option:first-child").attr("selected", true);
+			$('#userdomainrole-domain').attr('disabled', 'disabled');
+		}
+		else $('#userdomainrole-domain').removeAttr('disabled');
+    });
 }
