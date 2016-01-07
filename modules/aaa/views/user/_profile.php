@@ -1,10 +1,11 @@
 <?php
 
 use yii\widgets\DetailView;
+use yii\bootstrap\Html;
 
 ?>
 
-<img class="profile-user-img img-responsive img-circle" src="" alt="User profile picture">
+<?= Html::img("@web/images/avatar.png", ['class'=> 'profile-user-img img-responsive img-circle']); ?>
 
 <p class="text-muted text-center"><?= $model->name; ?></p>
 
