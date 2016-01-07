@@ -94,7 +94,7 @@ DocumentRoot /var/www/meican
 Por fim, reinicie o Apache para confirmar as alterações:
 
 ```
-service httpd restart
+sudo service apache2 restart
 ```
 
 Após isso, o MEICAN estará disponível em http://localhost com o seguinte usuário criado:
