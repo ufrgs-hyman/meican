@@ -1,10 +1,10 @@
 ##INSTALLATION GUIDE - CentOS
 
-Follow the steps detailed below.
+Siga as etapas detalhadas a seguir.
 
-This configuration was tested and performed on CentOS 6.7.
+Esta configuração foi testada e realizada no CentOS 6.7.
 
-#####Prepare environment
+#####Preparar ambiente
 
 ```
 yum update
@@ -12,15 +12,19 @@ rpm -Uvh https://mirror.webtatic.com/yum/el6/latest.rpm
 yum install httpd mysql-server php55w curl php55w-mysql php55w-curl
 ```
 
-There may be a conflict between the native PHP CentOS and the version that the Meican requires. To remove the native version, run:
+O CentOS geralmente já possui uma versão do PHP previamente instalada, entretanto esta versão pode não ser compatível com o MEICAN. Por isso, é necessário remover a antiga versão e instalar a 5.5 ou superior. Para remover execute:
 
 ```
 yum remove php-common
 ```
 
-After that, runs the install again.
+Após a remoção é possível tentar instalar a versão correta:
 
-Turn on all required services: 
+```
+yum install php55w php55w-mysql php55w-curl
+```
+
+Ative os serviços recém instalados:
 
 ````
 chkconfig mysqld on
@@ -29,7 +33,7 @@ chkconfig httpd on
 service httpd start
 ````
 
-In the RNP environment, the server is protected by an outer firewall and its rules are controlled at a higher level. The firewall of the operating system level is not required for this environment, but it can be to another. To disable the firewall perform the following:
+No ambiente da RNP, o servidor no qual o MEICAN está alocado é protegido por um firewall externo e suas regras são controladas em alto nível. Dessa forma o firewall local não é necessário no ambiente da RNP. Cabe ao administrador da rede local esta decisão. Para desabilitar o firewall execute o seguinte:
 
 ```
 service iptables save
@@ -37,73 +41,75 @@ service iptables stop
 chkconfig iptables off
 ```
 
-#####Setup database
+#####Configurar o banco de dados
 
-While not mandatory, the phpMyAdmin installation is recommended for easy database management.
+Mesmo que não obrigatório, a instalação do phpMyAdmin é recomendada para gerenciamento dos dados persistidos de forma facilitada. Para instalar execute:
 
 ```
 yum install epel-release
 yum install phpmyadmin
 ```
 
-Or you can simply create a database via command line.
+Você pode criar a base de dados a partir da interface gráfica do phpMyAdmin ou executar os seguintes comandos no terminal:
 
 ```
 mysql -u #user# -p
 CREATE DATABASE IF NOT EXISTS `meican2`;
 ```
 
-#####Download and install MEICAN
+#####Download e instalação do MEICAN
 
-In a public folder (e.g. /var/www) [download a stable version](https://github.com/ufrgs-hyman/meican2/releases):
+Em uma pasta de acesso permitido pelo usuário apache (e.g. /var/www) [baixe uma versão estável do sistema](https://github.com/ufrgs-hyman/meican2/releases) (recomendado):
 
 ```
 wget https://github.com/ufrgs-hyman/meican2/archive/#version#.tar.gz
 tar -zxvf #version#.tar.gz
 ```
 
-or clone the Git repository with the latest version (MAY BE NOT STABLE):
+ou, você pode efetuar o download da última versão (TALVEZ NÃO ESTÁVEL) do sistema diretamente do repositório GitHub:
 
 ```
 git clone https://github.com/ufrgs-hyman/meican2.git
 ```
 
-Configure database settings:
+Agora precisamos definir junto ao MEICAN, as configurações do banco de dados local. Para isso deve-se acessar o seguinte arquivo:
 
 ```
 nano #meican-folder#/config/db.php
 ```
 
-On source code folder (#meican-folder#) install the [Composer](https://getcomposer.org)
+As dependências do projeto são mantidas a partir do [Composer](https://getcomposer.org). Na raiz do projeto (#meican-folder#) execute os seguintes comandos: 
 
 ```
 curl -sS https://getcomposer.org/installer | php
 php composer.phar global require "fxp/composer-asset-plugin:~1.1.1"
 ```
 
-Install MEICAN and all dependencies, on source folder run:
+Com o Composer instalado, podemos prosseguir para o download das dependências. Ainda na raiz do projeto, execute:
 
 ```
 php composer.phar install
 ```
 
-It is possible that before the installation you are prompted by a "access token" of GitHub. You must have a user on GitHub to get a valid token on: https://github.com/settings/tokens
+É possível que durante o processo de instalação seja solicitado um token de acesso ou "access token" fornecido pelo GitHub. Para continuar, você terá que acessar sua conta no GitHub e solicitar um token de acesso na página de tokens pessoais: https://github.com/settings/tokens
 
-Create a simbolic link to app web folder on /var/www:
+Ao final da instalação das dependências podemos passar para a configuração de acesso a interface web.
+
+Primeiro, é necessário criar um link simbólico em "/var/www" para a pasta pública do projeto "web":
 
 ```
 sudo ln -s /path/to/#meican-folder#/web /var/www/meican
 ```
 
-#####Apache configuration
+#####Configuração do Apache
 
-By default, the Rewrite mode is enabled on CentOS 6.7. To confirm this verify that the following line is uncommented:
+Por padrão, o Rewrite mode está ativado no CentOS 6.7. Para confirmar isso verifique se a seguinte linha está descomentada no arquivo de configuração do Apache:
 
 ```
 LoadModule rewrite_module modules/mod_rewrite.so
 ```
 
-Enable symbolic links and change the document root:
+Ative os links simbólicos e altere o DocumentRoot como definido abaixo:
 
 ```
 DocumentRoot /var/www/meican
@@ -116,17 +122,17 @@ DocumentRoot /var/www/meican
 </Directory>
 ```
 
-Finally restart the Apache service:
+Por fim, reinicie o Apache para confirmar as alterações:
 
 ```
 service httpd restart
 ```
 
-After that, MEICAN will be available at localhost with one user created:
+Após isso, o MEICAN estará disponível em http://localhost com o seguinte usuário criado:
 
 ```
 user: master
 pass: master
 ```
 
-Next step is set parameters and configure the app. Look the [Configuration Guide](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide-en/configuration.md).
+Este é o fim do Guia de Instalação. A próxima etapa é definir alguns parâmetros e configurar a aplicação. Veja o [Guia de Configuração](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide-en/configuration.md).
