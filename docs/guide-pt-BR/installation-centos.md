@@ -1,4 +1,4 @@
-##INSTALLATION GUIDE - CentOS
+##GUIA DE INSTALAÇÃO - CentOS
 
 Siga as etapas detalhadas a seguir.
 
@@ -59,7 +59,7 @@ CREATE DATABASE IF NOT EXISTS `meican2`;
 
 #####Download e instalação do MEICAN
 
-Em uma pasta de acesso permitido pelo usuário apache (e.g. /var/www) [baixe uma versão estável do sistema](https://github.com/ufrgs-hyman/meican2/releases) (recomendado):
+Em uma pasta de acesso permitido ao usuário apache (e.g. /var/www) [baixe uma versão estável](https://github.com/ufrgs-hyman/meican2/releases) (recomendado):
 
 ```
 wget https://github.com/ufrgs-hyman/meican2/archive/#version#.tar.gz
