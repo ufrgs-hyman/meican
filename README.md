@@ -7,8 +7,8 @@ MEICAN 2 is a complete rewrite of its previous version. The system meets the dem
 ##DIRECTORY STRUCTURE
 
 ```
-certificates/       	application certificates
-config/             	application configuration
+certificates/       	app certificates
+config/             	app configurations
 mail/               	layouts and templates for mail sender
 migrations/         	database version control
 modules/            	application modules
@@ -20,7 +20,7 @@ modules/            	application modules
 	notification/		Notification Module
 	scheduler/			Scheduler Module
 	topology/			Topology Module
-		assets/			assets classes and their css, js
+		assets/			assets classes and their css and js files
 		components/		independent submodules or third part classes
 		controllers/	containing controller class files
 		forms/			form models for views
