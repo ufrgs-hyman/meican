@@ -20,7 +20,7 @@ modules/            	application modules
 	notification/		Notification Module
 	scheduler/			Scheduler Module
 	topology/			Topology Module
-		assets/			assets classes and their css, js and images
+		assets/			assets classes and their css, js
 		components/		independent submodules or third part classes
 		controllers/	containing controller class files
 		forms/			form models for views
@@ -29,7 +29,7 @@ modules/            	application modules
 		views/			views and layout files
 runtime/            folder for logging and debug features
 tests/              test scripts
-web/                web accessible files, e.g., assets cache, wsdl files.
+web/                web accessible files, e.g., assets cache, wsdl files and images.
 ```
 
 ##REQUIREMENTS
