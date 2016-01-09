@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\scheduler\controllers;
 
@@ -8,6 +12,9 @@ use Yii;
 use meican\scheduler\components\CrontabManager;
 use meican\scheduler\models\Cron;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class ServiceController extends Controller {
     
     public function beforeAction($action) {
