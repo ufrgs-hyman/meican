@@ -104,4 +104,4 @@ user: master
 pass: master
 ```
 
-Este é o fim do Guia de Instalação. A próxima etapa é definir alguns parâmetros e configurar a aplicação. Veja o [Guia de Configuração](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide-en/configuration.md).
+Este é o fim do Guia de Instalação. A próxima etapa é definir alguns parâmetros e configurar a aplicação. Veja o [Guia de Configuração](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide-pt-BR/configuration.md).
