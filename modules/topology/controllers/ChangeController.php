@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\topology\controllers;
 
@@ -10,6 +14,9 @@ use meican\topology\models\TopologySynchronizer;
 use meican\topology\models\TopologyChange;
 use meican\topology\models\TopologySyncEvent;
 
+/**
+ * @author Maurício Quatrin Guerreiro <@mqgmaster>
+ */
 
 class ChangeController extends RbacController {
 
