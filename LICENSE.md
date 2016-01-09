@@ -3,7 +3,7 @@ MEICAN 2: Management Environment of Inter-domain Circuits for Advanced Networks
 The MEICAN is a free software. It is released under the terms of the following 
 BSD2 License.
 
-Copyright (c) 2011-2016 by RNP (http://www.rnp.br) 
+Copyright (c) 2011-2016 by RNP (http://www.rnp.br) and UFRGS (http://www.ufrgs.br)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
