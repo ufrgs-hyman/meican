@@ -59,3 +59,8 @@ The documentation is [here](https://github.com/ufrgs-hyman/meican2/blob/master/d
 ##USER GUIDE
 
 A very short documentation is available on Help section of the application. The complete user guide currently is available only in [portuguese](https://wiki.rnp.br/display/secipo/Guia+MEICAN).
+
+##LICENSE
+
+Copyright (c) 2011-2016 by RNP (http://www.rnp.br) 
+All rights reserved. For more information see [LICENSE](https://github.com/ufrgs-hyman/meican2/blob/master/LICENSE.md).
