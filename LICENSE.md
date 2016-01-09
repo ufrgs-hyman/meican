@@ -1,14 +1,10 @@
-/*
- * MEICAN 2: Management Environment of Inter-domain Circuits for Advanced Networks
- * All rights reserved.
- *
- * Licensed under The BSD2 License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2012-2015, RNP. (http://www.rnp.br)
- * @link          https://github.com/ufrgs-hyman/meican2
- * @license       BSD2 License (http://opensource.org/licenses/bsd-license.php)
- */
+MEICAN 2: Management Environment of Inter-domain Circuits for Advanced Networks
+
+The MEICAN is a free software. It is released under the terms of the following 
+BSD2 License.
+
+Copyright (c) 2011-2016 by RNP (http://www.rnp.br) 
+All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
