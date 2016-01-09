@@ -4,6 +4,8 @@ MEICAN is a network management environment that provides a service to request ci
 
 MEICAN 2 is a complete rewrite of its previous version. The system meets the demands of users contacting a Connection Service Provider with the Network Service Interface (NSI) protocol. In our environment, a central server MEICAN interacts with the Aggregator installed in the backbone of the Brazilian Research & Education Network (** RNP - Rede Nacional de Ensino e Pesquisa **). At RNP, MEICAN works as the central portal for all users who need to create circuits along its backbone.
 
+This software is result of a partnership between the Brazilian Research & Education Network ([RNP](http://www.rnp.br)) and the Brazilian Federal University of Rio Grande do Sul ([UFRGS](http://www.ufrgs.br)).
+
 ##DIRECTORY STRUCTURE
 
 ```
@@ -64,5 +66,5 @@ A very short documentation is available on Help section of the application. The 
 
 ##LICENSE
 
-Copyright (c) 2011-2016 by [RNP](http://www.rnp.br) and [UFRGS](http://www.ufrgs.br).
+Copyright (c) 2012-2016 by [RNP](http://www.rnp.br).
 All rights reserved. MEICAN is released under of the BSD2 License. For more information see [LICENSE](https://github.com/ufrgs-hyman/meican2/blob/master/LICENSE.md).
