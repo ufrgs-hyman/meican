@@ -1,18 +1,24 @@
 <?php 
-	use yii\grid\GridView;
-	use yii\grid\CheckboxColumn;
-	use yii\helpers\Html;
-	use yii\i18n\Formatter;
-	use yii\widgets\ActiveForm;
-	use yii\helpers\ArrayHelper;
-	use yii\data\ArrayDataProvider;
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
-	use meican\base\components\LinkColumn;
-	use meican\circuits\models\Reservation;
-	use meican\circuits\models\Connection;
-	use meican\circuits\models\ConnectionPath;
-	use meican\circuits\models\ConnectionAuth;
-	use meican\aaa\models\User;
+use yii\grid\GridView;
+use yii\grid\CheckboxColumn;
+use yii\helpers\Html;
+use yii\i18n\Formatter;
+use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use yii\data\ArrayDataProvider;
+
+use meican\base\components\LinkColumn;
+use meican\circuits\models\Reservation;
+use meican\circuits\models\Connection;
+use meican\circuits\models\ConnectionPath;
+use meican\circuits\models\ConnectionAuth;
+use meican\aaa\models\User;
+
 ?>
 
 <h1><?= Yii::t('circuits', 'Pending Authorization'); ?></h1>

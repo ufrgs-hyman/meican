@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\circuits\models;
 
@@ -15,6 +19,8 @@ use Yii;
  * @property integer $occurrence_limit
  *
  * @property Reservation $id0
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class ReservationRecurrence extends \yii\db\ActiveRecord
 {

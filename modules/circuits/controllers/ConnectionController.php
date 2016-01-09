@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\circuits\controllers;
 
@@ -14,6 +18,9 @@ use meican\topology\models\Domain;
 use meican\topology\models\Provider;
 use meican\aaa\RbacController;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class ConnectionController extends RbacController {
 	
 	public function actionGetOrderedPathsOld($id) {

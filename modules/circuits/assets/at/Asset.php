@@ -14,6 +14,7 @@ class Asset extends AssetBundle
     ];
     
     public $depends = [
-        'meican\base\assets\CronPickerAsset',
+        'meican\base\assets\layout\Asset',
+        'meican\base\assets\cron\PickerAsset',
     ];
 }

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\circuits\models;
 
@@ -14,6 +18,8 @@ use Yii;
  * @property string $message
  *
  * @property Connection $conn
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class ConnectionLog extends \yii\db\ActiveRecord
 {

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\circuits\models;
 
@@ -42,6 +46,8 @@ use meican\base\components\DateUtils;
  * @property Provider $provider
  * @property User $requesterUser
  * @property ReservationRecurrence $reservationRecurrence
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class Reservation extends \yii\db\ActiveRecord
 {

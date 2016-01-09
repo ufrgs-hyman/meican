@@ -1,20 +1,26 @@
 <?php 
-	use yii\grid\GridView;
-	use yii\widgets\DetailView;
-	use yii\grid\CheckboxColumn;
-	use yii\helpers\Html;
-	use yii\i18n\Formatter;
-	use yii\widgets\ActiveForm;
-	use yii\data\ArrayDataProvider;
-	use yii\jui\Dialog;
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
-	use meican\base\components\LinkColumn;	
-	use meican\topology\models\Domain;
-	use meican\circuits\models\Reservation;
-	use meican\circuits\models\Connection;	
-	use meican\circuits\assets\authorization\Asset;
+use yii\grid\GridView;
+use yii\widgets\DetailView;
+use yii\grid\CheckboxColumn;
+use yii\helpers\Html;
+use yii\i18n\Formatter;
+use yii\widgets\ActiveForm;
+use yii\data\ArrayDataProvider;
+use yii\jui\Dialog;
 
-	Asset::register($this);
+use meican\base\components\LinkColumn;	
+use meican\topology\models\Domain;
+use meican\circuits\models\Reservation;
+use meican\circuits\models\Connection;	
+use meican\circuits\assets\authorization\Asset;
+
+Asset::register($this);
+
 ?>
 
 <script>

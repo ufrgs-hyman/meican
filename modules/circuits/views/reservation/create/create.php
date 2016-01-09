@@ -1,14 +1,20 @@
 <?php 
-	use meican\circuits\assets\reservation\CreateAsset;
-	use yii\widgets\ActiveForm;
-	
-	CreateAsset::register($this);
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
-	$form = ActiveForm::begin([
-			'method' => 'post',
-			'action' => 'create',
-			'id' => 'reservation-form',
-	])
+use meican\circuits\assets\reservation\CreateAsset;
+use yii\widgets\ActiveForm;
+
+CreateAsset::register($this);
+
+$form = ActiveForm::begin([
+		'method' => 'post',
+		'action' => 'create',
+		'id' => 'reservation-form',
+])
+
 ?>
 
 <script>

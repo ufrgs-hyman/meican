@@ -1,16 +1,22 @@
 <?php 
-	use yii\grid\GridView;
-	use yii\helpers\Html;
-	use yii\helpers\ArrayHelper;
-	use yii\widgets\ActiveForm;
-	use yii\widgets\Pjax;
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
-	use meican\base\components\LinkColumn;
-	use meican\aaa\models\User;
-	use meican\topology\models\Domain;
-	use meican\circuits\models\Reservation;
-	use meican\circuits\models\Connection;
-	use meican\circuits\models\ConnectionPath;
+use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
+
+use meican\base\components\LinkColumn;
+use meican\aaa\models\User;
+use meican\topology\models\Domain;
+use meican\circuits\models\Reservation;
+use meican\circuits\models\Connection;
+use meican\circuits\models\ConnectionPath;
+
 ?>
 
 <h1><?= Yii::t('circuits', "History reservations"); ?></h1>

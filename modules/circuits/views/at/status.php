@@ -1,23 +1,28 @@
 <?php 
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
-	use yii\grid\GridView;
-	use yii\grid\CheckboxColumn;
-	use yii\helpers\Url;
-	use yii\widgets\Pjax;
-	use yii\helpers\Html;
-	use yii\widgets\ActiveForm;
-	
-	use meican\modules\circuits\assets\at\Asset;
-	
-	Asset::register($this);
+use yii\grid\GridView;
+use yii\grid\CheckboxColumn;
+use yii\helpers\Url;
+use yii\widgets\Pjax;
+use yii\bootstrap\Html;
+use yii\widgets\ActiveForm;
 
-	$form = ActiveForm::begin([
-			'method' => 'post',
-			'action' => ['delete'],
-			'id' => 'test-form',
-            'enableClientScript'=>false,
-            'enableClientValidation' => false,
-	]);
+use meican\circuits\assets\at\Asset;
+
+Asset::register($this);
+
+$form = ActiveForm::begin([
+		'method' => 'post',
+		'action' => ['delete'],
+		'id' => 'test-form',
+        'enableClientScript'=>false,
+        'enableClientValidation' => false,
+]);
+
 ?>
 
 <h1><?= Yii::t("circuits", "Automated Tests"); ?></h1>

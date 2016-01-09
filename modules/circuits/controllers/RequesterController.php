@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\circuits\controllers;
 
@@ -17,14 +21,15 @@ use meican\topology\models\Domain;
 use meican\topology\models\Provider;
 use meican\base\components\DateUtils;
 
-/*
+/**
  * Classe que implementa o módulo SoapServer do protocolo NSI Connection Service Requester 2.0
  * 
  * Recebe mensagens de provedores NSI para criar, alterar ou remover conexões (circuitos).
  *
  * Esta classe NÃO deve extender o RbacControler, pois ela recebe respostas de provedores.
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-
 class RequesterController extends Controller {
     
     public $enableCsrfValidation = false;

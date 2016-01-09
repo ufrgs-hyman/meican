@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\circuits\forms;
 
@@ -12,6 +16,9 @@ use meican\base\models\Cron;
 use meican\base\components\DateUtils;
 use meican\aaa\controllers\RbacController;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class AutomatedTestForm extends Model {
 	
 	public $src_port;

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\circuits\models;
 
@@ -22,6 +26,8 @@ use Yii;
  * @property Group $managerGroup
  * @property User $managerUser
  * @property BpmWorkflow $managerWorkflow
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster 
  */
 class ConnectionAuth extends \yii\db\ActiveRecord
 {

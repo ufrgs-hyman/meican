@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\circuits\controllers;
 
@@ -25,6 +29,9 @@ use meican\topology\models\Network;
 use meican\topology\models\Service;
 use meican\notification\models\Notification;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class ReservationController extends RbacController {
 
     public $enableCsrfValidation = false;

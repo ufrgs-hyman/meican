@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\circuits\models;
 
@@ -19,6 +23,8 @@ use meican\circuits\controllers\services\RequesterClient;
  *
  * @property BpmFlowControl[] $bpmFlowControls
  * @property Reservation $reservation
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class Connection extends \yii\db\ActiveRecord
 {

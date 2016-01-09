@@ -1,20 +1,26 @@
 <?php 
-	use yii\grid\GridView;
-	use yii\helpers\Html;
-	use yii\helpers\ArrayHelper;
-	use yii\helpers\Url;
-	use yii\widgets\ActiveForm;
-	use yii\widgets\Pjax;
-	
-	use meican\base\components\LinkColumn;
-	use meican\topology\models\Domain;
-	use meican\aaa\models\User;
-	use meican\circuits\models\Reservation;
-	use meican\circuits\models\Connection;
-	use meican\circuits\models\ConnectionPath;
-	use meican\circuits\assets\reservation\StatusAsset;
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
-	StatusAsset::register($this);
+use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
+
+use meican\base\components\LinkColumn;
+use meican\topology\models\Domain;
+use meican\aaa\models\User;
+use meican\circuits\models\Reservation;
+use meican\circuits\models\Connection;
+use meican\circuits\models\ConnectionPath;
+use meican\circuits\assets\reservation\StatusAsset;
+
+StatusAsset::register($this);
+
 ?>
 
 <h1><?= Yii::t('circuits', "Active or pending reservations"); ?></h1>

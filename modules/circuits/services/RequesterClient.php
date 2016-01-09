@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\circuits\services;
 
@@ -11,12 +15,13 @@ use meican\circuits\models\ConnectionLog;
 use meican\circuits\models\Provider;
 use meican\circuits\models\CircuitsPreference;
 
-/*
+/**
  * Classe que implementa o módulo SoapClient do protocolo NSI Connection Service Requester 2.0
  * 
  * Envia mensagens para provedores NSI para criar, alterar  ou remover conexões (circuitos).
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-
 class RequesterClient extends \SoapClient {
     
     public $wsdl;

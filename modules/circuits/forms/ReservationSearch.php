@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\circuits\forms;
 
@@ -13,6 +17,7 @@ use meican\circuits\models\Connection;
 use meican\aaa\models\User;
 
 /**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class ReservationSearch extends Reservation {
 

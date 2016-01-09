@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\circuits\controllers;
 
@@ -15,6 +19,9 @@ use meican\circuits\models\CircuitsPreference;
 use meican\circuits\models\AutomatedTest;
 use meican\circuits\forms\AutomatedTestForm;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class AutomatedTestController extends RbacController {
 
 	public $enableCsrfValidation = false;
@@ -28,7 +35,7 @@ class AutomatedTestController extends RbacController {
     		'sort' => false,
     	]);
 
-		return $this->render('/tests/status', array(
+		return $this->render('/at/status', array(
 			'data' => $data,
 			'mode' => $mode,
 			'domains' => json_encode(Domain::find()->orderBy(['name'=> "SORT ASC"])->asArray()->select(['id','name'])->all()),

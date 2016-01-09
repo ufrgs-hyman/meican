@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\circuits\models;
 
@@ -6,6 +10,9 @@ use Yii;
 
 use meican\base\models\Preference;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class CircuitsPreference extends Preference {
 
     //retorna o NSA do provedor padrão atualmente configurado.

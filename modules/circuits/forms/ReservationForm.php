@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\circuits\forms;
 
@@ -14,6 +18,9 @@ use meican\circuits\models\Connection;
 use meican\base\models\Preference;
 use meican\base\components\DateUtils;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class ReservationForm extends Model {
 	
 	//request reservation
