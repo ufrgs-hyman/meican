@@ -58,7 +58,7 @@ There is two specific installation guides, one for [CentOS 6](https://github.com
 
 The documentation is [here](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide/configuration.md).
 
-###For Users
+###User guide
 
 A very short documentation is available on Help section of the application. The complete user guide currently is available only in [portuguese](https://wiki.rnp.br/display/secipo/Guia+MEICAN).
 
