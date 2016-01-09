@@ -1,4 +1,9 @@
 <?php 
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
+
 use meican\base\widgets\Menu;
 use meican\aaa\RbacController;
 
@@ -43,10 +48,10 @@ echo Menu::widget([
                 ['label'=>Yii::t('topology','Devices'), 'url'=>['/topology/device/index'], 'visible'=>RbacController::can('domainTopology/read')],
                 ['label'=>Yii::t('topology','Ports'), 'url'=>['/topology/port/index'], 'visible'=>RbacController::can('domainTopology/read')],
                 ['label'=>Yii::t('topology','Viewer'), 'url'=>['/topology/viewer/index'], 'visible'=>(RbacController::can("domainTopology/read") || RbacController::can("domain/read"))],
-                ['label'=>Yii::t('topology','Synchronizer'), 'url'=>['/topology/sync/index'], 'visible'=>RbacController::can('synchronizer/read')],
-                ['label'=>Yii::t('topology','Changes'), 'url'=>['/topology/change/applied'], 'visible'=>RbacController::can('synchronizer/read')],
+                ['label'=>Yii::t('topology','Discovery'), 'url'=>['/topology/discovery/index']],
+                ['label'=>Yii::t('topology','Changes'), 'url'=>['/topology/change/applied'], 'visible'=>RbacController::can('discovery/read')],
             ],
-            'visible'=>(RbacController::can('domainTopology/read') || RbacController::can('synchronizer/read'))
+            'visible'=>(RbacController::can('domainTopology/read') || RbacController::can('discovery/read'))
         ],
         [
             'label'=>Yii::t('aaa','Automated Tests'),
@@ -92,4 +97,5 @@ echo Menu::widget([
         ],
     ],
 ]);
+
 ?>

@@ -1,10 +1,17 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\base\assets\google;
 
 use yii\web\AssetBundle;
 use Yii;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class GoogleMapsAsset extends AssetBundle
 {
     public $jsOptions = ['position' => \yii\web\View::POS_HEAD];

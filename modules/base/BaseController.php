@@ -1,10 +1,17 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\base;
 
 use yii\web\Controller;
 use Yii;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 abstract class BaseController extends Controller {
 
     public $layout = "@meican/base/views/layouts/main";

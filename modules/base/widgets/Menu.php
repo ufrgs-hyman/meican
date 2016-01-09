@@ -1,13 +1,18 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
+
 namespace meican\base\widgets;
 
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\helpers\Html;
+
 /**
- * Class Menu
- * Theme menu widget.
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class Menu extends \yii\widgets\Menu
 {

@@ -15,7 +15,10 @@
  * I18N.begin("pt-BR");
  * I18N.add("word", "palavra");
  *
- * Usage in your scripts: 
+ * Usage in your scripts:
+ * I18N.init("pt-BR"); 
+ * I18N.t("word");
+ * ...
  * I18N.t("word");
  *
  */

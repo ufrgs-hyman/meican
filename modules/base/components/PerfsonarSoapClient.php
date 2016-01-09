@@ -1,7 +1,14 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\base\components;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class PerfsonarSoapClient extends \SoapClient {
 	
 	private $serverUrl;

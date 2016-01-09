@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\base\components;
 
@@ -6,6 +10,10 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\Column;
 
+/**
+ * @author Henrique Resende
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class LinkColumn extends Column
 {
     public $href = '#';
