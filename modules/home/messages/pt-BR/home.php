@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 return array(
 		'The documentation is only in portuguese and is available on <a href="{url}" target="blank">RNP Wiki</a>.</p>' => 'A documentação existe apenas em português e está disponível na <a href="{url}" target="blank">Wiki da RNP</a>.</p>',

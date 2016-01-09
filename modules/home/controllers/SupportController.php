@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\home\controllers;
 
@@ -9,6 +13,9 @@ use meican\base\BaseController;
 use meican\base\components\DateUtils;
 use meican\aaa\models\User;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class SupportController extends BaseController {
 	
 	public $enableCsrfValidation = false;
