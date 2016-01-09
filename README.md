@@ -48,15 +48,17 @@ web/                web accessible files, e.g., assets cache, wsdl files and ima
 - PHP 5.5+
 - cURL
 
-##INSTALLATION GUIDE
+##GUIDES
+
+###Installation
 
 There is two specific installation guides, one for [CentOS 6](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide/installation-centos.md) and another for [Ubuntu 14](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide/installation-ubuntu.md).
 
-##CONFIGURATION GUIDE
+###Configuration
 
 The documentation is [here](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide/configuration.md).
 
-##USER GUIDE
+###For Users
 
 A very short documentation is available on Help section of the application. The complete user guide currently is available only in [portuguese](https://wiki.rnp.br/display/secipo/Guia+MEICAN).
 
