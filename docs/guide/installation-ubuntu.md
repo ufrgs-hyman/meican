@@ -102,4 +102,4 @@ user: master
 pass: master
 ```
 
-Next step is set parameters and configure the app. Look the [Configuration Guide](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide-en/configuration.md).
+Next step is set parameters and configure the app. Look the [Configuration Guide](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide/configuration.md).
