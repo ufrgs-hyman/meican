@@ -13,7 +13,6 @@
         "php": ">=5.5.0",
         "yiisoft/yii2": "2.0.6",
         "yiisoft/yii2-swiftmailer": "2.0.4",
-        "yiisoft/yii2-jui": "2.0.4",
         "yiisoft/yii2-bootstrap": "2.0.5",
         "thiagotalma/yii2-fullcalendar": "2.0.0",
         "npm-asset/vis": "4.11.0",
