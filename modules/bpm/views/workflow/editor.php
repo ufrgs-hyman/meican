@@ -1,6 +1,11 @@
 <?php 
-	use yii\helpers\Html;
-	use yii\helpers\Url;
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
+ 
+use yii\helpers\Html;
+use yii\helpers\Url;
 ?>
 
 <script>

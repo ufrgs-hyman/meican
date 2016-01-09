@@ -1,9 +1,14 @@
 <?php 
-	use yii\jui\Dialog;
-	use yii\helpers\Html;
-	
-	use meican\modules\bpm\assets\IndexCreateAsset;
-	IndexCreateAsset::register($this);
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
+
+use yii\jui\Dialog;
+use yii\helpers\Html;
+
+use meican\modules\bpm\assets\IndexCreateAsset;
+IndexCreateAsset::register($this);
 ?>
 
 <?= Html::csrfMetaTags() ?>

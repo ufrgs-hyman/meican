@@ -1,17 +1,22 @@
 <?php 
-	use yii\grid\GridView;
-	use yii\grid\CheckboxColumn;
-	use yii\jui\Dialog;
-	use meican\components\LinkColumn;
-	use yii\helpers\Html;
-	use yii\i18n\Formatter;
-	use yii\data\ActiveDataProvider;
-	use meican\models\BpmWorkflow;
-	
-	use yii\helpers\ArrayHelper;
-	
-	use meican\modules\bpm\assets\IndexAsset;
-	IndexAsset::register($this);
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
+
+use yii\grid\GridView;
+use yii\grid\CheckboxColumn;
+use yii\jui\Dialog;
+use meican\components\LinkColumn;
+use yii\helpers\Html;
+use yii\i18n\Formatter;
+use yii\data\ActiveDataProvider;
+use meican\models\BpmWorkflow;
+
+use yii\helpers\ArrayHelper;
+
+use meican\modules\bpm\assets\IndexAsset;
+IndexAsset::register($this);
 ?>
 
 <?= Html::csrfMetaTags() ?>
