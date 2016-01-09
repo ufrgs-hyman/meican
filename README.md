@@ -65,4 +65,4 @@ A very short documentation is available on Help section of the application. The 
 ##LICENSE
 
 Copyright (c) 2011-2016 by RNP (http://www.rnp.br) 
-All rights reserved. For more information see [LICENSE](https://github.com/ufrgs-hyman/meican2/blob/master/LICENSE.md).
+All rights reserved. The MEICAN is released under the terms of the following BSD2 License. For more information see [LICENSE](https://github.com/ufrgs-hyman/meican2/blob/master/LICENSE.md).
