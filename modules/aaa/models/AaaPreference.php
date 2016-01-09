@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\aaa\models;
 
@@ -6,6 +10,9 @@ use Yii;
 
 use meican\base\models\Preference;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class AaaPreference extends Preference {
 
     //dominio padrao dos usuários logados via federação pela primeira vez

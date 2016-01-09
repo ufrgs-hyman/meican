@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\aaa\models;
 
@@ -20,6 +24,8 @@ use yii\web\IdentityInterface;
  * @property string $time_zone
  *
  * @property UserSettings $usersettings
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {

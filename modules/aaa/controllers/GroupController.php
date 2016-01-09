@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\aaa\controllers;
 
@@ -8,6 +12,9 @@ use Yii;
 use meican\aaa\models\Group;
 use meican\aaa\RbacController;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class GroupController extends RbacController {
     
     public function actionIndex() {

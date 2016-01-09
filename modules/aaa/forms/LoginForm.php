@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\aaa\forms;
 
@@ -11,6 +15,8 @@ use meican\aaa\models\User;
  * LoginForm class.
  * LoginForm is the data structure for keeping
  * user login form data. It is used by the 'validate' action of LoginController.
+ * 
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class LoginForm extends Model {
     

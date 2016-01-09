@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\aaa\models;
 
@@ -14,6 +18,8 @@ use meican\topology\models\Domain;
  *
  * @property Domain $domain
  * @property User $user
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class UserDomainRole extends \yii\db\ActiveRecord
 {

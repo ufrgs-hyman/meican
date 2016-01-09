@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\aaa;
 
@@ -16,10 +20,9 @@ use meican\topology\models\Domain;
  * 
  * Role Based Access Control
  * 
- * @author mqg
+ * @author Maurício Quatrin Guerreiro <@mqgmaster>
  * @since 2.0
  */
-
 abstract class RbacController extends BaseController {
 
     public function behaviors() {

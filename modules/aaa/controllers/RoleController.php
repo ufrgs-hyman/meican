@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\aaa\controllers;
 
@@ -14,6 +18,9 @@ use meican\aaa\models\Group;
 use meican\aaa\RbacController;
 use meican\notification\models\Notification;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class RoleController extends RbacController {
     
     public function actionIndex($id) {
@@ -132,7 +139,7 @@ class RoleController extends RbacController {
             }
         }
     
-        return $this->renderPartial('_add-role-form',array(
+        return $this->renderPartial('_add-role',array(
                 'udr' => $udr,
                 'groups' => $groups,
                 'domains' => $domains,
@@ -250,7 +257,7 @@ class RoleController extends RbacController {
             }
         }
 
-        return $this->renderPartial('_edit-role-form',array(
+        return $this->renderPartial('_edit-role',array(
                 'udr' => $udr,
                 'groups' => $groups,
                 'domains' => $domains,

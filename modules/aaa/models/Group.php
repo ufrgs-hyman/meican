@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\aaa\models;
 
@@ -11,6 +15,8 @@ use Yii;
  * @property string $role_name
  * @property string $name
  * @property string $type
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class Group extends \yii\db\ActiveRecord
 {
