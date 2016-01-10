@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 $params = require(__DIR__ . '/params.php');
 
@@ -31,15 +35,6 @@ $config = [
         'assetManager' => [
             'linkAssets' => true,
             'appendTimestamp' => true,
-            'bundles' => [ 
-                'yii\jui\JuiAsset' => [
-                    'css' => [],
-                    'js' => [],
-                    'depends' => [
-                        'meican\base\assets\MeicanJuiAsset',
-                    ]
-                ]
-            ],
         ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
