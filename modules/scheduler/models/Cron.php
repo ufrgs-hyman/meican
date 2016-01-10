@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\scheduler\models;
 
@@ -22,6 +26,8 @@ use meican\circuits\models\AutomatedTest;
  * @property string $status
  * @property string $freq
  * @property string $last_run_at
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class Cron extends \yii\db\ActiveRecord
 {

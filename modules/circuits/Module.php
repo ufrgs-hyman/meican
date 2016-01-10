@@ -6,8 +6,6 @@
 
 namespace meican\circuits;
 
-use Yii;
-
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */

@@ -8,6 +8,9 @@ namespace meican\topology\assets\device;
 
 use yii\web\AssetBundle;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class IndexAsset extends AssetBundle
 {
     public $sourcePath = '@meican/topology/assets/device/public';
