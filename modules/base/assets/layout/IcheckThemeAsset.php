@@ -11,12 +11,12 @@ use yii\web\AssetBundle;
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class IcheckConfigAsset extends AssetBundle
+class IcheckThemeAsset extends AssetBundle
 {
     public $sourcePath = '@meican/base/assets/layout/public';
 
     public $js = [
-        'icheck-config.js',
+        'icheck-theme.js',
     ];
     
     public $depends = [
