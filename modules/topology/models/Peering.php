@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\topology\models;
 
@@ -13,7 +17,7 @@ use Yii;
  * @property Provider $dst
  * @property Provider $src
  */
-class ProviderPeering extends \yii\db\ActiveRecord
+class Peering extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
