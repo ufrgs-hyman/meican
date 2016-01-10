@@ -14,8 +14,6 @@ use meican\base\components\DateUtils;
 use meican\topology\models\Network;
 use meican\topology\models\Domain;
 
-/**
- */
 class NetworkSearch extends Network {
 
     public $domain_name;

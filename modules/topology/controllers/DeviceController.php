@@ -16,7 +16,9 @@ use meican\topology\models\Port;
 use meican\topology\models\Domain;
 use meican\topology\forms\DeviceSearch;
 
-
+/**
+ * @author Maurício Quatrin Guerreiro <@mqgmaster>
+ */
 class DeviceController extends RbacController {
 	
     public function actionIndex($id = null) {

@@ -33,6 +33,8 @@ use Yii;
  *
  * @property Domain $domain
  * @property Port[] $ports
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class Network extends \yii\db\ActiveRecord
 {

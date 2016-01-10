@@ -13,13 +13,14 @@ use meican\topology\models\TopologySynchronizer;
 use meican\topology\components\NSIParser;
 use meican\base\models\Preference;
 
-/*
+/**
  * Classe que implementa o módulo Cliente do protocolo NSI Document Distribution Service (DDS), 
  * também conhecido como Discovery Service.
  *
  * Envia mensagens para provedores NSI para criar, alterar ou remover subscrições para notificações.
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-
 class DiscoveryClient {
     
     static function subscribe($url) {

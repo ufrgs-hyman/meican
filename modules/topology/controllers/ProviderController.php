@@ -14,6 +14,9 @@ use meican\aaa\RbacController;
 use meican\topology\models\Domain;
 use meican\topology\models\Provider;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class ProviderController extends RbacController {
     
     public function actionCreate() {

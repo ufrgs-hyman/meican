@@ -17,6 +17,9 @@ use meican\topology\models\Domain;
 use meican\topology\models\Provider;
 use meican\topology\forms\NetworkSearch;
 
+/**
+ * @author Maurício Quatrin Guerreiro <@mqgmaster>
+ */
 class NetworkController extends RbacController {
 	
 	public function actionIndex() {

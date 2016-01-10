@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\topology\models;
 
@@ -19,6 +23,8 @@ use meican\topology\models\TopologyNotification;
  * @property string $provider_nsa
  * @property string $subscription_id
  * @property string $url
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class TopologySynchronizer extends \yii\db\ActiveRecord
 {

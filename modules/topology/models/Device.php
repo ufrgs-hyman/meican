@@ -32,6 +32,8 @@ use Yii;
  *
  * @property Domain $domain
  * @property Port[] $ports
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class Device extends \yii\db\ActiveRecord
 {

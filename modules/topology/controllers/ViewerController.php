@@ -12,6 +12,9 @@ use meican\aaa\RbacController;
 use meican\topology\models\Domain;
 use meican\topology\models\Port;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class ViewerController extends RbacController {
 	
     public function actionIndex() {

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\topology\models;
 
@@ -9,6 +13,9 @@ use meican\notification\models\Notification;
 use meican\base\components\DateUtils;
 use meican\topology\models\TopologyChange;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class TopologyNotification {   
 
     static function create($user_id, $msg = "", $date = null){

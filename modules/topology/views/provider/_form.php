@@ -1,20 +1,25 @@
 <?php 
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
-    use yii\bootstrap\ActiveForm;
-    use yii\bootstrap\Html;
-    use yii\helpers\Url;
-    use yii\helpers\ArrayHelper;
+use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Html;
+use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 
-    use meican\topology\models\Domain;
-    use meican\topology\models\Provider;
+use meican\topology\models\Domain;
+use meican\topology\models\Provider;
 
-    $this->params['header'] = ["Providers", ['Home', 'Topology']];
+$this->params['header'] = ["Providers", ['Home', 'Topology']];
 
-    $form= ActiveForm::begin([
-        'id'        => 'provider-form',
-        'method'    => 'post',
-        'layout'    => 'horizontal'
-    ]);
+$form= ActiveForm::begin([
+    'id'        => 'provider-form',
+    'method'    => 'post',
+    'layout'    => 'horizontal'
+]);
+
 ?>
 
 <div class="box box-default">

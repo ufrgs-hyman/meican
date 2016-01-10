@@ -61,6 +61,8 @@ use Yii;
  * @property Device $device
  * @property Network $network
  * @property Port $alias
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class Port extends \yii\db\ActiveRecord
 {

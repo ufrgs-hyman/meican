@@ -15,6 +15,9 @@ use meican\topology\models\Domain;
 use meican\topology\models\Service;
 use meican\topology\models\Provider;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class ServiceController extends RbacController {
     
     public function actionCreate($id) {

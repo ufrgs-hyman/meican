@@ -12,7 +12,7 @@ use Yii;
 use meican\topology\models\TopologySynchronizer;
 use meican\topology\components\models\NSIParser;
 
-/*
+/**
  * Classe que implementa o módulo Servidor do protocolo NSI Document Distribution Service (DDS), 
  * também conhecido como Discovery Service.
  * 
@@ -20,8 +20,9 @@ use meican\topology\components\models\NSIParser;
  * para atualizar a topologia conhecida se assim estiver configurado.
  *
  * Esta classe NÃO deve extender o RbacControler, pois ela recebe respostas de provedores.
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-
 class DiscoveryController extends Controller {
 
     public $enableCsrfValidation = false;

@@ -21,6 +21,8 @@ use Yii;
  * @property Device[] $devices
  * @property Network[] $networks
  * @property UserDomain[] $userDomains
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class Domain extends \yii\db\ActiveRecord {
 	

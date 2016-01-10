@@ -14,8 +14,6 @@ use meican\base\components\DateUtils;
 use meican\topology\models\Device;
 use meican\topology\models\Domain;
 
-/**
- */
 class DeviceSearch extends Device {
 
     public $domain_name;

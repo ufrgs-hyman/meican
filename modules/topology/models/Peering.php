@@ -16,6 +16,8 @@ use Yii;
  *
  * @property Provider $dst
  * @property Provider $src
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class Peering extends \yii\db\ActiveRecord
 {

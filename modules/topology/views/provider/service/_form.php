@@ -1,11 +1,16 @@
 <?php 
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
-    use yii\widgets\ActiveForm;
-    use yii\helpers\Html;
-    use yii\helpers\Url;
-    use yii\helpers\ArrayHelper;
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 
-    use meican\models\Service;
+use meican\models\Service;
+
 ?>
 
 <?php $form= ActiveForm::begin([

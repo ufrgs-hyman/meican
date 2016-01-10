@@ -17,6 +17,8 @@ use Yii;
  * @property string $url
  *
  * @property Provider $provider
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class Service extends \yii\db\ActiveRecord
 {

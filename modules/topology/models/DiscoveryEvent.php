@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 namespace meican\topology\models;
 
@@ -14,6 +18,8 @@ use Yii;
  * @property integer $sync_id
  *
  * @property TopologySynchronizer $sync
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class TopologySyncEvent extends \yii\db\ActiveRecord
 {

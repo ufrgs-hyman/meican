@@ -6,6 +6,9 @@
 
 namespace meican\topology;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class Module extends \yii\base\Module {
 
     public $controllerNamespace = 'meican\topology\controllers';

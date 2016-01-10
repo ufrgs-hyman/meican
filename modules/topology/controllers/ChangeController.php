@@ -17,7 +17,6 @@ use meican\topology\models\TopologySyncEvent;
 /**
  * @author Maurício Quatrin Guerreiro <@mqgmaster>
  */
-
 class ChangeController extends RbacController {
 
     public function actionPending($eventId) {

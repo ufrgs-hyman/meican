@@ -17,6 +17,9 @@ use meican\topology\models\Domain;
 use meican\topology\models\Provider;
 use meican\bpm\models\BpmWorkflow;
 
+/**
+ * @author Maurício Quatrin Guerreiro <@mqgmaster>
+ */
 class DomainController extends RbacController {
 	
     public function actionIndex() {

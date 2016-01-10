@@ -26,6 +26,8 @@ use Yii;
  *
  * @property Reservation[] $reservations
  * @property Service[] $services
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class Provider extends \yii\db\ActiveRecord
 {

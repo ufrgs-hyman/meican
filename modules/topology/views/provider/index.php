@@ -1,16 +1,22 @@
 <?php 
-    use yii\grid\GridView;
-    use yii\grid\CheckboxColumn;
-    use yii\bootstrap\Html;
-    use yii\bootstrap\ActiveForm;
-    
-    use meican\base\widgets\GridButtons;
-    use meican\base\components\LinkColumn;
-    use meican\topology\assets\provider\IndexAsset;
-    
-    IndexAsset::register($this);
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
-    $this->params['header'] = ["Providers", ['Home', 'Topology']];
+use yii\grid\GridView;
+use yii\grid\CheckboxColumn;
+use yii\bootstrap\Html;
+use yii\bootstrap\ActiveForm;
+
+use meican\base\widgets\GridButtons;
+use meican\base\components\LinkColumn;
+use meican\topology\assets\provider\IndexAsset;
+
+IndexAsset::register($this);
+
+$this->params['header'] = ["Providers", ['Home', 'Topology']];
+
 ?>
 
 <div class="box box-default">
