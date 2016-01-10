@@ -1,19 +1,26 @@
 <?php 
-	use yii\grid\GridView;
-	use yii\grid\CheckboxColumn;
-	use yii\grid\ActionColumn;
-	use yii\helpers\Html;
-	use yii\widgets\ActiveForm;
-	use yii\widgets\LinkPager;
-	use yii\data\ActiveDataProvider;
-	use yii\data\ArrayDataProvider;
-	use yii\i18n\Formatter;
-	use yii\jui\Dialog;
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
-	use meican\topology\models\Port;
-	use meican\base\components\LinkColumn;
-	use meican\topology\assets\port\IndexAsset;
-	IndexAsset::register($this);
+use yii\grid\GridView;
+use yii\grid\CheckboxColumn;
+use yii\grid\ActionColumn;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use yii\widgets\LinkPager;
+use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
+use yii\i18n\Formatter;
+use yii\jui\Dialog;
+
+use meican\topology\models\Port;
+use meican\base\components\LinkColumn;
+use meican\topology\assets\port\IndexAsset;
+
+IndexAsset::register($this);
+
 ?>
 
 
