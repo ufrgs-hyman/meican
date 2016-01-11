@@ -543,9 +543,8 @@ class CrontabManager {
             if (is_array($oldJobs)) {
                 foreach ($oldJobs as $oldJob) {
                     if ($oldJob != '') {
-                        if (!preg_match('/' . $job . '/', $oldJob)) {
+                        if (!preg_match('/' . 'job'.$job . '/', $oldJob)) {
                             $newJob = new CronEntry($oldJob, $this);
-                            $newJob->lineComment = '';
                             $data[] = $newJob;
                         } else {
                             $jobsDeleted++;

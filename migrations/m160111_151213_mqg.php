@@ -19,8 +19,11 @@ class m160111_151213_mqg extends Migration
             ");
         $this->execute("
             ALTER TABLE meican_cron
-            RENAME TO meican_task;
+            RENAME TO meican_sche_task;
             ");
+        ALTER TABLE `meican_sche_task` CHANGE `task_type` `obj_class` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+        ALTER TABLE `meican_sche_task` CHANGE `task_id` `obj_id` INT(11) NOT NULL;
+        ALTER TABLE `meican_sche_task` DROP `external_id`;
     }
 
     public function down()

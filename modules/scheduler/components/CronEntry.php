@@ -29,6 +29,8 @@
 
 namespace meican\scheduler\components;
 
+use Yii;
+
 /**
  * Crontab Entry object
  *
@@ -347,10 +349,6 @@ class CronEntry
         );
         $entry = join("\t", $entry);
         if ($commentEntry) {
-            $hash = base_convert(
-                $this->_signedInt(crc32($entry . $this->group)),
-                10, 36
-            );
             $comments = is_array($this->comments) ? $this->comments : array();
             $comments = $this->_fixComments($comments);
             $comments = join("\n", $comments);
@@ -358,34 +356,13 @@ class CronEntry
                 $comments .= "\n";
             }
             $entry = $comments . $entry . " @ ";
-            if ($this->lineComment) {
-                $entry .= $this->lineComment . ' ';
-            }
-            $entry .= $hash;
-            $this->id = $hash;
         }
+        $entry .= $this->id ? 'job'.$this->id : $this->lineComment;
         return $entry;
     }
 
     /**
-     * Gets signed int from unsigned 64bit int
-     *
-     * @param integer $in
-     * @return integer
-     */
-    private static function _signedInt($in)
-    {
-        $int_max = 2147483647; // pow(2, 31) - 1
-        if ($in > $int_max) {
-            $out = $in - $int_max * 2 - 2;
-        } else {
-            $out = $in;
-        }
-        return $out;
-    }
-    
-    /**
-     * Fix comments by adding # sign
+     * Fix comments by adding @ sign
      * 
      * @param array $comments
      * @return array

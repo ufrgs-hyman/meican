@@ -6,7 +6,12 @@
 
 namespace meican\scheduler\api;
 
-interface ScheduledTask {
+/**
+ * Interface implemented by classes with scheduled execution support.
+ *
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
+interface SchedulableTask {
 
     public function execute();
 
