@@ -10,7 +10,7 @@ use yii\console\Controller;
 use Yii;
 
 use meican\scheduler\components\CrontabManager;
-use meican\scheduler\models\Cron;
+use meican\scheduler\models\Task;
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
@@ -91,6 +91,11 @@ class ServiceController extends Controller {
         }
     }
     
+    public function actionExecute() {
+        $test = new Task;
+        return $test->execute();
+    }
+
     private function delete($externalId) {
         $crontab = new CrontabManager();
         $crontab->deleteJob($externalId);

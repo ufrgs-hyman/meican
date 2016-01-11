@@ -8,10 +8,9 @@ namespace meican\scheduler\models;
 
 use Yii;
 use meican\base\components\DateUtils;
-use meican\circuits\models\AutomatedTest;
 
 /**
- * This is the model class for table "{{%cron}}".
+ * This is the model class for table "{{%task}}".
  *
  * Essa classe representa um objeto do tipo Cron,
  * também chamado de Tarefa Agendada. O Meican possui
@@ -29,7 +28,7 @@ use meican\circuits\models\AutomatedTest;
  *
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class Cron extends \yii\db\ActiveRecord
+class Task extends \yii\db\ActiveRecord
 {
     const STATUS_ENABLED =      "ENABLED";
     const STATUS_DISABLED =     "DISABLED";
@@ -90,7 +89,7 @@ class Cron extends \yii\db\ActiveRecord
             ->andWhere(['in','status',[self::STATUS_PROCESSING, self::STATUS_ENABLED]])->count();
     }
 
-    public function execute() {
+    public function execute2() {
         $this->last_run_at = DateUtils::now();
         $this->save();
 
@@ -114,5 +113,10 @@ class Cron extends \yii\db\ActiveRecord
                 }
                 break;
         }
+    }
+
+    public function execute() {
+        $test = new \meican\scheduler\Test;
+        return $test->execute();
     }
 }
