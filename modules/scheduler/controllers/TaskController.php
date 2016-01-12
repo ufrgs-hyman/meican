@@ -78,11 +78,11 @@ class TaskController extends Controller {
         return 0;
     }
 
-    private function toCronId($id) {
+    private function toCronId($taskId) {
         return 'job'.$id;
     }
 
-    private function toTaskId($id) {
+    private function toTaskId($cronId) {
         return str_replace("job", "", $id);
     }
 

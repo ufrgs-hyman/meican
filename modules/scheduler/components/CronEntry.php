@@ -357,7 +357,7 @@ class CronEntry
             }
             $entry = $comments . $entry . " @ ";
         }
-        $entry .= $this->id ? 'job'.$this->id : $this->lineComment;
+        $entry .= $this->id ? $this->id : $this->lineComment;
         return $entry;
     }
 
