@@ -13,8 +13,12 @@ use meican\scheduler\components\CrontabManager;
 use meican\scheduler\models\ScheduledTask;
 
 /**
- * Console controller used by OS crontab system to execute tasks or
- * by SchedulableTasks to create, update or delete tasks.
+ * Controller module of the Scheduler Service. This controller
+ * is used by:
+ * - OS system when the tasks are executed.
+ * - Scheduler Service to create, update or delete tasks.
+ *
+ * Currently only Unix systems are supported.
  *
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
@@ -34,18 +38,33 @@ class TaskController extends Controller {
         return Yii::$app->basePath."/yii scheduler/task/execute";
     }
     
-    public function actionCreate() {
-        $test = new ScheduledTask;
-        return $test->createTask($this->getExecutionPath());
+    public function actionCreate($id) {
+        $task = ScheduledTask::findOneByJob($id);
+        return $this->createCron($id, $task->freq, $this->getExecutionPath());
     }
 
     public function actionDelete($id) {
-        $test = ScheduledTask::findOneByJob($id);
-        return $test->deleteTask();
+        return $this->deleteCron($id);
     }
     
     public function actionExecute($tag, $id) {
-        $test = ScheduledTask::findOneByJob($id);
+        $test = ScheduledTask::findOne(str_replace("job", "", $id));
         $test->execute();
+    }
+
+    private function createCron($id, $freq, $execPath) {
+        $crontab = new CrontabManager();
+        $job = $crontab->newJob();
+        $job->id = $id;
+        $job->on($freq);
+        $job->doJob($execPath);
+        $crontab->add($job);
+        $crontab->save();
+    }
+
+    private function deleteCron($id) {
+        $crontab = new CrontabManager();
+        $crontab->deleteJob($id);
+        $crontab->save(false);
     }
 }
