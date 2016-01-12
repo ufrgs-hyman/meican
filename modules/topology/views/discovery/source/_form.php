@@ -4,46 +4,40 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-use yii\widgets\ActiveForm;
-use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 
 use meican\topology\models\Service;
-use meican\topology\models\TopologySynchronizer;
+use meican\topology\models\DiscoverySource;
 use meican\topology\assets\sync\SyncFormAsset;
 
 SyncFormAsset::register($this);
 
+$this->params['header'] = [Yii::t('topology', 'Discovery'), ['Home', 'Topology']];
+
+$form= ActiveForm::begin([
+    'id'        => 'source-form',
+    'method'    => 'post',
+    'layout'    => 'horizontal'
+]); 
+
 ?>
 
-<?php $form= ActiveForm::begin([
-    'id'=>'service-form',
-    'method' => 'post',
-    'enableClientValidation' => false,
-]); ?>
-    <h4>
-    <font color="#3a5879">
-
-    <div class="form input">
+<div class="box box-default">
+    <div class="box-header with-border">
+        <h3 class="box-title"><?= $this->params['box-title']; ?></h3>
+    </div>
+    <div class="box-body">
         <?= $form->field($model,'name')->textInput(['size'=>50]); ?>
-    </div>
-
-    <div class="form input">
-       <?= $form->field($model,'protocol')->dropDownList(ArrayHelper::map(TopologySynchronizer::getProtocols(), 'id', 'name')); ?>
-    </div>
-
-    <div class="form input">
-       <?= $form->field($model,'type')->dropDownList(ArrayHelper::map(TopologySynchronizer::getTypes(), 'id', 'name')); ?>
-    </div>
-
-    <div id="subscribed-row" class="form input" <?= ($model->type == Service::TYPE_NSI_DS_1_0) ? "" : "disabled" ?>>
+        <?= $form->field($model,'protocol')->dropDownList(ArrayHelper::map(DiscoverySource::getProtocols(), 'id', 'name')); ?>
+        <?= $form->field($model,'type')->dropDownList(ArrayHelper::map(DiscoverySource::getTypes(), 'id', 'name')); ?>
+    <div id="subscribed-row" <?= ($model->type == Service::TYPE_NSI_DS_1_0) ? "" : "disabled" ?>>
         <?= $form->field($model,'subscribe_enabled')->dropDownList(ArrayHelper::map(
             [['id'=>false, 'name'=>Yii::t("topology", 'Disabled')],['id'=>true,'name'=>Yii::t("topology", 'Enabled')]], 'id', 'name'), 
                 ['disabled'=>($model->protocol == Service::TYPE_NSI_DS_1_0) ? false : true]); ?>
     </div>
-
-    <div class="form input">
         <?php echo $form->field($model,'freq_enabled')->dropDownList(ArrayHelper::map(
             [['id'=>false, 'name'=>Yii::t("topology", 'Disabled')],['id'=>true,'name'=>Yii::t("topology", 'Enabled')]], 'id', 'name'));
             echo '<a id="cron-open-link" style="float: left;
@@ -52,32 +46,18 @@ SyncFormAsset::register($this);
     margin-right: 10px;
     text-align: right;
     font-size: 100%;" href="#">'.Yii::t("topology", "Set recurrence").'</a>'; ?>
-    </div>
-
-    <div class="form input">
         <?= $form->field($model,'auto_apply')->dropDownList(ArrayHelper::map(
             [['id'=>false, 'name'=>Yii::t("topology", 'Manually')],['id'=>true,'name'=>Yii::t("topology", 'Automatically')]], 'id', 'name')); ?>
-    </div>
-
-    <div class="form input">
         <?= $form->field($model,'url')->textInput(['size'=>50]); ?>
-    </div>
-
-    <div class="form input">
         <?= $form->field($model,'freq')->hiddenInput()->label(""); ?>
     </div>
-
-    </font>
-    </h4>
-
-    <div class="buttonsForm">
-        <?= Html::submitButton(Yii::t("topology", 'Save')); ?>
-        <a href="<?= Url::toRoute(['index']);?>"><?= Html::Button(Yii::t("topology", 'Cancel')); ?></a>
+    <div class="box-footer">
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-6">
+                <button type="submit" class="btn btn-primary"><?= Yii::t("topology", 'Save'); ?></button>
+            </div>
+        </div>
     </div>
-
-    
-<?php ActiveForm::end(); ?>
-
-<div id="cron-dialog" hidden>
-    <div class="label-description" id="cron-widget"></div>
 </div>
+
+<?php ActiveForm::end(); ?>

@@ -30,7 +30,7 @@ use meican\base\components\ColorUtils;
  *
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class TopologyChange extends \yii\db\ActiveRecord
+class Change extends \yii\db\ActiveRecord
 {
     const ITEM_TYPE_DOMAIN = 'DOMAIN';
     const ITEM_TYPE_PROVIDER = 'PROVIDER';
@@ -98,7 +98,7 @@ class TopologyChange extends \yii\db\ActiveRecord
         $this->load($params);
 
         // adjust the query by adding the filters
-        $query->andFilterWhere(['in','status',[TopologyChange::STATUS_PENDING, TopologyChange::STATUS_FAILED]]);
+        $query->andFilterWhere(['in','status',[Change::STATUS_PENDING, Change::STATUS_FAILED]]);
         $query->andFilterWhere(['domain' => $this->domain]);
         $query->andFilterWhere(['item_type' => $this->item_type]);
         $query->andFilterWhere(['type' => $this->type]);
@@ -122,7 +122,7 @@ class TopologyChange extends \yii\db\ActiveRecord
         $this->load($params);
 
         // adjust the query by adding the filters
-        $query->andFilterWhere(['status'=>TopologyChange::STATUS_APPLIED]);
+        $query->andFilterWhere(['status'=>Change::STATUS_APPLIED]);
         $query->andFilterWhere(['sync_event_id' => $eventId]);
         $query->andFilterWhere(['domain' => $this->domain]);
         $query->andFilterWhere(['item_type' => $this->item_type]);

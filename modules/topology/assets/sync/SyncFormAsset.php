@@ -15,7 +15,7 @@ class SyncFormAsset extends AssetBundle
 
     public $depends = [
     	'meican\base\assets\layout\Asset',
-        'meican\base\assets\CronPickerAsset',
+        'meican\base\assets\cron\PickerAsset',
     ];
 }
 

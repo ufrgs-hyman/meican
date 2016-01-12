@@ -9,13 +9,12 @@ namespace meican\topology\forms;
 use Yii;
 use yii\data\ActiveDataProvider;
 
-use meican\topology\models\TopologySynchronizer;
-use meican\base\models\Cron;
+use meican\topology\models\DiscoverySource;
 use meican\topology\models\Service;
 use meican\topology\components\NSIParser;
 use meican\topology\controllers\services\DiscoveryClient;
 
-class SyncForm extends TopologySynchronizer {
+class DiscoverySourceForm extends DiscoverySource {
 
     public $freq;
     public $freq_enabled;
@@ -62,18 +61,18 @@ class SyncForm extends TopologySynchronizer {
 
     public function validateUrl($att, $params) {
         switch ($this->type) {
-            case TopologySynchronizer::DESC_TYPE_NSI:
+            case DiscoverySource::DESC_TYPE_NSI:
                 $parser = new NSIParser;  
                 $parser->loadFile($this->url);
                 switch ($this->protocol) {
-                    case TopologySynchronizer::PROTOCOL_HTTP:
+                    case DiscoverySource::PROTOCOL_HTTP:
                         if (!$parser->isTD()) {
                             $this->addError('', 'The inserted URL does not contain a valid service. Please try again.');
                             return false;
                         }
                         return true;
                         break;
-                    case TopologySynchronizer::PROTOCOL_NSI_DS:
+                    case DiscoverySource::PROTOCOL_NSI_DS:
                         if (!$parser->isDS()) {
                             $this->addError('', 'The inserted URL does not contain a valid service. Please try again.');
                             return false;
@@ -84,7 +83,7 @@ class SyncForm extends TopologySynchronizer {
                 }
                 break;
                 
-            case TopologySynchronizer::DESC_TYPE_NMWG: 
+            case DiscoverySource::DESC_TYPE_NMWG: 
                 $parser = new NMWGParser;  
                 $parser->loadFile($this->url);
                 if (!$parser->isTD()) {

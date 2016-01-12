@@ -17,11 +17,11 @@ use Yii;
  * @property integer $progress
  * @property integer $sync_id
  *
- * @property TopologySynchronizer $sync
+ * @property Source $sync
  *
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class TopologySyncEvent extends \yii\db\ActiveRecord
+class DiscoveryEvent extends \yii\db\ActiveRecord
 {
     const STATUS_INPROGRESS = "INPROGRESS";
     const STATUS_SUCCESS = "SUCCESS";
@@ -65,9 +65,9 @@ class TopologySyncEvent extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSynchronizer()
+    public function getSource()
     {
-        return $this->hasOne(TopologySynchronizer::className(), ['id' => 'sync_id']);
+        return $this->hasOne(DiscoverySource::className(), ['id' => 'sync_id']);
     }
 
     public function applyChanges() {
@@ -78,15 +78,15 @@ class TopologySyncEvent extends \yii\db\ActiveRecord
             $logTarget->enabled = false;
         }
         
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_DOMAIN);
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_PROVIDER);
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_PEERING);
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_SERVICE);
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_NETWORK);
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_DEVICE);
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_BIPORT);
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_UNIPORT);
-        $this->applyChangesByType(TopologyChange::ITEM_TYPE_LINK);
+        $this->applyChangesByType(Change::ITEM_TYPE_DOMAIN);
+        $this->applyChangesByType(Change::ITEM_TYPE_PROVIDER);
+        $this->applyChangesByType(Change::ITEM_TYPE_PEERING);
+        $this->applyChangesByType(Change::ITEM_TYPE_SERVICE);
+        $this->applyChangesByType(Change::ITEM_TYPE_NETWORK);
+        $this->applyChangesByType(Change::ITEM_TYPE_DEVICE);
+        $this->applyChangesByType(Change::ITEM_TYPE_BIPORT);
+        $this->applyChangesByType(Change::ITEM_TYPE_UNIPORT);
+        $this->applyChangesByType(Change::ITEM_TYPE_LINK);
 
         $log = Yii::$app->log;
         foreach ($log->targets as $logTarget) { 
@@ -95,9 +95,9 @@ class TopologySyncEvent extends \yii\db\ActiveRecord
     }
 
     private function applyChangesByType($type) {
-        $changes = TopologyChange::find()
+        $changes = Change::find()
             ->where(['sync_event_id'=>$this->id, 'item_type'=>$type])
-            ->andWhere(['in','status',[TopologyChange::STATUS_FAILED,TopologyChange::STATUS_PENDING]])->all();
+            ->andWhere(['in','status',[Change::STATUS_FAILED,Change::STATUS_PENDING]])->all();
         foreach ($changes as $change) {
             $change->apply();
         }

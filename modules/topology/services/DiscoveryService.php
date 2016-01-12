@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-namespace meican\topology\models;
+namespace meican\topology\services;
 
 use Yii;
 
@@ -12,6 +12,17 @@ use meican\base\components\DateUtils;
 use meican\topology\components\NSIParser;
 use meican\topology\components\NMWGParser;
 use meican\topology\models\TopologyNotification;
+use meican\topology\models\DiscoveryEvent;
+use meican\topology\models\DiscoverySource;
+use meican\topology\models\Domain;
+use meican\topology\models\Network;
+use meican\topology\models\Device;
+use meican\topology\models\Port;
+use meican\topology\models\Provider;
+use meican\topology\models\Service;
+use meican\topology\models\Peering;
+use meican\topology\models\Change;
+use meican\scheduler\api\SchedulableTask;
 
 /**
  * This is the MEICAN Network Topology Discovery Service.
@@ -25,23 +36,15 @@ use meican\topology\models\TopologyNotification;
  *
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class DiscoveryService {
+class DiscoveryService implements SchedulableTask {
     
     public $parser;
     public $syncEvent;
     public $detectedChanges = false;
 
-    public function getEvents() {
-        return TopologySyncEvent::find()->where(['sync_id'=> $this->id])->orderBy(['started_at'=> SORT_DESC]);
-    }
-
-    public function getLastSyncDate() {
-        $event = $this->getEvents()->select(['started_at'])->asArray()->one();
-        return $event ? $event['started_at'] : null;
-    }
-
-    public function isAutoSyncEnabled() {
-        return Cron::existsSyncTask($this->id);
+    public function execute($data) {
+        $source = DiscoverySource::findOne($data);
+        $this->discover($source);
     }
 
     public function buildChange() {
@@ -52,56 +55,22 @@ class DiscoveryService {
         return $change;
     }
 
-    public function getProtocol() {
-        switch ($this->protocol) {
-            case self::PROTOCOL_NSI_DS:
-                return Yii::t('topology', 'NSI Discovery Service 1.0');
-            case self::PROTOCOL_HTTP:
-                return Yii::t('topology', 'HTTP');
-        }
-    }
-
-    static function getProtocols() {
-        return [
-            ['id'=> self::PROTOCOL_NSI_DS, 'name'=> Yii::t('topology', 'NSI Discovery Service 1.0')],
-            ['id'=> self::PROTOCOL_HTTP, 'name'=> Yii::t('topology', 'HTTP')],
-        ];
-    }
-
-    public function getType() {
-        switch ($this->type) {
-            case self::DESC_TYPE_NSI: return Yii::t('topology', 'NSI Topology 2.0');
-            case self::DESC_TYPE_NMWG: return Yii::t('topology', 'NMWG Topology 3.0');
-        }
-    }
-
-    static function getTypes() {
-        return [
-            ['id'=> self::DESC_TYPE_NSI, 'name'=> Yii::t('topology', 'NSI Topology 2.0')],
-            ['id'=> self::DESC_TYPE_NMWG, 'name'=> Yii::t('topology', 'NMWG Topology 3.0')],
-        ];
-    }
-
-    static function findOneByNsa($nsa) {
-        return self::find()->where(['provider_nsa'=>$nsa])->one();
-    }
-
-    public function execute() {
-        $this->syncEvent = new TopologySyncEvent;
+    public function discover($source) {
+        $this->syncEvent = new DiscoveryEvent;
         $this->syncEvent->started_at = DateUtils::now();
         $this->syncEvent->progress = 0;
-        $this->syncEvent->sync_id = $this->id;
-        $this->syncEvent->status = TopologySyncEvent::STATUS_INPROGRESS;
+        $this->syncEvent->sync_id = $source->id;
+        $this->syncEvent->status = DiscoveryEvent::STATUS_INPROGRESS;
         $this->syncEvent->save();
 
         if (!$this->parser) {
 
-            switch ($this->type) {
-                case self::DESC_TYPE_NSI: 
+            switch ($source->type) {
+                case DiscoverySource::DESC_TYPE_NSI: 
                     $this->parser = new NSIParser; 
-                    $this->parser->loadFile($this->url);
+                    $this->parser->loadFile($source->url);
                     if (!$this->parser->isTD()) {
-                        $this->syncEvent->status = TopologySyncEvent::STATUS_FAILED;
+                        $this->syncEvent->status = DiscoveryEvent::STATUS_FAILED;
                         $this->syncEvent->save();
                         return;
                     }
@@ -109,11 +78,11 @@ class DiscoveryService {
                     //Yii::trace($topo->getData());
                     break;
 
-                case self::DESC_TYPE_NMWG: 
+                case DiscoverySource::DESC_TYPE_NMWG: 
                     $this->parser = new NMWGParser;
-                    $this->parser->loadFile($this->url);
+                    $this->parser->loadFile($source->url);
                     if (!$this->parser->isTD()) {
-                        $this->syncEvent->status = TopologySyncEvent::STATUS_FAILED;
+                        $this->syncEvent->status = DiscoveryEvent::STATUS_FAILED;
                         $this->syncEvent->save();
                         return;
                     }
@@ -123,9 +92,9 @@ class DiscoveryService {
             }
         }
 
-        $this->synchronize();
+        $this->compare();
 
-        if ($this->auto_apply) {
+        if ($source->auto_apply) {
             $this->syncEvent->applyChanges();
         }
 
@@ -133,7 +102,7 @@ class DiscoveryService {
     }
 
     //Cria changes a partir de mudanças percebidas
-    private function synchronize() {
+    private function compare() {
         foreach ($this->parser->getData()['domains'] as $domainName => $domainData) {
             $domain = Domain::findByName($domainName)->one();
 
@@ -200,7 +169,7 @@ class DiscoveryService {
                             if ($provider) {
                                 $dstProv = Provider::findOneByNsa($dstNsaId);
                                 if ($dstProv) {
-                                    $peering = ProviderPeering::findOne(['src_id'=> $provider->id, 'dst_id'=>$dstProv->id]);
+                                    $peering = Peering::findOne(['src_id'=> $provider->id, 'dst_id'=>$dstProv->id]);
                                     if ($peering) {
                                         //$newPeerings[] = $peering->id;
                                         continue;

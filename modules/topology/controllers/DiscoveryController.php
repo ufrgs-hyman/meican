@@ -10,7 +10,10 @@ use Yii;
 use yii\data\ActiveDataProvider;
 
 use meican\aaa\RbacController;
-use meican\topology\models\DiscoveryRule;
+use meican\topology\models\DiscoverySource;
+use meican\topology\forms\DiscoverySourceForm;
+use meican\topology\models\Change;
+use meican\topology\services\DiscoveryService;
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
@@ -18,12 +21,51 @@ use meican\topology\models\DiscoveryRule;
 class DiscoveryController extends RbacController {
 
     public function actionIndex() {
-        $dataProvider = new ActiveDataProvider([
-                'query' => DiscoveryRule::find(),
+        $changeProvider = new ActiveDataProvider([
+            'query' => Change::find()->groupBy(['domain']),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        $sourceProvider = new ActiveDataProvider([
+            'query' => DiscoverySource::find(),
+            'pagination' => [
+                'pageSize' => 10,
+            ],
         ]);
         
         return $this->render('index', array(
-                'data' => $dataProvider,
+            'changeProvider' => $changeProvider,
+            'sourceProvider' => $sourceProvider,
         ));
+    }
+
+    public function actionDiscover($id) { 
+        $ds = new DiscoveryService;
+        $ds->execute($id);
+        
+        $this->redirect("index");
+    }
+
+    public function actionCreateSource(){
+        $form = new DiscoverySourceForm;
+        
+        if($form->load($_POST)) {
+            if ($form->save()) {
+                //$form->saveCron();
+                Yii::$app->getSession()->addFlash("success", 
+                    Yii::t("topology", "Source {name} added successfully", ['name'=>$form->name]));
+                return $this->redirect(array('index'));
+            } else {
+                foreach($form->getErrors() as $attribute => $error) {
+                    Yii::$app->getSession()->addFlash("error", $error[0]);
+                }
+            }
+        }
+        
+        return $this->render('source/create',[
+                'model' => $form,
+        ]);
     }
 }
