@@ -19,15 +19,15 @@ use meican\aaa\RbacController;
 
 <section class="content">
 
-  <div class="dashboard">
-        <div>
+  <div class="row" style="text-align: center">
+        <div class="col-xs-6 col-sm-3" style="min-width: 250px">
             <h2><?= Yii::t('home', 'New Reservation'); ?></h2>
             <a href="<?= Url::to(['/circuits/reservation/create']); ?>">
                 <img style="width: 128px; height:128px;" src="<?= Url::to('@web/images/dash_new_reservation.png'); ?>" alt="New Reservation"/>
             </a>
         </div>
         <?php if(RbacController::can("reservation/read")): ?>
-         <div>
+        <div class="col-xs-6 col-sm-3" style="min-width: 250px">
             <h2><?= Yii::t('home', 'Reservations'); ?></h2>
             <a href="<?= Url::to(['/circuits/reservation/status']); ?>">
                 <img style="width: 128px; height:128px;" src="<?= Url::to('@web/images/dash_reservations.png'); ?>" alt="Reservations"/>
@@ -35,7 +35,7 @@ use meican\aaa\RbacController;
         </div>
         <?php endif; ?>
         <?php if(RbacController::can('user/read') || RbacController::can('role/read')): ?>
-         <div>
+        <div class="col-xs-6 col-sm-3" style="min-width: 250px">
             <h2><?= Yii::t('home', 'Users'); ?></h2>
             <a href="<?= Url::to(['/aaa/user']); ?>">
                 <img style="width: 128px; height:128px;" src="<?= Url::to('@web/images/dash_users.png'); ?>" alt="Users"/>
@@ -43,7 +43,7 @@ use meican\aaa\RbacController;
         </div>
         <?php endif; ?>
         <?php if(RbacController::can("reservation/read")): ?>
-         <div>
+        <div class="col-xs-6 col-sm-3" style="min-width: 250px">
             <h2><?= Yii::t('home', 'Authorizations'); ?></h2>
             <a href="<?= Url::to(['/circuits/authorization/index']); ?>">
                 <img style="width: 128px; height:128px;" src="<?= Url::to('@web/images/dash_authorizations.png'); ?>" alt="Authorizations"/>
