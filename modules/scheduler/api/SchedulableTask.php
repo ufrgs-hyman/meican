@@ -13,6 +13,6 @@ namespace meican\scheduler\api;
  */
 interface SchedulableTask {
 
-    public function execute();
+    public function execute($obj_id);
 
 }

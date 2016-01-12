@@ -9,6 +9,7 @@ namespace meican\scheduler\models;
 use Yii;
 
 use meican\base\components\DateUtils;
+use meican\scheduler\api\SchedulableTask;
 
 /**
  * Essa classe representa um objeto ScheduledTask,
@@ -19,7 +20,7 @@ use meican\base\components\DateUtils;
  *
  * @property integer $id
  * @property string $obj_class
- * @property string $obj_id
+ * @property string $obj_data
  * @property string $status
  * @property string $freq
  * @property string $last_run_at
@@ -30,11 +31,8 @@ class ScheduledTask extends \yii\db\ActiveRecord
 {
     const STATUS_ENABLED =      "ENABLED";
     const STATUS_DISABLED =     "DISABLED";
-    const STATUS_DELETED =      "DELETED";
     const STATUS_PROCESSING =   "PROCESSING";
 
-    public $executionPath;
-    
     /**
      * @inheritdoc
      */
@@ -71,10 +69,10 @@ class ScheduledTask extends \yii\db\ActiveRecord
         $this->last_run_at = DateUtils::now();
         $this->save();
 
-        $obj = Yii::createObject($this->obj_class)::findOne($this->task_id);
+        $obj = Yii::createObject($this->obj_class);
         if ($obj) {
             if($obj instanceof SchedulableTask) {
-                $obj->execute();
+                $obj->execute($this->obj_data);
             }
         } else {
             $this->delete();
