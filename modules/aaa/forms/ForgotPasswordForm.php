@@ -20,49 +20,52 @@ class ForgotPasswordForm extends Model {
 
     public function rules()    {
         return [
-                [['login', 'email'], 'safe'],
+        		[['email'], 'email'],
+        		['login', 'validateFields', 'skipOnEmpty' => false, 'skipOnError' => false],
         ];
     }
 
     public function attributeLabels() {
         return [
-                'login'=>Yii::t('init', 'User'),
-                'email'=>Yii::t('init', 'Email'),
+                'login'=>Yii::t('home', 'User'),
+                'email'=>Yii::t('home', 'Email'),
         ];
     }
-
-    public function checkCamps() {
+    
+    public function validateFields($attribute, $params) {
         if($this->login != "" || $this->email != ""){
             if($this->login != "" && $this->email != ""){
                 $user = User::findByUsername($this->login);
                 if(!isset($user)){
-                    $this->addError($this->login, Yii::t('init', 'The user you entered is incorrect'));
+                    $this->addError('login', Yii::t('home', 'The user you entered is incorrect'));
                     return false;
                 }
 
-                $userSettings = UserSettings::findOne(['email' => $this->email]);
-                if($this->email == UserSettings::findOne(['id' => $user->id])->email) return true;
-                else $this->addError($this->login, Yii::t('init', 'The email you entered is incorrect'));
+                if($this->email == $user->email) return true;
+                else $this->addError('email', Yii::t('home', 'The email you entered is incorrect'));
             }
             else if($this->login != ""){
                 $user = User::findByUsername($this->login);
                 if(isset($user)) return true;
-                else $this->addError($this->login, Yii::t('init', 'The user you entered is incorrect'));
+                else $this->addError('login', Yii::t('home', 'The user you entered is incorrect'));
             }
             else {
-                $userSettings = UserSettings::findOne(['email' => $this->email]);
-                if(isset($userSettings)) return true;
-                else $this->addError($this->login, Yii::t('init', 'The email you entered is incorrect'));
+                $user = User::findOne(['email' => $this->email]);
+                if(isset($user)) return true;
+                else $this->addError('email', Yii::t('home', 'The email you entered is incorrect'));
             }
         }
-        else $this->addError($this->login, Yii::t('init', 'Please insert your user or email'));
+        else {
+        	$this->addError('login', Yii::t('home', 'Please insert your user or email'));
+        	$this->addError('email', Yii::t('home', 'Please insert your user or email'));
+        }
         return false;
     }
 
     public function sendEmail(){
         $user;
         if($this->login != "") $user = User::findByUsername($this->login);
-        else $user = User::findOne(['id' => UserSettings::findOne(['email' => $this->email])->id]);
+        else $user = User::findOne(['email' => $this->email]);
 
         $newPassword = $this->generateRandomString();
 
@@ -75,18 +78,18 @@ class ForgotPasswordForm extends Model {
 
         $mail = Yii::$app->mailer->compose()
         ->setFrom('meican@inf.ufrgs.br')
-        ->setTo(UserSettings::findOne(['id' => $user->id])->email)
+        ->setTo($user->email)
         ->setSubject('Meican new Password')
         ->setTextBody($body);
 
         if ($mail->send()){
-            Yii::trace("Email send to: ".UserSettings::findOne(['id' => $user->id])->email);
+            Yii::trace("Email send to: ".$user->email);
             $user->password = Yii::$app->getSecurity()->generatePasswordHash($newPassword);
             $user->save();
             return true;
         }
         else{
-            $this->addError($this->login, Yii::t('init', 'An error occured, please try again'));
+            $this->addError($this->login, Yii::t('home', 'An error occured, please try again'));
             return false;
         }
     }

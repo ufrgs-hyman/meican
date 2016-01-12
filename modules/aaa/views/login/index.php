@@ -32,7 +32,7 @@ Asset::register($this);
           <?= $form->field($model, 'password', ['inputOptions' => ['class' => 'form-control', 'placeholder' => 'Password']])->passwordInput()->label(false) ?>
           <span class="fa fa-lock form-control-feedback"></span>
       </div>
-      <a href="#">I forgot my password</a>
+      <?= Html::a(Yii::t("home", "I forgot my password"),array('/aaa/login/password')); ?>
       <div class="row">
           <div class="col-xs-8">
             <div class="checkbox icheck">

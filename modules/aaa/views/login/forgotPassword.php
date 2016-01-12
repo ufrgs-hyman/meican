@@ -4,9 +4,12 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-use yii\widgets\ActiveForm; 
-use yii\helpers\Html;
-use yii\helpers\Url;
+use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Html;
+
+use meican\aaa\assets\login\Asset;
+
+Asset::register($this);
 
 ?>
 
@@ -18,34 +21,40 @@ var RecaptchaOptions = {
 
 <script src='https://www.google.com/recaptcha/api.js'></script>
 
-<?php $form=ActiveForm::begin(array(
-	'id'=>'password-form',
-	'validateOnSubmit'=>true,
-	'options'=>array(
-			'class'=>'login',
-	),
-	
-));
+<div class="login-box">
+  <div class="login-logo">
+    <?= Html::img("@web/images/meican_new.png", ['style'=>'width: 240px;','title' => 'MEICAN']); ?>
+  </div>
+  <!-- /.login-logo -->
+    <div class="login-box-body">
+      <?php $form = ActiveForm::begin(array(
+        'id'=>'password-form',
+      	'validateOnSubmit'=> true,
 
-?>
-	<h4>
-	<div><?= Yii::t('init', 'Insert your user or email, and you will receive an email with your new password.'); ?></div>
-	</h4>
-	<div id="message"><?= $form->errorSummary($model); ?></div>
-	<div style="width: 100%;">
-    	<div class="input">
-         	<?= $form->field($model,'login'); ?>
-		</div>
-		<div class="input">
-            <?= $form->field($model,'email') ?>
-		</div>
+      )); ?>
+      <p class="login-box-msg"><?= Yii::t('home', 'Insert your user or email, and you will receive an email with your new password.'); ?></p>
+      
+      <div class="form-group has-feedback">          
+          <?= $form->field($model,'login', ['inputOptions' => ['class' => 'form-control', 'placeholder' => Yii::t('home', 'Login')]])->label(false) ?>
+          <span class="fa fa-user form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+          <?= $form->field($model, 'email', ['inputOptions' => ['class' => 'form-control', 'placeholder' => 'Email']])->input('email')->label(false) ?>
+          <span class="fa fa-at form-control-feedback"></span>
+      </div>
 
-		<div data-theme="clean" data-type="image" style="padding-top: 15px; transform:scale(0.91); transform-origin:0 0" class="g-recaptcha" data-sitekey="<?= Yii::$app->params["google.recaptcha.site.key"] ?>"></div>
+	  <div data-theme="clean" data-type="image" style="padding-bottom: 15px; transform:scale(1.06);-webkit-transform:scale(1.06);transform-origin:0 0;-webkit-transform-origin:0 0;" class="g-recaptcha" data-sitekey="<?= Yii::$app->params["google.recaptcha.site.key"] ?>"></div>
 
-		<div class="submit">
-        	<input class="next ui-button ui-widget ui-state-default ui-corner-all" type="submit" name="submit_password" value="<?= Yii::t('init', 'Send me') ?>" role="button" aria-disabled="false" tabindex="3"/>
-			<input type="button" id="button_cancel" onclick="location.href='../'" class="cancel" value=<?= Yii::t("init", 'Cancel'); ?>>
-		</div>
- 	</div>
-
-<?php ActiveForm::end(); ?>
+      <div class="row">
+          <div class="col-xs-8">
+            <?= Html::submitButton(Yii::t('home', 'Send me'), ['class' => 'btn btn-primary btn-flat form-control']) ?>
+          </div>
+          <div class="col-xs-4">
+            <?= Html::a(Yii::t('home', 'Cancel'), ['/aaa/login/'], ['style'=>'text-align: center;', 'class'=>'btn-primary btn-flat form-control']) ?>
+          </div>
+      </div>
+      
+      <?php ActiveForm::end(); ?>
+    </div>
+  <!-- /.login-box-body -->
+</div>

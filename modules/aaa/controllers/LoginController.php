@@ -39,7 +39,7 @@ class LoginController extends BaseController {
         }
             
         return $this->render('index', array(
-              'model'=>$model,
+            'model'=>$model,
             'federation' => AaaPreference::isFederationEnabled(),
         ));
     }
@@ -52,19 +52,17 @@ class LoginController extends BaseController {
     public function actionPassword() {
         $model = new ForgotPasswordForm;
         
-        Yii::trace($_POST);
-            
-        if($model->load($_POST)) {
+        if($model->load($_POST)) {        	
             if(isset($_POST['g-recaptcha-response'])) $captcha=$_POST['g-recaptcha-response'];
             if(!isset($captcha) || !$captcha){
-                $model->addError($model->login, Yii::t('init', 'Please, check the captcha'));
+                $model->addError('login', Yii::t('home', 'Please, check the captcha'));
                 return $this->render('forgotPassword', array('model'=>$model));
             }
             $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret="
                 .Yii::$app->params["google.recaptcha.secret.key"]
                 ."&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
             if($response){
-                if($model->checkCamps()){
+                if($model->validate()){
                     if($model->sendEmail()){
                         return $this->redirect('index');
                     }
@@ -76,12 +74,12 @@ class LoginController extends BaseController {
                     return $this->render('forgotPassword', array('model'=>$model));
                 }
             }
-            else {
-                $model->addError($model->login, Yii::t('init', 'Please, check the captcha'));
+            else {            	
+                $model->addError('login', Yii::t('home', 'Please, check the captcha'));
                 return $this->render('forgotPassword', array('model'=>$model));
             }
         }
-        
+
         return $this->render('forgotPassword', array('model'=>$model));
     }
     
