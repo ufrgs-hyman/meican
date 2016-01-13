@@ -24,6 +24,23 @@ abstract class BaseController extends Controller {
         Yii::$app->formatter->timeZone = Yii::$app->user->isGuest ? 'America/Sao_Paulo' : Yii::$app->user->getIdentity()->time_zone;
     } 
     
+    /**
+     * Indica o início de uma função com lógica independente ao
+     * usuário associado a sessão.
+     *
+     * Determina que a partir desse momento variáveis da sessão
+     * não serão mais acessadas. Necessário no caso de funções 
+     * com acesso externo, como chamadas SOAP. Sem esta função,
+     * uma chamada Ajax pode bloquear o usuário em toda a aplicação,
+     * pois apenas um script PHP pode acessar informações da sessão
+     * a cada vez.
+     *
+     * A partir dessa função, N scripts podem ser executados ao mesmo
+     * tempo, sempre que apenas um desses N tenha acesso à dados da
+     * sessão.
+     *
+     * Atenção, a partir dessa funcão não será possível usar o RBAC.
+     **/
     static function asyncActionBegin() {
         Yii::$app->session->close();
     }

@@ -50,21 +50,9 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
                             ],
                             'domain',
                             [
-                                'header' => Yii::t("topology", "Pending"),
-                                'value' => function ($model){
-                                    return "";
-                                },
-                            ],
-                            [
-                                'header' => Yii::t("topology", "Applied"),
-                                'value' => function ($model){
-                                    return "";
-                                },
-                            ],
-                            [
                                 'header' => Yii::t("topology", "Total"),
                                 'value' => function ($model){
-                                    return "";
+                                    return $model->count;
                                 },
                             ],
                         ),
@@ -74,6 +62,39 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
         </div>  
     </div>
     <div class="col-md-6">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= Yii::t("topology", "Last searchs"); ?></h3>
+            </div>
+            <div class="box-body">
+                <?php
+            
+                echo GridView::widget([
+                    'id'=> 'search-grid',
+                    'layout' => "{items}{summary}{pager}",
+                    'dataProvider' => $searchProvider,
+                    'columns' => array(
+                            [
+                                'format' => 'raw',
+                                'value' => function ($model){
+                                    return '<a href="'.Url::toRoute(["/topology/discovery/view",'id'=>$model->id]).'">'.
+                                        Html::img('@web/images/eye.png')."</a>";
+                                },
+                                'headerOptions'=>['style'=>'width: 2%;'],
+                            ],
+                            [
+                                'header' => Yii::t("topology", "Rule"),
+                                'value' => function ($model){
+                                    return $model->getRule()->one()->name;
+                                },
+                            ],
+                            'started_at',
+                            'progress',
+                        ),
+                    ]);
+                ?>
+            </div>
+        </div>  
         <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title"><?= Yii::t("topology", "Rules"); ?></h3>

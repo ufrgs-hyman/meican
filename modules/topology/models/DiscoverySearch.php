@@ -21,7 +21,7 @@ use Yii;
  *
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class DiscoveryEvent extends \yii\db\ActiveRecord
+class DiscoverySearch extends \yii\db\ActiveRecord
 {
     const STATUS_INPROGRESS = "INPROGRESS";
     const STATUS_SUCCESS = "SUCCESS";
@@ -55,7 +55,7 @@ class DiscoveryEvent extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'started_at' => Yii::t('app', 'Started At'),
+            'started_at' => Yii::t('app', 'Executed at'),
             'status' => Yii::t('app', 'Status'),
             'progress' => Yii::t('app', 'Progress'),
             'sync_id' => Yii::t('app', 'Sync ID'),
@@ -65,9 +65,9 @@ class DiscoveryEvent extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSource()
+    public function getRule()
     {
-        return $this->hasOne(DiscoverySource::className(), ['id' => 'sync_id']);
+        return $this->hasOne(DiscoveryRule::className(), ['id' => 'sync_id']);
     }
 
     public function applyChanges() {

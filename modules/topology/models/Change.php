@@ -50,6 +50,8 @@ class Change extends \yii\db\ActiveRecord
     const STATUS_FAILED = "FAILED";
     const STATUS_APPLIED = 'APPLIED';
 
+    public $count;
+
     /**
      * @inheritdoc
      */

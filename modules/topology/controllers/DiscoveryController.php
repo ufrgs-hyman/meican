@@ -11,6 +11,7 @@ use yii\data\ActiveDataProvider;
 
 use meican\aaa\RbacController;
 use meican\topology\models\DiscoveryRule;
+use meican\topology\models\DiscoverySearch;
 use meican\topology\forms\DiscoveryRuleForm;
 use meican\topology\models\Change;
 use meican\topology\services\DiscoveryService;
@@ -22,9 +23,16 @@ class DiscoveryController extends RbacController {
 
     public function actionIndex() {
         $changeProvider = new ActiveDataProvider([
-            'query' => Change::find()->groupBy(['domain']),
+            'query' => Change::find()->groupBy(['domain'])->select(['*,COUNT(*) AS count']),
             'pagination' => [
                 'pageSize' => 10,
+            ],
+        ]);
+
+        $searchProvider = new ActiveDataProvider([
+            'query' => DiscoverySearch::find(),
+            'pagination' => [
+                'pageSize' => 5,
             ],
         ]);
 
@@ -38,6 +46,7 @@ class DiscoveryController extends RbacController {
         return $this->render('index', array(
             'changeProvider' => $changeProvider,
             'ruleProvider' => $ruleProvider,
+            'searchProvider' => $searchProvider,
         ));
     }
 

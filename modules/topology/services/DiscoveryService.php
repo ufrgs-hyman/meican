@@ -12,7 +12,7 @@ use meican\base\components\DateUtils;
 use meican\topology\components\NSIParser;
 use meican\topology\components\NMWGParser;
 use meican\topology\models\TopologyNotification;
-use meican\topology\models\DiscoveryEvent;
+use meican\topology\models\DiscoverySearch;
 use meican\topology\models\DiscoveryRule;
 use meican\topology\models\Domain;
 use meican\topology\models\Network;
@@ -42,12 +42,12 @@ class DiscoveryService implements SchedulableTask {
     public $syncEvent;
     public $detectedChanges = false;
 
-    public function execute($data) {
-        $rule = DiscoveryRule::findOne($data);
+    public function execute($ruleId) {
+        $rule = DiscoveryRule::findOne($ruleId);
         $this->discover($rule);
     }
 
-    public function buildChange() {
+    private function buildChange() {
         if(!$this->detectedChanges) $this->detectedChanges = true;
         $change = new Change;
         $change->sync_event_id = $this->syncEvent->id;
@@ -56,11 +56,11 @@ class DiscoveryService implements SchedulableTask {
     }
 
     public function discover($rule) {
-        $this->syncEvent = new DiscoveryEvent;
+        $this->syncEvent = new DiscoverySearch;
         $this->syncEvent->started_at = DateUtils::now();
         $this->syncEvent->progress = 0;
         $this->syncEvent->sync_id = $rule->id;
-        $this->syncEvent->status = DiscoveryEvent::STATUS_INPROGRESS;
+        $this->syncEvent->status = DiscoverySearch::STATUS_INPROGRESS;
         $this->syncEvent->save();
 
         if (!$this->parser) {
@@ -70,7 +70,7 @@ class DiscoveryService implements SchedulableTask {
                     $this->parser = new NSIParser; 
                     $this->parser->loadFile($rule->url);
                     if (!$this->parser->isTD()) {
-                        $this->syncEvent->status = DiscoveryEvent::STATUS_FAILED;
+                        $this->syncEvent->status = DiscoverySearch::STATUS_FAILED;
                         $this->syncEvent->save();
                         return;
                     }
@@ -82,7 +82,7 @@ class DiscoveryService implements SchedulableTask {
                     $this->parser = new NMWGParser;
                     $this->parser->loadFile($rule->url);
                     if (!$this->parser->isTD()) {
-                        $this->syncEvent->status = DiscoveryEvent::STATUS_FAILED;
+                        $this->syncEvent->status = DiscoverySearch::STATUS_FAILED;
                         $this->syncEvent->save();
                         return;
                     }
@@ -92,7 +92,7 @@ class DiscoveryService implements SchedulableTask {
             }
         }
 
-        $this->compare();
+        $this->search();
 
         if ($rule->auto_apply) {
             $this->syncEvent->applyChanges();
@@ -102,7 +102,7 @@ class DiscoveryService implements SchedulableTask {
     }
 
     //Cria changes a partir de mudanças percebidas
-    private function compare() {
+    private function search() {
         foreach ($this->parser->getData()['domains'] as $domainName => $domainData) {
             $domain = Domain::findByName($domainName)->one();
 
