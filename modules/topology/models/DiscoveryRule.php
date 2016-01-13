@@ -26,7 +26,7 @@ use meican\topology\models\TopologyNotification;
  *
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class DiscoverySource extends \yii\db\ActiveRecord
+class DiscoveryRule extends \yii\db\ActiveRecord
 {
     const PROTOCOL_HTTP = "HTTP";
     const PROTOCOL_NSI_DS = "NSI_DS_1_0";
@@ -63,7 +63,7 @@ class DiscoverySource extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('topology', 'ID'),
-            'auto_apply' => Yii::t('topology', 'Apply changes'),
+            'auto_apply' => Yii::t('topology', 'Apply method'),
             'type' => Yii::t('topology', 'Type'),
             'subscription_id' => Yii::t('topology', 'Autosync by notification'),
             'name' => Yii::t('topology', 'Name'),

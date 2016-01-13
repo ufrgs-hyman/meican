@@ -10,7 +10,7 @@ use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 
 use meican\topology\models\Service;
-use meican\topology\models\DiscoverySource;
+use meican\topology\models\DiscoveryRule;
 use meican\topology\assets\sync\SyncFormAsset;
 
 SyncFormAsset::register($this);
@@ -18,7 +18,7 @@ SyncFormAsset::register($this);
 $this->params['header'] = [Yii::t('topology', 'Discovery'), ['Home', 'Topology']];
 
 $form= ActiveForm::begin([
-    'id'        => 'source-form',
+    'id'        => 'rule-form',
     'method'    => 'post',
     'layout'    => 'horizontal'
 ]); 
@@ -31,8 +31,8 @@ $form= ActiveForm::begin([
     </div>
     <div class="box-body">
         <?= $form->field($model,'name')->textInput(['size'=>50]); ?>
-        <?= $form->field($model,'protocol')->dropDownList(ArrayHelper::map(DiscoverySource::getProtocols(), 'id', 'name')); ?>
-        <?= $form->field($model,'type')->dropDownList(ArrayHelper::map(DiscoverySource::getTypes(), 'id', 'name')); ?>
+        <?= $form->field($model,'protocol')->dropDownList(ArrayHelper::map(DiscoveryRule::getProtocols(), 'id', 'name')); ?>
+        <?= $form->field($model,'type')->dropDownList(ArrayHelper::map(DiscoveryRule::getTypes(), 'id', 'name')); ?>
     <div id="subscribed-row" <?= ($model->type == Service::TYPE_NSI_DS_1_0) ? "" : "disabled" ?>>
         <?= $form->field($model,'subscribe_enabled')->dropDownList(ArrayHelper::map(
             [['id'=>false, 'name'=>Yii::t("topology", 'Disabled')],['id'=>true,'name'=>Yii::t("topology", 'Enabled')]], 'id', 'name'), 

@@ -9,7 +9,6 @@ use yii\grid\CheckboxColumn;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-use yii\db\Query;
 
 use meican\base\components\LinkColumn;
 use meican\base\widgets\GridButtons;
@@ -77,25 +76,25 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
     <div class="col-md-6">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t("topology", "Sources"); ?></h3>
+                <h3 class="box-title"><?= Yii::t("topology", "Rules"); ?></h3>
             </div>
             <div class="box-body">
                 <?php
 
-                echo GridButtons::widget(['addRoute'=>'create-source']).'<br>';
+                echo GridButtons::widget(['addRoute'=>'create-rule']).'<br>';
             
                 $form = ActiveForm::begin([
                     'method' => 'post',
                     'action' => ['delete'],
-                    'id' => 'source-form',  
+                    'id' => 'rule-form',  
                     'enableClientScript'=>false,
                     'enableClientValidation' => false,
                 ]);
             
                 echo GridView::widget([
-                    'id'=> 'source-grid',
+                    'id'=> 'rule-grid',
                     'layout' => "{items}{summary}{pager}",
-                    'dataProvider' => $sourceProvider,
+                    'dataProvider' => $ruleProvider,
                     'columns' => array(
                             array(
                                 'class'=>CheckboxColumn::className(),
@@ -127,15 +126,15 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
                             ],
                             "name",
                             [
-                                'header' => Yii::t("topology", "Autosync by recurrence"),
+                                'header' => Yii::t("topology", "Auto Discovery"),
                                 'value' => function ($model){
-                                    return $model->isAutoSyncEnabled() ? Yii::t("topology", "Enabled") : "";
+                                    return "Scheduled, on Notification";
                                 },
                             ],
                             [
                                 'attribute'=> 'auto_apply',
                                 'value' => function($model) {
-                                    return $model->auto_apply ? Yii::t("topology", "Automatically") : Yii::t("topology", "Manually");
+                                    return $model->auto_apply ? Yii::t("topology", "Automatic") : Yii::t("topology", "Manual");
                                 }
                             ],
                         ),

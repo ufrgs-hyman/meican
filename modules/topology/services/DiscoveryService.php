@@ -13,7 +13,7 @@ use meican\topology\components\NSIParser;
 use meican\topology\components\NMWGParser;
 use meican\topology\models\TopologyNotification;
 use meican\topology\models\DiscoveryEvent;
-use meican\topology\models\DiscoverySource;
+use meican\topology\models\DiscoveryRule;
 use meican\topology\models\Domain;
 use meican\topology\models\Network;
 use meican\topology\models\Device;
@@ -27,7 +27,7 @@ use meican\scheduler\api\SchedulableTask;
 /**
  * This is the MEICAN Network Topology Discovery Service.
  *
- * Based on a Discovery Source, this object contact the network topology provider and
+ * Based on a Discovery Rule, this object contact the network topology provider and
  * get the network topology description, generally a XML file. 
  * After that step, this service compare the current MEICAN topology and the
  * recently downloaded network topology. As result, changes are discovered and
@@ -43,8 +43,8 @@ class DiscoveryService implements SchedulableTask {
     public $detectedChanges = false;
 
     public function execute($data) {
-        $source = DiscoverySource::findOne($data);
-        $this->discover($source);
+        $rule = DiscoveryRule::findOne($data);
+        $this->discover($rule);
     }
 
     public function buildChange() {
@@ -55,20 +55,20 @@ class DiscoveryService implements SchedulableTask {
         return $change;
     }
 
-    public function discover($source) {
+    public function discover($rule) {
         $this->syncEvent = new DiscoveryEvent;
         $this->syncEvent->started_at = DateUtils::now();
         $this->syncEvent->progress = 0;
-        $this->syncEvent->sync_id = $source->id;
+        $this->syncEvent->sync_id = $rule->id;
         $this->syncEvent->status = DiscoveryEvent::STATUS_INPROGRESS;
         $this->syncEvent->save();
 
         if (!$this->parser) {
 
-            switch ($source->type) {
-                case DiscoverySource::DESC_TYPE_NSI: 
+            switch ($rule->type) {
+                case DiscoveryRule::DESC_TYPE_NSI: 
                     $this->parser = new NSIParser; 
-                    $this->parser->loadFile($source->url);
+                    $this->parser->loadFile($rule->url);
                     if (!$this->parser->isTD()) {
                         $this->syncEvent->status = DiscoveryEvent::STATUS_FAILED;
                         $this->syncEvent->save();
@@ -78,9 +78,9 @@ class DiscoveryService implements SchedulableTask {
                     //Yii::trace($topo->getData());
                     break;
 
-                case DiscoverySource::DESC_TYPE_NMWG: 
+                case DiscoveryRule::DESC_TYPE_NMWG: 
                     $this->parser = new NMWGParser;
-                    $this->parser->loadFile($source->url);
+                    $this->parser->loadFile($rule->url);
                     if (!$this->parser->isTD()) {
                         $this->syncEvent->status = DiscoveryEvent::STATUS_FAILED;
                         $this->syncEvent->save();
@@ -94,7 +94,7 @@ class DiscoveryService implements SchedulableTask {
 
         $this->compare();
 
-        if ($source->auto_apply) {
+        if ($rule->auto_apply) {
             $this->syncEvent->applyChanges();
         }
 

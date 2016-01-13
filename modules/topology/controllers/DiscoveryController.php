@@ -10,8 +10,8 @@ use Yii;
 use yii\data\ActiveDataProvider;
 
 use meican\aaa\RbacController;
-use meican\topology\models\DiscoverySource;
-use meican\topology\forms\DiscoverySourceForm;
+use meican\topology\models\DiscoveryRule;
+use meican\topology\forms\DiscoveryRuleForm;
 use meican\topology\models\Change;
 use meican\topology\services\DiscoveryService;
 
@@ -28,8 +28,8 @@ class DiscoveryController extends RbacController {
             ],
         ]);
 
-        $sourceProvider = new ActiveDataProvider([
-            'query' => DiscoverySource::find(),
+        $ruleProvider = new ActiveDataProvider([
+            'query' => DiscoveryRule::find(),
             'pagination' => [
                 'pageSize' => 10,
             ],
@@ -37,7 +37,7 @@ class DiscoveryController extends RbacController {
         
         return $this->render('index', array(
             'changeProvider' => $changeProvider,
-            'sourceProvider' => $sourceProvider,
+            'ruleProvider' => $ruleProvider,
         ));
     }
 
@@ -48,14 +48,14 @@ class DiscoveryController extends RbacController {
         $this->redirect("index");
     }
 
-    public function actionCreateSource(){
-        $form = new DiscoverySourceForm;
+    public function actionCreateRule(){
+        $form = new DiscoveryRuleForm;
         
         if($form->load($_POST)) {
             if ($form->save()) {
                 //$form->saveCron();
                 Yii::$app->getSession()->addFlash("success", 
-                    Yii::t("topology", "Source {name} added successfully", ['name'=>$form->name]));
+                    Yii::t("topology", "Rule {name} added successfully", ['name'=>$form->name]));
                 return $this->redirect(array('index'));
             } else {
                 foreach($form->getErrors() as $attribute => $error) {
@@ -64,7 +64,7 @@ class DiscoveryController extends RbacController {
             }
         }
         
-        return $this->render('source/create',[
+        return $this->render('rule/create',[
                 'model' => $form,
         ]);
     }

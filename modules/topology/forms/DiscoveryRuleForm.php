@@ -9,12 +9,12 @@ namespace meican\topology\forms;
 use Yii;
 use yii\data\ActiveDataProvider;
 
-use meican\topology\models\DiscoverySource;
+use meican\topology\models\DiscoveryRule;
 use meican\topology\models\Service;
 use meican\topology\components\NSIParser;
 use meican\topology\controllers\services\DiscoveryClient;
 
-class DiscoverySourceForm extends DiscoverySource {
+class DiscoveryRuleForm extends DiscoveryRule {
 
     public $freq;
     public $freq_enabled;
@@ -61,18 +61,18 @@ class DiscoverySourceForm extends DiscoverySource {
 
     public function validateUrl($att, $params) {
         switch ($this->type) {
-            case DiscoverySource::DESC_TYPE_NSI:
+            case DiscoveryRule::DESC_TYPE_NSI:
                 $parser = new NSIParser;  
                 $parser->loadFile($this->url);
                 switch ($this->protocol) {
-                    case DiscoverySource::PROTOCOL_HTTP:
+                    case DiscoveryRule::PROTOCOL_HTTP:
                         if (!$parser->isTD()) {
                             $this->addError('', 'The inserted URL does not contain a valid service. Please try again.');
                             return false;
                         }
                         return true;
                         break;
-                    case DiscoverySource::PROTOCOL_NSI_DS:
+                    case DiscoveryRule::PROTOCOL_NSI_DS:
                         if (!$parser->isDS()) {
                             $this->addError('', 'The inserted URL does not contain a valid service. Please try again.');
                             return false;
@@ -83,7 +83,7 @@ class DiscoverySourceForm extends DiscoverySource {
                 }
                 break;
                 
-            case DiscoverySource::DESC_TYPE_NMWG: 
+            case DiscoveryRule::DESC_TYPE_NMWG: 
                 $parser = new NMWGParser;  
                 $parser->loadFile($this->url);
                 if (!$parser->isTD()) {
