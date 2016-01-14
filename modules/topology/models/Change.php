@@ -13,7 +13,10 @@ use meican\base\components\DateUtils;
 use meican\base\components\ColorUtils;
 
 /**
- * This is the model class for table "{{%topo_change}}".
+ * Esta classe representa uma Alteração ou diferença
+ * da topologia local comparada a topologia do provedor
+ * consultado. Changes são geradas durante uma consulta
+ * realizada pelo DiscoveryService.
  *
  * @property integer $id
  * @property integer $sync_event_id
@@ -25,8 +28,6 @@ use meican\base\components\ColorUtils;
  * @property string $data
  * @property string $applied_at
  * @property string $error
- *
- * @property TopoSynchronizer $sync
  *
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */

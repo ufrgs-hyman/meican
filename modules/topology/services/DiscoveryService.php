@@ -12,7 +12,7 @@ use meican\base\components\DateUtils;
 use meican\topology\components\NSIParser;
 use meican\topology\components\NMWGParser;
 use meican\topology\models\TopologyNotification;
-use meican\topology\models\DiscoverySearch;
+use meican\topology\models\DiscoveryQuery;
 use meican\topology\models\DiscoveryRule;
 use meican\topology\models\Domain;
 use meican\topology\models\Network;
@@ -27,7 +27,7 @@ use meican\scheduler\api\SchedulableTask;
 /**
  * This is the MEICAN Network Topology Discovery Service.
  *
- * Based on a Discovery Rule, this object contact the network topology provider and
+ * Based on a Discovery Rule, this object query the network topology provider and
  * get the network topology description, generally a XML file. 
  * After that step, this service compare the current MEICAN topology and the
  * recently downloaded network topology. As result, changes are discovered and
@@ -56,11 +56,11 @@ class DiscoveryService implements SchedulableTask {
     }
 
     public function discover($rule) {
-        $this->syncEvent = new DiscoverySearch;
+        $this->syncEvent = new DiscoveryQuery;
         $this->syncEvent->started_at = DateUtils::now();
         $this->syncEvent->progress = 0;
         $this->syncEvent->sync_id = $rule->id;
-        $this->syncEvent->status = DiscoverySearch::STATUS_INPROGRESS;
+        $this->syncEvent->status = DiscoveryQuery::STATUS_INPROGRESS;
         $this->syncEvent->save();
 
         if (!$this->parser) {
@@ -70,7 +70,7 @@ class DiscoveryService implements SchedulableTask {
                     $this->parser = new NSIParser; 
                     $this->parser->loadFile($rule->url);
                     if (!$this->parser->isTD()) {
-                        $this->syncEvent->status = DiscoverySearch::STATUS_FAILED;
+                        $this->syncEvent->status = DiscoveryQuery::STATUS_FAILED;
                         $this->syncEvent->save();
                         return;
                     }
@@ -82,7 +82,7 @@ class DiscoveryService implements SchedulableTask {
                     $this->parser = new NMWGParser;
                     $this->parser->loadFile($rule->url);
                     if (!$this->parser->isTD()) {
-                        $this->syncEvent->status = DiscoverySearch::STATUS_FAILED;
+                        $this->syncEvent->status = DiscoveryQuery::STATUS_FAILED;
                         $this->syncEvent->save();
                         return;
                     }

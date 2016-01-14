@@ -9,7 +9,14 @@ namespace meican\topology\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%topo_sync_event}}".
+ * Esta classe representa uma consulta realizada pelo 
+ * serviço de descobrimento (DiscoveryService). A partir
+ * de uma DiscoveryRule, uma consulta pode gerar Changes
+ * representando as diferenças percebidas na topologia do
+ * provedor comparado a topologia local.
+ *
+ * Não confundir com classes Query ou ActiveQuery, esta classe
+ * não tem objetivo de criar consultas SQL.
  *
  * @property integer $id
  * @property string $started_at
@@ -17,11 +24,11 @@ use Yii;
  * @property integer $progress
  * @property integer $sync_id
  *
- * @property Source $sync
+ * @property DiscoveryRule $rule
  *
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class DiscoverySearch extends \yii\db\ActiveRecord
+class DiscoveryQuery extends \yii\db\ActiveRecord
 {
     const STATUS_INPROGRESS = "INPROGRESS";
     const STATUS_SUCCESS = "SUCCESS";
@@ -60,6 +67,11 @@ class DiscoverySearch extends \yii\db\ActiveRecord
             'progress' => Yii::t('app', 'Progress'),
             'sync_id' => Yii::t('app', 'Sync ID'),
         ];
+    }
+
+    public function getChanges()
+    {
+        return $this->hasMany(Change::className(), ['sync_event_id' => 'id']);
     }
 
     /**

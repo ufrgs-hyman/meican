@@ -64,7 +64,7 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
     <div class="col-md-6">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t("topology", "Last searchs"); ?></h3>
+                <h3 class="box-title"><?= Yii::t("topology", "Last queries"); ?></h3>
             </div>
             <div class="box-body">
                 <?php
@@ -72,7 +72,7 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
                 echo GridView::widget([
                     'id'=> 'search-grid',
                     'layout' => "{items}{summary}{pager}",
-                    'dataProvider' => $searchProvider,
+                    'dataProvider' => $queryProvider,
                     'columns' => array(
                             [
                                 'format' => 'raw',
@@ -89,7 +89,13 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
                                 },
                             ],
                             'started_at',
-                            'progress',
+                            'status',
+                            [
+                                'header' => Yii::t("topology", "Changes discovered"),
+                                'value' => function ($model){
+                                    return $model->getChanges()->count();
+                                },
+                            ],
                         ),
                     ]);
                 ?>

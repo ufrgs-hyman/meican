@@ -14,7 +14,9 @@ use meican\topology\components\NMWGParser;
 use meican\topology\models\TopologyNotification;
 
 /**
- * This is the model class for table "{{%topo_synchronizer}}".
+ * Esta classe representa uma regra de descobrimento.
+ * Ela define onde, quando e como uma consulta (DiscoveryQuery)
+ * deve proceder para descobrir topologias. 
  *
  * @property integer $id
  * @property string $name
@@ -72,8 +74,8 @@ class DiscoveryRule extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getEvents() {
-        return DiscoveryEvent::find()->where(['sync_id'=> $this->id])->orderBy(['started_at'=> SORT_DESC]);
+    public function getQueries() {
+        return DiscoveryQuery::find()->where(['sync_id'=> $this->id])->orderBy(['started_at'=> SORT_DESC]);
     }
 
     public function getLastSyncDate() {
