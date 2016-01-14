@@ -4,14 +4,14 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-namespace meican\modules\bpm\models;
+namespace meican\bpm\forms;
 
 use Yii;
-use meican\models\Domain;
+use meican\topology\models\Domain;
 use yii\data\ActiveDataProvider;
 use yii\base\Model;
 
-use meican\models\BpmWorkflow;
+use meican\bpm\models\BpmWorkflow;
 
 /**
  */

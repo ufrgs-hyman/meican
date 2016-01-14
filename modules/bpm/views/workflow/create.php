@@ -6,39 +6,40 @@
 
 use yii\helpers\Url;
 use yii\helpers\Html;
-use yii\jui\Dialog;
+use yii\bootstrap\Modal;
 
-use meican\modules\bpm\assets\CreateAsset;
+use meican\bpm\assets\CreateAsset;
 CreateAsset::register($this);
+
+$this->params['header'] = [Yii::t("bpm", 'Create'), [Yii::t("bpm", 'Home'), 'Workflows']];
 
 ?>
 
 <?= Html::csrfMetaTags() ?>
 
-<h1><?= Yii::t("bpm", 'Owner Domain:')." ".$domainName ?></h1>
+<div class="box box-default">
+    <h5 style="margin-bottom: 0px; margin-left: 10px;"><?= Yii::t("bpm", 'Owner Domain:')." ".$domainName ?></h5>
 
-<div id="frame">
-	<iframe style="width: 100%" name="workflow_editor" id="workflow_editor" src="<?php echo Yii::$app->urlManager->createUrl('bpm/workflow/editor-create?domainTop='.$domainTop.'&lang='.Yii::$app->language);?>"></iframe>
+    <div id="frame" class="box-body">  
+		<iframe class="embed-responsive-item" style="width: 100%; height: 650px; border: none;" name="workflow_editor" id="workflow_editor" src="<?php echo Yii::$app->urlManager->createUrl('bpm/workflow/editor-create?domainTop='.$domainTop.'&lang='.Yii::$app->language);?>"></iframe>
+	</div>
+	
+	<div class="box-footer with-border">
+        <input type="button" id="button_save" class="btn btn-primary" value=<?= Yii::t("bpm", 'Save'); ?>>
+	    <input type="button" id="button_cancel" class="btn btn-default" value=<?= Yii::t("bpm", 'Cancel'); ?>>
+    </div>
 </div>
 
-<div class="controls">
-    <input type="button" id="button_save" class="save" value=<?= Yii::t("bpm", 'Save'); ?>>
-    <input type="button" id="button_cancel" class="cancel" value=<?= Yii::t("bpm", 'Cancel'); ?>>
-</div>
+<?php 
 
-<div style="display: none">
-<?php Dialog::begin([
-		'id' => 'dialog',
-    	'clientOptions' => [
-        	'modal' => true,
-        	'autoOpen' => false,
-        	'title' => "Workflows",
-    	],
-	]);
+Modal::begin([
+    'id' => 'dialog',
+    'headerOptions' => ['hidden'=>'hidden'],
+    'footer' => '<button id="close-btn" class="btn btn-default" data-dismiss="modal">Ok</button>',
+]);
 
-	echo '<br></br>';
-    echo '<p style="text-align: left; height: 100%; width:100%;" id="message"></p>';
-    
-	Dialog::end(); 
+echo '<p style="text-align: left; height: 100%; width:100%;" id="message"></p>';
+
+Modal::end(); 
+
 ?>
-</div>

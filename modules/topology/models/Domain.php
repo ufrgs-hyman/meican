@@ -7,6 +7,8 @@
 namespace meican\topology\models;
 
 use Yii;
+use meican\aaa\models\UserDomainRole;
+use meican\bpm\models\BpmWorkflow;
 
 /**
  * This is the model class for table "meican_domain".

@@ -1,9 +1,10 @@
 <?php
+
 namespace meican\bpm\assets;
 
 use yii\web\AssetBundle;
 
-class UpdateAsset extends AssetBundle
+class ViewerAsset extends AssetBundle
 {
     public $sourcePath = '@meican/bpm/assets/public';
     
@@ -11,12 +12,12 @@ class UpdateAsset extends AssetBundle
     ];
     
     public $js = [
-    	'update.js',
+    	'viewer.js',
     ];
     
     public $depends = [
 		'yii\web\JqueryAsset',
     ];
-    
-    public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
+ 
 }
+

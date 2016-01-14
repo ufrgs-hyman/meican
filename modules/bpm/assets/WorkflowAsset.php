@@ -1,21 +1,21 @@
 <?php
 
-namespace meican\modules\bpm\assets;
+namespace meican\bpm\assets;
 
 use yii\web\AssetBundle;
 
 class WorkflowAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $sourcePath = '@meican/bpm/assets/public';
+    
     public $css = [
     ];
+    
     public $js = [
-    		
     ];
+    
     public $depends = [
 		'yii\web\JqueryAsset',
     ];
-
 }
 

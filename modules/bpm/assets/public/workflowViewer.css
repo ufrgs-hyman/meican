@@ -87,7 +87,8 @@ div.WireIt-Layer {
 }
 
 #center {
-	height: 98%;
+	border: none;
+	box-shadow: none;
 }
 
 #propertiesForm .inputEx-fieldWrapper{

@@ -48,17 +48,7 @@ WireIt.WiringEditor.adapters.JsonRpc = {
 				r = YAHOO.lang.JSON.parse(response);
             	if(r['error']!=null){
             		window.parent.$("#message").html(r['error']);
-            		window.parent.$("#dialog").dialog({
-						buttons: [
-							{
-								text: "Ok",
-							    click: function() {
-							    	window.parent.$(this).dialog( "close" );
-							    }
-							},
-						]
-					});
-            		window.parent.$("#dialog").dialog("open");
+        			window.parent.$('#dialog').modal('show');
             	}
                 callbacks.success.call(callbacks.scope, r.result);
                 if(r['error']==null) window.top.location.href="../workflow/index";
@@ -83,17 +73,7 @@ WireIt.WiringEditor.adapters.JsonRpc = {
                 r = YAHOO.lang.JSON.parse(response);
             	if(r['error']!=null){
             		window.parent.$("#message").html(r['error']);
-            		window.parent.$("#dialog").dialog({
-						buttons: [
-							{
-								text: "Ok",
-							    click: function() {
-							    	window.parent.$(this).dialog( "close" );
-							    }
-							},
-						]
-					});
-            		window.parent.$("#dialog").dialog("open");
+            		window.parent.$('#dialog').modal('show');
             	}
                 callbacks.success.call(callbacks.scope, r.result);
                 if(r['error']==null) window.top.location.href="../workflow/index";
@@ -110,7 +90,8 @@ WireIt.WiringEditor.adapters.JsonRpc = {
 			cache: false,
 			success: function(response) {
 				if(response==-1){
-                	alert("Failure");
+            		window.parent.$("#message").html("Failure");
+            		window.parent.$('#dialog').modal('show');
                 	window.top.location.href="../workflow/index";
                 }
                 else callbacks.success.call(callbacks.scope, JSON.parse(response));
@@ -127,11 +108,13 @@ WireIt.WiringEditor.adapters.JsonRpc = {
 			cache: false,
 			success: function(response) {
 				if(response==-1){
-                	alert("Failure");
+					window.parent.$("#message").html("Failure");
+            		window.parent.$('#dialog').modal('show');
                 	window.top.location.href="../workflow/index";
                 }
 				else if(response==0){
-                	alert("Only disabled Workflows can be edited.");
+                	window.parent.$("#message").html("Only disabled Workflows can be edited.");
+            		window.parent.$('#dialog').modal('show');
                 	window.top.location.href="../workflow/index";
                 }
                 else callbacks.success.call(callbacks.scope, JSON.parse(response));

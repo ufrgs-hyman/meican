@@ -1,18 +1,19 @@
 <?php
-namespace meican\modules\bpm\assets;
+namespace meican\bpm\assets;
 
 use yii\web\AssetBundle;
 
 class IndexAsset extends AssetBundle
 {
-	public $basePath = '@webroot';
-	public $baseUrl = '@web';
+	public $sourcePath = '@meican/bpm/assets/public';
+    
 	public $js = [
-			'js/bpm/workflow/index.js',
-			'js/bpm/workflow/bpm-i18n.js',
+		'index.js',
+		'bpm-i18n.js',
 	];
 	public $depends = [
-			'yii\web\JqueryAsset',
+		'yii\web\JqueryAsset',
 	];
+	
 	public $jsOptions = ['position' => \yii\web\View::POS_END];
 }

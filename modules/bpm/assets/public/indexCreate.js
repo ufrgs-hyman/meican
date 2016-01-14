@@ -22,32 +22,22 @@ $(document).ready(function() {
 		    
 		    if(selectBox.options.length > 1){
 		    	
-				$("#dialog").dialog();
-			
-				$("#dialog").dialog("open");
-				
-				$("#dialog").dialog({
-					dialogClass: "no-close",
-					buttons: [
-			          {
-			        	  text: "Ok",
-					      click: function() {
-					    	  var params = "?domainTop=".concat(selectBox.options[selectBox.selectedIndex].value);
-					    	  $("#dialog").dialog("close");
-					    	  window.location="../workflow/create".concat(params);
-					      }
-			          },
-			          {
-			        	  text: tt("Cancel"),
-					      click: function() {
-					    	  window.location="../workflow/index";
-					      }
-			          },
-			       ]
-				});
+		    	$("#dialog").modal({
+		            backdrop: 'static',
+		            keyboard: false
+		        });
+		    	
+		    	$('#button_ok').click(function(){
+		    		var params = "?domainTop=".concat(selectBox.options[selectBox.selectedIndex].value);
+		    		$('#dialog').modal('hide');
+			    	window.location="../workflow/create".concat(params);
+		    	});
+		    	
+		    	$('#button_cancel').click(function(){
+		    		window.location="../workflow/index";
+		    	});
 			} else if(selectBox.options.length == 1){
 				var params = "?domainTop=".concat(selectBox.options[selectBox.selectedIndex].value);
-		  	  	$("#dialog").dialog("close");
 		  	  	window.location="../workflow/create".concat(params);
 			} else {
 				window.location="../workflow/index";

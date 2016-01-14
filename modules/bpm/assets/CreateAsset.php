@@ -1,17 +1,17 @@
 <?php
 
-namespace meican\modules\bpm\assets;
+namespace meican\bpm\assets;
 
 use yii\web\AssetBundle;
 
 class CreateAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $sourcePath = '@meican/bpm/assets/public';
+    
     public $css = [
     ];
     public $js = [
-    	'js/bpm/workflow/create.js',
+    	'create.js',
     ];
     public $depends = [
 		'yii\web\JqueryAsset',

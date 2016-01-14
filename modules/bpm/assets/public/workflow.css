@@ -106,8 +106,10 @@ div.WireIt-Layer {
 
 #propertiesForm label {
 	color: #4F4F4F;
-	font-weight: bold;
-	font-size: 18px;
+	font-family: 'Source Sans Pro', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.5;
 }
 
 #propertiesForm div.inputEx-Group div.inputEx-label {
@@ -115,5 +117,7 @@ div.WireIt-Layer {
 }
 
 #propertiesForm input {
-	font-size: 18px;
+	font-family: 'Source Sans Pro', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
 }

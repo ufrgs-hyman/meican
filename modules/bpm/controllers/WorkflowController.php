@@ -10,15 +10,16 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 
-use meican\base\components\DateUtils;
 use meican\aaa\RbacController;
+use meican\aaa\models\Group;
 use meican\aaa\models\User;
 use meican\aaa\models\UserDomainRole;
+use meican\base\components\DateUtils;
 use meican\bpm\models\BpmWorkflow;
 use meican\bpm\forms\WorkflowSearch;
 use meican\topology\models\Device;
 use meican\topology\models\Domain;
-use meican\topology\models\Group;
+
 
 class WorkflowController extends RbacController {
 	
@@ -112,6 +113,7 @@ class WorkflowController extends RbacController {
 		    				'id' => $id,
 		    				'domainName' => $domain->name,
 		    				'workName' => $workflow->name,
+		    				'status' => $workflow->active,
 		    		));
 	    		};
     		};

@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-namespace meican\models;
+namespace meican\bpm\models;
 
 use Yii;
 

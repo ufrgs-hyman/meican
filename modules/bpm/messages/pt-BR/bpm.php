@@ -5,23 +5,20 @@
  */
 
 return array(
-		'Workflows' => 'Workflows',
-		'workflow' => 'workflow',
 		//'Status' => 'Estado',
 		'New' => 'Novo',
 		'Create' => 'Criar',
 		'Enabled' => 'Ativado',
 		'Disabled' => 'Desativado',
+		'Delete' => 'Remover',
 		'Name' => 'Nome',
 		'Domain' => 'Domínio',
 		'Owner Domain:' => 'Domínio Proprietário:',
 		'Workflow Name:' => 'Nome do Workflow:',
 		'Save' => 'Salvar',
 		'Cancel' => 'Cancelar',
-		'Back' => 'Voltar',
 		'Select the Domain' => 'Selecione o Domínio',
 		'Please select the Domain for which you want create a Workflow:' => 'Por favor, selecione o Domínio para o qual você deseja criar um Workflow:',
-		'Ok' => 'Ok',
 		'Enter a name' => 'Digite um nome',
 		'Please, insert a numeric bandwidth at the node:' => 'Por favor, a banda deve ser um número no nodo:',
 		'Please, insert a bandwidth at the node:' => 'Por favor, insira uma banda no nodo:',
@@ -41,6 +38,7 @@ return array(
 		'Enable Workflow' => 'Ativar Workflow',
 		'View Workflow' => 'Visualizar Workflow',
 		'Delete Workflow' => 'Remover Workflow',
+		'Update' => 'Editar',
 		'Update Workflow' => 'Editar Workflow',
 		'Create a copy of Workflow' => 'Criar uma cópia deste Workflow',
 		'Arriving a New Request' => 'Chegada de uma Nova Requisição',
@@ -66,6 +64,8 @@ return array(
 		'You are not allowed to create workflows' => 'Você não tem permissão para criar workflows',
 		'You are not allowed to read workflows' => 'Você não tem permissão para ler workflows',
 		'any' => 'qualquer',
+		'Viewer' => 'Visualizador',
+		'Cancel' => 'Cancelar',
 		
 );
 

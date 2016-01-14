@@ -19,13 +19,11 @@ use yii\helpers\Html;
     var language = '<?= $_GET['lang']; ?>';
 </script>
 
-<script type="text/javascript" src="../../js/bpm/workflow/bpm-i18n.js"></script>
-<script type="text/javascript" src="../../js/bpm/workflow/moment.js"></script>
-<script type="text/javascript" src="../../js/bpm/workflow/moment-timezone.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
-<script src="../../js/jquery.js"></script>
-<script src="../../js/jquery-ui.js"></script>
-<script src="../../js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../../modules/bpm/assets/public/bpm-i18n.js"></script>
+<script type="text/javascript" src="../../../modules/bpm/assets/public/moment.js"></script>
+<script type="text/javascript" src="../../../modules/bpm/assets/public/moment-timezone.js"></script>
 
 <!-- YUI CSS -->
 <link rel="stylesheet" type="text/css" href="../../WireIt-0.5.0/lib/inputex/lib/yui/reset-fonts-grids/reset-fonts-grids.css" />
@@ -42,7 +40,7 @@ use yii\helpers\Html;
 <link rel="stylesheet" type="text/css" href="../../WireIt-0.5.0/css/WireItEditor.css" />
 
 <!-- Meican Workflow CSS -->
-<link rel="stylesheet" type="text/css" href="../../css/workflow/workflowViewer.css" />
+<link rel="stylesheet" type="text/css" href="../../../modules/bpm/assets/public/workflowViewer.css" />
 
 <!-- YUI -->
 <script type="text/javascript" src="../../WireIt-0.5.0/lib/inputex/lib/yui/utilities/utilities.js"></script>
@@ -67,12 +65,13 @@ use yii\helpers\Html;
 <script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/ListField.js"></script>
 <script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/CheckBox.js"></script>
 <script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/InPlaceEdit.js"></script>
+<script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/HiddenField.js"></script>
 <script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/CombineField.js"></script>
 <script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/TimeField.js"></script>
 <script type='text/javascript' src="../../WireIt-0.5.0/lib/inputex/js/fields/IntegerField.js"></script>
 
 <!-- YUI-Accordion -->
-<script type='text/javascript' src="../../WireIt-0.5.0/lib/accordionview/accordionview-min.js"></script>
+<script src="../../WireIt-0.5.0/lib/accordionview/accordionview-min.js"  type='text/javascript'></script>
 
 <!-- WireIt -->
 <!--[if IE]><script type="text/javascript" src="../../../../lib/excanvas.js"></script><![endif]-->
@@ -86,15 +85,13 @@ use yii\helpers\Html;
 <script type="text/javascript" src="../../WireIt-0.5.0/js/Layer.js"></script>
 <script type="text/javascript" src="../../WireIt-0.5.0/js/util/inputex/FormContainer-beta.js"></script>
 <script type="text/javascript" src="../../WireIt-0.5.0/js/LayerMap.js"></script>
-
 <script type="text/javascript" src="../../WireIt-0.5.0/js/WiringEditorViewer.js"></script>
-
 <script type="text/javascript" src="../../WireIt-0.5.0/js/ImageContainer.js"></script>
 <script type="text/javascript" src="../../WireIt-0.5.0/js/InOutContainer.js"></script>
 <script type="text/javascript" src="../../WireIt-0.5.0/js/adapters/json-rpc.js"></script>
 
-<script type="text/javascript" src="../../js/bpm/workflow/MeicanContainer.js"></script>
-<script type="text/javascript" src="../../js/bpm/workflow/workflowLanguageViewer.js"></script>
+<script type="text/javascript" src="../../../modules/bpm/assets/public/MeicanContainer.js"></script>
+<script type="text/javascript" src="../../../modules/bpm/assets/public/workflowLanguageViewer.js"></script>
 
 <script>
 	// InputEx needs a correct path to this image

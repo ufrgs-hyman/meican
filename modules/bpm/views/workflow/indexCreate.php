@@ -4,29 +4,28 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-use yii\jui\Dialog;
 use yii\helpers\Html;
+use yii\bootstrap\Modal;
 
-use meican\modules\bpm\assets\IndexCreateAsset;
+use meican\bpm\assets\IndexCreateAsset;
 IndexCreateAsset::register($this);
 ?>
 
 <?= Html::csrfMetaTags() ?>
 
-<div style="display: none">
-<?php Dialog::begin([
-		'id' => 'dialog',
-		'clientOptions' => [
-				'modal' => true,
-				'closeOnEscape' => false,
-				'autoOpen' => false,
-				'title' => Yii::t("bpm", "Select the Domain"),
-		],
-]);
+	<div id="dialog" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                	<h5><?= Yii::t("bpm", 'Please select the Domain for which you want create a Workflow:');?></h5>
+                    <select id="selectDomain" class="form-control"></select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="button_cancel" class="btn btn-default" data-dismiss="modal"><?= Yii::t("bpm", 'Cancel');?></button>
+                    <button type="button" id="button_ok" class="btn btn-primary">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-echo '<label style="width:100%;" for="name" id="MessageLabel">'.Yii::t("bpm", 'Please select the Domain for which you want create a Workflow:').'</label>';
-echo '<br></br><select id="selectDomain"></select>';
-
-Dialog::end();
-?>
-</div>
+<?php 

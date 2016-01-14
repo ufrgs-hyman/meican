@@ -4,11 +4,17 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-namespace meican\models;
+namespace meican\bpm\models;
 
 use Yii;
-use meican\modules\bpm\models\GraphNode;
+use meican\bpm\models\GraphNode;
+use meican\bpm\models\BpmFlow;
+use meican\bpm\models\BpmNode;
 use meican\components\DateUtils;
+use meican\topology\models\Domain;
+use meican\circuits\models\ConnectionAuth;
+use meican\base\components\DataUtils;
+
 
 /**
  * This is the model class for table "{{%bpm_workflow}}".
