@@ -11,7 +11,7 @@ use yii\data\ActiveDataProvider;
 
 use meican\aaa\RbacController;
 use meican\topology\models\DiscoveryRule;
-use meican\topology\models\DiscoveryQuery;
+use meican\topology\models\DiscoveryTask;
 use meican\topology\forms\DiscoveryRuleForm;
 use meican\topology\models\Change;
 use meican\topology\services\DiscoveryService;
@@ -29,8 +29,8 @@ class DiscoveryController extends RbacController {
             ],
         ]);
 
-        $queryProvider = new ActiveDataProvider([
-            'query' => DiscoveryQuery::find(),
+        $taskProvider = new ActiveDataProvider([
+            'query' => DiscoveryTask::find(),
             'pagination' => [
                 'pageSize' => 5,
             ],
@@ -46,7 +46,7 @@ class DiscoveryController extends RbacController {
         return $this->render('index', array(
             'changeProvider' => $changeProvider,
             'ruleProvider' => $ruleProvider,
-            'queryProvider' => $queryProvider,
+            'taskProvider' => $taskProvider,
         ));
     }
 
@@ -57,12 +57,24 @@ class DiscoveryController extends RbacController {
         $this->redirect("index");
     }
 
+    public function actionTask($id) {
+        $model = DiscoveryTask::findOne($id);
+
+        $searchChange = new Change;
+        $changeProvider = $searchChange->searchPending(Yii::$app->request->get(), $id);
+
+        return $this->render('task',[
+            'changeProvider' => $changeProvider,
+            'model' => $model,
+            'searchChange' => $searchChange,
+        ]);
+    }
+
     public function actionCreateRule(){
         $form = new DiscoveryRuleForm;
         
         if($form->load($_POST)) {
             if ($form->save()) {
-                //$form->saveCron();
                 Yii::$app->getSession()->addFlash("success", 
                     Yii::t("topology", "Rule {name} added successfully", ['name'=>$form->name]));
                 return $this->redirect(array('index'));

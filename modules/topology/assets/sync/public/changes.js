@@ -1,6 +1,7 @@
 $(document).on('ready pjax:success', function() {
-    $("#grid-changes").on("click",'img.apply-button',  function() {
-        $("#loading-dialog").dialog("open");
+    $("#refresh-overlay").hide();
+    $("#change-grid").on("click",'img.apply-button',  function() {
+        $("#refresh-overlay").show();
         context = $(this);
         $.ajax({
             url: baseUrl+'/topology/change/apply',
@@ -10,32 +11,17 @@ $(document).on('ready pjax:success', function() {
                 id: $(this).parent().parent().parent().attr('data-key'),
             },
             success: function(response) {
-                $($(context.parent().parent().parent().children()[0]).children()[0]).attr("disabled","disabled");
-                context.parent().parent().parent().addClass("success");
-                context.attr("disabled","disabled");
-                context.removeClass("apply-button");
-                context.unwrap();
-                $("#loading-dialog").dialog("close");
+                $.pjax.reload({container:"#change-pjax"}); 
             },
             error: function() {
-                context.parent().parent().parent().addClass("error");
-                context.addClass("apply-button");
-                $("#loading-dialog").dialog("close");
+                $.pjax.reload({container:"#change-pjax"}); 
             }
         });
+        return false;
     });
 });
 
 $(document).ready(function() {
-    $("#loading-dialog").attr("title", "Loading");
-    $("#loading-dialog").html("<br>Wait a moment...<br><br>" + 
-            '<div style="text-align: center;"><img src="' + baseUrl + '/images/ajax-loader.gif"></div>');
-    $("#loading-dialog").dialog({
-        autoOpen: false,
-        modal: true,
-        resizable: false,
-    });
-
     $("#apply-all").on("click", function() {
         $("#loading-dialog").dialog("open");
         applyAll($("#sync-event-id").text());

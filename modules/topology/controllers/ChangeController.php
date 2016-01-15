@@ -11,7 +11,7 @@ use Yii;
 
 use meican\aaa\RbacController;
 use meican\topology\models\TopologySynchronizer;
-use meican\topology\models\TopologyChange;
+use meican\topology\models\Change;
 use meican\topology\models\TopologySyncEvent;
 
 /**
@@ -58,7 +58,7 @@ class ChangeController extends RbacController {
     }
 
     public function actionApply($id) {
-        $change = TopologyChange::findOne($id);
+        $change = Change::findOne($id);
         return $change->apply();
     }
 }

@@ -35,17 +35,9 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
                     'dataProvider' => $changeProvider,
                     'columns' => array(
                             [
-                                'format' => 'raw',
-                                'value' => function ($model){
-                                    return '<a href="'.Url::toRoute(["/topology/change/pending"]).'">'.
-                                        Html::img('@web/images/eye.png')."</a>";
-                                },
-                                'headerOptions'=>['style'=>'width: 2%;'],
-                            ],
-                            [
                                 'header' => Yii::t("topology", "Discovered at"),
                                 'value' => function ($model){
-                                    return "";
+                                    return $model->getTask()->one()->started_at;
                                 },
                             ],
                             'domain',
@@ -64,7 +56,7 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
     <div class="col-md-6">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t("topology", "Last queries"); ?></h3>
+                <h3 class="box-title"><?= Yii::t("topology", "Last tasks"); ?></h3>
             </div>
             <div class="box-body">
                 <?php
@@ -72,12 +64,12 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
                 echo GridView::widget([
                     'id'=> 'search-grid',
                     'layout' => "{items}{summary}{pager}",
-                    'dataProvider' => $queryProvider,
+                    'dataProvider' => $taskProvider,
                     'columns' => array(
                             [
                                 'format' => 'raw',
                                 'value' => function ($model){
-                                    return '<a href="'.Url::toRoute(["/topology/discovery/view",'id'=>$model->id]).'">'.
+                                    return '<a href="'.Url::toRoute(["/topology/discovery/task",'id'=>$model->id]).'">'.
                                         Html::img('@web/images/eye.png')."</a>";
                                 },
                                 'headerOptions'=>['style'=>'width: 2%;'],
@@ -91,7 +83,7 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
                             'started_at',
                             'status',
                             [
-                                'header' => Yii::t("topology", "Changes discovered"),
+                                'header' => Yii::t("topology", "Discovered changes"),
                                 'value' => function ($model){
                                     return $model->getChanges()->count();
                                 },

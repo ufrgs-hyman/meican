@@ -15,7 +15,7 @@ use meican\topology\models\TopologyNotification;
 
 /**
  * Esta classe representa uma regra de descobrimento.
- * Ela define onde, quando e como uma consulta (DiscoveryQuery)
+ * Ela define onde, quando e como uma execução (DiscoveryTask)
  * deve proceder para descobrir topologias. 
  *
  * @property integer $id
@@ -74,8 +74,8 @@ class DiscoveryRule extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getQueries() {
-        return DiscoveryQuery::find()->where(['sync_id'=> $this->id])->orderBy(['started_at'=> SORT_DESC]);
+    public function getTasks() {
+        return DiscoveryTask::find()->where(['sync_id'=> $this->id])->orderBy(['started_at'=> SORT_DESC]);
     }
 
     public function getLastSyncDate() {

@@ -94,6 +94,11 @@ class Change extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getTask()
+    {
+        return $this->hasOne(DiscoveryTask::className(), ['id' => 'sync_event_id']);
+    }
+
     public function searchPending($params, $eventId = null) {
         $query = self::find();
 
@@ -101,7 +106,6 @@ class Change extends \yii\db\ActiveRecord
         $this->load($params);
 
         // adjust the query by adding the filters
-        $query->andFilterWhere(['in','status',[Change::STATUS_PENDING, Change::STATUS_FAILED]]);
         $query->andFilterWhere(['domain' => $this->domain]);
         $query->andFilterWhere(['item_type' => $this->item_type]);
         $query->andFilterWhere(['type' => $this->type]);

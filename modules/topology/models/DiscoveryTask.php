@@ -9,14 +9,11 @@ namespace meican\topology\models;
 use Yii;
 
 /**
- * Esta classe representa uma consulta realizada pelo 
+ * Esta classe representa uma execução realizada pelo 
  * serviço de descobrimento (DiscoveryService). A partir
- * de uma DiscoveryRule, uma consulta pode gerar Changes
+ * de uma DiscoveryRule, uma execução pode gerar Changes
  * representando as diferenças percebidas na topologia do
  * provedor comparado a topologia local.
- *
- * Não confundir com classes Query ou ActiveQuery, esta classe
- * não tem objetivo de criar consultas SQL.
  *
  * @property integer $id
  * @property string $started_at
@@ -28,7 +25,7 @@ use Yii;
  *
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class DiscoveryQuery extends \yii\db\ActiveRecord
+class DiscoveryTask extends \yii\db\ActiveRecord
 {
     const STATUS_INPROGRESS = "INPROGRESS";
     const STATUS_SUCCESS = "SUCCESS";

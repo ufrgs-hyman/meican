@@ -56,13 +56,13 @@ $.AdminLTE.options = {
   //BoxRefresh Plugin
   enableBoxRefresh: true,
   //Bootstrap.js tooltip
-  enableBSToppltip: true,
+  enableBSToppltip: false,
   BSTooltipSelector: "[data-toggle='tooltip']",
   //Enable Fast Click. Fastclick.js creates a more
   //native touch experience with touch devices. If you
   //choose to enable the plugin, make sure you load the script
   //before AdminLTE's app.js
-  enableFastclick: true,
+  enableFastclick: false,
   //Control Sidebar Options
   enableControlSidebar: true,
   controlSidebarOptions: {
@@ -96,7 +96,7 @@ $.AdminLTE.options = {
   //Direct Chat plugin options
   directChat: {
     //Enable direct chat by default
-    enable: true,
+    enable: false,
     //The button to open and close the chat contacts pane
     contactToggleSelector: '[data-widget="chat-pane-toggle"]'
   },

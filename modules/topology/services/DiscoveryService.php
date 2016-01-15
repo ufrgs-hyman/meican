@@ -12,7 +12,7 @@ use meican\base\components\DateUtils;
 use meican\topology\components\NSIParser;
 use meican\topology\components\NMWGParser;
 use meican\topology\models\TopologyNotification;
-use meican\topology\models\DiscoveryQuery;
+use meican\topology\models\DiscoveryTask;
 use meican\topology\models\DiscoveryRule;
 use meican\topology\models\Domain;
 use meican\topology\models\Network;
@@ -56,11 +56,11 @@ class DiscoveryService implements SchedulableTask {
     }
 
     public function discover($rule) {
-        $this->syncEvent = new DiscoveryQuery;
+        $this->syncEvent = new DiscoveryTask;
         $this->syncEvent->started_at = DateUtils::now();
         $this->syncEvent->progress = 0;
         $this->syncEvent->sync_id = $rule->id;
-        $this->syncEvent->status = DiscoveryQuery::STATUS_INPROGRESS;
+        $this->syncEvent->status = DiscoveryTask::STATUS_INPROGRESS;
         $this->syncEvent->save();
 
         if (!$this->parser) {
@@ -70,7 +70,7 @@ class DiscoveryService implements SchedulableTask {
                     $this->parser = new NSIParser; 
                     $this->parser->loadFile($rule->url);
                     if (!$this->parser->isTD()) {
-                        $this->syncEvent->status = DiscoveryQuery::STATUS_FAILED;
+                        $this->syncEvent->status = DiscoveryTask::STATUS_FAILED;
                         $this->syncEvent->save();
                         return;
                     }
@@ -82,7 +82,7 @@ class DiscoveryService implements SchedulableTask {
                     $this->parser = new NMWGParser;
                     $this->parser->loadFile($rule->url);
                     if (!$this->parser->isTD()) {
-                        $this->syncEvent->status = DiscoveryQuery::STATUS_FAILED;
+                        $this->syncEvent->status = DiscoveryTask::STATUS_FAILED;
                         $this->syncEvent->save();
                         return;
                     }
