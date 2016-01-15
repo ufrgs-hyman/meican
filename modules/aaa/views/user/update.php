@@ -29,7 +29,7 @@ $form=ActiveForm::begin(array(
                 <?= $form->field($user, 'name'); ?>
                 <?= $form->field($user, 'email'); ?>  
                 
-                <?= $form->field($user, 'isChangedPass')->checkBox(); ?>
+                <?= $form->field($user, 'isChangedPass')->checkBox(['class'=>'icheck']); ?>
 
                 <div id="changePasswordForm" style="display: none;">
                     <?php if($user->scenario == $user::SCENARIO_UPDATE_ACCOUNT) echo $form->field($user, 'currentPass')->passwordInput(); ?>
