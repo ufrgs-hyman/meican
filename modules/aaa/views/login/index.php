@@ -43,7 +43,7 @@ Asset::register($this);
           </div>
           <!-- /.col -->
           <div class="col-xs-4">
-            <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-flat form-control']) ?>
+            <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary form-control']) ?>
           </div>
         </div>
         <?php if($federation): ?>
