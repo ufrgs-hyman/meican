@@ -14,26 +14,26 @@ Asset::register($this);
 ?>
 
 <div class="login-box">
-  <div class="login-logo">
+    <div class="login-logo">
     <?= Html::img("@web/images/meican_new.png", ['style'=>'width: 240px;','title' => 'MEICAN']); ?>
-  </div>
-  <!-- /.login-logo -->
+    </div>
+    <!-- /.login-logo -->
     <div class="login-box-body">
-      <?php $form = ActiveForm::begin(array(
-          'id'=>'login-form',
-          'enableClientValidation'=>false,
-      )); ?>
-      <p class="login-box-msg">Sign in to access the service</p>
-      <div class="form-group has-feedback">
+        <?php $form = ActiveForm::begin(array(
+            'id'=>'login-form',
+            'enableClientValidation'=>false,
+        )); ?>
+        <p class="login-box-msg">Sign in to access the service</p>
+        <div class="form-group has-feedback">
           <?= $form->field($model, 'login', ['inputOptions' => ['class' => 'form-control', 'placeholder' => 'Login']])->label(false) ?>
           <span class="fa fa-user form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
+        </div>
+        <div class="form-group has-feedback">
           <?= $form->field($model, 'password', ['inputOptions' => ['class' => 'form-control', 'placeholder' => 'Password']])->passwordInput()->label(false) ?>
           <span class="fa fa-lock form-control-feedback"></span>
-      </div>
-      <?= Html::a(Yii::t("home", "I forgot my password"),array('/aaa/login/password')); ?>
-      <div class="row">
+        </div>
+        <?= Html::a(Yii::t("home", "I forgot my password"),array('/aaa/login/password')); ?>
+        <div class="row">
           <div class="col-xs-8">
             <div class="checkbox icheck">
               <label>
@@ -45,13 +45,15 @@ Asset::register($this);
           <div class="col-xs-4">
             <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-flat form-control']) ?>
           </div>
-      </div>
-      <div class="text-center">
-        <p>Other options:</p>
-        <a id="cafe-button" href="#" class="btn btn-default"><?= Html::img('@web/images/cafe.png', ['style'=>'margin-right: 15px; width:60px; margin-bottom:1px;']); ?>Sign in using
-      CAFé Federation</a><br>          
-      </div>
-      <?php ActiveForm::end(); ?>
+        </div>
+        <?php if($federation): ?>
+            <div class="text-center">
+            <p>Other options:</p>
+            <a id="cafe-button" href="#" class="btn btn-default"><?= Html::img('@web/images/cafe.png', ['style'=>'margin-right: 15px; width:60px; margin-bottom:1px;']); ?>Sign in using
+            CAFé Federation</a><br>          
+            </div>
+        <?php endif; ?>
+        <?php ActiveForm::end(); ?>
     </div>
-  <!-- /.login-box-body -->
+    <!-- /.login-box-body -->
 </div>
