@@ -1,12 +1,26 @@
 {
     "name": "ufrgs-hyman/meican2",
-    "description": "Web NMS to request circuits and manage topologies in DCNs",
-    "keywords": ["meican", "dynamic", "circuit", "network", "reservation", "topology", "nsi"],
-    "homepage": "http://meican.cipo.rnp.br/",
+    "description": "Web application for management of dynamic circuits networks",
+    "keywords": [
+        "meican", "dynamic", "circuit", "network", "reservation", 
+        "topology", "nsi", "dcn", "intradomain", "interdomain"],
+    "homepage": "http://meican-cipo.inf.ufrgs.br/playground",
     "type": "project",
     "license": "BSD-2-License",
+    "authors": [
+        {
+            "name": "Mauricio Quatrin Guerreiro",
+            "email": "mqgmaster@gmail.com"
+        },
+        {
+            "name": "Diego Pittol",
+            "email": "diegokindin@gmail.com"
+        }
+    ],
     "support": {
-        "wiki": "https://wiki.rnp.br"
+        "issues": "https://github.com/ufrgs-hyman/meican2/issues",
+        "docs": "https://github.com/ufrgs-hyman/meican2/tree/master/docs",
+        "source": "https://github.com/ufrgs-hyman/meican2"
     },
     "minimum-stability": "stable",
     "require": {
@@ -35,10 +49,14 @@
         "process-timeout": 1800
     },
     "scripts": {
+        "pre-install-cmd": [
+            "php yii migrate --interactive=0"
+        ],
+        "pre-update-cmd": [
+            "php yii migrate --interactive=0"
+        ],
         "post-install-cmd": [
-            "yii\\composer\\Installer::postCreateProject",
-            "php yii migrate --interactive=0",
-            "php yii scheduler/service/start"
+            "yii\\composer\\Installer::postCreateProject"
         ]
     },
     "extra": {
