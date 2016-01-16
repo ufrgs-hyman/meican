@@ -7,10 +7,10 @@
 use yii\bootstrap\Modal;
 use yii\bootstrap\ActiveForm;
 use yii\grid\GridView;
-use yii\grid\CheckboxColumn;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use yii\helpers\Url;
 
+use meican\base\grid\IcheckboxColumn;
 use meican\base\components\LinkColumn;
 use meican\aaa\models\Group;
 use meican\aaa\assets\role\CreateEditAsset;
@@ -45,7 +45,7 @@ CreateEditAsset::register($this);
             'layout' => "{items}{summary}{pager}",
             'columns' => array(
                 array(
-                    'class'=>CheckboxColumn::className(),
+                    'class'=>IcheckboxColumn::className(),
                     'name'=>'delete',         
                     'multiple'=>false,
                     'headerOptions'=>['style'=>'width: 2%;'],

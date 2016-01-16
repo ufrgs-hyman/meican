@@ -5,11 +5,11 @@
  */
 
 use yii\grid\GridView;
-use yii\grid\CheckboxColumn;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
+use meican\base\grid\IcheckboxColumn;
 use meican\base\components\LinkColumn;
 use meican\base\widgets\GridButtons;
 use meican\topology\assets\discovery\IndexAsset;
@@ -116,7 +116,7 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
                     'dataProvider' => $ruleProvider,
                     'columns' => array(
                             array(
-                                'class'=>CheckboxColumn::className(),
+                                'class'=>IcheckboxColumn::className(),
                                 'name'=>'delete',         
                                 'multiple'=>false,
                                 'headerOptions'=>['style'=>'width: 2%;'],

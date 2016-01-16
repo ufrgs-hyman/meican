@@ -9,8 +9,8 @@ use yii\widgets\DetailView;
 use yii\helpers\Url;
 use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
-use yii\grid\CheckboxColumn;
 
+use meican\base\grid\IcheckboxColumn;
 use meican\base\widgets\GridButtons;
 use meican\base\components\LinkColumn;
 use meican\topology\assets\service\IndexAsset;
@@ -72,7 +72,7 @@ $this->params['header'] = [$model->name, ['Home', 'Topology']];
                     'layout' => "{items}{summary}{pager}",
                     'columns' => array(
                             array(
-                                'class'=>CheckboxColumn::className(),
+                                'class'=>IcheckboxColumn::className(),
                                 'name'=>'delete',         
                                 'multiple'=>false,
                                 'headerOptions'=>['style'=>'width: 2%;'],

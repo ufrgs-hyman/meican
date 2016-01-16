@@ -5,11 +5,11 @@
  */
    
 use yii\grid\GridView;
-use yii\grid\CheckboxColumn;
 use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 
+use meican\base\grid\IcheckboxColumn;
 use meican\base\widgets\GridButtons;
 use meican\base\components\LinkColumn;
 use meican\topology\assets\network\IndexAsset;
@@ -44,7 +44,7 @@ $this->params['header'] = ["Networks", ['Home', 'Topology']];
         'layout' => "{items}{summary}{pager}",
         'columns' => array(
                 [
-                    'class'=>CheckboxColumn::className(),
+                    'class'=>IcheckboxColumn::className(),
                     'name'=>'delete',         
                     'multiple'=>false,
                     'headerOptions'=>['style'=>'width: 2%;'],

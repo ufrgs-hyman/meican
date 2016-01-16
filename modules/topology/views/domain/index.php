@@ -5,9 +5,9 @@
  */
 
 use yii\grid\GridView;
-use yii\grid\CheckboxColumn;
 use yii\widgets\ActiveForm;
 
+use meican\base\grid\IcheckboxColumn;
 use meican\base\widgets\GridButtons;
 use meican\base\components\LinkColumn;
 use meican\topology\assets\domain\IndexAsset;
@@ -39,7 +39,7 @@ $this->params['header'] = ["Domains", ['Home', 'Topology']];
             'layout' => "{items}{summary}{pager}",
             'columns' => array(
                 array(
-                    'class'=>CheckboxColumn::className(),
+                    'class'=>IcheckboxColumn::className(),
                     'name'=>'delete',         
                     'multiple'=>false,
                     'headerOptions'=>['style'=>'width: 2%;'],

@@ -7,11 +7,11 @@
 use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use yii\grid\GridView;
-use yii\grid\CheckboxColumn;
 use yii\helpers\ArrayHelper;
 
+use meican\base\grid\IcheckboxColumn;
 use meican\base\widgets\GridButtons;
 use meican\aaa\models\UserDomainRole;
 use meican\base\components\LinkColumn;
@@ -33,19 +33,17 @@ $this->params['header'] = ["Users", ['Home', 'Users']];
         $form = ActiveForm::begin([
             'method' => 'post',
             'action' => ['delete'],
-            'id' => 'user-grid-form',
             'enableClientScript'=>false,
             'enableClientValidation' => false,
         ]);
     
         echo GridView::widget([
-            'options' => ['class' => 'list'],
             'dataProvider' => $users,
             'filterModel' => $searchModel,
             'layout' => "{items}{summary}{pager}",
             'columns' => array(
                 [
-                    'class'=> CheckboxColumn::className(),
+                    'class'=> IcheckboxColumn::className(),
                     'name'=>'delete',
                     'multiple'=>false,
                     'headerOptions'=>['style'=>'width: 2%;'],
