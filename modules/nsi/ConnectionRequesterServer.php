@@ -4,15 +4,19 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-namespace meican\nsi\connection;
+namespace meican\nsi;
 
 /**
- * Interface a ser implementada por classes que representem 
- * o módulo servidor SOAP do protocolo NSI Connection Service Requester 2.0
+ * Elemento responsável por receber e gerenciar as mensagens
+ * SOAP enviadas por Providers, como definido pelo protocolo
+ * NSI Connection Service 2.0.
  *
+ * A documentação de cada função é baseada no WSDL oficial do
+ * protocolo (https://github.com/BandwidthOnDemand/bod-nsi). 
+ * 
  * @author Maurício Quatrin Guerreiro
  */
-interface RequesterSoapServer {
+interface ConnectionRequesterServer {
     
     /**
      * This reserveConfirmed message is sent from a Provider NSA to

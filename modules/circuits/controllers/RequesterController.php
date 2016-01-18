@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2016 RNP
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
@@ -10,7 +10,7 @@ use yii\helpers\Url;
 use Yii;
 use yii\web\Controller;
 
-use meican\circuits\controllers\services\RequesterClient;
+use meican\circuits\services\RequesterClient;
 use meican\circuits\Module;
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionPath;
@@ -20,6 +20,7 @@ use meican\topology\models\Device;
 use meican\topology\models\Domain;
 use meican\topology\models\Provider;
 use meican\base\components\DateUtils;
+use meican\nsi\ConnectionRequesterServer;
 
 /**
  * Classe que implementa o módulo SoapServer do protocolo NSI Connection Service Requester 2.0
@@ -28,9 +29,9 @@ use meican\base\components\DateUtils;
  *
  * Esta classe NÃO deve extender o RbacControler, pois ela recebe respostas de provedores.
  *
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
-class RequesterController extends Controller {
+class RequesterController extends Controller implements ConnectionRequesterServer {
     
     public $enableCsrfValidation = false;
     
