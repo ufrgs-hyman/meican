@@ -33,3 +33,17 @@ $this->params['header'] = [Yii::t("bpm", 'Update'), ['Home', 'Workflows']];
 	    <input type="button" id="button_cancel" class="btn btn-default" value=<?= Yii::t("bpm", 'Cancel'); ?>>
     </div>
 </div>
+
+<?php
+
+Modal::begin([
+    'id' => 'dialog',
+    'headerOptions' => ['hidden'=>'hidden'],
+    'footer' => '<button id="close-btn" class="btn btn-default" data-dismiss="modal">Ok</button>',
+]);
+
+echo '<p style="text-align: left; height: 100%; width:100%;" id="message"></p>';
+
+Modal::end(); 
+
+?>

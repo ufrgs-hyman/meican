@@ -27,8 +27,8 @@ class WorkflowController extends RbacController {
 	
     public function actionIndex() {
     	$allowedDomains = self::whichDomainsCan('workflow/read');
-    	
-    	if(count($allowedDomains) < 1)return $this->goHome();
+
+    	if(count($allowedDomains) < 1) return $this->goHome();
     	
     	$searchModel = new WorkflowSearch;
     	$data = $searchModel->searchByDomains(Yii::$app->request->get(), $allowedDomains);
@@ -422,7 +422,7 @@ class WorkflowController extends RbacController {
     	}
     	
     	if(!self::can("workflow/read")) return $this->goHome();
-        else return $this->redirect(array('/bpm/workflow/index'));
+        if(isset($oldWorkflow)) return $this->redirect(array('/bpm/workflow/index'));
     }
     
     public function actionDisable($id = null) {
@@ -441,7 +441,7 @@ class WorkflowController extends RbacController {
     		}
     	}
     	if(!self::can("workflow/read")) return $this->goHome();
-        else return $this->redirect(array('/bpm/workflow/index'));
+        //else return $this->redirect(array('/bpm/workflow/index'));
     }
     
     

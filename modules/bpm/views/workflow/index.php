@@ -7,16 +7,18 @@
 use yii\grid\GridView;
 use yii\grid\CheckboxColumn;
 use yii\bootstrap\Modal;
-use meican\base\components\LinkColumn;
 use yii\helpers\Html;
 use yii\i18n\Formatter;
 use yii\data\ActiveDataProvider;
+use meican\base\components\LinkColumn;
 use meican\bpm\models\BpmWorkflow;
 
 use yii\helpers\ArrayHelper;
 
 use meican\bpm\assets\IndexAsset;
 IndexAsset::register($this);
+
+use yii\helpers\Url;
 
 $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 
@@ -38,58 +40,38 @@ $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 					[
 						'format' => 'raw',
 						'value' => function ($work){
-							return Html::img('@web'.'/images/remove.png', ['title'=> Yii::t("bpm", 'Delete Workflow'), 'onclick' => "deleteWorkflow($work->id)"]);
+							return Html::a(Html::tag('span', '', ['class' => 'fa fa-trash', 'title' => Yii::t("bpm", 'Delete Workflow'), 'onclick' => "deleteWorkflow($work->id)"]));
 						},
 						'contentOptions'=>['style'=>'cursor: pointer;'],
 						'headerOptions'=>['style'=>'width: 2%;'],
 					],
 					[
-						'class'=> LinkColumn::className(),
-						'image'=>'/images/eye.png',
-						'title'=> Yii::t("bpm", 'View Workflow'),
-						'url' => '/bpm/workflow/viewer',
+						'format' => 'raw',
+						'value' => function($work){
+							$href = Url::toRoute(['/bpm/workflow/viewer', 'id'=>$work->id]);
+							return Html::a(Html::tag('span', '', ['class' => 'fa fa-eye', 'title' => Yii::t("bpm", 'Update Workflow')]), $href);
+						},
 						'headerOptions'=>['style'=>'width: 2%;'],
 					],
 					[
 						'format' => 'raw',
 						'value' => function ($work){
-							if($work->isDisabled()) return Html::img('@web'.'/images/edit_1.png', ['title' => Yii::t("bpm", 'Update Workflow'), 'onclick' => "update($work->id)"]);
-							else return Html::img('@web'.'/images/edit_1.png', ['title' => Yii::t("bpm", 'Update Workflow')]);
+							if(!$work->isDisabled()) return Html::a(Html::tag('span', '', ['class' => 'fa fa-pencil', 'title' => Yii::t("bpm", 'Update Workflow')]));
+							else return Html::a(Html::tag('span', '', ['class' => 'fa fa-pencil', 'title' => Yii::t("bpm", 'Update Workflow'), 'onclick' => "update($work->id)"]));
 						},
 						'contentOptions' => function ($work){
 							return ['style'=>'display: table-cell;', 'disabled'=>!$work->isDisabled(), 'class'=>'btn'];
 			        	},
 			        	'headerOptions'=>['style'=>'width: 2%;'],
 					],
-			        [
-			        	'class'=> LinkColumn::className(),
-			        	'image'=>'/images/copy2.png',
-			        	'title'=> Yii::t("bpm", 'Create a copy of Workflow'),
-			        	'url' => '/bpm/workflow/copy',
-			        	'headerOptions'=>['style'=>'width: 2%;'],
-	        		],
-			        [
-			        	'format' => 'raw',
-			        	'value' => function ($work){
-			        		if(!$work->isDisabled()) return Html::img('@web'.'/images/desactivate1.png', ['title' => Yii::t("bpm", 'Disable Workflow'), 'onclick' => "disableWorkflow($work->id)"]);
-			        		else return Html::img('@web'.'/images/desactivate1.png', ['title' => Yii::t("bpm", 'Disable Workflow')]);
-			        	},
-			        	'contentOptions' => function ($work){
-			        		return ['style'=>'display: table-cell;', 'disabled'=>$work->isDisabled(), 'class'=>'btn'];
-			        	},
-			        	'headerOptions'=>['style'=>'width: 2%;'],
-			        ],
-			        [
-				        'format' => 'raw',
-				        'value' => function ($work){
-				        	if($work->isDisabled()) return Html::img('@web'.'/images/accept.png', ['title' => Yii::t("bpm", 'Enable Workflow'), 'onclick' => "enableWorkflow($work->id)"]);
-				        	else return Html::img('@web'.'/images/accept.png', ['title' => Yii::t("bpm", 'Enable Workflow')]);
-				        },
-				        'contentOptions' => function ($work){
-				        	return ['style'=>'display: table-cell;', 'disabled'=>!$work->isDisabled(), 'class'=>'btn'];
-				        },
-				        'headerOptions'=>['style'=>'width: 2%;'],
-			        ],
+					[
+						'format' => 'raw',
+						'value' => function($work){
+							$href = Url::toRoute(['/bpm/workflow/copy', 'id'=>$work->id]);
+							return Html::a(Html::tag('span', '', ['class' => 'fa fa-copy', 'title' => Yii::t("bpm", 'Update Workflow')]), $href);
+						},
+						'headerOptions'=>['style'=>'width: 2%;'],
+					],
 			        [
 						'label' => Yii::t("bpm", 'Name'),
 						'value' => 'name',
@@ -109,8 +91,7 @@ $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 						'format' => 'raw',
 						'label' => 'Status',
 						'value' => function ($work){
-							if($work->active==1) return Yii::t("bpm", "Enabled");
-							else return Yii::t("bpm", "Disabled");
+							return Html::input('checkbox', '', $work->id, ['id'=>'toggle-'.$work->id, 'class'=>'toggle-event-class', 'checked'=>!$work->isDisabled(), 'data-toggle'=>"toggle", 'data-size'=> "mini", "data-on" => Yii::t("bpm", "Enabled"), "data-off"=> Yii::t("bpm", "Disabled"), "data-width"=>"100", "data-onstyle"=>"success", "data-offstyle"=>"warning"]);
 						},
 						'filter' => Html::activeDropDownList($searchModel, 'status',
 								["enabled" => Yii::t("bpm", "Enabled"), "disabled"=> Yii::t("bpm", "Disabled")],
@@ -130,7 +111,7 @@ $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 Modal::begin([
     'id' => 'dialog',
     'headerOptions' => ['hidden'=>'hidden'],
-    'footer' => '<button id="close-btn" class="btn btn-default" data-dismiss="modal">'.Yii::t("bpm", "Cancel").'</button><button id="delete-btn" class="btn btn-danger">'.Yii::t("bpm", "Delete").'</button><button id="ok-btn" class="btn btn-primary">Ok</button>',
+    'footer' => '<button id="close-btn" class="btn btn-default">'.Yii::t("bpm", "Cancel").'</button><button id="delete-btn" class="btn btn-danger">'.Yii::t("bpm", "Delete").'</button><button id="ok-btn" class="btn btn-primary">Ok</button>',
 ]);
 
 echo '<p style="text-align: left; height: 100%; width:100%;" id="message"></p>';

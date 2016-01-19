@@ -12,8 +12,6 @@ class IndexAsset extends AssetBundle
 		'bpm-i18n.js',
 	];
 	public $depends = [
-		'yii\web\JqueryAsset',
+		'meican\base\assets\ToggleAsset',
 	];
-	
-	public $jsOptions = ['position' => \yii\web\View::POS_END];
 }
