@@ -55,8 +55,8 @@ class RequesterClient extends \SoapClient {
         }
         
         $this->replyTo = $meicanRequesterUrl;
-        $this->local_cert = realpath(__DIR__."/../../../../certificates/".\Yii::$app->params['meican.certificate.filename']);
-        $this->cert_passphrase = Yii::$app->params['meican.certificate.passphrase'];
+        $this->local_cert = realpath(__DIR__."/../../../../certificates/".\Yii::$app->params['certificate.filename']);
+        $this->cert_passphrase = Yii::$app->params['certificate.pass'];
         $this->providerNSA = "urn:ogf:network:".$defaultNsa;
 
         if (!$this->isDummy()) {

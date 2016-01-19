@@ -37,12 +37,6 @@ class ReservationController extends RbacController {
     public $enableCsrfValidation = false;
     
     public function actionCreate() {
-        /* Removido, pois todo usuário passa a ter acesso ao mapa.
-         * As permissões passam a ser conferidas no momento em que ele efetivamente solicita a reserva,
-         * é necessário que o usuário tenho permissão de CREATE no dominio de origem ou destino.
-         */
-        //self::canRedir('reservation/create');
-        
         return $this->render('create/create',['domains'=>Domain::find()->asArray()->all()]);
     }
     
