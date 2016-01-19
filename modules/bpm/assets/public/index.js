@@ -90,7 +90,12 @@ $(document).ready(function() {
 
 						$("#close-btn").off("click").click(function(){
 							$("#dialog").modal('hide');
-							$("#toggle-"+id).prop('checked', true).change();
+						});
+						
+						$("#dialog").on('hidden.bs.modal', function (e) {
+							$.getJSON(baseUrl + "/bpm/workflow/is-active?id="+id, function(data){
+								if(data) $("#toggle-"+id).prop('checked', true).change();
+							})
 						});
 					}
 				}
