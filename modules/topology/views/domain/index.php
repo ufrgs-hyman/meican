@@ -9,7 +9,10 @@ use yii\widgets\ActiveForm;
 
 use meican\base\grid\IcheckboxColumn;
 use meican\base\widgets\GridButtons;
-use meican\base\components\LinkColumn;
+
+use yii\helpers\Html;
+use yii\helpers\Url;
+
 use meican\topology\assets\domain\IndexAsset;
 
 IndexAsset::register($this);
@@ -44,14 +47,14 @@ $this->params['header'] = ["Domains", ['Home', 'Topology']];
                     'multiple'=>false,
                     'headerOptions'=>['style'=>'width: 2%;'],
                 ),
-                array(
-                    'class'=> LinkColumn::className(),
-                    'image'=>'/images/edit_1.png',
-                    'label' => '',
-                    'title'=> Yii::t("topology", 'Update'),
-                    'url' => '/topology/domain/update',
-                    'headerOptions'=>['style'=>'width: 2%;'],
-                ),
+                [
+            		'format' => 'html',
+            		'value' => function($dom){ 
+	            		$href = Url::toRoute(['/topology/domain/update', 'id'=>$dom->id]);
+	            		return Html::a(Html::tag('span', '', ['class' => 'fa fa-pencil']), $href);
+            		},
+            		'headerOptions'=>['style'=>'width: 2%;'],
+            	],
                 [
                     'label' => Yii::t('topology', 'Name'),
                     'value' => 'name',
