@@ -1,23 +1,30 @@
 <?php
+/**
+ * @copyright Copyright (c) 2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
-namespace meican\assets;
+namespace meican\base\assets;
 
 use yii\web\AssetBundle;
-use Yii;
 
+/**
+ * @author Maurício Quatrin Guerreiro <@mqgmaster>
+ */
 class LeafletAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $sourcePath = '@npm/leaflet/dist';
     
-    public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
-
     public $css = [
-        '@npm/leaflet/dist/leaflet.css',
+        'leaflet.css',
     ];
     
     public $js = [
-        '@npm/leaflet/dist/leaflet.js',
+        'leaflet.js',
+    ];
+    
+    public $depends = [
+        'yii\web\JqueryAsset',
     ];
 }
 

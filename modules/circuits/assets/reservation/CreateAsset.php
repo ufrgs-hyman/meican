@@ -9,18 +9,11 @@ class CreateAsset extends AssetBundle
     public $sourcePath = '@meican/circuits/assets/reservation/public';
     
     public $js = [
-    	'create/create-i18n.js',
-    	'create/create.js',
-    	'create/recurrence.js',
-    ];
-    
-    public $css = [
+    	'create/create2.js',
     ];
     
     public $depends = [
-    	'meican\base\assets\MeicanAsset',
-        'meican\base\assets\MeicanMapAsset',
-        'meican\base\assets\TimePickerAsset',
-        'meican\base\assets\HoverIntentAsset'
+        'meican\base\assets\layout\Asset',
+        'meican\topology\assets\map\MeicanLMapAsset',
     ];
 }

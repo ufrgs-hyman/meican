@@ -37,7 +37,7 @@ class ReservationController extends RbacController {
     public $enableCsrfValidation = false;
     
     public function actionCreate() {
-        return $this->render('create/create',['domains'=>Domain::find()->asArray()->all()]);
+        return $this->render('create/create2',['domains'=>Domain::find()->asArray()->all()]);
     }
     
     public function actionRequest() {

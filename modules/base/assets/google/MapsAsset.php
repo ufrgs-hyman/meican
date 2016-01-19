@@ -12,7 +12,7 @@ use Yii;
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class GoogleMapsAsset extends AssetBundle
+class MapsAsset extends AssetBundle
 {
     public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
 
