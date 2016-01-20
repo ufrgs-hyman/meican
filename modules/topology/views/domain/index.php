@@ -17,7 +17,7 @@ use meican\topology\assets\domain\IndexAsset;
 
 IndexAsset::register($this);
 
-$this->params['header'] = ["Domains", ['Home', 'Topology']];
+$this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology')]];
 
 ?>
 
@@ -41,12 +41,12 @@ $this->params['header'] = ["Domains", ['Home', 'Topology']];
             'id' => 'grid',
             'layout' => "{items}{summary}{pager}",
             'columns' => array(
-                array(
+                [
                     'class'=>IcheckboxColumn::className(),
                     'name'=>'delete',         
                     'multiple'=>false,
                     'headerOptions'=>['style'=>'width: 2%;'],
-                ),
+                ],
                 [
             		'format' => 'html',
             		'value' => function($dom){ 

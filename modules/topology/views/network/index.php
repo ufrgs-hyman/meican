@@ -8,15 +8,16 @@ use yii\grid\GridView;
 use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 use meican\base\grid\IcheckboxColumn;
 use meican\base\widgets\GridButtons;
-use meican\base\components\LinkColumn;
+
 use meican\topology\assets\network\IndexAsset;
 
 IndexAsset::register($this);
 
-$this->params['header'] = ["Networks", ['Home', 'Topology']];
+$this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology')]];
 
 ?>
 
@@ -43,20 +44,20 @@ $this->params['header'] = ["Networks", ['Home', 'Topology']];
         'id' => 'gridNetowrks',
         'layout' => "{items}{summary}{pager}",
         'columns' => array(
-                [
-                    'class'=>IcheckboxColumn::className(),
-                    'name'=>'delete',         
-                    'multiple'=>false,
-                    'headerOptions'=>['style'=>'width: 2%;'],
-                ],
-                [
-                    'class'=> LinkColumn::className(),
-                    'image'=>'/images/edit_1.png',
-                    'label' => '',
-                    'title'=> Yii::t("topology", 'Update'),
-                    'url' => '/topology/network/update',
-                    'headerOptions'=>['style'=>'width: 2%;'],
-                ],
+        		[
+	        		'class'=>IcheckboxColumn::className(),
+	        		'name'=>'delete',
+	        		'multiple'=>false,
+	        		'headerOptions'=>['style'=>'width: 2%;'],
+        		],
+        		[
+        			'format' => 'html',
+        			'value' => function($net){
+        				$href = Url::toRoute(['/topology/network/update', 'id'=>$net->id]);
+        				return Html::a(Html::tag('span', '', ['class' => 'fa fa-pencil']), $href);
+        			},
+        			'headerOptions'=>['style'=>'width: 2%;'],
+        		],
                 [
                     'label' => Yii::t("topology", 'Name'),
                     'value' => 'name',

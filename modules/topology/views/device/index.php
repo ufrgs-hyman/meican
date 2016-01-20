@@ -8,6 +8,7 @@ use yii\grid\GridView;
 use yii\bootstrap\Html;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
 
 use meican\base\grid\IcheckboxColumn;
 use meican\base\widgets\GridButtons;
@@ -17,7 +18,7 @@ use meican\topology\models\Device;
 
 IndexAsset::register($this);
 
-$this->params['header'] = ["Devices", ['Home', 'Topology']];
+$this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology')]];
 
 ?>
 
@@ -48,14 +49,14 @@ $this->params['header'] = ["Devices", ['Home', 'Topology']];
                     'multiple'=>false,
                     'headerOptions'=>['style'=>'width: 2%;'],
                 ],
-                [
-                    'class'=> LinkColumn::className(),
-                    'image'=>'/images/edit_1.png',
-                    'label' => '',
-                    'title'=> Yii::t("topology", 'Update'),
-                    'url' => '/topology/device/update',
-                    'headerOptions'=>['style'=>'width: 2%;'],
-                ],
+            	[
+            		'format' => 'html',
+            		'value' => function($dev){
+            			$href = Url::toRoute(['/topology/device/update', 'id'=>$dev->id]);
+            			return Html::a(Html::tag('span', '', ['class' => 'fa fa-pencil']), $href);
+            		},
+            		'headerOptions'=>['style'=>'width: 2%;'],
+            	],
                 [
                     'label' => Yii::t("topology", 'Name'),
                     'value' => 'name',

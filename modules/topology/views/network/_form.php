@@ -9,7 +9,7 @@ use yii\bootstrap\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 
-$this->params['header'] = [Yii::t('topology', 'Networks'), ['Home', 'Topology', 'Domains']];
+$this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology')]];
 
 ?>
 

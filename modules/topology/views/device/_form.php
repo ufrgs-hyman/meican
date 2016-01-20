@@ -9,7 +9,7 @@ use yii\bootstrap\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 
-$this->params['header'] = [Yii::t('topology', 'Devices'), ['Home', 'Topology']];
+$this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology')]];
 
 $form= ActiveForm::begin([
     'id'        => 'device-form',

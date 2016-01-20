@@ -13,7 +13,7 @@ use meican\topology\assets\domain\FormAsset;
 
 FormAsset::register($this);
 
-$this->params['header'] = [Yii::t('topology', 'Domains'), ['Home', 'Topology', 'Domains']];
+$this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology')]];
 
 $form= ActiveForm::begin([
     'id'        => 'domain-form',
