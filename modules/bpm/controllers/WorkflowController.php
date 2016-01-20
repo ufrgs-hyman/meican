@@ -422,7 +422,6 @@ class WorkflowController extends RbacController {
     	}
     	
     	if(!self::can("workflow/read")) return $this->goHome();
-        if(isset($oldWorkflow)) return $this->redirect(array('/bpm/workflow/index'));
     }
     
     public function actionDisable($id = null) {
@@ -441,9 +440,18 @@ class WorkflowController extends RbacController {
     		}
     	}
     	if(!self::can("workflow/read")) return $this->goHome();
-        //else return $this->redirect(array('/bpm/workflow/index'));
     }
     
+    public function actionHasOtherActive($id = null){
+    	if($id){
+    		$active = BpmWorkflow::findOne(['domain'=>BpmWorkflow::findOne(['id' => $id])->domain, 'active'=>1]);
+    		if(isset($active)){
+    			if($active->id == $id) echo -1;
+    			else echo $active->id;
+    		}
+    		else echo -1;
+    	}
+    }
     
     public function actionIsActive($id = null){
     	if($id){
