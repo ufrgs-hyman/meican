@@ -4,12 +4,12 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
    
-use yii\grid\GridView;
 use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
+use meican\base\grid\Grid;
 use meican\base\grid\IcheckboxColumn;
 use meican\base\widgets\GridButtons;
 
@@ -17,7 +17,8 @@ use meican\topology\assets\network\IndexAsset;
 
 IndexAsset::register($this);
 
-$this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology')]];
+$this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home'), 
+    Yii::t('topology', 'Topology')]];
 
 ?>
 
@@ -37,12 +38,10 @@ $this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home
             'enableClientValidation' => false,
     ]);
 
-    echo GridView::widget([
-        'options' => ['class' => 'list'],
+    echo Grid::widget([
         'dataProvider' => $networks,
         'filterModel' => $searchModel,
         'id' => 'gridNetowrks',
-        'layout' => "{items}{summary}{pager}",
         'columns' => array(
         		[
 	        		'class'=>IcheckboxColumn::className(),

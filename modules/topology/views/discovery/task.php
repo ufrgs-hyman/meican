@@ -4,7 +4,6 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-use yii\grid\GridView;
 use yii\grid\CheckboxColumn;
 use yii\widgets\DetailView;
 use yii\widgets\Pjax;
@@ -12,6 +11,7 @@ use yii\bootstrap\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 
+use meican\base\grid\Grid;
 use meican\base\components\LinkColumn;
 use meican\base\widgets\GridButtons;
 use meican\topology\models\Change;
@@ -50,9 +50,8 @@ $this->params['header'] = [Yii::t('topology',"Discovery Task"), ['Home', 'Topolo
             'enablePushState' => false,
         ]);
 
-        echo GridView::widget([
+        echo Grid::widget([
             'id'=> 'change-grid',
-            'layout' => "{items}{summary}{pager}",
             'filterModel' => $searchChange,
             'dataProvider' => $changeProvider,
             'columns' => array(

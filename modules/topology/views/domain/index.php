@@ -4,9 +4,9 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-use yii\grid\GridView;
 use yii\widgets\ActiveForm;
 
+use meican\base\grid\Grid;
 use meican\base\grid\IcheckboxColumn;
 use meican\base\widgets\GridButtons;
 
@@ -36,10 +36,9 @@ $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'
             'enableClientValidation' => false,
         ]);
         
-        echo GridView::widget([
+        echo Grid::widget([
             'dataProvider' => $domains,
             'id' => 'grid',
-            'layout' => "{items}{summary}{pager}",
             'columns' => array(
                 [
                     'class'=>IcheckboxColumn::className(),

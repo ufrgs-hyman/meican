@@ -4,11 +4,11 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-use yii\grid\GridView;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
+use meican\base\grid\Grid;
 use meican\base\grid\IcheckboxColumn;
 use meican\base\components\LinkColumn;
 use meican\base\widgets\GridButtons;
@@ -29,9 +29,8 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
             <div class="box-body">
                 <?php
 
-                echo GridView::widget([
+                echo Grid::widget([
                     'id'=> 'change-grid',
-                    'layout' => "{items}{summary}{pager}",
                     'dataProvider' => $changeProvider,
                     'columns' => array(
                             [
@@ -61,9 +60,8 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
             <div class="box-body">
                 <?php
             
-                echo GridView::widget([
+                echo Grid::widget([
                     'id'=> 'search-grid',
-                    'layout' => "{items}{summary}{pager}",
                     'dataProvider' => $taskProvider,
                     'columns' => array(
                             [
@@ -110,9 +108,8 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
                     'enableClientValidation' => false,
                 ]);
             
-                echo GridView::widget([
+                echo Grid::widget([
                     'id'=> 'rule-grid',
-                    'layout' => "{items}{summary}{pager}",
                     'dataProvider' => $ruleProvider,
                     'columns' => array(
                             array(

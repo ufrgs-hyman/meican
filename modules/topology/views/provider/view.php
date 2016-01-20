@@ -4,12 +4,12 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-use yii\grid\GridView;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
 use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
 
+use meican\base\grid\Grid;
 use meican\base\grid\IcheckboxColumn;
 use meican\base\widgets\GridButtons;
 use meican\base\components\LinkColumn;
@@ -67,9 +67,8 @@ $this->params['header'] = [$model->name, ['Home', 'Topology']];
                 echo GridButtons::widget([
                     'addRoute'=>['/topology/service/create', 'id'=>$model->id]]).'<br>';
 
-                echo GridView::widget([
+                echo Grid::widget([
                     'dataProvider' => $services,
-                    'layout' => "{items}{summary}{pager}",
                     'columns' => array(
                             array(
                                 'class'=>IcheckboxColumn::className(),
