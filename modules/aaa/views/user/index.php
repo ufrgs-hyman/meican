@@ -8,9 +8,9 @@ use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
 use yii\bootstrap\Html;
-use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 
+use meican\base\grid\Grid;
 use meican\base\grid\IcheckboxColumn;
 use meican\base\widgets\GridButtons;
 use meican\aaa\models\UserDomainRole;
@@ -37,10 +37,9 @@ $this->params['header'] = ["Users", ['Home', 'Users']];
             'enableClientValidation' => false,
         ]);
     
-        echo GridView::widget([
+        echo Grid::widget([
             'dataProvider' => $users,
             'filterModel' => $searchModel,
-            'layout' => "{items}{summary}{pager}",
             'columns' => array(
                 [
                     'class'=> IcheckboxColumn::className(),

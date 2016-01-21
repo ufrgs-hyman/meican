@@ -37,6 +37,8 @@ class IcheckboxColumn extends CheckboxColumn {
             $options['class'] = 'icheck';
         }
 
+        $options['hidden'] = true;
+
         return Html::checkbox($this->name, !empty($options['checked']), $options);
     }
 }

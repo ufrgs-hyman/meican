@@ -1,10 +1,14 @@
 <?php 
+/**
+ * @copyright Copyright (c) 2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-use yii\grid\GridView;
-use yii\grid\CheckboxColumn;
 
+use meican\base\grid\Grid;
+use meican\base\grid\IcheckboxColumn;
 use meican\base\widgets\GridButtons;
 use meican\base\components\LinkColumn;
 use meican\aaa\assets\group\IndexAsset;
@@ -30,17 +34,12 @@ $this->params['header'] = ["Groups", ['Home', 'Groups']];
             'enableClientValidation' => false,
         ]);
     
-        echo GridView::widget([
-            'options' => ['class' => 'list'],
+        echo Grid::widget([
             'dataProvider' => $groups,
-            'layout' => "{items}{summary}{pager}",
             'columns' => array(
                 array(
-                    'class'=> CheckboxColumn::className(),
+                    'class'=> IcheckboxColumn::className(),
                     'name'=>'delete',
-                    'checkboxOptions'=> [
-                        'class'=>'deleteCheckbox',
-                    ],
                     'multiple'=>false,
                     'contentOptions'=>['style'=>'width: 15px;'],
                 ),
