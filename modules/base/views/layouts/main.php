@@ -47,7 +47,7 @@ Asset::register($this);
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="#" class="logo">
+    <a href="#" class="logo" title="MEICAN">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><?= Html::img(Url::base()."/images/meican_logo_23.png"); ?></span>
       <!-- logo for regular state and mobile devices -->
@@ -104,15 +104,17 @@ Asset::register($this);
   </div>
   <!-- /.content-wrapper -->
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.3.0
-    </div>
-    <!-- Default to the left -->
-    <strong>Copyright &copy; 2015 <a href="#">MEICAN</a>.</strong> All rights reserved.
-  </footer>
+    <?php if(!isset($this->params['hide-footer'])): ?>
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+          <b>Version</b> 2.3.0
+        </div>
+        <!-- Default to the left -->
+        <strong>&copy; 2016 <a href="http://www.rnp.br" target="_blank">RNP</a></strong>
+    </footer>
+    <?php endif; ?>
 
 </div>
 <!-- ./wrapper -->
