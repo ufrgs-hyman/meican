@@ -42,21 +42,26 @@ $this->params['header'] = ["Providers", ['Home', 'Topology']];
                     'multiple'=>false,
                     'headerOptions'=>['style'=>'width: 2%;'],
                 ),
-                array(
-                    'class'=> LinkColumn::className(),
-                    'image'=>'/images/edit_1.png',
-                    'label' => '',
-                    'url' => 'update',
-                    'headerOptions'=>['style'=>'width: 2%;'],
-                ),
-                array(
-                    'class'=> LinkColumn::className(),
-                    'image'=>'/images/eye.png',
-                    'label' => '',
-                    'title'=>Yii::t("topology",'Show details and services of this provider'),
-                    'url' => 'view',
-                    'headerOptions'=>['style'=>'width: 2%;'],
-                ),
+        		[
+	        		'class' => 'yii\grid\ActionColumn',
+	        		'template'=>'{update}',
+	        		'buttons' => [
+	        				'update' => function ($url, $model) {
+	        					return Html::a('<span class="fa fa-pencil"></span>', $url);
+	        				}
+	        		],
+	        		'headerOptions'=>['style'=>'width: 2%;'],
+        		],
+        		[
+	        		'class' => 'yii\grid\ActionColumn',
+	        		'template'=>'{view}',
+	        		'buttons' => [
+	        				'view' => function ($url, $model) {
+	        					return Html::a('<span class="fa fa-eye"></span>', $url, [ 'title'=>Yii::t("topology",'Show details and services of this provider')]);
+	        				}
+	        		],
+	        		'headerOptions'=>['style'=>'width: 2%;'],
+        		],
                 'name',
                 [
                     'attribute'=> 'type',
