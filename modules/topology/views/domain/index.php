@@ -25,7 +25,7 @@ $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'
     <div class="box-header with-border">
         <?= GridButtons::widget(); ?>
     </div>
-    <div class="box-body">
+    <div class="box-body table-responsive"">
         <?php
 
         $form = ActiveForm::begin([
@@ -37,6 +37,9 @@ $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'
         ]);
         
         echo Grid::widget([
+        	'tableOptions' => [
+        		'class' => 'table table-condensed',
+        	],
             'dataProvider' => $domains,
             'id' => 'grid',
             'columns' => array(
@@ -47,11 +50,13 @@ $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'
                     'headerOptions'=>['style'=>'width: 2%;'],
                 ],
                 [
-            		'format' => 'html',
-            		'value' => function($dom){ 
-	            		$href = Url::toRoute(['/topology/domain/update', 'id'=>$dom->id]);
-	            		return Html::a(Html::tag('span', '', ['class' => 'fa fa-pencil']), $href);
-            		},
+            		'class' => 'yii\grid\ActionColumn',
+            		'template'=>'{update}',
+            		'buttons' => [
+            				'update' => function ($url, $model) {
+            					return Html::a('<span class="fa fa-pencil"></span>', $url);
+            				}
+            		],
             		'headerOptions'=>['style'=>'width: 2%;'],
             	],
                 [

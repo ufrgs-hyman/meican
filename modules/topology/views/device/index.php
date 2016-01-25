@@ -26,7 +26,7 @@ $this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'
     <div class="box-header with-border">
         <?= GridButtons::widget(); ?>
     </div>
-    <div class="box-body">
+    <div class="box-body table-responsive">
         <?php
 
         $form = ActiveForm::begin([
@@ -38,6 +38,9 @@ $this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'
         ]);
 
         echo Grid::widget([
+        	'tableOptions' => [
+        		'class' => 'table table-condensed',
+        	],
             'dataProvider' => $devices,
             'filterModel' => $searchModel,
             'id' => 'gridNetowrks',
@@ -49,11 +52,13 @@ $this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'
                     'headerOptions'=>['style'=>'width: 2%;'],
                 ],
             	[
-            		'format' => 'html',
-            		'value' => function($dev){
-            			$href = Url::toRoute(['/topology/device/update', 'id'=>$dev->id]);
-            			return Html::a(Html::tag('span', '', ['class' => 'fa fa-pencil']), $href);
-            		},
+            		'class' => 'yii\grid\ActionColumn',
+            		'template'=>'{update}',
+            		'buttons' => [
+            				'update' => function ($url, $model) {
+            					return Html::a('<span class="fa fa-pencil"></span>', $url);
+            				}
+            		],
             		'headerOptions'=>['style'=>'width: 2%;'],
             	],
                 [
@@ -101,7 +106,7 @@ $this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'
                     'format' => 'html',
                     'label' => Yii::t('topology', '#EndPoints'),
                     'value' => function($dev){
-                        return Html::a($dev->getPorts()->count(), ['/topology/port', 'id' => $dev->domain_id]);
+                        return Html::a($dev->getPorts()->count(), ['/topology/port/index', 'id' => $dev->domain_id]);
                     },
                     'headerOptions'=>['style'=>'width: 4%;'],
                 ],

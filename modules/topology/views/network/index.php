@@ -26,7 +26,7 @@ $this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home
     <div class="box-header with-border">
          <?= GridButtons::widget(); ?>
     </div>
-    <div class="box-body">
+    <div class="box-body table-responsive">
 
     <?php
 
@@ -39,6 +39,9 @@ $this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home
     ]);
 
     echo Grid::widget([
+    	'tableOptions' => [
+    		'class' => 'table table-condensed',
+    	],
         'dataProvider' => $networks,
         'filterModel' => $searchModel,
         'id' => 'gridNetowrks',
@@ -49,14 +52,16 @@ $this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home
 	        		'multiple'=>false,
 	        		'headerOptions'=>['style'=>'width: 2%;'],
         		],
-        		[
-        			'format' => 'html',
-        			'value' => function($net){
-        				$href = Url::toRoute(['/topology/network/update', 'id'=>$net->id]);
-        				return Html::a(Html::tag('span', '', ['class' => 'fa fa-pencil']), $href);
-        			},
-        			'headerOptions'=>['style'=>'width: 2%;'],
-        		],
+        		 [
+            		'class' => 'yii\grid\ActionColumn',
+            		'template'=>'{update}',
+            		'buttons' => [
+            				'update' => function ($url, $model) {
+            					return Html::a('<span class="fa fa-pencil"></span>', $url);
+            				}
+            		],
+            		'headerOptions'=>['style'=>'width: 2%;'],
+            	],
                 [
                     'label' => Yii::t("topology", 'Name'),
                     'value' => 'name',
