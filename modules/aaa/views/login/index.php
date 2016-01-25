@@ -35,7 +35,7 @@ Asset::register($this);
         <?= Html::a(Yii::t("home", "I forgot my password"),array('/aaa/login/password')); ?>
         <div class="row">
           <div class="col-xs-8">
-            <div class="checkbox icheck">
+            <div class="checkbox icheck" hidden>
               <label>
                 <input type="checkbox"> Remember Me
               </label>
