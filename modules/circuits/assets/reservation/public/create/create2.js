@@ -1,16 +1,32 @@
 //var meicanGMap = new MeicanGMap("map-canvas");
-var meicanLMap = new MeicanLMap('map');
+var meicanMap = new MeicanLMap('canvas');
 //var meicanGraph = new MeicanGraph("map-canvas");
 var meicanTopo = [];
 
 $(document).ready(function() {
+    $(".sidebar-mini").addClass("sidebar-collapse");
     //meicanGraph.build("graph-canvas");
-    meicanLMap.show("rnp", 'dev');
+    
     //$(".main-footer").hide();
-    /*$( window ).resize(function() {
-        $("#map").css("height", $(window).height() - 150 - ($(".main-header").height()));
-    })*/
-    $("#map").css("height", 500);
+    $("#canvas").css("height", $(window).height() - 50);
+    if($(window).width() < 768) {
+        $("#canvas").css("width", $(window).width() - 40);
+    } else {
+        $("#canvas").css("width", $(window).width() - 51);
+    }
+    //$("#canvas").css("width", $(window).width() - 51);
+    var lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap.getMap());
+
+    $( window ).resize(function() {
+        $("#canvas").css("height", $(window).height() - 50);
+        if($(window).width() < 768) {
+            $("#canvas").css("width", $(window).width() - 40);
+        } else {
+            $("#canvas").css("width", $(window).width() - 51);
+        }
+    })
+
+    meicanMap.show("rnp", 'dev');
     /*$( "#graph-canvas" ).on( "nodeClick", function(event, nodeId) {
         meicanMap.showMarker(nodeId);
     });
@@ -100,13 +116,14 @@ function loadDomains() {
         method: "GET",        
         success: function(response) {
             meicanTopo['dom'] = response;
+            meicanMap.setDomains(response);
             //meicanLMap.setDomains(response);
             //meicanGMap.setDomains(response);
             //meicanMap.setDomains(response);
             /*meicanGraph.setDomains(response);
             meicanGraph.addNodes(response, "dom", true);
             meicanGraph.fit();*/
-            loadDomainLinks();
+            loadDevices();
         }
     });
 }
@@ -122,12 +139,12 @@ function loadDevices() {
         },
         success: function(response) {
             meicanTopo['dev'] = true;
-            meicanGraph.addNodes(response, 'dev', true);
+            //meicanGraph.addNodes(response, 'dev', true);
             for (var i = 0; i < response.length; i++) {
                 meicanMap.addMarker(response[i], 'dev');
-            };
+            };/*
             meicanGraph.fit();
-            loadDeviceLinks();
+            loadDeviceLinks();*/
         }
     });
 }

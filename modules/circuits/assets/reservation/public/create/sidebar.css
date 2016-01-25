@@ -1,0 +1,225 @@
+/**
+The MIT License (MIT)
+
+Copyright (c) 2013 Tobias Bieniek
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+.lsidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  margin-top: 100px;
+  overflow: hidden;
+  z-index: 1001; }
+  .lsidebar.collapsed {
+    width: 40px; }
+  @media (min-width: 768px) {
+    .lsidebar {
+      top: 10px;
+      bottom: 10px;
+      margin-left: 50px;
+      margin-top: 50px;
+      transition: width 500ms; } }
+  @media (min-width: 768px) and (max-width: 991px) {
+    .lsidebar {
+      width: 305px; } }
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .lsidebar {
+      width: 390px; } }
+  @media (min-width: 1200px) {
+    .lsidebar {
+      width: 460px; } }
+
+.lsidebar-left {
+  left: 0; }
+  @media (min-width: 768px) {
+    .lsidebar-left {
+      left: 10px; } }
+
+.lsidebar-right {
+  right: 0; }
+  @media (min-width: 768px) {
+    .lsidebar-right {
+      right: 10px; } }
+
+.lsidebar-tabs {
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  background-color: #fff; }
+  .lsidebar-left .lsidebar-tabs {
+    left: 0; }
+  .lsidebar-right .lsidebar-tabs {
+    right: 0; }
+  .lsidebar-tabs, .lsidebar-tabs > ul {
+    position: absolute;
+    width: 40px;
+    margin: 0;
+    padding: 0; }
+    .lsidebar-tabs > li, .lsidebar-tabs > ul > li {
+      width: 100%;
+      height: 40px;
+      color: #333;
+      font-size: 12pt;
+      overflow: hidden;
+      transition: all 80ms; }
+      .lsidebar-tabs > li:hover, .lsidebar-tabs > ul > li:hover {
+        color: #000;
+        background-color: #eee; }
+      .lsidebar-tabs > li.active, .lsidebar-tabs > ul > li.active {
+        color: #000;
+        background-color: #f6f6f6; }
+      .lsidebar-tabs > li.disabled, .lsidebar-tabs > ul > li.disabled {
+        color: rgba(51, 51, 51, 0.4); }
+        .lsidebar-tabs > li.disabled:hover, .lsidebar-tabs > ul > li.disabled:hover {
+          background: transparent; }
+        .lsidebar-tabs > li.disabled > a, .lsidebar-tabs > ul > li.disabled > a {
+          cursor: default; }
+      .lsidebar-tabs > li > a, .lsidebar-tabs > ul > li > a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        line-height: 40px;
+        color: inherit;
+        text-decoration: none;
+        text-align: center; }
+  .lsidebar-tabs > ul + ul {
+    bottom: 0; }
+
+.lsidebar-content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  overflow-x: hidden;
+  overflow-y: auto; }
+  .lsidebar-left .lsidebar-content {
+    left: 40px;
+    right: 0; }
+  .lsidebar-right .lsidebar-content {
+    left: 0;
+    right: 40px; }
+  .lsidebar.collapsed > .lsidebar-content {
+    overflow-y: hidden; }
+
+.lsidebar-pane {
+  display: none;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  padding: 10px 20px; }
+  .lsidebar-pane.active {
+    display: block; }
+  @media (min-width: 768px) and (max-width: 991px) {
+    .lsidebar-pane {
+      min-width: 265px; } }
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .lsidebar-pane {
+      min-width: 350px; } }
+  @media (min-width: 1200px) {
+    .lsidebar-pane {
+      min-width: 420px; } }
+
+.lsidebar-header {
+  margin: -10px -20px 0;
+  height: 40px;
+  padding: 0 20px;
+  line-height: 40px;
+  font-size: 12pt;
+  color: #fff;
+  background-color: #27567C; }
+  .lsidebar-right .lsidebar-header {
+    padding-left: 40px; }
+
+.lsidebar-close {
+  position: absolute;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  cursor: pointer; }
+  .lsidebar-left .lsidebar-close {
+    right: 0; }
+  .lsidebar-right .lsidebar-close {
+    left: 0; }
+
+.lsidebar-left ~ .lsidebar-map {
+  margin-left: 40px; }
+  @media (min-width: 768px) {
+    .lsidebar-left ~ .lsidebar-map {
+      margin-left: 0; } }
+
+.lsidebar-right ~ .lsidebar-map {
+  margin-right: 40px; }
+  @media (min-width: 768px) {
+    .lsidebar-right ~ .lsidebar-map {
+      margin-right: 0; } }
+
+.lsidebar {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65); }
+  .lsidebar.leaflet-touch {
+    box-shadow: none;
+    border-right: 2px solid rgba(0, 0, 0, 0.2); }
+  @media (min-width: 768px) {
+    .lsidebar {
+      border-radius: 4px; }
+      .lsidebar.leaflet-touch {
+        border: 2px solid rgba(0, 0, 0, 0.2); } }
+
+@media (min-width: 768px) {
+  .lsidebar-left ~ .lsidebar-map .leaflet-left {
+    transition: left 500ms; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .lsidebar-left ~ .lsidebar-map .leaflet-left {
+    left: 315px; } }
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .lsidebar-left ~ .lsidebar-map .leaflet-left {
+    left: 400px; } }
+
+@media (min-width: 1200px) {
+  .lsidebar-left ~ .lsidebar-map .leaflet-left {
+    left: 470px; } }
+
+@media (min-width: 768px) {
+  .lsidebar-left.collapsed ~ .lsidebar-map .leaflet-left {
+    left: 50px; } }
+
+@media (min-width: 768px) {
+  .lsidebar-right ~ .lsidebar-map .leaflet-right {
+    transition: right 500ms; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .lsidebar-right ~ .lsidebar-map .leaflet-right {
+    right: 315px; } }
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .lsidebar-right ~ .lsidebar-map .leaflet-right {
+    right: 400px; } }
+
+@media (min-width: 1200px) {
+  .lsidebar-right ~ .lsidebar-map .leaflet-right {
+    right: 470px; } }
+
+@media (min-width: 768px) {
+  .lsidebar-right.collapsed ~ .lsidebar-map .leaflet-right {
+    right: 50px; } }

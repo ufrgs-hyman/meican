@@ -1,7 +1,7 @@
 /**
  * MeicanLMap 1.0
  *
- * A DCN topology visualization based on Leaflet maps library.
+ * A DCN topology visualization based on Leaflet Javascript library.
  *
  * @copyright Copyright (c) 2016 RNP
  * @license http://github.com/ufrgs-hyman/meican2#license
@@ -24,7 +24,7 @@ MeicanLMap.prototype.show = function(mapType, markerType) {
         $("#map-l").show();
     } else {
         $("#"+this._canvasDivId).append('<div id="map-l" style="width:100%; height:100%;"></div>');
-        this.build("map-l");
+        this.build('map-l');
     }
 
     var currentMap = this._map;
@@ -89,8 +89,9 @@ MeicanLMap.prototype.addMarker = function(object, type, color) {
     }
 
     var icon = L.divIcon({
-        iconAnchor: [5, 16],
-        popupAnchor: [5,-18],
+        iconSize: [22,22],
+        iconAnchor: [11, 22],
+        popupAnchor: [0,-24],
         html: '<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg">' + 
         '<g>' +
         '<path stroke="black" fill="' + color + '" d="m1,0.5l20,0l-10,20l-10,-20z"/>' + 
@@ -278,17 +279,13 @@ MeicanLMap.prototype.setTypeVisible = function(type) {
 MeicanLMap.prototype.build = function(mapDiv) {
     this._map = L.map(mapDiv, {
         center: [0, 0],
+        zoomControl: false,
         zoom: 3
     });
 
-    // load a tile layer
-    L.tileLayer('http://viaipe.rnp.br/mapa/{z}/{x}/{y}.png',{
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="www.rnp.br">RNP</a>',
-        maxZoom: 15,
-        minZoom: 2
-    }).addTo(this._map);
+    new L.Control.Zoom({ position: 'topright' }).addTo(this._map);
 
-    $(".leaflet-top").css("margin-top","15%");
+    //$(".leaflet-top").css("margin-top","15%");
 
     $('#' + mapDiv).show();   
 }
@@ -326,7 +323,7 @@ MeicanLMap.prototype.setMapType = function(mapType) {
             break;
         case 'rnp': 
             L.tileLayer('http://viaipe.rnp.br/mapa/{z}/{x}/{y}.png',{
-                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="www.rnp.br">RNP</a>',
+                attribution: 'MEICAN Project | UFRGS | Map data &copy; 2016 <a href="www.rnp.br">RNP</a>',
                 maxZoom: 15,
                 minZoom: 2
             }).addTo(this._map);
