@@ -94,8 +94,26 @@ class Port extends \yii\db\ActiveRecord
             [['max_capacity', 'min_capacity', 'granularity', 'biport_id', 'alias_id', 'device_id', 'network_id'], 'integer'],
             [['urn'], 'string', 'max' => 250],
             [['name'], 'string', 'max' => 100],
-            [['urn'], 'unique']
+            [['urn'], 'unique'],
+        	['vlan_range', 'validateVlan'],
         ];
+    }
+
+    public function validateVlan($attribute, $params)
+    {
+    	$this->$attribute;
+    	
+    	$vlans = explode(",", $this->$attribute);
+    	foreach($vlans as $vlan){
+    		if($vlan == "") $this->addError($attribute, Yii::t('topology', 'Sintax error. Sintax samples: "200" or "200-300" or "200-300,800-990"'));
+    		$elements = str_split($vlan);
+    		foreach($elements as $element){
+    			if(is_numeric($element) || $element == '-'){
+    				if($element == '-' && $element === end($elements)) $this->addError($attribute, Yii::t('topology', 'Sintax error. Sintax samples: "200" or "200-300" or "200-300,800-990"'));
+    			}
+    			else $this->addError($attribute, Yii::t('topology', 'Sintax error. Sintax samples: "200" or "200-300" or "200-300,800-990"'));
+    		}
+    	}
     }
 
     /**
@@ -116,6 +134,7 @@ class Port extends \yii\db\ActiveRecord
             'alias_id' => Yii::t('topology', 'Alias ID'),
             'device_id' => Yii::t('topology', 'Device'),
             'network_id' => Yii::t('topology', 'Network'),
+        	'vlan_range' => Yii::t('topology', 'VLANs'),
         ];
     }
 

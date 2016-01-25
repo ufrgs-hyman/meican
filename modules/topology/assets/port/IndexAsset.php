@@ -14,12 +14,9 @@ class IndexAsset extends AssetBundle
 
     public $js = [
     	'port.js',
-    	'port-i18n.js',
     ];
     
     public $depends = [
 		'meican\base\assets\layout\Asset',
     ];
-
-    public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
 }

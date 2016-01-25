@@ -5,15 +5,16 @@
  */
 
 use yii\grid\GridView;
-use yii\grid\CheckboxColumn;
 use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\LinkPager;
+use meican\base\grid\IcheckboxColumn;
+use meican\base\widgets\GridButtons;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\i18n\Formatter;
-use yii\jui\Dialog;
+use yii\bootstrap\Modal;
 
 use meican\topology\models\Port;
 use meican\base\components\LinkColumn;
@@ -21,8 +22,9 @@ use meican\topology\assets\port\IndexAsset;
 
 IndexAsset::register($this);
 
-?>
+$this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology')]];
 
+?>
 
 <?= Html::csrfMetaTags() ?>
 
@@ -30,138 +32,171 @@ IndexAsset::register($this);
 	var selected_domain = <?php echo json_encode($selected_domain); ?>;
 </script>
 
-<h1><?php echo Yii::t('topology', 'Ports'); ?></h1>
-	
-<?php foreach ($domains as $dom): ?>
-    <div id="domain<?php echo $dom->id; ?>">
+<?php
+	foreach ($domains as $dom):
+	if(!$selected_domain) $selected_domain = $dom->id;
+	if($dom->id != $selected_domain) echo '<div id="box-dom-'.$dom->id.'" class="box box-default collapsed-box">';
+	else echo '<div id="box-dom-'.$dom->id.'" class="box box-default">';
+	?>
 
-    	<h4><?=Html::img('@web'.'/images/minus.gif', ['id' => "collapseExpand".$dom->id]);?>
-        <?php
-        	$text = Yii::t('topology', 'Domain')." ";
-            $text .= ($dom->name);
-            echo $text;
-        ?></h4>
-	            
-        <div id="collapsable<?php echo $dom->id ?>">                
-                
-        <?php \yii\widgets\Pjax::begin([
-		    'id' => 'pjaxContainer'.$dom->id,
-		]); ?>
-	
-		<?=
-		GridView::widget([
-			'options' => ['class' => 'list-without-margin'],
-			'formatter' => new Formatter(['nullDisplay'=>'']),
-			'id' =>'grid'.$dom->id,
-			'emptyText' => Yii::t('topology', 'No Ports added to this domain'),
-			'dataProvider' => new ArrayDataProvider([
-				'models' => $dom->getBiPorts(),
-				'key' => 'id',
-				'pagination' => false,
-			]),
-			'layout' => '{items}',
-			'columns' => array(
-				[
-					'class'=>CheckboxColumn::className(),
-					'name'=>'deleteUrn',
-					'multiple'=>false,
-					'headerOptions'=>['style'=>'width: 2%;'],
-				],
-				[
-					'format' => 'raw',
-					'value' => function ($port){
-						return Html::img('@web'.'/images/edit_1.png', ['title' => Yii::t('topology', 'Update'), 'onclick' => "editPort(this, $port->id)"]);
-					},
-					'headerOptions'=>['style'=>'width: 2%;'],
-					'contentOptions'=>['style'=>'cursor: pointer;'],
-				],
-				[
-					'format' => 'raw',
-					'value' => function ($port){
-						return Html::img('@web'.'/images/remove.png', ['title' => Yii::t('topology', 'Delete'), 'onclick' => "deletePort($port->id)"]);
-					},
-					'headerOptions'=>['style'=>'width: 2%;'],
-					'contentOptions'=>['style'=>'cursor: pointer;'],
-				],
-				[
-					'format' => 'raw',
-					'label' => Yii::t('topology', 'Network'),
-					'value' => function($port){
-						return $port->getNetwork()->one()->name;
-					},
-					'headerOptions'=>['style'=>'width: 8%;'],
-				],
-				[
-					'format' => 'raw',
-					'label' => Yii::t('topology', 'Device'),
-					'value' => function($port){
-						return $port->getDevice()->one()->name;
-					},
-					'headerOptions'=>['style'=>'width: 8%;'],
-				],
-				[
-					'label' => Yii::t('topology', 'Name'),
-					'value' => 'name',
-					'headerOptions'=>['style'=>'width: 10%;'],
-				],
-				[
-					'label' => Yii::t('topology', 'Urn'),
-					'value' => 'urn',
-					'headerOptions'=>['style'=>'width: 30%;'],
-				],
-				[
-					'format' => 'raw',
-					'label' => Yii::t('topology', 'VLANs'),
-					'value' => function ($port){
-						if($port->vlan_range) return $port->vlan_range;
-						return $port->getInboundPortVlanRange();
-					},
-					'headerOptions'=>['style'=>'width: 8%;'],
-				],
-				[
-					'label' => Yii::t('topology', 'Max Capacity (Mbps)'),
-					'value' => 'max_capacity',
-					'headerOptions'=>['style'=>'width: 10%;'],
-				],
-				[
-					'label' => Yii::t('topology', 'Min Capacity (Mbps)'),
-					'value' => 'min_capacity',
-					'headerOptions'=>['style'=>'width: 10%;'],
-				],
-				[
-					'label' => Yii::t('topology', 'Granularity (Mbps)'),
-					'value' => 'granularity',
-					'headerOptions'=>['style'=>'width: 10%;'],
-				],
+		<div class="box-header with-border">
+        	<h3 class="box-title"><?php
+	        	$text = Yii::t('topology', 'Domain')." - ";
+	            $text .= ($dom->name);
+	            echo $text;
+	        ?></h3>
 
-			),
-		]);
-		?>
+            <div class="box-tools pull-right">
+            	<?php if($dom->id != $selected_domain) echo '<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>';
+            	else echo '<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'
+            	?>
+            </div>
+        </div>
+
+        <div class="box-body table-responsive">
+		    <div>
+            	<a id="add-port-grid-btn" value=<?= $dom->id;?> class="btn btn-primary btn-add"><?= Yii::t('topology', 'Add')?></a>
+            	<a id="delete-port-grid-btn" class="btn btn-warning btn-delete" value=<?= $dom->id;?>><?= Yii::t('topology', 'Delete')?></a>
+        	</div><br>
+
+			<?php $form = ActiveForm::begin([
+	            'method' => 'post',
+	            'action' => ['/topology/port/delete'],
+	            'id' => 'port-grid-form-'.$dom->id,  
+	        ]); ?>
+	
+			<?=
+			GridView::widget([
+				'tableOptions' => [
+					'class' => 'table table-condensed',
+				],
+				'id' =>'grid'.$dom->id,
+				'emptyText' => Yii::t('topology', 'No Ports added to this domain'),
+				'dataProvider' => new ArrayDataProvider([
+					'models' => $dom->getBiPorts(),
+					'key' => 'id',
+					'pagination' => false,
+				]),
+				'layout' => '{items}',
+				'columns' => array(
+					[
+						'class'=>ICheckboxColumn::className(),
+						'checkboxOptions' =>['class'=>'deleteUrn'.$dom->id],
+						'multiple'=>false,
+						'name'=>'delete',
+						'headerOptions'=>['style'=>'width: 2%;'],
+					],
+					[
+						'class' => 'yii\grid\ActionColumn',
+						'template'=>'{edit}',
+						'contentOptions' => function($port){
+							return ['class'=>'btn-edit', 'id' => $port->id];
+						},
+						'buttons' => [
+							'edit' => function ($url, $model) {
+								return Html::a('<span class="fa fa-pencil"></span>', null);
+							}
+						],
+					],
+					[
+						'format' => 'raw',
+						'label' => Yii::t('topology', 'Network'),
+						'value' => function($port){
+							return $port->getNetwork()->one()->name;
+						},
+						'headerOptions'=>['style'=>'width: 9%;'],
+					],
+					[
+						'format' => 'raw',
+						'label' => Yii::t('topology', 'Device'),
+						'value' => function($port){
+							return $port->getDevice()->one()->name;
+						},
+						'headerOptions'=>['style'=>'width: 9%;'],
+					],
+					[
+						'label' => Yii::t('topology', 'Name'),
+						'value' => 'name',
+						'headerOptions'=>['style'=>'width: 10%;'],
+					],
+					[
+						'label' => Yii::t('topology', 'Urn'),
+						'value' => 'urn',
+						'headerOptions'=>['style'=>'width: 30%;'],
+					],
+					[
+						'format' => 'raw',
+						'label' => Yii::t('topology', 'VLANs'),
+						'value' => function ($port){
+							if($port->vlan_range) return $port->vlan_range;
+							return $port->getInboundPortVlanRange();
+						},
+						'headerOptions'=>['style'=>'width: 8%;'],
+					],
+					[
+						'label' => Yii::t('topology', 'Max Capacity (Mbps)'),
+						'value' => 'max_capacity',
+						'headerOptions'=>['style'=>'width: 10%;'],
+					],
+					[
+						'label' => Yii::t('topology', 'Min Capacity (Mbps)'),
+						'value' => 'min_capacity',
+						'headerOptions'=>['style'=>'width: 10%;'],
+					],
+					[
+						'label' => Yii::t('topology', 'Granularity (Mbps)'),
+						'value' => 'granularity',
+						'headerOptions'=>['style'=>'width: 10%;'],
+					],
+	
+				),
+			]);
+			?>
 			
-		<?php \yii\widgets\Pjax::end(); ?>
-	
-		<input class="add" type="button" id="add_button<?php echo $dom->id; ?>" value="<?= Yii::t('topology', 'Add Manual'); ?>" />
-					
-	    </div> 
-	</div>
+			<?php ActiveForm::end(); ?>
+        </div>
+    </div>
 <?php endforeach; ?>
 
-<br></br>
-<?php if($domains) echo '<input class="delete" id="delete_button" type="button" value="'.Yii::t('topology', 'Delete Selected').'"/>'; ?>
+<?php 
 
-<div style="display: none">
-<?php Dialog::begin([
-		'id' => 'dialog',
-    	'clientOptions' => [
-        	'modal' => true,
-        	'autoOpen' => false,
-        	'title' => "Ports",
-    	],
-	]);
+Modal::begin([
+    'id' => 'dialog',
+    'footer' => '<button id="close-btn" class="btn btn-default" data-dismiss="modal">Ok</button>',
+]);
 
-	echo '<br></br>';
-    echo '<p style="text-align: left; height: 100%; width:100%;" id="message"></p>';
-    
-	Dialog::end(); 
+echo '<p style="text-align: left; height: 100%; width:100%;" id="message"></p>';
+
+Modal::end(); 
+
+Modal::begin([
+		'id' => 'delete-port-modal',
+		'footer' => '<button id="cancel-btn" class="btn btn-default">'.Yii::t('topology', 'Cancel').'</button> <button id="delete-port-btn" class="grid-btn btn btn-danger">'.Yii::t('topology', 'Delete').'</button>',
+]);
+
+echo Yii::t('topology', 'Do you want delete the selected items?');
+
+Modal::end();
+
+Modal::begin([
+    'id' => 'add-port-modal',
+    'header' => Yii::t('topology', 'Add Port'),
+    'footer' => '<button id="cancel-btn" class="btn btn-default">'.Yii::t('topology', 'Cancel').'</button> <button id="save-port-btn" class="btn btn-primary">'.Yii::t('topology', 'Save').'</button>',
+]);
+
+
+echo '<div id="add-port-form-wrapper"></div>';
+
+Modal::end();
+
+Modal::begin([
+	'id' => 'edit-port-modal',
+	'header' => Yii::t('topology', 'Edit Port'),
+	'footer' => '<button id="cancel-btn" class="btn btn-default">'.Yii::t('topology', 'Cancel').'</button> <button id="save-edit-port-btn" class="btn btn-primary">'.Yii::t('topology', 'Save').'</button>',
+]);
+
+
+echo '<div id="edit-port-form-wrapper"></div>';
+
+Modal::end();
 ?>
-</div>
