@@ -11,6 +11,10 @@ use yii\grid\GridView;
 /**
  * GridView customized for MEICAN.
  *
+ * Features:
+ * - standard layout
+ * - responsive template
+ *
  * @author Mauricio Quatrin Guerreiro
  * @since 2.3.0
  */
