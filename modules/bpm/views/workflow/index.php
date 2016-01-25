@@ -27,7 +27,7 @@ $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 <?= Html::csrfMetaTags() ?>
 
 <div class="box box-default">
-    <div class="box-body">               
+    <div class="box-body table-responsive">               
 	<?=
 		GridView::widget([
 			'options' => ['class' => 'list'],

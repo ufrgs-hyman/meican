@@ -38,6 +38,8 @@ $(document).ready(function() {
 						$("#disable-message").html(data);
 						$("#disable-workflow-modal").modal('show');
 
+						$("#disable-workflow-modal").off("click");
+
 						$("#disable-workflow-modal").on("click", "#cancel-btn", function (){
 				            $("#disable-workflow-modal").modal("hide");
 				            return false;
@@ -106,7 +108,9 @@ $(document).ready(function() {
 				if(data){
 					$("#disable-message").html(data);
 					$("#disable-workflow-modal").modal('show');
-
+					
+					$("#disable-workflow-modal").off("click");
+					
 					$("#disable-workflow-modal").on("click", "#cancel-btn", function (){
 			            $("#disable-workflow-modal").modal("hide");
 			            return false;
