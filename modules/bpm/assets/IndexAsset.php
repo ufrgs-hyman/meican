@@ -9,7 +9,6 @@ class IndexAsset extends AssetBundle
     
 	public $js = [
 		'index.js',
-		'bpm-i18n.js',
 	];
 	public $depends = [
 		'meican\base\assets\ToggleAsset',

@@ -66,6 +66,9 @@ return array(
 		'any' => 'qualquer',
 		'Viewer' => 'Visualizador',
 		'Cancel' => 'Cancelar',
+		'Yes' => 'Sim',
+		'Delete this Workflow?' => 'Remover este Workflow?',
+		'This Workflow is enabled for domain {domain}. This domain will not have an enabled workflow. Do you confirm?' =>  'Este workflow está ativado para o domínio {domain}. Este domínio não vai ter um workflow ativo. Deseja continuar?',
 		
 );
 

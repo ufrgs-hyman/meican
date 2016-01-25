@@ -38,38 +38,49 @@ $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 			'layout' => "{items}{summary}{pager}",
 			'columns' => array(
 					[
-						'format' => 'raw',
-						'value' => function ($work){
-							return Html::a(Html::tag('span', '', ['class' => 'fa fa-trash', 'title' => Yii::t("bpm", 'Delete Workflow'), 'onclick' => "deleteWorkflow($work->id)"]));
+						'class' => 'yii\grid\ActionColumn',
+						'template'=>'{delete}',
+						'contentOptions' => function($model){
+							return ['class'=>'btn-delete', 'id' => $model->id];
 						},
-						'contentOptions'=>['style'=>'cursor: pointer;'],
+						'buttons' => [
+								'delete' => function ($url, $model) {
+									return Html::a('<span class="fa fa-trash"></span>', null);
+								}
+						],
+					],
+					[
+						'class' => 'yii\grid\ActionColumn',
+						'template'=>'{viewer}',
+						'buttons' => [
+								'viewer' => function ($url, $model) {
+									return Html::a('<span class="fa fa-eye"></span>', $url);
+								}
+						],
 						'headerOptions'=>['style'=>'width: 2%;'],
 					],
 					[
-						'format' => 'raw',
-						'value' => function($work){
-							$href = Url::toRoute(['/bpm/workflow/viewer', 'id'=>$work->id]);
-							return Html::a(Html::tag('span', '', ['class' => 'fa fa-eye', 'title' => Yii::t("bpm", 'Update Workflow')]), $href);
+						'class' => 'yii\grid\ActionColumn',
+						'template'=>'{update}',
+						'buttons' => [
+								'update' => function ($url, $model) {
+									return Html::a('<span class="fa fa-pencil"></span>', null);
+								}
+						],
+						'contentOptions' => function($model){
+							return ['disabled'=>!$model->isDisabled(), 'id' => $model->id, 'class'=>'btn btn-update'];
 						},
+
 						'headerOptions'=>['style'=>'width: 2%;'],
 					],
 					[
-						'format' => 'raw',
-						'value' => function ($work){
-							if(!$work->isDisabled()) return Html::a(Html::tag('span', '', ['class' => 'fa fa-pencil', 'title' => Yii::t("bpm", 'Update Workflow')]));
-							else return Html::a(Html::tag('span', '', ['class' => 'fa fa-pencil', 'title' => Yii::t("bpm", 'Update Workflow'), 'onclick' => "update($work->id)"]));
-						},
-						'contentOptions' => function ($work){
-							return ['style'=>'display: table-cell;', 'disabled'=>!$work->isDisabled(), 'class'=>'btn'];
-			        	},
-			        	'headerOptions'=>['style'=>'width: 2%;'],
-					],
-					[
-						'format' => 'raw',
-						'value' => function($work){
-							$href = Url::toRoute(['/bpm/workflow/copy', 'id'=>$work->id]);
-							return Html::a(Html::tag('span', '', ['class' => 'fa fa-copy', 'title' => Yii::t("bpm", 'Update Workflow')]), $href);
-						},
+						'class' => 'yii\grid\ActionColumn',
+						'template'=>'{copy}',
+						'buttons' => [
+								'copy' => function ($url, $model) {
+									return Html::a('<span class="fa fa-copy"></span>', $url);
+								}
+						],
 						'headerOptions'=>['style'=>'width: 2%;'],
 					],
 			        [
@@ -90,8 +101,8 @@ $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 					[
 						'format' => 'raw',
 						'label' => 'Status',
-						'value' => function ($work){
-							return Html::input('checkbox', '', $work->id, ['id'=>'toggle-'.$work->id, 'class'=>'toggle-event-class', 'checked'=>!$work->isDisabled(), 'data-toggle'=>"toggle", 'data-size'=> "mini", "data-on" => Yii::t("bpm", "Enabled"), "data-off"=> Yii::t("bpm", "Disabled"), "data-width"=>"100", "data-onstyle"=>"success", "data-offstyle"=>"warning"]);
+						'value' => function ($model){
+							return Html::input('checkbox', '', $model->id, ['id'=>'toggle-'.$model->id, 'class'=>'toggle-event-class', 'checked'=>!$model->isDisabled(), 'data-toggle'=>"toggle", 'data-size'=> "mini", "data-on" => Yii::t("bpm", "Enabled"), "data-off"=> Yii::t("bpm", "Disabled"), "data-width"=>"100", "data-onstyle"=>"success", "data-offstyle"=>"warning"]);
 						},
 						'filter' => Html::activeDropDownList($searchModel, 'status',
 								["enabled" => Yii::t("bpm", "Enabled"), "disabled"=> Yii::t("bpm", "Disabled")],
@@ -109,13 +120,23 @@ $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 <?php 
 
 Modal::begin([
-    'id' => 'dialog',
+    'id' => 'delete-workflow-modal',
     'headerOptions' => ['hidden'=>'hidden'],
-    'footer' => '<button id="close-btn" class="btn btn-default">'.Yii::t("bpm", "Cancel").'</button><button id="delete-btn" class="btn btn-danger">'.Yii::t("bpm", "Delete").'</button><button id="ok-btn" class="btn btn-primary">Ok</button>',
+    'footer' => '<button id="cancel-btn" class="btn btn-default">'.Yii::t("bpm", "Cancel").'</button><button id="delete-btn" class="btn btn-danger">'.Yii::t("bpm", "Delete").'</button>',
 ]);
 
-echo '<p style="text-align: left; height: 100%; width:100%;" id="message"></p>';
+echo '<p style="text-align: left; height: 100%; width:100%;">'.Yii::t("bpm", "Delete this workflows?").'</p>';
 
-Modal::end(); 
+Modal::end();
+
+Modal::begin([
+		'id' => 'disable-workflow-modal',
+		'headerOptions' => ['hidden'=>'hidden'],
+		'footer' => '<button id="cancel-btn" class="btn btn-default">'.Yii::t("bpm", "Cancel").'</button><button id="confirm-btn" class="btn btn-danger">'.Yii::t("bpm", "Yes").'</button>',
+]);
+
+echo '<p style="text-align: left; height: 100%; width:100%;" id="disable-message"></p>';
+
+Modal::end();
 
 ?>

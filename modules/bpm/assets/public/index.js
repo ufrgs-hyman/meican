@@ -1,6 +1,64 @@
-// TOGGLE BUTTONS EVENT (ENABLE and DISABLE)
-// ==============================
 $(document).ready(function() {
+	$(".btn-update").click(function() {
+		var id = $(this).attr("id");
+		$.getJSON(baseUrl + "/bpm/workflow/is-active?id="+id,
+			function(data) {
+				if(!data){
+					window.location.href = "../workflow/update?id="+id;
+				}
+			}
+		);
+	});
+	
+	$(".btn-delete").click(function() {
+		var id = $(this).attr("id");
+		$("#delete-workflow-modal").modal('show');
+		
+		$("#delete-workflow-modal").on("click", "#cancel-btn", function (){
+            $("#delete-workflow-modal").modal("hide");
+            return false;
+        });
+		
+		$("#delete-workflow-modal").on("click", "#delete-btn", function (){
+			$.getJSON(baseUrl + "/bpm/workflow/is-active?id="+id, 
+	    		function(data) {
+					if(!data){
+						$.ajax({
+							type: "GET",
+							url: baseUrl + "/bpm/workflow/delete",
+							data: "id=".concat(id),
+							cache: false,
+							success:function() {
+								$("#delete-workflow-modal").modal("hide");
+							}
+						});
+					}
+					else {
+						$("#delete-workflow-modal").modal("hide");
+						$("#disable-message").html(data);
+						$("#disable-workflow-modal").modal('show');
+
+						$("#disable-workflow-modal").on("click", "#cancel-btn", function (){
+				            $("#disable-workflow-modal").modal("hide");
+				            return false;
+				        });
+						
+						$("#disable-workflow-modal").on("click", "#confirm-btn", function (){
+							$("#disable-workflow-modal").modal("hide");
+				    		$.ajax({
+				    			type: "GET",
+				    			url: baseUrl + "/bpm/workflow/delete",
+				    			data: "id=".concat(id),
+				    			cache: false,
+				    		});	
+						});
+					}
+				}
+			);
+		});
+	});
+	
+	
 	$('.toggle-event-class').change(function() {
     	var id = $(this).val();
     	if($(this).prop('checked')){
@@ -14,12 +72,16 @@ $(document).ready(function() {
 								data: "id=".concat(data),
 								cache: false,
 								success:function() {
+									$("#"+data+'.btn-update').attr('disabled', false).change();
 									$("#toggle-"+data).prop('checked', false).change();
 									$.ajax({
 										type: "GET",
 										url: baseUrl + "/bpm/workflow/active",
 										data: "id=".concat(id),
 										cache: false,
+										success: function(){
+											$("#"+id+'.btn-update').attr("disabled", true).change();
+										}
 									}); 
 								}
 							});
@@ -30,6 +92,9 @@ $(document).ready(function() {
 								url: baseUrl + "/bpm/workflow/active",
 								data: "id=".concat(id),
 								cache: false,
+								success:function(){
+									$("#"+id+'.btn-update').attr("disabled", true).change();
+								}
 							});
 						}
 					});	
@@ -39,29 +104,29 @@ $(document).ready(function() {
     	else {
     		$.getJSON(baseUrl + "/bpm/workflow/is-active?id="+id, function(data) {
 				if(data){
-					$("#message").html(tt("This Workflow is enabled for domain ")+data+tt(". This domain will not have an enabled workflow. Do you confirm?"));
-					$("#dialog").modal('show');
+					$("#disable-message").html(data);
+					$("#disable-workflow-modal").modal('show');
+
+					$("#disable-workflow-modal").on("click", "#cancel-btn", function (){
+			            $("#disable-workflow-modal").modal("hide");
+			            return false;
+			        });
 					
-					$("#ok-btn").show();
-					$("#close-btn").show();
-					$("#delete-btn").hide();
-					$("#delete-btn").off("click");
-					
-					$("#ok-btn").off("click").click(function(){
-						$("#dialog").modal('hide');
+					$("#disable-workflow-modal").on("click", "#confirm-btn", function (){
+						$("#disable-workflow-modal").modal("hide");
 						$.ajax({
 							type: "GET",
 							url: baseUrl + "/bpm/workflow/disable",
 							data: "id=".concat(id),
 							cache: false,
+							success:function(){
+								$("#toggle-"+id).prop('checked', false).change();
+								$("#"+id+'.btn-update').attr('disabled', false).change();
+							}
 						}); 
 					});
 
-					$("#close-btn").off("click").click(function(){
-						$("#dialog").modal('hide');
-					});
-					
-					$("#dialog").on('hidden.bs.modal', function (e) {
+					$("#disable-workflow-modal").on('hidden.bs.modal', function (e) {
 						$.getJSON(baseUrl + "/bpm/workflow/is-active?id="+id, function(data){
 							if(data) $("#toggle-"+id).prop('checked', true).change();
 						})
@@ -71,69 +136,3 @@ $(document).ready(function() {
     	}
     });
 })
-
-// DELETE WORKFLOW
-// ==============================
-function deleteWorkflow(id){
-	$("#message").html(tt("Delete this Workflow?"));
-	$("#dialog").modal('show');
-	
-	$("#ok-btn").hide();
-	$("#ok-btn").off("click");
-	$("#close-btn").show();
-	$("#delete-btn").show();
-	
-	$("#delete-btn").click(function(){
-		$.getJSON(baseUrl + "/bpm/workflow/is-active?id="+id, 
-    		function(data) {
-				if(!data){
-					$.ajax({
-						type: "GET",
-						url: baseUrl + "/bpm/workflow/delete",
-						data: "id=".concat(id),
-						cache: false,
-					});
-				}
-				else {
-					$("#message").html(tt("This Workflow is enabled for domain ")+data+tt(". This domain will not have an enabled workflow. Do you confirm?"));
-					$("#dialog").modal('show');
-					
-					$("#ok-btn").hide();
-					$("#ok-btn").off("click");
-					$("#close-btn").show();
-					$("#delete-btn").show();
-					
-					$("#delete-btn").off("click").click(function(){
-						$("#dialog").modal('hide');
-			    		$.ajax({
-			    			type: "GET",
-			    			url: baseUrl + "/bpm/workflow/delete",
-			    			data: "id=".concat(id),
-			    			cache: false,
-			    		});	
-					});
-				}
-			}
-		);
-	});
-}
-
-// UPDATE
-//==============================
-function update(id){
-	$.getJSON(baseUrl + "/bpm/workflow/is-active?id="+id, 
-		function(data) {
-			if(!data){
-				window.location="../workflow/update?id="+id;
-			}
-			else {
-				$("#message").html(tt("Only disabled Workflows can be edited."));
-				$("#dialog").modal('show');
-				
-				$("#ok-btn").hide();
-				$("#close-btn").show();
-				$("#delete-btn").hide();
-			}
-		}
-	);
-}

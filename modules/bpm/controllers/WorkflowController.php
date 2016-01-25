@@ -407,6 +407,7 @@ class WorkflowController extends RbacController {
 					    		if (!$activeWorkflow->save()){
 					    			Yii::$app->getSession()->setFlash('error', Yii::t("bpm", 'Unsuccessful enable the workflow {workflow} form domain {domain}', ['workflow' => $workflow->name, 'domain' => $workflow->getDomain()->one()->name]));
 					    		}
+					    		return true;
 			    			}
 			    		}
 			    		else {
@@ -422,6 +423,7 @@ class WorkflowController extends RbacController {
     	}
     	
     	if(!self::can("workflow/read")) return $this->goHome();
+    	return;
     }
     
     public function actionDisable($id = null) {
@@ -434,12 +436,14 @@ class WorkflowController extends RbacController {
 			    		if (!BpmWorkflow::disable($id)){
 			    			Yii::$app->getSession()->setFlash('error', Yii::t("bpm", 'Unsuccessful disable the workflow {workflow} form domain {domain}', ['workflow' => $workflow->name, 'domain' => $workflow->getDomain()->one()->name]));
 			    		}
+			    		else return true;
 					}
 		    		else Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to enable/disable in domain {domain}', ['domain' => BpmWorkflow::findOne(['id' => $id])->getDomain()->one()->name]));
 		    	}
     		}
     	}
     	if(!self::can("workflow/read")) return $this->goHome();
+    	return false;
     }
     
     public function actionHasOtherActive($id = null){
@@ -457,7 +461,7 @@ class WorkflowController extends RbacController {
     	if($id){
 	    	if(BpmWorkflow::findOne(['id' => $id])->active == 1){
 	    		$domain = Domain::findOne(['name' => BpmWorkflow::findOne(['id' => $id])->domain]);
-	    		if($domain) echo json_encode($domain->name);
+	    		if($domain) echo json_encode(Yii::t("bpm", 'This Workflow is enabled for domain {domain}. This domain will not have an enabled workflow. Do you confirm?', ['domain' => $domain->name]));
 	    		else echo 0;
 	    	}
 	    	else echo 0;
