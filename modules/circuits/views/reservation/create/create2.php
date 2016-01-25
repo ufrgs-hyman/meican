@@ -60,7 +60,7 @@ $this->params['hide-footer'] = true;
         <div class="lsidebar-tabs">
             <ul role="tablist">
                 <li><a href="#help" role="tab"><i class="fa fa-info-circle"></i></a></li>
-                <li><a href="#home" role="tab"><i class="fa fa-search"></i></a></li>
+                <li><a href="#home" role="tab"><i class="fa"><img src="https://maxcdn.icons8.com/Android_L/PNG/24/Maps/route-24.png" width="21"></i></a></li>
                 <li><a href="#requirements" role="tab"><i class="fa fa-sliders"></i></a></li>
                 <li><a href="#calendar" role="tab"><i class="fa fa-calendar"></i></a></li>
                 <li><a href="#check" role="tab"><i class="fa fa-check danger"></i></a></li>
@@ -75,14 +75,47 @@ $this->params['hide-footer'] = true;
         <div class="lsidebar-content">
             <div class="lsidebar-pane" id="home">
                 <h1 class="lsidebar-header">
-                    Step 1: Select your endpoints
+                    Step 1: Path
                     <span class="lsidebar-close"><i class="fa fa-caret-left"></i></span>
                 </h1>
-
                 <br>
+                <div class="nav-tabs-custom" style="margin-right: 20px;">
+                    <ul class="nav nav-tabs">
+                      <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-search"></i></a></li>
+                      <li><a href="#tab_2" data-toggle="tab"><i class="fa fa-list"></i></a></li>
+                      <li><a href="#tab_3" data-toggle="tab"><i class="fa fa-file-text"></i></a></li>
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="tab_1">
+                        <div class="input-group input-group-sm">
+                            <!-- /btn-group -->
+                                <input type="text" class="form-control" placeholder="Enter a domain, device, port or URN">
+                                <div class="input-group-btn">
+                                  <button type="button" class="btn btn-primary"><span class="fa fa-search"></span></button>
+                                </div>
+                              </div>
+                      </div>
+                      <!-- /.tab-pane -->
+                      <div class="tab-pane" id="tab_2">
+                        The European languages are members of the same family. Their separate existence is a myth.
+                        
+                      </div>
+                      <!-- /.tab-pane -->
+                      <div class="tab-pane" id="tab_3">
+                        <div class="form-group">
+                          <label for="urns">List of URNs</label>
+                          <textarea class="form-control" rows="5" id="urns"></textarea>
+                        </div>
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-default"><span class="fa fa-plus"></span> Import path</button>
+                        </div><br><br>
+                      </div>
+                      <!-- /.tab-pane -->
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
                 <div>
                     <ul class="timeline">
-
                     <li class="time-label">
                           <span class="bg-gray">
                             <i class="fa fa-laptop"></i>
@@ -94,14 +127,12 @@ $this->params['hide-footer'] = true;
                         <!-- timeline icon -->
                         <i class="fa fa-map-marker bg-gray"></i>
                         <div class="timeline-item">
-                            <h3 class="timeline-header no-padding">
-                                <div class="input-group input-group-sm">
-                                <!-- /btn-group -->
-                                    <input type="text" class="form-control" placeholder="Enter a domain, device, port or URN">
-                                    <div class="input-group-btn">
-                                      <button type="button" class="btn btn-primary"><span class="fa fa-search"></span></button>
-                                    </div>
-                                  </div>
+                            <h3 class="timeline-header">
+                                None
+                                <div class="pull-right">
+                                    <a href="#" class="text-muted"><i class="fa fa-plus"></i></a>
+                                    <a href="#" class="text-muted"><i class="fa fa-trash"></i></a>
+                                </div>
                           </h3>
                          <div class="timeline-body">
                           Domain<br>Network<br>Device<br>Port<br>VLAN
@@ -115,14 +146,8 @@ $this->params['hide-footer'] = true;
                         <!-- timeline icon -->
                         <i class="fa fa-map-marker bg-gray"></i>
                         <div class="timeline-item">
-                            <h3 class="timeline-header no-padding">
-                                <div class="input-group input-group-sm">
-                                <!-- /btn-group -->
-                                    <input type="text" class="form-control" placeholder="Enter a domain, device, port or URN">
-                                    <div class="input-group-btn">
-                                      <button type="button" class="btn btn-primary"><span class="fa fa-search"></span></button>
-                                    </div>
-                                  </div>
+                            <h3 class="timeline-header">
+                                None
                             </h3>
                         </div>
                     </li>
@@ -135,11 +160,10 @@ $this->params['hide-footer'] = true;
                     </li>
                     </ul>
                 </div>
-                
                 <div class="pull-right">
                     <button type="button" class="btn btn-default"><span class="fa fa-plus"></span> Add waypoint</button>
                     <button type="button" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</button>
-                </div>
+                </div><br><br><br>
             </div>
 
             <div class="lsidebar-pane" id="requirements">
@@ -170,10 +194,12 @@ $this->params['hide-footer'] = true;
 
             <div class="lsidebar-pane" id="calendar">
                 <h1 class="lsidebar-header">Step 3: Schedule<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                gdfgdfgfg
             </div>
 
             <div class="lsidebar-pane" id="check">
                 <h1 class="lsidebar-header">Step 4: Confirmation<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                xvdfd
             </div>
 
             <div class="lsidebar-pane" id="help">

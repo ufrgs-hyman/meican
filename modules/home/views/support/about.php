@@ -146,6 +146,7 @@ $this->params['header'] = ["About", ['Home', 'About']];
               ['style'=> 'margin-right: 10%;','title' => 'Open Grid Forum']); ?></a>
               <a href="https://www.glif.is" target="_blank"><?= Html::img("@web/images/glif.png", 
               ['title' => "Global Lambda Integrated Facility"]); ?></a>
+              <a href="https://icons8.com">Icon pack by Icons8</a>
             </div>
             <!-- /.box-body -->
           </div>
