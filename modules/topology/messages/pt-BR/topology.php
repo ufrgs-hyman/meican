@@ -151,5 +151,7 @@ return array(
 		'Synchronizer instance {name} updated successfully' => 'Instância de sincronização {name} atualizada com sucesso',
 		'Synchronizer instance {name} deleted successfully' => 'Instância de sincronização {name} removida com sucesso',
 		'Graph' => 'Grafo',
+		
+		'Sintax error. Samples: "200" or "200-300" or "200-300,800-990"' => 'Erro de sintaxe. Exemplos: "200" ou "200-300" ou "200-300,800-990"',
 );
 ?>

@@ -105,13 +105,13 @@ class Port extends \yii\db\ActiveRecord
     	
     	$vlans = explode(",", $this->$attribute);
     	foreach($vlans as $vlan){
-    		if($vlan == "") $this->addError($attribute, Yii::t('topology', 'Sintax error. Sintax samples: "200" or "200-300" or "200-300,800-990"'));
+    		if($vlan == "") $this->addError($attribute, Yii::t('topology', 'Sintax error. Samples: "200" or "200-300" or "200-300,800-990"'));
     		$elements = str_split($vlan);
     		foreach($elements as $element){
     			if(is_numeric($element) || $element == '-'){
-    				if($element == '-' && $element === end($elements)) $this->addError($attribute, Yii::t('topology', 'Sintax error. Sintax samples: "200" or "200-300" or "200-300,800-990"'));
+    				if($element == '-' && $element === end($elements)) $this->addError($attribute, Yii::t('topology', 'Sintax error. Samples: "200" or "200-300" or "200-300,800-990"'));
     			}
-    			else $this->addError($attribute, Yii::t('topology', 'Sintax error. Sintax samples: "200" or "200-300" or "200-300,800-990"'));
+    			else $this->addError($attribute, Yii::t('topology', 'Sintax error. Samples: "200" or "200-300" or "200-300,800-990"'));
     		}
     	}
     }
