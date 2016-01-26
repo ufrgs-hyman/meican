@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-use yii\grid\GridView;
+use meican\base\grid\Grid;
 use yii\grid\CheckboxColumn;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
@@ -27,9 +27,9 @@ $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 <?= Html::csrfMetaTags() ?>
 
 <div class="box box-default">
-    <div class="box-body table-responsive">               
+    <div class="box-body">               
 	<?=
-		GridView::widget([
+		Grid::widget([
 			'options' => ['class' => 'list'],
 			'dataProvider' => $data,
 			'filterModel' => $searchModel,

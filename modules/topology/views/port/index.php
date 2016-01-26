@@ -3,8 +3,8 @@
  * @copyright Copyright (c) 2012-2016 RNP
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
-
-use yii\grid\GridView;
+ 
+use meican\base\grid\Grid;
 use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -53,7 +53,7 @@ $this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'),
             </div>
         </div>
 
-        <div class="box-body table-responsive">
+        <div class="box-body">
 		    <div>
             	<a id="add-port-grid-btn" value=<?= $dom->id;?> class="btn btn-primary btn-add"><?= Yii::t('topology', 'Add')?></a>
             	<a id="delete-port-grid-btn" class="btn btn-warning btn-delete" value=<?= $dom->id;?>><?= Yii::t('topology', 'Delete')?></a>
@@ -66,7 +66,7 @@ $this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'),
 	        ]); ?>
 	
 			<?=
-			GridView::widget([
+			Grid::widget([
 				'tableOptions' => [
 					'class' => 'table table-condensed',
 				],

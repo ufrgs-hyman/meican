@@ -26,7 +26,7 @@ $this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'
     <div class="box-header with-border">
         <?= GridButtons::widget(); ?>
     </div>
-    <div class="box-body table-responsive">
+    <div class="box-body">
         <?php
 
         $form = ActiveForm::begin([
