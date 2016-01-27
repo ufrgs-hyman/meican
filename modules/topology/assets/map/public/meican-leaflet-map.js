@@ -106,7 +106,7 @@ MeicanLMap.prototype.addMarker = function(object, type, color) {
             id: type+ object.id, 
             icon: icon
         }
-    ).addTo(this._map).bindPopup(type + object.name);
+    ).addTo(this._map).bindPopup('#');
 
     this._markers.push(marker);
     //this._clusterer.addMarker(marker);

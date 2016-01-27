@@ -4,6 +4,49 @@ var meicanMap = new MeicanLMap('canvas');
 var meicanTopo = [];
 
 $(document).ready(function() {
+    $("#add-waypoint").click(function() {
+        $("#destination-endpoint").before('<li data-point="' + 
+            ($(".path-point").length - 1) + '" class="path-point">'+
+                    '<i class="fa fa-map-marker bg-gray"></i>'+
+                    '<div class="timeline-item">'+
+                        '<h3 class="timeline-header">'+
+                            'empty'+
+                            '<div class="pull-right">'+
+                                '<a href="#" class="text-muted"><i class="fa fa-minus"></i></a>'+
+                                '<a href="#" class="text-muted"><i class="fa fa-arrow-up"></i></a>'+
+                                '<a href="#" class="text-muted"><i class="fa fa-arrow-down"></i></a>'+
+                            '</div>'+
+                        '</h3>'+
+                        '<div class="timeline-body">'+
+                              'Domain<br>Network<br>Device<br>Port<br>VLAN'+
+                              '<div class="pull-right">'+
+                                    '<a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>'+
+                                    '<a href="#" class="text-muted"><i class="fa fa-trash"></i></a>'+
+                                '</div>'+
+                            '</div>'+
+                    '</div>'+
+                '</li>');
+        $("#destination-endpoint").attr("data-point", parseInt($("#destination-endpoint").attr("data-point")) + 1);
+        return false;
+    });
+
+    $(".fa-arrow-down").click(function() {
+    });
+
+    $("#path").on('click','.fa-minus', function() {
+        $(this).removeClass('fa-minus');
+        $(this).addClass('fa-plus');
+        $(this).parent().parent().parent().parent().find('.timeline-body').slideUp();
+        return false;
+    });
+
+    $("#path").on('click','.fa-plus',function() {
+        $(this).removeClass('fa-plus');
+        $(this).addClass('fa-minus');
+        $(this).parent().parent().parent().parent().find('.timeline-body').slideDown();
+        return false;
+    });
+
     $(".sidebar-mini").addClass("sidebar-collapse");
     //meicanGraph.build("graph-canvas");
     

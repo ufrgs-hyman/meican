@@ -16,106 +16,59 @@ $this->params['hide-footer'] = true;
 
 ?>
 
-<?php if(false): ?>
-<div class="row">
-    <div class="col-md-3">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                 <h3 class="box-title">Path</h3>
-            </div>
-            <div class="box-body">
-                <form role="form">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Source</label>
-                      <div class="input-group">
-                        <!-- /btn-group -->
-                        <input type="text" class="form-control" placeholder="Enter a domain, device, port or URN">
-                        <div class="input-group-btn">
-                          <button type="button" class="btn btn-primary"><span class="fa fa-search"></span></button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Destination</label>
-                      <div class="input-group">
-                        <!-- /btn-group -->
-                        <input type="text" class="form-control" placeholder="Enter a domain, device, port or URN">
-                        <div class="input-group-btn">
-                          <button type="button" class="btn btn-primary"><span class="fa fa-search"></span></button>
-                        </div>
-                      </div>
-                    </div>
-                </form>
-            </div>
-            <div class="box-footer">
-                <button type="button" class="btn btn-primary"><span class="fa fa-plus"></span> Add waypoint</button>
-            </div>
-        </div>
+<div id="lsidebar" class="lsidebar collapsed">
+    <!-- Nav tabs -->
+    <div class="lsidebar-tabs">
+        <ul role="tablist">
+            <li><a href="#help" role="tab"><i class="fa fa-info-circle"></i></a></li>
+            <li><a href="#home" role="tab"><i class="fa"><img src="https://maxcdn.icons8.com/Android_L/PNG/24/Maps/route-24.png" width="21"></i></a></li>
+            <li><a href="#requirements" role="tab"><i class="fa fa-sliders"></i></a></li>
+            <li><a href="#calendar" role="tab"><i class="fa fa-calendar"></i></a></li>
+            <li><a href="#check" role="tab"><i class="fa fa-check danger"></i></a></li>
+        </ul>
+
+        <ul role="tablist">
+            <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+        </ul>
     </div>
-    <div class="col-md-9">
-    <?php endif;?>
 
-        <div id="lsidebar" class="lsidebar collapsed">
-        <!-- Nav tabs -->
-        <div class="lsidebar-tabs">
-            <ul role="tablist">
-                <li><a href="#help" role="tab"><i class="fa fa-info-circle"></i></a></li>
-                <li><a href="#home" role="tab"><i class="fa"><img src="https://maxcdn.icons8.com/Android_L/PNG/24/Maps/route-24.png" width="21"></i></a></li>
-                <li><a href="#requirements" role="tab"><i class="fa fa-sliders"></i></a></li>
-                <li><a href="#calendar" role="tab"><i class="fa fa-calendar"></i></a></li>
-                <li><a href="#check" role="tab"><i class="fa fa-check danger"></i></a></li>
-            </ul>
-
-            <ul role="tablist">
-                <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
-            </ul>
-        </div>
-
-        <!-- Tab panes -->
-        <div class="lsidebar-content">
-            <div class="lsidebar-pane" id="home">
-                <h1 class="lsidebar-header">
-                    Step 1: Path
-                    <span class="lsidebar-close"><i class="fa fa-caret-left"></i></span>
-                </h1>
-                <br>
-                <div class="nav-tabs-custom" style="margin-right: 20px;">
-                    <ul class="nav nav-tabs">
-                      <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-search"></i></a></li>
-                      <li><a href="#tab_2" data-toggle="tab"><i class="fa fa-list"></i></a></li>
-                      <li><a href="#tab_3" data-toggle="tab"><i class="fa fa-file-text"></i></a></li>
-                    </ul>
-                    <div class="tab-content">
-                      <div class="tab-pane active" id="tab_1">
-                        <div class="input-group input-group-sm">
-                            <!-- /btn-group -->
-                                <input type="text" class="form-control" placeholder="Enter a domain, device, port or URN">
-                                <div class="input-group-btn">
-                                  <button type="button" class="btn btn-primary"><span class="fa fa-search"></span></button>
-                                </div>
-                              </div>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="tab_2">
-                        The European languages are members of the same family. Their separate existence is a myth.
-                        
-                      </div>
-                      <!-- /.tab-pane -->
-                      <div class="tab-pane" id="tab_3">
-                        <div class="form-group">
-                          <label for="urns">List of URNs</label>
-                          <textarea class="form-control" rows="5" id="urns"></textarea>
-                        </div>
-                        <div class="pull-right">
-                            <button type="button" class="btn btn-default"><span class="fa fa-plus"></span> Import path</button>
-                        </div><br><br>
-                      </div>
-                      <!-- /.tab-pane -->
-                    </div>
-                    <!-- /.tab-content -->
+    <!-- Tab panes -->
+    <div class="lsidebar-content">
+        <div class="lsidebar-pane" id="home">
+            <h1 class="lsidebar-header">
+                Step 1: Path
+                <span class="lsidebar-close"><i class="fa fa-caret-left"></i></span>
+            </h1>
+            <br>
+            <div class="nav-tabs-custom" style="margin-right: 15px;">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-search"></i> on map</a></li>
+                  <li><a href="#tab_2" data-toggle="tab"><i class="fa fa-plus"></i></a></li>
+                  <li><a href="#tab_3" data-toggle="tab"><i class="fa fa-file-text"></i></a></li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane active" id="tab_1">
+                    <div class="input-group input-group-sm">
+                        <!-- /btn-group -->
+                            <input type="text" class="form-control" placeholder="Enter a domain, device, port or URN">
+                            <div class="input-group-btn">
+                              <button type="button" class="btn btn-primary"><span class="fa fa-search"></span></button>
+                            </div>
+                          </div>
+                  </div>
+                  <!-- /.tab-pane -->
+                  <div class="tab-pane" id="tab_2">
+                  </div>
+                  <!-- /.tab-pane -->
+                  <div class="tab-pane" id="tab_3">
+                        <button type="button" class="btn btn-default"><span class="fa fa-plus"></span> Import path</button>
+                  </div>
+                  <!-- /.tab-pane -->
                 </div>
-                <div>
-                    <ul class="timeline">
+                <!-- /.tab-content -->
+            </div>
+            <div>
+                <ul id="path" class="timeline">
                     <li class="time-label">
                           <span class="bg-gray">
                             <i class="fa fa-laptop"></i>
@@ -123,32 +76,46 @@ $this->params['hide-footer'] = true;
                           </span>
                     </li>
                     <!-- timeline item -->
-                    <li>
+                    <li data-point="0" class="path-point">
                         <!-- timeline icon -->
                         <i class="fa fa-map-marker bg-gray"></i>
                         <div class="timeline-item">
                             <h3 class="timeline-header">
-                                None
+                                empty
                                 <div class="pull-right">
-                                    <a href="#" class="text-muted"><i class="fa fa-plus"></i></a>
-                                    <a href="#" class="text-muted"><i class="fa fa-trash"></i></a>
+                                    <a href="#" class="text-muted"><i class="fa fa-minus"></i></a>
+                                    <a href="#" class="text-muted"><i class="fa fa-arrow-up"></i></a>
+                                    <a href="#" class="text-muted"><i class="fa fa-arrow-down"></i></a>
                                 </div>
                           </h3>
                          <div class="timeline-body">
                           Domain<br>Network<br>Device<br>Port<br>VLAN
-                        </div>
-                        <div class="timeline-footer">
-                          <a class="btn btn-danger btn-xs">Delete</a>
+                          <div class="pull-right">
+                                 <a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="text-muted"><i class="fa fa-trash"></i></a>
+                            </div>
                         </div>
                       </div>
                     </li>
-                    <li>
+                    <li id="destination-endpoint" data-point="1" class="path-point">
                         <!-- timeline icon -->
                         <i class="fa fa-map-marker bg-gray"></i>
                         <div class="timeline-item">
                             <h3 class="timeline-header">
-                                None
+                                empty
+                                <div class="pull-right">
+                                    <a href="#" class="text-muted"><i class="fa fa-minus"></i></a>
+                                    <a href="#" class="text-muted"><i class="fa fa-arrow-up"></i></a>
+                                    <a href="#" class="text-muted"><i class="fa fa-arrow-down"></i></a>
+                                </div>
                             </h3>
+                            <div class="timeline-body">
+                              Domain<br>Network<br>Device<br>Port<br>VLAN
+                              <div class="pull-right">
+                                    <a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>
+                                    <a href="#" class="text-muted"><i class="fa fa-trash"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </li>
                     <!-- END timeline item -->
@@ -158,72 +125,72 @@ $this->params['hide-footer'] = true;
                             Destination
                           </span>
                     </li>
-                    </ul>
-                </div>
-                <div class="pull-right">
-                    <button type="button" class="btn btn-default"><span class="fa fa-plus"></span> Add waypoint</button>
-                    <button type="button" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</button>
-                </div><br><br><br>
+                </ul>
             </div>
+            <div class="pull-right">
+                <button id="add-waypoint" type="button" class="btn btn-default"><span class="fa fa-plus"></span> Add waypoint</button>
+                <button type="button" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</button>
+            </div><br><br><br>
+        </div>
 
-            <div class="lsidebar-pane" id="requirements">
-                <h1 class="lsidebar-header">Step 2: Requirements<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-                <br>
-                <div class="form-group">
-                    <label>Bandwidth</label>
-                    <div class="input-group">
-                        <div class="input-group-btn">
-                          <button type="button" class="btn btn-primary"><span class="fa fa-minus"></span></button>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Mbps">
-                        <div class="input-group-btn">
-                          <button type="button" class="btn btn-primary"><span class="fa fa-plus"></span></button>
-                        </div>
+        <div class="lsidebar-pane" id="requirements">
+            <h1 class="lsidebar-header">Step 2: Requirements<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            <br>
+            <div class="form-group">
+                <label>Bandwidth</label>
+                <div class="input-group">
+                    <div class="input-group-btn">
+                      <button type="button" class="btn btn-primary"><span class="fa fa-minus"></span></button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Mbps">
+                    <div class="input-group-btn">
+                      <button type="button" class="btn btn-primary"><span class="fa fa-plus"></span></button>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Protection</label> <i class="fa fa-question-circle" data-toggle="tooltip" title="A protected circuit means that you accept losing the guaranteed bandwidth, but requires availability of the service."></i>
-                    <br>
-                    <input type="checkbox" checked data-toggle="toggle">
-                </div>
+            </div>
+            <div class="form-group">
+                <label>Protection</label> <i class="fa fa-question-circle" data-toggle="tooltip" title="A protected circuit means that you accept losing the guaranteed bandwidth, but requires availability of the service."></i>
                 <br>
-                <div class="pull-right">
-                    <button type="button" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</button>
-                </div> 
+                <input type="checkbox" checked data-toggle="toggle">
             </div>
+            <br>
+            <div class="pull-right">
+                <button type="button" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</button>
+            </div> 
+        </div>
 
-            <div class="lsidebar-pane" id="calendar">
-                <h1 class="lsidebar-header">Step 3: Schedule<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-                gdfgdfgfg
-            </div>
+        <div class="lsidebar-pane" id="calendar">
+            <h1 class="lsidebar-header">Step 3: Schedule<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            gdfgdfgfg
+        </div>
 
-            <div class="lsidebar-pane" id="check">
-                <h1 class="lsidebar-header">Step 4: Confirmation<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-                xvdfd
-            </div>
+        <div class="lsidebar-pane" id="check">
+            <h1 class="lsidebar-header">Step 4: Confirmation<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            xvdfd
+        </div>
 
-            <div class="lsidebar-pane" id="help">
-                <h1 class="lsidebar-header">Welcome to reservation page<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-                <br><p>
-                    This is the reservation page. In this page a map is used for friendly search
-                    of endpoints. A search text field also is available. The interval or the recurrence of
-                    the reservation are available on the respective option in the map sidebar. The below list
-                    contains all steps involved in a reservation request.
-                </p><br>
-                <p>1. Select your endpoints.</p>
-                <p>2. Define the requirements, e.g., bandwidth.</p>
-                <p>3. Set the duration of the circuit.</p>
-                <p>4. Confirm your request and submit.</p>
+        <div class="lsidebar-pane" id="help">
+            <h1 class="lsidebar-header">Welcome to reservation page<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            <br><p>
+                This is the reservation page. In this page a map is used for friendly search
+                of endpoints. A search text field also is available. The interval or the recurrence of
+                the reservation are available on the respective option in the map sidebar. The below list
+                contains all steps involved in a reservation request.
+            </p><br>
+            <p>1. Select your endpoints.</p>
+            <p>2. Define the requirements, e.g., bandwidth.</p>
+            <p>3. Set the duration of the circuit.</p>
+            <p>4. Confirm your request and submit.</p>
 
-                <div class="pull-right">
-                    <button type="button" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Start</button>
-                </div>
-            </div>
-
-            <div class="lsidebar-pane" id="settings">
-                <h1 class="lsidebar-header">Settings<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            <div class="pull-right">
+                <button type="button" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Start</button>
             </div>
         </div>
-    </div>
 
-        <div id="canvas" class="lsidebar-map"></div>
+        <div class="lsidebar-pane" id="settings">
+            <h1 class="lsidebar-header">Settings<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+        </div>
+    </div>
+</div>
+
+<div id="canvas" class="lsidebar-map"></div>
