@@ -3,9 +3,17 @@ var meicanMap = new MeicanLMap('canvas');
 //var meicanGraph = new MeicanGraph("map-canvas");
 var meicanTopo = [];
 
+var MARKER_OPTIONS_DEV = '' +
+'<div><button style="font-size: 10px; height: 22px; width: 48.25%;" id="set-as-source">From here</button>' +
+'<button style="font-size: 10px; height: 22px; width: 48.25%;" id="set-as-dest">To here</button></div><div style="height: 2px;"></div>' +
+'<div><button style="font-size: 10px; height: 22px; width: 98%;" id="add-waypoint">Add waypoint</button>' +
+'</div>';
+
 $(document).ready(function() {
+    meicanMap.show("rnp", 'dev');
+    
     $("#add-waypoint").click(function() {
-        $("#destination-endpoint").before('<li data-point="' + 
+        $("#destination-client").before('<li data-point="' + 
             ($(".path-point").length - 1) + '" class="path-point">'+
                     '<i class="fa fa-map-marker bg-gray"></i>'+
                     '<div class="timeline-item">'+
@@ -13,15 +21,15 @@ $(document).ready(function() {
                             'empty'+
                             '<div class="pull-right">'+
                                 '<a href="#" class="text-muted"><i class="fa fa-minus"></i></a>'+
-                                '<a href="#" class="text-muted"><i class="fa fa-arrow-up"></i></a>'+
-                                '<a href="#" class="text-muted"><i class="fa fa-arrow-down"></i></a>'+
+                                '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-arrow-up"></i></a>'+
+                                '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-arrow-down"></i></a>'+
                             '</div>'+
                         '</h3>'+
                         '<div class="timeline-body">'+
-                              'Domain<br>Network<br>Device<br>Port<br>VLAN'+
+                              'Network<br>Device<br>Port<br>VLAN'+
                               '<div class="pull-right">'+
                                     '<a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>'+
-                                    '<a href="#" class="text-muted"><i class="fa fa-trash"></i></a>'+
+                                    '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-trash"></i></a>'+
                                 '</div>'+
                             '</div>'+
                     '</div>'+
@@ -30,7 +38,16 @@ $(document).ready(function() {
         return false;
     });
 
+    meicanMap.getMap().on('popupopen',function() {
+        console.log('dasd');
+    });
+
     $(".fa-arrow-down").click(function() {
+    });
+
+    $("#path").on('click','.fa-trash', function() {
+        $(this).parent().parent().parent().parent().parent().remove();
+        return false;
     });
 
     $("#path").on('click','.fa-minus', function() {
@@ -68,8 +85,7 @@ $(document).ready(function() {
             $("#canvas").css("width", $(window).width() - 51);
         }
     })
-
-    meicanMap.show("rnp", 'dev');
+    
     /*$( "#graph-canvas" ).on( "nodeClick", function(event, nodeId) {
         meicanMap.showMarker(nodeId);
     });

@@ -52,14 +52,17 @@ MeicanLMap.prototype.addLink = function(srcId, dstId, type) {
         strokeColor = "#0000FF"; 
         strokeOpacity = 0.1;
     
-        link = new google.maps.Polyline({
+        /*link = new google.maps.Polyline({
             path: [srcMarker.position, dstMarker.position],
             strokeColor: strokeColor,
             strokeOpacity: strokeOpacity,
             strokeWeight: 5,
             geodesic: false,
             type: type,
-        });
+        });*/
+
+        var link = L.polyline([srcMarker.getLatLng(), dstMarker.getLatLng()], 
+            {color: 'white'}).addTo(this._map);
     
     /*google.maps.event.addListener(link, 'click', function(event) {
         var srcDomain = meicanMap.getDomainName(source.domainId);
@@ -75,7 +78,6 @@ MeicanLMap.prototype.addLink = function(srcId, dstId, type) {
         meicanMap.addWindow(infoWin);
     });*/
     
-        link.setMap(this.getMap());
         this._links.push(link);
     }    
 }

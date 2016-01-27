@@ -43,8 +43,8 @@ $this->params['hide-footer'] = true;
             <div class="nav-tabs-custom" style="margin-right: 15px;">
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-search"></i> on map</a></li>
-                  <li><a href="#tab_2" data-toggle="tab"><i class="fa fa-plus"></i></a></li>
-                  <li><a href="#tab_3" data-toggle="tab"><i class="fa fa-file-text"></i></a></li>
+                  <li><a id="add-waypoint" href="#"><i class="fa fa-plus"></i></a></li>
+                  <li><a href="#"><i class="fa fa-file-text"></i></a></li>
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1">
@@ -119,7 +119,7 @@ $this->params['hide-footer'] = true;
                         </div>
                     </li>
                     <!-- END timeline item -->
-                    <li class="time-label">
+                    <li id="destination-client" class="time-label">
                           <span class="bg-gray">
                             <i class="fa fa-laptop"></i>
                             Destination
@@ -128,7 +128,6 @@ $this->params['hide-footer'] = true;
                 </ul>
             </div>
             <div class="pull-right">
-                <button id="add-waypoint" type="button" class="btn btn-default"><span class="fa fa-plus"></span> Add waypoint</button>
                 <button type="button" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</button>
             </div><br><br><br>
         </div>
