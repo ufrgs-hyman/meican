@@ -2216,13 +2216,13 @@ a:focus {
   background-color: #e7e7e7;
 }
 .btn-primary {
-  background-color: #27567C;
-  border-color: #27567C;
+  background-color: #306A99;
+  border-color: #214969;
 }
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary.hover {
-  background-color: #214969;
+  background-color: #27567C;
 }
 .btn-success {
   background-color: #00a65a;
