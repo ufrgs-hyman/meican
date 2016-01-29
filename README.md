@@ -1,5 +1,7 @@
 # MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks
 
+MEICAN 1.x is deprecated. This code is preserved here as a legacy archive for any poor soul who needs to work with it. Please look the version 2.x repository over [here](https://github.com/ufrgs-hyman/meican2).
+
 MEICAN is a network management environment that provides a service to request circuits in DCN (Dynamic Circuit Network). Users may access MEICAN through a graphical user interface based on Web 2.0 technologies, requesting the creation of circuits between the desired endpoints. In this process, users specify the source and destination points of the circuits, the bandwidth required, the time at which the circuit must be created, as well as the time interval in which the circuit must be active. The system also provides mechanisms that allow circuit requests to be provisioned automatically or upon the approval of network administrators. For this purpose, MEICAN internally employs a machine workflows with support for network management, which represent the operating policies set by the operators.
 
 The system meets the demands of users using the network middleware solution ** OSCARS ** . In this environment, a central server MEICAN interacts with the various OSCARS to be installed along the backbone of the Brazilian Research & Education Network (** RNP - Rede Nacional de Ensino e Pesquisa **). At RNP, MEICAN works as the central portal for all users who need to create circuits along its backbone.
