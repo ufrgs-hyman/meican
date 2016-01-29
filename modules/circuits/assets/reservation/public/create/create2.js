@@ -13,12 +13,11 @@ $(document).ready(function() {
     meicanMap.show("rnp", 'dev');
     
     $("#add-waypoint").click(function() {
-        $("#destination-client").before('<li data-point="' + 
-            ($(".path-point").length - 1) + '" class="path-point">'+
+        $("#destination-client").before('<li class="path-point">'+
                     '<i class="fa fa-map-marker bg-gray"></i>'+
                     '<div class="timeline-item">'+
                         '<h3 class="timeline-header">'+
-                            'empty'+
+                            'none'+
                             '<div class="pull-right">'+
                                 '<a href="#" class="text-muted"><i class="fa fa-minus"></i></a>'+
                                 '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-arrow-up"></i></a>'+
@@ -34,12 +33,22 @@ $(document).ready(function() {
                             '</div>'+
                     '</div>'+
                 '</li>');
-        $("#destination-endpoint").attr("data-point", parseInt($("#destination-endpoint").attr("data-point")) + 1);
         return false;
     });
 
-    meicanMap.getMap().on('popupopen',function() {
-        console.log('dasd');
+    $('#canvas').on('markerClick', function(e, marker) {
+        marker.setPopupContent('Domain: cipo.rnp.br<br>Device: POA<br><br><div class="btn-group">'+
+            '<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">'+
+              'Options <span class="caret"></span>'+
+            '</button>'+
+            '<ul class="dropdown-menu">'+
+              '<li><a class="set-source" href="#">From here</a></li>'+
+              '<li><a class="add-waypoint" href="#">Add waypoint</a></li>'+
+              '<li><a class="set-destination" href="#">To here</a></li>'+
+            '</ul>'+
+          '</div>');
+
+        setPoint(0, marker);
     });
 
     $(".fa-arrow-down").click(function() {
@@ -95,6 +104,10 @@ $(document).ready(function() {
         
     loadDomains();
 });
+
+function setPoint(position, marker) {
+    $($(".path-point")[position]).find('.point-net').text('glo');
+}
 
 /*$("#viewer-mode-select").selectmenu({
     select: function( event, ui ) {

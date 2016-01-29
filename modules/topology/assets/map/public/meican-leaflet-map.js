@@ -108,12 +108,16 @@ MeicanLMap.prototype.addMarker = function(object, type, color) {
             id: type+ object.id, 
             icon: icon
         }
-    ).addTo(this._map).bindPopup('#');
+    ).addTo(this._map).bindPopup("#");
 
     this._markers.push(marker);
     //this._clusterer.addMarker(marker);
 
     var currentMap = this;
+
+    marker.on('click', function(e) {
+        $("#"+currentMap._canvasDivId).trigger("markerClick", marker);
+    });
 
     /*google.maps.event.addListener(marker, 'mouseover', function() {
         currentMap.closeWindows();

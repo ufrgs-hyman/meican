@@ -76,33 +76,44 @@ $this->params['hide-footer'] = true;
                           </span>
                     </li>
                     <!-- timeline item -->
-                    <li data-point="0" class="path-point">
+                    <li class="path-point">
                         <!-- timeline icon -->
                         <i class="fa fa-map-marker bg-gray"></i>
                         <div class="timeline-item">
                             <h3 class="timeline-header">
-                                empty
+                                none
                                 <div class="pull-right">
                                     <a href="#" class="text-muted"><i class="fa fa-minus"></i></a>
                                     <a href="#" class="text-muted"><i class="fa fa-arrow-up"></i></a>
                                     <a href="#" class="text-muted"><i class="fa fa-arrow-down"></i></a>
                                 </div>
                           </h3>
-                         <div class="timeline-body">
-                          Domain<br>Network<br>Device<br>Port<br>VLAN
-                          <div class="pull-right">
-                                 <a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>
+                        <div class="timeline-body">
+                            <div class="point-default">
+                              Network: <label class="point-net">none</label><br>
+                              Device: <label class="point-dev">none</label><br>
+                              Port: <label class="point-port">none</label><br>
+                              <input type="hidden" name="ReservationForm[path][port][]">
+                            </div>
+                            <div class="point-advanced" hidden>
+                              URN: <label class="point-urn">none</label><br>
+                              <input type="hidden" name="ReservationForm[path][urn][]">
+                            </div>
+                            VLAN: <label class="point-vlan">Auto</label>
+                            <input type="hidden" name="ReservationForm[path][vlan][]">
+                            <div class="pull-right">
+                                <a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>
                                 <a href="#" class="text-muted"><i class="fa fa-trash"></i></a>
                             </div>
                         </div>
                       </div>
                     </li>
-                    <li id="destination-endpoint" data-point="1" class="path-point">
+                    <li class="path-point">
                         <!-- timeline icon -->
                         <i class="fa fa-map-marker bg-gray"></i>
                         <div class="timeline-item">
                             <h3 class="timeline-header">
-                                empty
+                                <label class="point dom">none</label>
                                 <div class="pull-right">
                                     <a href="#" class="text-muted"><i class="fa fa-minus"></i></a>
                                     <a href="#" class="text-muted"><i class="fa fa-arrow-up"></i></a>
@@ -110,8 +121,19 @@ $this->params['hide-footer'] = true;
                                 </div>
                             </h3>
                             <div class="timeline-body">
-                              Domain<br>Network<br>Device<br>Port<br>VLAN
-                              <div class="pull-right">
+                                <div class="point-default">
+                                  Network: <label class="point net">none</label><br>
+                                  Device: <label class="point dev">none</label><br>
+                                  Port: <label class="point port">none</label><br>
+                                  <input class="port-input" type="hidden" name="ReservationForm[path][port][]">
+                                </div>
+                                <div class="point-advanced" hidden>
+                                  URN: <label class="point urn">none</label><br>
+                                  <input class="urn-input" type="hidden" name="ReservationForm[path][urn][]">
+                                </div>
+                                VLAN: <label class="point vlan">Auto</label>
+                                <input class="vlan-input" type="hidden" name="ReservationForm[path][vlan][]">
+                                <div class="pull-right">
                                     <a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>
                                     <a href="#" class="text-muted"><i class="fa fa-trash"></i></a>
                                 </div>
@@ -120,10 +142,10 @@ $this->params['hide-footer'] = true;
                     </li>
                     <!-- END timeline item -->
                     <li id="destination-client" class="time-label">
-                          <span class="bg-gray">
-                            <i class="fa fa-laptop"></i>
-                            Destination
-                          </span>
+                      <span class="bg-gray">
+                        <i class="fa fa-laptop"></i>
+                        Destination
+                      </span>
                     </li>
                 </ul>
             </div>

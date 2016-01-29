@@ -56,7 +56,7 @@ class LoginForm extends Model {
     }
     
     public function createSession($user) {
-        $duration = 3600; // one hour
+        $duration = 3600*24; // one day
         return Yii::$app->user->login($user, $duration);
     }
     
