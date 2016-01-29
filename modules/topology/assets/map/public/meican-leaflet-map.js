@@ -44,25 +44,36 @@ MeicanLMap.prototype.hide = function() {
     }
 }
 
-MeicanLMap.prototype.addLink = function(srcId, dstId, type) {
-    var srcMarker = this.getMarker(srcId);
-    var dstMarker = this.getMarker(dstId);
+MeicanLMap.prototype.addLink = function(path, type) {
+    console.log(path);
+    var latLngList = [];
 
-    if(srcMarker && dstMarker) {
-        strokeColor = "#0000FF"; 
-        strokeOpacity = 0.1;
-    
-        /*link = new google.maps.Polyline({
-            path: [srcMarker.position, dstMarker.position],
-            strokeColor: strokeColor,
-            strokeOpacity: strokeOpacity,
-            strokeWeight: 5,
-            geodesic: false,
-            type: type,
-        });*/
+    for (var i = 0; i < path.length; i++) {
+        var marker = this.getMarker(path[i]);
+        if(marker != null)
+            latLngList.push(marker.getLatLng());
+    };
 
-        var link = L.polyline([srcMarker.getLatLng(), dstMarker.getLatLng()], 
-            {color: 'white'}).addTo(this._map);
+    //strokeColor = "#0000FF"; 
+    //strokeOpacity = 0.1;
+
+    /*link = new google.maps.Polyline({
+        path: [srcMarker.position, dstMarker.position],
+        strokeColor: strokeColor,
+        strokeOpacity: strokeOpacity,
+        strokeWeight: 5,
+        geodesic: false,
+        type: type,
+    });*/
+
+    if (latLngList.length > 1) {
+        console.log(latLngList);
+        var link = L.polyline(
+            latLngList, 
+            {color: 'black'}).addTo(this._map);
+
+        this._links.push(link);
+    }
     
     /*google.maps.event.addListener(link, 'click', function(event) {
         var srcDomain = meicanMap.getDomainName(source.domainId);
@@ -77,9 +88,22 @@ MeicanLMap.prototype.addLink = function(srcId, dstId, type) {
         infoWin.open(meicanMap.getMap());
         meicanMap.addWindow(infoWin);
     });*/
-    
-        this._links.push(link);
-    }    
+}
+
+MeicanLMap.prototype.removeLink = function(link) {
+    this._map.removeLayer(link);
+}
+
+MeicanLMap.prototype.getLinks = function() {
+    return this._links;
+}
+
+MeicanLMap.prototype.removeLinks = function() {
+    if (this._links.length > 0) {
+        for (var i = 0; i < this._links.length; i++) {
+            this.removeLink(this._links[i]);
+        };
+    }
 }
 
 MeicanLMap.prototype.addMarker = function(object, type, color) {
@@ -106,7 +130,10 @@ MeicanLMap.prototype.addMarker = function(object, type, color) {
         pos, 
         {
             id: type+ object.id, 
-            icon: icon
+            icon: icon,
+            type: type,
+            name: object.name,
+            domainId: object.domain_id
         }
     ).addTo(this._map).bindPopup("#");
 
@@ -205,7 +232,7 @@ MeicanLMap.prototype.getMarker = function(id) {
     if(id) {
         var size = this._markers.length;
         for(var i = 0; i < size; i++){
-            if ((this._markers[i].id.toString()) == (id.toString())) {
+            if ((this._markers[i].options.id.toString()) == (id.toString())) {
                 return this._markers[i];
             }
         }

@@ -2,53 +2,41 @@
 var meicanMap = new MeicanLMap('canvas');
 //var meicanGraph = new MeicanGraph("map-canvas");
 var meicanTopo = [];
-
-var MARKER_OPTIONS_DEV = '' +
-'<div><button style="font-size: 10px; height: 22px; width: 48.25%;" id="set-as-source">From here</button>' +
-'<button style="font-size: 10px; height: 22px; width: 48.25%;" id="set-as-dest">To here</button></div><div style="height: 2px;"></div>' +
-'<div><button style="font-size: 10px; height: 22px; width: 98%;" id="add-waypoint">Add waypoint</button>' +
-'</div>';
+var mode = 'map';
+var path = [];
 
 $(document).ready(function() {
     meicanMap.show("rnp", 'dev');
+    $(".sidebar-mini").addClass("sidebar-collapse");
     
-    $("#add-waypoint").click(function() {
-        $("#destination-client").before('<li class="path-point">'+
-                    '<i class="fa fa-map-marker bg-gray"></i>'+
-                    '<div class="timeline-item">'+
-                        '<h3 class="timeline-header">'+
-                            'none'+
-                            '<div class="pull-right">'+
-                                '<a href="#" class="text-muted"><i class="fa fa-minus"></i></a>'+
-                                '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-arrow-up"></i></a>'+
-                                '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-arrow-down"></i></a>'+
-                            '</div>'+
-                        '</h3>'+
-                        '<div class="timeline-body">'+
-                              'Network<br>Device<br>Port<br>VLAN'+
-                              '<div class="pull-right">'+
-                                    '<a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>'+
-                                    '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-trash"></i></a>'+
-                                '</div>'+
-                            '</div>'+
-                    '</div>'+
-                '</li>');
+    $("#add-point").click(function() {
+        addPoint();
         return false;
     });
 
     $('#canvas').on('markerClick', function(e, marker) {
         marker.setPopupContent('Domain: cipo.rnp.br<br>Device: POA<br><br><div class="btn-group">'+
             '<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">'+
-              'Options <span class="caret"></span>'+
+              'Options <span class="fa fa-caret"></span>'+
             '</button>'+
-            '<ul class="dropdown-menu">'+
+            '<ul data-marker="' + marker.options.id + '" class="dropdown-menu">'+
               '<li><a class="set-source" href="#">From here</a></li>'+
               '<li><a class="add-waypoint" href="#">Add waypoint</a></li>'+
               '<li><a class="set-destination" href="#">To here</a></li>'+
             '</ul>'+
           '</div>');
+    });
 
-        setPoint(0, marker);
+    $("#canvas").on("click",'.set-source', function() {
+        setSourcePoint($(this).parent().parent().attr('data-marker'));
+    });
+
+    $("#canvas").on("click",'.set-destination', function() {
+        setDestinationPoint($(this).parent().parent().attr('data-marker'));
+    });
+
+    $("#canvas").on("click",'.set-waypoint', function() {
+        addWayPoint($(this).parent().parent().attr('data-marker'));
     });
 
     $(".fa-arrow-down").click(function() {
@@ -72,19 +60,13 @@ $(document).ready(function() {
         $(this).parent().parent().parent().parent().find('.timeline-body').slideDown();
         return false;
     });
-
-    $(".sidebar-mini").addClass("sidebar-collapse");
-    //meicanGraph.build("graph-canvas");
     
-    //$(".main-footer").hide();
     $("#canvas").css("height", $(window).height() - 50);
     if($(window).width() < 768) {
         $("#canvas").css("width", $(window).width() - 40);
     } else {
         $("#canvas").css("width", $(window).width() - 51);
     }
-    //$("#canvas").css("width", $(window).width() - 51);
-    var lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap.getMap());
 
     $( window ).resize(function() {
         $("#canvas").css("height", $(window).height() - 50);
@@ -103,10 +85,89 @@ $(document).ready(function() {
     });*/
         
     loadDomains();
+
+    var lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap.getMap());
 });
 
-function setPoint(position, marker) {
-    $($(".path-point")[position]).find('.point-net').text('glo');
+function setSourcePoint(nodeId) {
+    setPoint(0, nodeId);
+}
+
+function setDestinationPoint(nodeId) {
+    setPoint($('.point').length - 1, nodeId);
+}
+
+function addWayPoint(nodeId) {
+    addPoint($('.point').length - 1, nodeId);
+}
+
+function setPoint(position, nodeId) {
+    console.log(position, nodeId);
+    //var node = meicanMap.getMarker(nodeId);
+    //var node = meicanGraph.getNode(nodeId);
+    if(mode == 'map') {
+        var marker = meicanMap.getMarker(nodeId);
+        $($(".point")[position]).find('.dom-l').text(meicanMap.getDomain(marker.options.domainId).name);
+        $($(".point")[position]).find('.dev-l').text(marker.options.name);
+        $($(".point")[position]).find('.dev-l').attr('data', marker.options.id.replace('dev',''));
+    } else {
+        var node = meicanGraph.getNode(nodeId);
+    }
+
+    drawPath();
+}
+
+function addPoint(position, markerId) {
+    if(position) {
+        $($(".point")[position]).before(buildPoint());
+    } else {
+        $("#destination-client").before(buildPoint());
+    }
+}
+
+function buildPoint() {
+    return '<li class="point">'+
+        '<i class="fa fa-map-marker bg-gray"></i>'+
+        '<div class="timeline-item">'+
+            '<h3 class="timeline-header">'+
+                '<label data="" class="point-info dom-l">none</label>'+
+                '<div class="pull-right">'+
+                    '<a href="#" class="text-muted"><i class="fa fa-minus"></i></a>'+
+                    '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-arrow-up"></i></a>'+
+                    '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-arrow-down"></i></a>'+
+                '</div>'+
+          '</h3>'+
+        '<div class="timeline-body">'+
+            '<div class="point-default">'+
+              'Network: <label data="" class="point-info net-l">none</label><br>'+
+              'Device: <label data="" class="point-info dev-l">none</label><br>'+
+              'Port: <label class="point-info port-l">none</label><br>'+
+              '<input class="port-id" type="hidden" name="ReservationForm[path][port][]">'+
+            '</div>'+
+            '<div class="point-advanced" hidden>'+
+              'URN: <label class="point-info urn-l">none</label><br>'+
+              '<input class="urn" type="hidden" name="ReservationForm[path][urn][]">'+
+            '</div>'+
+            'VLAN: <label class="point-info vlan-l">Auto</label>'+
+            '<input class="vlan" type="hidden" name="ReservationForm[path][vlan][]">'+
+            '<div class="pull-right">'+
+                '<a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>'+
+                '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-trash"></i></a>'+
+            '</div>'+
+        '</div>'+
+    '</li>';
+}
+
+function drawPath() {
+    meicanMap.removeLinks();
+
+    if ($(".point").length > 1) {
+        var path = [];
+        for (var i = 0; i < $(".point").length; i++) {
+            path.push('dev' + $($(".point")[i]).find('.dev-l').attr('data'));
+        };
+        meicanMap.addLink(path);
+    }
 }
 
 /*$("#viewer-mode-select").selectmenu({

@@ -6,13 +6,19 @@
 
 use yii\bootstrap\Tabs;
 use yii\bootstrap\Modal;
+use yii\bootstrap\ActiveForm;
 
 use meican\circuits\assets\reservation\CreateAsset;
 
 CreateAsset::register($this);
 
 $this->params['hide-content-section'] = true;
-$this->params['hide-footer'] = true; 
+$this->params['hide-footer'] = true;
+
+$form = ActiveForm::begin([
+        'method' => 'post',
+        'id' => 'reservation-form',
+]) 
 
 ?>
 
@@ -43,7 +49,7 @@ $this->params['hide-footer'] = true;
             <div class="nav-tabs-custom" style="margin-right: 15px;">
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-search"></i> on map</a></li>
-                  <li><a id="add-waypoint" href="#"><i class="fa fa-plus"></i></a></li>
+                  <li><a id="add-point" href="#"><i class="fa fa-plus"></i> <i class="fa fa-map-marker"></i></a></li>
                   <li><a href="#"><i class="fa fa-file-text"></i></a></li>
                 </ul>
                 <div class="tab-content">
@@ -76,31 +82,31 @@ $this->params['hide-footer'] = true;
                           </span>
                     </li>
                     <!-- timeline item -->
-                    <li class="path-point">
+                    <li class="point">
                         <!-- timeline icon -->
                         <i class="fa fa-map-marker bg-gray"></i>
                         <div class="timeline-item">
                             <h3 class="timeline-header">
-                                none
+                                <label data="" class="point-info dom-l">none</label>
                                 <div class="pull-right">
-                                    <a href="#" class="text-muted"><i class="fa fa-minus"></i></a>
+                                    <a href="#" class="text-muted"><i class="fa fa-plus"></i></a>
                                     <a href="#" class="text-muted"><i class="fa fa-arrow-up"></i></a>
                                     <a href="#" class="text-muted"><i class="fa fa-arrow-down"></i></a>
                                 </div>
                           </h3>
-                        <div class="timeline-body">
+                        <div class="timeline-body" hidden>
                             <div class="point-default">
-                              Network: <label class="point-net">none</label><br>
-                              Device: <label class="point-dev">none</label><br>
-                              Port: <label class="point-port">none</label><br>
-                              <input type="hidden" name="ReservationForm[path][port][]">
+                              Network: <label data="" class="point-info net-l">none</label><br>
+                              Device: <label data="" class="point-info dev-l">none</label><br>
+                              Port: <label class="point-info port-l">none</label><br>
+                              <input class="port-id" type="hidden" name="ReservationForm[path][port][]">
                             </div>
                             <div class="point-advanced" hidden>
-                              URN: <label class="point-urn">none</label><br>
-                              <input type="hidden" name="ReservationForm[path][urn][]">
+                              URN: <label class="point-info urn-l">none</label><br>
+                              <input class="urn" type="hidden" name="ReservationForm[path][urn][]">
                             </div>
-                            VLAN: <label class="point-vlan">Auto</label>
-                            <input type="hidden" name="ReservationForm[path][vlan][]">
+                            VLAN: <label class="point-info vlan-l">Auto</label>
+                            <input class="vlan" type="hidden" name="ReservationForm[path][vlan][]">
                             <div class="pull-right">
                                 <a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>
                                 <a href="#" class="text-muted"><i class="fa fa-trash"></i></a>
@@ -108,31 +114,31 @@ $this->params['hide-footer'] = true;
                         </div>
                       </div>
                     </li>
-                    <li class="path-point">
+                    <li class="point">
                         <!-- timeline icon -->
                         <i class="fa fa-map-marker bg-gray"></i>
                         <div class="timeline-item">
                             <h3 class="timeline-header">
-                                <label class="point dom">none</label>
+                                <label data="" class="point-info dom-l">none</label>
                                 <div class="pull-right">
-                                    <a href="#" class="text-muted"><i class="fa fa-minus"></i></a>
+                                    <a href="#" class="text-muted"><i class="fa fa-plus"></i></a>
                                     <a href="#" class="text-muted"><i class="fa fa-arrow-up"></i></a>
                                     <a href="#" class="text-muted"><i class="fa fa-arrow-down"></i></a>
                                 </div>
                             </h3>
-                            <div class="timeline-body">
+                            <div class="timeline-body" hidden>
                                 <div class="point-default">
-                                  Network: <label class="point net">none</label><br>
-                                  Device: <label class="point dev">none</label><br>
-                                  Port: <label class="point port">none</label><br>
-                                  <input class="port-input" type="hidden" name="ReservationForm[path][port][]">
+                                  Network: <label data="" class="point-info net-l">none</label><br>
+                                  Device: <label data="" class="point-info dev-l">none</label><br>
+                                  Port: <label class="point-info port-l">none</label><br>
+                                  <input class="port-id" type="hidden" name="ReservationForm[path][port][]">
                                 </div>
                                 <div class="point-advanced" hidden>
-                                  URN: <label class="point urn">none</label><br>
-                                  <input class="urn-input" type="hidden" name="ReservationForm[path][urn][]">
+                                  URN: <label class="point-info urn-l">none</label><br>
+                                  <input class="urn" type="hidden" name="ReservationForm[path][urn][]">
                                 </div>
-                                VLAN: <label class="point vlan">Auto</label>
-                                <input class="vlan-input" type="hidden" name="ReservationForm[path][vlan][]">
+                                VLAN: <label class="point-info vlan-l">Auto</label>
+                                <input class="vlan" type="hidden" name="ReservationForm[path][vlan][]">
                                 <div class="pull-right">
                                     <a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>
                                     <a href="#" class="text-muted"><i class="fa fa-trash"></i></a>
@@ -176,7 +182,7 @@ $this->params['hide-footer'] = true;
             </div>
             <br>
             <div class="pull-right">
-                <button type="button" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</button>
+                <input type="submit" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</input>
             </div> 
         </div>
 
@@ -215,3 +221,5 @@ $this->params['hide-footer'] = true;
 </div>
 
 <div id="canvas" class="lsidebar-map"></div>
+
+<?php ActiveForm::end(); ?>
