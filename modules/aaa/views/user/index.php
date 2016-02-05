@@ -64,21 +64,21 @@ $this->params['header'] = ["Users", ['Home', 'Users']];
                 [
                     'label' => Yii::t('aaa', 'User'),
                     'value' => 'login',
-                    'headerOptions'=>['style'=>'width: 39%;'],
+                    'headerOptions'=>['style'=>'width: 47%;'],
                 ],
                 [
                     'label' => Yii::t('aaa', 'Name'),
                     'value' => 'name',
-                    'headerOptions'=>['style'=>'width: 39%;'],
+                    'headerOptions'=>['style'=>'width: 47%;'],
                 ],
-                [
+                /*[
                     'label' => Yii::t('aaa', '#Roles in Domain'),
                     'value' => 'numRoles',
                     'filter' => Html::activeDropDownList($searchModel, 'domain',
                         ArrayHelper::map($domains, 'name', 'name'),
                         ['id'=>'dropdown', 'class'=>'form-control','prompt' => Yii::t("bpm", 'any')]),
                     'headerOptions'=>['style'=>'width: 16%;'],
-                ],
+                ],*/
                 ),
             ]);
             

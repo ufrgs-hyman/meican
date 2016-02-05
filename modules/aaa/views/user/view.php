@@ -5,8 +5,9 @@
  */
 
 use yii\helpers\Url;
+use meican\aaa\RbacController;
 
-$this->params['header'] = [$model->name, ['Home', 'Users', $model->name]];
+$this->params['header'] = [$model->name, [Yii::t("aaa", 'Home'), Yii::t("aaa", 'Users'), $model->name]];
 
 ?>
 
@@ -25,7 +26,8 @@ $this->params['header'] = [$model->name, ['Home', 'Users', $model->name]];
         </div>
     </div>
     <div class="col-md-6">
-        <?= $this->render("@meican/aaa/views/role/_index", ['rolesProvider'=>$rolesProvider]); ?>
+        <?= $this->render("@meican/aaa/views/role/_domain", ['rolesProvider'=>$domainRolesProvider, 'userId' => $model->id]); ?>
+        <?php if(RbacController::can("user/read")) echo $this->render("@meican/aaa/views/role/_system", ['rolesProvider'=>$systemRolesProvider, 'userId' => $model->id]); ?>
     </div>
 </div>
 

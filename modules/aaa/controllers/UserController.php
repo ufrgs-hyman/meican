@@ -51,17 +51,53 @@ class UserController extends RbacController {
     public function actionView($id) {
         $user = User::findOne($id);
         
-        $rolesProvider = new ActiveDataProvider([
-                'query' => $user->getRoles(),
+        if(self::can("user/read")){
+        	$roles = UserDomainRole::find()->where(['user_id' => $user->id])->all();
+        	$filtered = [];
+        	foreach($roles as $role){
+        		if($role->getGroup()->type == Group::TYPE_DOMAIN) $filtered[] = $role->id;
+        	}
+        	$queryDomain = UserDomainRole::find()->where(['in', 'id', $filtered]);
+        }
+        else if(self::can("role/read")){
+        	$allowedDomains = self::whichDomainsCan('role/read');
+            $domains_name = [];
+            foreach($allowedDomains as $domain) $domains_name[] = $domain->name;            
+            $roles = UserDomainRole::find()->where(['user_id' => $user->id])->andWhere(['in', 'domain', $domains_name])->all();
+            $filtered = [];
+            foreach($roles as $role){
+            	if($role->getGroup()->type == Group::TYPE_DOMAIN) $filtered[] = $role->id;
+            }
+            $queryDomain = UserDomainRole::find()->where(['in', 'id', $filtered]);
+        }
+        $domainProvider = new ActiveDataProvider([
+                'query' => $queryDomain,
                 'pagination' => [
-                  'pageSize' => 10,
+                  	'pageSize' => 5,
                 ],
                 'sort' => false,
         ]);
         
+        $roles = UserDomainRole::find()->where(['user_id' => $user->id])->all();
+        $filtered = [];
+        if(self::can("user/read")){
+        	foreach($roles as $role){
+        		if($role->getGroup()->type == Group::TYPE_SYSTEM) $filtered[] = $role->id;
+        	}
+        }
+        $querySystem = UserDomainRole::find()->where(['in', 'id', $filtered]);
+        $systemProvider = new ActiveDataProvider([
+        		'query' => $querySystem,
+        		'pagination' => [
+        			'pageSize' => 5,
+        		],
+        		'sort' => false,
+        ]);
+        
         return $this->render('view', array(
                 'model' => $user,
-                'rolesProvider' => $rolesProvider
+                'domainRolesProvider' => $domainProvider,
+        		'systemRolesProvider' => $systemProvider,
         ));
     }
     

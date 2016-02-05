@@ -13,20 +13,20 @@ use yii\helpers\Url;
 use meican\base\grid\IcheckboxColumn;
 use meican\base\components\LinkColumn;
 use meican\aaa\models\Group;
-use meican\aaa\assets\role\CreateEditAsset;
+use meican\aaa\assets\role\RoleSystemAsset;
 
-CreateEditAsset::register($this);
+RoleSystemAsset::register($this);
 
 ?>
 
 <div class="box box-default">
     <div class="box-header with-border">
-        <h3 class="box-title"><?= Yii::t("aaa", "Roles"); ?></h3>
+        <h3 class="box-title"><?= Yii::t("aaa", "Roles for System"); ?></h3>
     </div>
     <div class="box-body">
         <div>
-            <a id="add-role-grid-btn" class="btn btn-primary">Add</a>
-            <a id="delete-role-grid-btn" class="btn btn-warning">Delete</a>
+            <a id="<?= $userId ?>" class="btn btn-primary add-system-btn"><?= Yii::t("aaa", "Add"); ?></a>
+            <a id="delete-system-role" class="btn btn-warning delete-btn"><?= Yii::t("aaa", "Delete"); ?></a>
         </div><br>
 
         <?php
@@ -34,44 +34,36 @@ CreateEditAsset::register($this);
         $form = ActiveForm::begin([
             'method' => 'post',
             'action' => ['/aaa/role/delete'],
-            'id' => 'role-grid-form',  
+            'id' => 'system-role-form',  
             'enableClientScript'=>false,
             'enableClientValidation' => false,
         ]);
 
         echo GridView::widget([
-            'id' => 'role-grid',
+            'id' => 'role-system-grid',
             'dataProvider' => $rolesProvider,
             'layout' => "{items}{summary}{pager}",
             'columns' => array(
                 array(
                     'class'=>IcheckboxColumn::className(),
+                	'checkboxOptions' =>['class'=>'deleteSystem'],
                     'name'=>'delete',         
                     'multiple'=>false,
                     'headerOptions'=>['style'=>'width: 2%;'],
                 ),
                 [
-                    'format' => 'raw',
-                    'value' => function ($model){
-                        return '<a href="#">'.Html::img('@web/images/edit_1.png', ['class' => "edit-role-grid-btn"])."</a>";
-                    },
-                    'headerOptions'=>['style'=>'width: 2%;'],
-                ],
-                [
-                    'attribute' => 'domain', 
-                    'format' => 'raw',
-                    'value' => function($model) {
-                        $type = $model->getGroup()->type;
-                        if($type == Group::TYPE_DOMAIN){
-                            $dom = $model->getDomain();
-                            if ($dom) return $dom->name;
-                            return Yii::t("aaa", "Any");
-                        }
-                        else {
-                            return Yii::t("aaa", "Any");
-                        }
-                     }
-                ],
+            		'class' => 'yii\grid\ActionColumn',
+            		'template'=>'{edit}',
+            		'contentOptions' => function($model){
+            			return ['class'=>'btn-edit', 'id' => $model->id];
+            		},
+            		'buttons' => [
+            			'edit' => function ($url, $model) {
+            				return Html::a('<span class="fa fa-pencil"></span>', null);
+            			}
+            		],
+            		'headerOptions'=>['style'=>'width: 2%;'],
+            	],
                 [
                     'attribute' => '_groupRoleName',
                     'format' => 'raw',
@@ -91,7 +83,7 @@ CreateEditAsset::register($this);
 <?php 
 
 Modal::begin([
-    'id' => 'delete-role-modal',
+    'id' => 'delete-role-system-modal',
     'headerOptions' => ['hidden'=>'hidden'],
     'footer' => '<button id="close-btn" class="btn btn-default">Cancel</button> <button id="delete-role-btn" class="grid-btn btn btn-danger">Delete</button>',
 ]);
@@ -101,7 +93,7 @@ echo 'Do you want delete the selected items?';
 Modal::end(); 
 
 Modal::begin([
-    'id' => 'error-modal',
+    'id' => 'error-modal-system',
     'headerOptions' => ['hidden'=>'hidden'],
     'footer' => '<button id="close-btn" class="btn btn-default">Close</button>',
 ]);
@@ -111,26 +103,26 @@ echo 'Please, select a item.';
 Modal::end(); 
 
 Modal::begin([
-    'id' => 'add-role-modal',
+    'id' => 'add-role-system-modal',
     'header' => 'Add Role',
     'footer' => '<button id="close-btn" class="btn btn-default">Close</button> <button id="save-role-btn" class="btn btn-primary">Save</button>',
 ]);
 
 ?>
 
-<div id="add-role-form-wrapper"></div>
+<div id="add-role-system-form-wrapper"></div>
 
 <?php 
 
 Modal::end(); 
 
 Modal::begin([
-    'id' => 'edit-role-modal',
+    'id' => 'edit-role-system-modal',
     'header' => 'Edit Role',
     'footer' => '<button id="close-btn" class="btn btn-default">Close</button> <button id="save-role-btn" class="btn btn-primary">Save</button>',
 ]); ?>
 
-<div id="edit-role-form-wrapper"></div>
+<div id="edit-role-system-form-wrapper"></div>
 
 <?php Modal::end(); 
 

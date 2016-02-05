@@ -157,4 +157,12 @@ class UserDomainRole extends \yii\db\ActiveRecord
     
         return parent::afterSave($isNewRecord, $changedAttributes);
     }
+    
+    static function getDomainGroupsByDomainNoArray($domain) {
+    	return Group::find()->where(['type' => Group::TYPE_DOMAIN, 'domain' => $domain])->orderBy(['name' => SORT_ASC])->all();
+    }
+    
+    static function getGlobalDomainGroupsNoArray() {
+    	return Group::find()->where(['type' => Group::TYPE_DOMAIN, 'domain' => null])->orderBy(['name' => SORT_ASC])->all();
+    }
 }
