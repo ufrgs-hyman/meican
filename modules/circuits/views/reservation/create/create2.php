@@ -26,8 +26,8 @@ $form = ActiveForm::begin([
     <!-- Nav tabs -->
     <div class="lsidebar-tabs">
         <ul role="tablist">
-            <li><a title="Welcome to the reservation page" href="#help" role="tab"><i class="fa fa-info-circle"></i></a></li>
-            <li><a title="Select your endpoints" href="#home" role="tab"><i class="fa"><img src="https://maxcdn.icons8.com/Android_L/PNG/24/Maps/route-24.png" width="21"></i></a></li>
+            <li><a title="Welcome to the reservation page" href="#home" role="tab"><i class="fa fa-info-circle"></i></a></li>
+            <li><a title="Select your endpoints" href="#path" role="tab"><i class="fa"><img src="https://maxcdn.icons8.com/Android_L/PNG/24/Maps/route-24.png" width="21"></i></a></li>
             <li><a title="Set the circuit requirements" href="#requirements" role="tab"><i class="fa fa-sliders"></i></a></li>
             <li><a title="Choose the circuit duration" href="#calendar" role="tab"><i class="fa fa-calendar"></i></a></li>
             <li><a title="Confirm and submit" href="#check" role="tab"><i class="fa fa-check danger"></i></a></li>
@@ -40,7 +40,7 @@ $form = ActiveForm::begin([
 
     <!-- Tab panes -->
     <div class="lsidebar-content">
-        <div class="lsidebar-pane" id="home">
+        <div class="lsidebar-pane" id="path">
             <h1 class="lsidebar-header">
                 Step 1: Path
                 <span class="lsidebar-close"><i class="fa fa-caret-left"></i></span>
@@ -194,9 +194,13 @@ $form = ActiveForm::begin([
         <div class="lsidebar-pane" id="check">
             <h1 class="lsidebar-header">Step 4: Confirmation<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
             xvdfd
+            <div class="pull-right">
+                <button type="button" class="btn btn-primary"><span class="fa fa-arrow-left"></span> Previous</button>
+                <button type="button" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Next</button>
+            </div>
         </div>
 
-        <div class="lsidebar-pane" id="help">
+        <div class="lsidebar-pane" id="home">
             <h1 class="lsidebar-header">Welcome to reservation page<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
             <br><p>
                 This is the reservation page. In this page a map is used for friendly search

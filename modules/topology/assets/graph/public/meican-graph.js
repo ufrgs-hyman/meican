@@ -151,7 +151,6 @@ MeicanGraph.prototype.build = function(divId) {
         edges: this._links
     };
     var options = {
-        height: "98%",
         edges: {
             color: "#2B7CE9",
             width: 1,
@@ -185,7 +184,7 @@ MeicanGraph.prototype.build = function(divId) {
     this._graph.on("stabilized", function (params) {
         currentGraph._graph.setOptions({physics: false});
     });
-    this._tooltip = $('<div/>').qtip({
+    /*this._tooltip = $('<div/>').qtip({
         node: false,
         content: {
             text: 'Domain: <b>cipo.rnp.br</b>'
@@ -207,11 +206,11 @@ MeicanGraph.prototype.build = function(divId) {
         style: {
             classes: 'qtip-light qtip-shadow'
         }
-    }).qtip('api');
+    }).qtip('api');*/
     this._graph.on("click", function (params) {
         if(params['nodes'].length > 0) {
             console.log(' click node:', params);
-            $( "#"+currentGraph._divId ).trigger( "nodeClick",  currentGraph._nodes.get(params.nodes[0]).id);
+            $( "#"+currentGraph._canvasDivId ).trigger( "nodeClick",  currentGraph._nodes.get(params.nodes[0]).id);
             /*var pos = currentGraph._graph.getPositions(params['nodes'][0]);
             pos = currentGraph._graph.canvasToDOM(pos[params['nodes'][0]]);
             currentGraph._tooltip.set('position.target', [ pos.x, pos.y ]).show();

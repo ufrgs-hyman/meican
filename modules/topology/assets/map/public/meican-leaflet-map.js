@@ -9,7 +9,7 @@
 
 function MeicanLMap(canvasDivId) {
     this._canvasDivId = canvasDivId;
-    this._map;                       // Google Map
+    this._map;                       // Leaflet Map
     this._markers = [];              // markers container
     this._links = [];
     this._openedWindows = [];        // opened marker windows
