@@ -11,14 +11,14 @@ use yii\web\AssetBundle;
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class MeicanGMapAsset extends AssetBundle
+class MeicanLMap extends AssetBundle
 {
     public $sourcePath = '@meican/topology/assets/map/public';
 
     public $js = [
-        'meican-google-map.js',
+        'meican-leaflet-map.js',
     ];
     public $depends = [
-        'meican\base\assets\google\MapsAsset',
+        'meican\base\assets\Leaflet',
     ];
 }

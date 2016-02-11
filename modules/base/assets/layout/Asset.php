@@ -25,10 +25,10 @@ class Asset extends AssetBundle
     ];
     
     public $depends = [
-        'meican\base\assets\layout\IcheckThemeAsset',
+        'meican\base\assets\layout\IcheckTheme',
         'yii\bootstrap\BootstrapPluginAsset',
-        'meican\base\assets\SlimScrollAsset',
-        'meican\base\assets\FontAwesomeAsset',
-        'meican\base\assets\IoniconsAsset',
+        'meican\base\assets\SlimScroll',
+        'meican\base\assets\FontAwesome',
+        'meican\base\assets\Ionicons',
     ];
 }

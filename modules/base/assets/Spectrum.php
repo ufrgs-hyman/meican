@@ -11,17 +11,19 @@ use yii\web\AssetBundle;
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class HoverIntentAsset extends AssetBundle
+class Spectrum extends AssetBundle
 {
-    public $sourcePath = '@bower/jquery-hoverintent';
+    public $sourcePath = '@bower/spectrum';
     
     public $js = [
-    	'jquery.hoverIntent.js'
+        'spectrum.js',
     ];
     
     public $css = [
+        'spectrum.css',
     ];
     
     public $depends = [
+        'yii\web\JqueryAsset',
     ];
 }

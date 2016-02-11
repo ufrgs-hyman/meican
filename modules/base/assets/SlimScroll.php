@@ -4,22 +4,25 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-namespace meican\base\assets\layout;
+namespace meican\base\assets;
 
 use yii\web\AssetBundle;
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class IcheckThemeAsset extends AssetBundle
+class SlimScroll extends AssetBundle
 {
-    public $sourcePath = '@meican/base/assets/layout/public';
-
+    public $sourcePath = '@bower/slimscroll';
+    
     public $js = [
-        'icheck-theme.js',
+        'jquery.slimscroll.min.js',
+    ];
+    
+    public $css = [
     ];
     
     public $depends = [
-        'meican\base\assets\IcheckAsset'
+        'yii\web\JqueryAsset',
     ];
 }

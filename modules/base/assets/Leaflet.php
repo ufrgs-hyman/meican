@@ -11,7 +11,7 @@ use yii\web\AssetBundle;
 /**
  * @author Maurício Quatrin Guerreiro <@mqgmaster>
  */
-class LeafletAsset extends AssetBundle
+class Leaflet extends AssetBundle
 {
     public $sourcePath = '@npm/leaflet/dist';
     

@@ -1,6 +1,6 @@
 //var meicanGMap = new MeicanGMap("map-canvas");
 var meicanMap = new MeicanLMap('canvas');
-//var meicanGraph = new MeicanGraph("map-canvas");
+var meicanGraph = new MeicanGraph("canvas");
 var meicanTopo = [];
 var mode = 'map';
 var path = [];
@@ -12,6 +12,11 @@ $(document).ready(function() {
     $("#add-point").click(function() {
         addPoint();
         return false;
+    });
+
+    $("#switch-mode").on('click', function() {
+        meicanMap.hide();
+        meicanGraph.show();
     });
 
     $('#canvas').on('markerClick', function(e, marker) {
@@ -110,6 +115,7 @@ function setPoint(position, nodeId) {
         $($(".point")[position]).find('.dom-l').text(meicanMap.getDomain(marker.options.domainId).name);
         $($(".point")[position]).find('.dev-l').text(marker.options.name);
         $($(".point")[position]).find('.dev-l').attr('data', marker.options.id.replace('dev',''));
+        $($(".point")[position]).find('.vlan').val('auto');
     } else {
         var node = meicanGraph.getNode(nodeId);
     }

@@ -26,11 +26,11 @@ $form = ActiveForm::begin([
     <!-- Nav tabs -->
     <div class="lsidebar-tabs">
         <ul role="tablist">
-            <li><a href="#help" role="tab"><i class="fa fa-info-circle"></i></a></li>
-            <li><a href="#home" role="tab"><i class="fa"><img src="https://maxcdn.icons8.com/Android_L/PNG/24/Maps/route-24.png" width="21"></i></a></li>
-            <li><a href="#requirements" role="tab"><i class="fa fa-sliders"></i></a></li>
-            <li><a href="#calendar" role="tab"><i class="fa fa-calendar"></i></a></li>
-            <li><a href="#check" role="tab"><i class="fa fa-check danger"></i></a></li>
+            <li><a title="Welcome to the reservation page" href="#help" role="tab"><i class="fa fa-info-circle"></i></a></li>
+            <li><a title="Select your endpoints" href="#home" role="tab"><i class="fa"><img src="https://maxcdn.icons8.com/Android_L/PNG/24/Maps/route-24.png" width="21"></i></a></li>
+            <li><a title="Set the circuit requirements" href="#requirements" role="tab"><i class="fa fa-sliders"></i></a></li>
+            <li><a title="Choose the circuit duration" href="#calendar" role="tab"><i class="fa fa-calendar"></i></a></li>
+            <li><a title="Confirm and submit" href="#check" role="tab"><i class="fa fa-check danger"></i></a></li>
         </ul>
 
         <ul role="tablist">
@@ -48,7 +48,7 @@ $form = ActiveForm::begin([
             <br>
             <div class="nav-tabs-custom" style="margin-right: 15px;">
                 <ul class="nav nav-tabs">
-                  <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-search"></i> on map</a></li>
+                  <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-search"></i></a></li>
                   <li><a id="add-point" href="#"><i class="fa fa-plus"></i> <i class="fa fa-map-marker"></i></a></li>
                   <li><a href="#"><i class="fa fa-file-text"></i></a></li>
                 </ul>
@@ -216,6 +216,8 @@ $form = ActiveForm::begin([
 
         <div class="lsidebar-pane" id="settings">
             <h1 class="lsidebar-header">Settings<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            <br>
+            <button id="switch-mode" type="button" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Switch</button>
         </div>
     </div>
 </div>

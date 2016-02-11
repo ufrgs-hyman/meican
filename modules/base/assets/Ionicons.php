@@ -11,7 +11,7 @@ use yii\web\AssetBundle;
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class IoniconsAsset extends AssetBundle
+class Ionicons extends AssetBundle
 {
     public $sourcePath = '@bower/ionicons';
     

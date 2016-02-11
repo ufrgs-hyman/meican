@@ -4,26 +4,22 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-namespace meican\base\assets;
+namespace meican\base\assets\layout;
 
 use yii\web\AssetBundle;
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class SpectrumAsset extends AssetBundle
+class IcheckTheme extends AssetBundle
 {
-    public $sourcePath = '@bower/spectrum';
-    
+    public $sourcePath = '@meican/base/assets/layout/public';
+
     public $js = [
-        'spectrum.js',
-    ];
-    
-    public $css = [
-        'spectrum.css',
+        'icheck-theme.js',
     ];
     
     public $depends = [
-        'yii\web\JqueryAsset',
+        'meican\base\assets\Icheck'
     ];
 }

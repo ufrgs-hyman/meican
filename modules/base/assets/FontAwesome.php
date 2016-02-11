@@ -11,18 +11,17 @@ use yii\web\AssetBundle;
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class SlimScrollAsset extends AssetBundle
+class FontAwesome extends AssetBundle
 {
-    public $sourcePath = '@bower/slimscroll';
+    public $sourcePath = '@bower/fontawesome';
     
     public $js = [
-        'jquery.slimscroll.min.js',
     ];
     
     public $css = [
+        'css/font-awesome.min.css'
     ];
     
     public $depends = [
-        'yii\web\JqueryAsset',
     ];
 }

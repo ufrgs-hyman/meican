@@ -11,17 +11,19 @@ use yii\web\AssetBundle;
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class FontAwesomeAsset extends AssetBundle
+class Icheck extends AssetBundle
 {
-    public $sourcePath = '@bower/fontawesome';
+    public $sourcePath = '@bower/icheck';
     
     public $js = [
+        'icheck.min.js'
     ];
     
     public $css = [
-        'css/font-awesome.min.css'
+        'skins/minimal/blue.css',
     ];
     
     public $depends = [
+        'yii\web\JqueryAsset'
     ];
 }
