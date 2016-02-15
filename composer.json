@@ -25,11 +25,11 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.5.0",
-        "yiisoft/yii2": "2.0.6",
+        "yiisoft/yii2": "2.0.7",
         "yiisoft/yii2-swiftmailer": "2.0.4",
         "yiisoft/yii2-bootstrap": "2.0.5",
         "thiagotalma/yii2-fullcalendar": "2.0.0",
-        "npm-asset/vis": "4.11.0",
+        "npm-asset/vis": "4.14.0",
         "npm-asset/leaflet": "0.7.7",
         "bower-asset/spectrum": "1.8.0",
         "bower-asset/slimscroll": "1.3.7",
@@ -38,7 +38,8 @@
         "bower-asset/ionicons" : "2.0.1",
         "bower-asset/icheck" : "1.0.2",
         "bower-asset/timepicker" : "1.6.3",
-        "bower-asset/bootstrap-toggle" : "2.2.0"
+        "bower-asset/bootstrap-toggle" : "2.2.0",
+        "bower-asset/qtip2-main" : "3.0.2"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "2.0.4",

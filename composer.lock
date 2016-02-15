@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2d02d101fbfdfdab9745d8b8481ff816",
-    "content-hash": "57c74364d21355b30936246005574b91",
+    "hash": "feca6a5394e0b76d394dfee0fbcd7518",
+    "content-hash": "2f817d47cc97d3faaeba32fe37dca1ef",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -54,6 +54,82 @@
                 "mobile-first",
                 "responsive",
                 "web"
+            ]
+        },
+        {
+            "name": "bower-asset/bootstrap-toggle",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/minhur/bootstrap-toggle.git",
+                "reference": "7900336388e4c1cc51da89b0870648c2754ca743"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/minhur/bootstrap-toggle/zipball/7900336388e4c1cc51da89b0870648c2754ca743",
+                "reference": "7900336388e4c1cc51da89b0870648c2754ca743",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "./js/bootstrap-toggle.min.js",
+                    "./css/bootstrap-toggle.min.css"
+                ],
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Bootstrap Toggle is a highly flexible Bootstrap plugin that converts checkboxes into toggles",
+            "keywords": [
+                "bootstrap",
+                "bootstrap-switch",
+                "bootstrap-toggle",
+                "switch",
+                "toggle"
+            ]
+        },
+        {
+            "name": "bower-asset/ev-emitter",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/metafizzy/ev-emitter.git",
+                "reference": "a590dbd7be3ebe98a0bc8635938f666e2e8f13f7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/metafizzy/ev-emitter/zipball/a590dbd7be3ebe98a0bc8635938f666e2e8f13f7",
+                "reference": "a590dbd7be3ebe98a0bc8635938f666e2e8f13f7",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "ev-emitter.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests",
+                    "sandbox"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "lil' event emitter",
+            "keywords": [
+                "emitter",
+                "event",
+                "pubsub"
             ]
         },
         {
@@ -144,6 +220,49 @@
             ]
         },
         {
+            "name": "bower-asset/imagesloaded",
+            "version": "v4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/desandro/imagesloaded.git",
+                "reference": "eb483b9b5e1edcc06daa6bb980810b4accd406f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/desandro/imagesloaded/zipball/eb483b9b5e1edcc06daa6bb980810b4accd406f0",
+                "reference": "eb483b9b5e1edcc06daa6bb980810b4accd406f0",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/ev-emitter": "~1.0.0"
+            },
+            "require-dev": {
+                "bower-asset/jquery": ">=1.9,<4.0",
+                "bower-asset/qunit": "~1.20.0"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "imagesloaded.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "test",
+                    "package.json",
+                    "node_modules",
+                    "bower_components",
+                    "tests",
+                    "sandbox/",
+                    "contributing.md"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "JavaScript is all like _You images done yet or what?_",
+            "keywords": [
+                "images"
+            ]
+        },
+        {
             "name": "bower-asset/ionicons",
             "version": "v2.0.1",
             "source": {
@@ -186,36 +305,22 @@
         },
         {
             "name": "bower-asset/jquery",
-            "version": "2.1.4",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery.git",
-                "reference": "7751e69b615c6eca6f783a81e292a55725af6b85"
+                "url": "https://github.com/jquery/jquery-dist.git",
+                "reference": "6fc01e29bdad0964f62ef56d01297039cdcadbe5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery/zipball/7751e69b615c6eca6f783a81e292a55725af6b85",
-                "reference": "7751e69b615c6eca6f783a81e292a55725af6b85",
+                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/6fc01e29bdad0964f62ef56d01297039cdcadbe5",
+                "reference": "6fc01e29bdad0964f62ef56d01297039cdcadbe5",
                 "shasum": ""
-            },
-            "require-dev": {
-                "bower-asset/qunit": "1.14.0",
-                "bower-asset/requirejs": "2.1.10",
-                "bower-asset/sinon": "1.8.1",
-                "bower-asset/sizzle": "2.1.1-patch2"
             },
             "type": "bower-asset-library",
             "extra": {
                 "bower-asset-main": "dist/jquery.js",
                 "bower-asset-ignore": [
-                    "**/.*",
-                    "build",
-                    "dist/cdn",
-                    "speed",
-                    "test",
-                    "*.md",
-                    "AUTHORS.txt",
-                    "Gruntfile.js",
                     "package.json"
                 ]
             },
@@ -223,44 +328,10 @@
                 "MIT"
             ],
             "keywords": [
+                "browser",
                 "javascript",
                 "jquery",
                 "library"
-            ]
-        },
-        {
-            "name": "bower-asset/jquery-hoverintent",
-            "version": "v1.8.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/briancherne/jquery-hoverIntent.git",
-                "reference": "2d648374402f0c4b4406cd8d8e62fc0f74f95936"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/briancherne/jquery-hoverIntent/zipball/2d648374402f0c4b4406cd8d8e62fc0f74f95936",
-                "reference": "2d648374402f0c4b4406cd8d8e62fc0f74f95936",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/jquery": ">=1.9.1"
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "jquery.hoverIntent.js"
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "A jQuery plug-in that attempts to determine the user's intent on mouseover. To delay or prevent the accidental firing of callbacks.",
-            "keywords": [
-                "delay",
-                "hover",
-                "hoverintent",
-                "intent",
-                "jquery",
-                "mouseover",
-                "plugin"
             ]
         },
         {
@@ -290,16 +361,16 @@
         },
         {
             "name": "bower-asset/jquery.inputmask",
-            "version": "3.1.63",
+            "version": "3.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobinHerbots/jquery.inputmask.git",
-                "reference": "c40c7287eadc31e341ebbf0c02352eb55b9cbc48"
+                "reference": "5a72c563b502b8e05958a524cdfffafe9987be38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/c40c7287eadc31e341ebbf0c02352eb55b9cbc48",
-                "reference": "c40c7287eadc31e341ebbf0c02352eb55b9cbc48",
+                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/5a72c563b502b8e05958a524cdfffafe9987be38",
+                "reference": "5a72c563b502b8e05958a524cdfffafe9987be38",
                 "shasum": ""
             },
             "require": {
@@ -308,23 +379,17 @@
             "type": "bower-asset-library",
             "extra": {
                 "bower-asset-main": [
-                    "./dist/inputmask/jquery.inputmask.js",
-                    "./dist/inputmask/jquery.inputmask.extensions.js",
-                    "./dist/inputmask/jquery.inputmask.date.extensions.js",
-                    "./dist/inputmask/jquery.inputmask.numeric.extensions.js",
-                    "./dist/inputmask/jquery.inputmask.phone.extensions.js",
-                    "./dist/inputmask/jquery.inputmask.regex.extensions.js"
+                    "./dist/inputmask/inputmask.js"
                 ],
                 "bower-asset-ignore": [
-                    "**/.*",
-                    "qunit/",
-                    "nuget/",
-                    "tools/",
-                    "js/",
-                    "*.md",
-                    "build.properties",
-                    "build.xml",
-                    "jquery.inputmask.jquery.json"
+                    "**/*",
+                    "!dist/*",
+                    "!dist/inputmask/*",
+                    "!dist/min/*",
+                    "!dist/min/inputmask/*",
+                    "!extra/bindings/*",
+                    "!extra/dependencyLibs/*",
+                    "!extra/phone-codes/*"
                 ]
             },
             "license": [
@@ -367,6 +432,49 @@
                     "package.json"
                 ]
             }
+        },
+        {
+            "name": "bower-asset/qtip2-main",
+            "version": "v3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/qTip2/qTip2.git",
+                "reference": "c25a530a431e78b3f7e7d955c953ffdca8d10b1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/qTip2/qTip2/zipball/c25a530a431e78b3f7e7d955c953ffdca8d10b1a",
+                "reference": "c25a530a431e78b3f7e7d955c953ffdca8d10b1a",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/imagesloaded": ">=3.0.0",
+                "bower-asset/jquery": ">=1.6.0"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "./dist/jquery.qtip.js",
+                    "./dist/jquery.qtip.css"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Introducing... qTip2. The second generation of the advanced qTip plugin for the ever popular jQuery framework.",
+            "keywords": [
+                "craga89",
+                "craig michael thompson",
+                "craig thompson",
+                "craigsworks",
+                "jquery",
+                "jquery-plugin",
+                "qtip",
+                "qtip2",
+                "simpletip",
+                "tooltip",
+                "tooltips"
+            ]
         },
         {
             "name": "bower-asset/slimscroll",
@@ -640,12 +748,12 @@
         },
         {
             "name": "npm-asset/vis",
-            "version": "4.11.0",
+            "version": "4.14.0",
             "dist": {
                 "type": "tar",
-                "url": "http://registry.npmjs.org/vis/-/vis-4.11.0.tgz",
+                "url": "http://registry.npmjs.org/vis/-/vis-4.14.0.tgz",
                 "reference": null,
-                "shasum": "581da4f9cc858ea34df7649f95fb7e8614d28cb7"
+                "shasum": "b6a25bb41cfb7038b1f483c6a37fbd44f5a6a103"
             },
             "require-dev": {
                 "npm-asset/babel": ">=5.1.11,<6.0.0",
@@ -658,12 +766,12 @@
                 "npm-asset/gulp-minify-css": ">=1.0.0,<2.0.0",
                 "npm-asset/gulp-rename": ">=1.2.2,<2.0.0",
                 "npm-asset/gulp-util": ">=3.0.4,<4.0.0",
-                "npm-asset/hammerjs": ">=2.0.4,<3.0.0",
+                "npm-asset/hammerjs": ">=2.0.6,<3.0.0",
                 "npm-asset/keycharm": ">=0.2.0,<0.3.0",
                 "npm-asset/merge-stream": ">=0.1.7,<0.2.0",
                 "npm-asset/mocha": ">=2.2.4,<3.0.0",
                 "npm-asset/moment": ">=2.10.2,<3.0.0",
-                "npm-asset/propagating-hammerjs": ">=1.4.3,<2.0.0",
+                "npm-asset/propagating-hammerjs": ">=1.4.5,<2.0.0",
                 "npm-asset/rimraf": ">=2.3.2,<3.0.0",
                 "npm-asset/uglify-js": ">=2.4.20,<3.0.0",
                 "npm-asset/uuid": ">=2.0.1,<3.0.0",
@@ -675,7 +783,7 @@
                 "npm-asset-bugs": {
                     "url": "https://github.com/almende/vis/issues"
                 },
-                "npm-asset-main": "./dist/vis.min.js",
+                "npm-asset-main": "./dist/vis.js",
                 "npm-asset-directories": [],
                 "npm-asset-repository": {
                     "type": "git",
@@ -808,29 +916,30 @@
         },
         {
             "name": "yiisoft/yii2",
-            "version": "2.0.6",
+            "version": "2.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "f42b2eb80f61992438661b01d0d74c6738e2ff38"
+                "reference": "f45651582cb853b4326730d9d187a0f7a44a45a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/f42b2eb80f61992438661b01d0d74c6738e2ff38",
-                "reference": "f42b2eb80f61992438661b01d0d74c6738e2ff38",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/f45651582cb853b4326730d9d187a0f7a44a45a3",
+                "reference": "f45651582cb853b4326730d9d187a0f7a44a45a3",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/jquery": "2.1.*@stable | 1.11.*@stable",
-                "bower-asset/jquery.inputmask": "3.1.*",
+                "bower-asset/jquery": "2.2.*@stable | 2.1.*@stable | 1.11.*@stable",
+                "bower-asset/jquery.inputmask": "~3.2.2",
                 "bower-asset/punycode": "1.3.*",
-                "bower-asset/yii2-pjax": ">=2.0.1",
+                "bower-asset/yii2-pjax": "~2.0.1",
                 "cebe/markdown": "~1.0.0 | ~1.1.0",
+                "ext-ctype": "*",
                 "ext-mbstring": "*",
                 "ezyang/htmlpurifier": "4.6.*",
                 "lib-pcre": "*",
                 "php": ">=5.4.0",
-                "yiisoft/yii2-composer": "*"
+                "yiisoft/yii2-composer": "~2.0.4"
             },
             "bin": [
                 "yii"
@@ -884,6 +993,11 @@
                     "name": "Paul Klimov",
                     "email": "klimov.paul@gmail.com",
                     "role": "Core framework development"
+                },
+                {
+                    "name": "Dmitry Naumenko",
+                    "email": "d.naumenko.a@gmail.com",
+                    "role": "Core framework development"
                 }
             ],
             "description": "Yii PHP Framework Version 2",
@@ -892,7 +1006,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2015-08-05 22:00:30"
+            "time": "2016-02-14 14:45:55"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -946,20 +1060,20 @@
         },
         {
             "name": "yiisoft/yii2-composer",
-            "version": "2.0.3",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-composer.git",
-                "reference": "ca8d23707ae47d20b0454e4b135c156f6da6d7be"
+                "reference": "7452fd908a5023b8bb5ea1b123a174ca080de464"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/ca8d23707ae47d20b0454e4b135c156f6da6d7be",
-                "reference": "ca8d23707ae47d20b0454e4b135c156f6da6d7be",
+                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/7452fd908a5023b8bb5ea1b123a174ca080de464",
+                "reference": "7452fd908a5023b8bb5ea1b123a174ca080de464",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "1.0.0"
+                "composer-plugin-api": "^1.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -989,7 +1103,7 @@
                 "extension installer",
                 "yii2"
             ],
-            "time": "2015-03-01 06:22:44"
+            "time": "2016-02-06 00:49:24"
         },
         {
             "name": "yiisoft/yii2-jui",
