@@ -23,7 +23,13 @@ $(document).ready(function() {
     });
 
     $('#canvas').on('markerClick', function(e, marker) {
-        marker.setPopupContent('Domain: cipo.rnp.br<br>Device: POA<br><br><div class="btn-group">'+
+        marker.setPopupContent('Domain: cipo.rnp.br<br>Device: POA<br><br>'+
+            '<div data-marker="' + marker.options.id + '">'+
+              '<button class="set-source">From here</button>'+
+              '<button class="add-waypoint">Add waypoint</button>'+
+              '<button class="set-destination">To here</button>'+
+            '</div>');
+        /*marker.setPopupContent('Domain: cipo.rnp.br<br>Device: POA<br><br><div class="btn-group">'+
             '<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">'+
               'Options <span class="fa fa-caret"></span>'+
             '</button>'+
@@ -32,23 +38,33 @@ $(document).ready(function() {
               '<li><a class="add-waypoint" href="#">Add waypoint</a></li>'+
               '<li><a class="set-destination" href="#">To here</a></li>'+
             '</ul>'+
-          '</div>');
+          '</div>');*/
     });
 
     $('#canvas').on('nodeClick', function(e, nodeId) {
-        setSourcePoint(nodeId);
+        console.log('sdas');
+        meicanGraph.showPopup(nodeId, 'Domain: cipo.rnp.br<br>Device: POA<br><br>'+
+            '<div data-marker="' + nodeId + '">'+
+              '<button class="set-source">From here</button>'+
+              '<button class="add-waypoint">Add waypoint</button>'+
+              '<button class="set-destination">To here</button>'+
+            '</div>');
     });
 
     $("#canvas").on("click",'.set-source', function() {
-        setSourcePoint($(this).parent().parent().attr('data-marker'));
+        console.log('das');
+        setSourcePoint($(this).parent().attr('data-marker'));
+        return false;
     });
 
     $("#canvas").on("click",'.set-destination', function() {
-        setDestinationPoint($(this).parent().parent().attr('data-marker'));
+        setDestinationPoint($(this).parent().attr('data-marker'));
+        return false;
     });
 
-    $("#canvas").on("click",'.set-waypoint', function() {
-        addWayPoint($(this).parent().parent().attr('data-marker'));
+    $("#canvas").on("click",'.add-waypoint', function() {
+        addWayPoint($(this).parent().attr('data-marker'));
+        return false;
     });
 
     $(".fa-arrow-down").click(function() {

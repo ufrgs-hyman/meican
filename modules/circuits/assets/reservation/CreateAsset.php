@@ -19,7 +19,8 @@ class CreateAsset extends AssetBundle
     ];
 
     public $depends = [
-        'meican\base\assets\layout\Asset',
+        'meican\base\assets\Theme',
+        'meican\base\assets\Qtip',
         'meican\base\assets\ToggleAsset',
         'meican\topology\assets\map\MeicanLMap',
         'meican\topology\assets\graph\MeicanGraph'

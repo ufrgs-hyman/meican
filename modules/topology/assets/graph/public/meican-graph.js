@@ -14,7 +14,7 @@ function MeicanGraph(canvasDivId) {
     this._links = new vis.DataSet(); // edges
     this._currentNodeType;           // current node type visible
     this._domainsList;               // domains list reference;
-    this._tooltip;
+    this._popup;
 };
 
 MeicanGraph.prototype.show = function() {
@@ -184,7 +184,7 @@ MeicanGraph.prototype.build = function(divId) {
     this._graph.on("stabilized", function (params) {
         currentGraph._graph.setOptions({physics: false});
     });
-    /*this._tooltip = $('<div/>').qtip({
+    this._popup = $('<div/>').qtip({
         node: false,
         content: {
             text: 'Domain: <b>cipo.rnp.br</b>'
@@ -194,11 +194,11 @@ MeicanGraph.prototype.build = function(divId) {
             my: "bottom center",
             effect: false,
             adjust: {
-                x: 134,
-                y: 32
+                x: 50,
+                y: 50
             },
             target: 'event',
-            container: $('#graph_canvas'),
+            container: $('#graph-v'),
             viewport: $(window)
         },
         show: false,
@@ -206,31 +206,31 @@ MeicanGraph.prototype.build = function(divId) {
         style: {
             classes: 'qtip-light qtip-shadow'
         }
-    }).qtip('api');*/
+    }).qtip('api');
     this._graph.on("click", function (params) {
         if(params['nodes'].length > 0) {
             console.log(' click node:', params);
             $( "#"+currentGraph._canvasDivId ).trigger( "nodeClick",  currentGraph._nodes.get(params.nodes[0]).id);
-            /*var pos = currentGraph._graph.getPositions(params['nodes'][0]);
-            pos = currentGraph._graph.canvasToDOM(pos[params['nodes'][0]]);
-            currentGraph._tooltip.set('position.target', [ pos.x, pos.y ]).show();
-            currentGraph._tooltip.set('node', params['nodes'][0]);
         } else {
-            currentGraph._tooltip.set('node', false);
-            currentGraph._tooltip.hide();
-            console.log('click fora');*/
+            currentGraph._popup.hide();
+            console.log('click fora');
         }
     });
-   /* this._graph.on("zoom", function () {
-        currentGraph.showTooltip();
-        console.log('zoom');
+    this._graph.on("zoom", function () {
+        currentGraph._popup.hide();        
     });
     this._graph.on("dragEnd", function () {
-        currentGraph.showTooltip();
+        currentGraph._popup.hide();        
     });
     this._graph.on("dragStart", function () {
-        currentGraph._tooltip.hide();            
-    });*/
+        currentGraph._popup.hide();            
+    });
+    this._graph.on("resize", function () {
+        if(currentGraph._popup.get('visible')) {
+            currentGraph._popup.hide();    
+            currentGraph._popup.set('visible', false);
+        }     
+    });
     
     /*this._graph.on("click", function (params) {
         if(params.nodes.length > 0) {
@@ -254,18 +254,15 @@ MeicanGraph.prototype.build = function(divId) {
     network.on("dragging", function (params) {
         $("#tooltip").hide();
     });
-    network.on("resize", function (params) {
-        $("#tooltip").hide();
-    });
     network.on("zoom", function (params) {
         $("#tooltip").hide();
     });*/
 }
 
-MeicanGraph.prototype.showTooltip = function() {
-        if (this._tooltip.get('node')) {
-            var pos = this._graph.getPositions(this._tooltip.get("node"));
-            pos = this._graph.canvasToDOM(pos[this._tooltip.get("node")]);
-            this._tooltip.set('position.target', [ pos.x, pos.y ]).show();
-        }
-    }
+MeicanGraph.prototype.showPopup = function(nodeId, content) {
+    this._popup.set('visible', true);
+    var pos = this._graph.getPositions(nodeId);
+    pos = this._graph.canvasToDOM(pos[nodeId]);
+    if(content != null) this._popup.set('content.text', content);
+    this._popup.set('position.target', [ pos.x, pos.y ]).show();
+}
