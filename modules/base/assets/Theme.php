@@ -4,16 +4,18 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-namespace meican\base\assets\layout;
+namespace meican\base\assets;
 
 use yii\web\AssetBundle;
 
 /**
+ * Base theme of the application.
+ *
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class Asset extends AssetBundle
+class Theme extends AssetBundle
 {
-    public $sourcePath = '@meican/base/assets/layout/public';
+    public $sourcePath = '@meican/base/assets/theme/public';
 
     public $css = [
         'layout.css',
@@ -25,7 +27,7 @@ class Asset extends AssetBundle
     ];
     
     public $depends = [
-        'meican\base\assets\layout\IcheckTheme',
+        'meican\base\assets\theme\IcheckTheme',
         'yii\bootstrap\BootstrapPluginAsset',
         'meican\base\assets\SlimScroll',
         'meican\base\assets\FontAwesome',

@@ -20,6 +20,6 @@ class Asset extends AssetBundle
     ];
     
     public $depends = [
-        'meican\base\assets\layout\Asset',
+        'meican\base\assets\Theme',
     ];
 }

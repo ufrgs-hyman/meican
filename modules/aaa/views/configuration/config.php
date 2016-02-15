@@ -1,12 +1,13 @@
 <?php 
 
-    use yii\widgets\ActiveForm;
-    use yii\helpers\Html;
-    use yii\helpers\Url;
-    use yii\helpers\ArrayHelper;
-    
-    use meican\aaa\models\UserDomainRole;
-    use meican\topology\models\Domain;
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
+
+use meican\aaa\models\UserDomainRole;
+use meican\topology\models\Domain;
+
 ?>
 
 <h1><?= Yii::t('aaa', 'Federation Configuration'); ?></h1>

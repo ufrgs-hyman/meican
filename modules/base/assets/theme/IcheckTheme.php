@@ -4,22 +4,22 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-namespace meican\aaa\assets\user;
+namespace meican\base\assets\theme;
 
 use yii\web\AssetBundle;
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class EditAsset extends AssetBundle
+class IcheckTheme extends AssetBundle
 {
-    public $sourcePath = '@meican/aaa/assets/user/public';
-	
+    public $sourcePath = '@meican/base/assets/theme/public';
+
     public $js = [
-    	'account.js',
+        'icheck-theme.js',
     ];
     
     public $depends = [
-    	'meican\base\assets\Theme',
+        'meican\base\assets\Icheck'
     ];
 }

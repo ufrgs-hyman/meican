@@ -4,22 +4,26 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-namespace meican\base\assets\layout;
+namespace meican\base\assets;
 
 use yii\web\AssetBundle;
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class IcheckTheme extends AssetBundle
+class Qtip extends AssetBundle
 {
-    public $sourcePath = '@meican/base/assets/layout/public';
-
+    public $sourcePath = '@bower/qtip2-main/dist';
+    
     public $js = [
-        'icheck-theme.js',
+        'jquery.qtip.min.js',
+    ];
+    
+    public $css = [
+        'jquery.qtip.min.css',
     ];
     
     public $depends = [
-        'meican\base\assets\Icheck'
+        'yii\web\JqueryAsset',
     ];
 }

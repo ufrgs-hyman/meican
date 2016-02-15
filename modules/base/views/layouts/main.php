@@ -7,13 +7,13 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-use meican\base\assets\layout\Asset;
+use meican\base\assets\Theme;
 use meican\base\widgets\Analytics;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-Asset::register($this);
+Theme::register($this);
 
 ?>
 <!DOCTYPE html>
