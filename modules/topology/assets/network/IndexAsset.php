@@ -19,6 +19,6 @@ class IndexAsset extends AssetBundle
     	'network.js',
     ];
     public $depends = [
-		'meican\base\assets\layout\Asset',
+		'meican\base\assets\Theme',
     ];
 }
