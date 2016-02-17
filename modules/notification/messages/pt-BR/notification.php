@@ -36,7 +36,8 @@ return array(
 		'and' => 'e',
 		'are pending.' => 'estão pendentes.',
 		'The' => 'O',
-		'topology has been updated.' => 'teve a topologia atualizada.'
+		'topology has been updated.' => 'teve a topologia atualizada.',
+		'You have {number} notifications' => 'Vocë tem {number} notificações',
 		
 );
 

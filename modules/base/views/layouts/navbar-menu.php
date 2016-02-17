@@ -6,35 +6,34 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use meican\notification\models\Notification;
 
 ?>
 
 <ul class="nav navbar-nav">
   <!-- Messages: style can be found in dropdown.less-->
   <?php if (!\Yii::$app->user->isGuest): ?>
+    
   <!-- Notifications Menu -->
-  <li class="dropdown notifications-menu">
+  <li class="dropdown messages-menu">
     <!-- Menu toggle button -->
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <a id="not_toggle_button" href="#" class="dropdown-toggle" data-toggle="dropdown">
       <i class="fa fa-bell-o"></i>
-      <span class="label label-warning">10</span>
+      <span id="not_number" class="label label-warning"></span>
     </a>
-    <ul class="dropdown-menu">
-      <li class="header">You have 10 notifications</li>
-      <li>
+    <ul id="not_body" class="dropdown-menu">
+      <li class="header"><?= Yii::t("notification", "You have {number} notifications" ,['number'=>Notification::getNumberNotifications()])?></li>
+      <li id="not_content_li">
         <!-- Inner Menu: contains the notifications -->
-        <ul class="menu">
-          <li><!-- start notification -->
-            <a href="#">
-              <i class="fa fa-users text-aqua"></i> 5 new members joined today
-            </a>
-          </li>
-          <!-- end notification -->
+        <ul id="not_content" class="menu">
         </ul>
+		<?= Html::img('@web'.'/images/ajax-loader.gif', ['id' => "not_loader", 'style'=>'padding: 10px;']); ?>
       </li>
-      <li class="footer"><a href="#">View all</a></li>
+      <li class="footer"><a href="#">View All</a></li>
+      <li class="footer"><?= Html::a(Yii::t("notification", "View Authorizations")." (<span id='authN'>".Notification::getNumberAuthorizations()."</span>)",array('/circuits/authorization/index')); ?></li>
     </ul>
   </li>
+  
   <?php endif; ?>
   <li><?= Html::a(Yii::t("home", "About"),array('/home/support/about')); ?></li>
   <li><?= Html::a(Yii::t("home", "Help"),array('/home/support/help')); ?></li>

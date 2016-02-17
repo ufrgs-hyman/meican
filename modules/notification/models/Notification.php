@@ -11,11 +11,13 @@ use yii\helpers\Html;
 
 use meican\base\components\DateUtils;
 use meican\topology\models\TopologyNotification;
+use meican\topology\models\Domain;
 use meican\circuits\models\ConnectionAuth;
 use meican\circuits\models\ConnectionPath;
 use meican\circuits\models\Connection;
 use meican\aaa\models\User;
 use meican\aaa\models\Group;
+use meican\aaa\models\AaaNotification;
 
 /**
  * This is the model class for table "meican_notification".
@@ -31,13 +33,13 @@ use meican\aaa\models\Group;
  */
 class Notification extends \yii\db\ActiveRecord
 {    
-    const TYPE_AUTHORIZATION =         "AUTHORIZATION";
-    const TYPE_RESERVATION =         "RESERVATION";
-    const TYPE_TOPOLOGY =             "TOPOLOGY";
-    const TYPE_NOTICE =             "NOTICE";
+    const TYPE_AUTHORIZATION =      "AUTHORIZATION";
+    const TYPE_RESERVATION =        "RESERVATION";
+    const TYPE_TOPOLOGY =			"TOPOLOGY";
+    const TYPE_NOTICE =				"NOTICE";
     
-    const NOTICE_TYPE_ADD_GROUP =     "ADD_GROUP";
-    const NOTICE_TYPE_DEL_GROUP =     "DEL_GROUP";
+    const NOTICE_TYPE_ADD_GROUP =	"ADD_GROUP";
+    const NOTICE_TYPE_DEL_GROUP =	"DEL_GROUP";
 
     /**
      * @inheritdoc
@@ -84,9 +86,16 @@ class Notification extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'id']);
     }
     
-    public static function makeHtml($image, $text){
+    /*public static function makeHtml($image, $text){
         return '<table><tr><td class="image">'.Html::img('@web'.'/images/'.$image).'</td><td>'.$text.'</td></tr></table>';
+    }*/
+    
+    public static function makeHtml($img, $date, $title, $msg, $href = null){
+    	$not = '<div class="notification_img pull-left">'.Html::img('@web'.'/images/'.$img).'</div><h4 class="notification_title">'.$title.'</h4>'.'<p class="notification_p">'.$msg.'</p>'.'<h4 class="notification_date"><i class="fa fa-calendar notification_date_img"></i>'.$date.'</h4>';
+    	return Html::a($not, array($href));
     }
+    
+    //$text = 
     
     public static function getNumberNotifications(){
         $nots = 0;
@@ -178,7 +187,7 @@ class Notification extends \yii\db\ActiveRecord
                         $notification->save();
                         break;
                     case self::TYPE_NOTICE:
-                        $msg = Notification::makeHtmlNotificationNotice($notification);
+                        $msg = AaaNotification::makeHtml($notification);
                         $notification->viewed = true;
                         $notification->save();
                         break;
@@ -429,69 +438,7 @@ class Notification extends \yii\db\ActiveRecord
      * @return string
      */
     public static function makeHtmlNotificationNotice($notification = null){
-        if($notification == null) return "";
-        $data = json_decode($notification->info);
-        $type = $data[0];
-        switch($type){
-            //ADICIONADO A UM GRUPO
-            case self::NOTICE_TYPE_ADD_GROUP:
-                $group = Group::findOne($data[1]);
-                if(!$group) return "";
-                //Se não possui dado extra é para todos, do contrario, possui dominio
-                if(isset($data[2])){
-                    $domain = Domain::findOne(['name' => $data[2]]);
-                    if(!$domain) return "";
-                }
-                
-                $title = Yii::t("notification", 'Added to a group')." (".$group->name.")";
-                
-                $msg = Yii::t("notification", 'You have been added to group')." <b>".$group->name."</b>";
-                if($group->type==Group::TYPE_DOMAIN){
-                    if(isset($domain)) $msg .= " ".Yii::t("notification", 'of the domain')." <b>".$domain->name."</b>.";
-                    else if(!isset($data[2])) $msg .= " ".Yii::t("notification", 'of all domains.');
-                    else $msg .= ".";
-                }
-                else {
-                    $msg .= " ".Yii::t("notification", 'with system permissions');
-                }
-                
-                $date = Yii::$app->formatter->asDatetime($notification->date);
-                
-                $text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
-                break;
-            
-            //REMOVIDO DE UM GRUPO
-            case self::NOTICE_TYPE_DEL_GROUP:
-                $group = Group::findOne($data[1]);
-                if(!$group) return "";
-                //Se não possui dado extra é para todos, do contrario, possui dominio
-                if(isset($data[2])){
-                    $domain = Domain::findOne(['name' => $data[2]]);
-                    if(!$domain) return "";
-                }
-                
-                $title = Yii::t("notification", 'Removed from a group')." (".$group->name.")";
-                 
-                $msg = Yii::t("notification", 'You were removed from the group')." <b>".$group->name."</b>";
-                if($group->type==Group::TYPE_DOMAIN){
-                    if(isset($domain)) $msg .= " ".Yii::t("notification", 'of the domain')." <b>".$domain->name."</b>.";
-                    else if(!isset($data[2])) $msg .= " ".Yii::t("notification", 'of all domains.');
-                    else $msg .= ".";
-                }
-                else {
-                    $msg .= " ".Yii::t("notification", 'with system permissions');
-                }
-                 
-                $date = Yii::$app->formatter->asDatetime($notification->date);
-                 
-                $text = '<span><h1>'.$title.'</h1><h2>'.$msg.'</h2><h3>'.$date.'</h3></span>';
-                break;
-        }
-
-        $html = Notification::makeHtml('notice.png', $text);
-         
-        if($notification->viewed == true) return '<li>'.$html.'</li>';
-        return '<li class="new">'.$html.'</li>';
+        
     }
     
     /**
@@ -607,75 +554,5 @@ class Notification extends \yii\db\ActiveRecord
         
         if($notification->viewed == true) return '<li>'.Html::a($html, array($link)).'</li>';
         return '<li class="new">'.Html::a($html, array($link)).'</li>';
-    }
-    
-    /********************************
-     *
-     * CHANGE GROUP NOTIFICATION
-     *
-     ********************************/
-    
-    /**
-     * CREATE NOTIFICATIONS USER NEW GROUP
-     * @param string $user_id
-     * @param string $group_name
-     * @param string $domain_id
-     * Cria novas notificações quando usuário é adicionado a um grupo
-     */
-    public static function createNotificationsUserNewGroup($user_id, $group_name, $domain_id){
-        $user = User::findOne($user_id);
-        $group = Group::findOne(['role_name' => $group_name]);
-         
-        if($user && $group){
-            Yii::trace("Criar notificações do grupo ".$group->name." para usuário ".$user->name);
-            //Busca todas autorizações pendentes do grupo
-            //Se tem dominio, procura só as relacionadas ao dominio do papel
-            if($domain_id){
-                $domain = Domain::findOne($domain_id);
-                if($domain) $auths = ConnectionAuth::find()->where(['status' => Connection::AUTH_STATUS_PENDING, 'domain' => $domain->name, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
-                else return;
-            }
-            //Se não possui domonio no papel, busca para todos dominios, pois é ANY
-            else $auths = ConnectionAuth::find()->where(['status' => Connection::AUTH_STATUS_PENDING, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
-    
-            //Passa por todas criando uma notificação
-            foreach($auths as $auth){
-                $connection = Connection::findOne($auth->connection_id);
-                $reservation = Reservation::findOne($connection->reservation_id);
-                Notification::createUserAuthNotification($user->id, $auth->domain, $connection->reservation_id, $auth->id, $reservation->date);
-            }
-        }
-    }
-    
-    /**
-     * DELETE NOTIFICATIONS USER GROUP
-     * @param string $user_id
-     * @param string $group_name
-     * @param string $domain_id
-     * Deleta as notificações quando usuário é removido de um grupo
-     */
-    public static function deleteNotificationsUserGroup($user_id, $group_name, $domain_id){
-        $user = User::findOne($user_id);
-        $group = Group::findOne(['role_name' => $group_name]);
-    
-        if($user && $group){
-            Yii::trace("Remover notificações do grupo ".$group->name." para usuário ".$user->name);
-            //Busca todas autorizações do grupo
-            //Se tem domínio, procura só as relacionadas ao domínio do papel
-            if($domain_id){
-                $domain = Domain::findOne($domain_id);
-                if($domain) $auths = ConnectionAuth::find()->where(['domain' => $domain->name, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
-                else return;
-            }
-            //Se não possui domínio no papel, busca para todos dominios, pois é ANY
-            else $auths = ConnectionAuth::find()->where(['type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
-    
-            //Passa por todas criando uma notificação
-            foreach($auths as $auth){
-                $notification = Notification::findOne(['user_id' => $user_id, 'type' => self::TYPE_AUTHORIZATION, 'info' => $auth->id]);
-                if($notification) $notification->delete();
-            }
-        }
-    }
-
+    }    
 }

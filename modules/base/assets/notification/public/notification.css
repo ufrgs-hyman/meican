@@ -1,0 +1,22 @@
+.notification_new .notification_title{
+	font-weight: bold;
+}
+
+.notification_img{
+	height: 60px;
+}
+
+.notification_p{
+	white-space: pre-wrap;
+}
+
+.notification_date{
+	color: #999999 !important;
+	font-size: 10px !important;
+	padding: 3px !important;
+	padding-left: 5px !important;
+}
+
+.notification_date_img{
+	margin-right: 3px;
+}

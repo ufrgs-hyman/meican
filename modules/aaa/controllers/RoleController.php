@@ -16,7 +16,7 @@ use meican\aaa\models\UserDomainRole;
 use meican\topology\models\Domain;
 use meican\aaa\models\Group;
 use meican\aaa\RbacController;
-use meican\notification\models\Notification;
+use meican\aaa\models\AaaNotification;
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
@@ -39,8 +39,6 @@ class RoleController extends RbacController {
             
             $form = $_POST["UserDomainRole"];
             
-            Yii::error($form);
-            
             $udr->_groupRoleName = $form["_groupRoleName"];
             $roleDomain = $form['domain'];
             if($roleDomain == "") $udr->domain = null;
@@ -60,14 +58,7 @@ class RoleController extends RbacController {
             }
             else {
                 if($udr->save()) {
-                    
-                    //Cria notificações relativas ao novo papel
-                    //Notification::createNotificationsUserNewGroup($udr->user_id, $udr->_groupRoleName, $udr->domain);
-                    
-                    //Cria notificação de novo papel
-                    $domain = Domain::findOne(['name' => $udr->domain]);
-                    if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
-                    else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
+                	AaaNotification::createRole($udr);
                     
                     Yii::$app->getSession()->setFlash("success", Yii::t("aaa", 'Role created successfully'));
 
@@ -136,15 +127,8 @@ class RoleController extends RbacController {
     		}
     		else {
     			if($udr->save()) {
-    
-    				//Cria notificações relativas ao novo papel
-    				//Notification::createNotificationsUserNewGroup($udr->user_id, $udr->_groupRoleName, $udr->domain);
-    
-    				//Cria notificação de novo papel
-    				$domain = Domain::findOne(['name' => $udr->domain]);
-    				if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
-    				else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
-    
+    				AaaNotification::createRole($udr);
+    				
     				Yii::$app->getSession()->setFlash("success", Yii::t("aaa", 'Role created successfully'));
     
     				return $this->redirect(array('/aaa/user/view', 'id'=>$id));
@@ -210,29 +194,10 @@ class RoleController extends RbacController {
             }
             else {
                 if($udr->save()) {
-                    /*
-                    //Remove notificações relativas ao antigo papel
-                    Notification::deleteNotificationsUserGroup($udr->user_id, $group->role_name, $udr->domain);
-                    //Cria notificações relativas ao novo papel
-                    Notification::createNotificationsUserNewGroup($udr->user_id, $udr->_groupRoleName, $udr->domain);
+                	AaaNotification::createRole($udr);
                     
-                    //Pequena maquipulação do horário para que não fiquem as duas notificações com o mesmo horário.
-                    $dateAux = new \DateTime('now', new \DateTimeZone("UTC"));
-                    $dateAux->modify('-1 second');
-                    $dateAux = $dateAux->format("Y-m-d H:i:s");
+                	AaaNotification::deleteRole($udr, $group);
                     
-                    //Cria notificação do papel removido
-                    $domain = Domain::findOne(['name' => $udr->domain]);
-                    if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $group->id, $domain->name, $dateAux);
-                    else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $group->id, null, $dateAux);
-                    
-                    //Cria notificação do novo papel
-                    $domain = Domain::findOne(['name' => $udr->domain]);
-                    if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
-                    else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
-                     
-                    */
-                	
                     Yii::$app->getSession()->setFlash("success", Yii::t("aaa", 'Role updated successfully'));
                     
                     return $this->redirect(array('/aaa/user/view', 'id'=>$udr->user_id));
@@ -317,28 +282,9 @@ class RoleController extends RbacController {
     		}
     		else {
     			if($udr->save()) {
-    				/*
-    				 //Remove notificações relativas ao antigo papel
-    				 Notification::deleteNotificationsUserGroup($udr->user_id, $group->role_name, $udr->domain);
-    				 //Cria notificações relativas ao novo papel
-    				 Notification::createNotificationsUserNewGroup($udr->user_id, $udr->_groupRoleName, $udr->domain);
-    
-    				 //Pequena maquipulação do horário para que não fiquem as duas notificações com o mesmo horário.
-    				 $dateAux = new \DateTime('now', new \DateTimeZone("UTC"));
-    				 $dateAux->modify('-1 second');
-    				 $dateAux = $dateAux->format("Y-m-d H:i:s");
-    
-    				 //Cria notificação do papel removido
-    				 $domain = Domain::findOne(['name' => $udr->domain]);
-    				 if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $group->id, $domain->name, $dateAux);
-    				 else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $group->id, null, $dateAux);
-    
-    				 //Cria notificação do novo papel
-    				 $domain = Domain::findOne(['name' => $udr->domain]);
-    				 if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id, $domain->name);
-    				 else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
-    				  
-    				 */
+    				AaaNotification::createRole($udr);
+                    
+                	AaaNotification::deleteRole($udr, $group);
     				 
     				Yii::$app->getSession()->setFlash("success", Yii::t("aaa", 'Role updated successfully'));
     
@@ -362,10 +308,8 @@ class RoleController extends RbacController {
     
     public function actionDelete() {
         if(isset($_POST['delete'])){
-            $date = new \DateTime('now', new \DateTimeZone("UTC"));
             foreach ($_POST['delete'] as $udrId) {
                 $udr = UserDomainRole::findOne($udrId);
-                
                 $dom = $udr->getDomain();
                 $domName = Yii::t("aaa", 'any');
                 if($dom) $domName = $dom->name;
@@ -382,22 +326,8 @@ class RoleController extends RbacController {
                 	Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to delete roles on domain {domain}',['domain' => $domName]));
                 }
                 else {
-	                /*
-	                //Remove notificações relativas ao antigo papel
-	                $domain = Domain::findOne(['name' => $udr->domain]);
-	                if($domain) Notification::deleteNotificationsUserGroup($udr->user_id, $udr->getGroup()->role_name, $domain->name);
-	                else Notification::deleteNotificationsUserGroup($udr->user_id, $udr->getGroup()->role_name, null);
-	                
-	                //Pequena maquipulação do horário para que não fiquem as duas notificações com o mesmo horário.
-	                $date->modify('-1 second');
-	                $dateAux = $date->format("Y-m-d H:i:s");
-	                
-	                //Notificação removido papel
-	                $domain = Domain::findOne(['name' => $udr->domain]);
-	                if($domain) Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $udr->getGroup()->id, $domain->name, $dateAux);
-	                else Notification::createNoticeNotification($udr->user_id, Notification::NOTICE_TYPE_DEL_GROUP, $udr->getGroup()->id, null, $dateAux);
-					*/
-	
+                	AaaNotification::deleteRole($udr);
+                	
 	                $groupType = Group::TYPE_DOMAIN; 
 	                $group = $udr->getGroup();
 	                if($group) $groupType = $group->type;
