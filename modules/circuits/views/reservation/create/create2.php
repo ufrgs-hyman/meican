@@ -8,9 +8,7 @@ use yii\bootstrap\Tabs;
 use yii\bootstrap\Modal;
 use yii\bootstrap\ActiveForm;
 
-use meican\circuits\assets\reservation\CreateAsset;
-
-CreateAsset::register($this);
+\meican\circuits\assets\reservation\Create::register($this);
 
 $this->params['hide-content-section'] = true;
 $this->params['hide-footer'] = true;
@@ -228,4 +226,42 @@ $form = ActiveForm::begin([
 
 <div id="canvas" class="lsidebar-map"></div>
 
-<?php ActiveForm::end(); ?>
+<?php ActiveForm::end();
+
+Modal::begin([
+    'id' => 'point-modal',
+    'header' => 'Edit point',
+    'footer' => '<button class="cancel btn btn-default">Cancel</button> <button class="save btn btn-primary">Save</button>',
+]); ?>
+
+<div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#p1" data-toggle="tab">Normal</a></li>
+      <li><a href="#p2" data-toggle="tab">Advanced</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="p1">
+        <select id="dom-select" class="form-control">
+        </select><br>
+        <select id="net-select" class="form-control">
+        </select><br>
+        <select id="dev-select" class="form-control">
+        </select><br>
+        <select id="port-select" class="form-control">
+        </select><br>
+        <select id="vlan-select" class="form-control">
+        </select>
+      </div>
+      <!-- /.tab-pane -->
+      <div class="tab-pane" id="p2">
+        <div class="form-group">
+          <input id="urn" type="text" class="form-control" placeholder="URN">
+        </div>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+</div>
+<select id="vlan-select" class="form-control"></select>
+
+<?php Modal::end(); ?>

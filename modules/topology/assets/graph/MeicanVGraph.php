@@ -11,12 +11,12 @@ use yii\web\AssetBundle;
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class MeicanGraph extends AssetBundle
+class MeicanVGraph extends AssetBundle
 {
     public $sourcePath = '@meican/topology/assets/graph/public';
 
     public $js = [
-        'meican-graph.js',
+        'meican-vgraph.js',
     ];
     public $depends = [
         'meican\base\assets\Vis',

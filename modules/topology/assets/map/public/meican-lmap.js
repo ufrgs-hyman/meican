@@ -1,7 +1,7 @@
 /**
  * MeicanLMap 1.0
  *
- * A DCN topology visualization based on Leaflet Javascript library.
+ * A DCN topology viewer based on Leaflet Javascript library.
  *
  * @copyright Copyright (c) 2016 RNP
  * @license http://github.com/ufrgs-hyman/meican2#license
@@ -12,7 +12,6 @@ function MeicanLMap(canvasDivId) {
     this._map;                       // Leaflet Map
     this._markers = [];              // markers container
     this._links = [];
-    this._openedWindows = [];        // opened marker windows
     this._currentMarkerType;         // current marker type visible
     this._currentTileSource;
     this._domainsList;               // domains list reference;
@@ -145,16 +144,6 @@ MeicanLMap.prototype.addMarker = function(object, type, color) {
     marker.on('click', function(e) {
         $("#"+currentMap._canvasDivId).trigger("markerClick", marker);
     });
-
-    /*google.maps.event.addListener(marker, 'mouseover', function() {
-        currentMap.closeWindows();
-        currentMap.openWindow(marker);
-    });
-
-    google.maps.event.addListener(marker, 'click', function() {
-        currentMap.showMarker(marker.id);
-        $( "#"+currentMap._divId ).trigger( "markerClick",  marker.id);
-    });*/
 }
 
 MeicanLMap.prototype.getDomain = function(id) {
@@ -196,36 +185,14 @@ MeicanLMap.prototype.getValidMarkerPosition = function(type, position) {
     return position;
 }
 
-MeicanLMap.prototype.closeWindows = function() {
-    var size = this._openedWindows.length;
-    for (var i = 0; i < size; i++) {
-        this._openedWindows[i].close();
-    }
+MeicanLMap.prototype.closePopups = function() {
+    this._map.closePopup();
 }
 
-MeicanLMap.prototype.addWindow = function(infoWindow) {
-    this._openedWindows.push(infoWindow);
+MeicanLMap.prototype.addPopup = function(infoWindow) {
 }
 
-MeicanLMap.prototype.openWindow = function(marker, extra) {
-    if (extra) {
-        extra = '<br>' + extra + '</div></div>';
-    } else {
-        extra = '</div></div>';
-    }
-
-    markerWindow = new google.maps.InfoWindow({
-        content: '<div class = "MarkerPopUp" style="width: 230px; line-height: 1.35; overflow: hidden; white-space: nowrap;"><div class = "MarkerContext">' +
-            I18N.t('Domain') + ': ' + '<b>' + (marker.domainName ? marker.domainName : this.getDomain(marker.domainId).name) + '</b><br>' + 
-            (marker.type == "dev" ? I18N.t('Device') : I18N.t("Network")) + ': <b>'+marker.name+'</b><br>' +
-            extra
-        });
-
-    this._openedWindows.push(markerWindow);
-    
-    markerWindow.open(this._map, marker);
-
-    return markerWindow;
+MeicanLMap.prototype.openPopup = function(marker, extra) {
 }
 
 MeicanLMap.prototype.getMarker = function(id) {

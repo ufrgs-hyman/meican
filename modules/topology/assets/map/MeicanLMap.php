@@ -16,7 +16,7 @@ class MeicanLMap extends AssetBundle
     public $sourcePath = '@meican/topology/assets/map/public';
 
     public $js = [
-        'meican-leaflet-map.js',
+        'meican-lmap.js',
     ];
     public $depends = [
         'meican\base\assets\Leaflet',

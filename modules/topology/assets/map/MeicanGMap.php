@@ -16,7 +16,7 @@ class MeicanGMap extends AssetBundle
     public $sourcePath = '@meican/topology/assets/map/public';
 
     public $js = [
-        'meican-google-map.js',
+        'meican-gmap.js',
     ];
     public $depends = [
         'meican\base\assets\google\Maps',

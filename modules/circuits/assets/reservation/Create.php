@@ -4,7 +4,7 @@ namespace meican\circuits\assets\reservation;
 
 use yii\web\AssetBundle;
 
-class CreateAsset extends AssetBundle
+class Create extends AssetBundle
 {
     public $sourcePath = '@meican/circuits/assets/reservation/public/create';
     
@@ -23,6 +23,6 @@ class CreateAsset extends AssetBundle
         'meican\base\assets\Qtip',
         'meican\base\assets\ToggleAsset',
         'meican\topology\assets\map\MeicanLMap',
-        'meican\topology\assets\graph\MeicanGraph'
+        'meican\topology\assets\graph\MeicanVGraph'
     ];
 }

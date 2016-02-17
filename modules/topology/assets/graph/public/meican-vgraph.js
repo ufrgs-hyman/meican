@@ -1,5 +1,5 @@
 /**
- * MeicanGraph 1.0
+ * MeicanVGraph 1.0
  *
  * A DCN topology visualization based on Vis.js library.
  *
@@ -7,7 +7,7 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-function MeicanGraph(canvasDivId) {
+function MeicanVGraph(canvasDivId) {
     this._graph;                     // vis.js network
     this._canvasDivId = canvasDivId; 
     this._nodes = new vis.DataSet(); // nodes
@@ -17,7 +17,7 @@ function MeicanGraph(canvasDivId) {
     this._popup;
 };
 
-MeicanGraph.prototype.show = function() {
+MeicanVGraph.prototype.show = function() {
     if($("#graph-v").length == 1) {
         $("#graph-v").show();
     } else {
@@ -26,24 +26,24 @@ MeicanGraph.prototype.show = function() {
     }
 }
 
-MeicanGraph.prototype.hide = function() {
+MeicanVGraph.prototype.hide = function() {
     if($("#graph-v").length == 1) {
         this._graph.destroy();
         $("#graph-v").remove();
     }
 }
 
-MeicanGraph.prototype.setDomains = function(list) {
+MeicanVGraph.prototype.setDomains = function(list) {
     this._domainsList = list;
 }
 
-MeicanGraph.prototype.getDomain = function(id) {
+MeicanVGraph.prototype.getDomain = function(id) {
     for (var i = 0; i < this._domainsList.length; i++) {
         if (this._domainsList[i].id == id) return this._domainsList[i];
     }
 }
 
-MeicanGraph.prototype.addNodes = function(objects, type, loadPosition) {
+MeicanVGraph.prototype.addNodes = function(objects, type, loadPosition) {
     var size = objects.length;
     var nodes = [];
     var physics = true;
@@ -75,7 +75,7 @@ MeicanGraph.prototype.addNodes = function(objects, type, loadPosition) {
     this._graph.stabilize();
 }
 
-MeicanGraph.prototype.addNode = function(id, name, type, domainId, x,y, color) {
+MeicanVGraph.prototype.addNode = function(id, name, type, domainId, x,y, color) {
     var physics = true;
     if(x && y) physics = false;
     this._nodes.add({
@@ -92,7 +92,7 @@ MeicanGraph.prototype.addNode = function(id, name, type, domainId, x,y, color) {
     });
 }
 
-MeicanGraph.prototype.addLinks = function(objects, type) {
+MeicanVGraph.prototype.addLinks = function(objects, type) {
     var size = objects.length;
     for (var src in objects) {
         for (var i = 0; i < objects[src].length; i++) {
@@ -101,7 +101,7 @@ MeicanGraph.prototype.addLinks = function(objects, type) {
     }
 }
 
-MeicanGraph.prototype.addLink = function(srcId, dstId, type) {
+MeicanVGraph.prototype.addLink = function(srcId, dstId, type) {
     this._links.add({
         type: type,
         from: srcId, 
@@ -114,12 +114,12 @@ MeicanGraph.prototype.addLink = function(srcId, dstId, type) {
     });
 }
 
-MeicanGraph.prototype.showNode = function(nodeId) {
+MeicanVGraph.prototype.showNode = function(nodeId) {
     this._graph.selectNodes([nodeId]);
     this._graph.focus(nodeId);
 }
 
-MeicanGraph.prototype.setTypeVisible = function(type) {
+MeicanVGraph.prototype.setTypeVisible = function(type) {
     var nodes = this._nodes.get();
     for (var i = 0; i < nodes.length; i++) {
         if(nodes[i].type == type) {
@@ -139,11 +139,11 @@ MeicanGraph.prototype.setTypeVisible = function(type) {
     };
 }
 
-MeicanGraph.prototype.fit = function() {
+MeicanVGraph.prototype.fit = function() {
     this._graph.fit();
 }
 
-MeicanGraph.prototype.build = function(divId) {
+MeicanVGraph.prototype.build = function(divId) {
     $("#"+divId).show();
     var container = document.getElementById(divId);
     var data = {
@@ -259,7 +259,7 @@ MeicanGraph.prototype.build = function(divId) {
     });*/
 }
 
-MeicanGraph.prototype.showPopup = function(nodeId, content) {
+MeicanVGraph.prototype.showPopup = function(nodeId, content) {
     this._popup.set('visible', true);
     var pos = this._graph.getPositions(nodeId);
     pos = this._graph.canvasToDOM(pos[nodeId]);
