@@ -98,4 +98,50 @@ class PortController extends RbacController {
 		$port = Port::findOne($id);
 		return $port->getDevice()->one()->getDomain()->one()->id;
 	}
+
+    public function actionGetByDevice($id, $cols=null){
+        $query = Port::find()->orderBy(['name'=> "SORT ASC"])->where(['device_id'=>$id])->asArray();
+        
+        $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
+    }
+    public function actionGetAllBidirectional($cols=null) {
+        $query = Port::find()->where(['directionality'=> Port::DIR_BI])->asArray();
+        
+        $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
+    }
+    
+    public function actionGet($id, $cols=null) {
+        $cols ? $port = Port::find()->where(
+                ['id'=>$id])->select($cols)->asArray()->one() : $port = Port::find()->where(['id'=>$id])->asArray()->one();
+    
+        $temp = Json::encode($port);
+        Yii::trace($temp);
+        return $temp;
+    }
+    
+    public function actionGetVlanRange($id){
+        $port = Port::find()->where(['id'=>$id])->select(['vlan_range','id'])->one();
+        $data = $port->vlan_range;
+        if(!$data) $data = $port->getInboundPortVlanRange();
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
+    }
+    public function actionGetAllColor($cols=null) {
+        $query = Port::find()->orderBy(['name'=>'SORT ASC'])->asArray();
+        $cols ? $data = $query->select(array_merge(json_decode($cols), ['device_id']))->all() : $data = $query->all();
+        foreach ($data as &$port) {
+            $port['color'] = Domain::find()->where(['id'=>$dev['domain_id']])->select(['color'])->asArray()->one()['color'];
+        }
+        
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
+    }
 }
