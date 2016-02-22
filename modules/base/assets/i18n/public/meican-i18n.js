@@ -1,10 +1,8 @@
 /**
  * MeicanI18N 1.0
  *
- * @copyright (c) 2015, Maurício Quatrin Guerreiro @mqgmaster
- * All rights reserved.
- *
- * License: MIT
+ * @copyright Copyright (c) 2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
  *
  * Requirements - javascripts load order:
  * 1. This file
