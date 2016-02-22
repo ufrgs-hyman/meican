@@ -20,6 +20,7 @@ class MeicanVGraph extends AssetBundle
     ];
     public $depends = [
         'meican\base\assets\Vis',
+        'meican\base\assets\Qtip',
     ];
 }
 

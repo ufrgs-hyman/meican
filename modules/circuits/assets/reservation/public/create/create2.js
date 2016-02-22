@@ -9,9 +9,49 @@ var lsidebar;
 $(document).ready(function() {
     meicanMap.show("rnp", 'dev');
     $(".sidebar-mini").addClass("sidebar-collapse");
+
+    $("#home").on("click",'.next-btn', function() {
+        lsidebar.open("path");
+    });
+
+    $("#path").on("click",'.next-btn', function() {
+        lsidebar.open("requirements");
+    });
+
+    $("#requirements").on("click",'.next-btn', function() {
+        lsidebar.open("schedule");
+    });
+
+    $("#schedule").on("click",'.next-btn', function() {
+        lsidebar.open("confirm");
+    });
+
+    $("#confirm").on("click",'.next-btn', function() {
+        alert('ok');
+    });
     
     $("#add-point").click(function() {
         addPoint();
+        return false;
+    });
+
+    $("#point-modal").on('click','.save-btn',function() {
+        setPoint(
+            $("#point-modal").find('.point-position').text(),
+            $("#dom-select option:selected").text(),
+            $("#net-select").val() == '' ? 'none' : $("#net-select option:selected").text(),
+            $("#dev-select option:selected").text(),
+            $("#dev-select").val(),
+            $("#port-select option:selected").text(),
+            $("#port-select").val(),
+            null,
+            $("#vlan-select").val());
+        $("#point-modal").modal('hide');
+        return false;
+    });
+
+    $("#point-modal").on('click','.cancel-btn',function() {
+        $("#point-modal").modal('hide');
         return false;
     });
 
@@ -25,7 +65,7 @@ $(document).ready(function() {
     $('#canvas').on('markerClick', function(e, marker) {
         marker.setPopupContent('Domain: <b>' + meicanMap.getDomain(marker.options.domainId).name + 
             '</b><br>Device: <b>' + marker.options.name + '</b><br><br>'+
-            '<div data-marker="' + marker.options.id + '">'+
+            '<div data-node="' + marker.options.id + '">'+
               '<button class="set-source">From here</button>'+
               '<button class="add-waypoint">Add waypoint</button>'+
               '<button class="set-destination">To here</button>'+
@@ -45,7 +85,7 @@ $(document).ready(function() {
     $('#canvas').on('nodeClick', function(e, nodeId) {
         console.log('sdas');
         meicanGraph.showPopup(nodeId, 'Domain: cipo.rnp.br<br>Device: POA<br><br>'+
-            '<div data-marker="' + nodeId + '">'+
+            '<div data-node="' + nodeId + '">'+
               '<button class="set-source">From here</button>'+
               '<button class="add-waypoint">Add waypoint</button>'+
               '<button class="set-destination">To here</button>'+
@@ -54,22 +94,23 @@ $(document).ready(function() {
 
     $("#canvas").on("click",'.set-source', function() {
         lsidebar.open("path");
-        setSourcePoint($(this).parent().attr('data-marker'));
+        //setSourcePoint($(this).parent().attr('data-node'));
         closePopups();
-        $("#point-modal").modal("show");
+        showPointModal(0, $(this).parent().attr('data-node'));
         return false;
     });
 
     $("#canvas").on("click",'.set-destination', function() {
         lsidebar.open("path");
-        setDestinationPoint($(this).parent().attr('data-marker'));
+        //setDestinationPoint($(this).parent().attr('data-node'));
         closePopups();
+        showPointModal($('.point').length - 1, $(this).parent().attr('data-node'));
         return false;
     });
 
     $("#canvas").on("click",'.add-waypoint', function() {
         lsidebar.open("path");
-        addWayPoint($(this).parent().attr('data-marker'));
+        addWayPoint($(this).parent().attr('data-node'));
         closePopups();
         return false;
     });
@@ -134,32 +175,46 @@ function closePopups() {
     }
 }
 
+function showPointModal(pointPos, nodeId) {
+    var marker = meicanMap.getMarker(nodeId);
+    $("#point-modal").find('.point-position').text(pointPos);
+    $("#dom-select").val(marker.options.domainId);
+    fillNetworkSelect(marker.options.domainId);
+    fillDeviceSelect(marker.options.domainId, null, marker.options.id.replace('dev',''));
+    fillPortSelect(marker.options.id.replace('dev',''), $($(".point")[pointPos]).find('.port-id').val()); 
+    fillVlanSelect();   
+    $("#point-modal").modal("show");
+}
+
 function setSourcePoint(nodeId) {
-    setPoint(0, nodeId);
+    setPointByNode(0, nodeId);
 }
 
 function setDestinationPoint(nodeId) {
-    setPoint($('.point').length - 1, nodeId);
+    setPointByNode($('.point').length - 1, nodeId);
 }
 
 function addWayPoint(nodeId) {
     addPoint($('.point').length - 1, nodeId);
 }
 
-function setPoint(position, nodeId) {
+function setPointByNode(position, nodeId) {
     console.log(position, nodeId);
     //var node = meicanMap.getMarker(nodeId);
     //var node = meicanGraph.getNode(nodeId);
     if(mode == 'map') {
         var marker = meicanMap.getMarker(nodeId);
-        $($(".point")[position]).find('.dom-l').text(meicanMap.getDomain(marker.options.domainId).name);
-        $($(".point")[position]).find('.dev-l').text(marker.options.name);
-        $($(".point")[position]).find('.dev-l').attr('data', marker.options.id.replace('dev',''));
-        $($(".point")[position]).find('.vlan').val('auto');
-        $($(".point")[position]).find('.timeline-body').slideDown();
-        var element = $($(".point")[position]).find('.fa-plus'); 
-        element.removeClass('fa-plus');
-        element.addClass('fa-minus');
+        setPoint(
+            position, 
+            meicanMap.getDomain(marker.options.domainId).name,
+            'none',
+            marker.options.name,
+            marker.options.id.replace('dev',''),
+            'none',
+            null,
+            null,
+            'auto');
+        
     } else {
         var node = meicanGraph.getNode(nodeId);
     }
@@ -167,7 +222,23 @@ function setPoint(position, nodeId) {
     drawPath();
 }
 
-function addPoint(position, markerId) {
+function setPoint(position, dom, net, dev, devId, port, portId, urn, vlan) {
+    $($(".point")[position]).find('.dom-l').text(dom);
+    $($(".point")[position]).find('.net-l').text(net);
+    $($(".point")[position]).find('.dev-l').text(dev);
+    $($(".point")[position]).find('.dev-l').attr('data', devId);
+    $($(".point")[position]).find('.port-l').text(port);
+    $($(".point")[position]).find('.port-id').val(portId);
+    $($(".point")[position]).find('.urn').val(urn);
+    $($(".point")[position]).find('.vlan').val(vlan);
+    $($(".point")[position]).find('.timeline-body').slideDown();
+    var element = $($(".point")[position]).find('.fa-plus'); 
+    element.removeClass('fa-plus');
+    element.addClass('fa-minus');
+    drawPath();
+}
+
+function addPoint(position, nodeId) {
     if(position) {
         $($(".point")[position]).before(buildPoint());
     } else {
@@ -400,7 +471,7 @@ function loadDeviceLinks() {
 
 function fillDomainSelect() {
     clearSelect('dom-select');
-    $("#dom-select").append('<option value="">' + I18N('loading') + '</option>');
+    $("#dom-select").append('<option value="">' + I18N.t('loading') + '</option>');
     $.ajax({
         url: baseUrl+'/topology/domain/get-all',
         data: {
@@ -409,10 +480,11 @@ function fillDomainSelect() {
         dataType: 'json',
         success: function(domains){
             clearSelect("dom-select");
-            $("#dom-select").append('<option value="">' + I18N('select') + '</option>');
+            $("#dom-select").append('<option value="">' + I18N.t('select') + '</option>');
             for (var i = 0; i < domains.length; i++) {
                 $("#dom-select").append('<option value="' + domains[i].id + '">' + domains[i].name + '</option>');
             }
+            enableSelect("dom-select");
         },
     });
 }
@@ -421,7 +493,7 @@ function fillNetworkSelect(domainId, networkId, initDisabled) {
     disableSelect("net-select");
     clearSelect("net-select");
     if (domainId != "" && domainId != null) {
-        $("#net-select").append('<option value="">' + I18N('loading') + '</option>');
+        $("#net-select").append('<option value="">' + I18N.t('loading') + '</option>');
         $.ajax({
             url: baseUrl+'/topology/network/get-by-domain',
             data: {
@@ -430,7 +502,7 @@ function fillNetworkSelect(domainId, networkId, initDisabled) {
             dataType: 'json',
             success: function(response){
                 clearSelect("net-select");
-                $("#net-select").append('<option value="">' + I18N('select') + '</option>');
+                $("#net-select").append('<option value="">' + I18N.t('select') + '</option>');
                 if (!initDisabled) enableSelect("net-select");
                 for (var i = 0; i < response.length; i++) {
                     $("#net-select").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
@@ -458,7 +530,7 @@ function fillDeviceSelect(domainId, networkId, deviceId, initDisabled) {
     } 
 
     if (parent) {
-        $("#dev-select").append('<option value="">' + I18N('loading') + '</option>');
+        $("#dev-select").append('<option value="">' + I18N.t('loading') + '</option>');
         $.ajax({
             url: baseUrl+'/topology/device/get-by-' + parent[0],
             dataType: 'json',
@@ -467,7 +539,7 @@ function fillDeviceSelect(domainId, networkId, deviceId, initDisabled) {
             },
             success: function(response){
                 clearSelect("dev-select");
-                $("#dev-select").append('<option value="">' + I18N('select') + '</option>');
+                $("#dev-select").append('<option value="">' + I18N.t('select') + '</option>');
                 if (!initDisabled) enableSelect("dev-select");
                 for (var i = 0; i < response.length; i++) {
                     if (response[i].name == "") response[i].name = "default";
@@ -485,7 +557,7 @@ function fillPortSelect(deviceId, portId) {
     disableSelect("port-select");
     clearSelect("port-select");
     if (deviceId != "" && deviceId != null) {
-        $("#port-select").append('<option value="">' + I18N('loading') + '</option>');
+        $("#port-select").append('<option value="">' + I18N.t('loading') + '</option>');
         $.ajax({
             url: baseUrl+'/circuits/reservation/get-port-by-device',
             dataType: 'json',
@@ -495,12 +567,12 @@ function fillPortSelect(deviceId, portId) {
             },
             success: function(response){
                 clearSelect("port-select");
-                $("#port-select").append('<option value="">' + I18N('select') + '</option>');
+                $("#port-select").append('<option value="">' + I18N.t('select') + '</option>');
                 enableSelect("port-select");
                 for (var i = 0; i < response.length; i++) {
                     var name = response[i].name;
                     if (response[i].port == "") {
-                        name = I18N("default");
+                        name = I18N.t("default");
                     }
                     $("#port-select").append('<option value="' + response[i].id + '">' + name + '</option>');
                 }
@@ -514,7 +586,7 @@ function fillVlanSelect(portId, vlan) {
     disableSelect("vlan-select");
     clearSelect("vlan-select");
     if (portId != "" && portId != null) {
-        $("#vlan-select").append('<option value="">' + I18N('loading') + '</option>');
+        $("#vlan-select").append('<option value="">' + I18N.t('loading') + '</option>');
         $.ajax({
             url: baseUrl+'/topology/port/get-vlan-range',
             dataType: 'json',
@@ -523,6 +595,7 @@ function fillVlanSelect(portId, vlan) {
             },
             success: function(response){
                 clearSelect("vlan-select");
+                $("#vlan-select").append('<option value="auto">Auto</option>');
                 if(response) {
                     var ranges = response.split(",");
                     for (var i = 0; i < ranges.length; i++) {
@@ -555,15 +628,15 @@ function fillVlanSelect(portId, vlan) {
     }
 }
 
-function clearSelect(endPointType, object) {
-      $('#' + object).children().remove();
+function clearSelect(object) {
+    $('#' + object).children().remove();
 }
 
-function disableSelect(endPointType, object) {
-  $('#' + object).prop('disabled', true);
+function disableSelect(object) {
+    $('#' + object).prop('disabled', true);
 }
 
-function enableSelect(endPointType, object) {
+function enableSelect(object) {
     if ($('#' + object).val() != null && $('#' + object) != "null") {
         $('#' + object).prop('disabled', false);
     }

@@ -27,8 +27,8 @@ $form = ActiveForm::begin([
             <li><a title="Welcome to the reservation page" href="#home" role="tab"><i class="fa fa-info-circle"></i></a></li>
             <li><a title="Select your endpoints" href="#path" role="tab"><i class="fa"><img src="https://maxcdn.icons8.com/Android_L/PNG/24/Maps/route-24.png" width="21"></i></a></li>
             <li><a title="Set the circuit requirements" href="#requirements" role="tab"><i class="fa fa-sliders"></i></a></li>
-            <li><a title="Choose the circuit duration" href="#calendar" role="tab"><i class="fa fa-calendar"></i></a></li>
-            <li><a title="Confirm and submit" href="#check" role="tab"><i class="fa fa-check danger"></i></a></li>
+            <li><a title="Choose the circuit duration" href="#schedule" role="tab"><i class="fa fa-calendar"></i></a></li>
+            <li><a title="Confirm and submit" href="#confirm" role="tab"><i class="fa fa-check danger"></i></a></li>
         </ul>
 
         <ul role="tablist">
@@ -154,7 +154,7 @@ $form = ActiveForm::begin([
                 </ul>
             </div>
             <div class="pull-right">
-                <button type="button" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</button>
+                <button type="button" class="next-btn btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</button>
             </div><br><br><br>
         </div>
 
@@ -180,21 +180,32 @@ $form = ActiveForm::begin([
             </div>
             <br>
             <div class="pull-right">
-                <input type="submit" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</input>
+                <button type="button" class="next-btn btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</button>
             </div> 
         </div>
 
-        <div class="lsidebar-pane" id="calendar">
+        <div class="lsidebar-pane" id="schedule">
             <h1 class="lsidebar-header">Step 3: Schedule<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-            gdfgdfgfg
+            <div class="form-group"><br>
+                <label>Date and time range:</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right active" id="reservationtime">
+                </div>
+                <!-- /.input group -->
+              </div><br>
+            <div class="pull-right">
+                <button type="button" class="next-btn btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</button>
+            </div>
         </div>
 
-        <div class="lsidebar-pane" id="check">
+        <div class="lsidebar-pane" id="confirm">
             <h1 class="lsidebar-header">Step 4: Confirmation<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
             xvdfd
             <div class="pull-right">
-                <button type="button" class="btn btn-primary"><span class="fa fa-arrow-left"></span> Previous</button>
-                <button type="button" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Next</button>
+                <button type="button" class="next-btn btn btn-primary"><span class="fa fa-arrow-right"></span> Submit</button>
             </div>
         </div>
 
@@ -212,7 +223,7 @@ $form = ActiveForm::begin([
             <p>4. Confirm your request and submit.</p>
 
             <div class="pull-right">
-                <button type="button" class="btn btn-primary"><span class="fa fa-arrow-right"></span> Start</button>
+                <button type="button" class="next-btn btn btn-primary"><span class="fa fa-arrow-right"></span> Start</button>
             </div>
         </div>
 
@@ -231,9 +242,10 @@ $form = ActiveForm::begin([
 Modal::begin([
     'id' => 'point-modal',
     'header' => 'Edit point',
-    'footer' => '<button class="cancel btn btn-default">Cancel</button> <button class="save btn btn-primary">Save</button>',
+    'footer' => '<button class="cancel-btn btn btn-default">Cancel</button> <button class="save-btn btn btn-primary">Save</button>',
 ]); ?>
 
+<label class="point-position" hidden></label>
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
       <li class="active"><a href="#p1" data-toggle="tab">Normal</a></li>
@@ -241,27 +253,37 @@ Modal::begin([
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="p1">
-        <select id="dom-select" class="form-control">
+        Domain
+        <select id="dom-select" class="form-control" disabled>
         </select><br>
-        <select id="net-select" class="form-control">
+        Network
+        <select id="net-select" class="form-control" disabled>
         </select><br>
-        <select id="dev-select" class="form-control">
+        Device
+        <select id="dev-select" class="form-control" disabled>
         </select><br>
-        <select id="port-select" class="form-control">
+        Port
+        <select id="port-select" class="form-control" disabled>
         </select><br>
-        <select id="vlan-select" class="form-control">
+        VLAN
+        <select id="vlan-select" class="form-control" disabled>
         </select>
       </div>
       <!-- /.tab-pane -->
       <div class="tab-pane" id="p2">
+        URN
         <div class="form-group">
           <input id="urn" type="text" class="form-control" placeholder="URN">
+        </div>
+        VLAN
+        <div class="form-group">
+          <input id="vlan" type="text" class="form-control" value="Auto">
         </div>
       </div>
       <!-- /.tab-pane -->
     </div>
     <!-- /.tab-content -->
 </div>
-<select id="vlan-select" class="form-control"></select>
+
 
 <?php Modal::end(); ?>
