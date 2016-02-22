@@ -32,5 +32,6 @@ class Theme extends AssetBundle
         'meican\base\assets\SlimScroll',
         'meican\base\assets\FontAwesome',
         'meican\base\assets\Ionicons',
+        'meican\base\assets\I18N'
     ];
 }

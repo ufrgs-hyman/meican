@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "feca6a5394e0b76d394dfee0fbcd7518",
-    "content-hash": "2f817d47cc97d3faaeba32fe37dca1ef",
+    "hash": "51b607853dd89d87d61065537ecce807",
+    "content-hash": "da3608e1c1b7e92432ce50b2ccebf696",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -57,6 +57,41 @@
             ]
         },
         {
+            "name": "bower-asset/bootstrap-daterangepicker",
+            "version": "v2.1.17",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dangrossman/bootstrap-daterangepicker.git",
+                "reference": "05bf0fe85f14426f5bcfecaa3f6c721fb7e7f9e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dangrossman/bootstrap-daterangepicker/zipball/05bf0fe85f14426f5bcfecaa3f6c721fb7e7f9e9",
+                "reference": "05bf0fe85f14426f5bcfecaa3f6c721fb7e7f9e9",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.10",
+                "bower-asset/moment": ">=2.9.0"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "daterangepicker.js",
+                    "daterangepicker.css"
+                ],
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests",
+                    "moment.js",
+                    "moment.min.js"
+                ]
+            }
+        },
+        {
             "name": "bower-asset/bootstrap-toggle",
             "version": "2.2.0",
             "source": {
@@ -98,16 +133,16 @@
         },
         {
             "name": "bower-asset/ev-emitter",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/ev-emitter.git",
-                "reference": "a590dbd7be3ebe98a0bc8635938f666e2e8f13f7"
+                "reference": "e1f8d670f76749aff783ad5e2f27d7294c2c679e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/ev-emitter/zipball/a590dbd7be3ebe98a0bc8635938f666e2e8f13f7",
-                "reference": "a590dbd7be3ebe98a0bc8635938f666e2e8f13f7",
+                "url": "https://api.github.com/repos/metafizzy/ev-emitter/zipball/e1f8d670f76749aff783ad5e2f27d7294c2c679e",
+                "reference": "e1f8d670f76749aff783ad5e2f27d7294c2c679e",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -305,16 +340,16 @@
         },
         {
             "name": "bower-asset/jquery",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jquery/jquery-dist.git",
-                "reference": "6fc01e29bdad0964f62ef56d01297039cdcadbe5"
+                "reference": "788eaba2f83e7b7445c7a83a50c81c0704423874"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/6fc01e29bdad0964f62ef56d01297039cdcadbe5",
-                "reference": "6fc01e29bdad0964f62ef56d01297039cdcadbe5",
+                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/788eaba2f83e7b7445c7a83a50c81c0704423874",
+                "reference": "788eaba2f83e7b7445c7a83a50c81c0704423874",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -404,6 +439,43 @@
                 "mask",
                 "plugins"
             ]
+        },
+        {
+            "name": "bower-asset/moment",
+            "version": "2.11.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moment/moment.git",
+                "reference": "dd9cff0104c0dc3f114f54107397c59920e764cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moment/moment/zipball/dd9cff0104c0dc3f114f54107397c59920e764cc",
+                "reference": "dd9cff0104c0dc3f114f54107397c59920e764cc",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "moment.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "benchmarks",
+                    "bower_components",
+                    "meteor",
+                    "node_modules",
+                    "scripts",
+                    "tasks",
+                    "test",
+                    "component.json",
+                    "composer.json",
+                    "CONTRIBUTING.md",
+                    "ender.js",
+                    "Gruntfile.js",
+                    "Moment.js.nuspec",
+                    "package.js",
+                    "package.json"
+                ]
+            }
         },
         {
             "name": "bower-asset/punycode",
@@ -527,40 +599,6 @@
                     "test/"
                 ]
             }
-        },
-        {
-            "name": "bower-asset/timepicker",
-            "version": "1.6.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jonthornton/jquery-timepicker.git",
-                "reference": "a40064a8b6ecf6c71b80be8f927d52c4eadd79d8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jonthornton/jquery-timepicker/zipball/a40064a8b6ecf6c71b80be8f927d52c4eadd79d8",
-                "reference": "a40064a8b6ecf6c71b80be8f927d52c4eadd79d8",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/jquery": ">=1.7"
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "./jquery.timepicker.js",
-                    "./jquery.timepicker.css"
-                ]
-            },
-            "license": [
-                "http://opensource.org/licenses/MIT"
-            ],
-            "description": "A jQuery timepicker plugin inspired by Google Calendar.",
-            "keywords": [
-                "google calendar",
-                "picker",
-                "time"
-            ]
         },
         {
             "name": "bower-asset/yii2-pjax",

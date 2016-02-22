@@ -8,14 +8,14 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 use meican\base\assets\notification\NotificationAsset;
-use meican\base\assets\Theme;
 use meican\base\widgets\Analytics;
+
+\meican\base\assets\Theme::register($this);
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 NotificationAsset::register($this);
-Theme::register($this);
 
 ?>
 <!DOCTYPE html>

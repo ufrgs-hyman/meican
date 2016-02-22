@@ -7,23 +7,24 @@
 namespace meican\base\assets;
 
 use yii\web\AssetBundle;
-use Yii;
 
-class ToggleAsset extends AssetBundle
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
+class DateRangePicker extends AssetBundle
 {
-    public $sourcePath = '@bower/bootstrap-toggle';
+    public $sourcePath = '@bower/bootstrap-daterangepicker';
     
     public $js = [
-        'js/bootstrap-toggle.min.js',
+        'daterangepicker.js'
     ];
     
     public $css = [
-    	'css/bootstrap-toggle.min.css',
+        'daterangepicker.css'
     ];
     
     public $depends = [
         'yii\bootstrap\BootstrapPluginAsset',
+        'meican\base\assets\Moment'
     ];
 }
-
-?>
