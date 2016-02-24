@@ -28,7 +28,6 @@
         "yiisoft/yii2": "2.0.7",
         "yiisoft/yii2-swiftmailer": "2.0.4",
         "yiisoft/yii2-bootstrap": "2.0.5",
-        "thiagotalma/yii2-fullcalendar": "2.0.0",
         "npm-asset/vis": "4.14.0",
         "npm-asset/leaflet": "0.7.7",
         "bower-asset/spectrum": "1.8.0",
@@ -40,7 +39,8 @@
         "bower-asset/bootstrap-daterangepicker" : "2.1.17",
         "bower-asset/bootstrap-toggle" : "2.2.0",
         "bower-asset/qtip2-main" : "3.0.2",
-        "bower-asset/moment" : "2.11.2"
+        "bower-asset/moment" : "2.11.2",
+        "bower-asset/fullcalendar": "2.6.1"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "2.0.4",
