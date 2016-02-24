@@ -8,6 +8,13 @@ namespace meican\circuits\models;
 
 use Yii;
 
+use meican\aaa\models\Group;
+use meican\aaa\models\User;
+use meican\bpm\models\BpmFlow;
+use meican\bpm\models\BpmWorkflow;
+use meican\topology\models\Domain;
+use meican\circuits\models\Connection;
+
 /**
  * This is the model class for table "meican_connection_auth".
  *
@@ -122,7 +129,7 @@ class ConnectionAuth extends \yii\db\ActiveRecord
     public function isAnswered() {
     	return !($this->status == Connection::AUTH_STATUS_PENDING);
     }
-    
+   
     public function getStatus(){
     	if($this->status == Connection::AUTH_STATUS_PENDING) return Yii::t('circuits', 'Waiting');
     	else if($this->status == Connection::AUTH_STATUS_APPROVED) return Yii::t('circuits', 'Approved');

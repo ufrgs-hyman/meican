@@ -33,7 +33,6 @@ $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 			'options' => ['class' => 'list'],
 			'dataProvider' => $data,
 			'filterModel' => $searchModel,
-			'formatter' => new Formatter(['nullDisplay'=>'']),
 			'id' => 'gridDevices',
 			'layout' => "{items}{summary}{pager}",
 			'columns' => array(
@@ -70,7 +69,6 @@ $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 						'contentOptions' => function($model){
 							return ['disabled'=>!$model->isDisabled(), 'id' => $model->id, 'class'=>'btn btn-update'];
 						},
-
 						'headerOptions'=>['style'=>'width: 2%;'],
 					],
 					[

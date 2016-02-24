@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-namespace meican\base\assets\notification;
+namespace meican\notification\assets;
 
 use yii\web\AssetBundle;
 
@@ -15,7 +15,7 @@ use yii\web\AssetBundle;
  */
 class NotificationAsset extends AssetBundle
 {
-    public $sourcePath = '@meican/base/assets/notification/public';
+    public $sourcePath = '@meican/notification/assets/public';
 
     public $css = [
 		'notification.css',

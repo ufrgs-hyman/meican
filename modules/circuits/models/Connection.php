@@ -9,6 +9,13 @@ namespace meican\circuits\models;
 use Yii;
 use meican\circuits\controllers\services\RequesterClient;
 
+use meican\bpm\models\BpmFlow;
+
+use meican\topology\models\Domain;
+
+use meican\circuits\models\Connection;
+use meican\circuits\models\ConnectionAuth;
+
 /**
  * This is the model class for table "meican_connection".
  *

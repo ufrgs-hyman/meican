@@ -22,10 +22,10 @@ use Yii;
  *
  * @property BpmFlowControl[] $bpmFlowControls
  * @property BpmWorkflow $workflow
- * @property MeicanBpmNode $outputNo
- * @property MeicanBpmNode[] $meicanBpmNodes
- * @property MeicanBpmNode $outputYes
- * @property BpmWire[] $bpmWires
+ * @property BpmNode $outputNo
+ * @property BpmNode[] $bpmNodes
+ * @property BpmNode $outputYes
+ * @property BpmNode[] $bpmNodes0
  */
 class BpmNode extends \yii\db\ActiveRecord
 {
@@ -71,7 +71,7 @@ class BpmNode extends \yii\db\ActiveRecord
      */
     public function getBpmFlowControls()
     {
-        return $this->hasMany(BpmFlowControl::className(), ['source_id' => 'id']);
+        return $this->hasMany(BpmFlowControl::className(), ['node_id' => 'id']);
     }
 
     /**
@@ -87,15 +87,15 @@ class BpmNode extends \yii\db\ActiveRecord
      */
     public function getOutputNo()
     {
-        return $this->hasOne(MeicanBpmNode::className(), ['id' => 'output_no']);
+        return $this->hasOne(BpmNode::className(), ['id' => 'output_no']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMeicanBpmNodes()
+    public function getBpmNodes()
     {
-        return $this->hasMany(MeicanBpmNode::className(), ['output_yes' => 'id']);
+        return $this->hasMany(BpmNode::className(), ['output_no' => 'id']);
     }
 
     /**
@@ -103,14 +103,14 @@ class BpmNode extends \yii\db\ActiveRecord
      */
     public function getOutputYes()
     {
-        return $this->hasOne(MeicanBpmNode::className(), ['id' => 'output_yes']);
+        return $this->hasOne(BpmNode::className(), ['id' => 'output_yes']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBpmWires()
+    public function getBpmNodes0()
     {
-        return $this->hasMany(BpmWire::className(), ['target_id' => 'id']);
+        return $this->hasMany(BpmNode::className(), ['output_yes' => 'id']);
     }
 }

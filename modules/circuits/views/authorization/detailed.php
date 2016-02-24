@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-use yii\grid\GridView;
+use meican\base\grid\Grid;
 use yii\widgets\DetailView;
 use yii\grid\CheckboxColumn;
 use yii\helpers\Html;
@@ -13,13 +13,18 @@ use yii\widgets\ActiveForm;
 use yii\data\ArrayDataProvider;
 use yii\jui\Dialog;
 
+use yii\bootstrap\Modal;
+
 use meican\base\components\LinkColumn;	
 use meican\topology\models\Domain;
 use meican\circuits\models\Reservation;
 use meican\circuits\models\Connection;	
 use meican\circuits\assets\authorization\Asset;
+use meican\base\assets\FullCalendar;
 
 Asset::register($this);
+
+FullCalendar::register($this);
 
 ?>
 
@@ -27,185 +32,207 @@ Asset::register($this);
 	var jsonEvents = <?php echo json_encode($events); ?>;
 	var domain = <?php echo json_encode($domain); ?>;
 	var reservationId = <?php echo $info->reservation_id; ?>;
+	var language = <?php echo json_encode($language); ?>;
 </script>
 
 <h1><?= Yii::t('circuits', 'Reply request as ').Domain::findOne(['name' => $domain])->name ?></h1>
 
-<table id="table" style="min-height: 225px; width:100%">
-	<tr style="vertical-align: top; ">
-  		<td style="width: 50%; word-wrap: break-word; overflow-wrap: break-word;">
-			<div class="float-left">
-		    	<?= DetailView::widget([
-				    'options' => ['class' => 'list', 'style'=>'margin-top: 4px !important'],
-				    'model' => $info,
-				    'attributes' => [
-				        'reservation_name',
-						'source_domain',
-						'destination_domain',
-						'requester',
-						'bandwidth',
-						'port_in:html',
-						'port_out:html',
-				    ],
-				]); ?>
-		    	
-		    	
-			</div>
-		</td>
-		
-	  	<td style="width: 50%">
-			<?php \yii\widgets\Pjax::begin([
-			    	'id' => 'pjaxContainer',
-				]);
-			?>
-			<table style="width: 100%;">
-			<tr>
-				<td id="auth_controls" style="text-align: left; width: 66%; padding: 0px;">
-					<?php
-						$notWaiting = true;
-						foreach($requests as $req){
-							if($req->status == Connection::AUTH_STATUS_PENDING){
-								$notWaiting = false;
-								break;
-							}
-						}
-						$domainTop = json_encode($domain);
-						echo Html::button(Yii::t('circuits', 'Accept All'), ['disabled' => $notWaiting, 'onclick' => "acceptAll($info->reservation_id, $domainTop)"]);
-						echo Html::button(Yii::t('circuits', 'Reject All'), ['disabled' => $notWaiting, 'onclick' => "rejectAll($info->reservation_id, $domainTop)"]);
-					?>
-				</td>
-				<td id="map_controls" style="text-align: right; width: 33%;">
-					<?php
-						echo Html::a(Yii::t('circuits', 'See Map'), ['/circuits/reservation/view', 'id' => $info->reservation_id]);
-					?>
-				</td>
-				</tr>
-			</table>
-			
-			<?= GridView::widget([
-					'options' => ['class' => 'list'],
-					'dataProvider' => new ArrayDataProvider([
-		    				'allModels' => $requests,
-		    				'sort' => false,
-		    				'pagination' => [
-						        'pageSize' => 4,
-						    ],
-		    		]),
-					'formatter' => new Formatter(['nullDisplay'=>'']),
-					'id' => 'gridRequest',
-					'layout' => "{items}{summary}{pager}",
-					'rowOptions' => function ($model, $key, $index, $grid){
-						if($model->status == Connection::AUTH_STATUS_APPROVED){
-							return ['style'=>'background-color: #e4ffe4; border-bottom: 1px solid #d4eed4;', 'id' => $model['id'], 'onclick' => 'toDate(id)'];
-						}
-						else if($model->status == Connection::AUTH_STATUS_REJECTED){
-							return ['style'=>'background-color: #ffe6e6; border-bottom: 1px solid #eed6d6', 'id' => $model['id'], 'onclick' => 'toDate(id)'];
-						}
-						else return ['id' => $model['id'], 'onclick' => 'toDate(id)'];
-					},
-					'columns' => array(
-							[
-								'format' => 'raw',
-								'label' => Yii::t('circuits', 'Accept'),
-								'value' => function ($req){
-									return Html::img('@web'.'/images/hand_good.png', ['title' => Yii::t('circuits', 'Accept'), 'onclick' => "accept($req->id)"]);
-								},
-								'contentOptions'=>function($model) {
-									return ['style'=>'width: 40px; cursor: pointer;', "disabled"=> $model->isAnswered()];
-								},
-							],
-							[
-								'format' => 'raw',
-								'label' => Yii::t('circuits', 'Reject'),
-								'value' => function ($req){
-									return Html::img('@web'.'/images/hand_bad.png', ['title' => Yii::t('circuits', 'Reject'), 'onclick' => "reject($req->id)"]);
-								},
-								'contentOptions'=>function($model) {
-									return ['style'=>'width: 40px; cursor: pointer;', "disabled"=> $model->isAnswered()];
-								},
-							],
-				       		[
-			        			'label'=> Yii::t('circuits', 'Initial Date/Time'),
-				       			'value' => function($req){
-				      				return Yii::$app->formatter->asDatetime(Connection::findOne(['id' => $req->connection_id])->start);
-				       			},
-				       			'contentOptions'=>['style'=>'min-width: 70px;']
-							],
-							[
-								'label'=> Yii::t('circuits', 'Final Date/Time'),
-								'value' => function($req){
-				       				return Yii::$app->formatter->asDatetime(Connection::findOne(['id' => $req->connection_id])->finish);
-				       			},
-								'contentOptions'=>['style'=>'min-width: 70px;']
-							],
-							[
-								'label'=> Yii::t('circuits', 'Duration'),
-								'value' => function($req){
-									$start = strtotime(Connection::findOne(['id' => $req->connection_id])->start);
-									$finish = strtotime(Connection::findOne(['id' => $req->connection_id])->finish);
-									$mins = ($finish - $start) / 60;
-									$hours = 0;
-									while($mins > 59){
-										$hours++;
-										$mins-=60;
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= Yii::t("circuits", "Informations"); ?></h3>
+            </div>
+            <div class="box-body">                
+                <div class="table-responsive">
+			    	<?= DetailView::widget([
+					    'options' => ['class' => 'table table-condensed'],
+					    'model' => $info,
+					    'attributes' => [
+					        'reservation_name',
+							'source_domain',
+							'destination_domain',
+							'requester',
+							'bandwidth',
+							'port_in:html',
+							'port_out:html',
+					    ],
+					]); ?>
+				</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="box box-default">
+        	<?php \yii\widgets\Pjax::begin([
+				'id' => 'pjaxContainer',
+			]);?>
+            <div class="box-header with-border">
+                <table style="width: 100%;">
+					<tr>
+						<td id="auth_controls" style="text-align: left; width: 66%; padding: 0px;">
+							<?php
+								$notWaiting = true;
+								foreach($requests as $req){
+									if($req->status == Connection::AUTH_STATUS_PENDING){
+										$notWaiting = false;
+										break;
 									}
-									return $hours."h".$mins."m";
-								},
-								'contentOptions'=>['style'=>'min-width: 70px;']
-							],
-							[
-								'label'=> Yii::t('circuits', 'Status'),
-								'value' => function($req){
-									return $req->getStatus();
-								},
-								'contentOptions'=>['style'=>'min-width: 70px;']
-							],
-				        	),
-				]);
-			?>
-			
-			<?php \yii\widgets\Pjax::end(); ?>
-				
-		</td> 
-  	</tr>
-</table>
-
-<table style="margin-top: 15px; width:100%">
-  <tr style="vertical-align: top; ">
-    <td style="width: 100%">
-	    <div align="left" style="margin-bottom: 10px;">
-	    	<!-- <input type="checkbox" id="checkAgenda">Agenda</input> -->
-		    <input style="margin-right: 5px;" type="checkbox" id="checkPending" checked><?= Yii::t('circuits', 'Show others (Pending)'); ?></input>
-		    <input style="margin-left: 10px; margin-right: 5px;" type="checkbox" id="checkConfirmed" checked><?= Yii::t('circuits', 'Show others (Confirmed)'); ?></input>
-	    </div>
-	    <?php echo \talma\widgets\FullCalendar::widget([
-			'id' => 'calendar',
-    		'config' => [
-    			'lang' => strtolower(Yii::$app->language),
-    		],
-		]);
-	    ?>
-	    
-    </td>
-  </tr>
-</table>
-
-<div style="display: none">
-<?php Dialog::begin([
-		'id' => 'dialog',
-    	'clientOptions' => [
-        	'modal' => true,
-        	'autoOpen' => false,
-        	'title' => "Meican",
-    	],
-	]);
-
-	echo '<div align="center">';
-    echo '<img align="center" id="MessageImg" alt="" src=""/></br>';
-    echo '<label style="width:100%;" for="name" id="MessageLabel"></label>';
-    echo '<textarea type="text" name="name" id="Message" class="text ui-widget-content ui-corner-all" style="width:97%;margin-top:10px;" cols="20" rows="5"></textarea>';
-	echo '</div>';
-    
-	Dialog::end(); 
-?>
+								}
+								$domainTop = json_encode($domain);
+								echo Html::button(Yii::t('circuits', 'Accept All'), ['class' => 'btn btn-primary', 'disabled' => $notWaiting, 'onclick' => "acceptAll($info->reservation_id, $domainTop)"]);
+								echo " ";
+								echo Html::button(Yii::t('circuits', 'Reject All'), ['class' => 'btn btn-primary', 'disabled' => $notWaiting, 'onclick' => "rejectAll($info->reservation_id, $domainTop)"]);
+							?>
+						</td>
+						<td id="map_controls" style="text-align: right; width: 33%;">
+							<?php
+								echo Html::a(Yii::t('circuits', 'See Map'), ['/circuits/reservation/view', 'id' => $info->reservation_id]);
+							?>
+						</td>
+					</tr>
+				</table>
+            </div>
+            <div class="box-body">                
+                <div class="table-responsive">
+			    	<?= Grid::widget([
+						'options' => ['class' => 'list'],
+						'dataProvider' => new ArrayDataProvider([
+			    				'allModels' => $requests,
+			    				'sort' => false,
+			    				'pagination' => [
+							        'pageSize' => 4,
+							    ],
+			    		]),
+						'id' => 'gridRequest',
+						'layout' => "{items}{summary}{pager}",
+						'rowOptions' => function ($model, $key, $index, $grid){
+							return ['id' => $model['id'], 'onclick' => 'toDate(id)'];
+						},
+						'columns' => array(
+								[
+									'class' => 'yii\grid\ActionColumn',
+									'template'=>'{accept}{reject}',
+									'contentOptions' => function($model){
+										return  ['style' => 'white-space: nowrap;'];
+									},
+									'buttons' => [
+										'accept' => function ($url, $model) {
+											return Html::a('<span class="fa fa-thumbs-o-up"></span>', null, ['disabled'=>$model->isAnswered(), 'class'=>'btn btn-accept', 'id' => $model->id]);
+										},
+										'reject' => function ($url, $model) {
+											return Html::a('<span class="fa fa-thumbs-o-down"></span>', null, ['disabled'=>$model->isAnswered(), 'class'=>'btn btn-reject', 'id' => $model->id]);
+										}
+									],
+								],
+					       		[
+				        			'label'=> Yii::t('circuits', 'Initial Date/Time'),
+					       			'value' => function($req){
+					      				return Yii::$app->formatter->asDatetime(Connection::findOne(['id' => $req->connection_id])->start);
+					       			},
+					       			'contentOptions'=>['style'=>'min-width: 70px;']
+								],
+								[
+									'label'=> Yii::t('circuits', 'Final Date/Time'),
+									'value' => function($req){
+					       				return Yii::$app->formatter->asDatetime(Connection::findOne(['id' => $req->connection_id])->finish);
+					       			},
+									'contentOptions'=>['style'=>'min-width: 70px;']
+								],
+								[
+									'label'=> Yii::t('circuits', 'Duration'),
+									'value' => function($req){
+										$start = strtotime(Connection::findOne(['id' => $req->connection_id])->start);
+										$finish = strtotime(Connection::findOne(['id' => $req->connection_id])->finish);
+										$mins = ($finish - $start) / 60;
+										$hours = 0;
+										while($mins > 59){
+											$hours++;
+											$mins-=60;
+										}
+										return $hours."h".$mins."m";
+									},
+									'contentOptions'=>['style'=>'min-width: 70px;']
+								],
+								[
+									'format' => 'raw',
+									'label'=> Yii::t('circuits', 'Status'),
+									'value' => function($req){
+										if($req->status == Connection::AUTH_STATUS_APPROVED) return '<span class="label label-success">'.$req->getStatus().'</span>';
+										if($req->status == Connection::AUTH_STATUS_REJECTED || $req->status == Connection::AUTH_STATUS_EXPIRED) return '<span class="label label-danger">'.$req->getStatus().'</span>';
+										return '<span class="label label-warning">'.$req->getStatus().'</span>';
+									},
+									'contentOptions'=>['style'=>'min-width: 70px;']
+								],
+					        	),
+						]);
+					?>
+				</div>
+            </div>
+            <?php \yii\widgets\Pjax::end(); ?>
+        </div>
+    </div>
 </div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="box box-default">
+	    	<div class="box-header with-border">
+	    		<input style="margin-right: 5px;" type="checkbox" id="checkPending" checked><?= Yii::t('circuits', 'Show others (Pending)'); ?></input>
+			    <input style="margin-left: 10px; margin-right: 5px;" type="checkbox" id="checkConfirmed" checked><?= Yii::t('circuits', 'Show others (Confirmed)'); ?></input>
+	        </div>
+	        <div class="box-body">
+	        	<div id='calendar' class="fc-unthemed"></div>
+	        </div>
+	    </div>
+	</div>
+</div>
+
+<?php 
+
+Modal::begin([
+    'id' => 'auth-accept-modal',
+    'headerOptions' => ['hidden'=>'hidden'],
+    'footer' => '<button id="cancel-btn" class="btn btn-default">'.Yii::t("circuits", "Cancel").'</button><button id="accept-btn" class="btn btn-success">'.Yii::t("circuits", "Accept").'</button>',
+]);
+
+echo '<p style="text-align: left; height: 100%; width:100%;">'.Yii::t("circuits", "Request will be accepted. If you want, provide a message:").'</p>';
+echo '<textarea type="text" name="name" id="auth-accept-message" class="form-control" rows="5"></textarea>';
+
+Modal::end();
+
+Modal::begin([
+		'id' => 'auth-reject-modal',
+		'headerOptions' => ['hidden'=>'hidden'],
+		'footer' => '<button id="cancel-btn" class="btn btn-default">'.Yii::t("circuits", "Cancel").'</button><button id="reject-btn" class="btn btn-danger">'.Yii::t("circuits", "Reject").'</button>',
+]);
+
+echo '<p style="text-align: left; height: 100%; width:100%;">'.Yii::t("circuits", "Request will be rejected. If you want, provide a message:").'</p>';
+echo '<textarea type="text" name="name" id="auth-reject-message" class="form-control" rows="5"></textarea>';
+
+Modal::end();
+
+Modal::begin([
+		'id' => 'all-accept-modal',
+		'headerOptions' => ['hidden'=>'hidden'],
+		'footer' => '<button id="cancel-btn" class="btn btn-default">'.Yii::t("circuits", "Cancel").'</button><button id="accept-btn" class="btn btn-success">'.Yii::t("circuits", "Accept").'</button>',
+]);
+
+echo '<p style="text-align: left; height: 100%; width:100%;">'.Yii::t("circuits", "All requests will be accepted. If you want, provide a message:").'</p>';
+echo '<textarea type="text" name="name" id="all-accept-message" class="form-control" rows="5"></textarea>';
+
+Modal::end();
+
+Modal::begin([
+		'id' => 'all-reject-modal',
+		'headerOptions' => ['hidden'=>'hidden'],
+		'footer' => '<button id="cancel-btn" class="btn btn-default">'.Yii::t("circuits", "Cancel").'</button><button id="reject-btn" class="btn btn-danger">'.Yii::t("circuits", "Reject").'</button>',
+]);
+
+echo '<p style="text-align: left; height: 100%; width:100%;">'.Yii::t("circuits", "All requests will be rejected. If you want, provide a message:").'</p>';
+echo '<textarea type="text" name="name" id="all-reject-message" class="form-control" rows="5"></textarea>';
+
+Modal::end();
+
+?>

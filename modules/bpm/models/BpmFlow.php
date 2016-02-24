@@ -9,7 +9,19 @@ namespace meican\bpm\models;
 use Yii;
 use yii\data\ActiveDataProvider;
 use meican\components\DateUtils;
-use meican\congtrollers\RbacController;
+use meican\controllers\RbacController;
+
+use meican\aaa\models\User;
+
+use meican\circuits\models\Connection;
+use meican\circuits\models\ConnectionAuth;
+use meican\circuits\models\Reservation;
+use meican\circuits\models\AuthorizationNotification;
+use meican\circuits\models\ReservationNotification;
+
+use meican\topology\models\Domain;
+use meican\topology\models\Port;
+
 
 /**
  * This is the model class for table "meican_bpm_flow_control".
@@ -80,7 +92,7 @@ class BpmFlow extends \yii\db\ActiveRecord
      */
     public function getNode()
     {
-        return $this->hasOne(BpmBpmNode::className(), ['id' => 'node_id']);
+        return $this->hasOne(BpmNode::className(), ['id' => 'node_id']);
     }
 
     /**
@@ -371,7 +383,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     			$auth->connection_id = $connection_id;
     			$auth->save();
     			
-    			Notification::createConnectionNotification($connection_id);
+    			ReservationNotification::create($connection_id);
 	    	}
     	}
     	else {
@@ -401,7 +413,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     	$auth->connection_id = $flow->connection_id;
     	$auth->save();
     	
-    	Notification::createGroupAuthNotification($flow->value, $flow->domain, $reservation->id, $auth->id);
+    	AuthorizationNotification::createToGroup($flow->value, $flow->domain, $reservation->id, $auth->id);
     	
     	return false;
     }
@@ -429,7 +441,7 @@ class BpmFlow extends \yii\db\ActiveRecord
 	    $auth->connection_id = $flow->connection_id;
 	    $auth->save();
 	    
-	    Notification::createUserAuthNotification($flow->value, $flow->domain, $reservation->id, $auth->id);
+	    AuthorizationNotification::createToUser($flow->value, $flow->domain, $reservation->id, $auth->id);
     	
     	return false;
     }

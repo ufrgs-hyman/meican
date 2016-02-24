@@ -20,6 +20,7 @@ use meican\circuits\models\ConnectionPath;
 use meican\circuits\models\CircuitsPreference;
 use meican\circuits\models\Protocol;
 use meican\circuits\models\ReservationPath;
+use meican\circuits\models\CircuitNotification;
 use meican\circuits\forms\ReservationForm;
 use meican\circuits\forms\ReservationSearch;
 use meican\topology\models\Port;
@@ -27,7 +28,7 @@ use meican\topology\models\Domain;
 use meican\topology\models\Device;
 use meican\topology\models\Network;
 use meican\topology\models\Service;
-use meican\notification\models\Notification;
+
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster

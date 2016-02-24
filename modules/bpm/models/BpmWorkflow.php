@@ -12,6 +12,7 @@ use meican\bpm\models\BpmFlow;
 use meican\bpm\models\BpmNode;
 use meican\components\DateUtils;
 use meican\topology\models\Domain;
+use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionAuth;
 use meican\base\components\DataUtils;
 

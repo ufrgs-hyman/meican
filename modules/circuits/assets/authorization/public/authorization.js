@@ -2,6 +2,16 @@ var eventsPending, eventsConfirmed;
 
 $(document).ready(function() {
 	
+	$(".btn-accept").click(function() {
+		var id = $(this).attr("id");
+		accept(id);
+	});
+	
+	$(".btn-reject").click(function() {
+		var id = $(this).attr("id");
+		reject(id);
+	});
+	
 	document.getElementById("checkPending").addEventListener("change",
 		function(){
 			if(document.getElementById('checkPending').checked){
@@ -28,33 +38,22 @@ $(document).ready(function() {
 		}
 	);
 	
-	//CASO SEJA NECESSÃRIO ALTERAR PARA AGENDA
-	/*document.getElementById("checkAgenda").addEventListener("change",
-		function(){
-			if(document.getElementById('checkAgenda').checked){
-				$('#calendar').fullCalendar('changeView', 'agendaWeek');
-			}
-			else{
-				$('#calendar').fullCalendar('changeView', 'month');
-			}
-		}
-	);*/
-	
 	$('#calendar').fullCalendar({
 		
 		//defaultView : 'agendaWeek',
 		
-		allDaySlot: false,
+		lang: language,
 		
-		//height: 600,
+		allDaySlot: false,
+
 		contentHeight: 'auto',
-		theme: true,
+		theme: false,
 		
 		eventSources: [
 		               {
 		                 events: jsonEvents,
 		                 color: '#27567C',
-		                 textColor: '#D8E7F3',
+		                 textColor: '#FFFFFF',
 		                 borderColor: '#000000',
 		               },
 		             ],
@@ -107,167 +106,118 @@ function accept(id){
 	$.getJSON(baseUrl + "/circuits/authorization/is-answered?id="+id,
 		function(data) {
 			if(data==0){
-				$("#MessageImg").attr("src", baseUrl+"/images/hand_good.png");
-			    $("#MessageLabel").html(tt("Request will be accepted. If you want, provide a message:"));
-			
-			    $("#Message").val('');
-				$("#dialog").dialog("open");
+				$("#auth-accept-modal").modal("show");
+
+				$("#auth-accept-modal").on("click", "#cancel-btn", function (){
+		            $("#auth-accept-modal").modal("hide");
+		            return false;
+		        });
 				
-				$("#dialog").dialog({
-					buttons: [
-			          {
-			        	  text: "Ok",
-					      click: function() {
-					    	  var params = "id=".concat(id);
-					    	  var message = $("#Message").val();
-			                  if (message && message != "") params += "&message=".concat(message);
-					    	  $.ajax({
-					    		  type: "GET",
-					    		  url: baseUrl + "/circuits/authorization/accept",
-					    		  data: params,
-					    		  cache: false,
-					    		  success: function(html) {
-					    			  $.pjax.defaults.timeout = false;
-					    			  $.pjax.reload({container:'#pjaxContainer'});
-					    		  }
-					    	  });
-					    	  $(this).dialog("close");
-					      }
-			          },
-			          {
-			        	  text: tt("Cancel"),
-					      click: function() {
-					    	  $(this).dialog( "close" );
-					      }
-			          },
-			          
-			       ]
+				$("#auth-accept-modal").on("click", "#accept-btn", function (){ 
+					var params = "id=".concat(id);
+					var message = $("#auth-accept-message").val();
+	                if (message && message != "") params += "&message=".concat(message);
+			    	$.ajax({
+			    		type: "GET",
+			    		url: baseUrl + "/circuits/authorization/accept",
+			    		data: params,
+			    		cache: false,
+			    		success: function(html) {
+			    			$.pjax.defaults.timeout = false;
+			    			$.pjax.reload({container:'#pjaxContainer'});
+			    			$("#auth-accept-modal").modal("hide");
+			    		}
+			    	});
 				});
 			}
-	});
+		}
+	);
 }
 
 /////////////////////// REJECT //////////////////////
 function reject(id){
 	$.getJSON(baseUrl + "/circuits/authorization/is-answered?id="+id,
-			function(data) {
-				if(data==0){
-					$("#MessageImg").attr("src", baseUrl+"/images/hand_bad.png");
-				    $("#MessageLabel").html(tt("Request will be rejected. If you want, provide a message:"));
+		function(data) {
+			if(data==0){
+
+				$("#auth-reject-modal").modal("show");
+
+				$("#auth-reject-modal").on("click", "#cancel-btn", function (){
+		            $("#auth-reject-modal").modal("hide");
+		            return false;
+		        });
 				
-				    $("#Message").val('');
-					$("#dialog").dialog("open");
-					
-					$("#dialog").dialog({
-						buttons: [
-				          {
-				        	  text: "Ok",
-						      click: function() {
-						    	  var params = "id=".concat(id);
-						    	  var message = $("#Message").val();
-				                  if (message && message != "") params += "&message=".concat(message);
-						    	  $.ajax({
-						    		  type: "GET",
-						    		  url: baseUrl + "/circuits/authorization/reject",
-						    		  data: params,
-						    		  cache: false,
-						    		  success: function(html) {
-						    			  $.pjax.defaults.timeout = false;
-						    			  $.pjax.reload({container:'#pjaxContainer'});
-						    		  }
-						    	  });
-						    	  $(this).dialog("close");
-						      }
-				          },
-				          {
-				        	  text: tt("Cancel"),
-						      click: function() {
-						    	  $(this).dialog( "close" );
-						      }
-				          },
-				          
-				       ]
-					});
-				}
-	});
+				$("#auth-reject-modal").on("click", "#reject-btn", function (){ 
+			    	  var params = "id=".concat(id);
+			    	  var message = $("#auth-reject-message").val();
+	                  if (message && message != "") params += "&message=".concat(message);
+			    	  $.ajax({
+			    		  type: "GET",
+			    		  url: baseUrl + "/circuits/authorization/reject",
+			    		  data: params,
+			    		  cache: false,
+			    		  success: function(html) {
+			    			  $.pjax.defaults.timeout = false;
+			    			  $.pjax.reload({container:'#pjaxContainer'});
+			    			  $("#auth-reject-modal").modal("hide");
+			    		  }
+			    	  });
+				});
+			}
+		}
+	);
 }
 
 /////////////////////// ACCEPT ALL //////////////////////
 function acceptAll(id, domain){
-	$("#MessageImg").attr("src", baseUrl+"/images/hand_good.png");
-    $("#MessageLabel").html(tt("All requests will be accepted. If you want, provide a message:"));
+	$("#all-accept-modal").modal("show");
 
-    $("#Message").val('');
-	$("#dialog").dialog("open");
+	$("#all-accept-modal").on("click", "#cancel-btn", function (){
+        $("#all-accept-modal").modal("hide");
+        return false;
+    });
 	
-	$("#dialog").dialog({
-		buttons: [
-
-          {
-        	  text: "Ok",
-		      click: function() {
-		    	  var params = "id=".concat(id).concat("&domainTop=").concat(domain);
-		    	  var message = $("#Message").val();
-                  if (message && message != "") params += "&message=".concat(message);
-		    	  $.ajax({
-		    		  type: "GET",
-		    		  url: baseUrl + "/circuits/authorization/accept-all",
-		    		  data: params,
-		    		  cache: false,
-		    		  success: function(html) {
-		    			  $.pjax.defaults.timeout = false;
-		    			  $.pjax.reload({container:'#pjaxContainer'});
-		    		  }
-		    	  });
-		    	  $(this).dialog("close");
-		      }
-          },
-          {
-        	  text: tt("Cancel"),
-		      click: function() {
-		    	  $(this).dialog( "close" );
-		      }
-          },
-       ]
+	$("#all-accept-modal").on("click", "#accept-btn", function (){
+		var params = "id=".concat(id).concat("&domainTop=").concat(domain);
+		var message = $("#all-accept-message").val();
+        if (message && message != "") params += "&message=".concat(message);
+	    $.ajax({
+	    	type: "GET",
+	    	url: baseUrl + "/circuits/authorization/accept-all",
+	    	data: params,
+	    	cache: false,
+	    	success: function(html) {
+	    		$.pjax.defaults.timeout = false;
+	    		$.pjax.reload({container:'#pjaxContainer'});
+	    		$("#all-accept-modal").modal("hide");
+	    	}
+	    });
 	});
 }
 
 /////////////////////// REJECT ALL //////////////////////
 function rejectAll(id, domain){
-	$("#MessageImg").attr("src", baseUrl+"/images/hand_bad.png");
-    $("#MessageLabel").html(tt("All requests will be rejected. If you want, provide a message:"));
+	$("#all-reject-modal").modal("show");
 
-    $("#Message").val('');
-	$("#dialog").dialog("open");
+	$("#all-reject-modal").on("click", "#cancel-btn", function (){
+        $("#all-reject-modal").modal("hide");
+        return false;
+    });
 	
-	$("#dialog").dialog({
-		dialogClass: "no-close",
-		buttons: [
-          {
-        	  text: "Ok",
-		      click: function() {
-		    	  var params = "id=".concat(id).concat("&domainTop=").concat(domain);
-		    	  var message = $("#Message").val();
-                  if (message && message != "") params += "&message=".concat(message);
-		    	  $.ajax({
-		    		  type: "GET",
-		    		  url: baseUrl + "/circuits/authorization/reject-all",
-		    		  data: params,
-		    		  cache: false,
-		    		  success: function(html) {
-		    			  $.pjax.defaults.timeout = false;
-		    			  $.pjax.reload({container:'#pjaxContainer'});
-		    		  }
-		    	  });
-		    	  $(this).dialog("close");
-		      }
-          },
-          {
-        	  text: tt("Cancel"),
-		      click: function() {
-		    	  $(this).dialog( "close" );
-		      }
-          },
-       ]
+	$("#all-reject-modal").on("click", "#reject-btn", function (){
+		var params = "id=".concat(id).concat("&domainTop=").concat(domain);
+		var message = $("#all-reject-message").val();
+        if (message && message != "") params += "&message=".concat(message);
+	    $.ajax({
+	    	type: "GET",
+	    	url: baseUrl + "/circuits/authorization/reject-all",
+	    	data: params,
+	    	cache: false,
+	    	success: function(html) {
+	    		$.pjax.defaults.timeout = false;
+	    		$.pjax.reload({container:'#pjaxContainer'});
+	    		$("#all-reject-modal").modal("hide");
+	    	}
+	    });
 	});
 }

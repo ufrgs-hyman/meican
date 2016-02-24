@@ -7,7 +7,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-use meican\base\assets\notification\NotificationAsset;
+use meican\notification\assets\NotificationAsset;
 use meican\base\widgets\Analytics;
 
 \meican\base\assets\Theme::register($this);

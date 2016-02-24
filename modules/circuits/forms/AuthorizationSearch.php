@@ -17,8 +17,8 @@ use meican\circuits\models\Reservation;
 use meican\circuits\models\ConnectionAuth;
 use meican\circuits\models\Connection;
 use meican\circuits\forms\AuthorizationForm;
+use meican\circuits\models\ReservationNotification;
 use meican\aaa\models\User;
-use meican\notification\models\Notification;
 
 /**
  */
@@ -76,7 +76,7 @@ class AuthorizationSearch extends AuthorizationForm{
     			$request->changeStatusToExpired();
     			$conn->auth_status= Connection::AUTH_STATUS_EXPIRED;
     			$conn->save();
-    			Notification::createConnectionNotification($conn->id);
+    			ReservationNotification::create($conn->id);
     		}
     		else{
     			$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['>','start', DateUtils::now()])->one();
@@ -106,7 +106,7 @@ class AuthorizationSearch extends AuthorizationForm{
     	}
     
     	//Pega todos os papeis do usuário
-    	$domainRoles = User::findOne(['id' => $userId])->getUserDomainRoles()->all();
+    	$domainRoles = User::findOne(['id' => $userId])->getRoles()->all();
     	foreach($domainRoles as $role){ //Passa por todos papeis
     		if($this->domain) $groupRequests = ConnectionAuth::find()->where(['domain' => $this->domain, 'manager_group_id' => $role->getGroup()->id, 'status' => Connection::AUTH_STATUS_PENDING])->all();
     		else $groupRequests = ConnectionAuth::find()->where(['manager_group_id' => $role->getGroup()->id, 'status' => Connection::AUTH_STATUS_PENDING])->all();
@@ -120,7 +120,7 @@ class AuthorizationSearch extends AuthorizationForm{
     						$request->changeStatusToExpired();
     						$conn->auth_status= Connection::AUTH_STATUS_EXPIRED;
     						$conn->save();
-    						Notification::createConnectionNotification($conn->id);
+    						ReservationNotification::create($conn->id);
     					}
     					else{
     						$conn = Connection::find()->where(['id' => $request->connection_id])->andWhere(['>','start', DateUtils::now()])->one();

@@ -44,7 +44,6 @@ class AuthorizationController extends RbacController {
     }
     
     public function actionAnswer($id = null, $domain = null){
-        Yii::trace("Answer");
         if($id == null || $domain == null) $this->actionAuthorization();
         else{
             if(!Domain::findOne(['name' => $domain])) $this->actionAuthorization();
@@ -74,7 +73,7 @@ class AuthorizationController extends RbacController {
                 }
     
                 $allRequest = $allRequest->all();
-                $domainRoles = User::findOne(['id' => $userId])->getUserDomainRoles()->all();
+                $domainRoles = User::findOne(['id' => $userId])->getRoles()->all();
                 $requests = [];
                 foreach($allRequest as $request){
                     if($request->manager_user_id == $userId) $requests[$request->id] = $request;
@@ -97,7 +96,8 @@ class AuthorizationController extends RbacController {
                         'domain' => $domain,
                         'info' => $info,
                         'requests' => $requests,
-                        'events' => $events
+                        'events' => $events,
+                		'language' => Yii::$app->language
                 ));
             }
         }
@@ -159,7 +159,7 @@ class AuthorizationController extends RbacController {
             }
             
             $allRequest = $allRequest->all();
-            $domainRoles = User::findOne(['id' => $userId])->getUserDomainRoles()->all();
+            $domainRoles = User::findOne(['id' => $userId])->getRoles()->all();
             $requests = [];
             foreach($allRequest as $request){
                 if($request->manager_user_id == $userId) $requests[$request->id] = $request;
@@ -207,7 +207,7 @@ class AuthorizationController extends RbacController {
             }
     
             $allRequest = $allRequest->all();
-            $domainRoles = User::findOne(['id' => $userId])->getUserDomainRoles()->all();
+            $domainRoles = User::findOne(['id' => $userId])->getRoles()->all();
             $requests = [];
             foreach($allRequest as $request){
                 if($request->manager_user_id == $userId) $requests[$request->id] = $request;

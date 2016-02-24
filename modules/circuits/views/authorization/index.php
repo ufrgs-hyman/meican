@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-use yii\grid\GridView;
+use meican\base\grid\Grid;
 use yii\grid\CheckboxColumn;
 use yii\helpers\Html;
 use yii\i18n\Formatter;
@@ -19,15 +19,17 @@ use meican\circuits\models\ConnectionPath;
 use meican\circuits\models\ConnectionAuth;
 use meican\aaa\models\User;
 
+
+$this->params['header'] = [Yii::t('circuits', 'Pending Authorization'), ['Home', Yii::t('circuits', 'Circuits')]];
+
 ?>
 
-<h1><?= Yii::t('circuits', 'Pending Authorization'); ?></h1>
-
+<div class="box box-default">
+    <div class="box-body">      
 	<?=
-		GridView::widget([
+		Grid::widget([
 			'options' => ['class' => 'list'],
 			'dataProvider' => $data,
-			'formatter' => new Formatter(['nullDisplay'=>'']),
 			'id' => 'gridInfo',
 			'filterModel' => $searchModel,
 			'layout' => "{items}{summary}{pager}",
@@ -97,7 +99,7 @@ use meican\aaa\models\User;
             			'template' => '{answer}',
             			'buttons' => [
 	           				'answer' => function ($url,$model) {
-            					return Html::button(Yii::t('circuits', 'Answer'), ['onclick' => "window.location='answer?id=$model->id&domain=$model->domain'"]);
+	        					return Html::button(Yii::t('circuits', 'Answer'), ['class' => 'btn btn-sm btn-primary', 'onclick' => "window.location='answer?id=$model->id&domain=$model->domain'"]);
 			                },
 			            ],
 			            'headerOptions'=>['style'=>'width: 11%;'],
@@ -106,3 +108,5 @@ use meican\aaa\models\User;
 	        	),
 		]);
 	?>
+	</div>
+</div>

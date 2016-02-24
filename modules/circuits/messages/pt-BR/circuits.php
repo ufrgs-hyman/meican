@@ -25,7 +25,7 @@ return array(
 		"Initial Date/Time" => "Data/Hora Inicial",
 		"Final Date/Time" => "Data/Hora Final",
 		"Accept" => "Aceitar",
-		"Reject" => "Recusar",
+		"Reject" => "Rejeitar",
 		"Edit" => "Editar",
 		"Source" => "Origem",
 		"Destination" => "Destino",
@@ -300,5 +300,13 @@ return array(
 		
 		'Disabled' => 'Desativado',
 		'Enabled' => 'Ativado',
+		
+		'Request will be accepted. If you want, provide a message:' => 'A requisição será aceita. Caso deseje, adicione uma mensagem:',
+		'Request will be rejected. If you want, provide a message:' => 'A requisição será rejeitada. Caso deseje, adicione uma mensagem:',
+		'All requests will be accepted. If you want, provide a message:' => 'Todas as requisições serão aceitas. Caso deseje, adicione uma mensagem:',
+		'All requests will be rejected. If you want, provide a message:' => 'Todas as requisições serão rejeitadas. Caso deseje, adicione uma mensagem:',
+		
+		
+		'Informations' => 'Informações',
 );
 ?>

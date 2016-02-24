@@ -10,7 +10,6 @@ class Asset extends AssetBundle
     
     public $js = [
     	'authorization.js',
-    	'authorization-i18n.js',
     ];
     
     public $css = [
