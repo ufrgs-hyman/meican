@@ -46,7 +46,7 @@ class ReservationController extends RbacController {
         if ($form->load($_POST)) {
             
             //Confere se usuário tem permissão para reservas na origem OU no destino
-            $source = Port::findOne(['id' => $form->src_port]);
+            /*$source = Port::findOne(['id' => $form->src_port]);
             $destination = Port::findOne(['id' => $form->dst_port]);
             $permission = false;
             if($source){
@@ -65,7 +65,7 @@ class ReservationController extends RbacController {
             }
             if(!$permission){ //Se ele não tiver em nenhum dos dois, exibe aviso
                 return -1;
-            }
+            }*/
 
             if ($form->save()) {
                 return $form->reservation->id;

@@ -167,7 +167,7 @@ $form = ActiveForm::begin([
                     <div class="input-group-btn">
                       <button type="button" class="btn btn-primary"><span class="fa fa-minus"></span></button>
                     </div>
-                    <input type="text" class="form-control" placeholder="Mbps">
+                    <input type="text" class="form-control" placeholder="Mbps" name="ReservationForm[bandwidth]">
                     <div class="input-group-btn">
                       <button type="button" class="btn btn-primary"><span class="fa fa-plus"></span></button>
                     </div>
@@ -176,7 +176,7 @@ $form = ActiveForm::begin([
             <div class="form-group">
                 <label>Protection</label> <i class="fa fa-question-circle" data-toggle="tooltip" title="A protected circuit means that you accept losing the guaranteed bandwidth, but requires availability of the service."></i>
                 <br>
-                <input type="checkbox" checked data-toggle="toggle">
+                <input type="checkbox" checked data-toggle="toggle" name="ReservationForm[protection]">
             </div>
             <br>
             <div class="pull-right">
@@ -192,7 +192,7 @@ $form = ActiveForm::begin([
                   <div class="input-group-addon">
                     <i class="fa fa-clock-o"></i>
                   </div>
-                  <input type="text" class="form-control pull-right active" id="reservationtime">
+                  <input type="text" class="form-control" date-range="enabled" name="ReservationForm[date_range]">
                 </div>
                 <!-- /.input group -->
               </div><br>
@@ -203,7 +203,9 @@ $form = ActiveForm::begin([
 
         <div class="lsidebar-pane" id="confirm">
             <h1 class="lsidebar-header">Step 4: Confirmation<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-            xvdfd
+            <br>
+            <label>Name:</label>
+            <input type="text" class="form-control" name="ReservationForm[name]"><br>
             <div class="pull-right">
                 <button type="button" class="next-btn btn btn-primary"><span class="fa fa-arrow-right"></span> Submit</button>
             </div>

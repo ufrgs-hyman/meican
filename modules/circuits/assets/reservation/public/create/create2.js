@@ -10,6 +10,51 @@ $(document).ready(function() {
     meicanMap.show("rnp", 'dev');
     $(".sidebar-mini").addClass("sidebar-collapse");
 
+    $('input[date-range="enabled"]').daterangepicker({
+        timePicker: true,
+        timePickerIncrement: 1,
+        timePicker24Hour: true,
+        linkedCalendars: false,
+        startDate: moment().format("DD/MM/YYYY HH:mm"),
+        endDate: moment().add(1, 'hours').format("DD/MM/YYYY HH:mm"),
+        autoApply: "true",
+        "opens": "right",
+        "locale": {
+            "format": "DD/MM/YYYY HH:mm",
+            "separator": " - ",
+            "applyLabel": I18N.t("Apply"),
+            "cancelLabel": I18N.t("Cancel"),
+            "fromLabel": I18N.t("From"),
+            "toLabel": I18N.t("To"),
+            "customRangeLabel": I18N.t("Custom"),
+            "daysOfWeek": [
+                I18N.t("Su"),
+                I18N.t("Mo"),
+                I18N.t("Tu"),
+                I18N.t("We"),
+                I18N.t("Th"),
+                I18N.t("Fr"),
+                I18N.t("Sa")
+            ],
+            "monthNames": [
+                I18N.t("January"),
+                I18N.t("February"),
+                I18N.t("March"),
+                I18N.t("April"),
+                I18N.t("May"),
+                I18N.t("June"),
+                I18N.t("July"),
+                I18N.t("August"),
+                I18N.t("September"),
+                I18N.t("October"),
+                I18N.t("November"),
+                I18N.t("December")
+            ],
+        },
+    });
+
+    $(".daterangepicker").find('.ranges').remove();
+
     $("#home").on("click",'.next-btn', function() {
         lsidebar.open("path");
     });
@@ -27,7 +72,30 @@ $(document).ready(function() {
     });
 
     $("#confirm").on("click",'.next-btn', function() {
-        alert('ok');
+        $.ajax({
+            type: "POST",
+            url: baseUrl + '/circuits/reservation/request',
+            data: $("#reservation-form").serialize(),
+            success: function (resId) {
+                if (resId>0) {
+                    $.ajax({
+                        type: "POST",
+                        url: baseUrl + '/circuits/reservation/confirm', 
+                        data: {
+                            id: resId,
+                        }
+                    });
+                    window.location.href = baseUrl + '/circuits/reservation/view?id=' + resId;
+                } else if(resId==-1){
+                    //showError(tt("You are not allowed to create a reservation involving these selected domains."));
+                } else {
+                    //showError(tt("Error proccessing your request. Contact your administrator."));
+                }
+            },
+            error: function() {
+                //showError(tt("Error proccessing your request. Contact your administrator."));
+            }
+        });
     });
     
     $("#add-point").click(function() {
@@ -173,6 +241,64 @@ function closePopups() {
     } else {
         meicanMap.closePopups();
     }
+}
+
+function prepareConfirmModal() {
+    $("#confirm-dialog").dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        appendTo: "#reservation-form",
+        buttons: [{
+            id:"confirm-button",
+            text: tt('Yes'),
+            click: function() {
+                $("#confirm-button").attr("disabled", "disabled");
+                if (validateForm()) {
+                    $.ajax({
+                        type: "POST",
+                        url: baseUrl + '/circuits/reservation/request',
+                        data: $("#reservation-form").serialize(),
+                        success: function (resId) {
+                            if (resId>0) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: baseUrl + '/circuits/reservation/confirm', 
+                                    data: {
+                                        id: resId,
+                                    }
+                                });
+                                window.location.href = baseUrl + '/circuits/reservation/view?id=' + resId;
+                            } else if(resId==-1){
+                                showError(tt("You are not allowed to create a reservation involving these selected domains."));
+                            } else {
+                                showError(tt("Error proccessing your request. Contact your administrator."));
+                            }
+                        },
+                        error: function() {
+                            showError(tt("Error proccessing your request. Contact your administrator."));
+                        }
+                    });
+                }
+            }
+        },{
+            id:"cancel-button",
+            text: tt('No'),
+            click: function() {
+                $("#confirm-dialog").dialog( "close" );
+            }
+        }],
+        close: function() {
+            $("#error-confirm-dialog").hide();
+            $("#error-confirm-dialog").html("");
+            $("#confirm-button").attr("disabled", false);
+        },
+    });
+    
+    $("#request-button").click(function() {
+        $("#confirm-dialog").dialog("open");
+        return false;
+    });
 }
 
 function showPointModal(pointPos, nodeId) {

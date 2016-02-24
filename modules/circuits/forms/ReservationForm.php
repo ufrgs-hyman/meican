@@ -15,7 +15,7 @@ use meican\topology\models\Port;
 use meican\topology\models\Device;
 use meican\circuits\models\ReservationPath;
 use meican\circuits\models\Connection;
-use meican\base\models\Preference;
+use meican\circuits\models\CircuitsPreference;
 use meican\base\components\DateUtils;
 
 /**
@@ -24,21 +24,12 @@ use meican\base\components\DateUtils;
 class ReservationForm extends Model {
 	
 	//request reservation
-	public $src_domain;
-	public $src_port; 
-	public $src_vlan;
-	public $dst_domain;
-	public $dst_port; 
-	public $dst_vlan;
+	public $path;
 	public $name;
 	public $gri;
-	public $start_time;
-	public $start_date;
-	public $finish_time;
-	public $finish_date;
 	public $bandwidth;
-	public $waypoints;
-	public $pro_enabled;
+	public $protection;
+    public $date_range;
 	
 	//reservation recurrence
 	public $rec_enabled;
@@ -54,10 +45,9 @@ class ReservationForm extends Model {
 	
 	public function rules()	{
 		return [
-			[['src_domain','src_port','dst_domain','dst_port', 'name', 'start_time','start_date', 
-				'finish_time','finish_date', 'bandwidth', 'src_vlan', 'dst_vlan', 'pro_enabled'], 'required'],
+			[['name', 'bandwidth', 'path', 'protection', 'date_range'], 'required'],
 			[['rec_enabled','rec_type', 'rec_interval', 'rec_weekdays', 'rec_finish_type', 'rec_finish_date', 
-				'rec_finish_occur_limit', 'waypoints', 'gri'], 'safe'],
+				'rec_finish_occur_limit', 'gri'], 'safe'],
 		];
 	}
 	
@@ -66,10 +56,13 @@ class ReservationForm extends Model {
  			$this->reservation->type = Reservation::TYPE_NORMAL;
  			$this->reservation->gri = trim($this->gri) == "" ? null : str_replace(" ", "", $this->gri);
  			$this->reservation->name = $this->name;
- 			$this->reservation->protected = $this->pro_enabled ? 1 : 0;
+ 			$this->reservation->protected = $this->protection ? 1 : 0;
  			$this->reservation->date = DateUtils::now();
- 			$this->reservation->start = DateUtils::toUTC($this->start_date, $this->start_time);
- 			$this->reservation->finish = DateUtils::toUTC($this->finish_date, $this->finish_time);
+            $this->date_range = explode(" - ", $this->date_range);
+            $this->date_range[0] = explode(" ", $this->date_range[0]);
+            $this->date_range[1] = explode(" ", $this->date_range[1]);
+ 			$this->reservation->start = DateUtils::toUTC($this->date_range[0][0], $this->date_range[0][1]);
+ 			$this->reservation->finish = DateUtils::toUTC($this->date_range[1][0], $this->date_range[1][1]);
  			$this->reservation->bandwidth = $this->bandwidth;
  			$this->reservation->requester_nsa = CircuitsPreference::findOneValue(CircuitsPreference::MEICAN_NSA);
  			$this->reservation->provider_nsa = CircuitsPreference::findOneValue(CircuitsPreference::CIRCUITS_DEFAULT_PROVIDER_NSA);
@@ -89,45 +82,18 @@ class ReservationForm extends Model {
  						Yii::trace($recurrence->getErrors());
  					}
  				}
- 				
- 				$path = new ReservationPath;
- 				$path->reservation_id = $this->reservation->id;
- 				$path->port_urn = Port::find()->where(['id' => $this->src_port])->one()->urn;
- 				$path->path_order = 0;
- 				$path->vlan = $this->src_vlan;
- 				
- 				if (!$path->save()) {
- 					Yii::trace($path->getErrors());
- 				}
- 				
- 				$waySize = 0;
- 				if ($this->waypoints) {
- 					$waySize = count($this->waypoints['port']);
- 					for ($i = 0; $i < $waySize; $i++) {
- 						$path = new ReservationPath;
- 						$path->reservation_id = $this->reservation->id;
- 						$path->path_order = $i + 1;
- 						$port = Port::findOne($this->waypoints['port'][$i]);
- 						$path->port_urn = $port->urn;
- 						$path->vlan = $this->waypoints['vlan'][$i];
- 						
- 						if (!$path->save()) {
- 							Yii::trace($path->getErrors());
- 						}
- 					}
- 				}
- 				
- 				$path = new ReservationPath; 
- 				$path->reservation_id = $this->reservation->id;
- 				$path->port_urn = Port::find()->where(['id' => $this->dst_port])->one()->urn;
- 				$path->path_order = $waySize + 1;
- 				$path->vlan = $this->dst_vlan;
 
- 				if ($path->save()) {
- 					$this->reservation->createConnections();
- 				} else {
- 					Yii::trace($path->getErrors());
- 				}
+                for ($i=0; $i < count($this->path['port']); $i++) { 
+                    $path = new ReservationPath;
+                    $path->reservation_id = $this->reservation->id;
+                    $path->port_urn = Port::find()->where(['id' => $this->path['port'][$i]])->one()->urn;
+                    $path->path_order = $i;
+                    $path->vlan = $this->path['vlan'][$i];
+                    
+                    if (!$path->save()) {
+                        Yii::trace($path->getErrors());
+                    }
+                }
  			}
  			
  			Yii::trace($this->reservation->getErrors());

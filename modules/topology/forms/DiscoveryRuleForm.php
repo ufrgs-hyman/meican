@@ -14,6 +14,9 @@ use meican\topology\models\Service;
 use meican\topology\components\NSIParser;
 use meican\topology\controllers\services\DiscoveryClient;
 
+/**
+ * @author Maurício Quatrin Guerreiro @mqgmaster
+ */
 class DiscoveryRuleForm extends DiscoveryRule {
 
     public $freq;
