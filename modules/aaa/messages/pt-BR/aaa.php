@@ -121,6 +121,11 @@ return array(
         'Role not found' => 'Perfil não encontrado',
         'The user already has this profile' => 'O usuário ja possui este perfil',
         'Domains' => 'Domínios',
+		'Do you want delete the selected items?' => 'Você quer remover os itens selecionados?',
+		'Roles for Domains' => 'Papeis para os Domínios',
+		'Roles for System' => 'Papeis para o Sistema',
+		'Add Role' => 'Adicionar Papel',
+		'Edit Role' => 'Editar Papel,'
         
         
 );

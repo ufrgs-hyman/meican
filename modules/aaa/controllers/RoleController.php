@@ -171,6 +171,7 @@ class RoleController extends RbacController {
         $udr->getGroup();
 
         $group = $udr->getGroup();
+        $domain = $udr->getDomain();
         
         if(isset($_POST["UserDomainRole"])) {
             $form = $_POST["UserDomainRole"];
@@ -196,7 +197,7 @@ class RoleController extends RbacController {
                 if($udr->save()) {
                 	AaaNotification::createRole($udr);
                     
-                	AaaNotification::deleteRole($udr, $group);
+                	AaaNotification::deleteRole($udr, $group, $domain);
                     
                     Yii::$app->getSession()->setFlash("success", Yii::t("aaa", 'Role updated successfully'));
                     

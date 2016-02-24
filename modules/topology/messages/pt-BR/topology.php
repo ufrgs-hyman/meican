@@ -153,5 +153,8 @@ return array(
 		'Graph' => 'Grafo',
 		
 		'Sintax error. Samples: "200" or "200-300" or "200-300,800-990"' => 'Erro de sintaxe. Exemplos: "200" ou "200-300" ou "200-300,800-990"',
+
+		'Do you want delete the selected items?' => 'Você quer remover os itens selecionados?',
+		
 );
 ?>

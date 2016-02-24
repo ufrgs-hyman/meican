@@ -100,27 +100,25 @@ RoleDomainAsset::register($this);
 Modal::begin([
     'id' => 'delete-role-domain-modal',
     'headerOptions' => ['hidden'=>'hidden'],
-    'footer' => '<button id="close-btn" class="btn btn-default">Cancel</button> <button id="delete-role-btn" class="grid-btn btn btn-danger">Delete</button>',
+    'footer' => '<button id="close-btn" class="btn btn-default">'.Yii::t("aaa", "Cancel").'</button> <button id="delete-role-btn" class="grid-btn btn btn-danger">'.Yii::t("aaa", "Delete").'</button>',
 ]);
 
-echo 'Do you want delete the selected items?';
+echo Yii::t("aaa", "Do you want delete the selected items?");
 
 Modal::end(); 
 
 Modal::begin([
     'id' => 'error-modal-domain',
     'headerOptions' => ['hidden'=>'hidden'],
-    'footer' => '<button id="close-btn" class="btn btn-default">Close</button>',
+    'footer' => '<button id="close-btn" class="btn btn-default">'.Yii::t("aaa", "Close").'</button>',
 ]);
-
-echo 'Please, select a item.';
 
 Modal::end(); 
 
 Modal::begin([
     'id' => 'add-role-domain-modal',
-    'header' => 'Add Role',
-    'footer' => '<button id="close-btn" class="btn btn-default">Close</button> <button id="save-role-btn" class="btn btn-primary">Save</button>',
+    'header' => Yii::t("aaa", "Add Role"),
+    'footer' => '<button id="close-btn" class="btn btn-default">'.Yii::t("aaa", "Cancel").'</button> <button id="save-role-btn" class="btn btn-primary">'.Yii::t("aaa", "Save").'</button>',
 ]);
 
 ?>
@@ -133,8 +131,8 @@ Modal::end();
 
 Modal::begin([
     'id' => 'edit-role-domain-modal',
-    'header' => 'Edit Role',
-    'footer' => '<button id="close-btn" class="btn btn-default">Close</button> <button id="save-role-btn" class="btn btn-primary">Save</button>',
+    'header' => Yii::t("aaa", "Edit Role"),
+    'footer' => '<button id="close-btn" class="btn btn-default">'.Yii::t("aaa", "Cancel").'</button> <button id="save-role-btn" class="btn btn-primary">'.Yii::t("aaa", "Save").'</button>',
 ]); ?>
 
 <div id="edit-role-domain-form-wrapper"></div>

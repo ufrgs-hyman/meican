@@ -18,6 +18,7 @@ use meican\circuits\models\ReservationPath;
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionAuth;
 use meican\circuits\models\ConnectionPath;
+use meican\circuits\models\ReservationNotification;
 use meican\circuits\forms\AuthorizationForm;
 use meican\circuits\forms\AuthorizationDetailed;
 use meican\circuits\forms\AuthorizationSearch;
@@ -50,7 +51,21 @@ class AuthorizationController extends RbacController {
             else{
                 Yii::trace("Respondendo a reserva id: ".$id);
                 $userId = Yii::$app->user->getId();
-        
+                
+                //Confere se usuário pode autorizar
+                $conn = Connection::find()->where(['reservation_id' => $id])->one();
+                $auth = ConnectionAuth::find()->where(['connection_id' => $conn->id, 'type' => ConnectionAuth::TYPE_GROUP])->one();
+        		if($auth){
+        			$onGroup = false;
+        			$roles = User::findOne($userId)->getRoles()->all();
+        			foreach($roles as $role){
+        				if(($role->domain == $auth->domain || $role->domain == null) && $role->getGroup()->id == $auth->manager_group_id) $onGroup = true;
+        			}
+        			if(!$onGroup) return $this->goHome();
+        		}
+        		$auth = ConnectionAuth::find()->where(['connection_id' => $conn->id, 'type' => ConnectionAuth::TYPE_USER])->one();
+        		if($auth && $auth->manager_user_id != $userId) return $this->goHome();
+                
                 $reservation = Reservation::findOne(['id' => $id]);
                 
                 //Confere se alguma ja expirou
@@ -61,7 +76,7 @@ class AuthorizationController extends RbacController {
                         $request->changeStatusToExpired();
                         $connection->auth_status= Connection::AUTH_STATUS_EXPIRED;
                         $connection->save();
-                        Notification::createConnectionNotification($connection->id);
+                        ReservationNotification::create($connection->id);
                     }
                 }
 

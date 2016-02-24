@@ -15,6 +15,7 @@ use meican\aaa\models\User;
 
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionAuth;
+use meican\circuits\models\ConnectionPath;
 use meican\circuits\models\Reservation;
 use meican\circuits\models\AuthorizationNotification;
 use meican\circuits\models\ReservationNotification;
@@ -217,6 +218,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     	Yii::trace("Response: ".$response);
     	
     	$flow = BpmFlow::findOne(['domain' => $domainTop, 'connection_id' => $connection_id]);
+    	if(!isset($flow)) return;
     	$flow->status = $response;
     	$flow->save();
     
@@ -600,7 +602,7 @@ class BpmFlow extends \yii\db\ActiveRecord
     	Yii::trace("Testando Grupo");
     	$user = User::findOne($reservation->request_user_id);
 
-    	$roles = $user->getUserDomainRoles()->all();
+    	$roles = $user->getRoles()->all();
     	
     	foreach($roles as $role){
     		$group = $role->getGroup();

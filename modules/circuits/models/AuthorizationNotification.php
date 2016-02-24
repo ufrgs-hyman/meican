@@ -12,8 +12,14 @@ use yii\helpers\Html;
 use meican\base\components\DateUtils;
 
 use meican\circuits\models\ConnectionAuth;
+use meican\circuits\models\ConnectionPath;
 use meican\circuits\models\Connection;
 use meican\circuits\models\Reservation;
+
+use meican\aaa\models\Group;
+use meican\aaa\models\UserDomainRole;
+
+use meican\topology\models\Domain;
 
 use meican\notification\models\Notification;
 
@@ -104,7 +110,7 @@ class AuthorizationNotification {
         }
     }
     
-    static function createToGroup($group_id, $domain, $reservation_id, $auth_id){
+    static function createToGroup($group_id, $domain, $reservation_id, $auth_id, $date = null){
     	$group = Group::findOne($group_id);
     	 
     	$domain = Domain::findOne(['name' => $domain]);
@@ -140,7 +146,7 @@ class AuthorizationNotification {
 		            	//Pequena maquipulação do horário para que nunca existam duas notificações com o mesmo horário
 						$date = new \DateTime('now', new \DateTimeZone("UTC"));
 						$dateAux = $date->format("Y-m-d H:i:s");
-						while(Notification::find()->where(['user_id' => $user_id, 'date' => $dateAux])->one()){
+						while(Notification::find()->where(['user_id' => $role->user_id, 'date' => $dateAux])->one()){
 							$date->modify('-1 second');
 							$dateAux = $date->format("Y-m-d H:i:s");
 						}
@@ -152,12 +158,12 @@ class AuthorizationNotification {
     			else{ //Se for nova, cria notificação
     				$not = new Notification();
     				$not->user_id = $role->user_id;
-    				if($date) $not->date = $date;
+    				if(isset($date)) $not->date = $date;
 		        	else{
 		            	//Pequena maquipulação do horário para que nunca existam duas notificações com o mesmo horário
 						$date = new \DateTime('now', new \DateTimeZone("UTC"));
 						$dateAux = $date->format("Y-m-d H:i:s");
-						while(Notification::find()->where(['user_id' => $user_id, 'date' => $dateAux])->one()){
+						while(Notification::find()->where(['user_id' => $role->user_id, 'date' => $dateAux])->one()){
 							$date->modify('-1 second');
 							$dateAux = $date->format("Y-m-d H:i:s");
 						}

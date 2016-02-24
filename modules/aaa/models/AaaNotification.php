@@ -17,6 +17,8 @@ use meican\base\components\DateUtils;
 
 use meican\circuits\models\ConnectionAuth;
 use meican\circuits\models\Connection;
+use meican\circuits\models\Reservation;
+use meican\circuits\models\AuthorizationNotification;
 
 use meican\notification\models\Notification;
 
@@ -124,16 +126,16 @@ class AaaNotification {
 		else AaaNotification::create($udr->user_id, Notification::NOTICE_TYPE_ADD_GROUP, $udr->getGroup()->id);
 	}
 
-	static function deleteRole($udr, $group = null){
+	static function deleteRole($udr, $group = null, $domain = null){
 		if(!isset($group)) $group = $udr->getGroup();
-		$domain = Domain::findOne(['name' => $udr->domain]);
+		if(!isset($group)) $domain = Domain::findOne(['name' => $udr->domain]);
 		
 		//Remove notificações relativas ao antigo papel
 		if($domain){
-			AaaNotification::deleteNotificationsGroup($udr->user_id, $group->role_name, $domain->name);
+			AaaNotification::deleteNotificationsGroup($udr->user_id, $group, $domain->name);
 		}
 		else{
-			AaaNotification::deleteNotificationsGroup($udr->user_id, $group->role_name, null);
+			AaaNotification::deleteNotificationsGroup($udr->user_id, $group, null);
 		}
 
 		//Notificação removido papel
@@ -145,43 +147,38 @@ class AaaNotification {
 		}
 	}
     
-    static function createNotificationsGroup($user_id, $group_name, $domain_id){
+    static function createNotificationsGroup($user_id, $group_name, $domain){
     	$user = User::findOne($user_id);
     	$group = Group::findOne(['role_name' => $group_name]);
-    	 
+    	
     	if($user && $group){
     		Yii::trace("Criar notificações do grupo ".$group->name." para usuário ".$user->name);
     		//Busca todas autorizações pendentes do grupo
     		//Se tem dominio, procura só as relacionadas ao dominio do papel
-    		if($domain_id){
-    			$domain = Domain::findOne($domain_id);
-    			if($domain) $auths = ConnectionAuth::find()->where(['status' => Connection::AUTH_STATUS_PENDING, 'domain' => $domain->name, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
-    			else return;
+    		if($domain){
+    			$auths = ConnectionAuth::find()->where(['status' => Connection::AUTH_STATUS_PENDING, 'domain' => $domain, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
     		}
     		//Se não possui domonio no papel, busca para todos dominios, pois é ANY
     		else $auths = ConnectionAuth::find()->where(['status' => Connection::AUTH_STATUS_PENDING, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
-    
+    		
     		//Passa por todas criando uma notificação
     		foreach($auths as $auth){
     			$connection = Connection::findOne($auth->connection_id);
     			$reservation = Reservation::findOne($connection->reservation_id);
-    			Notification::createUserAuthNotification($user->id, $auth->domain, $connection->reservation_id, $auth->id, $reservation->date);
+    			AuthorizationNotification::createToUser($user->id, $auth->domain, $connection->reservation_id, $auth->id, $reservation->date);
     		}
     	}
     }
     
-    static function deleteNotificationsGroup($user_id, $group_name, $domain_id){
+    static function deleteNotificationsGroup($user_id, $group, $domain){
     	$user = User::findOne($user_id);
-    	$group = Group::findOne(['role_name' => $group_name]);
     
     	if($user && $group){
     		Yii::trace("Remover notificações do grupo ".$group->name." para usuário ".$user->name);
     		//Busca todas autorizações do grupo
     		//Se tem domínio, procura só as relacionadas ao domínio do papel
-    		if($domain_id){
-    			$domain = Domain::findOne($domain_id);
-    			if($domain) $auths = ConnectionAuth::find()->where(['domain' => $domain->name, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
-    			else return;
+    		if($domain){
+    			$auths = ConnectionAuth::find()->where(['domain' => $domain, 'type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();
     		}
     		//Se não possui domínio no papel, busca para todos dominios, pois é ANY
     		else $auths = ConnectionAuth::find()->where(['type' => ConnectionAuth::TYPE_GROUP, 'manager_group_id' => $group->id])->all();

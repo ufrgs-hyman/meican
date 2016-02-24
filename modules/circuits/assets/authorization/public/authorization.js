@@ -2,6 +2,18 @@ var eventsPending, eventsConfirmed;
 
 $(document).ready(function() {
 	
+	$(document).on('pjax:end',   function() {
+		$(".btn-accept").click(function() {
+			var id = $(this).attr("id");
+			accept(id);
+		});
+			
+		$(".btn-reject").click(function() {
+			var id = $(this).attr("id");
+			reject(id);
+		});
+	});
+	
 	$(".btn-accept").click(function() {
 		var id = $(this).attr("id");
 		accept(id);
@@ -126,6 +138,15 @@ function accept(id){
 			    			$.pjax.defaults.timeout = false;
 			    			$.pjax.reload({container:'#pjaxContainer'});
 			    			$("#auth-accept-modal").modal("hide");
+			    			$(".btn-accept").click(function() {
+			    				var id = $(this).attr("id");
+			    				accept(id);
+			    			});
+			    			
+			    			$(".btn-reject").click(function() {
+			    				var id = $(this).attr("id");
+			    				reject(id);
+			    			});
 			    		}
 			    	});
 				});
