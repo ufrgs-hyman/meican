@@ -87,13 +87,9 @@ class Notification extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'id']);
     }
-    
-    /*public static function makeHtml($image, $text){
-        return '<table><tr><td class="image">'.Html::img('@web'.'/images/'.$image).'</td><td>'.$text.'</td></tr></table>';
-    }*/
-    
+
     public static function makeHtml($img, $date, $title, $msg, $link = null){
-    	$not = '<div class="notification_img pull-left">'.Html::img('@web'.'/images/'.$img).'</div><h4 class="notification_title">'.$title.'</h4>'.'<p class="notification_p">'.$msg.'</p>'.'<h4 class="notification_date"><i class="fa fa-calendar notification_date_img"></i>'.$date.'</h4>';
+    	$not = '<div class="notification_img pull-left">'.Html::img('@web'.'/images/'.$img).'</div><h4 style="word-wrap:break-word; white-space: pre;" class="notification_title">'.$title.'</h4>'.'<p class="notification_p">'.$msg.'</p>'.'<h4 class="notification_date"><i class="fa fa-calendar notification_date_img"></i>'.$date.'</h4>';
     	if($link) return Html::a($not, array($link));
     	return Html::a($not, null);
     }
