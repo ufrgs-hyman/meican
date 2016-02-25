@@ -23,7 +23,7 @@ class ConfigurationForm extends Model {
     
     public function rules() {
         return [
-            [['domain','group','status'], 'required'],
+            [['group','status'], 'required'],
             [['domain','group','status'], 'safe'],
         ];
     }

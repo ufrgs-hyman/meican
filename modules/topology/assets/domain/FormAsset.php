@@ -25,6 +25,6 @@ class FormAsset extends AssetBundle
 
     public $depends = [
         'meican\base\assets\Theme',
-        'meican\base\assets\SpectrumAsset',
+        'meican\base\assets\Spectrum',
     ];
 }

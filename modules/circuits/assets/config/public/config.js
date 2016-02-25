@@ -8,7 +8,7 @@ function fillProviderSelect() {
         },
         success: function(response){
             $("#configurationform-defaultprovidernsa").replaceWith(
-              '<select id="configurationform-defaultprovidernsa" name="ConfigurationForm[defaultProviderNsa]" disabled>' +
+              '<select class="form-control" id="configurationform-defaultprovidernsa" name="ConfigurationForm[defaultProviderNsa]" disabled>' +
               '<option value="">loading</option>' +
               '</select>');
             $('#configurationform-defaultprovidernsa').children().remove();
@@ -41,7 +41,7 @@ function fillCSSelect() {
                 currentCS = $("#configurationform-defaultcsurl").val();
 
                 $("#configurationform-defaultcsurl").replaceWith(
-                  '<select id="configurationform-defaultcsurl" name="ConfigurationForm[defaultCSUrl]" disabled>' +
+                  '<select class="form-control" id="configurationform-defaultcsurl" name="ConfigurationForm[defaultCSUrl]" disabled>' +
                   '<option value="">loading</option>' +
                   '</select>');
                 $('#configurationform-defaultcsurl').children().remove();
