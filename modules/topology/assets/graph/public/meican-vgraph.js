@@ -30,6 +30,8 @@ MeicanVGraph.prototype.hide = function() {
     if($("#graph-v").length == 1) {
         this._graph.destroy();
         $("#graph-v").remove();
+        this._nodes = new vis.DataSet(); // nodes
+        this._links = new vis.DataSet(); // edges
     }
 }
 
@@ -145,6 +147,7 @@ MeicanVGraph.prototype.fit = function() {
 
 MeicanVGraph.prototype.build = function(divId) {
     $("#"+divId).show();
+
     var container = document.getElementById(divId);
     var data = {
         nodes: this._nodes,
@@ -207,6 +210,7 @@ MeicanVGraph.prototype.build = function(divId) {
             classes: 'qtip-light qtip-shadow'
         }
     }).qtip('api');
+    this._popup.set('visible', false);
     this._graph.on("click", function (params) {
         if(params['nodes'].length > 0) {
             console.log(' click node:', params);
@@ -265,4 +269,9 @@ MeicanVGraph.prototype.showPopup = function(nodeId, content) {
     pos = this._graph.canvasToDOM(pos[nodeId]);
     if(content != null) this._popup.set('content.text', content);
     this._popup.set('position.target', [ pos.x, pos.y ]).show();
+}
+
+MeicanVGraph.prototype.closePopups = function() {
+    this._popup.set('visible', false);
+    this._popup.hide();    
 }

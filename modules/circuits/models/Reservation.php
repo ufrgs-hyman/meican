@@ -86,7 +86,7 @@ class Reservation extends \yii\db\ActiveRecord
             'id' => 'ID',
             'type' => Yii::t('circuits', 'Type'),
             'name' => Yii::t('circuits', 'Name'),
-            'date' => Yii::t('circuits', 'Request Date'),
+            'date' => Yii::t('circuits', 'Requested at'),
             'bandwidth' => Yii::t('circuits', 'Bandwidth (Mbps)'),
             'start' => Yii::t('circuits', 'Start'),
             'finish' => Yii::t('circuits', 'Finish'),

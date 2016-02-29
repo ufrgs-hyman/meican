@@ -295,7 +295,7 @@ function drawCircuitAnimated(requiredMarkers) {
 	}
 }
 
-function getPathData(source,destin){  
+function getPathData(source,destin) {  
     var path = [];
 
     path[0] = new google.maps.LatLng(source.position.lat(),source.position.lng()); 
