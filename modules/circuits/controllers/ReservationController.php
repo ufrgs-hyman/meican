@@ -19,6 +19,7 @@ use meican\circuits\models\ConnectionAuth;
 use meican\circuits\models\ConnectionPath;
 use meican\circuits\models\CircuitsPreference;
 use meican\circuits\models\Protocol;
+use meican\circuits\models\ConnectionEvent;
 use meican\circuits\models\ReservationPath;
 use meican\circuits\models\CircuitNotification;
 use meican\circuits\forms\ReservationForm;
@@ -28,7 +29,6 @@ use meican\topology\models\Domain;
 use meican\topology\models\Device;
 use meican\topology\models\Network;
 use meican\topology\models\Service;
-
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
@@ -85,13 +85,14 @@ class ReservationController extends RbacController {
     
     //Verificar, pois a cada atualizacao da pagina ele vai verificar as autorizações, 
     //isso está fora do contexto dessa função. Deveria ser feito por workflows.
-    public function actionView($id) {
+    public function actionView($r, $c=null) {
         // Removido pois testa se é o usuário que solicitou ou se tem permissão para cancelar na origem OU destino
         //self::can('reservation/delete');
         
-        $reservation = Reservation::findOne($id);
+        $reservation = Reservation::findOne($r);
         
         //Confere se algum pedido de autorização da expirou
+        /*
         if($reservation){
             $connectionsExpired = $conn = Connection::find()->where(['reservation_id' => $reservation->id])->andWhere(['<=','start', DateUtils::now()])->all();
             foreach($connectionsExpired as $connection){
@@ -127,8 +128,7 @@ class ReservationController extends RbacController {
         
         if(!$permission){ //Se ele não tiver permissão em nenhum domínio do path e não for quem requisitou
             return $this->goHome();
-        }
-         
+        }*/
         
         $connections = new ActiveDataProvider([
                 'query' => $reservation->getConnections(),
@@ -137,10 +137,19 @@ class ReservationController extends RbacController {
                     'pageSize' => 5,
                 ]
         ]);
+
+        $connHistory = new ActiveDataProvider([
+                'query' => ConnectionEvent::find(),
+                'sort' => false,
+                'pagination' => [
+                    'pageSize' => 5,
+                ]
+        ]);
         
-        return $this->render('view/view',[
+        return $this->render('view/view2',[
                 'reservation' => $reservation,
-                'connections' => $connections,
+                'conn' => $reservation->getConnections()->one(),
+                'connHistory' => $connHistory,
         ]);
     }
 

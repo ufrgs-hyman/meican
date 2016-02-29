@@ -5,3 +5,7 @@ label.point-info {
 label.dom-l {
     font-weight: normal;
 } 
+
+.qtip-content {
+    font-size: 12px;
+}

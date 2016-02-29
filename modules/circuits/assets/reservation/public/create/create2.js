@@ -124,10 +124,20 @@ $(document).ready(function() {
     });
 
     $("#switch-mode").on('click', function() {
-        meicanMap.hide();
-        meicanGraph.show();
-        meicanGraph.addNodes(meicanTopo['dev'], 'dev', true);
-        meicanGraph.addLinks(meicanTopo['dev']['links'], 'dev');
+        if(mode != 'map') {
+            meicanGraph.hide();
+            meicanMap.show("rnp", 'dev');
+            for (var i = 0; i < meicanTopo['dev'].length; i++) {
+                meicanMap.addMarker(meicanTopo['dev'][i], 'dev');
+            }
+            mode = 'map';
+        } else {
+            meicanMap.hide();
+            meicanGraph.show();
+            meicanGraph.addNodes(meicanTopo['dev'], 'dev', true);
+            meicanGraph.addLinks(meicanTopo['dev']['links'], 'dev');
+            mode = 'graph';
+        }
     });
 
     $('#canvas').on('markerClick', function(e, marker) {
@@ -178,8 +188,8 @@ $(document).ready(function() {
 
     $("#canvas").on("click",'.add-waypoint', function() {
         lsidebar.open("path");
-        addWayPoint($(this).parent().attr('data-node'));
         closePopups();
+        addWayPoint($(this).parent().attr('data-node'));
         return false;
     });
 
