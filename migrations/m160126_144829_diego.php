@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Copyright (c) 2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
 use yii\db\Schema;
 use yii\db\Migration;
@@ -26,15 +30,4 @@ class m160126_144829_diego extends Migration
 
         return false;
     }
-
-    /*
-    // Use safeUp/safeDown to run migration code within a transaction
-    public function safeUp()
-    {
-    }
-
-    public function safeDown()
-    {
-    }
-    */
 }

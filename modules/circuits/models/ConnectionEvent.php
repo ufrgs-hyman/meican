@@ -9,26 +9,22 @@ namespace meican\circuits\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%connection_log}}".
- *
  * @property integer $id
  * @property integer $conn_id
- * @property string $date
- * @property integer $received
- * @property string $message
+ * @property string $created_at
  *
  * @property Connection $conn
  *
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class ConnectionLog extends \yii\db\ActiveRecord
+class ConnectionEvent extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%connection_log}}';
+        return '{{%connection_event}}';
     }
 
     /**
@@ -37,10 +33,9 @@ class ConnectionLog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['conn_id', 'date', 'received', 'message'], 'required'],
-            [['conn_id', 'received'], 'integer'],
-            [['date'], 'safe'],
-            [['message'], 'string']
+            [['conn_id', 'created_at'], 'required'],
+            [['conn_id'], 'integer'],
+            [['create_at'], 'safe'],
         ];
     }
 
@@ -52,9 +47,7 @@ class ConnectionLog extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('circuits', 'ID'),
             'conn_id' => Yii::t('circuits', 'Conn ID'),
-            'date' => Yii::t('circuits', 'Date'),
-            'received' => Yii::t('circuits', 'received'),
-            'message' => Yii::t('circuits', 'Message'),
+            'created_at' => Yii::t('circuits', 'Date'),
         ];
     }
 
