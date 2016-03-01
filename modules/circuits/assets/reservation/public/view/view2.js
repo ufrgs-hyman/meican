@@ -7,6 +7,24 @@ $(document).ready(function() {
     drawReservation($("#connection-id").text());
 });
 
+function activeCircuit() {
+    $("#status").find(".ion-clock").removeClass().addClass("ion ion-checkmark-circled");
+    $("#status").find(".info-box-text").text("Status");
+    $("#status").find(".info-box-number").text("Active");
+}
+
+function inactiveCircuit() {
+    $("#status").find(".ion-clock").removeClass().addClass("ion ion-close-circled");
+    $("#status").find(".info-box-text").text("Status");
+    $("#status").find(".info-box-number").text("Inactive");
+}
+
+function finishCircuit() {
+    $("#status").find(".ion-clock").removeClass().addClass("ion ion-checkmark-circled");
+    $("#status").find(".info-box-text").text("Status");
+    $("#status").find(".info-box-number").text("Finished");
+}
+
 function drawReservation(connId, animate) {
     $.ajax({
         url: baseUrl+'/circuits/connection/get-ordered-paths',

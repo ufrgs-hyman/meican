@@ -129,12 +129,14 @@ class Connection extends \yii\db\ActiveRecord
         return $this->getReservation()->select(['provider_nsa'])->getProvider();
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getAuthorizations()
     {
         return $this->hasMany(ConnectionAuth::className(), ['id' => 'connection_id']);
+    }
+
+    public function getHistory()
+    {
+        return $this->hasMany(ConnectionEvent::className(), ['conn_id' => 'id']);
     }
     
     public function requestCreate() {

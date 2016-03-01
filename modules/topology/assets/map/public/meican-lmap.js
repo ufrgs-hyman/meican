@@ -323,7 +323,7 @@ MeicanLMap.prototype.setMapType = function(mapType) {
             break;
         case 'rnp': 
             L.tileLayer('http://viaipe.rnp.br/mapa/{z}/{x}/{y}.png',{
-                attribution: 'MEICAN Project | UFRGS | Map data &copy; 2016 <a href="www.rnp.br">RNP</a>',
+                attribution: 'MEICAN Project | UFRGS | Map data &copy; 2016 <a href="http://www.rnp.br">RNP</a>',
                 maxZoom: 15,
                 minZoom: 2
             }).addTo(this._map);
