@@ -8,22 +8,21 @@ use yii\widgets\DetailView;
 use yii\bootstrap\Html;
 
 use meican\base\grid\Grid;
-use meican\base\widgets\GridButtons;
 
 \meican\circuits\assets\reservation\View::register($this);
 
 $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circuits']];
 
 ?>
-
+<data id="circuit-id" value="<?= $conn->id; ?>"></data>
 <div class="row">
     <div class="col-md-3 col-sm-6 col-xs-12">
-      <div id="status" class="info-box">
+      <div id="status" data-value="reservating" class="info-box">
         <span class="info-box-icon"><i class="ion ion-clock"></i></span>
 
         <div class="info-box-content">
-          <span class="info-box-text">Time to start</span>
-          <span class="info-box-number">10 days<br><small>10/02/2016 at 20:00</small></span>
+          <span class="info-box-text">Status</span>
+          <span class="info-box-number"><small>Waiting reservation</small></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -36,7 +35,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
 
         <div class="info-box-content">
           <span class="info-box-text">Reservation</span>
-          <span class="info-box-number">Provisioned</span>
+          <span class="info-box-number"><small>Provisioned</small></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -53,7 +52,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
 
         <div class="info-box-content">
           <span class="info-box-text">Authorization</span>
-          <span class="info-box-number">Approved</span>
+          <span class="info-box-number"><small>Approved</small></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -66,7 +65,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
 
         <div class="info-box-content">
           <span class="info-box-text">Updated at</span>
-          <span class="info-box-number">20/03/2016 21:12<br><small>by Provider</small></span>
+          <span class="info-box-number"><small>20/03/2016 21:12<br>by Provider</small></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -79,8 +78,8 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
     <div class="col-md-8">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#canvas" data-toggle="tab">Map</a></li>
-              <li><a href="#stats" data-toggle="tab">Graph</a></li>
+              <li class="active"><a href="#canvas" data-toggle="tab">Map Viewer</a></li>
+              <li><a href="#stats" data-toggle="tab">Graph Viewer</a></li>
             </ul>
             <div class="tab-content no-padding">
               <div class="tab-pane active" id="canvas">
@@ -120,13 +119,18 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
             </div>
             <div class="box-body">
                 <?= DetailView::widget([
-                    'model' => $reservation,
+                    'id' => 'circuit-info',
+                    'model' => $conn,
                     'attributes' => [
-                        'name',
-                        'date',
-                        'bandwidth',
+                        //'name',
+                        //'date',
+                        //'bandwidth',
                         'protected',
-                        'start',
+                        [                      
+                            'attribute' => 'start',
+                            'format' => 'raw',
+                            'value' => '<data class="start-time" value="'.$conn->start.'"></data>'.$conn->start
+                        ],
                         'finish',
                     ],
                 ]); ?>

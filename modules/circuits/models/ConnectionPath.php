@@ -8,6 +8,8 @@ namespace meican\circuits\models;
 
 use Yii;
 
+use meican\topology\models\Port;
+
 /**
  * This is the model class for table "{{%connection_path}}".
  *

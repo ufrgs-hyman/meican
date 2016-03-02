@@ -81,7 +81,7 @@ MeicanVGraph.prototype.addNode = function(id, name, type, domainId, x,y, color) 
     var physics = true;
     if(x && y) physics = false;
     this._nodes.add({
-        id: type + id, 
+        id: id, 
         label: name, 
         physics: physics, 
         type: type,

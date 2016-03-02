@@ -105,10 +105,10 @@ MeicanLMap.prototype.removeLinks = function() {
     }
 }
 
-MeicanLMap.prototype.addMarker = function(object, type, color) {
-    if (!color) color = this.getDomain(object.domain_id).color;
-    if (object.latitude != null && object.longitude != null) {
-        var pos = [object.latitude,object.longitude];
+MeicanLMap.prototype.addMarker = function(id, name, type, domainId, lat, lng, color) {
+    if (!color) color = this.getDomain(domainId).color;
+    if (lat != null && lng != null) {
+        var pos = [lat,lng];
     } else {
         var pos = [0, 0];
     }
@@ -128,11 +128,11 @@ MeicanLMap.prototype.addMarker = function(object, type, color) {
     var marker = L.marker(
         pos, 
         {
-            id: type+ object.id, 
+            id: id, 
             icon: icon,
             type: type,
-            name: object.name,
-            domainId: object.domain_id
+            name: name,
+            domainId: domainId
         }
     ).addTo(this._map).bindPopup("#");
 
