@@ -11,7 +11,7 @@ class m160229_204824_mqg extends Migration
     public function up()
     {
         $this->execute("
-            DROP TABLE meican_connection_log
+            DROP TABLE IF EXISTS meican_connection_log
             ");
         $this->execute("
             CREATE TABLE `meican_connection_event` ( `id` INT AUTO_INCREMENT PRIMARY KEY )
