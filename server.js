@@ -12,5 +12,5 @@ io.on('connection', function (socket) {
     refresher = setInterval(function() {
         console.log("ping");
         socket.emit("notification", { data: 'ping'});
-    }, 20000);
+    }, 2000);
 });
