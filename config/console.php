@@ -20,6 +20,7 @@ return [
         'aaa' => 'meican\aaa\Module',
         'circuits' => 'meican\circuits\Module',
         'scheduler' => 'meican\scheduler\Module',
+        'notification' => 'meican\notification\Module',
         'topology' => 'meican\topology\Module',
     ],
     'components' => [
