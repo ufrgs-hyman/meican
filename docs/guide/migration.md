@@ -4,11 +4,11 @@ This guide covers the migration of the application to another machine.
 
 #####1. Backup of the configurations
 
-Do a backup of the old application, configurations and database.
+Backup the following files from config`s folder: "db.php", "mailer.php" and "params.php".
 
 #####2. Backup of the database
 
-Do a backup of the old application, configurations and database.
+Access the phpMyAdmin interface and export the MEICAN database.
 
 #####3. Prepare the new environment
 
