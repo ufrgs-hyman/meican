@@ -214,10 +214,7 @@ $form = ActiveForm::begin([
         <div class="lsidebar-pane" id="home">
             <h1 class="lsidebar-header">Welcome to reservation page<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
             <br><p>
-                This is the reservation page. In this page a map is used for friendly search
-                of endpoints. A search text field also is available. The interval or the recurrence of
-                the reservation are available on the respective option in the map sidebar. The below list
-                contains all steps involved in a reservation request.
+                This is the reservation page. Here you can make a circuit reservation very quickly and easily.<br><br>Listed below you can see all steps involved in a circuit reservation:
             </p><br>
             <p>1. Select your endpoints.</p>
             <p>2. Define the requirements, e.g., bandwidth.</p>

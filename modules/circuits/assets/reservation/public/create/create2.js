@@ -278,7 +278,7 @@ function prepareConfirmModal() {
                                         id: resId,
                                     }
                                 });
-                                window.location.href = baseUrl + '/circuits/reservation/view?id=' + resId;
+                                window.location.href = baseUrl + '/circuits/reservation/view-circuit?id=' + resId;
                             } else if(resId==-1){
                                 showError(tt("You are not allowed to create a reservation involving these selected domains."));
                             } else {
@@ -532,7 +532,13 @@ function loadDevices() {
             meicanTopo['dev'] = response;
             //meicanGraph.addNodes(response, 'dev', true);
             for (var i = 0; i < response.length; i++) {
-                meicanMap.addMarker(response[i], 'dev');
+                meicanMap.addMarker(
+                    response[i].id + 'dev',
+                    response[i].name,
+                    'dev',
+                    response[i].domain_id,
+                    response[i].latitude,
+                    response[i].longitude);
             };
             //meicanGraph.fit();
             loadDeviceLinks();
