@@ -11,6 +11,8 @@ $(document).ready(function() {
     refresher = setInterval(function() {
         updateCircuitStatus();
     }, 1000);
+
+    buildStatsGraph();
 });
 
 function updateCircuitStatus() {
@@ -123,7 +125,6 @@ function drawCircuitWhenReady(requiredMarkers, animate) {
         if (animate) {
             drawCircuitAnimated(requiredMarkers);
         } else {
-            console.log('sda');
             var path = [];
             for (var i = 0; i < meicanMap.getMarkers().length; i++) {
                 path.push(meicanMap.getMarkers()[i].options.id);
@@ -233,3 +234,80 @@ function areMarkersReady(ids) {
     
     return true;
 }
+
+function buildStatsGraph() {
+    var DELAY = 1000; // delay in ms to add new data points
+
+  // create a graph2d with an (currently empty) dataset
+  var container = document.getElementById('stats');
+  var dataset = new vis.DataSet();
+
+  var options = {
+    start: vis.moment().add(-30, 'seconds'), // changed so its faster
+    end: vis.moment(),
+    height: '380px',
+    dataAxis: {
+      left: {
+        range: {
+          min:0, max: 20
+        }
+      }
+    },
+    drawPoints: {
+      style: 'circle' // square, circle
+    },
+    shaded: {
+      orientation: 'bottom' // top, bottom
+    }
+  };
+  var graph2d = new vis.Graph2d(container, dataset, options);
+
+  // a function to generate data points
+  function y(x) {
+    return ((Math.sin(x / 2) + Math.cos(x / 4)) * 5) + 10;
+  }
+
+  function renderStep() {
+    // move the window (you can think of different strategies).
+    var now = vis.moment();
+    var range = graph2d.getWindow();
+    var interval = range.end - range.start;
+    switch ('continuous') {
+      case 'continuous':
+        // continuously move the window
+        graph2d.setWindow(now - interval, now, {animation: false});
+        requestAnimationFrame(renderStep);
+        break;
+
+      case 'discrete':
+        graph2d.setWindow(now - interval, now, {animation: false});
+        setTimeout(renderStep, DELAY);
+        break;
+
+      default: // 'static'
+        // move the window 90% to the left when now is larger than the end of the window
+        if (now > range.end) {
+          graph2d.setWindow(now - 0.1 * interval, now + 0.9 * interval);
+        }
+        setTimeout(renderStep, DELAY);
+        break;
+    }
+  }
+  renderStep();
+
+  /**
+   * Add a new datapoint to the graph
+   */
+  function addDataPoint() {
+    // add a new data point to the dataset
+    var now = vis.moment();
+    dataset.add({
+      x: now,
+      y: y(now / 1000)
+    });
+
+    setTimeout(addDataPoint, DELAY);
+  }
+  addDataPoint();
+}
+  

@@ -84,7 +84,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
             <div class="tab-content no-padding">
               <div class="tab-pane active" id="canvas">
               </div>
-              <div class="tab-pane" id="stats">
+              <div class="tab-pane" id="graph">
                 Comming soon.
               </div>
             </div>
@@ -95,8 +95,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
             <div class="box-header with-border">
                 <h3 class="box-title"><?= Yii::t("topology", "Stats"); ?></h3>
             </div>
-            <div class="box-body">
-                <?= Html::img('@web/images/test.png'); ?>
+            <div id="stats" class="box-body">
             </div>
         </div>    
     </div>
@@ -124,14 +123,17 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                     'attributes' => [
                         //'name',
                         //'date',
-                        //'bandwidth',
-                        'protected',
+                        [                      
+                            'label' => 'Bandwidth',
+                            'format' => 'raw',
+                            'value' => '20 Mbps'
+                        ], 
                         [                      
                             'attribute' => 'start',
                             'format' => 'raw',
-                            'value' => '<data class="start-time" value="'.$conn->start.'"></data>'.$conn->start
-                        ],
-                        'finish',
+                            'value' => '<data class="start-time" value="'.$conn->start.'"></data>'.Yii::$app->formatter->asDatetime($conn->start)
+                        ],                        
+                        'finish:datetime',
                     ],
                 ]); ?>
             </div>

@@ -48,6 +48,7 @@ class ConnectionEvent extends \yii\db\ActiveRecord
             'id' => Yii::t('circuits', 'ID'),
             'conn_id' => Yii::t('circuits', 'Conn ID'),
             'created_at' => Yii::t('circuits', 'Date'),
+            'author_id' => Yii::t("circuits", "Author"),
         ];
     }
 
