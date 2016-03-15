@@ -28,7 +28,7 @@ From the backup, copy all files to the config`s folder on the new server.
 
 #####7. Import the database
 
-From the backup, import the database directly on phpMyAdmin.
+From the backup, import the database directly via phpMyAdmin instance on the new machine.
 
 After all these steps, the migration is done.
 
