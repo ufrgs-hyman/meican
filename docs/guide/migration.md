@@ -18,11 +18,15 @@ Access the phpMyAdmin interface and export the MEICAN database. By default the d
 
 Following the installation guide respective, setup a complete new MEICAN instance on the new machine.
 
-#####5. Copy the configuration
+#####5. Copy the certificate
+
+From the backup, copy the certificate to the certificate`s folder on the new server.
+
+#####6. Copy the configuration
 
 From the backup, copy all files to the config`s folder on the new server.
 
-#####6. Import the database
+#####7. Import the database
 
 From the backup, import the database directly on phpMyAdmin.
 
