@@ -24,7 +24,7 @@ From the backup, copy the certificate to the certificate`s folder on the new ser
 
 #####6. Copy the configuration
 
-From the backup, copy all files to the config`s folder on the new server.
+From the backup, copy the files: "db.php", "mailer.php" and "params.php" to the config`s folder on the new server.
 
 #####7. Import the database
 
