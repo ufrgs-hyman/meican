@@ -39,14 +39,14 @@ web/                web accessible files, e.g., assets cache, wsdl files and ima
 ###Hardware
 
 - CPU 1+
-- Memory 2GB+
-- Storage 20GB+
+- Memory 1GB+
+- Storage 10GB+
 
 ###Software
 
 - Ubuntu 14/CentOS 6/Any other OS with Crontab feature
-- Apache 2.2+ (recommended)
-- MySQL 5+
+- Apache 2.2+ (2.4 recommended)
+- MySQL 5+ 
 - PHP 5.5+
 - cURL
 
