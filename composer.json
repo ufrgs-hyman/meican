@@ -1,6 +1,6 @@
 {
     "name": "ufrgs-hyman/meican2",
-    "description": "Web application for management of dynamic circuits networks",
+    "description": "Web application for the management of dynamic circuits networks",
     "keywords": [
         "meican", "dynamic", "circuit", "network", "reservation", 
         "topology", "nsi", "dcn", "intradomain", "interdomain"],
@@ -26,8 +26,10 @@
     "require": {
         "php": ">=5.5.0",
         "yiisoft/yii2": "2.0.7",
-        "yiisoft/yii2-swiftmailer": "2.0.4",
-        "yiisoft/yii2-bootstrap": "2.0.5",
+        "yiisoft/yii2-swiftmailer": "2.0.5",
+        "yiisoft/yii2-bootstrap": "2.0.6",
+        "yiisoft/yii2-redis":"2.0.5",
+        "yiisoft/yii2-apidoc" : "2.0.5",
         "npm-asset/vis": "4.14.0",
         "npm-asset/leaflet": "0.7.7",
         "bower-asset/spectrum": "1.8.0",
@@ -43,9 +45,9 @@
         "bower-asset/fullcalendar": "2.6.1"
     },
     "require-dev": {
-        "yiisoft/yii2-codeception": "2.0.4",
-        "yiisoft/yii2-debug": "2.0.5",
-        "yiisoft/yii2-gii": "2.0.4"
+        "yiisoft/yii2-codeception": "2.0.5",
+        "yiisoft/yii2-debug": "2.0.6",
+        "yiisoft/yii2-gii": "2.0.5"
     },
     "config": {
         "process-timeout": 1800,
