@@ -13,6 +13,8 @@ class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'meican\circuits\controllers';
 
+    public $defaultRoute = 'connection';
+
     public function init()
     {
         parent::init();

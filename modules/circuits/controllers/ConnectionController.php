@@ -6,8 +6,10 @@
 
 namespace meican\circuits\controllers;
 
-use yii\helpers\Url;
 use Yii;
+use yii\helpers\Url;
+use yii\data\ActiveDataProvider;
+use yii\helpers\Json;
 
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionPath;
@@ -22,6 +24,32 @@ use meican\aaa\RbacController;
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class ConnectionController extends RbacController {
+
+    public $defaultAction = "view";
+
+    public function actionView($id) {
+        if (is_numeric($id)) {
+            $conn = Connection::findOne($id);
+        } else {
+            $conn = Connection::findOne(['external_id'=> $id]);            
+        }
+
+        if($conn === null) throw new \yii\web\HttpException(404, 'The requested Item could not be found.');
+
+        $history = new ActiveDataProvider([
+                'query' => $conn->getHistory(),
+                'sort' => false,
+                'pagination' => [
+                    'pageSize' => 5,
+                ]
+        ]);
+        
+        return $this->render('view',[
+                'reservation' => $conn->getReservation()->one(),
+                'conn' => $conn,
+                'history' => $history,
+        ]);
+    }
     
     public function actionGetOrderedPathsOld($id) {
         $paths = ConnectionPath::find()->where(['conn_id'=>$id])->orderBy(['path_order'=> "SORT_ASC"])->all();
