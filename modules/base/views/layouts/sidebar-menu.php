@@ -16,11 +16,11 @@ echo Menu::widget([
             'icon' => 'fa fa-home'
         ],
         [
-            'label' => Yii::t('circuits','Reservations'),
+            'label' => Yii::t('circuits','Circuits'),
             'url' => '#',
             'icon' => 'fa fa-calendar',
             'items' => [
-                ['label'=>Yii::t('circuits','Create'), 'url'=>['/circuits/reservation/create']],
+                ['label'=>Yii::t('circuits','Reserve'), 'url'=>['/circuits/reservation/create']],
                 ['label'=>Yii::t('circuits','Status'),'url'=>['/circuits/reservation/status']],
                 ['label'=>Yii::t('circuits','History'),'url'=>['/circuits/reservation/history']],
                 ['label'=>Yii::t('circuits','Authorization'),'url'=>['/circuits/authorization/index']],
