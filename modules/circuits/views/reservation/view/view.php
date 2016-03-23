@@ -1,150 +1,59 @@
 <?php 
-	use yii\grid\GridView;
-	use yii\grid\CheckboxColumn;
-	use yii\helpers\Url;
-	use yii\widgets\Pjax;
-	use yii\jui\Dialog;
-	use yii\helpers\Html;
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
 
-	use meican\circuits\assets\reservation\ViewAsset;
-	
-	ViewAsset::register($this);
+use yii\widgets\DetailView;
+use yii\bootstrap\Html;
+
+use meican\base\grid\Grid;
+
+\meican\circuits\assets\reservation\View::register($this);
+
+$this->params['header'] = [Yii::t('circuits',"Reservation Details"), ['Home', 'Circuits']];
+
 ?>
 
-<h1 style="clear: none; float: left; z-index: 999999; position: absolute;">
-	<data id="res-id" hidden><?= $reservation->id; ?></data>
-	<div class="reservation-name"><?= $reservation->name; ?></div>
-</h1>
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= Yii::t("circuits", "Circuits"); ?></h3>
+            </div>
+            <div class="box-body">
+                <?php
 
-<div id="subtab-points" class="tab_subcontent">
-	<?= $this->render('_formEndpoints', array('label' => Yii::t("circuits", "Source"), 'prefix' => 'src', 
-	)); ?>
-	<div id="bandwidth_bar">
-        <div id="reservation-view-bandwidth-bar">
-            <input type="text" id="reservation-view-bandwidth-field" value="<?php echo $reservation->bandwidth . " " . "Mbps" ?>" disabled="disabled" class="ui-widget ui-spinner-input"/>
-        </div>
-        <?php
-       		$max_bandwidth = null; //Futuramente, buscar a banda maxima possivel pro circuito
-        	if($max_bandwidth != null)
-        		echo '<div id="bandwidth_bar_inside" style="width:'.round($reservation->bandwidth * 100 / $max_bandwidth).'%"></div>';
-        ?>
+                echo Grid::widget([
+                    'dataProvider' => $connDataProvider,
+                    'columns' => [
+                        'external_id',
+                        'start',
+                        'finish'],
+                    ]);
+                ?>
+            </div>
+        </div> 
     </div>
-	<?= $this->render('_formEndpoints', array('label' => Yii::t("circuits", "Destination"), 'prefix' => 'dst',
-	)); ?>
-</div>
-
-<div id="reservation-tab">
-	<div id="reservation-connections">
-		<div class="controls">
-        	<button id="refresh-button" value="true"><?= Yii::t("circuits", "Disable auto refresh"); ?></button>
-        </div>
-        <?php Pjax::begin([
-		    'id' => 'connections-pjax',
-		]); ?>
-		
-        <?=
-			GridView::widget([
-				'options' => [
-						'id'=>'connections-grid',
-						'class' => 'list'],
-				'dataProvider' => $connections,
-				'summary' => false,
-				'columns' => array(
-						[
-							'format' => 'raw',
-							'value' => function ($model){
-								return '<a href="#">'.Html::img('@web/images/delete_2.png', [
-									'class' => "cancel-button",
-									'disabled' => $model->isCancelStatus(),
-									])."</a>";
-							},
-							'headerOptions'=>['style'=>'width: 4%;'],		
-						],
-						[
-							'attribute' => 'gri',
-							'headerOptions'=>['style'=>'width: 15%;'],		
-						],
-						[
-							'attribute' => 'external_id',
-							'headerOptions'=>['style'=>'width: 21%;'],		
-						],
-						[
-							'attribute' => 'protected',
-							'value' => function($model){
-								return $model->protected == 1 ? "Protected" : "Unprotected"; 
-							},
-							'headerOptions'=>['style'=>'width: 10%;'],		
-						],
-						[
-							'attribute' => 'start',
-							'format' 	=> 'datetime',		
-							'headerOptions'=>['style'=>'width: 10%;'],
-						],
-						[
-							'attribute' => 'finish',
-							'format' 	=> 'datetime',	
-							'headerOptions'=>['style'=>'width: 10%;'],
-						],
-						[
-							'attribute' => 'status',
-							'value' => function($model){
-								return $model->getStatus(); 
-							},
-							'headerOptions'=>['style'=>'width: 10%;'],
-						],
-						[
-							'attribute' => 'auth_status',
-							'value' => function($model){
-								return $model->getAuthStatus();
-							 },
-							'contentOptions'=> function ($model){
-								return ['class' => strtolower($model->auth_status)];
-							},
-							'headerOptions'=>['style'=>'width: 10%;'],
-						],
-						[
-							'attribute' => 'dataplane_status',
-							'value' => function($model){
-								return $model->getDataStatus(); 
-							},
-							'contentOptions'=> function ($model){
-								return ['class' => strtolower($model->dataplane_status)];
-							},
-							'headerOptions'=>['style'=>'width: 10%;'],
-						],
-					),
-			]);
-		?>
-		<?php Pjax::end(); ?>
-	</div>
-</div>
-
-<div id="copy-urn-dialog" title="<?= Yii::t("circuits", "Copy the endpoint identifier");?>" hidden>
-    <label for="copy-urn-field">URN:</label>
-    <br/>
-    <input readonly="true" type="text" name="copy-urn-field" id="copy-urn-field" size="50" style="margin-top: 10px;" value="urn"/>
-</div>
-
-<div id="cancel-dialog" title="<?= Yii::t("circuits", "Cancel"); ?>" hidden>
-	<br>
-    <label><?= Yii::t("circuits", "Do you want to cancel this connection?"); ?></label>
-    <br/>
-</div>
-
-<div style="display: none">
-<?php Dialog::begin([
-		'id' => 'dialog',
-    	'clientOptions' => [
-        	'modal' => true,
-        	'autoOpen' => false,
-        	'title' => "Reservation",
-    	],
-	]);
-
-	echo '<br></br>';
-    echo '<p style="text-align: left; height: 100%; width:100%;" id="message"></p>';
-    
-	Dialog::end(); 
-?>
-</div>
-
+    <div class="col-md-6">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= Yii::t("circuits", "Reservation Info"); ?></h3>
+            </div>
+            <div class="box-body">
+                <?= DetailView::widget([
+                    'model' => $reservation,
+                    'attributes' => [
+                        'id',
+                        'name',               
+                        'bandwidth',
+                        'requester_nsa',
+                        'provider_nsa',
+                        'request_user_id',
+                    ],
+                ]); ?>
+            </div>
+        </div>    
+    </div>
+</div> 
+ 
