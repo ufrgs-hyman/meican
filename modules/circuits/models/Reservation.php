@@ -83,7 +83,7 @@ class Reservation extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id' => 'Reservation ID',
             'type' => Yii::t('circuits', 'Type'),
             'name' => Yii::t('circuits', 'Name'),
             'date' => Yii::t('circuits', 'Requested at'),

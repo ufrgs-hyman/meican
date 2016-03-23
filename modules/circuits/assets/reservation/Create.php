@@ -31,6 +31,6 @@ class Create extends AssetBundle
         'meican\base\assets\ToggleAsset',
         'meican\base\assets\DateRangePicker',
         'meican\topology\assets\map\MeicanLMap',
-        'meican\topology\assets\graph\MeicanVGraph'
+        'meican\topology\assets\graph\MeicanVGraph',
     ];
 }

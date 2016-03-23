@@ -87,7 +87,7 @@ class Connection extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'external_id' => Yii::t('circuits', 'Connection ID'),
+            'external_id' => Yii::t('circuits', 'Circuit ID'),
             'status' => Yii::t("circuits", 'Reservation'),
             'dataplane_status' =>  Yii::t("circuits", 'Connectivity'),
             'auth_status' =>  Yii::t("circuits", "Authorization"),

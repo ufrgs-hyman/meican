@@ -173,7 +173,7 @@ $form = ActiveForm::begin([
                     </div>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" hidden>
                 <label>Protection</label> <i class="fa fa-question-circle" data-toggle="tooltip" title="A protected circuit means that you accept losing the guaranteed bandwidth, but requires availability of the service."></i>
                 <br>
                 <input type="checkbox" checked data-toggle="toggle" name="ReservationForm[protection]">

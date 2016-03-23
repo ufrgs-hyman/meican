@@ -86,10 +86,16 @@ class ReservationController extends RbacController {
     //Verificar, pois a cada atualizacao da pagina ele vai verificar as autorizações, 
     //isso está fora do contexto dessa função. Deveria ser feito por workflows.
     public function actionView($id) {
-        // Removido pois testa se é o usuário que solicitou ou se tem permissão para cancelar na origem OU destino
-        //self::can('reservation/delete');
-        
         $reservation = Reservation::findOne($id);
+        $totalConns = $reservation->getConnections()->count();
+        Yii::trace($totalConns);
+        if ($totalConns == 1) {
+            $this->redirect(['/circuits','id'=>$reservation->
+                getConnections()->
+                select(['id'])->
+                asArray()->
+                one()['id']]);
+        }
         
         //Confere se algum pedido de autorização da expirou
         /*
@@ -130,7 +136,7 @@ class ReservationController extends RbacController {
             return $this->goHome();
         }*/
         
-        $connections = new ActiveDataProvider([
+        $connDataProvider = new ActiveDataProvider([
                 'query' => $reservation->getConnections(),
                 'sort' => false,
                 'pagination' => [
@@ -138,36 +144,9 @@ class ReservationController extends RbacController {
                 ]
         ]);
 
-        $connHistory = new ActiveDataProvider([
-                'query' => ConnectionEvent::find(),
-                'sort' => false,
-                'pagination' => [
-                    'pageSize' => 5,
-                ]
-        ]);
-        
-        return $this->render('view/view2',[
+        return $this->render('view/view',[
                 'reservation' => $reservation,
-                'conn' => $reservation->getConnections()->one(),
-                'connHistory' => $connHistory,
-        ]);
-    }
-
-    public function actionViewCircuit($id) {
-        $conn = Connection::findOne($id);
-
-        $history = new ActiveDataProvider([
-                'query' => $conn->getHistory(),
-                'sort' => false,
-                'pagination' => [
-                    'pageSize' => 5,
-                ]
-        ]);
-        
-        return $this->render('view/view2',[
-                'reservation' => $conn->getReservation()->one(),
-                'conn' => $conn,
-                'history' => $history,
+                'connDataProvider' => $connDataProvider
         ]);
     }
 

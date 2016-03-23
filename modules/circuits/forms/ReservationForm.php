@@ -94,6 +94,8 @@ class ReservationForm extends Model {
                         Yii::trace($path->getErrors());
                     }
                 }
+
+                $this->reservation->createConnections();
  			}
  			
  			Yii::trace($this->reservation->getErrors());
