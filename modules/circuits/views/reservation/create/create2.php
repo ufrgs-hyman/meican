@@ -186,16 +186,17 @@ $form = ActiveForm::begin([
 
         <div class="lsidebar-pane" id="schedule">
             <h1 class="lsidebar-header">Step 3: Schedule<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-            <div class="form-group"><br>
-                <label>Date and time range:</label>
-                <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-clock-o"></i>
-                  </div>
-                  <input type="text" class="form-control" date-range="enabled" name="ReservationForm[date_range]">
+                <br>
+                <p>
+                    On this section you need set a one date least for your reservation request.
+                </p>
+                <br>
+                <div class="box box-default">
+                    <div id="calendar" class="box-body no-padding">
+                    </div>
                 </div>
                 <!-- /.input group -->
-              </div><br>
+              <br>
             <div class="pull-right">
                 <button type="button" class="next-btn btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</button>
             </div>

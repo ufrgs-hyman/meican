@@ -9,3 +9,10 @@ label.dom-l {
 .qtip-content {
     font-size: 12px;
 }
+
+.fc-toolbar .fc-center h2 {
+    margin-top: 10px;
+    margin-left:10px;
+    margin-right: 10px;
+    font-size: 17px;
+}
