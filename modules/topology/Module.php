@@ -6,6 +6,8 @@
 
 namespace meican\topology;
 
+use Yii;
+
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
@@ -15,5 +17,16 @@ class Module extends \yii\base\Module {
 
     public function init() {
         parent::init();
+        $this->registerTranslations();
+    }
+
+    public function registerTranslations() {
+        Yii::$app->i18n->translations['topology*'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'basePath' => '@meican/topology/messages',
+            'fileMap' => [
+                'topology' => 'topology.php',
+            ],
+        ];
     }
 }

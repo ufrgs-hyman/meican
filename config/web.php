@@ -11,7 +11,7 @@ $config = [
     'name'=>'MEICAN',
     'version' => '2.3.0',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'debug','session'],
+    'bootstrap' => ['log','debug','session','notification','home','bpm','circuits','topology','aaa'],
     'defaultRoute' => 'home',
     'modules' => [
         'debug' => [
@@ -49,7 +49,7 @@ $config = [
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '',
+            'cookieValidationKey' => 'fhgfhfggf',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -77,52 +77,6 @@ $config = [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
             'defaultRoles' => ['guest'],
-        ],
-        'i18n' => [
-            'translations' => [
-                'aaa*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@meican/aaa/messages',
-                    'fileMap' => [
-                        'aaa' => 'aaa.php',
-                    ],
-                ],
-                'home*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@meican/home/messages',
-                    'fileMap' => [
-                        'home' => 'home.php',
-                    ],
-                ],
-                'bpm*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@meican/bpm/messages',
-                    'fileMap' => [
-                        'bpm' => 'bpm.php',
-                    ],
-                ],
-                'circuits*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@meican/circuits/messages',
-                    'fileMap' => [
-                        'circuits' => 'circuits.php',
-                    ],
-                ],
-                'topology*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@meican/topology/messages',
-                    'fileMap' => [
-                        'topology' => 'topology.php',
-                    ],
-                ],
-                'notification*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@meican/notification/messages',
-                    'fileMap' => [
-                        'notification' => 'notification.php',
-                    ],
-                ],
-            ],
         ],
     ],
     'params' => $params,

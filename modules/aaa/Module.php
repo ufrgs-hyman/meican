@@ -6,6 +6,8 @@
 
 namespace meican\aaa;
 
+use Yii;
+
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
@@ -16,5 +18,16 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
+        $this->registerTranslations();
+    }
+
+    public function registerTranslations() {
+        Yii::$app->i18n->translations['aaa*'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'basePath' => '@meican/aaa/messages',
+            'fileMap' => [
+                'aaa' => 'aaa.php',
+            ],
+        ];
     }
 }

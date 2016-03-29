@@ -6,6 +6,8 @@
 
 namespace meican\notification;
 
+use Yii;
+
 class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'meican\notification\controllers';
@@ -13,5 +15,16 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
+        $this->registerTranslations();
+    }
+
+    public function registerTranslations() {
+        Yii::$app->i18n->translations['notification*'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'basePath' => '@meican/notification/messages',
+            'fileMap' => [
+                'notification' => 'notification.php',
+            ],
+        ];
     }
 }

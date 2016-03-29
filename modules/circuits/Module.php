@@ -6,6 +6,8 @@
 
 namespace meican\circuits;
 
+use Yii;
+
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
@@ -15,9 +17,19 @@ class Module extends \yii\base\Module
 
     public $defaultRoute = 'connection';
 
-    public function init()
-    {
+    public function init() {
         parent::init();
+        $this->registerTranslations();
+    }
+
+    public function registerTranslations() {
+        Yii::$app->i18n->translations['circuits*'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'basePath' => '@meican/circuits/messages',
+            'fileMap' => [
+                'circuits' => 'circuits.php',
+            ],
+        ];
     }
     
 }
