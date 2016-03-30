@@ -27,7 +27,7 @@ $form = ActiveForm::begin([
             <li><a title="Welcome to the reservation page" href="#home" role="tab"><i class="fa fa-info-circle"></i></a></li>
             <li><a title="Select your endpoints" href="#path" role="tab"><i class="fa"><img src="https://maxcdn.icons8.com/Android_L/PNG/24/Maps/route-24.png" width="21"></i></a></li>
             <li><a title="Set the circuit requirements" href="#requirements" role="tab"><i class="fa fa-sliders"></i></a></li>
-            <li><a title="Choose the circuit duration" href="#schedule" role="tab"><i class="fa fa-calendar"></i></a></li>
+            <li><a title="Choose the circuit duration" href="#schedule" role="tab" class="schedule-tab"><i class="fa fa-calendar"></i></a></li>
             <li><a title="Confirm and submit" href="#confirm" role="tab"><i class="fa fa-check danger"></i></a></li>
         </ul>
 
@@ -161,22 +161,25 @@ $form = ActiveForm::begin([
         <div class="lsidebar-pane" id="requirements">
             <h1 class="lsidebar-header">Step 2: Requirements<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
             <br>
-            <div class="form-group">
-                <label>Bandwidth</label>
-                <div class="input-group">
-                    <div class="input-group-btn">
-                      <button type="button" class="btn btn-primary"><span class="fa fa-minus"></span></button>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Mbps" name="ReservationForm[bandwidth]">
-                    <div class="input-group-btn">
-                      <button type="button" class="btn btn-primary"><span class="fa fa-plus"></span></button>
+            <p>
+                Define your circuit bandwidth requirement. That bandwidth will be reserved and granted only for your circuit.
+            </p>
+            <br>
+            <div class="row">
+                <div class="col-xs-7">
+                    <div class="form-group">
+                        <label>Bandwidth (Mbps)</label>
+                        <div id="bandwidth" class="input-group">
+                            <div class="input-group-btn">
+                              <button type="button" class="minus btn btn-primary"><span class="fa fa-minus"></span></button>
+                            </div>
+                            <input value="10" type="text" class="form-control" placeholder="Mbps" name="ReservationForm[bandwidth]">
+                            <div class="input-group-btn">
+                              <button type="button" class="plus btn btn-primary"><span class="fa fa-plus"></span></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group" hidden>
-                <label>Protection</label> <i class="fa fa-question-circle" data-toggle="tooltip" title="A protected circuit means that you accept losing the guaranteed bandwidth, but requires availability of the service."></i>
-                <br>
-                <input type="checkbox" checked data-toggle="toggle" name="ReservationForm[protection]">
             </div>
             <br>
             <div class="pull-right">
@@ -192,7 +195,7 @@ $form = ActiveForm::begin([
                 </p>
                 <br>
                 <div class="box box-default">
-                    <div id="calendar" class="box-body no-padding">
+                    <div id="calendar" loaded="false" class="box-body no-padding">
                     </div>
                 </div>
                 <!-- /.input group -->
@@ -205,6 +208,10 @@ $form = ActiveForm::begin([
         <div class="lsidebar-pane" id="confirm">
             <h1 class="lsidebar-header">Step 4: Confirmation<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
             <br>
+                <p>
+                    To confirm your circuit reservation, type a description or a name for it. That name is used to identify easily your circuit.
+                </p>
+                <br>
             <label>Name:</label>
             <input type="text" class="form-control" name="ReservationForm[name]"><br>
             <div class="pull-right">
@@ -285,5 +292,22 @@ Modal::begin([
     <!-- /.tab-content -->
 </div>
 
+<?php Modal::end(); ?>
+
+<?php Modal::begin([
+    'id' => 'schedule-modal',
+    'header' => 'Schedule Form',
+    'footer' => '<button class="cancel-btn btn btn-default">Cancel</button> <button class="add-btn btn btn-primary">Add</button>',
+]); ?>
+
+<div class="form-group"><br>
+    <label>Date and time range:</label>
+    <div class="input-group">
+      <div class="input-group-addon">
+        <i class="fa fa-clock-o"></i>
+      </div>
+      <input id="datetime-range" type="text" class="form-control">
+    </div>
+</div>
 
 <?php Modal::end(); ?>

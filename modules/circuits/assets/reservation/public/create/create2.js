@@ -4,125 +4,17 @@ var meicanGraph = new MeicanVGraph("canvas");
 var meicanTopo = [];
 var mode = 'map';
 var path = [];
+var events = [];
 var lsidebar;
 
 $(document).ready(function() {
     meicanMap.show("rnp", 'dev');
     $(".sidebar-mini").addClass("sidebar-collapse");
 
-    $('#calendar').fullCalendar({
-            height: 480,
-            lang: 'pt-br',
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            },
-            defaultDate: '2016-01-12',
-            editable: true,
-            eventLimit: true, // allow "more" link when too many events
-            events: [
-                {
-                    title: 'All Day Event',
-                    start: '2016-01-01'
-                },
-                {
-                    title: 'Long Event',
-                    start: '2016-01-07',
-                    end: '2016-01-10'
-                },
-                {
-                    id: 999,
-                    title: 'Repeating Event',
-                    start: '2016-01-09T16:00:00'
-                },
-                {
-                    id: 999,
-                    title: 'Repeating Event',
-                    start: '2016-01-16T16:00:00'
-                },
-                {
-                    title: 'Conference',
-                    start: '2016-01-11',
-                    end: '2016-01-13'
-                },
-                {
-                    title: 'Meeting',
-                    start: '2016-01-12T10:30:00',
-                    end: '2016-01-12T12:30:00'
-                },
-                {
-                    title: 'Lunch',
-                    start: '2016-01-12T12:00:00'
-                },
-                {
-                    title: 'Meeting',
-                    start: '2016-01-12T14:30:00'
-                },
-                {
-                    title: 'Happy Hour',
-                    start: '2016-01-12T17:30:00'
-                },
-                {
-                    title: 'Dinner',
-                    start: '2016-01-12T20:00:00'
-                },
-                {
-                    title: 'Birthday Party',
-                    start: '2016-01-13T07:00:00'
-                },
-                {
-                    title: 'Click for Google',
-                    url: 'http://google.com/',
-                    start: '2016-01-28'
-                }
-            ]
-        });
-
-    $('input[date-range="enabled"]').daterangepicker({
-        timePicker: true,
-        timePickerIncrement: 1,
-        timePicker24Hour: true,
-        linkedCalendars: false,
-        startDate: moment().format("DD/MM/YYYY HH:mm"),
-        endDate: moment().add(1, 'hours').format("DD/MM/YYYY HH:mm"),
-        autoApply: "true",
-        "opens": "right",
-        "locale": {
-            "format": "DD/MM/YYYY HH:mm",
-            "separator": " - ",
-            "applyLabel": I18N.t("Apply"),
-            "cancelLabel": I18N.t("Cancel"),
-            "fromLabel": I18N.t("From"),
-            "toLabel": I18N.t("To"),
-            "customRangeLabel": I18N.t("Custom"),
-            "daysOfWeek": [
-                I18N.t("Su"),
-                I18N.t("Mo"),
-                I18N.t("Tu"),
-                I18N.t("We"),
-                I18N.t("Th"),
-                I18N.t("Fr"),
-                I18N.t("Sa")
-            ],
-            "monthNames": [
-                I18N.t("January"),
-                I18N.t("February"),
-                I18N.t("March"),
-                I18N.t("April"),
-                I18N.t("May"),
-                I18N.t("June"),
-                I18N.t("July"),
-                I18N.t("August"),
-                I18N.t("September"),
-                I18N.t("October"),
-                I18N.t("November"),
-                I18N.t("December")
-            ],
-        },
-    });
-
-    $(".daterangepicker").find('.ranges').remove();
+    initScheduleTab();
+    initRequirementsTab();
+    initPathTab();
+    initConfirmTab();
 
     $("#home").on("click",'.next-btn', function() {
         lsidebar.open("path");
@@ -140,11 +32,40 @@ $(document).ready(function() {
         lsidebar.open("confirm");
     });
 
+    
+
+    $("#switch-mode").on('click', function() {
+        if(mode != 'map') {
+            meicanGraph.hide();
+            meicanMap.show("rnp", 'dev');
+            for (var i = 0; i < meicanTopo['dev'].length; i++) {
+                meicanMap.addMarker(meicanTopo['dev'][i], 'dev');
+            }
+            mode = 'map';
+        } else {
+            meicanMap.hide();
+            meicanGraph.show();
+            meicanGraph.addNodes(meicanTopo['dev'], 'dev', true);
+            meicanGraph.addLinks(meicanTopo['dev']['links'], 'dev');
+            mode = 'graph';
+        }
+    });
+
+    lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap.getMap());
+    lsidebar.open("home");
+    initEditPointSelects();
+});
+
+function initConfirmTab() {
     $("#confirm").on("click",'.next-btn', function() {
+        var reservationForm = $( "#reservation-form" ).clone();
+        for (var i = 0; i < events.length; i++) {
+            $( '<input name="ReservationForm[events][]" value="' + events[i].start + '" hidden>' ).appendTo( reservationForm );
+        };
         $.ajax({
             type: "POST",
             url: baseUrl + '/circuits/reservation/request',
-            data: $("#reservation-form").serialize(),
+            data: reservationForm.serialize(),
             success: function (resId) {
                 if (resId>0) {
                     $.ajax({
@@ -166,7 +87,9 @@ $(document).ready(function() {
             }
         });
     });
-    
+}
+
+function initPathTab() {
     $("#add-point").click(function() {
         addPoint();
         return false;
@@ -190,23 +113,6 @@ $(document).ready(function() {
     $("#point-modal").on('click','.cancel-btn',function() {
         $("#point-modal").modal('hide');
         return false;
-    });
-
-    $("#switch-mode").on('click', function() {
-        if(mode != 'map') {
-            meicanGraph.hide();
-            meicanMap.show("rnp", 'dev');
-            for (var i = 0; i < meicanTopo['dev'].length; i++) {
-                meicanMap.addMarker(meicanTopo['dev'][i], 'dev');
-            }
-            mode = 'map';
-        } else {
-            meicanMap.hide();
-            meicanGraph.show();
-            meicanGraph.addNodes(meicanTopo['dev'], 'dev', true);
-            meicanGraph.addLinks(meicanTopo['dev']['links'], 'dev');
-            mode = 'graph';
-        }
     });
 
     $('#canvas').on('markerClick', function(e, marker) {
@@ -308,11 +214,108 @@ $(document).ready(function() {
     });*/
         
     loadDomains();
+}
 
-    lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap.getMap());
-    lsidebar.open("home");
-    initEditPointSelects();
-});
+function initRequirementsTab() {
+    $("#bandwidth").on("click", '.minus', function() {
+        if (!isNaN($("#bandwidth").find('input').val()) &&
+            parseInt($("#bandwidth").find('input').val()) > 0) {
+            $("#bandwidth").find('input').val(parseInt($("#bandwidth").find('input').val()) - 100);
+        }
+    });
+
+    $("#bandwidth").on("click", '.plus', function() {
+        if (!isNaN($("#bandwidth").find('input').val())) {
+            $("#bandwidth").find('input').val(parseInt($("#bandwidth").find('input').val()) + 100);
+        }
+    });
+}
+
+function initScheduleTab() {
+    $("#lsidebar").on("click",'.schedule-tab', function() {
+        if($("#calendar").attr('loaded') === "false") {
+            $("#calendar").attr("loaded", 'true');
+            $('#calendar').fullCalendar({
+                height: 480,
+                timezone: 'local',
+                dayClick: function(date, jsEvent, view) {
+                    $("#schedule-modal").modal("show");
+                    $('#datetime-range').data('daterangepicker').setStartDate(moment(date).format("DD/MM/YYYY HH:mm"));
+                    $('#datetime-range').data('daterangepicker').setEndDate(moment(date).add(1, 'hours').format("DD/MM/YYYY HH:mm"));
+                },
+                lang: 'pt-br',
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                events: events,
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+            });
+        }
+    });
+
+    $("#schedule-modal").on('click', '.add-btn', function() {
+        events.push({
+            title: 'VC',
+            start: moment($('#datetime-range').val().split(' - ')[0], "DD/MM/YYYY HH:mm").toISOString(),
+            end: moment($('#datetime-range').val().split(' - ')[1], "DD/MM/YYYY HH:mm").toISOString()
+        });
+        $("#calendar").fullCalendar( 'removeEventSource', events );
+        $('#calendar').fullCalendar('addEventSource', events );
+        $("#schedule-modal").modal("hide");
+    });
+
+    $("#schedule-modal").on('click', '.cancel-btn', function() {
+        $("#schedule-modal").modal("hide");
+    });
+
+    $('#datetime-range').daterangepicker({
+        timePicker: true,
+        timePickerIncrement: 1,
+        timePicker24Hour: true,
+        linkedCalendars: false,
+        startDate: moment().format("DD/MM/YYYY HH:mm"),
+        endDate: moment().add(1, 'hours').format("DD/MM/YYYY HH:mm"),
+        autoApply: "true",
+        "opens": "right",
+        "locale": {
+            "format": "DD/MM/YYYY HH:mm",
+            "separator": " - ",
+            "applyLabel": I18N.t("Apply"),
+            "cancelLabel": I18N.t("Cancel"),
+            "fromLabel": I18N.t("From"),
+            "toLabel": I18N.t("To"),
+            "customRangeLabel": I18N.t("Custom"),
+            "daysOfWeek": [
+                I18N.t("Su"),
+                I18N.t("Mo"),
+                I18N.t("Tu"),
+                I18N.t("We"),
+                I18N.t("Th"),
+                I18N.t("Fr"),
+                I18N.t("Sa")
+            ],
+            "monthNames": [
+                I18N.t("January"),
+                I18N.t("February"),
+                I18N.t("March"),
+                I18N.t("April"),
+                I18N.t("May"),
+                I18N.t("June"),
+                I18N.t("July"),
+                I18N.t("August"),
+                I18N.t("September"),
+                I18N.t("October"),
+                I18N.t("November"),
+                I18N.t("December")
+            ],
+        },
+    });
+
+    $(".daterangepicker").find('.ranges').remove();
+}
 
 function closePopups() {
     if(mode != 'map') {
