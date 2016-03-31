@@ -2,6 +2,8 @@
 
 This guide covers the migration of the application to another machine.
 
+Are two ways to make the system migration. The quickest method (1) and the most time-consuming method (2).
+
 ####1. COPY METHOD
 
 #####1.1 Copy all files
