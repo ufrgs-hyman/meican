@@ -8,7 +8,7 @@ Your new server will have the same domain? If yes, you need a backup of the all 
 
 #####2. Backup of the configurations
 
-Backup the following files from "config" folder: "db.php", "mailer.php" and "params.php". 
+Backup the following files from **config** folder: "db.php", "mailer.php" and "params.php". 
 
 #####3. Backup of the database
 
