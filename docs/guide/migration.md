@@ -4,7 +4,7 @@ This guide covers the migration of the application to another machine.
 
 ####1. COPY METHOD
 
-The best backup method is copy all files from the current installation. Replace the #USER# and #HOST# with your user and server address. After that, run the following command:
+The best backup method is copy all files from the current installation. Replace the #USER# and #HOST# with your user and old server address. After that, run the following command:
 
 ```
 sudo rsync -a #USER#@#HOST#:/path/to/old/meican2 /path/to/new/meican2
