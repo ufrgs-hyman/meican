@@ -2,15 +2,23 @@
 
 This guide covers the migration of the application to another machine.
 
-#####1. Backup of the certficate
+####1. COPY METHOD
+
+```
+sudo rsync -a #USER#@#HOST#:/path/to/old/meican2 /path/to/new/meican2
+```
+
+####2. NEW INSTALLATION METHOD
+
+#####2.1 Backup of the certficate
 
 Your new server will have the same domain? If yes, you need a backup of the all files from **certificates** folder.
 
-#####2. Backup of the configurations
+#####2.2 Backup of the configurations
 
 Backup the following files from **config** folder: "db.php", "mailer.php" and "params.php". 
 
-#####3. Backup of the database
+#####2.3 Backup of the database
 
 Export the MEICAN database. By default the database name is **meican2**. Overwrite #USER# and #PASS# with your credentials and execute this command:
 
@@ -18,19 +26,19 @@ Export the MEICAN database. By default the database name is **meican2**. Overwri
 mysqldump -u #USER# -p#PASS# --databases meican2 > backup.sql
 ```
 
-#####4. Prepare the new environment
+#####2.4 Prepare the new environment
 
 Following the installation guide respective, setup a complete new MEICAN instance on the new machine. IMPORTANT: make sure that the version of the new installation is **exacly** the same of the old server.
 
-#####5. Copy the certificate
+#####2.5 Copy the certificate
 
 From the backup, copy the certificate to the **certificates** folder on the new server.
 
-#####6. Copy the configuration
+#####2.6 Copy the configuration
 
 From the backup, copy the files: "db.php", "mailer.php" and "params.php" to the **config** folder on the new server.
 
-#####7. Import the database
+#####2.7 Import the database
 
 Access the MySQL terminal:
 
