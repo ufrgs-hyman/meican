@@ -4,13 +4,19 @@ This guide covers the migration of the application to another machine.
 
 ####1. COPY METHOD
 
-The best backup method is copy all files from the current installation. Replace the #USER# and #HOST# with your user and old server address. After that, run the following command:
+#####1.1 Copy all files
+
+The quick backup method is copy all files from the current installation. Replace the #USER# and #HOST# with your user and old server address. After that, run the following command:
 
 ```
 sudo rsync -a #USER#@#HOST#:/path/to/old/meican2 /path/to/new/meican2
 ```
 
-Unfortunately, this method may not work in all systems. In this case you should follow the method 2.
+#####1.2 Database
+
+Now that you already have the files you need the database from the old machine. Follow the step 2.3 to get the backup and 2.7 to import the database on the new server.
+
+Test your application accessing http://localhost and verify some pages. If you detect some wrong this method may not work in your system. In this case you should follow the method 2.
 
 ####2. NEW INSTALLATION METHOD
 
