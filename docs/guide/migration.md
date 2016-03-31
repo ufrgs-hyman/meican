@@ -8,7 +8,7 @@ Are two ways to make the system migration. The quickest method (1) and the most 
 
 #####1.1 Copy all files
 
-The quick backup method is copy all files from the current installation. Replace the #USER# and #HOST# with your user and old server address. After that, run the following command:
+The quick backup method is copy all files from the current installation. Replace the #USER# and #HOST# with your user and old server address. After that, run the following command in your new server:
 
 ```
 sudo rsync -a #USER#@#HOST#:/path/to/old/meican2 /path/to/new/meican2
