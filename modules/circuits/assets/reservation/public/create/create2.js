@@ -26,12 +26,12 @@ $(document).ready(function() {
 
     $("#requirements").on("click",'.next-btn', function() {
         lsidebar.open("schedule");
+        initCalendar();
     });
 
     $("#schedule").on("click",'.next-btn', function() {
         lsidebar.open("confirm");
     });
-
     
 
     $("#switch-mode").on('click', function() {
@@ -60,7 +60,8 @@ function initConfirmTab() {
     $("#confirm").on("click",'.next-btn', function() {
         var reservationForm = $( "#reservation-form" ).clone();
         for (var i = 0; i < events.length; i++) {
-            $( '<input name="ReservationForm[events][]" value="' + events[i].start + '" hidden>' ).appendTo( reservationForm );
+            $( '<input name="ReservationForm[events][start][]" value="' + events[i].start + '" hidden>' ).appendTo( reservationForm );
+            $( '<input name="ReservationForm[events][finish][]" value="' + events[i].end + '" hidden>' ).appendTo( reservationForm );
         };
         $.ajax({
             type: "POST",
@@ -218,9 +219,10 @@ function initPathTab() {
 
 function initRequirementsTab() {
     $("#bandwidth").on("click", '.minus', function() {
-        if (!isNaN($("#bandwidth").find('input').val()) &&
-            parseInt($("#bandwidth").find('input').val()) > 0) {
-            $("#bandwidth").find('input').val(parseInt($("#bandwidth").find('input').val()) - 100);
+        if (!isNaN($("#bandwidth").find('input').val())) {
+            var old = $("#bandwidth").find('input').val();
+            var temp = parseInt($("#bandwidth").find('input').val()) - 100;
+            $("#bandwidth").find('input').val(temp < 0 ? old : temp);
         }
     });
 
@@ -231,29 +233,33 @@ function initRequirementsTab() {
     });
 }
 
+function initCalendar() {
+    if($("#calendar").attr('loaded') === "false") {
+        $("#calendar").attr("loaded", 'true');
+        $('#calendar').fullCalendar({
+            height: 480,
+            timezone: 'local',
+            dayClick: function(date, jsEvent, view) {
+                $("#schedule-modal").modal("show");
+                $('#datetime-range').data('daterangepicker').setStartDate(moment(date).format("DD/MM/YYYY HH:mm"));
+                $('#datetime-range').data('daterangepicker').setEndDate(moment(date).add(1, 'hours').format("DD/MM/YYYY HH:mm"));
+            },
+            lang: 'pt-br',
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            events: events,
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+        });
+    }
+}
+
 function initScheduleTab() {
     $("#lsidebar").on("click",'.schedule-tab', function() {
-        if($("#calendar").attr('loaded') === "false") {
-            $("#calendar").attr("loaded", 'true');
-            $('#calendar').fullCalendar({
-                height: 480,
-                timezone: 'local',
-                dayClick: function(date, jsEvent, view) {
-                    $("#schedule-modal").modal("show");
-                    $('#datetime-range').data('daterangepicker').setStartDate(moment(date).format("DD/MM/YYYY HH:mm"));
-                    $('#datetime-range').data('daterangepicker').setEndDate(moment(date).add(1, 'hours').format("DD/MM/YYYY HH:mm"));
-                },
-                lang: 'pt-br',
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
-                events: events,
-                editable: true,
-                eventLimit: true, // allow "more" link when too many events
-            });
-        }
+        initCalendar();
     });
 
     $("#schedule-modal").on('click', '.add-btn', function() {

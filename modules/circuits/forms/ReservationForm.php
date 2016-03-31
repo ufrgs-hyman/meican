@@ -29,7 +29,7 @@ class ReservationForm extends Model {
 	public $gri;
 	public $bandwidth;
 	public $protection;
-    public $date_range;
+    public $events;
 	
 	//reservation recurrence
 	public $rec_enabled;
@@ -45,7 +45,7 @@ class ReservationForm extends Model {
 	
 	public function rules()	{
 		return [
-			[['name', 'bandwidth', 'path', 'protection', 'date_range'], 'required'],
+			[['name', 'bandwidth', 'path', 'protection', 'events'], 'required'],
 			[['rec_enabled','rec_type', 'rec_interval', 'rec_weekdays', 'rec_finish_type', 'rec_finish_date', 
 				'rec_finish_occur_limit', 'gri'], 'safe'],
 		];
@@ -58,11 +58,6 @@ class ReservationForm extends Model {
  			$this->reservation->name = $this->name;
  			$this->reservation->protected = $this->protection ? 1 : 0;
  			$this->reservation->date = DateUtils::now();
-            $this->date_range = explode(" - ", $this->date_range);
-            $this->date_range[0] = explode(" ", $this->date_range[0]);
-            $this->date_range[1] = explode(" ", $this->date_range[1]);
- 			$this->reservation->start = DateUtils::toUTC($this->date_range[0][0], $this->date_range[0][1]);
- 			$this->reservation->finish = DateUtils::toUTC($this->date_range[1][0], $this->date_range[1][1]);
  			$this->reservation->bandwidth = $this->bandwidth;
  			$this->reservation->requester_nsa = CircuitsPreference::findOneValue(CircuitsPreference::MEICAN_NSA);
  			$this->reservation->provider_nsa = CircuitsPreference::findOneValue(CircuitsPreference::CIRCUITS_DEFAULT_PROVIDER_NSA);
@@ -95,7 +90,7 @@ class ReservationForm extends Model {
                     }
                 }
 
-                $this->reservation->createConnections();
+                $this->reservation->createConnections($this->events);
  			}
  			
  			Yii::trace($this->reservation->getErrors());

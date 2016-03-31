@@ -68,7 +68,7 @@ class Reservation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'name', 'date', 'bandwidth', 'start', 'finish', 'provider_nsa','requester_nsa'], 'required'],
+            [['type', 'name', 'date', 'bandwidth', 'provider_nsa','requester_nsa'], 'required'],
             [['type'], 'string'],
             [['bandwidth', 'request_user_id'], 'integer'],
             [['start', 'finish', 'date'], 'safe'],
@@ -178,18 +178,16 @@ class Reservation extends \yii\db\ActiveRecord
 		return $path->domain;
     }
     
-    public function createConnections() {
-    	$events = $this->getAllEvents();
+    public function createConnections($events) {
     	$paths = $this->getPaths()->all();
     	Yii::trace($events);
-    	foreach ($events as $event) {
+    	for ($i=0; $i < count($events['start']) ; $i++) { 
     		$conn = new Connection;
-    		$date = new \DateTime;
-    
-    		$date->setTimestamp($event->start);
+
+    		$date = new \DateTime($events['start'][$i]);    
     		$conn->start = $date->format('Y-m-d H:i');
     
-    		$date->setTimestamp($event->finish);
+            $date = new \DateTime($events['finish'][$i]);    
     		$conn->finish = $date->format('Y-m-d H:i');
     
     		$conn->reservation_id = $this->id;
