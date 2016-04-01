@@ -11,7 +11,7 @@ use Yii;
 
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionPath;
-use meican\circuits\models\ConnectionLog;
+use meican\circuits\models\ConnectionEvent;
 use meican\circuits\models\Provider;
 use meican\circuits\models\CircuitsPreference;
 
@@ -105,6 +105,7 @@ class RequesterClient extends \SoapClient {
         $request = $dom->saveXML();
         
         Yii::trace("client request: ".$request);
+        
 
         return parent::__doRequest($request, $location, $action, $version);
     }
@@ -182,7 +183,12 @@ class RequesterClient extends \SoapClient {
         if ($this->isDummy()) {
             sleep(4);
             $date = new \DateTime();
-            $this->conn->external_id = $date->format('YmdHis');
+            $this->conn->external_id = 'f'.$date->format('YmdHis');
+            $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE)->save();
+            sleep(1);
+            $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_RESPONSE)->save();
+            sleep(1);
+            $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_CONFIRMED)->save();
             $this->conn->confirmCreate();
             $this->conn->confirmCreatePath();
             return;
@@ -266,13 +272,18 @@ class RequesterClient extends \SoapClient {
             try{
                 $this->reserve($params);
             }catch(\SoapFault $error){
+                $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE, $this->__getLastRequest())->save();
                 Yii::trace($error);
                 return false;
             }
+
+            $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE, $this->__getLastRequest())->save();
         
             $dom = new \DOMDocument('1.0', 'UTF-8');
             $dom->preserveWhiteSpace = false;
             $response = $this->__getLastResponse();
+            $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_RESPONSE, $response)->save();
+            
             Yii::trace($response);
             $dom->loadXML($response);
         
@@ -322,6 +333,10 @@ class RequesterClient extends \SoapClient {
     
     public function requestSummary() {
         if ($this->isDummy()) {
+            sleep(1);
+            $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY)->save();
+            sleep(1);
+            $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY_CONFIRMED)->save();
             $this->conn->confirmSummary();
             return;
         }
@@ -345,6 +360,10 @@ class RequesterClient extends \SoapClient {
     
     public function requestCommit() {
         if ($this->isDummy()) {
+            sleep(1);
+            $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_COMMIT)->save();
+            sleep(1);
+            $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_COMMIT_CONFIRMED)->save();
             $this->conn->confirmCommit();
             return;
         }
@@ -367,6 +386,10 @@ class RequesterClient extends \SoapClient {
     
     public function requestProvision() {
         if ($this->isDummy()) {
+            sleep(1);
+            $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_PROVISION)->save();
+            sleep(1);
+            $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_PROVISION_CONFIRMED)->save();
             $this->conn->confirmProvision();
             return;
         }

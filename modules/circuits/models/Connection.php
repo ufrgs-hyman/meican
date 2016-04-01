@@ -7,14 +7,13 @@
 namespace meican\circuits\models;
 
 use Yii;
-use meican\circuits\controllers\services\RequesterClient;
 
+use meican\circuits\services\RequesterClient;
 use meican\bpm\models\BpmFlow;
-
 use meican\topology\models\Domain;
-
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionAuth;
+use meican\base\components\DateUtils;
 
 /**
  * This is the model class for table "meican_connection".
@@ -87,6 +86,7 @@ class Connection extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'version' => Yii::t("circuits", 'Version'),
             'external_id' => Yii::t('circuits', 'Circuit ID'),
             'status' => Yii::t("circuits", 'Reservation'),
             'dataplane_status' =>  Yii::t("circuits", 'Connectivity'),
@@ -97,6 +97,15 @@ class Connection extends \yii\db\ActiveRecord
             'gri' => "GRI",
             'protected' => Yii::t("circuits", 'Protection'),
         ];
+    }
+
+    public function buildEvent($eventType, $message = null) {
+        $event = new ConnectionEvent;
+        $event->type = $eventType;
+        $event->created_at = DateUtils::now();
+        $event->conn_id = $this->id;
+        $event->message = $message;
+        return $event;
     }
 
     /**
@@ -140,6 +149,10 @@ class Connection extends \yii\db\ActiveRecord
     }
     
     public function requestCreate() {
+        $event = $this->buildEvent(ConnectionEvent::TYPE_USER_CREATE);
+        $event->author_id = Yii::$app->user->getId();
+        $event->save();
+
     	$requester = new RequesterClient($this);
         $requester->requestCreate();
     }
@@ -186,7 +199,7 @@ class Connection extends \yii\db\ActiveRecord
 	public function confirmCancel() {
 		$this->status = self::STATUS_CANCELLED;
 		$this->save();
-		Notification::createConnectionNotification($this->id);
+		//Notification::createConnectionNotification($this->id);
 	} 
 	
 	public function confirmCommit() {
@@ -208,31 +221,31 @@ class Connection extends \yii\db\ActiveRecord
 	public function confirmProvision() {
 		$this->status = self::STATUS_PROVISIONED;
 		$this->save();
-		Notification::createConnectionNotification($this->id);
+		//Notification::createConnectionNotification($this->id);
 	}
 	
 	public function failedCreate() {
 		$this->status = self::STATUS_FAILED_CREATE;
 		$this->save();
-		Notification::createConnectionNotification($this->id);
+		//Notification::createConnectionNotification($this->id);
 	}
 	
 	public function failedCreatePath() {
 		$this->status = self::STATUS_FAILED_CONFIRM;
 		$this->save();
-		Notification::createConnectionNotification($this->id);
+		//Notification::createConnectionNotification($this->id);
 	}
 	
 	public function failedCommit() {
 		$this->status = self::STATUS_FAILED_SUBMIT;
 		$this->save();
-		Notification::createConnectionNotification($this->id);
+		//Notification::createConnectionNotification($this->id);
 	}
 	
 	public function failedProvision() {
 		$this->status = self::STATUS_FAILED_PROVISION;
 		$this->save();
-		Notification::createConnectionNotification($this->id);
+		//Notification::createConnectionNotification($this->id);
 	}
 	
 	public function failedCancel() {
@@ -346,10 +359,10 @@ class Connection extends \yii\db\ActiveRecord
     	///// Connection aceita pelo Provider e
     	//// Path atualizado com sucesso
 
-    	$this->executeWorkflows($this->id);
+    	///$this->executeWorkflows($this->id);
     	
-    	//$this->auth_status = 'AUTHORIZED';
-        //$this->save();
-    	//$this->requestProvision();
+    	$this->auth_status = 'AUTHORIZED';
+        $this->save();
+    	$this->requestProvision();
     }
 }

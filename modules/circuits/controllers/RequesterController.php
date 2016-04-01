@@ -67,6 +67,7 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         $params->connectionId = $responseObject->connectionId;
         
         $conn = Connection::find()->where(['external_id'=>$params->connectionId])->one();
+        $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_CONFIRMED, $responseObject)->save();
         $conn->confirmCreatePath();
         
         /** Connectivity Log **/

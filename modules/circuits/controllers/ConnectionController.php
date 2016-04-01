@@ -37,7 +37,7 @@ class ConnectionController extends RbacController {
         if($conn === null) throw new \yii\web\HttpException(404, 'The requested Item could not be found.');
 
         $history = new ActiveDataProvider([
-                'query' => $conn->getHistory(),
+                'query' => $conn->getHistory()->orderBy("created_at DESC"),
                 'sort' => false,
                 'pagination' => [
                     'pageSize' => 5,
