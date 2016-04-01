@@ -6,6 +6,7 @@
 
 use yii\widgets\DetailView;
 use yii\bootstrap\Html;
+use yii\bootstrap\Modal;
 
 use meican\base\grid\Grid;
 
@@ -122,13 +123,12 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                     'id' => 'circuit-info',
                     'model' => $conn,
                     'attributes' => [
-                        //'name',
-                        //'date',
+                        'external_id',
+                        'version',
                         [                      
-                            'label' => 'Bandwidth',
-                            'format' => 'raw',
-                            'value' => '20 Mbps'
-                        ], 
+                            'attribute' => 'bandwidth',
+                            'value' => $conn->bandwidth." Mbps"                            
+                        ],
                         [                      
                             'attribute' => 'start',
                             'format' => 'raw',
@@ -152,12 +152,48 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                     'columns' => array(
                         'created_at',
                         'type',
-                        'author_id'
-                        ),
-                    ]);
+                        [
+                            'attribute' => 'message',
+                            'format' => 'raw',
+                            'value' => function ($model){
+                                return $model->message ? '<a href="#"><span class="event-message fa fa-file-text"></span></a>' : '';
+                            },
+                        ],
+                        [
+                            'attribute' => 'author_id',
+                            'value' => function ($model){
+                                return $model->getAuthor();
+                            },
+                        ],
+                    ),
+                ]);
+
                 ?>
             </div>
         </div>    
     </div>
 </div> 
  
+<?php Modal::begin([
+    'id' => 'history-modal',
+    'header' => 'History',
+    'size' => Modal::SIZE_LARGE,
+]); ?>
+
+<?php echo Grid::widget([
+    'id'=> 'full-history-grid',
+    'dataProvider' => $history,
+    'columns' => array(
+        [
+            'header' => 'All Events',
+            'format' => 'raw',
+            'value' => function ($model){
+                return $model->created_at." - ".$model->type." by ".$model->getAuthor().'<br>'.Html::textarea('message', $model->message, ['rows'=> 20, 'cols'=> 138]);
+            },
+        ],
+    ),
+]);
+
+?>
+
+<?php Modal::end(); ?>

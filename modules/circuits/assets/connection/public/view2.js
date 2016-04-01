@@ -13,7 +13,15 @@ $(document).ready(function() {
     }, 1000);
 
     buildStatsGraph();
+    initHistoryModal();
 });
+
+function initHistoryModal() {
+    $("#history-grid").on("click", '.event-message', function() {
+        $('#history-modal').modal('show');
+        return false;
+    });
+}
 
 function updateCircuitStatus() {
     switch($("#status").attr("data-value")) {
