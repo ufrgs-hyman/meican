@@ -9,7 +9,7 @@ namespace meican\circuits\assets\connection;
 use yii\web\AssetBundle;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class View extends AssetBundle
 {
@@ -26,7 +26,8 @@ class View extends AssetBundle
         'meican\base\assets\Theme',
         'meican\topology\assets\map\MeicanLMap',
         'meican\topology\assets\graph\MeicanVGraph',
-        'meican\base\assets\Moment'
+        'meican\base\assets\Moment',
+        'meican\base\assets\DateRangePicker'
     ];
 }
 

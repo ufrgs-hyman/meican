@@ -92,7 +92,7 @@ class Connection extends \yii\db\ActiveRecord
             'dataplane_status' =>  Yii::t("circuits", 'Connectivity'),
             'auth_status' =>  Yii::t("circuits", "Authorization"),
             'start' =>  Yii::t("circuits", 'Start'),
-            'finish' =>  Yii::t("circuits", 'Finish'),
+            'finish' =>  Yii::t("circuits", 'End'),
             'reservation_id' => 'Reservation ID',
             'gri' => "GRI",
             'protected' => Yii::t("circuits", 'Protection'),

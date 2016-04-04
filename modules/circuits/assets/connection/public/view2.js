@@ -14,7 +14,80 @@ $(document).ready(function() {
 
     buildStatsGraph();
     initHistoryModal();
+    initEditModal();
 });
+
+$(document).on('ready pjax:success', function() {
+    initHistoryModal();
+});
+
+function initEditModal() {
+    $('#datetime-picker').daterangepicker({
+        timePicker: true,
+        timePickerIncrement: 1,
+        timePicker24Hour: true,
+        autoApply: true,
+        autoUpdateInput: true,
+        startDate: moment($("#info-start").attr('value')).format("DD/MM/YYYY HH:mm"),
+        endDate: moment($("#info-end").attr('value')).format("DD/MM/YYYY HH:mm"),
+        isInvalidDate: function(date) {
+            if (moment().isSame(date) || moment().isBefore(date)) {
+                console.log('valid', date);
+                return false;
+            } 
+            console.log(date);
+            return true;
+        },
+        "locale": {
+            "format": "DD/MM/YYYY HH:mm",
+            "separator": " - ",
+            "daysOfWeek": [
+                I18N.t("Su"),
+                I18N.t("Mo"),
+                I18N.t("Tu"),
+                I18N.t("We"),
+                I18N.t("Th"),
+                I18N.t("Fr"),
+                I18N.t("Sa")
+            ],
+            "monthNames": [
+                I18N.t("January"),
+                I18N.t("February"),
+                I18N.t("March"),
+                I18N.t("April"),
+                I18N.t("May"),
+                I18N.t("June"),
+                I18N.t("July"),
+                I18N.t("August"),
+                I18N.t("September"),
+                I18N.t("October"),
+                I18N.t("November"),
+                I18N.t("December")
+            ],
+        },
+    });
+
+    $(".daterangepicker").find('.ranges').remove();
+
+    $("#edit-btn").on("click", function() {
+        $('#edit-modal').modal("show");
+        return false;
+    });
+
+    $("#bandwidth").on("click", '.minus', function() {
+        if (!isNaN($("#bandwidth").find('input').val())) {
+            var old = $("#bandwidth").find('input').val();
+            var temp = parseInt($("#bandwidth").find('input').val()) - 100;
+            $("#bandwidth").find('input').val(temp < 0 ? old : temp);
+        }
+    });
+
+    $("#bandwidth").on("click", '.plus', function() {
+        if (!isNaN($("#bandwidth").find('input').val())) {
+            $("#bandwidth").find('input').val(parseInt($("#bandwidth").find('input').val()) + 100);
+        }
+    });
+}
 
 function initHistoryModal() {
     $("#history-grid").on("click", '.event-message', function() {

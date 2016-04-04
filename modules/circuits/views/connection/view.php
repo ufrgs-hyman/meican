@@ -7,6 +7,7 @@
 use yii\widgets\DetailView;
 use yii\bootstrap\Html;
 use yii\bootstrap\Modal;
+use yii\widgets\Pjax;
 
 use meican\base\grid\Grid;
 
@@ -17,6 +18,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
 ?>
 
 <data id="circuit-id" value="<?= $conn->id; ?>"></data>
+
 <div class="row">
     <div class="col-md-3 col-sm-6 col-xs-12">
       <div id="status" data-value="reservating" class="info-box">
@@ -112,7 +114,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                       <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-wrench"></i></button>
                       <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Edit circuit</a></li>
+                        <li><a id="edit-btn" href="#">Edit circuit</a></li>
                         <li><a href="#">Cancel circuit</a></li>
                       </ul>
                     </div>
@@ -132,9 +134,13 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                         [                      
                             'attribute' => 'start',
                             'format' => 'raw',
-                            'value' => '<data class="start-time" value="'.$conn->start.'"></data>'.Yii::$app->formatter->asDatetime($conn->start)
+                            'value' => '<data id="info-start" value="'.$conn->start.'"></data>'.Yii::$app->formatter->asDatetime($conn->start)
                         ],                        
-                        'finish:datetime',
+                        [                      
+                            'attribute' => 'finish',
+                            'format' => 'raw',
+                            'value' => '<data id="info-end" value="'.$conn->finish.'"></data>'.Yii::$app->formatter->asDatetime($conn->finish)
+                        ],  
                     ],
                 ]); ?>
             </div>
@@ -145,8 +151,14 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
             <div class="box-header with-border">
                 <h3 class="box-title"><?= Yii::t("topology", "History"); ?></h3>
             </div>
-            <div class="box-body">
-                <?php echo Grid::widget([
+            <div class="box-body">                
+                <?php 
+
+                Pjax::begin([
+                    'enablePushState'=>false
+                ]);
+
+                echo Grid::widget([
                     'id'=> 'history-grid',
                     'dataProvider' => $history,
                     'columns' => array(
@@ -161,12 +173,15 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                         ],
                         [
                             'attribute' => 'author_id',
+                            'format' => 'raw',
                             'value' => function ($model){
                                 return $model->getAuthor();
                             },
                         ],
                     ),
                 ]);
+
+                Pjax::end();
 
                 ?>
             </div>
@@ -195,5 +210,35 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
 ]);
 
 ?>
+
+<?php Modal::end(); ?>
+
+<?php Modal::begin([
+    'id' => 'edit-modal',
+    'header' => 'Edit',
+    'footer' => '<button>Save</button>'
+]); ?>
+
+<div class="form-group">
+    <label>Bandwidth (Mbps)</label>
+    <div id="bandwidth" class="input-group">
+        <div class="input-group-btn">
+          <button type="button" class="minus btn btn-primary"><span class="fa fa-minus"></span></button>
+        </div>
+        <input value="100" type="text" class="form-control" placeholder="Mbps" name="ReservationForm[bandwidth]">
+        <div class="input-group-btn">
+          <button type="button" class="plus btn btn-primary"><span class="fa fa-plus"></span></button>
+        </div>
+    </div>
+</div> 
+<div class="form-group">
+    <label>Date and time range:</label>
+    <div class="input-group">
+      <div class="input-group-addon">
+        <i class="fa fa-clock-o"></i>
+      </div>
+      <input id="datetime-picker" type="text" class="form-control">
+    </div>
+</div>
 
 <?php Modal::end(); ?>
