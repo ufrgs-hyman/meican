@@ -27,7 +27,6 @@ class View extends AssetBundle
         'meican\topology\assets\map\MeicanLMap',
         'meican\topology\assets\graph\MeicanVGraph',
         'meican\base\assets\Moment',
-        'meican\base\assets\DateRangePicker'
     ];
 }
 

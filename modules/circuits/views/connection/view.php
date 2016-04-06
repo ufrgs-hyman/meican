@@ -9,6 +9,10 @@ use yii\bootstrap\Html;
 use yii\bootstrap\Modal;
 use yii\widgets\Pjax;
 
+use kartik\datetime\DateTimePicker;
+use kartik\touchspin\TouchSpin;
+use kartik\form\ActiveForm;
+
 use meican\base\grid\Grid;
 
 \meican\circuits\assets\connection\View::register($this);
@@ -115,7 +119,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                         <i class="fa fa-wrench"></i></button>
                       <ul class="dropdown-menu" role="menu">
                         <li><a id="edit-btn" href="#">Edit circuit</a></li>
-                        <li><a href="#">Cancel circuit</a></li>
+                        <li><a id="cancel-btn" href="#">Cancel circuit</a></li>
                       </ul>
                     </div>
                   </div>
@@ -126,10 +130,10 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                     'model' => $conn,
                     'attributes' => [
                         'external_id',
-                        'version',
                         [                      
                             'attribute' => 'bandwidth',
-                            'value' => $conn->bandwidth." Mbps"                            
+                            'format' => 'raw',
+                            'value' => '<data id="info-bandwidth" value="'.$conn->bandwidth.'"></data>'.$conn->bandwidth." Mbps"                            
                         ],
                         [                      
                             'attribute' => 'start',
@@ -141,6 +145,15 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                             'format' => 'raw',
                             'value' => '<data id="info-end" value="'.$conn->finish.'"></data>'.Yii::$app->formatter->asDatetime($conn->finish)
                         ],  
+                        'version',
+                        [                      
+                            'label' => 'Type',
+                            'value' => 'NSI'                            
+                        ],
+                        [                      
+                            'label' => 'Provider',
+                            'value' => 'RNP Aggregator'                            
+                        ],
                     ],
                 ]); ?>
             </div>
@@ -216,29 +229,48 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
 <?php Modal::begin([
     'id' => 'edit-modal',
     'header' => 'Edit',
-    'footer' => '<button>Save</button>'
+    'footer' => '<button type="button" class="btn btn-default close-btn">Close</button> <button type="button" class="confirm-btn btn btn-primary">Confirm</button>'
+]); 
+
+$form = ActiveForm::begin([
+    'id'=> 'edit-form',
+    'action' => ['connection/update'],
+    'enableAjaxValidation' => true]);
+
+echo $form->field($editForm, 'bandwidth')->widget(TouchSpin::classname(), [
+    'pluginOptions' => [
+        'postfix' => 'Mbps',
+        'buttonup_txt' => '<i class="fa fa-plus"></i>', 
+        'buttondown_txt' => '<i class="fa fa-minus"></i>'
+    ]
+]);
+
+echo $form->field($editForm, 'start')->widget(DateTimePicker::classname(), [
+    'options' => ['placeholder' => 'Enter event time ...'],
+    'pluginOptions' => [
+        'autoclose' => true,
+        'format' => 'dd/mm/yyyy hh:ii',
+    ]
+]);
+
+echo $form->field($editForm, 'end')->widget(DateTimePicker::classname(), [
+    'options' => ['placeholder' => 'Enter event time ...'],
+    'pluginOptions' => [
+        'autoclose' => true,
+        'format' => 'dd/mm/yyyy hh:ii',
+    ]
+]);
+
+ActiveForm::end(); ?>
+
+<?php Modal::end(); ?>
+
+<?php Modal::begin([
+    'id' => 'cancel-modal',
+    'header' => 'Cancel',
+    'footer' => '<button type="button" class="btn btn-default close-btn">Close</button> <button type="button" class="confirm-btn btn btn-danger">Confirm</button>'
 ]); ?>
 
-<div class="form-group">
-    <label>Bandwidth (Mbps)</label>
-    <div id="bandwidth" class="input-group">
-        <div class="input-group-btn">
-          <button type="button" class="minus btn btn-primary"><span class="fa fa-minus"></span></button>
-        </div>
-        <input value="100" type="text" class="form-control" placeholder="Mbps" name="ReservationForm[bandwidth]">
-        <div class="input-group-btn">
-          <button type="button" class="plus btn btn-primary"><span class="fa fa-plus"></span></button>
-        </div>
-    </div>
-</div> 
-<div class="form-group">
-    <label>Date and time range:</label>
-    <div class="input-group">
-      <div class="input-group-addon">
-        <i class="fa fa-clock-o"></i>
-      </div>
-      <input id="datetime-picker" type="text" class="form-control">
-    </div>
-</div>
+Do you want cancel this circuit?
 
 <?php Modal::end(); ?>

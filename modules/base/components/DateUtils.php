@@ -13,6 +13,15 @@ use Yii;
  */
 class DateUtils {
 
+    public static function localToUTC($datetime, $format = "d/m/Y H:i") {
+        if ($datetime) {
+            $dateTime = \DateTime::createFromFormat($format, $datetime, new \DateTimeZone(Yii::$app->formatter->timeZone));
+            $dateTime->setTimezone(new \DateTimeZone("UTC"));
+            return $dateTime->format("Y-m-d H:i:s");
+        } else
+            return null;
+    }
+
 	public static function toUTC($date, $time) {
 		if ($date && $time) {
 			$dateFormat = "d/m/Y";

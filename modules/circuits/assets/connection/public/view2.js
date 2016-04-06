@@ -15,61 +15,41 @@ $(document).ready(function() {
     buildStatsGraph();
     initHistoryModal();
     initEditModal();
+    initCancelModal();
 });
 
 $(document).on('ready pjax:success', function() {
     initHistoryModal();
 });
 
+function initCancelModal() {
+    $("#cancel-btn").on("click", function() {
+        $('#cancel-modal').modal("show");
+        return false;
+    });
+}
+
 function initEditModal() {
-    $('#datetime-picker').daterangepicker({
-        timePicker: true,
-        timePickerIncrement: 1,
-        timePicker24Hour: true,
-        autoApply: true,
-        autoUpdateInput: true,
-        startDate: moment($("#info-start").attr('value')).format("DD/MM/YYYY HH:mm"),
-        endDate: moment($("#info-end").attr('value')).format("DD/MM/YYYY HH:mm"),
-        isInvalidDate: function(date) {
-            if (moment().isSame(date) || moment().isBefore(date)) {
-                console.log('valid', date);
-                return false;
-            } 
-            console.log(date);
-            return true;
-        },
-        "locale": {
-            "format": "DD/MM/YYYY HH:mm",
-            "separator": " - ",
-            "daysOfWeek": [
-                I18N.t("Su"),
-                I18N.t("Mo"),
-                I18N.t("Tu"),
-                I18N.t("We"),
-                I18N.t("Th"),
-                I18N.t("Fr"),
-                I18N.t("Sa")
-            ],
-            "monthNames": [
-                I18N.t("January"),
-                I18N.t("February"),
-                I18N.t("March"),
-                I18N.t("April"),
-                I18N.t("May"),
-                I18N.t("June"),
-                I18N.t("July"),
-                I18N.t("August"),
-                I18N.t("September"),
-                I18N.t("October"),
-                I18N.t("November"),
-                I18N.t("December")
-            ],
-        },
+    $("#edit-modal").on("click", '.confirm-btn', function() {
+        var form = $("#edit-form").clone();
+        $('<input name="ConnectionForm[id]" value="' + $("#circuit-id").attr("value") + '" hidden>').appendTo(form);
+        
+        $.ajax({
+            type: "POST",
+            url: baseUrl + '/circuits/connection/update?submit=true',
+            data: form.serialize(),
+            success: function (resId) {
+            },
+            error: function() {
+                //showError(tt("Error proccessing your request. Contact your administrator."));
+            }
+        });
     });
 
-    $(".daterangepicker").find('.ranges').remove();
-
     $("#edit-btn").on("click", function() {
+        $("#connectionform-start").val(moment($("#info-start").attr('value')).format("DD/MM/YYYY HH:mm"));
+        $("#connectionform-end").val(moment($("#info-end").attr('value')).format("DD/MM/YYYY HH:mm"));
+        $("#connectionform-bandwidth").val($("#info-bandwidth").attr('value'));
         $('#edit-modal').modal("show");
         return false;
     });
@@ -317,7 +297,7 @@ function areMarkersReady(ids) {
 }
 
 function buildStatsGraph() {
-    var DELAY = 1000; // delay in ms to add new data points
+    var DELAY = 5000; // delay in ms to add new data points
 
   // create a graph2d with an (currently empty) dataset
   var container = document.getElementById('stats');

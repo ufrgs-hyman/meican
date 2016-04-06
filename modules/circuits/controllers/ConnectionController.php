@@ -13,6 +13,7 @@ use yii\helpers\Json;
 
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionPath;
+use meican\circuits\forms\ConnectionForm;
 use meican\circuits\models\Reservation;
 use meican\topology\models\Port;
 use meican\topology\models\Device;
@@ -21,7 +22,7 @@ use meican\topology\models\Provider;
 use meican\aaa\RbacController;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class ConnectionController extends RbacController {
 
@@ -48,6 +49,7 @@ class ConnectionController extends RbacController {
                 'reservation' => $conn->getReservation()->one(),
                 'conn' => $conn,
                 'history' => $history,
+                'editForm' => new ConnectionForm
         ]);
     }
     
@@ -174,6 +176,16 @@ class ConnectionController extends RbacController {
             return true;
         }
         else return false;
+    }
+
+    public function actionUpdate($submit = false) {
+        $form = new ConnectionForm;
+        if ($form->load(Yii::$app->request->post()) && !$submit && Yii::$app->request->isAjax) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($form);
+        } else {
+            return $form->save() == true ? 1 : 0;
+        }
     }
 }
 
