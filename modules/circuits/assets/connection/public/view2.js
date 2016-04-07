@@ -8,9 +8,9 @@ $(document).ready(function() {
 
     drawCircuit($("#circuit-id").attr('value'));
 
-    refresher = setInterval(function() {
+    /*refresher = setInterval(function() {
         updateCircuitStatus();
-    }, 1000);
+    }, 1000);*/
 
     buildStatsGraph();
     initHistoryModal();
@@ -27,18 +27,24 @@ function initCancelModal() {
         $('#cancel-modal').modal("show");
         return false;
     });
+
+    $("#cancel-modal").on("click", '.close-btn', function() {
+        $("#cancel-modal").modal("hide");
+    });
+
+    $("#cancel-modal").on("click", '.confirm-btn', function() {
+        $("#cancel-modal").modal("hide");
+    });
 }
 
 function initEditModal() {
     $("#edit-modal").on("click", '.confirm-btn', function() {
-        var form = $("#edit-form").clone();
-        $('<input name="ConnectionForm[id]" value="' + $("#circuit-id").attr("value") + '" hidden>').appendTo(form);
-        
         $.ajax({
             type: "POST",
             url: baseUrl + '/circuits/connection/update?submit=true',
-            data: form.serialize(),
+            data: $("#edit-form").serialize(),
             success: function (resId) {
+                $("#edit-modal").modal('hide');
             },
             error: function() {
                 //showError(tt("Error proccessing your request. Contact your administrator."));
@@ -46,9 +52,13 @@ function initEditModal() {
         });
     });
 
+    $("#edit-modal").on("click", '.close-btn', function() {
+        $("#edit-modal").modal("hide");
+    });
+
     $("#edit-btn").on("click", function() {
-        $("#connectionform-start").val(moment($("#info-start").attr('value')).format("DD/MM/YYYY HH:mm"));
-        $("#connectionform-end").val(moment($("#info-end").attr('value')).format("DD/MM/YYYY HH:mm"));
+        $("#connectionform-start").val($("#info-start").attr('value'));
+        $("#connectionform-end").val($("#info-end").attr('value'));
         $("#connectionform-bandwidth").val($("#info-bandwidth").attr('value'));
         $('#edit-modal').modal("show");
         return false;
@@ -77,14 +87,14 @@ function initHistoryModal() {
 }
 
 function updateCircuitStatus() {
-    switch($("#status").attr("data-value")) {
+    switch($("#info-status").attr("value")) {
         case 'reservating'   : 
             break;
         case 'scheduled'     : 
-            if(moment().isAfter($("#circuit-info").find('.start-time').attr("value"))) {
+            if(moment().isAfter($("#info-start").attr("value"))) {
                 activatingCircuit();
             } else {
-                $("#status").find(".tts").text(moment().to($("#circuit-info").find('.start-time').attr("value")));
+                $("#status-box").find(".tts").text(moment().to($("#circuit-info").find('.start-time').attr("value")));
             }
             break;
         case 'activating'    : activeCircuit();
@@ -97,35 +107,35 @@ function updateCircuitStatus() {
 }
 
 function scheduleCircuit() {
-    $("#status").find(".info-box-text").text("Time to start");
-    $("#status").find(".info-box-number").html('<span class="tts">loading...</span><br><small>10/02/2016 at 20:00</small>');
-    $("#status").attr("data-value", 'scheduled');
+    $("#status-box").find(".info-box-text").text("Time to start");
+    $("#status-box").find(".info-box-number").html('<span class="tts">loading...</span><br><small>10/02/2016 at 20:00</small>');
+    $("#status-box").attr("data-value", 'scheduled');
 }
 
 function activatingCircuit() {
-    $("#status").find(".ion-clock").removeClass().addClass("ion ion-gear-a");
-    $("#status").find(".info-box-text").text("Status");
-    $("#status").find(".info-box-number").text("Activating");
-    $("#status").attr("data-value", 'activating');
+    $("#status-box").find(".ion-clock").removeClass().addClass("ion ion-gear-a");
+    $("#status-box").find(".info-box-text").text("Status");
+    $("#status-box").find(".info-box-number").text("Activating");
+    $("#status-box").attr("data-value", 'activating');
 }
 
 function activeCircuit() {
-    $("#status").find(".ion-clock").removeClass().addClass("ion ion-arrow-up-a");
-    $("#status").find(".info-box-text").text("Status");
-    $("#status").find(".info-box-number").text("Active");
-    $("#status").attr("data-value", 'active');
+    $("#status-box").find(".ion-clock").removeClass().addClass("ion ion-arrow-up-a");
+    $("#status-box").find(".info-box-text").text("Status");
+    $("#status-box").find(".info-box-number").text("Active");
+    $("#status-box").attr("data-value", 'active');
 }
 
 function inactiveCircuit() {
-    $("#status").find(".ion-clock").removeClass().addClass("ion ion-close-circled");
-    $("#status").find(".info-box-text").text("Status");
-    $("#status").find(".info-box-number").text("Inactive");
+    $("#status-box").find(".ion-clock").removeClass().addClass("ion ion-close-circled");
+    $("#status-box").find(".info-box-text").text("Status");
+    $("#status-box").find(".info-box-number").text("Inactive");
 }
 
 function finishCircuit() {
-    $("#status").find(".ion-clock").removeClass().addClass("ion ion-checkmark-circled");
-    $("#status").find(".info-box-text").text("Status");
-    $("#status").find(".info-box-number").text("Finished");
+    $("#status-box").find(".ion-clock").removeClass().addClass("ion ion-checkmark-circled");
+    $("#status-box").find(".info-box-text").text("Status");
+    $("#status-box").find(".info-box-number").text("Finished");
 }
 
 function drawCircuit(connId, animate) {
@@ -297,7 +307,7 @@ function areMarkersReady(ids) {
 }
 
 function buildStatsGraph() {
-    var DELAY = 5000; // delay in ms to add new data points
+    var DELAY = 10000; // delay in ms to add new data points
 
   // create a graph2d with an (currently empty) dataset
   var container = document.getElementById('stats');

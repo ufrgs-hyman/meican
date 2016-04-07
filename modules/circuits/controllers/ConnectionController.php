@@ -46,10 +46,10 @@ class ConnectionController extends RbacController {
         ]);
         
         return $this->render('view',[
-                'reservation' => $conn->getReservation()->one(),
                 'conn' => $conn,
                 'history' => $history,
-                'editForm' => new ConnectionForm
+                'editForm' => new ConnectionForm,
+                'lastEvent' => $conn->getHistory()->orderBy("created_at DESC")->one()
         ]);
     }
     

@@ -28,7 +28,6 @@ class ConnectionForm extends Model {
             [['id'], 'integer'],
             [['bandwidth'], 'validateBandwidth'],
             [['start'], 'validateDateRange'],
-            [['end'], 'validateDateRange']
         ];
     }
 
@@ -41,8 +40,17 @@ class ConnectionForm extends Model {
     }
 
     public function validateDateRange($attr, $params) {
-        if(DateUtils::localToUTC($this->start) >= DateUtils::localToUTC($this->end))
+        $start = DateUtils::localToUTC($this->start);
+        if($start >= DateUtils::localToUTC($this->end)) {
             $this->addError($attr, "Start time must be before end time");
+            return;
+        }
+
+        $oldStart = Connection::find()->where(['id'=>$this->id])->asArray()->select(['start'])->one()['start'];
+        Yii::trace($oldStart);
+        Yii::trace($start);
+        if($oldStart != $start && DateUtils::now() > $start) 
+            $this->addError('start', "Start time can not be changed in an active circuit.");
     }
 
     public function validateBandwidth($attr, $params) {

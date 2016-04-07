@@ -14,6 +14,7 @@ use kartik\touchspin\TouchSpin;
 use kartik\form\ActiveForm;
 
 use meican\base\grid\Grid;
+use meican\base\components\DateUtils;
 
 \meican\circuits\assets\connection\View::register($this);
 
@@ -23,14 +24,16 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
 
 <data id="circuit-id" value="<?= $conn->id; ?>"></data>
 
+<?php Pjax::begin(['id'=>'status-pjax']); ?>
+
 <div class="row">
     <div class="col-md-3 col-sm-6 col-xs-12">
-      <div id="status" data-value="reservating" class="info-box">
+      <div id="status-box" class="info-box">
         <span class="info-box-icon"><i class="ion ion-clock"></i></span>
 
         <div class="info-box-content">
           <span class="info-box-text">Status</span>
-          <span class="info-box-number"><small>Waiting reservation</small></span>
+          <span class="info-box-number"><small><?= $conn->dataplane_status; ?></small></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -43,7 +46,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
 
         <div class="info-box-content">
           <span class="info-box-text">Reservation</span>
-          <span class="info-box-number"><small>Provisioned</small></span>
+          <span class="info-box-number"><small><?= $conn->status; ?></small></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -60,7 +63,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
 
         <div class="info-box-content">
           <span class="info-box-text">Authorization</span>
-          <span class="info-box-number"><small>Approved</small></span>
+          <span class="info-box-number"><small><?= $conn->auth_status; ?></small></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -73,7 +76,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
 
         <div class="info-box-content">
           <span class="info-box-text">Updated at</span>
-          <span class="info-box-number"><small>20/03/2016 21:12<br>by Provider</small></span>
+          <span class="info-box-number"><small><?= Yii::$app->formatter->asDatetime($lastEvent->created_at)."<br>by ".$lastEvent->getAuthor(); ?></small></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -81,6 +84,8 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
     </div>
 <!-- /.col -->
 </div>
+
+<?php Pjax::end(); ?>
 
 <div class="row">
     <div class="col-md-8">
@@ -138,12 +143,12 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                         [                      
                             'attribute' => 'start',
                             'format' => 'raw',
-                            'value' => '<data id="info-start" value="'.$conn->start.'"></data>'.Yii::$app->formatter->asDatetime($conn->start)
+                            'value' => '<data id="info-start" value="'.Yii::$app->formatter->asDatetime($conn->start).'"></data>'.Yii::$app->formatter->asDatetime($conn->start)
                         ],                        
                         [                      
                             'attribute' => 'finish',
                             'format' => 'raw',
-                            'value' => '<data id="info-end" value="'.$conn->finish.'"></data>'.Yii::$app->formatter->asDatetime($conn->finish)
+                            'value' => '<data id="info-end" value="'.Yii::$app->formatter->asDatetime($conn->finish).'"></data>'.Yii::$app->formatter->asDatetime($conn->finish)
                         ],  
                         'version',
                         [                      
@@ -152,7 +157,11 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                         ],
                         [                      
                             'label' => 'Provider',
-                            'value' => 'RNP Aggregator'                            
+                            'format' => 'raw',
+                            'value' => 'RNP Aggregator'.
+                                '<data id="info-status" value='.$conn->status.'></data>'.
+                                '<data id="info-auth" value='.$conn->auth_status.'></data>'.
+                                '<data id="info-dataplane" value='.$conn->dataplane_status.'></data>'                           
                         ],
                     ],
                 ]); ?>
@@ -168,14 +177,15 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                 <?php 
 
                 Pjax::begin([
-                    'enablePushState'=>false
-                ]);
+                    'timeout' => 5000, 
+                    'enablePushState' => false,
+                    'clientOptions' => ['container' => 'history-pjax']]);
 
                 echo Grid::widget([
                     'id'=> 'history-grid',
                     'dataProvider' => $history,
                     'columns' => array(
-                        'created_at',
+                        'created_at:datetime',
                         'type',
                         [
                             'attribute' => 'message',
@@ -206,9 +216,14 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
     'id' => 'history-modal',
     'header' => 'History',
     'size' => Modal::SIZE_LARGE,
-]); ?>
+]); 
 
-<?php echo Grid::widget([
+Pjax::begin([
+    'timeout' => 5000, 
+    'enablePushState' => false,
+    'clientOptions' => ['container' => 'history-modal-pjax']]);
+
+echo Grid::widget([
     'id'=> 'full-history-grid',
     'dataProvider' => $history,
     'columns' => array(
@@ -221,6 +236,8 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
         ],
     ),
 ]);
+
+Pjax::end();
 
 ?>
 
@@ -235,18 +252,24 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
 $form = ActiveForm::begin([
     'id'=> 'edit-form',
     'action' => ['connection/update'],
-    'enableAjaxValidation' => true]);
+    'enableAjaxValidation' => true]); ?>
+
+<input name="ConnectionForm[id]" value="<?= $conn->id; ?>" hidden>
+
+<?php
 
 echo $form->field($editForm, 'bandwidth')->widget(TouchSpin::classname(), [
     'pluginOptions' => [
         'postfix' => 'Mbps',
-        'buttonup_txt' => '<i class="fa fa-plus"></i>', 
-        'buttondown_txt' => '<i class="fa fa-minus"></i>'
+        'verticalbuttons' => true,
+        'verticalupclass' => 'fa fa-plus',
+        'verticaldownclass' => 'fa fa-minus',
+        'max' => 1000000,
+        'step' => 100,
     ]
 ]);
 
 echo $form->field($editForm, 'start')->widget(DateTimePicker::classname(), [
-    'options' => ['placeholder' => 'Enter event time ...'],
     'pluginOptions' => [
         'autoclose' => true,
         'format' => 'dd/mm/yyyy hh:ii',
@@ -254,7 +277,6 @@ echo $form->field($editForm, 'start')->widget(DateTimePicker::classname(), [
 ]);
 
 echo $form->field($editForm, 'end')->widget(DateTimePicker::classname(), [
-    'options' => ['placeholder' => 'Enter event time ...'],
     'pluginOptions' => [
         'autoclose' => true,
         'format' => 'dd/mm/yyyy hh:ii',
