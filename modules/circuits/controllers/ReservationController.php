@@ -31,14 +31,16 @@ use meican\topology\models\Network;
 use meican\topology\models\Service;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiros
  */
 class ReservationController extends RbacController {
 
     public $enableCsrfValidation = false;
     
     public function actionCreate() {
-        return $this->render('create/create2',['domains'=>Domain::find()->asArray()->all()]);
+        return $this->render('create/create2',[
+            'domains'=>Domain::find()->asArray()->all(),
+            'reserveForm' => new ReservationForm]);
     }
     
     public function actionRequest() {

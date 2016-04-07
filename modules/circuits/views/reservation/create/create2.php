@@ -6,7 +6,11 @@
 
 use yii\bootstrap\Tabs;
 use yii\bootstrap\Modal;
-use yii\bootstrap\ActiveForm;
+
+use kartik\touchspin\TouchSpin;
+use kartik\form\ActiveForm;
+
+use meican\circuits\forms\ConnectionPointForm;
 
 \meican\circuits\assets\reservation\Create::register($this);
 
@@ -14,8 +18,7 @@ $this->params['hide-content-section'] = true;
 $this->params['hide-footer'] = true;
 
 $form = ActiveForm::begin([
-        'method' => 'post',
-        'id' => 'reservation-form',
+    'id' => 'reservation-form',
 ]) 
 
 ?>
@@ -168,16 +171,16 @@ $form = ActiveForm::begin([
             <div class="row">
                 <div class="col-xs-7">
                     <div class="form-group">
-                        <label>Bandwidth (Mbps)</label>
-                        <div id="bandwidth" class="input-group">
-                            <div class="input-group-btn">
-                              <button type="button" class="minus btn btn-primary"><span class="fa fa-minus"></span></button>
-                            </div>
-                            <input value="10" type="text" class="form-control" placeholder="Mbps" name="ReservationForm[bandwidth]">
-                            <div class="input-group-btn">
-                              <button type="button" class="plus btn btn-primary"><span class="fa fa-plus"></span></button>
-                            </div>
-                        </div>
+                        <?php echo $form->field($reserveForm, 'bandwidth')->widget(TouchSpin::classname(), [
+                            'pluginOptions' => [
+                                'postfix' => 'Mbps',
+                                'verticalbuttons' => true,
+                                'verticalupclass' => 'fa fa-plus',
+                                'verticaldownclass' => 'fa fa-minus',
+                                'max' => 1000000,
+                                'step' => 100,
+                            ]
+                        ]); ?>
                     </div>
                 </div>
             </div>
@@ -209,7 +212,7 @@ $form = ActiveForm::begin([
             <h1 class="lsidebar-header">Step 4: Confirmation<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
             <br>
                 <p>
-                    To confirm your circuit reservation, type a description or a name for it. That name is used to identify easily your circuit.
+                    To confirm your circuit reservation, type a description or a name for it. This name will be used to identify easily your circuit.
                 </p>
                 <br>
             <label>Name:</label>
@@ -260,6 +263,7 @@ Modal::begin([
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="p1">
+        <?php $form = \yii\widgets\ActiveForm::begin(); ?>
         Domain
         <select id="dom-select" class="form-control" disabled>
         </select><br>
@@ -275,6 +279,7 @@ Modal::begin([
         VLAN
         <select id="vlan-select" class="form-control" disabled>
         </select>
+        <?php ActiveForm::end(); ?>
       </div>
       <!-- /.tab-pane -->
       <div class="tab-pane" id="p2">
