@@ -263,8 +263,15 @@ Modal::begin([
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="p1">
-        <?php $form = \yii\widgets\ActiveForm::begin(); ?>
-        Domain
+        <?php $form = \yii\bootstrap\ActiveForm::begin();
+        $pointForm = new \meican\circuits\forms\ConnectionPointForm;
+
+        echo $form->field($pointForm, 'domain')->dropDownList([true=>'Ok']); 
+        echo $form->field($pointForm, 'network')->dropDownList([true=>'Ok']); 
+        echo $form->field($pointForm, 'device')->dropDownList([true=>'Ok']); 
+        echo $form->field($pointForm, 'port')->dropDownList([true=>'Ok']);
+        echo $form->field($pointForm, 'vlan')->dropDownList([true=>'Ok']); 
+        /*Domain
         <select id="dom-select" class="form-control" disabled>
         </select><br>
         Network
@@ -278,8 +285,8 @@ Modal::begin([
         </select><br>
         VLAN
         <select id="vlan-select" class="form-control" disabled>
-        </select>
-        <?php ActiveForm::end(); ?>
+        </select> */?>
+        <?php \yii\bootstrap\ActiveForm::end(); ?>
       </div>
       <!-- /.tab-pane -->
       <div class="tab-pane" id="p2">

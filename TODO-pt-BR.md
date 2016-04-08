@@ -9,7 +9,7 @@ Topology Discovery
 
 - Criacao de regras de descoberta
 - Edicao de regras de descoberta
-- Testar suporte ao NSI DDS
+- Testar suporte ao NSI DDS - fora do roadmap
 
 Topology Viewer
 
@@ -17,11 +17,16 @@ Topology Viewer
 - Finalizar MeicanGraph
 - Estudar popover para o tooltip do MeicanGraph - CHECK
 
-Circuits - Reservation - Create
+Circuits - Reservar
 
 - adicionar pontos via grafo (modulo do viewer)
-- adicionar pontos via mapa (modulo do viewer)
+- adicionar pontos via mapa (modulo do viewer) - CHECK
 - intercambiar pontos
 - completar pontos
-- criar reserva efetiva
+- criar reserva efetiva - CHECK
+
+Circuits - View
+
+- alterar o NSI Requester Service para suportar alteracao de circuitos
+
 
