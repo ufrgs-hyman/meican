@@ -100,14 +100,14 @@ $form = ActiveForm::begin([
                               Network: <label data="" class="point-info net-l">none</label><br>
                               Device: <label data="" class="point-info dev-l">none</label><br>
                               Port: <label class="point-info port-l">none</label><br>
-                              <input class="port-id" type="hidden" name="ReservationForm[path][port][]">
+                              <input class="port-input" type="hidden" name="ReservationForm[path][port][]">
                             </div>
                             <div class="point-advanced" hidden>
                               URN: <label class="point-info urn-l">none</label><br>
-                              <input class="urn" type="hidden" name="ReservationForm[path][urn][]">
+                              <input class="urn-input" type="hidden" name="ReservationForm[path][urn][]">
                             </div>
                             VLAN: <label class="point-info vlan-l">Auto</label>
-                            <input class="vlan" type="hidden" name="ReservationForm[path][vlan][]">
+                            <input class="vlan-input" type="hidden" name="ReservationForm[path][vlan][]">
                             <div class="pull-right">
                                 <a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>
                                 <a href="#" class="text-muted"><i class="fa fa-trash"></i></a>
@@ -132,14 +132,14 @@ $form = ActiveForm::begin([
                                   Network: <label data="" class="point-info net-l">none</label><br>
                                   Device: <label data="" class="point-info dev-l">none</label><br>
                                   Port: <label class="point-info port-l">none</label><br>
-                                  <input class="port-id" type="hidden" name="ReservationForm[path][port][]">
+                                  <input class="port-input" type="hidden" name="ReservationForm[path][port][]">
                                 </div>
                                 <div class="point-advanced" hidden>
                                   URN: <label class="point-info urn-l">none</label><br>
-                                  <input class="urn" type="hidden" name="ReservationForm[path][urn][]">
+                                  <input class="urn-input" type="hidden" name="ReservationForm[path][urn][]">
                                 </div>
                                 VLAN: <label class="point-info vlan-l">Auto</label>
-                                <input class="vlan" type="hidden" name="ReservationForm[path][vlan][]">
+                                <input class="vlan-input" type="hidden" name="ReservationForm[path][vlan][]">
                                 <div class="pull-right">
                                     <a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>
                                     <a href="#" class="text-muted"><i class="fa fa-trash"></i></a>
@@ -215,8 +215,8 @@ $form = ActiveForm::begin([
                     To confirm your circuit reservation, type a description or a name for it. This name will be used to identify easily your circuit.
                 </p>
                 <br>
-            <label>Name:</label>
-            <input type="text" class="form-control" name="ReservationForm[name]"><br>
+            <?php echo $form->field($reserveForm, 'name')->textInput(); ?>
+            <br>
             <div class="pull-right">
                 <button type="button" class="next-btn btn btn-primary"><span class="fa fa-arrow-right"></span> Submit</button>
             </div>
@@ -263,41 +263,20 @@ Modal::begin([
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="p1">
-        <?php $form = \yii\bootstrap\ActiveForm::begin();
-        $pointForm = new \meican\circuits\forms\ConnectionPointForm;
+        <?php $form = \yii\bootstrap\ActiveForm::begin(['id'=>'point-form']);
+        $pointForm = new \meican\circuits\forms\PointForm;
 
-        echo $form->field($pointForm, 'domain')->dropDownList([true=>'Ok']); 
-        echo $form->field($pointForm, 'network')->dropDownList([true=>'Ok']); 
-        echo $form->field($pointForm, 'device')->dropDownList([true=>'Ok']); 
-        echo $form->field($pointForm, 'port')->dropDownList([true=>'Ok']);
-        echo $form->field($pointForm, 'vlan')->dropDownList([true=>'Ok']); 
-        /*Domain
-        <select id="dom-select" class="form-control" disabled>
-        </select><br>
-        Network
-        <select id="net-select" class="form-control" disabled>
-        </select><br>
-        Device
-        <select id="dev-select" class="form-control" disabled>
-        </select><br>
-        Port
-        <select id="port-select" class="form-control" disabled>
-        </select><br>
-        VLAN
-        <select id="vlan-select" class="form-control" disabled>
-        </select> */?>
-        <?php \yii\bootstrap\ActiveForm::end(); ?>
+        echo $form->field($pointForm, 'domain')->dropDownList([],['disabled'=>true]); 
+        echo $form->field($pointForm, 'network')->dropDownList([],['disabled'=>true]); 
+        echo $form->field($pointForm, 'device')->dropDownList([],['disabled'=>true]); 
+        echo $form->field($pointForm, 'port')->dropDownList([],['disabled'=>true]); 
+        echo $form->field($pointForm, 'vlan')->dropDownList([],['disabled'=>true]); ?>
       </div>
       <!-- /.tab-pane -->
       <div class="tab-pane" id="p2">
-        URN
-        <div class="form-group">
-          <input id="urn" type="text" class="form-control" placeholder="URN">
-        </div>
-        VLAN
-        <div class="form-group">
-          <input id="vlan" type="text" class="form-control" value="Auto">
-        </div>
+        <?php echo $form->field($pointForm, 'urn')->textInput(); 
+        echo $form->field($pointForm, 'vlan_text')->textInput(); 
+        \yii\bootstrap\ActiveForm::end(); ?>
       </div>
       <!-- /.tab-pane -->
     </div>
