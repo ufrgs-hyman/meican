@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-namespace meican\nsi;
+namespace meican\nsi\connection;
 
 /**
  * Elemento responsável por receber e gerenciar as mensagens
@@ -16,7 +16,7 @@ namespace meican\nsi;
  * 
  * @author Maurício Quatrin Guerreiro
  */
-interface ConnectionRequesterServer {
+interface RequesterServer {
     
     /**
      * This reserveConfirmed message is sent from a Provider NSA to
