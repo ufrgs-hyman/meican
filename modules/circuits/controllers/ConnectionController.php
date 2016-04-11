@@ -38,7 +38,7 @@ class ConnectionController extends RbacController {
         if($conn === null) throw new \yii\web\HttpException(404, 'The requested Item could not be found.');
 
         $history = new ActiveDataProvider([
-                'query' => $conn->getHistory()->orderBy("created_at DESC"),
+                'query' => $conn->getHistory()->orderBy("id DESC"),
                 'sort' => false,
                 'pagination' => [
                     'pageSize' => 5,
@@ -49,7 +49,7 @@ class ConnectionController extends RbacController {
                 'conn' => $conn,
                 'history' => $history,
                 'editForm' => new ConnectionForm,
-                'lastEvent' => $conn->getHistory()->orderBy("created_at DESC")->one()
+                'lastEvent' => $conn->getHistory()->orderBy("id DESC")->one()
         ]);
     }
     

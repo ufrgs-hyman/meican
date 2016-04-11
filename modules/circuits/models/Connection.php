@@ -8,7 +8,6 @@ namespace meican\circuits\models;
 
 use Yii;
 
-use meican\circuits\services\RequesterClient;
 use meican\bpm\models\BpmFlow;
 use meican\topology\models\Domain;
 use meican\circuits\models\Connection;
@@ -30,7 +29,7 @@ use meican\base\components\DateUtils;
  * @property BpmFlowControl[] $bpmFlowControls
  * @property Reservation $reservation
  *
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class Connection extends \yii\db\ActiveRecord
 {
@@ -108,6 +107,13 @@ class Connection extends \yii\db\ActiveRecord
         return $event;
     }
 
+    public function getRequesterService() {
+        if (Yii::$app->params['provider.force.dummy']) {
+            return new \meican\circuits\services\DummyRequester($this);
+        }
+        return new \meican\circuits\services\NSIRequester($this);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -153,23 +159,19 @@ class Connection extends \yii\db\ActiveRecord
         $event->author_id = Yii::$app->user->getId();
         $event->save();
 
-    	$requester = new RequesterClient($this);
-        $requester->requestCreate();
+    	$this->getRequesterService()->create();
     }
     
     public function requestCommit() {
-        $requester = new RequesterClient($this);
-        $requester->requestCommit();
+        $this->getRequesterService()->commit();
     }
     
     public function requestSummary() {
-        $requester = new RequesterClient($this);
-        $requester->requestSummary();
+        $this->getRequesterService()->info();
     }
     
     public function requestProvision() {
-        $requester = new RequesterClient($this);
-        $requester->requestProvision();
+        $this->getRequesterService()->provision();
     }
     
     public function requestCancel() {
@@ -179,8 +181,7 @@ class Connection extends \yii\db\ActiveRecord
     	//Cancela possivel pedido de autorização pendente
     	ConnectionAuth::cancelConnAuthRequest($this->id);
     
-        $requester = new RequesterClient($this);
-        $requester->requestCancel();
+        $this->getRequesterService()->cancel();
     }
     
     public function confirmCreate() {

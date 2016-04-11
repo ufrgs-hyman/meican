@@ -4,13 +4,13 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-namespace meican\circuits\controllers;
+namespace meican\circuits\controllers\nsi;
 
 use yii\helpers\Url;
 use Yii;
 use yii\web\Controller;
 
-use meican\circuits\services\RequesterClient;
+use meican\circuits\services\NSIRequester;
 use meican\circuits\Module;
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionPath;
@@ -20,7 +20,7 @@ use meican\topology\models\Device;
 use meican\topology\models\Domain;
 use meican\topology\models\Provider;
 use meican\base\components\DateUtils;
-use meican\nsi\ConnectionRequesterServer;
+use meican\nsi\connection\RequesterServer;
 
 /**
  * Classe que implementa o módulo SoapServer do protocolo NSI Connection Service Requester 2.0
@@ -31,7 +31,7 @@ use meican\nsi\ConnectionRequesterServer;
  *
  * @author Maurício Quatrin Guerreiro
  */
-class RequesterController extends Controller implements ConnectionRequesterServer {
+class RequesterController extends Controller implements RequesterServer {
     
     public $enableCsrfValidation = false;
     
@@ -41,12 +41,6 @@ class RequesterController extends Controller implements ConnectionRequesterServe
     
     public function nsiHeader($params) {
         return "";
-    }
-
-    public function actionTest() {
-        $req = new RequesterClient;
-        $req->setAggHeader();
-        $req->querySummary();
     }
 
     public function dataPlaneStateChange($response) {
