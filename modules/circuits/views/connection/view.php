@@ -10,6 +10,7 @@ use yii\bootstrap\Modal;
 use yii\widgets\Pjax;
 
 use kartik\datetime\DateTimePicker;
+use kartik\switchinput\SwitchInput;
 use kartik\touchspin\TouchSpin;
 use kartik\form\ActiveForm;
 
@@ -257,6 +258,13 @@ $form = ActiveForm::begin([
 <input name="ConnectionForm[id]" value="<?= $conn->id; ?>" hidden>
 
 <?php
+
+echo $form->field($editForm, 'acceptRelease')->widget(SwitchInput::classname(), [
+    'pluginOptions' => [
+        'onText' => 'Yes',
+        'offText' => 'No',
+    ],
+]);
 
 echo $form->field($editForm, 'bandwidth')->widget(TouchSpin::classname(), [
     'pluginOptions' => [

@@ -52,30 +52,27 @@ function initEditModal() {
         });
     });
 
+    $("#connectionform-acceptrelease").on("switchChange.bootstrapSwitch", function(event, state) {
+        if(state) {
+            $("#edit-form").find(".field-connectionform-bandwidth").show();
+            $("#edit-form").find(".field-connectionform-start").show();
+        } else {
+            $("#edit-form").find(".field-connectionform-bandwidth").hide();
+            $("#edit-form").find(".field-connectionform-start").hide();
+        }
+    });
+
     $("#edit-modal").on("click", '.close-btn', function() {
         $("#edit-modal").modal("hide");
     });
 
     $("#edit-btn").on("click", function() {
+        $('#edit-form').yiiActiveForm('resetForm');
         $("#connectionform-start").val($("#info-start").attr('value'));
         $("#connectionform-end").val($("#info-end").attr('value'));
         $("#connectionform-bandwidth").val($("#info-bandwidth").attr('value'));
         $('#edit-modal').modal("show");
         return false;
-    });
-
-    $("#bandwidth").on("click", '.minus', function() {
-        if (!isNaN($("#bandwidth").find('input').val())) {
-            var old = $("#bandwidth").find('input').val();
-            var temp = parseInt($("#bandwidth").find('input').val()) - 100;
-            $("#bandwidth").find('input').val(temp < 0 ? old : temp);
-        }
-    });
-
-    $("#bandwidth").on("click", '.plus', function() {
-        if (!isNaN($("#bandwidth").find('input').val())) {
-            $("#bandwidth").find('input').val(parseInt($("#bandwidth").find('input').val()) + 100);
-        }
     });
 }
 
@@ -379,6 +376,6 @@ function buildStatsGraph() {
 
     setTimeout(addDataPoint, DELAY);
   }
-  addDataPoint();
+  //addDataPoint();
 }
   
