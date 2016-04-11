@@ -4,7 +4,7 @@
     "keywords": [
         "meican", "dynamic", "circuit", "network", "reservation", 
         "topology", "nsi", "dcn", "intradomain", "interdomain"],
-    "homepage": "http://meican-cipo.inf.ufrgs.br/playground",
+    "homepage": "https://github.com/ufrgs-hyman/meican2",
     "type": "project",
     "license": "BSD-2-License",
     "authors": [
@@ -33,6 +33,9 @@
         "kartik-v/yii2-widget-datetimepicker" : "1.4.2",
         "kartik-v/yii2-widget-activeform" : "1.4.7",
         "kartik-v/yii2-widget-touchspin" : "1.2.1",
+        "kartik-v/yii2-widget-colorinput" : "1.0.3",
+        "kartik-v/yii2-widget-growl" : "1.1.1",
+        "kartik-v/yii2-widget-switchinput" : "1.3.1",
         "npm-asset/vis": "4.16.0",
         "npm-asset/leaflet": "0.7.7",
         "bower-asset/spectrum": "1.8.0",
