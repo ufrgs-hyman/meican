@@ -93,7 +93,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#canvas" data-toggle="tab">Map Viewer</a></li>
-              <li><a href="#stats" data-toggle="tab">Graph Viewer</a></li>
+              <li><a href="#graph" data-toggle="tab">Graph Viewer</a></li>
             </ul>
             <div class="tab-content no-padding">
               <div class="tab-pane active" id="canvas">
@@ -186,7 +186,6 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                     'id'=> 'history-grid',
                     'dataProvider' => $history,
                     'columns' => array(
-                        'created_at:datetime',
                         'type',
                         [
                             'attribute' => 'message',
@@ -199,7 +198,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                             'attribute' => 'author_id',
                             'format' => 'raw',
                             'value' => function ($model){
-                                return $model->getAuthor();
+                                return '<a href="#"><span class="fa fa-tasks"></span></a>';
                             },
                         ],
                     ),

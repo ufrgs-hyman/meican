@@ -22,7 +22,8 @@ class RequesterClient extends \SoapClient {
     private $requesterNSA;
     private $version;
 
-    function __construct($requesterNSA, $requesterURL, $providerNSA, $providerURL, $certificatePath, $certificatePass) {
+    function __construct($requesterNSA, $requesterURL, $providerNSA, $providerURL, $certificatePath, 
+            $certificatePass) {
         $providerWSDL = $providerURL."?wsdl";
         $this->requesterURL = $requesterURL;
         $this->providerNSA = $providerNSA;

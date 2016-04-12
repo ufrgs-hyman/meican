@@ -122,6 +122,14 @@ class Connection extends \yii\db\ActiveRecord
         return $this->hasOne(Reservation::className(), ['id' => 'reservation_id']);
     }
 
+    public function getStartDateTime() {
+        return DateUtils::fromDB($this->start);
+    }
+
+    public function getEndDateTime() {
+        return DateUtils::fromDB($this->finish);
+    }
+
     public function getPath($order) {
         return ConnectionPath::find()->where(['conn_id'=>$this->id, 'path_order'=>$order]);
     }

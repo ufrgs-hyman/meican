@@ -12,7 +12,7 @@ $(document).ready(function() {
         updateCircuitStatus();
     }, 1000);*/
 
-    buildStatsGraph();
+    //buildStatsGraph();
     initHistoryModal();
     initEditModal();
     initCancelModal();

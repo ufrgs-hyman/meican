@@ -10,6 +10,7 @@ use yii\base\Model;
 use Yii;
 
 use meican\circuits\models\Connection;
+use meican\circuits\models\ConnectionEvent;
 use meican\base\components\DateUtils;
 
 /**
@@ -68,14 +69,33 @@ class ConnectionForm extends Model {
     
     public function save() {
         if($this->validate()) {
+            $changes = [];
+
             $conn = Connection::findOne($this->id);
             $conn->version = $conn->version + 1;
             if ($this->acceptRelease) {
+                if ($conn->getStartDateTime() != DateUtils::fromLocal($this->start)) {
+                    $changes['start'] = $this->start;
+                    Yii::trace($conn->getStartDateTime());
+                    Yii::trace(DateUtils::fromLocal($this->start));
+                }
+
                 $conn->start = DateUtils::localToUTC($this->start);
+
+                if ($conn->bandwidth != $this->bandwidth)
+                    $changes['bandwidth'] = $this->bandwidth;
+
                 $conn->bandwidth = $this->bandwidth;
             }
+
+            if ($conn->getEndDateTime() != DateUtils::fromLocal($this->end))
+                    $changes['finish'] = $this->end;
+
             $conn->finish = DateUtils::localToUTC($this->end);
-            return $conn->save();
+
+            if($conn->save())
+                $event = $conn->buildEvent(ConnectionEvent::TYPE_USER_UPDATE)
+                    ->setData(json_encode($changes))->save();
         }
         return false;
     }

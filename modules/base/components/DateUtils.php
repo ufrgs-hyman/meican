@@ -9,9 +9,19 @@ namespace meican\base\components;
 use Yii;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class DateUtils {
+
+    public static function fromDB($datetime) {
+        return new \DateTime($datetime, new \DateTimeZone("UTC"));
+    }
+
+    public static function fromLocal($datetime, $format = "d/m/Y H:i") {
+        $dateTime = \DateTime::createFromFormat($format, $datetime, new \DateTimeZone(Yii::$app->formatter->timeZone));
+        $dateTime->setTimezone(new \DateTimeZone("UTC"));
+        return $dateTime;
+    }
 
     public static function localToUTC($datetime, $format = "d/m/Y H:i") {
         if ($datetime) {

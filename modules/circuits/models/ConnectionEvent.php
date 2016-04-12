@@ -74,7 +74,7 @@ class ConnectionEvent extends \yii\db\ActiveRecord
         return [
             [['conn_id', 'created_at', 'type'], 'required'],
             [['conn_id', 'author_id'], 'integer'],
-            [['created_at', 'message'], 'safe'],
+            [['created_at', 'message', 'data'], 'safe'],
         ];
     }
 
@@ -124,5 +124,10 @@ class ConnectionEvent extends \yii\db\ActiveRecord
                 return 'Error';
                 break;
         }
+    }
+
+    public function setData($data) {
+        $this->data = $data;
+        return $this;
     }
 }
