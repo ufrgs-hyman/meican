@@ -104,6 +104,7 @@ class NSIRequester implements Requester {
     public function update() {
         $event = $this->conn->getLastUserUpdateEvent();
         $changes = json_decode($event->data);
+        Yii::trace($changes);
         $this->soapClient->requestReserve(
             $this->conn->external_id,
             $this->conn->version,
