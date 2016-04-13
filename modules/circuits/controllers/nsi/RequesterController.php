@@ -39,78 +39,66 @@ class RequesterController extends Controller implements RequesterServer {
         return "";
     }   
     
-    public function nsiHeader($params) {
+    public function nsiHeader($response) {
         return "";
     }
 
     public function dataPlaneStateChange($response) {
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
-        $conn->setActiveDataStatus($response->dataPlaneStatus->active);
-        $conn->save();
-        
-        return "";
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_DATAPLANE_CHANGE, $response)->save();
+        $conn->setActiveDataStatus($response->dataPlaneStatus->active)->save();
     }
     
     public function messageDeliveryTimeout($response) {
-        $params = new \stdClass();
-        $params->connectionId = $response->connectionId;
-    }
-    
-    public function reserveConfirmed($responseObject){
-        $params = new \stdClass();
-        $params->connectionId = $responseObject->connectionId;
-        
-        $conn = Connection::find()->where(['external_id'=>$params->connectionId])->one();
-        $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_CONFIRMED, $responseObject)->save();
-        $conn->confirmCreatePath();
-        
-        /** Connectivity Log **/
-        $log = "Received\n".
-                "Connection Id: ".$params->connectionId."\n".
-                "Action: reserveConfirmed\n".
-                "DateTime: ".date(DATE_RFC822)."\n\n";
-        
-        Yii::trace($log);
-        
         return "";
     }
     
-    //Errro conexào nao possui ID nesse momento
-    public function reserveFailed($responseObject){
-        $params = new \stdClass();
-        $params->connectionId = $responseObject->connectionId;
-        $connectionStates = $responseObject->connectionStates;
-        $serviceException = $responseObject->serviceException;
-        
-        $conn = Connection::find()->where(['external_id'=>$params->connectionId])->one();
-        $conn->failedCreatePath();
-        
-        /** Connectivity Log **/
-        $log = "Received\n".
-               "Connection Id: ".$params->connectionId."\n".
-               "Action: reserveFailed\n".
-               "DateTime: ".date(DATE_RFC822)."\n\n";
-        
-        Yii::trace($log);
-        
+    public function reserveConfirmed($response){
+        $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_CONFIRMED, $response)->save();
+        $conn->confirmResources();
+        return "";
+    }
+    
+    public function reserveFailed($response){
+        $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_FAILED, $response)->save();
+        $conn->failedResources();
         return "";
     }
 
-    public function reserveCommitConfirmed($responseObject){
-        $params = new \stdClass();
-        $params->connectionId = $responseObject->connectionId;
-        
-        /** Connectivity Log **/
-        $log = "Received\n".
-                "Connection Id: ".$params->connectionId."\n".
-                "Action: reserveCommitConfirmed\n".
-                "DateTime: ".date(DATE_RFC822)."\n\n";
-        
-        Yii::trace($log);
-        
-        $conn = Connection::find()->where(['external_id'=>$params->connectionId])->one();
+    public function reserveTimeout($response){
+        $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_TIMEOUT, $response)->save();
+        $conn->failedCreate();
+        return "";
+    }
+
+    public function reserveCommitConfirmed($response){
+        $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_COMMIT_CONFIRMED, $response)->save();
         $conn->confirmCommit();
-        
+        return "";
+    }
+
+    public function reserveCommitFailed($response){
+        $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_COMMIT_FAILED, $response)->save();
+        $conn->failedCommit();
+        return "";
+    }
+                
+    public function provisionConfirmed($response){
+        $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_PROVISION_CONFIRMED, $response)->save();
+        $conn->confirmProvision();
+        return "";
+    }
+    
+    public function terminateConfirmed($response){
+        $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_TERMINATE_CONFIRMED, $response)->save();
+        $conn->confirmCancel();
         return "";
     }
     
@@ -198,7 +186,7 @@ class RequesterController extends Controller implements RequesterServer {
             if($conn->status == Connection::STATUS_SUBMITTED) {
 
                 if($this->saveConnPath($conn, $response)) {
-                    $conn->confirmSummary();
+                    $conn->confirmInfo();
                 
                 } else {
                     
@@ -208,8 +196,7 @@ class RequesterController extends Controller implements RequesterServer {
 
             //atualizar info da reserva
             } else {
-                $conn->setActiveDataStatus($response->reservation->connectionStates->dataPlaneStatus->active);
-                $conn->save();
+                $conn->setActiveDataStatus($response->reservation->connectionStates->dataPlaneStatus->active)->save();
             }
         }
     }
@@ -272,63 +259,7 @@ class RequesterController extends Controller implements RequesterServer {
         }
         
         return true;
-    }
-    
-    public function reserveCommitFailed($responseObject){
-        $params = new \stdClass();
-        $params->connectionId = $responseObject->connectionId;
-        $connectionStates = $responseObject->connectionStates;
-        $serviceException = $responseObject->serviceException;
-        
-        $conn = Connection::find()->where(['external_id'=>$params->connectionId])->one();
-        $conn->failedCommit();
-        
-        /** Connectivity Log **/
-        $log = "Received\n".
-                "Connection Id: ".$params->connectionId."\n".
-                "Action: reserveCommitFailed\n".
-                "DateTime: ".date(DATE_RFC822)."\n\n";
-        
-        Yii::trace($log);
-        
-        return "";
-    }
-                
-    public function provisionConfirmed($responseObject){
-        $params = new \stdClass();
-        $params->connectionId = $responseObject->connectionId;
-        
-        $conn = Connection::find()->where(['external_id'=>$params->connectionId])->one();
-        $conn->confirmProvision();
-        
-        /** Connectivity Log **/
-        $log = "Received\n".
-                "Connection Id: ".$params->connectionId."\n".
-                "Action: provisionConfirmed\n".
-                "DateTime: ".date(DATE_RFC822)."\n\n";
-        
-        Yii::trace($log);
-        
-        return "";
-    }
-    
-    public function terminateConfirmed($responseObject){
-        $params = new \stdClass();
-        $params->connectionId = $responseObject->connectionId;
-        
-        $conn = Connection::find()->where(['external_id'=>$params->connectionId])->one();
-        $conn->confirmCancel();
-        
-        /** Connectivity Log **/
-        $log = "Received\n".
-                "Connection Id: ".$params->connectionId."\n".
-                "Action: terminateConfirmed\n".
-                "DateTime: ".date(DATE_RFC822)."\n\n";
-            
-        Yii::trace($log);
-        
-        return "";
-    }
+    }    
 }
 
 $wsdl = Url::to('@web/wsdl/ogf_nsi_connection_requester_v2_0.wsdl', true);

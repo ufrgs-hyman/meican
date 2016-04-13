@@ -22,6 +22,13 @@ $(document).on('ready pjax:success', function() {
     initHistoryModal();
 });
 
+function refreshPjaxContainer(id) {
+    $.pjax.defaults.timeout = false;
+    $.pjax.reload({
+        container:'#' + id
+    });
+}
+
 function initCancelModal() {
     $("#cancel-btn").on("click", function() {
         $('#cancel-modal').modal("show");
@@ -45,6 +52,21 @@ function initEditModal() {
             data: $("#edit-form").serialize(),
             success: function (resId) {
                 $("#edit-modal").modal('hide');
+                setTimeout(function() {
+                    refreshPjaxContainer('history-pjax');
+                    setTimeout(function() {
+                        refreshPjaxContainer('info-pjax');
+                    }, 1000);
+                }, 1000);
+                $.ajax({
+                    type: "POST",
+                    url: baseUrl + '/circuits/connection/update?confirm=true',
+                    success: function () {
+                    },
+                    error: function() {
+                        //showError(tt("Error proccessing your request. Contact your administrator."));
+                    }
+                });
             },
             error: function() {
                 //showError(tt("Error proccessing your request. Contact your administrator."));

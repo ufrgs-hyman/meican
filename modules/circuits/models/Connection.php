@@ -114,6 +114,10 @@ class Connection extends \yii\db\ActiveRecord
         return new \meican\circuits\services\NSIRequester($this);
     }
 
+    public function getLastUserUpdateEvent() {
+        return $this->getHistory()->where(['type'=>ConnectionEvent::TYPE_USER_UPDATE])->orderBy('id DESC')->one();
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -165,16 +169,24 @@ class Connection extends \yii\db\ActiveRecord
     public function requestCreate() {
         $event = $this->buildEvent(ConnectionEvent::TYPE_USER_CREATE);
         $event->author_id = Yii::$app->user->getId();
+        $event->setData(json_encode([
+            'bandwidth'=>$this->bandwidth,
+            'start'=>$this->start,
+            'end'=>$this->finish]));
         $event->save();
 
     	$this->getRequesterService()->create();
+    }
+
+    public function requestUpdate() {
+        $this->getRequesterService()->update();
     }
     
     public function requestCommit() {
         $this->getRequesterService()->commit();
     }
     
-    public function requestSummary() {
+    public function requestInfo() {
         $this->getRequesterService()->info();
     }
     
@@ -197,7 +209,7 @@ class Connection extends \yii\db\ActiveRecord
     	$this->save();
     }
     
-    public function confirmCreatePath() {
+    public function confirmResources() {
     	$this->status = self::STATUS_CONFIRMED;
     	$this->save();
     	
@@ -216,11 +228,11 @@ class Connection extends \yii\db\ActiveRecord
 		$this->save();
 		
 		//Depois de submetido podemos solicitar o caminho encontrado pelo provider
-		$this->requestSummary();
+		$this->requestInfo();
 	}
 	
 	//circuito confirmado e caminho disponivel. Se for uma reserva normal em submissao, solicitar autorizacao para provisionamento
-	public function confirmSummary() {
+	public function confirmInfo() {
 		if ($this->status == self::STATUS_SUBMITTED && $this->getReservation()->one()->type == Reservation::TYPE_NORMAL) {	
 			
 			$this->requestAuthorization();
@@ -239,7 +251,7 @@ class Connection extends \yii\db\ActiveRecord
 		//Notification::createConnectionNotification($this->id);
 	}
 	
-	public function failedCreatePath() {
+	public function failedResources() {
 		$this->status = self::STATUS_FAILED_CONFIRM;
 		$this->save();
 		//Notification::createConnectionNotification($this->id);
@@ -299,9 +311,10 @@ class Connection extends \yii\db\ActiveRecord
     public function setActiveDataStatus($bool) {
     	if ($bool) {
     		$this->dataplane_status = self::DATA_STATUS_ACTIVE;
-    		return;
-    	}
-    	$this->dataplane_status = self::DATA_STATUS_INACTIVE;
+    	} else {
+    	   $this->dataplane_status = self::DATA_STATUS_INACTIVE;
+        } 
+        return $this;
     }
     
     public function isCancelStatus() {

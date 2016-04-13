@@ -44,10 +44,19 @@ class ConnectionController extends RbacController {
                     'pageSize' => 5,
                 ]
         ]);
+
+        $messageHistory = new ActiveDataProvider([
+                'query' => $conn->getHistory()->where(['is not', 'message', null])->orderBy("id DESC"),
+                'sort' => false,
+                'pagination' => [
+                    'pageSize' => 5,
+                ]
+        ]);
         
         return $this->render('view',[
                 'conn' => $conn,
                 'history' => $history,
+                'messageHistory' => $messageHistory,
                 'editForm' => new ConnectionForm,
                 'lastEvent' => $conn->getHistory()->orderBy("id DESC")->one()
         ]);
@@ -178,9 +187,28 @@ class ConnectionController extends RbacController {
         else return false;
     }
 
-    public function actionUpdate($submit = false) {
+    /**
+     * Atualiza um circuito. 
+     * Com submit, a função deve tentar salvar as alterações no
+     * banco e criar um evento associado.
+     * Com confirm, a função envia ao provedor a solicitação de
+     * alteração salva a partir do submit.
+     * Sem parametros, a função apenas valida se os dados fornecidos
+     * podem ser alterados no circuito informado.
+     *
+     * @param $submit String
+     * @param $confirm String opcional
+     */
+    public function actionUpdate($submit = false, $confirm = false) {
         $form = new ConnectionForm;
-        if ($form->load(Yii::$app->request->post()) && !$submit && Yii::$app->request->isAjax) {
+        $form->load(Yii::$app->request->post());
+        if ($confirm) {
+            $conn = Connection::findOne($form->id);
+            $conn->requestUpdate();
+            return "";
+        }
+
+        if (!$submit && Yii::$app->request->isAjax) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\widgets\ActiveForm::validate($form);
         } else {

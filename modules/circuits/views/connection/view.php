@@ -131,7 +131,12 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                   </div>
             </div>
             <div class="box-body">
-                <?= DetailView::widget([
+                <?php Pjax::begin([
+                    'id' => 'info-pjax',
+                    'timeout' => 5000, 
+                ]);
+
+                echo DetailView::widget([
                     'id' => 'circuit-info',
                     'model' => $conn,
                     'attributes' => [
@@ -165,7 +170,9 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                                 '<data id="info-dataplane" value='.$conn->dataplane_status.'></data>'                           
                         ],
                     ],
-                ]); ?>
+                ]); 
+
+                Pjax::end(); ?>
             </div>
         </div> 
     </div>
@@ -178,27 +185,41 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                 <?php 
 
                 Pjax::begin([
+                    'id' => 'history-pjax',
                     'timeout' => 5000, 
-                    'enablePushState' => false,
-                    'clientOptions' => ['container' => 'history-pjax']]);
+                    'enablePushState' => false
+                ]);
 
                 echo Grid::widget([
                     'id'=> 'history-grid',
                     'dataProvider' => $history,
                     'columns' => array(
-                        'type',
                         [
-                            'attribute' => 'message',
+                            'attribute' => 'type',
+                            'value' => function ($model){
+                                return $model->getTypeLabel();
+                            },
+                        ],
+                        [
+                            'header' => Yii::t("circuits", 'Info'),
                             'format' => 'raw',
                             'value' => function ($model){
-                                return $model->message ? '<a href="#"><span class="event-message fa fa-file-text"></span></a>' : '';
+                                if($model->message) {
+                                    return '<a href="#"><span class="event-message fa fa-file-text"></span></a>';
+                                } elseif ($model->data) {
+                                    $tmp = json_decode($model->data);
+                                    return (isset($tmp->bandwidth) ? '<span class="fa fa-tachometer"></span> '.$tmp->bandwidth.' Mbps<br>' : '')
+                                        .(isset($tmp->start) ? '<span class="fa fa-clock-o"></span> Start at '.$tmp->start.'<br>' : '')
+                                        .(isset($tmp->end) ? '<span class="fa fa-clock-o"></span> End at '.$tmp->end.'<br>' : '');
+                                } 
+                                return '';
                             },
                         ],
                         [
                             'attribute' => 'author_id',
                             'format' => 'raw',
                             'value' => function ($model){
-                                return '<a href="#"><span class="fa fa-tasks"></span></a>';
+                                return $model->getAuthor();
                             },
                         ],
                     ),
@@ -214,7 +235,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
  
 <?php Modal::begin([
     'id' => 'history-modal',
-    'header' => 'History',
+    'header' => 'NSI Messages',
     'size' => Modal::SIZE_LARGE,
 ]); 
 
@@ -225,7 +246,7 @@ Pjax::begin([
 
 echo Grid::widget([
     'id'=> 'full-history-grid',
-    'dataProvider' => $history,
+    'dataProvider' => $messageHistory,
     'columns' => array(
         [
             'header' => 'All Events',

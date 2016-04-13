@@ -17,7 +17,7 @@ use meican\aaa\models\User;
  *
  * @property Connection $conn
  *
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class ConnectionEvent extends \yii\db\ActiveRecord
 {
@@ -129,5 +129,47 @@ class ConnectionEvent extends \yii\db\ActiveRecord
     public function setData($data) {
         $this->data = $data;
         return $this;
+    }
+
+    public function setAuthor($userId) {
+        $this->author_id = $userId;
+        return $this;
+    }
+
+    public function getTypeLabel() {
+        switch ($this->type) {
+            case self::TYPE_NSI_PROVISION_CONFIRMED:
+                return 'NSI Provision Confirmed received';
+            case self::TYPE_NSI_DATAPLANE_CHANGE:
+                return 'NSI Dataplane Status received';
+            case self::TYPE_NSI_SUMMARY_CONFIRMED:
+                return 'NSI Query Summary Confirmed received';
+            case self::TYPE_NSI_RESERVE_FAILED:
+                return 'NSI Reserve Failed received';
+            case self::TYPE_NSI_RESERVE_CONFIRMED:
+                return 'NSI Reserve Confirmed received';
+            case self::TYPE_NSI_RESERVE_RESPONSE:
+                return 'NSI Reserve Response received';
+            case self::TYPE_NSI_COMMIT_CONFIRMED:
+                return 'NSI Reserve Commit Confirmed received';
+            case self::TYPE_NSI_COMMIT_FAILED:
+                return 'NSI Reserve Commit Failed received';
+            case self::TYPE_NSI_SUMMARY:
+                return 'NSI Query Summary sent';
+            case self::TYPE_NSI_TERMINATE:
+                return 'NSI Terminate sent';
+            case self::TYPE_NSI_PROVISION:
+                return 'NSI Provision sent';
+            case self::TYPE_NSI_COMMIT:
+                return 'NSI Reserve Commit sent';
+            case self::TYPE_NSI_RESERVE:
+                return 'NSI Reserve sent';
+            case self::TYPE_USER_CANCEL:
+                return 'Cancel requested';
+            case self::TYPE_USER_UPDATE:
+                return 'Edit requested';
+            case self::TYPE_USER_CREATE:
+                return 'Create requested';
+        }
     }
 }

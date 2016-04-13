@@ -143,11 +143,13 @@ class RequesterClient extends \SoapClient {
      * Requisita um circuito ao provedor especificado na construcao do
      * objeto.
      *
-     * @param #description String
-     * @param $path Array de STPs
+     * @param $connectionId String opcional, obrigatoria se for edição
+     * @param $version Inteiro
      * @param $bandwidth Inteiro
-     * @param $start DateTime
-     * @param $end DateTime
+     * @param $startTime DateTime
+     * @param $endTime DateTime
+     * @param $path Array de STPs
+     * @param #description String
      * @param $globalReservationId String opcional
      */
     public function requestReserve($connectionId = null, $version, $bandwidth = null, $startTime = null, 

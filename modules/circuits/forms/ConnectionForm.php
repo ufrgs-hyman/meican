@@ -75,27 +75,28 @@ class ConnectionForm extends Model {
             $conn->version = $conn->version + 1;
             if ($this->acceptRelease) {
                 if ($conn->getStartDateTime() != DateUtils::fromLocal($this->start)) {
-                    $changes['start'] = $this->start;
-                    Yii::trace($conn->getStartDateTime());
-                    Yii::trace(DateUtils::fromLocal($this->start));
+                    $changes['start'] = DateUtils::localToUTC($this->start);
+                    $conn->start = $changes['start'];
                 }
 
-                $conn->start = DateUtils::localToUTC($this->start);
-
-                if ($conn->bandwidth != $this->bandwidth)
+                if ($conn->bandwidth != $this->bandwidth) {
                     $changes['bandwidth'] = $this->bandwidth;
-
-                $conn->bandwidth = $this->bandwidth;
+                    $conn->bandwidth = $changes['bandwidth'];
+                }
             }
 
-            if ($conn->getEndDateTime() != DateUtils::fromLocal($this->end))
-                    $changes['finish'] = $this->end;
+            if ($conn->getEndDateTime() != DateUtils::fromLocal($this->end)) {
+                $changes['end'] = DateUtils::localToUTC($this->end);
+                $conn->finish = $changes['end'];
+            }
 
-            $conn->finish = DateUtils::localToUTC($this->end);
-
-            if($conn->save())
-                $event = $conn->buildEvent(ConnectionEvent::TYPE_USER_UPDATE)
-                    ->setData(json_encode($changes))->save();
+            if((count($changes) > 0) && $conn->save()) {
+                return $conn->buildEvent(ConnectionEvent::TYPE_USER_UPDATE)
+                    ->setData(json_encode($changes))
+                    ->setAuthor(Yii::$app->user->getId())
+                    ->save();
+            } 
+            return false;
         }
         return false;
     }
