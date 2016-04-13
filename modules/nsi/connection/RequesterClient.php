@@ -149,7 +149,7 @@ class RequesterClient extends \SoapClient {
      * @param $startTime DateTime
      * @param $endTime DateTime
      * @param $path Array de STPs
-     * @param #description String
+     * @param $description String
      * @param $globalReservationId String opcional
      */
     public function requestReserve($connectionId = null, $version, $bandwidth = null, $startTime = null, 
@@ -183,6 +183,10 @@ class RequesterClient extends \SoapClient {
 
             if($bandwidth)
                 $criteria["p2ps"] = $p2ps;
+
+            $params = array(
+                "criteria" => $criteria
+            );
             
         } else {
 
