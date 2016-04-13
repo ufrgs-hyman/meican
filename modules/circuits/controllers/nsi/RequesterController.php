@@ -74,6 +74,10 @@ class RequesterController extends Controller implements RequesterServer {
         return "";
     }
 
+    public function reserveAbortConfirmed($response) {
+        return "";
+    }
+
     public function reserveCommitConfirmed($response){
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
         $conn->buildEvent(ConnectionEvent::TYPE_NSI_COMMIT_CONFIRMED, $response)->save();
@@ -99,6 +103,30 @@ class RequesterController extends Controller implements RequesterServer {
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
         $conn->buildEvent(ConnectionEvent::TYPE_NSI_TERMINATE_CONFIRMED, $response)->save();
         $conn->confirmCancel();
+        return "";
+    }
+
+    public function releaseConfirmed($response) {
+        return "";
+    }
+
+    public function queryRecursiveConfirmed($response) {
+        return "";
+    }
+
+    public function queryNotificationConfirmed($response) {
+        return "";
+    }
+
+    public function queryResultConfirmed($response) {
+        return "";
+    }
+
+    public function error($response) {
+        return "";
+    }
+
+    public function errorEvent($response) {
         return "";
     }
     
@@ -199,6 +227,7 @@ class RequesterController extends Controller implements RequesterServer {
                 $conn->setActiveDataStatus($response->reservation->connectionStates->dataPlaneStatus->active)->save();
             }
         }
+        return "";
     }
     
     private function saveConnPath($conn, $response) {
