@@ -13,6 +13,7 @@ use yii\web\Controller;
 use meican\circuits\services\NSIRequester;
 use meican\circuits\Module;
 use meican\circuits\models\Connection;
+use meican\circuits\models\ConnectionEvent;
 use meican\circuits\models\ConnectionPath;
 use meican\circuits\models\Reservation;
 use meican\topology\models\Port;
