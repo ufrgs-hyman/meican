@@ -156,6 +156,7 @@ class RequesterClient extends \SoapClient {
             $endTime = null, $path = null, $description = null, $globalReservationId = null) {
 
         $this->version = $version;
+        $serviceType = "http://services.ogf.org/nsi/2013/12/descriptions/EVTS.A-GOLE";
 
         if ($connectionId != null) {
             $params = array(
@@ -163,7 +164,9 @@ class RequesterClient extends \SoapClient {
             );
             
             $schedule = [];
-            $criteria = [];
+            $criteria = [
+                'serviceType' => $serviceType
+            ];
 
             if($startTime != null) 
                 $schedule["startTime"] = $startTime;
@@ -193,7 +196,6 @@ class RequesterClient extends \SoapClient {
             $directionality = "Bidirectional";
             $symmetricPath = "true";
             $parameter = "UNPROTECTED";
-            $serviceType = "http://services.ogf.org/nsi/2013/12/descriptions/EVTS.A-GOLE";
             
             /** Creating the SOAP request **/
             $schedule = array(
