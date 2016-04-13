@@ -60,7 +60,7 @@ function initEditModal() {
                 }, 1000);
                 $.ajax({
                     type: "POST",
-                    url: baseUrl + '/circuits/connection/update?confirm=true',
+                    url: baseUrl + '/circuits/connection/update?id='+ $("#circuit-id").attr('value') + '&confirm=true',
                     success: function () {
                     },
                     error: function() {

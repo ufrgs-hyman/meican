@@ -199,14 +199,15 @@ class ConnectionController extends RbacController {
      * @param $submit String
      * @param $confirm String opcional
      */
-    public function actionUpdate($submit = false, $confirm = false) {
-        $form = new ConnectionForm;
-        $form->load(Yii::$app->request->post());
+    public function actionUpdate($id = null, $submit = false, $confirm = false) {
         if ($confirm) {
-            $conn = Connection::findOne($form->id);
+            $conn = Connection::findOne($id);
             $conn->requestUpdate();
             return "";
         }
+        
+        $form = new ConnectionForm;
+        $form->load(Yii::$app->request->post());
 
         if (!$submit && Yii::$app->request->isAjax) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
