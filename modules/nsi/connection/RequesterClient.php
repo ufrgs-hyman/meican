@@ -156,7 +156,6 @@ class RequesterClient extends \SoapClient {
             $endTime = null, $path = null, $description = null, $globalReservationId = null) {
 
         $this->version = $version;
-        $serviceType = "http://services.ogf.org/nsi/2013/12/descriptions/EVTS.A-GOLE";
 
         if ($connectionId != null) {
             $params = array(
@@ -164,40 +163,37 @@ class RequesterClient extends \SoapClient {
             );
             
             $schedule = [];
+            $criteria = [];
 
-            if($startTime) 
+            if($startTime != null) 
                 $schedule["startTime"] = $startTime;
 
-            if($endTime) 
+            if($endTime != null) 
                 $schedule["endTime"] = $endTime;
 
-            if($bandwidth) 
+            if($bandwidth != null) {
                 $p2ps = array(
                     "capacity" => $bandwidth
                 );
-
-            $criteria = [
-                "serviceType" => $serviceType
-            ];
-
-
-            if (count($schedule) > 0) 
-                $criteria["schedule"] = $schedule;
-            
-
-            if($bandwidth)
+                $p2ps = new \SoapVar($p2ps, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
                 $criteria["p2ps"] = $p2ps;
+            }
 
-            $params = array(
-                "criteria" => $criteria
-            );
+            if (count($schedule) > 0) {
+                $schedule = new \SoapVar($schedule, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
+                $criteria["schedule"] = $schedule;
+            }
+        
+            $criteria = new \SoapVar($criteria, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
+            
+            $params["criteria"] = $criteria;
             
         } else {
 
             $directionality = "Bidirectional";
             $symmetricPath = "true";
             $parameter = "UNPROTECTED";
-            
+            $serviceType = "http://services.ogf.org/nsi/2013/12/descriptions/EVTS.A-GOLE";
             
             /** Creating the SOAP request **/
             $schedule = array(
