@@ -46,7 +46,7 @@ class RequesterController extends Controller implements RequesterServer {
 
     public function dataPlaneStateChange($response) {
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
-        $conn->buildEvent(ConnectionEvent::TYPE_NSI_DATAPLANE_CHANGE, $response)->save();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_DATAPLANE_CHANGE, Yii::$app->request->getRawBody())->save();
         $conn->setActiveDataStatus($response->dataPlaneStatus->active)->save();
     }
     
@@ -56,21 +56,21 @@ class RequesterController extends Controller implements RequesterServer {
     
     public function reserveConfirmed($response){
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
-        $conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_CONFIRMED, $response)->save();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_CONFIRMED, Yii::$app->request->getRawBody())->save();
         $conn->confirmResources();
         return "";
     }
     
     public function reserveFailed($response){
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
-        $conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_FAILED, $response)->save();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_FAILED, Yii::$app->request->getRawBody())->save();
         $conn->failedResources();
         return "";
     }
 
     public function reserveTimeout($response){
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
-        $conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_TIMEOUT, $response)->save();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_TIMEOUT, Yii::$app->request->getRawBody())->save();
         $conn->failedCreate();
         return "";
     }
@@ -81,28 +81,28 @@ class RequesterController extends Controller implements RequesterServer {
 
     public function reserveCommitConfirmed($response){
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
-        $conn->buildEvent(ConnectionEvent::TYPE_NSI_COMMIT_CONFIRMED, $response)->save();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_COMMIT_CONFIRMED, Yii::$app->request->getRawBody())->save();
         $conn->confirmCommit();
         return "";
     }
 
     public function reserveCommitFailed($response){
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
-        $conn->buildEvent(ConnectionEvent::TYPE_NSI_COMMIT_FAILED, $response)->save();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_COMMIT_FAILED, Yii::$app->request->getRawBody())->save();
         $conn->failedCommit();
         return "";
     }
                 
     public function provisionConfirmed($response){
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
-        $conn->buildEvent(ConnectionEvent::TYPE_NSI_PROVISION_CONFIRMED, $response)->save();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_PROVISION_CONFIRMED, Yii::$app->request->getRawBody())->save();
         $conn->confirmProvision();
         return "";
     }
     
     public function terminateConfirmed($response){
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
-        $conn->buildEvent(ConnectionEvent::TYPE_NSI_TERMINATE_CONFIRMED, $response)->save();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_TERMINATE_CONFIRMED, Yii::$app->request->getRawBody())->save();
         $conn->confirmCancel();
         return "";
     }
