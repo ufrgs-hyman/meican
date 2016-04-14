@@ -108,9 +108,9 @@ class NSIRequester implements Requester {
         $this->soapClient->requestReserve(
             $this->conn->external_id,
             $this->conn->version,
-            isset($changes->bandwidth) ? $this->conn->bandwidth : null,
+            $this->conn->bandwidth,
             isset($changes->start) ? DateUtils::fromDB($this->conn->start) : null,
-            isset($changes->end) ? DateUtils::fromDB($this->conn->finish) : null
+            DateUtils::fromDB($this->conn->finish)
         );
     }
 

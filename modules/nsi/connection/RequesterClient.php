@@ -171,14 +171,8 @@ class RequesterClient extends \SoapClient {
             if($startTime != null) 
                 $schedule["startTime"] = $startTime->format('Y-m-d\TH:i:s.000-00:00');
 
-            if($endTime != null) 
-                $schedule["endTime"] = $endTime->format('Y-m-d\TH:i:s.000-00:00');
+            $schedule["endTime"] = $endTime->format('Y-m-d\TH:i:s.000-00:00');
 
-            if (count($schedule) > 0) {
-                $schedule = new \SoapVar($schedule, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
-                $criteria["schedule"] = $schedule;
-            }
-        
         } else {
             
             $schedule = array(
