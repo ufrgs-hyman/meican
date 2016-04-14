@@ -173,6 +173,13 @@ class RequesterClient extends \SoapClient {
 
             $schedule["endTime"] = $endTime->format('Y-m-d\TH:i:s.000-00:00');
 
+            $p2ps = array(
+                    "capacity" => $bandwidth, 
+                    "directionality" => $directionality, 
+                    "symmetricPath" => $symmetricPath, 
+                    "parameter" => $parameter,
+            );
+
         } else {
             
             $schedule = array(
@@ -180,38 +187,37 @@ class RequesterClient extends \SoapClient {
                     "endTime" => $endTime->format('Y-m-d\TH:i:s.000-00:00')
             );
 
-        }
+            $pathSize = count($path);
+            $waypoints = new \ArrayObject();
             
-        $pathSize = count($path);
-        $waypoints = new \ArrayObject();
-        
-        if($pathSize > 2) {
-            for ($i = 1; $i < ($pathSize - 1); $i++) {
-                $stp = new \SoapVar(['stp'=>$path[$i]], SOAP_ENC_OBJECT, NULL, NULL, null, NULL);
-                $orderedSTP = new \SoapVar($stp, SOAP_ENC_OBJECT, NULL, NULL, 'orderedSTP', NULL);
-                $waypoints->append($orderedSTP);
-            }
-            
-            $ero = new \SoapVar($waypoints, SOAP_ENC_OBJECT, NULL, NULL, "ero", NULL);
+            if($pathSize > 2) {
+                for ($i = 1; $i < ($pathSize - 1); $i++) {
+                    $stp = new \SoapVar(['stp'=>$path[$i]], SOAP_ENC_OBJECT, NULL, NULL, null, NULL);
+                    $orderedSTP = new \SoapVar($stp, SOAP_ENC_OBJECT, NULL, NULL, 'orderedSTP', NULL);
+                    $waypoints->append($orderedSTP);
+                }
                 
-            $p2ps = array(
-                    "capacity" => $bandwidth, 
-                    "directionality" => $directionality, 
-                    "symmetricPath" => $symmetricPath, 
-                    "sourceSTP" => $path[0],  
-                    "destSTP" => $path[$pathSize-1], 
-                    "parameter" => $parameter, 
-                    $ero
-            );
-        } else {
-            $p2ps = array(
-                    "capacity" => $bandwidth, 
-                    "directionality" => $directionality, 
-                    "symmetricPath" => $symmetricPath, 
-                    "sourceSTP" => $path[0],  
-                    "destSTP" => $path[$pathSize-1], 
-                    "parameter" => $parameter,
-            );
+                $ero = new \SoapVar($waypoints, SOAP_ENC_OBJECT, NULL, NULL, "ero", NULL);
+                    
+                $p2ps = array(
+                        "capacity" => $bandwidth, 
+                        "directionality" => $directionality, 
+                        "symmetricPath" => $symmetricPath, 
+                        "sourceSTP" => $path[0],  
+                        "destSTP" => $path[$pathSize-1], 
+                        "parameter" => $parameter, 
+                        $ero
+                );
+            } else {
+                $p2ps = array(
+                        "capacity" => $bandwidth, 
+                        "directionality" => $directionality, 
+                        "symmetricPath" => $symmetricPath, 
+                        "sourceSTP" => $path[0],  
+                        "destSTP" => $path[$pathSize-1], 
+                        "parameter" => $parameter,
+                );
+            }
         }
     
         $schedule = new \SoapVar($schedule, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
