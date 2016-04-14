@@ -72,25 +72,21 @@ class ConnectionForm extends Model {
             $changes = [];
 
             $conn = Connection::findOne($this->id);
-            $conn->version = $conn->version + 1;
             if ($this->acceptRelease) {
                 if ($conn->getStartDateTime() != DateUtils::fromLocal($this->start)) {
                     $changes['start'] = DateUtils::localToUTC($this->start);
-                    $conn->start = $changes['start'];
                 }
 
                 if ($conn->bandwidth != $this->bandwidth) {
                     $changes['bandwidth'] = $this->bandwidth;
-                    $conn->bandwidth = $changes['bandwidth'];
                 }
             }
 
             if ($conn->getEndDateTime() != DateUtils::fromLocal($this->end)) {
                 $changes['end'] = DateUtils::localToUTC($this->end);
-                $conn->finish = $changes['end'];
             }
 
-            if((count($changes) > 0) && $conn->save()) {
+            if((count($changes) > 0)) {
                 return $conn->buildEvent(ConnectionEvent::TYPE_USER_UPDATE)
                     ->setData(json_encode($changes))
                     ->setAuthor(Yii::$app->user->getId())

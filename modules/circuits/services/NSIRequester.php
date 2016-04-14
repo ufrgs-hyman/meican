@@ -112,9 +112,9 @@ class NSIRequester implements Requester {
         Yii::trace($changes);
         $this->soapClient->requestReserve(
             $this->conn->external_id,
-            $this->conn->version,
+            $this->conn->version + 1,
             $this->conn->bandwidth,
-            isset($changes->start) ? DateUtils::fromDB($this->conn->start) : null,
+            DateUtils::fromDB($this->conn->start),
             DateUtils::fromDB($this->conn->finish),
             $path,
             $this->conn->getReservation()->asArray()->select(['name'])->one()['name']
