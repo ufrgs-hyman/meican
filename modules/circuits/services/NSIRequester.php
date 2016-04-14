@@ -102,6 +102,11 @@ class NSIRequester implements Requester {
     }
 
     public function update() {
+        $path = [];
+        foreach ($this->conn->getPaths()->all() as $point) {
+            $path[] = $point->getFullPortUrn()."?vlan=".$point->vlan;
+        }
+
         $event = $this->conn->getLastUserUpdateEvent();
         $changes = json_decode($event->data);
         Yii::trace($changes);
@@ -110,12 +115,14 @@ class NSIRequester implements Requester {
             $this->conn->version,
             $this->conn->bandwidth,
             isset($changes->start) ? DateUtils::fromDB($this->conn->start) : null,
-            DateUtils::fromDB($this->conn->finish)
+            DateUtils::fromDB($this->conn->finish),
+            $path,
+            $this->conn->getReservation()->asArray()->select(['name'])->one()['name']
         );
     }
 
     public function provision() {
-        $this->soapClient->requestCommit($this->conn->external_id);
+        $this->soapClient->requestProvision($this->conn->external_id);
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_PROVISION, $this->soapClient->__getLastRequest())->save();
     }
 }
