@@ -152,7 +152,7 @@ class RequesterClient extends \SoapClient {
      * @param $description String
      * @param $globalReservationId String opcional
      */
-    public function requestReserve($connectionId = null, $version, $bandwidth, $startTime, 
+    public function requestReserve($connectionId, $version, $bandwidth, $startTime, 
             $endTime, $path, $description, $globalReservationId = null) {
 
         $this->version = $version;
@@ -167,19 +167,12 @@ class RequesterClient extends \SoapClient {
 
         if ($connectionId != null) {
             $params["connectionId"] = $connectionId;
+        } 
 
-            if($startTime != null) 
-                $schedule["startTime"] = $startTime->format('Y-m-d\TH:i:s.000-00:00');
-
-            $schedule["endTime"] = $endTime->format('Y-m-d\TH:i:s.000-00:00');
-
-        } else {
-            
-            $schedule = array(
-                    "startTime" => $startTime->format('Y-m-d\TH:i:s.000-00:00'),
-                    "endTime" => $endTime->format('Y-m-d\TH:i:s.000-00:00')
-            );
-        }
+        $schedule = array(
+            "startTime" => $startTime->format('Y-m-d\TH:i:s.000-00:00'),
+            "endTime" => $endTime->format('Y-m-d\TH:i:s.000-00:00')
+        );
             
         $pathSize = count($path);
         $waypoints = new \ArrayObject();
