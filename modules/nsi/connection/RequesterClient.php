@@ -152,7 +152,7 @@ class RequesterClient extends \SoapClient {
      * @param $description String
      * @param $globalReservationId String opcional
      */
-    public function requestReserve($connectionId = null, $version, $bandwidth, $startTime = null, 
+    public function requestReserve($connectionId = null, $version, $bandwidth, $startTime, 
             $endTime, $path, $description, $globalReservationId = null) {
 
         $this->version = $version;
