@@ -152,56 +152,41 @@ class RequesterClient extends \SoapClient {
      * @param $description String
      * @param $globalReservationId String opcional
      */
-    public function requestReserve($connectionId = null, $version, $bandwidth = null, $startTime = null, 
-            $endTime = null, $path = null, $description = null, $globalReservationId = null) {
+    public function requestReserve($connectionId = null, $version, $bandwidth, $startTime = null, 
+            $endTime, $path, $description, $globalReservationId = null) {
 
         $this->version = $version;
         $serviceType = "http://services.ogf.org/nsi/2013/12/descriptions/EVTS.A-GOLE";
+        $directionality = "Bidirectional";
+        $symmetricPath = "true";
+        $parameter = "PROTECTED";
+        $criteria = [];
+        $criteria['serviceType'] = $serviceType;
+        $schedule = [];
+        $params = [];
 
         if ($connectionId != null) {
-            $params = array(
-                "connectionId" => $connectionId
-            );
-            
-            $schedule = [];
-            $criteria = [
-                'serviceType' => $serviceType
-            ];
+            $params["connectionId"] = $connectionId;
 
             if($startTime != null) 
-                $schedule["startTime"] = $startTime;
+                $schedule["startTime"] = $startTime->format('Y-m-d\TH:i:s.000-00:00');
 
             if($endTime != null) 
-                $schedule["endTime"] = $endTime;
-
-            if($bandwidth != null) {
-                $p2ps = array(
-                    "capacity" => $bandwidth
-                );
-                $p2ps = new \SoapVar($p2ps, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
-                $criteria["p2ps"] = $p2ps;
-            }
+                $schedule["endTime"] = $endTime->format('Y-m-d\TH:i:s.000-00:00');
 
             if (count($schedule) > 0) {
                 $schedule = new \SoapVar($schedule, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
                 $criteria["schedule"] = $schedule;
             }
         
-            $criteria = new \SoapVar($criteria, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
-            
-            $params["criteria"] = $criteria;
-            
         } else {
-
-            $directionality = "Bidirectional";
-            $symmetricPath = "true";
-            $parameter = "UNPROTECTED";
             
-            /** Creating the SOAP request **/
             $schedule = array(
                     "startTime" => $startTime->format('Y-m-d\TH:i:s.000-00:00'),
                     "endTime" => $endTime->format('Y-m-d\TH:i:s.000-00:00')
             );
+
+        }
             
             $pathSize = count($path);
             $waypoints = new \ArrayObject();
@@ -246,13 +231,11 @@ class RequesterClient extends \SoapClient {
         
             $criteria = new \SoapVar($criteria, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
         
-            $params = [];
             if ($globalReservationId)
                 $params["globalReservationId"] = $globalReservationId;
 
             $params["description"] = $description;
             $params["criteria"] = $criteria;
-
         }
 
         $this->setAggHeader();
