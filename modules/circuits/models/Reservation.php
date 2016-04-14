@@ -195,7 +195,7 @@ class Reservation extends \yii\db\ActiveRecord
     		$conn->dataplane_status = Connection::DATA_STATUS_INACTIVE;
     		$conn->auth_status = Connection::AUTH_STATUS_UNEXECUTED;
             $conn->protected = $this->protected;
-            $conn->version = 1;
+            $conn->version = 0;
             $conn->bandwidth = $this->bandwidth;
             $conn->gri = $this->gri;
 

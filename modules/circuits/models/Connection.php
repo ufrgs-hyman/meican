@@ -233,7 +233,7 @@ class Connection extends \yii\db\ActiveRecord
 	
 	//circuito confirmado e caminho disponivel. Se for uma reserva normal em submissao, solicitar autorizacao para provisionamento
 	public function confirmInfo() {
-		if ($this->status == self::STATUS_SUBMITTED && $this->getReservation()->one()->type == Reservation::TYPE_NORMAL) {	
+		if ($this->auth_status == self::AUTH_STATUS_UNSOLICITED && $this->getReservation()->one()->type == Reservation::TYPE_NORMAL) {	
 			
 			$this->requestAuthorization();
 		} 

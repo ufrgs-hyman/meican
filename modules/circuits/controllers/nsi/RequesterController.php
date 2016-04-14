@@ -130,12 +130,8 @@ class RequesterController extends Controller implements RequesterServer {
     public function errorEvent($response) {
         return "";
     }
-    
-    public function querySummaryConfirmed($response) {
-        Yii::trace($response);
-        $conn = Connection::find()->where(['external_id'=>$response->reservation->connectionId])->one();
-        $conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY_CONFIRMED, Yii::$app->request->getRawBody())->save();
 
+    private function updateAllConnections($response) {
         /*$reservation = $response->reservation;
         Yii::trace(print_r($reservation,true));
         foreach ($reservation as $connection) {
@@ -213,36 +209,47 @@ class RequesterController extends Controller implements RequesterServer {
                 }
             }
         }*/
+    }
+    
+    public function querySummaryConfirmed($response) {
         $conn = Connection::find()->where(['external_id'=>$response->reservation->connectionId])->one();
-
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY_CONFIRMED, Yii::$app->request->getRawBody())->save();
+        
         if ($conn) {
-            if($conn->status == Connection::STATUS_SUBMITTED) {
+            if($conn->version != $response->reservation->criteria->version) {
 
-                if($this->saveConnPath($conn, $response)) {
+                if($this->updateConnection($conn, $response)) {
                     $conn->confirmInfo();
                 
                 } else {
-                    
+                    Yii::trace("path invalid?");
                     /////Path invalido
                     /////Inconsistencias na topologia
                 }
-
-            //atualizar info da reserva
-            } else {
-                $conn->setActiveDataStatus($response->reservation->connectionStates->dataPlaneStatus->active)->save();
-            }
+            } 
+                
+            $conn->setActiveDataStatus($response->reservation->connectionStates->dataPlaneStatus->active)->save();
+            
         }
         return "";
     }
+
+
     
-    private function saveConnPath($conn, $response) {
-        //clean old paths
+    private function updateConnection($conn, $response) {
+        $conn->start = (new \DateTime($response->reservation->criteria->startTime))->format("Y-m-d H:i:s");
+        $conn->finish = (new \DateTime($response->reservation->criteria->endTime))->format("Y-m-d H:i:s");
+        $conn->save();
+
+        //updating path
+
+        //clean old points
         $oldPaths = $conn->getPaths()->all();
         foreach ($oldPaths as $oldPath) {
             $oldPath->delete();
         }
 
-        //save new paths
+        //save new points
         $pathNodes = $response->reservation->criteria->children->child;
         if (count($pathNodes) < 2) {
             $pathNodes = [$pathNodes];
@@ -301,5 +308,5 @@ $wsdl = Url::to('@web/wsdl/ogf_nsi_connection_requester_v2_0.wsdl', true);
 $requester = new \SoapServer($wsdl, array('encoding'=>'UTF-8'));
 $requester->setObject(new RequesterController('req', Module::getInstance()));
 $requester->handle();
-    
+
 ?>
