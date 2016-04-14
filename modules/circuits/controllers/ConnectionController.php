@@ -201,11 +201,12 @@ class ConnectionController extends RbacController {
      */
     public function actionUpdate($id = null, $submit = false, $confirm = false) {
         if ($confirm) {
+            self::asyncActionBegin();
             $conn = Connection::findOne($id);
             $conn->requestUpdate();
             return "";
         }
-        
+
         $form = new ConnectionForm;
         $form->load(Yii::$app->request->post());
 
