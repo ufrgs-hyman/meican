@@ -113,9 +113,9 @@ class NSIRequester implements Requester {
         $this->soapClient->requestReserve(
             $this->conn->external_id,
             $this->conn->version + 1,
-            $this->conn->bandwidth,
-            DateUtils::fromDB($this->conn->start),
-            DateUtils::fromDB($this->conn->finish),
+            isset($changes->bandwidth) ? DateUtils::fromDB($changes->bandwidth) : DateUtils::fromDB($this->conn->bandwidth),
+            isset($changes->start) ? DateUtils::fromDB($changes->start) : DateUtils::fromDB($this->conn->start),
+            isset($changes->end) ? DateUtils::fromDB($changes->end) : DateUtils::fromDB($this->conn->finish),
             $path,
             $this->conn->getReservation()->asArray()->select(['name'])->one()['name']
         );
