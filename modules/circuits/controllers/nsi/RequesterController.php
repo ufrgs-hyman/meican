@@ -132,6 +132,9 @@ class RequesterController extends Controller implements RequesterServer {
     }
     
     public function querySummaryConfirmed($response) {
+        $conn = Connection::find()->where(['external_id'=>$response->reservation->connectionId])->one();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY_CONFIRMED, Yii::$app->request->getRawBody())->save();
+
         /*$reservation = $response->reservation;
         Yii::trace(print_r($reservation,true));
         foreach ($reservation as $connection) {
