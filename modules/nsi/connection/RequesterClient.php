@@ -182,55 +182,54 @@ class RequesterClient extends \SoapClient {
 
         }
             
-            $pathSize = count($path);
-            $waypoints = new \ArrayObject();
-            
-            if($pathSize > 2) {
-                for ($i = 1; $i < ($pathSize - 1); $i++) {
-                    $stp = new \SoapVar(['stp'=>$path[$i]], SOAP_ENC_OBJECT, NULL, NULL, null, NULL);
-                    $orderedSTP = new \SoapVar($stp, SOAP_ENC_OBJECT, NULL, NULL, 'orderedSTP', NULL);
-                    $waypoints->append($orderedSTP);
-                }
-                
-                $ero = new \SoapVar($waypoints, SOAP_ENC_OBJECT, NULL, NULL, "ero", NULL);
-                    
-                $p2ps = array(
-                        "capacity" => $bandwidth, 
-                        "directionality" => $directionality, 
-                        "symmetricPath" => $symmetricPath, 
-                        "sourceSTP" => $path[0],  
-                        "destSTP" => $path[$pathSize-1], 
-                        "parameter" => $parameter, 
-                        $ero
-                );
-            } else {
-                $p2ps = array(
-                        "capacity" => $bandwidth, 
-                        "directionality" => $directionality, 
-                        "symmetricPath" => $symmetricPath, 
-                        "sourceSTP" => $path[0],  
-                        "destSTP" => $path[$pathSize-1], 
-                        "parameter" => $parameter,
-                );
+        $pathSize = count($path);
+        $waypoints = new \ArrayObject();
+        
+        if($pathSize > 2) {
+            for ($i = 1; $i < ($pathSize - 1); $i++) {
+                $stp = new \SoapVar(['stp'=>$path[$i]], SOAP_ENC_OBJECT, NULL, NULL, null, NULL);
+                $orderedSTP = new \SoapVar($stp, SOAP_ENC_OBJECT, NULL, NULL, 'orderedSTP', NULL);
+                $waypoints->append($orderedSTP);
             }
-        
-            $schedule = new \SoapVar($schedule, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
-            $p2ps = new \SoapVar($p2ps, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
-        
-            $criteria = array(
-                    "schedule" => $schedule,
-                    "serviceType" => $serviceType,
-                    "p2ps" => $p2ps
+            
+            $ero = new \SoapVar($waypoints, SOAP_ENC_OBJECT, NULL, NULL, "ero", NULL);
+                
+            $p2ps = array(
+                    "capacity" => $bandwidth, 
+                    "directionality" => $directionality, 
+                    "symmetricPath" => $symmetricPath, 
+                    "sourceSTP" => $path[0],  
+                    "destSTP" => $path[$pathSize-1], 
+                    "parameter" => $parameter, 
+                    $ero
             );
-        
-            $criteria = new \SoapVar($criteria, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
-        
-            if ($globalReservationId)
-                $params["globalReservationId"] = $globalReservationId;
-
-            $params["description"] = $description;
-            $params["criteria"] = $criteria;
+        } else {
+            $p2ps = array(
+                    "capacity" => $bandwidth, 
+                    "directionality" => $directionality, 
+                    "symmetricPath" => $symmetricPath, 
+                    "sourceSTP" => $path[0],  
+                    "destSTP" => $path[$pathSize-1], 
+                    "parameter" => $parameter,
+            );
         }
+    
+        $schedule = new \SoapVar($schedule, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
+        $p2ps = new \SoapVar($p2ps, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
+    
+        $criteria = array(
+                "schedule" => $schedule,
+                "serviceType" => $serviceType,
+                "p2ps" => $p2ps
+        );
+    
+        $criteria = new \SoapVar($criteria, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
+    
+        if ($globalReservationId)
+            $params["globalReservationId"] = $globalReservationId;
+
+        $params["description"] = $description;
+        $params["criteria"] = $criteria;
 
         $this->setAggHeader();
         
