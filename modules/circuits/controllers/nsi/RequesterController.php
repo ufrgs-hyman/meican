@@ -239,6 +239,7 @@ class RequesterController extends Controller implements RequesterServer {
     private function updateConnection($conn, $response) {
         $conn->start = (new \DateTime($response->reservation->criteria->schedule->startTime))->format("Y-m-d H:i:s");
         $conn->finish = (new \DateTime($response->reservation->criteria->schedule->endTime))->format("Y-m-d H:i:s");
+        $conn->version = $response->reservation->criteria->version;
         $conn->save();
 
         //updating path
