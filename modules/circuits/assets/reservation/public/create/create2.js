@@ -1,3 +1,8 @@
+/**
+ * @copyright Copyright (c) 2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican#license
+ */
+
 //var meicanGMap = new MeicanGMap("map-canvas");
 var meicanMap = new MeicanLMap('canvas');
 var meicanGraph = new MeicanVGraph("canvas");

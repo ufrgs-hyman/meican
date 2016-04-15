@@ -119,6 +119,9 @@ class NSIRequester implements Requester {
             $path,
             $this->conn->getReservation()->asArray()->select(['name'])->one()['name']
         );
+        
+        $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE, $this->soapClient->__getLastRequest())->save();
+        $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_RESPONSE, $this->soapClient->__getLastResponse())->save();
     }
 
     public function provision() {

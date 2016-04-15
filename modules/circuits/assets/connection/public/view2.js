@@ -1,3 +1,8 @@
+/**
+ * @copyright Copyright (c) 2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican#license
+ */
+
 var meicanMap = new MeicanLMap('canvas');
 var connIsApproved = true;
 var path;

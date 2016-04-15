@@ -1,7 +1,7 @@
 <?php
 /**
- * @copyright Copyright (c) 2012-2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @copyright Copyright (c) 2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
 namespace meican\circuits\models;
@@ -233,7 +233,7 @@ class Connection extends \yii\db\ActiveRecord
 	
 	//circuito confirmado e caminho disponivel. Se for uma reserva normal em submissao, solicitar autorizacao para provisionamento
 	public function confirmInfo() {
-		if ($this->auth_status == self::AUTH_STATUS_UNSOLICITED && $this->getReservation()->one()->type == Reservation::TYPE_NORMAL) {	
+		if ($this->auth_status == self::AUTH_STATUS_UNEXECUTED && $this->getReservation()->one()->type == Reservation::TYPE_NORMAL) {	
 			
 			$this->requestAuthorization();
 		} 
