@@ -1,10 +1,10 @@
 {
-    "name": "ufrgs-hyman/meican2",
+    "name": "ufrgs-hyman/meican",
     "description": "Web application for the management of dynamic circuits networks",
     "keywords": [
         "meican", "dynamic", "circuit", "network", "reservation", 
         "topology", "nsi", "dcn", "intradomain", "interdomain"],
-    "homepage": "https://github.com/ufrgs-hyman/meican2",
+    "homepage": "https://github.com/ufrgs-hyman/meican",
     "type": "project",
     "license": "BSD-2-License",
     "authors": [
@@ -18,9 +18,9 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/ufrgs-hyman/meican2/issues",
-        "docs": "https://github.com/ufrgs-hyman/meican2/tree/master/docs",
-        "source": "https://github.com/ufrgs-hyman/meican2"
+        "issues": "https://github.com/ufrgs-hyman/meican/issues",
+        "docs": "https://github.com/ufrgs-hyman/meican/tree/master/docs",
+        "source": "https://github.com/ufrgs-hyman/meican"
     },
     "minimum-stability": "stable",
     "require": {

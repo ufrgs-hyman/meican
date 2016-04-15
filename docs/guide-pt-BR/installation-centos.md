@@ -59,17 +59,17 @@ CREATE DATABASE IF NOT EXISTS `meican2`;
 
 #####Download e instalação do MEICAN
 
-Em uma pasta de acesso permitido ao usuário apache (e.g. /var/www) [baixe uma versão estável](https://github.com/ufrgs-hyman/meican2/releases) (recomendado):
+Em uma pasta de acesso permitido ao usuário apache (e.g. /var/www) [baixe uma versão estável](https://github.com/ufrgs-hyman/meican/releases) (recomendado):
 
 ```
-wget https://github.com/ufrgs-hyman/meican2/archive/#version#.tar.gz
+wget https://github.com/ufrgs-hyman/meican/archive/#version#.tar.gz
 tar -zxvf #version#.tar.gz
 ```
 
 ou, você pode efetuar o download da última versão (TALVEZ NÃO ESTÁVEL) do sistema diretamente do repositório GitHub:
 
 ```
-git clone https://github.com/ufrgs-hyman/meican2.git
+git clone https://github.com/ufrgs-hyman/meican.git
 ```
 
 Agora precisamos definir junto ao MEICAN as configurações do banco de dados local. Para isso deve-se acessar o seguinte arquivo:
@@ -135,4 +135,4 @@ user: master
 pass: master
 ```
 
-Este é o fim do Guia de Instalação. A próxima etapa é definir alguns parâmetros e configurar a aplicação. Veja o [Guia de Configuração](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide-pt-BR/configuration.md).
+Este é o fim do Guia de Instalação. A próxima etapa é definir alguns parâmetros e configurar a aplicação. Veja o [Guia de Configuração](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide-pt-BR/configuration.md).

@@ -39,7 +39,7 @@ $this->params['header'] = ["About", ['Home', 'About']];
               <b><?= Yii::t("home", 'License'); ?></b>
               <p><?= Yii::t("home", 'MEICAN is licenced under BSD2 License.');?></p>
               <b><?= Yii::t("home", 'Source code');?></b>
-              <p><?= Yii::t("home", 'The project is hosted by');?> <a href="https://github.com/ufrgs-hyman/meican2" target="blank">GitHub</a>.</p>
+              <p><?= Yii::t("home", 'The project is hosted by');?> <a href="https://github.com/ufrgs-hyman/meican" target="blank">GitHub</a>.</p>
             </div>
             <!-- /.box-body -->
           </div>

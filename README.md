@@ -54,11 +54,11 @@ web/                web accessible files, e.g., assets cache, wsdl files and ima
 
 ###Installation
 
-There is two specific installation guides, one for [CentOS 6](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide/installation-centos.md) and another for [Ubuntu 14](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide/installation-ubuntu.md).
+There is two specific installation guides, one for [CentOS 6](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-centos.md) and another for [Ubuntu 14](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-ubuntu.md).
 
 ###Configuration
 
-The documentation is [here](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide/configuration.md).
+The documentation is [here](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/configuration.md).
 
 ###User guide
 
@@ -66,9 +66,9 @@ A very short documentation is available on Help section of the application. The 
 
 ###Migration
 
-A complete migration of the application to another machine is detailed in this [guide](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide/migration.md).
+A complete migration of the application to another machine is detailed in this [guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/migration.md).
 
 ##LICENSE
 
 Copyright (c) 2012-2016 by [RNP](http://www.rnp.br).
-All rights reserved. MEICAN is released under of the BSD2 License. For more information see [LICENSE](https://github.com/ufrgs-hyman/meican2/blob/master/LICENSE.md).
+All rights reserved. MEICAN is released under of the BSD2 License. For more information see [LICENSE](https://github.com/ufrgs-hyman/meican/blob/master/LICENSE.md).

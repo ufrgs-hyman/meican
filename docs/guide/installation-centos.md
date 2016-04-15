@@ -55,17 +55,17 @@ CREATE DATABASE IF NOT EXISTS `meican2`;
 
 #####Download and install MEICAN
 
-In a public folder (e.g. /var/www) [download a stable version](https://github.com/ufrgs-hyman/meican2/releases):
+In a public folder (e.g. /var/www) [download a stable version](https://github.com/ufrgs-hyman/meican/releases):
 
 ```
-wget https://github.com/ufrgs-hyman/meican2/archive/#version#.tar.gz
+wget https://github.com/ufrgs-hyman/meican/archive/#version#.tar.gz
 tar -zxvf #version#.tar.gz
 ```
 
 or clone the Git repository with the latest version (MAY BE NOT STABLE):
 
 ```
-git clone https://github.com/ufrgs-hyman/meican2.git
+git clone https://github.com/ufrgs-hyman/meican.git
 ```
 
 Configure database settings:
@@ -129,4 +129,4 @@ user: master
 pass: master
 ```
 
-Next step is set parameters and configure the app. Look the [Configuration Guide](https://github.com/ufrgs-hyman/meican2/blob/master/docs/guide/configuration.md).
+Next step is set parameters and configure the app. Look the [Configuration Guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/configuration.md).
