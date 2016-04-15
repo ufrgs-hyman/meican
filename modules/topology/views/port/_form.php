@@ -1,0 +1,28 @@
+<?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican2#license
+ */
+
+use yii\bootstrap\ActiveForm;
+use yii\helpers\ArrayHelper;
+
+?>
+
+<?php
+$form=ActiveForm::begin(array(
+    'id'=> $formId,
+    'layout' => 'horizontal',
+)); ?>
+
+<?= $form->field($port,'name')->textInput(['size'=>50,'maxlength'=>50]); ?>
+<?= $form->field($port,'urn')->textInput(['size'=>50,'maxlength'=>16]); ?>
+<?= $form->field($port,'vlan_range')->textInput(['size'=>30,'maxlength'=>50]); ?>
+<?= $form->field($port,'max_capacity')->textInput(['size'=>30,'maxlength'=>20]); ?>
+<?= $form->field($port,'min_capacity')->textInput(['size'=>30,'maxlength'=>20]); ?>
+<?= $form->field($port,'granularity')->textInput(['size'=>30,'maxlength'=>30]); ?>
+<?= $form->field($port,'network_id')->dropDownList(ArrayHelper::map($networks->all(), 'id', 'name')); ?>
+<?= $form->field($port,'device_id')->dropDownList(ArrayHelper::map($devices->all(), 'id', 'name')); ?>
+
+
+<?php ActiveForm::end(); ?>

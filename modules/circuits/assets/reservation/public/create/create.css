@@ -1,0 +1,18 @@
+label.point-info {
+    margin-bottom: 0;
+}
+
+label.dom-l {
+    font-weight: normal;
+} 
+
+.qtip-content {
+    font-size: 12px;
+}
+
+.fc-toolbar .fc-center h2 {
+    margin-top: 10px;
+    margin-left:20px;
+    margin-right: 20px;
+    font-size: 17px;
+}

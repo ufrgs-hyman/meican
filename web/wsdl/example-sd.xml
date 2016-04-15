@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    The OGF takes no position regarding the validity or scope of any intellectual property or other rights that might be claimed to pertain to the implementation or use of the technology described in this document or the extent to which any license under such rights might or might not be available; neither does it represent that it has made any effort to identify any such rights.  Copies of claims of rights made available for publication and any assurances of licenses to be made available, or the result of an attempt made to obtain a general license or permission for the use of such proprietary rights by implementers or users of this specification can be obtained from the OGF Secretariat.
+    
+    The OGF invites any interested party to bring to its attention any copyrights, patents or patent applications, or other proprietary rights which may cover technology that may be required to practice this recommendation.  Please address the information to the OGF Executive Director.
+    
+    This document and the information contained herein is provided on an "As Is" basis and the OGF disclaims all warranties, express or implied, including but not limited to any warranty that the use of the information herein will not infringe any rights or any implied warranties of merchantability or fitness for a particular purpose.
+    
+    Copyright (C) Open Grid Forum (2009-2014). All Rights Reserved.
+    
+    This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this paragraph are included on all such copies and derivative works. However, this document itself may not be modified in any way, such as by removing the copyright notice or references to the OGF or other organizations, except as needed for the purpose of developing Grid Recommendations in which case the procedures for copyrights defined in the OGF Document process must be followed, or as required to translate it into languages other than English.
+    
+    The limited permissions granted above are perpetual and will not be revoked by the OGF or its successors or assignees.
+    
+    Open Grid Forum NSI Connection Services Protocol v2.0
+    
+    Description: This is an example Service Definition for the OGF NSI Connection Services Protocol v2.0. 
+-->
+
+<!-- A service definition must have a unique identifier within the network
+    sourcing the definition. -->
+<sd:serviceDefinition id="urn:ogf:network:netherlight.net:2013:service:EVTS.A-GOLE"
+    xmlns:sd="http://schemas.ogf.org/nsi/2013/12/services/definition"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schemas.ogf.org/nsi/2013/12/services/definition file:ogf_nsi_services_definition_v2_0.xsd">
+    
+    <!-- A comment describes the basic service offered in this service
+        definition.  Any differences from the global service definition
+        should be identified here. -->
+    <comment>
+        This is the Common Service Definition file that defines all parameters
+        associated with the Ethernet Framed Transport Service as defined for
+        the Automated GOLE network.
+        
+        In this example service definition document we define the Automated
+        GOLE Ethernet VLAN Transport Service based on IEEE 802.1Q Trunking.
+        In this service, all ports are considered E-NNI trunks, and there is
+        no concept of a client UNI.
+    </comment>
+
+    <!-- This is the standard service type as defined in the associated global
+        service definition. We allocate a standard namespace for each template
+        so they are globally unique. -->
+    <serviceType>http://services.ogf.org/nsi/2013/12/definitions/EVTS.A-GOLE</serviceType>
+    
+    <!-- This is the schema elements specified in a reservation.  There can be
+         multiple schema entries here for services if they require multiple
+         schema in a reserve request. 
+    
+         name - The name of the element carried in the reserve criteria.
+         
+         required - Is this element required in the reserve criteria or is it
+         optional.
+         
+         namespace - The qualified namesapce of the XML schema defining the
+         element.
+         
+         type - The XML schema type of the element.
+    -->
+    <schema name="p2ps" required="true"
+        namespace="http://schemas.ogf.org/nsi/2013/12/services/point2point"
+        type="{http://schemas.ogf.org/nsi/2013/12/services/point2point}P2PServiceBaseType">
+
+        <!-- Parameter definitions for the service and their values. These reflect
+             the XML schema definitions and any local range restrictions.  The
+             associated service XML schema is the definitive source for and type
+             and range definitions. If a parameter of the service is not contained
+             in this service descrption then it is not supported for this profile.
+        
+             Attributes:
+             
+             name - The name of the parameter within the XML schema for the
+             service.
+             
+             units - (Optinal) The unit of measurement for this parameter.
+             
+             required - Indicates if the parameter is mandatory or optional.
+             
+             modifiable - Can this parameter be modified after the initial
+             reservation has been created.  There are four values for modifiable:
+                false - parameter cannot be modified.
+                true - parameter can be modified and there are no restrictions.
+                pre - parameter can only be modified before schedule start time.
+                post - parameter can only be modified after schedule start time.
+                
+             namespace - The qualified namesapce of the XML schema defining the
+             parameter.
+             
+             type - The fully qualified XML schema type of the parameter.
+             
+             Elements:
+             
+             comment - Descriptive text describing the parameter.
+             
+             minInclusive, maxInclusive - Allows the specification of parameter
+             ranges.
+             
+             spacing - Allows for the specification of parameter value increments.
+             
+             default - The default for the parameter if a value is not specified.
+             This must not conflict with any default specified in the XML schema
+             definition for the parameter.
+        -->
+        <parameter name="capacity" units="Mbps" required="true" modifiable="true"
+            namespace="http://schemas.ogf.org/nsi/2013/12/services/point2point"
+            type="{http://www.w3.org/2001/XMLSchema}int">
+            <comment>
+                Capacity is defined to be the average quantity of data that will be
+                guaranteed to be transported per unit time from ingress to egress,
+                normalized to 1 second. The "capacity" for the EVTS instance
+                includes the ethernet frame header(s) but does not include sync
+                bits or any inter-frame gap considerations. Further, the EVTS
+                "capacity" attribute does not include any additional headers that
+                may be applied in transit.
+            </comment>
+            <minInclusive>0</minInclusive>
+            <maxInclusive>100000</maxInclusive>
+            <increment>1</increment>
+        </parameter>
+    
+        <!-- The service XML schema should fully define enumerated types, their
+             defaults, and optionality. This is here for informational purposes. -->
+        <parameter name="directionality" required="false" modifiable="false"
+            namespace="http://schemas.ogf.org/nsi/2013/12/services/point2point"
+            type="{http://schemas.ogf.org/nsi/2013/12/services/types}DirectionalityType">
+            <comment>
+                Directionality specifies whether the Connect requested is to be a
+                "unidirectional" or "bidirectional" circuit. The implications for
+                unidirectional are fairly obvious. However for bidirectional
+                connections the STPs must be defined as bi-directional. Note:
+                there may be ambiguity in certain topological scenarios where the
+                routing of the connection may not be clear.
+            </comment>
+            <default>Bidirectional</default>
+        </parameter>
+    
+        <!-- The service XML schema should fully define boolean types, their
+             defaults, and optionality. The only value for this being here is
+             informational and to indicate if the parameter can be modified. -->
+        <parameter name="symmetricPath" required="false" modifiable="false"
+            namespace="http://schemas.ogf.org/nsi/2013/12/services/point2point"
+            type="{http://www.w3.org/2001/XMLSchema}boolean">
+            <comment>
+                An indication that both directions of a bidirectional circuit must
+                follow the same path. Only applicable when directionality is
+                "Bidirectional". If not specified then value is assumed to be false.
+            </comment>
+            <default>false</default>
+        </parameter>
+    
+        <!-- This is here for informational purposes. The only value for this being
+             here is informational and to indicate if the parameter can be modified.
+        -->
+        <parameter name="sourceSTP" required="true" modifiable="false"
+            namespace="http://schemas.ogf.org/nsi/2013/12/services/point2point"
+            type="{http://schemas.ogf.org/nsi/2013/12/services/types}StpType">
+            <comment>
+                Source STP of the service.
+            </comment>
+        </parameter>
+    
+        <parameter name="destSTP" required="true" modifiable="false"
+            namespace="http://schemas.ogf.org/nsi/2013/12/services/point2point"
+            type="{http://schemas.ogf.org/nsi/2013/12/services/types}StpType">
+            <comment>
+                Destination STP of the service.
+            </comment>
+        </parameter>
+    
+        <parameter name="ero" required="false" modifiable="false"
+            namespace="http://schemas.ogf.org/nsi/2013/12/services/point2point"
+            type="{http://schemas.ogf.org/nsi/2013/12/services/types}StpListType">
+            <comment>
+                Hop-by-hop ordered list of STP from sourceSTP to destSTP. List does not include
+                sourceSTP and destSTP.
+            </comment>
+        </parameter>
+        
+        <parameter name="parameter" required="false" modifiable="false"
+                namespace="http://schemas.ogf.org/nsi/2013/12/services/point2point"
+                type="{http://schemas.ogf.org/nsi/2013/12/services/types}TypeValueType">
+            <parameter name="mtu" units="bytes" required="false" modifiable="false"
+                namespace="http://schemas.ogf.org/nml/2013/05/ethernet#mtu"
+                    type="{http://www.w3.org/2001/XMLSchema}int">
+                <comment> Specifies the maximum transmission unit size in bytes. </comment>
+                <minInclusive>1500</minInclusive>
+                <maxInclusive>9000</maxInclusive>
+                <increment>1</increment>
+                <default>9000</default>
+            </parameter>
+        </parameter>
+    </schema>
+    
+    <!-- Attributes are aspects of the service that are not specified in the
+         XML schema for the service. -->
+    
+    <!-- Framing describes the transport characteristics on the edge ports
+         supporting the service. -->
+    <attribute name="framing" type="IEEE 802.1Q Trunk">
+        <comment>IEEE 802.1Q is a standard for tagging Ethernet frames on a trunk link between Ethernet switches.</comment>
+    </attribute>
+    
+    <!-- This is an example of something that is not requested, but may be
+         interesting to someone looking for additional support. Perhaps
+         annotating support hours would be useful as well.
+     -->  
+    <attribute name="monitored"
+        namespace="http://services.ogf.org/nsi/2013/12/definitions/EVTS.A-GOLE">
+        <comment> Indicates this service is monitored. </comment>
+    </attribute>
+    
+    <!-- This is an example of a restriction on schedule duration that is
+        calcualted by (endTime - startTime).  Would this be considered policy?
+    -->
+    <attribute name="duration" units="seconds"
+        namespace="http://services.ogf.org/nsi/2013/12/definitions/ETS.A-GOLE">
+        <comment>
+            Indicates this service must not be shorter than 300 seconds nor
+            longer that 18000 seconds.
+        </comment>
+        <minInclusive>300</minInclusive>
+        <maxInclusive>18000</maxInclusive>
+    </attribute>
+    
+    <!-- Could we also bound times and days of week for schedule? -->
+    
+    <!-- Errors defined for this service. -->
+    <error id="00700" text="SERVICE_ERROR">
+        <comment>
+            Parent error classification for a service specific error. This
+            generic service error is generated for any errors that have not
+            been specifically enumerated.
+        </comment>
+    </error>
+    <error id="00701" text="UNKNOWN_STP">
+        <comment>
+            Could not find the specified STP within the topology database.
+            Variables will contain the unknown STP.
+        </comment>
+    </error>
+    <error id="00702" text="STP_RESOLUTION_ERROR">
+        <comment>
+            Could not resolve STP to a managing NSA. This would indicate that
+            the networkId component of the STP does not have a managing NSA
+            within the topology database. Variables will contain the unresolved
+            STP.
+        </comment>
+    </error>
+    <error id="00703" text="VLANID_INTERCANGE_NOT_SUPPORTED">
+        <comment>
+            VLAN interchange not supported for requested path. Variables will
+            contain the networkId of the network unable to support VLAN
+            interchange.
+        </comment>
+    </error>
+    <error id="00704" text="STP_UNAVALABLE">
+        <comment>
+            Specified STP already in use during the requested period. Variables
+            will contain the STP already in use.
+        </comment>
+    </error>
+    <error id="00705" text="BANDWIDTH_UNAVAILABLE">
+        <comment>
+            Insufficient bandwidth available for reservation. Variable will
+            contain requested capacity.
+        </comment>
+    </error>
+    <error id="00706" text="DIRECTIONALITY_NOT_SUPPORTED">
+        <comment>
+            Requested directionality is not supported. Variable will contain
+            requested directionality.
+        </comment>
+    </error>
+</sd:serviceDefinition>

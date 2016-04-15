@@ -1,0 +1,27 @@
+#calendar .fc-view-container {
+  /*box-shadow: 2px 2px 4px #888;*/
+}
+
+#calendar .ui-state-highlight {
+	border: 0px;
+	border-top: 1px solid #AAAAAA;
+	color: #3a5879;
+	font-weight: bold;
+}
+
+#calendar .ui-widget-header{
+	background: #27567c;
+	border: 1px solid #27567c !important;
+}
+
+#table .float-left {
+	text-align: left;
+}
+
+.fc-toolbar .fc-left{
+	margin-top: 10px;
+}
+
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}

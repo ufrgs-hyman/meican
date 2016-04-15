@@ -1,0 +1,27 @@
+.notification_new .notification_title{
+	font-weight: bold;
+}
+
+.notification_p{
+	white-space: pre-wrap;
+}
+
+.notification_date{
+	color: #999999 !important;
+	font-size: 10px !important;
+	padding: 3px !important;
+	padding-left: 5px !important;
+}
+
+.notification_date_img{
+	margin-right: 3px;
+}
+
+.notification_title{
+	word-wrap:break-word;
+	white-space: pre;
+}
+
+.navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a > p {
+	margin-left: 50px;
+}

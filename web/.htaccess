@@ -1,0 +1,8 @@
+RewriteEngine on
+ 
+# If a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI}  !^/Shibboleth.sso
+# Otherwise forward it to index.php
+RewriteRule . index.php
