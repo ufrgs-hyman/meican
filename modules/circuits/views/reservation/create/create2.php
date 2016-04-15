@@ -96,7 +96,7 @@ $form = ActiveForm::begin([
                                 </div>
                           </h3>
                         <div class="timeline-body" hidden>
-                            <div class="point-default">
+                            <div class="point-normal">
                               Network: <label data="" class="point-info net-l">none</label><br>
                               Device: <label data="" class="point-info dev-l">none</label><br>
                               Port: <label class="point-info port-l">none</label><br>
@@ -108,6 +108,7 @@ $form = ActiveForm::begin([
                             </div>
                             VLAN: <label class="point-info vlan-l">Auto</label>
                             <input class="vlan-input" type="hidden" name="ReservationForm[path][vlan][]">
+                            <input class="mode-input" type="hidden" name="ReservationForm[path][mode][]">
                             <div class="pull-right">
                                 <a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>
                                 <a href="#" class="text-muted"><i class="fa fa-trash"></i></a>
@@ -128,7 +129,7 @@ $form = ActiveForm::begin([
                                 </div>
                             </h3>
                             <div class="timeline-body" hidden>
-                                <div class="point-default">
+                                <div class="point-normal">
                                   Network: <label data="" class="point-info net-l">none</label><br>
                                   Device: <label data="" class="point-info dev-l">none</label><br>
                                   Port: <label class="point-info port-l">none</label><br>
@@ -140,6 +141,7 @@ $form = ActiveForm::begin([
                                 </div>
                                 VLAN: <label class="point-info vlan-l">Auto</label>
                                 <input class="vlan-input" type="hidden" name="ReservationForm[path][vlan][]">
+                                <input class="mode-input" type="hidden" name="ReservationForm[path][mode][]">
                                 <div class="pull-right">
                                     <a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>
                                     <a href="#" class="text-muted"><i class="fa fa-trash"></i></a>
@@ -255,14 +257,14 @@ Modal::begin([
     'footer' => '<button class="cancel-btn btn btn-default">Cancel</button> <button class="save-btn btn btn-primary">Save</button>',
 ]); ?>
 
-<label class="point-position" hidden></label>
+<label class="point-order" hidden></label>
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#p1" data-toggle="tab">Normal</a></li>
-      <li><a href="#p2" data-toggle="tab">Advanced</a></li>
+      <li class="active"><a href="#normal" data-toggle="tab">Normal</a></li>
+      <li><a href="#advanced" data-toggle="tab">Advanced</a></li>
     </ul>
     <div class="tab-content">
-      <div class="tab-pane active" id="p1">
+      <div class="tab-pane active" id="normal">
         <?php $form = \yii\bootstrap\ActiveForm::begin(['id'=>'point-form']);
         $pointForm = new \meican\circuits\forms\PointForm;
 
@@ -270,12 +272,18 @@ Modal::begin([
         echo $form->field($pointForm, 'network')->dropDownList([],['disabled'=>true]); 
         echo $form->field($pointForm, 'device')->dropDownList([],['disabled'=>true]); 
         echo $form->field($pointForm, 'port')->dropDownList([],['disabled'=>true]); 
-        echo $form->field($pointForm, 'vlan')->dropDownList([],['disabled'=>true]); ?>
+        echo $form->field($pointForm, 'vlan')->dropDownList([],['disabled'=>true]); 
+
+        \yii\bootstrap\ActiveForm::end(); ?>
       </div>
       <!-- /.tab-pane -->
-      <div class="tab-pane" id="p2">
-        <?php echo $form->field($pointForm, 'urn')->textInput(); 
+      <div class="tab-pane" id="advanced">
+        <?php $form = \yii\bootstrap\ActiveForm::begin(['id'=>'point-advanced-form']);
+        $pointForm = new \meican\circuits\forms\PointForm;
+
+        echo $form->field($pointForm, 'urn')->textInput(); 
         echo $form->field($pointForm, 'vlan_text')->textInput(); 
+
         \yii\bootstrap\ActiveForm::end(); ?>
       </div>
       <!-- /.tab-pane -->

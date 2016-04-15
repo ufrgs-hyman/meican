@@ -95,6 +95,55 @@ function initConfirmTab() {
     });
 }
 
+function showPointModal(pointElement, pointOrder, nodeId) {
+    $('#point-form').yiiActiveForm('resetForm');
+    $('#point-advanced-form').yiiActiveForm('resetForm');
+    clearSelect("pointform-network");
+    clearSelect("pointform-device");
+    clearSelect("pointform-port");
+    clearSelect("pointform-vlan");
+    $("#pointform-vlan_text").val('');
+    $('#pointform-urn').val('');
+
+    if(pointOrder != null) {
+        pointElement = $(".point")[pointOrder];
+        console.log(pointOrder, pointElement);
+    }
+    setPointModalMode($(pointElement).find(".mode-input").val());
+
+    if(nodeId) {
+        var marker = meicanMap.getMarker(nodeId);
+        $("#pointform-domain").val(marker.options.domainId);
+        fillNetworkSelect(marker.options.domainId);
+        fillDeviceSelect(marker.options.domainId, null, marker.options.id.replace('dev',''));
+        fillPortSelect(marker.options.id.replace('dev',''), $($(".point")[pointOrder]).find('.port-input').val());
+        $("#point-modal").find('.point-order').text(pointOrder); 
+    } else {
+        $("#pointform-domain").val($(pointElement).find('.dom-l').attr('data'));
+        fillNetworkSelect($(pointElement).find('.dom-l').attr('data'));
+        fillDeviceSelect($(pointElement).find('.dom-l').attr('data'), null, $(pointElement).find('.dev-l').attr('data'));
+        fillPortSelect($(pointElement).find('.dev-l').attr('data'), $(pointElement).find('.port-input').val()); 
+        fillVlanSelect($(pointElement).find('.port-input').val(), $(pointElement).find('.vlan-input').val()); 
+
+        $("#pointform-vlan_text").val($(pointElement).find('.vlan-input').val());
+        $('#pointform-urn').val($(pointElement).find('.urn-input').val());
+
+        //subtrai um no index pois os elementos sao de mesmo tipo mas o primeiro e ultimo sao de classes diferentes
+        $("#point-modal").find('.point-order').text($(pointElement).index() - 1); 
+    }
+    
+    $("#point-modal").modal("show");
+}
+
+function setPointModalMode(mode) {
+    console.log(mode);
+    if (mode == 'normal' || mode == "") {
+        $($('#point-modal').find("[data-toggle=tab]")[0]).tab('show');
+    } else {
+        $($('#point-modal').find("[data-toggle=tab]")[1]).tab('show');
+    }
+}
+
 function initPathTab() {
     $("#add-point").click(function() {
         addPoint();
@@ -102,20 +151,44 @@ function initPathTab() {
     });
 
     $("#point-modal").on('click','.save-btn',function() {
-        setPoint(
-            null,
-            $("#point-modal").find('.point-position').text(),
-            $("#pointform-domain").val(),
-            $("#pointform-domain option:selected").text(),
-            $("#pointform-network").val(),
-            $("#pointform-network").val() == '' ? 'none' : $("#pointform-network option:selected").text(),
-            $("#pointform-device").val(),
-            $("#pointform-device option:selected").text(),
-            $("#pointform-port").val(),
-            $("#pointform-port option:selected").text(),
-            null,
-            $("#pointform-vlan").val());
-        $("#point-modal").modal('hide');
+        if ($("#point-modal").find(".tab-pane.active").attr("id") == "normal") {
+            $("#point-form").yiiActiveForm("validateAttribute", 'pointform-domain');
+            $("#point-form").yiiActiveForm("validateAttribute", 'pointform-device');
+            $("#point-form").yiiActiveForm("validateAttribute", 'pointform-port');
+            $("#point-form").yiiActiveForm("validateAttribute", 'pointform-vlan');
+
+        } else {
+            $("#point-advanced-form").yiiActiveForm("validateAttribute", 'pointform-urn');
+            $("#point-advanced-form").yiiActiveForm("validateAttribute", 'pointform-vlan_text');
+        }
+
+        setTimeout(function() {
+            if($("#point-modal").find(".tab-pane.active").find(".has-error").length > 0) {
+                console.log("tem erro")
+                return false;
+            }
+
+            setPoint(
+                null,
+                $("#point-modal").find('.point-order').text(),
+                $("#point-modal").find(".tab-pane.active").attr("id"),
+                $("#pointform-domain").val(),
+                $("#pointform-domain option:selected").text(),
+                $("#pointform-network").val(),
+                $("#pointform-network").val() == '' ? 'none' : $("#pointform-network option:selected").text(),
+                $("#pointform-device").val(),
+                $("#pointform-device option:selected").text(),
+                $("#pointform-port").val(),
+                $("#pointform-port option:selected").text(),
+                $("#pointform-urn").val(),
+                $("#pointform-vlan").val(),
+                $("#pointform-vlan_text").val()
+            );                
+
+            $("#point-modal").modal('hide');
+
+        }, 200);
+        
         return false;
     });
 
@@ -237,7 +310,7 @@ function initPathTab() {
 }
 
 function initRequirementsTab() {
-    $("#bandwidth").on("click", '.minus', function() {
+    /*$("#bandwidth").on("click", '.minus', function() {
         if (!isNaN($("#bandwidth").find('input').val())) {
             var old = $("#bandwidth").find('input').val();
             var temp = parseInt($("#bandwidth").find('input').val()) - 100;
@@ -249,7 +322,7 @@ function initRequirementsTab() {
         if (!isNaN($("#bandwidth").find('input').val())) {
             $("#bandwidth").find('input').val(parseInt($("#bandwidth").find('input').val()) + 100);
         }
-    });
+    });*/
 }
 
 function initCalendar() {
@@ -271,7 +344,7 @@ function initCalendar() {
             },
             events: events,
             editable: true,
-            eventLimit: true, // allow "more" link when too many events
+            eventLimit: true,
         });
     }
 }
@@ -408,33 +481,6 @@ function prepareConfirmModal() {
     });
 }
 
-function showPointModal(pointElement, pointOrder, nodeId) {
-    $('#point-form').yiiActiveForm('resetForm');
-    clearSelect("pointform-network");
-    clearSelect("pointform-device");
-    clearSelect("pointform-port");
-    clearSelect("pointform-vlan");
-
-    if(nodeId) {
-        var marker = meicanMap.getMarker(nodeId);
-        $("#pointform-domain").val(marker.options.domainId);
-        fillNetworkSelect(marker.options.domainId);
-        fillDeviceSelect(marker.options.domainId, null, marker.options.id.replace('dev',''));
-        fillPortSelect(marker.options.id.replace('dev',''), $($(".point")[pointOrder]).find('.port-input').val());
-        $("#point-modal").find('.point-position').text(pointOrder); 
-    } else {
-        $("#pointform-domain").val($(pointElement).find('.dom-l').attr('data'));
-        fillNetworkSelect($(pointElement).find('.dom-l').attr('data'));
-        fillDeviceSelect($(pointElement).find('.dom-l').attr('data'), null, $(pointElement).find('.dev-l').attr('data'));
-        fillPortSelect($(pointElement).find('.dev-l').attr('data'), $(pointElement).find('.port-input').val()); 
-        fillVlanSelect($(pointElement).find('.port-input').val(), $(pointElement).find('.vlan-input').val());  
-        //subtrai um no index pois os elementos sao os mesmos mas o primeiro e ultimo sao de classes diferentes
-        $("#point-modal").find('.point-position').text($(pointElement).index() - 1); 
-    }
-    
-    $("#point-modal").modal("show");
-}
-
 function setSourcePoint(nodeId) {
     setPointByNode(0, nodeId);
 }
@@ -471,22 +517,42 @@ function setPointByNode(position, nodeId) {
     drawPath();
 }
 
-function setPoint(pointElement, pointOrder, domId, dom, netId, net, devId, dev, portId, port, urn, vlan) {
-    if(pointOrder) {
+function setPoint(pointElement, pointOrder, pointMode, domId, dom, netId, net, devId, dev, portId, port, urn, vlan, vlanAdvanced) {
+    if(pointOrder != null) {
         pointElement = $(".point")[pointOrder];
     }
-    $(pointElement).find('.dom-l').attr('data',domId);
-    $(pointElement).find('.dom-l').text(dom);
-    $(pointElement).find('.net-l').attr('data',netId);
-    $(pointElement).find('.net-l').text(net);
-    $(pointElement).find('.dev-l').attr('data', devId);
-    $(pointElement).find('.dev-l').text(dev);
-    $(pointElement).find('.port-input').val(portId);
-    $(pointElement).find('.port-l').text(port);
-    $(pointElement).find('.urn-input').val(urn);
-    $(pointElement).find('.urn-l').text(urn);
-    $(pointElement).find('.vlan-input').val(vlan);
-    $(pointElement).find('.vlan-l').text(vlan);
+
+    $(pointElement).find('.mode-input').val(pointMode);
+
+    if(pointMode == 'normal') {
+        $(pointElement).find(".point-advanced").hide();
+        $(pointElement).find(".point-normal").show();
+
+        $(pointElement).find('.dom-l').attr('data',domId);
+        $(pointElement).find('.dom-l').text(dom);
+        $(pointElement).find('.net-l').attr('data',netId);
+        $(pointElement).find('.net-l').text(net);
+        $(pointElement).find('.dev-l').attr('data', devId);
+        $(pointElement).find('.dev-l').text(dev);
+        $(pointElement).find('.port-input').val(portId);
+        $(pointElement).find('.port-l').text(port);
+
+        $(pointElement).find('.vlan-l').text(vlan);
+        $(pointElement).find('.vlan-input').val(vlan);
+    } else {
+        $(pointElement).find(".point-normal").hide();
+        $(pointElement).find(".point-advanced").show();
+
+        $(pointElement).find('.dom-l').text(urn.split(':')[3]);
+        console.log(urn.split(':')[3])
+
+        $(pointElement).find('.urn-input').val(urn);
+        $(pointElement).find('.urn-l').text(urn);
+
+        $(pointElement).find('.vlan-l').text(vlanAdvanced);
+        $(pointElement).find('.vlan-input').val(vlanAdvanced);
+    }
+    
     $(pointElement).find('.timeline-body').slideDown();
     var element = $(pointElement).find('.fa-plus'); 
     element.removeClass('fa-plus');
@@ -515,7 +581,7 @@ function buildPoint() {
                 '</div>'+
           '</h3>'+
         '<div class="timeline-body">'+
-            '<div class="point-default">'+
+            '<div class="point-normal">'+
               'Network: <label data="" class="point-info net-l">none</label><br>'+
               'Device: <label data="" class="point-info dev-l">none</label><br>'+
               'Port: <label class="point-info port-l">none</label><br>'+
@@ -527,6 +593,7 @@ function buildPoint() {
             '</div>'+
             'VLAN: <label class="point-info vlan-l">Auto</label>'+
             '<input class="vlan-input" type="hidden" name="ReservationForm[path][vlan][]">'+
+            '<input class="mode-input" type="hidden" name="ReservationForm[path][mode][]">'+
             '<div class="pull-right">'+
                 '<a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>'+
                 '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-trash"></i></a>'+
