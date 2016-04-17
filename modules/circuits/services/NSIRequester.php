@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2016 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -15,7 +15,7 @@ use meican\circuits\models\ConnectionPath;
 use meican\circuits\models\ConnectionEvent;
 use meican\circuits\models\Provider;
 use meican\circuits\models\CircuitsPreference;
-use meican\nsi\connection\RequesterClient;
+use meican\nsi\ConnectionRequesterClient;
 
 /**
  * Serviço que realiza requisições de circuitos em um ambiente NSI.
@@ -42,7 +42,7 @@ class NSIRequester implements Requester {
             $meicanRequesterUrl = Url::toRoute("/circuits/nsi/requester", "http");
         }
 
-        $this->soapClient = new RequesterClient(
+        $this->soapClient = new ConnectionRequesterClient(
             "urn:ogf:network:".CircuitsPreference::findOneValue(CircuitsPreference::MEICAN_NSA),
             $meicanRequesterUrl,
             "urn:ogf:network:".CircuitsPreference::findOneValue(CircuitsPreference::CIRCUITS_DEFAULT_PROVIDER_NSA),
