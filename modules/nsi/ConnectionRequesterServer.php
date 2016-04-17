@@ -1,10 +1,10 @@
 <?php
 /**
  * @copyright Copyright (c) 2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\nsi\connection;
+namespace meican\nsi;
 
 /**
  * Elemento responsável por receber e gerenciar as mensagens
@@ -16,7 +16,7 @@ namespace meican\nsi\connection;
  * 
  * @author Maurício Quatrin Guerreiro
  */
-interface RequesterServer {
+interface ConnectionRequesterServer {
     
     /**
      * This reserveConfirmed message is sent from a Provider NSA to

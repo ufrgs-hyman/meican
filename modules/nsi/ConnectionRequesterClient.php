@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\nsi\connection;
+namespace meican\nsi;
 
 use Yii;
 
@@ -15,7 +15,7 @@ use Yii;
  *
  * @author Maurício Quatrin Guerreiro
  */
-class RequesterClient extends \SoapClient {
+class ConnectionRequesterClient extends \SoapClient {
     
     private $requesterURL;
     private $providerNSA;
