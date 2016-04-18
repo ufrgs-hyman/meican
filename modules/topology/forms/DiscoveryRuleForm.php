@@ -11,11 +11,12 @@ use yii\data\ActiveDataProvider;
 
 use meican\topology\models\DiscoveryRule;
 use meican\topology\models\Service;
-use meican\topology\components\NSIParser;
-use meican\topology\controllers\services\DiscoveryClient;
+use meican\nsi\DiscoveryClient;
+use meican\nsi\NSIParser;
+use meican\nmwg\NMWGParser;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class DiscoveryRuleForm extends DiscoveryRule {
 
@@ -39,8 +40,8 @@ class DiscoveryRuleForm extends DiscoveryRule {
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(),[
-            'freq_enabled' => Yii::t('topology', 'Autosync by recurrence'),
-            'subscribe_enabled' => Yii::t('topology', 'Autosync by notification')
+            'freq_enabled' => Yii::t('topology', 'Discover by recurrence'),
+            'subscribe_enabled' => Yii::t('topology', 'Discover by notification')
         ]);
     }
 

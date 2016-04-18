@@ -11,7 +11,6 @@ use yii\helpers\Html;
 
 use meican\notification\models\Notification;
 use meican\base\components\DateUtils;
-use meican\topology\models\TopologyChange;
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
@@ -34,16 +33,16 @@ class TopologyNotification {
         if($notification == null) return "";
         $eventId = json_decode($notification->info);
 
-        $changesSize = TopologyChange::find()
+        $changesSize = Change::find()
             ->where(['sync_event_id'=>$eventId])->count();
 
-        $pendingChangesSize = TopologyChange::find()
-            ->where(['sync_event_id'=>$eventId])->andWhere(['in', 'status', [TopologyChange::STATUS_PENDING, TopologyChange::STATUS_FAILED]])->count();
+        $pendingChangesSize = Change::find()
+            ->where(['sync_event_id'=>$eventId])->andWhere(['in', 'status', [Change::STATUS_PENDING, Change::STATUS_FAILED]])->count();
 
-        $appliedChangesSize = TopologyChange::find()
-            ->where(['sync_event_id'=>$eventId, 'status'=>TopologyChange::STATUS_APPLIED])->count();
+        $appliedChangesSize = Change::find()
+            ->where(['sync_event_id'=>$eventId, 'status'=>Change::STATUS_APPLIED])->count();
 
-        $changes = TopologyChange::find()
+        $changes = Change::find()
             ->where(['sync_event_id'=>$eventId])->asArray()->groupBy(['domain'])->select(['domain'])->all();
 
         $title = Yii::t("notification", 'Topology change');

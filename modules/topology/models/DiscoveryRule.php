@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2016 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -9,8 +9,8 @@ namespace meican\topology\models;
 use Yii;
 
 use meican\base\components\DateUtils;
-use meican\topology\components\NSIParser;
-use meican\topology\components\NMWGParser;
+use meican\nsi\NSIParser;
+use meican\nmwg\NMWGParser;
 use meican\topology\models\TopologyNotification;
 
 /**
@@ -26,7 +26,7 @@ use meican\topology\models\TopologyNotification;
  * @property string $subscription_id
  * @property string $url
  *
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class DiscoveryRule extends \yii\db\ActiveRecord
 {
@@ -65,9 +65,9 @@ class DiscoveryRule extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('topology', 'ID'),
-            'auto_apply' => Yii::t('topology', 'Apply method'),
+            'auto_apply' => Yii::t('topology', 'Apply changes method'),
             'type' => Yii::t('topology', 'Type'),
-            'subscription_id' => Yii::t('topology', 'Autosync by notification'),
+            'subscription_id' => Yii::t('topology', 'Start by notification'),
             'name' => Yii::t('topology', 'Name'),
             'url' => Yii::t('topology', 'URL'),
             'provider_nsa' => Yii::t('topology', 'Provider NSA ID'),
@@ -98,8 +98,8 @@ class DiscoveryRule extends \yii\db\ActiveRecord
 
     static function getProtocols() {
         return [
-            ['id'=> self::PROTOCOL_NSI_DS, 'name'=> Yii::t('topology', 'NSI Discovery Service 1.0')],
             ['id'=> self::PROTOCOL_HTTP, 'name'=> Yii::t('topology', 'HTTP')],
+            ['id'=> self::PROTOCOL_NSI_DS, 'name'=> Yii::t('topology', 'NSI Discovery Service 1.0')],
         ];
     }
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2016 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -17,20 +17,22 @@ use meican\topology\models\Change;
 use meican\topology\services\DiscoveryService;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class DiscoveryController extends RbacController {
 
     public function actionIndex() {
         $changeProvider = new ActiveDataProvider([
-            'query' => Change::find()->groupBy(['domain'])->select(['*,COUNT(*) AS count']),
+            'query' => Change::find()->where(['status'=>Change::STATUS_APPLIED])->groupBy(['domain'])->select(['*,COUNT(*) AS count']),
+            'sort' => false,
             'pagination' => [
                 'pageSize' => 10,
             ],
         ]);
 
         $taskProvider = new ActiveDataProvider([
-            'query' => DiscoveryTask::find(),
+            'query' => DiscoveryTask::find()->orderBy('id DESC'),
+            'sort' => false,
             'pagination' => [
                 'pageSize' => 5,
             ],
@@ -38,8 +40,9 @@ class DiscoveryController extends RbacController {
 
         $ruleProvider = new ActiveDataProvider([
             'query' => DiscoveryRule::find(),
+            'sort' => false,
             'pagination' => [
-                'pageSize' => 10,
+                'pageSize' => 5,
             ],
         ]);
         
@@ -50,11 +53,9 @@ class DiscoveryController extends RbacController {
         ));
     }
 
-    public function actionDiscover($id) { 
+    public function actionExecute($rule) { 
         $ds = new DiscoveryService;
-        $ds->execute($id);
-        
-        $this->redirect("index");
+        return $ds->execute(new DiscoveryTask, DiscoveryRule::findOne($rule));
     }
 
     public function actionTask($id) {

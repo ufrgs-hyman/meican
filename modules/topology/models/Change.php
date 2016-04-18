@@ -817,16 +817,18 @@ class Change extends \yii\db\ActiveRecord
                         return Yii::t('topology', '<b>Device</b>: {node}', 
                             ['node' => $data->node]).$location;
                     case self::ITEM_TYPE_BIPORT:                         
-                        $vlan = $data->vlan ? Yii::t('topology',' - <b>VLAN Range</b>: {vlan}', 
+                        $vlan = $data->vlan ? Yii::t('topology','<br><b>VLAN Range</b>: {vlan}', 
                             ['vlan'=> $data->vlan]) : "";
-                        return Yii::t('topology', '<b>Bidirectional Port</b>: {urn}',['urn'=>$data->urn]).$vlan;
+                        return Yii::t('topology', '<b>Device</b>: {node}<br><b>Port</b>: {urn}',
+                            ['urn'=>$data->urn, 'node'=> $data->node]).$vlan;
                     case self::ITEM_TYPE_UNIPORT: 
-                        $vlan = $data->vlan ? Yii::t('topology',' - <b>VLAN Range</b>: {vlan}', 
+                        $vlan = $data->vlan ? Yii::t('topology','<br><b>VLAN Range</b>: {vlan}', 
                             ['vlan'=> $data->vlan]) : "";
-                        return Yii::t('topology', '<b>Unidirectional Port</b>: {urn}',['urn'=>$data->urn]).$vlan;
+                        return Yii::t('topology', '<b>Bidirectional Port</b>: {biPortUrn}<br><b>Port</b>: {urn}',
+                            ['urn'=>$data->urn, 'biPortUrn'=>$data->biPortUrn]).$vlan;
                     case self::ITEM_TYPE_LINK: 
-                        return Yii::t('topology', '<b>Link to</b>: {dst_urn}', 
-                            ['dst_urn'=> $data->dst_urn]);
+                        return Yii::t('topology', '<b>From</b>: {src}<br><b>To</b>: {dst}', 
+                            ['dst'=> $data->dst_urn, 'src'=> $data->urn]);
                     default: return Yii::t('topology', 'Error');
                 }
         }

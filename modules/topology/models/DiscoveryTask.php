@@ -8,6 +8,8 @@ namespace meican\topology\models;
 
 use Yii;
 
+use meican\scheduler\api\SchedulableTask;
+
 /**
  * Esta classe representa uma execução realizada pelo 
  * serviço de descobrimento (DiscoveryService). A partir
@@ -25,8 +27,8 @@ use Yii;
  *
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class DiscoveryTask extends \yii\db\ActiveRecord
-{
+class DiscoveryTask extends \yii\db\ActiveRecord implements SchedulableTask {
+
     const STATUS_INPROGRESS = "INPROGRESS";
     const STATUS_SUCCESS = "SUCCESS";
     const STATUS_FAILED = "FAILED";
@@ -77,6 +79,12 @@ class DiscoveryTask extends \yii\db\ActiveRecord
     public function getRule()
     {
         return $this->hasOne(DiscoveryRule::className(), ['id' => 'sync_id']);
+    }
+
+    public function execute($ruleId) {
+        $rule = DiscoveryRule::findOne($ruleId);
+        $ds = new DiscoveryService; 
+        $ds->execute($this, $rule);
     }
 
     public function applyChanges() {

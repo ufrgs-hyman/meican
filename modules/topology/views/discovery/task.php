@@ -1,10 +1,9 @@
 <?php 
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2016 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-use yii\grid\CheckboxColumn;
 use yii\widgets\DetailView;
 use yii\widgets\Pjax;
 use yii\bootstrap\Html;
@@ -12,17 +11,15 @@ use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 
 use meican\base\grid\Grid;
-use meican\base\components\LinkColumn;
-use meican\base\widgets\GridButtons;
+use meican\base\grid\GridButtons;
 use meican\topology\models\Change;
-use meican\topology\assets\sync\ChangeAsset;
 
-ChangeAsset::register($this);
+\meican\topology\assets\discovery\Task::register($this);
 
 $this->params['header'] = [Yii::t('topology',"Discovery Task"), ['Home', 'Topology', 'Discovery', 'Task']];
 
 ?>
-
+<data id="task-id" value="<?= $model->id; ?>"/>
 <div class="box box-default">
     <div class="box-header with-border">
         <h3 class="box-title"><?= Yii::t("topology", "Info"); ?></h3>
@@ -31,7 +28,7 @@ $this->params['header'] = [Yii::t('topology',"Discovery Task"), ['Home', 'Topolo
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
-                'started_at',               
+                'started_at:datetime',               
                 'status',  
             ],
         ]); ?>
@@ -43,6 +40,7 @@ $this->params['header'] = [Yii::t('topology',"Discovery Task"), ['Home', 'Topolo
         <h3 class="box-title"><?= Yii::t("topology", "Discovered changes"); ?></h3>
     </div>
     <div class="box-body">
+        <button class="btn btn-default" id="apply-all">Apply all changes</button><br>
         <?php
 
         Pjax::begin([
@@ -90,15 +88,7 @@ $this->params['header'] = [Yii::t('topology',"Discovery Task"), ['Home', 'Topolo
                     'value' => function($model) {
                         return $model->getItemType();
                     },
-                    'headerOptions'=>['style'=>'width: 9%;'],
-                ],
-                [
-                    'header' => Yii::t('topology', 'Parent'),
-                    'format' => 'raw',
-                    'value' => function($model) {
-                        return $model->getParentInfo();
-                    },
-                    'headerOptions'=>['style'=>'width: 16%;'],
+                    'headerOptions'=>['style'=>'width: 12%;'],
                 ],
                 [
                     'attribute' => 'data',
@@ -107,7 +97,7 @@ $this->params['header'] = [Yii::t('topology',"Discovery Task"), ['Home', 'Topolo
                     'value' => function($model) {
                         return $model->getDetails();
                     },
-                    'headerOptions'=>['style'=>'width: 45%;'],
+                    'headerOptions'=>['style'=>'width: 30%;'],
                 ],
                 [
                     'header' => 'Status',

@@ -11,15 +11,11 @@ use yii\helpers\ArrayHelper;
 
 use meican\topology\models\Service;
 use meican\topology\models\DiscoveryRule;
-use meican\topology\assets\sync\SyncFormAsset;
-
-SyncFormAsset::register($this);
 
 $this->params['header'] = [Yii::t('topology', 'Discovery'), ['Home', 'Topology']];
 
 $form= ActiveForm::begin([
     'id'        => 'rule-form',
-    'method'    => 'post',
     'layout'    => 'horizontal'
 ]); 
 
@@ -40,12 +36,12 @@ $form= ActiveForm::begin([
     </div>
         <?php echo $form->field($model,'freq_enabled')->dropDownList(ArrayHelper::map(
             [['id'=>false, 'name'=>Yii::t("topology", 'Disabled')],['id'=>true,'name'=>Yii::t("topology", 'Enabled')]], 'id', 'name'));
-            echo '<a id="cron-open-link" style="float: left;
+            /*echo '<a id="cron-open-link" style="float: left;
     width: 130px;
     margin-left: 0px;
     margin-right: 10px;
     text-align: right;
-    font-size: 100%;" href="#">'.Yii::t("topology", "Set recurrence").'</a>'; ?>
+    font-size: 100%;" href="#">'.Yii::t("topology", "Set recurrence").'</a>'; */?>
         <?= $form->field($model,'auto_apply')->dropDownList(ArrayHelper::map(
             [['id'=>false, 'name'=>Yii::t("topology", 'Manually')],['id'=>true,'name'=>Yii::t("topology", 'Automatically')]], 'id', 'name')); ?>
         <?= $form->field($model,'url')->textInput(['size'=>50]); ?>

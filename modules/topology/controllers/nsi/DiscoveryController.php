@@ -9,8 +9,8 @@ namespace meican\topology\controllers;
 use yii\web\Controller;
 use Yii;
 
-use meican\topology\models\TopologySynchronizer;
-use meican\topology\components\models\NSIParser;
+use meican\topology\services\DiscoveryService;
+use meican\nsi\NSIParser;
 
 /**
  * Classe que implementa o módulo Servidor do protocolo NSI Document Distribution Service (DDS), 

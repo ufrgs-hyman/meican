@@ -9,49 +9,17 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 use meican\base\grid\Grid;
+use meican\base\grid\GridButtons;
 use meican\base\grid\IcheckboxColumn;
-use meican\base\components\LinkColumn;
-use meican\base\widgets\GridButtons;
-use meican\topology\assets\discovery\IndexAsset;
 
-IndexAsset::register($this);
+\meican\topology\assets\discovery\Index::register($this);
 
 $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']];
 
 ?>
 
 <div class="row">
-    <div class="col-md-6">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t("topology", "Last changes"); ?></h3>
-            </div>
-            <div class="box-body">
-                <?php
-
-                echo Grid::widget([
-                    'id'=> 'change-grid',
-                    'dataProvider' => $changeProvider,
-                    'columns' => array(
-                            [
-                                'header' => Yii::t("topology", "Discovered at"),
-                                'value' => function ($model){
-                                    return $model->getTask()->one()->started_at;
-                                },
-                            ],
-                            'domain',
-                            [
-                                'header' => Yii::t("topology", "Total"),
-                                'value' => function ($model){
-                                    return $model->count;
-                                },
-                            ],
-                        ),
-                    ]);
-                ?>
-            </div>
-        </div>  
-    </div>
+    
     <div class="col-md-6">
         <div class="box box-default">
             <div class="box-header with-border">
@@ -65,11 +33,13 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
                     'dataProvider' => $taskProvider,
                     'columns' => array(
                             [
-                                'format' => 'raw',
-                                'value' => function ($model){
-                                    return '<a href="'.Url::toRoute(["/topology/discovery/task",'id'=>$model->id]).'">'.
-                                        Html::img('@web/images/eye.png')."</a>";
-                                },
+                                'class' => 'yii\grid\ActionColumn',
+                                'template'=>'{task}',
+                                'buttons' => [
+                                        'task' => function ($url, $model) {
+                                            return Html::a('<span class="fa fa-eye"></span>', $url);
+                                        }
+                                ],
                                 'headerOptions'=>['style'=>'width: 2%;'],
                             ],
                             [
@@ -78,7 +48,7 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
                                     return $model->getRule()->one()->name;
                                 },
                             ],
-                            'started_at',
+                            'started_at:datetime',
                             'status',
                             [
                                 'header' => Yii::t("topology", "Discovered changes"),
@@ -118,35 +88,27 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
                                 'multiple'=>false,
                                 'headerOptions'=>['style'=>'width: 2%;'],
                             ),
-                            array(
-                                'class'=> LinkColumn::className(),
-                                'image'=>'/images/edit_1.png',
-                                'label' => '',
-                                'url' => 'update',
-                                'headerOptions'=>['style'=>'width: 2%;'],
-                            ),
                             [
-                                'format' => 'raw',
-                                'value' => function ($model){
-                                    return '<a href="'.Url::toRoute(["/topology/discovery/view",'id'=>$model->id]).'">'.
-                                        Html::img('@web/images/eye.png')."</a>";
-                                },
+                                'class' => 'yii\grid\ActionColumn',
+                                'template'=>'{update-rule}',
+                                'buttons' => [
+                                        'update-rule' => function ($url, $model) {
+                                            return Html::a('<span class="fa fa-pencil"></span>', $url);
+                                        }
+                                ],
                                 'headerOptions'=>['style'=>'width: 2%;'],
                             ],
                             [
-                                'format' => 'raw',
-                                'value' => function ($model){
-                                    return '<a href="#">'.Html::img('@web/images/arrow_circle_double.png', ['class' => "sync-button"])."</a>";
-                                },
+                                'class' => 'yii\grid\ActionColumn',
+                                'template'=>'{execute}',
+                                'buttons' => [
+                                        'execute' => function ($url, $model) {
+                                            return Html::a('<span class="fa fa-compass execute-discovery"></span>', '#');
+                                        }
+                                ],
                                 'headerOptions'=>['style'=>'width: 2%;'],
                             ],
                             "name",
-                            [
-                                'header' => Yii::t("topology", "Auto Discovery"),
-                                'value' => function ($model){
-                                    return "Scheduled, on Notification";
-                                },
-                            ],
                             [
                                 'attribute'=> 'auto_apply',
                                 'value' => function($model) {
@@ -157,6 +119,38 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
                     ]);
 
                     ActiveForm::end();
+                ?>
+            </div>
+        </div>  
+    </div>
+    <div class="col-md-6">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= Yii::t("topology", "Last applied changes"); ?></h3>
+            </div>
+            <div class="box-body">
+                <?php
+
+                echo Grid::widget([
+                    'id'=> 'change-grid',
+                    'dataProvider' => $changeProvider,
+                    'columns' => array(
+                        [
+                            'header' => Yii::t("topology", "Discovered at"),
+                            'value' => function ($model){
+                                return $model->getTask()->one()->started_at;
+                            },
+                        ],
+                        'domain',
+                        [
+                            'header' => Yii::t("topology", "Total"),
+                            'value' => function ($model){
+                                return $model->count;
+                            },
+                        ],
+                    ),
+                ]);
+
                 ?>
             </div>
         </div>  

@@ -28,7 +28,11 @@ class ConnectionController extends RbacController {
 
     public $defaultAction = "view";
 
-    public function actionView($id) {
+    public function actionView($id = null) {
+        if($id == null) {
+            $this->redirect(['reservation/status']);
+        }
+
         if (is_numeric($id)) {
             $conn = Connection::findOne($id);
         } else {

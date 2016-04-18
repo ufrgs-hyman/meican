@@ -24,7 +24,7 @@ echo Menu::widget([
                 ['label'=>Yii::t('circuits','Status'),'url'=>['/circuits/reservation/status']],
                 ['label'=>Yii::t('circuits','History'),'url'=>['/circuits/reservation/history']],
                 ['label'=>Yii::t('circuits','Authorization'),'url'=>['/circuits/authorization/index']],
-                ['label'=>Yii::t('circuits','Configuration'),'url'=>['/circuits/configuration/index'], 'visible'=>RbacController::can('configuration/read')]
+                ['label'=>Yii::t('circuits','Configuration'),'url'=>['/circuits/configuration'], 'visible'=>RbacController::can('configuration/read')]
             ]
         ],
         [
@@ -42,14 +42,13 @@ echo Menu::widget([
             'url' => '#',
             'icon' => 'fa fa-globe',
             'items'=>[
-                ['label'=>Yii::t('topology','Domains'), 'url'=>['/topology/domain/index'], 'visible'=>RbacController::can('domain/read')],
-                ['label'=>Yii::t('topology','Providers'), 'url'=>['/topology/provider/index'], 'visible'=>RbacController::can('domain/read')],
-                ['label'=>Yii::t('topology','Networks'), 'url'=>['/topology/network/index'], 'visible'=>RbacController::can('domainTopology/read')],
-                ['label'=>Yii::t('topology','Devices'), 'url'=>['/topology/device/index'], 'visible'=>RbacController::can('domainTopology/read')],
-                ['label'=>Yii::t('topology','Ports'), 'url'=>['/topology/port/index'], 'visible'=>RbacController::can('domainTopology/read')],
-                ['label'=>Yii::t('topology','Viewer'), 'url'=>['/topology/viewer/index'], 'visible'=>(RbacController::can("domainTopology/read") || RbacController::can("domain/read"))],
-                ['label'=>Yii::t('topology','Discovery'), 'url'=>['/topology/discovery/index']],
-                ['label'=>Yii::t('topology','Changes'), 'url'=>['/topology/change/applied'], 'visible'=>RbacController::can('discovery/read')],
+                ['label'=>Yii::t('topology','Domains'), 'url'=>['/topology/domain'], 'visible'=>RbacController::can('domain/read')],
+                ['label'=>Yii::t('topology','Providers'), 'url'=>['/topology/provider'], 'visible'=>RbacController::can('domain/read')],
+                ['label'=>Yii::t('topology','Networks'), 'url'=>['/topology/network'], 'visible'=>RbacController::can('domainTopology/read')],
+                ['label'=>Yii::t('topology','Devices'), 'url'=>['/topology/device'], 'visible'=>RbacController::can('domainTopology/read')],
+                ['label'=>Yii::t('topology','Ports'), 'url'=>['/topology/port'], 'visible'=>RbacController::can('domainTopology/read')],
+                ['label'=>Yii::t('topology','Viewer'), 'url'=>['/topology/viewer'], 'visible'=>(RbacController::can("domainTopology/read") || RbacController::can("domain/read"))],
+                ['label'=>Yii::t('topology','Discovery'), 'url'=>['/topology/discovery']],
             ],
             'visible'=>(RbacController::can('domainTopology/read') || RbacController::can('discovery/read'))
         ],

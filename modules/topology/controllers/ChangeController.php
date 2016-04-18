@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2016 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -10,28 +10,14 @@ use yii\data\ActiveDataProvider;
 use Yii;
 
 use meican\aaa\RbacController;
-use meican\topology\models\TopologySynchronizer;
+use meican\topology\services\DiscoveryService;
 use meican\topology\models\Change;
-use meican\topology\models\TopologySyncEvent;
+use meican\topology\models\DiscoveryTask;
 
 /**
- * @author Maurício Quatrin Guerreiro <@mqgmaster>
+ * @author Maurício Quatrin Guerreiro
  */
 class ChangeController extends RbacController {
-
-    public function actionPending($eventId) {
-    	if(!self::can("synchronizer/read")){
-    		return $this->goHome();
-    	}
-    	
-        $searchModel = new TopologyChange;
-        $dataProvider = $searchModel->searchPending(Yii::$app->request->get(), $eventId);
-
-        return $this->render('pending', [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-            'eventId' => $eventId]);
-    }   
 
     public function actionApplied($eventId=null) {
     	if(!self::can("synchronizer/read")){
@@ -46,10 +32,10 @@ class ChangeController extends RbacController {
             'searchModel' => $searchModel]);
     }  
 
-    public function actionApplyAll($eventId) {
-        $event = TopologySyncEvent::findOne($eventId);
+    public function actionApplyAll($task) {
+        $task = DiscoveryTask::findOne($task);
         try {
-            $event->applyChanges();
+            $task->applyChanges();
         } catch (\Exception $e) {
             return false;
         }

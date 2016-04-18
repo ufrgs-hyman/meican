@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2016 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -9,8 +9,8 @@ namespace meican\topology\services;
 use Yii;
 
 use meican\base\components\DateUtils;
-use meican\topology\components\NSIParser;
-use meican\topology\components\NMWGParser;
+use meican\nsi\NSIParser;
+use meican\nmwg\NMWGParser;
 use meican\topology\models\TopologyNotification;
 use meican\topology\models\DiscoveryTask;
 use meican\topology\models\DiscoveryRule;
@@ -22,7 +22,6 @@ use meican\topology\models\Provider;
 use meican\topology\models\Service;
 use meican\topology\models\Peering;
 use meican\topology\models\Change;
-use meican\scheduler\api\SchedulableTask;
 
 /**
  * This is the MEICAN Network Topology Discovery Service.
@@ -34,34 +33,29 @@ use meican\scheduler\api\SchedulableTask;
  * applied on local MEICAN topology. View Change class for more information about
  * apply methods.
  *
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
-class DiscoveryService implements SchedulableTask {
+class DiscoveryService {
     
     public $parser;
-    public $syncEvent;
+    public $task;
     public $detectedChanges = false;
-
-    public function execute($ruleId) {
-        $rule = DiscoveryRule::findOne($ruleId);
-        $this->discover($rule);
-    }
 
     private function buildChange() {
         if(!$this->detectedChanges) $this->detectedChanges = true;
         $change = new Change;
-        $change->sync_event_id = $this->syncEvent->id;
+        $change->sync_event_id = $this->task->id;
         $change->status = Change::STATUS_PENDING;
         return $change;
     }
 
-    public function discover($rule) {
-        $this->syncEvent = new DiscoveryTask;
-        $this->syncEvent->started_at = DateUtils::now();
-        $this->syncEvent->progress = 0;
-        $this->syncEvent->sync_id = $rule->id;
-        $this->syncEvent->status = DiscoveryTask::STATUS_INPROGRESS;
-        $this->syncEvent->save();
+    public function execute($task, $rule) {
+        $this->task = $task;
+        $this->task->started_at = DateUtils::now();
+        $this->task->progress = 0;
+        $this->task->sync_id = $rule->id;
+        $this->task->status = DiscoveryTask::STATUS_INPROGRESS;
+        $this->task->save();
 
         if (!$this->parser) {
 
@@ -70,8 +64,8 @@ class DiscoveryService implements SchedulableTask {
                     $this->parser = new NSIParser; 
                     $this->parser->loadFile($rule->url);
                     if (!$this->parser->isTD()) {
-                        $this->syncEvent->status = DiscoveryTask::STATUS_FAILED;
-                        $this->syncEvent->save();
+                        $this->task->status = DiscoveryTask::STATUS_FAILED;
+                        $this->task->save();
                         return;
                     }
                     $this->parser->parseTopology();
@@ -82,8 +76,8 @@ class DiscoveryService implements SchedulableTask {
                     $this->parser = new NMWGParser;
                     $this->parser->loadFile($rule->url);
                     if (!$this->parser->isTD()) {
-                        $this->syncEvent->status = DiscoveryTask::STATUS_FAILED;
-                        $this->syncEvent->save();
+                        $this->task->status = DiscoveryTask::STATUS_FAILED;
+                        $this->task->save();
                         return;
                     }
                     $this->parser->parseTopology();
@@ -93,12 +87,14 @@ class DiscoveryService implements SchedulableTask {
         }
 
         $this->search();
+        $this->task->status = DiscoveryTask::STATUS_SUCCESS;
+        $this->task->save();
 
         if ($rule->auto_apply) {
-            $this->syncEvent->applyChanges();
+            $this->task->applyChanges();
         }
 
-        if($this->detectedChanges) TopologyNotification::create(1, $this->syncEvent->id);
+        if($this->detectedChanges) TopologyNotification::create(1, $this->task->id);
     }
 
     //Cria changes a partir de mudanças percebidas
