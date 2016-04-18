@@ -8,14 +8,12 @@ use yii\widgets\ActiveForm;
 
 use meican\base\grid\Grid;
 use meican\base\grid\IcheckboxColumn;
-use meican\base\widgets\GridButtons;
+use meican\base\grid\GridButtons;
 
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-use meican\topology\assets\domain\IndexAsset;
-
-IndexAsset::register($this);
+\meican\topology\assets\domain\Index::register($this);
 
 $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology')]];
 

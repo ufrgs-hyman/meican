@@ -4,20 +4,21 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-namespace meican\topology\assets\network;
+namespace meican\topology\assets\provider;
 
 use yii\web\AssetBundle;
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class IndexAsset extends AssetBundle
+class Index extends AssetBundle
 {
-    public $sourcePath = '@meican/topology/assets/network/public';
+    public $sourcePath = '@meican/topology/assets/provider/public';
 
     public $js = [
-    	'network.js',
+    	'provider.js',
     ];
+
     public $depends = [
 		'meican\base\assets\Theme',
     ];

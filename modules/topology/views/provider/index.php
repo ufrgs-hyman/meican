@@ -9,11 +9,9 @@ use yii\bootstrap\ActiveForm;
 
 use meican\base\grid\Grid;
 use meican\base\grid\IcheckboxColumn;
-use meican\base\widgets\GridButtons;
-use meican\base\components\LinkColumn;
-use meican\topology\assets\provider\IndexAsset;
+use meican\base\grid\GridButtons;
 
-IndexAsset::register($this);
+\meican\topology\assets\provider\Index::register($this);
 
 $this->params['header'] = ["Providers", ['Home', 'Topology']];
 

@@ -11,11 +11,9 @@ use yii\helpers\Url;
 
 use meican\base\grid\Grid;
 use meican\base\grid\IcheckboxColumn;
-use meican\base\widgets\GridButtons;
+use meican\base\grid\GridButtons;
 
-use meican\topology\assets\network\IndexAsset;
-
-IndexAsset::register($this);
+\meican\topology\assets\network\Index::register($this);
 
 $this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home'), 
     Yii::t('topology', 'Topology')]];

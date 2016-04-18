@@ -11,7 +11,7 @@ use yii\web\AssetBundle;
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class IndexAsset extends AssetBundle
+class Index extends AssetBundle
 {
     public $sourcePath = '@meican/topology/assets/domain/public';
 
