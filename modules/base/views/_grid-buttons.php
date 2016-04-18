@@ -14,7 +14,7 @@ ButtonsAsset::register($this);
 
 <div>
     <a class="btn btn-primary" href="<?= $addUrl; ?>">Add</a>
-    <a id="delete-grid-btn" class="btn btn-warning">Delete</a>
+    <a id="delete-grid-btn" class="btn btn-default">Delete</a>
 </div>
 
 <?php 
