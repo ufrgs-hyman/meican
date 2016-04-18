@@ -15,7 +15,7 @@ namespace meican\nsi;
  *
  * @author Maurício Quatrin Guerreiro
  */
-interface DocumentDistributionServer {
+interface DiscoveryServer {
     
     /**
      * This root resource contains a collection of zero or more

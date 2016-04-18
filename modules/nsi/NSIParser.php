@@ -4,9 +4,17 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\nsi\topology;
+namespace meican\nsi;
 
 /**
+ * Parser de mensagens e topologias NSI.
+ *
+ * Suporta os documentos:
+ *      NSI Topology Description 2.0 
+ *      NSA Document Description 1.0
+ * Suporta os seguintes protocolos:
+ *      NSI Discovery Service 1.0
+ *
  * @author Maurício Quatrin Guerreiro
  */
 class NSIParser {
