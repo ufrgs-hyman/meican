@@ -251,11 +251,16 @@ function initPathTab() {
     });
 
     $("#path").on('click','.fa-arrow-up', function() {
-        console.log('comming soon');
+        var index = $(this).parent().parent().parent().parent().parent().index();
+        if(index > 1)
+            $($(".point")[index - 1]).insertBefore($($(".point")[index - 2]));
         return false;
     });
 
     $("#path").on('click','.fa-arrow-down', function() {
+        var index = $(this).parent().parent().parent().parent().parent().index();
+        if(index < $(".point").length)
+            $($(".point")[index - 1]).insertAfter($($(".point")[index]));
         return false;
     });
 
