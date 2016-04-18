@@ -58,7 +58,7 @@ class NMWGParser {
     function isTD() {
         if ($this->error) return false;
         $xmlns = "http://ogf.org/schema/network/topology/ctrlPlane/20080828/";
-        $tagName = "topology";
+        $tagName = "*";
         foreach ($this->xml->getElementsByTagNameNS($xmlns, $tagName)
                 as $topology) {
             return true;
