@@ -754,7 +754,7 @@ class Change extends \yii\db\ActiveRecord
                             'lng'=> $data->lng]) : "";
                         return Yii::t('topology', '<b>Network</b>: {urn}',['urn' => $data->urn]).$location;
                     case self::ITEM_TYPE_DEVICE: 
-                        $location = $data->lat ? Yii::t('topology',' - <b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
+                        $location = $data->lat ? Yii::t('topology','<br><b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
                             ['lat'=> $data->lat, 
                             'lng'=> $data->lng]) : "";
                         return Yii::t('topology', '<b>Device</b>: {node}', 

@@ -10,7 +10,7 @@ use yii\web\AssetBundle;
 use Yii;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class Maps extends AssetBundle
 {

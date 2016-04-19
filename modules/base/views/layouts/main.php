@@ -49,11 +49,11 @@ NotificationAsset::register($this);
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="#" class="logo" title="MEICAN">
+    <a href="#" class="logo" title="MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><?= Html::img(Url::base()."/images/meican_logo_23.png"); ?></span>
+      <span class="logo-mini"><?= Html::img(Url::base()."/images/meican_logo_23.png", ['title'=>'MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks']); ?></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><?= Html::img(Url::base()."/images/meican_branco.png"); ?></span>
+      <span class="logo-lg"><?= Html::img(Url::base()."/images/meican_branco.png", ['title'=>'MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks']); ?></span>
     </a>
 
     <!-- Header Navbar -->
