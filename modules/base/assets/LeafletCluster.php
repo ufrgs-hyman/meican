@@ -11,20 +11,21 @@ use yii\web\AssetBundle;
 /**
  * @author Maurício Quatrin Guerreiro
  */
-class Leaflet extends AssetBundle
+class LeafletCluster extends AssetBundle
 {
-    public $sourcePath = '@bower/leaflet/dist';
+    public $sourcePath = '@bower/leaflet.markercluster/dist';
     
     public $css = [
-        'leaflet.css',
+        'MarkerCluster.css',
+        'MarkerCluster.Default.css'
     ];
     
     public $js = [
-        'leaflet.js',
+        'leaflet.markercluster.js',
     ];
     
     public $depends = [
-        'yii\web\JqueryAsset',
+        'meican\base\assets\Leaflet',
     ];
 }
 

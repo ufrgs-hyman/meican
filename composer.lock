@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "95ebe93a32ae2aa28c0162f9ab46f24c",
-    "content-hash": "ff1e06916a7729f0d7965abdbf4aed3f",
+    "hash": "c3740932c66e63ebe04fe3d65b609dd4",
+    "content-hash": "a7cc95386c005fba69cc8137f9bb1e36",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -469,6 +469,82 @@
                 "mask",
                 "plugins"
             ]
+        },
+        {
+            "name": "bower-asset/leaflet",
+            "version": "v0.7.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Leaflet/Leaflet.git",
+                "reference": "197f9d43b7bbc73c0492bf62cd666a5a98038098"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Leaflet/Leaflet/zipball/197f9d43b7bbc73c0492bf62cd666a5a98038098",
+                "reference": "197f9d43b7bbc73c0492bf62cd666a5a98038098",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "dist/leaflet.css",
+                    "dist/leaflet-src.js",
+                    "dist/images/layers-2x.png",
+                    "dist/images/layers.png",
+                    "dist/images/marker-icon-2x.png",
+                    "dist/images/marker-icon.png",
+                    "dist/images/marker-shadow.png"
+                ],
+                "bower-asset-ignore": [
+                    ".*",
+                    "CHANGELOG.json",
+                    "FAQ.md",
+                    "debug",
+                    "spec",
+                    "src",
+                    "build"
+                ]
+            },
+            "description": "JavaScript library for mobile-friendly interactive maps"
+        },
+        {
+            "name": "bower-asset/leaflet.markercluster",
+            "version": "v0.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Leaflet/Leaflet.markercluster.git",
+                "reference": "232e93ccbe5b70241913f47a4d1a8ceec8c88c30"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Leaflet/Leaflet.markercluster/zipball/232e93ccbe5b70241913f47a4d1a8ceec8c88c30",
+                "reference": "232e93ccbe5b70241913f47a4d1a8ceec8c88c30",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/leaflet": ">=0.7.0"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "dist/leaflet.markercluster-src.js",
+                    "dist/MarkerCluster.css",
+                    "dist/MarkerCluster.Default.css"
+                ],
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "example",
+                    "spec",
+                    "test",
+                    "tests"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Marker Clustering plugin for Leaflet."
         },
         {
             "name": "bower-asset/moment",
