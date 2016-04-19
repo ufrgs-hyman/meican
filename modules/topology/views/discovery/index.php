@@ -7,6 +7,7 @@
 use yii\bootstrap\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
 
 use meican\base\grid\Grid;
 use meican\base\grid\GridButtons;
@@ -27,37 +28,35 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
             </div>
             <div class="box-body">
                 <?php
+
+                Pjax::begin([
+                    'enablePushState' => false
+                ]);
             
                 echo Grid::widget([
                     'id'=> 'search-grid',
                     'dataProvider' => $taskProvider,
                     'columns' => array(
-                            [
-                                'class' => 'yii\grid\ActionColumn',
-                                'template'=>'{task}',
-                                'buttons' => [
-                                        'task' => function ($url, $model) {
-                                            return Html::a('<span class="fa fa-eye"></span>', $url);
-                                        }
-                                ],
-                                'headerOptions'=>['style'=>'width: 2%;'],
-                            ],
-                            [
-                                'header' => Yii::t("topology", "Rule"),
-                                'value' => function ($model){
-                                    return $model->getRule()->one()->name;
-                                },
-                            ],
-                            'started_at:datetime',
-                            'status',
-                            [
-                                'header' => Yii::t("topology", "Discovered changes"),
-                                'value' => function ($model){
-                                    return $model->getChanges()->count();
-                                },
-                            ],
-                        ),
-                    ]);
+                        'started_at:datetime',
+                        [
+                            'header' => Yii::t("topology", "Rule"),
+                            'value' => function ($model){
+                                return $model->getRule()->one()->name;
+                            },
+                        ],
+                        'status',
+                        [
+                            'header' => Yii::t("topology", "Discovered changes"),
+                            'format' => 'raw',
+                            'value' => function ($model){
+                                return Html::a('<span class="fa fa-eye"></span> ', ['task', 'id'=>$model->id]).$model->getChanges()->count();
+                            },
+                        ],
+                    ),
+                ]);
+
+                Pjax::end();    
+
                 ?>
             </div>
         </div>  
@@ -126,7 +125,7 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
     <div class="col-md-6">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t("topology", "Last applied changes"); ?></h3>
+                <h3 class="box-title"><?= Yii::t("topology", "History applied changes"); ?></h3>
             </div>
             <div class="box-body">
                 <?php

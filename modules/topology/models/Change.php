@@ -691,63 +691,6 @@ class Change extends \yii\db\ActiveRecord
             ['id' => self::ITEM_TYPE_LINK, 'name' => Yii::t('topology', 'Link')]];
     }
 
-    public function getParentInfo() {
-        $data = json_decode($this->data);
-
-        switch ($this->type) {
-            case self::TYPE_CREATE:
-                switch ($this->item_type) {
-                    case self::ITEM_TYPE_DOMAIN: return "";
-                    case self::ITEM_TYPE_PROVIDER: return "";
-                    case self::ITEM_TYPE_PEERING: return "<b>Provider</b>: ".$data->srcNsaId;
-                    case self::ITEM_TYPE_SERVICE: return Yii::t('topology', 
-                            '<b>Provider</b>: {provName}', 
-                            ['provName'=> $data->provName]);
-                    case self::ITEM_TYPE_NETWORK: return "";
-                    case self::ITEM_TYPE_DEVICE: return "";
-                    case self::ITEM_TYPE_BIPORT: return Yii::t('topology', 
-                            '<b>Device</b>: {node}', 
-                            ['node'=> $data->node]);
-                    case self::ITEM_TYPE_UNIPORT: return Yii::t('topology', 
-                            '<b>Port</b>: {biPortUrn}<br>', 
-                            ['biPortUrn'=>$data->biPortUrn]);
-                    case self::ITEM_TYPE_LINK: return Yii::t('topology', 
-                            '<b>Port</b>: {urn}<br>', 
-                            ['urn'=>$data->urn]);
-                    default: return Yii::t('topology', 'Error');
-                } 
-            case self::TYPE_UPDATE:
-            case self::TYPE_DELETE:
-                switch ($this->item_type) {
-                    case self::ITEM_TYPE_DOMAIN: return "";
-                    case self::ITEM_TYPE_PROVIDER: return "";
-                    case self::ITEM_TYPE_PEERING: return "";
-                    case self::ITEM_TYPE_SERVICE: return "";
-                    case self::ITEM_TYPE_NETWORK: return "";
-                    case self::ITEM_TYPE_DEVICE: return "";
-                    case self::ITEM_TYPE_BIPORT: return "";
-                    case self::ITEM_TYPE_UNIPORT: 
-                        $port = Port::findOne($this->item_id);
-                        if($port) {
-                            $biport = $port->getBiPort()->one();
-                            if($biport) return Yii::t('topology', 
-                                '<b>Port</b>: {biPortUrn}', 
-                                ['biPortUrn'=>$biport->urn]);
-                        }
-                        return "Unknown";
-                        
-                    case self::ITEM_TYPE_LINK: 
-                        $port = Port::findOne($this->item_id);
-                        if($port)
-                        $dev = $port->getDevice()->select(['name'])->asArray()->one();
-                        return $port ? Yii::t('topology', 
-                            '<b>Port</b>: {port} on <b>Device</b>: {node}', 
-                            ['node'=> $dev ? $dev['name'] : '', 'port'=>$port->name]) : Yii::t('topology', 'undefined');
-                    default: return Yii::t('topology', 'Error');
-                }
-        }
-    }
-
     public function getDetails() {
         $data = json_decode($this->data);
 
