@@ -1,7 +1,7 @@
 <?php
 /**
  * @copyright Copyright (c) 2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
 namespace meican\topology\assets\map;
@@ -9,9 +9,9 @@ namespace meican\topology\assets\map;
 use yii\web\AssetBundle;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
-class MeicanLMap extends AssetBundle
+class LMap extends AssetBundle
 {
     public $sourcePath = '@meican/topology/assets/map/public';
 
@@ -19,6 +19,6 @@ class MeicanLMap extends AssetBundle
         'meican-lmap.js',
     ];
     public $depends = [
-        'meican\base\assets\Leaflet',
+        'meican\base\assets\LeafletCluster',
     ];
 }

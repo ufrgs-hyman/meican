@@ -1,7 +1,7 @@
 <?php
 /**
  * @copyright Copyright (c) 2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
 namespace meican\topology\assets\graph;
@@ -9,9 +9,9 @@ namespace meican\topology\assets\graph;
 use yii\web\AssetBundle;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
-class MeicanVGraph extends AssetBundle
+class VGraph extends AssetBundle
 {
     public $sourcePath = '@meican/topology/assets/graph/public';
 

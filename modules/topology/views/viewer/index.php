@@ -1,21 +1,54 @@
-<?php 
+<?php
+/**
+ * @copyright Copyright (c) 2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican#license
+ */
 
-use meican\topology\assets\viewer\IndexAsset;
+use yii\bootstrap\ActiveForm;
 
-IndexAsset::register($this);
+\meican\topology\assets\viewer\Index::register($this);
+
+$this->params['hide-content-section'] = true;
+$this->params['hide-footer'] = true;
 
 ?>
 
-<div id="search-row" style="margin-left: 15px; margin-top:15px;" hidden>
-    <input type="text" id="search-box" size="40">
-    <button id="search-button"><span class="ui-icon-to-button-without-background ui-icon ui-icon-search" style="margin-left: 35%;"></span></button>
+<div id="lsidebar" class="lsidebar collapsed">
+    <!-- Nav tabs -->
+    <div class="lsidebar-tabs">
+        <ul role="tablist">
+            <li><a title="Topology Viewer options" href="#home" role="tab"><i class="fa fa-gear"></i></a></li>
+        </ul>
+    </div>
+
+    <!-- Tab panes -->
+    <div class="lsidebar-content">
+        <div class="lsidebar-pane" id="home">
+            <h1 class="lsidebar-header">
+                Topology Viewer options<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span>
+            </h1>
+            <br>
+            <br><br>
+            <div class="form-group">
+                <label class="control-label" for="node-type-select">Node type:</label>
+                <select id="node-type-select" class="form-control">
+                    <option value="dom">Domain</option>
+                    <option value="prov">Provider</option>
+                    <option value="net">Network</option>
+                    <option value="dev">Device</option>
+                </select>
+            </div>
+            <br>
+            <br>
+            <div class="form-group">
+                <label class="control-label" for="mode-select">Mode:</label>
+                <select id="mode-select" class="form-control">
+                    <option value="map">Map</option>
+                    <option value="graph">Graph</option>
+                </select>
+            </div>
+        </div>
+    </div>
 </div>
 
-<?= $this->render('//_mapSelects'); ?>
-
-<div id="refresh-box" style="margin-left: 10px; margin-top:15px;" hidden>
-    <button id="refresh-button">Refresh</button>
-</div>
-
-
-<label id="domains-list" hidden><?= json_encode($domains); ?></label>
+<div id="canvas" class="lsidebar-map"></div>

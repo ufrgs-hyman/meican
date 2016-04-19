@@ -17,13 +17,9 @@ use meican\topology\models\Device;
 use meican\topology\models\Peering;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class ViewerController extends RbacController {
-
-    public $enableCsrfValidation = false;
-
-    //public $layout = "/main23";
 
     public function actionIndex() {
         return $this->render('index');

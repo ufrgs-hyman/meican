@@ -4,7 +4,7 @@
  * A DCN topology viewer
  *
  * @copyright Copyright (c) 2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
 function TopologyViewer(canvasDivId) {

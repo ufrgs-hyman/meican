@@ -1,10 +1,10 @@
 /**
- * MeicanGMap 1.0
+ * Meican GMap 2.0
  *
  * A DCN topology visualization based on Google Maps library.
  *
  * @copyright Copyright (c) 2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
 function MeicanGMap(canvasDivId) {

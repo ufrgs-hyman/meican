@@ -1,13 +1,13 @@
 /**
- * MeicanVGraph 1.0
+ * Meican VGraph 1.0
  *
  * A DCN topology visualization based on Vis.js library.
  *
  * @copyright Copyright (c) 2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-function MeicanVGraph(canvasDivId) {
+function VGraph(canvasDivId) {
     this._graph;                     // vis.js network
     this._canvasDivId = canvasDivId; 
     this._nodes = new vis.DataSet(); // nodes
@@ -17,7 +17,7 @@ function MeicanVGraph(canvasDivId) {
     this._popup;
 };
 
-MeicanVGraph.prototype.show = function() {
+VGraph.prototype.show = function() {
     if($("#graph-v").length == 1) {
         $("#graph-v").show();
     } else {
@@ -26,7 +26,7 @@ MeicanVGraph.prototype.show = function() {
     }
 }
 
-MeicanVGraph.prototype.hide = function() {
+VGraph.prototype.hide = function() {
     if($("#graph-v").length == 1) {
         this._graph.destroy();
         $("#graph-v").remove();
@@ -35,17 +35,17 @@ MeicanVGraph.prototype.hide = function() {
     }
 }
 
-MeicanVGraph.prototype.setDomains = function(list) {
+VGraph.prototype.setDomains = function(list) {
     this._domainsList = list;
 }
 
-MeicanVGraph.prototype.getDomain = function(id) {
+VGraph.prototype.getDomain = function(id) {
     for (var i = 0; i < this._domainsList.length; i++) {
         if (this._domainsList[i].id == id) return this._domainsList[i];
     }
 }
 
-MeicanVGraph.prototype.addNodes = function(objects, type, loadPosition) {
+VGraph.prototype.addNodes = function(objects, type, loadPosition) {
     var size = objects.length;
     var nodes = [];
     var physics = true;
@@ -77,7 +77,7 @@ MeicanVGraph.prototype.addNodes = function(objects, type, loadPosition) {
     this._graph.stabilize();
 }
 
-MeicanVGraph.prototype.addNode = function(id, name, type, domainId, x,y, color) {
+VGraph.prototype.addNode = function(id, name, type, domainId, x,y, color) {
     var physics = true;
     if(x && y) physics = false;
     this._nodes.add({
@@ -94,7 +94,7 @@ MeicanVGraph.prototype.addNode = function(id, name, type, domainId, x,y, color) 
     });
 }
 
-MeicanVGraph.prototype.addLinks = function(objects, type) {
+VGraph.prototype.addLinks = function(objects, type) {
     var size = objects.length;
     for (var src in objects) {
         for (var i = 0; i < objects[src].length; i++) {
@@ -103,7 +103,7 @@ MeicanVGraph.prototype.addLinks = function(objects, type) {
     }
 }
 
-MeicanVGraph.prototype.addLink = function(srcId, dstId, type) {
+VGraph.prototype.addLink = function(srcId, dstId, type) {
     this._links.add({
         type: type,
         from: srcId, 
@@ -116,12 +116,12 @@ MeicanVGraph.prototype.addLink = function(srcId, dstId, type) {
     });
 }
 
-MeicanVGraph.prototype.showNode = function(nodeId) {
+VGraph.prototype.showNode = function(nodeId) {
     this._graph.selectNodes([nodeId]);
     this._graph.focus(nodeId);
 }
 
-MeicanVGraph.prototype.setTypeVisible = function(type) {
+VGraph.prototype.setTypeVisible = function(type) {
     var nodes = this._nodes.get();
     for (var i = 0; i < nodes.length; i++) {
         if(nodes[i].type == type) {
@@ -141,11 +141,11 @@ MeicanVGraph.prototype.setTypeVisible = function(type) {
     };
 }
 
-MeicanVGraph.prototype.fit = function() {
+VGraph.prototype.fit = function() {
     this._graph.fit();
 }
 
-MeicanVGraph.prototype.build = function(divId) {
+VGraph.prototype.build = function(divId) {
     $("#"+divId).show();
 
     var container = document.getElementById(divId);
@@ -263,7 +263,7 @@ MeicanVGraph.prototype.build = function(divId) {
     });*/
 }
 
-MeicanVGraph.prototype.showPopup = function(nodeId, content) {
+VGraph.prototype.showPopup = function(nodeId, content) {
     this._popup.set('visible', true);
     var pos = this._graph.getPositions(nodeId);
     pos = this._graph.canvasToDOM(pos[nodeId]);
@@ -271,7 +271,7 @@ MeicanVGraph.prototype.showPopup = function(nodeId, content) {
     this._popup.set('position.target', [ pos.x, pos.y ]).show();
 }
 
-MeicanVGraph.prototype.closePopups = function() {
+VGraph.prototype.closePopups = function() {
     this._popup.set('visible', false);
     this._popup.hide();    
 }

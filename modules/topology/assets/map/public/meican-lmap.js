@@ -1,24 +1,23 @@
 /**
- * MeicanLMap 1.0
+ * Meican LMap 1.0
  *
  * A DCN topology viewer based on Leaflet Javascript library.
  *
  * @copyright Copyright (c) 2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-function MeicanLMap(canvasDivId) {
+function LMap(canvasDivId) {
     this._canvasDivId = canvasDivId;
     this._map;                       // Leaflet Map
-    this._markers = [];              // markers container
-    this._links = [];
-    this._currentMarkerType;         // current marker type visible
-    this._currentTileSource;
+    this._nodes = [];               // markers/nodes container
+    this._links = [];               // polylines/links/edges container
+    this._nodeType;                 // current node type visible
     this._domainsList;               // domains list reference;
     this._lastShowedMarker; 
 };
 
-MeicanLMap.prototype.show = function(mapType, markerType) {
+LMap.prototype.show = function(mapType, nodeType) {
     if($("#map-l").length == 1) {
         $("#map-l").show();
     } else {
@@ -32,25 +31,25 @@ MeicanLMap.prototype.show = function(mapType, markerType) {
         currentMap.invalidateSize(true);
     }, 200);
 
-    this.setMapType(mapType);
-    //this.setTypeVisible(markerType);
+    this.setType(mapType);
+    this.setNodeType(nodeType);
 }
 
-MeicanLMap.prototype.hide = function() {
+LMap.prototype.hide = function() {
     if($("#map-l").length == 1) {
         this._map.remove();
         $("#map-l").remove();
     }
 }
 
-MeicanLMap.prototype.addLink = function(path, type) {
-    console.log(path);
+LMap.prototype.addLink = function(path, type) {
+    //console.log(path);
     var latLngList = [];
 
     for (var i = 0; i < path.length; i++) {
-        var marker = this.getMarker(path[i]);
-        if(marker != null)
-            latLngList.push(marker.getLatLng());
+        var node = this.getNode(path[i]);
+        if(node != null)
+            latLngList.push(node.getLatLng());
     };
 
     //strokeColor = "#0000FF"; 
@@ -66,10 +65,13 @@ MeicanLMap.prototype.addLink = function(path, type) {
     });*/
 
     if (latLngList.length > 1) {
-        console.log(latLngList);
+        //console.log(latLngList);
         var link = L.polyline(
             latLngList, 
-            {color: 'black'}).addTo(this._map);
+            {
+                color: '#cccccc',
+                type: type
+            }).addTo(this._map);
 
         this._links.push(link);
     }
@@ -89,15 +91,24 @@ MeicanLMap.prototype.addLink = function(path, type) {
     });*/
 }
 
-MeicanLMap.prototype.removeLink = function(link) {
+LMap.prototype.removeLink = function(link) {
+    this._map.removeLayer(link);
+    ///to do
+}
+
+LMap.prototype.hideLink = function(link) {
     this._map.removeLayer(link);
 }
 
-MeicanLMap.prototype.getLinks = function() {
+LMap.prototype.showLink = function(link) {
+    this._map.addLayer(link);
+}
+
+LMap.prototype.getLinks = function() {
     return this._links;
 }
 
-MeicanLMap.prototype.removeLinks = function() {
+LMap.prototype.removeLinks = function() {
     if (this._links.length > 0) {
         for (var i = 0; i < this._links.length; i++) {
             this.removeLink(this._links[i]);
@@ -105,7 +116,7 @@ MeicanLMap.prototype.removeLinks = function() {
     }
 }
 
-MeicanLMap.prototype.addMarker = function(id, name, type, domainId, lat, lng, color) {
+LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
     if (!color) color = this.getDomain(domainId).color;
     if (lat != null && lng != null) {
         var pos = [lat,lng];
@@ -125,7 +136,7 @@ MeicanLMap.prototype.addMarker = function(id, name, type, domainId, lat, lng, co
         className: 'marker-icon-svg',
     });
 
-    var marker = L.marker(
+    var node = L.marker(
         pos, 
         {
             id: id, 
@@ -134,48 +145,38 @@ MeicanLMap.prototype.addMarker = function(id, name, type, domainId, lat, lng, co
             name: name,
             domainId: domainId
         }
-    ).addTo(this._map).bindPopup("#");
+    ).bindPopup("#");
 
-    this._markers.push(marker);
-    //this._clusterer.addMarker(marker);
+    this._nodes.push(node);
+    this._cluster.addLayer(node);
 
     var currentMap = this;
 
-    marker.on('click', function(e) {
-        $("#"+currentMap._canvasDivId).trigger("markerClick", marker);
+    node.on('click', function(e) {
+        $("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
     });
 }
 
-MeicanLMap.prototype.getDomain = function(id) {
+LMap.prototype.getDomain = function(id) {
     for (var i = 0; i < this._domainsList.length; i++) {
         if (this._domainsList[i].id == id) return this._domainsList[i];
     }
 }
 
-MeicanLMap.prototype.setDomains = function(list) {
+LMap.prototype.setDomains = function(list) {
     this._domainsList = list;
 }
 
-MeicanLMap.prototype.changeDeviceMarkerColor = function(marker, color) {
-    marker.icon = {
-        path: 'M 15 15 L 35 15 L 25 35 z',
-        anchor: new google.maps.Point(25, 35),
-        fillColor: '#' + color,
-        fillOpacity: 1,
-        strokeColor: 'black',
-    };
-} 
-
-MeicanLMap.prototype.getValidMarkerPosition = function(type, position) {
-    size = this._markers.length;
+LMap.prototype.getValidMarkerPosition = function(type, position) {
+    size = this._nodes.length;
     lat = position.lat().toString().substring(0,6);
     lng = position.lng().toString().substring(0,6);
 
     for(var i = 0; i < size; i++){
-        anotherLat = this._markers[i].position.lat().toString().substring(0,6);
-        anotherLng = this._markers[i].position.lng().toString().substring(0,6);
+        anotherLat = this._nodes[i].position.lat().toString().substring(0,6);
+        anotherLng = this._nodes[i].position.lng().toString().substring(0,6);
 
-        if (this._markers[i].type == type &&
+        if (this._nodes[i].type == type &&
                 anotherLat == lat && 
                 anotherLng == lng) {
             return this.getValidMarkerPosition(type, new google.maps.LatLng(position.lat(), position.lng() + 0.01));
@@ -185,22 +186,22 @@ MeicanLMap.prototype.getValidMarkerPosition = function(type, position) {
     return position;
 }
 
-MeicanLMap.prototype.closePopups = function() {
+LMap.prototype.closePopups = function() {
     this._map.closePopup();
 }
 
-MeicanLMap.prototype.addPopup = function(infoWindow) {
+LMap.prototype.addPopup = function(infoWindow) {
 }
 
-MeicanLMap.prototype.openPopup = function(marker, extra) {
+LMap.prototype.openPopup = function(marker, extra) {
 }
 
-MeicanLMap.prototype.getMarker = function(id) {
+LMap.prototype.getNode = function(id) {
     if(id) {
-        var size = this._markers.length;
+        var size = this._nodes.length;
         for(var i = 0; i < size; i++){
-            if ((this._markers[i].options.id.toString()) == (id.toString())) {
-                return this._markers[i];
+            if ((this._nodes[i].options.id.toString()) == (id.toString())) {
+                return this._nodes[i];
             }
         }
     }
@@ -208,11 +209,11 @@ MeicanLMap.prototype.getMarker = function(id) {
     return null;
 }
 
-MeicanLMap.prototype.getCurrentMarkerType = function() {
-    return this._currentMarkerType;
+LMap.prototype.getNodeType = function() {
+    return this._nodeType;
 }
 
-MeicanLMap.prototype.searchMarkerByNameOrDomain = function (type, name) {
+LMap.prototype.searchMarkerByNameOrDomain = function (type, name) {
     results = [];
     name = name.toLowerCase();
     var domainId;
@@ -225,13 +226,13 @@ MeicanLMap.prototype.searchMarkerByNameOrDomain = function (type, name) {
         }
     };
 
-    var size = this._markers.length;
+    var size = this._nodes.length;
     for(var i = 0; i < size; i++){
-        if (this._markers[i].type == type) {
-            if ((this._markers[i].name.toLowerCase()).indexOf(name) > -1) {
-                results.push(this._markers[i]);
-            } else if (domainId == this._markers[i].domainId) {
-                results.push(this._markers[i]);
+        if (this._nodes[i].type == type) {
+            if ((this._nodes[i].name.toLowerCase()).indexOf(name) > -1) {
+                results.push(this._nodes[i]);
+            } else if (domainId == this._nodes[i].domainId) {
+                results.push(this._nodes[i]);
             }
         }
     }
@@ -239,74 +240,90 @@ MeicanLMap.prototype.searchMarkerByNameOrDomain = function (type, name) {
     return results;
 }
 
-MeicanLMap.prototype.getMarkerByDomain = function(type, domainId) {
-    var size = this._markers.length;
+LMap.prototype.getMarkerByDomain = function(type, domainId) {
+    var size = this._nodes.length;
     for(var i = 0; i < size; i++){
-        if (this._markers[i].type == type && this._markers[i].domainId == domainId) {
-            return this._markers[i];
+        if (this._nodes[i].type == type && this._nodes[i].domainId == domainId) {
+            return this._nodes[i];
         }
     }
     
     return null;
 }
 
-MeicanLMap.prototype.setTypeVisible = function(type) {
-   /* this.closeWindows();
-    this._lastShowedMarker = null;
-    this._currentMarkerType = type;
+LMap.prototype.setNodeType = function(type) {
+    if(this._nodeType == type)
+        return;
 
-    var size = this._markers.length;
+    this._nodeType = type;
+
+    var size = this._nodes.length;
     
     for(var i = 0; i < size; i++){ 
-        if (this._markers[i].type == type) {
-            this._markers[i].setVisible(true);
+        console.log(type, this._nodes[i].options.type);
+        if (this._nodes[i].options.type == type) {
+            this.showNode(this._nodes[i]);
         } else {
-            this._markers[i].setVisible(false);
+            this.hideNode(this._nodes[i]);
         }
-    }   
+    }  
 
     for (var i = 0; i < this._links.length; i++) {
-        if (this._links[i].type == type) {
-            this._links[i].setVisible(true);
+        if (this._links[i].options.type == type) {
+            this.showLink(this._links[i]);
         } else {
-            this._links[i].setVisible(false);
+            this.hideLink(this._links[i]);
         }
     }
-
-    this._clusterer.repaint();*/
 }
 
-MeicanLMap.prototype.build = function(mapDiv) {
+LMap.prototype.build = function(mapDiv) {
     this._map = L.map(mapDiv, {
-        center: [0, 0],
+        center: [-13.8771429,-52.0998244],
         zoomControl: false,
-        zoom: 3
+        zoom: 4,
+        maxZoom: 15,
+        minZoom: 2
     });
 
     new L.Control.Zoom({ position: 'topright' }).addTo(this._map);
 
     //$(".leaflet-top").css("margin-top","15%");
 
+    this._cluster = L.markerClusterGroup({
+        showCoverageOnHover: false,
+        maxClusterRadius: 40
+    });
+    this._map.addLayer(this._cluster);
+
     $('#' + mapDiv).show();   
 }
 
-MeicanLMap.prototype.getMap = function() {
+LMap.prototype.getMap = function() {
     return this._map;
 }
 
-MeicanLMap.prototype.getMarkers = function() {
-    return this._markers;
+LMap.prototype.getNodes = function() {
+    return this._nodes;
 }
 
-MeicanLMap.prototype.removeMarkers = function() {
-    var size = this._markers.length;
+LMap.prototype.hideNode = function(node) {
+    this._cluster.removeLayer(node);
+}
+
+LMap.prototype.showNode = function(node) {
+    this._cluster.addLayer(node);
+}
+
+LMap.prototype.removeNodes = function() {
+    var size = this._nodes.length;
     for (var i = 0; i < size; i++) {
-        this._markers[i].setMap(null);
+        this._nodes[i].setMap(null);
     }
-    this._markers = [];
+    this._nodes = [];
 }
 
-MeicanLMap.prototype.setMapType = function(mapType) {
+LMap.prototype.setType = function(mapType) {
     switch(mapType) {
         case "osm" : 
             L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -330,7 +347,7 @@ MeicanLMap.prototype.setMapType = function(mapType) {
     }
 }
 
-MeicanLMap.prototype.showMarker = function(id) {
+LMap.prototype.highlightNode = function(id) {
     var marker = this.getMarker(id);
     if(marker) {
         var bounds = new google.maps.LatLngBounds();
