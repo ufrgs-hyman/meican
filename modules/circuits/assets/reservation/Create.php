@@ -18,19 +18,18 @@ class Create extends AssetBundle
     public $js = [
         'create-i18n.js',
     	'create2.js',
-        'sidebar.js',
     ];
 
     public $css = [
         'create.css',
-        'sidebar.css',
     ];
 
     public $depends = [
         'meican\base\assets\Theme',
         'meican\base\assets\FullCalendar',
         'meican\base\assets\DateRangePicker',
-        'meican\topology\assets\map\MeicanLMap',
-        'meican\topology\assets\graph\MeicanVGraph',
+        'meican\topology\assets\map\LMap',
+        'meican\topology\assets\graph\VGraph',
+        'meican\base\assets\LSidebar'
     ];
 }

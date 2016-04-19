@@ -4,8 +4,8 @@
  */
 
 //var meicanGMap = new MeicanGMap("map-canvas");
-var meicanMap = new MeicanLMap('canvas');
-var meicanGraph = new MeicanVGraph("canvas");
+var meicanMap = new LMap('canvas');
+var meicanGraph = new VGraph("canvas");
 var meicanTopo = [];
 var mode = 'map';
 var path = [];
@@ -14,6 +14,7 @@ var lsidebar;
 
 $(document).ready(function() {
     meicanMap.show("rnp", 'dev');
+    $(".sidebar-toggle").remove();
     $(".sidebar-mini").addClass("sidebar-collapse");
 
     initScheduleTab();
@@ -197,7 +198,7 @@ function initPathTab() {
         return false;
     });
 
-    $('#canvas').on('markerClick', function(e, marker) {
+    $('#canvas').on('lmap.nodeClick', function(e, marker) {
         marker.setPopupContent('Domain: <b>' + meicanMap.getDomain(marker.options.domainId).name + 
             '</b><br>Device: <b>' + marker.options.name + '</b><br><br>'+
             '<div data-node="' + marker.options.id + '">'+
@@ -217,7 +218,7 @@ function initPathTab() {
           '</div>');*/
     });
 
-    $('#canvas').on('nodeClick', function(e, nodeId) {
+    $('#canvas').on('vgraph.nodeClick', function(e, nodeId) {
         console.log('sdas');
         meicanGraph.showPopup(nodeId, 'Domain: cipo.rnp.br<br>Device: POA<br><br>'+
             '<div data-node="' + nodeId + '">'+
