@@ -9,15 +9,16 @@
 
 function LMap(canvasDivId) {
     this._canvasDivId = canvasDivId;
-    this._map;                       // Leaflet Map
-    this._nodes = [];               // markers/nodes container
-    this._links = [];               // polylines/links/edges container
-    this._nodeType;                 // current node type visible
-    this._domainsList;               // domains list reference;
+    this._map;                          // Leaflet Map
+    this._nodes = [];                   // markers/nodes container
+    this._links = [];                   // polylines/links/edges container
+    this._nodeType;                     // current node type visible
+    this._domainsList;                  // domains list reference;
     this._lastShowedMarker; 
+    this._cluster;
 };
 
-LMap.prototype.show = function(mapType, nodeType) {
+LMap.prototype.show = function(nodeType) {
     if($("#map-l").length == 1) {
         $("#map-l").show();
     } else {
@@ -31,14 +32,14 @@ LMap.prototype.show = function(mapType, nodeType) {
         currentMap.invalidateSize(true);
     }, 200);
 
-    this.setType(mapType);
     this.setNodeType(nodeType);
 }
 
 LMap.prototype.hide = function() {
     if($("#map-l").length == 1) {
-        this._map.remove();
-        $("#map-l").remove();
+        $("#map-l").hide();
+        /*this._map.remove();
+        $("#map-l").remove();*/
     }
 }
 
@@ -292,9 +293,11 @@ LMap.prototype.build = function(mapDiv) {
 
     this._cluster = L.markerClusterGroup({
         showCoverageOnHover: false,
-        maxClusterRadius: 40
+        maxClusterRadius: 40,
     });
     this._map.addLayer(this._cluster);
+
+    this.setType('rnp');
 
     $('#' + mapDiv).show();   
 }
@@ -347,7 +350,7 @@ LMap.prototype.setType = function(mapType) {
     }
 }
 
-LMap.prototype.highlightNode = function(id) {
+LMap.prototype.focusNode = function(id) {
     var marker = this.getMarker(id);
     if(marker) {
         var bounds = new google.maps.LatLngBounds();

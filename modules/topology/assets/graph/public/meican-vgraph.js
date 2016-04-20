@@ -8,30 +8,34 @@
  */
 
 function VGraph(canvasDivId) {
-    this._graph;                     // vis.js network
     this._canvasDivId = canvasDivId; 
-    this._nodes = new vis.DataSet(); // nodes
-    this._links = new vis.DataSet(); // edges
-    this._currentNodeType;           // current node type visible
-    this._domainsList;               // domains list reference;
+    this._graph;                        // vis.js network
+    this._nodes = new vis.DataSet();    // nodes
+    this._links = new vis.DataSet();    // edges
+    this._nodeType;                     // current node type visible
+    this._domainsList;                  // domains list reference;
     this._popup;
 };
 
-VGraph.prototype.show = function() {
+VGraph.prototype.show = function(nodeType) {
     if($("#graph-v").length == 1) {
         $("#graph-v").show();
     } else {
         $("#"+this._canvasDivId).append('<div id="graph-v" style="width:100%; height:100%;"></div>');
         this.build("graph-v");
     }
+
+    this.setNodeType(nodeType);
+    this.fit();
 }
 
 VGraph.prototype.hide = function() {
     if($("#graph-v").length == 1) {
-        this._graph.destroy();
+        $("#graph-v").hide();
+        /*this._graph.destroy();
         $("#graph-v").remove();
         this._nodes = new vis.DataSet(); // nodes
-        this._links = new vis.DataSet(); // edges
+        this._links = new vis.DataSet(); // edges*/
     }
 }
 
@@ -74,7 +78,6 @@ VGraph.prototype.addNodes = function(objects, type, loadPosition) {
         });
     };
     this._nodes.add(nodes);
-    this._graph.stabilize();
 }
 
 VGraph.prototype.addNode = function(id, name, type, domainId, x,y, color) {
@@ -92,6 +95,10 @@ VGraph.prototype.addNode = function(id, name, type, domainId, x,y, color) {
             border: "#808080" 
         }
     });
+}
+
+VGraph.prototype.getNode = function(id) {
+    return this._nodes.get(id);
 }
 
 VGraph.prototype.addLinks = function(objects, type) {
@@ -116,12 +123,17 @@ VGraph.prototype.addLink = function(srcId, dstId, type) {
     });
 }
 
-VGraph.prototype.showNode = function(nodeId) {
+VGraph.prototype.focusNode = function(nodeId) {
     this._graph.selectNodes([nodeId]);
     this._graph.focus(nodeId);
 }
 
-VGraph.prototype.setTypeVisible = function(type) {
+VGraph.prototype.setNodeType = function(type) {
+    if(this._nodeType == type)
+        return;
+
+    this._nodeType = type;
+
     var nodes = this._nodes.get();
     for (var i = 0; i < nodes.length; i++) {
         if(nodes[i].type == type) {
@@ -213,11 +225,11 @@ VGraph.prototype.build = function(divId) {
     this._popup.set('visible', false);
     this._graph.on("click", function (params) {
         if(params['nodes'].length > 0) {
-            console.log(' click node:', params);
-            $( "#"+currentGraph._canvasDivId ).trigger( "nodeClick",  currentGraph._nodes.get(params.nodes[0]).id);
+            //console.log(' click node:', params);
+            $( "#"+currentGraph._canvasDivId ).trigger( "vgraph.nodeClick",  currentGraph._nodes.get(params.nodes[0]).id);
         } else {
             currentGraph._popup.hide();
-            console.log('click fora');
+            //console.log('click fora');
         }
     });
     this._graph.on("zoom", function () {

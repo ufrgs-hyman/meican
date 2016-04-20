@@ -4,8 +4,6 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-use yii\bootstrap\ActiveForm;
-
 \meican\topology\assets\viewer\Index::register($this);
 
 $this->params['hide-content-section'] = true;
@@ -23,30 +21,30 @@ $this->params['hide-footer'] = true;
 
     <!-- Tab panes -->
     <div class="lsidebar-content">
-        <div class="lsidebar-pane" id="home">
+        <div class="lsidebar-pane icheck" id="home">
             <h1 class="lsidebar-header">
                 Topology Viewer options<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span>
             </h1>
             <br>
-            <br><br>
             <div class="form-group">
-                <label class="control-label" for="node-type-select">Node type:</label>
-                <select id="node-type-select" class="form-control">
-                    <option value="dom">Domain</option>
-                    <option value="prov">Provider</option>
-                    <option value="net">Network</option>
-                    <option value="dev">Device</option>
-                </select>
+                <label>Mode:</label><br>
+                <input type="radio" name="mode" value="map" checked> Map
+                <input type="radio" name="mode" value="graph" > Graph
             </div>
-            <br>
-            <br>
             <div class="form-group">
-                <label class="control-label" for="mode-select">Mode:</label>
-                <select id="mode-select" class="form-control">
-                    <option value="map">Map</option>
-                    <option value="graph">Graph</option>
-                </select>
+                <label>Node type:</label><br>
+                <input type="radio" name="node-type" value="dom"> Domain
+                <input type="radio" name="node-type" value="prov"> Provider
+                <input type="radio" name="node-type" value="net"> Network
+                <input type="radio" name="node-type" value="dev" checked> Device
             </div>
+            <div class="form-group">
+                <label>Topology type:</label><br>
+                <input type="radio" name="topo-type" value="nsi"> NSI
+                <input type="radio" name="topo-type" value="nmwg"> NMWG
+                <input type="radio" name="topo-type" value="all" checked> All
+            </div>
+            <button id="save-positions-btn" class="btn btn-default">Save graph positions</button>
         </div>
     </div>
 </div>

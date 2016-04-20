@@ -31,7 +31,8 @@ class ViewerController extends RbacController {
         
     }
 
-    public function actionSaveGraph() {
+    public function actionSaveGraphPositions() {
+        Yii::trace($_POST);
         if($_POST['nodes']) {
             switch ($_POST['mode']) {
                 case 'dom':

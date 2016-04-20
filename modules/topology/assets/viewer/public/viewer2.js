@@ -6,30 +6,14 @@
 var meicanMap = new LMap('canvas');
 var meicanGraph = new VGraph("canvas");
 var meicanTopo = [];
-var mode = 'map';
+var viewer;
 var lsidebar;
 
 $(document).ready(function() {
-    meicanMap.show("rnp", 'dev');
+    meicanMap.show('dev');
+    viewer = meicanMap;
     $(".sidebar-toggle").remove();
     $(".sidebar-mini").addClass("sidebar-collapse");
-
-    $("#switch-mode").on('click', function() {
-        if(mode != 'map') {
-            meicanGraph.hide();
-            meicanMap.show("rnp", 'dev');
-            for (var i = 0; i < meicanTopo['dev'].length; i++) {
-                meicanMap.addMarker(meicanTopo['dev'][i], 'dev');
-            }
-            mode = 'map';
-        } else {
-            meicanMap.hide();
-            meicanGraph.show();
-            meicanGraph.addNodes(meicanTopo['dev'], 'dev', true);
-            meicanGraph.addLinks(meicanTopo['dev']['links'], 'dev');
-            mode = 'graph';
-        }
-    });
 
     lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap.getMap());
 
@@ -49,14 +33,38 @@ $(document).ready(function() {
         }
     });
     
-    initCanvas();    
+    initCanvas(); 
+    initMenu();   
     loadDomains();
 });
 
+function initMenu() {
+    $('input[name="mode"]').on('ifChecked', function(){
+        if(this.value == 'map') {
+            viewer = meicanMap;
+            meicanGraph.hide();
+            meicanMap.show($('input[name="node-type"]:checked').val());
+        } else {
+            viewer = meicanGraph;
+            meicanMap.hide();
+            meicanGraph.show($('input[name="node-type"]:checked').val());
+        }
+    });
+
+    $('input[name="node-type"]').on('ifChecked', function(){
+        viewer.setNodeType(this.value);
+    });
+}
+
 function initCanvas() {
     $('#canvas').on('lmap.nodeClick', function(e, marker) {
-        marker.setPopupContent('Domain: <b>' + meicanMap.getDomain(marker.options.domainId).name + 
-            '</b><br>Device: <b>' + marker.options.name + '</b><br><br>');
+        marker.setPopupContent(
+            buildPopupContent(
+                marker.options.type, 
+                marker.options.name, 
+                meicanMap.getDomain(marker.options.domainId).name
+            )
+        );
         /*marker.setPopupContent('Domain: cipo.rnp.br<br>Device: POA<br><br><div class="btn-group">'+
             '<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">'+
               'Options <span class="fa fa-caret"></span>'+
@@ -70,17 +78,29 @@ function initCanvas() {
     });
 
     $('#canvas').on('vgraph.nodeClick', function(e, nodeId) {
-        console.log('sdas');
-        meicanGraph.showPopup(nodeId, 'Domain: cipo.rnp.br<br>Device: POA<br><br>');
+        var node = meicanGraph.getNode(nodeId);
+        meicanGraph.showPopup(
+            nodeId, 
+            buildPopupContent(
+                node.type, 
+                node.label, 
+                node.domainId ? meicanGraph.getDomain(node.domainId).name : null
+            )
+        );
     });
+}
 
-    
-    /*$( "#graph-canvas" ).on( "nodeClick", function(event, nodeId) {
-        meicanMap.showMarker(nodeId);
-    });
-    $( "#map-canvas" ).on( "markerClick", function(event, markerId) {
-        meicanGraph.showNode(markerId);
-    });*/
+function buildPopupContent(type, name, domainName) {
+    switch(type) {
+        case 'dom':
+            return 'Domain: <b>' + name + '</b>';
+        case 'prov':
+            return '';
+        case 'net':
+            return '';
+        case 'dev':
+            return 'Domain: <b>' + domainName + '</b><br>Device: <b>' + name + '</b>';
+    }
 }
 
 function closePopups() {
@@ -91,68 +111,17 @@ function closePopups() {
     }
 }
 
-/*$("#viewer-mode-select").selectmenu({
-    select: function( event, ui ) {
-        switch(ui.item.value) {
-            case "mg-s" : 
-                meicanLMap.hide();
-                meicanGraph.hide();
-                meicanGMap.show('s', $("#node-type-select").val());
-                break;
-            case "ml-osm" :
-                meicanGMap.hide();
-                meicanGraph.hide();
-                meicanLMap.show("osm", $("#node-type-select").val());
-                break;
-            case "ml-mq" :
-                meicanGMap.hide();
-                meicanGraph.hide();
-                meicanLMap.show("mq");
-                break;
-            case "gv" : 
-                meicanLMap.hide();
-                meicanGMap.hide();
-                meicanGraph.show();
-                break;    
-        }
-    }
-});    
-
-$("#node-type-select").selectmenu({
-    select: function( event, ui ) {
-        switch($("#viewer-mode-select").val()) {
-            case "ml-osm":
-                meicanLMap.show('osm', ui.item.value);
-                break;
-        }
-
-        switch(ui.item.value) {
-            case "net" : 
-                loadNetworks();
-                break;  
-            case "dev" : 
-                loadDevices();
-                break;
-            case "port" : 
-                loadPorts();
-                break;  
-            case "prov" : 
-                loadProviders();
-                break;   
-        }
-    }
-});
-
-$("#save-button").on("click", function(){
+$("#save-positions-btn").on("click", function(){
     meicanGraph._graph.storePositions();
     $.ajax({
         type: "POST",
-        url: baseUrl + '/topology/viewer/save-graph',
+        url: baseUrl + '/topology/viewer/save-graph-positions',
         data: {
-            mode: $("#node-type-select").val(),
+            _csrf: yii.getCsrfToken(),
+            mode: 'dev',
             nodes: meicanGraph._nodes.get({
                 filter: function (item) {
-                    return item.type == $("#node-type-select").val();
+                    return item.type == 'dev';
                 }
             })
         },
@@ -161,7 +130,7 @@ $("#save-button").on("click", function(){
         error: function() {
         }
     });
-});*/
+});
 
 function loadDomains() {
     $.ajax({
@@ -171,13 +140,8 @@ function loadDomains() {
         success: function(response) {
             meicanTopo['dom'] = response;
             meicanMap.setDomains(response);
-            //meicanGraph.setDomains(response);
-            //meicanLMap.setDomains(response);
-            //meicanGMap.setDomains(response);
-            //meicanMap.setDomains(response);
-            /*meicanGraph.setDomains(response);
+            meicanGraph.setDomains(response);
             meicanGraph.addNodes(response, "dom", true);
-            meicanGraph.fit();*/
             loadDomainLinks();
             loadDevices();
         }
@@ -225,7 +189,7 @@ function loadNetworks() {
 }
 
 function loadDevices() {
-    console.log("load devs")
+    //console.log("load devs")
     if(meicanTopo['dev']) return;
     $.ajax({
         url: baseUrl+'/topology/device/get-all',
@@ -236,7 +200,7 @@ function loadDevices() {
         },
         success: function(response) {
             meicanTopo['dev'] = response;
-            //meicanGraph.addNodes(response, 'dev', true);
+            meicanGraph.addNodes(response, 'dev', true);
             for (var i = 0; i < response.length; i++) {
                 meicanMap.addNode(
                     'dev' + response[i].id,
@@ -246,7 +210,6 @@ function loadDevices() {
                     response[i].latitude,
                     response[i].longitude);
             };
-            //meicanGraph.fit();
             loadDeviceLinks();
         }
     });
@@ -258,8 +221,8 @@ function loadDomainLinks() {
         dataType: 'json',
         method: "GET",
         success: function(response) {
-            meicanTopo['doml'] = response;
-            //meicanGraph.addLinks(response, 'dom');            
+            meicanTopo['dom']['links'] = response;
+            meicanGraph.addLinks(response, 'dom');            
         }
     });
 }
@@ -302,7 +265,8 @@ function loadDeviceLinks() {
         dataType: 'json',
         method: "GET",
         success: function(response) {
-            //meicanGraph.addLinks(response, 'dev');
+            meicanTopo['dev']['links'] = response;
+            meicanGraph.addLinks(response, 'dev');
             for (var src in response) {
                 for (var i = 0; i < response[src].length; i++) {
                     //console.log(src, response[src][i]);
