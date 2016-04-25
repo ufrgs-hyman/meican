@@ -1,7 +1,7 @@
 <?php 
 /**
  * @copyright Copyright (c) 2012-2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
 use meican\base\grid\Grid;
@@ -11,15 +11,13 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 
-use meican\base\components\LinkColumn;
 use meican\topology\models\Domain;
 use meican\aaa\models\User;
 use meican\circuits\models\Reservation;
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionPath;
-use meican\circuits\assets\reservation\StatusAsset;
 
-StatusAsset::register($this);
+\meican\circuits\assets\reservation\Status::register($this);
 
 $this->params['header'] = [Yii::t('circuits', 'Active or pending reservations'), ['Home', Yii::t('circuits', 'Circuits')]];
 

@@ -93,7 +93,6 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#canvas" data-toggle="tab">Map Viewer</a></li>
-              <li><a href="#graph" data-toggle="tab">Graph Viewer</a></li>
             </ul>
             <div class="tab-content no-padding">
               <div class="tab-pane active" id="canvas">
@@ -160,14 +159,6 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                         [                      
                             'label' => 'Type',
                             'value' => 'NSI'                            
-                        ],
-                        [                      
-                            'label' => 'Provider',
-                            'format' => 'raw',
-                            'value' => 'RNP Aggregator'.
-                                '<data id="info-status" value='.$conn->status.'></data>'.
-                                '<data id="info-auth" value='.$conn->auth_status.'></data>'.
-                                '<data id="info-dataplane" value='.$conn->dataplane_status.'></data>'                           
                         ],
                     ],
                 ]); 

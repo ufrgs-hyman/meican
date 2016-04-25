@@ -1,7 +1,7 @@
 <?php 
 /**
  * @copyright Copyright (c) 2012-2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
 use meican\base\grid\Grid;
@@ -47,6 +47,7 @@ $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 									return Html::a('<span class="fa fa-trash"></span>', null);
 								}
 						],
+                        'headerOptions'=>['style'=>'width: 2%;'],
 					],
 					[
 						'class' => 'yii\grid\ActionColumn',

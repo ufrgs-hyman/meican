@@ -6,14 +6,13 @@
 
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use yii\helpers\Html;
 
 use meican\base\grid\Grid;
 use meican\base\grid\IcheckboxColumn;
-use meican\base\widgets\GridButtons;
-use meican\base\components\LinkColumn;
-use meican\aaa\assets\group\IndexAsset;
+use meican\base\grid\GridButtons;
 
-IndexAsset::register($this);
+\meican\aaa\assets\group\Index::register($this);
 
 $this->params['header'] = ["Groups", ['Home', 'Groups']];
 
@@ -43,13 +42,16 @@ $this->params['header'] = ["Groups", ['Home', 'Groups']];
                     'multiple'=>false,
                     'contentOptions'=>['style'=>'width: 15px;'],
                 ),
-                array(
-                    'class'=> LinkColumn::className(),
-                    'image'=>'/images/edit_1.png',
-                    'label' => '',
-                    'url' => 'update',
-                    'contentOptions'=>['style'=>'width: 15px;'],
-                ),
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template'=>'{update}',
+                    'buttons' => [
+                            'update' => function ($url, $model) {
+                                return Html::a('<span class="fa fa-pencil"></span>', $url);
+                            }
+                    ],
+                    'headerOptions'=>['style'=>'width: 2%;'],
+                ],
                     'name',
                 [
                     'label' => 'Tipo',

@@ -12,12 +12,10 @@ use yii\helpers\ArrayHelper;
 
 use meican\base\grid\Grid;
 use meican\base\grid\IcheckboxColumn;
-use meican\base\widgets\GridButtons;
+use meican\base\grid\GridButtons;
 use meican\aaa\models\UserDomainRole;
-use meican\base\components\LinkColumn;
-use meican\aaa\assets\user\IndexAsset;
 
-IndexAsset::register($this);
+\meican\aaa\assets\user\Index::register($this);
 
 $this->params['header'] = ["Users", ['Home', 'Users']];
 
@@ -48,19 +46,25 @@ $this->params['header'] = ["Users", ['Home', 'Users']];
                     'headerOptions'=>['style'=>'width: 2%;'],
                 ],
                 [
-                    'class'=> LinkColumn::className(),
-                    'image'=>'/images/edit_1.png',
-                    'url' => 'update',
+                    'class' => 'yii\grid\ActionColumn',
+                    'template'=>'{update}',
+                    'buttons' => [
+                            'update' => function ($url, $model) {
+                                return Html::a('<span class="fa fa-pencil"></span>', $url);
+                            }
+                    ],
                     'headerOptions'=>['style'=>'width: 2%;'],
                 ],
-                array(
-                    'class'=> LinkColumn::className(),
-                    'image'=>'/images/eye.png',
-                    'label' => '',
-                    'title'=>Yii::t("aaa",'Show details'),
-                    'url' => 'view',
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template'=>'{view}',
+                    'buttons' => [
+                            'view' => function ($url, $model) {
+                                return Html::a('<span class="fa fa-eye"></span>', $url);
+                            }
+                    ],
                     'headerOptions'=>['style'=>'width: 2%;'],
-                ),
+                ],
                 [
                     'label' => Yii::t('aaa', 'User'),
                     'value' => 'login',
@@ -71,16 +75,8 @@ $this->params['header'] = ["Users", ['Home', 'Users']];
                     'value' => 'name',
                     'headerOptions'=>['style'=>'width: 47%;'],
                 ],
-                /*[
-                    'label' => Yii::t('aaa', '#Roles in Domain'),
-                    'value' => 'numRoles',
-                    'filter' => Html::activeDropDownList($searchModel, 'domain',
-                        ArrayHelper::map($domains, 'name', 'name'),
-                        ['id'=>'dropdown', 'class'=>'form-control','prompt' => Yii::t("bpm", 'any')]),
-                    'headerOptions'=>['style'=>'width: 16%;'],
-                ],*/
-                ),
-            ]);
+            ),
+        ]);
             
         ?>
 

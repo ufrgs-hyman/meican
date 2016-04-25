@@ -1,7 +1,7 @@
 <?php 
 /**
  * @copyright Copyright (c) 2012-2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
 use meican\base\grid\Grid;
@@ -10,7 +10,6 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 
-use meican\base\components\LinkColumn;
 use meican\aaa\models\User;
 use meican\topology\models\Domain;
 use meican\circuits\models\Reservation;
@@ -31,12 +30,15 @@ $this->params['header'] = [Yii::t('circuits', 'History reservations'), ['Home', 
 			'layout' => "{items}{summary}{pager}",
 			'columns' => array(
 					[
-						'class'=> LinkColumn::className(),
-						'image'=>'/images/eye.png',
-						'label' => '',
-						'url' => 'view',
-						'headerOptions'=>['style'=>'width: 2%;'],
-					],
+                        'class' => 'yii\grid\ActionColumn',
+                        'template'=>'{view}',
+                        'buttons' => [
+                                'view' => function ($url, $model) {
+                                    return Html::a('<span class="fa fa-eye"></span>', $url);
+                                }
+                        ],
+                        'headerOptions'=>['style'=>'width: 2%;'],
+                    ],
 					[
 						'label' => Yii::t('circuits', 'Name'),
 						'value' => 'name',

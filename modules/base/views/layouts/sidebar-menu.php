@@ -23,7 +23,7 @@ echo Menu::widget([
                 ['label'=>Yii::t('circuits','Reserve'), 'url'=>['/circuits/reservation/create']],
                 ['label'=>Yii::t('circuits','Status'),'url'=>['/circuits/reservation/status']],
                 ['label'=>Yii::t('circuits','History'),'url'=>['/circuits/reservation/history']],
-                ['label'=>Yii::t('circuits','Authorization'),'url'=>['/circuits/authorization/index']],
+                ['label'=>Yii::t('circuits','Authorization'),'url'=>['/circuits/authorization']],
                 ['label'=>Yii::t('circuits','Configuration'),'url'=>['/circuits/configuration'], 'visible'=>RbacController::can('configuration/read')]
             ]
         ],
@@ -58,7 +58,7 @@ echo Menu::widget([
             'icon' => 'fa fa-calendar-check-o',
             'items'=>[
                     ['label'=>Yii::t('topology','Create'),'url'=>['/circuits/automated-test/create'], 'visible'=>RbacController::can('test/create')],
-                    ['label'=>Yii::t('topology','Status'),'url'=>['/circuits/automated-test/index'], 'visible'=>RbacController::can('test/read')]
+                    ['label'=>Yii::t('topology','Status'),'url'=>['/circuits/automated-test'], 'visible'=>RbacController::can('test/read')]
             ],
             'visible'=>(RbacController::can('test/read') || RbacController::can('test/create'))
         ],
@@ -67,9 +67,9 @@ echo Menu::widget([
             'url' => '#',
             'icon' => 'fa fa-users',
             'items'=>[
-                    ['label'=>Yii::t('aaa','Users'), 'url'=>['/aaa/user/index'], 'visible'=>(RbacController::can('user/read') || RbacController::can('role/read'))],
-                    ['label'=>Yii::t('aaa','Groups'), 'url'=>['/aaa/group/index'], 'visible'=>RbacController::can('group/read')],
-                    ['label'=>Yii::t('aaa','Configuration'), 'url'=>['/aaa/configuration/index'], 'visible'=>RbacController::can('group/update')],
+                    ['label'=>Yii::t('aaa','Users'), 'url'=>['/aaa/user'], 'visible'=>(RbacController::can('user/read') || RbacController::can('role/read'))],
+                    ['label'=>Yii::t('aaa','Groups'), 'url'=>['/aaa/group'], 'visible'=>RbacController::can('group/read')],
+                    ['label'=>Yii::t('aaa','Configuration'), 'url'=>['/aaa/configuration'], 'visible'=>RbacController::can('group/update')],
             ],
         ],
         [

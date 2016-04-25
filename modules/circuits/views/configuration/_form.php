@@ -25,16 +25,11 @@ $form= ActiveForm::begin([
 
 <div class="box box-default">
 	<div class="box-header with-border">
-        <h3><?= Yii::t('circuits', 'Configuration'); ?></h3>
+        <h3 class="box-title"><?= Yii::t('circuits', 'Circuit service settings'); ?></h3>
     </div>
     <div class="box-body">
         <?= $form->field($model,'meicanNsa')->textInput(['size'=>50]); ?>
         <?= $form->field($model,'protocol')->dropDownList(ArrayHelper::map(Protocol::getTypes(), 'id', 'name')); ?>
-    </div>
-    <div class="box-header with-border">
-        <h3><?= Yii::t('circuits', 'NSI Connection Service'); ?> <?= Html::img('@web/images/edit_1.png', ['id'=>"default-cs"]); ?></h3>
-    </div>
-    <div class="box-body">
         <?= $form->field($model,'defaultProviderNsa')->textInput(['size'=>50]); ?>
         <?= $form->field($model,'defaultCSUrl')->textInput(['size'=>50]); ?>
         <?= $form->field($model,'uniportsEnabled')->dropDownList(ArrayHelper::map([['id'=>'false', 'name'=>Yii::t('circuits', 'Disabled')],['id'=>'true','name'=>Yii::t('circuits', 'Enabled')]], 'id', 'name'), ['disabled'=>true]); ?>
