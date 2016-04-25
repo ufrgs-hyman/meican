@@ -31,7 +31,7 @@ class DummyRequester implements Requester {
         sleep(1);
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_CONFIRMED)->save();
         $this->conn->confirmCreate();
-        $this->conn->confirmCreatePath();
+        $this->conn->confirmResources();
     }
 
     public function commit() {
@@ -47,7 +47,7 @@ class DummyRequester implements Requester {
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY)->save();
         sleep(1);
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY_CONFIRMED)->save();
-        $this->conn->confirmSummary();
+        $this->conn->confirmInfo();
     }
 
     public function update() {

@@ -169,10 +169,6 @@ VGraph.prototype.build = function(divId) {
         edges: {
             color: "#2B7CE9",
             width: 1,
-            "smooth": {
-              "type": "continuous",
-              "forceDirection": "none"
-            }
           },
         physics: {
             enabled: true,

@@ -220,7 +220,7 @@ class Connection extends \yii\db\ActiveRecord
 	public function confirmCancel() {
 		$this->status = self::STATUS_CANCELLED;
 		$this->save();
-		//Notification::createConnectionNotification($this->id);
+		ReservationNotification::create($this->id);
 	} 
 	
 	public function confirmCommit() {
@@ -242,31 +242,31 @@ class Connection extends \yii\db\ActiveRecord
 	public function confirmProvision() {
 		$this->status = self::STATUS_PROVISIONED;
 		$this->save();
-		//Notification::createConnectionNotification($this->id);
+		ReservationNotification::create($this->id);
 	}
 	
 	public function failedCreate() {
 		$this->status = self::STATUS_FAILED_CREATE;
 		$this->save();
-		//Notification::createConnectionNotification($this->id);
+		ReservationNotification::create($this->id);
 	}
 	
 	public function failedResources() {
 		$this->status = self::STATUS_FAILED_CONFIRM;
 		$this->save();
-		//Notification::createConnectionNotification($this->id);
+		ReservationNotification::create($this->id);
 	}
 	
 	public function failedCommit() {
 		$this->status = self::STATUS_FAILED_SUBMIT;
 		$this->save();
-		//Notification::createConnectionNotification($this->id);
+		ReservationNotification::create($this->id);
 	}
 	
 	public function failedProvision() {
 		$this->status = self::STATUS_FAILED_PROVISION;
 		$this->save();
-		//Notification::createConnectionNotification($this->id);
+		ReservationNotification::create($this->id);
 	}
 	
 	public function failedCancel() {
@@ -381,10 +381,10 @@ class Connection extends \yii\db\ActiveRecord
     	///// Connection aceita pelo Provider e
     	//// Path atualizado com sucesso
 
-    	///$this->executeWorkflows($this->id);
+    	$this->executeWorkflows($this->id);
     	
-    	$this->auth_status = 'AUTHORIZED';
-        $this->save();
-    	$this->requestProvision();
+    	//$this->auth_status = 'AUTHORIZED';
+        //$this->save();
+    	//$this->requestProvision();
     }
 }

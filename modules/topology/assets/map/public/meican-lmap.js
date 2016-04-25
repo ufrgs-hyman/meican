@@ -302,10 +302,6 @@ LMap.prototype.build = function(mapDiv) {
     $('#' + mapDiv).show();   
 }
 
-LMap.prototype.getMap = function() {
-    return this._map;
-}
-
 LMap.prototype.getNodes = function() {
     return this._nodes;
 }
@@ -364,5 +360,9 @@ LMap.prototype.focusNode = function(id) {
         this.openWindow(marker);
         this._lastShowedMarker = id;
     }
+}
+
+LMap.prototype.focusLink = function(link) {
+    this._map.fitBounds(link.getBounds());
 }
 

@@ -221,10 +221,11 @@ function drawCircuitWhenReady(requiredMarkers, animate) {
             drawCircuitAnimated(requiredMarkers);
         } else {
             var path = [];
-            for (var i = 0; i < meicanMap.getMarkers().length; i++) {
-                path.push(meicanMap.getMarkers()[i].options.id);
+            for (var i = 0; i < meicanMap.getNodes().length; i++) {
+                path.push(meicanMap.getNodes()[i].options.id);
             }
             meicanMap.addLink(path);
+            meicanMap.focusLink(meicanMap.getLinks()[0]);
         }
     } else {
         setTimeout(function() {
@@ -239,7 +240,7 @@ function setMapBoundsMarkersWhenReady(requiredMarkers) {
         var path = [];
         var size = requiredMarkers.length;
         for(var i = 0; i < size; i++){
-            path.push(meicanMap.getMarker('dev',requiredMarkers[i]).position);
+            path.push(meicanMap.getNode('dev',requiredMarkers[i]).position);
         }
         setMapBounds(path);
     } else {
@@ -301,10 +302,10 @@ function addDestin(pathItem) {
 }
 
 function addMarker(dev, color) {
-    marker = meicanMap.getMarker('dev'+dev.id);
+    marker = meicanMap.getNode('dev'+dev.id);
     if (marker) return marker;
 
-    meicanMap.addMarker(
+    meicanMap.addNode(
         'dev'+dev.id,
         dev.name,
         'dev',
@@ -321,7 +322,7 @@ function addMarker(dev, color) {
 
 function areMarkersReady(ids) {
     for (var i = 0; i < ids.length; i++) {
-        var marker = meicanMap.getMarker('dev'+ids[i].device_id);
+        var marker = meicanMap.getNode('dev'+ids[i].device_id);
         if (marker === null) {
             return false;
         }

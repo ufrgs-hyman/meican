@@ -13,10 +13,11 @@ var events = [];
 var lsidebar;
 
 $(document).ready(function() {
-    meicanMap.show("rnp", 'dev');
+    meicanMap.show('dev');
     $(".sidebar-toggle").remove();
     $(".sidebar-mini").addClass("sidebar-collapse");
 
+    loadDomains();
     initScheduleTab();
     initRequirementsTab();
     initPathTab();
@@ -39,25 +40,7 @@ $(document).ready(function() {
         lsidebar.open("confirm");
     });
     
-
-    $("#switch-mode").on('click', function() {
-        if(mode != 'map') {
-            meicanGraph.hide();
-            meicanMap.show("rnp", 'dev');
-            for (var i = 0; i < meicanTopo['dev'].length; i++) {
-                meicanMap.addMarker(meicanTopo['dev'][i], 'dev');
-            }
-            mode = 'map';
-        } else {
-            meicanMap.hide();
-            meicanGraph.show();
-            meicanGraph.addNodes(meicanTopo['dev'], 'dev', true);
-            meicanGraph.addLinks(meicanTopo['dev']['links'], 'dev');
-            mode = 'graph';
-        }
-    });
-
-    lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap.getMap());
+    lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap._map);
     lsidebar.open("home");
     initEditPointSelects();
 });
@@ -113,7 +96,7 @@ function showPointModal(pointElement, pointOrder, nodeId) {
     setPointModalMode($(pointElement).find(".mode-input").val());
 
     if(nodeId) {
-        var marker = meicanMap.getMarker(nodeId);
+        var marker = meicanMap.getNode(nodeId);
         $("#pointform-domain").val(marker.options.domainId);
         fillNetworkSelect(marker.options.domainId);
         fillDeviceSelect(marker.options.domainId, null, marker.options.id.replace('dev',''));
@@ -312,7 +295,7 @@ function initPathTab() {
         meicanGraph.showNode(markerId);
     });*/
         
-    loadDomains();
+    
 }
 
 function initRequirementsTab() {
@@ -723,18 +706,16 @@ function loadDevices() {
         },
         success: function(response) {
             meicanTopo['dev'] = response;
-            //meicanGraph.addNodes(response, 'dev', true);
             for (var i = 0; i < response.length; i++) {
-                meicanMap.addMarker(
-                    response[i].id + 'dev',
+                meicanMap.addNode(
+                    'dev' + response[i].id,
                     response[i].name,
                     'dev',
                     response[i].domain_id,
                     response[i].latitude,
                     response[i].longitude);
             };
-            //meicanGraph.fit();
-            loadDeviceLinks();
+            //loadDeviceLinks();
         }
     });
 }

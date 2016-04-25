@@ -125,7 +125,7 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
     <div class="col-md-6">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t("topology", "History applied changes"); ?></h3>
+                <h3 class="box-title"><?= Yii::t("topology", "Change history"); ?></h3>
             </div>
             <div class="box-body">
                 <?php
@@ -135,7 +135,7 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']]
                     'dataProvider' => $changeProvider,
                     'columns' => array(
                         [
-                            'header' => Yii::t("topology", "Discovered at"),
+                            'header' => Yii::t("topology", "Last change at"),
                             'value' => function ($model){
                                 return $model->getTask()->one()->started_at;
                             },
