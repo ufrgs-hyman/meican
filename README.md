@@ -19,8 +19,10 @@ modules/            	application modules
 	bpm/				BPM Module
 	circuits/			Circuits Module
 	home				Home Module
+    monitoring/         Monitoring Module
 	notification/		Notification Module
 	scheduler/			Scheduler Module
+    tester/             Tester Module
 	topology/			Topology Module
 		assets/			assets classes and their css and js files
 		components/		independent submodules or third part classes
