@@ -15,7 +15,7 @@ $(document).ready(function() {
     $(".sidebar-toggle").remove();
     $(".sidebar-mini").addClass("sidebar-collapse");
 
-    lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap.getMap());
+    lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap._map);
 
     $("#canvas").css("height", $(window).height() - 50);
     if($(window).width() < 768) {
