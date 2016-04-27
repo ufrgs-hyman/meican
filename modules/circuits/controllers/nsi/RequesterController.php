@@ -233,8 +233,6 @@ class RequesterController extends Controller implements RequesterServer {
         }
         return "";
     }
-
-
     
     private function updateConnection($conn, $response) {
         $conn->start = (new \DateTime($response->reservation->criteria->schedule->startTime))->format("Y-m-d H:i:s");

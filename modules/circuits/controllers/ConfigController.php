@@ -13,9 +13,9 @@ use meican\circuits\forms\ConfigurationForm;
 use meican\circuits\models\CircuitsPreference;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
-class ConfigurationController extends RbacController {
+class ConfigController extends RbacController {
     
     public function actionIndex() {
         if(!self::can('configuration/read')){
@@ -42,7 +42,7 @@ class ConfigurationController extends RbacController {
             }
         }
 
-        return $this->render('config', array(
+        return $this->render('index', array(
                 'model' => $config,
         ));
     }

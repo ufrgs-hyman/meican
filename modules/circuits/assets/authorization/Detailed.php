@@ -1,10 +1,14 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican#license
+ */
 
 namespace meican\circuits\assets\authorization;
 
 use yii\web\AssetBundle;
 
-class Asset extends AssetBundle
+class Detailed extends AssetBundle
 {
     public $sourcePath = '@meican/circuits/assets/authorization/public';
     
@@ -18,6 +22,7 @@ class Asset extends AssetBundle
     
     public $depends = [
     	'yii\web\JqueryAsset',
+        'meican\base\assets\FullCalendar'
     ];
 }
 

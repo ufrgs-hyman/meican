@@ -19,7 +19,7 @@ use meican\circuits\models\ConnectionPath;
 
 \meican\circuits\assets\reservation\Status::register($this);
 
-$this->params['header'] = [Yii::t('circuits', 'Active or pending reservations'), ['Home', Yii::t('circuits', 'Circuits')]];
+$this->params['header'] = [Yii::t('circuits', 'Active or scheduled'), ['Home', Yii::t('circuits', 'Circuits')]];
 
 ?>
 

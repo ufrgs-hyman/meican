@@ -1,30 +1,26 @@
 <?php 
 /**
  * @copyright Copyright (c) 2012-2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
 use meican\base\grid\Grid;
 use yii\widgets\DetailView;
-use yii\grid\CheckboxColumn;
 use yii\helpers\Html;
 use yii\i18n\Formatter;
 use yii\widgets\ActiveForm;
 use yii\data\ArrayDataProvider;
-use yii\jui\Dialog;
 
 use yii\bootstrap\Modal;
 
-use meican\base\components\LinkColumn;	
 use meican\topology\models\Domain;
 use meican\circuits\models\Reservation;
 use meican\circuits\models\Connection;	
-use meican\circuits\assets\authorization\Asset;
-use meican\base\assets\FullCalendar;
 
-Asset::register($this);
+\meican\circuits\assets\authorization\Detailed::register($this);
 
-FullCalendar::register($this);
+$this->params['header'] = [Yii::t('circuits',"Reply request as <b>").Domain::findOne(['name' => $domain])->name.'</b>',
+    ['Home', 'Circuits']];
 
 ?>
 
@@ -34,8 +30,6 @@ FullCalendar::register($this);
 	var reservationId = <?php echo $info->reservation_id; ?>;
 	var language = <?php echo json_encode($language); ?>;
 </script>
-
-<h1><?= Yii::t('circuits', 'Reply request as ').Domain::findOne(['name' => $domain])->name ?></h1>
 
 <div class="row">
     <div class="col-md-6">
@@ -88,7 +82,7 @@ FullCalendar::register($this);
 						</td>
 						<td id="map_controls" style="text-align: right; width: 33%;">
 							<?php
-								echo Html::a(Yii::t('circuits', 'See Map'), ['/circuits/reservation/view', 'id' => $info->reservation_id]);
+								echo Html::a(Yii::t('circuits', 'Show reservation'), ['/circuits/reservation/view', 'id' => $info->reservation_id]);
 							?>
 						</td>
 					</tr>

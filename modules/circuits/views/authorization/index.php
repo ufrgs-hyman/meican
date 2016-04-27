@@ -1,7 +1,7 @@
 <?php 
 /**
  * @copyright Copyright (c) 2012-2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
 use meican\base\grid\Grid;
@@ -18,7 +18,6 @@ use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionPath;
 use meican\circuits\models\ConnectionAuth;
 use meican\aaa\models\User;
-
 
 $this->params['header'] = [Yii::t('circuits', 'Pending Authorization'), ['Home', Yii::t('circuits', 'Circuits')]];
 
@@ -99,7 +98,7 @@ $this->params['header'] = [Yii::t('circuits', 'Pending Authorization'), ['Home',
             			'template' => '{answer}',
             			'buttons' => [
 	           				'answer' => function ($url,$model) {
-	        					return Html::button(Yii::t('circuits', 'Answer'), ['class' => 'btn btn-sm btn-primary', 'onclick' => "window.location='answer?id=$model->id&domain=$model->domain'"]);
+	        					return Html::a(Html::button(Yii::t('circuits', 'Answer'), ['class' => 'btn btn-sm btn-primary']), ['answer', 'id'=>$model->id, 'domain'=>$model->domain]);
 			                },
 			            ],
 			            'headerOptions'=>['style'=>'width: 11%;'],

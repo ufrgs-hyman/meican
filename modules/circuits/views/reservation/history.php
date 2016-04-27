@@ -16,7 +16,7 @@ use meican\circuits\models\Reservation;
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionPath;
 
-$this->params['header'] = [Yii::t('circuits', 'History reservations'), ['Home', Yii::t('circuits', 'Circuits')]];
+$this->params['header'] = [Yii::t('circuits', 'History'), ['Home', Yii::t('circuits', 'Circuits')]];
 
 ?>
 

@@ -7,6 +7,7 @@
 namespace meican\circuits\services;
 
 use meican\circuits\models\ConnectionEvent;
+use meican\circuits\models\Connection;
 
 /**
  * Serviço que realiza requisições de circuitos em um ambiente simulado.
@@ -17,7 +18,7 @@ class DummyRequester implements Requester {
 
     public $conn;
 
-    function __construct($conn=null){
+    function __construct(Connection $conn = null){
         $this->conn = $conn;
     }
 
@@ -47,6 +48,8 @@ class DummyRequester implements Requester {
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY)->save();
         sleep(1);
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY_CONFIRMED)->save();
+        $this->conn->version = $this->conn->version + 1;
+        $this->conn->save();
         $this->conn->confirmInfo();
     }
 
