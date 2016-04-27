@@ -1,0 +1,11 @@
+I18N.begin('pt-BR');
+I18N.add('Disable auto refresh', 'Desativar autoatualização');
+I18N.add('Enable auto refresh', 'Ativar autoatualização');
+I18N.add('Never', 'Nunca');
+I18N.add('None', 'Sem resultado');
+I18N.add('loading', 'aguarde');
+I18N.add('select', 'selecione');
+I18N.add('Cancel', 'Cancelar');
+I18N.add('Save', 'Salvar');
+I18N.add('Create', 'Criar');
+I18N.add('Update', 'Editar');
