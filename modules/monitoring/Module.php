@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\home;
+namespace meican\monitoring;
 
 use Yii;
 
@@ -13,7 +13,7 @@ use Yii;
  */
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'meican\home\controllers';
+    public $controllerNamespace = 'meican\monitoring\controllers';
 
     public function init()
     {
@@ -22,11 +22,11 @@ class Module extends \yii\base\Module
     }
 
     public function registerTranslations() {
-        Yii::$app->i18n->translations['home*'] = [
+        Yii::$app->i18n->translations['notification*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
-            'basePath' => '@meican/home/messages',
+            'basePath' => '@meican/monitoring/messages',
             'fileMap' => [
-                'home' => 'home.php',
+                'messages' => 'messages.php',
             ],
         ];
     }
