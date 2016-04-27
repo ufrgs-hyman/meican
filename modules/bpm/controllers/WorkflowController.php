@@ -1,7 +1,7 @@
 <?php
 /**
  * @copyright Copyright (c) 2012-2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
 namespace meican\bpm\controllers;
@@ -44,7 +44,7 @@ class WorkflowController extends RbacController {
 			if(!self::can("workflow/read"))	return $this->goHome();
 			else{
 				Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to create workflows'));
-				return $this->redirect(array('/bpm/workflow/index'));
+				return $this->redirect(array('/bpm/workflow'));
 			}	    
 		}
     	return $this->render('indexCreate');
@@ -58,7 +58,7 @@ class WorkflowController extends RbacController {
 			    	if(!self::can("workflow/read")) return $this->goHome();
             		else{
             			Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to create in domain {domain}', ['domain' => $domain->name]));
-            			return $this->redirect(array('/bpm/workflow/index'));
+            			return $this->redirect(array('/bpm/workflow'));
             		}
             	}
 		    	return $this->render('create', array(
@@ -81,7 +81,7 @@ class WorkflowController extends RbacController {
 			    		if(!self::can("workflow/read")) return $this->goHome();
             			else{
             				Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to edit in domain {domain}', ['domain' => $domain->name]));
-            				return $this->redirect(array('/bpm/workflow/index'));
+            				return $this->redirect(array('/bpm/workflow'));
             			}
 			    	}
 		    		return $this->render('update', array(

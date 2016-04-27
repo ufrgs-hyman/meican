@@ -1,7 +1,7 @@
 <?php
 /**
  * @copyright Copyright (c) 2012-2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
 use yii\helpers\Url;
@@ -11,7 +11,7 @@ use yii\bootstrap\Modal;
 use meican\bpm\assets\CreateAsset;
 CreateAsset::register($this);
 
-$this->params['header'] = [Yii::t("bpm", 'Create'), [Yii::t("bpm", 'Home'), 'Workflows']];
+$this->params['header'] = [Yii::t("bpm", 'Create a Authorization Workflow'), [Yii::t("bpm", 'Home'), 'Workflows']];
 
 ?>
 
