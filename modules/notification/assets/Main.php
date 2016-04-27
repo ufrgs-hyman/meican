@@ -1,19 +1,14 @@
 <?php
 /**
  * @copyright Copyright (c) 2012-2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  */
 
 namespace meican\notification\assets;
 
 use yii\web\AssetBundle;
 
-/**
- * Base theme of the application.
- *
- * @author Maurício Quatrin Guerreiro @mqgmaster
- */
-class NotificationAsset extends AssetBundle
+class Main extends AssetBundle
 {
     public $sourcePath = '@meican/notification/assets/public';
 
