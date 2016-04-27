@@ -13,9 +13,9 @@ use meican\aaa\forms\ConfigurationForm;
 use meican\aaa\models\AaaPreference;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
-class ConfigurationController extends RbacController {
+class ConfigController extends RbacController {
     
     public function actionIndex() {
         if(!self::can('group/update')){
@@ -42,7 +42,7 @@ class ConfigurationController extends RbacController {
             }
         }
 
-        return $this->render('config', array(
+        return $this->render('index', array(
                 'model' => $config,
         ));
     }

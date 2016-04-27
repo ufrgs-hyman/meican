@@ -24,7 +24,7 @@ echo Menu::widget([
                 ['label'=>Yii::t('circuits','Status'),'url'=>['/circuits/reservation/status']],
                 ['label'=>Yii::t('circuits','History'),'url'=>['/circuits/reservation/history']],
                 ['label'=>Yii::t('circuits','Authorization'),'url'=>['/circuits/authorization']],
-                ['label'=>Yii::t('circuits','Configuration'),'url'=>['/circuits/configuration'], 'visible'=>RbacController::can('configuration/read')]
+                ['label'=>Yii::t('circuits','Configuration'),'url'=>['/circuits/config'], 'visible'=>RbacController::can('configuration/read')]
             ]
         ],
         [
@@ -33,7 +33,7 @@ echo Menu::widget([
             'icon' => 'fa fa-random',
             'items'=>[
                 ['label'=>Yii::t('bpm','Create'), 'url'=>['/bpm/workflow/new'], 'visible'=> RbacController::can('workflow/create')],
-                ['label'=>Yii::t('bpm','Status'), 'url'=>['/bpm/workflow/index']],
+                ['label'=>Yii::t('bpm','Status'), 'url'=>['/bpm/workflow']],
             ],
             'visible'=> RbacController::can('workflow/read')
         ],
@@ -57,8 +57,8 @@ echo Menu::widget([
             'url' => '#',
             'icon' => 'fa fa-calendar-check-o',
             'items'=>[
-                    ['label'=>Yii::t('topology','Create'),'url'=>['/circuits/automated-test/create'], 'visible'=>RbacController::can('test/create')],
-                    ['label'=>Yii::t('topology','Status'),'url'=>['/circuits/automated-test'], 'visible'=>RbacController::can('test/read')]
+                    ['label'=>Yii::t('topology','Create'),'url'=>['/tester/create'], 'visible'=>RbacController::can('test/create')],
+                    ['label'=>Yii::t('topology','Status'),'url'=>['/tester'], 'visible'=>RbacController::can('test/read')]
             ],
             'visible'=>(RbacController::can('test/read') || RbacController::can('test/create'))
         ],
@@ -85,11 +85,6 @@ echo Menu::widget([
                 [
                     'label'=>Yii::t('home','Monitoring'),
                     'url'=>'http://monitora.cipo.rnp.br/', 
-                    'target' => '_blank',
-                ],
-                [
-                    'label'=>Yii::t('home','Weathermap'),
-                    'url'=>'http://weathermap.cipo.rnp.br/',
                     'target' => '_blank',
                 ],
             ]

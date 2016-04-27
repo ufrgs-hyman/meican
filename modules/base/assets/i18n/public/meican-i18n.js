@@ -2,7 +2,7 @@
  * MeicanI18N 1.0
  *
  * @copyright Copyright (c) 2016 RNP
- * @license http://github.com/ufrgs-hyman/meican2#license
+ * @license http://github.com/ufrgs-hyman/meican#license
  *
  * Requirements - javascripts load order:
  * 1. This file

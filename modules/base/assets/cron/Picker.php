@@ -9,9 +9,9 @@ namespace meican\base\assets\cron;
 use yii\web\AssetBundle;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
-class PickerAsset extends AssetBundle {
+class Picker extends AssetBundle {
     
     public $sourcePath = '@meican/base/assets/cron/public';
 
@@ -26,6 +26,6 @@ class PickerAsset extends AssetBundle {
     
     public $depends = [
         'yii\web\JqueryAsset',
-        'meican\base\assets\i18n\Asset',
+        'meican\base\assets\I18N',
     ];
 }

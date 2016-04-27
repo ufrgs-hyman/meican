@@ -19,7 +19,7 @@ use meican\aaa\RbacController;
 use meican\aaa\models\AaaNotification;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class RoleController extends RbacController {
     
