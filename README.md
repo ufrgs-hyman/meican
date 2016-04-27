@@ -20,7 +20,10 @@ modules/            	application modules
 	circuits/			Circuits Module
 	home				Home Module
     monitoring/         Monitoring Module
+    nmwg/               NMWG Module
 	notification/		Notification Module
+    nsi/                NSI Module
+    perfsonar/          PerfSONAR Module
 	scheduler/			Scheduler Module
     tester/             Tester Module
 	topology/			Topology Module
