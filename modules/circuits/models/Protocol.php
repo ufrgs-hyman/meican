@@ -11,7 +11,7 @@ use Yii;
 use meican\topology\models\Service;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class Protocol {
 

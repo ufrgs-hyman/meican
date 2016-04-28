@@ -13,7 +13,8 @@ use meican\base\components\DateUtils;
 
 
 /**
- * This is the model class for table "{{%reservation}}".
+ * A Reservation element is created when a user
+ * request a scheduled circuit.
  *
  * @property integer $id
  * 

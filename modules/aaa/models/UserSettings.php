@@ -9,14 +9,14 @@ namespace meican\aaa\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%usersettings}}".
+ * User settings representation.
  *
  * @property integer $id
  * @property string $topo_viewer
  *
  * @property User $user
  *
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class UserSettings extends \yii\db\ActiveRecord
 {

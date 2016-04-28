@@ -11,7 +11,8 @@ use Yii;
 use meican\topology\models\Domain;
 
 /**
- * This is the model class for table "{{%user_domain}}".
+ * Represents a Role of User instance. Each role
+ * contains some permissions.
  *
  * @property integer $user_id
  * @property string $domain

@@ -11,6 +11,8 @@ use Yii;
 use meican\aaa\models\User;
 
 /**
+ * Event associated to a Connection instance.
+ *
  * @property integer $id
  * @property integer $conn_id
  * @property string $created_at

@@ -11,7 +11,8 @@ use Yii;
 use meican\topology\models\Port;
 
 /**
- * This is the model class for table "{{%connection_path}}".
+ * Represents a Connection Point. The connection path is
+ * formed by a set of these points.
  *
  * @property integer $conn_id
  * @property integer $path_order

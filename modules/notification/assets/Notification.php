@@ -8,7 +8,7 @@ namespace meican\notification\assets;
 
 use yii\web\AssetBundle;
 
-class Main extends AssetBundle
+class Notification extends AssetBundle
 {
     public $sourcePath = '@meican/notification/assets/public';
 
@@ -21,6 +21,6 @@ class Main extends AssetBundle
     ];
     
     public $depends = [
-        'meican\base\assets\Theme',
+        'yii\web\JqueryAsset',
     ];
 }

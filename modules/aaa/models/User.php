@@ -10,7 +10,7 @@ use Yii;
 use yii\web\IdentityInterface;
 
 /**
- * This is the model class for table "{{%user}}".
+ * User entity. A element of the entity represents a identity.
  *
  * @property integer $id
  * @property string $login
@@ -25,7 +25,7 @@ use yii\web\IdentityInterface;
  *
  * @property UserSettings $usersettings
  *
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {

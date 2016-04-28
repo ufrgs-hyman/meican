@@ -16,7 +16,7 @@ use meican\topology\models\Domain;
 use meican\circuits\models\Connection;
 
 /**
- * This is the model class for table "meican_connection_auth".
+ * Authorization entity managed by the Workflow service.
  *
  * @property integer $id
  * @property string $domain
@@ -34,7 +34,7 @@ use meican\circuits\models\Connection;
  * @property User $managerUser
  * @property BpmWorkflow $managerWorkflow
  *
- * @author Maurício Quatrin Guerreiro @mqgmaster 
+ * @author Maurício Quatrin Guerreiro
  */
 class ConnectionAuth extends \yii\db\ActiveRecord
 {

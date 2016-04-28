@@ -15,7 +15,7 @@ use meican\circuits\models\ConnectionAuth;
 use meican\base\components\DateUtils;
 
 /**
- * This is the model class for table "meican_connection".
+ * Represents a circuit object.
  *
  * @property integer $id
  * @property string $external_id
