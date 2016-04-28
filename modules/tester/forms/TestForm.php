@@ -14,17 +14,23 @@ use meican\topology\models\Port;
 use meican\circuits\models\ReservationPath;
 use meican\base\models\Cron;
 use meican\base\components\DateUtils;
-use meican\aaa\controllers\RbacController;
+use meican\aaa\RbacController;
 
 /**
  * @author Maurício Quatrin Guerreiro
  */
 class TestForm extends Model {
 	
+    public $src_dom;
+    public $src_net;
+    public $src_dev;
 	public $src_port;
 	public $src_vlan;
+    public $dst_dom;
+    public $dst_net;
+    public $dst_dev;
+    public $dst_port;
 	public $dst_vlan;
-	public $dst_port;
 	public $cron_value;
 	
 	public $reservation;
@@ -34,6 +40,21 @@ class TestForm extends Model {
 			[['src_port','src_vlan','dst_port','dst_vlan','cron_value'], 'required'],
 		];
 	}
+
+    public function attributeLabels() {
+        return [
+            'src_dom' => "Domain",
+            'src_net' => "Network",
+            'src_dev' => "Device",
+            'src_port' => "Port",
+            'src_vlan' => "VLAN",
+            'dst_dom' => "Domain",
+            'dst_net' => "Network",
+            'dst_dev' => "Device",
+            'dst_port' => "Port",
+            'dst_vlan' => "VLAN"
+        ];
+    }
 	
 	public function save() {
  			$this->reservation = new Reservation;

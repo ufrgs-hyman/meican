@@ -15,7 +15,7 @@ class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'meican\tester\controllers';
 
-    public $defaultRoute = 'tester';
+    public $defaultRoute = 'manager';
 
     public function init()
     {
@@ -24,7 +24,7 @@ class Module extends \yii\base\Module
     }
 
     public function registerTranslations() {
-        Yii::$app->i18n->translations['notification*'] = [
+        Yii::$app->i18n->translations['tester*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'basePath' => '@meican/tester/messages',
             'fileMap' => [

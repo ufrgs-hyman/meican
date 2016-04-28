@@ -22,7 +22,7 @@ use meican\tester\forms\TestForm;
 /**
  * @author Maurício Quatrin Guerreiro
  */
-class TesterController extends RbacController {
+class ManagerController extends RbacController {
 
     public $enableCsrfValidation = false;
 
@@ -55,7 +55,7 @@ class TesterController extends RbacController {
              
             return false;
         } else {
-            return $this->redirect(["index",'mode'=>'create']);
+            return $this->redirect(["/tester/manager",'mode'=>'create']);
         }
     }
 

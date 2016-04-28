@@ -38,8 +38,9 @@ $(document).on('ready pjax:success', function() {
 $(document).ready(function() {
 	prepareRefreshButton();
 	
-	$("#add-button").click(function() {
-		openCreateDialog();
+	$(".add-grid-btn").click(function() {
+        console.log('dsds');
+		openCreateModal();
 		return false;
 	});	
 
@@ -48,7 +49,6 @@ $(document).ready(function() {
 	initEndPointSelects("src", domains);
     initEndPointSelects("dst", domains);
 
-	$("#tabs").tabs();
 	$('#cron-widget').cron({
         initial: "0 12 * * *",
         onChange: function() {
@@ -56,12 +56,13 @@ $(document).ready(function() {
         },
     });
 
-    if($("#at-mode").attr("value") == "create") openCreateDialog();
+    if($("#tester-mode").attr("value") == "create") openCreateModal();
 });
 
-function openCreateDialog() {
+function openCreateModal() {
 	prepareCreate();
-	$('#test-dialog').dialog({
+    $("#test-modal").modal('show');
+	/*$('#test-dialog').dialog({
 		title: I18N.t("Create"),
 		width: 360,
 		height: 300,
@@ -77,12 +78,12 @@ function openCreateDialog() {
 	          	$(this).dialog('close');
 	        }
 	    }],
-	});
+	});*/
 }
 
 function prepareCreate() {
-	$( "#tabs" ).tabs( { disabled: [] } );
-	$('#tabs').tabs("option", "active", 0);
+	//$( "#tabs" ).tabs( { disabled: [] } );
+	//$('#tabs').tabs("option", "active", 0);
 	domains = JSON.parse($("#domains").text());
 	enableSelect("src", 'domain');
 	enableSelect("dst", 'domain');

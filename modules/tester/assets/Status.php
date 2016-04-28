@@ -16,8 +16,8 @@ class Status extends AssetBundle
     public $sourcePath = '@meican/tester/assets/public';
     
     public $js = [
-    	'at-i18n.js',
-    	'at.js',
+    	'status-i18n.js',
+    	'status.js',
     ];
     
     public $depends = [
