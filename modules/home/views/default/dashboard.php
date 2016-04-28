@@ -9,15 +9,9 @@ use yii\helpers\Url;
 
 use meican\aaa\RbacController;
 
+$this->params['header'] = ['Dashboard'];
+
 ?>
-
-<section class="content-header">
-  <h1>
-    Dashboard
-  </h1>
-</section>
-
-<section class="content">
 
   <div class="row" style="text-align: center">
         <div class="col-xs-6 col-sm-3" style="min-width: 250px">
@@ -51,6 +45,4 @@ use meican\aaa\RbacController;
         </div>
         <?php endif; ?>
     </div>
-
-</section>
 

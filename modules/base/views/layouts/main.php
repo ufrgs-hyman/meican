@@ -7,7 +7,6 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-use meican\notification\assets\NotificationAsset;
 use meican\base\widgets\Analytics;
 
 \meican\base\assets\Theme::register($this);
@@ -78,18 +77,26 @@ use meican\base\widgets\Analytics;
   <div class="content-wrapper">
     <?php 
         if (isset($this->params['header'])) {
-            $route = $this->params['header'][1][0];
-            for ($i=1; $i < count($this->params['header'][1]); $i++) { 
-                $route .= " > ".$this->params['header'][1][$i];
+            if(count($this->params['header']) > 1) {
+                $route = $this->params['header'][1][0];
+                for ($i=1; $i < count($this->params['header'][1]); $i++) { 
+                    $route .= " > ".$this->params['header'][1][$i];
+                }
+                echo '<section class="content-header">
+                    <h1>
+                      '.$this->params['header'][0].'
+                      <small>'.$route.'</small>
+                    </h1>
+                  </section>';
+            } else {
+                echo '<section class="content-header">
+                    <h1>
+                      '.$this->params['header'][0].'
+                    </h1>
+                  </section>';
             }
-            echo '<!-- Content Header (Page header) -->
-              <section class="content-header">
-                <h1>
-                  '.$this->params['header'][0].'
-                  <small>'.$route.'</small>
-                </h1>
-              </section>';
         } 
+
         if (!isset($this->params['hide-content-section'])) {
             echo '<section class="content">';
             echo $content;
@@ -106,7 +113,7 @@ use meican\base\widgets\Analytics;
     <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-          <b>Version</b> 2.3.0
+          Version <b><?= Yii::$app->version; ?></b>
         </div>
         <!-- Default to the left -->
         <strong>&copy; 2016 <a href="http://www.rnp.br" target="_blank">RNP</a></strong>

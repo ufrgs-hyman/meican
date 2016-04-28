@@ -22,7 +22,7 @@ class Module extends \yii\base\Module
     }
 
     public function registerTranslations() {
-        Yii::$app->i18n->translations['notification*'] = [
+        Yii::$app->i18n->translations['monitoring*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'basePath' => '@meican/monitoring/messages',
             'fileMap' => [

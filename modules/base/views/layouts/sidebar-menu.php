@@ -38,6 +38,14 @@ echo Menu::widget([
             'visible'=> RbacController::can('workflow/read')
         ],
         [
+            'label'=>Yii::t('monitoring','Monitoring'),
+            'url' => '#',
+            'icon' => 'fa fa-area-chart',
+            'items'=>[
+                ['label'=>Yii::t('bpm','Traffic Viewer'), 'url'=>['/monitoring']],
+            ],
+        ],
+        [
             'label'=>Yii::t('topology','Topologies'),
             'url' => '#',
             'icon' => 'fa fa-globe',
@@ -53,7 +61,7 @@ echo Menu::widget([
             'visible'=>(RbacController::can('domainTopology/read') || RbacController::can('discovery/read'))
         ],
         [
-            'label'=>Yii::t('aaa','Automated Tests'),
+            'label'=>Yii::t('aaa','Tests'),
             'url' => '#',
             'icon' => 'fa fa-calendar-check-o',
             'items'=>[
