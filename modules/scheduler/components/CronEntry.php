@@ -1,7 +1,6 @@
 <?php
 /**
  * @author   Krzysztof Suszyński <k.suszynski@mediovski.pl>
- * @author   Mauricio Quatrin Guerreiro
  * @version  0.2
  * @package  php.manager.crontab
  *

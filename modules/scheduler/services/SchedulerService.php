@@ -12,16 +12,16 @@ use meican\base\services\ConsoleService;
  * Service to create and delete the scheduled tasks on OS system.
  * Currently only Unix systems are supported.
  *
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class SchedulerService {
 
-    public function create($id) {
-        ConsoleService::run("scheduler/task/create ".$id);
+    public function create(SchedulableTask $task) {
+        ConsoleService::run("scheduler/task/create ".$task->id);
     }
 
-    public function delete($id) {
-        ConsoleService::run("scheduler/task/delete ".$id);
+    public function delete(SchedulableTask $task) {
+        ConsoleService::run("scheduler/task/delete ".$task->id);
     }
 }
 

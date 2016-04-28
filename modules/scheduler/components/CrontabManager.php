@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @author   Ryan Faerman <ryan.faerman@gmail.com>
  * @author   Krzysztof Suszyński <k.suszynski@mediovski.pl>

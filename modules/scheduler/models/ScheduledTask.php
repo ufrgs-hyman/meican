@@ -9,7 +9,7 @@ namespace meican\scheduler\models;
 use Yii;
 
 use meican\base\components\DateUtils;
-use meican\scheduler\api\SchedulableTask;
+use meican\scheduler\util\SchedulableTask;
 
 /**
  * Essa classe representa um objeto ScheduledTask,
@@ -25,10 +25,10 @@ use meican\scheduler\api\SchedulableTask;
  * @property string $freq
  * @property string $last_run_at
  *
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
-class ScheduledTask extends \yii\db\ActiveRecord
-{
+class ScheduledTask extends \yii\db\ActiveRecord implements SchedulableTask {
+
     const STATUS_ENABLED =      "ENABLED";
     const STATUS_DISABLED =     "DISABLED";
     const STATUS_PROCESSING =   "PROCESSING";

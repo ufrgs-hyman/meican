@@ -24,7 +24,7 @@ use meican\scheduler\models\ScheduledTask;
  * ScheduledTasks valid instances are required for all
  * actions in this controller.
  *
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class TaskController extends Controller {
 
