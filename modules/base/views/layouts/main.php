@@ -12,11 +12,6 @@ use meican\base\widgets\Analytics;
 
 \meican\base\assets\Theme::register($this);
 
-/* @var $this \yii\web\View */
-/* @var $content string */
-
-NotificationAsset::register($this);
-
 ?>
 <!DOCTYPE html>
 <?php $this->beginPage() ?>

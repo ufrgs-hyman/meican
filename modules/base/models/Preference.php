@@ -9,12 +9,12 @@ namespace meican\base\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%preference}}".
+ * Generic preference entity.
  *
  * @property string $name
  * @property string $value
  *
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class Preference extends \yii\db\ActiveRecord
 {

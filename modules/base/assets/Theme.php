@@ -11,7 +11,7 @@ use yii\web\AssetBundle;
 /**
  * Base theme of the application.
  *
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class Theme extends AssetBundle
 {
@@ -32,6 +32,7 @@ class Theme extends AssetBundle
         'meican\base\assets\SlimScroll',
         'meican\base\assets\FontAwesome',
         'meican\base\assets\Ionicons',
-        'meican\base\assets\I18N'
+        'meican\base\assets\I18N',
+        'meican\notification\assets\Notification'
     ];
 }
