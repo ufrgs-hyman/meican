@@ -8,11 +8,9 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Button;
 use yii\helpers\Html;
 
-use meican\aaa\assets\user\EditAsset;
+\meican\aaa\assets\user\Update::register($this);
 
 $this->params['header'] = [$user->scenario == $user::SCENARIO_UPDATE_ACCOUNT ? "My account" : "Users", ['Home']];
-
-EditAsset::register($this);
 
 $form=ActiveForm::begin(array(
     'layout' => 'horizontal'
