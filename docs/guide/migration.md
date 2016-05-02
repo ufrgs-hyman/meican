@@ -4,7 +4,7 @@ This guide covers the migration of the application to another machine.
 
 Two migration methods are presented. The first method is to copy the whole meican installation directory to the new sever (1) and second method is to copy only the necessary files to a new MEICAN installation (2).
 
-####1. COPY METHOD
+####1. Clone of existing Installation
 
 #####1.1 Machine requirements
 
@@ -24,7 +24,7 @@ Now that you already have the files you need the database from the old machine. 
 
 Test your application accessing http://localhost and verify some pages. If you detect some wrong this method may not work in your system. In this case you should follow the method 2.
 
-####2. NEW INSTALLATION METHOD
+####2. Move files to new installation
 
 #####2.1 Backup of the certficate
 
