@@ -24,11 +24,11 @@ Test your application accessing http://localhost and verify some pages. If you d
 
 #####2.1 Backup of the certficate
 
-Your new server will have the same domain? If yes, you need a backup of the all files from **certificates** folder.
+Your new server will have the same domain? If yes, you need a backup of the all files from **certificates** folder. This folder is located in the project root.
 
 #####2.2 Backup of the configurations
 
-Backup the following files from **config** folder: "db.php", "mailer.php" and "params.php". 
+Backup the following files from **config** folder: "db.php", "mailer.php" and "params.php". This folder is located in the project root.
 
 #####2.3 Backup of the database
 
