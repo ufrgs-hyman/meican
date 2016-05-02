@@ -15,6 +15,8 @@ class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'meican\monitoring\controllers';
 
+    public $defaultRoute = 'traffic';
+
     public function init()
     {
         parent::init();

@@ -202,7 +202,7 @@ class ViewerController extends RbacController {
     }
 
     public function actionGetPeerings() {
-        $peerings = ProviderPeering::find()->asArray()->all();
+        $peerings = Peering::find()->asArray()->all();
         $links = [];
 
         foreach ($peerings as $peering) {

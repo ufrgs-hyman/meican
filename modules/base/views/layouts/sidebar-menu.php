@@ -42,7 +42,7 @@ echo Menu::widget([
             'url' => '#',
             'icon' => 'fa fa-area-chart',
             'items'=>[
-                ['label'=>Yii::t('bpm','Traffic Viewer'), 'url'=>['/monitoring']],
+                ['label'=>Yii::t('bpm','Traffic'), 'url'=>['/monitoring']],
             ],
         ],
         [

@@ -46,24 +46,18 @@ LMap.prototype.hide = function() {
 LMap.prototype.addLink = function(path, type) {
     //console.log(path);
     var latLngList = [];
+    var nodes = [];
 
     for (var i = 0; i < path.length; i++) {
         var node = this.getNode(path[i]);
         if(node != null)
             latLngList.push(node.getLatLng());
+
+        nodes.push(node);
     };
 
     //strokeColor = "#0000FF"; 
     //strokeOpacity = 0.1;
-
-    /*link = new google.maps.Polyline({
-        path: [srcMarker.position, dstMarker.position],
-        strokeColor: strokeColor,
-        strokeOpacity: strokeOpacity,
-        strokeWeight: 5,
-        geodesic: false,
-        type: type,
-    });*/
 
     if (latLngList.length > 1) {
         //console.log(latLngList);
@@ -75,6 +69,10 @@ LMap.prototype.addLink = function(path, type) {
             }).addTo(this._map);
 
         this._links.push(link);
+        
+        for (var i = nodes.length - 1; i >= 0; i--) {
+            nodes[i].options.links.push(link);
+        };
     }
     
     /*google.maps.event.addListener(link, 'click', function(event) {
@@ -144,7 +142,8 @@ LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
             icon: icon,
             type: type,
             name: name,
-            domainId: domainId
+            domainId: domainId,
+            links: []
         }
     ).bindPopup("#");
 
