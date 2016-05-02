@@ -2,11 +2,15 @@
 
 This guide covers the migration of the application to another machine.
 
-Two migration methods are presented. The quickest method (1) and the most time-consuming method (2).
+Two migration methods are presented. The first method is to copy the whole meican installation directory to the new sever (1) and second method is to copy only the necessary files to a new MEICAN installation (2).
 
 ####1. COPY METHOD
 
-#####1.1 Copy all files
+#####1.1 Machine requirements
+
+Make sure that the software requirements: Apache, PHP and MySQL are configured as defined in the installation guide for your operating system. After that, proceed to the next step.
+
+#####1.2 Copy all files
 
 The quick backup method is copy all files from the current installation. Replace the #USER# and #HOST# with your user and old server address. After that, run the following command in your new server:
 
@@ -14,7 +18,7 @@ The quick backup method is copy all files from the current installation. Replace
 sudo rsync -a #USER#@#HOST#:/path/to/old/meican2 /path/to/new/meican2
 ```
 
-#####1.2 Database
+#####1.3 Database
 
 Now that you already have the files you need the database from the old machine. Follow the step 2.3 to get the backup and 2.7 to import the database on the new server.
 
