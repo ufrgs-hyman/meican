@@ -4,7 +4,7 @@ This guide covers the migration of the application to another machine.
 
 Two migration methods are presented. The first method is to copy the whole meican installation directory to the new sever (1) and second method is to copy only the necessary files to a new MEICAN installation (2).
 
-####1. Clone of existing Installation
+####1. Clone of existing installation
 
 #####1.1 Machine requirements
 
