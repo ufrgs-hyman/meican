@@ -40,26 +40,33 @@ $(document).ready(function() {
 
 function updateTraffic() {
     for (var i = meicanMap._nodes.length - 1; i >= 0; i--) {
-        $.ajax({
-            url: baseUrl+'/monitoring/traffic/get?dev=' + meicanMap._nodes[i].options.id.split('dev')[1] + '&port=test',
-            dataType: 'json',
-            method: "GET",
-            success: function(dev) {
-                console.log(dev);
-                switch(dev.traffic) {
-                    case 1:
-                        meicanMap.getNode('dev' + dev.id).options.links[0].setStyle({color:"#35E834"}); break;
-                    case 2:
-                        meicanMap.getNode('dev' + dev.id).options.links[0].setStyle({color:"#E8CB3E"}); break;
-                    case 3:
-                        meicanMap.getNode('dev' + dev.id).options.links[0].setStyle({color:"#FF7619"}); break;
-                    case 4:
-                        meicanMap.getNode('dev' + dev.id).options.links[0].setStyle({color:"#E8160C"}); break;
-                    case 5:
-                        meicanMap.getNode('dev' + dev.id).options.links[0].setStyle({color:"#000000"}); break;
-                }
+        for (var portId in meicanMap._nodes[i].options.ports) {
+            if(meicanMap._nodes[i].options.ports[portId].link != null) {
+                $.ajax({
+                    url: baseUrl+'/monitoring/traffic/get?dev=' + meicanMap._nodes[i].options.id.split('dev')[1] + '&port=' + portId,
+                    dataType: 'json',
+                    method: "GET",
+                    success: function(response) {
+                        var color; 
+                        switch(response.traffic) {
+                            case 1:
+                                color = "#35E834"; break;
+                            case 2:
+                                color = "#E8CB3E"; break;
+                            case 3:
+                                color = "#FF7619"; break;
+                            case 4:
+                                color = "#E8160C"; break;
+                            case 5:
+                                color = "#000000"; break;
+                            default: 
+                                console.log(response);
+                        }
+                        meicanMap.getNode('dev' + response.dev).options.ports[parseInt(response.port)].link.setStyle({color: color});
+                    }
+                });
             }
-        });
+        }
     };
 }
 
@@ -235,7 +242,7 @@ function loadDevices() {
                     response[i].latitude,
                     response[i].longitude);
             };
-            loadDeviceLinks();
+            loadDevicePorts();
         }
     });
 }
@@ -284,19 +291,24 @@ function loadNetworkLinks() {
     });
 }
 
-function loadDeviceLinks() {
+function loadDevicePorts() {
     $.ajax({
-        url: baseUrl+'/topology/viewer/get-device-links',
+        url: baseUrl+'/topology/viewer/get-device-ports',
         dataType: 'json',
         method: "GET",
         success: function(response) {
-            meicanTopo['dev']['links'] = response;
-            meicanGraph.addLinks(response, 'dev');
-            for (var src in response) {
-                for (var i = 0; i < response[src].length; i++) {
-                    //console.log(src, response[src][i]);
-                    meicanMap.addLink(['dev'+src,'dev'+response[src][i]], 'dev');
-                }
+            meicanTopo['dev']['ports'] = response;
+            //meicanGraph.addLinks(response, 'dev');
+            for (var dev in response) {
+                for (var port in response[dev]) {
+                    meicanMap.addPort(
+                        port, 
+                        response[dev][port].name, 
+                        response[dev][port].dir, 
+                        'dev'+dev, 
+                        response[dev][port].link ? 'dev'+response[dev][port].link : null, 
+                        'dev');
+                } 
             }           
         }
     });

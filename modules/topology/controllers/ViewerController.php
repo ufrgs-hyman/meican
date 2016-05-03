@@ -96,6 +96,29 @@ class ViewerController extends RbacController {
         return json_encode($links);
     }
 
+    public function actionGetDevicePorts() {
+        $portsWithAlias = Port::find()
+            ->select(['id','name','directionality','device_id','alias_id'])->all();
+        $ports = [];
+        foreach ($portsWithAlias as $port) {
+            $devId1 = $port->device_id;
+            $aliasPort = $port->getAlias()->select(['id','name','directionality','device_id'])->asArray()->one();
+            $devId2 = $aliasPort['device_id'];
+
+            isset($ports[$devId1]) ? null : $ports[$devId1] = [];
+            $devId2 ? (isset($ports[$devId2]) ? null : $ports[$devId2] = []) : null;
+
+            if(!in_array($port->id, $ports[$devId1]))
+                $ports[$devId1][$port->id] = [
+                    'dir'=>$port->directionality,
+                    'name' => $port->name,
+                    'link' => $devId2,
+                ]; 
+        }
+        Yii::trace($ports);
+        return json_encode($ports);
+    }
+
     public function actionGetDeviceLinks() {
         $portsWithAlias = Port::find()->where(['not', ['alias_id' => null]])
             ->select(['id','directionality','device_id','alias_id'])->all();

@@ -11,22 +11,33 @@ $config = [
     'name'=>'MEICAN',
     'version' => '2.3.0',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log','debug','session','notification','home','bpm','circuits','topology','aaa'],
+    'bootstrap' => ['log','debug','session',
+        'notification',
+        'home',
+        'bpm',
+        'circuits',
+        'topology',
+        'aaa',
+        'tester',
+        'monitoring'
+    ],
     'defaultRoute' => 'home',
     'modules' => [
         'debug' => [
             'class' => 'yii\debug\Module',
             //'allowedIPs' => ['143.54.12.245']
         ],
-        'aaa' => 'meican\aaa\Module',
-        'base' => 'meican\base\Module',
-        'circuits' => 'meican\circuits\Module',
-        'home' => 'meican\home\Module',
-        'scheduler' => 'meican\scheduler\Module',
-        'topology' => 'meican\topology\Module',
-        'bpm' => 'meican\bpm\Module',
-        'notification' => 'meican\notification\Module',
-        'gii' => 'yii\gii\Module',
+        'aaa' =>            'meican\aaa\Module',
+        'base' =>           'meican\base\Module',
+        'circuits' =>       'meican\circuits\Module',
+        'home' =>           'meican\home\Module',
+        'scheduler' =>      'meican\scheduler\Module',
+        'tester' =>         'meican\tester\Module',
+        'monitoring' =>     'meican\monitoring\Module',
+        'topology' =>       'meican\topology\Module',
+        'bpm' =>            'meican\bpm\Module',
+        'notification' =>   'meican\notification\Module',
+        'gii' =>            'yii\gii\Module',
     ],
     'aliases' => [
         '@meican' => '@app/modules',
@@ -49,7 +60,7 @@ $config = [
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '',
+            'cookieValidationKey' => 'oVPoqfV26tMmmGp35SHU52dRf91z5N3I',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',

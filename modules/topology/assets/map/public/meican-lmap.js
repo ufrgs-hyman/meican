@@ -43,37 +43,45 @@ LMap.prototype.hide = function() {
     }
 }
 
-LMap.prototype.addLink = function(path, type) {
-    //console.log(path);
+LMap.prototype.addPort = function(id, name, dir, srcNodeId, dstNodeId, type) {
+    var node = this.getNode(srcNodeId);
+    node.options.ports[id] = {
+        name: name,
+        dir: dir,
+        link: dstNodeId != null ? this.addLink([srcNodeId, dstNodeId], type, true) : null
+    };
+}
+
+LMap.prototype.addLink = function(path, type, partial) {
+    if(path.length < 2) return null;
+
     var latLngList = [];
-    var nodes = [];
 
     for (var i = 0; i < path.length; i++) {
         var node = this.getNode(path[i]);
         if(node != null)
             latLngList.push(node.getLatLng());
-
-        nodes.push(node);
     };
+
+    if(partial) {
+        latLngList[1] = L.latLngBounds(latLngList[0], latLngList[1]).getCenter();
+    }
 
     //strokeColor = "#0000FF"; 
     //strokeOpacity = 0.1;
 
     if (latLngList.length > 1) {
-        //console.log(latLngList);
         var link = L.polyline(
             latLngList, 
             {
                 color: '#cccccc',
-                type: type
+                type: type,
             }).addTo(this._map);
 
         this._links.push(link);
-        
-        for (var i = nodes.length - 1; i >= 0; i--) {
-            nodes[i].options.links.push(link);
-        };
     }
+
+    return link;
     
     /*google.maps.event.addListener(link, 'click', function(event) {
         var srcDomain = meicanMap.getDomainName(source.domainId);
@@ -143,7 +151,7 @@ LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
             type: type,
             name: name,
             domainId: domainId,
-            links: []
+            ports: {}
         }
     ).bindPopup("#");
 
@@ -197,12 +205,10 @@ LMap.prototype.openPopup = function(marker, extra) {
 }
 
 LMap.prototype.getNode = function(id) {
-    if(id) {
-        var size = this._nodes.length;
-        for(var i = 0; i < size; i++){
-            if ((this._nodes[i].options.id.toString()) == (id.toString())) {
-                return this._nodes[i];
-            }
+    var size = this._nodes.length;
+    for(var i = 0; i < size; i++){
+        if ((this._nodes[i].options.id.toString()) == (id.toString())) {
+            return this._nodes[i];
         }
     }
     

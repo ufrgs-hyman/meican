@@ -9,6 +9,9 @@ namespace meican\monitoring\controllers;
 use Yii;
 
 use meican\aaa\RbacController;
+use meican\base\utils\DateBuilder;
+use meican\topology\models\Device;
+use meican\topology\models\Port;
 
 /**
  * @author Maurício Quatrin Guerreiro
@@ -19,8 +22,37 @@ class TrafficController extends RbacController {
         return $this->render('index');
     }
 
-    public function actionGet($dev, $port) {
-        return json_encode(['id'=>$dev, 'traffic' =>rand(1, 5)]);
+    public function actionGet($dev, $port, $dir) {
+        $devName = Device::find()->
+            where(['id'=>$dev])->
+            asArray()->one()['node'];
+        $portName = Port::find()->
+            where(['id'=>$port])->
+            asArray()->one()['name'];
+        $portName = str_replace('/', '@2F', $portName);
+
+        $ch = curl_init();
+        $options = array(
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false,
+
+            CURLOPT_USERAGENT => 'Meican',
+            CURLOPT_URL => 'http://monitora.cipo.rnp.br/esmond/v2/device/'.$devName.'/interface/'.$portName.'/'.$dir.
+                '?format=json&begin='.strtotime('-90 seconds')//DateTime::now('-60 seconds')->getTimestamp()
+        );
+        curl_setopt_array($ch , $options);
+        $output = curl_exec($ch);
+        curl_close($ch);
+
+        Yii::trace($output);
+        
+        return json_encode([
+            'dev'=>$dev, 
+            'port'=>$port, 
+            'traffic' =>json_decode($output)->data[0]->val
+        ]);
     }
 
     public function actionGetHistory($dev, $port, $begin, $end) {
