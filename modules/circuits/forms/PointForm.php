@@ -9,8 +9,6 @@ namespace meican\circuits\forms;
 use yii\base\Model;
 use Yii;
 
-use meican\circuits\models\Connection;
-
 /**
  * @author Maurício Quatrin Guerreiro
  */

@@ -3,7 +3,6 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-//var meicanGMap = new MeicanGMap("map-canvas");
 var meicanMap = new LMap('canvas');
 var meicanGraph = new VGraph("canvas");
 var meicanTopo = [];
@@ -299,43 +298,6 @@ function initPathTab() {
 }
 
 function initRequirementsTab() {
-    /*$("#bandwidth").on("click", '.minus', function() {
-        if (!isNaN($("#bandwidth").find('input').val())) {
-            var old = $("#bandwidth").find('input').val();
-            var temp = parseInt($("#bandwidth").find('input').val()) - 100;
-            $("#bandwidth").find('input').val(temp < 0 ? old : temp);
-        }
-    });
-
-    $("#bandwidth").on("click", '.plus', function() {
-        if (!isNaN($("#bandwidth").find('input').val())) {
-            $("#bandwidth").find('input').val(parseInt($("#bandwidth").find('input').val()) + 100);
-        }
-    });*/
-}
-
-function initCalendar() {
-    if($("#calendar").attr('loaded') === "false") {
-        $("#calendar").attr("loaded", 'true');
-        $('#calendar').fullCalendar({
-            height: 480,
-            timezone: 'local',
-            dayClick: function(date, jsEvent, view) {
-                $("#schedule-modal").modal("show");
-                $('#datetime-range').data('daterangepicker').setStartDate(moment(date).format("DD/MM/YYYY HH:mm"));
-                $('#datetime-range').data('daterangepicker').setEndDate(moment(date).add(1, 'hours').format("DD/MM/YYYY HH:mm"));
-            },
-            lang: 'pt-br',
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            },
-            events: events,
-            editable: true,
-            eventLimit: true,
-        });
-    }
 }
 
 function initScheduleTab() {
@@ -358,7 +320,7 @@ function initScheduleTab() {
         $("#schedule-modal").modal("hide");
     });
 
-    $('#datetime-range').daterangepicker({
+    /*$('#datetime-range').daterangepicker({
         timePicker: true,
         timePickerIncrement: 1,
         timePicker24Hour: true,
@@ -401,7 +363,31 @@ function initScheduleTab() {
         },
     });
 
-    $(".daterangepicker").find('.ranges').remove();
+    $(".daterangepicker").find('.ranges').remove();*/
+}
+
+function initCalendar() {
+    if($("#calendar").attr('loaded') === "false") {
+        $("#calendar").attr("loaded", 'true');
+        $('#calendar').fullCalendar({
+            height: 480,
+            timezone: 'local',
+            dayClick: function(date, jsEvent, view) {
+                $("#schedule-modal").modal("show");
+                $('#datetime-range').data('daterangepicker').setStartDate(moment(date).format("DD/MM/YYYY HH:mm"));
+                $('#datetime-range').data('daterangepicker').setEndDate(moment(date).add(1, 'hours').format("DD/MM/YYYY HH:mm"));
+            },
+            lang: 'pt-br',
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            events: events,
+            editable: true,
+            eventLimit: true,
+        });
+    }
 }
 
 function closePopups() {
