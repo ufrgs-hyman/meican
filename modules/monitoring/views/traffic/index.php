@@ -15,7 +15,7 @@ $this->params['hide-footer'] = true;
     <!-- Nav tabs -->
     <div class="lsidebar-tabs">
         <ul role="tablist">
-            <li><a title="Topology Viewer options" href="#home" role="tab"><i class="fa fa-gear"></i></a></li>
+            <li><a title="Monitoring options" href="#home" role="tab"><i class="fa fa-gear"></i></a></li>
         </ul>
     </div>
 
@@ -23,7 +23,7 @@ $this->params['hide-footer'] = true;
     <div class="lsidebar-content">
         <div class="lsidebar-pane icheck" id="home">
             <h1 class="lsidebar-header">
-                Topology Viewer options<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span>
+                Monitoring options<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span>
             </h1>
             <br>
             <div class="form-group">
@@ -34,17 +34,9 @@ $this->params['hide-footer'] = true;
             <div class="form-group">
                 <label>Node type:</label><br>
                 <input type="radio" name="node-type" value="dom"> Domain
-                <input type="radio" name="node-type" value="prov"> Provider
                 <input type="radio" name="node-type" value="net"> Network
                 <input type="radio" name="node-type" value="dev" checked> Device
             </div>
-            <div class="form-group">
-                <label>Topology type:</label><br>
-                <input type="radio" name="topo-type" value="nsi"> NSI
-                <input type="radio" name="topo-type" value="nmwg"> NMWG
-                <input type="radio" name="topo-type" value="all" checked> All
-            </div>
-            <button id="save-positions-btn" class="btn btn-default">Save graph positions</button>
         </div>
     </div>
 </div>

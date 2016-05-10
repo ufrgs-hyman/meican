@@ -41,7 +41,7 @@ abstract class BaseController extends Controller {
      *
      * Atenção, a partir dessa funcão não será possível usar o RBAC.
      **/
-    static function asyncActionBegin() {
+    static function beginAsyncAction() {
         Yii::$app->session->close();
     }
 }

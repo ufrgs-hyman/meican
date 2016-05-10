@@ -38,30 +38,23 @@ $(document).ready(function() {
     loadDomains();
 });
 
-function updateTraffic() {
+function loadTraffic() {
     for (var i = meicanMap._nodes.length - 1; i >= 0; i--) {
         for (var portId in meicanMap._nodes[i].options.ports) {
             if(meicanMap._nodes[i].options.ports[portId].link != null) {
                 $.ajax({
-                    url: baseUrl+'/monitoring/traffic/get?dev=' + meicanMap._nodes[i].options.id.split('dev')[1] + '&port=' + portId,
+                    url: baseUrl+'/monitoring/traffic/get?port=' + portId + '&dir=in',
                     dataType: 'json',
                     method: "GET",
                     success: function(response) {
                         var color; 
-                        switch(response.traffic) {
-                            case 1:
-                                color = "#35E834"; break;
-                            case 2:
-                                color = "#E8CB3E"; break;
-                            case 3:
-                                color = "#FF7619"; break;
-                            case 4:
-                                color = "#E8160C"; break;
-                            case 5:
-                                color = "#000000"; break;
-                            default: 
-                                console.log(response);
-                        }
+                        if(response.traffic < 0.4) {
+                            color = "#35E834";
+                        } else if(response.traffic < 0.8) {
+                            color = "#FF7619";
+                        } else {
+                            color = "#E8160C";
+                        } 
                         meicanMap.getNode('dev' + response.dev).options.ports[parseInt(response.port)].link.setStyle({color: color});
                     }
                 });
@@ -142,27 +135,6 @@ function closePopups() {
         meicanMap.closePopups();
     }
 }
-
-$("#save-positions-btn").on("click", function(){
-    meicanGraph._graph.storePositions();
-    $.ajax({
-        type: "POST",
-        url: baseUrl + '/topology/viewer/save-graph-positions',
-        data: {
-            _csrf: yii.getCsrfToken(),
-            mode: 'dev',
-            nodes: meicanGraph._nodes.get({
-                filter: function (item) {
-                    return item.type == 'dev';
-                }
-            })
-        },
-        success: function (response) {
-        },
-        error: function() {
-        }
-    });
-});
 
 function loadDomains() {
     $.ajax({
@@ -309,7 +281,8 @@ function loadDevicePorts() {
                         response[dev][port].link ? 'dev'+response[dev][port].link : null, 
                         'dev');
                 } 
-            }           
+            }  
+            loadTraffic();         
         }
     });
 }
