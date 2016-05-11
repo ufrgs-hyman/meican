@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bb41a2b474df569bb0658e175b099d61",
-    "content-hash": "92065f909529ad4c0b9685bd7509d0f7",
+    "hash": "a30943b8f35482d07bb205287df14ff4",
+    "content-hash": "d50bb6c55e5c252897a5d32f66564dc7",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -55,6 +55,41 @@
                 "responsive",
                 "web"
             ]
+        },
+        {
+            "name": "bower-asset/bootstrap-daterangepicker",
+            "version": "v2.1.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dangrossman/bootstrap-daterangepicker.git",
+                "reference": "59791b857634de45b7a720d9061a1ed197bb965e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dangrossman/bootstrap-daterangepicker/zipball/59791b857634de45b7a720d9061a1ed197bb965e",
+                "reference": "59791b857634de45b7a720d9061a1ed197bb965e",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.10",
+                "bower-asset/moment": ">=2.9.0"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "daterangepicker.js",
+                    "daterangepicker.css"
+                ],
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "tests",
+                    "moment.js",
+                    "moment.min.js"
+                ]
+            }
         },
         {
             "name": "bower-asset/bootstrap-toggle",

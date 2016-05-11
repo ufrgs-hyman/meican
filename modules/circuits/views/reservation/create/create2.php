@@ -9,9 +9,6 @@ use yii\bootstrap\Modal;
 
 use kartik\touchspin\TouchSpin;
 use kartik\form\ActiveForm;
-use kartik\daterange\DateRangePicker;
-
-use meican\circuits\forms\EventForm;
 
 \meican\circuits\assets\reservation\Create::register($this);
 
@@ -296,29 +293,17 @@ Modal::begin([
 <?php Modal::begin([
     'id' => 'schedule-modal',
     'header' => 'Schedule Form',
-    'footer' => '<button class="cancel-btn btn btn-default">Cancel</button> <button class="add-btn btn btn-primary">Add</button>',
+    'footer' => '<button class="remove-btn btn btn-danger">Remove</button> <button class="cancel-btn btn btn-default">Cancel</button> <button class="save-btn btn btn-primary">Save</button>',
 ]); ?>
 
-<br>
-<?php 
+<div class="form-group"><br>
+    <label>Date and time range:</label>
+    <div class="input-group">
+      <div class="input-group-addon">
+        <i class="fa fa-clock-o"></i>
+      </div>
+      <input id="datetime-range" type="text" class="form-control">
+    </div>
+</div>
 
-$form = ActiveForm::begin();
-// DateRangePicker with ActiveForm and model. Check the `required` model validation for 
-// the attribute. This also features configuration of Bootstrap input group addon.
-echo $form->field(new EventForm, 'date', [
-    'addon'=>['prepend'=>['content'=>'<i class="glyphicon glyphicon-calendar"></i>']],
-    'options'=>['class'=>'drp-container form-group']
-])->widget(DateRangePicker::classname(), [
-    'useWithAddon'=>true,
-    'convertFormat'=>true,
-    'pluginOptions'=>[
-        'timePicker'=>true,
-        'timePickerIncrement'=>15,
-        'timePicker24Hour'=> true,
-        'locale'=>['format' => 'd/m/Y h:i'],
-    ]
-]);
-
-ActiveForm::end();
-
-Modal::end(); ?>
+<?php Modal::end(); ?>

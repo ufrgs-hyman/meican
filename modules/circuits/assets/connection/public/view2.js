@@ -6,6 +6,7 @@
 var meicanMap = new LMap('canvas');
 var connIsApproved = true;
 var path;
+var dataset = new vis.DataSet();
 
 $(document).ready(function() {
     meicanMap.show("rnp", 'dev');
@@ -17,7 +18,7 @@ $(document).ready(function() {
         updateCircuitStatus();
     }, 1000);*/
 
-    //buildStatsGraph();
+    buildStatsGraph();
     initHistoryModal();
     initEditModal();
     initCancelModal();
@@ -332,23 +333,16 @@ function areMarkersReady(ids) {
 }
 
 function buildStatsGraph() {
-    var DELAY = 10000; // delay in ms to add new data points
+  var DELAY = 30000; // delay in ms to add new data points
 
   // create a graph2d with an (currently empty) dataset
   var container = document.getElementById('stats');
-  var dataset = new vis.DataSet();
+  
 
   var options = {
     start: vis.moment().add(-30, 'seconds'), // changed so its faster
     end: vis.moment(),
     height: '380px',
-    dataAxis: {
-      left: {
-        range: {
-          min:0, max: 20
-        }
-      }
-    },
     drawPoints: {
       style: 'circle' // square, circle
     },
@@ -365,45 +359,60 @@ function buildStatsGraph() {
 
   function renderStep() {
     // move the window (you can think of different strategies).
-    var now = vis.moment();
-    var range = graph2d.getWindow();
-    var interval = range.end - range.start;
-    switch ('continuous') {
-      case 'continuous':
-        // continuously move the window
-        graph2d.setWindow(now - interval, now, {animation: false});
-        requestAnimationFrame(renderStep);
-        break;
-
-      case 'discrete':
-        graph2d.setWindow(now - interval, now, {animation: false});
-        setTimeout(renderStep, DELAY);
-        break;
-
-      default: // 'static'
-        // move the window 90% to the left when now is larger than the end of the window
-        if (now > range.end) {
-          graph2d.setWindow(now - 0.1 * interval, now + 0.9 * interval);
-        }
-        setTimeout(renderStep, DELAY);
-        break;
-    }
+    //var now = vis.moment();
+    //var range = graph2d.getWindow();
+    //var interval = range.end - range.start;
+    //graph2d.setWindow(now - interval, now, {animation: false});
+    //requestAnimationFrame(renderStep);
   }
   renderStep();
-
-  /**
-   * Add a new datapoint to the graph
-   */
-  function addDataPoint() {
-    // add a new data point to the dataset
-    var now = vis.moment();
-    dataset.add({
-      x: now,
-      y: y(now / 1000)
-    });
-
-    setTimeout(addDataPoint, DELAY);
-  }
+  
   //addDataPoint();
 }
+
+/*
+dataset.add(
+{
+            x: 1463005350,
+            y: 0
+        },
+{
+            x: 1463005380,
+            y: 40.166666666666664
+        },
+        {
+            x: 1463005410,
+            y: 53112.13333333333
+        },
+        {
+            x: 1463005440,
+            y: 56492.3
+        },
+        {
+            x: 1463005470,
+            y: 14092.133333333333
+        },
+        {
+            x: 1463005500,
+            y: 770.7333333333333
+        },
+        {
+            x: 1463005530,
+            y: 0
+        });
+
+*/
+
+/**
+   * Add a new datapoint to the graph
+   */
+  function addDataPoint(ts, val) {
+    // add a new data point to the dataset
+    dataset.add({
+      x: moment.unix(ts),
+      y: val
+    });
+
+    //setTimeout(addDataPoint, DELAY);
+  }
   

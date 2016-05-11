@@ -47,6 +47,9 @@ $config = [
             'linkAssets' => true,
             'appendTimestamp' => true,
         ],
+        'cache' => [
+            'class' => 'yii\caching\DummyCache',
+        ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,

@@ -77,7 +77,7 @@ class ReservationController extends RbacController {
     }
     
     public function actionConfirm() {
-        self::asyncActionBegin();
+        self::beginAsyncAction();
         
         $reservation = Reservation::findOne($_POST['id']);
         $reservation->confirm();

@@ -8,7 +8,7 @@ var meicanGraph = new VGraph("canvas");
 var meicanTopo = [];
 var mode = 'map';
 var path = [];
-var events = [];
+var currentEvent = null;
 var lsidebar;
 
 $(document).ready(function() {
@@ -18,7 +18,6 @@ $(document).ready(function() {
 
     loadDomains();
     initScheduleTab();
-    initRequirementsTab();
     initPathTab();
     initConfirmTab();
 
@@ -47,9 +46,10 @@ $(document).ready(function() {
 function initConfirmTab() {
     $("#confirm").on("click",'.next-btn', function() {
         var reservationForm = $( "#reservation-form" ).clone();
+        var events = $('#calendar').fullCalendar('clientEvents');
         for (var i = 0; i < events.length; i++) {
-            $( '<input name="ReservationForm[events][start][]" value="' + events[i].start + '" hidden>' ).appendTo( reservationForm );
-            $( '<input name="ReservationForm[events][finish][]" value="' + events[i].end + '" hidden>' ).appendTo( reservationForm );
+            $( '<input name="ReservationForm[events][start][]" value="' + events[i].start.toISOString() + '" hidden>' ).appendTo( reservationForm );
+            $( '<input name="ReservationForm[events][finish][]" value="' + events[i].end.toISOString() + '" hidden>' ).appendTo( reservationForm );
         };
         $.ajax({
             type: "POST",
@@ -297,22 +297,32 @@ function initPathTab() {
     
 }
 
-function initRequirementsTab() {
-}
-
 function initScheduleTab() {
     $("#lsidebar").on("click",'.schedule-tab', function() {
         initCalendar();
     });
 
-    $("#schedule-modal").on('click', '.add-btn', function() {
-        events.push({
-            title: 'VC',
-            start: moment($('#datetime-range').val().split(' - ')[0], "DD/MM/YYYY HH:mm").toISOString(),
-            end: moment($('#datetime-range').val().split(' - ')[1], "DD/MM/YYYY HH:mm").toISOString()
-        });
-        $("#calendar").fullCalendar( 'removeEventSource', events );
-        $('#calendar').fullCalendar('addEventSource', events );
+    $("#schedule-modal").on('click', '.save-btn', function() {
+        if(currentEvent == null) {
+            var events = [];
+            events.push({
+                title: 'VC',
+                start: moment($('#datetime-range').val().split(' - ')[0], "DD/MM/YYYY HH:mm").toISOString(),
+                end: moment($('#datetime-range').val().split(' - ')[1], "DD/MM/YYYY HH:mm").toISOString()
+            });
+
+            $('#calendar').fullCalendar('addEventSource', events );
+        } else {
+            currentEvent.start = moment($('#datetime-range').val().split(' - ')[0], "DD/MM/YYYY HH:mm").toISOString()
+            currentEvent.end = moment($('#datetime-range').val().split(' - ')[1], "DD/MM/YYYY HH:mm").toISOString()
+            $('#calendar').fullCalendar('updateEvent', currentEvent );
+        }
+
+        $("#schedule-modal").modal("hide");
+    });
+
+    $("#schedule-modal").on('click', '.remove-btn', function() {
+        $('#calendar').fullCalendar('removeEvents', currentEvent._id);
         $("#schedule-modal").modal("hide");
     });
 
@@ -320,7 +330,7 @@ function initScheduleTab() {
         $("#schedule-modal").modal("hide");
     });
 
-    /*$('#datetime-range').daterangepicker({
+    $('#datetime-range').daterangepicker({
         timePicker: true,
         timePickerIncrement: 1,
         timePicker24Hour: true,
@@ -363,19 +373,35 @@ function initScheduleTab() {
         },
     });
 
-    $(".daterangepicker").find('.ranges').remove();*/
+    $(".daterangepicker").find('.ranges').remove();
 }
 
 function initCalendar() {
     if($("#calendar").attr('loaded') === "false") {
         $("#calendar").attr("loaded", 'true');
         $('#calendar').fullCalendar({
+            defaultView: 'agendaWeek',
             height: 480,
             timezone: 'local',
-            dayClick: function(date, jsEvent, view) {
+            dayClick: function(date) {
+                currentEvent = null;
+                $("#schedule-modal").find(".remove-btn").hide();
                 $("#schedule-modal").modal("show");
-                $('#datetime-range').data('daterangepicker').setStartDate(moment(date).format("DD/MM/YYYY HH:mm"));
-                $('#datetime-range').data('daterangepicker').setEndDate(moment(date).add(1, 'hours').format("DD/MM/YYYY HH:mm"));
+                $('#datetime-range').data('daterangepicker').setStartDate(date.format("DD/MM/YYYY HH:mm"));
+                if(date._ambigTime)
+                    $('#datetime-range').data('daterangepicker').setEndDate(date.add(24, 'hours').format("DD/MM/YYYY HH:mm"));
+                else
+                    $('#datetime-range').data('daterangepicker').setEndDate(date.add(1, 'hours').format("DD/MM/YYYY HH:mm"));
+            },
+            eventClick: function(event) {
+                currentEvent = event;
+                $("#schedule-modal").find(".remove-btn").show();
+                $("#schedule-modal").modal("show");
+                $('#datetime-range').data('daterangepicker').setStartDate(moment(event.start).format("DD/MM/YYYY HH:mm"));
+                if(event.allDay)
+                    $('#datetime-range').data('daterangepicker').setEndDate((moment(event.start).add(24, 'hours')).format("DD/MM/YYYY HH:mm"));
+                else
+                    $('#datetime-range').data('daterangepicker').setEndDate(moment(event.end).format("DD/MM/YYYY HH:mm"));
             },
             lang: 'pt-br',
             header: {
@@ -383,7 +409,7 @@ function initCalendar() {
                 center: 'title',
                 right: 'month,agendaWeek,agendaDay'
             },
-            events: events,
+            events: [],
             editable: true,
             eventLimit: true,
         });

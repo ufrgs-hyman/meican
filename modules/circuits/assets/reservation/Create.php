@@ -27,6 +27,7 @@ class Create extends AssetBundle
     public $depends = [
         'meican\base\assets\Theme',
         'meican\base\assets\FullCalendar',
+        'meican\base\assets\DateRangePicker',
         'meican\topology\assets\map\LMap',
         'meican\topology\assets\graph\VGraph',
         'meican\base\assets\LSidebar'
