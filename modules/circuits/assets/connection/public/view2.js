@@ -7,6 +7,7 @@ var meicanMap = new LMap('canvas');
 var connIsApproved = true;
 var path;
 var dataset = new vis.DataSet();
+var statsGraphic;
 
 $(document).ready(function() {
     meicanMap.show("rnp", 'dev');
@@ -18,7 +19,7 @@ $(document).ready(function() {
         updateCircuitStatus();
     }, 1000);*/
 
-    buildStatsGraph();
+    initStats();
     initHistoryModal();
     initEditModal();
     initCancelModal();
@@ -227,6 +228,7 @@ function drawCircuitWhenReady(requiredMarkers, animate) {
             }
             meicanMap.addLink(path);
             meicanMap.focusLink(meicanMap.getLinks()[0]);
+            loadStats();
         }
     } else {
         setTimeout(function() {
@@ -332,15 +334,12 @@ function areMarkersReady(ids) {
     return true;
 }
 
-function buildStatsGraph() {
-  var DELAY = 30000; // delay in ms to add new data points
-
+function initStats() {
   // create a graph2d with an (currently empty) dataset
   var container = document.getElementById('stats');
-  
 
   var options = {
-    start: vis.moment().add(-30, 'seconds'), // changed so its faster
+    start: vis.moment().add(-24, 'hours'), // changed so its faster
     end: vis.moment(),
     height: '380px',
     drawPoints: {
@@ -350,24 +349,8 @@ function buildStatsGraph() {
       orientation: 'bottom' // top, bottom
     }
   };
-  var graph2d = new vis.Graph2d(container, dataset, options);
+  statsGraphic = new vis.Graph2d(container, dataset, options);
 
-  // a function to generate data points
-  function y(x) {
-    return ((Math.sin(x / 2) + Math.cos(x / 4)) * 5) + 10;
-  }
-
-  function renderStep() {
-    // move the window (you can think of different strategies).
-    //var now = vis.moment();
-    //var range = graph2d.getWindow();
-    //var interval = range.end - range.start;
-    //graph2d.setWindow(now - interval, now, {animation: false});
-    //requestAnimationFrame(renderStep);
-  }
-  renderStep();
-  
-  //addDataPoint();
 }
 
 /*
@@ -403,16 +386,29 @@ dataset.add(
 
 */
 
-/**
-   * Add a new datapoint to the graph
-   */
-  function addDataPoint(ts, val) {
+function loadStats() {
+    console.log('hola');
+    $.ajax({
+        url: baseUrl+'/monitoring/traffic/get-vlan-history',
+        dataType: 'json',
+        method: "GET",
+        success: function(data) {
+            for (var index in data.traffic) {
+                setTimeout(function() {
+                    addDataPoint(data.traffic[index].ts, data.traffic[index].val,1);
+                },100);
+            }
+        }
+    });
+}
+
+  function addDataPoint(ts, val, dir) {
     // add a new data point to the dataset
     dataset.add({
       x: moment.unix(ts),
-      y: val
+      y: val,
+      group: dir
     });
 
-    //setTimeout(addDataPoint, DELAY);
   }
   
