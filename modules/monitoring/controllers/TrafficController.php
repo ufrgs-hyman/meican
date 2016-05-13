@@ -24,6 +24,7 @@ class TrafficController extends RbacController {
 
     //history by vlan
     public function actionGetVlanHistory(/*$port, $vlan, $dir, $begin, $end*/) {
+        //http://monitora.cipo.rnp.br/esmond/v2/device/MXRJ/interface/xe-3@2F0@2F0.1705/out?begin=1462545617&end=1462632017&format=json
         return json_encode([
                 //'dev'=> $dev['id'], 
                 //'port'=> $portId, 
