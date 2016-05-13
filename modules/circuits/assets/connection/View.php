@@ -27,6 +27,7 @@ class View extends AssetBundle
         'meican\topology\assets\map\LMap',
         'meican\topology\assets\graph\VGraph',
         'meican\base\assets\Moment',
+        'meican\base\assets\MetricsGraphics'
     ];
 }
 

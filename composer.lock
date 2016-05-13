@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a30943b8f35482d07bb205287df14ff4",
-    "content-hash": "d50bb6c55e5c252897a5d32f66564dc7",
+    "hash": "1f958a2120eed99772d846fce605fa30",
+    "content-hash": "3b2387a2e5de0f8d9b95dbe98968efa7",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -130,6 +130,30 @@
                 "switch",
                 "toggle"
             ]
+        },
+        {
+            "name": "bower-asset/d3",
+            "version": "v3.5.17",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mbostock-bower/d3-bower.git",
+                "reference": "7a826d211d5067867debf9ce24a9987e0cb02b6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mbostock-bower/d3-bower/zipball/7a826d211d5067867debf9ce24a9987e0cb02b6e",
+                "reference": "7a826d211d5067867debf9ce24a9987e0cb02b6e",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "d3.js",
+                "bower-asset-ignore": []
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "A JavaScript visualization library for HTML and SVG."
         },
         {
             "name": "bower-asset/ev-emitter",
@@ -545,6 +569,56 @@
                 "MIT"
             ],
             "description": "Marker Clustering plugin for Leaflet."
+        },
+        {
+            "name": "bower-asset/metrics-graphics",
+            "version": "v2.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mozilla/metrics-graphics.git",
+                "reference": "276b4cac1a344de97c3647838456419edcfbbeb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mozilla/metrics-graphics/zipball/276b4cac1a344de97c3647838456419edcfbbeb0",
+                "reference": "276b4cac1a344de97c3647838456419edcfbbeb0",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/d3": ">=3.4.8",
+                "bower-asset/jquery": ">=1.11.1"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "dist/metricsgraphics.js",
+                    "dist/metricsgraphics.css"
+                ],
+                "bower-asset-ignore": [
+                    ".DS_Store",
+                    ".git",
+                    ".gitignore",
+                    "examples",
+                    "gulp",
+                    "gulpfile.js",
+                    "index.js",
+                    "node_modules",
+                    "package.json",
+                    "src",
+                    "testem.json",
+                    "tests"
+                ]
+            },
+            "license": [
+                "MPL-2.0"
+            ],
+            "keywords": [
+                "d3 charts",
+                "metrics-graphics",
+                "metricsgraphics",
+                "metricsgraphics.js",
+                "metricsgraphicsjs"
+            ]
         },
         {
             "name": "bower-asset/moment",

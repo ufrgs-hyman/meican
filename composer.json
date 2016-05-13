@@ -48,7 +48,8 @@
         "bower-asset/qtip2-main" : "3.0.2",
         "bower-asset/moment" : "2.12.0",
         "bower-asset/fullcalendar": "2.6.1",
-        "bower-asset/bootstrap-daterangepicker": "2.1.19"
+        "bower-asset/bootstrap-daterangepicker": "2.1.19",
+        "bower-asset/metrics-graphics" : "2.9"
 
     },
     "require-dev": {

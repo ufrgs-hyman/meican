@@ -334,7 +334,7 @@ function areMarkersReady(ids) {
     return true;
 }
 
-function initStats() {
+function initStats2() {
   // create a graph2d with an (currently empty) dataset
   var container = document.getElementById('stats');
 
@@ -351,6 +351,27 @@ function initStats() {
   };
   statsGraphic = new vis.Graph2d(container, dataset, options);
 
+}
+
+function initStats() {
+    $.ajax({
+        url: baseUrl+'/monitoring/traffic/get-vlan-history',
+        dataType: 'json',
+        method: "GET",
+        success: function(data) {
+            MG.data_graphic({
+                data: data.traffic,
+                full_width: true,
+                height: 375,
+                right: 40,
+                target: document.getElementById('stats'),
+                x_accessor: 'ts',
+                y_accessor: 'val'
+            });
+            console.log(data);
+        }
+    });
+    
 }
 
 /*
@@ -387,17 +408,73 @@ dataset.add(
 */
 
 function loadStats() {
+    return;
     console.log('hola');
     $.ajax({
         url: baseUrl+'/monitoring/traffic/get-vlan-history',
         dataType: 'json',
         method: "GET",
         success: function(data) {
+            var stats = [];
+            console.log(data);
+            MG.data_graphic({
+                title: "Custom Line Coloring",
+                description: "By passing in an arisk.",
+                data: [{
+                    x: 1463005350,
+                    y: 0
+                },
+                {       
+                    x: 1463005380,
+                    y: 40.166666666666664
+                },
+                {
+                    x: 1463005410,
+                    y: 53112.13333333333
+                },
+                {
+                    x: 1463005440,
+                    y: 56492.3
+                },
+                {
+                    x: 1463005470,
+                    y: 14092.133333333333
+                },
+                {
+                    x: 1463005500,
+                    y: 770.7333333333333
+                },
+                {
+                    x: 1463005530,
+                    y: 0
+                }],
+                width: 600,
+                height: 200,
+                right: 40,
+                target: '#stats',
+                aggregate_rollover: true
+            });
+        }
+    });
+}
+
+
+function loadStats2() {
+    console.log('hola');
+    $.ajax({
+        url: baseUrl+'/monitoring/traffic/get-vlan-history',
+        dataType: 'json',
+        method: "GET",
+        success: function(data) {
+            var stats = [];
             for (var index in data.traffic) {
-                setTimeout(function() {
-                    addDataPoint(data.traffic[index].ts, data.traffic[index].val,1);
-                },100);
+                stats.push({
+                    x: moment.unix(data.traffic[index].ts),
+                    y: data.traffic[index].val,
+                    group: 1
+                });
             }
+            console.log(stats);
         }
     });
 }

@@ -108,7 +108,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
             <div class="box-header with-border">
                 <h3 class="box-title"><?= Yii::t("topology", "Stats"); ?></h3>
             </div>
-            <div id="stats" class="box-body">
+            <div class="box-body"><div id="stats"></div>
             </div>
         </div>    
     </div>
