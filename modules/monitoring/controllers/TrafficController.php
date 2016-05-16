@@ -21,19 +21,65 @@ class TrafficController extends RbacController {
     public function actionIndex() {
         return $this->render('index');
     }
-
-    //history by vlan
-    public function actionGetVlanHistory(/*$port, $vlan, $dir, $begin, $end*/) {
-        //http://monitora.cipo.rnp.br/esmond/v2/device/MXRJ/interface/xe-3@2F0@2F0.1705/out?begin=1462545617&end=1462632017&format=json
-        return json_encode([
-                //'dev'=> $dev['id'], 
-                //'port'=> $portId, 
-                'traffic' => json_decode('{"url":"http://monitora.cipo.rnp.br/esmond/v2/device/MXRJ/interface/xe-3@2F0@2F0.1705/out","data":[{"ts":1462545630,"val":0.0},{"ts":1462545660,"val":0.0},{"ts":1462545690,"val":0.0},{"ts":1462545720,"val":0.0},{"ts":1462545750,"val":0.0},{"ts":1462545780,"val":7.3},{"ts":1462545810,"val":25.433333333333334},{"ts":1462545840,"val":27.233333333333334},{"ts":1462545870,"val":36.9},{"ts":1462545900,"val":25.166666666666668},{"ts":1462545930,"val":30.966666666666665},{"ts":1462545960,"val":20.0},{"ts":1462545990,"val":0.0},{"ts":1462546020,"val":0.0},{"ts":1462546050,"val":0.0},{"ts":1462546080,"val":0.0},{"ts":1462546110,"val":0.0},{"ts":1462546140,"val":0.0},{"ts":1462546170,"val":0.0},{"ts":1462546200,"val":0.0},{"ts":1462546230,"val":0.0},{"ts":1462546260,"val":0.0},{"ts":1462546290,"val":19.333333333333332},{"ts":1462546320,"val":45.266666666666666},{"ts":1462546350,"val":36.9},{"ts":1462546380,"val":27.233333333333334},{"ts":1462546410,"val":33.9},{"ts":1462546440,"val":30.366666666666667},{"ts":1462546470,"val":14.6},{"ts":1462546500,"val":0.0},{"ts":1462546530,"val":0.0},{"ts":1462546560,"val":0.0},{"ts":1462546590,"val":0.0},{"ts":1462546620,"val":0.0},{"ts":1462546650,"val":0.0},{"ts":1462546680,"val":0.0},{"ts":1462546710,"val":0.0},{"ts":1462546740,"val":2.7},{"ts":1462546770,"val":14.2},{"ts":1462546800,"val":25.5},{"ts":1462546830,"val":31.4},{"ts":1462546860,"val":27.7},{"ts":1462546890,"val":43.833333333333336},{"ts":1462546920,"val":32.13333333333333},{"ts":1462546950,"val":18.6},{"ts":1462546980,"val":0.0},{"ts":1462547010,"val":0.0},{"ts":1462547040,"val":0.0},{"ts":1462547070,"val":0.0},{"ts":1462547100,"val":0.0},{"ts":1462547130,"val":0.0},{"ts":1462547160,"val":0.0},{"ts":1462547190,"val":0.0},{"ts":1462547220,"val":0.0},{"ts":1462547250,"val":2.2333333333333334},{"ts":1462547280,"val":32.766666666666666},{"ts":1462547310,"val":11.133333333333333},{"ts":1462547340,"val":0.7333333333333333},{"ts":1462547370,"val":22.333333333333332},{"ts":1462547400,"val":23.066666666666666},{"ts":1462547430,"val":11.533333333333333},{"ts":1462547460,"val":0.0},{"ts":1462547490,"val":0.0},{"ts":1462547520,"val":0.0},{"ts":1462547550,"val":0.0},{"ts":1462547580,"val":0.0},{"ts":1462547610,"val":0.0},{"ts":1462547640,"val":0.0},{"ts":1462547670,"val":0.0},{"ts":1462547700,"val":0.0},{"ts":1462547730,"val":0.0},{"ts":1462547760,"val":31.133333333333333},{"ts":1462547790,"val":23.566666666666666},{"ts":1462547820,"val":22.966666666666665},{"ts":1462547850,"val":23.066666666666666},{"ts":1462547880,"val":12.733333333333333},{"ts":1462547910,"val":40.3},{"ts":1462547940,"val":7.7},{"ts":1462547970,"val":0.0},{"ts":1462548000,"val":0.0},{"ts":1462548030,"val":0.0},{"ts":1462548060,"val":0.0},{"ts":1462548090,"val":0.0},{"ts":1462548120,"val":0.0},{"ts":1462548150,"val":0.0},{"ts":1462548180,"val":0.0},{"ts":1462548210,"val":0.0},{"ts":1462548240,"val":24.566666666666666},{"ts":1462548270,"val":34.266666666666666},{"ts":1462548300,"val":42.666666666666664},{"ts":1462548330,"val":29.466666666666665},{"ts":1462548360,"val":22.8},{"ts":1462548390,"val":23.066666666666666},{"ts":1462548420,"val":15.4},{"ts":1462548450,"val":3.8333333333333335},{"ts":1462548480,"val":0.0},{"ts":1462548510,"val":0.0},{"ts":1462548540,"val":0.0},{"ts":1462548570,"val":0.0},{"ts":1462548600,"val":0.0},{"ts":1462548630,"val":0.0},{"ts":1462548660,"val":0.0},{"ts":1462548690,"val":0.0},{"ts":1462548720,"val":13.066666666666666},{"ts":1462548750,"val":10.0},{"ts":1462548780,"val":6.166666666666667},{"ts":1462548810,"val":5.366666666666666},{"ts":1462548840,"val":11.9},{"ts":1462548870,"val":22.7},{"ts":1462548900,"val":28.833333333333332},{"ts":1462548930,"val":17.3},{"ts":1462548960,"val":0.0},{"ts":1462548990,"val":0.0},{"ts":1462549020,"val":0.0},{"ts":1462549050,"val":0.0},{"ts":1462549080,"val":0.0},{"ts":1462549110,"val":0.0},{"ts":1462549140,"val":0.0},{"ts":1462549170,"val":0.0},{"ts":1462549200,"val":4.466666666666667},{"ts":1462549230,"val":15.533333333333333},{"ts":1462549260,"val":27.3},{"ts":1462549290,"val":30.1},{"ts":1462549320,"val":22.566666666666666}],"begin_time":1462545617,"end_time":1462632017,"agg":"30","cf":"average","resource_uri":"/esmond/v2/device/MXRJ/interface/xe-3@2F0@2F0.1705/out"}'
-                    )->data
-            ]);
-        return 
-        
+    
+    /**
+     * Obtem o historico de trafego de determinada VLAN em determinada Porta e dada direção.
+     * 
+     * @param port
+     *      Port ID, inteiro.
+     * @param vlan
+     *      VLAN, inteiro.
+     * @param dir
+     *      Direção do trafego ('in' ou 'out').
+     * @param interval
+     *      Define o intervalo relativo ao historico solicitado. Apenas são aceitos: 
+     *      última hora ou 3600s (dados a cada 30s agregados = padrao esmond), 
+     *      ultimo dia ou 86400s (dados a cada 10 min ou 600s agregados),
+     *      ultima semana ou 604800s (dados a cada 1h10m ou 4200s agregados),
+     *      ultimo mes ou 2592000s (dados a cada 5 horas ou 18000s agregados).
+     */
+    public function actionGetVlanHistory($port, $vlan, $dir, $interval) {
         self::beginAsyncAction();
+
+        $portId = $port;
+
+        $port = Port::find()
+                ->where(['id'=>$portId])
+                ->select(['id', 'device_id', 'name', 'max_capacity'])
+                ->one();
+        $dev = $port->getDevice()->select(['id', 'node'])->asArray()->one();
+        //TODO NSI converte / para _
+        $portName = str_replace('_', '@2F', $port->name);
+        //TODO NSI insere :+ no final das URNs
+        $portName = str_replace(':+', '', $portName);
+
+        $ch = curl_init();
+        $options = array(
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false,
+
+            CURLOPT_USERAGENT => 'Meican',
+            CURLOPT_URL => 'http://monitora.cipo.rnp.br/esmond/v2/device/'.$dev['node'].'/interface/'.$portName.'.'.$vlan.'/'.$dir.
+                '?format=json&begin='.strtotime('-3600 seconds')
+        );
+        Yii::trace($options);
+        curl_setopt_array($ch , $options);
+        $output = curl_exec($ch);
+        curl_close($ch);
+
+        Yii::trace($output);
+
+        $output = json_decode($output);
+
+        $data = json_encode([
+            'dev'=> $dev['id'], 
+            'port'=> $portId, 
+            'traffic' => isset($output->data) ? $output->data : 0
+        ]);
+        
+        return $data;
 
         $portId = $port;
         $data = Yii::$app->cache->get('monitoring.traffic.history.port.'.$portId.'.vlan.'.$vlan.$begin);

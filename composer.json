@@ -37,6 +37,7 @@
         "kartik-v/yii2-widget-growl" : "1.1.1",
         "kartik-v/yii2-widget-switchinput" : "1.3.1",
         "npm-asset/vis": "4.16.0",
+        "npm-asset/flot-charts": "0.8.3",
         "bower-asset/leaflet": "0.7.7",
         "bower-asset/leaflet.markercluster": "0.5.0",
         "bower-asset/spectrum": "1.8.0",
@@ -50,7 +51,6 @@
         "bower-asset/fullcalendar": "2.6.1",
         "bower-asset/bootstrap-daterangepicker": "2.1.19",
         "bower-asset/metrics-graphics" : "2.9"
-
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "2.0.5",

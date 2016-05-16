@@ -89,10 +89,12 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
 <?php Pjax::end(); ?>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#canvas" data-toggle="tab">Map Viewer</a></li>
+              <li class="active"><a href="#canvas" data-toggle="tab">Map</a></li>
+              <li><a href="#graph" data-toggle="tab">Graph</a></li>
+              <li><a href="#path-info" data-toggle="tab">Advanced path info</a></li>
             </ul>
             <div class="tab-content no-padding">
               <div class="tab-pane active" id="canvas">
@@ -100,24 +102,16 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
               <div class="tab-pane" id="graph">
                 Comming soon.
               </div>
+              <div class="tab-pane" id="path-info">
+                Comming soon.
+              </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t("topology", "Stats"); ?></h3>
-            </div>
-            <div class="box-body"><div id="stats"></div>
-            </div>
-        </div>    
-    </div>
-</div> 
-<div class="row">
-    <div class="col-md-6">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t("topology", "Info"); ?></h3>
+                <h3 class="box-title"><?= Yii::t("topology", "Circuit info"); ?></h3>
                 <div class="box-tools pull-right">
                     <div class="btn-group">
                       <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -167,7 +161,30 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
             </div>
         </div> 
     </div>
-    <div class="col-md-6">
+</div> 
+<div class="row">
+    <div class="col-md-8">
+        <div id="stats-box" class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?= Yii::t("topology", "Stats"); ?></h3>
+                <div class="box-tools pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-sm">Last month</button>
+                        <button type="button" class="btn btn-default btn-sm">Last week</button>
+                        <button type="button" class="btn btn-default btn-sm">Last day</button>
+                        <button type="button" class="btn btn-default btn-sm active">Last hour</button>
+                        <button type="button" class="btn btn-success btn-sm refresh-btn">Refresh</button>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body"><div id="stats"></div>
+            </div>
+            <div id='stats-loading' class="overlay">
+              <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>    
+    </div>
+    <div class="col-md-4">
         <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title"><?= Yii::t("topology", "History"); ?></h3>

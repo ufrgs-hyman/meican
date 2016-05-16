@@ -6,7 +6,7 @@
 var meicanMap = new LMap('canvas');
 var connIsApproved = true;
 var path;
-var dataset = new vis.DataSet();
+var statsData;
 var statsGraphic;
 
 $(document).ready(function() {
@@ -334,161 +334,130 @@ function areMarkersReady(ids) {
     return true;
 }
 
-function initStats2() {
-  // create a graph2d with an (currently empty) dataset
-  var container = document.getElementById('stats');
-
-  var options = {
-    start: vis.moment().add(-24, 'hours'), // changed so its faster
-    end: vis.moment(),
-    height: '380px',
-    drawPoints: {
-      style: 'circle' // square, circle
-    },
-    shaded: {
-      orientation: 'bottom' // top, bottom
-    }
-  };
-  statsGraphic = new vis.Graph2d(container, dataset, options);
-
-}
-
-function initStats() {
-    $.ajax({
-        url: baseUrl+'/monitoring/traffic/get-vlan-history',
+function loadStats2() {
+  $.ajax({
+        url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 369 + '&vlan=' + 1705 + '&dir=' + 'out' + '&interval=' + 0,
         dataType: 'json',
         method: "GET",
         success: function(data) {
+            var dataIn = [];
             for (var i = 0; i < data.traffic.length; i++) {
-                data.traffic[i].ts = new Date(data.traffic[i].ts*1000);
+                dataIn.push({ts: new Date(data.traffic[i].ts*1000), val: data.traffic[i].val/1000000});
             }
+            var dataOut = [];
+            for (var i = 0; i < data.traffic.length; i++) {
+                dataOut.push({ts: new Date(data.traffic[i].ts*1000), val: 0-(data.traffic[i].val/1000000)});
+            }
+
             MG.data_graphic({
-                data: data.traffic,
+                data: [dataIn, dataOut],
                 full_width: true,
                 height: 375,
                 right: 10,
                 target: document.getElementById('stats'),
                 x_accessor: 'ts',
-                y_accessor: 'val'
+                y_accessor: 'val',
+                aggregate_rollover: true,
             });
+
             console.log(data);
+            $("#stats-loading").hide();
         }
     });
-    
 }
 
-/*
-dataset.add(
-{
-            x: 1463005350,
-            y: 0
-        },
-{
-            x: 1463005380,
-            y: 40.166666666666664
-        },
-        {
-            x: 1463005410,
-            y: 53112.13333333333
-        },
-        {
-            x: 1463005440,
-            y: 56492.3
-        },
-        {
-            x: 1463005470,
-            y: 14092.133333333333
-        },
-        {
-            x: 1463005500,
-            y: 770.7333333333333
-        },
-        {
-            x: 1463005530,
-            y: 0
-        });
+function initStats() {
+    $("#stats").css("height", 375);
 
-*/
+    $("#stats-box").on('click', '.refresh-btn', function() {
+        loadStats();
+    });
+
+    statsGraphic = $.plot("#stats", [], {
+      grid: {
+        hoverable: true,
+        borderColor: "#f3f3f3",
+        borderWidth: 1,
+        tickColor: "#f3f3f3"
+      },
+      series: {
+        shadowSize: 0,
+        lines: {
+          show: true
+        },
+        points: {
+          show: true
+        }
+      },
+      lines: {
+        fill: true,
+      },
+      yaxis: {
+        show: true,
+        tickFormatter: function(val, axis) { return val + " Mbps";}
+      },
+      xaxis: {
+        mode: "time",
+        timezone: 'browser',
+        show: true,
+      }
+    });
+    //Initialize tooltip on hover
+    $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
+      position: "absolute",
+      display: "none",
+      opacity: 0.8
+    }).appendTo("body");
+    $("#stats").bind("plothover", function (event, pos, item) {
+
+      if (item) {
+        var x = item.datapoint[0],
+            y = item.datapoint[1].toFixed(6);
+
+        $("#line-chart-tooltip").html(moment.unix(x/1000).format("DD/MM/YYYY HH:mm:ss") + '<br>' + (y < 0 ? (-1*y) : y) + ' Mbps')
+            .css({top: item.pageY + 5, left: item.pageX + 5})
+            .fadeIn(200);
+      } else {
+        $("#line-chart-tooltip").hide();
+      }
+
+    });
+}
 
 function loadStats() {
-    return;
-    console.log('hola');
+    $("#stats-loading").show();
     $.ajax({
-        url: baseUrl+'/monitoring/traffic/get-vlan-history',
+        url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 369 + '&vlan=' + 1705 + '&dir=' + 'out' + '&interval=' + 0,
         dataType: 'json',
         method: "GET",
         success: function(data) {
-            var stats = [];
-            console.log(data);
-            MG.data_graphic({
-                title: "Custom Line Coloring",
-                description: "By passing in an arisk.",
-                data: [{
-                    x: 1463005350,
-                    y: 0
-                },
-                {       
-                    x: 1463005380,
-                    y: 40.166666666666664
-                },
-                {
-                    x: 1463005410,
-                    y: 53112.13333333333
-                },
-                {
-                    x: 1463005440,
-                    y: 56492.3
-                },
-                {
-                    x: 1463005470,
-                    y: 14092.133333333333
-                },
-                {
-                    x: 1463005500,
-                    y: 770.7333333333333
-                },
-                {
-                    x: 1463005530,
-                    y: 0
-                }],
-                width: 600,
-                height: 200,
-                right: 40,
-                target: '#stats',
-                aggregate_rollover: true
-            });
-        }
-    });
-}
-
-
-function loadStats2() {
-    console.log('hola');
-    $.ajax({
-        url: baseUrl+'/monitoring/traffic/get-vlan-history',
-        dataType: 'json',
-        method: "GET",
-        success: function(data) {
-            var stats = [];
-            for (var index in data.traffic) {
-                stats.push({
-                    x: moment.unix(data.traffic[index].ts),
-                    y: data.traffic[index].val,
-                    group: 1
-                });
+            var dataOut = [];
+            for (var i = 0; i < data.traffic.length; i++) {
+                dataOut.push([moment.unix(data.traffic[i].ts), data.traffic[i].val*8/1000000]);
             }
-            console.log(stats);
+            statsData = [{data: dataOut, color: "#3c8dbc" }];
+
+            if(data.traffic.length > 0) {
+                $.ajax({
+                    url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 369 + '&vlan=' + 1705 + '&dir=' + 'in' + '&interval=' + 0,
+                    dataType: 'json',
+                    method: "GET",
+                    success: function(data) {
+                        var dataIn = [];
+                        for (var i = 0; i < data.traffic.length; i++) {
+                            dataIn.push([moment.unix(data.traffic[i].ts), 0-(data.traffic[i].val*8/1000000)]);
+                        }
+                        statsData.push({data: dataIn, color: "#f56954" });
+
+                        statsGraphic.setData(statsData);
+                        statsGraphic.setupGrid();
+                        statsGraphic.draw();
+
+                        $("#stats-loading").hide();
+                    }
+                });
+            } else $("#stats-loading").hide();
         }
     });
 }
 
-  function addDataPoint(ts, val, dir) {
-    // add a new data point to the dataset
-    dataset.add({
-      x: moment.unix(ts),
-      y: val,
-      group: dir
-    });
-
-  }
-  
