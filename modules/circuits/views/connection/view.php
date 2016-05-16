@@ -89,7 +89,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
 <?php Pjax::end(); ?>
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-6">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#canvas" data-toggle="tab">Map Viewer</a></li>
@@ -103,7 +103,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title"><?= Yii::t("topology", "Stats"); ?></h3>

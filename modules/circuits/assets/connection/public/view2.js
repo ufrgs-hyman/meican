@@ -359,11 +359,14 @@ function initStats() {
         dataType: 'json',
         method: "GET",
         success: function(data) {
+            for (var i = 0; i < data.traffic.length; i++) {
+                data.traffic[i].ts = new Date(data.traffic[i].ts*1000);
+            }
             MG.data_graphic({
                 data: data.traffic,
                 full_width: true,
                 height: 375,
-                right: 40,
+                right: 10,
                 target: document.getElementById('stats'),
                 x_accessor: 'ts',
                 y_accessor: 'val'
