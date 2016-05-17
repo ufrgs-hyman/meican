@@ -21,7 +21,7 @@ class NotificationController extends RbacController {
 	const TYPE_TOPOLOGY = 		"TOPOLOGY";
 	
 	public $enableCsrfValidation = false;
-	
+
 	public function actionIndex(){
 		$dataProvider = new ActiveDataProvider([
 				'query' => Notification::find()->where(['user_id' => Yii::$app->user->getId()])->orderBy(['date' => SORT_DESC]),
@@ -34,7 +34,7 @@ class NotificationController extends RbacController {
 		));
 	}
 	
-	public function actionGetNumberNotifications(){
+	public function actionGetSize(){
 		echo Notification::getNumberNotifications();
 	}
 	

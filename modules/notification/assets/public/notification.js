@@ -1,7 +1,7 @@
 function timerAuths() {
 	$.ajax({
 	    type: "GET",
-	    url: baseUrl + '/notification/notification/get-number-notifications',
+	    url: baseUrl + '/notification/notification/get-size',
 	    success: function(number) {
             if(number>0) $("#not_number").removeClass("label-primary").addClass("label-warning");
 	    	else $("#not_number").removeClass("label-warning").addClass("label-primary");

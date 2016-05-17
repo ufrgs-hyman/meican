@@ -39,7 +39,7 @@ class ConnectionController extends RbacController {
             $conn = Connection::findOne(['external_id'=> $id]);            
         }
 
-        if($conn === null) throw new \yii\web\HttpException(404, 'The requested Item could not be found.');
+        if($conn === null) throw new \yii\web\HttpException(404, 'The requested item could not be found.');
 
         $history = new ActiveDataProvider([
                 'query' => $conn->getHistory()->orderBy("id DESC"),
@@ -84,7 +84,7 @@ class ConnectionController extends RbacController {
         return $data;
     }
 
-    public function actionGetOrderedPaths($id) {
+    public function actionGetOrderedPath($id) {
         $paths = ConnectionPath::find()->where(['conn_id'=>$id])->orderBy(['path_order'=> "SORT_ASC"])->all();
          
         $data = [];
@@ -96,6 +96,7 @@ class ConnectionController extends RbacController {
                 'device_id'=> $port ? $port->device_id : null,
                 'port_id' => $port ? $port->id : null,
                 'port_urn' => $port ? $port->urn : null,
+                'vlan' => $path->vlan,
                 'domain' => $path->domain
             ];
         }

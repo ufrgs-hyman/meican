@@ -13,12 +13,12 @@ use yii\web\AssetBundle;
  */
 class Flot extends AssetBundle
 {
-    public $sourcePath = '@npm/flot';
+    public $sourcePath = '@npm/flot-charts';
     
     public $js = [
-        'jquery.flot.min.js',
-        'jquery.flot.resize.min.js',
-        'jquery.flot.time.min.js'
+        'jquery.flot.js',
+        'jquery.flot.resize.js',
+        'jquery.flot.time.js'
     ];
     
     public $css = [

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1f958a2120eed99772d846fce605fa30",
-    "content-hash": "3b2387a2e5de0f8d9b95dbe98968efa7",
+    "hash": "b2881e0881dfa9337a2b507b044c251f",
+    "content-hash": "f9aeb3f66ab772c1f5b00946dcddbd78",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -1316,6 +1316,46 @@
                 "yii2"
             ],
             "time": "2016-01-10 17:10:39"
+        },
+        {
+            "name": "npm-asset/flot-charts",
+            "version": "0.8.3",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/flot-charts/-/flot-charts-0.8.3.tgz",
+                "reference": null,
+                "shasum": "3ccad570d748f9e174f3b32378c0abc182746c3b"
+            },
+            "require-dev": {
+                "npm-asset/jshint": "0.9.1"
+            },
+            "type": "npm-asset-library",
+            "extra": {
+                "npm-asset-bugs": {
+                    "url": "https://github.com/magora-suchkov/flot/issues"
+                },
+                "npm-asset-main": "jquery.flot.js",
+                "npm-asset-directories": {
+                    "example": "examples"
+                },
+                "npm-asset-repository": {
+                    "type": "git",
+                    "url": "git+https://github.com/magora-suchkov/flot.git"
+                },
+                "npm-asset-scripts": {
+                    "test": "make test"
+                }
+            },
+            "license": [
+                "ISC"
+            ],
+            "authors": [
+                {
+                    "name": "flot"
+                }
+            ],
+            "description": "## About ##",
+            "homepage": "https://github.com/magora-suchkov/flot#readme"
         },
         {
             "name": "npm-asset/vis",

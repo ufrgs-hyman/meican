@@ -3,17 +3,14 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-var meicanMap = new LMap('canvas');
+var meicanMap;
 var connIsApproved = true;
 var path;
 var statsData;
 var statsGraphic;
 
 $(document).ready(function() {
-    meicanMap.show("rnp", 'dev');
-    $("#canvas").css("height", 400);
-
-    drawCircuit($("#circuit-id").attr('value'));
+    initPathBox();
 
     /*refresher = setInterval(function() {
         updateCircuitStatus();
@@ -164,9 +161,31 @@ function finishCircuit() {
     $("#status-box").find(".info-box-number").text("Finished");
 }
 
+function initPathBox() {
+    meicanMap = new LMap('canvas');
+    meicanMap.show('dev');
+    $("#canvas").css("height", 400);
+    drawCircuit($("#circuit-id").attr('value'));
+
+    $('#canvas').on('lmap.nodeClick', function(e, marker) {
+        marker.setPopupContent('Domain: <b>' + meicanMap.getDomain(marker.options.domainId).name + 
+            '</b><br>Device: <b>' + marker.options.name + '</b><br><br>');
+        /*marker.setPopupContent('Domain: cipo.rnp.br<br>Device: POA<br><br><div class="btn-group">'+
+            '<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">'+
+              'Options <span class="fa fa-caret"></span>'+
+            '</button>'+
+            '<ul data-marker="' + marker.options.id + '" class="dropdown-menu">'+
+              '<li><a class="set-source" href="#">From here</a></li>'+
+              '<li><a class="add-waypoint" href="#">Add waypoint</a></li>'+
+              '<li><a class="set-destination" href="#">To here</a></li>'+
+            '</ul>'+
+          '</div>');*/
+    });
+}
+
 function drawCircuit(connId, animate) {
     $.ajax({
-        url: baseUrl+'/circuits/connection/get-ordered-paths',
+        url: baseUrl+'/circuits/connection/get-ordered-path',
         dataType: 'json',
         method: "GET",
         data: {
@@ -316,11 +335,6 @@ function addMarker(dev, color) {
         dev.lat,
         dev.lng,
         color);
-    //markerCluster.addMarker(marker);
-    
-    //addMarkerListeners(marker);
-    
-    //marker.setMap(meicanMap.getMap());
 }
 
 function areMarkersReady(ids) {
@@ -335,38 +349,52 @@ function areMarkersReady(ids) {
 }
 
 function loadStats2() {
-  $.ajax({
-        url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 369 + '&vlan=' + 1705 + '&dir=' + 'out' + '&interval=' + 0,
+    $("#stats-loading").show();
+    $.ajax({
+        url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 372 + '&vlan=' + 206 + '&dir=' + 'out' + '&interval=' + 0,
         dataType: 'json',
         method: "GET",
         success: function(data) {
-            var dataIn = [];
-            for (var i = 0; i < data.traffic.length; i++) {
-                dataIn.push({ts: new Date(data.traffic[i].ts*1000), val: data.traffic[i].val/1000000});
-            }
             var dataOut = [];
             for (var i = 0; i < data.traffic.length; i++) {
-                dataOut.push({ts: new Date(data.traffic[i].ts*1000), val: 0-(data.traffic[i].val/1000000)});
+                dataOut.push({ts: new Date(data.traffic[i].ts*1000), val:data.traffic[i].val*8/1000000});
             }
+            statsData = [dataOut];
 
-            MG.data_graphic({
-                data: [dataIn, dataOut],
-                full_width: true,
-                height: 375,
-                right: 10,
-                target: document.getElementById('stats'),
-                x_accessor: 'ts',
-                y_accessor: 'val',
-                aggregate_rollover: true,
-            });
+            if(data.traffic.length > 0) {
+                $.ajax({
+                    url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 372 + '&vlan=' + 206 + '&dir=' + 'in' + '&interval=' + 0,
+                    dataType: 'json',
+                    method: "GET",
+                    success: function(data) {
+                        var dataIn = [];
+                        for (var i = 0; i < data.traffic.length; i++) {
+                            dataIn.push({ts: new Date(data.traffic[i].ts*1000), val: (0-(data.traffic[i].val*8/1000000))});
+                        }
+                        statsData.push(dataIn);
+                        console.log(statsData);
 
-            console.log(data);
-            $("#stats-loading").hide();
+                        MG.data_graphic({
+                            data: statsData,
+                            full_width: true,
+                            height: 375,
+                            right: 10,
+                            target: document.getElementById('stats'),
+                            x_accessor: 'ts',
+                            y_accessor: 'val',
+                            aggregate_rollover: true,
+                        });
+
+                        $("#stats-loading").hide();
+                    }
+                });
+            } else $("#stats-loading").hide();
         }
     });
 }
 
 function initStats() {
+    //return;
     $("#stats").css("height", 375);
 
     $("#stats-box").on('click', '.refresh-btn', function() {
@@ -394,7 +422,10 @@ function initStats() {
       },
       yaxis: {
         show: true,
-        tickFormatter: function(val, axis) { return val + " Mbps";}
+        tickFormatter: function(val, axis) { 
+            val = val.toFixed(4)
+            return (val < 0 ? -1*val : val) + " Mbps";
+        }
       },
       xaxis: {
         mode: "time",
@@ -412,7 +443,7 @@ function initStats() {
 
       if (item) {
         var x = item.datapoint[0],
-            y = item.datapoint[1].toFixed(6);
+            y = item.datapoint[1].toFixed(4);
 
         $("#line-chart-tooltip").html(moment.unix(x/1000).format("DD/MM/YYYY HH:mm:ss") + '<br>' + (y < 0 ? (-1*y) : y) + ' Mbps')
             .css({top: item.pageY + 5, left: item.pageX + 5})
@@ -427,7 +458,7 @@ function initStats() {
 function loadStats() {
     $("#stats-loading").show();
     $.ajax({
-        url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 369 + '&vlan=' + 1705 + '&dir=' + 'out' + '&interval=' + 0,
+        url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 372 + '&vlan=' + 206 + '&dir=' + 'out' + '&interval=' + 0,
         dataType: 'json',
         method: "GET",
         success: function(data) {
@@ -439,7 +470,7 @@ function loadStats() {
 
             if(data.traffic.length > 0) {
                 $.ajax({
-                    url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 369 + '&vlan=' + 1705 + '&dir=' + 'in' + '&interval=' + 0,
+                    url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 372 + '&vlan=' + 206 + '&dir=' + 'in' + '&interval=' + 0,
                     dataType: 'json',
                     method: "GET",
                     success: function(data) {
