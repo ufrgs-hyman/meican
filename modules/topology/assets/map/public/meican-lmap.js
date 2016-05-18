@@ -57,11 +57,13 @@ LMap.prototype.addLink = function(path, type, partial) {
 
     var latLngList = [];
 
-    for (var i = 0; i < path.length; i++) {
-        var node = this.getNode(path[i]);
-        if(node != null)
-            latLngList.push(node.getLatLng());
-    };
+    var src = this.getNode(path[0]);
+    if(src != null)
+        latLngList.push(src.getLatLng());
+
+    var dst = this.getNode(path[1]);
+    if(dst != null)
+        latLngList.push(dst.getLatLng());
 
     if(partial) {
         latLngList[1] = L.latLngBounds(latLngList[0], latLngList[1]).getCenter();
@@ -74,6 +76,8 @@ LMap.prototype.addLink = function(path, type, partial) {
         var link = L.polyline(
             latLngList, 
             {
+                from: path[0],
+                to: path[1],
                 color: '#cccccc',
                 type: type,
             }).addTo(this._map);
@@ -168,6 +172,12 @@ LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
 LMap.prototype.getDomain = function(id) {
     for (var i = 0; i < this._domainsList.length; i++) {
         if (this._domainsList[i].id == id) return this._domainsList[i];
+    }
+}
+
+LMap.prototype.getDomainByName = function(name) {
+    for (var i = 0; i < this._domainsList.length; i++) {
+        if (this._domainsList[i].name == name) return this._domainsList[i];
     }
 }
 
@@ -367,7 +377,11 @@ LMap.prototype.focusNode = function(id) {
     }
 }
 
-LMap.prototype.focusLink = function(link) {
-    this._map.fitBounds(link.getBounds());
+LMap.prototype.focusNodes = function() {
+    var latLngs = [];
+    for (var i = 0; i < this._nodes.length; i++) {
+        latLngs.push(this._nodes[i].getLatLng());
+    };
+    this._map.fitBounds(L.latLngBounds(latLngs));
 }
 
