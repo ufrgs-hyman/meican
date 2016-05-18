@@ -164,22 +164,24 @@ function finishCircuit() {
 function initPathBox() {
     meicanMap = new LMap('canvas');
     meicanMap.show('dev');
+    loadDomains();
     $("#canvas").css("height", 400);
     drawCircuit($("#circuit-id").attr('value'));
 
     $('#canvas').on('lmap.nodeClick', function(e, marker) {
         marker.setPopupContent('Domain: <b>' + meicanMap.getDomain(marker.options.domainId).name + 
-            '</b><br>Device: <b>' + marker.options.name + '</b><br><br>');
-        /*marker.setPopupContent('Domain: cipo.rnp.br<br>Device: POA<br><br><div class="btn-group">'+
-            '<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">'+
-              'Options <span class="fa fa-caret"></span>'+
-            '</button>'+
-            '<ul data-marker="' + marker.options.id + '" class="dropdown-menu">'+
-              '<li><a class="set-source" href="#">From here</a></li>'+
-              '<li><a class="add-waypoint" href="#">Add waypoint</a></li>'+
-              '<li><a class="set-destination" href="#">To here</a></li>'+
-            '</ul>'+
-          '</div>');*/
+            '</b><br>Device: <b>' + marker.options.name + '</b><br>');
+    });
+}
+
+function loadDomains() {
+    $.ajax({
+        url: baseUrl+'/topology/domain/get-all',
+        dataType: 'json',
+        method: "GET",        
+        success: function(response) {
+            meicanMap.setDomains(response);
+        }
     });
 }
 
@@ -199,12 +201,15 @@ function drawCircuit(connId, animate) {
                 //a ordem dos marcadores aqui eh importante,
                 //pois eh a ordem do circuito
                 //console.log(requiredMarkers);
-
                 addSource(path[0]);
                 addDestin(path[size-1]);
                 
                 for (var i = 1; i < size-1; i++) {
                     addWayPoint(path[i]);
+                }
+
+                for (var i = 0; i < size; i++) {
+                    $("#path-info").append('<p>' + path[i].port_urn + '</p>');
                 }
                 
                 //setMapBoundsMarkersWhenReady(requiredMarkers);
@@ -246,7 +251,7 @@ function drawCircuitWhenReady(requiredMarkers, animate) {
                 path.push(meicanMap.getNodes()[i].options.id);
             }
             meicanMap.addLink(path);
-            meicanMap.focusLink(meicanMap.getLinks()[0]);
+            meicanMap.focusNodes();
             loadStats();
         }
     } else {
@@ -331,7 +336,7 @@ function addMarker(dev, color) {
         'dev'+dev.id,
         dev.name,
         'dev',
-        dev.dom,
+        meicanMap.getDomainByName(dev.dom).id,
         dev.lat,
         dev.lng,
         color);
@@ -422,23 +427,36 @@ function initStats() {
       },
       yaxis: {
         show: true,
-        tickFormatter: function(val, axis) { 
-            val = val.toFixed(4)
-            return (val < 0 ? -1*val : val) + " Mbps";
+        tickFormatter: function(val, axis) {
+            if (Math.abs(val) < 1) 
+                val = val.toFixed(4);
+            else 
+                val = val.toFixed(2);
+            return Math.abs(val) + " Mbps";
         }
       },
       xaxis: {
         mode: "time",
         timezone: 'browser',
         show: true,
+      },
+      legend: {
+        noColumns: 2,
+        container: $("#stats-legend"),
+        labelFormatter: function(label, series) {
+            return '<span style="margin-right: 10px; margin-left: 5px;">' + label + '</span>';
+        }
       }
     });
+
     //Initialize tooltip on hover
     $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
       position: "absolute",
       display: "none",
-      opacity: 0.8
+      opacity: 0.8,
+      zIndex: 3,
     }).appendTo("body");
+
     $("#stats").bind("plothover", function (event, pos, item) {
 
       if (item) {
@@ -457,8 +475,20 @@ function initStats() {
 
 function loadStats() {
     $("#stats-loading").show();
+
+    var srcUrn = path[path.length - 2].port_urn;
+    srcUrn = srcUrn.split(':');
+    var srcDev = srcUrn[srcUrn.length - 3];
+
+    var dstUrn = path[path.length - 1].port_urn;
+    dstUrn = dstUrn.split(':');
+    var dstDev = dstUrn[dstUrn.length - 3];
+    var dstPort = dstUrn[dstUrn.length - 2];
+    var dstVlan = path[path.length - 1].vlan;
+
     $.ajax({
-        url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 372 + '&vlan=' + 206 + '&dir=' + 'out' + '&interval=' + 0,
+        url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=cipo.rnp.br&dev=' + dstDev +
+            '&port=' + dstPort + '&vlan=' + dstVlan + '&dir=out' + '&interval=' + 0,
         dataType: 'json',
         method: "GET",
         success: function(data) {
@@ -466,11 +496,12 @@ function loadStats() {
             for (var i = 0; i < data.traffic.length; i++) {
                 dataOut.push([moment.unix(data.traffic[i].ts), data.traffic[i].val*8/1000000]);
             }
-            statsData = [{data: dataOut, color: "#3c8dbc" }];
+            statsData = [{label: srcDev + ' to ' + dstDev, data: dataOut, color: "#3c8dbc" }];
 
             if(data.traffic.length > 0) {
                 $.ajax({
-                    url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 372 + '&vlan=' + 206 + '&dir=' + 'in' + '&interval=' + 0,
+                    url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=cipo.rnp.br&dev=' + dstDev +
+                        '&port=' + dstPort + '&vlan=' + dstVlan + '&dir=in' + '&interval=' + 0,
                     dataType: 'json',
                     method: "GET",
                     success: function(data) {
@@ -478,12 +509,13 @@ function loadStats() {
                         for (var i = 0; i < data.traffic.length; i++) {
                             dataIn.push([moment.unix(data.traffic[i].ts), 0-(data.traffic[i].val*8/1000000)]);
                         }
-                        statsData.push({data: dataIn, color: "#f56954" });
+                        statsData.push({label: dstDev + ' to ' + srcDev, data: dataIn, color: "#f56954" });
 
                         statsGraphic.setData(statsData);
                         statsGraphic.setupGrid();
                         statsGraphic.draw();
 
+                        $("#stats-legend").find("table").css("margin", 'auto');
                         $("#stats-loading").hide();
                     }
                 });

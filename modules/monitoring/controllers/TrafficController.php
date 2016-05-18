@@ -38,20 +38,16 @@ class TrafficController extends RbacController {
      *      ultima semana ou 604800s (dados a cada 1h10m ou 4200s agregados),
      *      ultimo mes ou 2592000s (dados a cada 5 horas ou 18000s agregados).
      */
-    public function actionGetVlanHistory($port, $vlan, $dir, $interval) {
+    public function actionGetVlanHistory($dom, $dev, $port, $vlan, $dir, $interval) {
         self::beginAsyncAction();
 
-        $portId = $port;
+        if ($dom != 'cipo.rnp.br') 
+            throw new \yii\web\HttpException(501, 'Currently only cipo.rnp.br ports are supported.');     
+        //urn:ogf:network:cipo.rnp.br:2013::MXRJ:xe-3_0_0:+
 
-        $port = Port::find()
-                ->where(['id'=>$portId])
-                ->select(['id', 'device_id', 'name', 'max_capacity'])
-                ->one();
-        $dev = $port->getDevice()->select(['id', 'node'])->asArray()->one();
-        //TODO NSI converte / para _
-        $portName = str_replace('_', '@2F', $port->name);
-        //TODO NSI insere :+ no final das URNs
-        $portName = str_replace(':+', '', $portName);
+        // NSI converte / para _
+        $port = str_replace('_', '@2F', $port);
+        // NSI insere :+ no final das URNs
 
         $ch = curl_init();
         $options = array(
@@ -61,7 +57,7 @@ class TrafficController extends RbacController {
             CURLOPT_SSL_VERIFYPEER => false,
 
             CURLOPT_USERAGENT => 'Meican',
-            CURLOPT_URL => 'http://monitora.cipo.rnp.br/esmond/v2/device/'.$dev['node'].'/interface/'.$portName.'.'.$vlan.'/'.$dir.
+            CURLOPT_URL => 'http://monitora.cipo.rnp.br/esmond/v2/device/'.$dev.'/interface/'.$port.'.'.$vlan.'/'.$dir.
                 '?format=json&begin='.strtotime('-3600 seconds')
         );
         Yii::trace($options);
@@ -69,13 +65,13 @@ class TrafficController extends RbacController {
         $output = curl_exec($ch);
         curl_close($ch);
 
-        Yii::trace($output);
-
         $output = json_decode($output);
+        //if(!isset($output->data))
+         //   throw new \yii\web\HttpException(500, 'Monitoring service has been returned a error for your request.');
 
         $data = json_encode([
-            'dev'=> $dev['id'], 
-            'port'=> $portId, 
+            'dev'=> $dev, 
+            'port'=> $port, 
             'traffic' => isset($output->data) ? $output->data : 0
         ]);
         

@@ -16,6 +16,7 @@ use kartik\form\ActiveForm;
 
 use meican\base\grid\Grid;
 use meican\base\components\DateUtils;
+use meican\circuits\forms\ConnectionForm;
 
 \meican\circuits\assets\connection\View::register($this);
 
@@ -103,7 +104,6 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                 Comming soon.
               </div>
               <div class="tab-pane" id="path-info">
-                Comming soon.
               </div>
             </div>
         </div>
@@ -134,6 +134,10 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                     'model' => $conn,
                     'attributes' => [
                         'external_id',
+                        [                      
+                            'label' => 'Name',
+                            'value' => ''                            
+                        ],
                         [                      
                             'attribute' => 'bandwidth',
                             'format' => 'raw',
@@ -177,7 +181,10 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                     </div>
                 </div>
             </div>
-            <div class="box-body"><div id="stats"></div>
+            <div class="box-body">
+                <div id="stats"></div>
+            </div>
+            <div id="stats-legend" class="box-footer">
             </div>
             <div id='stats-loading' class="overlay">
               <i class="fa fa-refresh fa-spin"></i>
@@ -286,6 +293,8 @@ $form = ActiveForm::begin([
 <input name="ConnectionForm[id]" value="<?= $conn->id; ?>" hidden>
 
 <?php
+
+$editForm = new ConnectionForm;
 
 echo $form->field($editForm, 'acceptRelease')->widget(SwitchInput::classname(), [
     'pluginOptions' => [

@@ -61,7 +61,6 @@ class ConnectionController extends RbacController {
                 'conn' => $conn,
                 'history' => $history,
                 'messageHistory' => $messageHistory,
-                'editForm' => new ConnectionForm,
                 'lastEvent' => $conn->getHistory()->orderBy("id DESC")->one()
         ]);
     }
@@ -85,19 +84,19 @@ class ConnectionController extends RbacController {
     }
 
     public function actionGetOrderedPath($id) {
-        $paths = ConnectionPath::find()->where(['conn_id'=>$id])->orderBy(['path_order'=> "SORT_ASC"])->all();
+        $points = ConnectionPath::find()->where(['conn_id'=>$id])->orderBy(['path_order'=> "SORT_ASC"])->all();
          
         $data = [];
          
-        foreach ($paths as $path) {
-            $port = $path->getPort()->select(['id','urn','device_id'])->one();
+        foreach ($points as $point) {
+            $port = $point->getPort()->select(['id','urn','device_id'])->one();
             $data[] = [
-                'path_order' => $path->path_order, 
+                'path_order' => $point->path_order, 
                 'device_id'=> $port ? $port->device_id : null,
                 'port_id' => $port ? $port->id : null,
-                'port_urn' => $port ? $port->urn : null,
-                'vlan' => $path->vlan,
-                'domain' => $path->domain
+                'port_urn' => $point->getFullPortUrn(),
+                'vlan' => $point->vlan,
+                'domain' => $point->domain
             ];
         }
          

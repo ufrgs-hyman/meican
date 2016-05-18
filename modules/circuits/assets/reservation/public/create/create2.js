@@ -403,7 +403,7 @@ function initCalendar() {
                 else
                     $('#datetime-range').data('daterangepicker').setEndDate(moment(event.end).format("DD/MM/YYYY HH:mm"));
             },
-            lang: 'pt-br',
+            lang: 'en-us',
             header: {
                 left: 'prev,next today',
                 center: 'title',
