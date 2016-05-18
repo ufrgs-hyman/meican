@@ -194,6 +194,10 @@ class Port extends \yii\db\ActiveRecord
         $this->device_id = $dev->id;
     }
 
+    public function getFullUrn() {
+        return "urn:ogf:network:".$this->urn;
+    }
+
     public function getInboundPortVlanRange() {
         $inboundPort = $this->getUniPorts()->andWhere(['directionality'=>self::DIR_UNI_IN])->select(['vlan_range'])->one();
         if ($inboundPort) return $inboundPort->vlan_range;

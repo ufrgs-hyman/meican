@@ -45,7 +45,6 @@ $this->params['header'] = [Yii::t('topology',"Discovery Task"), ['Home', 'Topolo
 
         Pjax::begin([
             'id' => 'change-pjax',
-            'enablePushState' => false,
         ]);
 
         echo Grid::widget([
