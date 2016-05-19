@@ -638,21 +638,6 @@ a:focus {
     display: none !important;
     -webkit-transform: translateZ(0);
   }
-  .sidebar-mini.sidebar-collapse .main-header .logo {
-    width: 50px;
-  }
-  .sidebar-mini.sidebar-collapse .main-header .logo > .logo-mini {
-    display: block;
-    margin-left: -15px;
-    margin-right: -15px;
-    font-size: 18px;
-  }
-  .sidebar-mini.sidebar-collapse .main-header .logo > .logo-lg {
-    display: none;
-  }
-  .sidebar-mini.sidebar-collapse .main-header .navbar {
-    margin-left: 50px;
-  }
 }
 .sidebar-menu,
 .main-sidebar .user-panel,
