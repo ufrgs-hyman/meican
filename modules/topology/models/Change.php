@@ -226,7 +226,7 @@ class Change extends \yii\db\ActiveRecord
                         if ($prov) {
                             $dstProv = Provider::findOneByNsa($data->dstNsaId);
                             if ($dstProv) {
-                                $peering = new ProviderPeering;
+                                $peering = new Peering;
                                 $peering->src_id = $prov->id;
                                 $peering->dst_id = $dstProv->id;
                                 if($peering->save()) {
@@ -725,7 +725,7 @@ class Change extends \yii\db\ActiveRecord
                     case self::ITEM_TYPE_NETWORK: return Yii::t('topology', 'Network');
                     case self::ITEM_TYPE_DEVICE: 
                         $dev = Device::findOne($this->item_id);
-                        return Yii::t('topology', '<b>Device</b>: {node}  - <b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
+                        return Yii::t('topology', '<b>Device</b>: {node}<br><b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
                             ['node'=> $data->node, 'lat'=> $data->lat, 'lng'=>$data->lng]);
                     case self::ITEM_TYPE_BIPORT: return Yii::t('topology', 'Port');
                     case self::ITEM_TYPE_UNIPORT: 
@@ -741,15 +741,15 @@ class Change extends \yii\db\ActiveRecord
             case self::TYPE_CREATE:
                 switch ($this->item_type) {
                     case self::ITEM_TYPE_DOMAIN: return "";
-                    case self::ITEM_TYPE_PROVIDER: return Yii::t('topology', '<b>Provider</b>: {name}, <b>Type</b>: {type}, <b>Latitude</b>: {lat}'.
+                    case self::ITEM_TYPE_PROVIDER: return Yii::t('topology', '<b>Provider</b>: {name}<br><b>Type</b>: {type}<br><b>Latitude</b>: {lat}'.
                                 ', <b>Longitude</b>: {lng}', 
                             ['name' => $data->name, 'type'=>Provider::getTypeLabels()[$data->type], 'lat'=> $data->lat, 'lng'=>$data->lng]);
-                    case self::ITEM_TYPE_PEERING: return Yii::t('topology', '<b>Peering with</b>: {dstNsaId}', 
-                            ['dstNsaId' => $data->dstNsaId]);
-                    case self::ITEM_TYPE_SERVICE: return Yii::t('topology', '<b>Service</b>: {type}, <b>URL</b>: {url}', 
-                            ['url' => $data->url, 'type'=>Service::getTypeLabels()[$data->type]]);
+                    case self::ITEM_TYPE_PEERING: return Yii::t('topology', '<b>Provider</b>: {nsa}<br><b>Peering with</b>: {dstNsaId}', 
+                            ['nsa' => $data->srcNsaId,'dstNsaId' => $data->dstNsaId]);
+                    case self::ITEM_TYPE_SERVICE: return Yii::t('topology', '<b>Provider</b>: {nsa}<br><b>Service</b>: {type}<br><b>URL</b>: {url}', 
+                            ['nsa'=>$data->provNsa,'url' => $data->url, 'type'=>Service::getTypeLabels()[$data->type]]);
                     case self::ITEM_TYPE_NETWORK: 
-                        $location = $data->lat ? Yii::t('topology',' - <b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
+                        $location = $data->lat ? Yii::t('topology','<br><b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
                             ['lat'=> $data->lat, 
                             'lng'=> $data->lng]) : "";
                         return Yii::t('topology', '<b>Network</b>: {urn}',['urn' => $data->urn]).$location;

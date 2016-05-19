@@ -129,6 +129,6 @@ class Provider extends \yii\db\ActiveRecord
     }
 
     public function getPeerings() {
-        return $this->hasMany(ProviderPeering::className(), ['provider_id' => 'id']);
+        return $this->hasMany(Peering::className(), ['provider_id' => 'id']);
     }
 }
