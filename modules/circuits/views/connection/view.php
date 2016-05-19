@@ -20,7 +20,7 @@ use meican\circuits\forms\ConnectionForm;
 
 \meican\circuits\assets\connection\View::register($this);
 
-$this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circuits']];
+$this->params['header'] = [Yii::t('circuits',"Circuit").' #'.$conn->id, ['Home', 'Circuits']];
 
 ?>
 
@@ -91,11 +91,13 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
 
 <div class="row">
     <div class="col-md-8">
+        <div id="path-box" class="box box-default">
         <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#canvas" data-toggle="tab">Map</a></li>
-              <li><a href="#graph" data-toggle="tab">Graph</a></li>
-              <li><a href="#path-info" data-toggle="tab">Advanced path info</a></li>
+            <ul class="nav nav-tabs pull-right">
+                <li><a href="#path-info" data-toggle="tab">Info</a></li>
+                <li><a href="#graph" data-toggle="tab">Graph</a></li>
+                <li class="active"><a href="#canvas" data-toggle="tab">Map</a></li>
+                <li class="pull-left header"> Path</li>
             </ul>
             <div class="tab-content no-padding">
               <div class="tab-pane active" id="canvas">
@@ -103,15 +105,54 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
               <div class="tab-pane" id="graph">
                 Comming soon.
               </div>
-              <div class="tab-pane" id="path-info">
+              <div class="tab-pane with-padding" id="path-info">
+                <?php
+
+                $provider = new \yii\data\ArrayDataProvider([
+                    'allModels' => [['order'=>0, 'urn'=>'fdasfd', 'vlan'=> 123]],
+                ]);
+
+                echo Grid::widget([
+                    'id'=> 'path-grid',
+                    'summary' => false,
+                    'dataProvider' => $provider,
+                    'columns' => array(
+                        [
+                            'header' => 'Order',
+                            'value' => function ($model){
+                                return "";
+                            },
+                        ],
+                         [
+                            'header' => 'URN',
+                            'value' => function ($model){
+                                return "";
+                            },
+                        ],
+                         [
+                            'header' => 'VLAN',
+                            'value' => function ($model){
+                                return "";
+                            },
+                        ],
+                        [
+                            'header' => '',
+                            'format' => 'raw',
+                            'value' => function ($model){
+                                return '<a href="#" class="show-stats">Show stats</a>';
+                            },
+                        ],
+                    ),
+                ]); ?>
               </div>
             </div>
+        </div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t("topology", "Circuit info"); ?></h3>
+                <h3 class="box-title"><?= Yii::t("topology", "Details"); ?></h3>
                 <div class="box-tools pull-right">
                     <div class="btn-group">
                       <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -170,7 +211,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
     <div class="col-md-8">
         <div id="stats-box" class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t("topology", "Stats"); ?></h3>
+                <h3 class="box-title"><?= Yii::t("topology", "Traffic monitoring"); ?></h3>
                 <div class="box-tools pull-right">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-sm">Last month</button>
@@ -182,10 +223,10 @@ $this->params['header'] = [Yii::t('circuits',"Circuit Details"), ['Home', 'Circu
                 </div>
             </div>
             <div class="box-body">
-                <div id="stats"></div>
+                <div id="stats-legend" class="pull-right"></div>
+                <div id="stats" style="margin-top: 15px;"></div>
             </div>
-            <div id="stats-legend" class="box-footer">
-            </div>
+            
             <div id='stats-loading' class="overlay">
               <i class="fa fa-refresh fa-spin"></i>
             </div>

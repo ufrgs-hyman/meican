@@ -85,6 +85,12 @@ LMap.prototype.addLink = function(path, type, partial) {
         this._links.push(link);
     }
 
+    var currentMap = this;
+
+    link.on('click', function(e) {
+        $("#"+currentMap._canvasDivId).trigger("linkClick", link);
+    });
+
     return link;
     
     /*google.maps.event.addListener(link, 'click', function(event) {
@@ -308,7 +314,7 @@ LMap.prototype.build = function(mapDiv) {
 
     this._cluster = L.markerClusterGroup({
         showCoverageOnHover: false,
-        maxClusterRadius: 40,
+        maxClusterRadius: 20,
     });
     this._map.addLayer(this._cluster);
 

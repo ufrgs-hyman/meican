@@ -96,7 +96,8 @@ class ConnectionController extends RbacController {
                 'port_id' => $port ? $port->id : null,
                 'port_urn' => $point->getFullPortUrn(),
                 'vlan' => $point->vlan,
-                'domain' => $point->domain
+                'domain' => $point->domain,
+                'port_type' => 'NSI'
             ];
         }
          

@@ -7,6 +7,7 @@ var meicanMap;
 var connIsApproved = true;
 var path;
 var statsData;
+var statsCurrentPts;
 var statsGraphic;
 
 $(document).ready(function() {
@@ -165,12 +166,32 @@ function initPathBox() {
     meicanMap = new LMap('canvas');
     meicanMap.show('dev');
     loadDomains();
+    $("#path-grid").css("margin", '10px');
+    $("#path-box").css("height", 445);
     $("#canvas").css("height", 400);
+
     drawCircuit($("#circuit-id").attr('value'));
+
+    $("#canvas").on("linkClick", function(e, link) {
+        var srcPoint;
+        for (var i = 0; i < path.length; i++) {
+            if(('dev' + path[i].device_id) == link.options.from)
+                srcPoint = path[i];
+        };
+        for (var i = 0; i < path.length; i++) {
+            if(('dev' + path[i].device_id) == link.options.to)
+                loadStats(srcPoint, path[i]);
+        };
+    });
 
     $('#canvas').on('lmap.nodeClick', function(e, marker) {
         marker.setPopupContent('Domain: <b>' + meicanMap.getDomain(marker.options.domainId).name + 
             '</b><br>Device: <b>' + marker.options.name + '</b><br>');
+    });
+
+    $("#path-box").on("click", '.show-stats', function() {
+        ///monitoramento de interfaces????????
+        loadStats($(this).parent().parent().attr("data-key"));
     });
 }
 
@@ -208,8 +229,18 @@ function drawCircuit(connId, animate) {
                     addWayPoint(path[i]);
                 }
 
-                for (var i = 0; i < size; i++) {
-                    $("#path-info").append('<p>' + path[i].port_urn + '</p>');
+                $($("#path-grid").find('tbody').find("tr").children()[0]).text(0);
+                $($("#path-grid").find('tbody').find("tr").children()[1]).text(path[0].port_urn);
+                $($("#path-grid").find('tbody').find("tr").children()[2]).text(path[0].vlan);
+
+                for (var i = 1; i < size; i++) {
+                    var pointRow = $($("#path-grid").find('tbody').find("tr")[0]).clone();
+
+                    $(pointRow.children()[0]).text(i);
+                    $(pointRow.children()[1]).text(path[i].port_urn);
+                    $(pointRow.children()[2]).text(path[i].vlan);
+                    $(pointRow).attr('data-key', i);
+                    $($("#path-grid").find('tbody')).append(pointRow);
                 }
                 
                 //setMapBoundsMarkersWhenReady(requiredMarkers);
@@ -246,13 +277,14 @@ function drawCircuitWhenReady(requiredMarkers, animate) {
         if (animate) {
             drawCircuitAnimated(requiredMarkers);
         } else {
-            var path = [];
+            var pathIds = [];
             for (var i = 0; i < meicanMap.getNodes().length; i++) {
-                path.push(meicanMap.getNodes()[i].options.id);
+                pathIds.push(meicanMap.getNodes()[i].options.id);
             }
-            meicanMap.addLink(path);
+            meicanMap.addLink(pathIds, 'dev', true);
+            meicanMap.addLink(pathIds.reverse(), 'dev', true);
             meicanMap.focusNodes();
-            loadStats();
+            loadStats(path[0], path[1]);
         }
     } else {
         setTimeout(function() {
@@ -399,7 +431,6 @@ function loadStats2() {
 }
 
 function initStats() {
-    //return;
     $("#stats").css("height", 375);
 
     $("#stats-box").on('click', '.refresh-btn', function() {
@@ -457,6 +488,7 @@ function initStats() {
       zIndex: 3,
     }).appendTo("body");
 
+
     $("#stats").bind("plothover", function (event, pos, item) {
 
       if (item) {
@@ -473,21 +505,30 @@ function initStats() {
     });
 }
 
-function loadStats() {
+function loadStats(srcPoint, dstPoint, urnType) {
+    if(srcPoint) {
+        statsCurrentPts = [srcPoint, dstPoint];
+    } else {
+        srcPoint = statsCurrentPts[0];
+        dstPoint = statsCurrentPts[1];
+    }
+
     $("#stats-loading").show();
 
-    var srcUrn = path[path.length - 2].port_urn;
+    //if(urnType == "NSI")....
+    var srcUrn = srcPoint.port_urn;
     srcUrn = srcUrn.split(':');
     var srcDev = srcUrn[srcUrn.length - 3];
 
-    var dstUrn = path[path.length - 1].port_urn;
+    var dstUrn = dstPoint.port_urn;
     dstUrn = dstUrn.split(':');
+    var dstDom = dstUrn[3];
     var dstDev = dstUrn[dstUrn.length - 3];
     var dstPort = dstUrn[dstUrn.length - 2];
-    var dstVlan = path[path.length - 1].vlan;
+    var dstVlan = dstPoint.vlan;
 
     $.ajax({
-        url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=cipo.rnp.br&dev=' + dstDev +
+        url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=' + dstDom + '&dev=' + dstDev +
             '&port=' + dstPort + '&vlan=' + dstVlan + '&dir=out' + '&interval=' + 0,
         dataType: 'json',
         method: "GET",
@@ -500,7 +541,7 @@ function loadStats() {
 
             if(data.traffic.length > 0) {
                 $.ajax({
-                    url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=cipo.rnp.br&dev=' + dstDev +
+                    url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=' + dstDom + '&dev=' + dstDev +
                         '&port=' + dstPort + '&vlan=' + dstVlan + '&dir=in' + '&interval=' + 0,
                     dataType: 'json',
                     method: "GET",
@@ -515,7 +556,7 @@ function loadStats() {
                         statsGraphic.setupGrid();
                         statsGraphic.draw();
 
-                        $("#stats-legend").find("table").css("margin", 'auto');
+                        
                         $("#stats-loading").hide();
                     }
                 });
