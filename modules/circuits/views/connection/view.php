@@ -223,8 +223,9 @@ $this->params['header'] = [Yii::t('circuits',"Circuit").' #'.$conn->id, ['Home',
                 </div>
             </div>
             <div class="box-body">
+                <div class="pull-left">Target: <span id="stats-target"></span></div>
                 <div id="stats-legend" class="pull-right"></div>
-                <div id="stats" style="margin-top: 15px;"></div>
+                <div id="stats" style="margin-top: 25px;"></div>
             </div>
             
             <div id='stats-loading' class="overlay">

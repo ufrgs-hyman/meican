@@ -80,7 +80,7 @@ LMap.prototype.addLink = function(path, type, partial) {
                 to: path[1],
                 color: '#cccccc',
                 type: type,
-            }).addTo(this._map);
+            }).addTo(this._map).bindPopup("#");
 
         this._links.push(link);
     }

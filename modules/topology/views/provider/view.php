@@ -13,7 +13,7 @@ use meican\base\grid\Grid;
 use meican\base\grid\IcheckboxColumn;
 use meican\base\grid\GridButtons;
 
-use meican\topology\assets\service\Index::register($this);
+\meican\topology\assets\service\Index::register($this);
 
 $this->params['header'] = [$model->name, ['Home', 'Topology']];
 
@@ -74,13 +74,13 @@ $this->params['header'] = [$model->name, ['Home', 'Topology']];
                                 'multiple'=>false,
                                 'headerOptions'=>['style'=>'width: 2%;'],
                             ),
-                            array(
+                            /*array(
                                 'class'=> LinkColumn::className(),
                                 'image'=>'/images/edit_1.png',
                                 'label' => '',
                                 'url' => '/topology/service/update',
                                 'headerOptions'=>['style'=>'width: 2%;'],
-                            ),
+                            ),*/
                             [
                                 'attribute' => 'type',
                                 'value' => function($model) {

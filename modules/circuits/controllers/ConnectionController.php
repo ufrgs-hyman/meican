@@ -45,7 +45,7 @@ class ConnectionController extends RbacController {
                 'query' => $conn->getHistory()->orderBy("id DESC"),
                 'sort' => false,
                 'pagination' => [
-                    'pageSize' => 5,
+                    'pageSize' => 6,
                 ]
         ]);
 
