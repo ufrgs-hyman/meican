@@ -8,6 +8,10 @@ namespace meican\notification\assets;
 
 use yii\web\AssetBundle;
 
+/**
+ * @author Diego Pittol
+ * @author Maurício Quatrin Guerreiro
+ */
 class Notification extends AssetBundle
 {
     public $sourcePath = '@meican/notification/assets/public';
@@ -21,6 +25,8 @@ class Notification extends AssetBundle
     ];
     
     public $depends = [
+        'kartik\base\AnimateAsset',
+        'kartik\growl\GrowlAsset',
         'yii\web\JqueryAsset',
     ];
 }

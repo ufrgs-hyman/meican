@@ -30,7 +30,7 @@ class ConnectionController extends RbacController {
 
     public function actionView($id = null) {
         if($id == null) {
-            $this->redirect(['reservation/status']);
+            return $this->redirect(['reservation/status']);
         }
 
         if (is_numeric($id)) {

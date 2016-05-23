@@ -7,6 +7,8 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+use kartik\growl\Growl;
+
 use meican\base\widgets\Analytics;
 
 \meican\base\assets\Theme::register($this);
@@ -124,6 +126,24 @@ use meican\base\widgets\Analytics;
 <!-- ./wrapper -->
 
 <?php $this->endBody() ?>
+<?php 
+
+foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
+    echo Growl::widget([
+        'type' => $key,
+        'icon' => 'glyphicon glyphicon-ok-sign',
+        'body' => $message,
+        'pluginOptions' => [
+            'delay' => 20000,
+            'placement' => [
+                'from' => 'top',
+                'align' => 'right',
+            ]
+        ]
+    ]);
+}
+
+?>
 <?= Analytics::build(); ?>
 </body>
 <?php $this->endPage() ?>

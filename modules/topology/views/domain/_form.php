@@ -9,9 +9,7 @@ use yii\bootstrap\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 
-use meican\topology\assets\domain\FormAsset;
-
-FormAsset::register($this);
+\meican\topology\assets\domain\Form::register($this);
 
 $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology')]];
 
