@@ -83,12 +83,12 @@ LMap.prototype.addLink = function(path, type, partial) {
             }).addTo(this._map).bindPopup("#");
 
         this._links.push(link);
-    }
+    } else return null;
 
     var currentMap = this;
 
     link.on('click', function(e) {
-        $("#"+currentMap._canvasDivId).trigger("linkClick", link);
+        $("#"+currentMap._canvasDivId).trigger("lmap.linkClick", link);
     });
 
     return link;

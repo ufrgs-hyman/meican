@@ -48,8 +48,8 @@ $form = ActiveForm::begin([
             <div class="nav-tabs-custom" style="margin-right: 15px;">
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-search"></i></a></li>
-                  <li><a id="add-point" href="#"><i class="fa fa-plus"></i> <i class="fa fa-map-marker"></i></a></li>
-                  <li><a href="#"><i class="fa fa-file-text"></i></a></li>
+                  <li><a id="add-point" href="#" title="Add point"><i class="fa fa-plus"></i> <i class="fa fa-map-marker"></i></a></li>
+                  <li><a href="#" title="Import path"><i class="fa fa-file-text"></i></a></li>
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1">
@@ -156,7 +156,7 @@ $form = ActiveForm::begin([
                     </li>
                 </ul>
             </div>
-            <div class="pull-right">
+            <div class="pull-right margin">
                 <button type="button" class="next-btn btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</button>
             </div><br><br><br>
         </div>
@@ -177,7 +177,8 @@ $form = ActiveForm::begin([
                                 'verticalbuttons' => true,
                                 'verticalupclass' => 'fa fa-plus',
                                 'verticaldownclass' => 'fa fa-minus',
-                                'max' => 1000000,
+                                'max' => 100000,
+                                'min' => 10,
                                 'step' => 100,
                             ]
                         ]); ?>
@@ -185,7 +186,7 @@ $form = ActiveForm::begin([
                 </div>
             </div>
             <br>
-            <div class="pull-right">
+            <div class="pull-right margin">
                 <button type="button" class="next-btn btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</button>
             </div> 
         </div>
@@ -203,7 +204,7 @@ $form = ActiveForm::begin([
                 </div>
                 <!-- /.input group -->
               <br>
-            <div class="pull-right">
+            <div class="pull-right margin">
                 <button type="button" class="next-btn btn btn-primary"><span class="fa fa-arrow-right"></span> Next step</button>
             </div>
         </div>
@@ -217,7 +218,7 @@ $form = ActiveForm::begin([
                 <br>
             <?php echo $form->field($reserveForm, 'name')->textInput(); ?>
             <br>
-            <div class="pull-right">
+            <div class="pull-right margin">
                 <button type="button" class="next-btn btn btn-primary"><span class="fa fa-arrow-right"></span> Submit</button>
             </div>
         </div>
@@ -232,7 +233,7 @@ $form = ActiveForm::begin([
             <p>3. Set the duration of the circuit.</p>
             <p>4. Confirm your request and submit.</p>
 
-            <div class="pull-right">
+            <div class="pull-right margin">
                 <button type="button" class="next-btn btn btn-primary"><span class="fa fa-arrow-right"></span> Start</button>
             </div>
         </div>
@@ -293,7 +294,7 @@ Modal::begin([
 <?php Modal::begin([
     'id' => 'schedule-modal',
     'header' => 'Schedule Form',
-    'footer' => '<button class="remove-btn btn btn-danger">Remove</button> <button class="cancel-btn btn btn-default">Cancel</button> <button class="save-btn btn btn-primary">Save</button>',
+    'footer' => '<button class="save-btn btn btn-primary">Save</button> <button class="remove-btn btn btn-danger">Remove</button> <button class="cancel-btn btn btn-default">Cancel</button>',
 ]); ?>
 
 <div class="form-group"><br>

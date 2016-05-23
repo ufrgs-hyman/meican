@@ -77,7 +77,7 @@ echo Menu::widget([
             'items'=>[
                     ['label'=>Yii::t('aaa','Users'), 'url'=>['/aaa/user'], 'visible'=>(RbacController::can('user/read') || RbacController::can('role/read'))],
                     ['label'=>Yii::t('aaa','Groups'), 'url'=>['/aaa/group'], 'visible'=>RbacController::can('group/read')],
-                    ['label'=>Yii::t('aaa','Configuration'), 'url'=>['/aaa/configuration'], 'visible'=>RbacController::can('group/update')],
+                    ['label'=>Yii::t('aaa','Configuration'), 'url'=>['/aaa/config'], 'visible'=>RbacController::can('group/update')],
             ],
         ],
         [
@@ -88,11 +88,6 @@ echo Menu::widget([
                 [
                     'label'=>Yii::t('home','Console Central'), 
                     'url'=>'http://monitora.cipo.rnp.br/console/',
-                    'target' => '_blank',
-                ],
-                [
-                    'label'=>Yii::t('home','Monitoring'),
-                    'url'=>'http://monitora.cipo.rnp.br/', 
                     'target' => '_blank',
                 ],
             ]
