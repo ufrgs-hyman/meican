@@ -202,18 +202,18 @@ function initPathTab() {
         marker.setPopupContent('Domain: <b>' + meicanMap.getDomain(marker.options.domainId).name + 
             '</b><br>Device: <b>' + marker.options.name + '</b><br><br>'+
             '<div data-node="' + marker.options.id + '">'+
-              '<button class="set-source">From here</button>'+
-              '<button class="add-waypoint">Add waypoint</button>'+
-              '<button class="set-destination">To here</button>'+
+              '<button class="btn btn-sm btn-default set-source">From here</button>'+
+              ' <button class="btn btn-sm btn-default add-waypoint">Add waypoint</button>'+
+              ' <button class="btn btn-sm btn-default set-destination">To here</button>'+
             '</div>');
     });
 
     $('#canvas').on('vgraph.nodeClick', function(e, nodeId) {
         meicanGraph.showPopup(nodeId, 'Domain: cipo.rnp.br<br>Device: POA<br><br>'+
             '<div data-node="' + nodeId + '">'+
-              '<button class="set-source">From here</button>'+
-              '<button class="add-waypoint">Add waypoint</button>'+
-              '<button class="set-destination">To here</button>'+
+              '<button class="btn btn-sm btn-default set-source">From here</button>'+
+              ' <button class="btn btn-sm btn-default add-waypoint">Add waypoint</button>'+
+              ' <button class="btn btn-sm btn-default set-destination">To here</button>'+
             '</div>');
     });
 
