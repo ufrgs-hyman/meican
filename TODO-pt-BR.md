@@ -1,5 +1,10 @@
 TO DO:
 
+Login
+
+- Melhorar informacoes da tela de login
+- Atualizar tela de login via cafe
+
 AAA - Users
 
 - Criacao
@@ -11,6 +16,7 @@ Topology Discovery
 - Edicao de regras de descoberta
 - Remover suporte ao DDS, pois nao parece estavel
 - Manter HTTP como unico protocolo
+- Habilitar novo Scheduler para agendar descobertas
 
 Topology Viewer
 
