@@ -13,7 +13,7 @@ var lsidebar;
 
 $(document).ready(function() {
     
-    $(".sidebar-toggle").remove();
+    $(".sidebar-toggle").hide();
     $(".sidebar-mini").addClass("sidebar-collapse");
 
     loadDomains();
@@ -26,32 +26,21 @@ $(document).ready(function() {
     });
 
     $("#path").on("click",'.next-btn', function() {
-        if(true)//path.size < 2)
-            $.notify({
-                title: '<strong>Path invalid!</strong>',
-                message: 'Two endpoint are required for a valid circuit reservation.'
-            },{
-                type: 'danger'
-            });
-            else 
-        lsidebar.open("requirements");
+        if(validatePath())
+            lsidebar.open("requirements");
+        return false;
     });
 
     $("#requirements").on("click",'.next-btn', function() {
-        lsidebar.open("schedule");
-        initCalendar();
+        if(validateRequirements()) {
+            lsidebar.open("schedule");
+            initCalendar();
+        }
     });
 
     $("#schedule").on("click",'.next-btn', function() {
-        if(true)//path.size < 2)
-            $.notify({
-                title: '<strong>Circuit schedule invalid!</strong>',
-                message: 'A least one date is required for a valid circuit reservation.'
-            },{
-                type: 'danger'
-            });
-            else 
-        lsidebar.open("confirm");
+        if(validateSchedule())
+            lsidebar.open("confirm");
     });
     
     lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap._map);
@@ -59,38 +48,105 @@ $(document).ready(function() {
     initEditPointSelects();
 });
 
+function validatePath() {
+    if (isValidPath()) return true;
+    else {
+        $.notify({
+            title: '<strong>Path invalid!</strong>',
+            message: 'Two endpoints are required for a valid circuit.'
+        },{
+            type: 'danger'
+        });
+        return false;
+    }
+}
+
+function isValidPath() {
+    for (var i = 0; i < $('.point').length; i++) {
+        if ($($('.point')[i]).find('.port-input').val() == "") {
+            return false;
+        }
+    };
+
+    return true;
+}
+
+function validateRequirements() {
+    if(($("#reservationform-bandwidth").val() == "") ||
+        $("#requirements").find(".field-reservationform-bandwidth").hasClass("has-error")) {
+        $.notify({
+            title: '<strong>Bandwidth invalid!</strong>',
+            message: 'The value must be must be no less than 1.'
+        },{
+            type: 'danger'
+        });
+        return false;
+    }
+    return true;
+}
+
+function validateSchedule() {
+    var events = $('#calendar').fullCalendar('clientEvents');
+    if(events.length < 1) {
+        $.notify({
+            title: '<strong>Circuit date invalid!</strong>',
+            message: 'At least one date is required.'
+        },{
+            type: 'danger'
+        });
+        return false;
+    }  
+    return true;
+}
+
+function validateName() {
+    if(($("#reservationform-name").val() == "") ||
+        $("#confirm").find(".field-reservationform-name").hasClass("has-error")) {
+        $.notify({
+            title: '<strong>Name invalid!</strong>',
+            message: 'Check your input.'
+        },{
+            type: 'danger'
+        });
+        return false;
+    }
+    return true;
+}
+
 function initConfirmTab() {
     $("#confirm").on("click",'.next-btn', function() {
-        var reservationForm = $( "#reservation-form" ).clone();
-        var events = $('#calendar').fullCalendar('clientEvents');
-        for (var i = 0; i < events.length; i++) {
-            $( '<input name="ReservationForm[events][start][]" value="' + events[i].start.toISOString() + '" hidden>' ).appendTo( reservationForm );
-            $( '<input name="ReservationForm[events][finish][]" value="' + events[i].end.toISOString() + '" hidden>' ).appendTo( reservationForm );
-        };
-        $.ajax({
-            type: "POST",
-            url: baseUrl + '/circuits/reservation/request',
-            data: reservationForm.serialize(),
-            success: function (resId) {
-                if (resId>0) {
-                    $.ajax({
-                        type: "POST",
-                        url: baseUrl + '/circuits/reservation/confirm', 
-                        data: {
-                            id: resId,
-                        }
-                    });
-                    window.location.href = baseUrl + '/circuits/reservation/view?id=' + resId;
-                } else if(resId==-1){
-                    //showError(tt("You are not allowed to create a reservation involving these selected domains."));
-                } else {
+        if(validatePath() && validateRequirements() && validateSchedule() && validateName()) {
+            var reservationForm = $( "#reservation-form" ).clone();
+            var events = $('#calendar').fullCalendar('clientEvents');
+            for (var i = 0; i < events.length; i++) {
+                $( '<input name="ReservationForm[events][start][]" value="' + events[i].start.toISOString() + '" hidden>' ).appendTo( reservationForm );
+                $( '<input name="ReservationForm[events][finish][]" value="' + events[i].end.toISOString() + '" hidden>' ).appendTo( reservationForm );
+            };
+            $.ajax({
+                type: "POST",
+                url: baseUrl + '/circuits/reservation/request',
+                data: reservationForm.serialize(),
+                success: function (resId) {
+                    if (resId>0) {
+                        $.ajax({
+                            type: "POST",
+                            url: baseUrl + '/circuits/reservation/confirm', 
+                            data: {
+                                id: resId,
+                            }
+                        });
+                        window.location.href = baseUrl + '/circuits/reservation/view?id=' + resId;
+                    } else if(resId==-1){
+                        //showError(tt("You are not allowed to create a reservation involving these selected domains."));
+                    } else {
+                        //showError(tt("Error proccessing your request. Contact your administrator."));
+                    }
+                },
+                error: function() {
                     //showError(tt("Error proccessing your request. Contact your administrator."));
                 }
-            },
-            error: function() {
-                //showError(tt("Error proccessing your request. Contact your administrator."));
-            }
-        });
+            });
+        }
     });
 }
 
@@ -255,7 +311,15 @@ function initPathTab() {
     });
 
     $("#path").on('click','.fa-trash', function() {
-        $(this).parent().parent().parent().parent().parent().remove();
+        if($(".point").length > 2) {
+            $(this).parent().parent().parent().parent().parent().remove();
+            drawPath();
+        } else $.notify({
+                title: '<strong>Invalid action!</strong>',
+                message: 'Two points are required for a valid circuit.'
+            },{
+                type: 'warning'
+            });
         return false;
     });
 
@@ -488,16 +552,10 @@ function prepareConfirmModal() {
     });
 }
 
-function setSourcePoint(nodeId) {
-    setPointByNode(0, nodeId);
-}
-
-function setDestinationPoint(nodeId) {
-    setPointByNode($('.point').length - 1, nodeId);
-}
-
 function addWayPoint(nodeId) {
-    addPoint($('.point').length - 1, nodeId);
+    var position = $('.point').length - 1;
+    addPoint(position);
+    showPointModal(null, position, nodeId);
 }
 
 function setPointByNode(position, nodeId) {
@@ -568,7 +626,7 @@ function setPoint(pointElement, pointOrder, pointMode, domId, dom, netId, net, d
     drawPath();
 }
 
-function addPoint(position, nodeId) {
+function addPoint(position) {
     if(position) {
         $($(".point")[position]).before(buildPoint());
     } else {
@@ -590,7 +648,7 @@ function buildPoint() {
           '</h3>'+
         '<div class="timeline-body">'+
             '<div class="point-normal">'+
-              'Network: <label data="" class="point-info net-l">none</label><br>'+
+              '<label data="" class="point-info net-l" hidden>none</label>'+
               'Device: <label data="" class="point-info dev-l">none</label><br>'+
               'Port: <label class="point-info port-l">none</label><br>'+
               '<input class="port-input" type="hidden" name="ReservationForm[path][port][]">'+
@@ -615,13 +673,17 @@ function drawPath() {
 
     if ($(".point").length > 1) {
         var path = [];
-        for (var i = 0; i < $(".point").length - 1; i++) {
+        for (var i = 0; i < $(".point").length; i++) {
+            if($($(".point")[i]).find('.mode-input').val() == 'normal')
+                path.push($($(".point")[i]).find('.dev-l').attr('data'));
+        };
+
+        for (var i = 0; i < path.length - 1; i++) {
             meicanMap.addLink([
-                'dev' + $($(".point")[i]).find('.dev-l').attr('data'), 
-                'dev' + $($(".point")[i+1]).find('.dev-l').attr('data')    
+                'dev' + path[i], 
+                'dev' + path[i+1]   
             ]);
         };
-        
     }
 }
 

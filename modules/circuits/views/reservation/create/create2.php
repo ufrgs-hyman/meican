@@ -95,7 +95,7 @@ $form = ActiveForm::begin([
                           </h3>
                         <div class="timeline-body" hidden>
                             <div class="point-normal">
-                              Network: <label data="" class="point-info net-l">none</label><br>
+                              <label data="" class="point-info net-l" hidden>none</label>
                               Device: <label data="" class="point-info dev-l">none</label><br>
                               Port: <label class="point-info port-l">none</label><br>
                               <input class="port-input" type="hidden" name="ReservationForm[path][port][]">
@@ -128,7 +128,7 @@ $form = ActiveForm::begin([
                             </h3>
                             <div class="timeline-body" hidden>
                                 <div class="point-normal">
-                                  Network: <label data="" class="point-info net-l">none</label><br>
+                                  <label data="" class="point-info net-l" hidden>none</label>
                                   Device: <label data="" class="point-info dev-l">none</label><br>
                                   Port: <label class="point-info port-l">none</label><br>
                                   <input class="port-input" type="hidden" name="ReservationForm[path][port][]">
@@ -178,8 +178,8 @@ $form = ActiveForm::begin([
                                 'verticalupclass' => 'fa fa-plus',
                                 'verticaldownclass' => 'fa fa-minus',
                                 'max' => 100000,
-                                'min' => 10,
-                                'step' => 100,
+                                'min' => 1,
+                                'step' => 10,
                             ]
                         ]); ?>
                     </div>
@@ -252,7 +252,7 @@ $form = ActiveForm::begin([
 Modal::begin([
     'id' => 'point-modal',
     'header' => 'Edit point',
-    'footer' => '<button class="cancel-btn btn btn-default">Cancel</button> <button class="save-btn btn btn-primary">Save</button>',
+    'footer' => '<button class="save-btn btn btn-primary">Save</button> <button class="cancel-btn btn btn-default">Cancel</button>',
 ]); ?>
 
 <label class="point-order" hidden></label>

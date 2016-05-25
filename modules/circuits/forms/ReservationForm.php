@@ -46,6 +46,7 @@ class ReservationForm extends Model {
 	public function rules()	{
 		return [
 			[['name', 'bandwidth', 'path', 'protection', 'events'], 'required'],
+            [['bandwidth'], 'integer', 'min'=> 1],
 			[['rec_enabled','rec_type', 'rec_interval', 'rec_weekdays', 'rec_finish_type', 'rec_finish_date', 
 				'rec_finish_occur_limit', 'gri'], 'safe'],
 		];

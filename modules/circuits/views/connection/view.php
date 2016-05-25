@@ -324,7 +324,7 @@ Pjax::end();
 <?php Modal::begin([
     'id' => 'edit-modal',
     'header' => 'Edit',
-    'footer' => '<button type="button" class="btn btn-default close-btn">Close</button> <button type="button" class="confirm-btn btn btn-primary">Confirm</button>'
+    'footer' => '<button type="button" class="confirm-btn btn btn-primary">Confirm</button> <button type="button" class="btn btn-default close-btn">Close</button>'
 ]); 
 
 $form = ActiveForm::begin([
@@ -377,7 +377,7 @@ ActiveForm::end(); ?>
 <?php Modal::begin([
     'id' => 'cancel-modal',
     'header' => 'Cancel',
-    'footer' => '<button type="button" class="btn btn-default close-btn">Close</button> <button type="button" class="confirm-btn btn btn-danger">Confirm</button>'
+    'footer' => '<button type="button" class="confirm-btn btn btn-danger">Confirm</button> <button type="button" class="btn btn-default close-btn">Close</button>'
 ]); ?>
 
 Do you want cancel this circuit?
