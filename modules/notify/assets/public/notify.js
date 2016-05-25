@@ -1,7 +1,7 @@
 function timerAuths() {
 	$.ajax({
 	    type: "GET",
-	    url: baseUrl + '/notification/notification/get-size',
+	    url: baseUrl + '/notify/notify/get-size',
 	    success: function(number) {
             if(number>0) $("#not_number").removeClass("label-primary").addClass("label-warning");
 	    	else $("#not_number").removeClass("label-warning").addClass("label-primary");
@@ -29,13 +29,13 @@ $(document).ready(function() {
 			$("#not_loader").show();
 			$.ajax({
 				type: "POST",
-				url: baseUrl + "/notification/notification/get-notifications",
+				url: baseUrl + "/notify/notify/get-notifications",
 				cache: false,
 				success: function(html) {					
 					//Get the number of not displayed notifications
 					$.ajax({
 					    type: "GET",
-					    url: baseUrl + '/notification/notification/get-number-notifications',
+					    url: baseUrl + '/notify/notify/get-number-notifications',
 					    success: function(number) {
 					    	if(number>0) $("#not_number").removeClass("label-primary").addClass("label-warning");
 					    	else $("#not_number").removeClass("label-warning").addClass("label-primary");
@@ -46,7 +46,7 @@ $(document).ready(function() {
 					//Get the number of pending authorizations
 					$.ajax({
 						type: "POST",
-						url: baseUrl + "/notification/notification/get-number-authorizations",
+						url: baseUrl + "/notify/notify/get-number-authorizations",
 						cache: false,
 						success: function(number) {
 							$("#authN").html(number);

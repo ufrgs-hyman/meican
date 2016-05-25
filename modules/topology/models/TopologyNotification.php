@@ -9,7 +9,7 @@ namespace meican\topology\models;
 use Yii;
 use yii\helpers\Html;
 
-use meican\notification\models\Notification;
+use meican\notify\models\Notification;
 use meican\base\components\DateUtils;
 
 /**
@@ -45,13 +45,13 @@ class TopologyNotification {
         $changes = Change::find()
             ->where(['sync_event_id'=>$eventId])->asArray()->groupBy(['domain'])->select(['domain'])->all();
 
-        $title = Yii::t("notification", 'Topology change');
+        $title = Yii::t("notify", 'Topology change');
         if (count($changes) > 1) {
-            $msg = Yii::t("notification", 'The topologies of')." <b>".count($changes)."</b> ".Yii::t("notification", 'domains has been updated.')." <b>".
-            $appliedChangesSize."</b> ".Yii::t("notification", 'changes were applied.').' '.($pendingChangesSize > 0 ? " <b>".$pendingChangesSize."</b> ".Yii::t("notification", 'are pending.') : '');
+            $msg = Yii::t("notify", 'The topologies of')." <b>".count($changes)."</b> ".Yii::t("notify", 'domains has been updated.')." <b>".
+            $appliedChangesSize."</b> ".Yii::t("notify", 'changes were applied.').' '.($pendingChangesSize > 0 ? " <b>".$pendingChangesSize."</b> ".Yii::t("notify", 'are pending.') : '');
         } else if (count($changes) == 1){
-            $msg = Yii::t("notification", 'The')." <b>".$changes[0]['domain']."</b> ".Yii::t("notification", 'topology has been updated.')." <b>".
-            $appliedChangesSize."</b> ".Yii::t("notification", 'changes were applied.').' '.($pendingChangesSize > 0 ? " <b>".$pendingChangesSize."</b> ".Yii::t("notification", 'are pending.') : '');
+            $msg = Yii::t("notify", 'The')." <b>".$changes[0]['domain']."</b> ".Yii::t("notify", 'topology has been updated.')." <b>".
+            $appliedChangesSize."</b> ".Yii::t("notify", 'changes were applied.').' '.($pendingChangesSize > 0 ? " <b>".$pendingChangesSize."</b> ".Yii::t("notify", 'are pending.') : '');
         } else return "";
         
         $date = Yii::$app->formatter->asDatetime($notification->date);

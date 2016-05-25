@@ -15,7 +15,7 @@ use meican\circuits\models\ConnectionAuth;
 use meican\circuits\models\Connection;
 use meican\circuits\models\Reservation;
 
-use meican\notification\models\Notification;
+use meican\notify\models\Notification;
 
 class ReservationNotification {
 	
@@ -29,13 +29,13 @@ class ReservationNotification {
         $path_order = ConnectionPath::find()->where(['conn_id' => $connection->id])->count()-1;
         $destination = ConnectionPath::findOne(['conn_id' => $connection->id, 'path_order' => $path_order])->domain;
          
-        $title = Yii::t("notification", 'Reservation')." (".$reservation->name.")";
+        $title = Yii::t("notify", 'Reservation')." (".$reservation->name.")";
         
         $connections = Connection::find()->where(['reservation_id' => $reservation->id])->all();
         
         //Se possui apenas uma conexão, então pode informar diretamente se foi aceito ou negado
         if(count($connections)<2){
-            $msg = Yii::t("notification", 'The connection between')." <b>".$source." </b>".Yii::t("notification", 'and')." <b>".$destination."</b> ";
+            $msg = Yii::t("notify", 'The connection between')." <b>".$source." </b>".Yii::t("notify", 'and')." <b>".$destination."</b> ";
             $date = Yii::$app->formatter->asDatetime($notification->date);
             $link = '/circuits/reservation/view?id='.$reservation->id;
             
@@ -48,11 +48,11 @@ class ReservationNotification {
                $connections[0]->auth_status == Connection::AUTH_STATUS_REJECTED ||
                $connections[0]->auth_status == Connection::AUTH_STATUS_EXPIRED
             ){
-                $msg .= " ".Yii::t("notification", 'can not be provisioned.');
+                $msg .= " ".Yii::t("notify", 'can not be provisioned.');
                 $html = Notification::makeHtml('circuit_reject.png', $date, $title, $msg, $link);
             }
             else{
-                $msg .= " ".Yii::t("notification", 'was provisioned.');
+                $msg .= " ".Yii::t("notify", 'was provisioned.');
                 $html = Notification::makeHtml('circuit_accept.png', $date, $title, $msg, $link);
             }
         }
@@ -76,10 +76,10 @@ class ReservationNotification {
                 else $pending++;
             }
 
-            $msg = Yii::t("notification", 'The status of connections changed:')."<br />";
-            $msg .= Yii::t("notification", 'Provisioned:')." ".$provisioned.", ";
-            $msg .= Yii::t("notification", 'Rejected:')." ".$reject.", ";
-            $msg .= Yii::t("notification", 'Pending:')." ".$pending;
+            $msg = Yii::t("notify", 'The status of connections changed:')."<br />";
+            $msg .= Yii::t("notify", 'Provisioned:')." ".$provisioned.", ";
+            $msg .= Yii::t("notify", 'Rejected:')." ".$reject.", ";
+            $msg .= Yii::t("notify", 'Pending:')." ".$pending;
             
             $date = Yii::$app->formatter->asDatetime($notification->date);
             $link = '/circuits/reservation/view?id='.$reservation->id;

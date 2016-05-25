@@ -19,7 +19,7 @@ use meican\aaa\models\UserSettings;
 use meican\aaa\models\UserDomainRole;
 use meican\aaa\models\Group;
 use meican\aaa\RbacController;
-use meican\notification\models\Notification;
+use meican\notify\models\Notification;
 use meican\topology\models\Domain;
 
 /**

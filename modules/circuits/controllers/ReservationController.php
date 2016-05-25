@@ -74,7 +74,8 @@ class ReservationController extends RbacController {
                 return $form->reservation->id;
             }
         }
-        return null;
+
+        return $this->redirect("create");
     }
     
     public function actionConfirm() {

@@ -118,9 +118,9 @@ $this->params['header'] = [Yii::t('circuits', 'History'), ['Home', Yii::t('circu
 								else $pending++;
 							}
 							
-							$msg = Yii::t("notification", 'Provisioned:')." ".$provisioned.", ";
-							$msg .= Yii::t("notification", 'Rejected:')." ".$reject.", ";
-							$msg .= Yii::t("notification", 'Pending:')." ".$pending;
+							$msg = Yii::t("notify", 'Provisioned:')." ".$provisioned.", ";
+							$msg .= Yii::t("notify", 'Rejected:')." ".$reject.", ";
+							$msg .= Yii::t("notify", 'Pending:')." ".$pending;
 							
 							return $msg;
 						},

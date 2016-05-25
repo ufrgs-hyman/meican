@@ -20,7 +20,7 @@ use meican\circuits\models\Connection;
 use meican\circuits\models\Reservation;
 use meican\circuits\models\AuthorizationNotification;
 
-use meican\notification\models\Notification;
+use meican\notify\models\Notification;
 
 use meican\topology\models\Domain;
 
@@ -41,16 +41,16 @@ class AaaNotification {
 					if(!$domain) return "";
 				}
 				 
-				$title = Yii::t("notification", 'Added to a group');
+				$title = Yii::t("notify", 'Added to a group');
 				 
-				$msg = Yii::t("notification", 'You have been added to group')." <b>".$group->name."</b>";
+				$msg = Yii::t("notify", 'You have been added to group')." <b>".$group->name."</b>";
 				if($group->type==Group::TYPE_DOMAIN){
-					if(isset($domain)) $msg .= " ".Yii::t("notification", 'of the domain')." <b>".$domain->name."</b>.";
-					else if(!isset($data[2])) $msg .= " ".Yii::t("notification", 'of all domains.');
+					if(isset($domain)) $msg .= " ".Yii::t("notify", 'of the domain')." <b>".$domain->name."</b>.";
+					else if(!isset($data[2])) $msg .= " ".Yii::t("notify", 'of all domains.');
 					else $msg .= ".";
 				}
 				else {
-					$msg .= " ".Yii::t("notification", 'with system permissions');
+					$msg .= " ".Yii::t("notify", 'with system permissions');
 				}
 				 
 				$date = Yii::$app->formatter->asDatetime($notification->date);
@@ -68,16 +68,16 @@ class AaaNotification {
 					if(!$domain) return "";
 				}
 				 
-				$title = Yii::t("notification", 'Removed from a group');
+				$title = Yii::t("notify", 'Removed from a group');
 	
-				$msg = Yii::t("notification", 'You were removed from the group')." <b>".$group->name."</b>";
+				$msg = Yii::t("notify", 'You were removed from the group')." <b>".$group->name."</b>";
 				if($group->type==Group::TYPE_DOMAIN){
-					if(isset($domain)) $msg .= " ".Yii::t("notification", 'of the domain')." <b>".$domain->name."</b>.";
-					else if(!isset($data[2])) $msg .= " ".Yii::t("notification", 'of all domains.');
+					if(isset($domain)) $msg .= " ".Yii::t("notify", 'of the domain')." <b>".$domain->name."</b>.";
+					else if(!isset($data[2])) $msg .= " ".Yii::t("notify", 'of all domains.');
 					else $msg .= ".";
 				}
 				else {
-					$msg .= " ".Yii::t("notification", 'with system permissions');
+					$msg .= " ".Yii::t("notify", 'with system permissions');
 				}
 	
 				$date = Yii::$app->formatter->asDatetime($notification->date);

@@ -1,3 +1,4 @@
+
 <?php
 /**
  * @copyright Copyright (c) 2012-2016 RNP
@@ -21,7 +22,7 @@ use meican\aaa\models\UserDomainRole;
 
 use meican\topology\models\Domain;
 
-use meican\notification\models\Notification;
+use meican\notify\models\Notification;
 
 class AuthorizationNotification {
 	
@@ -40,9 +41,9 @@ class AuthorizationNotification {
         
         $reservation = Reservation::findOne($connection->reservation_id);
         
-        $title = Yii::t("notification", 'Pending authorization');
-        $msg = Yii::t("notification", 'The connection is from')." <b>".$source."</b> ".Yii::t("notification", 'to')." <b>".$destination."</b>";
-        $msg .= ". ".Yii::t("notification", 'The request bandwidth is')." ".$reservation->bandwidth." Mbps.";
+        $title = Yii::t("notify", 'Pending authorization');
+        $msg = Yii::t("notify", 'The connection is from')." <b>".$source."</b> ".Yii::t("notify", 'to')." <b>".$destination."</b>";
+        $msg .= ". ".Yii::t("notify", 'The request bandwidth is')." ".$reservation->bandwidth." Mbps.";
         $date = Yii::$app->formatter->asDatetime($notification->date);
         
         $link = '/circuits/authorization/answer?id='.$reservation->id.'&domain='.$auth->domain;

@@ -4,15 +4,15 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\notification;
+namespace meican\notify;
 
 use Yii;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'meican\notification\controllers';
+    public $controllerNamespace = 'meican\notify\controllers';
 
-    public $defaultRoute = 'notification';
+    public $defaultRoute = 'notify';
 
     public function init()
     {
@@ -21,11 +21,11 @@ class Module extends \yii\base\Module
     }
 
     public function registerTranslations() {
-        Yii::$app->i18n->translations['notification*'] = [
+        Yii::$app->i18n->translations['notify*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
-            'basePath' => '@meican/notification/messages',
+            'basePath' => '@meican/notify/messages',
             'fileMap' => [
-                'notification' => 'notification.php',
+                'notify' => 'notify.php',
             ],
         ];
     }

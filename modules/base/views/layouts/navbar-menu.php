@@ -7,7 +7,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-use meican\notification\models\Notification;
+use meican\notify\models\Notification;
 
 ?>
 
@@ -23,7 +23,7 @@ use meican\notification\models\Notification;
       <span id="not_number" class="label label-warning"></span>
     </a>
     <ul id="not_body" class="dropdown-menu">
-      <li class="header"><?= Yii::t("notification", "You have {number} notifications" ,['number'=>Notification::getNumberNotifications()])?></li>
+      <li class="header"><?= Yii::t("notify", "You have {number} notifications" ,['number'=>Notification::getNumberNotifications()])?></li>
       <li id="not_content_li">
       	<?= Html::img('@web'.'/images/ajax-loader.gif', ['id' => "not_loader", 'style'=>'padding: 10px;']); ?>
         <!-- Inner Menu: contains the notifications -->
@@ -31,7 +31,7 @@ use meican\notification\models\Notification;
         </ul>
       </li>
       <!-- <li class="footer"><a href="#">View All</a></li> -->
-      <li class="footer"><?= Html::a(Yii::t("notification", "View Authorizations")." (<span id='authN'>".Notification::getNumberAuthorizations()."</span>)",array('/circuits/authorization/index')); ?></li>
+      <li class="footer"><?= Html::a(Yii::t("notify", "View Authorizations")." (<span id='authN'>".Notification::getNumberAuthorizations()."</span>)",array('/circuits/authorization/index')); ?></li>
     </ul>
   </li>
   

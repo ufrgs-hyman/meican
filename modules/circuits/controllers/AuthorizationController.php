@@ -24,7 +24,7 @@ use meican\circuits\forms\AuthorizationDetailed;
 use meican\circuits\forms\AuthorizationSearch;
 use meican\bpm\models\BpmFlow;
 use meican\topology\models\Domain;
-use meican\notification\models\Notification;
+use meican\notify\models\Notification;
 use meican\base\components\DateUtils;
 
 class AuthorizationController extends RbacController {

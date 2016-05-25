@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\i18n\Formatter;
 
-use meican\notification\models\Notification;
+use meican\notify\models\Notification;
 ?>
 
 

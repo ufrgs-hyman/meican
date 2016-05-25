@@ -4,17 +4,17 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\notification\controllers;
+namespace meican\notify\controllers;
 
 use Yii;
 use meican\aaa\RbacController;
-use meican\notification\models\Notification;
+use meican\notify\models\Notification;
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionAuth;
 use yii\helpers\Html;
 use yii\data\ActiveDataProvider;
 
-class NotificationController extends RbacController {
+class NotifyController extends RbacController {
 	
 	const TYPE_AUTHORIZATION = 	"AUTHORIZATION";
 	const TYPE_RESERVATION = 	"RESERVATION";

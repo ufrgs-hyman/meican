@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\notification\models;
+namespace meican\notify\models;
 
 use Yii;
 use yii\helpers\Html;
@@ -140,7 +140,7 @@ class Notification extends \yii\db\ActiveRecord
         if(count($notifications) == 0){
             $info = [];
             $info['date'] = null;
-            $info['array'] = "<li style='text-align: center;'><span style='float: none !important;'><h2>".Yii::t("notification", 'You don`t have notifications yet.')."</h2></span></li>";
+            $info['array'] = "<li style='text-align: center;'><span style='float: none !important;'><h2>".Yii::t("notify", 'You don`t have notifications yet.')."</h2></span></li>";
             $info['more'] = false;
             return $info;
         }

@@ -33,6 +33,6 @@ class Theme extends AssetBundle
         'meican\base\assets\FontAwesome',
         'meican\base\assets\Ionicons',
         'meican\base\assets\I18N',
-        'meican\notification\assets\Notification'
+        'meican\notify\assets\Notify'
     ];
 }
