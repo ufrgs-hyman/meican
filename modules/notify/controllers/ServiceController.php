@@ -14,7 +14,11 @@ use meican\circuits\models\ConnectionAuth;
 use yii\helpers\Html;
 use yii\data\ActiveDataProvider;
 
-class NotifyController extends RbacController {
+/**
+ * @author Diego Pittol
+ * @author Maurício Quatrin Guerreiro
+ */
+class ServiceController extends RbacController {
 	
 	const TYPE_AUTHORIZATION = 	"AUTHORIZATION";
 	const TYPE_RESERVATION = 	"RESERVATION";
