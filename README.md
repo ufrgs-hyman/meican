@@ -6,6 +6,10 @@ MEICAN 2 is a complete rewrite of its previous version. The system meets the dem
 
 This software is result of a partnership between the Brazilian Research & Education Network ([RNP](http://www.rnp.br)) and the Brazilian Federal University of Rio Grande do Sul ([UFRGS](http://www.ufrgs.br)).
 
+Mobile support since version 2.3
+
+![Alt text](/docs/mobile.png)
+
 ##DIRECTORY STRUCTURE
 
 ```
