@@ -7,26 +7,28 @@ AAA - Users
 
 Topology Discovery 
 
-- Criacao de regras de descoberta
+- Criacao de regras de descoberta - CHECK
 - Edicao de regras de descoberta
-- Testar suporte ao NSI DDS - fora do roadmap
+- Remover suporte ao DDS, pois nao parece estavel
+- Manter HTTP como unico protocolo
 
 Topology Viewer
 
-- Finalizar MeicanLMap
-- Finalizar MeicanGraph
+- Finalizar MeicanLMap - CHECK
+- Finalizar MeicanGraph - CHECK
 - Estudar popover para o tooltip do MeicanGraph - CHECK
 
 Circuits - Reservar
 
 - adicionar pontos via grafo (modulo do viewer)
 - adicionar pontos via mapa (modulo do viewer) - CHECK
-- intercambiar pontos
-- completar pontos
+- intercambiar pontos - CHECK
+- completar pontos - CHECK
 - criar reserva efetiva - CHECK
 
 Circuits - View
 
-- alterar o NSI Requester Service para suportar alteracao de circuitos
+- Alteracao de circuitos - CHECK
+- Aguardar DataPlaneStateChange para entao Provisionar alterações de circuitos ativos
 
 
