@@ -1,0 +1,22 @@
+language: php
+
+php:
+  - 5.5
+  - 5.6
+  - 7.0
+
+sudo: false
+
+install:
+  - travis_retry composer self-update
+  - travis_retry composer global require "fxp/composer-asset-plugin:~1.1.4"
+  - travis_retry composer install --no-interaction
+
+before_script:
+  # show some versions and env information
+  - php -r "echo INTL_ICU_VERSION . \"\n\";"
+  - php -r "echo INTL_ICU_DATA_VERSION . \"\n\";"
+  - mysql --version
+
+  # initialize databases
+  - mysql -e 'CREATE DATABASE meican2;';
