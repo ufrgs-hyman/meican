@@ -21,7 +21,7 @@ use meican\topology\models\Device;
 use meican\topology\models\Domain;
 use meican\topology\models\Provider;
 use meican\base\components\DateUtils;
-use meican\nsi\connection\RequesterServer;
+use meican\nsi\ConnectionRequesterServer;
 
 /**
  * Classe que implementa o módulo SoapServer do protocolo NSI Connection Service Requester 2.0
@@ -32,7 +32,7 @@ use meican\nsi\connection\RequesterServer;
  *
  * @author Maurício Quatrin Guerreiro
  */
-class RequesterController extends Controller implements RequesterServer {
+class RequesterController extends Controller implements ConnectionRequesterServer {
     
     public $enableCsrfValidation = false;
     
