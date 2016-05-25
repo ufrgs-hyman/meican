@@ -1,4 +1,4 @@
-MEICAN 2: Management Environment of Inter-domain Circuits for Advanced Networks
+MEICAN: Management Environment of Inter-domain Circuits for Advanced Networks
 
 The MEICAN is a free software. It is released under the terms of the following 
 BSD2 License.
