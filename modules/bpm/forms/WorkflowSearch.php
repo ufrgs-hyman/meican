@@ -14,6 +14,7 @@ use yii\base\Model;
 use meican\bpm\models\BpmWorkflow;
 
 /**
+ * @author Diego Pittol
  */
 class WorkflowSearch extends BpmWorkflow{
 

@@ -4,7 +4,7 @@ $(document).ready(function() {
 		$.getJSON(baseUrl + "/bpm/workflow/is-active?id="+id,
 			function(data) {
 				if(!data){
-					window.location.href = "../workflow/update?id="+id;
+					window.location.href = baseUrl + "/bpm/workflow/update?id="+id;
 				}
 			}
 		);

@@ -4,27 +4,23 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-use meican\base\grid\Grid;
 use yii\grid\CheckboxColumn;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\i18n\Formatter;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
+
 use meican\base\components\LinkColumn;
 use meican\bpm\models\BpmWorkflow;
+use meican\base\grid\Grid;
 
-use yii\helpers\ArrayHelper;
-
-use meican\bpm\assets\IndexAsset;
-IndexAsset::register($this);
-
-use yii\helpers\Url;
+\meican\bpm\assets\Index::register($this);
 
 $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 
 ?>
-
-<?= Html::csrfMetaTags() ?>
 
 <div class="box box-default">
     <div class="box-body">               
@@ -64,7 +60,7 @@ $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 						'template'=>'{update}',
 						'buttons' => [
 								'update' => function ($url, $model) {
-									return Html::a('<span class="fa fa-pencil"></span>', null);
+									return Html::a('<span class="fa fa-pencil"></span>', $url);
 								}
 						],
 						'contentOptions' => function($model){

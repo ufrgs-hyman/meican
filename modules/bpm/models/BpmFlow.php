@@ -41,6 +41,8 @@ use meican\topology\models\Port;
  * @property Connection $connection
  * @property Domain $domain
  * @property BpmWorkflow $workflow
+ *
+ * @author Diego Pittol
  */
 class BpmFlow extends \yii\db\ActiveRecord
 {

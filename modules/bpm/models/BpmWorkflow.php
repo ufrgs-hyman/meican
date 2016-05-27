@@ -16,7 +16,6 @@ use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionAuth;
 use meican\base\components\DataUtils;
 
-
 /**
  * This is the model class for table "{{%bpm_workflow}}".
  *
@@ -25,6 +24,7 @@ use meican\base\components\DataUtils;
  * @property string $json
  * @property integer $active
  *
+ * @author Diego Pittol
  */
 class BpmWorkflow extends \yii\db\ActiveRecord
 {
@@ -448,7 +448,7 @@ class BpmWorkflow extends \yii\db\ActiveRecord
     	$db_workflow_id = BpmWorkflow::findOne(['name' => $work->name, 'domain' => $working->properties->domains_owner])->id;
     
     	//Save nodes
-    	BpmNode::deleteAll(['in', 'workflow_id', $work->id]);
+    	BpmNode::deleteAll(['workflow_id'=>$work->id]);
     	 
     	foreach($this->nodes as $node){
     		$nodeDB = new BpmNode();

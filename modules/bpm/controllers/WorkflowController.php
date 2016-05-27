@@ -20,7 +20,10 @@ use meican\bpm\forms\WorkflowSearch;
 use meican\topology\models\Device;
 use meican\topology\models\Domain;
 
-
+/**
+ * @author Diego Pittol
+ * @author Mauricio Quatrin Guerreiro
+ */
 class WorkflowController extends RbacController {
 	
 	public $enableCsrfValidation = false;
@@ -109,7 +112,7 @@ class WorkflowController extends RbacController {
             			}
 		    		}
 		    		$workflow = BpmWorkflow::findOne(['id' => $id]);
-		    		return $this->render('indexViewer', array(
+		    		return $this->render('viewer', array(
 		    				'id' => $id,
 		    				'domainName' => $domain->name,
 		    				'workName' => $workflow->name,
@@ -123,6 +126,8 @@ class WorkflowController extends RbacController {
     }
     
     public function actionEditorCreate($domainTop = null) {
+        $this->layout = 'wireit';
+
     	if($domainTop){
     		$domain = Domain::findOne(['name' => $domainTop]);
     		if($domain){
@@ -169,7 +174,7 @@ class WorkflowController extends RbacController {
 		    	Yii::trace($groupsNames);
 		    	Yii::trace($devicesNames);
 		    	 
-		    	return $this->renderPartial('editor', array(
+		    	return $this->render('editor', array(
 		    			'owner_domain' => $ownerDomain,
 		    			'domains' => $allDomains,
 		    			'groups' => $groupsNames,
@@ -184,6 +189,8 @@ class WorkflowController extends RbacController {
     }
     
     public function actionEditorUpdate($id = null) {
+        $this->layout = 'wireit';
+
     	if($id){
     		$workflow = BpmWorkflow::findOne(['id' => $id]);
     		if($workflow){
@@ -231,7 +238,7 @@ class WorkflowController extends RbacController {
 			    	Yii::trace($groupsNames);
 			    	Yii::trace($devicesNames);
 			    	 
-			    	return $this->renderPartial('editor', array(
+			    	return $this->render('editor', array(
 		    			'owner_domain' => $ownerDomain,
 		    			'domains' => $allDomains,
 		    			'groups' => $groupsNames,
@@ -248,6 +255,8 @@ class WorkflowController extends RbacController {
     }
     
     public function actionEditorViewer($id = null) {
+        $this->layout = 'wireit';
+
     	if($id){
     		$workflow = BpmWorkflow::findOne(['id' => $id]);
     		if($workflow){
@@ -296,7 +305,7 @@ class WorkflowController extends RbacController {
 			    	Yii::trace($groupsNames);
 			    	Yii::trace($devicesNames);
 			    	 
-			    	return $this->renderPartial('viewer', array(
+			    	return $this->render('viewer-editor', array(
 		    			'owner_domain' => $ownerDomain,
 		    			'domains' => $allDomains,
 		    			'groups' => $groupsNames,
@@ -355,11 +364,11 @@ class WorkflowController extends RbacController {
 		    	if($domain){
 		    		if(self::can('workflow/delete', $domain->name)){
 			    		if(BpmWorkflow::findOne(['id' => $id])->active == 0){
-			    			BpmWorkflow::deleteAll(['in', 'id', $id]);
+			    			BpmWorkflow::deleteAll(['id'=> $id]);
 			    		}
 			    		else {
 			    			BpmWorkflow::disable($id);
-			    			BpmWorkflow::deleteAll(['in', 'id', $id]);
+			    			BpmWorkflow::deleteAll(['id'=> $id]);
 			    		}
 		    		}
 		    		else Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to delete in domain {domain}', ['domain' => BpmWorkflow::findOne(['id' => $id])->getDomain()->one()->name]));

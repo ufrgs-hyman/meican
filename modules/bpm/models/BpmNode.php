@@ -26,6 +26,8 @@ use Yii;
  * @property BpmNode[] $bpmNodes
  * @property BpmNode $outputYes
  * @property BpmNode[] $bpmNodes0
+ *
+ * @author Diego Pittol
  */
 class BpmNode extends \yii\db\ActiveRecord
 {

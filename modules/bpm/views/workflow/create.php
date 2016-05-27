@@ -8,20 +8,17 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 
-use meican\bpm\assets\CreateAsset;
-CreateAsset::register($this);
+\meican\bpm\assets\Create::register($this);
 
 $this->params['header'] = [Yii::t("bpm", 'Create an Authorization Workflow'), [Yii::t("bpm", 'Home'), 'Workflows']];
 
 ?>
 
-<?= Html::csrfMetaTags() ?>
-
 <div class="box box-default">
     <h5 style="margin-bottom: 0px; margin-left: 10px;"><?= Yii::t("bpm", 'Owner Domain:')." ".$domainName ?></h5>
 
     <div id="frame" class="box-body">  
-		<iframe class="embed-responsive-item" style="width: 100%; height: 650px; border: none;" name="workflow_editor" id="workflow_editor" src="<?php echo Yii::$app->urlManager->createUrl('bpm/workflow/editor-create?domainTop='.$domainTop.'&lang='.Yii::$app->language);?>"></iframe>
+		<iframe class="embed-responsive-item" style="width: 100%; height: 670px; border: none;" name="workflow_editor" id="workflow_editor" src="<?php echo Yii::$app->urlManager->createUrl('bpm/workflow/editor-create?domainTop='.$domainTop.'&lang='.Yii::$app->language);?>"></iframe>
 	</div>
 	
 	<div class="box-footer with-border">

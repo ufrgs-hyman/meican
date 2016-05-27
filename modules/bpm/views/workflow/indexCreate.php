@@ -7,11 +7,9 @@
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 
-use meican\bpm\assets\IndexCreateAsset;
-IndexCreateAsset::register($this);
-?>
+\meican\bpm\assets\IndexCreate::register($this);
 
-<?= Html::csrfMetaTags() ?>
+?>
 
 	<div id="dialog" class="modal fade">
         <div class="modal-dialog">

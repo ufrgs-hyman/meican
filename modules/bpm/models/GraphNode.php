@@ -8,6 +8,9 @@ namespace meican\bpm\models;
 
 use Yii;
 
+/**
+ * @author Diego Pittol
+ */
 class GraphNode{
 	
 	/*
