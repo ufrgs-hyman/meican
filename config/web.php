@@ -12,7 +12,7 @@ $config = [
     'version' => '2.3.0',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log','debug','session',
-        'notification',
+        'notify',
         'home',
         'bpm',
         'circuits',
@@ -36,7 +36,7 @@ $config = [
         'monitoring' =>     'meican\monitoring\Module',
         'topology' =>       'meican\topology\Module',
         'bpm' =>            'meican\bpm\Module',
-        'notification' =>   'meican\notification\Module',
+        'notify' =>         'meican\notify\Module',
         'gii' =>            'yii\gii\Module',
     ],
     'aliases' => [
