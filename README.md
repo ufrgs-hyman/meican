@@ -25,7 +25,7 @@ modules/            	application modules
 	home				Home Module
     monitoring/         Monitoring Module
     nmwg/               NMWG Module
-	notify/		Notify Module
+	notify/				Notify Module
     nsi/                NSI Module
     perfsonar/          PerfSONAR Module
 	scheduler/			Scheduler Module
