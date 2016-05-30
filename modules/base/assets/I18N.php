@@ -15,7 +15,7 @@ use yii\web\AssetBundle;
  */
 class I18N extends AssetBundle
 {
-    public $sourcePath = '@meican/base/assets/i18n/public';
+    public $sourcePath = '@meican/base/assets/i18n';
     
     public $js = [
         'meican-i18n.js',

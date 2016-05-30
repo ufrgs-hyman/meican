@@ -13,7 +13,7 @@ use yii\web\AssetBundle;
  */
 class LSidebar extends AssetBundle
 {
-    public $sourcePath = '@meican/base/assets/lsidebar/public';
+    public $sourcePath = '@meican/base/assets/lsidebar';
     
     public $css = [
         'sidebar.css',

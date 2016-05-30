@@ -11,9 +11,9 @@ use yii\web\AssetBundle;
 /**
  * @author Maurício Quatrin Guerreiro
  */
-class Picker extends AssetBundle {
+class CronPicker extends AssetBundle {
     
-    public $sourcePath = '@meican/base/assets/cron/public';
+    public $sourcePath = '@meican/base/assets/cron';
 
     public $js = [
         'jquery-cron.js',
@@ -21,7 +21,7 @@ class Picker extends AssetBundle {
     ];
     
     public $css = [
-		'cron.css'
+        'cron.css'
     ];
     
     public $depends = [

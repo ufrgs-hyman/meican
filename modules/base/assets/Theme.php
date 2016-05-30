@@ -9,7 +9,19 @@ namespace meican\base\assets;
 use yii\web\AssetBundle;
 
 /**
- * Base theme of the application.
+ * MEICAN base asset.
+ *
+ * Includes I18N system, bootstrap scripts and styles, Icheck and
+ * Icheck theme, slimscroll, Ionicons, Fontawesome and Notify assets.
+ * Also includes all scripts and base styles for the base layout of 
+ * the application. Based on AdminLTE amazing template.
+ *
+ * Each module may be require more assets. Do not put all module
+ * exclusive assets in this asset bundle class. For each page must
+ * exist one exclusive asset class reporting all scripts and styles 
+ * required by that page. So, for example, in the case of a about
+ * page, must exist a About asset and this asset must include in
+ * your assets requirements (depends array) this base asset (Theme).
  *
  * @author Maurício Quatrin Guerreiro
  */
@@ -33,6 +45,7 @@ class Theme extends AssetBundle
         'meican\base\assets\FontAwesome',
         'meican\base\assets\Ionicons',
         'meican\base\assets\I18N',
-        'meican\notify\assets\Notify'
+        'meican\notify\assets\Notify',
+        'meican\base\assets\Feedback'
     ];
 }
