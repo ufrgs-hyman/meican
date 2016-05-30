@@ -112,11 +112,6 @@ WireIt.WiringEditor.adapters.JsonRpc = {
             		window.parent.$('#dialog').modal('show');
                 	window.top.location.href="../workflow/index";
                 }
-				else if(response==0){
-                	window.parent.$("#message").html("Only disabled Workflows can be edited.");
-            		window.parent.$('#dialog').modal('show');
-                	window.top.location.href="../workflow/index";
-                }
                 else callbacks.success.call(callbacks.scope, JSON.parse(response));
 			}
     	});

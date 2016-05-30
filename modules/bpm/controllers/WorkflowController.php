@@ -22,7 +22,6 @@ use meican\topology\models\Domain;
 
 /**
  * @author Diego Pittol
- * @author Mauricio Quatrin Guerreiro
  */
 class WorkflowController extends RbacController {
 	
@@ -92,33 +91,6 @@ class WorkflowController extends RbacController {
 		    				'domainName' => $domain->name,
 		    		));
 		    	};
-    		};
-    	};
-    	if(!self::can("workflow/read")) return $this->goHome();
-    	else return $this->redirect(array('/bpm/workflow/index'));
-    }
-    
-    public function actionViewer($id = null){
-    	if($id){
-    		$workflow = BpmWorkflow::findOne(['id' => $id]);
-    		if($workflow){
-	    		$domain = Domain::findOne(['name' => $workflow->domain]);
-	    		if($domain){
-		    		if(!self::can('workflow/read', $domain->name)){
-		    			if(!self::can("workflow/read")) return $this->goHome();
-            			else{
-            				Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to read in domain {domain}', ['domain' => $domain->name]));
-            				return $this->redirect(array('/bpm/workflow/index'));
-            			}
-		    		}
-		    		$workflow = BpmWorkflow::findOne(['id' => $id]);
-		    		return $this->render('viewer', array(
-		    				'id' => $id,
-		    				'domainName' => $domain->name,
-		    				'workName' => $workflow->name,
-		    				'status' => $workflow->active,
-		    		));
-	    		};
     		};
     	};
     	if(!self::can("workflow/read")) return $this->goHome();
@@ -254,79 +226,11 @@ class WorkflowController extends RbacController {
 	    else return $this->redirect(array('/bpm/workflow/index'));
     }
     
-    public function actionEditorViewer($id = null) {
-        $this->layout = 'wireit';
-
-    	if($id){
-    		$workflow = BpmWorkflow::findOne(['id' => $id]);
-    		if($workflow){
-				$domain = Domain::findOne(['name' => $workflow->domain]);
-		    	if($domain){
-		    		if(!self::can('workflow/read', $domain->name)){
-		    			if(!self::can("workflow/read")) return $this->goHome();
-            			else{
-            				Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to read in domain {domain}', ['domain' => $domain->name]));
-            				return $this->redirect(array('/bpm/workflow/index'));
-            			}
-		    		}
-		    		
-			    	$ownerDomain = [];
-			    	$ownerDomain[$domain->name] = $domain->name;
-			    	 
-			    	$domains = Domain::find()->all();
-			    	$allDomains = [];
-			    	foreach($domains as $dom){
-			    		$allDomains[$dom->name] = $dom->name;
-			    	}
-			    
-			    	$roles = $domain->getUserDomainsRoles()->all();
-
-			    	$adminsNames = [];
-			    	foreach($roles as $role):
-			    		$adminsNames[$role->getUser()->id] = $role->getUser()->name;
-			    	endforeach;
-			    	
-			    	foreach(User::find()->all() as $user):
-			    		$usersNames[$user->id] = $user->name;
-			    	endforeach;
-			    	
-			    	$groupsNames = [];
-			    	foreach(Group::find()->where(['type' => Group::TYPE_DOMAIN])->all() as $group):
-				    	$groupsNames[$group->id] = $group->name;
-			    	endforeach;
-			    	
-			    	$devicesNames = [];
-			    	foreach(Device::find()->where(['domain_id' => $domain->id])->all() as $device):
-			    	$devicesNames[$device->id] = $device->name;
-			    	endforeach;
-			    	
-			    	Yii::trace($roles);
-			    	Yii::trace($usersNames);
-			    	Yii::trace($groupsNames);
-			    	Yii::trace($devicesNames);
-			    	 
-			    	return $this->render('viewer-editor', array(
-		    			'owner_domain' => $ownerDomain,
-		    			'domains' => $allDomains,
-		    			'groups' => $groupsNames,
-		    			'users' => $usersNames,
-		    			'admins' => $adminsNames,
-			    		'devices' => $devicesNames,
-			    		'id' => $_GET['id'],
-			    	));
-				};
-    		};
-	    };
-	    if(!self::can("workflow/read")) return $this->goHome();
-	    else return $this->redirect(array('/bpm/workflow/index'));
-    }
-    
     public function actionLoadWorkflow() {
     	if(isset($_POST['id'])){
 	    	$id = $_POST['id'];
 	    	$workflow = BpmWorkflow::findOne(['id' => $id]);
 	    	if($workflow){
-		    	if($workflow->active==1) return 0;
 		    	$json = json_decode($workflow->json, true);
 		    	Yii::trace($json);
 		    	$response = [];

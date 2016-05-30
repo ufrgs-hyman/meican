@@ -10,7 +10,7 @@ use yii\bootstrap\Modal;
 
 \meican\bpm\assets\Create::register($this);
 
-$this->params['header'] = [Yii::t("bpm", 'Create an Authorization Workflow'), [Yii::t("bpm", 'Home'), 'Workflows']];
+$this->params['header'] = [Yii::t("bpm", 'Create a workflow'), [Yii::t("bpm", 'Home'), 'Workflows', 'Create']];
 
 ?>
 

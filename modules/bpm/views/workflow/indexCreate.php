@@ -19,8 +19,8 @@ use yii\bootstrap\Modal;
                     <select id="selectDomain" class="form-control"></select>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="button_cancel" class="btn btn-default" data-dismiss="modal"><?= Yii::t("bpm", 'Cancel');?></button>
                     <button type="button" id="button_ok" class="btn btn-primary">Ok</button>
+                    <button type="button" id="button_cancel" class="btn btn-default" data-dismiss="modal"><?= Yii::t("bpm", 'Cancel');?></button>
                 </div>
             </div>
         </div>

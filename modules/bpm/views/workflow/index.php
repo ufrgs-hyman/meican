@@ -40,20 +40,10 @@ $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 						},
 						'buttons' => [
 								'delete' => function ($url, $model) {
-									return Html::a('<span class="fa fa-trash"></span>', null);
+									return Html::a('<span class="fa fa-trash"></span>', '#');
 								}
 						],
                         'headerOptions'=>['style'=>'width: 2%;'],
-					],
-					[
-						'class' => 'yii\grid\ActionColumn',
-						'template'=>'{viewer}',
-						'buttons' => [
-								'viewer' => function ($url, $model) {
-									return Html::a('<span class="fa fa-eye"></span>', $url);
-								}
-						],
-						'headerOptions'=>['style'=>'width: 2%;'],
 					],
 					[
 						'class' => 'yii\grid\ActionColumn',
@@ -63,9 +53,6 @@ $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 									return Html::a('<span class="fa fa-pencil"></span>', $url);
 								}
 						],
-						'contentOptions' => function($model){
-							return ['disabled'=>!$model->isDisabled(), 'id' => $model->id, 'class'=>'btn btn-update'];
-						},
 						'headerOptions'=>['style'=>'width: 2%;'],
 					],
 					[
@@ -117,7 +104,7 @@ $this->params['header'] = ["Workflows", ['Home', 'Workflows']];
 Modal::begin([
     'id' => 'delete-workflow-modal',
     'headerOptions' => ['hidden'=>'hidden'],
-    'footer' => '<button id="cancel-btn" class="btn btn-default">'.Yii::t("bpm", "Cancel").'</button><button id="delete-btn" class="btn btn-danger">'.Yii::t("bpm", "Delete").'</button>',
+    'footer' => '<button id="delete-btn" class="btn btn-danger">'.Yii::t("bpm", "Delete").'</button><button id="cancel-btn" class="btn btn-default">'.Yii::t("bpm", "Cancel").'</button>',
 ]);
 
 echo '<p style="text-align: left; height: 100%; width:100%;">'.Yii::t("bpm", "Delete this workflows?").'</p>';
@@ -127,7 +114,7 @@ Modal::end();
 Modal::begin([
 		'id' => 'disable-workflow-modal',
 		'headerOptions' => ['hidden'=>'hidden'],
-		'footer' => '<button id="cancel-btn" class="btn btn-default">'.Yii::t("bpm", "Cancel").'</button><button id="confirm-btn" class="btn btn-danger">'.Yii::t("bpm", "Yes").'</button>',
+		'footer' => '<button id="confirm-btn" class="btn btn-danger">'.Yii::t("bpm", "Yes").'</button><button id="cancel-btn" class="btn btn-default">'.Yii::t("bpm", "Cancel").'</button>',
 ]);
 
 echo '<p style="text-align: left; height: 100%; width:100%;" id="disable-message"></p>';

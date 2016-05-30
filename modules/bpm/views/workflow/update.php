@@ -10,7 +10,7 @@ use yii\bootstrap\Modal;
 
 \meican\bpm\assets\Update::register($this);
 
-$this->params['header'] = [Yii::t("bpm", 'Update'), ['Home', 'Workflows']];
+$this->params['header'] = [Yii::t("bpm", 'Edit workflow'), ['Home', 'Workflows', '#'.$id]];
 
 ?>
 
