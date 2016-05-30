@@ -11,9 +11,11 @@ use Yii;
 use meican\base\BaseController;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
-class DefaultController extends BaseController {
+class BoardController extends BaseController {
+
+    public $defaultAction = 'dashboard';
 	
 	public function actions()
 	{
@@ -24,7 +26,7 @@ class DefaultController extends BaseController {
 		];
 	}
 	
-	public function actionIndex() {
+	public function actionDashboard() {
     	return $this->render('dashboard');
 	}
 }

@@ -15,6 +15,8 @@ class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'meican\home\controllers';
 
+    public $defaultRoute = 'board';
+
     public function init()
     {
         parent::init();
