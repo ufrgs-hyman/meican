@@ -22,7 +22,7 @@ use meican\topology\assets\port\IndexAsset;
 
 IndexAsset::register($this);
 
-$this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology')]];
+$this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology'), 'Ports']];
 
 ?>
 

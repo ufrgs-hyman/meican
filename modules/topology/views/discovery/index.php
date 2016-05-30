@@ -15,7 +15,7 @@ use meican\base\grid\IcheckboxColumn;
 
 \meican\topology\assets\discovery\Index::register($this);
 
-$this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology']];
+$this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology', 'Discovery']];
 
 ?>
 

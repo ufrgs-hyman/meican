@@ -10,7 +10,7 @@ use yii\helpers\Html;
 
 \meican\aaa\assets\user\Update::register($this);
 
-$this->params['header'] = [$user->scenario == $user::SCENARIO_UPDATE_ACCOUNT ? "My account" : "Users", ['Home']];
+$this->params['header'] = [$user->scenario == $user::SCENARIO_UPDATE_ACCOUNT ? "My account" : "Users", ['Home', 'Users']];
 
 $form=ActiveForm::begin(array(
     'layout' => 'horizontal'

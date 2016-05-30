@@ -38,7 +38,7 @@ class ServiceController extends RbacController {
 		));
 	}
 	
-	public function actionGetSize(){
+	public function actionGetCount(){
 		echo Notification::getNumberNotifications();
 	}
 	
@@ -46,7 +46,7 @@ class ServiceController extends RbacController {
 		echo Notification::getNumberAuthorizations();
 	}
 	
-	public function actionGetNotifications(){
+	public function actionGetAll(){
 		if(isset($_POST['date'])) echo json_encode(Notification::getNotifications($_POST['date']));
 		else echo json_encode(Notification::getNotifications(null));
 	}

@@ -25,8 +25,8 @@ RoleSystemAsset::register($this);
     </div>
     <div class="box-body">
         <div>
-            <a id="<?= $userId ?>" class="btn btn-primary add-system-btn"><?= Yii::t("aaa", "Add"); ?></a>
-            <a id="delete-system-role" class="btn btn-warning delete-btn"><?= Yii::t("aaa", "Delete"); ?></a>
+            <a id="<?= $userId ?>" class="btn btn-sm btn-primary add-system-btn"><?= Yii::t("aaa", "Add"); ?></a>
+            <a id="delete-system-role" class="btn btn-sm btn-default delete-btn"><?= Yii::t("aaa", "Delete"); ?></a>
         </div><br>
 
         <?php
@@ -85,7 +85,7 @@ RoleSystemAsset::register($this);
 Modal::begin([
     'id' => 'delete-role-system-modal',
     'headerOptions' => ['hidden'=>'hidden'],
-    'footer' => '<button id="close-btn" class="btn btn-default">'.Yii::t("aaa", "Cancel").'</button> <button id="delete-role-btn" class="grid-btn btn btn-danger">'.Yii::t("aaa", "Delete").'</button>',
+    'footer' => '<button id="delete-role-btn" class="grid-btn btn btn-sm btn-danger">'.Yii::t("aaa", "Delete").'</button><button id="close-btn" class="btn btn-sm btn-default">'.Yii::t("aaa", "Cancel").'</button>',
 ]);
 
 echo Yii::t("aaa", "Do you want delete the selected items?");
@@ -103,7 +103,7 @@ Modal::end();
 Modal::begin([
     'id' => 'add-role-system-modal',
     'header' => Yii::t("aaa", "Add Role"),
-    'footer' => '<button id="close-btn" class="btn btn-default">'.Yii::t("aaa", "Cancel").'</button> <button id="save-role-btn" class="btn btn-primary">'.Yii::t("aaa", "Save").'</button>',
+    'footer' => '<button id="save-role-btn" class="btn btn-sm btn-primary">'.Yii::t("aaa", "Save").'</button><button id="close-btn" class="btn btn-sm btn-default">'.Yii::t("aaa", "Cancel").'</button>',
 ]);
 
 ?>
@@ -117,7 +117,7 @@ Modal::end();
 Modal::begin([
     'id' => 'edit-role-system-modal',
     'header' => Yii::t("aaa", "Edit Role"),
-    'footer' => '<button id="close-btn" class="btn btn-default">'.Yii::t("aaa", "Cancel").'</button> <button id="save-role-btn" class="btn btn-primary">'.Yii::t("aaa", "Save").'</button>',
+    'footer' => '<button id="save-role-btn" class="btn btn-sm btn-primary">'.Yii::t("aaa", "Save").'</button><button id="close-btn" class="btn btn-sm btn-default">'.Yii::t("aaa", "Cancel").'</button>',
 ]); ?>
 
 <div id="edit-role-system-form-wrapper"></div>

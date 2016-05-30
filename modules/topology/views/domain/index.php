@@ -12,10 +12,11 @@ use meican\base\grid\GridButtons;
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 
 \meican\topology\assets\domain\Index::register($this);
 
-$this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology')]];
+$this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology'), 'Domains']];
 
 ?>
 
@@ -33,6 +34,8 @@ $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'
             'enableClientScript'=>false,
             'enableClientValidation' => false,
         ]);
+
+        Pjax::begin();
         
         echo Grid::widget([
         	'tableOptions' => [
@@ -70,7 +73,9 @@ $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'
                     'headerOptions'=>['style'=>'width: 46%;'],
                 ],
             ),
-        ]); 
+        ]);
+
+        Pjax::end(); 
 
         ActiveForm::end();
 

@@ -16,7 +16,7 @@ use meican\topology\models\Device;
 
 \meican\topology\assets\device\Index::register($this);
 
-$this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology')]];
+$this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology'), 'Devices']];
 
 ?>
 

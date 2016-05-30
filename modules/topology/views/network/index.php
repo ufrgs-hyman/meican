@@ -16,7 +16,7 @@ use meican\base\grid\GridButtons;
 \meican\topology\assets\network\Index::register($this);
 
 $this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home'), 
-    Yii::t('topology', 'Topology')]];
+    Yii::t('topology', 'Topology'), 'Networks']];
 
 ?>
 

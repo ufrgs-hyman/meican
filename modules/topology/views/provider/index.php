@@ -13,7 +13,7 @@ use meican\base\grid\GridButtons;
 
 \meican\topology\assets\provider\Index::register($this);
 
-$this->params['header'] = ["Providers", ['Home', 'Topology']];
+$this->params['header'] = ["Providers", ['Home', 'Topology', 'Providers']];
 
 ?>
 

@@ -21,6 +21,9 @@ $form= ActiveForm::begin([
 ?>
 
 <div class="box box-default">
+    <div class="box-header with-border">
+        <h3 class="box-title"><?= Yii::t("aaa", "Federation sign-in"); ?></h3></h3>
+    </div>
     <div class="box-body">
         <?= $form->field($model,'status')->dropDownList(ArrayHelper::map([['id'=>'true','name'=>Yii::t("aaa" , "Enabled")],['id'=>'false', 'name'=>Yii::t("aaa" , "Disabled")]], 'id', 'name')); ?>
         <?= $form->field($model,'group')->dropDownList(ArrayHelper::map(UserDomainRole::getDomainGroups(), 'role_name', 'name')); ?>

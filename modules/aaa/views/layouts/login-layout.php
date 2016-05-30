@@ -26,6 +26,10 @@ Theme::register($this);
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <?= Html::csrfMetaTags() ?>
   <link rel="shortcut icon" href="<?= Url::base(); ?>/images/favicon.ico" type="image/x-icon" />
+  <script type="text/javascript">
+    window.baseUrl = "<?= Url::base(); ?>";
+    var language = "<?= Yii::$app->language; ?>";
+  </script>
   <?php $this->head() ?>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

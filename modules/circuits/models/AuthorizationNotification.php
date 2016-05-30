@@ -1,4 +1,3 @@
-
 <?php
 /**
  * @copyright Copyright (c) 2012-2016 RNP

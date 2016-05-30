@@ -14,7 +14,7 @@ use meican\aaa\models\Group;
 use meican\base\widgets\GridButtons;
 use meican\base\components\LinkColumn;
 
-$this->params['header'] = ["My account", ['Home']];
+$this->params['header'] = ["My account", ['Home', 'My account']];
 
 ?>
 
