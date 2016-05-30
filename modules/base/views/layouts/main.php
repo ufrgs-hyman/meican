@@ -6,10 +6,12 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\bootstrap\Modal;
 
 use kartik\growl\Growl;
 
 use meican\base\widgets\Analytics;
+use meican\home\forms\FeedbackForm;
 
 \meican\base\assets\Theme::register($this);
 
@@ -67,7 +69,6 @@ use meican\base\widgets\Analytics;
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
 
-    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <?= $this->render('sidebar-menu'); ?>
       <!-- /.sidebar-menu -->
@@ -143,7 +144,22 @@ foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
     ]);
 }
 
-?>
+Modal::begin([
+    'id' => 'feedback-modal',
+    'header' => 'Feedback',
+    'footer' => '<button class="send-btn btn btn-sm btn-primary">Send</button><button class="cancel-btn btn btn-sm btn-default">Cancel</button>',
+]); 
+
+$form = \yii\bootstrap\ActiveForm::begin(['id'=>'feedback-form', 'layout' => 'horizontal']);
+$model = new FeedbackForm;
+
+echo $form->field($model, 'subject')->textInput(); 
+echo $form->field($model, 'message')->textArea(['rows'=> 6, 'resize' => false]); 
+
+\yii\bootstrap\ActiveForm::end();
+
+Modal::end(); ?>
+
 <?= Analytics::build(); ?>
 </body>
 <?php $this->endPage() ?>

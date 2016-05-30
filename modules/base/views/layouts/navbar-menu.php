@@ -12,7 +12,6 @@ use meican\notify\models\Notification;
 ?>
 
 <ul class="nav navbar-nav">
-  <!-- Messages: style can be found in dropdown.less-->
   <?php if (!\Yii::$app->user->isGuest): ?>
     
   <!-- Notifications Menu -->
@@ -66,7 +65,7 @@ use meican\notify\models\Notification;
           <a href="<?= Url::toRoute(['/aaa/user/account']); ?>" class="btn btn-default">My account</a>
         </div>
         <div class="pull-right">
-          <a href="#" class="btn btn-default">Feedback</a>
+          <a href="#" class="btn btn-default feedback-btn">Feedback</a>
         </div>
       </li>
     </ul>
