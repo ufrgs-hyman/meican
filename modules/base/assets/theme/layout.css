@@ -2152,6 +2152,13 @@ a:focus {
   -webkit-box-shadow: none;
   box-shadow: none;
   border: 1px solid transparent;
+  font-size: 13px;
+}
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
 }
 .btn.uppercase {
   text-transform: uppercase;
@@ -2189,6 +2196,12 @@ a:focus {
   background: white;
   cursor: inherit;
   display: block;
+}
+.btn-popup {
+  background-color: #f4f4f4;
+  color: #444;
+  border-color: #ddd;
+  font-size: 12px;
 }
 .btn-default {
   background-color: #f4f4f4;
@@ -2534,6 +2547,9 @@ a:focus {
 .pagination > li > a {
   background: #fafafa;
   color: #666;
+}
+.pagination > .active > a {
+    background: #306A99;
 }
 .pagination.pagination-flat > li > a {
   border-radius: 0 !important;

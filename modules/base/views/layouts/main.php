@@ -147,7 +147,7 @@ foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
 Modal::begin([
     'id' => 'feedback-modal',
     'header' => 'Feedback',
-    'footer' => '<button class="send-btn btn btn-sm btn-primary">Send</button><button class="cancel-btn btn btn-sm btn-default">Cancel</button>',
+    'footer' => '<button class="send-btn btn btn-primary">Send</button><button class="cancel-btn btn btn-default">Cancel</button>',
 ]); 
 
 $form = \yii\bootstrap\ActiveForm::begin(['id'=>'feedback-form', 'layout' => 'horizontal']);

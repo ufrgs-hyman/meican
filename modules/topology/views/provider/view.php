@@ -15,7 +15,7 @@ use meican\base\grid\GridButtons;
 
 \meican\topology\assets\service\Index::register($this);
 
-$this->params['header'] = [$model->name, ['Home', 'Topology']];
+$this->params['header'] = [$model->name, ['Home', 'Topology', 'Provider', '#'.$model->id]];
 
 ?>
 
@@ -29,6 +29,7 @@ $this->params['header'] = [$model->name, ['Home', 'Topology']];
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
+                        'id',
                         'name',               
                         'nsa',  
                         [            

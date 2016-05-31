@@ -8,6 +8,7 @@ use yii\bootstrap\Html;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 
 use meican\base\grid\Grid;
 use meican\base\grid\IcheckboxColumn;
@@ -34,6 +35,8 @@ $this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'
             'enableClientScript'=>false,
             'enableClientValidation' => false,
         ]);
+
+        Pjax::begin();
 
         echo Grid::widget([
         	'tableOptions' => [
@@ -63,16 +66,6 @@ $this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'
                     'label' => Yii::t("topology", 'Name'),
                     'value' => 'name',
                     'headerOptions'=>['style'=>'width: 24%;'],
-                ],
-                [
-                    'label' => Yii::t("topology", 'Ip'),
-                    'value' => 'ip',
-                    'headerOptions'=>['style'=>'width: 8%;'],
-                ],
-                [
-                    'label' => Yii::t("topology", 'Address'),
-                    'value' => 'address',
-                    'headerOptions'=>['style'=>'width: 10%;'],
                 ],
                 [
                     'label' => Yii::t("topology", 'Latitude'),
@@ -110,6 +103,8 @@ $this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'
                 ],
             ),
         ]);
+
+        Pjax::end();
 
         ActiveForm::end();
 

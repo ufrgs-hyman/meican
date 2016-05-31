@@ -15,8 +15,8 @@ ButtonsAsset::register($this);
 <div class="grid-buttons">
 
     <div>
-        <a class="btn btn-sm btn-primary add-grid-btn" href="<?= $addUrl; ?>">Add</a>
-        <a id="delete-grid-btn" class="btn btn-sm btn-default">Delete</a>
+        <a class="btn btn-primary add-grid-btn" href="<?= $addUrl; ?>">Add</a>
+        <a id="delete-grid-btn" class="btn btn-default">Delete</a>
     </div>
 
     <?php 
@@ -24,7 +24,7 @@ ButtonsAsset::register($this);
     Modal::begin([
         'id' => 'delete-grid-modal',
         'headerOptions' => ['hidden'=>'hidden'],
-        'footer' => '<button id="confirm-grid-btn" class="btn btn-sm btn-danger">Delete</button><button id="cancel-grid-btn" class="btn btn-sm btn-default">Cancel</button>',
+        'footer' => '<button id="confirm-grid-btn" class="btn btn-danger">Delete</button><button id="cancel-grid-btn" class="btn btn-default">Cancel</button>',
     ]);
 
     echo 'Do you want delete the selected items?';
@@ -34,7 +34,7 @@ ButtonsAsset::register($this);
     Modal::begin([
         'id' => 'error-grid-modal',
         'headerOptions' => ['hidden'=>'hidden'],
-        'footer' => '<button id="close-grid-btn" class="btn btn-sm btn-default">Close</button>',
+        'footer' => '<button id="close-grid-btn" class="btn btn-default">Close</button>',
     ]);
 
     echo 'Please, select a item.';

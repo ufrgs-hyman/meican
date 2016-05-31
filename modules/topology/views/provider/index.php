@@ -6,6 +6,7 @@
 
 use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
+use yii\widgets\Pjax;
 
 use meican\base\grid\Grid;
 use meican\base\grid\IcheckboxColumn;
@@ -24,6 +25,7 @@ $this->params['header'] = ["Providers", ['Home', 'Topology', 'Providers']];
     <div class="box-body">
 
 <?php
+
     $form = ActiveForm::begin([
         'method' => 'post',
         'action' => ['delete'],
@@ -31,6 +33,9 @@ $this->params['header'] = ["Providers", ['Home', 'Topology', 'Providers']];
         'enableClientScript'=>false,
         'enableClientValidation' => false,
     ]);
+
+    Pjax::begin();
+
     echo Grid::widget([
         'dataProvider' => $providers,
         'columns' => array(
@@ -72,6 +77,8 @@ $this->params['header'] = ["Providers", ['Home', 'Topology', 'Providers']];
                 'longitude',
             ),
     ]);
+
+    Pjax::end();
 
     ActiveForm::end();
 ?>

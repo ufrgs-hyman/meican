@@ -27,7 +27,7 @@ use yii\web\AssetBundle;
  */
 class Theme extends AssetBundle
 {
-    public $sourcePath = '@meican/base/assets/theme/public';
+    public $sourcePath = '@meican/base/assets/theme';
 
     public $css = [
         'layout.css',
@@ -36,11 +36,12 @@ class Theme extends AssetBundle
     
     public $js = [
         'layout.js',
+        'icheck-theme.js'
     ];
     
     public $depends = [
-        'meican\base\assets\theme\IcheckTheme',
         'yii\bootstrap\BootstrapPluginAsset',
+        'meican\base\assets\Icheck',
         'meican\base\assets\SlimScroll',
         'meican\base\assets\FontAwesome',
         'meican\base\assets\Ionicons',
