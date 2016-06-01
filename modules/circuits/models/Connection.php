@@ -18,6 +18,7 @@ use meican\base\components\DateUtils;
  * Represents a circuit object.
  *
  * @property integer $id
+ * @property string $type
  * @property string $external_id
  * @property string $status
  * @property string $dataplane_status
@@ -69,12 +70,11 @@ class Connection extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status', 'dataplane_status', 'auth_status', 'start', 'finish', 'reservation_id'], 'required'],
-            [['status', 'dataplane_status', 'auth_status'], 'string'],
+            [['status', 'bandwidth', 'type','dataplane_status', 'auth_status', 'start', 'finish', 'reservation_id'], 'required'],
+            [['status', 'type','dataplane_status', 'auth_status'], 'string'],
             [['start', 'finish'], 'safe'],
-            [['reservation_id'], 'integer'],
+            [['reservation_id', 'bandwidth'], 'integer'],
             [['external_id'], 'string', 'max' => 65],
-            [['external_id'], 'unique']
         ];
     }
 
@@ -85,6 +85,7 @@ class Connection extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'type' => Yii::t("circuits", 'Type'),
             'version' => Yii::t("circuits", 'Version'),
             'external_id' => Yii::t('circuits', 'ID'),
             'status' => Yii::t("circuits", 'Reservation'),
@@ -93,7 +94,6 @@ class Connection extends \yii\db\ActiveRecord
             'start' =>  Yii::t("circuits", 'Start'),
             'finish' =>  Yii::t("circuits", 'End'),
             'reservation_id' => 'Reservation ID',
-            'gri' => "GRI",
             'protected' => Yii::t("circuits", 'Protection'),
         ];
     }

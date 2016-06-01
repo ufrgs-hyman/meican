@@ -13,6 +13,13 @@ use Yii;
  */
 class DateUtils {
 
+    public static function timestampToDB($timestamp) {
+        $date = new \DateTime;
+        $date->setTimezone(new \DateTimeZone("UTC"));
+        $date->setTimestamp($timestamp);
+        return $date->format("Y-m-d H:i:s");
+    }
+
     public static function fromDB($datetime) {
         return new \DateTime($datetime, new \DateTimeZone("UTC"));
     }

@@ -9,7 +9,7 @@ namespace meican\base\services;
 use Yii;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class ConsoleService {
 
@@ -20,7 +20,7 @@ class ConsoleService {
      * @param string $command
      * @return array [status, output]
      */
-    function run($cmd) {
+    static function run($cmd) {
         $cmd = Yii::getAlias("@app/yii") . ' ' . $cmd . ' 2>&1';
         $handler = popen($cmd, 'r');
         $output = '';
