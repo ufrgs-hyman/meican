@@ -4,7 +4,6 @@
  */
 
 var meicanMap = new LMap('canvas');
-var meicanGraph = new VGraph("canvas");
 var meicanTopo = [];
 var viewer;
 var lsidebar;
@@ -64,21 +63,6 @@ function loadTraffic() {
 }
 
 function initMenu() {
-    $('input[name="mode"]').on('ifChecked', function(){
-        if(this.value == 'map') {
-            viewer = meicanMap;
-            meicanGraph.hide();
-            meicanMap.show($('input[name="node-type"]:checked').val());
-        } else {
-            viewer = meicanGraph;
-            meicanMap.hide();
-            meicanGraph.show($('input[name="node-type"]:checked').val());
-        }
-    });
-
-    $('input[name="node-type"]').on('ifChecked', function(){
-        viewer.setNodeType(this.value);
-    });
 }
 
 function initCanvas() {
@@ -88,28 +72,6 @@ function initCanvas() {
                 marker.options.type, 
                 marker.options.name, 
                 meicanMap.getDomain(marker.options.domainId).name
-            )
-        );
-        /*marker.setPopupContent('Domain: cipo.rnp.br<br>Device: POA<br><br><div class="btn-group">'+
-            '<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">'+
-              'Options <span class="fa fa-caret"></span>'+
-            '</button>'+
-            '<ul data-marker="' + marker.options.id + '" class="dropdown-menu">'+
-              '<li><a class="set-source" href="#">From here</a></li>'+
-              '<li><a class="add-waypoint" href="#">Add waypoint</a></li>'+
-              '<li><a class="set-destination" href="#">To here</a></li>'+
-            '</ul>'+
-          '</div>');*/
-    });
-
-    $('#canvas').on('vgraph.nodeClick', function(e, nodeId) {
-        var node = meicanGraph.getNode(nodeId);
-        meicanGraph.showPopup(
-            nodeId, 
-            buildPopupContent(
-                node.type, 
-                node.label, 
-                node.domainId ? meicanGraph.getDomain(node.domainId).name : null
             )
         );
     });
@@ -129,74 +91,25 @@ function buildPopupContent(type, name, domainName) {
 }
 
 function closePopups() {
-    if(mode != 'map') {
-        meicanGraph.closePopups();
-    } else {
-        meicanMap.closePopups();
-    }
+    meicanMap.closePopups();
 }
 
 function loadDomains() {
     $.ajax({
-        url: baseUrl+'/topology/domain/get-all',
+        url: baseUrl+'/topology/domain/get-by-name?name=cipo.rnp.br',
         dataType: 'json',
         method: "GET",        
         success: function(response) {
             meicanTopo['dom'] = response;
-            meicanMap.setDomains(response);
-            meicanGraph.setDomains(response);
-            meicanGraph.addNodes(response, "dom", true);
-            loadDomainLinks();
+            meicanMap.setDomains([response]);
             loadDevices();
         }
     });
 }
 
-function loadProviders() {
-    if(meicanTopo['prov']) return;
-    $.ajax({
-        url: baseUrl+'/topology/provider/get-all',
-        dataType: 'json',
-        method: "GET",
-        data: {
-            cols: JSON.stringify(['id','name','latitude','longitude', 'domain_id'])
-        },
-        success: function(response) {
-            meicanTopo['prov'] = response;
-            /*meicanGraph.addNodes(response, 'prov');
-            for (var i = 0; i < response.length; i++) {
-                meicanMap.addMarker(response[i], 'prov');
-            };*/
-            loadProviderLinks();
-        }
-    });
-}
-
-function loadNetworks() {
-    if(meicanTopo['net']) return;
-    $.ajax({
-        url: baseUrl+'/topology/network/get-all',
-        dataType: 'json',
-        method: "GET",
-        data: {
-            cols: JSON.stringify(['id','name','latitude','longitude', 'domain_id'])
-        },
-        success: function(response) {
-            meicanTopo['net'] = true;
-            meicanGraph.addNodes(response, 'net');
-            for (var i = 0; i < response.length; i++) {
-                meicanMap.addNode(response[i], 'net');
-            };
-            loadNetworkLinks();
-        }
-    });
-}
-
 function loadDevices() {
-    //console.log("load devs")
-    if(meicanTopo['dev']) return;
     $.ajax({
-        url: baseUrl+'/topology/device/get-all',
+        url: baseUrl+'/topology/device/get-by-domain?id=' + meicanMap.getDomains()[0].id,
         dataType: 'json',
         method: "GET",
         data: {
@@ -204,7 +117,6 @@ function loadDevices() {
         },
         success: function(response) {
             meicanTopo['dev'] = response;
-            meicanGraph.addNodes(response, 'dev', true);
             for (var i = 0; i < response.length; i++) {
                 meicanMap.addNode(
                     'dev' + response[i].id,
@@ -219,58 +131,13 @@ function loadDevices() {
     });
 }
 
-function loadDomainLinks() {
-    $.ajax({
-        url: baseUrl+'/topology/viewer/get-domain-links',
-        dataType: 'json',
-        method: "GET",
-        success: function(response) {
-            meicanTopo['dom']['links'] = response;
-            meicanGraph.addLinks(response, 'dom');            
-        }
-    });
-}
-
-function loadProviderLinks() {
-    $.ajax({
-        url: baseUrl+'/topology/viewer/get-peerings',
-        dataType: 'json',
-        method: "GET",
-        success: function(response) {
-            meicanGraph.addLinks(response, 'prov');
-            for (var src in response) {
-                for (var i = 0; i < response[src].length; i++) {
-                    meicanMap.addLink('prov'+src,'prov'+response[src][i], 'prov');
-                }
-            }
-        }
-    });
-}
-
-function loadNetworkLinks() {
-    $.ajax({
-        url: baseUrl+'/topology/viewer/get-network-links',
-        dataType: 'json',
-        method: "GET",
-        success: function(response) {
-            meicanGraph.addLinks(response, 'net');
-            for (var src in response) {
-                for (var i = 0; i < response[src].length; i++) {
-                    meicanMap.addLink('net'+src,'net'+response[src][i], 'net');
-                }
-            }           
-        }
-    });
-}
-
 function loadDevicePorts() {
     $.ajax({
-        url: baseUrl+'/topology/viewer/get-device-ports',
+        url: baseUrl+'/topology/viewer/get-device-ports?dom=' + meicanMap.getDomains()[0].id + "&type=NMWG",
         dataType: 'json',
         method: "GET",
         success: function(response) {
             meicanTopo['dev']['ports'] = response;
-            //meicanGraph.addLinks(response, 'dev');
             for (var dev in response) {
                 for (var port in response[dev]) {
                     meicanMap.addPort(
@@ -283,6 +150,17 @@ function loadDevicePorts() {
                 } 
             }  
             loadTraffic();         
+        }
+    });
+}
+
+function loadCircuits() {
+    $.ajax({
+        url: baseUrl+'/circuits/connection/get-all?status=ACTIVE&type=OSCARS',
+        dataType: 'json',
+        method: "GET",
+        success: function(response) {
+            console.log(response);
         }
     });
 }

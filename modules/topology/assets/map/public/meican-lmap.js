@@ -44,6 +44,7 @@ LMap.prototype.hide = function() {
 }
 
 LMap.prototype.addPort = function(id, name, dir, srcNodeId, dstNodeId, type) {
+    console.log(id, name, dir, srcNodeId, dstNodeId, type);
     var node = this.getNode(srcNodeId);
     node.options.ports[id] = {
         name: name,
@@ -60,10 +61,18 @@ LMap.prototype.addLink = function(path, type, partial) {
     var src = this.getNode(path[0]);
     if(src != null)
         latLngList.push(src.getLatLng());
+    else {
+        console.log('fonte nao existe', path[0]);
+        return;
+    }
 
     var dst = this.getNode(path[1]);
     if(dst != null)
         latLngList.push(dst.getLatLng());
+    else {
+        console.log('destino nao existe', path[1]);
+        return;
+    }
 
     if(partial) {
         latLngList[1] = L.latLngBounds(latLngList[0], latLngList[1]).getCenter();
@@ -189,6 +198,10 @@ LMap.prototype.getDomainByName = function(name) {
 
 LMap.prototype.setDomains = function(list) {
     this._domainsList = list;
+}
+
+LMap.prototype.getDomains = function() {
+    return this._domainsList;
 }
 
 LMap.prototype.getValidMarkerPosition = function(type, position) {

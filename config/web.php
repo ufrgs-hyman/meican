@@ -19,7 +19,7 @@ $config = [
         'topology',
         'aaa',
         'tester',
-        'monitoring'
+        'monitoring',
     ],
     'defaultRoute' => 'home',
     'modules' => [
@@ -37,6 +37,7 @@ $config = [
         'topology' =>       'meican\topology\Module',
         'bpm' =>            'meican\bpm\Module',
         'notify' =>         'meican\notify\Module',
+        'oscars' =>         'meican\oscars\Module',
         'gii' =>            'yii\gii\Module',
     ],
     'aliases' => [
@@ -74,7 +75,7 @@ $config = [
             'loginUrl' => ['aaa/login']
         ],
         'errorHandler' => [
-            'errorAction' => 'home/default/error',
+            'errorAction' => 'home/board/error',
         ],
         'mailer' => require(__DIR__ . '/mailer.php'),
         'log' => [

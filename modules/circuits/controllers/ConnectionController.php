@@ -222,6 +222,13 @@ class ConnectionController extends RbacController {
             return $form->save() == true ? 1 : 0;
         }
     }
+
+    public function actionGetAll($status, $type) {
+        $conns = Connection::find()->where(['dataplane_status'=>$status, 'type'=>$type])
+            ->with('fullPath')
+            ->asArray()->all();
+        return json_encode($conns);
+    }
 }
 
 ?>

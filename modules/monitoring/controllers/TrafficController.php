@@ -76,54 +76,12 @@ class TrafficController extends RbacController {
         ]);
         
         return $data;
-
-        $portId = $port;
-        $data = Yii::$app->cache->get('monitoring.traffic.history.port.'.$portId.'.vlan.'.$vlan.$begin);
-
-        if ($data === false) {
-
-            $port = Port::find()
-                ->where(['id'=>$port])
-                ->select(['id', 'device_id', 'name', 'max_capacity'])
-                ->one();
-            $dev = $port->getDevice()->select(['id', 'node'])->asArray()->one();
-            $portName = str_replace('/', '@2F', $port->name);
-
-            $ch = curl_init();
-            $options = array(
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_SSL_VERIFYHOST => false,
-                CURLOPT_SSL_VERIFYPEER => false,
-
-                CURLOPT_USERAGENT => 'Meican',
-                CURLOPT_URL => 'http://monitora.cipo.rnp.br/esmond/v2/device/'.$dev['node'].'/interface/'.$portName.'/'.$dir.
-                    '?format=json&begin='.$begin//DateTime::now('-60 seconds')->getTimestamp()
-            );
-            curl_setopt_array($ch , $options);
-            $output = curl_exec($ch);
-            curl_close($ch);
-
-            Yii::trace($output);
-
-            $output = json_decode($output);
-
-            $data = json_encode([
-                'dev'=> $dev['id'], 
-                'port'=> $portId, 
-                'traffic' => isset($output->data) ? $output->data : 0
-            ]);
-
-            // store $data in cache so that it can be retrieved next time
-            Yii::$app->cache->set('monitoring.traffic.history.port.'.$portId.'.vlan.'.$vlan.$begin, $data);
-        }
-
-        return $data;
     }
 
     //instant bandwidth
-    public function actionGet($dev = null, $port = null, $dir) {
+    public function actionGet($port = null, $dir) {
         self::beginAsyncAction();
+        
         $portId = $port;
         $data = Yii::$app->cache->get('monitoring.traffic.port.'.$portId);
 

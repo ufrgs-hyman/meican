@@ -165,6 +165,11 @@ class Connection extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ConnectionEvent::className(), ['conn_id' => 'id']);
     }
+
+    public function getFullPath()
+    {
+        return $this->hasMany(ConnectionPath::className(), ['conn_id' => 'id']);
+    }
     
     public function requestCreate() {
         $event = $this->buildEvent(ConnectionEvent::TYPE_USER_CREATE);

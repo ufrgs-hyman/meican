@@ -27,6 +27,9 @@ use meican\topology\models\Domain;
 use meican\notify\models\Notification;
 use meican\base\components\DateUtils;
 
+/**
+ * @author Diego Pittol
+ */
 class AuthorizationController extends RbacController {
     
     public $enableCsrfValidation = false;

@@ -96,9 +96,23 @@ class ViewerController extends RbacController {
         return json_encode($links);
     }
 
-    public function actionGetDevicePorts() {
-        $portsWithAlias = Port::find()
-            ->select(['id','name','directionality','device_id','alias_id'])->all();
+    public function actionGetDevicePorts($dom=null, $type=null) {
+        if($dom != null) {
+            $validDevs = Device::find()->where(['domain_id'=>$dom])->asArray()->select('id')->all();
+            $devs =[];
+            foreach ($validDevs as $value) {
+                $devs[] = $value['id'];
+            }
+            $portsWithAlias = Port::find()
+                ->where(['in', 'device_id', $devs])
+                ->andWhere(['type'=>$type])
+                ->select(['id','name','directionality','device_id','alias_id'])
+                ->all();
+        } else {
+            $portsWithAlias = Port::find()
+                ->select(['id','name','directionality','device_id','alias_id'])->all();
+        }
+        
         $ports = [];
         foreach ($portsWithAlias as $port) {
             $devId1 = $port->device_id;
