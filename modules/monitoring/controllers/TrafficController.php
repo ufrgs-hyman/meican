@@ -132,7 +132,7 @@ class TrafficController extends RbacController {
         
         $port = str_replace('/', '@2F', $port);
 
-        $ch = curl_init();
+        /*$ch = curl_init();
         $options = array(
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
@@ -141,7 +141,7 @@ class TrafficController extends RbacController {
 
             CURLOPT_USERAGENT => 'Meican',
             CURLOPT_URL => 'http://monitora.cipo.rnp.br/esmond/v2/device/'.$dev.'/interface/'.$port.'.'.$vlan.'/'.$dir.
-                '?format=json&begin='.strtotime('-90 seconds')
+                '?format=json&begin=1465251630'//.strtotime('-90 seconds')
         );
         curl_setopt_array($ch , $options);
         $output = curl_exec($ch);
@@ -149,7 +149,7 @@ class TrafficController extends RbacController {
 
         Yii::trace($output);
 
-        $output = json_decode($output);
+        $output = json_decode($output);*/
 
         $port = str_replace('@2F', '/', $port);
 
@@ -157,8 +157,10 @@ class TrafficController extends RbacController {
             'dev' => $dev,
             'port' => $port,
             'vlan' => $vlan,
-            'traffic' => isset($output->data[0]) ? $output->data[0]->val : 0
+            'traffic' => 84991531.766667//isset($output->data[0]) ? $output->data[0]->val : 0
         ]);
+
+        Yii::trace($data);
 
         return $data;
     }

@@ -35,6 +35,8 @@ $this->params['hide-footer'] = true;
                 <label>Node type:</label><br>
                 <input type="radio" name="node-type" value="dev" checked> Device
             </div>
+            <br>
+            <button id="refresh-btn" class="btn btn-default">Refresh</button>
         </div>
     </div>
 </div>

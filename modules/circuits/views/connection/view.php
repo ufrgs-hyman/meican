@@ -195,10 +195,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit").' #'.$conn->id, ['Home',
                             'value' => '<data id="info-end" value="'.Yii::$app->formatter->asDatetime($conn->finish).'"></data>'.Yii::$app->formatter->asDatetime($conn->finish)
                         ],  
                         'version',
-                        [                      
-                            'label' => 'Type',
-                            'value' => 'NSI'                            
-                        ],
+                        'type',
                     ],
                 ]); 
 

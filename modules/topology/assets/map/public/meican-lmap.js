@@ -121,9 +121,10 @@ LMap.prototype.addLink = function(id, from, to, type, partial) {
         var link = L.polyline(
             latLngList, 
             {
-                id: id,
+                id: id ? id : new Date(),
                 from: from,
                 to: to,
+                traffic: 0,
                 color: '#cccccc',
                 type: type,
             }).addTo(this._map).bindPopup(

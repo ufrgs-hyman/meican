@@ -274,13 +274,13 @@ function drawCircuitWhenReady(requiredMarkers, animate) {
             drawCircuitAnimated(requiredMarkers);
         } else {
             var pathIds = [];
-            for (var i = 0; i < meicanMap.getNodes().length; i++) {
-                pathIds.push(meicanMap.getNodes()[i].options.id);
+            for (var i = 0; i < meicanMap.getNodes().length - 1; i++) {
+                meicanMap.addLink(null, meicanMap.getNodes()[i].options.id, meicanMap.getNodes()[i+1].options.id, 'dev', true);
+                meicanMap.addLink(null, meicanMap.getNodes()[i+1].options.id, meicanMap.getNodes()[i].options.id, 'dev', true);
             }
-            meicanMap.addLink(pathIds, 'dev', true);
-            meicanMap.addLink(pathIds.reverse(), 'dev', true);
+            
             meicanMap.focusNodes();
-            loadStats(path[0]);
+            loadStats(path[1]);
         }
     } else {
         setTimeout(function() {
