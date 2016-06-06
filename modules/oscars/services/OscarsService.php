@@ -31,14 +31,14 @@ class OscarsService {
 
         $bridgePath = '/Users/mqg/Documents/workspacejee/oscars-bridge';
         $output = [];
-        exec('export JAVA_HOME=/usr; mvn test -f /Users/mqg/Documents/workspacejee/oscars-bridge', $output);
+        //exec('export JAVA_HOME=/usr; mvn test -f /Users/mqg/Documents/workspacejee/oscars-bridge', $output);
         Yii::trace($output);
         OscarsService::saveCircuits($output);
         return true;
     }
 
     private static function saveCircuits($output) {
-        /*$output = [
+        $output = [
             '[INFO] --- exec-maven-plugin:1.5.0:java (default) @ oscars-bridge ---',
             '=======START===RESERVATIONS=======',
             '=======START===CIRCUIT========',
@@ -63,7 +63,7 @@ class OscarsService {
             '=======END===CIRCUIT========',
             '=======END===RESERVATIONS=======',
             '[INFO] ------------------------------------------------------------------------',
-        ];*/
+        ];
         $conns = [];
 
         for ($i=0; $i < count($output); $i++) { 

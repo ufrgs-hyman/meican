@@ -43,34 +43,73 @@ LMap.prototype.hide = function() {
     }
 }
 
-LMap.prototype.addPort = function(id, name, dir, srcNodeId, dstNodeId, type) {
-    console.log(id, name, dir, srcNodeId, dstNodeId, type);
-    var node = this.getNode(srcNodeId);
+LMap.prototype.addPort = function(id, name, dir, cap, nodeId, aliasNodeId, aliasPortId, type) {
+    //console.log(id, name, dir, nodeId, aliasNodeId, aliasPortId, type);
+    var node = this.getNode(nodeId);
+    var link = {
+        in: null,
+        out: null,
+        circuits: []
+    };
+
     node.options.ports[id] = {
         name: name,
         dir: dir,
-        link: dstNodeId != null ? this.addLink([srcNodeId, dstNodeId], type, true) : null
+        cap: cap,
+        link: link
     };
+
+    if(aliasNodeId != null) {
+        var linkIn = this.getLink(aliasNodeId+nodeId);
+        if(linkIn == null) {
+            linkIn = this.addLink(aliasNodeId+nodeId, aliasNodeId, nodeId, type, true);
+            linkIn.options.fromPort = aliasPortId;
+            linkIn.options.toPort = id;
+            linkIn.options.dir = 'IN';
+            linkIn.options.port = node.options.ports[id];
+        }
+        var linkOut = this.getLink(nodeId+aliasNodeId);
+        if(linkOut == null) {
+            linkOut = this.addLink(nodeId+aliasNodeId, nodeId, aliasNodeId, type, true);
+            linkOut.options.fromPort = id;
+            linkOut.options.toPort = aliasPortId;
+            linkOut.options.dir = 'OUT';
+            linkOut.options.port = node.options.ports[id];
+        }
+        link.in = linkIn;
+        link.out = linkOut;
+    }
 }
 
-LMap.prototype.addLink = function(path, type, partial) {
-    if(path.length < 2) return null;
+LMap.prototype.getLink = function(id) {
+    var size = this._links.length;
+    for(var i = 0; i < size; i++){
+        if ((this._links[i].options.id.toString()) == (id.toString())) {
+            return this._links[i];
+        }
+    }
+    
+    return null;
+}
+
+LMap.prototype.addLink = function(id, from, to, type, partial) {
+    if(!from || !to) return null;
 
     var latLngList = [];
 
-    var src = this.getNode(path[0]);
+    var src = this.getNode(from);
     if(src != null)
         latLngList.push(src.getLatLng());
     else {
-        console.log('fonte nao existe', path[0]);
+        console.log('fonte nao existe', from);
         return;
     }
 
-    var dst = this.getNode(path[1]);
+    var dst = this.getNode(to);
     if(dst != null)
         latLngList.push(dst.getLatLng());
     else {
-        console.log('destino nao existe', path[1]);
+        console.log('destino nao existe', to);
         return;
     }
 
@@ -78,18 +117,21 @@ LMap.prototype.addLink = function(path, type, partial) {
         latLngList[1] = L.latLngBounds(latLngList[0], latLngList[1]).getCenter();
     }
 
-    //strokeColor = "#0000FF"; 
-    //strokeOpacity = 0.1;
-
     if (latLngList.length > 1) {
         var link = L.polyline(
             latLngList, 
             {
-                from: path[0],
-                to: path[1],
+                id: id,
+                from: from,
+                to: to,
                 color: '#cccccc',
                 type: type,
-            }).addTo(this._map).bindPopup("#");
+            }).addTo(this._map).bindPopup(
+                        'Link between <b>' + 
+                        meicanMap.getNode(from).options.name +
+                        '</b> and <b>' +
+                        meicanMap.getNode(to).options.name +
+                        '</b><br><br>Circuits:<br>');
 
         this._links.push(link);
     } else return null;
@@ -101,20 +143,6 @@ LMap.prototype.addLink = function(path, type, partial) {
     });
 
     return link;
-    
-    /*google.maps.event.addListener(link, 'click', function(event) {
-        var srcDomain = meicanMap.getDomainName(source.domainId);
-        var dstDomain = meicanMap.getDomainName(destin.domainId);
-        meicanMap.closeWindows();
-        var infoWin = new google.maps.InfoWindow({
-            content: "Link between <b>" + 
-                ((source.name == srcDomain) ? srcDomain : srcDomain + " (" + source.name + ")") + '</b> and <b>' + 
-                ((destin.name == dstDomain) ? dstDomain : dstDomain + " (" + destin.name + ")")  + "</b>",
-            position: event.latLng,
-        });
-        infoWin.open(meicanMap.getMap());
-        meicanMap.addWindow(infoWin);
-    });*/
 }
 
 LMap.prototype.removeLink = function(link) {
@@ -163,7 +191,7 @@ LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
     });
 
     var node = L.marker(
-        pos, 
+        this.buildNodePosition(type, L.latLng(pos)), 
         {
             id: id, 
             icon: icon,
@@ -204,19 +232,16 @@ LMap.prototype.getDomains = function() {
     return this._domainsList;
 }
 
-LMap.prototype.getValidMarkerPosition = function(type, position) {
+LMap.prototype.buildNodePosition = function(type, position) {
     size = this._nodes.length;
-    lat = position.lat().toString().substring(0,6);
-    lng = position.lng().toString().substring(0,6);
+    lat = position.lat;
+    lng = position.lng;
 
     for(var i = 0; i < size; i++){
-        anotherLat = this._nodes[i].position.lat().toString().substring(0,6);
-        anotherLng = this._nodes[i].position.lng().toString().substring(0,6);
-
-        if (this._nodes[i].type == type &&
-                anotherLat == lat && 
-                anotherLng == lng) {
-            return this.getValidMarkerPosition(type, new google.maps.LatLng(position.lat(), position.lng() + 0.01));
+        if ((this._nodes[i].options.type === type) &&
+                (this._nodes[i].getLatLng().lat === lat) && 
+                (this._nodes[i].getLatLng().lng === lng)) {
+            return this.buildNodePosition(type, L.latLng(position.lat, position.lng + 0.01));
         }
     }
     
@@ -230,13 +255,24 @@ LMap.prototype.closePopups = function() {
 LMap.prototype.addPopup = function(infoWindow) {
 }
 
-LMap.prototype.openPopup = function(marker, extra) {
+LMap.prototype.openPopup = function(latLng, info) {
 }
 
 LMap.prototype.getNode = function(id) {
     var size = this._nodes.length;
     for(var i = 0; i < size; i++){
         if ((this._nodes[i].options.id.toString()) == (id.toString())) {
+            return this._nodes[i];
+        }
+    }
+    
+    return null;
+}
+
+LMap.prototype.getNodeByName = function(name) {
+    var size = this._nodes.length;
+    for(var i = 0; i < size; i++){
+        if ((this._nodes[i].options.name) == name) {
             return this._nodes[i];
         }
     }

@@ -381,7 +381,7 @@ function areMarkersReady(ids) {
     return true;
 }
 
-function loadStats2() {
+function loadStatsMetricsGraphics() {
     $("#stats-loading").show();
     $.ajax({
         url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 372 + '&vlan=' + 206 + '&dir=' + 'out' + '&interval=' + 0,

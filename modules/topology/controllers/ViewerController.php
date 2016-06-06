@@ -106,17 +106,17 @@ class ViewerController extends RbacController {
             $portsWithAlias = Port::find()
                 ->where(['in', 'device_id', $devs])
                 ->andWhere(['type'=>$type])
-                ->select(['id','name','directionality','device_id','alias_id'])
+                ->select(['id','name','directionality','capacity','device_id','alias_id'])
                 ->all();
         } else {
             $portsWithAlias = Port::find()
-                ->select(['id','name','directionality','device_id','alias_id'])->all();
+                ->select(['id','name','directionality','capacity','device_id','alias_id'])->all();
         }
         
         $ports = [];
         foreach ($portsWithAlias as $port) {
             $devId1 = $port->device_id;
-            $aliasPort = $port->getAlias()->select(['id','name','directionality','device_id'])->asArray()->one();
+            $aliasPort = $port->getAlias()->select(['id','device_id'])->asArray()->one();
             $devId2 = $aliasPort['device_id'];
 
             isset($ports[$devId1]) ? null : $ports[$devId1] = [];
@@ -126,7 +126,11 @@ class ViewerController extends RbacController {
                 $ports[$devId1][$port->id] = [
                     'dir'=>$port->directionality,
                     'name' => $port->name,
-                    'link' => $devId2,
+                    'cap' => $port->capacity,
+                    'link' => [
+                        'dev' => $devId2,
+                        'port' => $aliasPort['id']
+                    ],
                 ]; 
         }
         Yii::trace($ports);
