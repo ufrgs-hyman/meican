@@ -47,7 +47,7 @@ $(document).ready(function() {
 function loadTraffic() {
     for (var i = meicanMap._nodes.length - 1; i >= 0; i--) {
         for (var portId in meicanMap._nodes[i].options.ports) {
-            if(meicanMap._nodes[i].options.ports[portId].link.out != null) {
+            if(meicanMap._nodes[i].options.ports[portId].linkOut != null) {
                 $.ajax({
                     url: baseUrl+'/monitoring/traffic/get?port=' + portId + '&dir=in',
                     dataType: 'json',
@@ -76,8 +76,8 @@ function initCanvas() {
     $('#canvas').on('lmap.nodeClick', function(e, node) {
         var circuitsList = [];
         for (var portId in node.options.ports) {
-            for (var k = node.options.ports[portId].link.circuits.length - 1; k >= 0; k--) {
-                circuitsList[node.options.ports[portId].link.circuits[k].id] = node.options.ports[portId].link.circuits[k].external_id;
+            for (var k = node.options.ports[portId].circuits.length - 1; k >= 0; k--) {
+                circuitsList[node.options.ports[portId].circuits[k].id] = node.options.ports[portId].circuits[k].external_id;
             }
         }
         var circuitsHtml = '';
@@ -92,14 +92,8 @@ function initCanvas() {
     });
 
     $('#canvas').on('lmap.linkClick', function(e, link) {
+            console.log(link);
     });
-}
-
-function buildPopupContent(type, name, domainName) {
-    switch(type) {
-        case 'dev':
-            return 
-    }
 }
 
 function closePopups() {
@@ -149,7 +143,7 @@ function loadDevicePorts() {
         dataType: 'json',
         method: "GET",
         success: function(response) {
-            meicanTopo['dev']['ports'] = response;
+            
             for (var dev in response) {
                 for (var port in response[dev]) {
                     meicanMap.addPort(
@@ -161,10 +155,28 @@ function loadDevicePorts() {
                         response[dev][port].link.dev ? 'dev'+response[dev][port].link.dev : null, 
                         response[dev][port].link.port ? response[dev][port].link.port : null,
                         'dev');
+                    loadPortStatus(meicanMap.getNode('dev'+dev).options.name, response[dev][port].name);
                 } 
             }  
             
             loadCircuits();       
+        }
+    });
+}
+
+function loadPortStatus(dev, port) {
+    $.ajax({
+        url: baseUrl+'/monitoring/status/get-by-port?dev=' + dev + '&port=' + port,
+        dataType: 'json',
+        method: "GET",
+        success: function(response) {
+            var node = meicanMap.getNodeByName(response.dev);
+            for (var portId in node.options.ports) {
+                if(response.port == node.options.ports[portId].name) {
+                    node.options.ports[portId].status = response.status;
+                    break;
+                }
+            }
         }
     });
 }
@@ -185,15 +197,14 @@ function clearCircuits() {
     circuits = [];
     for (var i = meicanMap.getNodes().length - 1; i >= 0; i--) {
         for (var portId in meicanMap.getNodes()[i].options.ports) {
-            var link = meicanMap.getNodes()[i].options.ports[portId].link;
-            link.circuits = [];
-            if(link.in) {
-                link.in.options.traffic = 0;
-                link.out.options.traffic = 0;
-                var color; 
-                color = "#35E834";
-                link.in.setStyle({color: color});
-                link.out.setStyle({color: color});
+            var port = meicanMap.getNodes()[i].options.ports[portId];
+            port.circuits = [];
+            if(port.linkIn) {
+                port.linkIn.options.traffic = 0;
+                port.linkOut.options.traffic = 0;
+                var color = "#35E834";
+                port.linkIn.setStyle({color: color});
+                port.linkOut.setStyle({color: color});
             }
         }
     };
@@ -207,17 +218,17 @@ function addCircuits(circuits) {
             var portName = circuits[i].fullPath[j].port_urn.split(':')[5].split('=')[1];
             for (var portId in node.options.ports) {
                 if(portName == node.options.ports[portId].name) {
-                    node.options.ports[portId].link.circuits.push(circuits[i]);
-                    if(node.options.ports[portId].link.out != null) {
+                    node.options.ports[portId].circuits.push(circuits[i]);
+                    if(node.options.ports[portId].linkOut != null) {
                         var circuitsList = [];
-                        for (var k = node.options.ports[portId].link.circuits.length - 1; k >= 0; k--) {
-                            circuitsList[node.options.ports[portId].link.circuits[k].id] = node.options.ports[portId].link.circuits[k].external_id;
+                        for (var k = node.options.ports[portId].circuits.length - 1; k >= 0; k--) {
+                            circuitsList[node.options.ports[portId].circuits[k].id] = node.options.ports[portId].circuits[k].external_id;
                         }
                         var circuitsHtml = '';
                         for (var circuitId in circuitsList) {
                             circuitsHtml += circuitsList[circuitId] + '<br>';
                         };
-                        var linkOut = node.options.ports[portId].link.out;
+                        var linkOut = node.options.ports[portId].linkOut;
                         linkOut.bindPopup(
                         'Link between <b>' + 
                         meicanMap.getNode(linkOut.options.from).options.name +
@@ -303,27 +314,35 @@ function setLinkStatus() {
     console.log('setting colors');
     for (var j = meicanMap.getLinks().length - 1; j >= 0; j--) {
         var link = meicanMap.getLinks()[j];
-        var linkCircuits = meicanMap.getLinks()[j].options.port.link.circuits;
-        var color; 
+        var linkCircuits = meicanMap.getLinks()[j].options.fromPort.circuits;
         if(linkCircuits.length > 0) {
             for (var i = linkCircuits.length - 1; i >= 0; i--) {
                 link.options.traffic += linkCircuits[i].traffic.in;
             };
         } 
-        color = getColorByStatusAndTraffic('ok', (link.options.traffic)*8/1000000, link.options.port.cap);
-        link.setStyle({color: color});
+        link.setStyle({
+            opacity: 0.7,
+            color: getColorByStatusAndTraffic(
+                link.options.fromPort.status, 
+                (link.options.traffic)*8/1000000, 
+                link.options.fromPort.cap, link)
+        });
     }
 }
 
-function getColorByStatusAndTraffic(status, traffic, cap) {
-    console.log(status, traffic, cap);
-    if (status == 'down') {
+function getColorByStatusAndTraffic(status, traffic, cap, link) {
+    if (status == 0) {
+        return '#ccc';
+    } else if (status == 2) {
+        console.log(link);
         return '#000';
     } else if (cap == null) {
         return '#ccc';
     } else if(traffic < cap*0.6) {
+        console.log(link);
         return '#35E834';
     } else if(traffic < cap*0.9) {
+        console.log(link);
         return "#FF7619";
     } else {
         return "#E8160C";

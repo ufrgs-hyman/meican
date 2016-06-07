@@ -46,38 +46,36 @@ LMap.prototype.hide = function() {
 LMap.prototype.addPort = function(id, name, dir, cap, nodeId, aliasNodeId, aliasPortId, type) {
     //console.log(id, name, dir, nodeId, aliasNodeId, aliasPortId, type);
     var node = this.getNode(nodeId);
-    var link = {
-        in: null,
-        out: null,
-        circuits: []
-    };
 
     node.options.ports[id] = {
         name: name,
         dir: dir,
         cap: cap,
-        link: link
+        circuits: [],
+        linkIn: null,
+        linkOut: null,
+        status: 0
     };
 
     if(aliasNodeId != null) {
+        var dstNode = this.getNode(aliasNodeId);
+        var dstPort = dstNode.options.ports[aliasPortId];
         var linkIn = this.getLink(aliasNodeId+nodeId);
         if(linkIn == null) {
             linkIn = this.addLink(aliasNodeId+nodeId, aliasNodeId, nodeId, type, true);
-            linkIn.options.fromPort = aliasPortId;
-            linkIn.options.toPort = id;
+            linkIn.options.fromPort = dstPort;
             linkIn.options.dir = 'IN';
-            linkIn.options.port = node.options.ports[id];
+            linkIn.options.toPort = node.options.ports[id];
         }
         var linkOut = this.getLink(nodeId+aliasNodeId);
         if(linkOut == null) {
             linkOut = this.addLink(nodeId+aliasNodeId, nodeId, aliasNodeId, type, true);
-            linkOut.options.fromPort = id;
-            linkOut.options.toPort = aliasPortId;
+            linkOut.options.toPort = dstPort;
             linkOut.options.dir = 'OUT';
-            linkOut.options.port = node.options.ports[id];
+            linkOut.options.fromPort = node.options.ports[id];
         }
-        link.in = linkIn;
-        link.out = linkOut;
+        node.options.ports[id].linkIn = linkIn;
+        node.options.ports[id].linkOut = linkOut;
     }
 }
 
