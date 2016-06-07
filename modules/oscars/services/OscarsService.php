@@ -27,6 +27,8 @@ class OscarsService {
         //is required to pass the request to a console app instance
         if (Yii::$app instanceof \yii\web\Application) {
             ConsoleService::run('oscars/service/load-circuits');
+            Yii::trace('Loading circuits from OSCARS...');
+            return true;
         } 
 
         $bridgePath = '/Users/mqg/Documents/workspacejee/oscars-bridge';
