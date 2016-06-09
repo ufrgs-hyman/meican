@@ -57,7 +57,7 @@ class StatusController extends RbacController {
             Yii::trace($data);
 
             // store $data in cache so that it can be retrieved next time
-            Yii::$app->cache->set('monitoring.status.dev.'.$dev.'.port.'.$port, $data);
+            Yii::$app->cache->set('monitoring.status.dev.'.$dev.'.port.'.$port, $data, 20000);
         }
 
         return $data;

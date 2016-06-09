@@ -49,6 +49,7 @@ LMap.prototype.addPort = function(id, name, dir, cap, nodeId, aliasNodeId, alias
 
     node.options.ports[id] = {
         name: name,
+        device: node,
         dir: dir,
         cap: cap,
         circuits: [],
@@ -62,7 +63,7 @@ LMap.prototype.addPort = function(id, name, dir, cap, nodeId, aliasNodeId, alias
         var dstPort = dstNode.options.ports[aliasPortId];
         var linkIn = this.getLink(aliasNodeId+nodeId);
         if(linkIn == null) {
-            linkIn = this.addLink(aliasNodeId+nodeId, aliasNodeId, nodeId, type, true);
+            linkIn = this.addLink(aliasNodeId+nodeId, aliasNodeId, nodeId, type, true, cap);
         } 
 
         linkIn.options.fromPort = dstPort;
@@ -70,7 +71,7 @@ LMap.prototype.addPort = function(id, name, dir, cap, nodeId, aliasNodeId, alias
         
         var linkOut = this.getLink(nodeId+aliasNodeId);
         if(linkOut == null) {
-            linkOut = this.addLink(nodeId+aliasNodeId, nodeId, aliasNodeId, type, true);
+            linkOut = this.addLink(nodeId+aliasNodeId, nodeId, aliasNodeId, type, true, cap);
         }
 
         linkOut.options.fromPort = node.options.ports[id];
@@ -92,7 +93,7 @@ LMap.prototype.getLink = function(id) {
     return null;
 }
 
-LMap.prototype.addLink = function(id, from, to, type, partial) {
+LMap.prototype.addLink = function(id, from, to, type, partial, cap) {
     if(!from || !to) return null;
 
     var latLngList = [];
@@ -132,7 +133,7 @@ LMap.prototype.addLink = function(id, from, to, type, partial) {
                         meicanMap.getNode(from).options.name +
                         '</b> and <b>' +
                         meicanMap.getNode(to).options.name +
-                        '</b><br><br>Circuits:<br>');
+                        '</b><br>Capacity: <b>' + cap + ' Mbps</b><br>');
 
         this._links.push(link);
     } else return null;

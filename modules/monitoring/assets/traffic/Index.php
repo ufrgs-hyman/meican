@@ -25,6 +25,7 @@ class Index extends AssetBundle
         'meican\topology\assets\graph\VGraph',
         'meican\base\assets\LSidebar',
         'meican\base\assets\Moment',
+        'meican\base\assets\Flot',
         'yii\web\YiiAsset',
     ];
 }

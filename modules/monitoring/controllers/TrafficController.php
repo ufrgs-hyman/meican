@@ -46,7 +46,7 @@ class TrafficController extends RbacController {
         //urn:ogf:network:cipo.rnp.br:2013::MXRJ:xe-3_0_0:+
 
         // NSI converte / para _
-        $port = str_replace('_', '@2F', $port);
+        $port = str_replace('/', '@2F', $port);
         // NSI insere :+ no final das URNs
 
         $ch = curl_init();
@@ -129,38 +129,46 @@ class TrafficController extends RbacController {
     //instant bandwidth
     public function actionGet($dev, $port, $vlan, $dir) {
         self::beginAsyncAction();
+
+        $data = Yii::$app->cache->get('monitoring.status.dev.'.$dev.'.port.'.$port.'.vlan.'.$vlan.'.dir.'.$dir);
+
+        if ($data === false) {
         
-        $port = str_replace('/', '@2F', $port);
+            $port = str_replace('/', '@2F', $port);
 
-        /*$ch = curl_init();
-        $options = array(
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_SSL_VERIFYHOST => false,
-            CURLOPT_SSL_VERIFYPEER => false,
+            $ch = curl_init();
+            $options = array(
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_SSL_VERIFYHOST => false,
+                CURLOPT_SSL_VERIFYPEER => false,
 
-            CURLOPT_USERAGENT => 'Meican',
-            CURLOPT_URL => 'http://monitora.cipo.rnp.br/esmond/v2/device/'.$dev.'/interface/'.$port.'.'.$vlan.'/'.$dir.
-                '?format=json&begin='.strtotime('-90 seconds')
-        );
-        curl_setopt_array($ch , $options);
-        $output = curl_exec($ch);
-        curl_close($ch);
+                CURLOPT_USERAGENT => 'Meican',
+                CURLOPT_URL => 'http://monitora.cipo.rnp.br/esmond/v2/device/'.$dev.'/interface/'.$port.'.'.$vlan.'/'.$dir.
+                    '?format=json&begin='.strtotime('-90 seconds')
+            );
+            curl_setopt_array($ch , $options);
+            $output = curl_exec($ch);
+            curl_close($ch);
 
-        Yii::trace($output);
+            Yii::trace($output);
 
-        $output = json_decode($output);*/
+            $output = json_decode($output);
 
-        $port = str_replace('@2F', '/', $port);
+            $port = str_replace('@2F', '/', $port);
 
-        $data = json_encode([
-            'dev' => $dev,
-            'port' => $port,
-            'vlan' => $vlan,
-            'traffic' => 300//isset($output->data[0]) ? $output->data[0]->val : 0
-        ]);
+            $data = json_encode([
+                'dev' => $dev,
+                'port' => $port,
+                'vlan' => $vlan,
+                'traffic' => isset($output->data[0]) && $output->data[0]->val ? $output->data[0]->val : 0
+            ]);
 
-        Yii::trace($data);
+            Yii::trace($data);
+
+            // store $data in cache so that it can be retrieved next time
+            Yii::$app->cache->set('monitoring.status.dev.'.$dev.'.port.'.$port.'.vlan.'.$vlan.'.dir.'.$dir, $data, 20);
+        }
 
         return $data;
     }
