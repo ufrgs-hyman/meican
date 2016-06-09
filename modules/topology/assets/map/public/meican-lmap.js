@@ -63,17 +63,19 @@ LMap.prototype.addPort = function(id, name, dir, cap, nodeId, aliasNodeId, alias
         var linkIn = this.getLink(aliasNodeId+nodeId);
         if(linkIn == null) {
             linkIn = this.addLink(aliasNodeId+nodeId, aliasNodeId, nodeId, type, true);
-            linkIn.options.fromPort = dstPort;
-            linkIn.options.dir = 'IN';
-            linkIn.options.toPort = node.options.ports[id];
-        }
+        } 
+
+        linkIn.options.fromPort = dstPort;
+        linkIn.options.toPort = node.options.ports[id];
+        
         var linkOut = this.getLink(nodeId+aliasNodeId);
         if(linkOut == null) {
             linkOut = this.addLink(nodeId+aliasNodeId, nodeId, aliasNodeId, type, true);
-            linkOut.options.toPort = dstPort;
-            linkOut.options.dir = 'OUT';
-            linkOut.options.fromPort = node.options.ports[id];
         }
+
+        linkOut.options.fromPort = node.options.ports[id];
+        linkOut.options.toPort = dstPort;
+        
         node.options.ports[id].linkIn = linkIn;
         node.options.ports[id].linkOut = linkOut;
     }

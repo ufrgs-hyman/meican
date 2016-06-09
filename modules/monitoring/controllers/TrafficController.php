@@ -132,7 +132,7 @@ class TrafficController extends RbacController {
         
         $port = str_replace('/', '@2F', $port);
 
-        $ch = curl_init();
+        /*$ch = curl_init();
         $options = array(
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
@@ -149,7 +149,7 @@ class TrafficController extends RbacController {
 
         Yii::trace($output);
 
-        $output = json_decode($output);
+        $output = json_decode($output);*/
 
         $port = str_replace('@2F', '/', $port);
 
@@ -157,7 +157,7 @@ class TrafficController extends RbacController {
             'dev' => $dev,
             'port' => $port,
             'vlan' => $vlan,
-            'traffic' => isset($output->data[0]) ? $output->data[0]->val : 0
+            'traffic' => 300//isset($output->data[0]) ? $output->data[0]->val : 0
         ]);
 
         Yii::trace($data);

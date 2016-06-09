@@ -189,8 +189,25 @@ function loadCircuits() {
         success: function(response) {
             circuits = response;
             addCircuits(circuits);
+            prepareCircuitsDevPath();
         }
     });
+}
+
+function prepareCircuitsDevPath() {
+    for (var i = circuits.length - 1; i >= 0; i--) {
+        circuits[i].devPath = [];
+        for (var j = 0; j <= circuits[i].fullPath.length - 2; j++) {
+            var nodeName = circuits[i].fullPath[j].port_urn.split(':')[4].split('=')[1];
+            var node = meicanMap.getNodeByName(nodeName);
+            var dstNodeName = circuits[i].fullPath[j+1].port_urn.split(':')[4].split('=')[1];
+            var dstNode = meicanMap.getNodeByName(dstNodeName);
+            if(node.options.id != dstNode.options.id) {
+                circuits[i].devPath.push(node.options.id);
+                circuits[i].devPath.push(dstNode.options.id);
+            }
+        }
+    }
 }
 
 function clearCircuits() {
@@ -261,14 +278,7 @@ function loadCircuitTraffic() {
                     if(response.dev == nodeName &&
                             response.port == portName &&
                             response.vlan == vlan) {
-                        if(circuits[j]['traffic']) {
-                            circuits[j]['traffic'].in = response.traffic;
-                        } else {
-                            circuits[j]['traffic'] = {
-                                in: response.traffic,
-                                out: 0
-                            }
-                        }
+                        circuits[j]['trafficIn'] = response.traffic;
                         break;
                     }
                 }
@@ -287,14 +297,7 @@ function loadCircuitTraffic() {
                             if(response.dev == nodeName &&
                                     response.port == portName &&
                                     response.vlan == vlan) {
-                                if(circuits[j]['traffic']) {
-                                    circuits[j]['traffic'].out = response.traffic;
-                                } else {
-                                    circuits[j]['traffic'] = {
-                                        in: 0,
-                                        out: response.traffic
-                                    }
-                                }
+                                circuits[j]['trafficOut'] = response.traffic;
                                 break;
                             }
                         }
@@ -306,43 +309,72 @@ function loadCircuitTraffic() {
 
     setTimeout(function() {
         setLinkStatus();
-    }, 2000);
+    }, 1000);
 }
 
 function setLinkStatus() {
     //pegar links associados a circuitos e atualizar sua banda (cor)
     console.log('setting colors');
-    for (var j = meicanMap.getLinks().length - 1; j >= 0; j--) {
+    for (var i = circuits.length - 1; i >= 0; i--) {
+        for (var j = 0; j <= circuits[i].devPath.length - 2; j++) {
+            var link = meicanMap.getLink(circuits[i].devPath[j]+circuits[i].devPath[j+1]);
+            if(link)
+                link.setStyle({
+                    opacity: 0.7,
+                    color: getColorByStatusAndTraffic(
+                        link.options.fromPort.status,
+                        link.options.toPort.status, 
+                        link.options.fromPort.cap,
+                        (circuits[i].trafficIn)*8/1000000, 
+                        link)
+                });
+        };
+    };
+    /*for (var j = meicanMap.getLinks().length - 1; j >= 0; j--) {
         var link = meicanMap.getLinks()[j];
-        var linkCircuits = meicanMap.getLinks()[j].options.fromPort.circuits;
+        var portStatus;
+        var portCap;
+        var linkCircuits = link.options.fromPort.circuits;
+        portStatus = link.options.fromPort.status;
+        portCap = link.options.fromPort.cap;
         if(linkCircuits.length > 0) {
             for (var i = linkCircuits.length - 1; i >= 0; i--) {
-                link.options.traffic += linkCircuits[i].traffic.in;
+                link.options.traffic += linkCircuits[i].trafficIn;
             };
         } 
+            var linkCircuits = link.options.toPort.circuits;
+            portStatus = link.options.toPort.status;
+            portCap = link.options.toPort.cap;
+            if(linkCircuits.length > 0) {
+                for (var i = linkCircuits.length - 1; i >= 0; i--) {
+                    link.options.traffic += linkCircuits[i].trafficIn;
+                };
+            } 
+        
         link.setStyle({
             opacity: 0.7,
             color: getColorByStatusAndTraffic(
-                link.options.fromPort.status, 
+                portStatus, 
                 (link.options.traffic)*8/1000000, 
-                link.options.fromPort.cap, link)
+                portCap, 
+                link)
         });
-    }
+    }*/
 }
 
-function getColorByStatusAndTraffic(status, traffic, cap, link) {
-    if (status == 0) {
+function getColorByStatusAndTraffic(fromPortStatus, toPortStatus, cap, traffic, link) {
+    if (fromPortStatus == 0 || toPortStatus == 0) {
         return '#ccc';
-    } else if (status == 2) {
-        console.log(link);
+    } else if (fromPortStatus == 2 || toPortStatus == 2) {
+        //console.log(link);
         return '#000';
     } else if (cap == null) {
         return '#ccc';
     } else if(traffic < cap*0.6) {
-        console.log(link);
+        //console.log(link);
         return '#35E834';
     } else if(traffic < cap*0.9) {
-        console.log(link);
+        //console.log(link);
         return "#FF7619";
     } else {
         return "#E8160C";
