@@ -4,14 +4,14 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\base\assets;
+namespace meican\base\assets\leaflet;
 
 use yii\web\AssetBundle;
 
 /**
  * @author Maurício Quatrin Guerreiro
  */
-class LeafletCluster extends AssetBundle
+class Cluster extends AssetBundle
 {
     public $sourcePath = '@bower/leaflet.markercluster/dist';
     
@@ -25,7 +25,7 @@ class LeafletCluster extends AssetBundle
     ];
     
     public $depends = [
-        'meican\base\assets\Leaflet',
+        'meican\base\assets\leaflet\Map',
     ];
 }
 

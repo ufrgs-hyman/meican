@@ -4,15 +4,15 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\base\assets;
+namespace meican\base\assets\leaflet;
 
 use yii\web\AssetBundle;
 
 /**
  * @author Maurício Quatrin Guerreiro
  */
-class Leaflet extends AssetBundle
-{
+class Map extends AssetBundle {
+    
     public $sourcePath = '@bower/leaflet/dist';
     
     public $css = [

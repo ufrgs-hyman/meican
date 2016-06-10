@@ -24,7 +24,7 @@ class LSidebar extends AssetBundle
     ];
     
     public $depends = [
-        'meican\base\assets\Leaflet',
+        'meican\base\assets\leaflet\Map',
     ];
 }
 
