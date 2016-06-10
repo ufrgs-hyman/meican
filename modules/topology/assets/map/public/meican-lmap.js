@@ -133,7 +133,7 @@ LMap.prototype.addLink = function(id, from, to, type, partial, cap) {
                         meicanMap.getNode(from).options.name +
                         '</b> and <b>' +
                         meicanMap.getNode(to).options.name +
-                        '</b><br>Capacity: <b>' + cap + ' Mbps</b><br>');
+                        '</b><br>Capacity: <b>' + cap + ' Mbps</b><br><div class="link-status">Status: <b>loading...</b></div>');
 
         this._links.push(link);
     } else return null;
@@ -184,6 +184,7 @@ LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
         iconSize: [22,22],
         iconAnchor: [11, 22],
         popupAnchor: [0,-24],
+        labelAnchor: [4, -8],
         html: '<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg">' + 
         '<g>' +
         '<path stroke="black" fill="' + color + '" d="m1,0.5l20,0l-10,20l-10,-20z"/>' + 
@@ -202,7 +203,7 @@ LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
             domainId: domainId,
             ports: {}
         }
-    ).bindPopup("#");
+    ).bindPopup("#").bindLabel(name, { noHide: true, direction: 'auto' });
 
     this._nodes.push(node);
     this._cluster.addLayer(node);
@@ -243,6 +244,8 @@ LMap.prototype.buildNodePosition = function(type, position) {
         if ((this._nodes[i].options.type === type) &&
                 (this._nodes[i].getLatLng().lat === lat) && 
                 (this._nodes[i].getLatLng().lng === lng)) {
+            this._nodes[i].unbindLabel();
+            this._nodes[i].bindLabel(this._nodes[i].options.name, { noHide: true, direction: 'left' });
             return this.buildNodePosition(type, L.latLng(position.lat, position.lng + 0.01));
         }
     }

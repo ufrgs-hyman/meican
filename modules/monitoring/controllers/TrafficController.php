@@ -167,7 +167,7 @@ class TrafficController extends RbacController {
             Yii::trace($data);
 
             // store $data in cache so that it can be retrieved next time
-            Yii::$app->cache->set('monitoring.status.dev.'.$dev.'.port.'.$port.'.vlan.'.$vlan.'.dir.'.$dir, $data, 20);
+            Yii::$app->cache->set('monitoring.status.dev.'.$dev.'.port.'.$port.'.vlan.'.$vlan.'.dir.'.$dir, $data, 200000);
         }
 
         return $data;

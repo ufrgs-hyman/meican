@@ -72,6 +72,14 @@ function initCanvas() {
         //$("#map-l").find('.traffic-stats').css('width', 475);
         if(link.options.fromPort.circuits.length > 0)
             loadStats(link, $("#map-l").find('.traffic-stats'));
+
+        if(link.options.fromPort.status == 0 || link.options.toPort.status == 0) {
+            $("#map-l").find('.link-status').html("Status: <b>Unknown</b>");
+        } else if(link.options.fromPort.status == 2 || link.options.toPort.status == 2) {
+            $("#map-l").find('.link-status').html("Status: <b>Down</b>");
+        } else {
+            $("#map-l").find('.link-status').html("Status: <b>Up</b>");
+        }
     });
 }
 
@@ -113,30 +121,6 @@ function loadStats(link, divElement) {
       legend: {
         noColumns: 2,
       }
-    });
-
-    //Initialize tooltip on hover
-    $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
-      position: "absolute",
-      display: "none",
-      opacity: 0.8,
-      zIndex: 3,
-    }).appendTo("body");
-
-
-    $(divElement).bind("plothover", function (event, pos, item) {
-
-      if (item) {
-        var x = item.datapoint[0],
-            y = item.datapoint[1].toFixed(4);
-
-        $("#line-chart-tooltip").html(moment.unix(x/1000).format("DD/MM/YYYY HH:mm:ss") + '<br>' + (y < 0 ? (-1*y) : y) + ' Mbps')
-            .css({top: item.pageY + 5, left: item.pageX + 5})
-            .fadeIn(200);
-      } else {
-        $("#line-chart-tooltip").hide();
-      }
-
     });
 
     var domain = 'cipo.rnp.br';
@@ -369,7 +353,7 @@ function loadCircuitTraffic() {
                             response.vlan == vlan) {
                         circuits[j].fullPath[0]['device'] = response.dev;
                         circuits[j].fullPath[0]['port'] = response.port; 
-                        circuits[j]['trafficIn'] = response.traffic;
+                        circuits[j]['trafficIn'] = Math.round(response.traffic*8/1000000*100) / 100;
                         break;
                     }
                 }
@@ -388,7 +372,7 @@ function loadCircuitTraffic() {
                             if(response.dev == nodeName &&
                                     response.port == portName &&
                                     response.vlan == vlan) {
-                                circuits[j]['trafficOut'] = response.traffic;
+                                circuits[j]['trafficOut'] = Math.round(response.traffic*8/1000000*100) / 100;
                                 break;
                             }
                         }
@@ -445,15 +429,23 @@ function setLinkStatus() {
         var toPortStatus = link.options.toPort.status;
         var portCap = link.options.fromPort.cap;
 
+        link.options.traffic = link.options.traffic ? link.options.traffic : 0;
+
         link.setStyle({
             opacity: 0.7,
             color: buildColorByStatusAndTraffic(
                 fromPortStatus, 
                 toPortStatus,
                 portCap,
-                link.options.traffic ? ((link.options.traffic)*8/1000000) : 0, 
+                link.options.traffic, 
                 link)
         });
+        //TODO banda sobre os links
+        //PROBLEMA TextPath nao resolve a orientacao on the fly.
+        //RESULTADO texto da banda fica invertido sobre o link.
+        /*if(link.options.traffic != null) {
+            link.setText(link.options.traffic + "Mbps", {center: true});
+        }*/
     }
 }
 
