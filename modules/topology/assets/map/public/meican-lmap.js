@@ -126,6 +126,7 @@ LMap.prototype.addLink = function(id, from, to, type, partial, cap) {
                 from: from,
                 to: to,
                 traffic: 0,
+                directedCircuits: [],
                 color: '#cccccc',
                 type: type,
             }).addTo(this._map).bindPopup(

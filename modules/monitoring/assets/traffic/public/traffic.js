@@ -124,15 +124,18 @@ function loadStats(link, divElement) {
     });
 
     var domain = 'cipo.rnp.br';
-    var linkCircuits = link.options.fromPort.circuits;
+    var linkCircuits = link.options.directedCircuits;
     var srcDev = link.options.fromPort.device.options.name;
     var dstDev = link.options.toPort.device.options.name;
-    var statsData =[];
+    var statsData = [];
 
     for (var i = linkCircuits.length - 1; i >= 0; i--) {
-        var circuitDev = linkCircuits[i].fullPath[0].device;
-        var circuitPort = linkCircuits[i].fullPath[0].port;
-        var circuitVlan = linkCircuits[i].fullPath[0].vlan;
+        //a partir daqui deveria ser chamada uma funcao para controlar o acesso 
+        //dentro do ajax nas variaveis abaixo
+        //assim seria possivel acessar o directed circuit associado ao link para verificar a DIR dele
+        var circuitDev = linkCircuits[i].circuit.fullPath[0].device;
+        var circuitPort = linkCircuits[i].circuit.fullPath[0].port;
+        var circuitVlan = linkCircuits[i].circuit.fullPath[0].vlan;
 
         $.ajax({
             url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=' + domain + '&dev=' + circuitDev +
@@ -144,7 +147,10 @@ function loadStats(link, divElement) {
                 for (var i = 0; i < data.traffic.length; i++) {
                     dataOut.push([moment.unix(data.traffic[i].ts), data.traffic[i].val*8/1000000]);
                 }
-                statsData.push({label: dstDev + ' to ' + srcDev, data: dataOut, color: "#3c8dbc" });
+
+                console.log(link);
+                statsData.push({label: link.options.directedCircuits[0].dir == 'out' ? srcDev + ' to ' + dstDev : dstDev + ' to ' + srcDev, 
+                    data: dataOut, color: "#3c8dbc" });
 
                 if(data.traffic.length > 0) {
                     $.ajax({
@@ -157,7 +163,8 @@ function loadStats(link, divElement) {
                             for (var i = 0; i < data.traffic.length; i++) {
                                 dataIn.push([moment.unix(data.traffic[i].ts), 0-(data.traffic[i].val*8/1000000)]);
                             }
-                            statsData.push({label: srcDev + ' to ' + dstDev, data: dataIn, color: "#f56954" });
+                            statsData.push({label: link.options.directedCircuits[0].dir == 'in' ? srcDev + ' to ' + dstDev : dstDev + ' to ' + srcDev,
+                            data: dataIn, color: "#f56954" });
 
                             statsGraphic.setData(statsData);
                             statsGraphic.setupGrid();
@@ -300,6 +307,7 @@ function clearCircuits() {
 
 function addCircuits(circuits) {
     for (var i = circuits.length - 1; i >= 0; i--) {
+        circuits[i].links = [];
         for (var j = circuits[i].fullPath.length - 1; j >= 0; j--) {
             var nodeName = circuits[i].fullPath[j].port_urn.split(':')[4].split('=')[1];
             var node = meicanMap.getNodeByName(nodeName);
@@ -414,11 +422,22 @@ function setLinkStatus() {
             var linkIn = meicanMap.getLink(circuits[i].devPath[j]+circuits[i].devPath[j+1]);
             var linkOut = meicanMap.getLink(circuits[i].devPath[j+1]+circuits[i].devPath[j]);
             
-            if(linkIn)
+            if(linkIn) {
                 linkIn.options.traffic += circuits[i].trafficIn;
-            if(linkOut)
+                linkIn.options.directedCircuits.push({
+                    circuit: circuits[i],
+                    dir: 'in'
+                });
+                circuits[i].links.push(linkIn);
+            }
+            if(linkOut) {
                 linkOut.options.traffic += circuits[i].trafficOut;
-
+                linkOut.options.directedCircuits.push({
+                    circuit: circuits[i],
+                    dir: 'out'
+                });
+                circuits[i].links.push(linkOut);
+            }
             //console.log(linkIn, linkOut);
         };
     };
