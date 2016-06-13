@@ -18,7 +18,8 @@ class Flot extends AssetBundle
     public $js = [
         'jquery.flot.js',
         'jquery.flot.resize.js',
-        'jquery.flot.time.js'
+        'jquery.flot.time.js',
+        'jquery.flot.stack.js'
     ];
     
     public $css = [

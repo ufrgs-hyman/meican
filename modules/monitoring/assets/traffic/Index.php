@@ -22,7 +22,6 @@ class Index extends AssetBundle
     public $depends = [
     	'meican\base\assets\Theme',
         'meican\topology\assets\map\LMap',
-        'meican\topology\assets\graph\VGraph',
         'meican\base\assets\LSidebar',
         'meican\base\assets\Moment',
         'meican\base\assets\Flot',

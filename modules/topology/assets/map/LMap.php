@@ -18,6 +18,11 @@ class LMap extends AssetBundle
     public $js = [
         'meican-lmap.js',
     ];
+
+    public $css = [
+        'lmap-label.css'
+    ];
+
     public $depends = [
         'meican\base\assets\leaflet\Cluster',
         'meican\base\assets\leaflet\Label',

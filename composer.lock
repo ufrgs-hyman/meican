@@ -4,9 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "677deda5cadb27591b6fc673eec7ee13",
-    "content-hash": "eeb72da04ee7d5cccfd0757434ab0c75",
+    "hash": "3a5839047e4d80cdb313d24590baf707",
+    "content-hash": "6131a0bbff4760ab4a08f3993e3fb42c",
     "packages": [
+        {
+            "name": "bower-asset/Leaflet.label",
+            "version": "0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Leaflet/Leaflet.label.git",
+                "reference": "90ed880773bd64723621a666e74a4f6730aea41c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Leaflet/Leaflet.label/zipball/90ed880773bd64723621a666e74a4f6730aea41c",
+                "reference": "90ed880773bd64723621a666e74a4f6730aea41c",
+                "shasum": ""
+            },
+            "type": "bower-asset-library"
+        },
         {
             "name": "bower-asset/bootstrap",
             "version": "v3.3.5",
@@ -157,16 +173,16 @@
         },
         {
             "name": "bower-asset/ev-emitter",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/ev-emitter.git",
-                "reference": "e1f8d670f76749aff783ad5e2f27d7294c2c679e"
+                "reference": "1c67f55ea625b87857c2846e9505aee43f45bc6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/ev-emitter/zipball/e1f8d670f76749aff783ad5e2f27d7294c2c679e",
-                "reference": "e1f8d670f76749aff783ad5e2f27d7294c2c679e",
+                "url": "https://api.github.com/repos/metafizzy/ev-emitter/zipball/1c67f55ea625b87857c2846e9505aee43f45bc6c",
+                "reference": "1c67f55ea625b87857c2846e9505aee43f45bc6c",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -419,16 +435,16 @@
         },
         {
             "name": "bower-asset/jquery",
-            "version": "2.2.3",
+            "version": "2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jquery/jquery-dist.git",
-                "reference": "af22a351b2ea5801ffb1695abb3bb34d5bed9198"
+                "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/af22a351b2ea5801ffb1695abb3bb34d5bed9198",
-                "reference": "af22a351b2ea5801ffb1695abb3bb34d5bed9198",
+                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/c0185ab7c75aab88762c5aae780b9d83b80eda72",
+                "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -743,42 +759,6 @@
                 "shasum": ""
             },
             "type": "bower-asset-library"
-        },
-        {
-            "name": "bower-asset/spectrum",
-            "version": "1.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/bgrins/spectrum.git",
-                "reference": "98454b55521cfb495f628db28af01100c029ef76"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/bgrins/spectrum/zipball/98454b55521cfb495f628db28af01100c029ef76",
-                "reference": "98454b55521cfb495f628db28af01100c029ef76",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/jquery": ">=1.7.2"
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "./spectrum.css",
-                    "./spectrum.js"
-                ],
-                "bower-asset-ignore": [
-                    ".gitignore",
-                    ".travis.yml",
-                    "build/",
-                    "docs/",
-                    "example/",
-                    "Gruntfile.js",
-                    "LICENSE",
-                    "README.md",
-                    "test/"
-                ]
-            }
         },
         {
             "name": "bower-asset/yii2-pjax",
@@ -1671,54 +1651,6 @@
                 "yii2"
             ],
             "time": "2016-02-06 00:49:24"
-        },
-        {
-            "name": "yiisoft/yii2-redis",
-            "version": "2.0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yiisoft/yii2-redis.git",
-                "reference": "7fd93ff3847e765964c8c83b7e3eed0281078916"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-redis/zipball/7fd93ff3847e765964c8c83b7e3eed0281078916",
-                "reference": "7fd93ff3847e765964c8c83b7e3eed0281078916",
-                "shasum": ""
-            },
-            "require": {
-                "yiisoft/yii2": ">=2.0.4"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "yii\\redis\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Carsten Brandt",
-                    "email": "mail@cebe.cc"
-                }
-            ],
-            "description": "Redis Cache, Session and ActiveRecord for the Yii framework",
-            "keywords": [
-                "active-record",
-                "cache",
-                "redis",
-                "session",
-                "yii2"
-            ],
-            "time": "2016-03-17 04:11:03"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
