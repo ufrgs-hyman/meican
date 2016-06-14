@@ -5,7 +5,6 @@
 
 var meicanMap = new LMap('canvas');
 var meicanTopo = [];
-var viewer;
 var lsidebar;
 var circuits;
 var statsGraphic;
@@ -14,7 +13,6 @@ var defaultColorOut = "#000000";
 
 $(document).ready(function() {
     meicanMap.show('dev');
-    viewer = meicanMap;
     $(".sidebar-toggle").remove();
     $(".sidebar-mini").addClass("sidebar-collapse");
 
@@ -39,6 +37,16 @@ $(document).ready(function() {
     $("#refresh-btn").on('click', function() {
         clearCircuits();
         loadCircuits();
+    });
+
+    $("#map-l").on("click", ".agg-stats-btn", function() {
+        if($(this).attr('agg') == 'true') {
+            hideCircuitsOnGraphic();
+            $(this).attr('agg', 'false');
+        } else {
+            showCircuitsOnGraphic();
+            $(this).attr('agg', 'true');
+        }
     });
     
     initCanvas(); 
@@ -65,7 +73,7 @@ function initCanvas() {
         node.setPopupContent(
             'Domain: <b>' + meicanMap.getDomain(node.options.domainId).name + 
             '</b><br>Device: <b>' + node.options.name + '</b><br><br>' +
-            'Circuits:<br>' + circuitsHtml
+            (circuitsHtml != '' ? 'Circuits:<br>' + circuitsHtml : '')
         );
     });
 
@@ -88,7 +96,14 @@ function initCanvas() {
 
 function initStats(link, divElement) {
     statsGraphic = $.plot($(divElement), [], {
+        mode: {
+            type: 'circuit',
+            seriesIn: 0,
+            seriesOut: 0
+        },
       grid: {
+        hoverable: true,
+        autoHighlight: false,
         borderColor: "#f3f3f3",
         borderWidth: 1,
         tickColor: "#f3f3f3"
@@ -101,6 +116,9 @@ function initStats(link, divElement) {
         points: {
           show: false
         }
+      },
+      crosshair: {
+        mode: "x"
       },
       lines: {
         fill: true,
@@ -120,47 +138,110 @@ function initStats(link, divElement) {
         timezone: 'browser',
         show: true,
       },
-      legend: false//{       noColumns: 2      }
+      legend: {      
+        noColumns: 4,
+        container: $("#map-l").find('.stats-legend'),    
+        labelFormatter: function(label, series) {
+            var mode = statsGraphic.getOptions().mode;
+            if(mode.type == 'circuit') {
+                if(series.stack == 'in')
+                    return '<span style="margin-right: 10px; margin-left: 5px;">' + label + ' to MXSP</span>';
+                else 
+                    return '<span style="margin-right: 10px; margin-left: 5px;">' + label + ' to MXSC</span>';
+            } else {
+                if(mode.seriesIn == 0 && series.stack == 'in') {
+                    mode.seriesIn++;
+                    return '<span style="margin-right: 10px; margin-left: 5px;">' + series.direction + '</span>';
+                } else if(mode.seriesOut == 0) {
+                    mode.seriesOut++;
+                    return '<span style="margin-right: 10px; margin-left: 5px;">' + series.direction + '</span>';
+                }
+            }
+        }
+      }
     });
 
-    var domain = 'cipo.rnp.br';
     var linkCircuits = link.options.directedCircuits;
-    var srcDev = link.options.fromPort.device.options.name;
-    var dstDev = link.options.toPort.device.options.name;
-    var countLoadedTrafficHistory = 0;
+    var fromDev = link.options.fromPort.device.options.name;
+    var toDev = link.options.toPort.device.options.name;
+    var dataSeries = [];
+    var loadedCircuitsCounter = { val: 0 };
 
     for (var i = linkCircuits.length - 1; i >= 0; i--) {
-        loadTrafficHistory(countLoadedTrafficHistory, linkCircuits[i].circuit, linkCircuits[i].dir);
+        loadTrafficHistory(fromDev, toDev, loadedCircuitsCounter, dataSeries, linkCircuits[i].circuit, linkCircuits[i].dir);
+    }
+
+    showGraphicWhenReady(loadedCircuitsCounter, linkCircuits.length);
+}
+
+function showGraphicWhenReady(loaded, total) {
+    console.log('trying draw graphic');
+    if (loaded.val == total*2) {
+        hideCircuitsOnGraphic();
+    } else {
+        setTimeout(function() {
+            showGraphicWhenReady(loaded, total);
+        }, 100);
     }
 }
 
 function showCircuitsOnGraphic() {
+    statsGraphic.getOptions().mode.type = 'circuit';
+    statsGraphic.getOptions().mode.seriesIn = 0;
+    statsGraphic.getOptions().mode.seriesOut = 0;
     for (var i = statsGraphic.getData().length - 1; i >= 0; i--) {
         statsGraphic.getData()[i].lines.lineWidth = 2;
         statsGraphic.getData()[i].color = statsGraphic.getData()[i].oldColor;
     };
+    statsGraphic.setupGrid();
     statsGraphic.draw();
 }
 
 function hideCircuitsOnGraphic() {
+    statsGraphic.getOptions().mode.type = 'global';
+    statsGraphic.getOptions().mode.seriesIn = 0;
+    statsGraphic.getOptions().mode.seriesOut = 0;
+    var firstInPassed = false;
+    var firstOutPassed = false;
     for (var i = statsGraphic.getData().length - 1; i >= 0; i--) {
-        if(((statsGraphic.getData().length/2) - 1) == i || (statsGraphic.getData().length - 1) == i)
-            statsGraphic.getData()[i].lines.lineWidth = 2;
-        else 
-            statsGraphic.getData()[i].lines.lineWidth = 0;
+        if(statsGraphic.getData()[i].stack == 'out') {
+            if(!firstOutPassed) {
+                firstOutPassed = true;
+            } else {
+                statsGraphic.getData()[i].lines.lineWidth = 0;
+            }
+        }
+
+        if(statsGraphic.getData()[i].stack == 'in') {
+            if(!firstInPassed) {
+                firstInPassed = true;
+            } else {
+                statsGraphic.getData()[i].lines.lineWidth = 0;
+            }
+        }
+
         statsGraphic.getData()[i].oldColor = statsGraphic.getData()[i].color;
         statsGraphic.getData()[i].color = statsGraphic.getData()[i].stack == 'out' ? defaultColorOut : defaultColorIn;
     };
+    statsGraphic.setupGrid();
     statsGraphic.draw();
 }
 
-function loadTrafficHistory() {
-    //a partir daqui deveria ser chamada uma funcao para controlar o acesso 
-    //dentro do ajax nas variaveis abaixo
-    //assim seria possivel acessar o directed circuit associado ao link para verificar a DIR dele
-    var circuitDev = linkCircuits[i].circuit.fullPath[0].device;
-    var circuitPort = linkCircuits[i].circuit.fullPath[0].port;
-    var circuitVlan = linkCircuits[i].circuit.fullPath[0].vlan;
+function buildRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+function loadTrafficHistory(fromDev, toDev, loadedCircuitsCounter, dataSeries, circuit, relativeDir) {
+    var domain = 'cipo.rnp.br';
+    var circuitDev = circuit.fullPath[0].device;
+    var circuitPort = circuit.fullPath[0].port;
+    var circuitVlan = circuit.fullPath[0].vlan;
+    var color = buildRandomColor();
 
     $.ajax({
         url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=' + domain + '&dev=' + circuitDev +
@@ -170,31 +251,43 @@ function loadTrafficHistory() {
         success: function(data) {
             var dataOut = [];
             for (var i = 0; i < data.traffic.length; i++) {
-                dataOut.push([moment.unix(data.traffic[i].ts), data.traffic[i].val*8/1000000]);
+                dataOut.push([moment.unix(data.traffic[i].ts), 
+                    relativeDir == 'out' ? data.traffic[i].val*8/1000000 : (0-(data.traffic[i].val*8/1000000))]);
             }
 
-            dataSeries.push({stack: 'out', label: link.options.directedCircuits[0].dir == 'out' ? dstDev + ' to ' + srcDev : srcDev + ' to ' + dstDev, 
+            dataSeries.push({
+                stack: relativeDir == 'out' ? 'in' : 'out', 
+                label: circuit.external_id, 
+                direction: relativeDir == 'out' ? fromDev + " to " + toDev : toDev + ' to ' + fromDev, 
+                color: color,
                 data: dataOut});
 
-                $.ajax({
-                    url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=' + domain + '&dev=' + circuitDev +
-                        '&port=' + circuitPort + '&vlan=' + circuitVlan + '&dir=in' + '&interval=' + 0,
-                    dataType: 'json',
-                    method: "GET",
-                    success: function(data) {
-                        var dataIn = [];
-                        for (var i = 0; i < data.traffic.length; i++) {
-                            dataIn.push([moment.unix(data.traffic[i].ts), 0-(data.traffic[i].val*8/1000000)]);
-                        }
-                        dataSeries.push({stack: 'in', label: link.options.directedCircuits[0].dir == 'in' ? srcDev + ' to ' + dstDev : dstDev + ' to ' + srcDev,
-                            data: dataIn});
+            statsGraphic.setData(dataSeries);
+            loadedCircuitsCounter.val++;
+        }
+    });
 
-                        statsGraphic.setData(dataSeries);
-                        statsGraphic.setupGrid();
-                        statsGraphic.draw();
-                    }
-                });
+    $.ajax({
+        url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=' + domain + '&dev=' + circuitDev +
+            '&port=' + circuitPort + '&vlan=' + circuitVlan + '&dir=in' + '&interval=' + 0,
+        dataType: 'json',
+        method: "GET",
+        success: function(data) {
+            var dataIn = [];
+            for (var i = 0; i < data.traffic.length; i++) {
+                dataIn.push([moment.unix(data.traffic[i].ts), 
+                    relativeDir == 'out' ? (0-(data.traffic[i].val*8/1000000)) : data.traffic[i].val*8/1000000]);
             }
+
+            dataSeries.push({
+                stack: relativeDir == 'out' ? 'out' : 'in', 
+                label: circuit.external_id, 
+                direction: relativeDir == 'out' ? toDev + " to " + fromDev : fromDev + ' to ' + toDev, 
+                color: color,
+                data: dataIn});
+
+            statsGraphic.setData(dataSeries);
+            loadedCircuitsCounter.val++;
         }
     });
 }
@@ -265,6 +358,12 @@ function loadDevicePorts() {
             loadCircuits();       
         }
     });
+}
+
+function reloadPortStatus(dev, port) {
+    //for dev
+    ///for port
+    ///loadPortStatus()
 }
 
 function loadPortStatus(dev, port) {
@@ -347,13 +446,18 @@ function addCircuits(circuits) {
                             circuitsHtml += circuitsList[circuitId] + '<br>';
                         };
                         var linkOut = node.options.ports[portId].linkOut;
+                        var fromDev = meicanMap.getNode(linkOut.options.from).options.name;
+                        var toDev = meicanMap.getNode(linkOut.options.to).options.name;
                         linkOut.bindPopup(
                         'Link between <b>' + 
                         meicanMap.getNode(linkOut.options.from).options.name +
                         '</b> and <b>' +
                         meicanMap.getNode(linkOut.options.to).options.name +
-                        '</b><br>Capacity: <b>' + node.options.ports[portId].cap + ' Mbps</b><br>Circuits:<br>' + circuitsHtml + 
-                        '<br><div class="traffic-stats" style="width: 610px; height: 250px"></div>',
+                        '</b><br>Capacity: <b>' + node.options.ports[portId].cap + ' Mbps</b>' + 
+                        '<div class="pull-right"><button class="btn btn-default btn-sm agg-stats-btn">Show aggregate DCN traffic</button> ' + 
+                        '</div><br>' + 
+                        '<br><div class="traffic-stats" style="width: 610px; height: 250px"></div><br>' + 
+                        '<div class="stats-legend"></div>',
                         {'maxWidth': '625'});
                     }
                 }

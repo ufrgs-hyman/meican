@@ -19,7 +19,8 @@ class Flot extends AssetBundle
         'jquery.flot.js',
         'jquery.flot.resize.js',
         'jquery.flot.time.js',
-        'jquery.flot.stack.js'
+        'jquery.flot.stack.js',
+        'jquery.flot.crosshair.js'
     ];
     
     public $css = [
