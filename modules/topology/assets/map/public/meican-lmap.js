@@ -16,6 +16,7 @@ function LMap(canvasDivId) {
     this._domainsList;                  // domains list reference;
     this._lastShowedMarker; 
     this._cluster;
+    this._portsSize = 0;
 };
 
 LMap.prototype.show = function(nodeType) {
@@ -43,9 +44,14 @@ LMap.prototype.hide = function() {
     }
 }
 
+LMap.prototype.getPortsSize = function() {
+    return this._portsSize;
+}
+
 LMap.prototype.addPort = function(id, name, dir, cap, nodeId, aliasNodeId, aliasPortId, type) {
     //console.log(id, name, dir, nodeId, aliasNodeId, aliasPortId, type);
     var node = this.getNode(nodeId);
+    this._portsSize++;
 
     node.options.ports[id] = {
         name: name,

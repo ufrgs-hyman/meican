@@ -32,6 +32,6 @@ class ServiceController extends Controller {
      * and save in MEICAN database.
      */
     public function actionLoadCircuits() {
-        return OscarsService::loadCircuits('');
+        return OscarsService::loadCircuits(Yii::$app->params['oscars.bridge.provider.url']);
     }
 }

@@ -10,6 +10,7 @@ var circuits;
 var statsGraphic;
 var defaultColorIn = "#3c8dbc";
 var defaultColorOut = "#000000";
+var loadedPortsStatusCounter = { val: 0 };
 
 $(document).ready(function() {
     meicanMap.show('dev');
@@ -339,7 +340,7 @@ function loadDevicePorts() {
         dataType: 'json',
         method: "GET",
         success: function(response) {
-            
+            console.log('loading port status');
             for (var dev in response) {
                 for (var port in response[dev]) {
                     meicanMap.addPort(
@@ -351,7 +352,7 @@ function loadDevicePorts() {
                         response[dev][port].link.dev ? 'dev'+response[dev][port].link.dev : null, 
                         response[dev][port].link.port ? response[dev][port].link.port : null,
                         'dev');
-                    loadPortStatus(meicanMap.getNode('dev'+dev).options.name, response[dev][port].name);
+                    loadPortStatus(loadedPortsStatusCounter, meicanMap.getNode('dev'+dev).options.name, response[dev][port].name);
                 } 
             }  
             
@@ -360,13 +361,22 @@ function loadDevicePorts() {
     });
 }
 
-function reloadPortStatus(dev, port) {
-    //for dev
-    ///for port
-    ///loadPortStatus()
+function reloadPortsStatus() {
+    console.log('loading ports status');
+    loadedPortsStatusCounter.val = 0;
+    for (var i = meicanMap.getNodes().length - 1; i >= 0; i--) {
+        var node = meicanMap.getNodes()[i];
+        for (var portId in node.options.ports) {
+            loadPortStatus(
+                loadedPortsStatusCounter,
+                node.options.name, 
+                node.options.ports[portId].name
+            );
+        }
+    };
 }
 
-function loadPortStatus(dev, port) {
+function loadPortStatus(loadedCounter, dev, port) {
     $.ajax({
         url: baseUrl+'/monitoring/status/get-by-port?dev=' + dev + '&port=' + port,
         dataType: 'json',
@@ -376,6 +386,7 @@ function loadPortStatus(dev, port) {
             for (var portId in node.options.ports) {
                 if(response.port == node.options.ports[portId].name) {
                     node.options.ports[portId].status = response.status;
+                    loadedCounter.val++;
                     break;
                 }
             }
@@ -383,7 +394,14 @@ function loadPortStatus(dev, port) {
     });
 }
 
+function refresh() {
+    clearCircuits();
+    reloadPortsStatus();
+    loadCircuits();
+}
+
 function loadCircuits() {
+    console.log('loading circuits');
     $.ajax({
         url: baseUrl+'/circuits/connection/get-all?status=ACTIVE&type=OSCARS',
         dataType: 'json',
@@ -392,6 +410,7 @@ function loadCircuits() {
             circuits = response;
             addCircuits(circuits);
             prepareCircuitsDevPath();
+            setLinkStatusWhenReady();
         }
     });
 }
@@ -421,6 +440,8 @@ function clearCircuits() {
             if(port.linkIn) {
                 port.linkIn.options.traffic = 0;
                 port.linkOut.options.traffic = 0;
+                port.linkIn.options.directedCircuits = [];
+                port.linkOut.options.directedCircuits = [];
             }
         }
     };
@@ -428,6 +449,7 @@ function clearCircuits() {
 
 function addCircuits(circuits) {
     for (var i = circuits.length - 1; i >= 0; i--) {
+        loadCircuitTraffic(circuits[i]);
         circuits[i].links = [];
         for (var j = circuits[i].fullPath.length - 1; j >= 0; j--) {
             var nodeName = circuits[i].fullPath[j].port_urn.split(':')[4].split('=')[1];
@@ -464,65 +486,39 @@ function addCircuits(circuits) {
             }
         }
     }
-    loadCircuitTraffic();
 }
 
-function loadCircuitTraffic() {
-    for (var i = circuits.length - 1; i >= 0; i--) {
-        var nodeName = circuits[i].fullPath[0].port_urn.split(':')[4].split('=')[1];
-        var portName = circuits[i].fullPath[0].port_urn.split(':')[5].split('=')[1];
-        var vlan = circuits[i].fullPath[0].vlan;
-        $.ajax({
-            url: baseUrl+'/monitoring/traffic/get?dev=' + nodeName +
-                '&port=' + portName + '&vlan=' + vlan + '&dir=in',
-            dataType: 'json',
-            method: "GET",
-            success: function(response) {
-                for (var j = circuits.length - 1; j >= 0; j--) {
-                    var nodeName = circuits[j].fullPath[0].port_urn.split(':')[4].split('=')[1];
-                    var portName = circuits[j].fullPath[0].port_urn.split(':')[5].split('=')[1];
-                    var vlan = circuits[j].fullPath[0].vlan;
-                    if(response.dev == nodeName &&
-                            response.port == portName &&
-                            response.vlan == vlan) {
-                        circuits[j].fullPath[0]['device'] = response.dev;
-                        circuits[j].fullPath[0]['port'] = response.port; 
-                        circuits[j]['trafficIn'] = Math.round(response.traffic*8/1000000*100) / 100;
-                        break;
-                    }
-                }
+function loadCircuitTraffic(circuit) {
+    var node = circuit.fullPath[0].port_urn.split(':')[4].split('=')[1];
+    var port = circuit.fullPath[0].port_urn.split(':')[5].split('=')[1];
+    var vlan = circuit.fullPath[0].vlan;
+    circuit.fullPath[0]['device'] = node;
+    circuit.fullPath[0]['port'] = port; 
 
-                $.ajax({
-                    url: baseUrl+'/monitoring/traffic/get?dev=' + nodeName +
-                        '&port=' + portName + '&vlan=' + vlan + '&dir=out',
-                    dataType: 'json',
-                    method: "GET",
-                    success: function(response) {
-                        //pegar trafego e gravar no circuito
-                        for (var j = circuits.length - 1; j >= 0; j--) {
-                            var nodeName = circuits[j].fullPath[0].port_urn.split(':')[4].split('=')[1];
-                            var portName = circuits[j].fullPath[0].port_urn.split(':')[5].split('=')[1];
-                            var vlan = circuits[j].fullPath[0].vlan;
-                            if(response.dev == nodeName &&
-                                    response.port == portName &&
-                                    response.vlan == vlan) {
-                                circuits[j]['trafficOut'] = Math.round(response.traffic*8/1000000*100) / 100;
-                                break;
-                            }
-                        }
-                    }
-                });
-            }
-        });
-    };
+    $.ajax({
+        url: baseUrl+'/monitoring/traffic/get?dev=' + node +
+            '&port=' + port + '&vlan=' + vlan + '&dir=in',
+        dataType: 'json',
+        method: "GET",
+        success: function(response) {
+            circuit['trafficIn'] = Math.round(response.traffic*8/1000000*100) / 100;
+        }
+    });
 
-    setLinkStatusWhenReady();
+    $.ajax({
+        url: baseUrl+'/monitoring/traffic/get?dev=' + node +
+            '&port=' + port + '&vlan=' + vlan + '&dir=out',
+        dataType: 'json',
+        method: "GET",
+        success: function(response) {
+            circuit['trafficOut'] = Math.round(response.traffic*8/1000000*100) / 100;
+        }
+    });
 }
 
 function setLinkStatusWhenReady() {
     console.log('trying set link status');
-    if (areCircuitsReady()) {
-        //console.log("setbounds");
+    if (areCircuitsReady() && arePortsStatusReady()) {
         setLinkStatus();
     } else {
         setTimeout(function() {
@@ -533,11 +529,16 @@ function setLinkStatusWhenReady() {
 
 function areCircuitsReady() {
     for (var i = 0; i < circuits.length; i++) {
-        if(circuits[i].trafficOut == null)
+        if(circuits[i].trafficOut == null || circuits[i].trafficIn == null)
             return false;
     }
     
     return true;
+}
+
+function arePortsStatusReady() {
+    console.log(loadedPortsStatusCounter.val, meicanMap.getPortsSize());
+    return loadedPortsStatusCounter.val == meicanMap.getPortsSize();
 }
 
 function setLinkStatus() {
@@ -554,7 +555,7 @@ function setLinkStatus() {
                     circuit: circuits[i],
                     dir: 'in'
                 });
-                circuits[i].links.push(linkIn);
+                //circuits[i].links.push(linkIn);
             }
             if(linkOut) {
                 linkOut.options.traffic += circuits[i].trafficOut;
@@ -562,7 +563,7 @@ function setLinkStatus() {
                     circuit: circuits[i],
                     dir: 'out'
                 });
-                circuits[i].links.push(linkOut);
+                //circuits[i].links.push(linkOut);
             }
             //console.log(linkIn, linkOut);
         };

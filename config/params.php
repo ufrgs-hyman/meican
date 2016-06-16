@@ -11,10 +11,12 @@ return [
     "google.recaptcha.secret.key" => "",
     "google.recaptcha.site.key" => "",
 
-    'mailer.destination' => 'meican@inf.ufrgs.br',
+    'mailer.destination' => 'mqgmaster@gmail.com',
 
     'certificate.filename' => "",
     'certificate.pass' => "",	
 
     "provider.force.dummy" => true,
+
+    "oscars.bridge.provider.url" => 'http://meican-cipo.inf.ufrgs.br:8080/oscars-bridge/circuits',
 ];

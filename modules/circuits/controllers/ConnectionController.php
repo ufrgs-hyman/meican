@@ -20,6 +20,7 @@ use meican\topology\models\Device;
 use meican\topology\models\Domain;
 use meican\topology\models\Provider;
 use meican\aaa\RbacController;
+use meican\oscars\services\OscarsService;
 
 /**
  * @author Maurício Quatrin Guerreiro
@@ -224,6 +225,8 @@ class ConnectionController extends RbacController {
     }
 
     public function actionGetAll($status, $type) {
+        OscarsService::loadCircuits(Yii::$app->params['oscars.bridge.provider.url']);
+
         $conns = Connection::find()->where(['dataplane_status'=>$status, 'type'=>$type])
             ->with('fullPath')
             ->asArray()->all();

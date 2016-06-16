@@ -18,7 +18,7 @@ use meican\topology\models\Port;
  */
 class StatusController extends RbacController {
     
-    //instant link status
+    //instant port status
     public function actionGetByPort($dev, $port) {
         self::beginAsyncAction();
 
@@ -57,7 +57,7 @@ class StatusController extends RbacController {
             Yii::trace($data);
 
             // store $data in cache so that it can be retrieved next time
-            Yii::$app->cache->set('monitoring.status.dev.'.$dev.'.port.'.$port, $data, 200000);
+            Yii::$app->cache->set('monitoring.status.dev.'.$dev.'.port.'.$port, $data, 120000);
         }
 
         return $data;
