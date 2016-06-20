@@ -134,6 +134,7 @@ LMap.prototype.addLink = function(id, from, to, type, partial, cap) {
                 traffic: 0,
                 directedCircuits: [],
                 color: '#cccccc',
+                weight: 6,
                 type: type,
             }).addTo(this._map).bindPopup(
                         'Link between <b>' + 

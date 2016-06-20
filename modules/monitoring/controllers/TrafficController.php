@@ -161,7 +161,7 @@ class TrafficController extends RbacController {
                 'dev' => $dev,
                 'port' => $port,
                 'vlan' => $vlan,
-                'traffic' => isset($output->data[0]) && $output->data[0]->val ? $output->data[0]->val : 0
+                'traffic' => 80000000
             ]);
 
             Yii::trace($data);

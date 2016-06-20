@@ -11,6 +11,7 @@ var statsGraphic;
 var defaultColorIn = "#3c8dbc";
 var defaultColorOut = "#000000";
 var loadedPortsStatusCounter = { val: 0 };
+var refreshInterval;
 
 $(document).ready(function() {
     meicanMap.show('dev');
@@ -49,12 +50,52 @@ $(document).ready(function() {
             $(this).attr('agg', 'true');
         }
     });
+
+    $("#auto-refresh-switch").bootstrapSwitch();
+    $("#auto-refresh-switch").on('switchChange.bootstrapSwitch', function(event, state) {
+        state ? enableAutoRefresh() : disableAutoRefresh();
+    });
+
+    var legend = L.control({position: 'bottomright'});
+
+        legend.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'info legend');
+
+            div.innerHTML += '<label>Link status:</label><br>';
+            div.innerHTML +=
+                '<i style="background: #35E834"></i> ' +
+                'Up and 0' + '&ndash;' + '59% of the capacity in use' +'<br>';
+            div.innerHTML +=
+                '<i style="background: #FFC604"></i> ' +
+                'Up and 60' + '&ndash;' + '89% of the capacity in use' +'<br>';
+            div.innerHTML +=
+                '<i style="background: #E8160C"></i> ' +
+                'Up and 90' + '&ndash;' + '100% of the capacity in use' +'<br>';
+            div.innerHTML +=
+                '<i style="background: #000"></i> ' +
+                'Down<br>';
+            div.innerHTML +=
+                '<i style="background: #ccc"></i> ' +
+                'Unknown<br>';
+
+            return div;
+        };
+
+    legend.addTo(meicanMap._map);
     
     initCanvas(); 
     initMenu();   
     loadDomains();
-    
+    enableAutoRefresh();
 });
+
+function disableAutoRefresh() {
+    clearInterval(refreshInterval);
+}
+
+function enableAutoRefresh() {
+    refreshInterval = setInterval(refresh, 120000);
+}
 
 function initMenu() {
 }
@@ -140,27 +181,54 @@ function initStats(link, divElement) {
         show: true,
       },
       legend: {      
-        noColumns: 4,
+        noColumns: 1,
         container: $("#map-l").find('.stats-legend'),    
         labelFormatter: function(label, series) {
-            var mode = statsGraphic.getOptions().mode;
-            if(mode.type == 'circuit') {
-                if(series.stack == 'in')
-                    return '<span style="margin-right: 10px; margin-left: 5px;">' + label + ' to MXSP</span>';
-                else 
-                    return '<span style="margin-right: 10px; margin-left: 5px;">' + label + ' to MXSC</span>';
-            } else {
-                if(mode.seriesIn == 0 && series.stack == 'in') {
-                    mode.seriesIn++;
-                    return '<span style="margin-right: 10px; margin-left: 5px;">' + series.direction + '</span>';
-                } else if(mode.seriesOut == 0) {
-                    mode.seriesOut++;
-                    return '<span style="margin-right: 10px; margin-left: 5px;">' + series.direction + '</span>';
-                }
-            }
+            return buildLegend(label,series);
         }
       }
     });
+
+    var updateLegendTimeout = null; 
+    var latestPosition = null; 
+     
+    function updateLegend(legends) { 
+        updateLegendTimeout = null; 
+         
+        var pos = latestPosition; 
+         
+        var axes = statsGraphic.getAxes(); 
+        if (pos.x < axes.xaxis.min || pos.x > axes.xaxis.max || 
+            pos.y < axes.yaxis.min || pos.y > axes.yaxis.max) 
+            return; 
+
+        var i, j, dataset = statsGraphic.getData(); 
+        for (i = 0; i < dataset.length; ++i) { 
+            var series = dataset[i]; 
+
+            // find the nearest points, x-wise 
+            for (j = 0; j < series.data.length; ++j) 
+                if (series.data[j][0] > pos.x) 
+                    break; 
+             
+            // now interpolate 
+            var y, p1 = series.data[j - 1], p2 = series.data[j]; 
+            if (p1 == null) 
+                y = p2[1]; 
+            else if (p2 == null) 
+                y = p1[1]; 
+            else 
+                y = p1[1] + (p2[1] - p1[1]) * (pos.x - p1[0]) / (p2[0] - p1[0]);
+
+            $("#map-l").find('.legendLabel').eq(i).text($("#map-l").find('.legendLabel').eq(i).text().replace(/=.*/, "= " + Math.abs(y).toFixed(5) + ' Mbps'));
+        } 
+    } 
+     
+    $(divElement).bind("plothover",  function (event, pos, item) { 
+        latestPosition = pos; 
+        if (!updateLegendTimeout) 
+            updateLegendTimeout = setTimeout(updateLegend, 50); 
+    }); 
 
     var linkCircuits = link.options.directedCircuits;
     var fromDev = link.options.fromPort.device.options.name;
@@ -173,6 +241,24 @@ function initStats(link, divElement) {
     }
 
     showGraphicWhenReady(loadedCircuitsCounter, linkCircuits.length);
+}
+
+function buildLegend(label, series) {
+    var mode = statsGraphic.getOptions().mode;
+    if(mode.type == 'circuit') {
+        if(series.stack == 'in')
+            return label + ' to MXSP = 0.0 Mbps';
+        else 
+            return label + ' to MXSC = 0.0 Mbps';
+    } else {
+        if(mode.seriesIn == 0 && series.stack == 'in') {
+            mode.seriesIn++;
+            return series.direction + ' = 0.0 Mbps';
+        } else if(mode.seriesOut == 0) {
+            mode.seriesOut++;
+            return series.direction + ' = 0.0 Mbps';
+        }
+    }
 }
 
 function showGraphicWhenReady(loaded, total) {
@@ -291,10 +377,6 @@ function loadTrafficHistory(fromDev, toDev, loadedCircuitsCounter, dataSeries, c
             loadedCircuitsCounter.val++;
         }
     });
-}
-
-function closePopups() {
-    meicanMap.closePopups();
 }
 
 function loadDomains() {
@@ -607,7 +689,7 @@ function buildColorByStatusAndTraffic(fromPortStatus, toPortStatus, cap, traffic
     } else if(traffic < cap*0.6) {
         return '#35E834';
     } else if(traffic < cap*0.9) {
-        return "#FF7619";
+        return "#FFC604";
     } else {
         return "#E8160C";
     } 

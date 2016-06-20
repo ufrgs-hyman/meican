@@ -225,7 +225,7 @@ class ConnectionController extends RbacController {
     }
 
     public function actionGetAll($status, $type) {
-        OscarsService::loadCircuits(Yii::$app->params['oscars.bridge.provider.url']);
+        //OscarsService::loadCircuits(Yii::$app->params['oscars.bridge.provider.url']);
 
         $conns = Connection::find()->where(['dataplane_status'=>$status, 'type'=>$type])
             ->with('fullPath')
