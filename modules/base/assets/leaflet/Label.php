@@ -13,7 +13,7 @@ use yii\web\AssetBundle;
  */
 class Label extends AssetBundle
 {
-    public $sourcePath = '@bower/leaflet.label/dist';
+    public $sourcePath = '@bower/Leaflet.label/dist';
     
     public $js = [
         'leaflet.label.js'
