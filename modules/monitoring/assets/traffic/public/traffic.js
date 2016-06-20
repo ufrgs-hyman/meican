@@ -40,17 +40,15 @@ $(document).ready(function() {
         clearCircuits();
         loadCircuits();
     });
-
-    $("#map-l").on("click", ".agg-stats-btn", function() {
-        if($(this).attr('agg') == 'true') {
+    
+    $("#map-l").on("switchChange.bootstrapSwitch", ".graphic-mode-switch", function(e, state) {
+        if(state) {
             hideCircuitsOnGraphic();
-            $(this).attr('agg', 'false');
         } else {
             showCircuitsOnGraphic();
-            $(this).attr('agg', 'true');
         }
     });
-
+    
     $("#auto-refresh-switch").bootstrapSwitch();
     $("#auto-refresh-switch").on('switchChange.bootstrapSwitch', function(event, state) {
         state ? enableAutoRefresh() : disableAutoRefresh();
@@ -58,28 +56,29 @@ $(document).ready(function() {
 
     var legend = L.control({position: 'bottomright'});
 
-        legend.onAdd = function (map) {
-            var div = L.DomUtil.create('div', 'info legend');
+    legend.onAdd = function (map) {
+        var div = L.DomUtil.create('div', 'info legend');
 
-            div.innerHTML += '<label>Link status:</label><br>';
-            div.innerHTML +=
-                '<i style="background: #35E834"></i> ' +
-                'Up and 0' + '&ndash;' + '59% of the capacity in use' +'<br>';
-            div.innerHTML +=
-                '<i style="background: #FFC604"></i> ' +
-                'Up and 60' + '&ndash;' + '89% of the capacity in use' +'<br>';
-            div.innerHTML +=
-                '<i style="background: #E8160C"></i> ' +
-                'Up and 90' + '&ndash;' + '100% of the capacity in use' +'<br>';
-            div.innerHTML +=
-                '<i style="background: #000"></i> ' +
-                'Down<br>';
-            div.innerHTML +=
-                '<i style="background: #ccc"></i> ' +
-                'Unknown<br>';
+        div.innerHTML += '<label>Link status:</label><br>';
+        div.innerHTML +=
+            '<i style="background: #35E834"></i> ' +
+            'Up and 0' + '&ndash;' + '59%*' +'<br>';
+        div.innerHTML +=
+            '<i style="background: #FFC604"></i> ' +
+            'Up and 60' + '&ndash;' + '89%*' +'<br>';
+        div.innerHTML +=
+            '<i style="background: #E8160C"></i> ' +
+            'Up and 90' + '&ndash;' + '100%*' +'<br>';
+        div.innerHTML +=
+            '<i style="background: #000"></i> ' +
+            'Down<br>';
+        div.innerHTML +=
+            '<i style="background: #ccc"></i> ' +
+            'Unknown<br>';
+        div.innerHTML += '*of the capacity in use';
 
-            return div;
-        };
+        return div;
+    };
 
     legend.addTo(meicanMap._map);
     
@@ -114,15 +113,12 @@ function initCanvas() {
         };
         node.setPopupContent(
             'Domain: <b>' + meicanMap.getDomain(node.options.domainId).name + 
-            '</b><br>Device: <b>' + node.options.name + '</b><br><br>' +
-            (circuitsHtml != '' ? 'Circuits:<br>' + circuitsHtml : '')
+            '</b><br>Device: <b>' + node.options.name + '</b><br>'
         );
     });
 
     $('#canvas').on('lmap.linkClick', function(e, link) {
         console.log(link);
-        //$("#map-l").find('.traffic-stats').css('height', 250);
-        //$("#map-l").find('.traffic-stats').css('width', 475);
         if(link.options.fromPort.circuits.length > 0)
             initStats(link, $("#map-l").find('.traffic-stats'));
 
@@ -189,6 +185,8 @@ function initStats(link, divElement) {
       }
     });
 
+    $(".graphic-mode-switch").bootstrapSwitch();
+
     var updateLegendTimeout = null; 
     var latestPosition = null; 
      
@@ -196,6 +194,8 @@ function initStats(link, divElement) {
         updateLegendTimeout = null; 
          
         var pos = latestPosition; 
+        var trafficIn = 0;
+        var trafficOut = 0;
          
         var axes = statsGraphic.getAxes(); 
         if (pos.x < axes.xaxis.min || pos.x > axes.xaxis.max || 
@@ -220,8 +220,27 @@ function initStats(link, divElement) {
             else 
                 y = p1[1] + (p2[1] - p1[1]) * (pos.x - p1[0]) / (p2[0] - p1[0]);
 
-            $("#map-l").find('.legendLabel').eq(i).text($("#map-l").find('.legendLabel').eq(i).text().replace(/=.*/, "= " + Math.abs(y).toFixed(5) + ' Mbps'));
+            if(statsGraphic.getOptions().mode.type == 'circuit') {
+                $("#map-l").find('.legendLabel').eq(i).text(
+                    $("#map-l").find('.legendLabel').eq(i).text().replace(/=.*/, "= " + Math.abs(y).toFixed(5) + ' Mbps'));
+            } else {
+                if(series.stack == 'in') {
+                    trafficIn += y;
+                } else {
+                    trafficOut += y;
+                }
+            }
         } 
+
+        if(statsGraphic.getOptions().mode.type != 'circuit') {
+            for (i = 0; i < dataset.length; ++i) { 
+                var series = dataset[i]; 
+
+                $("#map-l").find('.legendLabel').eq(i).text(
+                    $("#map-l").find('.legendLabel').eq(i).text().replace(/=.*/, "= " + 
+                        Math.abs(series.stack == 'in' ? trafficIn : trafficOut).toFixed(5) + ' Mbps'));
+            }
+        }
     } 
      
     $(divElement).bind("plothover",  function (event, pos, item) { 
@@ -246,10 +265,7 @@ function initStats(link, divElement) {
 function buildLegend(label, series) {
     var mode = statsGraphic.getOptions().mode;
     if(mode.type == 'circuit') {
-        if(series.stack == 'in')
-            return label + ' to MXSP = 0.0 Mbps';
-        else 
-            return label + ' to MXSC = 0.0 Mbps';
+        return label + ' to ' + series.direction.split(' ')[2] + ' = 0.0 Mbps';
     } else {
         if(mode.seriesIn == 0 && series.stack == 'in') {
             mode.seriesIn++;
@@ -553,13 +569,14 @@ function addCircuits(circuits) {
                         var fromDev = meicanMap.getNode(linkOut.options.from).options.name;
                         var toDev = meicanMap.getNode(linkOut.options.to).options.name;
                         linkOut.bindPopup(
+                        '<div class="pull-right"><br>' + buildGraphicModeSwitch() + '</div>' +
                         'Link between <b>' + 
                         meicanMap.getNode(linkOut.options.from).options.name +
-                        '</b> and <b>' +
+                        '</b> and <b>' + 
                         meicanMap.getNode(linkOut.options.to).options.name +
-                        '</b><br>Capacity: <b>' + node.options.ports[portId].cap + ' Mbps</b>' + 
-                        '<div class="pull-right"><button class="btn btn-default btn-sm agg-stats-btn">Show aggregate DCN traffic</button> ' + 
-                        '</div><br>' + 
+                        '</b><br>' + 
+                        'Capacity: <b>' + node.options.ports[portId].cap + ' Mbps</b>' + 
+                        '<br>' + 
                         '<br><div class="traffic-stats" style="width: 610px; height: 250px"></div><br>' + 
                         '<div class="stats-legend"></div>',
                         {'maxWidth': '625'});
@@ -568,6 +585,10 @@ function addCircuits(circuits) {
             }
         }
     }
+}
+
+function buildGraphicModeSwitch() {
+    return '<input class="graphic-mode-switch" data-label-text="Aggregate traffic" data-size="mini" type="checkbox" name="graphic-mode" checked>';
 }
 
 function loadCircuitTraffic(circuit) {

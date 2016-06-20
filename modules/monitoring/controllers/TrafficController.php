@@ -161,13 +161,13 @@ class TrafficController extends RbacController {
                 'dev' => $dev,
                 'port' => $port,
                 'vlan' => $vlan,
-                'traffic' => 80000000
+                'traffic' => isset($output->data[0]) && $output->data[0]->val ? $output->data[0]->val : 0
             ]);
 
             Yii::trace($data);
 
             // store $data in cache so that it can be retrieved next time
-            Yii::$app->cache->set('monitoring.status.dev.'.$dev.'.port.'.$port.'.vlan.'.$vlan.'.dir.'.$dir, $data, 5);
+            Yii::$app->cache->set('monitoring.status.dev.'.$dev.'.port.'.$port.'.vlan.'.$vlan.'.dir.'.$dir, $data, 120000);
         }
 
         return $data;

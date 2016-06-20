@@ -51,7 +51,7 @@ class StatusController extends RbacController {
             $data = json_encode([
                 'dev' => $dev,
                 'port' => $port,
-                'status' => 1,
+                'status' => isset($output->ifOperStatus) ? $output->ifOperStatus : 0,
             ]);
 
             Yii::trace($data);
