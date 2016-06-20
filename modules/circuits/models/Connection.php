@@ -55,7 +55,10 @@ class Connection extends \yii\db\ActiveRecord
 	const AUTH_STATUS_EXPIRED = 	"EXPIRED";
 	const AUTH_STATUS_UNEXECUTED = 	"UNEXECUTED";
 	const AUTH_STATUS_UNSOLICITED = "UNSOLICITED";
-	
+
+    const TYPE_NSI = "NSI";
+    const TYPE_OSCARS = "OSCARS";
+ 	
     /**
      * @inheritdoc
      */
@@ -87,7 +90,7 @@ class Connection extends \yii\db\ActiveRecord
             'id' => 'ID',
             'type' => Yii::t("circuits", 'Type'),
             'version' => Yii::t("circuits", 'Version'),
-            'external_id' => Yii::t('circuits', 'ID'),
+            'external_id' => Yii::t('circuits', 'Circuit ID'),
             'status' => Yii::t("circuits", 'Reservation'),
             'dataplane_status' =>  Yii::t("circuits", 'Connectivity'),
             'auth_status' =>  Yii::t("circuits", "Authorization"),

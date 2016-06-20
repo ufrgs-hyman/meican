@@ -30,9 +30,11 @@ class ConnectionController extends RbacController {
     public $defaultAction = "view";
 
     public function actionView($id = null) {
-        if($id == null) {
+        if($id == null) 
             return $this->redirect(['reservation/status']);
-        }
+
+        if(Yii::$app->request->isPjax)
+            return $this->buildViewContent($id);
 
         if (is_numeric($id)) {
             $conn = Connection::findOne($id);
@@ -58,14 +60,24 @@ class ConnectionController extends RbacController {
                 ]
         ]);
         
-        return $this->render('view',[
+        return $this->render('view/view',[
                 'conn' => $conn,
                 'history' => $history,
                 'messageHistory' => $messageHistory,
                 'lastEvent' => $conn->getHistory()->orderBy("id DESC")->one()
         ]);
     }
-    
+
+    private function buildViewContent($id) {
+        if($_GET['_pjax'] == '#status-pjax') {
+            $conn = Connection::findOne($id);
+            return $this->renderPartial('view/status', [
+                    'conn' => $conn, 'lastEvent' => $conn->getHistory()->orderBy("id DESC")->one()
+                ]
+            );
+        }
+    }
+
     public function actionGetOrderedPathsOld($id) {
         $paths = ConnectionPath::find()->where(['conn_id'=>$id])->orderBy(['path_order'=> "SORT_ASC"])->all();
          

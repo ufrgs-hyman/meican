@@ -195,10 +195,9 @@ class Reservation extends \yii\db\ActiveRecord
     		$conn->status = Connection::STATUS_PENDING;
     		$conn->dataplane_status = Connection::DATA_STATUS_INACTIVE;
     		$conn->auth_status = Connection::AUTH_STATUS_UNEXECUTED;
-            $conn->protected = $this->protected;
             $conn->version = 0;
             $conn->bandwidth = $this->bandwidth;
-            $conn->gri = $this->gri;
+            $conn->type = Connection::TYPE_NSI;
 
             if($conn->save()) {
                 $i = 0;
@@ -213,6 +212,8 @@ class Reservation extends \yii\db\ActiveRecord
                     
                     $connPath->save();
                 }
+            } else {
+                Yii::trace($conn->getErrors());
             }
     	}
     }
@@ -222,21 +223,6 @@ class Reservation extends \yii\db\ActiveRecord
     		if ($conn->external_id == null) {
     			$conn->requestCreate();
     		}
-    	}
-    }
-    
-    public function getAllEvents() {
-    	$rec = $this->getRecurrence()->one();
-    	if ($rec) {
-    		return $rec->getEvents($this->start, $this->finish);
-    	} else {
-    		$per = new \stdClass();
-    		$eventStart = new \DateTime($this->start);
-    		$eventFinish = new \DateTime($this->finish);
-    		$per->start = $eventStart->getTimestamp();
-    		$per->finish = $eventFinish->getTimestamp();
-    		$periods[] = $per;
-    		return $periods;
     	}
     }
 }

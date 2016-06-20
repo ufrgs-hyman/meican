@@ -381,7 +381,7 @@ function areMarkersReady(ids) {
     return true;
 }
 
-function loadStatsMetricsGraphics() {
+/*function loadStatsMetricsGraphics() {
     $("#stats-loading").show();
     $.ajax({
         url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 372 + '&vlan=' + 206 + '&dir=' + 'out' + '&interval=' + 0,
@@ -424,7 +424,7 @@ function loadStatsMetricsGraphics() {
             } else $("#stats-loading").hide();
         }
     });
-}
+}*/
 
 function initStats() {
     $("#stats").css("height", 375);
