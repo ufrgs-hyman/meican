@@ -94,7 +94,7 @@ class DiscoveryService {
             $this->task->applyChanges();
         }
 
-        if($this->detectedChanges) TopologyNotification::create(1, $this->task->id);
+        //if($this->detectedChanges) TopologyNotification::create(1, $this->task->id);
     }
 
     //Cria changes a partir de mudanças percebidas
