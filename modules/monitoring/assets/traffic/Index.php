@@ -19,6 +19,10 @@ class Index extends AssetBundle
     	'traffic.js',
     ];
 
+    public $css = [
+        'legend.css'
+    ];
+
     public $depends = [
     	'meican\base\assets\Theme',
         'meican\topology\assets\map\LMap',
@@ -26,5 +30,6 @@ class Index extends AssetBundle
         'meican\base\assets\Moment',
         'meican\base\assets\Flot',
         'yii\web\YiiAsset',
+        'kartik\switchinput\SwitchInputAsset'
     ];
 }
