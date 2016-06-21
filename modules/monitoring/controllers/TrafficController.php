@@ -47,6 +47,7 @@ class TrafficController extends RbacController {
 
         // NSI converte / para _
         $port = str_replace('/', '@2F', $port);
+        $port = str_replace('_', '@2F', $port);
         // NSI insere :+ no final das URNs
 
         $ch = curl_init();

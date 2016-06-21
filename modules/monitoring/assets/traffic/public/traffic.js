@@ -101,16 +101,6 @@ function initMenu() {
 
 function initCanvas() {
     $('#canvas').on('lmap.nodeClick', function(e, node) {
-        var circuitsList = [];
-        for (var portId in node.options.ports) {
-            for (var k = node.options.ports[portId].circuits.length - 1; k >= 0; k--) {
-                circuitsList[node.options.ports[portId].circuits[k].id] = node.options.ports[portId].circuits[k].external_id;
-            }
-        }
-        var circuitsHtml = '';
-        for (var circuitId in circuitsList) {
-            circuitsHtml += circuitsList[circuitId] + '<br>';
-        };
         node.setPopupContent(
             'Domain: <b>' + meicanMap.getDomain(node.options.domainId).name + 
             '</b><br>Device: <b>' + node.options.name + '</b><br>'
@@ -221,8 +211,7 @@ function initStats(link, divElement) {
                 y = p1[1] + (p2[1] - p1[1]) * (pos.x - p1[0]) / (p2[0] - p1[0]);
 
             if(statsGraphic.getOptions().mode.type == 'circuit') {
-                $("#map-l").find('.legendLabel').eq(i).text(
-                    $("#map-l").find('.legendLabel').eq(i).text().replace(/=.*/, "= " + Math.abs(y).toFixed(5) + ' Mbps'));
+                $("#map-l").find('.traffic-value').eq(i).text(Math.abs(y).toFixed(5));
             } else {
                 if(series.stack == 'in') {
                     trafficIn += y;
@@ -265,7 +254,8 @@ function initStats(link, divElement) {
 function buildLegend(label, series) {
     var mode = statsGraphic.getOptions().mode;
     if(mode.type == 'circuit') {
-        return label + ' to ' + series.direction.split(' ')[2] + ' = 0.0 Mbps';
+        return '<a href="' + baseUrl + '/circuits?id=' + series.circuit.parent_id + '">' + label + '</a> to ' + 
+            series.direction.split(' ')[2] + ' = <span class="traffic-value">0.0</span> Mbps';
     } else {
         if(mode.seriesIn == 0 && series.stack == 'in') {
             mode.seriesIn++;
@@ -360,7 +350,8 @@ function loadTrafficHistory(fromDev, toDev, loadedCircuitsCounter, dataSeries, c
 
             dataSeries.push({
                 stack: relativeDir == 'out' ? 'in' : 'out', 
-                label: circuit.external_id, 
+                label: circuit.name,
+                circuit: circuit, 
                 direction: relativeDir == 'out' ? fromDev + " to " + toDev : toDev + ' to ' + fromDev, 
                 color: color,
                 data: dataOut});
@@ -384,7 +375,8 @@ function loadTrafficHistory(fromDev, toDev, loadedCircuitsCounter, dataSeries, c
 
             dataSeries.push({
                 stack: relativeDir == 'out' ? 'out' : 'in', 
-                label: circuit.external_id, 
+                label: circuit.name, 
+                circuit: circuit,
                 direction: relativeDir == 'out' ? toDev + " to " + fromDev : fromDev + ' to ' + toDev, 
                 color: color,
                 data: dataIn});
@@ -557,17 +549,7 @@ function addCircuits(circuits) {
                 if(portName == node.options.ports[portId].name) {
                     node.options.ports[portId].circuits.push(circuits[i]);
                     if(node.options.ports[portId].linkOut != null) {
-                        var circuitsList = [];
-                        for (var k = node.options.ports[portId].circuits.length - 1; k >= 0; k--) {
-                            circuitsList[node.options.ports[portId].circuits[k].id] = node.options.ports[portId].circuits[k].external_id;
-                        }
-                        var circuitsHtml = '';
-                        for (var circuitId in circuitsList) {
-                            circuitsHtml += circuitsList[circuitId] + '<br>';
-                        };
                         var linkOut = node.options.ports[portId].linkOut;
-                        var fromDev = meicanMap.getNode(linkOut.options.from).options.name;
-                        var toDev = meicanMap.getNode(linkOut.options.to).options.name;
                         linkOut.bindPopup(
                         '<div class="pull-right"><br>' + buildGraphicModeSwitch() + '</div>' +
                         'Link between <b>' + 
