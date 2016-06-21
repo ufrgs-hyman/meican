@@ -95,6 +95,7 @@ class OscarsService {
             }
         } else {
             $conn->dataplane_status = $status == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE';
+            $conn->save();
         }
     }
 
