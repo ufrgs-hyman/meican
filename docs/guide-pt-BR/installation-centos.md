@@ -9,7 +9,7 @@ Esta configuração foi testada e realizada no CentOS 6.7.
 ```
 yum update
 rpm -Uvh https://mirror.webtatic.com/yum/el6/latest.rpm
-yum install httpd mysql-server php55w curl php55w-mysql php55w-curl
+yum install httpd mysql-server php55w curl php55w-mysql php55w-curl php55w-soap php55w-xml
 ```
 
 O CentOS geralmente já possui uma versão do PHP previamente instalada, entretanto esta versão pode não ser compatível com o MEICAN. Por isso, é necessário remover a antiga versão e instalar a 5.5 ou superior. Para remover execute:
