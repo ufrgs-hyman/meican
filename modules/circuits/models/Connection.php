@@ -73,8 +73,8 @@ class Connection extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status', 'bandwidth', 'type','dataplane_status', 'auth_status', 'start', 'finish', 'reservation_id'], 'required'],
-            [['status', 'type','dataplane_status', 'auth_status'], 'string'],
+            [['status', 'bandwidth', 'type','dataplane_status', 'auth_status', 'start', 'finish'], 'required'],
+            [['status', 'type','dataplane_status', 'auth_status', 'name'], 'string'],
             [['start', 'finish'], 'safe'],
             [['reservation_id', 'bandwidth'], 'integer'],
             [['external_id'], 'string', 'max' => 65],
@@ -172,6 +172,14 @@ class Connection extends \yii\db\ActiveRecord
     public function getFullPath()
     {
         return $this->hasMany(ConnectionPath::className(), ['conn_id' => 'id']);
+    }
+
+    public function getParent() {
+        return $this->hasOne(Connection::className(), ['id'=> 'parent_id']);
+    }
+
+    public function getName() {
+        return $this->getReservation()->select(['name'])->asArray()->one()['name'];
     }
     
     public function requestCreate() {
