@@ -25,9 +25,7 @@ class ReservationForm extends Model {
 	//request reservation
 	public $path;
 	public $name;
-	public $gri;
 	public $bandwidth;
-	public $protection;
     public $events;
 	
 	//reservation recurrence
@@ -44,7 +42,7 @@ class ReservationForm extends Model {
 	
 	public function rules()	{
 		return [
-			[['name', 'bandwidth', 'path', 'protection', 'events'], 'required'],
+			[['name', 'bandwidth', 'path', 'events'], 'required'],
             [['bandwidth'], 'integer', 'min'=> 1],
 		];
 	}
@@ -53,7 +51,6 @@ class ReservationForm extends Model {
  			$this->reservation = new Reservation;
  			$this->reservation->type = Reservation::TYPE_NORMAL;
  			$this->reservation->name = $this->name;
- 			$this->reservation->protected = $this->protection ? 1 : 0;
  			$this->reservation->date = DateUtils::now();
  			$this->reservation->bandwidth = $this->bandwidth;
  			$this->reservation->requester_nsa = CircuitsPreference::findOneValue(CircuitsPreference::MEICAN_NSA);

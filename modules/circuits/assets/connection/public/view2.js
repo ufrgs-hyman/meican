@@ -1,34 +1,50 @@
 /**
  * @copyright Copyright (c) 2016 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
+ * @author Mauricio Quatrin Guerreiro
  */
 
 var meicanMap;
 var connIsApproved = true;
 var path;
-var statsData;
 var statsCurrentPts;
 var statsGraphic;
+var refreshInterval;
 
 $(document).ready(function() {
     initPathBox();
-
-    /*refresher = setInterval(function() {
-        updateCircuitStatus();
-    }, 1000);*/
-
     initStats();
     initHistoryModal();
     initEditModal();
     initCancelModal();
+    enableAutoRefresh();
 });
 
 $(document).on('ready pjax:success', function() {
     initHistoryModal();
 });
 
-function refreshPjaxContainer(id) {
-    $.pjax.defaults.timeout = false;
+function disableAutoRefresh() {
+    clearInterval(refreshInterval);
+}
+
+function enableAutoRefresh() {
+    refreshInterval = setInterval(refreshAll, 120000);
+}
+
+function refreshAll() {
+    console.log('refreshing...');
+    refreshPjax('status-pjax');
+    setTimeout(function() {
+        refreshPjax('details-pjax');
+    }, 2000);
+    setTimeout(function() {
+        refreshPjax('history-pjax');
+    }, 4000);
+}
+
+function refreshPjax(id) {
+    $.pjax.defaults.timeout = 5000;
     $.pjax.reload({
         container:'#' + id
     });
@@ -280,7 +296,7 @@ function drawCircuitWhenReady(requiredMarkers, animate) {
             }
             
             meicanMap.focusNodes();
-            loadStats(path[1]);
+            loadStats(path[0]);
         }
     } else {
         setTimeout(function() {
@@ -506,51 +522,58 @@ function loadStats(point) {
         statsCurrentPoint = point;
     }
 
-    $("#stats-target").html("<b>" + statsCurrentPoint.port_urn + "</b> (VLAN <b>" + statsCurrentPoint.vlan + "</b>)");
+    //$("#stats-target").html("<b>" + statsCurrentPoint.port_urn + "</b> (VLAN <b>" + statsCurrentPoint.vlan + "</b>)");
 
     $("#stats-loading").show();
 
     //if(urnType == "NSI")....
-    var dstUrn = statsCurrentPoint.port_urn;
-    dstUrn = dstUrn.split(':');
-    var dstDom = dstUrn[3];
-    var dstDev = dstUrn[dstUrn.length - 3];
-    var dstPort = dstUrn[dstUrn.length - 2];
-    var dstVlan = statsCurrentPoint.vlan;
+    var urn = statsCurrentPoint.port_urn;
+    urn = urn.split(':');
+    var dom = urn[3];
+    var dev = urn[urn.length - 3];
+    var port = urn[urn.length - 2];
+    var vlan = statsCurrentPoint.vlan;
+    var statsData = [];
 
+    loadTrafficHistory(statsData, dom, dev, port, vlan);
+}
+
+function loadTrafficHistory(statsData, dom, dev, port, vlan) {
     $.ajax({
-        url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=' + dstDom + '&dev=' + dstDev +
-            '&port=' + dstPort + '&vlan=' + dstVlan + '&dir=out' + '&interval=' + 0,
+        url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=' + dom + '&dev=' + dev +
+            '&port=' + port + '&vlan=' + vlan + '&dir=out' + '&interval=' + 0,
         dataType: 'json',
         method: "GET",
         success: function(data) {
             var dataOut = [];
             for (var i = 0; i < data.traffic.length; i++) {
-                dataOut.push([moment.unix(data.traffic[i].ts), data.traffic[i].val*8/1000000]);
+                dataOut.push([moment.unix(data.traffic[i].ts), 0-(data.traffic[i].val*8/1000000)]);
             }
-            statsData = [{label: "Out", data: dataOut, color: "#3c8dbc" }];
+            statsData.push({label: dev + " in", data: dataOut, color: "#f56954" });
 
-            if(data.traffic.length > 0) {
-                $.ajax({
-                    url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=' + dstDom + '&dev=' + dstDev +
-                        '&port=' + dstPort + '&vlan=' + dstVlan + '&dir=in' + '&interval=' + 0,
-                    dataType: 'json',
-                    method: "GET",
-                    success: function(data) {
-                        var dataIn = [];
-                        for (var i = 0; i < data.traffic.length; i++) {
-                            dataIn.push([moment.unix(data.traffic[i].ts), 0-(data.traffic[i].val*8/1000000)]);
-                        }
-                        statsData.push({label: 'In', data: dataIn, color: "#f56954" });
+            statsGraphic.setData(statsData);
+            statsGraphic.setupGrid();
+            statsGraphic.draw();
+        }
+    });
 
-                        statsGraphic.setData(statsData);
-                        statsGraphic.setupGrid();
-                        statsGraphic.draw();
-                        
-                        $("#stats-loading").hide();
-                    }
-                });
-            } else $("#stats-loading").hide();
+    $.ajax({
+        url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=' + dom + '&dev=' + dev +
+            '&port=' + port + '&vlan=' + vlan + '&dir=in' + '&interval=' + 0,
+        dataType: 'json',
+        method: "GET",
+        success: function(data) {
+            var dataIn = [];
+            for (var i = 0; i < data.traffic.length; i++) {
+                dataIn.push([moment.unix(data.traffic[i].ts), data.traffic[i].val*8/1000000]);
+            }
+            statsData.push({label: dev + ' out', data: dataIn, color: "#3c8dbc" });
+
+            statsGraphic.setData(statsData);
+            statsGraphic.setupGrid();
+            statsGraphic.draw();
+            
+            $("#stats-loading").hide();
         }
     });
 }

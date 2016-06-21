@@ -33,9 +33,6 @@ class ConnectionController extends RbacController {
         if($id == null) 
             return $this->redirect(['reservation/status']);
 
-        if(Yii::$app->request->isPjax)
-            return $this->buildViewContent($id);
-
         if (is_numeric($id)) {
             $conn = Connection::findOne($id);
         } else {
@@ -44,37 +41,64 @@ class ConnectionController extends RbacController {
 
         if($conn === null) throw new \yii\web\HttpException(404, 'The requested item could not be found.');
 
+        if(Yii::$app->request->isPjax)
+            return $this->buildViewContent($conn);
+
         $history = new ActiveDataProvider([
-                'query' => $conn->getHistory()->orderBy("id DESC"),
-                'sort' => false,
-                'pagination' => [
-                    'pageSize' => 6,
-                ]
+            'query' => $conn->getHistory()->orderBy("id DESC"),
+            'sort' => false,
+            'pagination' => [
+                'pageSize' => 6,
+            ]
         ]);
 
         $messageHistory = new ActiveDataProvider([
-                'query' => $conn->getHistory()->where(['is not', 'message', null])->orderBy("id DESC"),
-                'sort' => false,
-                'pagination' => [
-                    'pageSize' => 5,
-                ]
+            'query' => $conn->getHistory()->where(['is not', 'message', null])->orderBy("id DESC"),
+            'sort' => false,
+            'pagination' => [
+                'pageSize' => 1,
+            ]
         ]);
         
         return $this->render('view/view',[
-                'conn' => $conn,
-                'history' => $history,
-                'messageHistory' => $messageHistory,
-                'lastEvent' => $conn->getHistory()->orderBy("id DESC")->one()
+            'conn' => $conn,
+            'history' => $history,
+            'messages' => $messageHistory,
+            'lastEvent' => $conn->getHistory()->orderBy("id DESC")->one()
         ]);
     }
 
-    private function buildViewContent($id) {
-        if($_GET['_pjax'] == '#status-pjax') {
-            $conn = Connection::findOne($id);
-            return $this->renderPartial('view/status', [
-                    'conn' => $conn, 'lastEvent' => $conn->getHistory()->orderBy("id DESC")->one()
-                ]
-            );
+    private function buildViewContent($conn) {
+        switch ($_GET['_pjax']) {
+            case '#status-pjax':
+                return $this->renderPartial('view/status', [
+                        'conn' => $conn, 'lastEvent' => $conn->getHistory()->orderBy("id DESC")->one()
+                    ]
+                );
+            case '#history-pjax':
+                return $this->renderPartial('view/history', [
+                    'history' => new ActiveDataProvider([
+                        'query' => $conn->getHistory()->orderBy("id DESC"),
+                        'sort' => false,
+                        'pagination' => [
+                            'pageSize' => 6,
+                        ]
+                    ])
+                ]);
+            case '#details-pjax':
+                return $this->renderPartial('view/details', [
+                    'conn' => $conn
+                ]);
+            case '#messages-pjax':
+                return $this->renderPartial('view/history-messages', [
+                    'messages' => new ActiveDataProvider([
+                        'query' => $conn->getHistory()->where(['is not', 'message', null])->orderBy("id DESC"),
+                        'sort' => false,
+                        'pagination' => [
+                            'pageSize' => 1,
+                        ]
+                    ])
+                ]);
         }
     }
 
@@ -236,12 +260,24 @@ class ConnectionController extends RbacController {
         }
     }
 
+    //CACHED
     public function actionGetAll($status, $type) {
-        //OscarsService::loadCircuits(Yii::$app->params['oscars.bridge.provider.url']);
+        self::beginAsyncAction();
+
+        $data = Yii::$app->cache->get('circuits.oscars.all');
+
+        if ($data === false) {
+            OscarsService::loadCircuits(Yii::$app->params['oscars.bridge.provider.url']);
+
+            // store $data in cache so that it can be retrieved next time
+            Yii::$app->cache->set('circuits.oscars.all', 'true', 120000);
+        } 
 
         $conns = Connection::find()->where(['dataplane_status'=>$status, 'type'=>$type])
-            ->with('fullPath')
-            ->asArray()->all();
+                ->with('fullPath')
+                ->asArray()
+                ->all();
+
         return json_encode($conns);
     }
 }

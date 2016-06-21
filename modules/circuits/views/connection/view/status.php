@@ -12,7 +12,7 @@
 
         <div class="info-box-content">
           <span class="info-box-text">Status</span>
-          <span class="info-box-number"><small><?= $conn->dataplane_status; ?></small></span>
+          <span class="info-box-number"><small><?= $conn->getDataStatus(); ?></small></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -25,7 +25,7 @@
 
         <div class="info-box-content">
           <span class="info-box-text">Reservation</span>
-          <span class="info-box-number"><small><?= $conn->status; ?></small></span>
+          <span class="info-box-number"><small><?= $conn->getStatus(); ?></small></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -42,7 +42,7 @@
 
         <div class="info-box-content">
           <span class="info-box-text">Authorization</span>
-          <span class="info-box-number"><small><?= $conn->auth_status; ?></small></span>
+          <span class="info-box-number"><small><?= $conn->getAuthStatus(); ?></small></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -50,15 +50,26 @@
     </div>
     <!-- /.col -->
     <div class="col-md-3 col-sm-6 col-xs-12">
-      <div class="info-box">
-        <span class="info-box-icon"><i class="ion ion-loop"></i></span>
+        <div class="info-box">
+            <span class="info-box-icon"><i class="ion ion-loop"></i></span>
 
-        <div class="info-box-content">
-          <span class="info-box-text">Updated at</span>
-          <span class="info-box-number"><small><?= Yii::$app->formatter->asDatetime($lastEvent->created_at)."<br>by ".$lastEvent->getAuthor(); ?></small></span>
-        </div>
+            <div class="info-box-content">
+                <span class="info-box-text">Updated at</span>
+                <span class="info-box-number">
+                    <small>
+                    <?php
+
+                    if(isset($lastEvent))
+                        echo Yii::$app->formatter->asDatetime($lastEvent->created_at)."<br>by ".$lastEvent->getAuthor();
+                    else
+                        echo 'Unknown';
+
+                    ?>
+                    </small>
+                </span>
+            </div>
         <!-- /.info-box-content -->
-      </div>
+        </div>
       <!-- /.info-box -->
     </div>
 <!-- /.col -->

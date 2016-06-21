@@ -41,7 +41,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit").' #'.$conn->id, ['Home',
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs pull-right">
                 <li><a href="#path-info" data-toggle="tab">Info</a></li>
-                <li><a href="#graph" data-toggle="tab">Graph</a></li>
+                <!--<li><a href="#graph" data-toggle="tab">Graph</a></li>-->
                 <li class="active"><a href="#canvas" data-toggle="tab">Map</a></li>
                 <li class="pull-left header"> Path</li>
             </ul>
@@ -81,13 +81,13 @@ $this->params['header'] = [Yii::t('circuits',"Circuit").' #'.$conn->id, ['Home',
                                 return "";
                             },
                         ],
-                        [
+                        /*[
                             'header' => '',
                             'format' => 'raw',
                             'value' => function ($model){
                                 return '<a href="#" class="show-stats">Show stats</a>';
                             },
-                        ],
+                        ],*/
                     ),
                 ]); ?>
               </div>
@@ -101,49 +101,20 @@ $this->params['header'] = [Yii::t('circuits',"Circuit").' #'.$conn->id, ['Home',
                 <h3 class="box-title"><?= Yii::t("topology", "Details"); ?></h3>
                 <div class="box-tools pull-right">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-wrench"></i></button>
-                      <ul class="dropdown-menu" role="menu">
-                        <li><a id="edit-btn" href="#">Edit circuit</a></li>
-                        <li><a id="cancel-btn" href="#">Cancel circuit</a></li>
-                      </ul>
+                        <button id="edit-btn" type="button" class="btn btn-default btn-sm">Edit</button>
+                        <button id="cancel-btn" type="button" class="btn btn-default btn-sm">Cancel</button>
                     </div>
-                  </div>
+                </div>
             </div>
             <div class="box-body">
                 <?php Pjax::begin([
-                    'id' => 'info-pjax',
+                    'id' => 'details-pjax',
                     'timeout' => 5000, 
                 ]);
 
-                echo DetailView::widget([
-                    'id' => 'circuit-info',
-                    'model' => $conn,
-                    'attributes' => [
-                        'external_id',
-                        [                      
-                            'label' => 'Name',
-                            'value' => ''                            
-                        ],
-                        [                      
-                            'attribute' => 'bandwidth',
-                            'format' => 'raw',
-                            'value' => '<data id="info-bandwidth" value="'.$conn->bandwidth.'"></data>'.$conn->bandwidth." Mbps"                            
-                        ],
-                        [                      
-                            'attribute' => 'start',
-                            'format' => 'raw',
-                            'value' => '<data id="info-start" value="'.Yii::$app->formatter->asDatetime($conn->start).'"></data>'.Yii::$app->formatter->asDatetime($conn->start)
-                        ],                        
-                        [                      
-                            'attribute' => 'finish',
-                            'format' => 'raw',
-                            'value' => '<data id="info-end" value="'.Yii::$app->formatter->asDatetime($conn->finish).'"></data>'.Yii::$app->formatter->asDatetime($conn->finish)
-                        ],  
-                        'version',
-                        'type',
-                    ],
-                ]); 
+                echo $this->render('details', array(
+                    'conn' => $conn,
+                ));
 
                 Pjax::end(); ?>
             </div>
@@ -157,16 +128,13 @@ $this->params['header'] = [Yii::t('circuits',"Circuit").' #'.$conn->id, ['Home',
                 <h3 class="box-title"><?= Yii::t("topology", "Traffic monitoring"); ?></h3>
                 <div class="box-tools pull-right">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm">Last month</button>
-                        <button type="button" class="btn btn-default btn-sm">Last week</button>
-                        <button type="button" class="btn btn-default btn-sm">Last day</button>
                         <button type="button" class="btn btn-default btn-sm active">Last hour</button>
                         <button type="button" class="btn btn-success btn-sm refresh-btn">Refresh</button>
                     </div>
                 </div>
             </div>
             <div class="box-body">
-                <div class="pull-left">Target: <span id="stats-target"></span></div>
+                <!--<div class="pull-left">Target: <span id="stats-target"></span></div>-->
                 <div id="stats-legend" class="pull-right"></div>
                 <div id="stats" style="margin-top: 25px;"></div>
             </div>
@@ -187,43 +155,11 @@ $this->params['header'] = [Yii::t('circuits',"Circuit").' #'.$conn->id, ['Home',
                 Pjax::begin([
                     'id' => 'history-pjax',
                     'timeout' => 5000, 
-                    'enablePushState' => false
                 ]);
 
-                echo Grid::widget([
-                    'id'=> 'history-grid',
-                    'dataProvider' => $history,
-                    'columns' => array(
-                        [
-                            'attribute' => 'type',
-                            'value' => function ($model){
-                                return $model->getTypeLabel();
-                            },
-                        ],
-                        [
-                            'header' => Yii::t("circuits", 'Info'),
-                            'format' => 'raw',
-                            'value' => function ($model){
-                                if($model->message) {
-                                    return '<a href="#"><span class="event-message fa fa-file-text"></span></a>';
-                                } elseif ($model->data) {
-                                    $tmp = json_decode($model->data);
-                                    return (isset($tmp->bandwidth) ? '<span class="fa fa-tachometer"></span> '.$tmp->bandwidth.' Mbps<br>' : '')
-                                        .(isset($tmp->start) ? '<span class="fa fa-clock-o"></span> Start at '.$tmp->start.'<br>' : '')
-                                        .(isset($tmp->end) ? '<span class="fa fa-clock-o"></span> End at '.$tmp->end.'<br>' : '');
-                                } 
-                                return '';
-                            },
-                        ],
-                        [
-                            'attribute' => 'author_id',
-                            'format' => 'raw',
-                            'value' => function ($model){
-                                return $model->getAuthor();
-                            },
-                        ],
-                    ),
-                ]);
+                echo $this->render('history', array(
+                    'history' => $history,
+                )); 
 
                 Pjax::end();
 
@@ -235,28 +171,18 @@ $this->params['header'] = [Yii::t('circuits',"Circuit").' #'.$conn->id, ['Home',
  
 <?php Modal::begin([
     'id' => 'history-modal',
-    'header' => 'NSI Messages',
+    'header' => 'Detailed messages',
     'size' => Modal::SIZE_LARGE,
 ]); 
 
 Pjax::begin([
-    'timeout' => 5000, 
-    'enablePushState' => false,
-    'clientOptions' => ['container' => 'history-modal-pjax']]);
-
-echo Grid::widget([
-    'id'=> 'full-history-grid',
-    'dataProvider' => $messageHistory,
-    'columns' => array(
-        [
-            'header' => 'All Events',
-            'format' => 'raw',
-            'value' => function ($model){
-                return $model->created_at." - ".$model->type." by ".$model->getAuthor().'<br>'.Html::textarea('message', $model->message, ['rows'=> 20, 'cols'=> 138]);
-            },
-        ],
-    ),
+    'id'=> 'messages-pjax',
+    'timeout' => 5000
 ]);
+
+echo $this->render('history-messages', array(
+    'messages' => $messages,
+));
 
 Pjax::end();
 
