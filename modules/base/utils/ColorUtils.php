@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\base\components;
+namespace meican\base\utils;
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
