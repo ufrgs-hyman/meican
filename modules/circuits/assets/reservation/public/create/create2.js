@@ -51,12 +51,10 @@ $(document).ready(function() {
 function validatePath() {
     if (isValidPath()) return true;
     else {
-        $.notify({
-            title: '<strong>Path invalid!</strong>',
-            message: 'Two endpoints are required for a valid circuit.'
-        },{
-            type: 'danger'
-        });
+        MAlert.show(
+            'Path invalid!', 
+            'Minimum two endpoints are required for a valid circuit.',
+            'danger');
         return false;
     }
 }
@@ -74,12 +72,10 @@ function isValidPath() {
 function validateRequirements() {
     if(($("#reservationform-bandwidth").val() == "") ||
         $("#requirements").find(".field-reservationform-bandwidth").hasClass("has-error")) {
-        $.notify({
-            title: '<strong>Bandwidth invalid!</strong>',
-            message: 'The value must be must be no less than 1.'
-        },{
-            type: 'danger'
-        });
+        MAlert.show(
+            'Bandwidth invalid!', 
+            'The value must be must be no less than 1.',
+            'danger');
         return false;
     }
     return true;
@@ -88,12 +84,10 @@ function validateRequirements() {
 function validateSchedule() {
     var events = $('#calendar').fullCalendar('clientEvents');
     if(events.length < 1) {
-        $.notify({
-            title: '<strong>Circuit date invalid!</strong>',
-            message: 'At least one date is required.'
-        },{
-            type: 'danger'
-        });
+        MAlert.show(
+            'Circuit duration invalid!', 
+            'Please, check your start and end time.',
+            'danger');
         return false;
     }  
     return true;
@@ -102,12 +96,10 @@ function validateSchedule() {
 function validateName() {
     if(($("#reservationform-name").val() == "") ||
         $("#confirm").find(".field-reservationform-name").hasClass("has-error")) {
-        $.notify({
-            title: '<strong>Name invalid!</strong>',
-            message: 'Check your input.'
-        },{
-            type: 'danger'
-        });
+        MAlert.show(
+            'Name invalid!', 
+            'Please, check your circuit name.',
+            'danger');
         return false;
     }
     return true;
@@ -314,12 +306,10 @@ function initPathTab() {
         if($(".point").length > 2) {
             $(this).parent().parent().parent().parent().parent().remove();
             drawPath();
-        } else $.notify({
-                title: '<strong>Invalid action!</strong>',
-                message: 'Two points are required for a valid circuit.'
-            },{
-                type: 'warning'
-            });
+        } else MAlert.show(
+            'Invalid action!',
+            'Minimum two points are required for a valid circuit.',
+            'warning');
         return false;
     });
 

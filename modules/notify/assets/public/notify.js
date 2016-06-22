@@ -99,7 +99,6 @@ $(document).ready(function() {
 	    }
 	});
 
-
 	//Document Click hiding the popups 
 	$(document).click(function(event){
 	    /*if (!$("#feedback_panel").is(event.target) && $("#feedback_panel").has(event.target).length === 0){

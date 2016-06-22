@@ -22,6 +22,7 @@ class Notify extends AssetBundle
     
     public $js = [
 		'notify.js',
+        'alert.js'
     ];
     
     public $depends = [

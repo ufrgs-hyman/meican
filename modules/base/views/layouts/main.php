@@ -136,11 +136,15 @@ foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
         'body' => $message,
         'pluginOptions' => [
             'delay' => 20000,
+            'newest_on_top' => true,
             'placement' => [
                 'from' => 'top',
                 'align' => 'right',
-            ]
-        ]
+            ],
+            'offset' => [
+                'y'=>60,
+                'x'=>20
+            ]]
     ]);
 }
 
