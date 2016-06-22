@@ -11,7 +11,7 @@ use yii\data\ActiveDataProvider;
 use yii\base\Model;
 use yii\data\ArrayDataProvider;
 
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 use meican\topology\models\Domain;
 use meican\circuits\models\Reservation;
 use meican\circuits\models\ConnectionAuth;

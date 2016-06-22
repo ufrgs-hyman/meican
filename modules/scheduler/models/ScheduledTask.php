@@ -8,7 +8,7 @@ namespace meican\scheduler\models;
 
 use Yii;
 
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 use meican\scheduler\util\SchedulableTask;
 
 /**

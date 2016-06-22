@@ -13,7 +13,7 @@ use meican\aaa\models\UserDomainRole;
 use meican\aaa\models\User;
 use meican\aaa\models\Group;
 
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 
 use meican\circuits\models\ConnectionAuth;
 use meican\circuits\models\Connection;

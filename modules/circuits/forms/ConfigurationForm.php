@@ -9,7 +9,7 @@ namespace meican\circuits\forms;
 use yii\base\Model;
 use Yii;
 
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 use meican\circuits\models\CircuitsPreference;
 
 /**

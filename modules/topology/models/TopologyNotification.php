@@ -10,7 +10,7 @@ use Yii;
 use yii\helpers\Html;
 
 use meican\notify\models\Notification;
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster

@@ -9,7 +9,7 @@ namespace meican\circuits\services;
 use yii\helpers\Url;
 use Yii;
 
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionPath;
 use meican\circuits\models\ConnectionEvent;

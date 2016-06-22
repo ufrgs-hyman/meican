@@ -15,7 +15,7 @@ use meican\topology\models\Device;
 use meican\circuits\models\ReservationPath;
 use meican\circuits\models\Connection;
 use meican\circuits\models\CircuitsPreference;
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster

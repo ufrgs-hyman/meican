@@ -8,7 +8,7 @@ namespace meican\oscars\services;
 
 use Yii;
 
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 use meican\base\utils\StringUtils;
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionPath;

@@ -10,7 +10,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\base\Model;
 
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 use meican\circuits\models\Reservation;
 use meican\circuits\models\ConnectionPath;
 use meican\circuits\models\Connection;

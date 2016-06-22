@@ -12,7 +12,7 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\Json;
 
 use meican\aaa\RbacController;
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 use meican\circuits\models\Reservation;
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionAuth;

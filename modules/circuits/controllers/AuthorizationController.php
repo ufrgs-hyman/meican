@@ -25,7 +25,7 @@ use meican\circuits\forms\AuthorizationSearch;
 use meican\bpm\models\BpmFlow;
 use meican\topology\models\Domain;
 use meican\notify\models\Notification;
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 
 /**
  * @author Diego Pittol

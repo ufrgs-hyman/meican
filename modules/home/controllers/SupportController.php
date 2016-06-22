@@ -10,7 +10,7 @@ use Yii;
 use yii\helpers\Url;
 
 use meican\base\BaseController;
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 use meican\aaa\models\User;
 use meican\home\forms\FeedbackForm;
 

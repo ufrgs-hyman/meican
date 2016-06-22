@@ -12,7 +12,7 @@ use meican\bpm\models\BpmFlow;
 use meican\topology\models\Domain;
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionAuth;
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 
 /**
  * Represents a circuit object.

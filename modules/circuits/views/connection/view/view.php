@@ -15,7 +15,7 @@ use kartik\touchspin\TouchSpin;
 use kartik\form\ActiveForm;
 
 use meican\base\grid\Grid;
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 use meican\circuits\forms\ConnectionForm;
 
 \meican\circuits\assets\connection\View::register($this);

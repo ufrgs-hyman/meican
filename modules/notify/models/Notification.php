@@ -9,7 +9,7 @@ namespace meican\notify\models;
 use Yii;
 use yii\helpers\Html;
 
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 use meican\topology\models\TopologyNotification;
 use meican\topology\models\Domain;
 use meican\circuits\models\ConnectionAuth;

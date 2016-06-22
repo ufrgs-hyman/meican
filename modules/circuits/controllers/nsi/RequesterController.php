@@ -20,7 +20,7 @@ use meican\topology\models\Port;
 use meican\topology\models\Device;
 use meican\topology\models\Domain;
 use meican\topology\models\Provider;
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 use meican\nsi\ConnectionRequesterServer;
 
 /**

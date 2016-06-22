@@ -9,7 +9,7 @@ namespace meican\circuits\models;
 use Yii;
 use yii\data\ActiveDataProvider;
 
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 
 
 /**

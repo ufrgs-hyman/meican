@@ -9,8 +9,8 @@ namespace meican\topology\models;
 use Yii;
 
 use yii\data\ActiveDataProvider;
-use meican\base\components\DateUtils;
-use meican\base\components\ColorUtils;
+use meican\base\utils\DateUtils;
+use meican\base\utils\ColorUtils;
 
 /**
  * Esta classe representa uma Alteração ou diferença

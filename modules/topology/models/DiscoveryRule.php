@@ -8,7 +8,7 @@ namespace meican\topology\models;
 
 use Yii;
 
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 use meican\nsi\NSIParser;
 use meican\nmwg\NMWGParser;
 use meican\topology\models\TopologyNotification;

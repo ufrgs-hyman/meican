@@ -10,7 +10,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 use meican\topology\models\Network;
 use meican\topology\models\Domain;
 

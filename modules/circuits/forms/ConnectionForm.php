@@ -11,7 +11,7 @@ use Yii;
 
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionEvent;
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 
 /**
  * @author Maurício Quatrin Guerreiro

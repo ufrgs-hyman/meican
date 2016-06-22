@@ -10,7 +10,7 @@ use yii\base\Model;
 use Yii;
 
 use meican\aaa\models\AaaPreference;
-use meican\base\components\DateUtils;
+use meican\base\utils\DateUtils;
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
