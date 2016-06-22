@@ -90,6 +90,7 @@ class ConnectionEvent extends \yii\db\ActiveRecord
             'conn_id' => Yii::t('circuits', 'Conn ID'),
             'created_at' => Yii::t('circuits', 'Date'),
             'author_id' => Yii::t("circuits", "Author"),
+            'type' => 'Event',
         ];
     }
 
@@ -141,31 +142,31 @@ class ConnectionEvent extends \yii\db\ActiveRecord
     public function getTypeLabel() {
         switch ($this->type) {
             case self::TYPE_NSI_PROVISION_CONFIRMED:
-                return 'NSI Provision Confirmed received';
+                return 'Provision confirmed';
             case self::TYPE_NSI_DATAPLANE_CHANGE:
-                return 'NSI Dataplane Status received';
+                return 'DataPlane report';
             case self::TYPE_NSI_SUMMARY_CONFIRMED:
-                return 'NSI Query Summary Confirmed received';
+                return 'Summary confirmed';
             case self::TYPE_NSI_RESERVE_FAILED:
-                return 'NSI Reserve Failed received';
+                return 'Reserve failed';
             case self::TYPE_NSI_RESERVE_CONFIRMED:
-                return 'NSI Reserve Confirmed received';
+                return 'Reserve confirmed';
             case self::TYPE_NSI_RESERVE_RESPONSE:
-                return 'NSI Reserve Response received';
+                return 'Reserve response';
             case self::TYPE_NSI_COMMIT_CONFIRMED:
-                return 'NSI Reserve Commit Confirmed received';
+                return 'Commit confirmed';
             case self::TYPE_NSI_COMMIT_FAILED:
-                return 'NSI Reserve Commit Failed received';
+                return 'Commit failed';
             case self::TYPE_NSI_SUMMARY:
-                return 'NSI Query Summary sent';
+                return 'Summary requested';
             case self::TYPE_NSI_TERMINATE:
-                return 'NSI Terminate sent';
+                return 'Terminate requested';
             case self::TYPE_NSI_PROVISION:
-                return 'NSI Provision sent';
+                return 'Provision requested';
             case self::TYPE_NSI_COMMIT:
-                return 'NSI Reserve Commit sent';
+                return 'Commit requested';
             case self::TYPE_NSI_RESERVE:
-                return 'NSI Reserve sent';
+                return 'Reserve requested';
             case self::TYPE_USER_CANCEL:
                 return 'Cancel requested';
             case self::TYPE_USER_UPDATE:

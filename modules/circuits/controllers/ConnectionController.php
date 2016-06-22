@@ -243,8 +243,9 @@ class ConnectionController extends RbacController {
      */
     public function actionUpdate($id = null, $submit = false, $confirm = false) {
         if ($confirm) {
-            self::asyncActionBegin();
+            self::beginAsyncAction();
             $conn = Connection::findOne($id);
+            //envia ao provedor uma requisicao de atualizacao do circuito
             $conn->requestUpdate();
             return "";
         }

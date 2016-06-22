@@ -4,7 +4,8 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-use meican\base\grid\Grid;
+
+
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -16,27 +17,32 @@ use meican\aaa\models\User;
 use meican\circuits\models\Reservation;
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionPath;
+use meican\base\grid\Grid;
+
+use kartik\switchinput\SwitchInput;
 
 \meican\circuits\assets\reservation\Status::register($this);
 
-$this->params['header'] = [Yii::t('circuits', 'Active or scheduled'), ['Home', Yii::t('circuits', 'Circuits')]];
+$this->params['header'] = [Yii::t('circuits', 'Circuits'), ['Home', Yii::t('circuits', 'Circuits'), 'Status']];
 
 ?>
 
 <div class="box box-default">
 	<div class="box-header with-border">
-		<button id="refresh-button" class="btn btn-primary" value="true"><?= Yii::t("circuits", "Enable auto refresh"); ?></button>
+        <h3 class="box-title"><?= Yii::t("circuits", "Active or scheduled circuits"); ?></h3>
+        <div class="box-tools pull-right">
+            <?= SwitchInput::widget(['id' => 'auto-refresh-switch', 'name'=>'auto-refresh', 'value'=>true, 
+                'pluginOptions' => [
+                    'size' => 'small',
+                    'labelText' => 'Auto update'
+                ]]); ?>
+        </div>
+        
 	</div>
     <div class="box-body">   
+		<?php Pjax::begin(['id' => 'pjax-status']); 
 
-
-		<?php Pjax::begin([
-		            'id' => 'pjax-status',
-		            'enablePushState' => false,
-		]); ?>
-		
-		<?=
-			Grid::widget([
+	    echo Grid::widget([
 				'options' => [
 						'id'=>'grid',
 						'class' => 'list'],
@@ -45,13 +51,15 @@ $this->params['header'] = [Yii::t('circuits', 'Active or scheduled'), ['Home', Y
 				'layout' => "{items}{summary}{pager}",
 				'columns' => array(
 						[
-							'format' => 'raw',
-							'value' => function ($res){
-								return Html::img('@web'.'/images/eye.png', ['onclick' => "view($res->id)"]);
-							},
-							'contentOptions'=>['style'=>'cursor: pointer;'],
-							'headerOptions'=>['style'=>'width: 2%;'],
-						],
+                            'class' => 'yii\grid\ActionColumn',
+                            'template'=>'{view}',
+                            'buttons' => [
+                                    'view' => function ($url, $model) {
+                                        return Html::a('<span class="fa fa-eye"></span>', $url);
+                                    }
+                            ],
+                            'headerOptions'=>['style'=>'width: 2%;'],
+                        ],
 						[
 							'label' => Yii::t('circuits', 'Name'),
 							'value' => 'name',

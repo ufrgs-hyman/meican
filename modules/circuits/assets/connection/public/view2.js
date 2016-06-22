@@ -73,12 +73,7 @@ function initEditModal() {
             data: $("#edit-form").serialize(),
             success: function (resId) {
                 $("#edit-modal").modal('hide');
-                setTimeout(function() {
-                    refreshPjaxContainer('history-pjax');
-                    setTimeout(function() {
-                        refreshPjaxContainer('info-pjax');
-                    }, 1000);
-                }, 1000);
+                refreshAll();
                 $.ajax({
                     type: "POST",
                     url: baseUrl + '/circuits/connection/update?id='+ $("#circuit-id").attr('value') + '&confirm=true',
@@ -507,7 +502,7 @@ function initStats() {
         var x = item.datapoint[0],
             y = item.datapoint[1].toFixed(4);
 
-        $("#line-chart-tooltip").html(moment.unix(x/1000).format("DD/MM/YYYY HH:mm:ss") + '<br>' + (y < 0 ? (-1*y) : y) + ' Mbps')
+        $("#line-chart-tooltip").html(moment.unix(x/1000).format("DD/MM/YYYY HH:mm:ss") + '<br>' + Math.abs(y) + ' Mbps')
             .css({top: item.pageY + 5, left: item.pageX + 5})
             .fadeIn(200);
       } else {

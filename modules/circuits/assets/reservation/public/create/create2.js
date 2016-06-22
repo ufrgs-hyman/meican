@@ -1,6 +1,7 @@
 /**
  * @copyright Copyright (c) 2016 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
+ * @author Maurício Quatrin Guerreiro
  */
 
 var meicanMap = new LMap('canvas');
@@ -12,7 +13,6 @@ var currentEvent = null;
 var lsidebar;
 
 $(document).ready(function() {
-    
     $(".sidebar-toggle").hide();
     $(".sidebar-mini").addClass("sidebar-collapse");
 
@@ -53,7 +53,7 @@ function validatePath() {
     else {
         MAlert.show(
             'Path invalid!', 
-            'Minimum two endpoints are required for a valid circuit.',
+            'Please, verify if your path is completelly filled. Two points are required.',
             'danger');
         return false;
     }
@@ -61,8 +61,19 @@ function validatePath() {
 
 function isValidPath() {
     for (var i = 0; i < $('.point').length; i++) {
-        if ($($('.point')[i]).find('.port-input').val() == "") {
-            return false;
+        switch($('.point').eq(i).find(".mode-input").val()) {
+            case 'normal':
+                if ($('.point').eq(i).find('.port-input').val() == "") {
+                    return false;
+                }
+                break;
+            case 'advanced':
+                if ($('.point').eq(i).find('.urn-input').val() == "") {
+                    return false;
+                }
+            default:
+                console.log('erro ao validar path');
+                return false;
         }
     };
 
@@ -649,7 +660,7 @@ function buildPoint() {
             '</div>'+
             'VLAN: <label class="point-info vlan-l">Auto</label>'+
             '<input class="vlan-input" type="hidden" name="ReservationForm[path][vlan][]">'+
-            '<input class="mode-input" type="hidden" name="ReservationForm[path][mode][]">'+
+            '<input class="mode-input" type="hidden" name="ReservationForm[path][mode][]" value="normal">'+
             '<div class="pull-right">'+
                 '<a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>'+
                 '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-trash"></i></a>'+
@@ -669,65 +680,10 @@ function drawPath() {
         };
 
         for (var i = 0; i < path.length - 1; i++) {
-            meicanMap.addLink([
-                'dev' + path[i], 
-                'dev' + path[i+1]   
-            ]);
+            meicanMap.addLink(null, 'dev' + path[i], 'dev' + path[i+1]);
         };
     }
 }
-
-/*$("#viewer-mode-select").selectmenu({
-    select: function( event, ui ) {
-        switch(ui.item.value) {
-            case "mg-s" : 
-                meicanLMap.hide();
-                meicanGraph.hide();
-                meicanGMap.show('s', $("#node-type-select").val());
-                break;
-            case "ml-osm" :
-                meicanGMap.hide();
-                meicanGraph.hide();
-                meicanLMap.show("osm", $("#node-type-select").val());
-                break;
-            case "ml-mq" :
-                meicanGMap.hide();
-                meicanGraph.hide();
-                meicanLMap.show("mq");
-                break;
-            case "gv" : 
-                meicanLMap.hide();
-                meicanGMap.hide();
-                meicanGraph.show();
-                break;    
-        }
-    }
-});    
-
-$("#node-type-select").selectmenu({
-    select: function( event, ui ) {
-        switch($("#viewer-mode-select").val()) {
-            case "ml-osm":
-                meicanLMap.show('osm', ui.item.value);
-                break;
-        }
-
-        switch(ui.item.value) {
-            case "net" : 
-                loadNetworks();
-                break;  
-            case "dev" : 
-                loadDevices();
-                break;
-            case "port" : 
-                loadPorts();
-                break;  
-            case "prov" : 
-                loadProviders();
-                break;   
-        }
-    }
-});*/
 
 function loadDomains() {
     $.ajax({
@@ -784,51 +740,6 @@ function loadNetworks() {
                 meicanMap.addMarker(response[i], 'net');
             };
             loadNetworkLinks();
-        }
-    });
-}
-
-function loadDomainLinks() {
-    $.ajax({
-        url: baseUrl+'/topology/viewer/get-domain-links',
-        dataType: 'json',
-        method: "GET",
-        success: function(response) {
-            meicanTopo['doml'] = response;
-            //meicanGraph.addLinks(response, 'dom');            
-        }
-    });
-}
-
-function loadNetworkLinks() {
-    $.ajax({
-        url: baseUrl+'/topology/viewer/get-network-links',
-        dataType: 'json',
-        method: "GET",
-        success: function(response) {
-            meicanGraph.addLinks(response, 'net');
-            for (var src in response) {
-                for (var i = 0; i < response[src].length; i++) {
-                    meicanMap.addLink('net'+src,'net'+response[src][i], 'net');
-                }
-            }           
-        }
-    });
-}
-
-function loadDeviceLinks() {
-    $.ajax({
-        url: baseUrl+'/topology/viewer/get-device-links',
-        dataType: 'json',
-        method: "GET",
-        success: function(response) {
-            meicanTopo['dev']['links'] = response;
-            /*meicanGraph.addLinks(response, 'dev');
-            for (var src in response) {
-                for (var i = 0; i < response[src].length; i++) {
-                    meicanMap.addLink('dev'+src,'dev'+response[src][i], 'dev');
-                }
-            }   */        
         }
     });
 }

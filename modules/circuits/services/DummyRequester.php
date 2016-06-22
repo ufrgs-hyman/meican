@@ -43,17 +43,25 @@ class DummyRequester implements Requester {
         $this->conn->confirmCommit();
     }
 
-    public function info() {
+    public function read() {
         sleep(1);
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY)->save();
         sleep(1);
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY_CONFIRMED)->save();
         $this->conn->version = $this->conn->version + 1;
         $this->conn->save();
-        $this->conn->confirmInfo();
+        $this->conn->confirmRead();
     }
 
     public function update() {
+        sleep(1);
+        $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE)->save();
+        sleep(1);
+        $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_RESPONSE)->save();
+        sleep(1);
+        $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_CONFIRMED)->save();
+        $this->conn->version = $this->conn->version + 1;
+        $this->conn->save();
     }
 
     public function provision() {

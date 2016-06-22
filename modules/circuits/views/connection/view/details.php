@@ -32,6 +32,10 @@ echo DetailView::widget([
         ],  
         'version',
         'type',
+        [
+            'label' => 'Provider',
+            'value' => 'RNP Aggregator'
+        ]
     ],
 ]); 
 

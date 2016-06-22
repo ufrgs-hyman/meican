@@ -11,8 +11,5 @@ namespace meican\circuits\services;
  *
  * @author Maurício Quatrin Guerreiro
  */
-class OscarsRequester implements Requester {
-
-    public function create() {
-    }
+class OscarsRequester 
 }

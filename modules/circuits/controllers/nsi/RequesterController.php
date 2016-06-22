@@ -33,9 +33,11 @@ use meican\nsi\ConnectionRequesterServer;
  * @author Maurício Quatrin Guerreiro
  */
 class RequesterController extends Controller implements ConnectionRequesterServer {
+
+    public $layout = "@meican/base/views/layouts/blank";
     
     public $enableCsrfValidation = false;
-    
+
     public function actionIndex() {
         return "";
     }   
@@ -217,29 +219,30 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         
         if ($conn) {
             if($conn->version != $response->reservation->criteria->version) {
+                $conn->start = (new \DateTime($response->reservation->criteria->schedule->startTime))->format("Y-m-d H:i:s");
+                $conn->finish = (new \DateTime($response->reservation->criteria->schedule->endTime))->format("Y-m-d H:i:s");
 
-                if($this->updateConnection($conn, $response)) {
-                    $conn->confirmInfo();
-                
-                } else {
-                    Yii::trace("path invalid?");
-                    /////Path invalido
-                    /////Inconsistencias na topologia
+                if($conn->version == 0) {
+                    if($this->updateConnectionPath($conn, $response)) {
+                        $conn->confirmRead();
+                    } else {
+                        /////Path invalido
+                        /////Inconsistencias na topologia
+                        Yii::trace("path invalid?");
+                    }
                 }
+                
+                $conn->version = $response->reservation->criteria->version;
+                
             } 
                 
-            $conn->setActiveDataStatus($response->reservation->connectionStates->dataPlaneStatus->active)->save();
-            
+            $conn->setActiveDataStatus($response->reservation->connectionStates->dataPlaneStatus->active);
+            $conn->save();
         }
         return "";
     }
     
-    private function updateConnection($conn, $response) {
-        $conn->start = (new \DateTime($response->reservation->criteria->schedule->startTime))->format("Y-m-d H:i:s");
-        $conn->finish = (new \DateTime($response->reservation->criteria->schedule->endTime))->format("Y-m-d H:i:s");
-        $conn->version = $response->reservation->criteria->version;
-        $conn->save();
-
+    private function updateConnectionPath($conn, $response) {
         //updating path
 
         //clean old points

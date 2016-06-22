@@ -19,7 +19,7 @@ interface Requester {
 
     public function commit();
 
-    public function info();
+    public function read();
 
     public function provision();
 }

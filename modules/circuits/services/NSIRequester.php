@@ -96,7 +96,7 @@ class NSIRequester implements Requester {
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_COMMIT, $this->soapClient->__getLastRequest())->save();
     }
 
-    public function info() {
+    public function read() {
         $this->soapClient->requestSummary($this->conn->external_id);
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY, $this->soapClient->__getLastRequest())->save();
     }

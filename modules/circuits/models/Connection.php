@@ -202,8 +202,8 @@ class Connection extends \yii\db\ActiveRecord
         $this->getRequesterService()->commit();
     }
     
-    public function requestInfo() {
-        $this->getRequesterService()->info();
+    public function requestRead() {
+        $this->getRequesterService()->read();
     }
     
     public function requestProvision() {
@@ -244,11 +244,11 @@ class Connection extends \yii\db\ActiveRecord
 		$this->save();
 		
 		//Depois de submetido podemos solicitar o caminho encontrado pelo provider
-		$this->requestInfo();
+		$this->requestRead();
 	}
 	
 	//circuito confirmado e caminho disponivel. Se for uma reserva normal em submissao, solicitar autorizacao para provisionamento
-	public function confirmInfo() {
+	public function confirmRead() {
 		if ($this->auth_status == self::AUTH_STATUS_UNEXECUTED && $this->getReservation()->one()->type == Reservation::TYPE_NORMAL) {	
 			
 			$this->requestAuthorization();

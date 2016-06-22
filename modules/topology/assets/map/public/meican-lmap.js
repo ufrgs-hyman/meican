@@ -141,7 +141,7 @@ LMap.prototype.addLink = function(id, from, to, type, partial, cap) {
                         meicanMap.getNode(from).options.name +
                         '</b> and <b>' +
                         meicanMap.getNode(to).options.name +
-                        '</b><br>Capacity: <b>' + cap + ' Mbps</b><br><div class="link-status">Status: <b>loading...</b></div>');
+                        '</b><br>');
 
         this._links.push(link);
     } else return null;
