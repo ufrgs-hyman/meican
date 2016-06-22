@@ -9,7 +9,7 @@ use yii\bootstrap\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 
-\meican\topology\assets\domain\Form::register($this);
+use kartik\color\ColorInput;
 
 $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology')]];
 
@@ -28,7 +28,9 @@ $form= ActiveForm::begin([
     <div class="box-body">
         <?= $form->field($domain,'name')->textInput(['size'=>30,'maxlength'=>60]); ?>
         <?= $form->field($domain,'default_policy')->dropDownList($domain->getPolicyOptions()); ?>
-        <?= $form->field($domain,'color')->hiddenInput(); ?>
+        <?= $form->field($domain, 'color')->widget(ColorInput::classname(), [
+            'options' => ['placeholder' => 'Select color ...', 'readonly' => true],
+        ]); ?>
     </div>
     <div class="box-footer">
         <div class="form-group">

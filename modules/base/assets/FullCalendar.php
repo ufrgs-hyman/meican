@@ -8,6 +8,9 @@ namespace meican\base\assets;
 
 use yii\web\AssetBundle;
 
+/**
+ * @author Maurício Quatrin Guerreiro
+ */
 class FullCalendar extends AssetBundle
 {
     public $sourcePath = '@bower/fullcalendar/dist';

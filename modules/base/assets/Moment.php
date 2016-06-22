@@ -9,7 +9,7 @@ namespace meican\base\assets;
 use yii\web\AssetBundle;
 
 /**
- * @author Maurício Quatrin Guerreiro @mqgmaster
+ * @author Maurício Quatrin Guerreiro
  */
 class Moment extends AssetBundle
 {

@@ -8,6 +8,9 @@ namespace meican\base\assets;
 
 use yii\web\AssetBundle;
 
+/**
+ * @author Maurício Quatrin Guerreiro
+ */
 class Vis extends AssetBundle
 {
     public $sourcePath = '@npm/vis/dist';
