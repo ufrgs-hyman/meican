@@ -73,7 +73,20 @@ function initCancelModal() {
     });
 
     $("#cancel-modal").on("click", '.confirm-btn', function() {
-        $("#cancel-modal").modal("hide");
+        $.ajax({
+            url: baseUrl+'/circuits/connection/cancel',
+            dataType: 'json',
+            data: {
+                id: connId,
+            },
+            success: function() {
+                $("#cancel-modal").modal("hide");
+                MAlert.show(I18N.t"Success"), I18N.t"Your cancel request has been sent to provider."), 'success');
+            },
+            error: function() {
+                MAlert.show(I18N.t("Success"), I18N.t("You are not allowed for cancel circuits in this domains."), 'success');
+            }
+        });
     });
 }
 
