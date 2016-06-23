@@ -63,7 +63,7 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
         if(!$conn) return "";
 
-        $conn->buildEvent(ConnectionEvent::TYPE_MESSAGE_TIMEOUT, Yii::$app->request->getRawBody())->save();
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_MESSAGE_TIMEOUT, Yii::$app->request->getRawBody())->save();
         return "";
     }
     
