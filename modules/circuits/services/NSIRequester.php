@@ -107,7 +107,9 @@ class NSIRequester implements Requester {
         $event = $this->conn->getUpdateEventInProgress();
         $changes = json_decode($event->data);
 
-        if(isset($changes->release) && $this->conn->resources_status == Connection::RES_STATUS_PROVISIONED) {
+        if(isset($changes->release) && 
+            $this->conn->resources_status == Connection::RES_STATUS_PROVISIONED &&
+            $this->conn->dataplane_status == Connection::DATA_STATUS_ACTIVE) {
             $this->conn->requestRelease();
             return;
         } else $this->updateReleased();

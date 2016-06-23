@@ -106,6 +106,13 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         if(!$conn) return "";
         $conn->buildEvent(ConnectionEvent::TYPE_NSI_COMMIT_CONFIRMED, Yii::$app->request->getRawBody())->save();
         $conn->confirmCommit();
+
+        $event = $conn->getUpdateEventInProgress();
+        if($event) {
+            $changes = json_decode($event->data);
+            if(isset($changes->release) && $conn->dataplane_status == Connection::DATA_STATUS_ACTIVE)
+                $conn->status = Connection::STATUS_WAITING_DATAPLANE;
+        }
         return "";
     }
 
@@ -260,15 +267,8 @@ class RequesterController extends Controller implements ConnectionRequesterServe
                     /////Inconsistencias na topologia
                     Yii::trace("path invalid?");
                 }
-            } else {
-                $event = $conn->getUpdateEventInProgress();
-                if($event) {
-                    $changes = json_decode($event->data);
-                    if(isset($changes->release))
-                        $conn->status = Connection::STATUS_WAITING_DATAPLANE;
-                }
-            }
-
+            } 
+            
             $conn->version = $response->reservation->criteria->version;
         } 
         
