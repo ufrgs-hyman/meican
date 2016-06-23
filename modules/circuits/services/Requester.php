@@ -24,4 +24,6 @@ interface Requester {
     public function provision();
 
     public function release();
+
+    public function cancel();
 }
