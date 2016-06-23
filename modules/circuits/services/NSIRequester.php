@@ -114,6 +114,9 @@ class NSIRequester implements Requester {
     }
 
     public function updateReleased() {
+        $event = $this->conn->getUpdateEventInProgress();
+        $changes = json_decode($event->data);
+        
         $path = [];
         foreach ($this->conn->getPaths()->all() as $point) {
             $path[] = $point->getFullPortUrn()."?vlan=".$point->vlan;
