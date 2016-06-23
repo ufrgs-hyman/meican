@@ -62,6 +62,8 @@ class ConnectionEvent extends \yii\db\ActiveRecord
     const TYPE_NSI_MESSAGE_TIMEOUT =        'NSI_MESSAGE_TIMEOUT';
     const TYPE_NSI_ABORT =                  'NSI_ABORT';
     const TYPE_NSI_ABORT_CONFIRMED =        'NSI_ABORT_CONFIRMED';
+    const TYPE_NSI_RELEASE_CONFIRMED =      'NSI_RELEASE_CONFIRMED';
+    const TYPE_NSI_RELEASE =                'NSI_RELEASE';
 
     const STATUS_INPROGRESS =               'INPROGRESS';
     const STATUS_FINISHED =                 'FINISHED';
