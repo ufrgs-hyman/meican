@@ -126,12 +126,14 @@ class ConnectionEvent extends \yii\db\ActiveRecord
             case self::TYPE_NSI_RESERVE_RESPONSE:
             case self::TYPE_NSI_COMMIT_CONFIRMED:
             case self::TYPE_NSI_COMMIT_FAILED:
+            case self::TYPE_NSI_RELEASE_CONFIRMED:
                 return 'Provider';
             case self::TYPE_NSI_SUMMARY:
             case self::TYPE_NSI_TERMINATE:
             case self::TYPE_NSI_PROVISION:
             case self::TYPE_NSI_COMMIT:
             case self::TYPE_NSI_RESERVE:
+            case self::TYPE_NSI_RELEASE:
                 return 'MEICAN';
             case self::TYPE_USER_CANCEL:
             case self::TYPE_USER_UPDATE:
@@ -155,38 +157,24 @@ class ConnectionEvent extends \yii\db\ActiveRecord
 
     public function getTypeLabel() {
         switch ($this->type) {
-            case self::TYPE_NSI_PROVISION_CONFIRMED:
-                return 'Provision confirmed';
-            case self::TYPE_NSI_DATAPLANE_CHANGE:
-                return 'DataPlane report';
-            case self::TYPE_NSI_SUMMARY_CONFIRMED:
-                return 'Summary confirmed';
-            case self::TYPE_NSI_RESERVE_FAILED:
-                return 'Reserve failed';
-            case self::TYPE_NSI_RESERVE_CONFIRMED:
-                return 'Reserve confirmed';
-            case self::TYPE_NSI_RESERVE_RESPONSE:
-                return 'Reserve response';
-            case self::TYPE_NSI_COMMIT_CONFIRMED:
-                return 'Commit confirmed';
-            case self::TYPE_NSI_COMMIT_FAILED:
-                return 'Commit failed';
-            case self::TYPE_NSI_SUMMARY:
-                return 'Summary requested';
-            case self::TYPE_NSI_TERMINATE:
-                return 'Terminate requested';
-            case self::TYPE_NSI_PROVISION:
-                return 'Provision requested';
-            case self::TYPE_NSI_COMMIT:
-                return 'Commit requested';
-            case self::TYPE_NSI_RESERVE:
-                return 'Reserve requested';
-            case self::TYPE_USER_CANCEL:
-                return 'Cancel requested';
-            case self::TYPE_USER_UPDATE:
-                return 'Edit requested';
-            case self::TYPE_USER_CREATE:
-                return 'Create requested';
+            case self::TYPE_NSI_PROVISION_CONFIRMED:return 'Provision confirmed';
+            case self::TYPE_NSI_DATAPLANE_CHANGE:   return 'DataPlane report';
+            case self::TYPE_NSI_SUMMARY_CONFIRMED:  return 'Summary confirmed';
+            case self::TYPE_NSI_RESERVE_FAILED:     return 'Reserve failed';
+            case self::TYPE_NSI_RESERVE_CONFIRMED:  return 'Reserve confirmed';
+            case self::TYPE_NSI_RESERVE_RESPONSE:   return 'Reserve response';
+            case self::TYPE_NSI_COMMIT_CONFIRMED:   return 'Commit confirmed';
+            case self::TYPE_NSI_COMMIT_FAILED:      return 'Commit failed';
+            case self::TYPE_NSI_SUMMARY:            return 'Summary requested';
+            case self::TYPE_NSI_TERMINATE:          return 'Terminate requested';
+            case self::TYPE_NSI_PROVISION:          return 'Provision requested';
+            case self::TYPE_NSI_COMMIT:             return 'Commit requested';
+            case self::TYPE_NSI_RESERVE:            return 'Reserve requested';
+            case self::TYPE_NSI_RELEASE:            return "Release requested";
+            case self::TYPE_NSI_RELEASE_CONFIRMED:  return "Release confirmed";
+            case self::TYPE_USER_CANCEL:            return 'Cancel requested';
+            case self::TYPE_USER_UPDATE:            return 'Edit requested';
+            case self::TYPE_USER_CREATE:            return 'Create requested';
         }
     }
 }

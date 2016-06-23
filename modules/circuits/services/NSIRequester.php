@@ -107,7 +107,7 @@ class NSIRequester implements Requester {
         $event = $this->conn->getUpdateEventInProgress();
         $changes = json_decode($event->data);
 
-        if(isset($changes->release)) {
+        if(isset($changes->release) && $conn->resources_status == Connection::RES_STATUS_PROVISIONED) {
             $this->conn->requestRelease();
             return;
         } else $this->updateReleased();
@@ -116,7 +116,7 @@ class NSIRequester implements Requester {
     public function updateReleased() {
         $event = $this->conn->getUpdateEventInProgress();
         $changes = json_decode($event->data);
-        
+
         $path = [];
         foreach ($this->conn->getPaths()->all() as $point) {
             $path[] = $point->getFullPortUrn()."?vlan=".$point->vlan;

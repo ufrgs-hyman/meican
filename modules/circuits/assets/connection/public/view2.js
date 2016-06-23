@@ -18,6 +18,18 @@ $(document).ready(function() {
     initEditModal();
     initCancelModal();
     enableAutoRefresh();
+
+    $("#refresh-btn").on('click', function() {
+        $.ajax({
+            url: baseUrl+'/circuits/connection/refresh',
+            data: {
+                id: $("#circuit-id").attr('value'),
+            },
+            success: function() {
+                refreshPjax("details-pjax");
+            }
+        });
+    });
 });
 
 $(document).on('ready pjax:success', function() {

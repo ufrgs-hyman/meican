@@ -101,6 +101,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit").' #'.$conn->id, ['Home',
                 <h3 class="box-title"><?= Yii::t("topology", "Details"); ?></h3>
                 <div class="box-tools pull-right">
                     <div class="btn-group">
+                        <button id="refresh-btn" type="button" class="btn btn-default btn-sm">Refresh</button>
                         <button id="edit-btn" type="button" class="btn btn-default btn-sm">Edit</button>
                         <button id="cancel-btn" type="button" class="btn btn-default btn-sm">Cancel</button>
                     </div>

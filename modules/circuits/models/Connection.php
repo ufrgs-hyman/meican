@@ -52,6 +52,9 @@ class Connection extends \yii\db\ActiveRecord
     const DATA_STATUS_ACTIVE =       "ACTIVE";
     const DATA_STATUS_INACTIVE =     "INACTIVE";
 
+    const RES_STATUS_PROVISIONED =   "PROVISIONED";
+    const RES_STATUS_RELEASED =      "RELEASED";
+
     const AUTH_STATUS_PENDING =      "WAITING";
     const AUTH_STATUS_APPROVED =     "AUTHORIZED";
     const AUTH_STATUS_REJECTED =     "DENIED";
@@ -76,8 +79,8 @@ class Connection extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status', 'bandwidth', 'type','dataplane_status', 'auth_status', 'start', 'finish'], 'required'],
-            [['status', 'type','dataplane_status', 'auth_status', 'name'], 'string'],
+            [['status', 'bandwidth', 'type','resources_status','dataplane_status', 'auth_status', 'start', 'finish'], 'required'],
+            [['status', 'type','resources_status','dataplane_status', 'auth_status', 'name'], 'string'],
             [['start', 'finish'], 'safe'],
             [['reservation_id', 'bandwidth'], 'integer'],
             [['external_id'], 'string', 'max' => 65],
@@ -239,6 +242,7 @@ class Connection extends \yii\db\ActiveRecord
 
     public function confirmRelease() {
         $this->status = self::STATUS_RELEASED;
+        $this->resources_status = self::RES_STATUS_RELEASED;
         $this->save();
 
         if($this->getUpdateEventInProgress())
@@ -277,6 +281,8 @@ class Connection extends \yii\db\ActiveRecord
     
     public function confirmProvision() {
         $this->status = self::STATUS_PROVISIONED;
+        $this->resources_status = self::RES_STATUS_PROVISIONED;
+        
         $event = $this->getUpdateEventInProgress();
         if($event)
             $event->finish()->save();
