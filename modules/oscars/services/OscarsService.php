@@ -30,16 +30,22 @@ class OscarsService {
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_CONNECTTIMEOUT => 2,
             CURLOPT_USERAGENT => 'Meican',
-            CURLOPT_URL => $oscarsUrl
+            CURLOPT_URL => $oscarsUrl,
         );
         curl_setopt_array($ch , $options);
         $output = curl_exec($ch);
         curl_close($ch);
 
-        Yii::trace(json_decode($output));
-        OscarsService::saveCircuits(json_decode($output));
-        return true;
+        Yii::trace($output);
+        
+        if($output != null) {
+            OscarsService::saveCircuits(json_decode($output));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private static function saveCircuits($circuits) {
