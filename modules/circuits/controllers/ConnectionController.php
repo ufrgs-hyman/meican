@@ -262,12 +262,13 @@ class ConnectionController extends RbacController {
     }
 
     public function actionRefresh($id) {
-        self::asyncActionBegin();
+        self::beginAsyncAction();
+        
         $conn = Connection::findOne($id);
         //circuitos pendentes nao possuem external ID e nao existem nos provedores
         if($conn && $conn->status != Connection::STATUS_PENDING)
             $conn->requestRead();
-        
+
         return true;
     }
 
