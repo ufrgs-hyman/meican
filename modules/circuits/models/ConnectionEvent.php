@@ -158,6 +158,7 @@ class ConnectionEvent extends \yii\db\ActiveRecord
 
     public function getTypeLabel() {
         switch ($this->type) {
+            case self::TYPE_NSI_TERMINATE_CONFIRMED:return 'Terminate confirmed';
             case self::TYPE_NSI_PROVISION_CONFIRMED:return 'Provision confirmed';
             case self::TYPE_NSI_DATAPLANE_CHANGE:   return 'DataPlane report';
             case self::TYPE_NSI_SUMMARY_CONFIRMED:  return 'Summary confirmed';
