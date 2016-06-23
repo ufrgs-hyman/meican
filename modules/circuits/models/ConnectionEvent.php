@@ -127,6 +127,7 @@ class ConnectionEvent extends \yii\db\ActiveRecord
             case self::TYPE_NSI_COMMIT_CONFIRMED:
             case self::TYPE_NSI_COMMIT_FAILED:
             case self::TYPE_NSI_RELEASE_CONFIRMED:
+            case self::TYPE_NSI_TERMINATE_CONFIRMED:
                 return 'Provider';
             case self::TYPE_NSI_SUMMARY:
             case self::TYPE_NSI_TERMINATE:
