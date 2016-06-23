@@ -107,7 +107,7 @@ class NSIRequester implements Requester {
             $path[] = $point->getFullPortUrn()."?vlan=".$point->vlan;
         }
 
-        $event = $this->conn->getLastUserUpdateEvent();
+        $event = $this->conn->getUpdateEventInProgress();
         $changes = json_decode($event->data);
         Yii::trace($changes);
         $this->soapClient->requestReserve(

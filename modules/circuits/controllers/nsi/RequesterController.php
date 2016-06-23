@@ -48,8 +48,15 @@ class RequesterController extends Controller implements ConnectionRequesterServe
 
     public function dataPlaneStateChange($response) {
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        if(!$conn) return "";
+
         $conn->buildEvent(ConnectionEvent::TYPE_NSI_DATAPLANE_CHANGE, Yii::$app->request->getRawBody())->save();
         $conn->setActiveDataStatus($response->dataPlaneStatus->active)->save();
+        if($conn->status == Connection::STATUS_WAITING_DATAPLANE) {
+            $conn->requestProvision();
+        }
+        
+        return '';
     }
     
     public function messageDeliveryTimeout($response) {
@@ -58,6 +65,8 @@ class RequesterController extends Controller implements ConnectionRequesterServe
     
     public function reserveConfirmed($response){
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        if(!$conn) return "";
+
         $conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_CONFIRMED, Yii::$app->request->getRawBody())->save();
         $conn->confirmResources();
         return "";
@@ -65,6 +74,8 @@ class RequesterController extends Controller implements ConnectionRequesterServe
     
     public function reserveFailed($response){
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        if(!$conn) return "";
+
         $conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_FAILED, Yii::$app->request->getRawBody())->save();
         $conn->failedResources();
         return "";
@@ -72,17 +83,23 @@ class RequesterController extends Controller implements ConnectionRequesterServe
 
     public function reserveTimeout($response){
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        if(!$conn) return "";
+
         $conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE_TIMEOUT, Yii::$app->request->getRawBody())->save();
         $conn->failedCreate();
         return "";
     }
 
     public function reserveAbortConfirmed($response) {
+        $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        if(!$conn) return "";
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_ABORT_CONFIRMED, Yii::$app->request->getRawBody())->save();
         return "";
     }
 
     public function reserveCommitConfirmed($response){
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        if(!$conn) return "";
         $conn->buildEvent(ConnectionEvent::TYPE_NSI_COMMIT_CONFIRMED, Yii::$app->request->getRawBody())->save();
         $conn->confirmCommit();
         return "";
@@ -90,6 +107,7 @@ class RequesterController extends Controller implements ConnectionRequesterServe
 
     public function reserveCommitFailed($response){
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        if(!$conn) return "";
         $conn->buildEvent(ConnectionEvent::TYPE_NSI_COMMIT_FAILED, Yii::$app->request->getRawBody())->save();
         $conn->failedCommit();
         return "";
@@ -97,6 +115,7 @@ class RequesterController extends Controller implements ConnectionRequesterServe
                 
     public function provisionConfirmed($response){
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        if(!$conn) return "";
         $conn->buildEvent(ConnectionEvent::TYPE_NSI_PROVISION_CONFIRMED, Yii::$app->request->getRawBody())->save();
         $conn->confirmProvision();
         return "";
@@ -104,12 +123,17 @@ class RequesterController extends Controller implements ConnectionRequesterServe
     
     public function terminateConfirmed($response){
         $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        if(!$conn) return "";
         $conn->buildEvent(ConnectionEvent::TYPE_NSI_TERMINATE_CONFIRMED, Yii::$app->request->getRawBody())->save();
         $conn->confirmCancel();
         return "";
     }
 
     public function releaseConfirmed($response) {
+        $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        if(!$conn) return "";
+        $conn->buildEvent(ConnectionEvent::TYPE_NSI_RELEASE_CONFIRMED, Yii::$app->request->getRawBody())->save();
+        $conn->confirmRelease();
         return "";
     }
 
@@ -215,30 +239,32 @@ class RequesterController extends Controller implements ConnectionRequesterServe
     
     public function querySummaryConfirmed($response) {
         $conn = Connection::find()->where(['external_id'=>$response->reservation->connectionId])->one();
+        if(!$conn) return "";
+
         $conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY_CONFIRMED, Yii::$app->request->getRawBody())->save();
         
-        if ($conn) {
-            if($conn->version != $response->reservation->criteria->version) {
-                $conn->start = (new \DateTime($response->reservation->criteria->schedule->startTime))->format("Y-m-d H:i:s");
-                $conn->finish = (new \DateTime($response->reservation->criteria->schedule->endTime))->format("Y-m-d H:i:s");
+        if($conn->version != $response->reservation->criteria->version) {
+            $conn->start = (new \DateTime($response->reservation->criteria->schedule->startTime))->format("Y-m-d H:i:s");
+            $conn->finish = (new \DateTime($response->reservation->criteria->schedule->endTime))->format("Y-m-d H:i:s");
 
-                if($conn->version == 0) {
-                    if($this->updateConnectionPath($conn, $response)) {
-                        $conn->confirmRead();
-                    } else {
-                        /////Path invalido
-                        /////Inconsistencias na topologia
-                        Yii::trace("path invalid?");
-                    }
+            if($conn->version == 0) {
+                if($this->updateConnectionPath($conn, $response)) {
+                    //Como eh a primeira versao deve ser verificado se ha autorizacao para este circuito.
+                    $conn->confirmRead();
+                } else {
+                    /////Path invalido
+                    /////Inconsistencias na topologia
+                    Yii::trace("path invalid?");
                 }
-                
-                $conn->version = $response->reservation->criteria->version;
-                
-            } 
-                
-            $conn->setActiveDataStatus($response->reservation->connectionStates->dataPlaneStatus->active);
-            $conn->save();
-        }
+            } else {
+                $conn->status = Connection::STATUS_WAITING_DATAPLANE;
+            }
+
+            $conn->version = $response->reservation->criteria->version;
+        } 
+            
+        $conn->setActiveDataStatus($response->reservation->connectionStates->dataPlaneStatus->active);
+        $conn->save();
         return "";
     }
     

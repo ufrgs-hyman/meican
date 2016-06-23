@@ -24,41 +24,47 @@ use meican\aaa\models\User;
 class ConnectionEvent extends \yii\db\ActiveRecord
 {
     //usuario solicitou criacao
-    const TYPE_USER_CREATE = 'USER_CREATE';
+    const TYPE_USER_CREATE =                'USER_CREATE';
     //usuario solicitou edicao
-    const TYPE_USER_UPDATE = 'USER_UPDATE';
+    const TYPE_USER_UPDATE =                'USER_UPDATE';
     //usuario solicitou cancelamento
-    const TYPE_USER_CANCEL = 'USER_CANCEL';
+    const TYPE_USER_CANCEL =                'USER_CANCEL';
     //meican solicitou criacao/alteracao do circuito
-    const TYPE_NSI_RESERVE = 'NSI_RESERVE';
+    const TYPE_NSI_RESERVE =                'NSI_RESERVE';
     //provedor confirma recebimento da solicitacao de criacao/alteracao do circuito
-    const TYPE_NSI_RESERVE_RESPONSE = 'NSI_RESERVE_RESPONSE';
+    const TYPE_NSI_RESERVE_RESPONSE =       'NSI_RESERVE_RESPONSE';
     //provedor confirmou criacao/alteracao do circuito
-    const TYPE_NSI_RESERVE_CONFIRMED = 'NSI_RESERVE_CONFIRMED';
+    const TYPE_NSI_RESERVE_CONFIRMED =      'NSI_RESERVE_CONFIRMED';
     //provedor rejeitou criacao/alteracao do circuito
-    const TYPE_NSI_RESERVE_FAILED = 'NSI_RESERVE_FAILED';
+    const TYPE_NSI_RESERVE_FAILED =         'NSI_RESERVE_FAILED';
     //provedor reportou que ocorreu um timeout e o circuito expirou
-    const TYPE_NSI_RESERVE_TIMEOUT = 'NSI_RESERVE_TIMEOUT';
+    const TYPE_NSI_RESERVE_TIMEOUT =        'NSI_RESERVE_TIMEOUT';
     //meican solicitou commit do circuito
-    const TYPE_NSI_COMMIT = 'NSI_COMMIT';
+    const TYPE_NSI_COMMIT =                 'NSI_COMMIT';
     //provedor confirmou commit do circuito
-    const TYPE_NSI_COMMIT_CONFIRMED = 'NSI_COMMIT_CONFIRMED';
+    const TYPE_NSI_COMMIT_CONFIRMED =       'NSI_COMMIT_CONFIRMED';
     //provedor rejeitou commit do circuito
-    const TYPE_NSI_COMMIT_FAILED = 'NSI_COMMIT_FAILED';
+    const TYPE_NSI_COMMIT_FAILED =          'NSI_COMMIT_FAILED';
     //meican solicitou provisionamento do circuito
-    const TYPE_NSI_PROVISION = 'NSI_PROVISION';
+    const TYPE_NSI_PROVISION =              'NSI_PROVISION';
     //provedor confirmou provisionamento do circuito
-    const TYPE_NSI_PROVISION_CONFIRMED = 'NSI_PROVISION_CONFIRMED';
+    const TYPE_NSI_PROVISION_CONFIRMED =    'NSI_PROVISION_CONFIRMED';
     //meican solicitou cancelamento do circuito
-    const TYPE_NSI_TERMINATE = 'NSI_TERMINATE';
+    const TYPE_NSI_TERMINATE =              'NSI_TERMINATE';
     //provedor confirmou cancelamento do circuito
-    const TYPE_NSI_TERMINATE_CONFIRMED = 'NSI_TERMINATE_CONFIRMED';
+    const TYPE_NSI_TERMINATE_CONFIRMED =    'NSI_TERMINATE_CONFIRMED';
     //meican solicitou detalhes do circuito
-    const TYPE_NSI_SUMMARY = 'NSI_SUMMARY';
+    const TYPE_NSI_SUMMARY =                'NSI_SUMMARY';
     //provedor enviou detalhes do circuito
-    const TYPE_NSI_SUMMARY_CONFIRMED = 'NSI_SUMMARY_CONFIRMED';
+    const TYPE_NSI_SUMMARY_CONFIRMED =      'NSI_SUMMARY_CONFIRMED';
     //provedor enviou detalhes do status do dataplane do circuito
-    const TYPE_NSI_DATAPLANE_CHANGE = 'NSI_DATAPLANE_CHANGE';
+    const TYPE_NSI_DATAPLANE_CHANGE =       'NSI_DATAPLANE_CHANGE';
+    const TYPE_NSI_MESSAGE_TIMEOUT =        'NSI_MESSAGE_TIMEOUT';
+    const TYPE_NSI_ABORT =                  'NSI_ABORT';
+    const TYPE_NSI_ABORT_CONFIRMED =        'NSI_ABORT_CONFIRMED';
+
+    const STATUS_INPROGRESS =               'INPROGRESS';
+    const STATUS_FINISHED =                 'FINISHED';
 
     /**
      * @inheritdoc
@@ -76,6 +82,7 @@ class ConnectionEvent extends \yii\db\ActiveRecord
         return [
             [['conn_id', 'created_at', 'type'], 'required'],
             [['conn_id', 'author_id'], 'integer'],
+            [['status'], 'string'],
             [['created_at', 'message', 'data'], 'safe'],
         ];
     }
@@ -100,6 +107,10 @@ class ConnectionEvent extends \yii\db\ActiveRecord
     public function getConnection()
     {
         return $this->hasOne(Connection::className(), ['id' => 'conn_id']);
+    }
+
+    public function finish() {
+        $this->status = self::STATUS_FINISHED;
     }
 
     public function getAuthor() {
