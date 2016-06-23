@@ -215,6 +215,10 @@ class Connection extends \yii\db\ActiveRecord
     public function requestProvision() {
         $this->getRequesterService()->provision();
     }
+
+    public function requestRelease() {
+        $this->getRequesterService()->release();
+    }
     
     public function requestCancel() {
         $this->status = self::STATUS_CANCEL_REQ;
@@ -230,7 +234,15 @@ class Connection extends \yii\db\ActiveRecord
         $this->status = self::STATUS_CREATED;
         $this->save();
     }
-    
+
+    public function confirmRelease() {
+        $this->status = self::STATUS_RELEASED;
+        $this->save();
+
+        if($this->getUpdateEventInProgress())
+            $this->getRequesterService()->updateReleased();
+    }
+
     public function confirmResources() {
         $this->status = self::STATUS_CONFIRMED;
         $this->save();
@@ -263,6 +275,10 @@ class Connection extends \yii\db\ActiveRecord
     
     public function confirmProvision() {
         $this->status = self::STATUS_PROVISIONED;
+        $event = $this->getUpdateEventInProgress();
+        if($event)
+            $event->finish()->save();
+        
         $this->save();
         ReservationNotification::create($this->id);
     }

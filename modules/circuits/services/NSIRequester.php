@@ -101,14 +101,24 @@ class NSIRequester implements Requester {
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY, $this->soapClient->__getLastRequest())->save();
     }
 
+    //Circuitos NSI ativos devem ser desativados para
+    //depois efetuar alteracao
     public function update() {
+        $event = $this->conn->getUpdateEventInProgress();
+        $changes = json_decode($event->data);
+
+        if(isset($changes->release)) {
+            $this->conn->requestRelease();
+            return;
+        } else $this->updateReleased();
+    }
+
+    public function updateReleased() {
         $path = [];
         foreach ($this->conn->getPaths()->all() as $point) {
             $path[] = $point->getFullPortUrn()."?vlan=".$point->vlan;
         }
-
-        $event = $this->conn->getUpdateEventInProgress();
-        $changes = json_decode($event->data);
+        
         Yii::trace($changes);
         $this->soapClient->requestReserve(
             $this->conn->external_id,
@@ -127,5 +137,10 @@ class NSIRequester implements Requester {
     public function provision() {
         $this->soapClient->requestProvision($this->conn->external_id);
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_PROVISION, $this->soapClient->__getLastRequest())->save();
+    }
+
+    public function release() {
+        $this->soapClient->requestRelease($this->conn->external_id);
+        $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RELEASE, $this->soapClient->__getLastRequest())->save();
     }
 }

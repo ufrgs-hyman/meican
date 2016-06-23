@@ -22,4 +22,6 @@ interface Requester {
     public function read();
 
     public function provision();
+
+    public function release();
 }

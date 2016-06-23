@@ -111,6 +111,7 @@ class ConnectionEvent extends \yii\db\ActiveRecord
 
     public function finish() {
         $this->status = self::STATUS_FINISHED;
+        return $this;
     }
 
     public function getAuthor() {

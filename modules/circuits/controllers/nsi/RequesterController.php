@@ -60,6 +60,10 @@ class RequesterController extends Controller implements ConnectionRequesterServe
     }
     
     public function messageDeliveryTimeout($response) {
+        $conn = Connection::find()->where(['external_id'=>$response->connectionId])->one();
+        if(!$conn) return "";
+
+        $conn->buildEvent(ConnectionEvent::TYPE_MESSAGE_TIMEOUT, Yii::$app->request->getRawBody())->save();
         return "";
     }
     
@@ -257,7 +261,12 @@ class RequesterController extends Controller implements ConnectionRequesterServe
                     Yii::trace("path invalid?");
                 }
             } else {
-                $conn->status = Connection::STATUS_WAITING_DATAPLANE;
+                $event = $conn->getUpdateEventInProgress();
+                if($event) {
+                    $changes = json_decode($event->data);
+                    if(isset($changes->release))
+                        $conn->status = Connection::STATUS_WAITING_DATAPLANE;
+                }
             }
 
             $conn->version = $response->reservation->criteria->version;

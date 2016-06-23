@@ -71,4 +71,8 @@ class DummyRequester implements Requester {
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_PROVISION_CONFIRMED)->save();
         $this->conn->confirmProvision();
     }
+
+    public function release() {
+        
+    }
 }
