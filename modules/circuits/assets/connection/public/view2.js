@@ -77,7 +77,7 @@ function initCancelModal() {
             url: baseUrl+'/circuits/connection/cancel',
             dataType: 'json',
             data: {
-                id: connId,
+                id: $("#circuit-id").attr("value"),
             },
             success: function() {
                 $("#cancel-modal").modal("hide");
