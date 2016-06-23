@@ -257,6 +257,7 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         if($conn->version != $response->reservation->criteria->version) {
             $conn->start = (new \DateTime($response->reservation->criteria->schedule->startTime))->format("Y-m-d H:i:s");
             $conn->finish = (new \DateTime($response->reservation->criteria->schedule->endTime))->format("Y-m-d H:i:s");
+            $this->updateConnectionBandwidth($conn, $response);
 
             if($conn->version == 0) {
                 if($this->updateConnectionPath($conn, $response)) {
@@ -268,7 +269,7 @@ class RequesterController extends Controller implements ConnectionRequesterServe
                     Yii::trace("path invalid?");
                 }
             } 
-            
+
             $conn->version = $response->reservation->criteria->version;
         } 
         
@@ -339,6 +340,35 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         
         return true;
     }    
+
+    private function updateConnectionBandwidth($conn, $response) {
+        $pathNodes = $response->reservation->criteria->children->child;
+        if (count($pathNodes) < 2) {
+            $pathNodes = [$pathNodes];
+        }
+        
+        Yii::trace(print_r($pathNodes,true));
+
+        $i = 0;
+        
+        foreach ($pathNodes as $pathNode) {
+            Yii::trace(print_r($pathNode,true));
+            
+            $pathNodeXml = $pathNode->any;
+            $pathNodeXml = str_replace("<nsi_p2p:p2ps>","<p2p>", $pathNodeXml);
+            $pathNodeXml = str_replace("</nsi_p2p:p2ps>","</p2p>", $pathNodeXml);
+            $pathNodeXml = '<?xml version="1.0" encoding="UTF-8"?>'.$pathNodeXml;
+            $xml = new \DOMDocument();
+            $xml->loadXML($pathNodeXml);
+            $parser = new \DOMXpath($xml);
+            $cap = $parser->query("//capacity");
+                
+            $conn->bandwidth = $cap->item(0)->nodeValue);
+            return true;
+        }
+        
+        return false;
+    }   
 }
 
 $wsdl = Url::to('@web/wsdl/ogf_nsi_connection_requester_v2_0.wsdl', true);
