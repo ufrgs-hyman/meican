@@ -122,9 +122,11 @@ class Connection extends \yii\db\ActiveRecord
     }
 
     public function getUpdateEventInProgress() {
+        return $this->getHistory()->where(['type'=>ConnectionEvent::TYPE_USER_UPDATE])->orderBy('id DESC')->one();
+        /*
         return $this->getHistory()->where([
             'type'=>ConnectionEvent::TYPE_USER_UPDATE,
-            'status'=>ConnectionEvent::STATUS_INPROGRESS])->one();
+            'status'=>ConnectionEvent::STATUS_INPROGRESS])->one();*/
     }
 
     /**
@@ -278,7 +280,7 @@ class Connection extends \yii\db\ActiveRecord
         $event = $this->getUpdateEventInProgress();
         if($event)
             $event->finish()->save();
-        
+
         $this->save();
         ReservationNotification::create($this->id);
     }
