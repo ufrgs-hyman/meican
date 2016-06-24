@@ -367,7 +367,7 @@ class RequesterController extends Controller implements ConnectionRequesterServe
             $parser = new \DOMXpath($xml);
             $cap = $parser->query("//capacity");
                 
-            $conn->bandwidth = $cap->item(0)->nodeValue);
+            $conn->bandwidth = $cap->item(0)->nodeValue;
             return true;
         }
         
