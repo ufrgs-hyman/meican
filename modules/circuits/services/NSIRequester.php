@@ -105,9 +105,9 @@ class NSIRequester implements Requester {
     //depois efetuar alteracao
     public function update() {
         if($this->conn->resources_status == Connection::RES_STATUS_PROVISIONED)
-            $this->conn->requestRelease();
-            return;
-        } else $this->updateReleased();
+            return $this->conn->requestRelease();
+        else 
+            return $this->updateReleased();
     }
 
     public function updateReleased() {
