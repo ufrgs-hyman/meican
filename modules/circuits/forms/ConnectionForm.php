@@ -73,12 +73,13 @@ class ConnectionForm extends Model {
 
             $conn = Connection::findOne($this->id);
             if ($this->acceptRelease) {
-                $changes['needRelease'] = true;
                 if ($conn->getStartDateTime() != DateUtils::fromLocal($this->start)) {
+                    $changes['needRelease'] = true;
                     $changes['start'] = DateUtils::localToUTC($this->start);
                 }
 
                 if ($conn->bandwidth != $this->bandwidth) {
+                    $changes['needRelease'] = true;
                     $changes['bandwidth'] = $this->bandwidth;
                 }
             }
