@@ -110,10 +110,6 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         if(!$conn) return "";
         $conn->buildEvent(ConnectionEvent::TYPE_NSI_COMMIT_CONFIRMED, Yii::$app->request->getRawBody())->save();
         $conn->confirmCommit();
-
-        if($conn->version > 1 && $conn->resources_status == Connection::RES_STATUS_RELEASED) {
-            $conn->requestProvision();
-        }
         return "";
     }
 

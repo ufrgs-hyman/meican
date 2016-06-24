@@ -272,7 +272,12 @@ class Connection extends \yii\db\ActiveRecord
     public function confirmCommit() {
         $this->status = self::STATUS_SUBMITTED;
         $this->save();
-        
+
+        //se maior que zero eh pq estamos alterando um circuito ja autorizado
+        if($this->version > 0 && $this->resources_status == Connection::RES_STATUS_RELEASED) {
+            $this->requestProvision();
+        }
+
         //Depois de submetido podemos solicitar o caminho encontrado pelo provider
         $this->requestRead();
     }
