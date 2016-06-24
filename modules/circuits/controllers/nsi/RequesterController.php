@@ -107,11 +107,15 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         $conn->buildEvent(ConnectionEvent::TYPE_NSI_COMMIT_CONFIRMED, Yii::$app->request->getRawBody())->save();
         $conn->confirmCommit();
 
-        $event = $conn->getUpdateEventInProgress();
+        /*$event = $conn->getUpdateEventInProgress();
         if($event) {
             $changes = json_decode($event->data);
             if(isset($changes->release) && $conn->dataplane_status == Connection::DATA_STATUS_ACTIVE)
                 $conn->status = Connection::STATUS_WAITING_DATAPLANE;
+        }*/
+
+        if($conn->version > 1 && $conn->resources_status == Connection::RES_STATUS_RELEASED) {
+            $conn->requestProvision();
         }
         return "";
     }

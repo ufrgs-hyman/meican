@@ -282,7 +282,7 @@ class Connection extends \yii\db\ActiveRecord
     public function confirmProvision() {
         $this->status = self::STATUS_PROVISIONED;
         $this->resources_status = self::RES_STATUS_PROVISIONED;
-        
+
         $event = $this->getUpdateEventInProgress();
         if($event)
             $event->finish()->save();
@@ -324,13 +324,13 @@ class Connection extends \yii\db\ActiveRecord
         switch($this->status) {
             case self::STATUS_PENDING:          return Yii::t("circuits", "Pending");
             case self::STATUS_CREATED:          return Yii::t("circuits", "Checking resources");
-            case self::STATUS_CONFIRMED:        return Yii::t("circuits", "Getting path info");
-            case self::STATUS_SUBMITTED:        return Yii::t("circuits", "Waiting authorization");
+            case self::STATUS_CONFIRMED:        return Yii::t("circuits", "Getting information");
+            case self::STATUS_SUBMITTED:        return Yii::t("circuits", "Resources ready");
             case self::STATUS_PROVISIONED:      return Yii::t("circuits", "Provisioned");
-            case self::STATUS_CANCEL_REQ:       return Yii::t("circuits", "Cancel requested");
+            case self::STATUS_CANCEL_REQ:       return Yii::t("circuits", "Cancelling");
             case self::STATUS_CANCELLED:        return Yii::t("circuits", "Cancelled");
-            case self::STATUS_WAITING_DATAPLANE:return Yii::t("circuits", "Waiting dataplane");
-            case self::STATUS_FAILED_CREATE:    return Yii::t("circuits", "Rejected by provider");
+            case self::STATUS_WAITING_DATAPLANE:return Yii::t("circuits", "Checking dataplane");
+            case self::STATUS_FAILED_CREATE:    return Yii::t("circuits", "Provider unavailable");
             case self::STATUS_FAILED_CONFIRM:   return Yii::t("circuits", "Resources unavailable");
             case self::STATUS_FAILED_SUBMIT:    return Yii::t("circuits", "Preparing failed");
             case self::STATUS_FAILED_PROVISION: return Yii::t("circuits", "Provision failed");
@@ -349,11 +349,11 @@ class Connection extends \yii\db\ActiveRecord
     public function getAuthStatus() {
         switch($this->auth_status) {
             case self::AUTH_STATUS_PENDING:     return Yii::t("circuits", "Waiting");
-            case self::AUTH_STATUS_APPROVED :     return Yii::t("circuits", "Approved");
-            case self::AUTH_STATUS_REJECTED :     return Yii::t("circuits", "Rejected");
-            case self::AUTH_STATUS_EXPIRED :     return Yii::t("circuits", "Expired");
-            case self::AUTH_STATUS_UNEXECUTED :     return Yii::t("circuits", "Unexecuted");
-            case self::AUTH_STATUS_UNSOLICITED :     return Yii::t("circuits", "Unsocilited");
+            case self::AUTH_STATUS_APPROVED :   return Yii::t("circuits", "Approved");
+            case self::AUTH_STATUS_REJECTED :   return Yii::t("circuits", "Rejected");
+            case self::AUTH_STATUS_EXPIRED :    return Yii::t("circuits", "Expired");
+            case self::AUTH_STATUS_UNEXECUTED : return Yii::t("circuits", "Unexecuted");
+            case self::AUTH_STATUS_UNSOLICITED :return Yii::t("circuits", "Unsocilited");
         }
     }
     

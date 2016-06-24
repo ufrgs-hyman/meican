@@ -80,13 +80,13 @@ function initCancelModal() {
                 id: $("#circuit-id").attr("value"),
             },
             success: function() {
-                $("#cancel-modal").modal("hide");
-                MAlert.show(I18N.t("Success"), I18N.t("Your cancel request has been sent to provider."), 'success');
+                MAlert.show(I18N.t("Success"), I18N.t("Wait a moment while we process your request."), 'success');
             },
             error: function() {
                 MAlert.show(I18N.t("Success"), I18N.t("You are not allowed for cancel circuits in this domains."), 'success');
             }
         });
+        $("#cancel-modal").modal("hide");
     });
 }
 
@@ -97,7 +97,7 @@ function initEditModal() {
             url: baseUrl + '/circuits/connection/update?submit=true',
             data: $("#edit-form").serialize(),
             success: function (resId) {
-                $("#edit-modal").modal('hide');
+                MAlert.show(I18N.t("Success"), I18N.t("Wait a moment while we process your request."), 'success');
                 refreshAll();
                 $.ajax({
                     type: "POST",
@@ -113,6 +113,7 @@ function initEditModal() {
                 //showError(tt("Error proccessing your request. Contact your administrator."));
             }
         });
+        $("#edit-modal").modal('hide');
     });
 
     $("#connectionform-acceptrelease").on("switchChange.bootstrapSwitch", function(event, state) {

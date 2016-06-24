@@ -118,6 +118,7 @@ class ConnectionEvent extends \yii\db\ActiveRecord
 
     public function getAuthor() {
         switch ($this->type) {
+            case self::TYPE_NSI_MESSAGE_TIMEOUT:
             case self::TYPE_NSI_PROVISION_CONFIRMED:
             case self::TYPE_NSI_DATAPLANE_CHANGE:
             case self::TYPE_NSI_SUMMARY_CONFIRMED:
@@ -158,6 +159,7 @@ class ConnectionEvent extends \yii\db\ActiveRecord
 
     public function getTypeLabel() {
         switch ($this->type) {
+            case self::TYPE_NSI_MESSAGE_TIMEOUT:    return 'Message timeout';
             case self::TYPE_NSI_TERMINATE_CONFIRMED:return 'Terminate confirmed';
             case self::TYPE_NSI_PROVISION_CONFIRMED:return 'Provision confirmed';
             case self::TYPE_NSI_DATAPLANE_CHANGE:   return 'DataPlane report';
