@@ -80,13 +80,14 @@ function initCancelModal() {
                 id: $("#circuit-id").attr("value"),
             },
             success: function() {
-                MAlert.show(I18N.t("Success"), I18N.t("Wait a moment while we process your request."), 'success');
+                MAlert.show(I18N.t("Success"), I18N.t("Your request has been sent to provider."), 'success');
             },
             error: function() {
                 MAlert.show(I18N.t("Success"), I18N.t("You are not allowed for cancel circuits in this domains."), 'success');
             }
         });
         $("#cancel-modal").modal("hide");
+        MAlert.show(I18N.t("Success"), I18N.t("Your cancel request has been received. Wait a moment."), 'success');
     });
 }
 

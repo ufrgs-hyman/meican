@@ -34,6 +34,5 @@ Monitoring
 
 Circuits - View
 
-- Aguardar DataPlaneStateChange para entao Provisionar alterações de circuitos ativos
-
+- Aguardar DataPlaneStateChange para entao Commitar alterações de circuitos ativos
 

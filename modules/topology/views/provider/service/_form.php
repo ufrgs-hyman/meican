@@ -9,7 +9,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 
-use meican\models\Service;
+use meican\topology\models\Service;
 
 ?>
 

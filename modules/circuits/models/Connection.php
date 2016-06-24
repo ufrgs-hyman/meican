@@ -246,15 +246,21 @@ class Connection extends \yii\db\ActiveRecord
         $this->save();
 
         if($this->getUpdateEventInProgress())
-            $this->getRequesterService()->updateReleased();
+            $this->getRequesterService()->updateContinue();
     }
 
     public function confirmResources() {
         $this->status = self::STATUS_CONFIRMED;
         $this->save();
         
-        //Path encontrado pelo provider, temos que submeter para obter o caminho
-        $this->requestCommit();
+        //se recebeu confirm de resources e esta ativo eh
+        //pq eh uma alteracao de circuito
+        //nesse caso deve-se esperar o dataPlaneStateChange
+        if($this->dataplane_status == self::DATA_STATUS_ACTIVE && 
+                $this->resources_status == self::RES_STATUS_PROVISIONED)
+            $this->status = self::STATUS_WAITING_DATAPLANE;
+        else
+            $this->requestCommit();
     }
     
     public function confirmCancel() {

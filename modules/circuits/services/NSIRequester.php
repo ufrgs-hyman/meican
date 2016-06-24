@@ -101,16 +101,26 @@ class NSIRequester implements Requester {
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY, $this->soapClient->__getLastRequest())->save();
     }
 
-    //Circuitos NSI ativos devem ser desativados para
-    //depois efetuar alteracao
     public function update() {
-        if($this->conn->resources_status == Connection::RES_STATUS_PROVISIONED)
+        $event = $this->conn->getUpdateEventInProgress();
+        $changes = json_decode($event->data);
+        //circuito ativo
+        //end time pode ser alterado.
+        //start e banda soh apos release.
+        if($this->conn->dataplane_status == Connection::DATA_STATUS_ACTIVE) {
+            if(isset($changes->needRelease)) //start ou banda
+                return $this->conn->requestRelease();
+            else //endtime
+                $this->updateContinue();
+        //circuito inativo
+        //provisionado
+        } elseif ($this->conn->resources_status == Connection::RES_STATUS_PROVISIONED)
             return $this->conn->requestRelease();
-        else 
-            return $this->updateReleased();
+        else //released
+            return $this->updateContinue();
     }
 
-    public function updateReleased() {
+    public function updateContinue() {
         $event = $this->conn->getUpdateEventInProgress();
         $changes = json_decode($event->data);
 

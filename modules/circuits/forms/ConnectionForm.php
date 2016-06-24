@@ -73,7 +73,7 @@ class ConnectionForm extends Model {
 
             $conn = Connection::findOne($this->id);
             if ($this->acceptRelease) {
-                $changes['release'] = true;
+                $changes['needRelease'] = true;
                 if ($conn->getStartDateTime() != DateUtils::fromLocal($this->start)) {
                     $changes['start'] = DateUtils::localToUTC($this->start);
                 }
