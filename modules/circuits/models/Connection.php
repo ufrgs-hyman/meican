@@ -245,7 +245,13 @@ class Connection extends \yii\db\ActiveRecord
         $this->resources_status = self::RES_STATUS_RELEASED;
         $this->save();
 
-        if($this->getUpdateEventInProgress())
+        //release soh eh dado em alteracoes
+        //logo para continuar a alteracao soh precisamos
+        //confirmar que o circuito esta inactive
+        if($this->dataplane_status == self::DATA_STATUS_ACTIVE) {
+            $this->status = self::STATUS_WAITING_DATAPLANE;
+            $this->save();
+        } else
             $this->getRequesterService()->updateContinue();
     }
 

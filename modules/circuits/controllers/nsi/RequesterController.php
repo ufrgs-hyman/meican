@@ -54,10 +54,13 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         $conn->setActiveDataStatus($response->dataPlaneStatus->active)->save();
 
         //Se recebeu dataPlaneState e estava esperando
-        //eh alteracao e devemos commitar
-        //para efetiva-la
+        //eh alteracao 
         if($conn->status == Connection::STATUS_WAITING_DATAPLANE) {
-            $conn->requestCommit();
+            //se esta inativo devemos usar o reserve
+            if($conn->dataplane_status == Connection::DATA_STATUS_INACTIVE)
+                $conn->getRequesterService()->updateContinue();
+            else//se esta active podemos usar o commit diretamente
+                $conn->requestCommit();
         }
         
         return '';
