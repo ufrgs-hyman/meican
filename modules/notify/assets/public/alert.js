@@ -13,6 +13,7 @@ function MeicanAlert() {
 
 MeicanAlert.prototype.show = function(title, message, type) {
     $.notify({
+        icon: 'glyphicon glyphicon-ok-sign',
         title: '<strong>' + title + '</strong>',
         message: message
     },{

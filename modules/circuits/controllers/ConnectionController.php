@@ -45,11 +45,6 @@ class ConnectionController extends RbacController {
         if(Yii::$app->request->isPjax)
             return $this->buildViewContent($conn);
 
-        //se o circuito ja foi criado
-        //solicitar refresh junto ao provedor
-        if($conn->external_id)
-            $conn->requestRead();
-
         $history = new ActiveDataProvider([
             'query' => $conn->getHistory()->orderBy("id DESC"),
             'sort' => false,
