@@ -342,32 +342,21 @@ class RequesterController extends Controller implements ConnectionRequesterServe
     }    
 
     private function updateConnectionBandwidth($conn, $response) {
-        $pathNodes = $response->reservation->criteria->children->child;
-        if (count($pathNodes) < 2) {
-            $pathNodes = [$pathNodes];
-        }
+        $criteria = $response->reservation->criteria;
         
-        Yii::trace(print_r($pathNodes,true));
+        Yii::trace(print_r($criteria,true));
 
-        $i = 0;
-        
-        foreach ($pathNodes as $pathNode) {
-            Yii::trace(print_r($pathNode,true));
+        $p2pXml = $criteria->any;
+        $p2pXml = str_replace("<nsi_p2p:p2ps>","<p2p>", $p2pXml);
+        $p2pXml = str_replace("</nsi_p2p:p2ps>","</p2p>", $p2pXml);
+        $p2pXml = '<?xml version="1.0" encoding="UTF-8"?>'.$p2pXml;
+        $xml = new \DOMDocument();
+        $xml->loadXML($p2pXml);
+        $parser = new \DOMXpath($xml);
+        $cap = $parser->query("//capacity");
             
-            $pathNodeXml = $pathNode->any;
-            $pathNodeXml = str_replace("<nsi_p2p:p2ps>","<p2p>", $pathNodeXml);
-            $pathNodeXml = str_replace("</nsi_p2p:p2ps>","</p2p>", $pathNodeXml);
-            $pathNodeXml = '<?xml version="1.0" encoding="UTF-8"?>'.$pathNodeXml;
-            $xml = new \DOMDocument();
-            $xml->loadXML($pathNodeXml);
-            $parser = new \DOMXpath($xml);
-            $cap = $parser->query("//capacity");
-                
-            $conn->bandwidth = $cap->item(0)->nodeValue;
-            return true;
-        }
-        
-        return false;
+        $conn->bandwidth = $cap->item(0)->nodeValue;
+        return true;
     }   
 }
 
