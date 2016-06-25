@@ -75,4 +75,8 @@ class DummyRequester implements Requester {
     public function release() {
         
     }
+
+    public function cancel() {
+        
+    }
 }
