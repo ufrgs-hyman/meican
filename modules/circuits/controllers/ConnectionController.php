@@ -13,6 +13,7 @@ use yii\helpers\Json;
 
 use meican\circuits\models\Connection;
 use meican\circuits\models\ConnectionPath;
+use meican\circuits\models\ConnectionEvent;
 use meican\circuits\forms\ConnectionForm;
 use meican\circuits\models\Reservation;
 use meican\topology\models\Port;
@@ -52,18 +53,9 @@ class ConnectionController extends RbacController {
             ]
         ]);
 
-        $messageHistory = new ActiveDataProvider([
-            'query' => $conn->getHistory()->where(['is not', 'message', null])->orderBy("id DESC"),
-            'sort' => false,
-            'pagination' => [
-                'pageSize' => 1,
-            ]
-        ]);
-        
         return $this->render('view/view',[
             'conn' => $conn,
             'history' => $history,
-            'messages' => $messageHistory,
             'lastEvent' => $conn->getHistory()->orderBy("id DESC")->one()
         ]);
     }
@@ -89,16 +81,14 @@ class ConnectionController extends RbacController {
                 return $this->renderPartial('view/details', [
                     'conn' => $conn
                 ]);
-            case '#messages-pjax':
-                return $this->renderPartial('view/history-messages', [
-                    'messages' => new ActiveDataProvider([
-                        'query' => $conn->getHistory()->where(['is not', 'message', null])->orderBy("id DESC"),
-                        'sort' => false,
-                        'pagination' => [
-                            'pageSize' => 1,
-                        ]
-                    ])
-                ]);
+        }
+    }
+
+    public function actionGetEventMessage($id) {
+        if(Yii::$app->request->isAjax) {
+            return $this->renderPartial('view/event-message', [
+                'model' => ConnectionEvent::findOne($id)
+            ]);
         }
     }
 

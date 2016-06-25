@@ -171,23 +171,10 @@ $this->params['header'] = [Yii::t('circuits',"Circuit").' #'.$conn->id, ['Home',
 </div> 
  
 <?php Modal::begin([
-    'id' => 'history-modal',
-    'header' => 'Detailed messages',
+    'id' => 'event-message-modal',
+    'header' => 'Detailed event message',
     'size' => Modal::SIZE_LARGE,
-]); 
-
-Pjax::begin([
-    'id'=> 'messages-pjax',
-    'timeout' => 5000
-]);
-
-echo $this->render('history-messages', array(
-    'messages' => $messages,
-));
-
-Pjax::end();
-
-?>
+]); ?>
 
 <?php Modal::end(); ?>
 

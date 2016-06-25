@@ -21,7 +21,7 @@ echo Grid::widget([
             'format' => 'raw',
             'value' => function ($model){
                 if($model->message) {
-                    return '<a href="#"><span class="event-message fa fa-file-text"></span></a>';
+                    return '<a class="event-message" href="#"><span class="fa fa-file-text"></span></a>';
                 } elseif ($model->data) {
                     $tmp = json_decode($model->data);
                     return (isset($tmp->bandwidth) ? '<span class="fa fa-tachometer"></span> '.$tmp->bandwidth.' Mbps<br>' : '')
