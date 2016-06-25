@@ -29,6 +29,7 @@ $(document).ready(function() {
                 refreshPjax("details-pjax");
             }
         });
+        MAlert("Refresh in progress.", "Please, wait a moment while we get updated information.")
     });
 });
 
@@ -79,14 +80,13 @@ function initCancelModal() {
                 id: $("#circuit-id").attr("value"),
             },
             success: function() {
-                MAlert.show(I18N.t("Success"), I18N.t("Your request has been sent to provider."), 'success');
             },
             error: function() {
-                MAlert.show(I18N.t("Success"), I18N.t("You are not allowed for cancel circuits in this domains."), 'success');
+                MAlert.show(I18N.t("Error."), I18N.t("You are not allowed for cancel circuits in this domains."), 'danger');
             }
         });
         $("#cancel-modal").modal("hide");
-        MAlert.show(I18N.t("Success"), I18N.t("Your cancel request has been received. Wait a moment."), 'success');
+        MAlert.show(I18N.t("Cancellation in progress."), I18N.t("Please, wait a moment while we process your request."), 'success');
     });
 }
 
@@ -97,7 +97,7 @@ function initEditModal() {
             url: baseUrl + '/circuits/connection/update?submit=true',
             data: $("#edit-form").serialize(),
             success: function (resId) {
-                MAlert.show(I18N.t("Success"), I18N.t("Wait a moment while we process your request."), 'success');
+                MAlert.show(I18N.t("Modification in progress."), I18N.t("Please, wait a moment while we process your request."), 'success');
                 refreshAll();
                 $.ajax({
                     type: "POST",
@@ -105,12 +105,12 @@ function initEditModal() {
                     success: function () {
                     },
                     error: function() {
-                        //showError(tt("Error proccessing your request. Contact your administrator."));
+                        MAlert.show(I18N.t("Error."), I18N.t("Sorry, contact your administrator."), 'danger');
                     }
                 });
             },
             error: function() {
-                //showError(tt("Error proccessing your request. Contact your administrator."));
+                MAlert.show(I18N.t("Error."), I18N.t("Sorry, contact your administrator."), 'danger');
             }
         });
         $("#edit-modal").modal('hide');
