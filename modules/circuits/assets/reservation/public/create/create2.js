@@ -451,7 +451,7 @@ function initCalendar() {
     if($("#calendar").attr('loaded') === "false") {
         $("#calendar").attr("loaded", 'true');
         $('#calendar').fullCalendar({
-            defaultView: 'agendaWeek',
+            defaultView: 'month',
             height: 480,
             timezone: 'local',
             dayClick: function(date) {

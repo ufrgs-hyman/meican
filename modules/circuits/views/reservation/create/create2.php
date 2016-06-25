@@ -194,8 +194,8 @@ $form = ActiveForm::begin([
         <div class="lsidebar-pane" id="schedule">
             <h1 class="lsidebar-header">Step 3: Schedule<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
                 <br>
-                <p>
-                    On this section you need set a one date least for your reservation request.
+                <p>                   
+In this section you need to provide at least one interval, based in the start and end time of your circuit.
                 </p>
                 <br>
                 <div class="box box-default">
