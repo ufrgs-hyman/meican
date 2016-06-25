@@ -257,9 +257,10 @@ class Connection extends \yii\db\ActiveRecord
         //pq eh uma alteracao de circuito
         //nesse caso deve-se esperar o dataPlaneStateChange
         if($this->dataplane_status == self::DATA_STATUS_ACTIVE && 
-                $this->resources_status == self::RES_STATUS_PROVISIONED)
+                $this->resources_status == self::RES_STATUS_PROVISIONED) {
             $this->status = self::STATUS_WAITING_DATAPLANE;
-        else
+            $this->save();
+        } else
             $this->requestCommit();
     }
     
