@@ -48,7 +48,6 @@ class DummyRequester implements Requester {
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY)->save();
         sleep(1);
         $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY_CONFIRMED)->save();
-        $this->conn->version = $this->conn->version + 1;
         $this->conn->save();
         $this->conn->confirmRead();
     }
@@ -73,10 +72,16 @@ class DummyRequester implements Requester {
     }
 
     public function release() {
-        
+        sleep(1);
+        $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RELEASE)->save();
+        sleep(1);
+        $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RELEASE_CONFIRMED)->save();
     }
 
     public function cancel() {
-        
+        sleep(1);
+        $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_TERMINATE)->save();
+        sleep(1);
+        $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_TERMINATE_CONFIRMED)->save();
     }
 }
