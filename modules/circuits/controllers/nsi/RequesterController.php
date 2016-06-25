@@ -273,7 +273,12 @@ class RequesterController extends Controller implements ConnectionRequesterServe
             $conn->version = $response->reservation->criteria->version;
         } 
         
-        $conn->resources_status = $response->reservation->connectionStates->provisionState == 'Released' ? 'RELEASED' : 'PROVISIONED';
+        if($response->reservation->connectionStates->provisionState == "Provisioned") {
+            $conn->resources_status = 'PROVISIONED';
+            $conn->status = "PROVISIONED";
+        } else
+            $conn->resources_status = 'RELEASED';
+        
         $conn->setActiveDataStatus($response->reservation->connectionStates->dataPlaneStatus->active);
         $conn->save();
         return "";
