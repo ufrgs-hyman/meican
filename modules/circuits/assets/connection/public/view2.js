@@ -33,7 +33,6 @@ $(document).ready(function() {
 });
 
 $(document).on('ready pjax:success', function() {
-    initHistoryModal();
 });
 
 function disableAutoRefresh() {
@@ -142,10 +141,24 @@ function initEditModal() {
 }
 
 function initHistoryModal() {
-    $("#history-grid").on("click", '.event-message', function() {
-        $('#history-modal').modal('show');
+    $("#history-pjax").on("click", '.event-message', function(e) {
+        $('#event-message-modal').modal('show');
+        $.ajax({
+            url: baseUrl+'/circuits/connection/get-event-message',
+            data: {
+                id: $(this).parent().parent().attr('data-key')
+            },
+            method: "GET",
+            success: function(response) {
+                $("#event-message-modal").find('.modal-body').html(response);
+            },
+        });
         return false;
     });
+
+    $('#event-message-modal').on('hidden.bs.modal', function () {
+        $("#event-message-modal").find('.modal-body').html('');
+    })
 }
 
 function updateCircuitStatus() {
@@ -201,12 +214,12 @@ function finishCircuit() {
 }
 
 function initPathBox() {
-    meicanMap = new LMap('canvas');
-    meicanMap.show('dev');
-    loadDomains();
     $("#path-grid").css("margin", '10px');
     $("#path-box").css("height", 445);
     $("#canvas").css("height", 400);
+    meicanMap = new LMap('canvas');
+    meicanMap.show('dev');
+    loadDomains();
 
     drawCircuit($("#circuit-id").attr('value'));
 
