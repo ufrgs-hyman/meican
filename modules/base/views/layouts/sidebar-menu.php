@@ -22,7 +22,6 @@ echo Menu::widget([
             'items' => [
                 ['label'=>Yii::t('circuits','Reserve'), 'url'=>['/circuits/reservation/create']],
                 ['label'=>Yii::t('circuits','Status'),'url'=>['/circuits/reservation/status']],
-                ['label'=>Yii::t('circuits','History'),'url'=>['/circuits/reservation/history']],
                 ['label'=>Yii::t('circuits','Authorization'),'url'=>['/circuits/authorization']],
                 ['label'=>Yii::t('circuits','Configuration'),'url'=>['/circuits/config'], 'visible'=>RbacController::can('configuration/read')]
             ]

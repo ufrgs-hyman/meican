@@ -1,43 +1,39 @@
+var refreshInterval;
+
 $(document).ready(function() {
-	prepareRefreshButton();
-	disableAutoRefresh();
+	prepareRefreshSwitch();
+	enableAutoRefresh();
+    $.pjax.defaults.timeout = 5000;
 });
 
-var refresher;
-
-function prepareRefreshButton() {
-	$("#refresh-button").click(function(){
-		if ($("#refresh-button").val() == "true") {
-			disableAutoRefresh();
-		} else {
-			enableAutoRefresh();
-		}
-	});
-}
-
 function disableAutoRefresh() {
-	$("#loader-img").hide();
-
-	$("#refresh-button").val('false');
-	clearInterval(refresher);
-	$("#refresh-button").text(tt("Enable auto refresh"));
+    clearInterval(refreshInterval);
 }
 
-function enableAutoRefresh() {
-	$("#loader-img").show();
-	$("#cancel-button").attr("disabled", 'disabled');
-
-	updateGridView();
-	$("#refresh-button").val('true');
-	refresher = setInterval(updateGridView, 30000);
-	$("#refresh-button").text(tt("Disable auto refresh"));
+function enableAutoRefresh(pjaxContainerId) {
+    refreshInterval = setInterval(function() {
+        refreshGrid(pjaxContainerId);
+    }, 120000);
 }
 
-function updateGridView() {
-	$.pjax.defaults.timeout = false;
-	$('#grid').yiiGridView('applyFilter');
+function prepareRefreshSwitch() {
+	$("#auto-refresh-scheduled-switch").bootstrapSwitch();
+    $("#auto-refresh-scheduled-switch").on('switchChange.bootstrapSwitch', function(event, state) {
+        state ? enableAutoRefresh() : disableAutoRefresh();
+    });
+
+    $("#auto-refresh-finished-switch").bootstrapSwitch();
+    $("#auto-refresh-finished-switch").on('switchChange.bootstrapSwitch', function(event, state) {
+        state ? enableAutoRefresh() : disableAutoRefresh();
+    });
 }
 
-function view(id){
-	window.location = baseUrl+ "/circuits/reservation/view?id="+id;
+function refreshPjax(id) {
+    $.pjax.reload({
+        container:'#' + id
+    });
+}
+
+function refreshGrid(gridId) {
+	$('#' + gridId).yiiGridView('applyFilter');
 }

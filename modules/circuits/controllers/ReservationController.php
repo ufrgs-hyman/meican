@@ -175,40 +175,41 @@ class ReservationController extends RbacController {
         $searchModel = new ReservationSearch;
         $allowedDomains = self::whichDomainsCan('reservation/read');
 
-        $data = $searchModel->searchActiveByDomains(Yii::$app->request->get(),
-                $allowedDomains);
+        if(Yii::$app->request->isPjax) {
+            switch ($_GET['_pjax']) {
+                case '#scheduled-pjax':
+                    return $this->renderAjax('status/_grid', [
+                        'gridId' => 'scheduled-grid',
+                        'searchModel' => $searchModel, 
+                        'data' => $searchModel
+                            ->searchActiveByDomains(Yii::$app->request->get(), $allowedDomains)
+                    ]);
+                case '#finished-pjax':
+                    return $this->renderAjax('status/_grid', [
+                        'gridId' => 'finished-grid',
+                        'searchModel' => $searchModel, 
+                        'data' => $searchModel
+                            ->searchTerminatedByDomains(Yii::$app->request->get(), $allowedDomains)
+                    ]);
+            }
+        }
 
-        return $this->render('status', [
+        $scheduledData = $searchModel
+            ->searchActiveByDomains(Yii::$app->request->get(), $allowedDomains);
+        $finishedData = $searchModel
+            ->searchTerminatedByDomains(Yii::$app->request->get(), $allowedDomains);
+
+        $scheduledData->pagination->pageParam = 'scheduled-page';
+        $finishedData->pagination->pageParam = 'finished-page';
+
+        return $this->render('status/status', [
             'searchModel' => $searchModel,
-            'data' => $data,
-            'allowedDomains' => $allowedDomains
-        ]);
-    }
-    
-    public function actionHistory() {
-        $searchModel = new ReservationSearch;
-        $allowedDomains = self::whichDomainsCan('reservation/read');
-
-        $data = $searchModel->searchTerminatedByDomains(Yii::$app->request->get(),
-                $allowedDomains);
-
-        return $this->render('history', [
-            'searchModel' => $searchModel,
-            'data' => $data,
-            'allowedDomains' => $allowedDomains
+            'scheduledData' => $scheduledData,
+            'finishedData' => $finishedData
         ]);
     }
     
     //////REST functions
-
-    public function actionRequestUpdate($id) {
-        self::asyncActionBegin();
-        $res = Reservation::findOne($id);
-        foreach ($res->getConnections()->all() as $conn) {
-            if($conn->status != Connection::STATUS_PENDING)
-                $conn->requestSummary();
-        }
-    }
 
     public function actionGetPortByDevice($id, $cols=null) {
         $query = Port::find()->where(['device_id'=>$id])->orderBy(['name'=>'SORT ASC'])->asArray();
