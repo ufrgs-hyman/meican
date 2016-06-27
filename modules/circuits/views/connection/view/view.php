@@ -237,7 +237,7 @@ ActiveForm::end(); ?>
 <?php Modal::begin([
     'id' => 'cancel-modal',
     'header' => 'Cancel',
-    'footer' => '<button type="button" class="btn btn-danger confirm-btn">Confirm</button>' +        
+    'footer' => '<button type="button" class="btn btn-danger confirm-btn">Confirm</button>'.        
         '<button type="button" class="btn btn-default close-btn">Close</button>'
 ]); ?>
 

@@ -502,51 +502,6 @@ function areMarkersReady(ids) {
     return true;
 }
 
-/*function loadStatsMetricsGraphics() {
-    $("#stats-loading").show();
-    $.ajax({
-        url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 372 + '&vlan=' + 206 + '&dir=' + 'out' + '&interval=' + 0,
-        dataType: 'json',
-        method: "GET",
-        success: function(data) {
-            var dataOut = [];
-            for (var i = 0; i < data.traffic.length; i++) {
-                dataOut.push({ts: new Date(data.traffic[i].ts*1000), val:data.traffic[i].val*8/1000000});
-            }
-            statsData = [dataOut];
-
-            if(data.traffic.length > 0) {
-                $.ajax({
-                    url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + 372 + '&vlan=' + 206 + '&dir=' + 'in' + '&interval=' + 0,
-                    dataType: 'json',
-                    method: "GET",
-                    success: function(data) {
-                        var dataIn = [];
-                        for (var i = 0; i < data.traffic.length; i++) {
-                            dataIn.push({ts: new Date(data.traffic[i].ts*1000), val: (0-(data.traffic[i].val*8/1000000))});
-                        }
-                        statsData.push(dataIn);
-                        console.log(statsData);
-
-                        MG.data_graphic({
-                            data: statsData,
-                            full_width: true,
-                            height: 375,
-                            right: 10,
-                            target: document.getElementById('stats'),
-                            x_accessor: 'ts',
-                            y_accessor: 'val',
-                            aggregate_rollover: true,
-                        });
-
-                        $("#stats-loading").hide();
-                    }
-                });
-            } else $("#stats-loading").hide();
-        }
-    });
-}*/
-
 function initStats() {
     $("#stats").css("height", 375);
 
