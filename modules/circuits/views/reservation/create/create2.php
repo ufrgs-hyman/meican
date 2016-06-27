@@ -47,19 +47,19 @@ $form = ActiveForm::begin([
             <br>
             <div class="nav-tabs-custom" style="margin-right: 15px;">
                 <ul class="nav nav-tabs">
-                  <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-search"></i></a></li>
+                  <li><a href="#"><i class="fa fa-search"></i></a></li>
                   <li><a id="add-point" href="#" title="Add point"><i class="fa fa-plus"></i> <i class="fa fa-map-marker"></i></a></li>
                   <li><a href="#" title="Import path"><i class="fa fa-file-text"></i></a></li>
                 </ul>
-                <div class="tab-content">
+                <div class="tab-content" hidden>
                   <div class="tab-pane active" id="tab_1">
                     <div class="input-group input-group-sm">
                         <!-- /btn-group -->
-                            <input type="text" class="form-control" placeholder="Enter a domain, device, port or URN">
-                            <div class="input-group-btn">
-                              <button type="button" class="btn btn-primary"><span class="fa fa-search"></span></button>
-                            </div>
-                          </div>
+                        <input type="text" class="form-control" placeholder="Enter a domain, device, port or URN">
+                        <div class="input-group-btn">
+                          <button type="button" class="btn btn-primary"><span class="fa fa-search"></span></button>
+                        </div>
+                      </div>
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_2">
@@ -104,7 +104,7 @@ $form = ActiveForm::begin([
                               URN: <label class="point-info urn-l">none</label><br>
                               <input class="urn-input" type="hidden" name="ReservationForm[path][urn][]">
                             </div>
-                            VLAN: <label class="point-info vlan-l">Auto</label>
+                            VLAN: <label class="point-info vlan-l">none</label>
                             <input class="vlan-input" type="hidden" name="ReservationForm[path][vlan][]">
                             <input class="mode-input" type="hidden" name="ReservationForm[path][mode][]" value="normal">
                             <div class="pull-right">
@@ -195,7 +195,7 @@ $form = ActiveForm::begin([
             <h1 class="lsidebar-header">Step 3: Schedule<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
                 <br>
                 <p>                   
-In this section you need to provide at least one interval, based in the start and end time of your circuit.
+In this section you need to provide at least one interval, based in the start and end time of your circuit. To start, click over the start day of the circuit.
                 </p>
                 <br>
                 <div class="box box-default">

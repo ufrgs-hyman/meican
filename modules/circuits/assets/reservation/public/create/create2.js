@@ -658,7 +658,7 @@ function buildPoint() {
               'URN: <label class="point-info urn-l">none</label><br>'+
               '<input class="urn-input" type="hidden" name="ReservationForm[path][urn][]">'+
             '</div>'+
-            'VLAN: <label class="point-info vlan-l">Auto</label>'+
+            'VLAN: <label class="point-info vlan-l">none</label>'+
             '<input class="vlan-input" type="hidden" name="ReservationForm[path][vlan][]">'+
             '<input class="mode-input" type="hidden" name="ReservationForm[path][mode][]" value="normal">'+
             '<div class="pull-right">'+
@@ -872,7 +872,7 @@ function fillVlanSelect(portId, vlan) {
             },
             success: function(response){
                 clearSelect(selectId);
-                $("#" + selectId).append('<option value="auto">Auto</option>');
+                //$("#" + selectId).append('<option value="auto">Auto</option>');
                 if(response) {
                     var ranges = response.split(",");
                     for (var i = 0; i < ranges.length; i++) {
