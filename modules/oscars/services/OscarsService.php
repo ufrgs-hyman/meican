@@ -75,6 +75,7 @@ class OscarsService {
             $conn->version = 1;
             $conn->dataplane_status = $status == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE';
             $conn->auth_status = 'UNEXECUTED';
+            $conn->resources_status = 'PROVISIONED';
             $conn->start = DateUtils::timestampToDB($start);
             $conn->finish = DateUtils::timestampToDB($end);
             $conn->bandwidth = $bandwidth;
@@ -98,7 +99,7 @@ class OscarsService {
                     $point->save();
                 }
                 OscarsService::associateNSICircuits($conn);
-            }
+            } else Yii::trace($conn->getErrors());
         } else {
             $conn->dataplane_status = $status == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE';
             $conn->save();
