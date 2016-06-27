@@ -1,3 +1,9 @@
+/**
+ * @copyright Copyright (c) 2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican#license
+ * @author Diego Pittol
+ */
+
 var imagePath = '../../images/workflow/';
 
 var iconPath = '../../images/workflow/'+ language + '/';

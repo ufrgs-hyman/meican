@@ -29,22 +29,16 @@ $this->params['hide-footer'] = true;
             <div class="form-group">
                 <label>Mode:</label><br>
                 <input type="radio" name="mode" value="map" checked> Map
-                <input type="radio" name="mode" value="graph" > Graph
+                <input type="radio" name="mode" value="graph" disabled> Graph
             </div>
             <div class="form-group">
                 <label>Node type:</label><br>
-                <input type="radio" name="node-type" value="dom"> Domain
-                <input type="radio" name="node-type" value="prov"> Provider
-                <input type="radio" name="node-type" value="net"> Network
+                <input type="radio" name="node-type" value="dom" disabled> Domain
+                <input type="radio" name="node-type" value="prov" disabled> Provider
+                <input type="radio" name="node-type" value="net" disabled> Network
                 <input type="radio" name="node-type" value="dev" checked> Device
             </div>
-            <div class="form-group">
-                <label>Topology type:</label><br>
-                <input type="radio" name="topo-type" value="nsi"> NSI
-                <input type="radio" name="topo-type" value="nmwg"> NMWG
-                <input type="radio" name="topo-type" value="all" checked> All
-            </div>
-            <button id="save-positions-btn" class="btn btn-default">Save graph positions</button>
+            <!--<button id="save-positions-btn" class="btn btn-default">Save graph positions</button>-->
         </div>
     </div>
 </div>

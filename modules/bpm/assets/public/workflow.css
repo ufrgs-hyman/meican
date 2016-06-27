@@ -1,3 +1,9 @@
+/**
+ * @copyright Copyright (c) 2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican#license
+ * @author Diego Pittol
+ */
+
 div.WireIt-Container {
     width: 80px; /* Prevent the modules from scratching on the right */
 }

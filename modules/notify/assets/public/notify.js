@@ -1,3 +1,8 @@
+/**
+ * @copyright Copyright (c) 2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican#license
+ */
+
 function timerAuths() {
 	$.ajax({
 	    type: "GET",

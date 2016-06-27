@@ -5,6 +5,10 @@
  * @constructor
  * @param {Object} options
  * @param {WireIt.Layer} layer
+ *
+ * @copyright Copyright (c) 2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican#license
+ * @author Diego Pittol
  */
 WireIt.MeicanContainer = function(options, layer) {
    WireIt.MeicanContainer.superclass.constructor.call(this, options, layer);

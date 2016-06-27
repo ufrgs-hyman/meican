@@ -63,12 +63,12 @@ class ConnectionController extends RbacController {
     private function buildViewContent($conn) {
         switch ($_GET['_pjax']) {
             case '#status-pjax':
-                return $this->renderPartial('view/status', [
+                return $this->renderAjax('view/status', [
                         'conn' => $conn, 'lastEvent' => $conn->getHistory()->orderBy("id DESC")->one()
                     ]
                 );
             case '#history-pjax':
-                return $this->renderPartial('view/history', [
+                return $this->renderAjax('view/history', [
                     'history' => new ActiveDataProvider([
                         'query' => $conn->getHistory()->orderBy("id DESC"),
                         'sort' => false,
@@ -78,7 +78,7 @@ class ConnectionController extends RbacController {
                     ])
                 ]);
             case '#details-pjax':
-                return $this->renderPartial('view/details', [
+                return $this->renderAjax('view/details', [
                     'conn' => $conn
                 ]);
         }
