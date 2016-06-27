@@ -8,8 +8,8 @@ $params = require(__DIR__ . '/params.php');
 
 $config = [
     'id' => 'meican',
-    'name'=>'MEICAN',
-    'version' => '2.3.0',
+    'name'=>'MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks',
+    'version' => '3.0.0',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log','debug','session',
         'notify',
@@ -25,7 +25,7 @@ $config = [
     'modules' => [
         'debug' => [
             'class' => 'yii\debug\Module',
-            //'allowedIPs' => ['143.54.12.245']
+            'allowedIPs' => ['143.54.12.*']
         ],
         'aaa' =>            'meican\aaa\Module',
         'base' =>           'meican\base\Module',
@@ -64,7 +64,7 @@ $config = [
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'oVPoqfV26tMmmGp35SHU52dRf91z5N3I',
+            'cookieValidationKey' => '',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
