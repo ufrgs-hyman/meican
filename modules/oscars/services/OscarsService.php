@@ -121,7 +121,6 @@ class OscarsService {
         //que o circuito OSCARS.
         $nsiActiveCircuits = Connection::find()
             ->where([
-                'dataplane_status'=>'ACTIVE',
                 'type'=> 'NSI',
                 'start'=> $conn->start,
                 'finish' => $conn->finish])
