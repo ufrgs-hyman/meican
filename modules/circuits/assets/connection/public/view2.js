@@ -80,7 +80,7 @@ function disableAutoRefresh() {
 }
 
 function enableAutoRefresh() {
-    refreshInterval = setInterval(refreshAll, 120000);
+    refreshInterval = setInterval(refreshAll, 30000);
 }
 
 function refreshAll() {
@@ -131,42 +131,64 @@ function initCancelModal() {
 
 function initEditModal() {
     $("#edit-modal").on("click", '.confirm-btn', function() {
-        $.ajax({
-            type: "POST",
-            url: baseUrl + '/circuits/connection/update?submit=true',
-            data: $("#edit-form").serialize(),
-            success: function (resId) {
-                MAlert.show(I18N.t("Modification in progress."), I18N.t("Please, wait a moment while we process your request."), 'success');
-                refreshAll();
-                $.ajax({
-                    type: "POST",
-                    url: baseUrl + '/circuits/connection/update?id='+ $("#circuit-id").attr('value') + '&confirm=true',
-                    success: function () {
-                    },
-                    error: function() {
-                        MAlert.show(I18N.t("Error."), I18N.t("Sorry, contact your administrator."), 'danger');
-                    }
-                });
-            },
-            error: function() {
-                MAlert.show(I18N.t("Error."), I18N.t("Sorry, contact your administrator."), 'danger');
+        validateEditForm();
+
+        setTimeout(function() {
+            if($("#edit-modal").find(".has-error").length > 0) {
+                console.log("tem erro")
+                MAlert.show(I18N.t("Request invalid."), I18N.t("Please, check your input and try again."), 'danger');
+                return;
             }
-        });
-        $("#edit-modal").modal('hide');
+
+            $.ajax({
+                type: "POST",
+                url: baseUrl + '/circuits/connection/update?submit=true',
+                data: $("#edit-form").serialize(),
+                success: function (response) {
+                    if(response) {
+                        MAlert.show(I18N.t("Modification in progress."), 
+                        I18N.t("Please, wait a moment while we process your request."), 'success');
+                        $.ajax({
+                            type: "POST",
+                            url: baseUrl + '/circuits/connection/update?id='+ $("#circuit-id").attr('value') + '&confirm=true',
+                            success: function () {
+                            },
+                            error: function() {
+                                MAlert.show(I18N.t("Error."), I18N.t("Sorry, contact your administrator."), 'danger');
+                            }
+                        });
+                        $("#edit-modal").modal('hide');
+                    }
+                    else MAlert.show(
+                        I18N.t("No changes."), 
+                        I18N.t("Please, check your input and try again."), 
+                        'warning');
+                },
+                error: function() {
+                    MAlert.show(I18N.t("Error."), I18N.t("Sorry, contact your administrator."), 'danger');
+                }
+            });
+
+        }, 200);
+
+        return false;
     });
 
     $("#connectionform-acceptrelease").on("switchChange.bootstrapSwitch", function(event, state) {
-        if(state) {
-            $("#edit-form").find(".field-connectionform-bandwidth").show();
-            $("#edit-form").find(".field-connectionform-start").show();
-        } else {
-            $("#edit-form").find(".field-connectionform-bandwidth").hide();
-            $("#edit-form").find(".field-connectionform-start").hide();
-        }
+        validateEditForm();
     });
 
     $("#edit-modal").on("click", '.close-btn', function() {
         $("#edit-modal").modal("hide");
+        return false;
+    });
+
+    $("#edit-modal").on("click", '.undo-btn', function() {
+        $("#connectionform-start").val($("#info-start").attr('value'));
+        $("#connectionform-end").val($("#info-end").attr('value'));
+        $("#connectionform-bandwidth").val($("#info-bandwidth").attr('value'));
+        validateEditForm();
+        return false;
     });
 
     $("#edit-btn").on("click", function() {
@@ -177,6 +199,12 @@ function initEditModal() {
         $('#edit-modal').modal("show");
         return false;
     });
+}
+
+function validateEditForm() {
+    $("#edit-form").yiiActiveForm("validateAttribute", 'connectionform-bandwidth');
+    $("#edit-form").yiiActiveForm("validateAttribute", 'connectionform-start');
+    $("#edit-form").yiiActiveForm("validateAttribute", 'connectionform-end');
 }
 
 function initHistoryModal() {

@@ -247,7 +247,7 @@ class ConnectionController extends RbacController {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\widgets\ActiveForm::validate($form);
         } else {
-            return $form->save() == true ? 1 : 0;
+            return $form->save();
         }
     }
 

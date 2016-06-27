@@ -11,18 +11,19 @@ var MAlert = new MeicanAlert;
 function MeicanAlert() {   
 };
 
-MeicanAlert.prototype.show = function(title, message, type) {
+MeicanAlert.prototype.show = function(title, message, type, zIndex) {
     $.notify({
         icon: 'glyphicon glyphicon-ok-sign',
         title: '<strong>' + title + '</strong>',
         message: message
     },{
         type: type,
-        delay: 20000,
+        delay: 10000,
         newest_on_top: true,
         offset: {
             y: 60,
             x: 20
-        }
+        },
+        z_index: 2000
     });
 }

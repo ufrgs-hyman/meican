@@ -181,7 +181,9 @@ $this->params['header'] = [Yii::t('circuits',"Circuit").' #'.$conn->id, ['Home',
 <?php Modal::begin([
     'id' => 'edit-modal',
     'header' => 'Edit',
-    'footer' => '<button type="button" class="confirm-btn btn btn-primary">Confirm</button> <button type="button" class="btn btn-default close-btn">Close</button>'
+    'footer' => '<button type="button" class="confirm-btn btn btn-primary">Confirm</button>'.
+        '<button type="button" class="btn btn-default undo-btn">Undo changes</button>'. 
+        '<button type="button" class="btn btn-default close-btn">Close</button>'
 ]); 
 
 $form = ActiveForm::begin([
@@ -208,8 +210,9 @@ echo $form->field($editForm, 'bandwidth')->widget(TouchSpin::classname(), [
         'verticalbuttons' => true,
         'verticalupclass' => 'fa fa-plus',
         'verticaldownclass' => 'fa fa-minus',
+        'min' => 10,
         'max' => 1000000,
-        'step' => 100,
+        'step' => 10,
     ]
 ]);
 
@@ -234,7 +237,8 @@ ActiveForm::end(); ?>
 <?php Modal::begin([
     'id' => 'cancel-modal',
     'header' => 'Cancel',
-    'footer' => '<button type="button" class="confirm-btn btn btn-danger">Confirm</button> <button type="button" class="btn btn-default close-btn">Close</button>'
+    'footer' => '<button type="button" class="btn btn-danger confirm-btn">Confirm</button>' +        
+        '<button type="button" class="btn btn-default close-btn">Close</button>'
 ]); ?>
 
 Do you want cancel this circuit?

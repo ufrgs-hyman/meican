@@ -22,7 +22,7 @@ class ConnectionForm extends Model {
     public $bandwidth;
     public $start;
     public $end;
-    public $acceptRelease = true;
+    public $acceptRelease = false;
 
     public function rules() {
         return [
@@ -44,27 +44,21 @@ class ConnectionForm extends Model {
     }
 
     public function validateDateRange($attr, $params) {
-        if($this->acceptRelease) {
-            $start = DateUtils::localToUTC($this->start);
-            if($start >= DateUtils::localToUTC($this->end)) {
-                $this->addError('end', "Start time must be before end time");
-                return;
-            }
+        $oldStart = Connection::find()->where(['id'=>$this->id])->asArray()->select(['start'])->one()['start'];
+        $start = DateUtils::localToUTC($this->start);
 
-            $oldStart = Connection::find()->where(['id'=>$this->id])->asArray()->select(['start'])->one()['start'];
-            if($oldStart != $start && DateUtils::now() > $start) 
-                $this->addError('end', "Start time can not be changed in an active circuit.");
-        } else {
-            $oldStart = Connection::find()->where(['id'=>$this->id])->asArray()->select(['start'])->one()['start'];
-            if($oldStart >= DateUtils::localToUTC($this->end)) 
-                $this->addError('end', "Start time must be before end time");
-        }
+        if($start >= DateUtils::localToUTC($this->end)) 
+            $this->addError('end', "Start time must be before end time");
+        elseif($oldStart != $start && !$this->acceptRelease) 
+            $this->addError('start', "A circuit interruption is required to change the start time.");
     }
 
     public function validateBandwidth($attr, $params) {
-        if (!is_numeric($this->bandwidth) || !is_integer(intval($this->bandwidth))) {
+        $oldBand = Connection::find()->where(['id'=>$this->id])->asArray()->select(['bandwidth'])->one()['bandwidth'];
+        if (!is_numeric($this->bandwidth) || !is_integer(intval($this->bandwidth)) || $this->bandwidth < 1) {
             $this->addError('bandwidth', "Invalid bandwidth value");
-        }
+        } elseif($oldBand != $this->bandwidth && !$this->acceptRelease)
+            $this->addError('bandwidth', "A circuit interruption is required to change the bandwidth.");
     }
     
     public function save() {

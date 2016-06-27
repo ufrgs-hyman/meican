@@ -8,9 +8,9 @@ return [
     'class' => 'yii\swiftmailer\Mailer',
     'transport' => [
         'class' => 'Swift_SmtpTransport',
-        'host' => '',
-        'username' => '',
-        'password' => '',
+        'host' => 'smtp.inf.ufrgs.br',
+        'username' => 'meican@inf.ufrgs.br',
+        'password' => 'Futura@2015',
         'port' => '465',
         'encryption' => 'ssl',
     ],
