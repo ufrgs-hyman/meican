@@ -273,7 +273,9 @@ class RequesterController extends Controller implements ConnectionRequesterServe
             $conn->version = $response->reservation->criteria->version;
         } 
         
-        if($response->reservation->connectionStates->provisionState == "Provisioned") {
+        if($response->reservation->connectionStates->lifecycleState == "Terminated") {
+            $conn->status = "CANCELLED";
+        } elseif($response->reservation->connectionStates->provisionState == "Provisioned") {
             $conn->resources_status = 'PROVISIONED';
             $conn->status = "PROVISIONED";
         } else
