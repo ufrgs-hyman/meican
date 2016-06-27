@@ -9,6 +9,7 @@ namespace meican\circuits\forms;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 
 use meican\base\utils\DateUtils;
 use meican\circuits\models\Reservation;
@@ -23,7 +24,6 @@ class ReservationSearch extends Reservation {
 
     public $src_domain;
     public $dst_domain;
-    public $request_user;
 
     /**
      * @inheritdoc
@@ -31,7 +31,7 @@ class ReservationSearch extends Reservation {
     public function rules()
     {
         return [
-            [['src_domain', 'dst_domain', 'request_user'], 'safe'],
+            [['src_domain', 'dst_domain'], 'safe'],
         ];
     }
 
@@ -50,6 +50,79 @@ class ReservationSearch extends Reservation {
     {
         // add related fields to searchable attributes
         return parent::attributes();
+    }
+
+    public function searchByDomains($params, $allowedDomains){
+        $this->load($params);
+        
+        $validDomains = [];
+        foreach($allowedDomains as $domain) $validDomains[] = $domain['name'];
+
+        if ($this->src_domain && $this->dst_domain) {
+            $dstPoints = ConnectionPath::findBySql("
+                SELECT cp1.conn_id
+                FROM (
+                    SELECT conn_id, MAX(`path_order`) AS last_path
+                    FROM `meican_connection_path`
+                    GROUP BY `conn_id`
+                    ) cp2
+                JOIN    `meican_connection_path` cp1
+                ON      cp1.conn_id = cp2.conn_id AND cp1.domain = '".$this->dst_domain."' AND cp1.path_order = cp2.last_path");
+             
+            //filtra por conn aceitas pela query anterior
+            $connPoints = ConnectionPath::find()
+                ->where(['in', 'domain', [$this->src_domain]])
+                ->andWhere(['path_order'=>0])
+                ->select(["conn_id"])
+                ->distinct(true)
+                ->union($dstPoints);
+
+        } elseif ($this->src_domain) {
+            $connPoints = ConnectionPath::find()
+                ->where(['in', 'domain', [$this->src_domain]])
+                ->andWhere(['path_order'=>0])
+                ->select(["conn_id"])
+                ->distinct(true);
+
+        } elseif ($this->dst_domain) {
+            $connPoints = ConnectionPath::findBySql("
+                SELECT cp1.conn_id
+                FROM (
+                    SELECT conn_id, MAX(`path_order`) AS last_path
+                    FROM `meican_connection_path`
+                    GROUP BY `conn_id`
+                    ) cp2
+                JOIN    `meican_connection_path` cp1
+                ON      cp1.conn_id = cp2.conn_id AND cp1.domain = '".$this->dst_domain."' AND cp1.path_order = cp2.last_path");
+        } else {
+            $connPoints = ConnectionPath::find()
+                ->where(['in', 'domain', $validDomains])
+                ->distinct(true);
+        }
+
+        $validConns = Connection::find()
+            ->where(['in', 'id', 
+                ArrayHelper::getColumn(
+                    $connPoints->all(),
+                    'conn_id')]);
+
+        $reservations = Reservation::find()
+            ->andWhere(['in', 'id', 
+                ArrayHelper::getColumn(
+                    $validConns->select(['reservation_id'])->asArray()->all(),
+                    'reservation_id')])
+            ->andWhere(['type'=>self::TYPE_NORMAL])
+            ->orderBy(['date'=>SORT_DESC]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $reservations,
+            'sort' => false,
+            'pagination' => [
+                'pageSize' => 15,
+            ]
+        ]);
+        
+        return $dataProvider;
     }
 
     public function searchActiveByDomains($params, $allowed_domains){

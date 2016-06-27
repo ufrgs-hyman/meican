@@ -156,39 +156,31 @@ class ReservationController extends RbacController {
 
     public function actionStatus() {
         $searchModel = new ReservationSearch;
-        $allowedDomains = self::whichDomainsCan('reservation/read');
+        $allowedDomains = self::whichDomainsCan('reservation/read', true);
+
+        $data = $searchModel
+            ->searchByDomains(Yii::$app->request->get(), $allowedDomains);
 
         if(Yii::$app->request->isPjax) {
             switch ($_GET['_pjax']) {
-                case '#scheduled-pjax':
+                case '#circuits-pjax':
                     return $this->renderAjax('status/_grid', [
-                        'gridId' => 'scheduled-grid',
+                        'gridId' => 'circuits-grid',
                         'searchModel' => $searchModel, 
-                        'data' => $searchModel
-                            ->searchActiveByDomains(Yii::$app->request->get(), $allowedDomains)
-                    ]);
-                case '#finished-pjax':
-                    return $this->renderAjax('status/_grid', [
-                        'gridId' => 'finished-grid',
-                        'searchModel' => $searchModel, 
-                        'data' => $searchModel
-                            ->searchTerminatedByDomains(Yii::$app->request->get(), $allowedDomains)
+                        'data' => $data,
+                        'allowedDomains' => $allowedDomains
                     ]);
             }
         }
-
-        $scheduledData = $searchModel
-            ->searchActiveByDomains(Yii::$app->request->get(), $allowedDomains);
-        $finishedData = $searchModel
-            ->searchTerminatedByDomains(Yii::$app->request->get(), $allowedDomains);
-
-        $scheduledData->pagination->pageParam = 'scheduled-page';
-        $finishedData->pagination->pageParam = 'finished-page';
+        
+        //deve ser feito quando ha duas ou mais grids na mesma pagina   
+        //$scheduledData->pagination->pageParam = 'scheduled-page';
+        //$finishedData->pagination->pageParam = 'finished-page';
 
         return $this->render('status/status', [
             'searchModel' => $searchModel,
-            'scheduledData' => $scheduledData,
-            'finishedData' => $finishedData
+            'data' => $data,
+            'allowedDomains' => $allowedDomains
         ]);
     }
     

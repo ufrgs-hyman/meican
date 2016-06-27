@@ -148,12 +148,22 @@ abstract class RbacController extends BaseController {
         self::can($permissions, $domain, true);
     }
     
-    static function whichDomainsCan($permissions = null) {
-        $domains = Domain::find()->orderBy(['name' => SORT_ASC])->all();
-        $canDomains = [];
-        foreach($domains as $domain){
-            if(self::can($permissions, $domain->name)) $canDomains[] = $domain;
+    static function whichDomainsCan($permissions = null, $asArray = false) {
+        $domains = Domain::find()->orderBy(['name' => SORT_ASC]);
+        if($asArray) {
+            $domains = $domains->asArray()->all();
+            $canDomains = [];
+            foreach($domains as $domain){
+                if(self::can($permissions, $domain['name'])) $canDomains[] = $domain;
+            }
+            return $canDomains;
+        } else {
+            $domains = $domains->all();
+            $canDomains = [];
+            foreach($domains as $domain){
+                if(self::can($permissions, $domain->name)) $canDomains[] = $domain;
+            }
+            return $canDomains;
         }
-        return $canDomains;
     }
 }

@@ -1,11 +1,9 @@
-var scheduledInterval = {val: null};
-var finishedInterval = {val: null};
+var refreshInterval = {val: null};
 
 $(document).ready(function() {
     $.pjax.defaults.timeout = 5000;
 	prepareRefreshSwitch();
-	enableInterval(scheduledInterval, 'scheduled-grid');
-    enableInterval(finishedInterval, 'finished-grid');
+	enableInterval(refreshInterval, 'circuits-grid');
 });
 
 function disableInterval(interval) {
@@ -19,20 +17,12 @@ function enableInterval(interval, gridId) {
 }
 
 function prepareRefreshSwitch() {
-    $("#auto-refresh-scheduled-switch").on('switchChange.bootstrapSwitch', function(event, state) {
+    $("#auto-refresh-switch").on('switchChange.bootstrapSwitch', function(event, state) {
         if(state) {
-            refreshGrid('scheduled-grid');
-            enableInterval(scheduledInterval, 'scheduled-grid')
+            refreshGrid('circuits-grid');
+            enableInterval(refreshInterval, 'circuits-grid')
         } else
-            disableInterval(scheduledInterval);
-    });
-
-    $("#auto-refresh-finished-switch").on('switchChange.bootstrapSwitch', function(event, state) {
-        if(state) {
-            refreshGrid('finished-grid');
-            enableInterval(finishedInterval, 'finished-grid')
-        } else
-            disableInterval(finishedInterval);
+            disableInterval(refreshInterval);
     });
 }
 

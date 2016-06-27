@@ -46,8 +46,7 @@ echo Grid::widget([
                 return $model->getSourceDomain();
             },      
             'filter' => Html::activeDropDownList($searchModel, 'src_domain', 
-                ArrayHelper::map(
-                    ConnectionPath::find()->select(["domain"])->distinct(true)->orderBy(['domain'=>SORT_ASC])->asArray()->all(), 'domain', 'domain'),
+                ArrayHelper::map($allowedDomains, 'name', 'name'),
                 ['class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
             ),
             'headerOptions'=>['style'=>'width: 14%;'],
@@ -58,8 +57,7 @@ echo Grid::widget([
                 return $model->getDestinationDomain();
             },
             'filter' => Html::activeDropDownList($searchModel, 'dst_domain', 
-                ArrayHelper::map(
-                    ConnectionPath::find()->select(["domain"])->distinct(true)->orderBy(['domain'=>SORT_ASC])->asArray()->all(), 'domain', 'domain'),
+                ArrayHelper::map($allowedDomains, 'name', 'name'),
                 ['class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
             ),
             'headerOptions'=>['style'=>'width: 14%;'],
@@ -79,11 +77,6 @@ echo Grid::widget([
                 if($user)return $user->name;
                 return null;
             },
-            'filter' => Html::activeDropDownList($searchModel, 'request_user',
-                ArrayHelper::map(
-                    User::find()->where(['id' => Yii::$app->user->getId()])->all(), 'login', 'login'),
-                ['class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
-            ),
             'headerOptions'=>['style'=>'width: 12%;'],
         ],
         [
