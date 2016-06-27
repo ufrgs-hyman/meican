@@ -65,19 +65,20 @@ function isValidPath() {
             case 'normal':
                 if ($('.point').eq(i).find('.port-input').val() == "") {
                     return false;
-                }
+                } else return true;
                 break;
             case 'advanced':
                 if ($('.point').eq(i).find('.urn-input').val() == "") {
                     return false;
-                }
+                } else return true;
+                break;
             default:
                 console.log('erro ao validar path');
                 return false;
         }
     };
 
-    return true;
+    return false;
 }
 
 function validateRequirements() {
@@ -614,7 +615,7 @@ function setPoint(pointElement, pointOrder, pointMode, domId, dom, netId, net, d
         console.log(domLabel);
 
         $(pointElement).find('.urn-input').val(urn);
-        $(pointElement).find('.urn-l').text(urn);
+        $(pointElement).find('.urn-l').text(urn.split(':').slice(3).join(':'));
 
         $(pointElement).find('.vlan-l').text(vlanAdvanced);
         $(pointElement).find('.vlan-input').val(vlanAdvanced);

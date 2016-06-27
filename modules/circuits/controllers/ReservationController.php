@@ -154,23 +154,6 @@ class ReservationController extends RbacController {
         ]);
     }
 
-    public function actionViewGraph($id) {
-        $reservation = Reservation::findOne($id);
-        
-        $connections = new ActiveDataProvider([
-                'query' => $reservation->getConnections(),
-                'sort' => false,
-                'pagination' => [
-                    'pageSize' => 5,
-                ]
-        ]);
-        
-        return $this->render('view/graph',[
-                'reservation' => $reservation,
-                'connections' => $connections,
-        ]);
-    }
-    
     public function actionStatus() {
         $searchModel = new ReservationSearch;
         $allowedDomains = self::whichDomainsCan('reservation/read');

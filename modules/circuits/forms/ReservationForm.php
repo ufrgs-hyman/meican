@@ -64,7 +64,7 @@ class ReservationForm extends Model {
                     if($this->path['mode'][$i] == 'normal') 
                         $path->port_urn = Port::find()->where(['id' => $this->path['port'][$i]])->one()->urn;
                     else 
-                        $path->port_urn = $this->path['urn'][$i];
+                        $path->port_urn = str_replace('urn:ogf:network:','',$this->path['urn'][$i]);
                     
                     $path->path_order = $i;
                     $path->vlan = $this->path['vlan'][$i];
