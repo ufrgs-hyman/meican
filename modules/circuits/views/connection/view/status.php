@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-md-3 col-sm-6 col-xs-12">
       <div id="status-box" class="info-box">
-        <span class="info-box-icon"><i class="ion ion-clock"></i></span>
+        <span class="info-box-icon"><i class="fa fa-exchange" style="font-size:39px;"></i></span>
 
         <div class="info-box-content">
           <span class="info-box-text">Status</span>
