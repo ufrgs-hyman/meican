@@ -434,7 +434,7 @@ function loadDevicePorts() {
             console.log('loading port status');
             for (var dev in response) {
                 for (var port in response[dev]) {
-                    meicanMap.addPort(
+                    portObject = meicanMap.addPort(
                         port, 
                         response[dev][port].name, 
                         response[dev][port].dir, 
@@ -444,6 +444,24 @@ function loadDevicePorts() {
                         response[dev][port].link.port ? response[dev][port].link.port : null,
                         'dev');
                     loadPortStatus(loadedPortsStatusCounter, meicanMap.getNode('dev'+dev).options.name, response[dev][port].name);
+                    if(portObject.linkIn)
+                        portObject.linkIn.bindPopup(
+                            'Link between <b>' + 
+                            meicanMap.getNode(portObject.linkIn.options.from).options.name +
+                            '</b> and <b>' + 
+                            meicanMap.getNode(portObject.linkIn.options.to).options.name +
+                            '</b><br>' + 
+                            'Capacity: <b>' + portObject.cap + ' Mbps</b>' + 
+                            '<br>');
+                    if(portObject.linkOut)
+                        portObject.linkOut.bindPopup(
+                            'Link between <b>' + 
+                            meicanMap.getNode(portObject.linkIn.options.from).options.name +
+                            '</b> and <b>' + 
+                            meicanMap.getNode(portObject.linkIn.options.to).options.name +
+                            '</b><br>' + 
+                            'Capacity: <b>' + portObject.cap + ' Mbps</b>' + 
+                            '<br>');
                 } 
             }  
             

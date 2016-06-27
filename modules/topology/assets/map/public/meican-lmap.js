@@ -87,6 +87,8 @@ LMap.prototype.addPort = function(id, name, dir, cap, nodeId, aliasNodeId, alias
         node.options.ports[id].linkIn = linkIn;
         node.options.ports[id].linkOut = linkOut;
     }
+
+    return node.options.ports[id];
 }
 
 LMap.prototype.getLink = function(id) {
