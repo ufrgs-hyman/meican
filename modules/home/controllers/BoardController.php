@@ -8,12 +8,12 @@ namespace meican\home\controllers;
 
 use Yii;
 
-use meican\base\BaseController;
+use meican\aaa\RbacController;
 
 /**
  * @author Maurício Quatrin Guerreiro
  */
-class BoardController extends BaseController {
+class BoardController extends RbacController {
 
     public $defaultAction = 'dashboard';
 	

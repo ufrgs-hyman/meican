@@ -112,14 +112,10 @@ function initCanvas() {
         console.log(link);
         if(link.options.fromPort.circuits.length > 0)
             initStats(link, $("#map-l").find('.traffic-stats'));
+    });
 
-        if(link.options.fromPort.status == 0 || link.options.toPort.status == 0) {
-            $("#map-l").find('.link-status').html("Status: <b>Unknown</b>");
-        } else if(link.options.fromPort.status == 2 || link.options.toPort.status == 2) {
-            $("#map-l").find('.link-status').html("Status: <b>Down</b>");
-        } else {
-            $("#map-l").find('.link-status').html("Status: <b>Up</b>");
-        }
+    $("#canvas").on('lmap.linkHover', function(e, link) {
+        //link.openPopup();
     });
 }
 

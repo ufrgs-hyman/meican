@@ -9,7 +9,7 @@ namespace meican\home\controllers;
 use Yii;
 use yii\helpers\Url;
 
-use meican\base\BaseController;
+use meican\aaa\RbacController;
 use meican\base\utils\DateUtils;
 use meican\aaa\models\User;
 use meican\home\forms\FeedbackForm;
@@ -17,7 +17,7 @@ use meican\home\forms\FeedbackForm;
 /**
  * @author Maurício Quatrin Guerreiro
  */
-class SupportController extends BaseController {
+class SupportController extends RbacController {
 	
 	public function actionHelp() {
 		return $this->render('help');

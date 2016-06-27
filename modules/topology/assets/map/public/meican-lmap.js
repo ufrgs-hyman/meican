@@ -156,6 +156,10 @@ LMap.prototype.addLink = function(id, from, to, type, partial, cap, color) {
         $("#"+currentMap._canvasDivId).trigger("lmap.linkClick", link);
     });
 
+    link.on('mouseover', function(e) {
+        $("#"+currentMap._canvasDivId).trigger("lmap.linkHover", link);
+    })
+
     return link;
 }
 
