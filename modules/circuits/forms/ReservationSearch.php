@@ -71,11 +71,13 @@ class ReservationSearch extends Reservation {
                         GROUP BY `conn_id`
                         ) cp2
                     JOIN    `meican_connection_path` cp1
-                    ON      cp1.conn_id = cp2.conn_id AND cp1.domain = '".$this->dst_domain."' AND cp1.path_order = cp2.last_path")->all();
+                    ON      cp1.conn_id = cp2.conn_id AND cp1.domain = '".$this->dst_domain."' AND cp1.path_order = cp2.last_path")
+                    ->asArray()
+                    ->all();
                  
                 $allowedConns = [];
                 foreach ($dstPaths as $dstPath) {
-                    $allowedConns[] = $dstPath->conn_id;
+                    $allowedConns[] = $dstPath['conn_id'];
                 }
                  
                 //filtra por conn aceitas pela query anterior
@@ -85,6 +87,7 @@ class ReservationSearch extends Reservation {
                     ->andWhere(['in', 'conn_id', $allowedConns])
                     ->select(["conn_id"])
                     ->distinct(true)
+                    ->asArray()
                     ->all();
             //}
         } elseif ($this->src_domain) {
@@ -94,6 +97,7 @@ class ReservationSearch extends Reservation {
                     ->andWhere(['path_order'=>0])
                     ->select(["conn_id"])
                     ->distinct(true)
+                    ->asArray()
                     ->all();
             //}
         } elseif ($this->dst_domain) {
@@ -106,29 +110,39 @@ class ReservationSearch extends Reservation {
                         GROUP BY `conn_id`
                         ) cp2
                     JOIN    `meican_connection_path` cp1
-                    ON      cp1.conn_id = cp2.conn_id AND cp1.domain = '".$this->dst_domain."' AND cp1.path_order = cp2.last_path")->all();
+                    ON      cp1.conn_id = cp2.conn_id AND cp1.domain = '".$this->dst_domain."' AND cp1.path_order = cp2.last_path")
+                    ->asArray()
+                    ->all();
             //}
         } else {
             foreach ($allowed_domains as $domain) {
                 $validDomains[] = $domain->name;
             }
-            $connPaths = ConnectionPath::find()->where(['in', 'domain', $validDomains])->select(["conn_id"])->distinct(true)->all();
+            $connPaths = ConnectionPath::find()
+                ->where(['in', 'domain', $validDomains])
+                ->select(["conn_id"])
+                ->distinct(true)
+                ->asArray()
+                ->all();
         }
         
         $validConnIds = [];
         foreach ($connPaths as $connPath) {
-            $validConnIds[] = $connPath->conn_id;
+            $validConnIds[] = $connPath['conn_id'];
         }
         
         $validConnections = Connection::find()
             ->where(['>=','finish', DateUtils::now()])
             ->andWhere(['in', 'id', $validConnIds])
             ->andWhere(['status'=>["PENDING","CREATED","CONFIRMED","SUBMITTED","PROVISIONED"]])
-            ->select(["reservation_id"])->distinct(true)->all();
+            ->select(["reservation_id"])
+            ->distinct(true)
+            ->asArray()
+            ->all();
         
         $validIds = [];
         foreach ($validConnections as $conn) {
-            $validIds[] = $conn->reservation_id;
+            $validIds[] = $conn['reservation_id'];
         }
 
         if(!$this->src_domain && !$this->dst_domain){
@@ -137,11 +151,14 @@ class ReservationSearch extends Reservation {
             $allValidConnections = Connection::find()
                 ->where(['>=','finish', DateUtils::now()])
                 ->andWhere(['status'=>["PENDING","CREATED","CONFIRMED","SUBMITTED","PROVISIONED"]])
-                ->select(["reservation_id"])->distinct(true)->all();
+                ->select(["reservation_id"])
+                ->distinct(true)
+                ->asArray()
+                ->all();
             
             $allValidIds = [];
             foreach ($allValidConnections as $conn) {
-                $allValidIds[] = $conn->reservation_id;
+                $allValidIds[] = $conn['reservation_id'];
             }
             
             $reservationsUser = Reservation::find()
@@ -156,45 +173,55 @@ class ReservationSearch extends Reservation {
                 ->orderBy(['date'=>SORT_DESC]);
             
             $reservations = $reservations->union($reservationsUser);
-            $reservations = $reservations->all();
+            $reservations = $reservations->asArray()->all();
             
         } else {
             $reservations = Reservation::find()
                 ->andWhere(['in', 'id', $validIds])
                 ->andWhere(['type'=>self::TYPE_NORMAL])
-                ->orderBy(['date'=>SORT_DESC])->all();
+                ->orderBy(['date'=>SORT_DESC])
+                ->asArray()
+                ->all();
         }         
 
         $validResIds = [];
         foreach($reservations as $res){
-        
-            if($res->request_user_id == $userId){
-                $validResIds[] = $res->id;
+            if($res['request_user_id'] == $userId){
+                $validResIds[] = $res['id'];
             }
             else if(!$this->request_user) {
-                $conns = Connection::find()->where(['reservation_id' => $res->id])->select(["id"])->all();
+                $conns = Connection::find()
+                    ->where(['reservation_id' => $res['id']])
+                    ->select(["id"])
+                    ->asArray()
+                    ->all();
                 if(!empty($conns)){
                     $conn_ids = [];
-                    foreach($conns as $conn) $conn_ids[] = $conn->id;
+                    foreach($conns as $conn) $conn_ids[] = $conn['id'];
 
                     $paths = ConnectionPath::find()
                         ->where(['in', 'domain', $domains_name])
                         ->andWhere(['in', 'conn_id', $conn_ids])
-                        ->select(["conn_id"])->distinct(true)->all();
+                        ->select(["conn_id"])
+                        ->distinct(true)
+                        ->asArray()
+                        ->all();
         
                     if(!empty($paths)){
-                        $validResIds[] = $res->id;
+                        $validResIds[] = $res['id'];
                     }
                 }
             }
         }
 
         $dataProvider = new ActiveDataProvider([
-                'query' => Reservation::find()->where(['in', 'id', $validResIds])->orderBy(['date'=>SORT_DESC]),
-                'sort' => false,
-                'pagination' => [
-                        'pageSize' => 10,
-                ]
+            'query' => Reservation::find()
+                ->where(['in', 'id', $validResIds])
+                ->orderBy(['date'=>SORT_DESC]),
+            'sort' => false,
+            'pagination' => [
+                'pageSize' => 10,
+            ]
         ]);
         
         return $dataProvider;
@@ -219,11 +246,13 @@ class ReservationSearch extends Reservation {
                         GROUP BY `conn_id`
                         ) cp2
                     JOIN    `meican_connection_path` cp1
-                    ON      cp1.conn_id = cp2.conn_id AND cp1.domain = '".$this->dst_domain."' AND cp1.path_order = cp2.last_path")->all();
+                    ON      cp1.conn_id = cp2.conn_id AND cp1.domain = '".$this->dst_domain."' AND cp1.path_order = cp2.last_path")
+                    ->asArray()
+                    ->all();
                  
                 $allowedConns = [];
                 foreach ($dstPaths as $dstPath) {
-                    $allowedConns[] = $dstPath->conn_id;
+                    $allowedConns[] = $dstPath['conn_id'];
                 }
                  
                 //filtra por conn aceitas pela query anterior
@@ -233,6 +262,7 @@ class ReservationSearch extends Reservation {
                     ->andWhere(['in', 'conn_id', $allowedConns])
                     ->select(["conn_id"])
                     ->distinct(true)
+                    ->asArray()
                     ->all();
             //}
         } elseif ($this->src_domain) {
@@ -242,6 +272,7 @@ class ReservationSearch extends Reservation {
                     ->andWhere(['path_order'=>0])
                     ->select(["conn_id"])
                     ->distinct(true)
+                    ->asArray()
                     ->all();
             //}
         } elseif ($this->dst_domain) {
@@ -254,33 +285,50 @@ class ReservationSearch extends Reservation {
                         GROUP BY `conn_id`
                         ) cp2
                     JOIN    `meican_connection_path` cp1
-                    ON      cp1.conn_id = cp2.conn_id AND cp1.domain = '".$this->dst_domain."' AND cp1.path_order = cp2.last_path")->all();
+                    ON      cp1.conn_id = cp2.conn_id AND cp1.domain = '".$this->dst_domain."' AND cp1.path_order = cp2.last_path")
+                    ->asArray()
+                    ->all();
             //}
         } else {
             foreach ($allowed_domains as $domain) {
                 $validDomains[] = $domain->name;
             }
-            $connPaths = ConnectionPath::find()->where(['in', 'domain', $validDomains])->select(["conn_id"])->distinct(true)->all();
+            $connPaths = ConnectionPath::find()
+                ->where(['in', 'domain', $validDomains])
+                ->select(["conn_id"])
+                ->distinct(true)
+                ->asArray()
+                ->all();
         }
         
         $validConnIds = [];
         foreach ($connPaths as $connPath) {
-            $validConnIds[] = $connPath->conn_id;
+            $validConnIds[] = $connPath['conn_id'];
         }
 
-        $validConns = Connection::find()->where(['in','id',$validConnIds])->select('reservation_id')->distinct(true)->all();
+        $validConns = Connection::find()
+            ->where(['in','id',$validConnIds])
+            ->select('reservation_id')
+            ->distinct(true)
+            ->asArray()
+            ->all();
         
         $validIds = [];
         foreach ($validConns as $conn) {
-            $validIds[] = $conn->reservation_id;
+            $validIds[] = $conn['reservation_id'];
         }
         
-        $invalidConnections = Connection::find()->where(['>=','finish', DateUtils::now()])->andWhere(['status'=>[
-                "PENDING","CREATED","CONFIRMED","SUBMITTED","PROVISIONED"]])->select(["reservation_id"])->distinct(true)->all();
+        $invalidConnections = Connection::find()
+            ->where(['>=','finish', DateUtils::now()])
+            ->andWhere(['status'=>["PENDING","CREATED","CONFIRMED","SUBMITTED","PROVISIONED"]])
+            ->select(["reservation_id"])
+            ->distinct(true)
+            ->asArray()
+            ->all();
         
         $invalidIds = [];
         foreach ($invalidConnections as $conn) {
-            $invalidIds[] = $conn->reservation_id;
+            $invalidIds[] = $conn['reservation_id'];
         }
         
         if(!$this->src_domain && !$this->dst_domain){
@@ -289,45 +337,59 @@ class ReservationSearch extends Reservation {
                 ->orWhere(['request_user_id' => Yii::$app->user->getId()])
                 ->andWhere(['not in', 'id', $invalidIds])
                 ->andWhere(['type'=>self::TYPE_NORMAL])
-                ->orderBy(['date'=>SORT_DESC])->all(); 
+                ->orderBy(['date'=>SORT_DESC])
+                ->asArray()
+                ->all(); 
         } else {
             $reservations = Reservation::find()
                 ->where(['not in', 'id', $invalidIds])
                 ->andWhere(['in', 'id', $validIds])
                 ->andWhere(['type'=>self::TYPE_NORMAL])
-                ->orderBy(['date'=>SORT_DESC])->all(); 
+                ->orderBy(['date'=>SORT_DESC])
+                ->asArray()
+                ->all(); 
         }
         
         $validResIds = [];
         foreach($reservations as $res){
             
-            if($res->request_user_id == $userId){
-                $validResIds[] = $res->id;
+            if($res['request_user_id'] == $userId){
+                $validResIds[] = $res['id'];
             }
             else if(!$this->request_user) {
-                $conns = Connection::find()->where(['reservation_id' => $res->id])->select(["id"])->all();
+                $conns = Connection::find()
+                    ->where(['reservation_id' => $res['id']])
+                    ->select(["id"])
+                    ->asArray()
+                    ->all();
+
                 if(!empty($conns)){
                     $conn_ids = [];
-                    foreach($conns as $conn) $conn_ids[] = $conn->id;
+                    foreach($conns as $conn) $conn_ids[] = $conn['id'];
 
                     $paths = ConnectionPath::find()
-                                ->where(['in', 'domain', $domains_name])
-                                ->andWhere(['in', 'conn_id', $conn_ids])
-                                ->select(["conn_id"])->distinct(true)->all();
+                        ->where(['in', 'domain', $domains_name])
+                        ->andWhere(['in', 'conn_id', $conn_ids])
+                        ->select(["conn_id"])
+                        ->distinct(true)
+                        ->asArray()
+                        ->all();
                     
                     if(!empty($paths)){
-                        $validResIds[] = $res->id;
+                        $validResIds[] = $res['id'];
                     }
                 }
             }
         }
 
         $dataProvider = new ActiveDataProvider([
-                'query' => Reservation::find()->where(['in', 'id', $validResIds])->orderBy(['date'=>SORT_DESC]),
-                'sort' => false,
-                'pagination' => [
-                        'pageSize' => 10,
-                ]
+            'query' => Reservation::find()
+                ->where(['in', 'id', $validResIds])
+                ->orderBy(['date'=>SORT_DESC]),
+            'sort' => false,
+            'pagination' => [
+                'pageSize' => 10,
+            ]
         ]);
          
         return $dataProvider;
