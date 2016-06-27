@@ -99,9 +99,9 @@ LMap.prototype.getLink = function(id) {
     return null;
 }
 
-LMap.prototype.addLink = function(id, from, to, type, partial, cap) {
+LMap.prototype.addLink = function(id, from, to, type, partial, cap, color) {
     if(!from || !to) return null;
-
+    if(!color) color = '#cccccc';
     var latLngList = [];
 
     var src = this.getNode(from);
@@ -133,7 +133,8 @@ LMap.prototype.addLink = function(id, from, to, type, partial, cap) {
                 to: to,
                 traffic: 0,
                 directedCircuits: [],
-                color: '#cccccc',
+                color: color,
+                opacity: 0.7,
                 weight: 6,
                 type: type,
             }).addTo(this._map).bindPopup(
@@ -451,5 +452,9 @@ LMap.prototype.focusNodes = function() {
         latLngs.push(this._nodes[i].getLatLng());
     };
     this._map.fitBounds(L.latLngBounds(latLngs));
+    var currentMap = this;
+    setTimeout(function () {
+        currentMap._map.setZoom(currentMap._map.getZoom() - 1);
+    }, 300);
 }
 

@@ -4,18 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-use yii\helpers\Html;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
-use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
-
-use meican\topology\models\Domain;
-use meican\aaa\models\User;
-use meican\circuits\models\Reservation;
-use meican\circuits\models\Connection;
-use meican\circuits\models\ConnectionPath;
-use meican\base\grid\Grid;
 
 use kartik\switchinput\SwitchInput;
 

@@ -13,6 +13,7 @@
         <div class="info-box-content">
           <span class="info-box-text">Status</span>
           <span class="info-box-number"><small><?= $conn->getDataStatus(); ?></small></span>
+          <data id="status-dataplane" status="<?= $conn->dataplane_status; ?>"></data>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -43,6 +44,7 @@
         <div class="info-box-content">
           <span class="info-box-text">Authorization</span>
           <span class="info-box-number"><small><?= $conn->getAuthStatus(); ?></small></span>
+          <data id="status-auth" status="<?= $conn->auth_status; ?>"></data>
         </div>
         <!-- /.info-box-content -->
       </div>

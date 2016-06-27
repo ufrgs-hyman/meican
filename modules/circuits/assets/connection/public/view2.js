@@ -5,13 +5,16 @@
  */
 
 var meicanMap;
-var connIsApproved = true;
+var circuitApproved = false;
+var circuitDataPlane;
 var path;
 var statsCurrentPts;
 var statsGraphic;
 var refreshInterval;
 
 $(document).ready(function() {
+    circuitApproved = isAuthorized();
+    circuitDataPlane = getDataPlaneStatus();
     requestRefresh();
     initPathBox();
     initStats();
@@ -27,7 +30,38 @@ $(document).ready(function() {
 });
 
 $(document).on('ready pjax:success', function() {
+    //se o circuito nao esta aprovado, verifica o ultimo status
+    //se ele for aprovado, entao deve ser recarregado 
+    if (!circuitApproved && isAuthorized()) {
+        circuitApproved = true;
+        console.log("connection approved");
+        drawCircuit($("#circuit-id").attr('value'), true);
+    }
+
+    //se mudou dataplane entao atualiza cor do circuito
+    if(circuitDataPlane != getDataPlaneStatus()) {
+        console.log('dataplane change');
+        circuitDataPlane = getDataPlaneStatus();
+        updateCircuitColor();
+    }
 });
+
+function updateCircuitColor() {
+    var color = (circuitDataPlane == 'ACTIVE') ? "#35E834" : "#27567C";
+    for (var i = meicanMap.getLinks().length - 1; i >= 0; i--) {
+        meicanMap.getLinks()[i].setStyle({
+            color: color
+        });
+    };
+}
+
+function getDataPlaneStatus() {
+    return $("#status-dataplane").attr("status");
+}
+
+function isAuthorized() {
+    return $("#status-auth").attr('status') == 'AUTHORIZED';
+}
 
 function requestRefresh() {
     $.ajax({
@@ -228,13 +262,13 @@ function initPathBox() {
 
     drawCircuit($("#circuit-id").attr('value'));
 
-    $("#canvas").on("linkClick", function(e, link) {
+    /*$("#canvas").on("linkClick", function(e, link) {
         var srcPoint;
         for (var i = 0; i < path.length; i++) {
             if(('dev' + path[i].device_id) == link.options.from)
                 loadStats(path[i]);
         };
-    });
+    });*/
 
     $('#canvas').on('lmap.nodeClick', function(e, marker) {
         marker.setPopupContent('Domain: <b>' + meicanMap.getDomain(marker.options.domainId).name + 
@@ -267,10 +301,14 @@ function drawCircuit(connId, animate) {
             id: connId,
         },
         success: function(response) {
-            if (connIsApproved) {
-                var size = response.length;
-                path = response;
+            path = response;
+            var size = response.length;
+            var requiredMarkers = [];
+            for (var i = 0; i < size; i++) {
+                requiredMarkers.push(path[i]);
+            }
 
+            if (circuitApproved) {
                 //a ordem dos marcadores aqui eh importante,
                 //pois eh a ordem do circuito
                 //console.log(requiredMarkers);
@@ -281,58 +319,62 @@ function drawCircuit(connId, animate) {
                     addWayPoint(path[i]);
                 }
 
-                $($("#path-grid").find('tbody').find("tr").children()[0]).text(0);
-                $($("#path-grid").find('tbody').find("tr").children()[1]).text(path[0].port_urn);
-                $($("#path-grid").find('tbody').find("tr").children()[2]).text(path[0].vlan);
-
-                for (var i = 1; i < size; i++) {
-                    var pointRow = $($("#path-grid").find('tbody').find("tr")[0]).clone();
-
-                    $(pointRow.children()[0]).text(i);
-                    $(pointRow.children()[1]).text(path[i].port_urn);
-                    $(pointRow.children()[2]).text(path[i].vlan);
-                    $(pointRow).attr('data-key', i);
-                    $($("#path-grid").find('tbody')).append(pointRow);
-                }
+                updatePathInfo(path);
                 
                 //setMapBoundsMarkersWhenReady(requiredMarkers);
                 
-                drawCircuitWhenReady(path, animate);
+                //
+                //drawCircuitWhenReady(path, animate);
+                drawCircuitWhenReady(path, false);
                 
             } else {
-                var size = response.length;
-            
-                var requiredMarkers = [];
-
                 //aqui nao importa a ordem dos marcadores, pois nao ha circuito criado
-                addSourceMarker(response[0].device_id);
-                requiredMarkers.push(response[0].device_id);
-                addDestinMarker(response[size-1].device_id);
-                requiredMarkers.push(response[size-1].device_id);
+
+                addSource(path[0]);
+                addDestin(path[size-1]);
                 
                 for (var i = 1; i < size-1; i++) {
-                    if (response[i].device_id != null) {
-                        addWayPointMarker(response[i].device_id);
-                        requiredMarkers.push(response[i].device_id);
-                    }
+                    addWayPoint(path[i]);
                 }
                 
-                //setMapBoundsMarkersWhenReady(requiredMarkers);
+                setMapBoundsMarkersWhenReady(requiredMarkers);
             }
         }
     });
+}
+
+function updatePathInfo(path) {
+    $($("#path-grid").find('tbody').find("tr").children()[0]).text(0);
+    $($("#path-grid").find('tbody').find("tr").children()[1]).text(path[0].port_urn);
+    $($("#path-grid").find('tbody').find("tr").children()[2]).text(path[0].vlan);
+
+    for (var i = 1; i < path.length; i++) {
+        var pointRow = $($("#path-grid").find('tbody').find("tr")[0]).clone();
+
+        $(pointRow.children()[0]).text(i);
+        $(pointRow.children()[1]).text(path[i].port_urn);
+        $(pointRow.children()[2]).text(path[i].vlan);
+        $(pointRow).attr('data-key', i);
+        $($("#path-grid").find('tbody')).append(pointRow);
+    }
 }
 
 function drawCircuitWhenReady(requiredMarkers, animate) {
     if (areMarkersReady(requiredMarkers)) {
         //console.log("drew");
         if (animate) {
-            drawCircuitAnimated(requiredMarkers);
+            drawCircuitAnimated();
         } else {
             var pathIds = [];
             for (var i = 0; i < meicanMap.getNodes().length - 1; i++) {
-                meicanMap.addLink(null, meicanMap.getNodes()[i].options.id, meicanMap.getNodes()[i+1].options.id, 'dev', true);
-                meicanMap.addLink(null, meicanMap.getNodes()[i+1].options.id, meicanMap.getNodes()[i].options.id, 'dev', true);
+                meicanMap.addLink(
+                    null, 
+                    meicanMap.getNodes()[i].options.id, 
+                    meicanMap.getNodes()[i+1].options.id, 
+                    'dev', 
+                    false,
+                    null,
+                    (circuitDataPlane == 'ACTIVE') ? "#35E834" : "#27567C");
             }
             
             meicanMap.focusNodes();
@@ -348,12 +390,7 @@ function drawCircuitWhenReady(requiredMarkers, animate) {
 function setMapBoundsMarkersWhenReady(requiredMarkers) {
     if (areMarkersReady(requiredMarkers)) {
         //console.log("setbounds");
-        var path = [];
-        var size = requiredMarkers.length;
-        for(var i = 0; i < size; i++){
-            path.push(meicanMap.getNode('dev',requiredMarkers[i]).position);
-        }
-        setMapBounds(path);
+        meicanMap.focusNodes();
     } else {
         setTimeout(function() {
             setMapBoundsMarkersWhenReady(requiredMarkers);
@@ -617,4 +654,3 @@ function loadTrafficHistory(statsData, dom, dev, port, vlan) {
         }
     });
 }
-
