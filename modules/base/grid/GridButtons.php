@@ -18,7 +18,7 @@ class GridButtons extends \yii\base\Widget {
 
     public function run() {
         return $this->render('@meican/base/views/_grid-buttons', 
-          ['addUrl'=> Url::to((isset($this->addRoute) ? $this->addRoute : ['create']))]);
+          ['addUrl'=> Url::to((isset($this->addRoute) ? [$this->addRoute] : ['create']))]);
     }
 
 }
