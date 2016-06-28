@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\base\assets\cron;
+namespace meican\base\assets;
 
 use yii\web\AssetBundle;
 

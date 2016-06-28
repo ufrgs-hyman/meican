@@ -65,7 +65,7 @@ class DiscoveryRule extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('topology', 'ID'),
-            'auto_apply' => Yii::t('topology', 'Apply changes method'),
+            'auto_apply' => Yii::t('topology', 'Apply method'),
             'type' => Yii::t('topology', 'Type'),
             'subscription_id' => Yii::t('topology', 'Start by notification'),
             'name' => Yii::t('topology', 'Name'),
@@ -83,7 +83,7 @@ class DiscoveryRule extends \yii\db\ActiveRecord
         return $event ? $event['started_at'] : null;
     }
 
-    public function isAutoSyncEnabled() {
+    public function isScheduled() {
         return false;
     }
 

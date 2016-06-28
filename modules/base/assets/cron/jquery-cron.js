@@ -309,64 +309,52 @@
                 }
             }
 
-            block["period"] = $("<span class='cron-period'>"
-                    + I18N.t("Every") + " <select name='cron-period'>" + custom_periods
-                    + str_opt_period + "</select> </span>")
+            block["period"] = $('<div class="form-group"><span class="cron-period">' +
+                    '<label class="control-label col-sm-3">'+ I18N.t("Every") + '</label>' +
+                    '<div class="col-sm-6"><select name="cron-period" class="form-control">' + custom_periods +
+                    str_opt_period + "</select> </span></div></div>")
                 .appendTo(this)
                 .data("root", this);
 
             var select = block["period"].find("select");
             select.bind("change.cron", event_handlers.periodChanged)
                   .data("root", this);
-            if (o.useGentleSelect) select.gentleSelect(eo);
 
-            block["dom"] = $("<span class='cron-block cron-block-dom'>"
-                    + " " + I18N.t("on day") + " <select name='cron-dom'>" + str_opt_dom
-                    + "</select> </span>")
+            block["dom"] = $("<div class='cron-block form-group'><span class='cron-block-dom'>" +
+                    '<label class="control-label col-sm-3">'+ I18N.t("on day") + '</label>' + 
+                    "<div class='col-sm-6'><select name='cron-dom' class='form-control' style='width: 80px;'>" + str_opt_dom
+                    + "</select> </span></div></div>")
                 .appendTo(this)
                 .data("root", this);
 
-            select = block["dom"].find("select").data("root", this);
-            if (o.useGentleSelect) select.gentleSelect(o.domOpts);
-
-            block["month"] = $("<span class='cron-block cron-block-month'>"
-                    + " " + I18N.t("of") + " <select name='cron-month'>" + str_opt_month
-                    + "</select> </span>")
+            block["month"] = $("<div class='cron-block form-group'><span class='cron-block-month'>" +
+                    '<label class="control-label col-sm-3">'+ I18N.t("of") + '</label>' + 
+                    "<div class='col-sm-6'><select name='cron-month' class='form-control' style='width: 80px;>" + 
+                    str_opt_month + "</select> </span></div></div>")
                 .appendTo(this)
                 .data("root", this);
 
-            select = block["month"].find("select").data("root", this);
-            if (o.useGentleSelect) select.gentleSelect(o.monthOpts);
-
-            block["mins"] = $("<span class='cron-block cron-block-mins'>"
-                    + " " + I18N.t("on minute") + " <select name='cron-mins'>" + str_opt_mih
-                    + "</select> </span>")
+            block["mins"] = $("<div class='cron-block form-group'><span class='cron-block-mins'>" +
+                    '<label class="control-label col-sm-3">'+ I18N.t("on minute") + '</label>' + 
+                    "<div class='col-sm-6'><select name='cron-mins' class='form-control' style='width: 80px;'>" + str_opt_mih
+                    + "</select> </span></div></div>")
                 .appendTo(this)
                 .data("root", this);
 
-            select = block["mins"].find("select").data("root", this);
-            if (o.useGentleSelect) select.gentleSelect(o.minuteOpts);
-
-            block["dow"] = $("<span class='cron-block cron-block-dow'>"
-                    + " " + I18N.t("on") + " <select name='cron-dow'>" + str_opt_dow
-                    + "</select> </span>")
+            block["dow"] = $("<div class='cron-block form-group'><span class='cron-block-dow'>" +
+                    '<label class="control-label col-sm-3">'+ I18N.t("on") + '</label>' + 
+                    "<div class='col-sm-6'><select name='cron-dow' class='form-control' style='width: 80px;'>" + str_opt_dow
+                    + "</select> </span></div></div>")
                 .appendTo(this)
                 .data("root", this);
 
-            select = block["dow"].find("select").data("root", this);
-            if (o.useGentleSelect) select.gentleSelect(o.dowOpts);
-
-            block["time"] = $("<span class='cron-block cron-block-time'>"
-                    + " " + I18N.t("at") + " <select name='cron-time-hour' class='cron-time-hour'>" + str_opt_hid
-                    + "</select>:<select name='cron-time-min' class='cron-time-min'>" + str_opt_mih
-                    + " </span>")
+            block["time"] = $("<div class='cron-block input-group form-group'><span class='cron-block-time'>" +
+                    '<label class="control-label col-sm-3">'+ I18N.t("at") + '</label>' + 
+                    "<div class='col-sm-6'><select name='cron-time-hour' class='cron-time-hour form-control' style='width: 40px;'>" + str_opt_hid
+                    + "</select> : <select name='cron-time-min' class='cron-time-min form-control' style='width: 40px;'>" + str_opt_mih
+                    + " </span></div></div>")
                 .appendTo(this)
                 .data("root", this);
-
-            select = block["time"].find("select.cron-time-hour").data("root", this);
-            if (o.useGentleSelect) select.gentleSelect(o.timeHourOpts);
-            select = block["time"].find("select.cron-time-min").data("root", this);
-            if (o.useGentleSelect) select.gentleSelect(o.timeMinuteOpts);
 
             block["controls"] = $("<span class='cron-controls'>&laquo; save "
                     + "<span class='cron-button cron-button-save'></span>"
@@ -442,7 +430,7 @@
                 opt = root.data("options");
             var period = $(this).val();
 
-            root.find("span.cron-block").hide(); // first, hide all blocks
+            root.find(".cron-block").hide(); // first, hide all blocks
             if (toDisplay.hasOwnProperty(period)) { // not custom value
                 var b = toDisplay[$(this).val()];
                 for (var i = 0; i < b.length; i++) {

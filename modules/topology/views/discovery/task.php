@@ -16,7 +16,7 @@ use meican\topology\models\Change;
 
 \meican\topology\assets\discovery\Task::register($this);
 
-$this->params['header'] = [Yii::t('topology',"Discovery Task"), ['Home', 'Topology', 'Discovery', 'Task']];
+$this->params['header'] = [Yii::t('topology',"Discovery Task").' #'.$model->id, ['Home', 'Topology', 'Discovery', 'Task']];
 
 ?>
 <data id="task-id" value="<?= $model->id; ?>"/>
