@@ -327,12 +327,16 @@
                 .appendTo(this)
                 .data("root", this);
 
+            select = block["dom"].find("select").data("root", this);
+
             block["month"] = $("<div class='cron-block form-group'><span class='cron-block-month'>" +
                     '<label class="control-label col-sm-3">'+ I18N.t("of") + '</label>' + 
-                    "<div class='col-sm-6'><select name='cron-month' class='form-control' style='width: 80px;>" + 
+                    "<div class='col-sm-6'><select name='cron-month' class='form-control' style='width: 120px;>" + 
                     str_opt_month + "</select> </span></div></div>")
                 .appendTo(this)
                 .data("root", this);
+
+            select = block["month"].find("select").data("root", this);
 
             block["mins"] = $("<div class='cron-block form-group'><span class='cron-block-mins'>" +
                     '<label class="control-label col-sm-3">'+ I18N.t("on minute") + '</label>' + 
@@ -341,20 +345,27 @@
                 .appendTo(this)
                 .data("root", this);
 
+            select = block["mins"].find("select").data("root", this);
+
             block["dow"] = $("<div class='cron-block form-group'><span class='cron-block-dow'>" +
                     '<label class="control-label col-sm-3">'+ I18N.t("on") + '</label>' + 
-                    "<div class='col-sm-6'><select name='cron-dow' class='form-control' style='width: 80px;'>" + str_opt_dow
+                    "<div class='col-sm-6'><select name='cron-dow' class='form-control' style='width: 120px;'>" + str_opt_dow
                     + "</select> </span></div></div>")
                 .appendTo(this)
                 .data("root", this);
 
+            select = block["dow"].find("select").data("root", this);
+
             block["time"] = $("<div class='cron-block input-group form-group'><span class='cron-block-time'>" +
                     '<label class="control-label col-sm-3">'+ I18N.t("at") + '</label>' + 
-                    "<div class='col-sm-6'><select name='cron-time-hour' class='cron-time-hour form-control' style='width: 40px;'>" + str_opt_hid
-                    + "</select> : <select name='cron-time-min' class='cron-time-min form-control' style='width: 40px;'>" + str_opt_mih
+                    "<div class='col-sm-6'><select name='cron-time-hour' class='cron-time-hour form-control' style='width: 80px;'>" + str_opt_hid
+                    + "</select><select name='cron-time-min' class='cron-time-min form-control' style='width: 80px;'>" + str_opt_mih
                     + " </span></div></div>")
                 .appendTo(this)
                 .data("root", this);
+
+            select = block["time"].find("select.cron-time-hour").data("root", this);        
+            select = block["time"].find("select.cron-time-min").data("root", this);       
 
             block["controls"] = $("<span class='cron-controls'>&laquo; save "
                     + "<span class='cron-button cron-button-save'></span>"
