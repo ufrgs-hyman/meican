@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\scheduler\util;
+namespace meican\scheduler\utils;
 
 /**
  * Interface implemented by classes with scheduled execution support.
@@ -14,5 +14,4 @@ namespace meican\scheduler\util;
 interface SchedulableTask {
 
     public function execute($data);
-
 }

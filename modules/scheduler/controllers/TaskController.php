@@ -15,9 +15,14 @@ use meican\scheduler\models\ScheduledTask;
 
 /**
  * Console controller module of the Scheduler Service. This 
- * controller is used by:
+ * controller must be ONLY used by:
  * - Operational System to execute tasks.
  * - Scheduler Service to create, update or delete tasks.
+ * - Tests involving scheduled tasks.
+ *
+ * To create scheduled tasks, is not required use directly
+ * this service. Simply create a instance of ScheduledTask
+ * and after save this service is called in sequence.
  *
  * Currently only Unix systems are supported.
  *

@@ -27,7 +27,7 @@
  *
  */
 
-namespace meican\scheduler\components;
+namespace meican\scheduler\utils;
 
 /**
  * Crontab manager implementation

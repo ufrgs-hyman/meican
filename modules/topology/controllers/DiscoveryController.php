@@ -110,9 +110,9 @@ class DiscoveryController extends RbacController {
     }
 
     public function actionUpdateRule($id) {
-        $rule = DiscoveryRule::findOne($id);
+        $form = DiscoveryRuleForm::findOne($id);
 
-        if($rule->load($_POST)) {
+        if($form->load($_POST)) {
             if ($form->save()) {
                 Yii::$app->getSession()->addFlash("success", 
                     Yii::t("topology", "Rule {name} added successfully", ['name'=>$form->name]));
@@ -124,7 +124,7 @@ class DiscoveryController extends RbacController {
             }
         }
         
-        return $this->render('rule/create',[
+        return $this->render('rule/update',[
                 'model' => $form,
         ]);
     }

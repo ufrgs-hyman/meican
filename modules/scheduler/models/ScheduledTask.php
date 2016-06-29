@@ -9,7 +9,7 @@ namespace meican\scheduler\models;
 use Yii;
 
 use meican\base\utils\DateUtils;
-use meican\scheduler\util\SchedulableTask;
+use meican\scheduler\utils\SchedulableTask;
 
 /**
  * Essa classe representa um objeto ScheduledTask,
@@ -27,7 +27,7 @@ use meican\scheduler\util\SchedulableTask;
  *
  * @author Maurício Quatrin Guerreiro
  */
-class ScheduledTask extends \yii\db\ActiveRecord implements SchedulableTask {
+class ScheduledTask extends \yii\db\ActiveRecord {
 
     const STATUS_ENABLED =      "ENABLED";
     const STATUS_DISABLED =     "DISABLED";
@@ -47,7 +47,7 @@ class ScheduledTask extends \yii\db\ActiveRecord implements SchedulableTask {
     public function rules()
     {
         return [
-            [['freq', 'obj_class','obj_id','status'], 'required'],
+            [['freq', 'obj_class','obj_data','status'], 'required'],
             [['status'], 'string'],
             [['last_run_at'], 'safe'],
         ];
@@ -65,6 +65,14 @@ class ScheduledTask extends \yii\db\ActiveRecord implements SchedulableTask {
         ];
     }
 
+    public function afterSave() {
+        SchedulerService::create($this);
+    }
+
+    /**
+     * Executa a tarefa agendada, criando um objeto do tipo
+     * definido e enviando como argumento uma string $obj_data;
+     */
     public function execute() {
         $this->last_run_at = DateUtils::now();
         $this->save();

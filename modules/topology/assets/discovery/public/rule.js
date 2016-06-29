@@ -1,8 +1,12 @@
 $(document).ready(function() {
     $('#cron-widget').cron({
-        initial: $("#syncform-freq").val() ? $("#syncform-freq").val() : "0 12 * * *",
+        initial: $("#discoveryruleform-freq").val() ? $("#discoveryruleform-freq").val() : "0 12 * * *",
         onChange: function() {
-            $('#syncform-freq').val($(this).cron("value"));
+            $('#discoveryruleform-freq').val($(this).cron("value"));
         },
+    });
+
+    $("#connectionform-acceptrelease").on("switchChange.bootstrapSwitch", function(event, state) {
+        validateEditForm();
     });
 });

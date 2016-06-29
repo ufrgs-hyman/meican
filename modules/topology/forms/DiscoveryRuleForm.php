@@ -14,6 +14,7 @@ use meican\topology\models\Service;
 use meican\nsi\DiscoveryClient;
 use meican\nsi\NSIParser;
 use meican\nmwg\NMWGParser;
+use meican\scheduler\models\ScheduledTask;
 
 /**
  * @author Maurício Quatrin Guerreiro
@@ -98,37 +99,36 @@ class DiscoveryRuleForm extends DiscoveryRule {
         }
     }
 
-    static function build($syncId) {
-        $sync = self::findOne($syncId);
+    static function loadFromDB($id) {
+        $rule = parent::findOne($id);
         
-        if(!isset($sync)) return false;
+        if(!isset($rule)) return null;
         
-        $cron = Cron::findOneSyncTask($sync->id);
-        if($cron) {
-            $sync->freq = $cron->freq;
-            $sync->freq_enabled = true;
+        $task = ScheduledTask::findOne(['obj_data'=>$id, 'obj_class'=>'meican\topology\models\DiscoveryTask']);
+        if($task) {
+            $rule->freq = $task->freq;
+            $rule->freq_enabled = true;
         }
 
-        if ($sync->subscription_id) 
-            $sync->subscribe_enabled = true;
+        if ($rule->subscription_id) 
+            $rule->subscribe_enabled = true;
 
-        return $sync;
+        return $rule;
     }
 
-    public function saveCron() {
-        $cron = Cron::findOneSyncTask($this->id);
+    public function afterSave($insert, $changedAttributes) {
+        $task = ScheduledTask::findOne(['obj_data'=>$this->id, 'obj_class'=>'meican\topology\models\DiscoveryTask']);
 
         if ($this->freq_enabled) {
-            if (!$cron) {
-                $cron = new Cron;
-                $cron->task_type = Cron::TYPE_SYNC;
-                $cron->task_id = $this->id;
+            if (!$task) {
+                $task = new ScheduledTask;
+                $task->obj_class = 'meican\topology\models\DiscoveryTask';
+                $task->obj_data = $this->id;
             } 
-            $cron->status = Cron::STATUS_PROCESSING;
-            $cron->freq = $this->freq;
-            $cron->save();
-        } else if ($cron) {
-            $cron->delete();
+            $task->freq = $this->freq;
+            $task->save();
+        } else if ($task) {
+            $task->delete();
         }
     }
 }

@@ -26,7 +26,7 @@
  *
  */
 
-namespace meican\scheduler\components;
+namespace meican\scheduler\utils;
 
 use Yii;
 

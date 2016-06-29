@@ -8,7 +8,7 @@ namespace meican\topology\models;
 
 use Yii;
 
-use meican\scheduler\util\SchedulableTask;
+use meican\scheduler\utils\SchedulableTask;
 
 /**
  * Esta classe representa uma execução realizada pelo 

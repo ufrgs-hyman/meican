@@ -24,7 +24,6 @@ $this->params['header'] = [Yii::t('circuits', 'Status'), ['Home', Yii::t('circui
                     'labelText' => 'Auto update'
                 ]]); ?>
         </div>
-        
     </div>
     <div class="box-body">   
         <?php Pjax::begin(['id' => 'circuits-pjax']); ?>
