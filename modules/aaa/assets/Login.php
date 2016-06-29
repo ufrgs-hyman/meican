@@ -4,16 +4,16 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\aaa\assets\login;
+namespace meican\aaa\assets;
 
 use yii\web\AssetBundle;
 
 /**
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
-class Asset extends AssetBundle
+class Login extends AssetBundle
 {
-    public $sourcePath = '@meican/aaa/assets/login/public';
+    public $sourcePath = '@meican/aaa/assets/login';
     
     public $js = [
         'login.js',

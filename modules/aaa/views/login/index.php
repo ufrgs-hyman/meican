@@ -7,9 +7,7 @@
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 
-use meican\aaa\assets\login\Asset;
-
-Asset::register($this);
+\meican\aaa\assets\login::register($this);
 
 ?>
 

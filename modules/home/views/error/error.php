@@ -18,7 +18,7 @@ $this->params['header'] = [$name];
 <div class="site-error">
 
     <div class="alert alert-danger">
-        <?= nl2br(Html::encode($message)) ?>
+        <?= nl2br(Html::encode($exception->getMessage())) ?>
     </div>
 
     <p>
@@ -26,6 +26,12 @@ $this->params['header'] = [$name];
     </p>
     <p>
         Please contact us if you think this is a server error. Thank you.
+        </p><p>
+
+        Administrator</p>
+        <p>
+            <?= Yii::$app->params['mailer.destination']; ?>
+        </p>
     </p>
 
 </div>

@@ -4,18 +4,15 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use yii\helpers\Url;
 
-use meican\base\assets\Theme;
 use meican\base\widgets\Analytics;
 
-/* @var $this \yii\web\View */
-/* @var $content string */
-
-Theme::register($this);
+\meican\base\assets\Theme::register($this);
 
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
