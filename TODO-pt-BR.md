@@ -28,19 +28,12 @@ Próximo checkpoint:
 
 Login
 
-- Melhorar informacoes da tela de login
 - Atualizar tela de login via cafe
 
 AAA - Users
 
 - Criacao
 - Edicao
-
-Topology Discovery 
-
-- Edicao de regras de descoberta
-- Remover suporte ao DDS, pois nao parece estavel, manter HTTP como unico protocolo
-- Habilitar novo Scheduler para agendar descobertas
 
 Monitoring
 
@@ -57,4 +50,6 @@ ISSUES
 9) Discovery nao le topologias redirecionadas ou le?
 10) IN e OUT estao invertidos no traffic
 11) Colocar VLAN na popup de circuit view
+12) Colocar Device to Device na legenda do circuit view
+13) Oscars service nao esta atualizando status dos circuitos
 

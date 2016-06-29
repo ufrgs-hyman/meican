@@ -34,6 +34,7 @@ class DiscoveryRuleForm extends DiscoveryRule {
             [['freq'], 'safe'],
             [['freq_enabled'], 'boolean'],
             [['url'], 'validateUrl'],
+            [['url'], 'match', 'pattern' => '/^http/'],
             [['subscribe_enabled'], 'validateSubscribe']
         ], parent::rules());
     }
@@ -68,18 +69,22 @@ class DiscoveryRuleForm extends DiscoveryRule {
         switch ($this->type) {
             case DiscoveryRule::DESC_TYPE_NSI:
                 $parser = new NSIParser;  
-                $parser->loadFile($this->url);
+                if(!$parser->loadFile($this->url)) {
+                    $this->addError('url', 'Check your URL and try again.');
+                    return false;
+                }
+
                 switch ($this->protocol) {
                     case DiscoveryRule::PROTOCOL_HTTP:
                         if (!$parser->isTD()) {
-                            $this->addError('', 'The inserted URL does not contain a valid service. Please try again.');
+                            $this->addError('url', 'The inserted URL does not contains a valid NSI Topology.');
                             return false;
                         }
                         return true;
                         break;
                     case DiscoveryRule::PROTOCOL_NSI_DS:
                         if (!$parser->isDS()) {
-                            $this->addError('', 'The inserted URL does not contain a valid service. Please try again.');
+                            $this->addError('url', 'The inserted URL does not contains a valid service.');
                             return false;
                         }
                         $parser->parseLocalProvider();
@@ -90,9 +95,13 @@ class DiscoveryRuleForm extends DiscoveryRule {
                 
             case DiscoveryRule::DESC_TYPE_NMWG: 
                 $parser = new NMWGParser;  
-                $parser->loadFile($this->url);
+                if(!$parser->loadFile($this->url)) {
+                    $this->addError('url', 'Check your URL and try again.');
+                    return false;
+                }
+
                 if (!$parser->isTD()) {
-                    $this->addError('', 'The inserted URL does not contain a valid service. Please try again.');
+                    $this->addError('url', 'The inserted URL does not contains a valid NMWG Topology.');
                     return false;
                 }
                 return true;

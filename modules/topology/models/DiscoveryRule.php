@@ -11,6 +11,7 @@ use Yii;
 use meican\base\utils\DateUtils;
 use meican\nsi\NSIParser;
 use meican\nmwg\NMWGParser;
+use meican\scheduler\models\ScheduledTask;
 use meican\topology\models\TopologyNotification;
 
 /**
@@ -66,7 +67,7 @@ class DiscoveryRule extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('topology', 'ID'),
             'auto_apply' => Yii::t('topology', 'Apply method'),
-            'type' => Yii::t('topology', 'Type'),
+            'type' => Yii::t('topology', 'Topology type'),
             'subscription_id' => Yii::t('topology', 'Start by notification'),
             'name' => Yii::t('topology', 'Name'),
             'url' => Yii::t('topology', 'URL'),
@@ -84,7 +85,7 @@ class DiscoveryRule extends \yii\db\ActiveRecord
     }
 
     public function isScheduled() {
-        return false;
+        return ScheduledTask::findOne(['obj_data'=>$this->id, 'obj_class'=>'meican\topology\models\DiscoveryTask']) != null;
     }
 
     public function getProtocol() {
@@ -99,7 +100,6 @@ class DiscoveryRule extends \yii\db\ActiveRecord
     static function getProtocols() {
         return [
             ['id'=> self::PROTOCOL_HTTP, 'name'=> Yii::t('topology', 'HTTP')],
-            ['id'=> self::PROTOCOL_NSI_DS, 'name'=> Yii::t('topology', 'NSI Discovery Service 1.0')],
         ];
     }
 

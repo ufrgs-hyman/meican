@@ -34,15 +34,10 @@ $form= ActiveForm::begin([
             </div>
             <div class="box-body">
                 <?= $form->field($model,'name')->textInput(['size'=>50]); ?>
-                <?= $form->field($model,'protocol')->dropDownList(ArrayHelper::map(DiscoveryRule::getProtocols(), 'id', 'name')); ?>
                 <?= $form->field($model,'type')->dropDownList(ArrayHelper::map(DiscoveryRule::getTypes(), 'id', 'name')); ?>
-            <div id="subscribed-row" <?= ($model->type == Service::TYPE_NSI_DS_1_0) ? "" : "disabled" ?>>
-                <?= $form->field($model,'subscribe_enabled')->dropDownList(ArrayHelper::map(
-                    [['id'=>false, 'name'=>Yii::t("topology", 'Disabled')],['id'=>true,'name'=>Yii::t("topology", 'Enabled')]], 'id', 'name'), 
-                        ['disabled'=>($model->protocol == Service::TYPE_NSI_DS_1_0) ? false : true]); ?>
-            </div>
                 <?= $form->field($model,'auto_apply')->dropDownList(ArrayHelper::map(
                     [['id'=>false, 'name'=>Yii::t("topology", 'Manually')],['id'=>true,'name'=>Yii::t("topology", 'Automatically')]], 'id', 'name')); ?>
+                <?= $form->field($model,'protocol')->dropDownList(ArrayHelper::map(DiscoveryRule::getProtocols(), 'id', 'name')); ?>
                 <?= $form->field($model,'url')->textInput(['size'=>50]); ?>
                 <?= $form->field($model,'freq')->hiddenInput()->label(""); ?>
             </div>

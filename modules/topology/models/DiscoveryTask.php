@@ -9,6 +9,7 @@ namespace meican\topology\models;
 use Yii;
 
 use meican\scheduler\utils\SchedulableTask;
+use meican\topology\services\DiscoveryService;
 
 /**
  * Esta classe representa uma execução realizada pelo 

@@ -129,13 +129,11 @@ class NSIParser {
 
         $options = array(
                 CURLOPT_RETURNTRANSFER => true,
-                //CURLOPT_HEADER         => true,
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_SSL_VERIFYHOST => false,
                 CURLOPT_SSL_VERIFYPEER => false,
-
+                CURLOPT_CONNECTTIMEOUT => 5,
                 CURLOPT_USERAGENT => 'Meican',
-                //CURLOPT_VERBOSE        => true,
                 CURLOPT_URL => $this->url,
         );
 
@@ -143,8 +141,12 @@ class NSIParser {
 
         $output = curl_exec($ch);
         curl_close($ch);
-        //  echo $output;
-        $this->loadXml($output);
+
+        if($output != null) {
+            //  echo $output;
+            $this->loadXml($output);
+            return true;
+        } else return false;
     }
     
     function getData() {

@@ -10,7 +10,7 @@ use yii\console\Controller;
 use yii\web\ForbiddenHttpException;
 use Yii;
 
-use meican\scheduler\components\CrontabManager;
+use meican\scheduler\utils\CrontabManager;
 use meican\scheduler\models\ScheduledTask;
 
 /**
@@ -79,16 +79,19 @@ class TaskController extends Controller {
      */
     public function actionExecute($tag, $cronId) {
         $task = ScheduledTask::findOne($this->toTaskId($cronId));
-        $task->execute();
+        if($task)
+            $task->execute();
+        else 
+            $this->deleteCron($cronId);
         return 0;
     }
 
     private function toCronId($taskId) {
-        return 'job'.$id;
+        return 'job'.$taskId;
     }
 
     private function toTaskId($cronId) {
-        return str_replace("job", "", $id);
+        return str_replace("job", "", $cronId);
     }
 
     /**

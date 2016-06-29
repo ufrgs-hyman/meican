@@ -10,6 +10,7 @@ use Yii;
 
 use meican\base\utils\DateUtils;
 use meican\scheduler\utils\SchedulableTask;
+use meican\scheduler\services\SchedulerService;
 
 /**
  * Essa classe representa um objeto ScheduledTask,
@@ -47,8 +48,7 @@ class ScheduledTask extends \yii\db\ActiveRecord {
     public function rules()
     {
         return [
-            [['freq', 'obj_class','obj_data','status'], 'required'],
-            [['status'], 'string'],
+            [['freq', 'obj_class','obj_data'], 'required'],
             [['last_run_at'], 'safe'],
         ];
     }
@@ -65,8 +65,11 @@ class ScheduledTask extends \yii\db\ActiveRecord {
         ];
     }
 
-    public function afterSave() {
-        SchedulerService::create($this);
+    public function afterSave($insert, $changedAttributes) {
+        if($insert)
+            SchedulerService::create($this);
+        else
+            SchedulerService::update($this);
     }
 
     /**
@@ -78,10 +81,8 @@ class ScheduledTask extends \yii\db\ActiveRecord {
         $this->save();
 
         $obj = Yii::createObject($this->obj_class);
-        if ($obj) {
-            if($obj instanceof SchedulableTask) {
+        if ($obj && $obj instanceof SchedulableTask) {
                 $obj->execute($this->obj_data);
-            }
         } else {
             $this->delete();
         }

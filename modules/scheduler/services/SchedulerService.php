@@ -4,9 +4,10 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\base\services;
+namespace meican\scheduler\services;
 
 use meican\base\services\ConsoleService;
+use meican\scheduler\models\ScheduledTask;
 
 /**
  * Service to create and delete the scheduled tasks on OS system.
@@ -23,6 +24,11 @@ class SchedulerService {
 
     public static function delete(ScheduledTask $task) {
         ConsoleService::run("scheduler/task/delete ".$task->id);
+    }
+
+    public static function update(ScheduledTask $task) {
+        ConsoleService::run("scheduler/task/delete ".$task->id);
+        ConsoleService::run("scheduler/task/create ".$task->id);
     }
 }
 
