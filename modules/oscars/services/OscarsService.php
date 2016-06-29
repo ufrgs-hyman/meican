@@ -50,8 +50,12 @@ class OscarsService {
 
     private static function saveCircuits($circuits) {
         $conns = [];
+        $activeCircuitsGRI = [];
 
         foreach ($circuits as $circuit) {
+            if($circuit->status == 'ACTIVE')
+                $activeCircuitsGRI[] = $circuit->gri;
+
             OscarsService::saveCircuit(
                 $circuit->gri, 
                 $circuit->description, 
@@ -61,6 +65,16 @@ class OscarsService {
                 $circuit->bandwidth, 
                 $circuit->path
             );
+        }
+
+        $toFixCircuits = Connection::find()
+            ->where(['dataplane_status'=> 'ACTIVE', 'type'=> 'OSCARS'])
+            ->andWhere(['not in', 'external_id', $activeCircuitsGRI])
+            ->all();
+
+        foreach ($toFixCircuits as $conn) {
+            $conn->dataplane_status = 'INACTIVE';
+            $conn->save();
         }
     }
 
