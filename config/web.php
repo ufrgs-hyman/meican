@@ -64,7 +64,7 @@ $config = [
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '',
+            'cookieValidationKey' => 'oVPoqfV26tMmmGp35SHU52dRf91z5N3I',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -75,7 +75,7 @@ $config = [
             'loginUrl' => ['aaa/login']
         ],
         'errorHandler' => [
-            'errorAction' => 'home/board/error',
+            'errorAction' => 'home/error/error',
         ],
         'mailer' => require(__DIR__ . '/mailer.php'),
         'log' => [
