@@ -56,4 +56,5 @@ ISSUES
 8) Habilitar hover em nodes e links. 
 9) Discovery nao le topologias redirecionadas ou le?
 10) IN e OUT estao invertidos no traffic
+11) Colocar VLAN na popup de circuit view
 

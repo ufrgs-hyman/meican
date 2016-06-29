@@ -120,6 +120,11 @@ function validateName() {
 function initConfirmTab() {
     $("#confirm").on("click",'.next-btn', function() {
         if(validatePath() && validateRequirements() && validateSchedule() && validateName()) {
+            $(this).attr('disabled','disabled');
+            MAlert.show(
+                'Request received!', 
+                'Please, wait a moment while we process your request.',
+                'success');
             var reservationForm = $( "#reservation-form" ).clone();
             var events = $('#calendar').fullCalendar('clientEvents');
             for (var i = 0; i < events.length; i++) {

@@ -70,7 +70,7 @@ class ReservationController extends RbacController {
             }*/
 
             if ($form->save()) {
-                Yii::$app->getSession()->addFlash('success', Yii::t('circuits', 'Circuit reservation successfully registered. Please wait while we connect to the provider to check for required resources.'));
+                Yii::$app->getSession()->addFlash('success', Yii::t('circuits', 'Circuit reservation successfully registered. Please wait while we check for required resources.'));
                 return $form->reservation->id;
             }
         }
