@@ -23,7 +23,8 @@ var count;
 var waitingNext;
 
 $(document).ready(function() {
-	
+    if (typeof disabledNotify !== 'undefined') return;
+
 	timerAuths();
 	 
 	$("#not_toggle_button").click(function(){

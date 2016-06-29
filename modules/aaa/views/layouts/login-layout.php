@@ -24,6 +24,7 @@ use meican\base\widgets\Analytics;
   <?= Html::csrfMetaTags() ?>
   <link rel="shortcut icon" href="<?= Url::base(); ?>/images/favicon.ico" type="image/x-icon" />
   <script type="text/javascript">
+    var disabledNotify = true;
     window.baseUrl = "<?= Url::base(); ?>";
     var language = "<?= Yii::$app->language; ?>";
   </script>
