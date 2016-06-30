@@ -62,7 +62,7 @@ class DiscoveryTask extends \yii\db\ActiveRecord implements SchedulableTask {
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'started_at' => Yii::t('app', 'Executed at'),
+            'started_at' => Yii::t('app', 'Started at'),
             'status' => Yii::t('app', 'Status'),
             'progress' => Yii::t('app', 'Progress'),
             'sync_id' => Yii::t('app', 'Sync ID'),

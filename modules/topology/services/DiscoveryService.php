@@ -49,6 +49,11 @@ class DiscoveryService {
         return $change;
     }
 
+    private function taskFailed() {
+        $this->task = DiscoveryTask::STATUS_FAILED;
+        $this->task->save();
+    }
+
     public function execute($task, $rule) {
         $this->task = $task;
         $this->task->started_at = DateUtils::now();
@@ -62,24 +67,18 @@ class DiscoveryService {
             switch ($rule->type) {
                 case DiscoveryRule::DESC_TYPE_NSI: 
                     $this->parser = new NSIParser; 
-                    $this->parser->loadFile($rule->url);
-                    if (!$this->parser->isTD()) {
-                        $this->task->status = DiscoveryTask::STATUS_FAILED;
-                        $this->task->save();
-                        return;
-                    }
+                    if(!$this->parser->loadFile($rule->url) || !$this->parser->isTD()) 
+                        return $this->taskFailed();
+
                     $this->parser->parseTopology();
                     //Yii::trace($topo->getData());
                     break;
 
                 case DiscoveryRule::DESC_TYPE_NMWG: 
                     $this->parser = new NMWGParser;
-                    $this->parser->loadFile($rule->url);
-                    if (!$this->parser->isTD()) {
-                        $this->task->status = DiscoveryTask::STATUS_FAILED;
-                        $this->task->save();
-                        return;
-                    }
+                    if(!$this->parser->loadFile($rule->url) || !$this->parser->isTD()) 
+                        return $this->taskFailed();
+
                     $this->parser->parseTopology();
                     //Yii::trace($topo->getData());
                     break;

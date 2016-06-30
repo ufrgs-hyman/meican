@@ -13,7 +13,7 @@ class m160629_191436_mqg extends Migration
         $this->execute("
            ALTER TABLE `meican_sche_task` DROP `status`;");
         $this->execute("
-           ALTER TABLE meican_sche_task DROP INDEX type_id;");
+           ALTER TABLE meican_sche_task DROP INDEX task_id;");
         $this->execute("
            ALTER TABLE `meican_sche_task` CHANGE `obj_id` `obj_data` TEXT NOT NULL;");
     }

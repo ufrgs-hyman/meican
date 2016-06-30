@@ -22,14 +22,38 @@ $this->params['header'] = [Yii::t('topology',"Discovery Task").' #'.$model->id, 
 <data id="task-id" value="<?= $model->id; ?>"/>
 <div class="box box-default">
     <div class="box-header with-border">
-        <h3 class="box-title"><?= Yii::t("topology", "Info"); ?></h3>
+        <h3 class="box-title"><?= Yii::t("topology", "Task info"); ?></h3>
     </div>
     <div class="box-body">
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
-                'started_at:datetime',               
+                'started_at:datetime',  
+                [
+                    'label' => 'Rule name',
+                    'value' => $model->getRule()->asArray()->one()['name']
+                ],
+                [
+                    'label' => 'Target URL',
+                    'value' => $model->getRule()->asArray()->one()['url']
+                ],
+                [
+                    'label' => 'Topology type',
+                    'value' => $model->getRule()->one()->getType()
+                ],
                 'status',  
+                [
+                    'label' => 'Total pending changes',
+                    'value' => $model->getChanges()->where(['status'=>Change::STATUS_PENDING])->count()
+                ],
+                [
+                    'label' => 'Total applied changes',
+                    'value' => $model->getChanges()->where(['status'=>Change::STATUS_APPLIED])->count()
+                ],
+                [
+                    'label' => 'Total failed changes',
+                    'value' => $model->getChanges()->where(['status'=>Change::STATUS_FAILED])->count()
+                ],
             ],
         ]); ?>
     </div>
@@ -38,9 +62,11 @@ $this->params['header'] = [Yii::t('topology',"Discovery Task").' #'.$model->id, 
 <div id="changes-box" class="box box-default">
     <div class="box-header with-border">
         <h3 class="box-title"><?= Yii::t("topology", "Discovered changes"); ?></h3>
+        <div class="box-tools">
+            <button class="btn btn-sm btn-default" id="apply-all">Apply all changes</button>
+        </div>
     </div>
     <div class="box-body">
-        <button class="btn btn-default" id="apply-all">Apply all changes</button><br>
         <?php
 
         Pjax::begin([
@@ -53,10 +79,13 @@ $this->params['header'] = [Yii::t('topology',"Discovery Task").' #'.$model->id, 
             'dataProvider' => $changeProvider,
             'columns' => array(
                 [
-                    'format' => 'raw',
-                    'value' => function ($model){
-                        return $model->status == Change::STATUS_APPLIED ? "" : '<a href="#">'.Html::img('@web/images/ok.png', ['class' => "apply-button"])."</a>";
-                    },
+                    'class' => 'yii\grid\ActionColumn',
+                    'template'=>'{apply}',
+                    'buttons' => [
+                        'apply' => function ($url, $model) {
+                            return $model->status == Change::STATUS_APPLIED ? "" : Html::a('<span class="fa fa-eye apply-btn"></span>', '#');
+                        }
+                    ],
                     'headerOptions'=>['style'=>'width: 2%;'],
                 ],
                 [

@@ -37,8 +37,6 @@ AAA - Users
 
 Monitoring
 
-- [Reavaliar necessidade] Ter um campo de filtro para buscar um campo especifico. Possibilitar lista de sugestões? Feature existente no Weathermap que conflita com a tela de detalhes do circuito.
-
 - [Reavaliar necessidade] O status do enlace pode ser uma informação útil para ser apresentada na tela de detalhes do circuito. Uma forma seria informar algum alerta caso algum enlace do circuito esteja DOWN.
 
 ISSUES
@@ -52,4 +50,7 @@ ISSUES
 11) Colocar VLAN na popup de circuit view
 12) Colocar Device to Device na legenda do circuit view
 13) Oscars service nao esta atualizando status dos circuitos
+14) Garantid Capacity nos enlaces
+15) Test77 to MXPA ========>  Test77 : MXSP to MXPA
+16) Bloquear dias do passado no schedule da reserve
 

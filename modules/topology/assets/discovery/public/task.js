@@ -6,7 +6,7 @@
 
 $(document).on('ready pjax:success', function() {
     $("#refresh-overlay").hide();
-    $("#change-grid").on("click",'img.apply-button',  function() {
+    $("#change-grid").on("click",'.apply-btn',  function() {
         $("#refresh-overlay").show();
         context = $(this);
         $.ajax({

@@ -72,6 +72,8 @@ class DiscoveryController extends RbacController {
     }
 
     public function actionExecute($rule) { 
+        self::beginAsyncAction();
+        
         $ds = new DiscoveryService;
         return $ds->execute(new DiscoveryTask, DiscoveryRule::findOne($rule));
     }
