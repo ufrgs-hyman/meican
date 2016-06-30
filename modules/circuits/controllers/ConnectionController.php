@@ -92,7 +92,7 @@ class ConnectionController extends RbacController {
         }
     }
 
-    public function actionGetOrderedPathsOld($id) {
+    /*public function actionGetOrderedPathsOld($id) {
         $paths = ConnectionPath::find()->where(['conn_id'=>$id])->orderBy(['path_order'=> "SORT_ASC"])->all();
          
         $data = [];
@@ -108,7 +108,7 @@ class ConnectionController extends RbacController {
         $data = json_encode($data);
         Yii::trace($data);
         return $data;
-    }
+    }*/
 
     public function actionGetOrderedPath($id) {
         $points = ConnectionPath::find()->where(['conn_id'=>$id])->orderBy(['path_order'=> "SORT_ASC"])->all();
@@ -116,15 +116,16 @@ class ConnectionController extends RbacController {
         $data = [];
          
         foreach ($points as $point) {
-            $port = $point->getPort()->select(['id','urn','device_id'])->one();
+            $port = $point->getPort()->select(['id','urn','device_id', 'type', 'name'])->one();
             $data[] = [
                 'path_order' => $point->path_order, 
                 'device_id'=> $port ? $port->device_id : null,
                 'port_id' => $port ? $port->id : null,
+                'port_name' => $port ? $port->name : null,
+                'port_type' => $port ? $port->type : null,
                 'port_urn' => $point->getFullPortUrn(),
                 'vlan' => $point->vlan,
                 'domain' => $point->domain,
-                'port_type' => 'NSI'
             ];
         }
          

@@ -447,7 +447,7 @@ function loadDevicePorts() {
                             '</b> and <b>' + 
                             meicanMap.getNode(portObject.linkIn.options.to).options.name +
                             '</b><br>' + 
-                            'Capacity: <b>' + portObject.cap + ' Mbps</b>' + 
+                            'Guaranteed Capacity: <b>' + portObject.cap + ' Mbps</b>' + 
                             '<br>');
                     if(portObject.linkOut)
                         portObject.linkOut.bindPopup(
@@ -456,7 +456,7 @@ function loadDevicePorts() {
                             '</b> and <b>' + 
                             meicanMap.getNode(portObject.linkIn.options.to).options.name +
                             '</b><br>' + 
-                            'Capacity: <b>' + portObject.cap + ' Mbps</b>' + 
+                            'Guaranteed Capacity: <b>' + portObject.cap + ' Mbps</b>' + 
                             '<br>');
                 } 
             }  
@@ -572,7 +572,7 @@ function addCircuits(circuits) {
                         '</b> and <b>' + 
                         meicanMap.getNode(linkOut.options.to).options.name +
                         '</b><br>' + 
-                        'Capacity: <b>' + node.options.ports[portId].cap + ' Mbps</b>' + 
+                        'Guaranteed Capacity: <b>' + node.options.ports[portId].cap + ' Mbps</b>' + 
                         '<br>' + 
                         '<br><div class="traffic-stats" style="width: 610px; height: 250px"></div><br>' + 
                         '<div class="stats-legend"></div>',

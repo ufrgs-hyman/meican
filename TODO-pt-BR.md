@@ -41,15 +41,14 @@ Monitoring
 
 ISSUES
 
-5) [Topology] Não estão sendo mostrados os links das topologia NSI e Cipo
 6) [CircuitDetails] Grafico não apresenta unidade de medida adequada (Ex: 0.0003 Mbps). Considerar utilizar algum tipo de mudança de escala da unidade de medida para evitar numeros com mais de 1 ou 2 casas decimais (Ex 0.3Kbps ou 300 bps).
 7) Enlaces sem circuitos devem ter uma mensagem informando isto.
 8) Habilitar hover em nodes e links. 
 10) IN e OUT estao invertidos no traffic
-11) Colocar VLAN na popup de circuit view
+11) Colocar VLAN na popup de circuit view (FALAR COM MARCOS => Cada device representa dois pontos e eles tem duas vlans.)
 12) Colocar Device to Device na legenda do circuit view
-14) Garantid Capacity nos enlaces
 15) Test77 to MXPA ========>  Test77 : MXSP to MXPA
 16) Bloquear dias do passado no schedule da reserve
 17) Discovery nao ta criando notificacoes.
+18) Ediçao de circuitos finalizados nao deve ser permitido. PassedEndTime deve ser verificado, uma vez detectado deve-se finalizar o circuito.
 

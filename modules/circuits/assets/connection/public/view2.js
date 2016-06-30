@@ -301,6 +301,9 @@ function initPathBox() {
     $('#canvas').on('lmap.nodeClick', function(e, marker) {
         marker.setPopupContent('Domain: <b>' + meicanMap.getDomain(marker.options.domainId).name + 
             '</b><br>Device: <b>' + marker.options.name + '</b><br>');
+            //'In port: <b></b><br>' +
+            //'Out port: <b></b><br>' +
+            //'VLAN: <b></b><br>');
     });
 
     $("#path-box").on("click", '.show-stats', function() {
