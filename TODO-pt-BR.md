@@ -51,4 +51,5 @@ ISSUES
 16) Bloquear dias do passado no schedule da reserve
 17) Discovery nao ta criando notificacoes.
 18) Ediçao de circuitos finalizados nao deve ser permitido. PassedEndTime deve ser verificado, uma vez detectado deve-se finalizar o circuito.
+19) quando troca de abas no circuit view, buga o mapa.
 
