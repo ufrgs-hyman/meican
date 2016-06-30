@@ -15,8 +15,8 @@ ButtonsAsset::register($this);
 <div class="grid-buttons">
 
     <div>
-        <a class="btn btn-primary add-grid-btn" href="<?= $addUrl; ?>">Add</a>
-        <a id="delete-grid-btn" class="btn btn-default">Delete</a>
+        <a class="btn <?= $size == 'small' ? 'btn-sm' : ''; ?> btn-primary add-grid-btn" href="<?= $addUrl; ?>">Add</a>
+        <a id="delete-grid-btn" class="btn <?= $size == 'small' ? 'btn-sm' : ''; ?> btn-default">Delete</a>
     </div>
 
     <?php 

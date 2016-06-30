@@ -31,16 +31,12 @@ class ServiceController extends RbacController {
             if ($model->save()) {
                 Yii::$app->getSession()->addFlash("success", Yii::t("topology", "Service {type} added successfully", ['type'=>$model->getType()]));
                 return $this->redirect(array('/topology/provider/view', 'id'=>$model->provider_id));
-            } else {
-                foreach($model->getErrors() as $attribute => $error) {
-                    Yii::$app->getSession()->addFlash("error", $error[0]);
-                }
-                $model->clearErrors();
-            }
+            } 
         }
 
         return $this->render('/provider/service/create', array(
-                'model' => $model,
+            'provider' => $prov,    
+            'model' => $model,
         ));
     }
 
@@ -51,16 +47,12 @@ class ServiceController extends RbacController {
             if ($model->save()) {
                 Yii::$app->getSession()->addFlash("success", Yii::t("topology", "Service {type} updated successfully", ['type'=>$model->getType()]));
                 return $this->redirect(array('/topology/provider/view', 'id'=>$model->provider_id));
-            } else {
-                foreach($model->getErrors() as $attribute => $error) {
-                    Yii::$app->getSession()->addFlash("error", $error[0]);
-                }
-                $model->clearErrors();
-            }
+            } 
         }
 
         return $this->render('/provider/service/update', array(
-                'model' => $model,
+            'provider' => $model->getProvider()->one(), 
+            'model' => $model,
         ));
     }
 

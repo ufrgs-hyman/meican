@@ -15,7 +15,7 @@ use meican\base\grid\GridButtons;
 
 \meican\topology\assets\service\Index::register($this);
 
-$this->params['header'] = [$model->name, ['Home', 'Topology', 'Provider', '#'.$model->id]];
+$this->params['header'] = [$model->name, ['Home', 'Topology', 'Providers', $model->name]];
 
 ?>
 
@@ -23,7 +23,7 @@ $this->params['header'] = [$model->name, ['Home', 'Topology', 'Provider', '#'.$m
     <div class="col-md-6">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t("topology", "Informations"); ?></h3>
+                <h3 class="box-title"><?= Yii::t("topology", "Details"); ?></h3>
             </div>
             <div class="box-body">
                 <?= DetailView::widget([
@@ -51,6 +51,11 @@ $this->params['header'] = [$model->name, ['Home', 'Topology', 'Provider', '#'.$m
         <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title"><?= Yii::t("topology", "Services"); ?></h3>
+                <div class="box-tools">
+                    <?= GridButtons::widget([
+                        'size' => 'small',
+                        'addRoute'=>['/topology/service/create', 'id'=>$model->id]]); ?>
+                </div>
             </div>
             <div class="box-body">
                 <?php
@@ -63,9 +68,6 @@ $this->params['header'] = [$model->name, ['Home', 'Topology', 'Provider', '#'.$m
                     'enableClientValidation' => false,
                 ]);
 
-                echo GridButtons::widget([
-                    'addRoute'=>['/topology/service/create', 'id'=>$model->id]]).'<br>';
-
                 echo Grid::widget([
                     'dataProvider' => $services,
                     'columns' => array(
@@ -75,13 +77,16 @@ $this->params['header'] = [$model->name, ['Home', 'Topology', 'Provider', '#'.$m
                                 'multiple'=>false,
                                 'headerOptions'=>['style'=>'width: 2%;'],
                             ),
-                            /*array(
-                                'class'=> LinkColumn::className(),
-                                'image'=>'/images/edit_1.png',
-                                'label' => '',
-                                'url' => '/topology/service/update',
+                            [
+                                'class' => 'yii\grid\ActionColumn',
+                                'template'=>'{update}',
+                                'buttons' => [
+                                    'update' => function ($url, $model) {
+                                        return Html::a('<span class="fa fa-pencil"></span>', Url::to(['/topology/service/update', 'id'=>$model->id]));
+                                    }
+                                ],
                                 'headerOptions'=>['style'=>'width: 2%;'],
-                            ),*/
+                            ],
                             [
                                 'attribute' => 'type',
                                 'value' => function($model) {

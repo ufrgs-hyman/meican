@@ -16,7 +16,6 @@ use yii\grid\GridView;
  * - responsive template
  *
  * @author Mauricio Quatrin Guerreiro
- * @since 2.3.0
  */
 class Grid extends GridView {
 

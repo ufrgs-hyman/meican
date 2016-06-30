@@ -13,7 +13,6 @@ use yii\bootstrap\Html;
  * iCheck style for yii2 CheckboxColumn
  *
  * @author Mauricio Quatrin Guerreiro
- * @since 2.3.0
  */
 class IcheckboxColumn extends CheckboxColumn {
 

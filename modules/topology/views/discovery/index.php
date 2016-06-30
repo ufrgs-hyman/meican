@@ -30,7 +30,7 @@ $this->params['header'] = [Yii::t('topology',"Discovery"), ['Home', 'Topology', 
             <div class="box-body">
                 <?php
 
-                echo GridButtons::widget(['addRoute'=>'create-rule']).'<br>';
+                echo GridButtons::widget(['addRoute'=>['create-rule']]).'<br>';
             
                 $form = ActiveForm::begin([
                     'method' => 'post',

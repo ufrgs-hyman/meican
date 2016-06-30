@@ -24,7 +24,7 @@ $this->params['header'] = ["Providers", ['Home', 'Topology', 'Providers']];
     </div>
     <div class="box-body">
 
-<?php
+    <?php
 
     $form = ActiveForm::begin([
         'method' => 'post',
@@ -49,9 +49,9 @@ $this->params['header'] = ["Providers", ['Home', 'Topology', 'Providers']];
 	        		'class' => 'yii\grid\ActionColumn',
 	        		'template'=>'{update}',
 	        		'buttons' => [
-	        				'update' => function ($url, $model) {
-	        					return Html::a('<span class="fa fa-pencil"></span>', $url);
-	        				}
+        				'update' => function ($url, $model) {
+        					return Html::a('<span class="fa fa-pencil"></span>', $url);
+        				}
 	        		],
 	        		'headerOptions'=>['style'=>'width: 2%;'],
         		],
@@ -59,9 +59,9 @@ $this->params['header'] = ["Providers", ['Home', 'Topology', 'Providers']];
 	        		'class' => 'yii\grid\ActionColumn',
 	        		'template'=>'{view}',
 	        		'buttons' => [
-	        				'view' => function ($url, $model) {
-	        					return Html::a('<span class="fa fa-eye"></span>', $url, [ 'title'=>Yii::t("topology",'Show details and services of this provider')]);
-	        				}
+        				'view' => function ($url, $model) {
+        					return Html::a('<span class="fa fa-eye"></span>', $url, [ 'title'=>Yii::t("topology",'Show details and services of this provider')]);
+        				}
 	        		],
 	        		'headerOptions'=>['style'=>'width: 2%;'],
         		],
@@ -81,7 +81,8 @@ $this->params['header'] = ["Providers", ['Home', 'Topology', 'Providers']];
     Pjax::end();
 
     ActiveForm::end();
-?>
+
+    ?>
 
     </div>
 </div>

@@ -15,10 +15,13 @@ use Yii;
 class GridButtons extends \yii\base\Widget {
 
     public $addRoute;
+    public $size;
 
     public function run() {
         return $this->render('@meican/base/views/_grid-buttons', 
-          ['addUrl'=> Url::to((isset($this->addRoute) ? [$this->addRoute] : ['create']))]);
+          [
+          'size' => (isset($this->size) && $this->size == 'small') ? 'small' : 'normal',
+          'addUrl'=> Url::to((isset($this->addRoute) ? $this->addRoute : ['create']))]);
     }
 
 }
