@@ -7,12 +7,10 @@
 var meicanMap = new LMap('canvas');
 var meicanGraph = new VGraph("canvas");
 var meicanTopo = [];
-var viewer;
 var lsidebar;
 
 $(document).ready(function() {
     meicanMap.show('dev');
-    viewer = meicanMap;
     $(".sidebar-toggle").remove();
     $(".sidebar-mini").addClass("sidebar-collapse");
 
@@ -40,7 +38,7 @@ $(document).ready(function() {
 });
 
 function initMenu() {
-    $('input[name="mode"]').on('ifChecked', function(){
+   /* $('input[name="mode"]').on('ifChecked', function(){
         if(this.value == 'map') {
             viewer = meicanMap;
             meicanGraph.hide();
@@ -54,7 +52,7 @@ function initMenu() {
 
     $('input[name="node-type"]').on('ifChecked', function(){
         viewer.setNodeType(this.value);
-    });
+    });*/
 }
 
 function initCanvas() {
@@ -271,7 +269,7 @@ function loadDeviceLinks() {
             for (var src in response) {
                 for (var i = 0; i < response[src].length; i++) {
                     //console.log(src, response[src][i]);
-                    meicanMap.addLink(['dev'+src,'dev'+response[src][i]], 'dev');
+                    meicanMap.addLink(null, 'dev'+src,'dev'+response[src][i], 'dev');
                 }
             }           
         }
