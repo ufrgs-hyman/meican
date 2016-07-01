@@ -58,13 +58,13 @@ $config = [
         ],
         'session' => [
             'class' => 'yii\web\Session',
-            //'cookieParams' => ['httpOnly' => true, 'lifetime'=> 3600],
+            //'cookieParams' => ['httpOnly' => true,'lifetime'=> 3600],
             //'timeout' => 3600,
-            //'useCookies' => true,
+            'useCookies' => true,
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'oVPoqfV26tMmmGp35SHU52dRf91z5N3I',
+            'cookieValidationKey' => '345i34534534kb3kb53k',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',

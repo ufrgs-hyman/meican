@@ -24,6 +24,8 @@ use meican\aaa\models\AaaPreference;
 class LoginController extends BaseController {
     
     public $layout = 'login-layout';
+    //VERIFICAR
+    public $enableCsrfValidation = false;
     
     public function actionIndex() {
         if (!\Yii::$app->user->isGuest) {

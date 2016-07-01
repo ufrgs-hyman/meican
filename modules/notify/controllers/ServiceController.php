@@ -24,8 +24,6 @@ class ServiceController extends RbacController {
 	const TYPE_RESERVATION = 	"RESERVATION";
 	const TYPE_TOPOLOGY = 		"TOPOLOGY";
 	
-	public $enableCsrfValidation = false;
-
 	public function actionIndex(){
 		$dataProvider = new ActiveDataProvider([
 				'query' => Notification::find()->where(['user_id' => Yii::$app->user->getId()])->orderBy(['date' => SORT_DESC]),
