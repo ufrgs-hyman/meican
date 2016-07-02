@@ -409,7 +409,7 @@ function drawCircuitWhenReady(requiredMarkers, animate) {
             }
             
             meicanMap.focusNodes();
-            loadStats(path[0]);
+            loadStats(path[0], path[1]);
         }
     } else {
         setTimeout(function() {
@@ -580,9 +580,9 @@ function initStats() {
     });
 }
 
-function loadStats(point) {
-    if(point) {
-        statsCurrentPoint = point;
+function loadStats(srcPoint, dstPoint) {
+    if(srcPoint) {
+        statsCurrentLink = {src: srcPoint, dst: dstPoint};
     }
 
     //$("#stats-target").html("<b>" + statsCurrentPoint.port_urn + "</b> (VLAN <b>" + statsCurrentPoint.vlan + "</b>)");
@@ -590,18 +590,19 @@ function loadStats(point) {
     $("#stats-loading").show();
 
     //if(urnType == "NSI")....
-    var urn = statsCurrentPoint.port_urn;
+    var urn = statsCurrentLink.src.port_urn;
     urn = urn.split(':');
     var dom = urn[3];
+    var dstDev = statsCurrentLink.dst.port_urn.split(':')[statsCurrentLink.dst.port_urn.split(':').length - 3];
     var dev = urn[urn.length - 3];
     var port = urn[urn.length - 2];
-    var vlan = statsCurrentPoint.vlan;
+    var vlan = statsCurrentLink.src.vlan;
     var statsData = [];
 
-    loadTrafficHistory(statsData, dom, dev, port, vlan);
+    loadTrafficHistory(statsData, dom, dev, port, vlan, dstDev);
 }
 
-function loadTrafficHistory(statsData, dom, dev, port, vlan) {
+function loadTrafficHistory(statsData, dom, dev, port, vlan, dstDev) {
     $.ajax({
         url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=' + dom + '&dev=' + dev +
             '&port=' + port + '&vlan=' + vlan + '&dir=out' + '&interval=' + 0,
@@ -612,7 +613,7 @@ function loadTrafficHistory(statsData, dom, dev, port, vlan) {
             for (var i = 0; i < data.traffic.length; i++) {
                 dataOut.push([moment.unix(data.traffic[i].ts), 0-(data.traffic[i].val*8/1000000)]);
             }
-            statsData.push({label: dev + " in", data: dataOut, color: "#f56954" });
+            statsData.push({label: dstDev + ' to ' + dev, data: dataOut, color: "#f56954" });
 
             statsGraphic.setData(statsData);
             statsGraphic.setupGrid();
@@ -630,7 +631,7 @@ function loadTrafficHistory(statsData, dom, dev, port, vlan) {
             for (var i = 0; i < data.traffic.length; i++) {
                 dataIn.push([moment.unix(data.traffic[i].ts), data.traffic[i].val*8/1000000]);
             }
-            statsData.push({label: dev + ' out', data: dataIn, color: "#3c8dbc" });
+            statsData.push({label: dev + ' to ' + dstDev, data: dataIn, color: "#3c8dbc" });
 
             statsGraphic.setData(statsData);
             statsGraphic.setupGrid();
