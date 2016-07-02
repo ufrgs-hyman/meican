@@ -29,7 +29,7 @@ $this->params['hide-footer'] = true;
             <div class="form-group">
                 <label>Mode:</label><br>
                 <input type="radio" name="mode" value="map" checked> Map
-                <input type="radio" name="mode" value="graph" disabled> Graph
+                <input type="radio" name="mode" value="graph"> Graph
             </div>
             <div class="form-group">
                 <label>Node type:</label><br>

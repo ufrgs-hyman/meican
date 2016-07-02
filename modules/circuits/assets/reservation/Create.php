@@ -28,8 +28,8 @@ class Create extends AssetBundle
         'meican\base\assets\Theme',
         'meican\base\assets\FullCalendar',
         'meican\base\assets\DateRangePicker',
-        'meican\topology\assets\map\LMap',
-        'meican\topology\assets\graph\VGraph',
+        'meican\topology\assets\viewer\LMap',
+        'meican\topology\assets\viewer\VGraph',
         'meican\base\assets\LSidebar'
     ];
 }

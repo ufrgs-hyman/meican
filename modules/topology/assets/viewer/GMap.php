@@ -4,24 +4,21 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\topology\assets\graph;
+namespace meican\topology\assets\viewer;
 
 use yii\web\AssetBundle;
 
 /**
  * @author Maurício Quatrin Guerreiro
  */
-class VGraph extends AssetBundle
+class GMap extends AssetBundle
 {
-    public $sourcePath = '@meican/topology/assets/graph/public';
+    public $sourcePath = '@meican/topology/assets/viewer/map';
 
     public $js = [
-        'meican-vgraph.js',
+        'meican-gmap.js',
     ];
     public $depends = [
-        'meican\base\assets\Vis',
-        'meican\base\assets\Qtip',
+        'meican\base\assets\google\Maps',
     ];
 }
-
-?>

@@ -38,21 +38,22 @@ $(document).ready(function() {
 });
 
 function initMenu() {
-   /* $('input[name="mode"]').on('ifChecked', function(){
+    $('input[name="mode"]').on('ifChecked', function(){
+        console.log('check');
         if(this.value == 'map') {
-            viewer = meicanMap;
+            //viewer = meicanMap;
             meicanGraph.hide();
             meicanMap.show($('input[name="node-type"]:checked').val());
         } else {
-            viewer = meicanGraph;
+            //viewer = meicanGraph;
             meicanMap.hide();
             meicanGraph.show($('input[name="node-type"]:checked').val());
         }
     });
 
     $('input[name="node-type"]').on('ifChecked', function(){
-        viewer.setNodeType(this.value);
-    });*/
+       console.log('change node-type');// viewer.setNodeType(this.value);
+    });
 }
 
 function initCanvas() {

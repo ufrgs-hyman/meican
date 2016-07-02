@@ -24,8 +24,8 @@ class View extends AssetBundle
 
     public $depends = [
         'meican\base\assets\Theme',
-        'meican\topology\assets\map\LMap',
-        'meican\topology\assets\graph\VGraph',
+        'meican\topology\assets\viewer\LMap',
+        'meican\topology\assets\viewer\VGraph',
         'meican\base\assets\Moment',
         'meican\base\assets\Flot'
     ];

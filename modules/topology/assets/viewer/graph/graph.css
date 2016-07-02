@@ -1,0 +1,12 @@
+div.vis-network div.vis-navigation div.vis-button.vis-up {
+    display:none;
+}
+div.vis-network div.vis-navigation div.vis-button.vis-down {
+    display:none;
+}
+div.vis-network div.vis-navigation div.vis-button.vis-left {
+    display:none;
+}
+div.vis-network div.vis-navigation div.vis-button.vis-right {
+    display:none;
+}

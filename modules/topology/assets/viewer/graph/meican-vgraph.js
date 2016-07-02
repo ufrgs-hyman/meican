@@ -5,6 +5,7 @@
  *
  * @copyright Copyright (c) 2016 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
+ * @author Mauricio Quatrin Guerreiro
  */
 
 function VGraph(canvasDivId) {
@@ -166,6 +167,9 @@ VGraph.prototype.build = function(divId) {
         edges: this._links
     };
     var options = {
+        layout: {
+            improvedLayout: false,
+        },
         edges: {
             color: "#2B7CE9",
             width: 1,
@@ -188,6 +192,7 @@ VGraph.prototype.build = function(divId) {
         },
         interaction:{
             hover: true,
+            navigationButtons: true,
         }
     };
     this._graph = new vis.Network(container, data, options);

@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\topology\assets\map;
+namespace meican\topology\assets\viewer;
 
 use yii\web\AssetBundle;
 
@@ -13,7 +13,7 @@ use yii\web\AssetBundle;
  */
 class LMap extends AssetBundle
 {
-    public $sourcePath = '@meican/topology/assets/map/public';
+    public $sourcePath = '@meican/topology/assets/viewer/map';
 
     public $js = [
         'meican-lmap.js',

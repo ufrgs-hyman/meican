@@ -13,7 +13,7 @@ use yii\web\AssetBundle;
  */
 class Index extends AssetBundle
 {
-    public $sourcePath = '@meican/topology/assets/viewer/public';
+    public $sourcePath = '@meican/topology/assets/viewer/index';
 
     public $js = [
     	'viewer2.js',
@@ -21,8 +21,8 @@ class Index extends AssetBundle
 
     public $depends = [
     	'meican\base\assets\Theme',
-        'meican\topology\assets\map\LMap',
-        'meican\topology\assets\graph\VGraph',
+        'meican\topology\assets\viewer\LMap',
+        'meican\topology\assets\viewer\VGraph',
         'meican\base\assets\LSidebar',
         'yii\web\YiiAsset'
     ];

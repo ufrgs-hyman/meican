@@ -44,17 +44,18 @@ ISSUES
 6) [CircuitDetails] Grafico não apresenta unidade de medida adequada (Ex: 0.0003 Mbps). Considerar utilizar algum tipo de mudança de escala da unidade de medida para evitar numeros com mais de 1 ou 2 casas decimais (Ex 0.3Kbps ou 300 bps).
 7) Enlaces sem circuitos devem ter uma mensagem informando isto.
 8) Habilitar hover em nodes e links. 
-10) IN e OUT estao invertidos no traffic
+9) colocar uma flecha deixando mais claro o sentido do trafego.
+10) IN e OUT estao invertidos no traffic (VALIDAR)
 11) Colocar VLAN na popup de circuit view (FALAR COM MARCOS => Cada device representa dois pontos e eles tem duas vlans.)
 15) Test77 to MXPA ========>  Test77 : MXSP to MXPA
 16) Bloquear dias do passado no schedule da reserve
 17) Discovery nao ta criando notificacoes.
 18) Ediçao de circuitos finalizados nao deve ser permitido. PassedEndTime deve ser verificado, uma vez detectado deve-se finalizar o circuito.
 19) quando troca de abas no circuit view, buga o mapa.
-20) ACK nao ta sendo enviado pelo MEICAN
+20) ACKs nao tao sendo enviados pelo MEICAN
 
 Futuro
 
-1) Meican deveria ser um provedor na lista de providers, mas nao poderia ser removido.
+21) Meican deveria ser um provedor na lista de providers, mas nao poderia ser removido.
 Ele nao possuiria servicos e seria o unico uRA da lista.
-
+22) usar snakeanimate para animar os paths
