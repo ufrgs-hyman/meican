@@ -9,14 +9,17 @@ namespace meican\base\services;
 use Yii;
 
 /**
+ * Based on Alexander Makarov strategy, this service
+ * executes asynchronous commands in MEICAN console.
+ *
  * @author Maurício Quatrin Guerreiro
  */
 class ConsoleService {
 
     /**
-     * Runs console command
+     * Runs MEICAN console command.
      *
-     * @author Alexander Makarov
+     * @author 
      * @param string $command
      * @return array [status, output]
      */

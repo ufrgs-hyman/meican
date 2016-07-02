@@ -35,14 +35,19 @@ use meican\nsi\ConnectionRequesterServer;
 class RequesterController extends Controller implements ConnectionRequesterServer {
 
     public $layout = "@meican/base/views/layouts/blank";
-    
     public $enableCsrfValidation = false;
+
+    public $correlationId;
+    public $protocolVersion;
+    public $requesterNSA;
+    public $providerNSA;
 
     public function actionIndex() {
         return "";
     }   
     
     public function nsiHeader($response) {
+        Yii::trace($response);
         return "";
     }
 

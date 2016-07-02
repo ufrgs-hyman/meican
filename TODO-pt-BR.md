@@ -46,10 +46,15 @@ ISSUES
 8) Habilitar hover em nodes e links. 
 10) IN e OUT estao invertidos no traffic
 11) Colocar VLAN na popup de circuit view (FALAR COM MARCOS => Cada device representa dois pontos e eles tem duas vlans.)
-12) Colocar Device to Device na legenda do circuit view
 15) Test77 to MXPA ========>  Test77 : MXSP to MXPA
 16) Bloquear dias do passado no schedule da reserve
 17) Discovery nao ta criando notificacoes.
 18) Ediçao de circuitos finalizados nao deve ser permitido. PassedEndTime deve ser verificado, uma vez detectado deve-se finalizar o circuito.
 19) quando troca de abas no circuit view, buga o mapa.
+20) ACK nao ta sendo enviado pelo MEICAN
+
+Futuro
+
+1) Meican deveria ser um provedor na lista de providers, mas nao poderia ser removido.
+Ele nao possuiria servicos e seria o unico uRA da lista.
 
