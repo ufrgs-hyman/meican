@@ -60,7 +60,7 @@ class ReservationSearch extends Reservation {
 
         if ($this->src_domain && $this->dst_domain) {
             $dstPoints = ConnectionPath::findBySql("
-                SELECT cp1.conn_id
+                SELECT cp1.conn_id as conn_id
                 FROM (
                     SELECT conn_id, MAX(`path_order`) AS last_path
                     FROM `meican_connection_path`
@@ -97,6 +97,7 @@ class ReservationSearch extends Reservation {
         } else {
             $connPoints = ConnectionPath::find()
                 ->where(['in', 'domain', $validDomains])
+                ->select(["conn_id"])
                 ->distinct(true);
         }
 
