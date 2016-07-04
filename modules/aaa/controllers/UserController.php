@@ -120,17 +120,8 @@ class UserController extends RbacController {
                 Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User added successfully'));
                 
                 return $this->redirect(array('index'));
-
-            } else {
-                foreach($user->getErrors() as $attribute => $error) {
-                    Yii::$app->getSession()->addFlash("error", $error[0]);
-                }
-            }
-        } else {
-            foreach($userForm->getErrors() as $attribute => $error) {
-                Yii::$app->getSession()->addFlash("error", $error[0]);
-            }
-        }
+            } 
+        } 
 
         return $this->render('create',array(
                 'user' => $userForm,
@@ -173,24 +164,13 @@ class UserController extends RbacController {
                 if ($userForm->updateUser($user)) {
                     Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User updated successfully'));
                     return $this->redirect(array('index'));
-                } else {
-                    foreach($user->getErrors() as $attribute => $error) {
-                        Yii::$app->getSession()->addFlash("error", $error[0]);
-                    }
-                }
-            }
-            else {
-                foreach($userForm->getErrors() as $attribute => $error) {
-                    Yii::$app->getSession()->addFlash("error", $error[0]);
-                }
+                } 
             }
             
         } else {
             $userForm->setFromRecord($user);
         }
         
-        $userForm->clearErrors();
-    
         return $this->render('update',array(
                 'user' => $userForm,
         ));

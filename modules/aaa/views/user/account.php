@@ -14,7 +14,7 @@ use meican\aaa\models\Group;
 use meican\base\widgets\GridButtons;
 use meican\base\components\LinkColumn;
 
-$this->params['header'] = ["My account", ['Home', 'My account']];
+$this->params['header'] = [$model->name, ['Home', 'Users', $model->name]];
 
 ?>
 
@@ -23,13 +23,13 @@ $this->params['header'] = ["My account", ['Home', 'My account']];
         <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title"><?= Yii::t("aaa", "Profile"); ?></h3>
+                <div class="box-tools">
+                    <a href="<?= Url::to("update-my-account") ?>" class="btn btn-sm btn-default"><i class="fa fa-pencil"></i> Edit</a>
+                </div>
             </div>
             <div class="box-body">                
                 <?= $this->render("_profile", ['model'=>$model]); ?>
             </div>
-            <div class="box-footer">
-                <a href="<?= Url::to("update-my-account") ?>" class="btn btn-default"><i class="fa fa-pencil"></i> Edit</a>
-            </div>   
         </div>
     </div>
     <div class="col-md-6">

@@ -47,16 +47,6 @@ $this->params['header'] = ["Users", ['Home', 'Users']];
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template'=>'{update}',
-                    'buttons' => [
-                            'update' => function ($url, $model) {
-                                return Html::a('<span class="fa fa-pencil"></span>', $url);
-                            }
-                    ],
-                    'headerOptions'=>['style'=>'width: 2%;'],
-                ],
-                [
-                    'class' => 'yii\grid\ActionColumn',
                     'template'=>'{view}',
                     'buttons' => [
                             'view' => function ($url, $model) {

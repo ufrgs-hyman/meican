@@ -86,6 +86,14 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasOne(UserSettings::className(), ['id' => 'id']);
     }
 
+    public function getLanguage() {
+        return self::getLanguageOptions()[$this->language];
+    }
+
+    static function getLanguageOptions() {
+        return array('en-US' => Yii::t('aaa', 'English'), 'pt-BR' => Yii::t('aaa', 'Portuguese'));
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

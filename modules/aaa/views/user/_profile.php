@@ -19,7 +19,10 @@ use yii\bootstrap\Html;
         'created_at',
         'login',               
         'email',
-        'language',
+        [
+            'attribute' => 'language',
+            'value' => $model->getLanguage()
+        ],
         'time_zone',
         'time_format',
         'date_format',
