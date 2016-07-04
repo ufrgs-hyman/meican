@@ -8,5 +8,3 @@ function initIcheck() {
 $(document).on('ready pjax:success', function() {
     initIcheck();
 });
-
-initIcheck();
