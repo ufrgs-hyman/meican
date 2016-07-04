@@ -41,14 +41,14 @@ $this->params['header'] = [Yii::t('circuits',"Circuit").' #'.$conn->id, ['Home',
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs pull-right">
                 <li><a href="#path-info" data-toggle="tab">Info</a></li>
-                <!--<li><a href="#graph" data-toggle="tab">Graph</a></li>-->
-                <li class="active"><a href="#canvas" data-toggle="tab">Map</a></li>
+                <!--<li><a href="#path-graph" data-toggle="tab">Graph</a></li>-->
+                <li class="active"><a href="#path-map" data-toggle="tab">Map</a></li>
                 <li class="pull-left header"> Path</li>
             </ul>
             <div class="tab-content no-padding">
-              <div class="tab-pane active" id="canvas">
+              <div class="tab-pane active" id="path-map">
               </div>
-              <div class="tab-pane" id="graph">
+              <div class="tab-pane" id="path-graph">
                 Comming soon.
               </div>
               <div class="tab-pane with-padding" id="path-info">

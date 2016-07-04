@@ -283,14 +283,14 @@ function finishCircuit() {
 function initPathBox() {
     $("#path-grid").css("margin", '10px');
     $("#path-box").css("height", 445);
-    $("#canvas").css("height", 400);
-    meicanMap = new LMap('canvas');
+    $("#path-map").css("height", 400);
+    meicanMap = new LMap('path-map');
     meicanMap.show('dev');
     loadDomains();
 
     drawCircuit($("#circuit-id").attr('value'));
 
-    /*$("#canvas").on("linkClick", function(e, link) {
+    /*$("#path-map").on("linkClick", function(e, link) {
         var srcPoint;
         for (var i = 0; i < path.length; i++) {
             if(('dev' + path[i].device_id) == link.options.from)
@@ -298,7 +298,14 @@ function initPathBox() {
         };
     });*/
 
-    $('#canvas').on('lmap.nodeClick', function(e, marker) {
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href"); // activated tab
+        console.log(target);
+        if(target == '#path-map')
+            meicanMap.show(null, true);
+    });
+
+    $('#path-map').on('lmap.nodeClick', function(e, marker) {
         marker.setPopupContent('Domain: <b>' + meicanMap.getDomain(marker.options.domainId).name + 
             '</b><br>Device: <b>' + marker.options.name + '</b><br>');
             //'In port: <b></b><br>' +

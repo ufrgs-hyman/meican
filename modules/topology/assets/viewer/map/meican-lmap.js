@@ -20,7 +20,7 @@ function LMap(canvasDivId) {
     this._portsSize = 0;
 };
 
-LMap.prototype.show = function(nodeType) {
+LMap.prototype.show = function(nodeType, instantRefresh) {
     if($("#map-l").length == 1) {
         $("#map-l").show();
     } else {
@@ -30,11 +30,15 @@ LMap.prototype.show = function(nodeType) {
 
     var currentMap = this._map;
 
-    setTimeout(function() {
-        currentMap.invalidateSize(true);
-    }, 200);
+    if(instantRefresh)
+        this._map.invalidateSize(true);
+    else
+        setTimeout(function() {
+            currentMap.invalidateSize(true);
+        }, 200);
 
-    this.setNodeType(nodeType);
+    if(nodeType)
+        this.setNodeType(nodeType);
 }
 
 LMap.prototype.hide = function() {
