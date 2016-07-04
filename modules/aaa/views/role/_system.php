@@ -6,29 +6,26 @@
 
 use yii\bootstrap\Modal;
 use yii\bootstrap\ActiveForm;
-use yii\grid\GridView;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
 
 use meican\base\grid\IcheckboxColumn;
-use meican\base\components\LinkColumn;
+use meican\base\grid\Grid;
 use meican\aaa\models\Group;
-use meican\aaa\assets\role\RoleSystemAsset;
 
-RoleSystemAsset::register($this);
+\meican\aaa\assets\role\SystemRole::register($this);
 
 ?>
 
 <div class="box box-default">
     <div class="box-header with-border">
         <h3 class="box-title"><?= Yii::t("aaa", "Roles for System"); ?></h3>
+        <div class="box-tools">
+            <a id="<?= $userId ?>" class="btn btn-sm btn-primary add-system-btn"><?= Yii::t("aaa", "Add"); ?></a>
+            <a id="delete-system-role" class="btn btn-sm btn-default delete-btn"><?= Yii::t("aaa", "Delete"); ?></a>
+        </div>
     </div>
     <div class="box-body">
-        <div>
-            <a id="<?= $userId ?>" class="btn btn-primary add-system-btn"><?= Yii::t("aaa", "Add"); ?></a>
-            <a id="delete-system-role" class="btn btn-default delete-btn"><?= Yii::t("aaa", "Delete"); ?></a>
-        </div><br>
-
         <?php
 
         $form = ActiveForm::begin([
@@ -39,7 +36,7 @@ RoleSystemAsset::register($this);
             'enableClientValidation' => false,
         ]);
 
-        echo GridView::widget([
+        echo Grid::widget([
             'id' => 'role-system-grid',
             'dataProvider' => $rolesProvider,
             'layout' => "{items}{summary}{pager}",
