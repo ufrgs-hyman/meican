@@ -80,7 +80,7 @@ class GroupController extends RbacController {
                 ),
                 'root' => array(
                     'configuration'=>Yii::t("aaa", 'Reservations Configuration'),
-                    'synchronizer'=>Yii::t("aaa", 'Synchronizer'), 
+                    'synchronizer'=>Yii::t("aaa", 'Discovery'), 
                     'domain'=>Yii::t("aaa", 'Domains'),
                     'group'=>Yii::t("aaa", 'Groups'),
                     'user'=>Yii::t("aaa", 'Users'),
@@ -147,7 +147,7 @@ class GroupController extends RbacController {
                 ),
                 'root' => array(
                     'configuration'=>Yii::t("aaa", 'Reservations Configuration'),
-                    'synchronizer'=>Yii::t("aaa", 'Synchronizer'), 
+                    'synchronizer'=>Yii::t("aaa", 'Discovery'), 
                     'domain'=>Yii::t("aaa", 'Domains'),
                     'group'=>Yii::t("aaa", 'Groups'),
                     'user'=>Yii::t("aaa", 'Users'),

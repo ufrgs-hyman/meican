@@ -1,8 +1,10 @@
 <?php
+/**
+ * @copyright Copyright (c) 2012-2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican#license
+ */
 
-use meican\aaa\assets\group\CreateEditAsset;
-
-CreateEditAsset::register($this);
+\meican\aaa\assets\group\CreateEdit::register($this);
 
 $this->params['box-title'] = Yii::t('aaa', 'Add Group');
 

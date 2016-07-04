@@ -5,7 +5,7 @@
 
 $(document).ready(function() {
 	$('#group-type').change(function () {
-	    $('.listPermissions').hide();
+	    $('.table').hide();
 	    $('#'+$(this).val()).show();
 	})
 
