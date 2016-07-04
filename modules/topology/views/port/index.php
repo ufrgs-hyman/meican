@@ -67,9 +67,6 @@ $this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'),
 	
 			<?=
 			Grid::widget([
-				'tableOptions' => [
-					'class' => 'table table-condensed',
-				],
 				'id' =>'grid'.$dom->id,
 				'emptyText' => Yii::t('topology', 'No Ports added to this domain'),
 				'dataProvider' => new ArrayDataProvider([

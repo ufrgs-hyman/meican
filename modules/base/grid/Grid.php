@@ -20,6 +20,7 @@ use yii\grid\GridView;
 class Grid extends GridView {
 
     public $layout = "{items}{summary}{pager}";
+    public $tableOptions = ['class' => 'table table-striped'];
 
     public function init() {
         parent::init();

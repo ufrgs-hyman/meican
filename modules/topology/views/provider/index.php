@@ -39,43 +39,36 @@ $this->params['header'] = ["Providers", ['Home', 'Topology', 'Providers']];
     echo Grid::widget([
         'dataProvider' => $providers,
         'columns' => array(
-                array(
-                    'class'=>IcheckboxColumn::className(),
-                    'name'=>'delete',         
-                    'multiple'=>false,
-                    'headerOptions'=>['style'=>'width: 2%;'],
-                ),
-        		[
-	        		'class' => 'yii\grid\ActionColumn',
-	        		'template'=>'{update}',
-	        		'buttons' => [
-        				'update' => function ($url, $model) {
-        					return Html::a('<span class="fa fa-pencil"></span>', $url);
-        				}
-	        		],
-	        		'headerOptions'=>['style'=>'width: 2%;'],
-        		],
-        		[
-	        		'class' => 'yii\grid\ActionColumn',
-	        		'template'=>'{view}',
-	        		'buttons' => [
-        				'view' => function ($url, $model) {
-        					return Html::a('<span class="fa fa-eye"></span>', $url, [ 'title'=>Yii::t("topology",'Show details and services of this provider')]);
-        				}
-	        		],
-	        		'headerOptions'=>['style'=>'width: 2%;'],
-        		],
-                'name',
-                [
-                    'attribute'=> 'type',
-                    'value' => function($model) {
-                        return $model->getType();
-                    },
-                ],
-                'nsa',
-                'latitude',
-                'longitude',
+            array(
+                'class'=>IcheckboxColumn::className(),
+                'name'=>'delete',         
+                'multiple'=>false,
+                'headerOptions'=>['style'=>'width: 2%;'],
             ),
+    		[
+        		'class' => 'yii\grid\ActionColumn',
+        		'template'=>'{update} {view}',
+        		'buttons' => [
+    				'update' => function ($url, $model) {
+    					return Html::a('<span class="fa fa-pencil"></span>', $url);
+    				},
+                    'view' => function ($url, $model) {
+                        return Html::a('<span class="fa fa-eye"></span>', $url, [ 'title'=>Yii::t("topology",'Show details and services of this provider')]);
+                    }
+        		],
+                'headerOptions'=>['style'=>'width: 3%;'],
+    		],
+            'name',
+            [
+                'attribute'=> 'type',
+                'value' => function($model) {
+                    return $model->getType();
+                },
+            ],
+            'nsa',
+            'latitude',
+            'longitude',
+        ),
     ]);
 
     Pjax::end();

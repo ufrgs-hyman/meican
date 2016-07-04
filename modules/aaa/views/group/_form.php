@@ -32,7 +32,7 @@ $form=ActiveForm::begin(array(
             <?php echo $form->field($group,'type')->dropDownList([Group::TYPE_DOMAIN => Yii::t('aaa', 'Domain'), Group::TYPE_SYSTEM => Yii::t('aaa', 'System')]); ?>
         </div>
     
-        <table class="table table-striped table-bordered icheck" id=<?= Group::TYPE_DOMAIN?> <?php if($group->type!=Group::TYPE_DOMAIN && isset($group->type)) echo 'style="display: none"';?>>
+        <table class="table table-striped icheck" id=<?= Group::TYPE_DOMAIN?> <?php if($group->type!=Group::TYPE_DOMAIN && isset($group->type)) echo 'style="display: none"';?>>
             <thead>
                 <tr>
                     <th style="width: 40%"><?= Yii::t("aaa", 'Modules'); ?></th>
@@ -106,7 +106,7 @@ $form=ActiveForm::begin(array(
     
         </table>
         
-        <table class="table table-striped table-bordered icheck" id=<?= Group::TYPE_SYSTEM?> <?php if($group->type!=Group::TYPE_SYSTEM) echo 'style="display: none"';?>>
+        <table class="table table-striped icheck" id=<?= Group::TYPE_SYSTEM?> <?php if($group->type!=Group::TYPE_SYSTEM) echo 'style="display: none"';?>>
             <thead>
                 <tr>
                     <th style="width: 40%"><?= Yii::t("aaa", 'Modules'); ?></th>

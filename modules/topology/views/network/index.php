@@ -40,9 +40,6 @@ $this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home
     Pjax::begin();
 
     echo Grid::widget([
-    	'tableOptions' => [
-    		'class' => 'table table-condensed',
-    	],
         'dataProvider' => $networks,
         'filterModel' => $searchModel,
         'id' => 'gridNetowrks',
