@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-use yii\widgets\DetailView;
+use meican\base\widgets\DetailView;
 
 echo DetailView::widget([
     'id' => 'circuit-info',

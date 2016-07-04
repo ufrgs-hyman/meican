@@ -4,7 +4,6 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-use yii\widgets\DetailView;
 use yii\bootstrap\Html;
 use yii\bootstrap\Modal;
 use yii\widgets\Pjax;
@@ -17,6 +16,7 @@ use kartik\form\ActiveForm;
 use meican\base\grid\Grid;
 use meican\base\utils\DateUtils;
 use meican\circuits\forms\ConnectionForm;
+use meican\base\widgets\DetailView;
 
 \meican\circuits\assets\connection\View::register($this);
 

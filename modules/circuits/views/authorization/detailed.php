@@ -5,7 +5,6 @@
  */
 
 use meican\base\grid\Grid;
-use yii\widgets\DetailView;
 use yii\helpers\Html;
 use yii\i18n\Formatter;
 use yii\widgets\ActiveForm;
@@ -16,6 +15,7 @@ use yii\bootstrap\Modal;
 use meican\topology\models\Domain;
 use meican\circuits\models\Reservation;
 use meican\circuits\models\Connection;	
+use meican\base\widgets\DetailView;
 
 \meican\circuits\assets\authorization\Detailed::register($this);
 

@@ -4,10 +4,10 @@
  * @license http://github.com/ufrgs-hyman/meican2#license
  */
 
-use yii\widgets\DetailView;
 use yii\bootstrap\Html;
 
 use meican\base\grid\Grid;
+use meican\base\widgets\DetailView;
 
 \meican\circuits\assets\reservation\View::register($this);
 

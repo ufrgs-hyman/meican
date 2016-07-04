@@ -4,15 +4,13 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
-use yii\grid\CheckboxColumn;
 
 use meican\aaa\models\Group;
 use meican\base\widgets\GridButtons;
-use meican\base\components\LinkColumn;
+use meican\base\grid\Grid;
 
 $this->params['header'] = [$model->name, ['Home', 'Users', $model->name]];
 
@@ -40,9 +38,8 @@ $this->params['header'] = [$model->name, ['Home', 'Users', $model->name]];
             <div class="box-body">
                 <?php
 
-                echo GridView::widget([
+                echo Grid::widget([
                     'dataProvider' => $rolesProvider,
-                    'layout' => "{items}{summary}{pager}",
                     'columns' => array(
                         [
                             'attribute' => 'domain', 

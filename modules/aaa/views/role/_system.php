@@ -39,7 +39,6 @@ use meican\aaa\models\Group;
         echo Grid::widget([
             'id' => 'role-system-grid',
             'dataProvider' => $rolesProvider,
-            'layout' => "{items}{summary}{pager}",
             'columns' => array(
                 array(
                     'class'=>IcheckboxColumn::className(),

@@ -4,7 +4,6 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-use yii\widgets\DetailView;
 use yii\helpers\Url;
 use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
@@ -12,6 +11,7 @@ use yii\bootstrap\ActiveForm;
 use meican\base\grid\Grid;
 use meican\base\grid\IcheckboxColumn;
 use meican\base\grid\GridButtons;
+use meican\base\widgets\DetailView;
 
 \meican\topology\assets\service\Index::register($this);
 

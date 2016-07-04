@@ -4,7 +4,6 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-use yii\widgets\DetailView;
 use yii\widgets\Pjax;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
@@ -13,6 +12,7 @@ use yii\helpers\ArrayHelper;
 use meican\base\grid\Grid;
 use meican\base\grid\GridButtons;
 use meican\topology\models\Change;
+use meican\base\widgets\DetailView;
 
 \meican\topology\assets\discovery\Task::register($this);
 

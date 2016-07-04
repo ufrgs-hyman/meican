@@ -4,8 +4,9 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-use yii\widgets\DetailView;
 use yii\bootstrap\Html;
+
+use meican\base\widgets\DetailView;
 
 ?>
 
