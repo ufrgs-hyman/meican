@@ -79,6 +79,16 @@ A very short documentation is available on Help section of the application. The 
 
 A complete migration of the application to another machine is detailed in this [guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/migration.md).
 
+###Upgrade
+
+####Version 1.x to 2.x
+
+Upgrade is not possible. See the installation guide for a fresh install.
+
+####Version 2.x to 3.x
+
+TODO
+
 ##LICENSE
 
 Copyright (c) 2012-2016 by [RNP](http://www.rnp.br).
