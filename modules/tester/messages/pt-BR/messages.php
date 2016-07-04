@@ -7,7 +7,6 @@
 return array(
 
         'You have {number} notifications' => 'Vocë tem {number} notificações',
-        
 );
 
 ?>

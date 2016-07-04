@@ -263,7 +263,8 @@ Modal::begin([
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="normal">
-        <?php $form = \yii\bootstrap\ActiveForm::begin(['id'=>'point-form']);
+        <br>
+        <?php $form = \yii\bootstrap\ActiveForm::begin(['id'=>'point-form', 'layout'=>'horizontal']);
         $pointForm = new \meican\circuits\forms\PointForm;
 
         echo $form->field($pointForm, 'domain')->dropDownList([],['disabled'=>true]); 
@@ -276,6 +277,7 @@ Modal::begin([
       </div>
       <!-- /.tab-pane -->
       <div class="tab-pane" id="advanced">
+        <br>
         <?php $form = \yii\bootstrap\ActiveForm::begin(['id'=>'point-advanced-form']);
         $pointForm = new \meican\circuits\forms\PointForm;
 

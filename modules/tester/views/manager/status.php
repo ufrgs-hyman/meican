@@ -16,7 +16,7 @@ use meican\base\grid\GridButtons;
 
 \meican\tester\assets\Status::register($this);
 
-$this->params['header'] = [Yii::t('tester', 'Automated Tests'), [Yii::t('tester', 'Home')]];
+$this->params['header'] = [Yii::t('tester', 'Automated Tests'), [Yii::t('tester', 'Home'), 'Automated Tests']];
 
 ?>
 
@@ -24,7 +24,10 @@ $this->params['header'] = [Yii::t('tester', 'Automated Tests'), [Yii::t('tester'
 
 <div class="box box-default">
     <div class="box-header with-border">
-         <?= GridButtons::widget(); ?><br><button id="refresh-button" class="btn btn-default"><?= Yii::t("tester", "Enable auto refresh"); ?></button>
+        <?= GridButtons::widget(); ?>
+        <div class="box-tools">
+            <button id="refresh-button" class="btn btn-default"><?= Yii::t("tester", "Enable auto refresh"); ?></button>
+        </div>
     </div>
     <div class="box-body">
 
@@ -44,9 +47,7 @@ $this->params['header'] = [Yii::t('tester', 'Automated Tests'), [Yii::t('tester'
 
 	echo Grid::widget([
         'id'=>'test-grid',
-		'options' => ['class' => 'list'],
 		'dataProvider' => $data,
-		'layout' => "{items}{summary}{pager}",
 		'columns' => array(
 				array(
 					'class'=>IcheckboxColumn::className(),
@@ -138,12 +139,13 @@ $this->params['header'] = [Yii::t('tester', 'Automated Tests'), [Yii::t('tester'
 <?php Modal::begin([
     'id' => 'test-modal',
     'header' => 'Create test',
-    'footer' => '<button type="button" class="btn btn-default close-btn">Close</button> <button type="button" class="confirm-btn btn btn-primary">Confirm</button>'
+    'footer' => '<button type="button" class="confirm-btn btn btn-primary">Confirm</button><button type="button" class="btn btn-default close-btn">Close</button>'
 ]); ?>
 
 <?php $form = ActiveForm::begin([
         'method' => 'post',
         'id' => 'test-form',
+        'layout' => 'horizontal'
 ]); ?>
 
 <div class="nav-tabs-custom">

@@ -32,7 +32,6 @@ ISSUES
 15) Test77 to MXPA ========>  Test77 : MXSP to MXPA
 16) Bloquear dias do passado no schedule da reserve
 18) Ediçao de circuitos finalizados nao deve ser permitido. PassedEndTime deve ser verificado, uma vez detectado deve-se finalizar o circuito.
-20) ACKs nao tao sendo enviados pelo MEICAN
 24) Federation login
 26) path nao disponivel na aba Info se circuito falha
 27) nao deveria ser permitido editar ou refresh de reservas finalizadas
@@ -40,6 +39,7 @@ ISSUES
 
 Futuro
 
+20) ACKs nao tao sendo enviados pelo MEICAN
 11) Colocar VLAN na popup de circuit view (FALAR COM MARCOS => Cada device representa dois pontos e eles tem duas vlans.)
 21) Meican deveria ser um provedor na lista de providers, mas nao poderia ser removido.
 Ele nao possuiria servicos e seria o unico uRA da lista.

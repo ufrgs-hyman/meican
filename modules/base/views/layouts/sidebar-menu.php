@@ -59,7 +59,7 @@ echo Menu::widget([
             ],
             'visible'=>(RbacController::can('domainTopology/read') || RbacController::can('discovery/read'))
         ],
-        /*[
+        [
             'label'=>Yii::t('aaa','Tests'),
             'url' => '#',
             'icon' => 'fa fa-calendar-check-o',
@@ -68,7 +68,7 @@ echo Menu::widget([
                     ['label'=>Yii::t('topology','Status'),'url'=>['/tester'], 'visible'=>RbacController::can('test/read')]
             ],
             'visible'=>(RbacController::can('test/read') || RbacController::can('test/create'))
-        ],*/
+        ],
         [
             'label'=>Yii::t('aaa','Users'),
             'url' => '#',

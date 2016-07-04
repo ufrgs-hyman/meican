@@ -22,6 +22,6 @@ class Status extends AssetBundle
     
     public $depends = [
         'meican\base\assets\Theme',
-        'meican\base\assets\cron\Picker',
+        'meican\base\assets\CronPicker',
     ];
 }
