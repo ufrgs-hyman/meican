@@ -36,6 +36,8 @@ ISSUES
 26) path nao disponivel na aba Info se circuito falha
 27) nao deveria ser permitido editar ou refresh de reservas finalizadas
 28) testes automatizados
+29) circuitos recorrentes
+30) problema com discovery
 
 Futuro
 

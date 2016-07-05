@@ -397,6 +397,7 @@ class Change extends \yii\db\ActiveRecord
                                 $this->setApplied();
                                 return $this->save();
                             } else {
+                                Yii::trace($dev->getErrors());
                                 $this->error = "Unknown";
                             }
                         } else {
@@ -416,6 +417,7 @@ class Change extends \yii\db\ActiveRecord
                                 $this->setApplied();
                                 return $this->save();
                             } else {
+                                Yii::trace($dev->getErrors());
                                 $this->error = "Unknown";
                             }
 
@@ -464,6 +466,7 @@ class Change extends \yii\db\ActiveRecord
                                 $this->setApplied();
                                 return $this->save();
                             } else {
+                                Yii::trace($port->getErrors());
                                 $this->error = "Unknown";
                             }
                         } 
@@ -481,6 +484,7 @@ class Change extends \yii\db\ActiveRecord
                                 $this->setApplied();
                                 return $this->save();
                             } else {
+                                Yii::trace($port->getErrors());
                                 $this->error = "Unknown";
                             }
                         } else {
