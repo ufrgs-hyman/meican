@@ -86,14 +86,15 @@ class NMWGParser {
         return $this->errors;
     }
 
-    function addBiPort($domainName, $deviceName, $urn,  $portName, $capMax, $capMin, $granu,
+    function addBiPort($domainName, $deviceName, $urn,  $portName, $cap, $capMax, $capMin, $granu,
             $vlanRange, $aliasUrn) {
         $urn = str_replace("urn:ogf:network:","",$urn);
         $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn] = array();
         $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn]["port"] = $portName;
-        $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn]["capMax"] = intval($capMax)/1000000;
+        $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn]["cap"] = substr($cap, 0, -6);
+        $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn]["capMax"] = substr($capMax, 0, -6);
         $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn]["capMin"] = intval($capMin)/1000000;
-        $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn]["granu"] = intval($granu)/1000000;
+        $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn]["granu"] = substr($granu, 0, -6);
         $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn]["vlan"] = $vlanRange;
         if ($aliasUrn)
         $aliasUrn = str_replace("urn:ogf:network:","",$aliasUrn);
@@ -153,6 +154,8 @@ class NMWGParser {
 
                 $portName = $id[count($id)-1];
 
+                $value = $this->xpath->query(".//x:capacity", $portNode);
+                $cap = $value->item(0) ? $value->item(0)->nodeValue : null;
                 $value = $this->xpath->query(".//x:maximumReservableCapacity", $portNode);
                 $capMax = $value->item(0) ? $value->item(0)->nodeValue : null;
                 $value = $this->xpath->query(".//x:minimumReservableCapacity", $portNode);
@@ -161,12 +164,12 @@ class NMWGParser {
                 $granu = $value->item(0) ? $value->item(0)->nodeValue : null;
 
                 $this->parseLinks($domainName, $deviceName, $portNode, $portName,
-                        $capMax, $capMin, $granu);
+                        $cap, $capMax, $capMin, $granu);
             }
         }
     }
 
-    function parseLinks($domainName, $deviceName, $portNode, $portName, $capMax, $capMin,
+    function parseLinks($domainName, $deviceName, $portNode, $portName, $cap, $capMax, $capMin,
             $granu) {
         $linkNodes = $this->xpath->query(".//x:link", $portNode);
         if($linkNodes) {
@@ -188,6 +191,11 @@ class NMWGParser {
                     } else {
                         $aliasUrn = null;
                     }
+                }
+
+                if (!$cap) {
+                    $value = $this->xpath->query(".//x:capacity", $linkNode);
+                    $cap = $value->item(0) ? $value->item(0)->nodeValue : null;
                 }
 
                 if (!$capMax) {
@@ -213,6 +221,7 @@ class NMWGParser {
                         $deviceName,
                         $urn,
                         $portName,
+                        $cap,
                         $capMax,
                         $capMin,
                         $granu,
