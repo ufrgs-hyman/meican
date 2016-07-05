@@ -71,7 +71,7 @@ class DiscoveryService {
                         return $this->taskFailed();
 
                     $this->parser->parseTopology();
-                    //Yii::trace($topo->getData());
+                    //Yii::trace($this->parser->getData());
                     break;
 
                 case DiscoveryRule::DESC_TYPE_NMWG: 
@@ -80,7 +80,7 @@ class DiscoveryService {
                         return $this->taskFailed();
 
                     $this->parser->parseTopology();
-                    //Yii::trace($topo->getData());
+                    Yii::trace($this->parser->getData());
                     break;
             }
         }
