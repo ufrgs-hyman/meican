@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-$this->params['header'] = [Yii::t('circuits', 'Configuration'), ['Home', Yii::t('circuits', 'Circuits')]];
+$this->params['header'] = [Yii::t('circuits', 'Configuration'), ['Home', Yii::t('circuits', 'Circuits'), 'Configuration']];
 
 ?>
 

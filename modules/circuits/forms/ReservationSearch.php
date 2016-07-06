@@ -59,7 +59,14 @@ class ReservationSearch extends Reservation {
         foreach($allowedDomains as $domain) $validDomains[] = $domain['name'];
 
         if ($this->src_domain && $this->dst_domain) {
-            $dstPoints = ConnectionPath::findBySql("
+            //foi usado um SQL direto no UNION ao inves do findBySQL pois este
+            //apresentou um bug que selecionava todas as colunas
+            $connPoints = ConnectionPath::find()
+                ->where(['in', 'domain', [$this->src_domain]])
+                ->andWhere(['path_order'=>0])
+                ->select(["conn_id"])
+                ->distinct(true)
+                ->union("
                 SELECT cp1.conn_id as conn_id
                 FROM (
                     SELECT conn_id, MAX(`path_order`) AS last_path
@@ -68,14 +75,6 @@ class ReservationSearch extends Reservation {
                     ) cp2
                 JOIN    `meican_connection_path` cp1
                 ON      cp1.conn_id = cp2.conn_id AND cp1.domain = '".$this->dst_domain."' AND cp1.path_order = cp2.last_path");
-             
-            //filtra por conn aceitas pela query anterior
-            $connPoints = ConnectionPath::find()
-                ->where(['in', 'domain', [$this->src_domain]])
-                ->andWhere(['path_order'=>0])
-                ->select(["conn_id"])
-                ->distinct(true)
-                ->union($dstPoints);
 
         } elseif ($this->src_domain) {
             $connPoints = ConnectionPath::find()
@@ -86,7 +85,7 @@ class ReservationSearch extends Reservation {
 
         } elseif ($this->dst_domain) {
             $connPoints = ConnectionPath::findBySql("
-                SELECT cp1.conn_id
+                SELECT cp1.conn_id as conn_id
                 FROM (
                     SELECT conn_id, MAX(`path_order`) AS last_path
                     FROM `meican_connection_path`

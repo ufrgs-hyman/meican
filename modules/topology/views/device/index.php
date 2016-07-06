@@ -75,11 +75,6 @@ $this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'
                     'headerOptions'=>['style'=>'width: 8%;'],
                 ],
                 [
-                    'label' => Yii::t("topology", 'Node'),
-                    'value' => 'node',
-                    'headerOptions'=>['style'=>'width: 9%;'],
-                ],
-                [
                     'label' => Yii::t("topology", 'Domain'),
                     'value' => function($dev){
                         return $dev->getDomain()->one()->name;

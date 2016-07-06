@@ -18,20 +18,19 @@ $this->params['header'] = [$name];
 <div class="site-error">
 
     <div class="alert alert-danger">
-        <?= nl2br(Html::encode($exception->getMessage())) ?>
+        Error processing your request. Sorry. :(
     </div>
 
     <p>
-        The above error occurred while the Web server was processing your request.
+        A error occurred while the Web server was processing your request.
     </p>
     <p>
-        Please contact us if you think this is a server error. Thank you.
+        This error has been registered. Please use the feedback option in the top menu if you want to report more informations. 
+
+        Thank you.
         </p><p>
 
-        Administrator</p>
-        <p>
-            <?= Yii::$app->params['mailer.destination']; ?>
-        </p>
+        Administrator</p>        
     </p>
 
 </div>

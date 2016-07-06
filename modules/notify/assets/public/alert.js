@@ -12,8 +12,15 @@ function MeicanAlert() {
 };
 
 MeicanAlert.prototype.show = function(title, message, type, zIndex) {
+    var icon;
+    switch(type) {
+        case 'danger' : icon = 'glyphicon glyphicon-remove-sign'; break;
+        case 'warning' : icon = 'glyphicon glyphicon-exclamation-sign'; break;
+        case 'success' : icon = 'glyphicon glyphicon-ok-sign';
+    }
+
     $.notify({
-        icon: 'glyphicon glyphicon-ok-sign',
+        icon: icon,
         title: '<strong>' + title + '</strong>',
         message: message
     },{
@@ -24,6 +31,6 @@ MeicanAlert.prototype.show = function(title, message, type, zIndex) {
             y: 60,
             x: 20
         },
-        z_index: 2000
+        z_index: zIndex ? zIndex : 2000
     });
 }

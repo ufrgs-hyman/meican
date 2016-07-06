@@ -56,7 +56,7 @@ $this->params['header'] = ["Providers", ['Home', 'Topology', 'Providers']];
                         return Html::a('<span class="fa fa-eye"></span>', $url, [ 'title'=>Yii::t("topology",'Show details and services of this provider')]);
                     }
         		],
-                'headerOptions'=>['style'=>'width: 3%;'],
+                'headerOptions'=>['style'=>'width: 4%;'],
     		],
             'name',
             [

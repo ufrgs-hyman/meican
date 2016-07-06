@@ -357,10 +357,10 @@
             select = block["dow"].find("select").data("root", this);
 
             block["time"] = $("<div class='cron-block input-group form-group'><span class='cron-block-time'>" +
-                    '<label class="control-label col-sm-3">'+ I18N.t("at") + '</label>' + 
+                    '<label class="control-label col-sm-3">'+ I18N.t("at (hh:mm)") + '</label>' + 
                     "<div class='col-sm-6'><select name='cron-time-hour' class='cron-time-hour form-control' style='width: 80px;'>" + str_opt_hid
                     + "</select><select name='cron-time-min' class='cron-time-min form-control' style='width: 80px;'>" + str_opt_mih
-                    + " </span></div></div>")
+                    + "</select></span></div></div>")
                 .appendTo(this)
                 .data("root", this);
 

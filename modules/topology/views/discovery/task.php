@@ -83,7 +83,7 @@ $this->params['header'] = [Yii::t('topology',"Discovery Task").' #'.$model->id, 
                     'template'=>'{apply}',
                     'buttons' => [
                         'apply' => function ($url, $model) {
-                            return $model->status == Change::STATUS_APPLIED ? "" : Html::a('<span class="fa fa-eye apply-btn"></span>', '#');
+                            return $model->status == Change::STATUS_APPLIED ? "" : Html::a('<span class="fa fa-check apply-btn"></span>', '#');
                         }
                     ],
                     'headerOptions'=>['style'=>'width: 2%;'],
