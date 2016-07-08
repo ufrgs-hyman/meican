@@ -95,7 +95,7 @@ function refreshAll() {
 }
 
 function refreshPjax(id) {
-    $.pjax.defaults.timeout = 5000;
+    $.pjax.defaults.timeout = false;
     $.pjax.reload({
         container:'#' + id
     });
@@ -301,8 +301,10 @@ function initPathBox() {
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         var target = $(e.target).attr("href"); // activated tab
         console.log(target);
-        if(target == '#path-map')
+        if(target == '#path-map') {
             meicanMap.show(null, true);
+            meicanMap.focusNodes();
+        }
     });
 
     $('#path-map').on('lmap.nodeClick', function(e, marker) {
@@ -341,10 +343,6 @@ function drawCircuit(connId, animate) {
         success: function(response) {
             path = response;
             var size = response.length;
-            var requiredMarkers = [];
-            for (var i = 0; i < size; i++) {
-                requiredMarkers.push(path[i]);
-            }
 
             if (circuitApproved) {
                 //a ordem dos marcadores aqui eh importante,
@@ -359,10 +357,6 @@ function drawCircuit(connId, animate) {
 
                 updatePathInfo(path);
                 
-                //setMapBoundsMarkersWhenReady(requiredMarkers);
-                
-                //
-                //drawCircuitWhenReady(path, animate);
                 drawCircuitWhenReady(path, false);
                 
             } else {
@@ -375,7 +369,7 @@ function drawCircuit(connId, animate) {
                     addWayPoint(path[i]);
                 }
                 
-                setMapBoundsMarkersWhenReady(requiredMarkers);
+                setMapBoundsMarkersWhenReady(path);
             }
         }
     });
@@ -397,18 +391,17 @@ function updatePathInfo(path) {
     }
 }
 
-function drawCircuitWhenReady(requiredMarkers, animate) {
-    if (areMarkersReady(requiredMarkers)) {
-        //console.log("drew");
+function drawCircuitWhenReady(path, animate) {
+    if (areMarkersReady(path)) {
+        console.log("drew");
         if (animate) {
             drawCircuitAnimated();
         } else {
-            var pathIds = [];
-            for (var i = 0; i < meicanMap.getNodes().length - 1; i++) {
+            for (var i = 0; i < path.length - 1; i++) {
                 meicanMap.addLink(
                     null, 
-                    meicanMap.getNodes()[i].options.id, 
-                    meicanMap.getNodes()[i+1].options.id, 
+                    'dev' + path[i].device_id, 
+                    'dev' + path[i+1].device_id, 
                     'dev', 
                     false,
                     null,
@@ -419,19 +412,21 @@ function drawCircuitWhenReady(requiredMarkers, animate) {
             loadStats(path[0], path[1]);
         }
     } else {
+        console.log("try draw");
         setTimeout(function() {
-            drawCircuitWhenReady(requiredMarkers, animate);
+            drawCircuitWhenReady(path, animate);
         } ,50);
     }
 }
 
-function setMapBoundsMarkersWhenReady(requiredMarkers) {
-    if (areMarkersReady(requiredMarkers)) {
-        //console.log("setbounds");
+function setMapBoundsMarkersWhenReady(path) {
+    if (areMarkersReady(path)) {
+        console.log("setbounds");
         meicanMap.focusNodes();
     } else {
+        console.log("try bounds");
         setTimeout(function() {
-            setMapBoundsMarkersWhenReady(requiredMarkers);
+            setMapBoundsMarkersWhenReady(path);
         } ,50);
     }
 }
@@ -501,9 +496,9 @@ function addMarker(dev, color) {
         color);
 }
 
-function areMarkersReady(ids) {
-    for (var i = 0; i < ids.length; i++) {
-        var marker = meicanMap.getNode('dev'+ids[i].device_id);
+function areMarkersReady(path) {
+    for (var i = 0; i < path.length; i++) {
+        var marker = meicanMap.getNode('dev'+path[i].device_id);
         if (marker === null) {
             return false;
         }
