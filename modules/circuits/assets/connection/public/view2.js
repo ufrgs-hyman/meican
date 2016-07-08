@@ -536,11 +536,7 @@ function initStats() {
       yaxis: {
         show: true,
         tickFormatter: function(val, axis) {
-            if (Math.abs(val) < 1) 
-                val = val.toFixed(4);
-            else 
-                val = val.toFixed(2);
-            return Math.abs(val) + " Mbps";
+            return convertTrafficValue(val);
         }
       },
       xaxis: {
@@ -570,9 +566,9 @@ function initStats() {
 
       if (item) {
         var x = item.datapoint[0],
-            y = item.datapoint[1].toFixed(4);
+            y = convertTrafficValue(item.datapoint[1], 2);
 
-        $("#line-chart-tooltip").html(moment.unix(x/1000).format("DD/MM/YYYY HH:mm:ss") + '<br>' + Math.abs(y) + ' Mbps')
+        $("#line-chart-tooltip").html(moment.unix(x/1000).format("DD/MM/YYYY HH:mm:ss") + '<br>' + y)
             .css({top: item.pageY + 5, left: item.pageX + 5})
             .fadeIn(200);
       } else {
@@ -580,6 +576,15 @@ function initStats() {
       }
 
     });
+}
+
+function convertTrafficValue(val, fixed) {
+    if (Math.abs(val) > 999999)
+        return (Math.abs(val)/1000000).toFixed(fixed ? fixed : 0) + " Mbps";
+    else if(Math.abs(val) > 999)
+        return (Math.abs(val)/1000).toFixed(fixed ? fixed : 0) + " Kbps";
+    else
+        return (Math.abs(val)).toFixed(fixed ? fixed : 0) + " bps";
 }
 
 function loadStats(srcPoint, dstPoint) {
@@ -613,7 +618,7 @@ function loadTrafficHistory(statsData, dom, dev, port, vlan, dstDev) {
         success: function(data) {
             var dataOut = [];
             for (var i = 0; i < data.traffic.length; i++) {
-                dataOut.push([moment.unix(data.traffic[i].ts), 0-(data.traffic[i].val*8/1000000)]);
+                dataOut.push([moment.unix(data.traffic[i].ts), 0-(data.traffic[i].val*8)]);
             }
             statsData.push({label: dstDev + ' to ' + dev, data: dataOut, color: "#f56954" });
 
@@ -631,7 +636,7 @@ function loadTrafficHistory(statsData, dom, dev, port, vlan, dstDev) {
         success: function(data) {
             var dataIn = [];
             for (var i = 0; i < data.traffic.length; i++) {
-                dataIn.push([moment.unix(data.traffic[i].ts), data.traffic[i].val*8/1000000]);
+                dataIn.push([moment.unix(data.traffic[i].ts), data.traffic[i].val*8]);
             }
             statsData.push({label: dev + ' to ' + dstDev, data: dataIn, color: "#3c8dbc" });
 

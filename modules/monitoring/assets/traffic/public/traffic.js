@@ -119,6 +119,15 @@ function initCanvas() {
     });
 }
 
+function convertTrafficValue(val, fixed) {
+    if (Math.abs(val) > 999999)
+        return (Math.abs(val)/1000000).toFixed(fixed ? fixed : 0) + " Mbps";
+    else if(Math.abs(val) > 999)
+        return (Math.abs(val)/1000).toFixed(fixed ? fixed : 0) + " Kbps";
+    else
+        return (Math.abs(val)).toFixed(fixed ? fixed : 0) + " bps";
+}
+
 function initStats(link, divElement) {
     statsGraphic = $.plot($(divElement), [], {
         mode: {
@@ -151,11 +160,7 @@ function initStats(link, divElement) {
       yaxis: {
         show: true,
         tickFormatter: function(val, axis) {
-            if (Math.abs(val) < 1) 
-                val = val.toFixed(4);
-            else 
-                val = val.toFixed(2);
-            return Math.abs(val) + " Mbps";
+            return convertTrafficValue(val);
         }
       },
       xaxis: {
@@ -208,7 +213,7 @@ function initStats(link, divElement) {
                 y = p1[1] + (p2[1] - p1[1]) * (pos.x - p1[0]) / (p2[0] - p1[0]);
 
             if(statsGraphic.getOptions().mode.type == 'circuit') {
-                $("#map-l").find('.traffic-value').eq(i).text(Math.abs(y).toFixed(5));
+                $("#map-l").find('.traffic-value').eq(i).text(convertTrafficValue(val,2));
             } else {
                 if(series.stack == 'in') {
                     trafficIn += y;
@@ -224,7 +229,7 @@ function initStats(link, divElement) {
 
                 $("#map-l").find('.legendLabel').eq(i).text(
                     $("#map-l").find('.legendLabel').eq(i).text().replace(/=.*/, "= " + 
-                        Math.abs(series.stack == 'in' ? trafficIn : trafficOut).toFixed(5) + ' Mbps'));
+                        convertTrafficValue((series.stack == 'in' ? trafficIn : trafficOut),2)));
             }
         }
     } 
@@ -342,7 +347,7 @@ function loadTrafficHistory(fromDev, toDev, loadedCircuitsCounter, dataSeries, c
             var dataOut = [];
             for (var i = 0; i < data.traffic.length; i++) {
                 dataOut.push([moment.unix(data.traffic[i].ts), 
-                    relativeDir == 'out' ? data.traffic[i].val*8/1000000 : (0-(data.traffic[i].val*8/1000000))]);
+                    relativeDir == 'out' ? data.traffic[i].val*8 : (0-(data.traffic[i].val*8))]);
             }
 
             dataSeries.push({
@@ -367,7 +372,7 @@ function loadTrafficHistory(fromDev, toDev, loadedCircuitsCounter, dataSeries, c
             var dataIn = [];
             for (var i = 0; i < data.traffic.length; i++) {
                 dataIn.push([moment.unix(data.traffic[i].ts), 
-                    relativeDir == 'out' ? (0-(data.traffic[i].val*8/1000000)) : data.traffic[i].val*8/1000000]);
+                    relativeDir == 'out' ? (0-(data.traffic[i].val*8)) : data.traffic[i].val*8]);
             }
 
             dataSeries.push({

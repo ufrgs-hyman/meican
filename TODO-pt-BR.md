@@ -1,6 +1,5 @@
 ISSUES
 
-6) [CircuitDetails] Grafico não apresenta unidade de medida adequada (Ex: 0.0003 Mbps). Considerar utilizar algum tipo de mudança de escala da unidade de medida para evitar numeros com mais de 1 ou 2 casas decimais (Ex 0.3Kbps ou 300 bps).
 15) Test77 to MXPA ========>  Test77 : MXSP to MXPA
 26) path nao disponivel na aba Info se circuito falha
 28) testes automatizados
