@@ -99,8 +99,8 @@ class ManagerController extends RbacController {
     }
     
     public function actionDelete() {
-        if(isset($_POST["ids"])) {
-            foreach (json_decode($_POST["ids"]) as $testId) {
+        if(isset($_POST["delete"])) {
+            foreach ($_POST["delete"] as $testId) {
                 $test = Test::findOne($testId);
                 
                 //Confere se usuário tem permissão para remover teste na origem OU no destino
@@ -112,20 +112,16 @@ class ManagerController extends RbacController {
                  
                  if(!$permission){
                      Yii::$app->getSession()->addFlash("warning", Yii::t("circuits", "You are not allowed to delete automated tests involving these selected domains"));
-                    return true;
                  }
                  
                 if(!$test->delete()) {
                     Yii::$app->getSession()->addFlash("error", Yii::t("circuits", "Error deleting Automated Test"));
-                    return true;
                 } else {
                     Yii::$app->getSession()->addFlash("success", Yii::t("circuits", "Automated Test deleted successfully"));
                 }
             }
-            
-            return true;
         }
         
-        return false;
+        return $this->redirect('index');
     }
 }

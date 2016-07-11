@@ -36,7 +36,7 @@ $this->params['header'] = [Yii::t('tester', 'Automated Tests'), [Yii::t('tester'
     $form = ActiveForm::begin([
         'method' => 'post',
         'action' => ['delete'],
-        'id' => 'test-form',
+        'id' => 'delete-test-form',
         'enableClientScript'=>false,
         'enableClientValidation' => false,
     ]);
@@ -56,12 +56,15 @@ $this->params['header'] = [Yii::t('tester', 'Automated Tests'), [Yii::t('tester'
 					'multiple'=>false,
 				),
 				[
-					'format' => 'raw',
-					'value' => function ($model){
-						return '<a href="#">'.Html::img('@web/images/edit_1.png', ['class' => "edit-button"])."</a>";
-					},
-					'headerOptions'=>['style'=>'width: 2%;'],
-				],
+                    'class' => 'yii\grid\ActionColumn',
+                    'template'=>'{update}',
+                    'buttons' => [
+                            'update' => function ($url, $model) {
+                                return Html::a('<span class="fa fa-pencil"></span>', '#');
+                            }
+                    ],
+                    'headerOptions'=>['style'=>'width: 2%;'],
+                ],
 				[
 					'header' => Yii::t("tester", "Source"),
 					'value' => function($model){
@@ -70,7 +73,7 @@ $this->params['header'] = [Yii::t('tester', 'Automated Tests'), [Yii::t('tester'
                     'headerOptions'=>['style'=>'width: 20%;'],
 				],
                 [
-                    'header' => Yii::t("tester", "Source VLAN"),
+                    'header' => Yii::t("tester", "VLAN"),
                     'value' => function($model){
                         return $model->getFirstPath()->one()->vlan; 
                     },
@@ -84,7 +87,7 @@ $this->params['header'] = [Yii::t('tester', 'Automated Tests'), [Yii::t('tester'
                     'headerOptions'=>['style'=>'width: 20%;'],
 				],
                 [
-                    'header' => Yii::t("tester", "Destination VLAN"),
+                    'header' => Yii::t("tester", "VLAN"),
                     'value' => function($model){
                         return $model->getLastPath()->one()->vlan; 
                     },
@@ -98,21 +101,14 @@ $this->params['header'] = [Yii::t('tester', 'Automated Tests'), [Yii::t('tester'
 					'contentOptions'=> function ($model, $key, $index, $column){
 						return [
 						'class' => 'cron-value',
-						'data'=>$model->getCronValue()];
+						'data'=>$model->getScheduledTask()->freq];
 					},
                     'headerOptions'=>['style'=>'width: 1%;'],
 				],
 				[
-					'attribute' => 'status',
-					'value' => function ($model) {
-						return $model->getStatus();
-					},
-                    'headerOptions'=>['style'=>'width: 10%;'],
-				],
-				[
 					'attribute' => 'last_run_at',
 					'value' => function ($model) {
-						$cron = $model->getCron()->one();
+						$cron = $model->getScheduledTask();
 						return $cron->last_run_at ? Yii::$app->formatter->asDatetime($cron->last_run_at) : Yii::t("tester", "Never");
 					},
                     'headerOptions'=>['style'=>'width: 10%;'],
@@ -143,9 +139,9 @@ $this->params['header'] = [Yii::t('tester', 'Automated Tests'), [Yii::t('tester'
 ]); ?>
 
 <?php $form = ActiveForm::begin([
-        'method' => 'post',
-        'id' => 'test-form',
-        'layout' => 'horizontal'
+    'method' => 'post',
+    'id' => 'test-form',
+    'layout' => 'horizontal'
 ]); ?>
 
 <div class="nav-tabs-custom">
@@ -182,7 +178,7 @@ $this->params['header'] = [Yii::t('tester', 'Automated Tests'), [Yii::t('tester'
             ?>
         </div>
         <div class="tab-pane" id="rec">
-            <br><div class="label-description" id="cron-widget"></div><br>
+            <br><div id="cron-widget"></div><br>
             <input id="cron-value" name="TestForm[cron_value]" hidden/>
         </div>
     </div>

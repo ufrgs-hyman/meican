@@ -8,6 +8,8 @@ namespace meican\circuits\models;
 
 use Yii;
 
+use meican\topology\models\Port;
+
 /**
  * Classe que representa o Path requisitado em uma
  * solicitação de reserva. Uma reserva apenas terá uma

@@ -8,14 +8,15 @@ namespace meican\tester\models;
 
 use Yii;
 
-use meican\scheduler\models\Cron;
+use meican\scheduler\utils\SchedulableTask;
+use meican\scheduler\models\ScheduledTask;
 use meican\circuits\models\Reservation;
 use meican\circuits\models\Connection;
 
 /**
  * @author Maurício Quatrin Guerreiro
  */
-class Test extends Reservation {
+class Test extends Reservation implements SchedulableTask {
 
     const AT_PREFIX = "MeicanAT";
 
@@ -24,10 +25,6 @@ class Test extends Reservation {
         return array_merge(parent::attributeLabels(),[
             'last_run_at' => Yii::t('circuits', 'Last execution'),
         ]);
-    }
-
-    function getCron() {
-        return Cron::findTestTask($this->id);
     }
 
     function getConnectionStatus() {
@@ -45,29 +42,24 @@ class Test extends Reservation {
                 case Connection::STATUS_FAILED_SUBMIT :     return Yii::t("circuits","Failed");
             }
         } else {
-            return "";
+            return "Never tested";
         }
     }
     
-    function getStatus() {
-        switch ($this->getCron()->one()->status) {
-            case Cron::STATUS_ENABLED: return Yii::t("circuits","Enabled");
-            case Cron::STATUS_DISABLED: return Yii::t("circuits","Disabled");
-            case Cron::STATUS_PROCESSING: return Yii::t("circuits","Processing"); 
+    public function execute($data) {
+        $test = self::findOne($data);
+        if($test) {
+            $date = new \DateTime();
+            $date->modify('+10 minutes');
+            $this->start = $date->format('Y-m-d H:i:s');
+            $date->modify('+10 minutes');
+            $this->finish =  $date->format('Y-m-d H:i:s');
+            $this->save();
+        
+            $this->createConnections();
+                
+            $this->confirm();
         }
-    }
-    
-    function execute() {
-        $date = new \DateTime();
-        $date->modify('+10 minutes');
-        $this->start = $date->format('Y-m-d H:i:s');
-        $date->modify('+10 minutes');
-        $this->finish =  $date->format('Y-m-d H:i:s');
-        $this->save();
-    
-        $this->createConnections();
-            
-        $this->confirm();
     }
 
     function getSourceDomain() {
@@ -102,7 +94,18 @@ class Test extends Reservation {
         return $this->getLastPath()->one()->vlan;
     }
 
-    function getCronValue() {
-        return $this->getCron()->one()->freq;
+    function getScheduledTask() {
+        return ScheduledTask::findOne([
+            'obj_class'=> 'meican\tester\models\Test',
+            'obj_data'=> $this->id]);
+    }
+
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            $task = $this->getScheduledTask();
+            if($task) return $task->delete();
+        }
+        return false;
     }
 }

@@ -4,34 +4,11 @@
  */
 
 var refresher;
+var modalMode;
 
 $(document).on('ready pjax:success', function() {
-	$('#test-grid').on("click", '.deleteCheckbox', function() {
-		disableAutoRefresh();
-		deleteButtonSwitch();
-	});
-	
 	$("#test-grid").on("click",'img.edit-button',  function() {
 		edit(this);
-
-		var rowNode = this;
-		$('#test-dialog').dialog({
-			title: I18N.t("Update"),
-			width: 360,
-			height: 300,
-			modal: true,
-			buttons: [{
-				text: I18N.t("Save"),
-				click: function() {
-					save(rowNode);
-		        }},
-		        {
-		        text: I18N.t("Cancel") + " (ESC)",
-		        click: function() {
-		          	$(this).dialog('close');
-		        }
-		    }],
-		});
 	});
 });
 
@@ -46,8 +23,20 @@ $(document).ready(function() {
 
 	domains = JSON.parse($("#domains").text());
 
-	initEndPointSelects("src", domains);
-    initEndPointSelects("dst", domains);
+	initEndPointSelects("testform-src_", domains);
+    initEndPointSelects("testform-dst_", domains);
+
+    $("#test-modal").on('click', '.confirm-btn', function() {
+        if(modalMode == 'create') {
+            create();
+        } else { 
+            save(this);
+        }
+    });
+
+    $("#test-modal").on('click', '.close-btn', function() {
+        $("#test-modal").modal('hide'); 
+    });
 
 	$('#cron-widget').cron({
         initial: "0 12 * * *",
@@ -61,71 +50,34 @@ $(document).ready(function() {
 
 function openCreateModal() {
 	prepareCreate();
+    modalMode = 'create';
     $("#test-modal").modal('show');
-	/*$('#test-dialog').dialog({
-		title: I18N.t("Create"),
-		width: 360,
-		height: 300,
-		modal: true,
-		buttons: [{
-			text: I18N.t("Save"),
-			click: function() {
-				create();
-	        }},
-	        {
-	        text: I18N.t("Cancel") + " (ESC)",
-	        click: function() {
-	          	$(this).dialog('close');
-	        }
-	    }],
-	});*/
 }
 
 function prepareCreate() {
 	//$( "#tabs" ).tabs( { disabled: [] } );
 	//$('#tabs').tabs("option", "active", 0);
 	domains = JSON.parse($("#domains").text());
-	enableSelect("src", 'domain');
-	enableSelect("dst", 'domain');
-	$("#src-domain").val("");
-	$("#dst-domain").val("");
-	fillDeviceSelect("src");
-	fillNetworkSelect("src");
-	fillPortSelect("src");
-	fillVlanSelect("src");
-	fillDeviceSelect("dst");
-	fillNetworkSelect("dst");
-	fillPortSelect("dst");
-	fillVlanSelect("dst");
+	enableSelect("testform-src_", 'dom');
+	enableSelect("testform-dst_", 'dom');
+	$("#testform-src_dom").val("");
+	$("#testform-dst_dom").val("");
+	fillDeviceSelect("testform-src_");
+	fillNetworkSelect("testform-src_");
+	fillPortSelect("testform-src_");
+	fillVlanSelect("testform-src_");
+	fillDeviceSelect("testform-dst_");
+	fillNetworkSelect("testform-dst_");
+	fillPortSelect("testform-dst_");
+	fillVlanSelect("testform-dst_");
 }
 
 function submitDeleteForm() {
-	deleteChecked();
-}
-
-function deleteChecked() {
-    var item = document.getElementById("test-grid");
-    var keys = $(item).yiiGridView('getSelectedRows');
-    
-    $.ajax({
-        type: "POST",
-        url: baseUrl+'/circuits/automated-test/delete',
-        dataType: 'json',
-        data: {
-            ids: JSON.stringify(keys),
-        },
-        success: function (response) {
-            window.location.reload(true);
-        },
-    });
-}
-
-function clearCheckbox() {
-	$("#test-grid :checked").removeAttr('checked');
-	$('#delete-button').hide();
+	$("#delete-test-form").submit();
 }
 
 function edit(row) {
+    modalMode = 'update';
 	$( "#tabs" ).tabs( { disabled: [0, 1] } );
 	$('#tabs').tabs("option", "active", 2);
 	rowId = $(row).parent().parent().parent().attr('data-key');
@@ -148,18 +100,13 @@ function prepareRefreshButton() {
 	});
 }
 
-function disableAutoRefresh(disableButton) {
-	if (disableButton) 
-		$("#refresh-button").attr("disabled", "disabled");
-
+function disableAutoRefresh() {
 	$("#refresh-button").val('false');
 	clearInterval(refresher);
 	$("#refresh-button").text(I18N.t("Enable auto refresh"));
 }
 
 function enableAutoRefresh() {
-	$("#deleteButton").hide();
-	
 	$("#refresh-button").attr("disabled", false);
 	updateGridView();
 	$("#refresh-button").val('true');
@@ -175,68 +122,69 @@ function updateGridView() {
 }
 
 function create() {
-	if(validateForm()) {
+	validateForm();
+
+    setTimeout(function() {
+        if($("#test-modal").find(".has-error").length > 0) {
+            console.log("tem erro");
+            MAlert.show(I18N.t("Invalid request."), I18N.t("Please, check your input and try again."), 'danger');
+            return;
+        }
 		$.ajax({
 	        type: "POST",
-	        url: baseUrl + '/circuits/automated-test/create',
-	        data: $("#test-details-form").serialize(),
+	        url: baseUrl + '/tester/manager/create',
+	        data: $("#test-form").serialize(),
 	        success: function (response) {
-	        	window.location.href = baseUrl + "/circuits/automated-test";
+	        	window.location.href = baseUrl + "/tester/manager";
 	        },
 	    });
-	} 
+	}, 200);
 }
 
 function validateForm() {
-	return validateInput("src-domain") &&
-		validateInput("src-device") &&
-		validateInput("src-port") &&
-		validateInput("src-vlan") &&
-		validateInput("dst-domain") &&
-		validateInput("dst-device") &&
-		validateInput("dst-port") &&
-		validateInput("dst-vlan");
+	validateInput("src_dom");
+    validateInput("src_dev");
+    validateInput("src_port");
+    validateInput("src_vlan");
+    validateInput("dst_dom");
+    validateInput("dst_dev");
+    validateInput("dst_port");
+    validateInput("dst_vlan");
 }
 
 function validateInput(elementId) {
-	if (!$("#" + elementId).val() || $("#" + elementId).val() == "") {
-		$("#" + elementId).animate({backgroundColor: "#CC0000"});
-		$("#" + elementId).animate({backgroundColor: "blank"});
-		$('#tabs').tabs("option", "active", $("#" + elementId).parent().parent().parent().attr("id").split('-')[1]);
-		return false;
-	} 
-	return true;
+	$("#test-form").yiiActiveForm("validateAttribute", 'testform-' + elementId);
 }
 
 function save(row) {
 	rowId = $(row).parent().parent().parent().attr('data-key');
 	$.ajax({
         type: "POST",
-        url: baseUrl + '/circuits/automated-test/update?id=' + rowId,
+        url: baseUrl + '/tester/manager/update?id=' + rowId,
         data: $("#test-details-form").serialize(),
         success: function (response) {
-        	window.location.href = baseUrl + "/circuits/automated-test";
+        	window.location.href = baseUrl + "/tester/manager";
         },
     });
 }
 
 function fillDomainSelect(endPointType, domains, domainId, initDisabled) {
-	disableSelect(endPointType, "domain");
-	$("#"+ endPointType + "-domain").append('<option value="">' + I18N.t('select') + '</option>');
+	disableSelect(endPointType, "dom");
+	$("#"+ endPointType + "dom").append('<option value="">' + I18N.t('select') + '</option>');
 	for (var i = 0; i < domains.length; i++) {
-		$("#"+ endPointType + "-domain").append('<option value="' + domains[i].id + '">' + domains[i].name + '</option>');
+		$("#"+ endPointType + "dom").append('<option value="' + domains[i].id + '">' + domains[i].name + '</option>');
 	}
 	if (domainId != null) {
-		$("#"+ endPointType + "-domain").val(domainId);
+		$("#"+ endPointType + "dom").val(domainId);
 	}
-	if(!initDisabled) enableSelect(endPointType, "domain");
+	if(!initDisabled) enableSelect(endPointType, "dom");
 }
 
 function fillNetworkSelect(endPointType, domainId, networkId, initDisabled) {
-    disableSelect(endPointType, "network");
-	clearSelect(endPointType, "network");
+    disableSelect(endPointType, "net");
+	clearSelect(endPointType, "net");
 	if (domainId != "" && domainId != null) {
-		$("#"+ endPointType + "-network").append('<option value="">' + I18N.t('loading') + '</option>');
+		$("#"+ endPointType + "net").append('<option value="">' + I18N.t('loading') + '</option>');
 		$.ajax({
 			url: baseUrl+'/topology/network/get-by-domain',
 			data: {
@@ -244,23 +192,23 @@ function fillNetworkSelect(endPointType, domainId, networkId, initDisabled) {
 			},
 			dataType: 'json',
 			success: function(response){
-				clearSelect(endPointType, "network");
-				$("#"+ endPointType + "-network").append('<option value="">' + I18N.t('select') + '</option>');
+				clearSelect(endPointType, "net");
+				$("#"+ endPointType + "net").append('<option value="">' + I18N.t('select') + '</option>');
 				for (var i = 0; i < response.length; i++) {
-					$("#"+ endPointType + "-network").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
+					$("#"+ endPointType + "net").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
 			    }
 				if (networkId != null) {
-					$("#"+ endPointType + "-network").val(networkId);
+					$("#"+ endPointType + "net").val(networkId);
 				}
-				if (!initDisabled) enableSelect(endPointType, "network");
+				if (!initDisabled) enableSelect(endPointType, "net");
 			}
 		});
 	} 
 }
 
 function fillDeviceSelect(endPointType, domainId, networkId, deviceId, initDisabled) {
-    disableSelect(endPointType, "device");
-	clearSelect(endPointType, "device");
+    disableSelect(endPointType, "dev");
+	clearSelect(endPointType, "dev");
     parent = null;
 	if (networkId != "" && networkId != null) {
         parent = [];
@@ -273,7 +221,7 @@ function fillDeviceSelect(endPointType, domainId, networkId, deviceId, initDisab
     } 
 
     if (parent) {
-        $("#"+ endPointType + "-device").append('<option value="">' + I18N.t('loading') + '</option>');
+        $("#"+ endPointType + "dev").append('<option value="">' + I18N.t('loading') + '</option>');
         $.ajax({
             url: baseUrl+'/topology/device/get-by-' + parent[0],
             dataType: 'json',
@@ -281,16 +229,16 @@ function fillDeviceSelect(endPointType, domainId, networkId, deviceId, initDisab
                 id: parent[1],
             },
             success: function(response){
-                clearSelect(endPointType, "device");
-                $("#"+ endPointType + "-device").append('<option value="">' + I18N.t('select') + '</option>');
+                clearSelect(endPointType, "dev");
+                $("#"+ endPointType + "dev").append('<option value="">' + I18N.t('select') + '</option>');
                 for (var i = 0; i < response.length; i++) {
                     if (response[i].name == "") response[i].name = "default";
-                    $("#"+ endPointType + "-device").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
+                    $("#"+ endPointType + "dev").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
                 }
                 if (deviceId != null && deviceId != "") {
-                    $("#"+ endPointType + "-device").val(deviceId);
+                    $("#"+ endPointType + "dev").val(deviceId);
                 }
-                if (!initDisabled) enableSelect(endPointType, "device");
+                if (!initDisabled) enableSelect(endPointType, "dev");
             }
         });
     } 
@@ -300,7 +248,7 @@ function fillPortSelect(endPointType, deviceId, portId, initDisabled) {
     disableSelect(endPointType, "port");
 	clearSelect(endPointType, "port");
 	if (deviceId != "" && deviceId != null) {
-		$("#"+ endPointType + "-port").append('<option value="">' + I18N.t('loading') + '</option>');
+		$("#"+ endPointType + "port").append('<option value="">' + I18N.t('loading') + '</option>');
 		$.ajax({
 			url: baseUrl+'/circuits/reservation/get-port-by-device',
 			dataType: 'json',
@@ -310,11 +258,11 @@ function fillPortSelect(endPointType, deviceId, portId, initDisabled) {
 			},
 			success: function(response){
 				clearSelect(endPointType, "port");
-				$("#"+ endPointType + "-port").append('<option value="">' + I18N.t('select') + '</option>');
+				$("#"+ endPointType + "port").append('<option value="">' + I18N.t('select') + '</option>');
 				for (var i = 0; i < response.length; i++) {
-					$("#"+ endPointType + "-port").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
+					$("#"+ endPointType + "port").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
 			    }
-                if (portId != null && portId != "") $("#"+ endPointType + "-port").val(portId);
+                if (portId != null && portId != "") $("#"+ endPointType + "port").val(portId);
                 if (!initDisabled) enableSelect(endPointType, "port");
 			}
 		});
@@ -325,7 +273,7 @@ function fillVlanSelect(endPointType, portId, vlan, initDisabled) {
     disableSelect(endPointType, "vlan");
 	clearSelect(endPointType, "vlan");
 	if (portId != "" && portId != null) {
-		$("#"+ endPointType + "-vlan").append('<option value="">' + I18N.t('loading') + '</option>');
+		$("#"+ endPointType + "vlan").append('<option value="">' + I18N.t('loading') + '</option>');
 		$.ajax({
 			url: baseUrl+'/topology/port/get-vlan-range',
 			dataType: 'json',
@@ -339,7 +287,7 @@ function fillVlanSelect(endPointType, portId, vlan, initDisabled) {
     				for (var i = 0; i < ranges.length; i++) {
                         var interval = ranges[i].split("-");
                         if (interval.length > 1)
-                            $("#"+ endPointType + "-vlan").append('<option value="' + ranges[i] + '">' + ranges[i] + '</option>');
+                            $("#"+ endPointType + "vlan").append('<option value="' + ranges[i] + '">' + ranges[i] + '</option>');
     			    }
 
                     for (var i = 0; i < ranges.length; i++) {
@@ -351,10 +299,10 @@ function fillVlanSelect(endPointType, portId, vlan, initDisabled) {
                         }
                         
                         for (var j = low; j < high+1; j++) {
-                            $("#"+ endPointType + "-vlan").append('<option value="' + j + '">' + j + '</option>');
+                            $("#"+ endPointType + "vlan").append('<option value="' + j + '">' + j + '</option>');
                         }
                         if (vlan != null && vlan != "") {
-                            $("#"+ endPointType + "-vlan").val(vlan);
+                            $("#"+ endPointType + "vlan").val(vlan);
                         }
                     }
     				if (!initDisabled) enableSelect(endPointType, "vlan");
@@ -367,31 +315,31 @@ function fillVlanSelect(endPointType, portId, vlan, initDisabled) {
 function initEndPointSelects(endPointType, domains) {
 	fillDomainSelect(endPointType, domains);
 	
-	$('#' + endPointType + '-domain').on('change', function() {
+	$('#' + endPointType + 'dom').on('change', function() {
 		fillDeviceSelect(endPointType, this.value);
 		fillNetworkSelect(endPointType, this.value);
 		fillPortSelect(endPointType);
 		fillVlanSelect(endPointType);
 	});
 	
-	$('#' + endPointType + '-device').on('change', function() {
+	$('#' + endPointType + 'dev').on('change', function() {
 		fillPortSelect(endPointType, this.value);
 	});
 
-	$('#' + endPointType + '-port').on('change', function() {
+	$('#' + endPointType + 'port').on('change', function() {
 		fillVlanSelect(endPointType, this.value);
 	});
 }
 
 function clearSelect(endPointType, object) {
-	$('#' + endPointType + '-' + object).children().remove();
+	$('#' + endPointType + object).children().remove();
 }
 
 function disableSelect(endPointType, object) {
-	$('#' + endPointType + '-' + object).prop('disabled', true);
+	$('#' + endPointType + object).prop('disabled', true);
 }
 
 function enableSelect(endPointType, object) {
-	$('#' + endPointType + '-' + object).prop('disabled', false);
+	$('#' + endPointType + object).prop('disabled', false);
 }
 

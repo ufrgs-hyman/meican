@@ -9,12 +9,14 @@ namespace meican\tester\forms;
 use yii\base\Model;
 use Yii;
 
-use meican\circuits\models\Reservation;
+use meican\circuits\models\CircuitsPreference;
 use meican\topology\models\Port;
+use meican\circuits\models\Reservation;
 use meican\circuits\models\ReservationPath;
-use meican\base\models\Cron;
 use meican\base\utils\DateUtils;
 use meican\aaa\RbacController;
+use meican\tester\models\Test;
+use meican\scheduler\models\ScheduledTask;
 
 /**
  * @author Maurício Quatrin Guerreiro
@@ -37,7 +39,9 @@ class TestForm extends Model {
 	
 	public function rules()	{
 		return [
-			[['src_port','src_vlan','dst_port','dst_vlan','cron_value'], 'required'],
+			[['src_dom','src_dev','src_port','src_vlan',
+            'dst_dom','dst_dev','dst_port','dst_vlan','cron_value'], 'required'],
+            [['src_net', 'dst_net'], 'safe']
 		];
 	}
 
@@ -59,12 +63,11 @@ class TestForm extends Model {
 	public function save() {
  			$this->reservation = new Reservation;
  			$this->reservation->type = Reservation::TYPE_TEST;
- 			$this->reservation->name = AutomatedTest::AT_PREFIX;
+ 			$this->reservation->name = Test::AT_PREFIX;
  			$this->reservation->date = DateUtils::now();
  			$this->reservation->start = DateUtils::now();
  			$this->reservation->finish =  DateUtils::now();
  			$this->reservation->bandwidth = 10;
- 			$this->reservation->protected = 0;
  			$this->reservation->requester_nsa = CircuitsPreference::findOneValue(CircuitsPreference::MEICAN_NSA);
  			$this->reservation->provider_nsa = CircuitsPreference::findOneValue(CircuitsPreference::CIRCUITS_DEFAULT_PROVIDER_NSA);
  			$this->reservation->request_user_id = Yii::$app->user->getId();
@@ -118,14 +121,12 @@ class TestForm extends Model {
  					return false;
  				}
 
- 				$cron = new Cron;
- 				$cron->freq = $this->cron_value;
- 				$cron->task_type = Cron::TYPE_TEST;
- 				$cron->task_id = $this->reservation->id;
- 				$cron->freq = $this->cron_value;
- 				$cron->status = Cron::STATUS_PROCESSING;
- 				if(!$cron->save()) {
- 					Yii::trace($cron->getErrors());
+ 				$task = new ScheduledTask;
+ 				$task->freq = $this->cron_value;
+ 				$task->obj_class = 'meican\tester\models\Test';
+ 				$task->obj_data = $this->reservation->id;
+ 				if(!$task->save()) {
+ 					Yii::trace($task->getErrors());
  					return false;
  				}
  				
