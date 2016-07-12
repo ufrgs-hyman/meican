@@ -201,13 +201,13 @@ class Reservation extends \yii\db\ActiveRecord
             $conn->type = Connection::TYPE_NSI;
 
             if($conn->save()) {
-                $i = 0;
+                $k = 0;
                 foreach ($paths as $resPath) {
                     $connPath = new ConnectionPath;
-                    $connPath->path_order = $i;
+                    $connPath->path_order = $k;
                     $connPath->conn_id = $conn->id;
                     $connPath->domain = explode(":",$resPath->port_urn)[0];
-                    $i++;
+                    $k++;
                     $connPath->port_urn = $resPath->port_urn;
                     $connPath->vlan = $resPath->vlan;
                     

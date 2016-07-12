@@ -16,7 +16,7 @@ $this->params['header'] = [Yii::t('circuits',"Reservation Details"), ['Home', 'C
 ?>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title"><?= Yii::t("circuits", "Circuits"); ?></h3>
@@ -27,15 +27,28 @@ $this->params['header'] = [Yii::t('circuits',"Reservation Details"), ['Home', 'C
                 echo Grid::widget([
                     'dataProvider' => $connDataProvider,
                     'columns' => [
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template'=>'{view}',
+                            'buttons' => [
+                                    'view' => function ($url, $model) {
+                                        return Html::a('<span class="fa fa-eye"></span>', ['connection/view','id'=>$model->id]);
+                                    }
+                            ],
+                            'headerOptions'=>['style'=>'width: 2%;'],
+                        ],
                         'external_id',
-                        'start',
-                        'finish'],
+                        'start:datetime',
+                        'finish:datetime',
+                        'status',
+                        'dataplane_status',
+                        'auth_status'],
                     ]);
                 ?>
             </div>
         </div> 
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="box box-default">
             <div class="box-header with-border">
                 <h3 class="box-title"><?= Yii::t("circuits", "Reservation Info"); ?></h3>
@@ -49,7 +62,7 @@ $this->params['header'] = [Yii::t('circuits',"Reservation Details"), ['Home', 'C
                         'bandwidth',
                         'requester_nsa',
                         'provider_nsa',
-                        'request_user_id',
+                        //'request_user_id',
                     ],
                 ]); ?>
             </div>
