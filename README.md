@@ -33,8 +33,8 @@ modules/            	application modules
 	scheduler/			Scheduler Module
     tester/             Tester Module
 	topology/			Topology Module
-		assets/			assets classes and their css and js files
-		components/		independent submodules or third part classes
+		assets/			css, js files and bundle classes
+		utils/		utils classes
 		controllers/	containing controller class files
 		forms/			form models for views
 		messages/		I18N internationalization files
