@@ -30,11 +30,12 @@ modules/            	application modules
 	notify/				Notify Module
     nsi/                NSI Module
     perfsonar/          PerfSONAR Module
+    oscars/		OSCARS Module
 	scheduler/			Scheduler Module
     tester/             Tester Module
 	topology/			Topology Module
 		assets/			css, js files and bundle classes
-		utils/		utils classes
+		utils/			utils classes
 		controllers/	containing controller class files
 		forms/			form models for views
 		messages/		I18N internationalization files
