@@ -30,7 +30,7 @@ modules/            	application modules
 	notify/				Notify Module
     nsi/                NSI Module
     perfsonar/          PerfSONAR Module
-    oscars/		OSCARS Module
+    oscars/				OSCARS Module
 	scheduler/			Scheduler Module
     tester/             Tester Module
 	topology/			Topology Module
