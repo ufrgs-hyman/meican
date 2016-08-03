@@ -89,7 +89,7 @@ Upgrade is not possible. See the installation guide for a fresh install.
 
 ####Version 2.x to 3.x
 
-Upgrade is just a migration. Look the [Migration guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/migration.md).
+Upgrade is a migration with some settings for new features. TODO
 
 ##LICENSE
 
