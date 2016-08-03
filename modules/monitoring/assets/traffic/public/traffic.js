@@ -213,7 +213,7 @@ function initStats(link, divElement) {
                 y = p1[1] + (p2[1] - p1[1]) * (pos.x - p1[0]) / (p2[0] - p1[0]);
 
             if(statsGraphic.getOptions().mode.type == 'circuit') {
-                $("#map-l").find('.traffic-value').eq(i).text(convertTrafficValue(val,2));
+                $("#map-l").find('.traffic-value').eq(i).text(convertTrafficValue(y,2));
             } else {
                 if(series.stack == 'in') {
                     trafficIn += y;
@@ -257,7 +257,7 @@ function buildLegend(label, series) {
     var mode = statsGraphic.getOptions().mode;
     if(mode.type == 'circuit') {
         return '<a href="' + baseUrl + '/circuits?id=' + series.circuit.parent_id + '">' + label + '</a> to ' + 
-            series.direction.split(' ')[2] + ' = <span class="traffic-value">0.0</span> Mbps';
+            series.direction.split(' ')[2] + ' = <span class="traffic-value">0.0</span>';
     } else {
         if(mode.seriesIn == 0 && series.stack == 'in') {
             mode.seriesIn++;
