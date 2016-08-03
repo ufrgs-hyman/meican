@@ -2,8 +2,6 @@ ISSUES
 
 15) Test77 to MXPA ========>  Test77 : MXSP to MXPA
 26) path nao disponivel na aba Info se circuito falha
-28) testes automatizados
-29) circuitos recorrentes
 
 Futuro
 
