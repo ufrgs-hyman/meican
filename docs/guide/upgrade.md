@@ -20,14 +20,14 @@ After this line:
 ```
 "provider.force.dummy" => true,
 ```
-Add this:
+Add your OSCARS Bridge URL:
 ```
 "oscars.bridge.provider.url" => 'http://localhost:8080/oscars-bridge/circuits',
 ```
 
 ####4. configure the URL of the Esmond REST API in params.php
 
-After the line added above, add this other:
+After the line added above, add your Esmond API URL:
 ```
 "esmond.server.api.url" => 'http://localhost/esmond/v2/',
 ```
