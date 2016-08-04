@@ -8,7 +8,9 @@ Upgrade is not possible. See the installation guide for a fresh install.
 
 ####1. Migration
 
-Perform every step detailed from option 2 of the [Migration guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/migration.md). After that, are required some steps to enable the Monitoring module:
+Perform every step detailed from option 2 of the [Migration guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/migration.md). 
+
+After that, are required some steps to enable the Monitoring module. If you are not interested in this module, your upgrade is done.
 
 ####2. Install OSCARS Bridge following [this guide](https://github.com/ufrgs-hyman/oscars-bridge/blob/master/README.md).
 
