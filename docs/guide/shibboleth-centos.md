@@ -1,0 +1,8 @@
+Comming soon
+
+cd /etc/yum.repos.d
+wget http://download.opensuse.org/repositories/security://shibboleth/CentOS_CentOS-6/security:shibboleth.repo
+
+yum install shibboleth
+
+yum install mod_ssl
