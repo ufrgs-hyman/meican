@@ -10,7 +10,7 @@ Upgrade is not possible. See the installation guide for a fresh install.
 
 Perform every step detailed from option 2 of the [Migration guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/migration.md). After that, are required some steps to enable the Monitoring module:
 
-####2. install OSCARS Bridge following [this guide](https://github.com/ufrgs-hyman/oscars-bridge/blob/master/README.md).
+####2. Install OSCARS Bridge following [this guide](https://github.com/ufrgs-hyman/oscars-bridge/blob/master/README.md).
 
 ####3. Update parameters (Location: params.php in config folder)
 
