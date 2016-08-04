@@ -6,14 +6,30 @@ Upgrade is not possible. See the installation guide for a fresh install.
 
 ####Version 2.x to 3.x
 
-Make every step detailed from [Migration guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/migration.md) option 2. After that, do more some steps to enable the Monitoring module:
+1. Migration
 
-- install OSCARS Bridge following [this guide](https://github.com/ufrgs-hyman/oscars-bridge/blob/master/README.md).
-- configure the URL of the OSCARS Bridge in params.php
+Perform every step detailed from option 2 of the [Migration guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/migration.md). After that, are required some steps to enable the Monitoring module:
+
+2. install OSCARS Bridge following [this guide](https://github.com/ufrgs-hyman/oscars-bridge/blob/master/README.md).
+
+3. Update parameters (Location: params.php in config folder)
+
+3.1. Configure the URL of the OSCARS Bridge in params.php
+
+After this line:
+```
+"provider.force.dummy" => true,
+```
+Add this:
 ```
 "oscars.bridge.provider.url" => 'http://localhost:8080/oscars-bridge/circuits',
 ```
-- configure the URL of the Esmond service in params.php
+
+4. configure the URL of the Esmond REST API in params.php
+
+After the line added above, add this other:
 ```
 "esmond.server.api.url" => 'http://localhost/esmond/v2/',
 ```
+
+Done! Your application must be ready for use.
