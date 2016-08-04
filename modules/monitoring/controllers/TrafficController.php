@@ -40,7 +40,7 @@ class TrafficController extends RbacController {
      */
     public function actionGetVlanHistory($dom, $dev, $port, $vlan, $dir, $interval) {
         self::beginAsyncAction();
-        //return $this->buildDummyTrafficHistory();
+        return $this->buildDummyTrafficHistory();
 
         if ($dom != 'cipo.rnp.br') 
             throw new \yii\web\HttpException(501, 'Currently only cipo.rnp.br ports are supported.');     
@@ -59,7 +59,7 @@ class TrafficController extends RbacController {
             CURLOPT_SSL_VERIFYPEER => false,
 
             CURLOPT_USERAGENT => 'Meican',
-            CURLOPT_URL => 'http://monitora.cipo.rnp.br/esmond/v2/device/'.$dev.'/interface/'.$port.'.'.$vlan.'/'.$dir.
+            CURLOPT_URL => Yii::$app->params['esmond.server.api.url'].'device/'.$dev.'/interface/'.$port.'.'.$vlan.'/'.$dir.
                 '?format=json&begin='.strtotime('-3600 seconds')
         );
         Yii::trace($options);
@@ -104,7 +104,7 @@ class TrafficController extends RbacController {
                 CURLOPT_SSL_VERIFYPEER => false,
 
                 CURLOPT_USERAGENT => 'Meican',
-                CURLOPT_URL => 'http://monitora.cipo.rnp.br/esmond/v2/device/'.$dev['node'].'/interface/'.$portName.'/'.$dir.
+                CURLOPT_URL => Yii::$app->params['esmond.server.api.url'].'device/'.$dev['node'].'/interface/'.$portName.'/'.$dir.
                     '?format=json&begin='.strtotime('-90 seconds')//DateTime::now('-60 seconds')->getTimestamp()
             );
             curl_setopt_array($ch , $options);
@@ -146,7 +146,7 @@ class TrafficController extends RbacController {
                 CURLOPT_SSL_VERIFYPEER => false,
 
                 CURLOPT_USERAGENT => 'Meican',
-                CURLOPT_URL => 'http://monitora.cipo.rnp.br/esmond/v2/device/'.$dev.'/interface/'.$port.'.'.$vlan.'/'.$dir.
+                CURLOPT_URL => Yii::$app->params['esmond.server.api.url'].'device/'.$dev.'/interface/'.$port.'.'.$vlan.'/'.$dir.
                     '?format=json&begin='.strtotime('-90 seconds')
             );
             curl_setopt_array($ch , $options);

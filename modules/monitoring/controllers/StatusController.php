@@ -36,7 +36,7 @@ class StatusController extends RbacController {
                 CURLOPT_SSL_VERIFYPEER => false,
 
                 CURLOPT_USERAGENT => 'Meican',
-                CURLOPT_URL => 'http://monitora.cipo.rnp.br/esmond/v2/device/'.$dev.'/interface/'.$port.'/?format=json'
+                CURLOPT_URL => Yii::$app->params['esmond.server.api.url'].'device/'.$dev.'/interface/'.$port.'/?format=json'
             );
             curl_setopt_array($ch , $options);
             $output = curl_exec($ch);
