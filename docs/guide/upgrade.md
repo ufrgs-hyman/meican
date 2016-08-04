@@ -1,8 +1,10 @@
-From 1.x
+##Upgrade guide
 
-Is not possible. Look the installation guide for a fresh install.
+####Version 1.x to 2.x
 
-From 2.x
+Upgrade is not possible. See the installation guide for a fresh install.
+
+####Version 2.x to 3.x
 
 Make every step detailed from Migration guide option 2. After that, do more some steps to enable the Monitoring module:
 
