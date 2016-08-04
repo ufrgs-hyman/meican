@@ -83,13 +83,7 @@ A complete migration of the application to another machine is detailed in this [
 
 ###Upgrade
 
-####Version 1.x to 2.x
-
-Upgrade is not possible. See the installation guide for a fresh install.
-
-####Version 2.x to 3.x
-
-Upgrade is a migration with some settings for new features. TODO
+Look [this document](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/upgrade.md) for instructions.
 
 ##LICENSE
 
