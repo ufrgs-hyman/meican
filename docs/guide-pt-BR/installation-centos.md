@@ -82,7 +82,7 @@ As dependências do projeto são mantidas a partir do [Composer](https://getcomp
 
 ```
 curl -sS https://getcomposer.org/installer | php
-php composer.phar global require "fxp/composer-asset-plugin:~1.1.4"
+php composer.phar global require "fxp/composer-asset-plugin:~1.2.1"
 ```
 
 Com o Composer instalado, podemos prosseguir para o download das dependências. Ainda na raiz do projeto, execute:
