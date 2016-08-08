@@ -13,13 +13,7 @@ sudo apt-get install apache2 mysql-server php5 curl php5-mysql php5-curl
 
 ####Setup database
 
-While not mandatory, the phpMyAdmin installation is recommended for easy database management.
-
-```
-sudo apt-get install phpmyadmin
-```
-
-Or you can simply create a database via the command line.
+Create a database via command line.
 
 ```
 mysql -u #user# -p
