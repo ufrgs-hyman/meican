@@ -20,7 +20,7 @@ After that, are required some steps to enable the Monitoring module. If you are 
 
 After this line:
 ```
-"provider.force.dummy" => true,
+"provider.force.dummy" => false,
 ```
 Add your OSCARS Bridge URL:
 ```
