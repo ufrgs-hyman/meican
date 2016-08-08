@@ -90,7 +90,7 @@ sudo ln -s /path/to/#meican-folder#/web /var/www/meican
 
 ####Apache configuration
 
-By default, the Rewrite mode is enabled on CentOS 6.7. To confirm this verify that the following line is uncommented:
+By default, the Rewrite mode is enabled on CentOS 6.7. To confirm this, verify that the following line is uncommented:
 
 ```
 LoadModule rewrite_module modules/mod_rewrite.so
