@@ -39,14 +39,7 @@ chkconfig iptables off
 
 ####Setup database
 
-While not mandatory, the phpMyAdmin installation is recommended for easy database management.
-
-```
-yum install epel-release
-yum install phpmyadmin
-```
-
-Or you can simply create a database via command line.
+Create a database via command line.
 
 ```
 mysql -u #user# -p
