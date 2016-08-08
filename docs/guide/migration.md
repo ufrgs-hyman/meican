@@ -44,7 +44,7 @@ mysqldump -u #USER# -p#PASS# --databases meican2 > backup.sql
 
 #####2.4 Prepare the new environment
 
-Following the installation guide respective, setup a complete new MEICAN instance on the new machine skipping the configuration step. IMPORTANT: make sure that the version of the new installation is **exacly** the same of the old server.
+Following the installation guide respective, setup a complete new MEICAN instance on the new machine **skipping the configuration step**. IMPORTANT: make sure that the version of the new installation is **exacly** the same of the old server.
 
 #####2.5 Copy the certificate
 
