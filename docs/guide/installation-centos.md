@@ -81,7 +81,7 @@ curl -sS https://getcomposer.org/installer | php
 php composer.phar global require "fxp/composer-asset-plugin:~1.2.1"
 ```
 
-Install MEICAN and all dependencies. It is **possible** that before the installation you are prompted by a "access token" of GitHub. You must have an account on GitHub to get a valid token on [GitHub](https://github.com/settings/tokens). 
+Install MEICAN and all dependencies. It is **possible** that before the installation you are prompted by a "access token" of GitHub. You must have an account on [GitHub](https://github.com/settings/tokens) to request a valid token. 
 
 In the root folder run:
 
