@@ -4,14 +4,14 @@ Follow the steps detailed below.
 
 This configuration was tested and performed on Ubuntu 14.04.
 
-#####Prepare environment
+####Prepare environment
 
 ```
 sudo apt-get update
 sudo apt-get install apache2 mysql-server php5 curl php5-mysql php5-curl
 ```
 
-#####Setup database
+####Setup database
 
 While not mandatory, the phpMyAdmin installation is recommended for easy database management.
 
@@ -26,7 +26,7 @@ mysql -u #user# -p
 CREATE DATABASE IF NOT EXISTS `meican2`;
 ```
 
-#####Download and install MEICAN
+####Download and install MEICAN
 
 [Get a stable version](https://github.com/ufrgs-hyman/meican/releases):
 
@@ -68,7 +68,7 @@ Create a simbolic link to app web folder on /var/www:
 sudo ln -s /path/to/#meican-folder#/web /var/www/meican
 ```
 
-#####Apache configuration
+####Apache configuration
 
 Enable the Rewrite mode:
 
