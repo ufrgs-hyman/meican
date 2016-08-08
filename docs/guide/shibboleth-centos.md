@@ -1,4 +1,4 @@
-Shibboleth installation guide - CentOS
+##Shibboleth installation guide - CentOS
 
 Configuration of yum repository
 
