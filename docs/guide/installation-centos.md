@@ -4,7 +4,7 @@ Follow the steps detailed below.
 
 This configuration was tested and performed on CentOS 6.7.
 
-#####Prepare environment
+####Prepare environment
 
 ```
 yum update
@@ -37,7 +37,7 @@ service iptables stop
 chkconfig iptables off
 ```
 
-#####Setup database
+####Setup database
 
 While not mandatory, the phpMyAdmin installation is recommended for easy database management.
 
@@ -53,7 +53,7 @@ mysql -u #user# -p
 CREATE DATABASE IF NOT EXISTS `meican2`;
 ```
 
-#####Download and install MEICAN
+####Download and install MEICAN
 
 In a public folder (e.g. /var/www) [download a stable version](https://github.com/ufrgs-hyman/meican/releases):
 
@@ -95,7 +95,7 @@ Create a simbolic link to app web folder on /var/www:
 sudo ln -s /path/to/#meican-folder#/web /var/www/meican
 ```
 
-#####Apache configuration
+####Apache configuration
 
 By default, the Rewrite mode is enabled on CentOS 6.7. To confirm this verify that the following line is uncommented:
 
