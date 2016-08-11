@@ -56,6 +56,8 @@ From the backup, copy the files: "db.php", "mailer.php" and "params.php" to the 
 
 ####2.7 Import the database
 
+This is step is exclusive for a migration of the application. If you are doing an upgrade, look the next step on [Upgrade Guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/upgrade.md#2-install-oscars-bridge-following-this-guide).
+
 Access the MySQL terminal:
 
 ```
