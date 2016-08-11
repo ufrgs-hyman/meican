@@ -20,7 +20,7 @@ class m160126_144829_diego extends Migration
         ");
     	 
     	$this->execute("
-            ALTER TABLE `meican_group` ADD CONSTRAINT `group_domain` FOREIGN KEY (`domain`) REFERENCES `meican2`.`meican_domain`(`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+            ALTER TABLE `meican_group` ADD CONSTRAINT `group_domain` FOREIGN KEY (`domain`) REFERENCES `meican_domain`(`name`) ON DELETE CASCADE ON UPDATE CASCADE;
         ");
     }
 
