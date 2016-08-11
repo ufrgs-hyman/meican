@@ -67,7 +67,7 @@ web/                web accessible files, e.g., assets cache, wsdl files and ima
 
 ###Installation
 
-There is two specific installation guides, one for [CentOS 6](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-centos.md) and another for [Ubuntu 14](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-ubuntu.md).
+There are two specific installation guides, one for [CentOS 6](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-centos.md) and another for [Ubuntu 14](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-ubuntu.md).
 
 ###Configuration
 
