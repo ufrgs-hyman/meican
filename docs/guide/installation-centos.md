@@ -39,7 +39,7 @@ chkconfig iptables off
 
 ####2. Setup database
 
-If this is not a Upgrade, you must create a database. The fast method is via command line.
+If this is not an Upgrade, you must create a database. The fast method is via command line.
 
 ```
 mysql -u #user# -p
