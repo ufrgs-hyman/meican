@@ -1,5 +1,7 @@
 ##GUIA DE INSTALAÇÃO - CentOS
 
+Guia desatualizado. Por favor, veja a versão em [inglês](https://github.com/ufrgs-hyman/meican/edit/master/docs/guide/installation-centos.md).
+
 Siga as etapas detalhadas a seguir.
 
 Esta configuração foi testada e realizada no CentOS 6.7.
