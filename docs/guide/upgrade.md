@@ -8,7 +8,7 @@ Upgrade is not possible. See the installation guide for a fresh install.
 
 ####1. Migration
 
-Perform every step detailed from option 2 of the [Migration guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/migration.md). But, there are some exceptions:
+Perform every step detailed from option 2 of the [Migration guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/migration.md#2-move-files-to-new-installation). But, there are some exceptions:
 - In the step 2.4 you must download the 3.x version, instead of the your current 2.x version.
 - Backup and creation of database is not required, because this is not a migration and in the new version installation the database will be upgraded. Nevertheless, is always recommended have a backup for security.
 
