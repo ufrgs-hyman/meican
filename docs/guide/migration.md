@@ -8,7 +8,7 @@ Two migration methods are presented. The first method is to copy the whole meica
 
 ####1.1 Machine requirements
 
-Make sure that the software requirements: Apache, PHP and MySQL are configured as defined in the installation guide for your operating system. After that, proceed to the next step.
+Make sure that the [software requirements](https://github.com/ufrgs-hyman/meican#software) are configured as defined in the installation guide for your operating system. After that, proceed to the next step.
 
 ####1.2 Copy all files
 
