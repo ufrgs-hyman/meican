@@ -39,7 +39,7 @@ chkconfig iptables off
 
 ####2. Setup database
 
-If this is an upgrade, you cannot create a database. 
+If this is an **upgrade**, you dont need create a database. Jump to next step.
 
 The fastest method to do this is via command line:
 
@@ -61,7 +61,7 @@ tar -zxvf #version#.tar.gz
 
 ####3.2. Configure database settings
 
-**Warning**: If this is an upgrade, you must keep the old settings and the new installation will be upgrade the database keeping the data.
+**Warning**: If this is an **upgrade**, you must keep the old settings and the new installation will be upgrade the database keeping the data.
 
 ```
 nano #meican-folder#/config/db.php
