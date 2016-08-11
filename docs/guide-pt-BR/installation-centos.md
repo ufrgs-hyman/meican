@@ -1,6 +1,6 @@
 ##GUIA DE INSTALAÇÃO - CentOS
 
-**Guia desatualizado. Por favor, veja a versão em [inglês](https://github.com/ufrgs-hyman/meican/master/docs/guide/installation-centos.md).**
+**Guia desatualizado. Por favor, veja a versão em [inglês](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-centos.md).**
 
 Siga as etapas detalhadas a seguir.
 
