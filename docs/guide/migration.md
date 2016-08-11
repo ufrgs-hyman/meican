@@ -56,8 +56,6 @@ From the backup, copy the files: "db.php", "mailer.php" and "params.php" to the 
 
 ####2.7 Import the database
 
-This is step is exclusive for a migration of the application.
-
 Access the MySQL terminal:
 
 ```
