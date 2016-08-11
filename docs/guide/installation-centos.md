@@ -48,6 +48,8 @@ CREATE DATABASE IF NOT EXISTS `meican2`;
 
 ####3. Download and install MEICAN
 
+####3.1. Download
+
 In a public folder (e.g. /var/www) [download a stable version](https://github.com/ufrgs-hyman/meican/releases):
 
 ```
@@ -55,11 +57,13 @@ wget https://github.com/ufrgs-hyman/meican/archive/#version#.tar.gz
 tar -zxvf #version#.tar.gz
 ```
 
-Configure database settings:
+####3.2. Configure database settings
 
 ```
 nano #meican-folder#/config/db.php
 ```
+
+####3.3. Install Composer
 
 On source code folder (#meican-folder#) install the [Composer](https://getcomposer.org)
 
@@ -67,6 +71,8 @@ On source code folder (#meican-folder#) install the [Composer](https://getcompos
 curl -sS https://getcomposer.org/installer | php
 php composer.phar global require "fxp/composer-asset-plugin:~1.2.1"
 ```
+
+####3.4. Install MEICAN
 
 Install MEICAN and all dependencies. It is **possible** that before the installation you are prompted by a "access token" of GitHub. You must have an account on [GitHub](https://github.com/settings/tokens) to request a valid token. 
 
