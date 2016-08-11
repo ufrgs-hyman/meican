@@ -39,7 +39,7 @@ chkconfig iptables off
 
 ####2. Setup database
 
-If this is an **upgrade**, you dont need create a database. Jump to next step.
+If this is an **upgrade**, you don't need create a database. Go to step 3.
 
 The fastest method to do this is via command line:
 
