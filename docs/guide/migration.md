@@ -54,7 +54,9 @@ From the backup, copy the certificate to the **certificates** folder on the new 
 
 From the backup, copy the files: "db.php", "mailer.php" and "params.php" to the **config** folder on the new server.
 
-####2.7 Import the database (Only for migrations)
+####2.7 Import the database
+
+This is step is exclusive for a migration of the application.
 
 Access the MySQL terminal:
 
