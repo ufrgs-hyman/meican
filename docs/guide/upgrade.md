@@ -38,7 +38,7 @@ After the line added above, add your Esmond API URL:
 
 ####3.3. Certificate param name
 
-Change only the left part of the following params (Do not change the right #value#):
+Change only the left part of the following params (Do not change your right value (#value#)):
 ```
 'meican.certificate.filename' => "#value#",
 'meican.certificate.passphrase' => "#value#",	
