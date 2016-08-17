@@ -36,4 +36,17 @@ After the line added above, add your Esmond API URL:
 "esmond.server.api.url" => 'http://localhost/esmond/v2/',
 ```
 
+####3.3. Certificate param name
+
+Change only the left part of the following params (Do not change the right #value#):
+```
+'meican.certificate.filename' => "#value#",
+'meican.certificate.passphrase' => "#value#",	
+```
+To this:
+```
+'certificate.filename' => "#value#",
+'certificate.pass' => "#value#",	
+```
+    
 Done! Your application must be ready for use.
