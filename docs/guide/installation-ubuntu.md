@@ -29,12 +29,6 @@ wget https://github.com/ufrgs-hyman/meican/archive/#version#.tar.gz
 tar -zxvf #version#.tar.gz
 ```
 
-or clone the Git repository with the latest version (MAY BE NOT STABLE):
-
-```
-git clone https://github.com/ufrgs-hyman/meican.git
-```
-
 Configure database settings:
 
 ```
@@ -44,7 +38,7 @@ nano #meican-folder#/config/db.php
 On source code folder (#meican-folder#) install the [Composer](https://getcomposer.org)
 
 ```
-curl -sS https://getcomposer.org/installer | php
+curl -O https://getcomposer.org/download/1.2.0/composer.phar
 php composer.phar global require "fxp/composer-asset-plugin:~1.2.1"
 ```
 
