@@ -72,7 +72,7 @@ nano #meican-folder#/config/db.php
 On source code folder (#meican-folder#) install the [Composer](https://getcomposer.org)
 
 ```
-curl -sS https://getcomposer.org/installer | php
+curl -O https://getcomposer.org/download/1.2.0/composer.phar
 php composer.phar global require "fxp/composer-asset-plugin:~1.2.1"
 ```
 
