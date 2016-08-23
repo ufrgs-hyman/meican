@@ -35,12 +35,6 @@ wget https://github.com/ufrgs-hyman/meican/archive/#version#.tar.gz
 tar -zxvf #version#.tar.gz
 ```
 
-ou, você pode efetuar o download da última versão (TALVEZ NÃO ESTÁVEL) do sistema diretamente do repositório GitHub:
-
-```
-git clone https://github.com/ufrgs-hyman/meican.git
-```
-
 Agora precisamos definir junto ao MEICAN as configurações do banco de dados local. Para isso deve-se acessar o seguinte arquivo:
 
 ```
@@ -50,7 +44,7 @@ nano #meican-folder#/config/db.php
 As dependências do projeto são mantidas a partir do [Composer](https://getcomposer.org). Na raiz do projeto (#meican-folder#) execute os seguintes comandos: 
 
 ```
-curl -sS https://getcomposer.org/installer | php
+curl -O https://getcomposer.org/download/1.2.0/composer.phar
 php composer.phar global require "fxp/composer-asset-plugin:~1.2.1"
 ```
 
