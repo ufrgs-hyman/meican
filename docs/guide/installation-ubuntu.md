@@ -8,7 +8,7 @@ This configuration was tested and performed on Ubuntu 14.04.
 
 ```
 sudo apt-get update
-sudo apt-get install apache2 mysql-server php5 curl php5-mysql php5-curl php5-mbstring
+sudo apt-get install apache2 mysql-server php5 curl php5-mysql php5-curl php5-xml php5-mbstring
 ```
 
 ####Setup database
