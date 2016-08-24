@@ -23,7 +23,7 @@ Você pode criar a base de dados a partir da interface gráfica do phpMyAdmin ou
 
 ```
 mysql -u #user# -p
-CREATE DATABASE IF NOT EXISTS `meican2`;
+CREATE DATABASE IF NOT EXISTS `meican`;
 ```
 
 #####Download e instalação do MEICAN
