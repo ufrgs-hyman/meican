@@ -17,7 +17,7 @@ Create a database via command line.
 
 ```
 mysql -u #user# -p
-CREATE DATABASE IF NOT EXISTS `meican2`;
+CREATE DATABASE IF NOT EXISTS `meican`;
 ```
 
 ####Download and install MEICAN
