@@ -45,7 +45,7 @@ The fastest method to do this is via command line:
 
 ```
 mysql -u #user# -p
-CREATE DATABASE IF NOT EXISTS `meican2`;
+CREATE DATABASE IF NOT EXISTS `meican`;
 ```
 
 ####3. Download and install MEICAN
