@@ -15,7 +15,7 @@ Make sure that the [software requirements](https://github.com/ufrgs-hyman/meican
 The quick backup method is copy all files from the current installation. Replace the #USER# and #HOST# with your user and old server address. After that, run the following command in your new server:
 
 ```
-sudo rsync -a #USER#@#HOST#:/path/to/old/meican2 /path/to/new/meican2
+sudo rsync -a #USER#@#HOST#:/path/to/old/meican /path/to/new/meican
 ```
 
 ####1.3 Database
