@@ -40,17 +40,7 @@ yum remove php-common
 
 After that, runs the install command again.
 
-####1.6. Install and start OSCARS Bridge
-
-If you want use the Monitoring module, is required an OSCARS Bridge instance. It is not necessary that this instance is on the same machine as the MEICAN. See [this document](https://github.com/ufrgs-hyman/oscars-bridge/blob/master/README.md) for installation instructions. 
-
-Later, in the configuration step, you must provide the OSCARS Bridge URL if you want use the Monitoring module.
-
-####1.7. Esmond
-
-The Monitoring module requires an Esmond instance. It is recommended that this instance is located in a **secondary** machine for performance issues. The installation and configuration of the Esmond is not in the scope of this guide. See the [official repository](https://github.com/esnet/esmond) for more information.
-
-####1.8. Start Apache and MySQL
+####1.6. Start Apache and MySQL
 
 Turn on all required services: 
 
@@ -60,6 +50,16 @@ service mysqld start
 chkconfig httpd on
 service httpd start
 ````
+
+####1.7. Install and start OSCARS Bridge
+
+If you want use the Monitoring module, is required an OSCARS Bridge instance. It is not necessary that this instance is on the same machine as the MEICAN. See [this document](https://github.com/ufrgs-hyman/oscars-bridge/blob/master/README.md) for installation instructions. 
+
+Later, in the configuration step, you must provide the OSCARS Bridge URL if you want use the Monitoring module.
+
+####1.8. Esmond
+
+The Monitoring module requires an Esmond instance. It is recommended that this instance is located in a **secondary** machine for performance issues. The installation and configuration of the Esmond is not in the scope of this guide. See the [official repository](https://github.com/esnet/esmond) for more information.
 
 ####1.9. Firewall configuration
 
