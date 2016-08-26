@@ -65,9 +65,9 @@ service iptables stop
 chkconfig iptables off
 ```
 
-####1.8. SELinux configuration
+####1.9. SELinux configuration
 
-MEICAN requires the permissive mode of SELinux. 
+MEICAN requires the SELinux disabled or in permissive mode. To enable the permissive mode execute:
 
 ```
 setenforce 0
