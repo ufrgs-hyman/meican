@@ -46,7 +46,11 @@ If you want use the Monitoring module, is required an OSCARS Bridge instance. It
 
 Later, in the configuration step, you must provide the OSCARS Bridge URL if you want use the Monitoring module.
 
-####1.7. Start Apache and MySQL
+####1.7. Esmond
+
+The Monitoring module requires an Esmond instance. It is recommended that this instance is located on **secondary** machine for performance issues. The installation and configuration of the Esmond is not in the scope of this guide. See the [official repository](https://github.com/esnet/esmond) for more information.
+
+####1.8. Start Apache and MySQL
 
 Turn on all required services: 
 
@@ -57,7 +61,7 @@ chkconfig httpd on
 service httpd start
 ````
 
-####1.8. Firewall configuration
+####1.9. Firewall configuration
 
 In the RNP environment, the server is protected by an outer firewall and its rules are controlled at a higher level. The firewall of the operating system level is not required for this environment, but it can be to another. To disable the firewall perform the following:
 
@@ -67,7 +71,7 @@ service iptables stop
 chkconfig iptables off
 ```
 
-####1.9. SELinux configuration
+####1.10. SELinux configuration
 
 MEICAN requires the SELinux disabled or in permissive mode. To enable the permissive mode execute:
 
