@@ -61,7 +61,8 @@ web/                web accessible files, e.g., assets cache, wsdl files and ima
 - MySQL 5+ 
 - PHP 5.5+
 - cURL
-- [OSCARS Bridge](https://github.com/ufrgs-hyman/oscars-bridge) (required by Monitoring Module)
+- [OSCARS Bridge](https://github.com/ufrgs-hyman/oscars-bridge) (local or remote instance required by Monitoring Module)
+- [ESnet Monitoring Daemon (Esmond)](https://github.com/esnet/esmond) (local or remote instance required by Monitoring Module)
 
 ##GUIDES
 
