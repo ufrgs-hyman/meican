@@ -61,6 +61,8 @@ Later, in the configuration step, you must provide the OSCARS Bridge URL if you 
 
 The Monitoring module requires an Esmond instance. It is recommended that this instance is located in a **secondary** machine for performance issues. The installation and configuration of the Esmond is not in the scope of this guide. See the [official repository](https://github.com/esnet/esmond) for more information.
 
+Later, in the configuration step, you must provide the Esmond API URL if you want use the Monitoring module.
+
 ####1.9. Firewall configuration
 
 In the RNP environment, the server is protected by an outer firewall and its rules are controlled at a higher level. The firewall of the operating system level is not required for this environment, but it can be to another. To disable the firewall perform the following:
