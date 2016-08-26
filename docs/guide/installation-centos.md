@@ -44,7 +44,7 @@ After that, runs the install command again.
 
 If you want use the Monitoring module, is required an OSCARS Bridge instance. It is not necessary that this instance is on the same machine as the MEICAN. See [this document](https://github.com/ufrgs-hyman/oscars-bridge/blob/master/README.md) for installation instructions. 
 
-Later, you must provide OSCARS Bridge URL if you want use the Monitoring module.
+Later, you must provide the OSCARS Bridge URL if you want use the Monitoring module.
 
 ####1.7. Start Apache and MySQL
 
