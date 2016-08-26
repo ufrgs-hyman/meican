@@ -48,7 +48,7 @@ Later, in the configuration step, you must provide the OSCARS Bridge URL if you 
 
 ####1.7. Esmond
 
-The Monitoring module requires an Esmond instance. It is recommended that this instance is located on **secondary** machine for performance issues. The installation and configuration of the Esmond is not in the scope of this guide. See the [official repository](https://github.com/esnet/esmond) for more information.
+The Monitoring module requires an Esmond instance. It is recommended that this instance is located in a **secondary** machine for performance issues. The installation and configuration of the Esmond is not in the scope of this guide. See the [official repository](https://github.com/esnet/esmond) for more information.
 
 ####1.8. Start Apache and MySQL
 
