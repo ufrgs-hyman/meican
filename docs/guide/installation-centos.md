@@ -6,10 +6,30 @@ This configuration was tested and performed on CentOS 6.7.
 
 ####1. Prepare environment
 
+####1.1. Update Yum repository
 ```
 yum update
 rpm -Uvh https://mirror.webtatic.com/yum/el6/latest.rpm
-yum install httpd mysql-server php55w curl php55w-mysql php55w-curl php55w-soap php55w-xml php55w-mbstring
+```
+####1.2. Apache
+```
+yum install httpd
+```
+
+####1.3. MySQL
+```
+yum install mysql-server
+```
+
+####1.4. cURL
+```
+yum install curl
+```
+
+####1.5. PHP 5.5
+
+```
+yum install php55w php55w-mysql php55w-curl php55w-soap php55w-xml php55w-mbstring
 ```
 
 There may be a conflict between the native PHP CentOS and the version that the Meican requires. To remove the native version, run:
@@ -18,7 +38,13 @@ There may be a conflict between the native PHP CentOS and the version that the M
 yum remove php-common
 ```
 
-After that, runs the install again.
+After that, runs the install command again.
+
+####1.6. OSCARS Bridge
+
+See [this document](https://github.com/ufrgs-hyman/oscars-bridge/blob/master/README.md) for instructions.
+
+####1.7. Start services
 
 Turn on all required services: 
 
@@ -29,12 +55,20 @@ chkconfig httpd on
 service httpd start
 ````
 
+####1.8. Disable firewall
+
 In the RNP environment, the server is protected by an outer firewall and its rules are controlled at a higher level. The firewall of the operating system level is not required for this environment, but it can be to another. To disable the firewall perform the following:
 
 ```
 service iptables save
 service iptables stop
 chkconfig iptables off
+```
+
+####1.8. SELinux
+
+```
+setenforce 0
 ```
 
 ####2. Setup database
