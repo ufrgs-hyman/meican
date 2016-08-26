@@ -44,7 +44,7 @@ After that, runs the install command again.
 
 See [this document](https://github.com/ufrgs-hyman/oscars-bridge/blob/master/README.md) for instructions.
 
-####1.7. Start services
+####1.7. Start Apache and MySQL
 
 Turn on all required services: 
 
