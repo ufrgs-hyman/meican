@@ -42,7 +42,7 @@ After that, runs the install command again.
 
 ####1.6. Install and start OSCARS Bridge
 
-See [this document](https://github.com/ufrgs-hyman/oscars-bridge/blob/master/README.md) for instructions.
+If you want use the Monitoring module, is required the installation and configuration of the OSCARS Bridge. See [this document](https://github.com/ufrgs-hyman/oscars-bridge/blob/master/README.md) for instructions.
 
 ####1.7. Start Apache and MySQL
 
