@@ -53,3 +53,14 @@ urn:ogf:network:#DOMAIN#:#YEAR#:nsa:meican
 ###DEFAULT PROVIDER
 
 If the fake provider has been disabled, we need to define a real provider to receive the MEICAN requests. On the same configuration page (Reservations > Configuration) you can set the Provider NSA ID and the URL of the Connection Service.
+
+###Monitoring
+
+The Monitoring module requires an instance of [OSCARS Bridge](https://github.com/ufrgs-hyman/oscars-bridge) and [ESnet Monitoring Daemon](https://github.com/esnet/esmond) for proper operation. 
+
+Location: config/params.php
+
+```
+"oscars.bridge.provider.url" => 'http://localhost:8080/oscars-bridge/circuits',
+"esmond.server.api.url" => 'http://localhost/esmond/v2/',
+```
