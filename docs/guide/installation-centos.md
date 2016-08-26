@@ -11,22 +11,22 @@ This configuration was tested and performed on CentOS 6.7.
 yum update
 rpm -Uvh https://mirror.webtatic.com/yum/el6/latest.rpm
 ```
-####1.2. Apache
+####1.2. Install Apache
 ```
 yum install httpd
 ```
 
-####1.3. MySQL
+####1.3. Install MySQL
 ```
 yum install mysql-server
 ```
 
-####1.4. cURL
+####1.4. Install cURL
 ```
 yum install curl
 ```
 
-####1.5. PHP 5.5
+####1.5. Install PHP 5.5
 
 ```
 yum install php55w php55w-mysql php55w-curl php55w-soap php55w-xml php55w-mbstring
@@ -40,7 +40,7 @@ yum remove php-common
 
 After that, runs the install command again.
 
-####1.6. OSCARS Bridge
+####1.6. Install and start OSCARS Bridge
 
 See [this document](https://github.com/ufrgs-hyman/oscars-bridge/blob/master/README.md) for instructions.
 
@@ -55,7 +55,7 @@ chkconfig httpd on
 service httpd start
 ````
 
-####1.8. Disable firewall
+####1.8. Firewall configuration
 
 In the RNP environment, the server is protected by an outer firewall and its rules are controlled at a higher level. The firewall of the operating system level is not required for this environment, but it can be to another. To disable the firewall perform the following:
 
@@ -65,7 +65,9 @@ service iptables stop
 chkconfig iptables off
 ```
 
-####1.8. SELinux
+####1.8. SELinux configuration
+
+MEICAN requires the permissive mode of SELinux. 
 
 ```
 setenforce 0
