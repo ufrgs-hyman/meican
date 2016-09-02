@@ -130,7 +130,15 @@ In the meican folder run:
 php composer.phar install
 ```
 
-####4. Apache configuration
+####4. Check permissions
+
+Make sure the Apache/PHP has full permission in the MEICAN runtime folders. In the meican folder runs:
+```
+chown -R 777 runtime/
+chwon -R 777 web/assets/
+```
+
+####5. Apache configuration
 
 Create a simbolic link to app web folder on /var/www:
 
