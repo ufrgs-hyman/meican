@@ -40,7 +40,7 @@ class TrafficController extends RbacController {
      */
     public function actionGetVlanHistory($dom, $dev, $port, $vlan, $dir, $interval) {
         self::beginAsyncAction();
-        return $this->buildDummyTrafficHistory();
+        //return $this->buildDummyTrafficHistory();
 
         if ($dom != 'cipo.rnp.br') 
             throw new \yii\web\HttpException(501, 'Currently only cipo.rnp.br ports are supported.');     
