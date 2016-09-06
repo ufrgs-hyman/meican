@@ -134,8 +134,8 @@ php composer.phar install
 
 Make sure the Apache/PHP has full permission in the MEICAN runtime folders. In the meican folder runs:
 ```
-chown -R 777 runtime/
-chwon -R 777 web/assets/
+chmod -R 777 runtime/
+chmod -R 777 web/assets/
 ```
 
 ####5. Apache configuration
