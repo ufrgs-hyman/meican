@@ -20,30 +20,30 @@ config/             	app configurations
 mail/               	layouts and templates for mail sender
 migrations/         	database version control
 modules/            	application modules
-aaa/				AAA Module
-base/				Base Module
-bpm/				BPM Module
-circuits/			Circuits Module
-home				Home Module
-monitoring/         Monitoring Module
-nmwg/               NMWG Module
-notify/				Notify Module
-nsi/                NSI Module
-perfsonar/          PerfSONAR Module
-oscars/				OSCARS Module
-scheduler/			Scheduler Module
-tester/             Tester Module
-topology/			Topology Module
-	assets/			css, js files and bundle classes
-	utils/			utils classes
+aaa/			AAA Module
+base/			Base Module
+bpm/			BPM Module
+circuits/		Circuits Module
+home			Home Module
+monitoring/         	Monitoring Module
+nmwg/               	NMWG Module
+notify/			Notify Module
+nsi/                	NSI Module
+perfsonar/          	PerfSONAR Module
+oscars/			OSCARS Module
+scheduler/		Scheduler Module
+tester/             	Tester Module
+topology/		Topology Module
+	assets/		css, js files and bundle classes
+	utils/		utils classes
 	controllers/	containing controller class files
-	forms/			form models for views
-	messages/		I18N internationalization files
-	models/			database or standard models, e.g., DAO classes
-	views/			views and layout files
-runtime/            folder for logging and debug features
-tests/              test scripts
-web/                web accessible files, e.g., assets cache, wsdl files and images.
+	forms/		form models for views
+	messages/	I18N internationalization files
+	models/		database or standard models, e.g., DAO classes
+	views/		views and layout files
+runtime/            	folder for logging and debug features
+tests/              	test scripts
+web/                	web accessible files, e.g., assets cache, wsdl files and images.
 ```
 
 ## REQUIREMENTS
