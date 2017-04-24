@@ -12,7 +12,7 @@ Mobile friendly since version 3
 
 ![Alt text](/docs/mobile.png)
 
-##DIRECTORY STRUCTURE
+## DIRECTORY STRUCTURE
 
 ```
 certificates/       	app certificates
@@ -46,15 +46,15 @@ tests/              test scripts
 web/                web accessible files, e.g., assets cache, wsdl files and images.
 ```
 
-##REQUIREMENTS
+## REQUIREMENTS
 
-###Hardware
+### Hardware
 
 - CPU 1+
 - Memory 1GB+
 - Storage 10GB+
 
-###Software
+### Software
 
 - Ubuntu 14/CentOS 6/Any other OS with Crontab feature
 - Apache 2.2+ (2.4 recommended)
