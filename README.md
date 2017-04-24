@@ -20,27 +20,27 @@ config/             	app configurations
 mail/               	layouts and templates for mail sender
 migrations/         	database version control
 modules/            	application modules
-	aaa/				AAA Module
-	base/				Base Module
-	bpm/				BPM Module
-	circuits/			Circuits Module
-	home				Home Module
-    monitoring/         Monitoring Module
-    nmwg/               NMWG Module
-	notify/				Notify Module
-    nsi/                NSI Module
-    perfsonar/          PerfSONAR Module
-    oscars/				OSCARS Module
-	scheduler/			Scheduler Module
-    tester/             Tester Module
-	topology/			Topology Module
-		assets/			css, js files and bundle classes
-		utils/			utils classes
-		controllers/	containing controller class files
-		forms/			form models for views
-		messages/		I18N internationalization files
-		models/			database or standard models, e.g., DAO classes
-		views/			views and layout files
+aaa/				AAA Module
+base/				Base Module
+bpm/				BPM Module
+circuits/			Circuits Module
+home				Home Module
+monitoring/         Monitoring Module
+nmwg/               NMWG Module
+notify/				Notify Module
+nsi/                NSI Module
+perfsonar/          PerfSONAR Module
+oscars/				OSCARS Module
+scheduler/			Scheduler Module
+tester/             Tester Module
+topology/			Topology Module
+	assets/			css, js files and bundle classes
+	utils/			utils classes
+	controllers/	containing controller class files
+	forms/			form models for views
+	messages/		I18N internationalization files
+	models/			database or standard models, e.g., DAO classes
+	views/			views and layout files
 runtime/            folder for logging and debug features
 tests/              test scripts
 web/                web accessible files, e.g., assets cache, wsdl files and images.
@@ -64,29 +64,29 @@ web/                web accessible files, e.g., assets cache, wsdl files and ima
 - [OSCARS Bridge](https://github.com/ufrgs-hyman/oscars-bridge) (local or remote instance required by Monitoring Module)
 - [ESnet Monitoring Daemon (Esmond)](https://github.com/esnet/esmond) (local or remote instance required by Monitoring Module)
 
-##GUIDES
+## GUIDES
 
-###Installation
+### Installation
 
 There are two specific installation guides, one for [CentOS 6](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-centos.md) and another for [Ubuntu 14](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-ubuntu.md).
 
-###Configuration
+### Configuration
 
 The documentation is [here](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/configuration.md).
 
-###User guide
+### User guide
 
 A very short documentation is available on Help section of the application. The complete user guide currently is available only in [portuguese](https://wiki.rnp.br/display/secipo/Guia+MEICAN).
 
-###Migration
+### Migration
 
 A complete migration of the application to another machine is detailed in this [guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/migration.md).
 
-###Upgrade
+### Upgrade
 
 Look [this document](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/upgrade.md) for instructions.
 
-##LICENSE
+## LICENSE
 
 Copyright (c) 2012-2016 by [RNP](http://www.rnp.br).
 All rights reserved. MEICAN is released under of the BSD2 License. For more information see [LICENSE](https://github.com/ufrgs-hyman/meican/blob/master/LICENSE.md).
