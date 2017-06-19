@@ -20,7 +20,8 @@ return [
         'aaa' =>        'meican\aaa\Module',
         'circuits' =>   'meican\circuits\Module',
         'scheduler' =>  'meican\scheduler\Module',
-        'oscars'    =>  'meican\oscars\Module'
+        'oscars'    =>  'meican\oscars\Module',
+        'nsi'       =>  'meican\nsi\Module'
     ],
     'components' => [
         'cache' => [
@@ -33,6 +34,7 @@ return [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning', 'trace'],
                     'logFile' => dirname(__DIR__).'/runtime/logs/console.log',
+                     'logVars' => [],
                 ],
             ],
         ],

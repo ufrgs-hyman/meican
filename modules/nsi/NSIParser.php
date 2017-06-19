@@ -27,6 +27,10 @@ class NSIParser {
     private $xml;
     private $error;
 
+    function getXml() {
+        return $this->xml->saveXML();
+    }
+
     function loadXml($input) {
         try {
             $this->xml = new \DOMDocument();
