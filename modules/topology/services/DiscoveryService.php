@@ -30,7 +30,7 @@ use meican\topology\models\Change;
  * get the network topology description, generally a XML file. 
  * After that step, this service compare the current MEICAN topology and the
  * recently downloaded network topology. As result, changes are discovered and
- * applied on local MEICAN topology. View Change class for more information about
+ * applied on local MEICAN topology. Go to Change class for more information about
  * apply methods.
  *
  * @author Maurício Quatrin Guerreiro
