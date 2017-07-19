@@ -16,7 +16,8 @@ $(document).ready(function() {
     $(".sidebar-toggle").hide();
     $(".sidebar-mini").addClass("sidebar-collapse");
 
-    loadDomains();
+    initNodes();
+    //loadDomains();
     initScheduleTab();
     initPathTab();
     initConfirmTab();
@@ -705,6 +706,30 @@ function loadDomains() {
     });
 }
 
+function initNodes() {
+    $.ajax({
+        url: baseUrl+'/circuits/reservation/data',
+        dataType: 'json',
+        method: "GET",        
+        success: function(response) {
+            console.log(response);
+            meicanMap.setDomains([{id:1,name:'cipo.rnp.br'}]);
+            counter = 0;
+            for (var port in response['domains']['cipo.rnp.br']['nets'][
+                'cipo.rnp.br:2013:']['biports']) {
+                counter++;
+                meicanMap.addNode(
+                    'dev' + counter,
+                    port,
+                    'dev',
+                    1,
+                    0.0,
+                    0.0);
+            };
+        }
+    });
+}
+
 function loadDevices() {
     if(meicanTopo['dev']) return;
     $.ajax({
@@ -927,7 +952,7 @@ function enableSelect(object) {
 }
 
 function initEditPointSelects() {
-    fillDomainSelect();
+    //fillDomainSelect();
     
     $('#pointform-domain').on('change', function() {
         fillNetworkSelect(this.value);

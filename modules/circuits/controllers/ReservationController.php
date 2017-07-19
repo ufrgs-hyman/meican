@@ -11,6 +11,7 @@ use yii\helpers\Url;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Json;
 
+use meican\nsi\NSIParser;
 use meican\aaa\RbacController;
 use meican\base\utils\DateUtils;
 use meican\circuits\models\Reservation;
@@ -41,6 +42,14 @@ class ReservationController extends RbacController {
         return $this->render('create/create2',[
             'domains'=>Domain::find()->asArray()->all(),
             'reserveForm' => new ReservationForm]);
+    }
+
+    public function actionData() {
+        $parser = new NSIParser();
+        $parser->loadFile('http://idc.cipo.rnp.br/rnp-topology.xml');
+        $parser->parseTopology();
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return $parser->getData();
     }
     
     public function actionRequest() {

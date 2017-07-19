@@ -214,53 +214,50 @@ class NSIParser {
             return;
         }
         
-        $devicePortArray = explode(":", $devicePort);
-        if (count($devicePortArray) > 1) {
-            $deviceName = $deviceName ? $deviceName : $devicePortArray[0];
-            $devicePortArray[0] = "";
-            $devicePortArray = implode(":", $devicePortArray);
-            $portName = substr($devicePortArray, 1);
-        } else {
-            $deviceName = $domainName;
-            $portName = implode(":", $devicePortArray);
-        }
+        // $devicePortArray = explode(":", $devicePort);
+        // if (count($devicePortArray) > 1) {
+        //     $deviceName = $deviceName ? $deviceName : $devicePortArray[0];
+        //     $devicePortArray[0] = "";
+        //     $devicePortArray = implode(":", $devicePortArray);
+        //     $portName = substr($devicePortArray, 1);
+        // } else {
+        //     $deviceName = $domainName;
+        //     $portName = implode(":", $devicePortArray);
+        // }
 
         if (!isset($this->topology["domains"][
-                $domainName]["nets"][$netUrn]["devices"][
-                $deviceName]["biports"][$biPortUrn])) {
+                $domainName]["nets"][$netUrn]["biports"][$biPortUrn])) {
             $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["name"] = $netName;
             $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["devices"][
-                $deviceName]["biports"][$biPortUrn] = array();
-            if (!$biportName) $biportName = $portName;
+                $domainName]["nets"][$netUrn]["biports"][$biPortUrn] = array();
+            // if (!$biportName) $biportName = $portName;
             $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["devices"][
-                $deviceName]["biports"][$biPortUrn]["port"] = $biportName;
+                $domainName]["nets"][$netUrn]["biports"][$biPortUrn]["port"] = $biportName;
         } 
         
-        $devicePort = str_replace($netId.":", "", $portId);
-        $devicePortArray = explode(":", $devicePort);
-        if (count($devicePortArray) > 1) {
-            $devicePortArray[0] = "";
-            $devicePortArray = implode(":", $devicePortArray);
-            $portName = substr($devicePortArray, 1);
-        } else {
-            $portName = implode(":", $devicePortArray);
-        }
+        // $devicePort = str_replace($netId.":", "", $portId);
+        // $devicePortArray = explode(":", $devicePort);
+        // if (count($devicePortArray) > 1) {
+        //     $devicePortArray[0] = "";
+        //     $devicePortArray = implode(":", $devicePortArray);
+        //     $portName = substr($devicePortArray, 1);
+        // } else {
+        //     $portName = implode(":", $devicePortArray);
+        // }
         
+        // $this->topology["domains"][
+        //         $domainName]["nets"][$netUrn]["devices"][$deviceName]["biports"][
+        //                 $biPortUrn]["uniports"][$portUrn]['port'] = $portName;
         $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["devices"][$deviceName]["biports"][
-                        $biPortUrn]["uniports"][$portUrn]['port'] = $portName;
-        $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["devices"][$deviceName]["biports"][
+                $domainName]["nets"][$netUrn]["biports"][
                         $biPortUrn]["uniports"][$portUrn]['type'] = $portType;
         $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["devices"][$deviceName]["biports"][
+                $domainName]["nets"][$netUrn]["biports"][
                         $biPortUrn]["uniports"][$portUrn]['vlan'] = $vlan;
                 if ($aliasUrn) 
         $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["devices"][$deviceName]["biports"][
+                $domainName]["nets"][$netUrn]["biports"][
                         $biPortUrn]["uniports"][$portUrn]['aliasUrn'] = $aliasUrn;
     }
 
@@ -417,8 +414,8 @@ class NSIParser {
                         $portId,
                         $this->parseUniPortType($netNode, $portId),
                         $vlanAndAlias[0],
-                        $vlanAndAlias[1],
-                        $this->parseDevice($netNode, $portId));
+                        $vlanAndAlias[1]);
+                        #$this->parseDevice($netNode, $portId));
             }
         }
     }
