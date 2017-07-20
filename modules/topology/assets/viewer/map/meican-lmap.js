@@ -214,7 +214,7 @@ LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
     });
 
     var node = L.marker(
-        this.buildNodePosition(type, L.latLng(pos)), 
+        L.latLng(pos), 
         {
             id: id, 
             icon: icon,
@@ -227,6 +227,18 @@ LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
 
     this._nodes.push(node);
     this._cluster.addLayer(node);
+    var node = L.marker(
+        L.latLng([1,1]), 
+        {
+            id: id, 
+            icon: icon,
+            type: type,
+            name: name,
+            domainId: domainId,
+            ports: {}
+        }
+    ).bindPopup("#").bindLabel(name, { noHide: true, direction: 'auto' });
+    this._cluster2.addLayer(node);
 
     var currentMap = this;
 
@@ -389,8 +401,33 @@ LMap.prototype.build = function(mapDiv) {
     this._cluster = L.markerClusterGroup({
         showCoverageOnHover: false,
         maxClusterRadius: 20,
+        zoomToBoundsOnClick: false,
+        spiderfyOnMaxZoom: false,
+        iconCreateFunction: function(cluster) {
+            var small = false;
+            var className = small ? 'mycluster1' : 'mycluster2';
+            var size = small ? 40 : 60;
+            return L.divIcon({ html: 'cipo.rnp.br', className: className, iconSize: L.point(size, size) });
+        }
+    });
+    this._cluster2 = L.markerClusterGroup({
+        showCoverageOnHover: false,
+        maxClusterRadius: 20,
+        zoomToBoundsOnClick: false,
+        spiderfyOnMaxZoom: false,
+        iconCreateFunction: function(cluster) {
+            var small = false;
+            var className = small ? 'mycluster1' : 'mycluster2';
+            var size = small ? 40 : 60;
+            return L.divIcon({ html: 'cipo.rnp.br', className: className, iconSize: L.point(size, size) });
+        }
+    });
+
+    this._cluster.on('clusterclick', function(ev) {
+        console.log(ev);
     });
     this._map.addLayer(this._cluster);
+    this._map.addLayer(this._cluster2);
 
     this.setType('rnp');
 
