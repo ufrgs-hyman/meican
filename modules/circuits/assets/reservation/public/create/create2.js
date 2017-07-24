@@ -17,7 +17,7 @@ $(document).ready(function() {
     $(".sidebar-mini").addClass("sidebar-collapse");
 
     initNodes();
-    //loadDomains();
+    
     initScheduleTab();
     initPathTab();
     initConfirmTab();
@@ -692,43 +692,54 @@ function drawPath() {
     }
 }
 
+function initNodes() {
+    loadDomains();
+}
+
 function loadDomains() {
     $.ajax({
         url: baseUrl+'/topology/domain/get-all',
         dataType: 'json',
         method: "GET",        
         success: function(response) {
-            meicanTopo['dom'] = response;
             meicanMap.setDomains(response);
-            meicanGraph.setDomains(response);
-            loadDevices();
+            // meicanGraph.setDomains(response);
+            loadPorts(response);
         }
     });
 }
 
-function initNodes() {
+function loadPorts(domains) {
     $.ajax({
         url: baseUrl+'/circuits/reservation/data',
         dataType: 'json',
         method: "GET",        
         success: function(response) {
             console.log(response);
-            meicanMap.setDomains([{id:1,name:'cipo.rnp.br'}]);
+
             counter = 0;
-            for (var port in response['domains']['cipo.rnp.br']['nets'][
-                'cipo.rnp.br:2013:']['biports']) {
-                counter++;
-                meicanMap.addNode(
-                    'dev' + counter,
-                    port,
-                    'dev',
-                    1);
-                    //0.0,
-                    //0.0);
+            for (var index in domains) {
+                console.log(domains[index]);
+                for (var network in response['domains'][domains[index].name]['nets']) {
+                    console.log(network);
+                    for (var port in response['domains'][domains[index].name][
+                        'nets'][network]['biports']) {
+                        counter++;
+                        meicanMap.addNode(
+                            'dev' + counter,
+                            port,
+                            'dev',
+                            domains[index].id,
+                            1,
+                            1);
+                    }
+                }
             };
         }
     });
 }
+
+
 
 function loadDevices() {
     if(meicanTopo['dev']) return;

@@ -46,7 +46,7 @@ class ReservationController extends RbacController {
 
     public function actionData() {
         $parser = new NSIParser();
-        $parser->loadFile('http://idc.cipo.rnp.br/rnp-topology.xml');
+        $parser->loadFile('https://agg.cipo.rnp.br/dds');
         $parser->parseTopology();
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return $parser->getData();

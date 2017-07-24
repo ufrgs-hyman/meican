@@ -16,7 +16,7 @@ function LMap(canvasDivId) {
     this._nodeType;                     // current node type visible
     this._domainsList;                  // domains list reference;
     this._lastShowedMarker; 
-    this._cluster;
+    this._clusters = {};
     this._portsSize = 0;
 };
 
@@ -193,7 +193,7 @@ LMap.prototype.removeLinks = function() {
 }
 
 LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
-    if (!color) color = this.getDomain(domainId).color;
+    if (!color) color = this.getDomain(domainId).options.color;
     if (lat != null && lng != null) {
         var pos = [lat,lng];
     } else {
@@ -226,19 +226,7 @@ LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
     ).bindPopup("#").bindLabel(name, { noHide: true, direction: 'auto' });
 
     this._nodes.push(node);
-    this._cluster.addLayer(node);
-    var node = L.marker(
-        L.latLng([1,1]), 
-        {
-            id: id, 
-            icon: icon,
-            type: type,
-            name: name,
-            domainId: domainId,
-            ports: {}
-        }
-    ).bindPopup("#").bindLabel(name, { noHide: true, direction: 'auto' });
-    this._cluster2.addLayer(node);
+    this._clusters[domainId].addLayer(node);
 
     var currentMap = this;
 
@@ -248,19 +236,48 @@ LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
 }
 
 LMap.prototype.getDomain = function(id) {
-    for (var i = 0; i < this._domainsList.length; i++) {
-        if (this._domainsList[i].id == id) return this._domainsList[i];
-    }
+    return this._clusters[id];
 }
 
 LMap.prototype.getDomainByName = function(name) {
-    for (var i = 0; i < this._domainsList.length; i++) {
-        if (this._domainsList[i].name == name) return this._domainsList[i];
+    for (var i = 0; i < this._clusters.length; i++) {
+        if (this._clusters[i].name == name) return this._clusters[i];
     }
 }
 
 LMap.prototype.setDomains = function(list) {
-    this._domainsList = list;
+    for (var i = 0; i < list.length; i++) {
+        cluster = L.markerClusterGroup({
+            showCoverageOnHover: false,
+            maxClusterRadius: 20,
+            zoomToBoundsOnClick: false,
+            spiderfyOnMaxZoom: false,
+            id: list[i].id,
+            domain: list[i].name,
+            color: list[i].color
+            // iconCreateFunction: function(cluster) {
+            //     var small = false;
+            //     var className = small ? 'mycluster1' : 'mycluster2';
+            //     var size = small ? 40 : 60;
+            //     var names = [];
+            //     for (var marker in cluster.getAllChildMarkers()) {
+            //         console.log(marker.options.name);
+            //         //names.push(marker.options.name);
+            //     }
+            //     return L.divIcon({ html: sharedStart(names), className: className, iconSize: L.point(size, size) });
+            // }
+        });
+        this._clusters[list[i].id] = cluster;
+
+        cluster.on('clusterclick', function(ev) {
+            console.log(ev);
+            L.popup()
+            .setLatLng(ev.latlng)
+            .setContent('<p>Hello world!<br />This is a nice popup.</p>')
+            .openOn(this._map);
+            });
+        this._map.addLayer(cluster);
+    }
 }
 
 LMap.prototype.getDomains = function() {
@@ -398,40 +415,19 @@ LMap.prototype.build = function(mapDiv) {
 
     //$(".leaflet-top").css("margin-top","15%");
 
-    this._cluster = L.markerClusterGroup({
-        showCoverageOnHover: false,
-        maxClusterRadius: 20,
-        zoomToBoundsOnClick: false,
-        spiderfyOnMaxZoom: false,
-        iconCreateFunction: function(cluster) {
-            var small = false;
-            var className = small ? 'mycluster1' : 'mycluster2';
-            var size = small ? 40 : 60;
-            return L.divIcon({ html: 'cipo.rnp.br', className: className, iconSize: L.point(size, size) });
-        }
-    });
-    this._cluster2 = L.markerClusterGroup({
-        showCoverageOnHover: false,
-        maxClusterRadius: 20,
-        zoomToBoundsOnClick: false,
-        spiderfyOnMaxZoom: false,
-        iconCreateFunction: function(cluster) {
-            var small = false;
-            var className = small ? 'mycluster1' : 'mycluster2';
-            var size = small ? 40 : 60;
-            return L.divIcon({ html: 'cipo.rnp.br', className: className, iconSize: L.point(size, size) });
-        }
-    });
-
-    this._cluster.on('clusterclick', function(ev) {
-        console.log(ev);
-    });
-    this._map.addLayer(this._cluster);
-    this._map.addLayer(this._cluster2);
-
     this.setType('rnp');
 
     $('#' + mapDiv).show();   
+}
+
+function sharedStart(array){
+    if (array.length < 1)
+        return array[0];
+
+    var a= array.concat().sort(), 
+    a1= a[0], a2= a[a.length-1], L= a1.length, i= 0;
+    while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
+    return a1.substring(0, i);
 }
 
 LMap.prototype.getNodes = function() {
