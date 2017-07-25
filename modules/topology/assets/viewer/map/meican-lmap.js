@@ -214,7 +214,7 @@ LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
     });
 
     var node = L.marker(
-        L.latLng(pos), 
+        this.buildNodePosition('dev', L.latLng(pos)), 
         {
             id: id, 
             icon: icon,
@@ -249,23 +249,28 @@ LMap.prototype.setDomains = function(list) {
     for (var i = 0; i < list.length; i++) {
         cluster = L.markerClusterGroup({
             showCoverageOnHover: false,
-            maxClusterRadius: 20,
+            maxClusterRadius: 10,
             zoomToBoundsOnClick: false,
             spiderfyOnMaxZoom: false,
             id: list[i].id,
-            domain: list[i].name,
-            color: list[i].color
-            // iconCreateFunction: function(cluster) {
-            //     var small = false;
-            //     var className = small ? 'mycluster1' : 'mycluster2';
-            //     var size = small ? 40 : 60;
-            //     var names = [];
-            //     for (var marker in cluster.getAllChildMarkers()) {
-            //         console.log(marker.options.name);
-            //         //names.push(marker.options.name);
-            //     }
-            //     return L.divIcon({ html: sharedStart(names), className: className, iconSize: L.point(size, size) });
-            // }
+            name: list[i].name,
+            color: list[i].color,
+            iconCreateFunction: function(cluster) {
+                console.log(cluster);
+                var small = true;
+                var className = small ? 'mycluster1' : 'mycluster2';
+                var size = small ? 40 : 60;
+                var name = cluster._group.options.name;
+                if (cluster.getChildCount() > 1)
+                    var names = [];
+                    var markers = cluster.getAllChildMarkers();
+                    for (var i = 0; i < markers.length; i++) {
+                        names.push(markers[i].options.name);
+                    }
+                    name = sharedStart(names);
+                // return L.divIcon({ html: sharedStart(names), className: className, iconSize: L.point(size, size) });
+                return L.divIcon({ html: name, className: className, iconSize: L.point(size, size) });
+            }
         });
         this._clusters[list[i].id] = cluster;
 
@@ -273,7 +278,13 @@ LMap.prototype.setDomains = function(list) {
             console.log(ev);
             L.popup()
             .setLatLng(ev.latlng)
-            .setContent('<p>Hello world!<br />This is a nice popup.</p>')
+            .setContent('Domain: <b>' + ev.target.options.name + 
+            '</b><br><br>'+
+            '<div data-node="' + ev.target.options.id + '">'+
+              '<button class="btn btn-sm btn-default set-source">From here</button>'+
+              ' <button class="btn btn-sm btn-default add-waypoint">Add waypoint</button>'+
+              ' <button class="btn btn-sm btn-default set-destination">To here</button>'+
+            '</div>')
             .openOn(this._map);
             });
         this._map.addLayer(cluster);
@@ -295,7 +306,7 @@ LMap.prototype.buildNodePosition = function(type, position) {
                 (this._nodes[i].getLatLng().lng === lng)) {
             this._nodes[i].unbindLabel();
             this._nodes[i].bindLabel(this._nodes[i].options.name, { noHide: true, direction: 'left' });
-            return this.buildNodePosition(type, L.latLng(position.lat, position.lng + 0.01));
+            return this.buildNodePosition(type, L.latLng(position.lat, position.lng + 0.001));
         }
     }
     

@@ -264,10 +264,10 @@ function initPathTab() {
         return false;
     });
 
-    $('#canvas').on('lmap.nodeClick', function(e, marker) {
-        marker.setPopupContent('Domain: <b>' + meicanMap.getDomain(marker.options.domainId).name + 
-            '</b><br>Device: <b>' + marker.options.name + '</b><br><br>'+
-            '<div data-node="' + marker.options.id + '">'+
+    $('#canvas').on('lmap.nodeClick', function(e, node) {
+        node.setPopupContent('Domain: <b>' + meicanMap.getDomain(node.options.domainId).name + 
+            '</b><br>Device: <b>' + node.options.name + '</b><br><br>'+
+            '<div data-node="' + node.options.id + '">'+
               '<button class="btn btn-sm btn-default set-source">From here</button>'+
               ' <button class="btn btn-sm btn-default add-waypoint">Add waypoint</button>'+
               ' <button class="btn btn-sm btn-default set-destination">To here</button>'+
@@ -730,8 +730,10 @@ function loadPorts(domains) {
                             port,
                             'dev',
                             domains[index].id,
-                            1,
-                            1);
+                            response['domains'][domains[index].name][
+                        'nets'][network]['biports'][port]['lat'],
+                            response['domains'][domains[index].name][
+                        'nets'][network]['biports'][port]['lng']);
                     }
                 }
             };

@@ -23,7 +23,8 @@ label.dom-l {
   height: 40px;
   background-color: greenyellow;
   text-align: center;
-  font-size: 24px;
+  padding-top: 12px;
+  font-size: 10px;
 }
 .mycluster2 {
   border-radius: 30px;
