@@ -1530,8 +1530,10 @@ class ReservationController extends RbacController {
                 "cipo.rnp.br:2013:": {
                     "name": "cipo.rnp.br",
                     "biports": {
-                        "cipo.rnp.br:2013::MXTO:ge-2_3_4:+": {
+                        "MXTO:ge-2_3_4:+": {
                             "port": null,
+                            "lat": -10.175300,   
+                            "lng":-48.298199,
                             "uniports": {
                                 "cipo.rnp.br:2013::MXTO:ge-2_3_4:+:in": {
                                     "type": "IN",
@@ -1543,8 +1545,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "cipo.rnp.br:2013::MXBA:ge-3_3_0:+": {
+                        "MXBA:ge-3_3_0:+": {
                             "port": null,
+                            "lat": -12.901600 , 
+                            "lng": -38.419800,   
                             "uniports": {
                                 "cipo.rnp.br:2013::MXBA:ge-3_3_0:+:in": {
                                     "type": "IN",
@@ -1556,8 +1560,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "cipo.rnp.br:2013::MXRO:ge-2_3_4:+": {
+                        "MXRO:ge-2_3_4:+": {
                             "port": null,
+                            "lat":  -8.756550  ,
+                            "lng": -63.854900  ,
                             "uniports": {
                                 "cipo.rnp.br:2013::MXRO:ge-2_3_4:+:in": {
                                     "type": "IN",
@@ -1569,8 +1575,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "cipo.rnp.br:2013::MXSP:ae4:southernlight": {
+                        "MXSP:ae4:southernlight": {
                             "port": null,
+                            "lat": -23.543200  ,
+                            "lng": -46.629200  ,
                             "uniports": {
                                 "cipo.rnp.br:2013::MXSP:ae4:southernlight:in": {
                                     "type": "IN",
@@ -1584,8 +1592,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "cipo.rnp.br:2013::MXSP:ge-2_3_3:+": {
+                        "MXSP:ge-2_3_3:+": {
                             "port": null,
+                           "lat": -23.543200  ,
+                            "lng": -46.629200  ,
                             "uniports": {
                                 "cipo.rnp.br:2013::MXSP:ge-2_3_3:+:in": {
                                     "type": "IN",
@@ -1597,8 +1607,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "cipo.rnp.br:2013::MXJPA:ge-2_3_4:+": {
+                        "MXJPA:ge-2_3_4:+": {
                             "port": null,
+                            "lat":  -7.146600  ,
+                            "lng":-34.881599 ,
                             "uniports": {
                                 "cipo.rnp.br:2013::MXJPA:ge-2_3_4:+:in": {
                                     "type": "IN",
@@ -1610,8 +1622,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "cipo.rnp.br:2013::MXMG:ge-2_3_4:+": {
+                        "MXMG:ge-2_3_4:+": {
                             "port": null,
+                            "lat":  -19.902700  ,
+                            "lng": -43.964001,
                             "uniports": {
                                 "cipo.rnp.br:2013::MXMG:ge-2_3_4:+:in": {
                                     "type": "IN",
@@ -1623,40 +1637,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "MXRN:xe-2_3_1:+": {
-                            "port": null,
-                            "lat": -23.5484821,
-                            "lng":-46.6324758,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXRN:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXRN:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
-                        "MXRN:ge-2_3_4:+": {
-                            "port": null,
-                            "lat": -23.5484821,
-                            "lng":-46.6324758,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXGO:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXGO:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
                         "MXRS:ge-2_3_4:+": {
                             "port": null,
-                            "lng": -43.229733,
-                            "lat":-22.862125,
+                            "lat":  -30.034599 ,
+                            "lng": -51.217701,
                             "uniports": {
                                 "cipo.rnp.br:2013::MXRS:ge-2_3_4:+:in": {
                                     "type": "IN",
@@ -1668,60 +1652,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "cipo.rnp.br:2013::MXMS:ge-2_3_4:+": {
+                        "MXRJ:xe-3_0_0:+": {
                             "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXMS:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXMS:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
-                        "cipo.rnp.br:2013::MXMA:ge-2_3_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXMA:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXMA:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
-                        "cipo.rnp.br:2013::MXPB:ge-2_3_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXPB:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXPB:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
-                        "cipo.rnp.br:2013::MXSE:ge-2_3_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXSE:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXSE:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
-                        "cipo.rnp.br:2013::MXRJ:xe-3_0_0:+": {
-                            "port": null,
+                            "lat": -22.913900  ,
+                            "lng": -43.209400 ,
                             "uniports": {
                                 "cipo.rnp.br:2013::MXRJ:xe-3_0_0:+:in": {
                                     "type": "IN",
@@ -1733,8 +1667,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "cipo.rnp.br:2013::MXRJ:ae0:+": {
+                        "MXRJ:ae0:+": {
                             "port": null,
+                             "lat": -22.913900  ,
+                            "lng": -43.209400 ,
                             "uniports": {
                                 "cipo.rnp.br:2013::MXRJ:ae0:+:in": {
                                     "type": "IN",
@@ -1746,8 +1682,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "cipo.rnp.br:2013::MXRJ:ge-2_3_3:+": {
+                        "MXRJ:ge-2_3_3:+": {
                             "port": null,
+                             "lat": -22.913900  ,
+                            "lng": -43.209400 ,
                             "uniports": {
                                 "cipo.rnp.br:2013::MXRJ:ge-2_3_3:+:in": {
                                     "type": "IN",
@@ -1759,8 +1697,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "cipo.rnp.br:2013::MXSP2:xe-3_0_0:+": {
+                        "MXSP2:xe-3_0_0:+": {
                             "port": null,
+                           "lat": -23.543200  ,
+                            "lng": -46.629200  ,
                             "uniports": {
                                 "cipo.rnp.br:2013::MXSP2:xe-3_0_0:+:in": {
                                     "type": "IN",
@@ -1772,8 +1712,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "cipo.rnp.br:2013::MXSP:ge-2_3_4:+": {
+                        "MXSP:ge-2_3_4:+": {
                             "port": null,
+                           "lat": -23.543200  ,
+                            "lng": -46.629200  ,
                             "uniports": {
                                 "cipo.rnp.br:2013::MXSP:ge-2_3_4:+:in": {
                                     "type": "IN",
@@ -1785,8 +1727,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "cipo.rnp.br:2013::MXDF:ge-2_3_4:+": {
+                        "MXDF:ge-2_3_4:+": {
                             "port": null,
+                            "lat": -15.826700  ,
+                            "lng": -47.921799,
                             "uniports": {
                                 "cipo.rnp.br:2013::MXDF:ge-2_3_4:+:in": {
                                     "type": "IN",
@@ -1797,163 +1741,8 @@ class ReservationController extends RbacController {
                                     "vlan": "200-299"
                                 }
                             }
-                        },
-                        "cipo.rnp.br:2013::MXPE:ge-2_3_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXPE:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXPE:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
-                        "cipo.rnp.br:2013::MXES:ge-2_3_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXES:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXES:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
-                        "cipo.rnp.br:2013::MXPR:ge-2_3_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXPR:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXPR:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
-                        "cipo.rnp.br:2013::MXPI:ge-2_3_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXPI:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXPI:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
-                        "cipo.rnp.br:2013::MXAL:ge-2_3_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXAL:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXAL:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
-                        "cipo.rnp.br:2013::MXAC:ge-2_3_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXAC:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXAC:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
-                        "cipo.rnp.br:2013::MXDF2:ge-2_3_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXDF2:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXDF2:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
-                        "cipo.rnp.br:2013::MXPA:ge-2_3_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXPA:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXPA:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
-                        "cipo.rnp.br:2013::MXRJ:ge-2_3_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXRJ:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299,1801-1821"
-                                },
-                                "cipo.rnp.br:2013::MXRJ:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299,1801-1821"
-                                }
-                            }
-                        },
-                        "cipo.rnp.br:2013::MXMT:ge-2_3_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXMT:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXMT:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
-                        "cipo.rnp.br:2013::MXSC:ge-2_3_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXSC:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXSC:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
-                        },
-                        "cipo.rnp.br:2013::MXCE:ge-2_3_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "cipo.rnp.br:2013::MXCE:ge-2_3_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "200-299"
-                                },
-                                "cipo.rnp.br:2013::MXCE:ge-2_3_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "200-299"
-                                }
-                            }
                         }
+
                     }
                 }
             },
@@ -2219,8 +2008,10 @@ class ReservationController extends RbacController {
                 "es.net:2013:": {
                     "name": "es.net",
                     "biports": {
-                        "es.net:2013::chic-cr5:3_2_1:+": {
+                        "chic-cr5:3_2_1:+": {
                             "port": null,
+                            "lat":41.8339042,
+                            "lng":-88.0123493,
                             "uniports": {
                                 "es.net:2013::chic-cr5:3_2_1:+:in": {
                                     "type": "IN",
@@ -2232,8 +2023,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "es.net:2013::star-cr5:3_1_1:+": {
+                        "star-cr5:3_1_1:+": {
                             "port": null,
+                            "lat":34.13369,
+                            "lng":-118.1236976,
                             "uniports": {
                                 "es.net:2013::star-cr5:3_1_1:+:in": {
                                     "type": "IN",
@@ -2245,628 +2038,16 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "es.net:2013::lbl-mr2:xe-8_2_0:+": {
+                        "star-cr5:6_1_1:star-tb1": {
                             "port": null,
-                            "uniports": {
-                                "es.net:2013::lbl-mr2:xe-8_2_0:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::lbl-mr2:xe-8_2_0:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::star-cr5:6_1_1:star-tb1": {
-                            "port": null,
+                            "lat":34.13369,
+                            "lng":-118.1236976,
                             "uniports": {
                                 "es.net:2013::star-cr5:6_1_1:star-tb1:in": {
                                     "type": "IN",
                                     "vlan": "2-4094"
                                 },
                                 "es.net:2013::star-cr5:6_1_1:star-tb1:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::denv-cr5:10_1_11:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::denv-cr5:10_1_11:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::denv-cr5:10_1_11:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::atla-cr5:10_1_1:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::atla-cr5:10_1_1:+:in": {
-                                    "type": "IN",
-                                    "vlan": "1662,1720-1725"
-                                },
-                                "es.net:2013::atla-cr5:10_1_1:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "1662,1720-1725"
-                                }
-                            }
-                        },
-                        "es.net:2013::fnal-mr2:xe-8_0_0:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::fnal-mr2:xe-8_0_0:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::fnal-mr2:xe-8_0_0:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::fnal-mr2:xe-0_2_0:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::fnal-mr2:xe-0_2_0:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-908,910-918,920-1800,1802-4094"
-                                },
-                                "es.net:2013::fnal-mr2:xe-0_2_0:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-908,910-918,920-1800,1802-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::sunn-cr5:8_1_1:pacwave": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::sunn-cr5:8_1_1:pacwave:in": {
-                                    "type": "IN",
-                                    "vlan": "1779-1799",
-                                    "aliasUrn": "snvaca.pacificwave.net:2016:topology:esnet-sunnyvale-out"
-                                },
-                                "es.net:2013::sunn-cr5:8_1_1:pacwave:out": {
-                                    "type": "OUT",
-                                    "vlan": "1779-1799",
-                                    "aliasUrn": "snvaca.pacificwave.net:2016:topology:esnet-sunnyvale-in"
-                                }
-                            }
-                        },
-                        "es.net:2013::sunn-cr5:10_1_6:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::sunn-cr5:10_1_6:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::sunn-cr5:10_1_6:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::star-cr5:to_star-tb1_ip-a:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::star-cr5:to_star-tb1_ip-a:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::star-cr5:to_star-tb1_ip-a:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::pnwg-cr5:10_1_2:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::pnwg-cr5:10_1_2:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::pnwg-cr5:10_1_2:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::sunn-cr5:8_1_1:caltech": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::sunn-cr5:8_1_1:caltech:in": {
-                                    "type": "IN",
-                                    "vlan": "3600-3619",
-                                    "aliasUrn": "caltech.edu:2013::CER2024:eth2_1:esnet:out"
-                                },
-                                "es.net:2013::sunn-cr5:8_1_1:caltech:out": {
-                                    "type": "OUT",
-                                    "vlan": "3600-3619",
-                                    "aliasUrn": "caltech.edu:2013::CER2024:eth2_1:esnet:in"
-                                }
-                            }
-                        },
-                        "es.net:2013::aofa-cr5:to_manlan_pilot:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::aofa-cr5:to_manlan_pilot:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::aofa-cr5:to_manlan_pilot:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::aofa-cr5:to_manlan_canet_montreal:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::aofa-cr5:to_manlan_canet_montreal:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::aofa-cr5:to_manlan_canet_montreal:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::fnal-mr2:xe-2_2_0:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::fnal-mr2:xe-2_2_0:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::fnal-mr2:xe-2_2_0:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::bnl-mr2:xe-4_2_0:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::bnl-mr2:xe-4_2_0:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::bnl-mr2:xe-4_2_0:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::pnwg-cr5:2_1_1:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::pnwg-cr5:2_1_1:+:in": {
-                                    "type": "IN",
-                                    "vlan": "1779-1799",
-                                    "aliasUrn": "sttlwa.pacificwave.net:2016:topology:esnet-seattle-out"
-                                },
-                                "es.net:2013::pnwg-cr5:2_1_1:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "1779-1799",
-                                    "aliasUrn": "sttlwa.pacificwave.net:2016:topology:esnet-seattle-in"
-                                }
-                            }
-                        },
-                        "es.net:2013::aofa-cr5:to_manlan_canet_toronto:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::aofa-cr5:to_manlan_canet_toronto:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::aofa-cr5:to_manlan_canet_toronto:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::bnl-mr2:xe-1_0_0:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::bnl-mr2:xe-1_0_0:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-2623,2625-4094"
-                                },
-                                "es.net:2013::bnl-mr2:xe-1_0_0:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-2623,2625-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::amst-cr5:3_1_1:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::amst-cr5:3_1_1:+:in": {
-                                    "type": "IN",
-                                    "vlan": "1000-1019",
-                                    "aliasUrn": "netherlight.net:2013:production7:esnet-1-out"
-                                },
-                                "es.net:2013::amst-cr5:3_1_1:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "1000-1019",
-                                    "aliasUrn": "netherlight.net:2013:production7:esnet-1-in"
-                                }
-                            }
-                        },
-                        "es.net:2013::chic-cr5:5_1_1:al2s": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::chic-cr5:5_1_1:al2s:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4089"
-                                },
-                                "es.net:2013::chic-cr5:5_1_1:al2s:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4089"
-                                }
-                            }
-                        },
-                        "es.net:2013::anl-mr2:xe-1_2_0:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::anl-mr2:xe-1_2_0:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-911,913-4094"
-                                },
-                                "es.net:2013::anl-mr2:xe-1_2_0:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-911,913-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::aofa-cr5:to_manlan-mgmt_v4:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::aofa-cr5:to_manlan-mgmt_v4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::aofa-cr5:to_manlan-mgmt_v4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::fnal-mr2:xe-1_3_0:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::fnal-mr2:xe-1_3_0:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-910,912-4094"
-                                },
-                                "es.net:2013::fnal-mr2:xe-1_3_0:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-910,912-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::aofa-cr5:to_bnl-rt3_ip-a_v4:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::aofa-cr5:to_bnl-rt3_ip-a_v4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::aofa-cr5:to_bnl-rt3_ip-a_v4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::star-cr5:10_1_7:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::star-cr5:10_1_7:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::star-cr5:10_1_7:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::atla-cr5:10_1_12:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::atla-cr5:10_1_12:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::atla-cr5:10_1_12:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::cern-272-cr5:10_1_3:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::cern-272-cr5:10_1_3:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::cern-272-cr5:10_1_3:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::fnal-mr2:xe-7_0_0:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::fnal-mr2:xe-7_0_0:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::fnal-mr2:xe-7_0_0:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::atla-cr5:4_1_1:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::atla-cr5:4_1_1:+:in": {
-                                    "type": "IN",
-                                    "vlan": "1662,1720-1725"
-                                },
-                                "es.net:2013::atla-cr5:4_1_1:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "1662,1720-1725"
-                                }
-                            }
-                        },
-                        "es.net:2013::bnl-mr2:xe-2_3_0:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::bnl-mr2:xe-2_3_0:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-23,25-908,910-918,920-922,924-4094"
-                                },
-                                "es.net:2013::bnl-mr2:xe-2_3_0:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-23,25-908,910-918,920-922,924-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::lbl-mr2:xe-9_3_0:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::lbl-mr2:xe-9_3_0:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-911,913-4094"
-                                },
-                                "es.net:2013::lbl-mr2:xe-9_3_0:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-911,913-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::bnl-mr2:xe-2_2_0:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::bnl-mr2:xe-2_2_0:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-916,918-4094"
-                                },
-                                "es.net:2013::bnl-mr2:xe-2_2_0:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-916,918-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::aofa-cr5:2_1_1:manlan": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::aofa-cr5:2_1_1:manlan:in": {
-                                    "type": "IN",
-                                    "vlan": "1779-1799,1800-1819,3400-3499",
-                                    "aliasUrn": "manlan.internet2.edu:2013::sw.net.manlan.internet2.edu:15_2:esnet:out"
-                                },
-                                "es.net:2013::aofa-cr5:2_1_1:manlan:out": {
-                                    "type": "OUT",
-                                    "vlan": "1779-1799,1800-1819,3400-3499",
-                                    "aliasUrn": "manlan.internet2.edu:2013::sw.net.manlan.internet2.edu:15_2:esnet:in"
-                                }
-                            }
-                        },
-                        "es.net:2013::atla-cr5:10_1_10:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::atla-cr5:10_1_10:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::atla-cr5:10_1_10:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::fnal-mr2:xe-8_3_0:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::fnal-mr2:xe-8_3_0:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-1799,1801-4094"
-                                },
-                                "es.net:2013::fnal-mr2:xe-8_3_0:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-1799,1801-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::aofa-cr5:to_manlan_internet2:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::aofa-cr5:to_manlan_internet2:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::aofa-cr5:to_manlan_internet2:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::atla-cr5:10_1_11:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::atla-cr5:10_1_11:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::atla-cr5:10_1_11:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::star-cr5:6_1_1:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::star-cr5:6_1_1:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::star-cr5:6_1_1:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::aofa-cr5:5_1_1:star-tb1": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::aofa-cr5:5_1_1:star-tb1:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::aofa-cr5:5_1_1:star-tb1:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::wash-cr5:6_1_1:wix": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::wash-cr5:6_1_1:wix:in": {
-                                    "type": "IN",
-                                    "vlan": "1720-1725,1860-1899,3400-3499",
-                                    "aliasUrn": "wix.internet2.edu:2013::sw.net.wix.internet2.edu:13_2:esnet:out"
-                                },
-                                "es.net:2013::wash-cr5:6_1_1:wix:out": {
-                                    "type": "OUT",
-                                    "vlan": "1720-1725,1860-1899,3400-3499",
-                                    "aliasUrn": "wix.internet2.edu:2013::sw.net.wix.internet2.edu:13_2:esnet:in"
-                                }
-                            }
-                        },
-                        "es.net:2013::star-cr5:6_2_1:umich": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::star-cr5:6_2_1:umich:in": {
-                                    "type": "IN",
-                                    "vlan": "3176-3179,3800-3809",
-                                    "aliasUrn": "oess.dcn.umnet.umich.edu:2013::f10-dynes.dcn.umnet.umich.edu:Te0_20:esnet:out"
-                                },
-                                "es.net:2013::star-cr5:6_2_1:umich:out": {
-                                    "type": "OUT",
-                                    "vlan": "3176-3179,3800-3809",
-                                    "aliasUrn": "oess.dcn.umnet.umich.edu:2013::f10-dynes.dcn.umnet.umich.edu:Te0_20:esnet:in"
-                                }
-                            }
-                        },
-                        "es.net:2013::pnwg-cr5:10_1_7:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::pnwg-cr5:10_1_7:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::pnwg-cr5:10_1_7:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::sacr-cr5:10_1_4:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::sacr-cr5:10_1_4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::sacr-cr5:10_1_4:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::star-cr5:10_1_8:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::star-cr5:10_1_8:+:in": {
-                                    "type": "IN",
-                                    "vlan": "1779-1799",
-                                    "aliasUrn": "icair.org:2013:topology:esnet-out"
-                                },
-                                "es.net:2013::star-cr5:10_1_8:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "1779-1799",
-                                    "aliasUrn": "icair.org:2013:topology:esnet-in"
-                                }
-                            }
-                        },
-                        "es.net:2013::lbl-mr2:xe-0_1_0:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::lbl-mr2:xe-0_1_0:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-499,501-4094"
-                                },
-                                "es.net:2013::lbl-mr2:xe-0_1_0:+:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-499,501-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::nersc-mr2:xe-7_3_0:xo-osf-rt1": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::nersc-mr2:xe-7_3_0:xo-osf-rt1:in": {
-                                    "type": "IN",
-                                    "vlan": "2-998,1000-4094"
-                                },
-                                "es.net:2013::nersc-mr2:xe-7_3_0:xo-osf-rt1:out": {
-                                    "type": "OUT",
-                                    "vlan": "2-998,1000-4094"
-                                }
-                            }
-                        },
-                        "es.net:2013::newy-cr5:to_bnl-rt3_ip-a_v4:+": {
-                            "port": null,
-                            "uniports": {
-                                "es.net:2013::newy-cr5:to_bnl-rt3_ip-a_v4:+:in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "es.net:2013::newy-cr5:to_bnl-rt3_ip-a_v4:+:out": {
                                     "type": "OUT",
                                     "vlan": "2-4094"
                                 }

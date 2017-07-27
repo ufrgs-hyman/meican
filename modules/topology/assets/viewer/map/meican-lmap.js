@@ -214,7 +214,8 @@ LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
     });
 
     var node = L.marker(
-        this.buildNodePosition('dev', L.latLng(pos)), 
+        //this.buildNodePosition('dev',
+         L.latLng(pos), 
         {
             id: id, 
             icon: icon,
@@ -249,7 +250,7 @@ LMap.prototype.setDomains = function(list) {
     for (var i = 0; i < list.length; i++) {
         cluster = L.markerClusterGroup({
             showCoverageOnHover: false,
-            maxClusterRadius: 10,
+            maxClusterRadius: 1,
             zoomToBoundsOnClick: false,
             spiderfyOnMaxZoom: false,
             id: list[i].id,
@@ -268,6 +269,8 @@ LMap.prototype.setDomains = function(list) {
                         names.push(markers[i].options.name);
                     }
                     name = sharedStart(names);
+                    if (name.length > 1 && name[name.length -1] == ":")
+                        name = name.slice(0, -1);
                 // return L.divIcon({ html: sharedStart(names), className: className, iconSize: L.point(size, size) });
                 return L.divIcon({ html: name, className: className, iconSize: L.point(size, size) });
             }
