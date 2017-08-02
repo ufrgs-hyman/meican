@@ -258,11 +258,8 @@ LMap.prototype.setDomains = function(list) {
             color: list[i].color,
             iconCreateFunction: function(cluster) {
                 console.log(cluster);
-                var small = true;
-                var className = small ? 'mycluster1' : 'mycluster2';
-                var size = small ? 40 : 60;
                 var name = cluster._group.options.name;
-                if (cluster.getChildCount() > 1)
+                if (cluster.getChildCount() > 1) {
                     var names = [];
                     var markers = cluster.getAllChildMarkers();
                     for (var i = 0; i < markers.length; i++) {
@@ -271,8 +268,10 @@ LMap.prototype.setDomains = function(list) {
                     name = sharedStart(names);
                     if (name.length > 1 && name[name.length -1] == ":")
                         name = name.slice(0, -1);
-                // return L.divIcon({ html: sharedStart(names), className: className, iconSize: L.point(size, size) });
-                return L.divIcon({ html: name, className: className, iconSize: L.point(size, size) });
+                }
+
+                return L.divIcon({ html: name, className: 'stp-cluster-' + cluster._group.options.color.slice(1),
+                    iconSize: L.point(40, 40) });
             }
         });
         this._clusters[list[i].id] = cluster;
