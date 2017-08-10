@@ -16,7 +16,7 @@ function LMap(canvasDivId) {
     this._nodeType;                     // current node type visible
     this._domainsList;                  // domains list reference;
     this._lastShowedMarker; 
-    this._clusters = {};
+    this._cluster;
     this._portsSize = 0;
 };
 
@@ -192,54 +192,89 @@ LMap.prototype.removeLinks = function() {
     }
 }
 
-LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
-    if (!color) color = this.getDomain(domainId).options.color;
+LMap.prototype.getNodeByPosition = function(lat, lng) {
+    size = this._nodes.length;
+
+    for(var i = 0; i < size; i++){
+        if ((this._nodes[i].getLatLng().lat === lat) && 
+                (this._nodes[i].getLatLng().lng === lng)) {
+            //this._nodes[i].unbindLabel();
+            //this._nodes[i].bindLabel(this._nodes[i].options.name, { noHide: true, direction: 'left' });
+            return this._nodes[i];
+        }
+    }
+
+    return null;
+}
+
+LMap.prototype.addNode = function(id, name, domain, lat, lng, color) {
+    if (!color) color = domain.color;
     if (lat != null && lng != null) {
         var pos = [lat,lng];
     } else {
         var pos = [0, 0];
     }
 
-    var icon = L.divIcon({
-        iconSize: [22,22],
-        iconAnchor: [11, 22],
-        popupAnchor: [0,-24],
-        labelAnchor: [4, -8],
-        html: '<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg">' + 
-        '<g>' +
-        //'<path stroke="black" fill="' + color + '" d="m1,0.5l20,0l-10,20l-10,-20z"/>' + 
-        //http://complexdan.com/svg-circleellipse-to-path-converter/
-        '<path stroke="black" fill="' + color + '" d="M1,11a10,10 0 1,0 20,0a10,10 0 1,0 -20,0"/>' + 
-        '</g>' + 
-        '</svg>',
-        className: 'marker-icon-svg',
-    });
+    var node = this.getNodeByPosition(lat, lng);
 
-    var node = L.marker(
-        //this.buildNodePosition('dev',
-         L.latLng(pos), 
-        {
-            id: id, 
-            icon: icon,
-            type: type,
-            name: name,
-            domainId: domainId,
-            ports: {}
-        }
-    ).bindPopup("#").bindLabel(name, { noHide: true, direction: 'auto' });
+    if (node == null) {
+        var icon = L.divIcon({
+            iconSize: [22,22],
+            iconAnchor: [11, 22],
+            popupAnchor: [0,-24],
+            labelAnchor: [4, -8],
+            html: '<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg">' + 
+            '<g>' +
+            '<path stroke="black" fill="' + color + '" d="m1,0.5l20,0l-10,20l-10,-20z"/>' + 
+            '</g>' + 
+            '</svg>',
+            className: 'marker-icon-svg',
+        });
 
-    this._nodes.push(node);
-    this._clusters[domainId].addLayer(node);
+        node = L.marker(
+            //this.buildNodePosition('dev',
+             L.latLng(pos), 
+            {
+                id: id, 
+                icon: icon,
+                name: name,
+                domain: domain,
+                ports: []
+            }
+        ).bindPopup("#").bindLabel(name, { noHide: true, direction: 'auto' });
 
-    var currentMap = this;
+        this._nodes.push(node);
+        this._cluster.addLayer(node);
 
-    node.on('click', function(e) {
-        $("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
-    });
+        var currentMap = this;
+
+        node.on('click', function(e) {
+            $("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
+        });
+    } else {
+        node.options.ports.push(name);
+        node.unbindLabel();
+        node.bindLabel(sharedStart(node.options.ports), { noHide: true, direction: 'auto' });
+        node.setIcon(L.divIcon({
+            iconSize: [22,22],
+            iconAnchor: [11, 22],
+            popupAnchor: [0,-24],
+            labelAnchor: [4, -8],
+            html: '<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg">' + 
+            '<g>' +
+            //http://complexdan.com/svg-circleellipse-to-path-converter/
+            '<path stroke="black" fill="' + color + '" d="M1,11a10,10 0 1,0 20,0a10,10 0 1,0 -20,0"/>' + 
+            '</g>' + 
+            '</svg>',
+            className: 'marker-icon-svg',
+        }));
+    }
 }
 
 LMap.prototype.getDomain = function(id) {
-    return this._clusters[id];
+    for (var i = 0; i < this._domainsList.length; i++) {
+        if (this._domainsList[i].id == id) return this._domainsList[i];
+    }
 }
 
 LMap.prototype.getDomainByName = function(name) {
@@ -249,50 +284,7 @@ LMap.prototype.getDomainByName = function(name) {
 }
 
 LMap.prototype.setDomains = function(list) {
-    for (var i = 0; i < list.length; i++) {
-        cluster = L.markerClusterGroup({
-            showCoverageOnHover: false,
-            maxClusterRadius: 1,
-            zoomToBoundsOnClick: false,
-            spiderfyOnMaxZoom: false,
-            id: list[i].id,
-            name: list[i].name,
-            color: list[i].color,
-            iconCreateFunction: function(cluster) {
-                console.log(cluster);
-                var name = cluster._group.options.name;
-                if (cluster.getChildCount() > 1) {
-                    var names = [];
-                    var markers = cluster.getAllChildMarkers();
-                    for (var i = 0; i < markers.length; i++) {
-                        names.push(markers[i].options.name);
-                    }
-                    name = sharedStart(names);
-                    if (name.length > 1 && name[name.length -1] == ":")
-                        name = name.slice(0, -1);
-                }
-
-                return L.divIcon({ html: name, className: 'stp-cluster-' + cluster._group.options.color.slice(1),
-                    iconSize: L.point(40, 40) });
-            }
-        });
-        this._clusters[list[i].id] = cluster;
-
-        cluster.on('clusterclick', function(ev) {
-            console.log(ev);
-            L.popup()
-            .setLatLng(ev.latlng)
-            .setContent('Domain: <b>' + ev.target.options.name + 
-            '</b><br><br>'+
-            '<div data-node="' + ev.target.options.id + '">'+
-              '<button class="btn btn-sm btn-default set-source">From here</button>'+
-              ' <button class="btn btn-sm btn-default add-waypoint">Add waypoint</button>'+
-              ' <button class="btn btn-sm btn-default set-destination">To here</button>'+
-            '</div>')
-            .openOn(this._map);
-            });
-        this._map.addLayer(cluster);
-    }
+    this._domainsList = list;
 }
 
 LMap.prototype.getDomains = function() {
@@ -429,6 +421,15 @@ LMap.prototype.build = function(mapDiv) {
     new L.Control.Zoom({ position: 'topright' }).addTo(this._map);
 
     //$(".leaflet-top").css("margin-top","15%");
+
+    this._cluster = L.markerClusterGroup({
+        showCoverageOnHover: false,
+        maxClusterRadius: 1,
+        zoomToBoundsOnClick: false,
+        spiderfyOnMaxZoom: false,
+    });
+
+    this._map.addLayer(this._cluster);
 
     this.setType('rnp');
 

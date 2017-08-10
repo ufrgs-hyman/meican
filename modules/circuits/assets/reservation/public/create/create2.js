@@ -728,8 +728,7 @@ function loadPorts(domains) {
                         meicanMap.addNode(
                             'dev' + counter,
                             port,
-                            'dev',
-                            domains[index].id,
+                            domains[index],
                             response['domains'][domains[index].name][
                         'nets'][network]['biports'][port]['lat'],
                             response['domains'][domains[index].name][
