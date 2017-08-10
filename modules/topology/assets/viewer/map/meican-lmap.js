@@ -207,7 +207,9 @@ LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
         labelAnchor: [4, -8],
         html: '<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg">' + 
         '<g>' +
-        '<path stroke="black" fill="' + color + '" d="m1,0.5l20,0l-10,20l-10,-20z"/>' + 
+        //'<path stroke="black" fill="' + color + '" d="m1,0.5l20,0l-10,20l-10,-20z"/>' + 
+        //http://complexdan.com/svg-circleellipse-to-path-converter/
+        '<path stroke="black" fill="' + color + '" d="M1,11a10,10 0 1,0 20,0a10,10 0 1,0 -20,0"/>' + 
         '</g>' + 
         '</svg>',
         className: 'marker-icon-svg',

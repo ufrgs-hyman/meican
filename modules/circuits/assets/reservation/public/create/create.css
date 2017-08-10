@@ -17,18 +17,3 @@ label.dom-l {
     font-size: 17px;
 }
 
-.stp-cluster-ff0000 {
-  border-radius: 20px;
-  background-color: #ff0000;
-  text-align: center;
-  font-size: 10px;
-  padding-top: 12px;
-}
-
-.stp-cluster-00ff00 {
-  border-radius: 20px;
-  background-color: #00ff00;
-  text-align: center;
-  font-size: 10px;
-  padding-top: 12px;
-}

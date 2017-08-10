@@ -10,6 +10,8 @@ use yii\bootstrap\Modal;
 use kartik\touchspin\TouchSpin;
 use kartik\form\ActiveForm;
 
+use meican\topology\models\Domain;
+
 \meican\circuits\assets\reservation\Create::register($this);
 
 $this->params['hide-content-section'] = true;
@@ -310,3 +312,18 @@ Modal::begin([
 </div>
 
 <?php Modal::end(); ?>
+
+<?php 
+
+$css = '';
+foreach (Domain::find()->asArray()->all() as $domain) {
+    $css .= '.stp-cluster-'.substr($domain['color'],1).' {
+      border-radius: 20px;
+      background-color: '.$domain['color'].';
+      text-align: center;
+      font-size: 10px;
+      padding-top: 12px;
+    }';
+}
+
+$this->registerCss($css); ?>

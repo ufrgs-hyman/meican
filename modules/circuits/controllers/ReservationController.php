@@ -346,8 +346,10 @@ class ReservationController extends RbacController {
                 "surfnet.nl:1990:netherlight7": {
                     "name": "netherlight7",
                     "biports": {
-                        "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-4-1": {
+                        "2c:39:c1:38:e0:00-4-1": {
                             "port": "Asd001A_8700_07 4/1 UvA (SNE)",
+                            "lat":52.3567,
+                            "lng":4.954585,
                             "uniports": {
                                 "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-4-1-out": {
                                     "type": "OUT",
@@ -1530,7 +1532,7 @@ class ReservationController extends RbacController {
                 "cipo.rnp.br:2013:": {
                     "name": "cipo.rnp.br",
                     "biports": {
-                        "MXTO:ge-2_3_4:+": {
+                        "MXTO": {
                             "port": null,
                             "lat": -10.175300,   
                             "lng":-48.298199,
@@ -1545,7 +1547,7 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "MXBA:ge-3_3_0:+": {
+                        "MXBA": {
                             "port": null,
                             "lat": -12.901600 , 
                             "lng": -38.419800,   
