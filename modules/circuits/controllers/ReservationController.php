@@ -361,7 +361,9 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-7-2": {
+                        "2c:39:c1:38:e0:00-7-2": {
+                            "lat":52.3567,
+                            "lng":4.954585,
                             "port": "Asd001A_8700_07 7/2 NORDUnet (nl-sar2-nordunet xe-0/0/3)",
                             "uniports": {
                                 "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-7-2-out": {
@@ -374,7 +376,9 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-10-1": {
+                        "2c:39:c1:38:e0:00-10-1": {
+                            "lat":52.3567,
+                            "lng":4.954585,
                             "port": "Asd001A_8700_07 10/1 MANLAN (via Hibernia)",
                             "uniports": {
                                 "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-10-1-out": {
@@ -387,7 +391,9 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-8-1": {
+                        "2c:39:c1:38:e0:00-8-1": {
+                            "lat":52.3567,
+                            "lng":4.954585,
                             "port": "Asd001A_8700_07 8/1 StarLight/iCAIR (via GEANT Open London)",
                             "uniports": {
                                 "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-8-1-out": {
@@ -400,7 +406,9 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-5-13": {
+                        "2c:39:c1:38:e0:00-5-13": {
+                            "lat":52.3567,
+                            "lng":4.954585,
                             "port": "Asd001A_8700_07 5/13 iperf1 eth2",
                             "uniports": {
                                 "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-5-13-out": {
@@ -410,149 +418,6 @@ class ReservationController extends RbacController {
                                 "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-5-13-in": {
                                     "type": "IN",
                                     "vlan": "3000-4000"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-5-14": {
-                            "port": "Asd001A_8700_07 5/14 SURFnet (Asd001A_5410_01 5/8)",
-                            "uniports": {
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-5-14-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-5-14-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-5-15": {
-                            "port": "Asd001A_8700_07 5/15 iperf1 eth3",
-                            "uniports": {
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-5-15-out": {
-                                    "type": "OUT",
-                                    "vlan": "1700-2099"
-                                },
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-5-15-in": {
-                                    "type": "IN",
-                                    "vlan": "1700-2099"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-5-17": {
-                            "port": "Asd001A_8700_07 5/17 CzechLight (GEANT patch panel pp-nl-e10 tray4 p5+6)",
-                            "uniports": {
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-5-17-out": {
-                                    "type": "OUT",
-                                    "vlan": "1779-1799"
-                                },
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-5-17-in": {
-                                    "type": "IN",
-                                    "vlan": "1779-1799"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-10-2": {
-                            "port": "Asd001A_8700 10/2 ESnet",
-                            "uniports": {
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-10-2-out": {
-                                    "type": "OUT",
-                                    "vlan": "1000-1019"
-                                },
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-10-2-in": {
-                                    "type": "IN",
-                                    "vlan": "1000-1019"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-5-18": {
-                            "port": "Asd001A_8700_07 5/18 PIONIER/PSNC (Asd001A_OME24 1/7/2 CBF to Hamburg)",
-                            "uniports": {
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-5-18-out": {
-                                    "type": "OUT",
-                                    "vlan": "1779-1799"
-                                },
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-5-18-in": {
-                                    "type": "IN",
-                                    "vlan": "1779-1799"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-7-1": {
-                            "port": "Asd001A_8700_07 7/1 GEANT",
-                            "uniports": {
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-7-1-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-7-1-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-6-2": {
-                            "port": "Asd001A_8700_07 6/2 GEANT",
-                            "uniports": {
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-6-2-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-6-2-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:netherlight7:00:03:18:9b:02:00-7-6": {
-                            "port": "Asd002A_5410_01 7/6 Microsoft",
-                            "uniports": {
-                                "surfnet.nl:1990:netherlight7:00:03:18:9b:02:00-7-6-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:netherlight7:00:03:18:9b:02:00-7-6-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:netherlight7:00:03:18:9b:02:00-7-8": {
-                            "port": "Asd002A_5410_01 7/8",
-                            "uniports": {
-                                "surfnet.nl:1990:netherlight7:00:03:18:9b:02:00-7-8-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:netherlight7:00:03:18:9b:02:00-7-8-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:netherlight7:2c:39:c1:37:a0:00-5-5": {
-                            "port": "Asd002A_8700_05 5/5",
-                            "uniports": {
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:37:a0:00-5-5-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:37:a0:00-5-5-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-4-2": {
-                            "port": "Asd001A_8700_07 4/2 NetherLight Inventec OpenFlow",
-                            "uniports": {
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-4-2-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:netherlight7:2c:39:c1:38:e0:00-4-2-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
                                 }
                             }
                         }
