@@ -255,7 +255,11 @@ LMap.prototype.addNode = function(id, name, domain, lat, lng, color) {
     } else {
         node.options.ports.push(name);
         node.unbindLabel();
-        node.bindLabel(sharedStart(node.options.ports), { noHide: true, direction: 'auto' });
+        var common = sharedStart(node.options.ports);
+        if (common.length < 1) {
+            common = domain;
+        } 
+        node.bindLabel(common, { noHide: true, direction: 'auto' });
         node.setIcon(L.divIcon({
             iconSize: [22,22],
             iconAnchor: [11, 22],
