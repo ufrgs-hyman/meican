@@ -265,8 +265,7 @@ function initPathTab() {
     });
 
     $('#canvas').on('lmap.nodeClick', function(e, node) {
-        node.setPopupContent('Domain: <b>' + meicanMap.getDomain(node.options.domainId).name + 
-            '</b><br>Device: <b>' + node.options.name + '</b><br><br>'+
+        node.setPopupContent('Domain: <b>' + node.options.domain.name + 
             '<div data-node="' + node.options.id + '">'+
               '<button class="btn btn-sm btn-default set-source">From here</button>'+
               ' <button class="btn btn-sm btn-default add-waypoint">Add waypoint</button>'+
