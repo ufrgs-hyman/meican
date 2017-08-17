@@ -1654,366 +1654,10 @@ class ReservationController extends RbacController {
                 "geant.net:2013:topology": {
                     "name": "geant.net",
                     "biports": {
-                        "geant.net:2013:topology:Ubuntunet__port": {
-                            "port": "Ubuntunet__port",
-                            "uniports": {
-                                "geant.net:2013:topology:Ubuntunet__port-in": {
-                                    "type": "IN",
-                                    "vlan": "1600-1610"
-                                },
-                                "geant.net:2013:topology:Ubuntunet__port-out": {
-                                    "type": "OUT",
-                                    "vlan": "1600-1610"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:GARR__port": {
-                            "port": "GARR__port",
-                            "uniports": {
-                                "geant.net:2013:topology:GARR__port-in": {
-                                    "type": "IN",
-                                    "vlan": "300-399"
-                                },
-                                "geant.net:2013:topology:GARR__port-out": {
-                                    "type": "OUT",
-                                    "vlan": "300-399"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:GEANT-Netherlight-LON-MS-Express": {
-                            "port": "GEANT-Netherlight-LON-MS-Express",
-                            "uniports": {
-                                "geant.net:2013:topology:GEANT-Netherlight-LON-MS-Express-in": {
-                                    "type": "IN",
-                                    "vlan": "3750-4095",
-                                    "aliasUrn": "netherlight.net:2013:production7:geant-lon-out"
-                                },
-                                "geant.net:2013:topology:GEANT-Netherlight-LON-MS-Express-out": {
-                                    "type": "OUT",
-                                    "vlan": "3750-4095",
-                                    "aliasUrn": "netherlight.net:2013:production7:geant-lon-in"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:IUCC-AP1-MS-Express-Routes": {
-                            "port": "IUCC-AP1-MS-Express-Routes",
-                            "uniports": {
-                                "geant.net:2013:topology:IUCC-AP1-MS-Express-Routes-in": {
-                                    "type": "IN",
-                                    "vlan": "3750-4039"
-                                },
-                                "geant.net:2013:topology:IUCC-AP1-MS-Express-Routes-out": {
-                                    "type": "OUT",
-                                    "vlan": "3750-4039"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:bi-southernlight": {
-                            "port": "bi-southernlight",
-                            "uniports": {
-                                "geant.net:2013:topology:bi-southernlight-in": {
-                                    "type": "IN",
-                                    "vlan": "1779-1799",
-                                    "aliasUrn": "southernlight.net.br:2013:topology:bi-geant-out"
-                                },
-                                "geant.net:2013:topology:bi-southernlight-out": {
-                                    "type": "OUT",
-                                    "vlan": "1779-1799",
-                                    "aliasUrn": "southernlight.net.br:2013:topology:bi-geant-in"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:GTS__LAB2__port__to__GEANT": {
-                            "port": "GTS__LAB2__port__to__GEANT",
-                            "uniports": {
-                                "geant.net:2013:topology:GTS__LAB2__port__to__GEANT-in": {
-                                    "type": "IN",
-                                    "vlan": "1-4094"
-                                },
-                                "geant.net:2013:topology:GTS__LAB2__port__to__GEANT-out": {
-                                    "type": "OUT",
-                                    "vlan": "1-4094"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:funet": {
-                            "port": "funet",
-                            "uniports": {
-                                "geant.net:2013:topology:funet-in": {
-                                    "type": "IN",
-                                    "vlan": "2026-2030",
-                                    "aliasUrn": "funet.fi:2013:topology:espoo1-geant-out"
-                                },
-                                "geant.net:2013:topology:funet-out": {
-                                    "type": "OUT",
-                                    "vlan": "2026-2030",
-                                    "aliasUrn": "funet.fi:2013:topology:espoo1-geant-in"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:nordunet": {
-                            "port": "nordunet",
-                            "uniports": {
-                                "geant.net:2013:topology:nordunet-in": {
-                                    "type": "IN",
-                                    "vlan": "2-2014,2031-4094",
-                                    "aliasUrn": "nordu.net:2013:topology:geant-out"
-                                },
-                                "geant.net:2013:topology:nordunet-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-2014,2031-4094",
-                                    "aliasUrn": "nordu.net:2013:topology:geant-in"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:GTS__LAB1__port__to__GEANT": {
-                            "port": "GTS__LAB1__port__to__GEANT",
-                            "uniports": {
-                                "geant.net:2013:topology:GTS__LAB1__port__to__GEANT-in": {
-                                    "type": "IN",
-                                    "vlan": "1-4094"
-                                },
-                                "geant.net:2013:topology:GTS__LAB1__port__to__GEANT-out": {
-                                    "type": "OUT",
-                                    "vlan": "1-4094"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:CESNET__port": {
-                            "port": "CESNET__port",
-                            "uniports": {
-                                "geant.net:2013:topology:CESNET__port-in": {
-                                    "type": "IN",
-                                    "vlan": "558-559"
-                                },
-                                "geant.net:2013:topology:CESNET__port-out": {
-                                    "type": "OUT",
-                                    "vlan": "558-559"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:TAAS__port": {
-                            "port": "TAAS__port",
-                            "uniports": {
-                                "geant.net:2013:topology:TAAS__port-in": {
-                                    "type": "IN",
-                                    "vlan": "1-3499,3500-4094"
-                                },
-                                "geant.net:2013:topology:TAAS__port-out": {
-                                    "type": "OUT",
-                                    "vlan": "1-3499,3500-4094"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:geant-testpoint-amsterdam": {
-                            "port": "geant-testpoint-amsterdam",
-                            "uniports": {
-                                "geant.net:2013:topology:geant-testpoint-amsterdam-in": {
-                                    "type": "IN",
-                                    "vlan": "2016"
-                                },
-                                "geant.net:2013:topology:geant-testpoint-amsterdam-out": {
-                                    "type": "OUT",
-                                    "vlan": "2016"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:GTS__Prague__port__to__GEANT": {
-                            "port": "GTS__Prague__port__to__GEANT",
-                            "uniports": {
-                                "geant.net:2013:topology:GTS__Prague__port__to__GEANT-in": {
-                                    "type": "IN",
-                                    "vlan": "1-4094"
-                                },
-                                "geant.net:2013:topology:GTS__Prague__port__to__GEANT-out": {
-                                    "type": "OUT",
-                                    "vlan": "1-4094"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:Express__server__port": {
-                            "port": "Express__server__port",
-                            "uniports": {
-                                "geant.net:2013:topology:Express__server__port-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "geant.net:2013:topology:Express__server__port-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:__NetherLight__Automated__GOLE__port": {
-                            "port": "__NetherLight__Automated__GOLE__port",
-                            "uniports": {
-                                "geant.net:2013:topology:__NetherLight__Automated__GOLE__port-in": {
-                                    "type": "IN",
-                                    "vlan": "4000-4039"
-                                },
-                                "geant.net:2013:topology:__NetherLight__Automated__GOLE__port-out": {
-                                    "type": "OUT",
-                                    "vlan": "4000-4039"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:GEANT-Netherlight-AMS-MS-Express": {
-                            "port": "GEANT-Netherlight-AMS-MS-Express",
-                            "uniports": {
-                                "geant.net:2013:topology:GEANT-Netherlight-AMS-MS-Express-in": {
-                                    "type": "IN",
-                                    "vlan": "3750-4095",
-                                    "aliasUrn": "netherlight.net:2013:production7:geant-ams-out"
-                                },
-                                "geant.net:2013:topology:GEANT-Netherlight-AMS-MS-Express-out": {
-                                    "type": "OUT",
-                                    "vlan": "3750-4095",
-                                    "aliasUrn": "netherlight.net:2013:production7:geant-ams-in"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:ExLink_0": {
-                            "port": "ExLink_0",
-                            "uniports": {
-                                "geant.net:2013:topology:ExLink_0-in": {
-                                    "type": "IN",
-                                    "vlan": "1200-4094",
-                                    "aliasUrn": "pionier.net.pl:2013:topology:Pionier-link-out"
-                                },
-                                "geant.net:2013:topology:ExLink_0-out": {
-                                    "type": "OUT",
-                                    "vlan": "1200-4094",
-                                    "aliasUrn": "pionier.net.pl:2013:topology:Pionier-link-in"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:GEANT__IP__port__LON": {
-                            "port": "GEANT__IP__port__LON",
-                            "uniports": {
-                                "geant.net:2013:topology:GEANT__IP__port__LON-in": {
-                                    "type": "IN",
-                                    "vlan": "2013"
-                                },
-                                "geant.net:2013:topology:GEANT__IP__port__LON-out": {
-                                    "type": "OUT",
-                                    "vlan": "2013"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:RedIRIS__port__to__GEANT": {
-                            "port": "RedIRIS__port__to__GEANT",
-                            "uniports": {
-                                "geant.net:2013:topology:RedIRIS__port__to__GEANT-in": {
-                                    "type": "IN",
-                                    "vlan": "2040-2042"
-                                },
-                                "geant.net:2013:topology:RedIRIS__port__to__GEANT-out": {
-                                    "type": "OUT",
-                                    "vlan": "2040-2042"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:geant-testpoint-london": {
-                            "port": "geant-testpoint-london",
-                            "uniports": {
-                                "geant.net:2013:topology:geant-testpoint-london-in": {
-                                    "type": "IN",
-                                    "vlan": "2016"
-                                },
-                                "geant.net:2013:topology:geant-testpoint-london-out": {
-                                    "type": "OUT",
-                                    "vlan": "2016"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:geant-sinet": {
-                            "port": "geant-sinet",
-                            "uniports": {
-                                "geant.net:2013:topology:geant-sinet-in": {
-                                    "type": "IN",
-                                    "vlan": "1779-1799"
-                                },
-                                "geant.net:2013:topology:geant-sinet-out": {
-                                    "type": "OUT",
-                                    "vlan": "1779-1799"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:iMinds__port__to__GEANT": {
-                            "port": "iMinds__port__to__GEANT",
-                            "uniports": {
-                                "geant.net:2013:topology:iMinds__port__to__GEANT-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094"
-                                },
-                                "geant.net:2013:topology:iMinds__port__to__GEANT-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:p-to-geant": {
-                            "port": "p-to-geant",
-                            "uniports": {
-                                "geant.net:2013:topology:p-to-geant-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094",
-                                    "aliasUrn": "ja.net:2013:topology:p-to-janet-out"
-                                },
-                                "geant.net:2013:topology:p-to-geant-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094",
-                                    "aliasUrn": "ja.net:2013:topology:p-to-janet-in"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:bi-geant-netherlight1": {
-                            "port": "bi-geant-netherlight1",
-                            "uniports": {
-                                "geant.net:2013:topology:bi-geant-netherlight1-in": {
-                                    "type": "IN",
-                                    "vlan": "4000-4039",
-                                    "aliasUrn": "netherlight.net:2013:production7:geant-1-out"
-                                },
-                                "geant.net:2013:topology:bi-geant-netherlight1-out": {
-                                    "type": "OUT",
-                                    "vlan": "4000-4039",
-                                    "aliasUrn": "netherlight.net:2013:production7:geant-1-in"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:deic-geant": {
-                            "port": "deic-geant",
-                            "uniports": {
-                                "geant.net:2013:topology:deic-geant-in": {
-                                    "type": "IN",
-                                    "vlan": "2015-2025",
-                                    "aliasUrn": "deic.dk:2013:topology:funet-geant-out"
-                                },
-                                "geant.net:2013:topology:deic-geant-out": {
-                                    "type": "OUT",
-                                    "vlan": "2015-2025",
-                                    "aliasUrn": "deic.dk:2013:topology:funet-geant-in"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:GEANT-port-heanet": {
-                            "port": "GEANT-port-heanet",
-                            "uniports": {
-                                "geant.net:2013:topology:GEANT-port-heanet-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4094",
-                                    "aliasUrn": "heanet.ie:2013:topology:HEANET-port-geant-out"
-                                },
-                                "geant.net:2013:topology:GEANT-port-heanet-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4094",
-                                    "aliasUrn": "heanet.ie:2013:topology:HEANET-port-geant-in"
-                                }
-                            }
-                        },
-                        "geant.net:2013:topology:JANET__eMusic__Edinburgh__port": {
+                        "JANET__eMusic__Edinburgh__port": {
                             "port": "JANET__eMusic__Edinburgh__port",
+                            "lat": 49.1,
+                            "lng": 8.24,
                             "uniports": {
                                 "geant.net:2013:topology:JANET__eMusic__Edinburgh__port-in": {
                                     "type": "IN",
@@ -2025,8 +1669,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "geant.net:2013:topology:GTS__London__port__to__GEANT": {
+                        "GTS__London__port__to__GEANT": {
                             "port": "GTS__London__port__to__GEANT",
+                            "lat": 49.1,
+                            "lng": 8.24,
                             "uniports": {
                                 "geant.net:2013:topology:GTS__London__port__to__GEANT-in": {
                                     "type": "IN",
@@ -2038,8 +1684,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "geant.net:2013:topology:GEANT__IP__port__AMS": {
+                        "GEANT__IP__port__AMS": {
                             "port": "GEANT__IP__port__AMS",
+                            "lat": 49.1,
+                            "lng": 8.24,
                             "uniports": {
                                 "geant.net:2013:topology:GEANT__IP__port__AMS-in": {
                                     "type": "IN",
@@ -2051,8 +1699,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "geant.net:2013:topology:To_Netherlight": {
+                        "To_Netherlight": {
                             "port": "To_Netherlight",
+                            "lat": 49.1,
+                            "lng": 8.24,
                             "uniports": {
                                 "geant.net:2013:topology:To_Netherlight-in": {
                                     "type": "IN",
