@@ -1945,7 +1945,7 @@ class ReservationController extends RbacController {
                 "kddilabs.jp:2013:topology": {
                     "name": "kddilabs.jp",
                     "biports": {
-                        "kddilabs.jp:2013:topology:bi-kddilabs-jgn-x": {
+                        "bi-kddilabs-jgn-x": {
                             "port": null,
                             "lat": 35.879,
                             "lng": 139.517,
@@ -1962,7 +1962,7 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "kddilabs.jp:2013:topology:bi-ps": {
+                        "bi-ps": {
                             "port": null,
                             "lat": 35.879,
                             "lng": 139.517,
