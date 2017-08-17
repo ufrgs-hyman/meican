@@ -240,7 +240,7 @@ LMap.prototype.addNode = function(id, name, domain, lat, lng, color) {
                 icon: icon,
                 name: name,
                 domain: domain,
-                ports: []
+                ports: [name]
             }
         ).bindPopup("#").bindLabel(name, { noHide: true, direction: 'auto' });
 
