@@ -1555,8 +1555,10 @@ class ReservationController extends RbacController {
                 "caltech.edu:2013:": {
                     "name": "caltech.edu",
                     "biports": {
-                        "caltech.edu:2013::CER2024:eth1_24:+": {
+                        "CER2024:eth1_24:+": {
                             "port": null,
+                            "lat": 34.13602,
+                            "lng": -118.125404,
                             "uniports": {
                                 "caltech.edu:2013::CER2024:eth1_24:+:in": {
                                     "type": "IN",
@@ -1568,8 +1570,10 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "caltech.edu:2013::CER2024:eth2_2:+": {
+                        "CER2024:eth2_2:+": {
                             "port": null,
+                            "lat": 34.13602,
+                            "lng": -118.125404,
                             "uniports": {
                                 "caltech.edu:2013::CER2024:eth2_2:+:in": {
                                     "type": "IN",
@@ -1581,8 +1585,9 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "caltech.edu:2013::CER2024:eth2_3:+": {
-                            "port": null,
+                        "CER2024:eth2_3:+": {
+                            "port": null,"lat": 34.13602,
+                            "lng": -118.125404,
                             "uniports": {
                                 "caltech.edu:2013::CER2024:eth2_3:+:in": {
                                     "type": "IN",
@@ -1594,8 +1599,9 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "caltech.edu:2013::CER2024:eth2_1:esnet": {
-                            "port": null,
+                        "CER2024:eth2_1:esnet": {
+                            "port": null,"lat": 34.13602,
+                            "lng": -118.125404,
                             "uniports": {
                                 "caltech.edu:2013::CER2024:eth2_1:esnet:in": {
                                     "type": "IN",
@@ -1609,8 +1615,9 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "caltech.edu:2013::CER2024:eth2_1:PWave": {
-                            "port": null,
+                        "CER2024:eth2_1:PWave": {
+                            "port": null,"lat": 34.13602,
+                            "lng": -118.125404,
                             "uniports": {
                                 "caltech.edu:2013::CER2024:eth2_1:PWave:in": {
                                     "type": "IN",
