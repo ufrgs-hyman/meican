@@ -346,7 +346,7 @@ class ReservationController extends RbacController {
                 "surfnet.nl:1990:netherlight7": {
                     "name": "netherlight7",
                     "biports": {
-                        "2c:39:c1:38:e0:00-4-1": {
+                        "netherlight7:2c:39:c1:38:e0:00-4-1": {
                             "port": "Asd001A_8700_07 4/1 UvA (SNE)",
                             "lat":52.3567,
                             "lng":4.954585,
@@ -361,7 +361,7 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "2c:39:c1:38:e0:00-7-2": {
+                        "netherlight7:2c:39:c1:38:e0:00-7-2": {
                             "lat":52.3567,
                             "lng":4.954585,
                             "port": "Asd001A_8700_07 7/2 NORDUnet (nl-sar2-nordunet xe-0/0/3)",
@@ -376,7 +376,7 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "2c:39:c1:38:e0:00-10-1": {
+                        "netherlight7:2c:39:c1:38:e0:00-10-1": {
                             "lat":52.3567,
                             "lng":4.954585,
                             "port": "Asd001A_8700_07 10/1 MANLAN (via Hibernia)",
@@ -391,7 +391,7 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "2c:39:c1:38:e0:00-8-1": {
+                        "netherlight7:2c:39:c1:38:e0:00-8-1": {
                             "lat":52.3567,
                             "lng":4.954585,
                             "port": "Asd001A_8700_07 8/1 StarLight/iCAIR (via GEANT Open London)",
@@ -406,7 +406,7 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "2c:39:c1:38:e0:00-5-13": {
+                        "netherlight7:2c:39:c1:38:e0:00-5-13": {
                             "lat":52.3567,
                             "lng":4.954585,
                             "port": "Asd001A_8700_07 5/13 iperf1 eth2",
@@ -426,8 +426,10 @@ class ReservationController extends RbacController {
                 "surfnet.nl:1990:testbed7": {
                     "name": "testbed7",
                     "biports": {
-                        "surfnet.nl:1990:testbed7:3821": {
+                        "testbed7:3821": {
                             "port": "Asd001A_5410-01T 1/32",
+                            "lat":52.3567,
+                            "lng":4.954585,
                             "uniports": {
                                 "surfnet.nl:1990:testbed7:3821-out": {
                                     "type": "OUT",
@@ -439,7 +441,9 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "surfnet.nl:1990:testbed7:14895": {
+                        "testbed7:14895": {
+                            "lat":52.3567,
+                            "lng":4.954585,
                             "port": "Asd001A_5410-02T 6/3 Anritsu tester poort 2/4",
                             "uniports": {
                                 "surfnet.nl:1990:testbed7:14895-out": {
@@ -452,98 +456,9 @@ class ReservationController extends RbacController {
                                 }
                             }
                         },
-                        "surfnet.nl:1990:testbed7:14949": {
-                            "port": "Asd001A_5410-01T 6/3 Anritsu tester poort 2/3",
-                            "uniports": {
-                                "surfnet.nl:1990:testbed7:14949-out": {
-                                    "type": "OUT",
-                                    "vlan": "2000-2019"
-                                },
-                                "surfnet.nl:1990:testbed7:14949-in": {
-                                    "type": "IN",
-                                    "vlan": "2000-2019"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:testbed7:26026": {
-                            "port": "Asd001A_5410-01T 6/3 Anritsu tester poort 2/3",
-                            "uniports": {
-                                "surfnet.nl:1990:testbed7:26026-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:testbed7:26026-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:testbed7:41247": {
-                            "port": "Asd001A_5410-02T 6/3 Anritsu tester poort",
-                            "uniports": {
-                                "surfnet.nl:1990:testbed7:41247-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-2095"
-                                },
-                                "surfnet.nl:1990:testbed7:41247-in": {
-                                    "type": "IN",
-                                    "vlan": "2-2095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:testbed7:53717": {
-                            "port": "Asd001A_5410-01T 1/31 Asd001A_Smartbits-4xGE 1",
-                            "uniports": {
-                                "surfnet.nl:1990:testbed7:53717-out": {
-                                    "type": "OUT",
-                                    "vlan": "100-2100"
-                                },
-                                "surfnet.nl:1990:testbed7:53717-in": {
-                                    "type": "IN",
-                                    "vlan": "100-2100"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:testbed7:60962": {
-                            "port": "Asd001A_5142-10T 1 Anritsu 4-3",
-                            "uniports": {
-                                "surfnet.nl:1990:testbed7:60962-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:testbed7:60962-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:testbed7:62225": {
-                            "port": "Voor Bart - A - Asd001A_5410-01T 6/3",
-                            "uniports": {
-                                "surfnet.nl:1990:testbed7:62225-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:testbed7:62225-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:testbed7:62228": {
-                            "port": "Voor Bart - B - Asd001A_5410-02T 6/3",
-                            "uniports": {
-                                "surfnet.nl:1990:testbed7:62228-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:testbed7:62228-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:testbed7:netherlight-1": {
+                        "testbed7:netherlight-1": {
+                            "lat":52.3567,
+                            "lng":4.954585,
                             "port": "Asd001A_5150-06T 2.2 Asd001A_Anritsu_01_2/2",
                             "uniports": {
                                 "surfnet.nl:1990:testbed7:netherlight-1-out": {
@@ -555,457 +470,6 @@ class ReservationController extends RbacController {
                                     "type": "IN",
                                     "vlan": "200-299",
                                     "aliasUrn": "netherlight.net:2013:topology:surfnet-1-out"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:testbed7:providerA-1": {
-                            "port": "provider A behind eurofiber",
-                            "uniports": {
-                                "surfnet.nl:1990:testbed7:providerA-1-out": {
-                                    "type": "IN",
-                                    "vlan": "2-4095",
-                                    "aliasUrn": "surfnet.nl:1990:testbed7:providerA-1-in"
-                                },
-                                "surfnet.nl:1990:testbed7:providerA-1-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095",
-                                    "aliasUrn": "surfnet.nl:1990:testbed7:providerA-1-out"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:testbed7:providerB-1": {
-                            "port": "provider B behind eurofiber",
-                            "uniports": {
-                                "surfnet.nl:1990:testbed7:providerB-1-out": {
-                                    "type": "IN",
-                                    "vlan": "78",
-                                    "aliasUrn": "surfnet.nl:1990:testbed7:providerB-1-in"
-                                },
-                                "surfnet.nl:1990:testbed7:providerB-1-in": {
-                                    "type": "IN",
-                                    "vlan": "78",
-                                    "aliasUrn": "surfnet.nl:1990:testbed7:providerB-1-out"
-                                }
-                            }
-                        }
-                    }
-                },
-                "surfnet.nl:1990:netherlight-testbed7": {
-                    "name": "netherlight-testbed7",
-                    "biports": {
-                        "surfnet.nl:1990:netherlight-testbed7:00:03:18:f2:9a:60-6": {
-                            "port": "Asd001A_3930-09T 6 Anrtisu 4-2",
-                            "uniports": {
-                                "surfnet.nl:1990:netherlight-testbed7:00:03:18:f2:9a:60-6-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:netherlight-testbed7:00:03:18:f2:9a:60-6-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:netherlight-testbed7:00:23:8a:98:3f:00-24": {
-                            "port": "Asd001A_5160_11T 24 Anritsu 1-2",
-                            "uniports": {
-                                "surfnet.nl:1990:netherlight-testbed7:00:23:8a:98:3f:00-24-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:netherlight-testbed7:00:23:8a:98:3f:00-24-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:netherlight-testbed7:00:03:18:f2:9a:50-5": {
-                            "port": "Asd001A_3930-08T 5 Anritsu 4/1",
-                            "uniports": {
-                                "surfnet.nl:1990:netherlight-testbed7:00:03:18:f2:9a:50-5-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:netherlight-testbed7:00:03:18:f2:9a:50-5-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:netherlight-testbed7:00:03:18:ec:21:40-2.2-10G-netherlight": {
-                            "port": "00:03:18:ec:21:40-2.2 (10G)",
-                            "uniports": {
-                                "surfnet.nl:1990:netherlight-testbed7:00:03:18:ec:21:40-2.2-10G-netherlight-out": {
-                                    "type": "OUT",
-                                    "vlan": "300-399"
-                                },
-                                "surfnet.nl:1990:netherlight-testbed7:00:03:18:ec:21:40-2.2-10G-netherlight-in": {
-                                    "type": "IN",
-                                    "vlan": "300-399"
-                                }
-                            }
-                        }
-                    }
-                },
-                "surfnet.nl:1990:production7": {
-                    "name": "production7",
-                    "biports": {
-                        "surfnet.nl:1990:production7:357": {
-                            "port": "ralph - test",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:357-out": {
-                                    "type": "OUT",
-                                    "vlan": "777"
-                                },
-                                "surfnet.nl:1990:production7:357-in": {
-                                    "type": "IN",
-                                    "vlan": "777"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:650": {
-                            "port": "VP_test (SURFnet kantoor - poort 1.3 - VLAN 4000)",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:650-out": {
-                                    "type": "OUT",
-                                    "vlan": "900"
-                                },
-                                "surfnet.nl:1990:production7:650-in": {
-                                    "type": "IN",
-                                    "vlan": "900"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:769": {
-                            "port": "SURFnet kantoor Utrecht poort 1.7 vlan 666",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:769-out": {
-                                    "type": "OUT",
-                                    "vlan": "666"
-                                },
-                                "surfnet.nl:1990:production7:769-in": {
-                                    "type": "IN",
-                                    "vlan": "666"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:12750": {
-                            "port": "test2 (VLAN 555)",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:12750-out": {
-                                    "type": "OUT",
-                                    "vlan": "555"
-                                },
-                                "surfnet.nl:1990:production7:12750-in": {
-                                    "type": "IN",
-                                    "vlan": "555"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:13015": {
-                            "port": "Test3 (VLAN 444 op SURFnet 1.3)",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:13015-out": {
-                                    "type": "OUT",
-                                    "vlan": "444"
-                                },
-                                "surfnet.nl:1990:production7:13015-in": {
-                                    "type": "IN",
-                                    "vlan": "444"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:13246": {
-                            "port": "SURFnet kantoor Utrecht poort 1.3 vlan 333 (Hans Trompert)",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:13246-out": {
-                                    "type": "OUT",
-                                    "vlan": "333"
-                                },
-                                "surfnet.nl:1990:production7:13246-in": {
-                                    "type": "IN",
-                                    "vlan": "333"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:13249": {
-                            "port": "SURFnet kantoor Utrecht poort 1.7 vlan 333 (Hans Trompert)",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:13249-out": {
-                                    "type": "OUT",
-                                    "vlan": "333"
-                                },
-                                "surfnet.nl:1990:production7:13249-in": {
-                                    "type": "IN",
-                                    "vlan": "333"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:13266": {
-                            "port": "SURFnet kantoor Utrecht poort 1.3 vlan 222 (Hans Trompert)\t",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:13266-out": {
-                                    "type": "OUT",
-                                    "vlan": "222"
-                                },
-                                "surfnet.nl:1990:production7:13266-in": {
-                                    "type": "IN",
-                                    "vlan": "222"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:13276": {
-                            "port": "SURFnet kantoor Utrecht poort 1.7 vlan 111 (Hans Trompert)\t",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:13276-out": {
-                                    "type": "OUT",
-                                    "vlan": "111"
-                                },
-                                "surfnet.nl:1990:production7:13276-in": {
-                                    "type": "IN",
-                                    "vlan": "111"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:13870": {
-                            "port": "Port 1.3 VLAN 777-800 (Storage)",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:13870-out": {
-                                    "type": "OUT",
-                                    "vlan": "777-800"
-                                },
-                                "surfnet.nl:1990:production7:13870-in": {
-                                    "type": "IN",
-                                    "vlan": "777-800"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:19523": {
-                            "port": "crosssitevm",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:19523-out": {
-                                    "type": "OUT",
-                                    "vlan": "2077"
-                                },
-                                "surfnet.nl:1990:production7:19523-in": {
-                                    "type": "IN",
-                                    "vlan": "2077"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:28382": {
-                            "port": "test poort 1 bij SURFnet",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:28382-out": {
-                                    "type": "OUT",
-                                    "vlan": "2077"
-                                },
-                                "surfnet.nl:1990:production7:28382-in": {
-                                    "type": "IN",
-                                    "vlan": "2077"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:28385": {
-                            "port": "test poort 2 bij SURFnet",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:28385-out": {
-                                    "type": "OUT",
-                                    "vlan": "2077"
-                                },
-                                "surfnet.nl:1990:production7:28385-in": {
-                                    "type": "IN",
-                                    "vlan": "2077"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:46825": {
-                            "port": "urn:ogf:network:surfsara.nl:2013:port:de-kit-lhopn-test",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:46825-out": {
-                                    "type": "OUT",
-                                    "vlan": "3900"
-                                },
-                                "surfnet.nl:1990:production7:46825-in": {
-                                    "type": "IN",
-                                    "vlan": "3900"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:96292": {
-                            "port": "SURFsara NL-T1 10G",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:96292-out": {
-                                    "type": "OUT",
-                                    "vlan": "3901"
-                                },
-                                "surfnet.nl:1990:production7:96292-in": {
-                                    "type": "IN",
-                                    "vlan": "3901"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:108793": {
-                            "port": "Test Poort Stroomt 1",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:108793-out": {
-                                    "type": "OUT",
-                                    "vlan": "4000"
-                                },
-                                "surfnet.nl:1990:production7:108793-in": {
-                                    "type": "IN",
-                                    "vlan": "4000"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:108796": {
-                            "port": "Test Poort Stroomt 2",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:108796-out": {
-                                    "type": "OUT",
-                                    "vlan": "4000"
-                                },
-                                "surfnet.nl:1990:production7:108796-in": {
-                                    "type": "IN",
-                                    "vlan": "4000"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:114353": {
-                            "port": "NOC test port 1 - SURFnet kantoor Ut042A_5142_01",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:114353-out": {
-                                    "type": "OUT",
-                                    "vlan": "4000-4001"
-                                },
-                                "surfnet.nl:1990:production7:114353-in": {
-                                    "type": "IN",
-                                    "vlan": "4000-4001"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:114356": {
-                            "port": "NOC test port 2 - SURFnet kantoor Ut042A_5142_02",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:114356-out": {
-                                    "type": "OUT",
-                                    "vlan": "4000-4001"
-                                },
-                                "surfnet.nl:1990:production7:114356-in": {
-                                    "type": "IN",
-                                    "vlan": "4000-4001"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:114955": {
-                            "port": "SURFnet office 1",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:114955-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:production7:114955-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:114958": {
-                            "port": "SURFnet office 2",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:114958-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095"
-                                },
-                                "surfnet.nl:1990:production7:114958-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:146844": {
-                            "port": "IaaS cloudburst SURFsara",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:146844-out": {
-                                    "type": "OUT",
-                                    "vlan": "2105"
-                                },
-                                "surfnet.nl:1990:production7:146844-in": {
-                                    "type": "IN",
-                                    "vlan": "2105"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:160407": {
-                            "port": "test",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:160407-out": {
-                                    "type": "OUT",
-                                    "vlan": "3189"
-                                },
-                                "surfnet.nl:1990:production7:160407-in": {
-                                    "type": "IN",
-                                    "vlan": "3189"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:astron-1": {
-                            "port": "Dgl001A_5410_01 3/4 Astron/JIVE",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:astron-1-out": {
-                                    "type": "IN",
-                                    "vlan": "2-4095",
-                                    "aliasUrn": "surfnet.nl:1990:production7:astron-1-in"
-                                },
-                                "surfnet.nl:1990:production7:astron-1-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095",
-                                    "aliasUrn": "surfnet.nl:1990:production7:astron-1-out"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:netherlight-1": {
-                            "port": "Asd001A_5410_01 5/8 NetherLight (Asd001A_8700_07 5/14)",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:netherlight-1-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095",
-                                    "aliasUrn": "netherlight.net:2013:production7:surfnet-1-in"
-                                },
-                                "surfnet.nl:1990:production7:netherlight-1-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095",
-                                    "aliasUrn": "netherlight.net:2013:production7:surfnet-1-out"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:testbed7-1": {
-                            "port": "Asd001A_5410_03 5/10 SURFnet7 testbed (Asd001A_5410_02T 4/9)",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:testbed7-1-out": {
-                                    "type": "OUT",
-                                    "vlan": "2-4095",
-                                    "aliasUrn": "surfnet.nl:1990:testbed7:surfnet7-1-in"
-                                },
-                                "surfnet.nl:1990:production7:testbed7-1-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095",
-                                    "aliasUrn": "surfnet.nl:1990:testbed7:surfnet7-1-out"
-                                }
-                            }
-                        },
-                        "surfnet.nl:1990:production7:iperf2-2": {
-                            "port": "Asd001A_5410_02 1/6 iperf2 (eth2)",
-                            "uniports": {
-                                "surfnet.nl:1990:production7:iperf2-2-out": {
-                                    "type": "IN",
-                                    "vlan": "2-4095",
-                                    "aliasUrn": "surfnet.nl:1990:production7:iperf2-2-in"
-                                },
-                                "surfnet.nl:1990:production7:iperf2-2-in": {
-                                    "type": "IN",
-                                    "vlan": "2-4095",
-                                    "aliasUrn": "surfnet.nl:1990:production7:iperf2-2-out"
                                 }
                             }
                         }
