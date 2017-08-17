@@ -430,7 +430,7 @@ LMap.prototype.build = function(mapDiv) {
     this._cluster = L.markerClusterGroup({
         showCoverageOnHover: false,
         maxClusterRadius: 1,
-        zoomToBoundsOnClick: false,
+        zoomToBoundsOnClick: true,
         spiderfyOnMaxZoom: false,
     });
 
