@@ -739,8 +739,6 @@ function loadPorts(domains) {
     });
 }
 
-
-
 function loadDevices() {
     if(meicanTopo['dev']) return;
     $.ajax({

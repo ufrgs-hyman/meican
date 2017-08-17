@@ -242,7 +242,7 @@ LMap.prototype.addNode = function(id, name, domain, lat, lng, color) {
                 domain: domain,
                 ports: [name]
             }
-        ).bindPopup("#").bindLabel(name, { noHide: true, direction: 'auto' });
+        ).bindPopup("#");
 
         this._nodes.push(node);
         this._cluster.addLayer(node);
@@ -255,11 +255,7 @@ LMap.prototype.addNode = function(id, name, domain, lat, lng, color) {
     } else {
         node.options.ports.push(name);
         node.unbindLabel();
-        var common = sharedStart(node.options.ports);
-        if (common.length < 1) {
-            common = domain.name;
-        } 
-        node.bindLabel(common, { noHide: true, direction: 'auto' });
+        
         node.setIcon(L.divIcon({
             iconSize: [22,22],
             iconAnchor: [11, 22],
@@ -274,6 +270,11 @@ LMap.prototype.addNode = function(id, name, domain, lat, lng, color) {
             className: 'marker-icon-svg',
         }));
     }
+    var common = sharedStart(node.options.ports);
+    if (common.length < 1) {
+        common = domain.name;
+    } 
+    node.bindLabel(common, { noHide: true, direction: 'auto' });
 }
 
 LMap.prototype.getDomain = function(id) {
@@ -443,7 +444,7 @@ LMap.prototype.build = function(mapDiv) {
 
 function sharedStart(array){
     if (array.length < 1)
-        return array[0];
+        return removeInvalidChar(array[0]);
 
     var a= array.concat().sort(), 
     a1= a[0], a2= a[a.length-1], L= a1.length, i= 0;
