@@ -196,7 +196,7 @@ LMap.prototype.getNodeByPosition = function(domain, lat, lng) {
     size = this._nodes.length;
 
     for(var i = 0; i < size; i++){
-        if (this._nodes[i].options.domain == domain.name && 
+        if (this._nodes[i].options.domain == domain && 
                 (this._nodes[i].getLatLng().lat === lat) && 
                 (this._nodes[i].getLatLng().lng === lng)) {
             //this._nodes[i].unbindLabel();
