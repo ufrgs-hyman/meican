@@ -196,7 +196,7 @@ LMap.prototype.getNodeByPosition = function(domain, lat, lng) {
     size = this._nodes.length;
 
     for(var i = 0; i < size; i++){
-        if (this._nodes[i].options.domain && 
+        if (this._nodes[i].options.domain == domain.name && 
                 (this._nodes[i].getLatLng().lat === lat) && 
                 (this._nodes[i].getLatLng().lng === lng)) {
             //this._nodes[i].unbindLabel();
@@ -257,7 +257,7 @@ LMap.prototype.addNode = function(id, name, domain, lat, lng, color) {
         node.unbindLabel();
         var common = sharedStart(node.options.ports);
         if (common.length < 1) {
-            common = domain;
+            common = domain.name;
         } 
         node.bindLabel(common, { noHide: true, direction: 'auto' });
         node.setIcon(L.divIcon({
