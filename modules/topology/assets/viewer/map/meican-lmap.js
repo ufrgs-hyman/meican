@@ -448,7 +448,17 @@ function sharedStart(array){
     var a= array.concat().sort(), 
     a1= a[0], a2= a[a.length-1], L= a1.length, i= 0;
     while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
-    return a1.substring(0, i);
+    return removeInvalidChar(a1.substring(0, i));
+}
+
+function removeInvalidChar(str) {
+    if (str.length < 1)
+        return str;
+
+    if (str.slice(-1) == '-' || str.slice(-1) == ':') {
+        return removeInvalidChar(str.slice(-1));
+    }
+    return str;
 }
 
 LMap.prototype.getNodes = function() {
