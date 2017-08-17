@@ -455,7 +455,7 @@ function removeInvalidChar(str) {
     if (str.length < 2)
         return str;
 
-    if (str.slice(-1) == '-' || str.slice(-1) == ':')
+    if (str.slice(-1) == '-' || str.slice(-1) == ':' || str.slice(-1) == '+')
         return removeInvalidChar(str.substring(0, str.length - 1));
 
     return str;
