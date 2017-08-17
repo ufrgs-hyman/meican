@@ -452,12 +452,12 @@ function sharedStart(array){
 }
 
 function removeInvalidChar(str) {
-    if (str.length < 1)
+    if (str.length < 2)
         return str;
 
-    if (str.slice(-1) == '-' || str.slice(-1) == ':') {
+    if (str.slice(-1) == '-' || str.slice(-1) == ':')
         return removeInvalidChar(str.slice(-1));
-    }
+
     return str;
 }
 
