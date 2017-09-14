@@ -6,7 +6,7 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=meican',
+    'dsn' => 'mysql:host=localhost:8889;dbname=meican',
     'username' => 'root',
     'password' => 'root',
     'charset' => 'utf8',

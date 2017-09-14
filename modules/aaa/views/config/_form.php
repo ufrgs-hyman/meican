@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @copyright Copyright (c) 2012-2016 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
@@ -16,7 +16,7 @@ $form= ActiveForm::begin([
     'id'        => 'config-form',
     'method'    => 'post',
     'layout'    => 'horizontal'
-]); 
+]);
 
 ?>
 

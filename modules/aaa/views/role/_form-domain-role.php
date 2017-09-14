@@ -13,9 +13,11 @@ use yii\helpers\ArrayHelper;
 $form=ActiveForm::begin(array(
     'id'=> $formId,
     'layout' => 'horizontal'
-)); 
+));
 
-echo $form->field($udr,'domain')->dropDownList(array_merge($anyDomain, ArrayHelper::map($domains, 'name', 'name')));
+//echo $form->field($udr,'domain')->dropDownList(array_merge($anyDomain, ArrayHelper::map($domains, 'name', 'name')));
+
+echo $form->field($udr,'domain')->dropDownList(ArrayHelper::map($domains, 'name', 'name'));
 
 echo $form->field($udr,'_groupRoleName')->dropDownList($groups);
 
