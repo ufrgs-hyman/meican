@@ -98,8 +98,8 @@ $form = ActiveForm::begin([
                         <div class="timeline-body" hidden>
                             <div class="point-normal">
                               <label data="" class="point-info net-l" hidden>none</label>
-                              Device: <label data="" class="point-info dev-l">none</label><br>
-                              Port: <label class="point-info port-l">none</label><br>
+                              Network: <label class="point-info net-l">none</label><br>
+                              Point Local ID: <label data="" class="point-info lid-l">none</label><br>
                               <input class="port-input" type="hidden" name="ReservationForm[path][port][]">
                             </div>
                             <div class="point-advanced" hidden>
@@ -131,8 +131,8 @@ $form = ActiveForm::begin([
                             <div class="timeline-body" hidden>
                                 <div class="point-normal">
                                   <label data="" class="point-info net-l" hidden>none</label>
-                                  Device: <label data="" class="point-info dev-l">none</label><br>
-                                  Port: <label class="point-info port-l">none</label><br>
+                                  Network: <label class="point-info net-l">none</label><br>
+                                  Point Local ID: <label data="" class="point-info lid-l">none</label><br>
                                   <input class="port-input" type="hidden" name="ReservationForm[path][port][]">
                                 </div>
                                 <div class="point-advanced" hidden>
@@ -271,7 +271,7 @@ Modal::begin([
 
         echo $form->field($pointForm, 'domain')->dropDownList([],['disabled'=>true]); 
         echo $form->field($pointForm, 'network')->dropDownList([],['disabled'=>true]); 
-        echo $form->field($pointForm, 'device')->dropDownList([],['disabled'=>true]); 
+        //echo $form->field($pointForm, 'device')->dropDownList([],['disabled'=>true]); 
         echo $form->field($pointForm, 'port')->dropDownList([],['disabled'=>true]); 
         echo $form->field($pointForm, 'vlan')->dropDownList([],['disabled'=>true]); 
 

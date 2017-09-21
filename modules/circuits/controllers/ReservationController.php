@@ -3328,4 +3328,8 @@ class ReservationController extends RbacController {
         Yii::trace($temp);
         return $temp;
     }
+
+    public function actionDummy() {
+        return True;
+    }
 }
