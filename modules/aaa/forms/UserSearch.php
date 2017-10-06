@@ -15,6 +15,7 @@ use meican\aaa\models\User;
 use meican\aaa\forms\UserSearchForm;
 use meican\aaa\models\UserDomainRole;
 use meican\bpm\models\BpmWorkflow;
+use meican\topology\models\Domain;
 
 /**
  */
@@ -49,9 +50,9 @@ class UserSearch extends UserSearchForm{
         return parent::attributes();
     }
 
-    public function searchByDomains($params, $allowed_domains, $root){
+    public function searchByDomains($params, $allowed_domains, $root, $empty = false){
         $this->load($params);
-        
+
         Yii::trace($this->domain);
 
         $domains_name = [];
@@ -81,9 +82,18 @@ class UserSearch extends UserSearchForm{
                 }
             }
         }
-        
+        if($empty){
+          //Get the users who do not be part of any domain
+          $domains = Domain::find()->all();
+          foreach($domains as $domain_row) $domains_name_all[] = $domain_row->name;
+          $users_all = UserDomainRole::find()->where(['in', 'domain', $domains_name_all])->all();
+          foreach($users_all as $user) $users_id_without[] = $user->user_id;
+          $users_without_domain = User::find()->where(['not in', 'id', $users_id_without])->all();
+          foreach($users_without_domain as $user) array_push($users_id, $user->id);                    
+        }
+
         $users = User::find()->where(['in', 'id', $users_id])->all();
-        
+
         $userForm = [];
         foreach($users as $user){
             $aux = new UserSearchForm();
@@ -91,12 +101,12 @@ class UserSearch extends UserSearchForm{
             else{
                 if(!$root) $count = UserDomainRole::find()->where(['user_id' => $user->id])->andWhere(['in', 'domain', $domains_name])->select('DISTINCT `domain`')->count();
                  else $count = UserDomainRole::find()->where(['user_id' => $user->id])->select('DISTINCT `domain`')->count();
-                
+
             }
             $aux->setData($user, $count);
             $userForm[$aux->id] = $aux;
         }
-        
+
         $data = new ArrayDataProvider([
                 'allModels' => $userForm,
                 'sort' => false,
@@ -104,8 +114,8 @@ class UserSearch extends UserSearchForm{
                         'pageSize' => 15,
                 ],
         ]);
-         
+
         return $data;
     }
-    
+
 }

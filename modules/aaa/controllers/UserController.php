@@ -26,7 +26,7 @@ use meican\topology\models\Domain;
  * @author Maurício Quatrin Guerreiro @mqgmaster
  */
 class UserController extends RbacController {
-    
+
     public function actionIndex() {
         if(self::can("user/read")){
             $allowedDomains = Domain::find()->orderBy(['name' => SORT_ASC])->all();
@@ -36,7 +36,7 @@ class UserController extends RbacController {
         else if(self::can("role/read")){
             $allowedDomains = self::whichDomainsCan('role/read');
             $searchModel = new UserSearch;
-            $data = $searchModel->searchByDomains(Yii::$app->request->get(), $allowedDomains, false);
+            $data = $searchModel->searchByDomains(Yii::$app->request->get(), $allowedDomains, false, true);
         }
         else return $this->goHome();
 
@@ -50,7 +50,7 @@ class UserController extends RbacController {
 
     public function actionView($id) {
         $user = User::findOne($id);
-        
+
         if(self::can("user/read")){
         	$roles = UserDomainRole::find()->where(['user_id' => $user->id])->all();
         	$filtered = [];
@@ -62,7 +62,7 @@ class UserController extends RbacController {
         else if(self::can("role/read")){
         	$allowedDomains = self::whichDomainsCan('role/read');
             $domains_name = [];
-            foreach($allowedDomains as $domain) $domains_name[] = $domain->name;            
+            foreach($allowedDomains as $domain) $domains_name[] = $domain->name;
             $roles = UserDomainRole::find()->where(['user_id' => $user->id])->andWhere(['in', 'domain', $domains_name])->all();
             $filtered = [];
             foreach($roles as $role){
@@ -77,7 +77,7 @@ class UserController extends RbacController {
                 ],
                 'sort' => false,
         ]);
-        
+
         $roles = UserDomainRole::find()->where(['user_id' => $user->id])->all();
         $filtered = [];
         if(self::can("user/read")){
@@ -93,35 +93,37 @@ class UserController extends RbacController {
         		],
         		'sort' => false,
         ]);
-        
+
         return $this->render('view', array(
                 'model' => $user,
                 'domainRolesProvider' => $domainProvider,
         		'systemRolesProvider' => $systemProvider,
         ));
     }
-    
+
     public function actionCreate() {
         if(!self::can("user/create")){
+          if(!self::can("userdomain/create")){
             if(!self::can("user/read")) return $this->goHome();
             else{
                 Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create users'));
                 return $this->redirect(array('index'));
             }
+          }
         }
-        
+
         $userForm = new UserForm;
         $userForm->scenario = UserForm::SCENARIO_CREATE;
-    
+
         if($userForm->load($_POST) && $userForm->validate()) {
             $user = new User;
-            
+
             if($userForm->createUser($user)){
                 Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User added successfully'));
-                
+
                 return $this->redirect(array('index'));
-            } 
-        } 
+            }
+        }
 
         return $this->render('create',array(
                 'user' => $userForm,
@@ -141,7 +143,7 @@ class UserController extends RbacController {
         $userForm->scenario = UserForm::SCENARIO_UPDATE;
         return $this->edit($user, $userForm);
     }
-    
+
     private function edit($user, $userForm) {
         /*if(!self::can("user/update")){
             if(!self::can("user/read")) return $this->goHome();
@@ -150,7 +152,7 @@ class UserController extends RbacController {
                 return $this->redirect(array('index'));
             }
         }
-        
+
         if(!$user){
             if(!self::can("user/read")) return $this->goHome();
             else{
@@ -158,30 +160,30 @@ class UserController extends RbacController {
                 return $this->redirect(array('index'));
             }
         }*/
-        
+
         if($userForm->load($_POST)) {
             if ($userForm->validate()) {
                 if ($userForm->updateUser($user)) {
                     Yii::$app->getSession()->addFlash("success", Yii::t('aaa', 'User updated successfully'));
                     return $this->redirect(array('index'));
-                } 
+                }
             }
-            
+
         } else {
             $userForm->setFromRecord($user);
         }
-        
+
         return $this->render('update',array(
                 'user' => $userForm,
         ));
     }
-    
+
     public function actionDelete() {
         if(!self::can("user/delete")){
             Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to delete users'));
             return $this->redirect(array('index'));
         }
-        
+
         if(isset($_POST['delete'])){
             foreach ($_POST['delete'] as $userId) {
                 $user = User::findOne($userId);
@@ -192,7 +194,7 @@ class UserController extends RbacController {
                 }
             }
         }
-         
+
         return $this->redirect(array('index'));
     }
 
@@ -206,7 +208,7 @@ class UserController extends RbacController {
                 ],
                 'sort' => false,
         ]);
-        
+
         return $this->render('account', array(
                 'model' => $user,
                 'rolesProvider' => $rolesProvider
