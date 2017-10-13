@@ -2,9 +2,17 @@ ISSUES
 
 15) Test77 to MXPA ========>  Test77 : MXSP to MXPA
 26) path nao disponivel na aba Info se circuito falha
+2) atualizar modal da reserva para suportar a nocao de Points
+3) retirar limitacao de reservas com banda 0
+4) finalizar ajustes no formulario para remover uso de IDs e da entidade device
+5) definir comportamento do formulario do modal ao clicar em um agrupamento de pontos, 
+devem ser mostrados apenas os LIDs agrupados na lista, todos ou selecionar um aleatorio?
 
 Futuro
 
+1) Pontos no mapa deveriam comecar agrupados, o usuario deve interagir com os nodos e os 
+desagrupar se quiser. Na proxima vez que for visualizado, o mapa deve mostrar os nodos de acordo
+com a ultima configuracao do usuario. 
 16) Bloquear dias do passado no schedule da reserve
 24) Federation login
 18) Ediçao de circuitos finalizados nao deve ser permitido. PassedEndTime deve ser verificado, uma vez detectado deve-se finalizar o circuito.

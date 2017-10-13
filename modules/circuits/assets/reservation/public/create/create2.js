@@ -46,7 +46,7 @@ $(document).ready(function() {
     
     lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap._map);
     lsidebar.open("home");
-    initEditPointSelects();
+    
 });
 
 function validatePath() {
@@ -181,9 +181,9 @@ function showPointModal(pointElement, pointOrder, nodeId) {
         console.log(nodeId);
         var node = meicanMap.getNode(nodeId);
         console.log(node.options.domain);
-        $("#pointform-domain").val(node.options.domain.id);
-        fillNetworkSelect(node.options.domain.id);
-        fillPortSelect(node.options.id.replace('dev',''));
+        $("#pointform-domain").val(node.options.domain.name);
+        fillNetworkSelect(node.options.domain.name);
+        fillPortSelect(node.options.domain.name);
         $("#point-modal").find('.point-order').text(pointOrder); 
     } else {
         $("#pointform-domain").val($(pointElement).find('.dom-l').attr('data'));
@@ -221,7 +221,7 @@ function initPathTab() {
         if ($("#point-modal").find(".tab-pane.active").attr("id") == "normal") {
             $("#point-form").yiiActiveForm("validateAttribute", 'pointform-domain');
             //$("#point-form").yiiActiveForm("validateAttribute", 'pointform-device');
-            $("#point-form").yiiActiveForm("validateAttribute", 'pointform-port');
+            $("#point-form").yiiActiveForm("validateAttribute", 'pointform-lid');
             $("#point-form").yiiActiveForm("validateAttribute", 'pointform-vlan');
 
         } else {
@@ -655,9 +655,8 @@ function buildPoint() {
           '</h3>'+
         '<div class="timeline-body">'+
             '<div class="point-normal">'+
-              '<label data="" class="point-info net-l" hidden>none</label>'+
-              //'Device: <label class="point-info dev-l">none</label><br>'+
-              'Point: <label data="" class="point-info port-l">none</label><br>'+
+              'Network: <label data="" class="point-info net-l">none</label>'+
+              'Local ID: <label data="" class="point-info lid-l">none</label><br>'+
               '<input class="port-input" type="hidden" name="ReservationForm[path][port][]">'+
             '</div>'+
             '<div class="point-advanced" hidden>'+
@@ -715,6 +714,8 @@ function loadPorts(domains) {
         method: "GET",        
         success: function(response) {
             console.log(response);
+            meicanTopo = response;
+            initEditPointSelects();
 
             counter = 0;
             for (var index in domains) {
@@ -787,47 +788,27 @@ function loadPorts(domains) {
 function fillDomainSelect() {
     var selectId = "pointform-domain";
     clearSelect(selectId);
-    $("#" + selectId).append('<option value="">' + I18N.t('loading') + '</option>');
-    $.ajax({
-        url: baseUrl+'/topology/domain/get-all',
-        data: {
-            cols: JSON.stringify(['id','name']),
-        },
-        dataType: 'json',
-        success: function(domains){
-            clearSelect(selectId);
-            $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
-            for (var i = 0; i < domains.length; i++) {
-                $("#" + selectId).append('<option value="' + domains[i].id + '">' + domains[i].name + '</option>');
-            }
-            enableSelect(selectId);
-        },
-    });
+    $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
+    for (var domain in meicanTopo['domains']) {
+        $("#" + selectId).append('<option value="' + domain + '">' + domain + '</option>');
+    }
+    enableSelect(selectId);
 }
 
-function fillNetworkSelect(domainId, networkId, initDisabled) {
+function fillNetworkSelect(domain, networkId, initDisabled) {
+    console.log(domain);
     var selectId = "pointform-network";
     disableSelect(selectId);
-    if (domainId != "" && domainId != null) {
-        $("#" + selectId).append('<option value="">' + I18N.t('loading') + '</option>');
-        $.ajax({
-            url: baseUrl+'/topology/network/get-by-domain',
-            data: {
-                id: domainId,
-            },
-            dataType: 'json',
-            success: function(response){
-                clearSelect(selectId);
-                $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
-                if (!initDisabled) enableSelect(selectId);
-                for (var i = 0; i < response.length; i++) {
-                    $("#" + selectId).append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
-                }
-                if (networkId != null) {
-                    $("#" + selectId).val(networkId);
-                }
-            }
-        });
+    clearSelect(selectId);
+    $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
+    if (!initDisabled) enableSelect(selectId);
+    if (domain != "" && domain != null) {
+        for (var net in meicanTopo['domains'][domain]['nets']) {
+            $("#" + selectId).append('<option value="' + net + '">' + net + '</option>');
+        }
+        if (networkId != null) {
+            $("#" + selectId).val(networkId);
+        }
     } 
 }
 
@@ -869,34 +850,20 @@ function fillNetworkSelect(domainId, networkId, initDisabled) {
 //     } 
 // }
 
-function fillPortSelect(networkId, portId) {
-    console.log(networkId, portId);
-    var selectId = "pointform-port";
+function fillPortSelect(domain, network, portId) {
+    console.log(domain, network, portId);
+    var selectId = "pointform-lid";
     disableSelect(selectId);
-    if (networkId != "" && networkId != null) {
-        $("#" + selectId).append('<option value="">' + I18N.t('loading') + '</option>');
-        $.ajax({
-            //url: baseUrl+'/circuits/reservation/get-port-by-device',
-            url: baseUrl+'/circuits/reservation/get-dummy',
-            // dataType: 'json',
-            // data: {
-            //     id: networkId,
-            //     cols: JSON.stringify(['id','name']),
-            // },
-            success: function(response){
-                clearSelect(selectId);
-                $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
-                enableSelect(selectId);
-                for (var i = 0; i < response.length; i++) {
-                    var name = response[i].name;
-                    if (response[i].port == "") {
-                        name = I18N.t("default");
-                    }
-                    $("#" + selectId).append('<option value="' + response[i].id + '">' + name + '</option>');
-                }
-                if (portId != null && portId != "") $("#" + selectId).val(portId);
-            }
-        });
+    clearSelect(selectId);
+    $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
+    enableSelect(selectId);
+    if (network != "" && network != null) {
+        for (var lid in meicanTopo['domains'][domain]['nets'][network]['biports']) {
+            console.log(lid);
+            $("#" + selectId).append('<option value="' + lid + '">' + lid + '</option>');
+        }
+        if (portId != null && portId != "") 
+            $("#" + selectId).val(portId);
     } 
 }
 
@@ -966,21 +933,14 @@ function initEditPointSelects() {
     
     $('#pointform-domain').on('change', function() {
         fillNetworkSelect(this.value);
-        //fillDeviceSelect(this.value);
         fillPortSelect();
         fillVlanSelect();
     });
     
     $('#pointform-network').on('change', function() {
-        //fillDeviceSelect($('#pointform-domain').val(), this.value);
-        fillPortSelect();
+        fillPortSelect($('#pointform-domain').val(), this.value);
         fillVlanSelect();
     });
-    
-    // $('#pointform-device').on('change', function() {
-    //     fillPortSelect(this.value);
-    //     fillVlanSelect();
-    // });
     
     $('#pointform-port').on('change', function() {
         fillVlanSelect(this.value);

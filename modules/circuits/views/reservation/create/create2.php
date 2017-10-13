@@ -97,9 +97,8 @@ $form = ActiveForm::begin([
                           </h3>
                         <div class="timeline-body" hidden>
                             <div class="point-normal">
-                              <label data="" class="point-info net-l" hidden>none</label>
-                              Network: <label class="point-info net-l">none</label><br>
-                              Point Local ID: <label data="" class="point-info lid-l">none</label><br>
+                              Network: <label data="" class="point-info net-l">none</label><br>
+                              Local ID: <label data="" class="point-info lid-l">none</label><br>
                               <input class="port-input" type="hidden" name="ReservationForm[path][port][]">
                             </div>
                             <div class="point-advanced" hidden>
@@ -130,16 +129,15 @@ $form = ActiveForm::begin([
                             </h3>
                             <div class="timeline-body" hidden>
                                 <div class="point-normal">
-                                  <label data="" class="point-info net-l" hidden>none</label>
-                                  Network: <label class="point-info net-l">none</label><br>
-                                  Point Local ID: <label data="" class="point-info lid-l">none</label><br>
+                                  Network: <label data="" class="point-info net-l">none</label><br>
+                                  Local ID: <label data="" class="point-info lid-l">none</label><br>
                                   <input class="port-input" type="hidden" name="ReservationForm[path][port][]">
                                 </div>
                                 <div class="point-advanced" hidden>
                                   URN: <label class="point-info urn-l">none</label><br>
                                   <input class="urn-input" type="hidden" name="ReservationForm[path][urn][]">
                                 </div>
-                                VLAN: <label class="point-info vlan-l">Auto</label>
+                                VLAN: <label class="point-info vlan-l">none</label>
                                 <input class="vlan-input" type="hidden" name="ReservationForm[path][vlan][]">
                                 <input class="mode-input" type="hidden" name="ReservationForm[path][mode][]" value="normal">
                                 <div class="pull-right">
@@ -272,7 +270,7 @@ Modal::begin([
         echo $form->field($pointForm, 'domain')->dropDownList([],['disabled'=>true]); 
         echo $form->field($pointForm, 'network')->dropDownList([],['disabled'=>true]); 
         //echo $form->field($pointForm, 'device')->dropDownList([],['disabled'=>true]); 
-        echo $form->field($pointForm, 'port')->dropDownList([],['disabled'=>true]); 
+        echo $form->field($pointForm, 'lid')->dropDownList([],['disabled'=>true]); 
         echo $form->field($pointForm, 'vlan')->dropDownList([],['disabled'=>true]); 
 
         \yii\bootstrap\ActiveForm::end(); ?>
