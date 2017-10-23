@@ -62,21 +62,9 @@ function validatePath() {
 
 function isValidPath() {
     for (var i = 0; i < $('.point').length; i++) {
-        switch($('.point').eq(i).find(".mode-input").val()) {
-            case 'normal':
-                if ($('.point').eq(i).find('.port-input').val() == "") {
-                    return false;
-                } else return true;
-                break;
-            case 'advanced':
-                if ($('.point').eq(i).find('.urn-input').val() == "") {
-                    return false;
-                } else return true;
-                break;
-            default:
-                console.log('erro ao validar path');
-                return false;
-        }
+        if ($('.point').eq(i).find('.urn-input').val() == "") {
+            return false;
+        } else return true;
     };
 
     return false;
@@ -164,8 +152,7 @@ function showPointModal(pointElement, pointOrder, nodeId) {
     $('#point-form').yiiActiveForm('resetForm');
     $('#point-advanced-form').yiiActiveForm('resetForm');
     disableSelect("pointform-network");
-    //disableSelect("pointform-device");
-    disableSelect("pointform-port");
+    disableSelect("pointform-lid");
     disableSelect("pointform-vlan");
     $("#pointform-vlan_text").val('');
     $('#pointform-urn').val('');
@@ -183,13 +170,17 @@ function showPointModal(pointElement, pointOrder, nodeId) {
         console.log(node.options.domain);
         $("#pointform-domain").val(node.options.domain.name);
         fillNetworkSelect(node.options.domain.name);
-        fillPortSelect(node.options.domain.name);
+        fillLidSelect(node.options.domain.name);
         $("#point-modal").find('.point-order').text(pointOrder); 
     } else {
-        $("#pointform-domain").val($(pointElement).find('.dom-l').attr('data'));
-        fillNetworkSelect($(pointElement).find('.dom-l').attr('data'));
-        fillPortSelect($(pointElement).find('.dev-l').attr('data'), $(pointElement).find('.port-input').val()); 
-        fillVlanSelect($(pointElement).find('.port-input').val(), $(pointElement).find('.vlan-input').val()); 
+        $("#pointform-domain").val($(pointElement).find('.dom-l').val());
+        fillNetworkSelect($(pointElement).find('.dom-l').val());
+        fillLidSelect($(pointElement).find('.dom-l').val(), $(pointElement).find('.net-l').val()); 
+        fillVlanSelect(
+            $(pointElement).find('.dom-l').val(), 
+            $(pointElement).find('.net-l').val(),
+            $(pointElement).find('.lid-l').val(),
+        ); 
 
         $("#pointform-vlan_text").val($(pointElement).find('.vlan-input').val());
         $('#pointform-urn').val($(pointElement).find('.urn-input').val());
@@ -240,13 +231,8 @@ function initPathTab() {
                 $("#point-modal").find('.point-order').text(),
                 $("#point-modal").find(".tab-pane.active").attr("id"),
                 $("#pointform-domain").val(),
-                $("#pointform-domain option:selected").text(),
                 $("#pointform-network").val(),
-                $("#pointform-network").val() == '' ? 'none' : $("#pointform-network option:selected").text(),
-                //$("#pointform-device").val(),
-                //$("#pointform-device option:selected").text(),
-                $("#pointform-port").val(),
-                $("#pointform-port option:selected").text(),
+                $("#pointform-lid").val(),
                 $("#pointform-urn").val(),
                 $("#pointform-vlan").val(),
                 $("#pointform-vlan_text").val()
@@ -589,7 +575,7 @@ function setPointByNode(position, nodeId) {
     drawPath();
 }
 
-function setPoint(pointElement, pointOrder, pointMode, domId, dom, netId, net, devId, dev, portId, port, urn, vlan, vlanAdvanced) {
+function setPoint(pointElement, pointOrder, pointMode, dom, net, lid, urn, vlan, vlanAdvanced) {
     if(pointOrder != null) {
         pointElement = $(".point")[pointOrder];
     }
@@ -600,14 +586,11 @@ function setPoint(pointElement, pointOrder, pointMode, domId, dom, netId, net, d
         $(pointElement).find(".point-advanced").hide();
         $(pointElement).find(".point-normal").show();
 
-        $(pointElement).find('.dom-l').attr('data',domId);
         $(pointElement).find('.dom-l').text(dom);
-        $(pointElement).find('.net-l').attr('data',netId);
         $(pointElement).find('.net-l').text(net);
-        $(pointElement).find('.dev-l').attr('data', devId);
-        $(pointElement).find('.dev-l').text(dev);
-        $(pointElement).find('.port-input').val(portId);
-        $(pointElement).find('.port-l').text(port);
+        $(pointElement).find('.lid-l').text(lid);
+
+        $(pointElement).find('.urn-input').val(urn == '' ? 'urn:ogf:network:' : urn);
 
         $(pointElement).find('.vlan-l').text(vlan);
         $(pointElement).find('.vlan-input').val(vlan);
@@ -657,7 +640,6 @@ function buildPoint() {
             '<div class="point-normal">'+
               'Network: <label data="" class="point-info net-l">none</label>'+
               'Local ID: <label data="" class="point-info lid-l">none</label><br>'+
-              '<input class="port-input" type="hidden" name="ReservationForm[path][port][]">'+
             '</div>'+
             '<div class="point-advanced" hidden>'+
               'URN: <label class="point-info urn-l">none</label><br>'+
@@ -850,8 +832,8 @@ function fillNetworkSelect(domain, networkId, initDisabled) {
 //     } 
 // }
 
-function fillPortSelect(domain, network, portId) {
-    console.log(domain, network, portId);
+function fillLidSelect(domain, network, localId) {
+    //console.log(domain, network, localId);
     var selectId = "pointform-lid";
     disableSelect(selectId);
     clearSelect(selectId);
@@ -859,57 +841,47 @@ function fillPortSelect(domain, network, portId) {
     enableSelect(selectId);
     if (network != "" && network != null) {
         for (var lid in meicanTopo['domains'][domain]['nets'][network]['biports']) {
-            console.log(lid);
+            //console.log(lid);
             $("#" + selectId).append('<option value="' + lid + '">' + lid + '</option>');
         }
-        if (portId != null && portId != "") 
-            $("#" + selectId).val(portId);
+        if (localId != null && localId != "") 
+            $("#" + selectId).val(localId);
     } 
 }
 
-function fillVlanSelect(portId, vlan) {
+function fillVlanSelect(domain, network, localId, vlan) {
     var selectId = "pointform-vlan";
     disableSelect(selectId);
-    if (portId != "" && portId != null) {
-        $("#" + selectId).append('<option value="">' + I18N.t('loading') + '</option>');
-        $.ajax({
-            url: baseUrl+'/topology/port/get-vlan-range',
-            dataType: 'json',
-            data: {
-                id: portId,
-            },
-            success: function(response){
-                clearSelect(selectId);
-                //$("#" + selectId).append('<option value="auto">Auto</option>');
-                if(response) {
-                    var ranges = response.split(",");
-                    for (var i = 0; i < ranges.length; i++) {
-                        var interval = ranges[i].split("-");
-                        if (interval.length > 1)
-                            $("#" + selectId).append('<option value="' + ranges[i] + '">' + ranges[i] + '</option>');
-                    }
+    if (localId != "" && localId != null) {
+        clearSelect(selectId);
+        for (var uniport in meicanTopo['domains'][domain]['nets'][network]['biports'][localId]['uniports']) {
+            response = meicanTopo['domains'][domain]['nets'][network]['biports'][localId]['uniports'][uniport]['vlan'];
+            var ranges = response.split(",");
+            for (var i = 0; i < ranges.length; i++) {
+                var interval = ranges[i].split("-");
+                if (interval.length > 1)
+                    $("#" + selectId).append('<option value="' + ranges[i] + '">' + ranges[i] + '</option>');
+            }
 
-                    for (var i = 0; i < ranges.length; i++) {
-                        var interval = ranges[i].split("-");
-                        var low = parseInt(interval[0]);
-                        var high = low;
-                        if (interval.length > 1) {
-                            high = parseInt(interval[1]);
-                            for (var j = low; j < high+1; j++) {
-                            $("#" + selectId).append('<option value="' + j + '">' + j + '</option>');
-                        }
-                        } else {
-                            $("#" + selectId).append('<option value="' + low + '">' + low + '</option>');
-                        }
-                        
-                        if (vlan != null && vlan != "") {
-                            $("#" + selectId).val(vlan);
-                        }
-                    }
-                    enableSelect(selectId);
+            for (var i = 0; i < ranges.length; i++) {
+                var interval = ranges[i].split("-");
+                var low = parseInt(interval[0]);
+                var high = low;
+                if (interval.length > 1) {
+                    high = parseInt(interval[1]);
+                    for (var j = low; j < high+1; j++) {
+                    $("#" + selectId).append('<option value="' + j + '">' + j + '</option>');
+                }
+                } else {
+                    $("#" + selectId).append('<option value="' + low + '">' + low + '</option>');
+                }
+                
+                if (vlan != null && vlan != "") {
+                    $("#" + selectId).val(vlan);
                 }
             }
-        });
+            enableSelect(selectId);
+        }
     }
 }
 
@@ -933,16 +905,19 @@ function initEditPointSelects() {
     
     $('#pointform-domain').on('change', function() {
         fillNetworkSelect(this.value);
-        fillPortSelect();
+        fillLidSelect();
         fillVlanSelect();
     });
     
     $('#pointform-network').on('change', function() {
-        fillPortSelect($('#pointform-domain').val(), this.value);
+        fillLidSelect($('#pointform-domain').val(), this.value);
         fillVlanSelect();
     });
     
-    $('#pointform-port').on('change', function() {
-        fillVlanSelect(this.value);
+    $('#pointform-lid').on('change', function() {
+        fillVlanSelect(
+            $('#pointform-domain').val(), 
+            $('#pointform-network').val(),
+            this.value);
     });
 }

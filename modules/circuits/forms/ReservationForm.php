@@ -61,11 +61,7 @@ class ReservationForm extends Model {
             for ($i=0; $i < count($this->path['port']); $i++) { 
                 $path = new ReservationPath;
                 $path->reservation_id = $this->reservation->id;
-                if($this->path['mode'][$i] == 'normal') 
-                    $path->port_urn = Port::find()->where(['id' => $this->path['port'][$i]])->one()->urn;
-                else 
-                    $path->port_urn = str_replace('urn:ogf:network:','',$this->path['urn'][$i]);
-                
+                $path->port_urn = str_replace('urn:ogf:network:','',$this->path['urn'][$i]);
                 $path->path_order = $i;
                 $path->vlan = $this->path['vlan'][$i];
                 
@@ -79,6 +75,6 @@ class ReservationForm extends Model {
         
         Yii::trace($this->reservation->getErrors());
          
-         return true;
+        return true;
     }
 }
