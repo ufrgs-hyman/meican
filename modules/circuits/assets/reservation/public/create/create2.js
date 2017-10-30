@@ -251,6 +251,7 @@ function initPathTab() {
     });
 
     $('#canvas').on('lmap.nodeClick', function(e, node) {
+        console.log(node.options);
         node.setPopupContent('Domain: <b>' + node.options.domain.name + 
             '<div data-node="' + node.options.id + '">'+
               '<button class="btn btn-sm btn-default set-source">From here</button>'+
@@ -638,7 +639,7 @@ function buildPoint() {
           '</h3>'+
         '<div class="timeline-body">'+
             '<div class="point-normal">'+
-              'Network: <label data="" class="point-info net-l">none</label>'+
+              'Network: <label data="" class="point-info net-l">none</label><br>'+
               'Local ID: <label data="" class="point-info lid-l">none</label><br>'+
             '</div>'+
             '<div class="point-advanced" hidden>'+

@@ -58,7 +58,7 @@ class ReservationForm extends Model {
         $this->reservation->request_user_id = Yii::$app->user->getId();             
         
         if ($this->reservation->save()) {
-            for ($i=0; $i < count($this->path['port']); $i++) { 
+            for ($i=0; $i < count($this->path['urn']); $i++) { 
                 $path = new ReservationPath;
                 $path->reservation_id = $this->reservation->id;
                 $path->port_urn = str_replace('urn:ogf:network:','',$this->path['urn'][$i]);

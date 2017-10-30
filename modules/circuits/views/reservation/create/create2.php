@@ -99,7 +99,6 @@ $form = ActiveForm::begin([
                             <div class="point-normal">
                               Network: <label data="" class="point-info net-l">none</label><br>
                               Local ID: <label data="" class="point-info lid-l">none</label><br>
-                              <input class="port-input" type="hidden" name="ReservationForm[path][port][]">
                             </div>
                             <div class="point-advanced" hidden>
                               URN: <label class="point-info urn-l">none</label><br>

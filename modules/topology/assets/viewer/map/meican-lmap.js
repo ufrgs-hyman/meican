@@ -252,6 +252,10 @@ LMap.prototype.addNode = function(id, name, domain, lat, lng, color) {
         node.on('click', function(e) {
             $("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
         });
+        node.on('contextmenu', function(e) {
+            console.log(e);
+            //$("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
+        });
     } else {
         node.options.ports.push(name);
         node.unbindLabel();
