@@ -153,14 +153,6 @@ class Port extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDevice()
-    {
-        return $this->hasOne(Device::className(), ['id' => 'device_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getNetwork()
     {
         return $this->hasOne(Network::className(), ['id' => 'network_id']);
@@ -190,10 +182,6 @@ class Port extends \yii\db\ActiveRecord
         $this->alias_id = $port->id;
     }
     
-    public function setDevice($dev) {
-        $this->device_id = $dev->id;
-    }
-
     public function getFullUrn() {
         return "urn:ogf:network:".$this->urn;
     }
