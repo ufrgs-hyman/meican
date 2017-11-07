@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:Topology id="urn:ogf:network:cipo.rnp.br:2013:" version="2016-07-06T12:20:02.729-05:00" xmlns:ns2="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns3="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns4="http://schemas.ogf.org/nml/2012/10/ethernet">
+    <ns2:name>cipo.rnp.br</ns2:name>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXTO:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXTO:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXTO:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXBA:ge-3_3_0:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXBA:ge-3_3_0:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXBA:ge-3_3_0:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRO:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRO:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRO:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_3:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_3:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_3:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXJPA:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXJPA:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXJPA:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRN:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRN:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRN:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXMS:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMS:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMS:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXMA:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMA:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMA:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXPB:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPB:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPB:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXSE:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSE:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSE:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:xe-3_0_0:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:xe-3_0_0:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:xe-3_0_0:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ae0:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ae0:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ae0:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_3:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_3:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_3:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:xe-3_0_0:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:xe-3_0_0:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:xe-3_0_0:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXPE:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPE:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPE:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXPR:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPR:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPR:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXPI:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPI:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPI:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXAL:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAL:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAL:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXAC:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAC:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAC:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXDF2:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF2:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF2:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXMT:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMT:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMT:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXCE:ge-2_3_4:+">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXCE:ge-2_3_4:+:in"/>
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXCE:ge-2_3_4:+:out"/>
+    </ns2:BidirectionalPort>
+    <ns3:serviceDefinition id="urn:ogf:network:cipo.rnp.br:2013::ServiceDefinition:EVTS.A-GOLE">
+        <name>GLIF Automated GOLE Ethernet VLAN Transfer Service</name>
+        <serviceType>http://services.ogf.org/nsi/2013/07/definitions/EVTS.A-GOLE</serviceType>
+    </ns3:serviceDefinition>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasService">
+        <ns2:SwitchingService encoding="http://schemas.ogf.org/nml/2012/10/ethernet" labelSwapping="true" labelType="http://schemas.ogf.org/nml/2012/10/ethernet#vlan" id="urn:ogf:network:cipo.rnp.br:2013::ServiceDomain:EVTS.A-GOLE">
+            <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXTO:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXBA:ge-3_3_0:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRO:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_3:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXJPA:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRN:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMS:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMA:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPB:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSE:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:xe-3_0_0:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ae0:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_3:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:xe-3_0_0:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPE:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPR:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPI:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAL:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAC:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF2:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMT:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+:in"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXCE:ge-2_3_4:+:in"/>
+            </ns2:Relation>
+            <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXTO:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXBA:ge-3_3_0:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRO:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_3:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXJPA:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRN:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMS:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMA:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPB:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSE:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:xe-3_0_0:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ae0:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_3:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:xe-3_0_0:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPE:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPR:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPI:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAL:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAC:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF2:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMT:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+:out"/>
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXCE:ge-2_3_4:+:out"/>
+            </ns2:Relation>
+            <ns3:serviceDefinition id="urn:ogf:network:cipo.rnp.br:2013::ServiceDefinition:EVTS.A-GOLE"/>
+        </ns2:SwitchingService>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXTO:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXTO:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXBA:ge-3_3_0:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXBA:ge-3_3_0:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRO:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRO:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns2:LabelGroup>
+            <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                <ns2:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:bi-rnp-out"/>
+            </ns2:Relation>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns2:LabelGroup>
+            <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                <ns2:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:bi-rnp-in"/>
+            </ns2:Relation>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_3:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1779-1799</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_3:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1779-1799</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXJPA:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXJPA:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRN:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRN:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMS:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMS:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMA:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMA:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPB:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPB:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSE:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSE:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:xe-3_0_0:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:xe-3_0_0:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ae0:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ae0:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_3:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1801-1821</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_3:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1801-1821</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:xe-3_0_0:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">201-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:xe-3_0_0:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">201-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPE:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPE:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPR:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPR:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPI:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPI:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAL:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAL:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAC:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAC:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF2:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF2:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299,1801-1821</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299,1801-1821</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMT:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMT:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXCE:ge-2_3_4:+:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXCE:ge-2_3_4:+:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+            <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013::MXCE:location">
+                <ns2:lat>-12.901600</ns2:lat>
+                <ns2:long>-38.419800</ns2:long>
+            </ns2:Location>
+            <ns4:maximumReservableCapacity>10000000000</ns4:maximumReservableCapacity>
+            <ns4:minimumReservableCapacity>1000000</ns4:minimumReservableCapacity>
+            <ns4:capacity>10000000000</ns4:capacity>
+            <ns4:granularity>1000000</ns4:granularity>
+        </ns2:PortGroup>
+    </ns2:Relation>
+</ns2:Topology>
+
+
