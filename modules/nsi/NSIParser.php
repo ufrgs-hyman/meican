@@ -208,47 +208,26 @@ class NSIParser {
 
         $domainName = $id[3];
 
-        $devicePort = str_replace($netId.":", "", $biPortId);
-        if (strpos($devicePort,'urn') !== false) {
-            $this->errors["Unknown URN"][$devicePort] = null;
+        if (strpos($biPortId,'urn') !== false) {
+            $this->errors["Unknown URN"][$biPortId] = null;
             return;
         }
-        
-        // $devicePortArray = explode(":", $devicePort);
-        // if (count($devicePortArray) > 1) {
-        //     $deviceName = $deviceName ? $deviceName : $devicePortArray[0];
-        //     $devicePortArray[0] = "";
-        //     $devicePortArray = implode(":", $devicePortArray);
-        //     $portName = substr($devicePortArray, 1);
-        // } else {
-        //     $deviceName = $domainName;
-        //     $portName = implode(":", $devicePortArray);
-        // }
 
+        $localId = str_replace($netId, "", $biPortId);
+        
         if (!isset($this->topology["domains"][
                 $domainName]["nets"][$netUrn]["biports"][$biPortUrn])) {
             $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["name"] = $netName;
             $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["biports"][$biPortUrn] = array();
-            // if (!$biportName) $biportName = $portName;
             $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["biports"][$biPortUrn]["port"] = $biportName;
         } 
         
-        // $devicePort = str_replace($netId.":", "", $portId);
-        // $devicePortArray = explode(":", $devicePort);
-        // if (count($devicePortArray) > 1) {
-        //     $devicePortArray[0] = "";
-        //     $devicePortArray = implode(":", $devicePortArray);
-        //     $portName = substr($devicePortArray, 1);
-        // } else {
-        //     $portName = implode(":", $devicePortArray);
-        // }
-        
-        // $this->topology["domains"][
-        //         $domainName]["nets"][$netUrn]["devices"][$deviceName]["biports"][
-        //                 $biPortUrn]["uniports"][$portUrn]['port'] = $portName;
+        $this->topology["domains"][
+                $domainName]["nets"][$netUrn]["devices"][$deviceName]["biports"][
+                        $biPortUrn]["uniports"][$portUrn]['port'] = $localId;
         $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["biports"][
                         $biPortUrn]["uniports"][$portUrn]['type'] = $portType;
@@ -384,7 +363,7 @@ class NSIParser {
                 if ($biportNameNode->item(0)) {
                     $biportName = $biportNameNode->item(0)->nodeValue;
                 } else {
-                    $biportName = null;
+                    $biportName = str_replace($netId, "", $biPortId);
                 }
 
                 $this->parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName);
