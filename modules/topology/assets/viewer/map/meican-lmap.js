@@ -208,7 +208,7 @@ LMap.prototype.getNodeByPosition = function(domain, lat, lng) {
     return null;
 }
 
-LMap.prototype.addNode = function(id, name, domain, lat, lng, color) {
+LMap.prototype.addNode = function(id, lid, network, domain, lat, lng, color) {
     if (!color) color = domain.color;
     if (lat != null && lng != null) {
         var pos = [lat,lng];
@@ -240,7 +240,7 @@ LMap.prototype.addNode = function(id, name, domain, lat, lng, color) {
                 icon: icon,
                 name: name,
                 domain: domain,
-                ports: [name]
+                points: [network + ':' + lid]
             }
         ).bindPopup("#");
 
@@ -252,12 +252,12 @@ LMap.prototype.addNode = function(id, name, domain, lat, lng, color) {
         node.on('click', function(e) {
             $("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
         });
-        node.on('contextmenu', function(e) {
-            console.log(e);
-            //$("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
-        });
+        // node.on('contextmenu', function(e) {
+        //     console.log(e);
+        //     //$("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
+        // });
     } else {
-        node.options.ports.push(name);
+        node.options.points.push(network + ':' + lid);
         node.unbindLabel();
         
         node.setIcon(L.divIcon({
@@ -274,11 +274,15 @@ LMap.prototype.addNode = function(id, name, domain, lat, lng, color) {
             className: 'marker-icon-svg',
         }));
     }
-    var common = sharedStart(node.options.ports);
-    if (common.length < 1) {
-        common = domain.name;
-    } 
-    node.bindLabel(common, { noHide: true, direction: 'auto' });
+    var label = lid;
+    if (node.options.points.length > 1) {
+        label = sharedStart(node.options.points);
+        if (label.length < 1) {
+            label = domain.name;
+        } 
+    }
+    
+    node.bindLabel(label, { noHide: true, direction: 'auto' });
 }
 
 LMap.prototype.getDomain = function(id) {

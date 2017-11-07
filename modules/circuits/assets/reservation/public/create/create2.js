@@ -591,7 +591,7 @@ function setPoint(pointElement, pointOrder, pointMode, dom, net, lid, urn, vlan,
         $(pointElement).find('.net-l').text(net);
         $(pointElement).find('.lid-l').text(lid);
 
-        $(pointElement).find('.urn-input').val(urn == '' ? 'urn:ogf:network:' : urn);
+        $(pointElement).find('.urn-input').val(net + ':' + lid);
 
         $(pointElement).find('.vlan-l').text(vlan);
         $(pointElement).find('.vlan-input').val(vlan);
@@ -705,17 +705,18 @@ function loadPorts(domains) {
                 console.log(domains[index]);
                 for (var network in response['domains'][domains[index].name]['nets']) {
                     console.log(network);
-                    for (var port in response['domains'][domains[index].name][
+                    for (var lid in response['domains'][domains[index].name][
                         'nets'][network]['biports']) {
                         counter++;
                         meicanMap.addNode(
-                            'dev' + counter,
-                            port,
+                            counter,
+                            lid,
+                            network,
                             domains[index],
                             response['domains'][domains[index].name][
-                        'nets'][network]['biports'][port]['lat'],
+                        'nets'][network]['biports'][lid]['lat'],
                             response['domains'][domains[index].name][
-                        'nets'][network]['biports'][port]['lng']);
+                        'nets'][network]['biports'][lid]['lng']);
                     }
                 }
             };
