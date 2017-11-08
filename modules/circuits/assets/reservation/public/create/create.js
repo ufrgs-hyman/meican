@@ -16,7 +16,8 @@ $(document).ready(function() {
     $(".sidebar-toggle").hide();
     $(".sidebar-mini").addClass("sidebar-collapse");
 
-    loadDomains();
+    initNodes();
+    
     initScheduleTab();
     initPathTab();
     initConfirmTab();
@@ -45,7 +46,7 @@ $(document).ready(function() {
     
     lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap._map);
     lsidebar.open("home");
-    initEditPointSelects();
+    
 });
 
 function validatePath() {
@@ -61,21 +62,9 @@ function validatePath() {
 
 function isValidPath() {
     for (var i = 0; i < $('.point').length; i++) {
-        switch($('.point').eq(i).find(".mode-input").val()) {
-            case 'normal':
-                if ($('.point').eq(i).find('.port-input').val() == "") {
-                    return false;
-                } else return true;
-                break;
-            case 'advanced':
-                if ($('.point').eq(i).find('.urn-input').val() == "") {
-                    return false;
-                } else return true;
-                break;
-            default:
-                console.log('erro ao validar path');
-                return false;
-        }
+        if ($('.point').eq(i).find('.urn-input').val() == "") {
+            return false;
+        } else return true;
     };
 
     return false;
@@ -163,7 +152,6 @@ function showPointModal(pointElement, pointOrder, nodeId) {
     $('#point-form').yiiActiveForm('resetForm');
     $('#point-advanced-form').yiiActiveForm('resetForm');
     disableSelect("pointform-network");
-    disableSelect("pointform-device");
     disableSelect("pointform-port");
     disableSelect("pointform-vlan");
     $("#pointform-vlan_text").val('');
@@ -177,18 +165,22 @@ function showPointModal(pointElement, pointOrder, nodeId) {
     }
 
     if(nodeId) {
-        var marker = meicanMap.getNode(nodeId);
-        $("#pointform-domain").val(marker.options.domainId);
-        fillNetworkSelect(marker.options.domainId);
-        fillDeviceSelect(marker.options.domainId, null, marker.options.id.replace('dev',''));
-        fillPortSelect(marker.options.id.replace('dev',''));
+        console.log(nodeId);
+        var node = meicanMap.getNode(nodeId);
+        console.log(node.options.domain);
+        $("#pointform-domain").val(node.options.domain.name);
+        fillNetworkSelect(node.options.domain.name);
+        fillPortSelect(node.options.domain.name);
         $("#point-modal").find('.point-order').text(pointOrder); 
     } else {
-        $("#pointform-domain").val($(pointElement).find('.dom-l').attr('data'));
-        fillNetworkSelect($(pointElement).find('.dom-l').attr('data'));
-        fillDeviceSelect($(pointElement).find('.dom-l').attr('data'), null, $(pointElement).find('.dev-l').attr('data'));
-        fillPortSelect($(pointElement).find('.dev-l').attr('data'), $(pointElement).find('.port-input').val()); 
-        fillVlanSelect($(pointElement).find('.port-input').val(), $(pointElement).find('.vlan-input').val()); 
+        $("#pointform-domain").val($(pointElement).find('.dom-l').val());
+        fillNetworkSelect($(pointElement).find('.dom-l').val());
+        fillPortSelect($(pointElement).find('.dom-l').val(), $(pointElement).find('.net-l').val()); 
+        fillVlanSelect(
+            $(pointElement).find('.dom-l').val(), 
+            $(pointElement).find('.net-l').val(),
+            $(pointElement).find('.port-l').val(),
+        ); 
 
         $("#pointform-vlan_text").val($(pointElement).find('.vlan-input').val());
         $('#pointform-urn').val($(pointElement).find('.urn-input').val());
@@ -219,7 +211,7 @@ function initPathTab() {
     $("#point-modal").on('click','.save-btn',function() {
         if ($("#point-modal").find(".tab-pane.active").attr("id") == "normal") {
             $("#point-form").yiiActiveForm("validateAttribute", 'pointform-domain');
-            $("#point-form").yiiActiveForm("validateAttribute", 'pointform-device');
+            //$("#point-form").yiiActiveForm("validateAttribute", 'pointform-device');
             $("#point-form").yiiActiveForm("validateAttribute", 'pointform-port');
             $("#point-form").yiiActiveForm("validateAttribute", 'pointform-vlan');
 
@@ -239,13 +231,8 @@ function initPathTab() {
                 $("#point-modal").find('.point-order').text(),
                 $("#point-modal").find(".tab-pane.active").attr("id"),
                 $("#pointform-domain").val(),
-                $("#pointform-domain option:selected").text(),
                 $("#pointform-network").val(),
-                $("#pointform-network").val() == '' ? 'none' : $("#pointform-network option:selected").text(),
-                $("#pointform-device").val(),
-                $("#pointform-device option:selected").text(),
                 $("#pointform-port").val(),
-                $("#pointform-port option:selected").text(),
                 $("#pointform-urn").val(),
                 $("#pointform-vlan").val(),
                 $("#pointform-vlan_text").val()
@@ -263,10 +250,10 @@ function initPathTab() {
         return false;
     });
 
-    $('#canvas').on('lmap.nodeClick', function(e, marker) {
-        marker.setPopupContent('Domain: <b>' + meicanMap.getDomain(marker.options.domainId).name + 
-            '</b><br>Device: <b>' + marker.options.name + '</b><br><br>'+
-            '<div data-node="' + marker.options.id + '">'+
+    $('#canvas').on('lmap.nodeClick', function(e, node) {
+        console.log(node.options);
+        node.setPopupContent('Domain: <b>' + node.options.domain.name + 
+            '<div data-node="' + node.options.id + '">'+
               '<button class="btn btn-sm btn-default set-source">From here</button>'+
               ' <button class="btn btn-sm btn-default add-waypoint">Add waypoint</button>'+
               ' <button class="btn btn-sm btn-default set-destination">To here</button>'+
@@ -589,7 +576,7 @@ function setPointByNode(position, nodeId) {
     drawPath();
 }
 
-function setPoint(pointElement, pointOrder, pointMode, domId, dom, netId, net, devId, dev, portId, port, urn, vlan, vlanAdvanced) {
+function setPoint(pointElement, pointOrder, pointMode, dom, net, port, urn, vlan, vlanAdvanced) {
     if(pointOrder != null) {
         pointElement = $(".point")[pointOrder];
     }
@@ -600,14 +587,11 @@ function setPoint(pointElement, pointOrder, pointMode, domId, dom, netId, net, d
         $(pointElement).find(".point-advanced").hide();
         $(pointElement).find(".point-normal").show();
 
-        $(pointElement).find('.dom-l').attr('data',domId);
         $(pointElement).find('.dom-l').text(dom);
-        $(pointElement).find('.net-l').attr('data',netId);
         $(pointElement).find('.net-l').text(net);
-        $(pointElement).find('.dev-l').attr('data', devId);
-        $(pointElement).find('.dev-l').text(dev);
-        $(pointElement).find('.port-input').val(portId);
-        $(pointElement).find('.port-l').text(port);
+        $(pointElement).find('.port-l').text(lid);
+
+        $(pointElement).find('.urn-input').val(net + ':' + port);
 
         $(pointElement).find('.vlan-l').text(vlan);
         $(pointElement).find('.vlan-input').val(vlan);
@@ -646,7 +630,7 @@ function buildPoint() {
         '<i class="fa fa-map-marker bg-gray"></i>'+
         '<div class="timeline-item">'+
             '<h3 class="timeline-header">'+
-                '<label data="" class="point-info dom-l">none</label>'+
+                '<label class="point-info dom-l">none</label>'+
                 '<div class="pull-right">'+
                     '<a href="#" class="text-muted"><i class="fa fa-minus"></i></a>'+
                     '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-arrow-up"></i></a>'+
@@ -655,10 +639,8 @@ function buildPoint() {
           '</h3>'+
         '<div class="timeline-body">'+
             '<div class="point-normal">'+
-              '<label data="" class="point-info net-l" hidden>none</label>'+
-              'Device: <label data="" class="point-info dev-l">none</label><br>'+
+              'Network: <label class="point-info net-l">none</label><br>'+
               'Port: <label class="point-info port-l">none</label><br>'+
-              '<input class="port-input" type="hidden" name="ReservationForm[path][port][]">'+
             '</div>'+
             '<div class="point-advanced" hidden>'+
               'URN: <label class="point-info urn-l">none</label><br>'+
@@ -691,223 +673,179 @@ function drawPath() {
     }
 }
 
+function initNodes() {
+    loadDomains();
+}
+
 function loadDomains() {
     $.ajax({
         url: baseUrl+'/topology/domain/get-all',
         dataType: 'json',
         method: "GET",        
         success: function(response) {
-            meicanTopo['dom'] = response;
             meicanMap.setDomains(response);
-            meicanGraph.setDomains(response);
-            loadDevices();
+            // meicanGraph.setDomains(response);
+            loadPorts(response);
         }
     });
 }
 
-function loadDevices() {
-    if(meicanTopo['dev']) return;
+function loadPorts(domains) {
     $.ajax({
-        url: baseUrl+'/topology/device/get-all',
+        url: baseUrl+'/circuits/reservation/data',
         dataType: 'json',
-        method: "GET",
-        data: {
-            cols: JSON.stringify(['id','name','latitude','longitude','graph_x', 'graph_y', 'domain_id'])
-        },
+        method: "GET",        
         success: function(response) {
-            meicanTopo['dev'] = response;
-            for (var i = 0; i < response.length; i++) {
-                meicanMap.addNode(
-                    'dev' + response[i].id,
-                    response[i].name,
-                    'dev',
-                    response[i].domain_id,
-                    response[i].latitude,
-                    response[i].longitude);
+            console.log(response);
+            meicanTopo = response;
+            initEditPointSelects();
+
+            counter = 0;
+            for (var index in domains) {
+                console.log(domains[index]);
+                for (var network in response['domains'][domains[index].name]['nets']) {
+                    console.log(network);
+                    for (var lid in response['domains'][domains[index].name][
+                        'nets'][network]['biports']) {
+                        counter++;
+                        meicanMap.addNode(
+                            counter,
+                            lid,
+                            network,
+                            domains[index],
+                            response['domains'][domains[index].name][
+                        'nets'][network]['biports'][lid]['lat'],
+                            response['domains'][domains[index].name][
+                        'nets'][network]['biports'][lid]['lng']);
+                    }
+                }
             };
-            //loadDeviceLinks();
         }
     });
 }
 
-function loadNetworks() {
-    if(meicanTopo['net']) return;
-    $.ajax({
-        url: baseUrl+'/topology/network/get-all',
-        dataType: 'json',
-        method: "GET",
-        data: {
-            cols: JSON.stringify(['id','name','latitude','longitude', 'domain_id'])
-        },
-        success: function(response) {
-            meicanTopo['net'] = true;
-            meicanGraph.addNodes(response, 'net');
-            for (var i = 0; i < response.length; i++) {
-                meicanMap.addMarker(response[i], 'net');
-            };
-            loadNetworkLinks();
-        }
-    });
-}
+// function loadDevices() {
+//     if(meicanTopo['dev']) return;
+//     $.ajax({
+//         url: baseUrl+'/topology/device/get-all',
+//         dataType: 'json',
+//         method: "GET",
+//         data: {
+//             cols: JSON.stringify(['id','name','latitude','longitude','graph_x', 'graph_y', 'domain_id'])
+//         },
+//         success: function(response) {
+//             meicanTopo['dev'] = response;
+//             for (var i = 0; i < response.length; i++) {
+//                 meicanMap.addNode(
+//                     'dev' + response[i].id,
+//                     response[i].name,
+//                     'dev',
+//                     response[i].domain_id,
+//                     response[i].latitude,
+//                     response[i].longitude);
+//             };
+//             //loadDeviceLinks();
+//         }
+//     });
+// }
+
+// function loadNetworks() {
+//     if(meicanTopo['net']) return;
+//     $.ajax({
+//         url: baseUrl+'/topology/network/get-all',
+//         dataType: 'json',
+//         method: "GET",
+//         data: {
+//             cols: JSON.stringify(['id','name','latitude','longitude', 'domain_id'])
+//         },
+//         success: function(response) {
+//             meicanTopo['net'] = true;
+//             meicanGraph.addNodes(response, 'net');
+//             for (var i = 0; i < response.length; i++) {
+//                 meicanMap.addMarker(response[i], 'net');
+//             };
+//             loadNetworkLinks();
+//         }
+//     });
+// }
 
 function fillDomainSelect() {
     var selectId = "pointform-domain";
     clearSelect(selectId);
-    $("#" + selectId).append('<option value="">' + I18N.t('loading') + '</option>');
-    $.ajax({
-        url: baseUrl+'/topology/domain/get-all',
-        data: {
-            cols: JSON.stringify(['id','name']),
-        },
-        dataType: 'json',
-        success: function(domains){
-            clearSelect(selectId);
-            $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
-            for (var i = 0; i < domains.length; i++) {
-                $("#" + selectId).append('<option value="' + domains[i].id + '">' + domains[i].name + '</option>');
-            }
-            enableSelect(selectId);
-        },
-    });
+    $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
+    for (var domain in meicanTopo['domains']) {
+        $("#" + selectId).append('<option value="' + domain + '">' + domain + '</option>');
+    }
+    enableSelect(selectId);
 }
 
-function fillNetworkSelect(domainId, networkId, initDisabled) {
+function fillNetworkSelect(domain, networkId, initDisabled) {
+    console.log(domain);
     var selectId = "pointform-network";
     disableSelect(selectId);
-    if (domainId != "" && domainId != null) {
-        $("#" + selectId).append('<option value="">' + I18N.t('loading') + '</option>');
-        $.ajax({
-            url: baseUrl+'/topology/network/get-by-domain',
-            data: {
-                id: domainId,
-            },
-            dataType: 'json',
-            success: function(response){
-                clearSelect(selectId);
-                $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
-                if (!initDisabled) enableSelect(selectId);
-                for (var i = 0; i < response.length; i++) {
-                    $("#" + selectId).append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
-                }
-                if (networkId != null) {
-                    $("#" + selectId).val(networkId);
-                }
-            }
-        });
+    clearSelect(selectId);
+    $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
+    if (!initDisabled) enableSelect(selectId);
+    if (domain != "" && domain != null) {
+        for (var net in meicanTopo['domains'][domain]['nets']) {
+            $("#" + selectId).append('<option value="' + net + '">' + net + '</option>');
+        }
+        if (networkId != null) {
+            $("#" + selectId).val(networkId);
+        }
     } 
 }
 
-function fillDeviceSelect(domainId, networkId, deviceId, initDisabled) {
-    var selectId = "pointform-device";
-    disableSelect(selectId);
-    parent = null;
-    if (networkId != "" && networkId != null) {
-        parent = [];
-        parent[0] = "network";
-        parent[1] = networkId;
-    } else if (domainId != "" && domainId != null) {
-        parent = [];
-        parent[0] = "domain";
-        parent[1] = domainId;
-    } 
-
-    if (parent) {
-        $("#" + selectId).append('<option value="">' + I18N.t('loading') + '</option>');
-        $.ajax({
-            url: baseUrl+'/topology/device/get-by-' + parent[0],
-            dataType: 'json',
-            data: {
-                id: parent[1],
-            },
-            success: function(response){
-                clearSelect(selectId);
-                $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
-                if (!initDisabled) enableSelect(selectId);
-                for (var i = 0; i < response.length; i++) {
-                    if (response[i].name == "") response[i].name = "default";
-                    $("#" + selectId).append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
-                }
-                if (deviceId != null && deviceId != "") {
-                    $("#" + selectId).val(deviceId);
-                }
-            }
-        });
-    } 
-}
-
-function fillPortSelect(deviceId, portId) {
-    console.log(deviceId, portId);
+function fillPortSelect(domain, network, port) {
+    //console.log(domain, network, localId);
     var selectId = "pointform-port";
     disableSelect(selectId);
-    if (deviceId != "" && deviceId != null) {
-        $("#" + selectId).append('<option value="">' + I18N.t('loading') + '</option>');
-        $.ajax({
-            url: baseUrl+'/circuits/reservation/get-port-by-device',
-            dataType: 'json',
-            data: {
-                id: deviceId,
-                cols: JSON.stringify(['id','name']),
-            },
-            success: function(response){
-                clearSelect(selectId);
-                $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
-                enableSelect(selectId);
-                for (var i = 0; i < response.length; i++) {
-                    var name = response[i].name;
-                    if (response[i].port == "") {
-                        name = I18N.t("default");
-                    }
-                    $("#" + selectId).append('<option value="' + response[i].id + '">' + name + '</option>');
-                }
-                if (portId != null && portId != "") $("#" + selectId).val(portId);
-            }
-        });
+    clearSelect(selectId);
+    $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
+    enableSelect(selectId);
+    if (network != "" && network != null) {
+        for (var port in meicanTopo['domains'][domain]['nets'][network]['biports']) {
+            //console.log(port);
+            $("#" + selectId).append('<option value="' + port + '">' + port + '</option>');
+        }
+        if (port != null && port != "") 
+            $("#" + selectId).val(port);
     } 
 }
 
-function fillVlanSelect(portId, vlan) {
+function fillVlanSelect(domain, network, port, vlan) {
     var selectId = "pointform-vlan";
     disableSelect(selectId);
-    if (portId != "" && portId != null) {
-        $("#" + selectId).append('<option value="">' + I18N.t('loading') + '</option>');
-        $.ajax({
-            url: baseUrl+'/topology/port/get-vlan-range',
-            dataType: 'json',
-            data: {
-                id: portId,
-            },
-            success: function(response){
-                clearSelect(selectId);
-                //$("#" + selectId).append('<option value="auto">Auto</option>');
-                if(response) {
-                    var ranges = response.split(",");
-                    for (var i = 0; i < ranges.length; i++) {
-                        var interval = ranges[i].split("-");
-                        if (interval.length > 1)
-                            $("#" + selectId).append('<option value="' + ranges[i] + '">' + ranges[i] + '</option>');
-                    }
+    if (port != "" && port != null) {
+        clearSelect(selectId);
+        for (var uniport in meicanTopo['domains'][domain]['nets'][network]['biports'][port]['uniports']) {
+            response = meicanTopo['domains'][domain]['nets'][network]['biports'][port]['uniports'][uniport]['vlan'];
+            var ranges = response.split(",");
+            for (var i = 0; i < ranges.length; i++) {
+                var interval = ranges[i].split("-");
+                if (interval.length > 1)
+                    $("#" + selectId).append('<option value="' + ranges[i] + '">' + ranges[i] + '</option>');
+            }
 
-                    for (var i = 0; i < ranges.length; i++) {
-                        var interval = ranges[i].split("-");
-                        var low = parseInt(interval[0]);
-                        var high = low;
-                        if (interval.length > 1) {
-                            high = parseInt(interval[1]);
-                            for (var j = low; j < high+1; j++) {
-                            $("#" + selectId).append('<option value="' + j + '">' + j + '</option>');
-                        }
-                        } else {
-                            $("#" + selectId).append('<option value="' + low + '">' + low + '</option>');
-                        }
-                        
-                        if (vlan != null && vlan != "") {
-                            $("#" + selectId).val(vlan);
-                        }
-                    }
-                    enableSelect(selectId);
+            for (var i = 0; i < ranges.length; i++) {
+                var interval = ranges[i].split("-");
+                var low = parseInt(interval[0]);
+                var high = low;
+                if (interval.length > 1) {
+                    high = parseInt(interval[1]);
+                    for (var j = low; j < high+1; j++) {
+                    $("#" + selectId).append('<option value="' + j + '">' + j + '</option>');
+                }
+                } else {
+                    $("#" + selectId).append('<option value="' + low + '">' + low + '</option>');
+                }
+                
+                if (vlan != null && vlan != "") {
+                    $("#" + selectId).val(vlan);
                 }
             }
-        });
+            enableSelect(selectId);
+        }
     }
 }
 
@@ -931,23 +869,19 @@ function initEditPointSelects() {
     
     $('#pointform-domain').on('change', function() {
         fillNetworkSelect(this.value);
-        fillDeviceSelect(this.value);
         fillPortSelect();
         fillVlanSelect();
     });
     
     $('#pointform-network').on('change', function() {
-        fillDeviceSelect($('#pointform-domain').val(), this.value);
-        fillPortSelect();
-        fillVlanSelect();
-    });
-    
-    $('#pointform-device').on('change', function() {
-        fillPortSelect(this.value);
+        fillPortSelect($('#pointform-domain').val(), this.value);
         fillVlanSelect();
     });
     
     $('#pointform-port').on('change', function() {
-        fillVlanSelect(this.value);
+        fillVlanSelect(
+            $('#pointform-domain').val(), 
+            $('#pointform-network').val(),
+            this.value);
     });
 }

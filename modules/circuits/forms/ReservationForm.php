@@ -11,7 +11,6 @@ use Yii;
 
 use meican\circuits\models\Reservation;
 use meican\topology\models\Port;
-use meican\topology\models\Device;
 use meican\circuits\models\ReservationPath;
 use meican\circuits\models\Connection;
 use meican\circuits\models\CircuitsPreference;
