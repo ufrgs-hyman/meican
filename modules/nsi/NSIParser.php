@@ -233,7 +233,7 @@ class NSIParser {
                         $biPortUrn]["uniports"][$portUrn]['type'] = $portType;
         $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["biports"][
-                        $biPortUrn]["uniports"][$portUrn]['vlan'] = $vlan;
+                        $biPortUrn]['vlan'] = $vlan;
         if ($aliasUrn) 
             $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["biports"][
@@ -242,10 +242,10 @@ class NSIParser {
         if ($lat) {
             $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["biports"][
-                        $biPortUrn]["uniports"][$portUrn]['lat'] = $lat;
+                        $biPortUrn]['lat'] = $lat;
             $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["biports"][
-                        $biPortUrn]["uniports"][$portUrn]['lng'] = $lng;
+                        $biPortUrn]['lng'] = $lng;
         }
     }
 

@@ -293,6 +293,8 @@ class DiscoveryService {
                     'urn'=>$urnString,
                     'type'=>$type,
                     'name' =>$portData["name"],
+                    'lat'=>isset($portData["lat"]) ? $portData["lat"] : null,
+                    'lng'=>isset($portData["lng"]) ? $portData["lng"] : null,
                     'cap_max' =>isset($portData["capMax"]) ? $portData["capMax"] : null,
                     'cap_min'=>isset($portData["capMin"]) ? $portData["capMin"] : null,
                     'granu' =>isset($portData["granu"]) ? $portData["granu"] : null,

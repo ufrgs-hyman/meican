@@ -381,6 +381,8 @@ class Change extends \yii\db\ActiveRecord
                         $port->min_capacity = $data->cap_min;
                         $port->granularity = $data->granu;
                         $port->vlan_range = $data->vlan;
+                        $port->lat = $data->lat;
+                        $port->lng = $data->lng;
 
                         if ($data->netUrn) {
                             $net = Network::findByUrn($data->netUrn)->one();
@@ -403,6 +405,8 @@ class Change extends \yii\db\ActiveRecord
                             $port->min_capacity = $data->cap_min;
                             $port->granularity = $data->granu;
                             $port->vlan_range = $data->vlan;
+                            $port->lat = $data->lat;
+                            $port->lng = $data->lng;
 
                             if($port->save()) {
                                 $this->setApplied();
@@ -645,7 +649,7 @@ class Change extends \yii\db\ActiveRecord
                             ['name' => $data->name, 'type'=>$data->type, 'lat'=> $data->lat, 'lng'=>$data->lng]);
                     case self::ITEM_TYPE_PEERING: return "";
                     case self::ITEM_TYPE_SERVICE: return Yii::t('topology', 'Domain');
-                    case self::ITEM_TYPE_NETWORK: return Yii::t('topology', 'Network');
+                    case self::ITEM_TYPE_NETWORK: return Yii::t('topology', 'URN');
                     case self::ITEM_TYPE_BIPORT: return Yii::t('topology', 'Port');
                     case self::ITEM_TYPE_UNIPORT: 
                         $port = Port::findOneArraySelect($this->item_id, ['urn']);
@@ -671,17 +675,20 @@ class Change extends \yii\db\ActiveRecord
                         $location = $data->lat ? Yii::t('topology','<br><b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
                             ['lat'=> $data->lat, 
                             'lng'=> $data->lng]) : "";
-                        return Yii::t('topology', '<b>Network</b>: {urn}',['urn' => $data->urn]).$location;
-                    case self::ITEM_TYPE_BIPORT:                         
+                        return Yii::t('topology', '<b>Name</b>: {name}<br><b>URN</b>: {urn}',
+                            ['name'=>$data->name,'urn' => $data->urn]).$location;
+                    case self::ITEM_TYPE_BIPORT:     
+                        $location = $data->lat ? Yii::t('topology',
+                            '<br><b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
+                            ['lat'=> $data->lat, 
+                            'lng'=> $data->lng]) : "";
                         $vlan = $data->vlan ? Yii::t('topology','<br><b>VLAN Range</b>: {vlan}', 
                             ['vlan'=> $data->vlan]) : "";
-                        return Yii::t('topology', '<b>Port</b>: {urn}',
-                            ['urn'=>$data->urn]).$vlan;
+                        return Yii::t('topology', '<b>Name</b>: {name}<br><b>URN</b>: {urn}',
+                            ['urn'=>$data->urn, 'name'=>$data->name]).$vlan.$location;
                     case self::ITEM_TYPE_UNIPORT: 
-                        $vlan = $data->vlan ? Yii::t('topology','<br><b>VLAN Range</b>: {vlan}', 
-                            ['vlan'=> $data->vlan]) : "";
-                        return Yii::t('topology', '<b>Bidirectional Port</b>: {biPortUrn}<br><b>Port</b>: {urn}',
-                            ['urn'=>$data->urn, 'biPortUrn'=>$data->biPortUrn]).$vlan;
+                        return Yii::t('topology', '<b>Name</b>: {name}<br><b>URN</b>: {urn}<br><b>Parent Port URN</b>: {biPortUrn}',
+                            ['urn'=>$data->urn, 'biPortUrn'=>$data->biPortUrn, 'name'=>$data->name]);
                     case self::ITEM_TYPE_LINK: 
                         return Yii::t('topology', '<b>From</b>: {src}<br><b>To</b>: {dst}', 
                             ['dst'=> $data->dst_urn, 'src'=> $data->urn]);
