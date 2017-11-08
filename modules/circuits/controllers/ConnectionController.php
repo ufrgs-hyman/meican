@@ -17,7 +17,6 @@ use meican\circuits\models\ConnectionEvent;
 use meican\circuits\forms\ConnectionForm;
 use meican\circuits\models\Reservation;
 use meican\topology\models\Port;
-use meican\topology\models\Device;
 use meican\topology\models\Domain;
 use meican\topology\models\Provider;
 use meican\aaa\RbacController;

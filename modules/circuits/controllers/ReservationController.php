@@ -27,7 +27,6 @@ use meican\circuits\forms\ReservationForm;
 use meican\circuits\forms\ReservationSearch;
 use meican\topology\models\Port;
 use meican\topology\models\Domain;
-use meican\topology\models\Device;
 use meican\topology\models\Network;
 use meican\topology\models\Service;
 
