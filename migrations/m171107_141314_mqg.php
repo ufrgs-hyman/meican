@@ -11,6 +11,7 @@ class m171107_141314_mqg extends Migration
         $this->execute("DROP TABLE meican_device;");
         $this->execute("ALTER TABLE `meican_port` ADD `lat` FLOAT NULL AFTER `name`;");
         $this->execute("ALTER TABLE `meican_port` ADD `lng` FLOAT NULL AFTER `lat`;");
+        $this->execute("DELETE FROM meican_port;");
     }
 
     public function down()
