@@ -11,8 +11,8 @@ devem ser mostrados apenas os LIDs agrupados na lista, todos ou selecionar um al
 4) usar o contextmenu para expandir os pointgroups se possivel
 5) VALIDAR RESERVA VIA MODO AVANCADO
 6) VALIDAR RESERVA VIA MAPA
-7) VALIDAR QUE PONTOS SE EXPANDEM CASO SOLICITADO
 8) VALIDAR TELA DE STATUS DE CIRCUITO COM MUDANCAS
+9) Ajustes no Discovery
 
 Futuro
 
@@ -71,15 +71,40 @@ muito mais que apenas alterar o parser.
 - politicas e permissoes nao seriam afetadas.
 - seria possivel editar e adicionar elementos na topologia do meican
 
+cipo.rnp.br:2013:MXRS:poa
+cipo.rnp.br:2013:
+MXRS:poa
+
+topo['doms']['cipo.rnp.br']['nets']['cipo.rnp.br:2013:']['points']
+
+topo = {
+	'doms': {
+		'cipo.rnp.br': {
+			'nets': {
+				'cipo.rnp.br:2013:': {
+					'urn': 'cipo.rnp.br:2013:'
+					'points': {
+						'MXRS:poa': {
+							'MXRS:poa:in': {
+								'type': 'IN',
+								'vlan': "200-999,1779-1799",
+								'alias': 'netherlight.net:2013:production7:netherlight-of-1-out'
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
 
 topo = [
-	&dom1
-	dom1 = [
-		net1 = [
-			p1
-		]
-	]
+	'dom1' = &dom1
 ]
+
+topo = {
+	'domains': &dom1
+}
 
 dom1 = {
 	'color': #000,

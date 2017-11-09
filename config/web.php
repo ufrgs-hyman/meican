@@ -9,7 +9,7 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'meican',
     'name'=>'MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks',
-    'version' => '3.0.0',
+    'version' => '3.1.0',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log','debug','session',
         'notify',
@@ -25,7 +25,7 @@ $config = [
     'modules' => [
         'debug' => [
             'class' => 'yii\debug\Module',
-            'allowedIPs' => ['143.54.12.*']
+            'allowedIPs' => ['*']
         ],
         'aaa' =>            'meican\aaa\Module',
         'base' =>           'meican\base\Module',
@@ -61,6 +61,14 @@ $config = [
             //'cookieParams' => ['httpOnly' => true,'lifetime'=> 3600],
             //'timeout' => 3600,
             'useCookies' => true,
+        ],
+        'response' => [
+            'formatters' => [
+                \yii\web\Response::FORMAT_JSON => [
+                    'class' => 'yii\web\JsonResponseFormatter',
+                    'prettyPrint' => YII_DEBUG, // use "pretty" output in debug mode
+                ],
+            ],
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
