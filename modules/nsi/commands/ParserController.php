@@ -26,6 +26,15 @@ class ParserController extends Controller {
         $this->stdout($parser->getXml());
         return 0;
     }
+
+    public function actionCheck($url) {
+        $parser = new NSIParser();
+        $parser->loadFile($url);
+        $parser->parseTopology();
+        #Yii::trace($parser->getData());
+        $this->stdout(json_encode($parser->getData(), JSON_PRETTY_PRINT));
+        return 0;
+    }
 }
 
 ?>

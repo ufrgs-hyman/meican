@@ -17,7 +17,6 @@ use meican\aaa\models\UserDomainRole;
 use meican\base\utils\DateUtils;
 use meican\bpm\models\BpmWorkflow;
 use meican\bpm\forms\WorkflowSearch;
-use meican\topology\models\Device;
 use meican\topology\models\Domain;
 
 /**
@@ -136,15 +135,9 @@ class WorkflowController extends RbacController {
 			    	$groupsNames[$group->id] = $group->name;
 		    	endforeach;
 		    	
-		    	$devicesNames = [];
-		    	foreach(Device::find()->where(['domain_id' => $domain->id])->all() as $device):
-		    	$devicesNames[$device->id] = $device->name;
-		    	endforeach;
-		    	
 		    	Yii::trace($roles);
 		    	Yii::trace($usersNames);
 		    	Yii::trace($groupsNames);
-		    	Yii::trace($devicesNames);
 		    	 
 		    	return $this->render('editor', array(
 		    			'owner_domain' => $ownerDomain,
@@ -152,7 +145,6 @@ class WorkflowController extends RbacController {
 		    			'groups' => $groupsNames,
 		    			'users' => $usersNames,
 		    			'admins' => $adminsNames,
-		    			'devices' => $devicesNames,
 		    	));
     		};
     	};
@@ -200,15 +192,9 @@ class WorkflowController extends RbacController {
 				    	$groupsNames[$group->id] = $group->name;
 			    	endforeach;
 			    	
-			    	$devicesNames = [];
-			    	foreach(Device::find()->where(['domain_id' => $domain->id])->all() as $device):
-			    	$devicesNames[$device->id] = $device->name;
-			    	endforeach;
-			    	
 			    	Yii::trace($roles);
 			    	Yii::trace($usersNames);
 			    	Yii::trace($groupsNames);
-			    	Yii::trace($devicesNames);
 			    	 
 			    	return $this->render('editor', array(
 		    			'owner_domain' => $ownerDomain,
@@ -216,7 +202,6 @@ class WorkflowController extends RbacController {
 		    			'groups' => $groupsNames,
 		    			'users' => $usersNames,
 		    			'admins' => $adminsNames,
-			    		'devices' => $devicesNames,
 			    		'id' => $_GET['id'],
 			    	));
 		    	};

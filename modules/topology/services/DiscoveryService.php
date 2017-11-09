@@ -16,7 +16,6 @@ use meican\topology\models\DiscoveryTask;
 use meican\topology\models\DiscoveryRule;
 use meican\topology\models\Domain;
 use meican\topology\models\Network;
-use meican\topology\models\Device;
 use meican\topology\models\Port;
 use meican\topology\models\Provider;
 use meican\topology\models\Service;
@@ -30,7 +29,7 @@ use meican\topology\models\Change;
  * get the network topology description, generally a XML file. 
  * After that step, this service compare the current MEICAN topology and the
  * recently downloaded network topology. As result, changes are discovered and
- * applied on local MEICAN topology. View Change class for more information about
+ * applied on local MEICAN topology. Go to Change class for more information about
  * apply methods.
  *
  * @author Maurício Quatrin Guerreiro
@@ -108,18 +107,7 @@ class DiscoveryService {
                 $change->data = json_encode([''=>'']);
                 $change->type = Change::TYPE_CREATE;
                 $change->save();
-
-                $invalidDevices = false;
-
-            } else {
-                //VERIFICA DEVICES
-                if ($this->parser instanceof NSIParser) {
-                    $invalidDevices = Device::find()->where(['domain_id'=>$domain->id]);
-                } else {
-                    $invalidDevices = false;
-                }
-                ///////////
-            }
+            } 
             
             if ($this->parser instanceof NSIParser && isset($domainData['nsa'])) {
                 foreach ($domainData['nsa'] as $nsaId => $nsaData) {
@@ -231,28 +219,13 @@ class DiscoveryService {
             //NSI
             } else {
                 if (isset($domainData['nets'])) {
-                    $this->importNetworks($domainData["nets"], $domainName, $invalidDevices);
-
-                    if ($invalidDevices) {
-                        $invalidDevices = $invalidDevices->select(['id','node'])->asArray()->all();
-
-                        foreach ($invalidDevices as $device) {
-                            $change = $this->buildChange();
-                            $change->type = Change::TYPE_DELETE;
-                            $change->domain = $domainName;
-                            $change->item_type = Change::ITEM_TYPE_DEVICE;
-                            $change->item_id = $device['id'];
-                            $change->data = json_encode(["node"=>$device['node']]);
-
-                            $change->save();
-                        } 
-                    }
+                    $this->importNetworks($domainData["nets"], $domainName);
                 }
             }
         }
     }
 
-    private function importNetworks($netsArray, $domainName, $invalidDevices) {
+    private function importNetworks($netsArray, $domainName) {
         foreach ($netsArray as $netUrn => $netData) {
             $network = Network::findByUrn($netUrn)->one();
             if (!$network) {
@@ -282,15 +255,13 @@ class DiscoveryService {
                 }
             }
 
-            if (isset($netData['devices'])) {
-                $this->importDevices($netData["devices"], $domainName, $invalidDevices, $netUrn);
+            if (isset($netData['biports'])) {
+                $this->searchPorts($netData["biports"], $domainName, $netUrn);
             }
         }
     }
     
-    private function importDevices($devicesArray, $domainName, $invalidDevices, $netUrn=null) {
-        $validDevices = [];
-
+    private function searchPorts($biports, $domainName, $netUrn=null) {
         //VERIFICA PORTAS
         $validBiPorts = [];
         if ($this->parser instanceof NMWGParser) {
@@ -308,175 +279,134 @@ class DiscoveryService {
             }
         }
 
-        foreach ($devicesArray as $deviceNode => $deviceData) {
-            $device = Device::findOneByDomainAndNode($domainName, $deviceNode);
+        foreach ($biports as $urnString => $portData) {
+            $port = Port::findByUrn($urnString)->one();
 
-            if(!$device) {
+            if(!$port) {
                 $change = $this->buildChange();
                 $change->type = Change::TYPE_CREATE;
                 $change->domain = $domainName;
-                $change->item_type = Change::ITEM_TYPE_DEVICE;
-                $change->data = json_encode(['node'=>$deviceNode,
-                    'lat'=>isset($deviceData["lat"]) ? $deviceData['lat'] : null,
-                    'lng'=>isset($deviceData["lng"]) ? $deviceData['lng'] : null,
-                    'address'=>isset($deviceData["address"]) ? $deviceData['address'] : null]);
-    
+                $change->item_type = Change::ITEM_TYPE_BIPORT;
+
+                $change->data = json_encode([
+                    'netUrn' => $netUrn,
+                    'urn'=>$urnString,
+                    'type'=>$type,
+                    'name' =>$portData["name"],
+                    'lat'=>isset($portData["lat"]) ? $portData["lat"] : null,
+                    'lng'=>isset($portData["lng"]) ? $portData["lng"] : null,
+                    'cap_max' =>isset($portData["capMax"]) ? $portData["capMax"] : null,
+                    'cap_min'=>isset($portData["capMin"]) ? $portData["capMin"] : null,
+                    'granu' =>isset($portData["granu"]) ? $portData["granu"] : null,
+                    'vlan'=> isset($portData["vlan"]) ? $portData["vlan"] : null,
+                ]);
+
                 $change->save();
 
             } else {
-                $validDevices[] = $device->id;
-
-                if (isset($deviceData['lat']) && isset($deviceData['lng']) && 
-                    (intval($device->latitude) != intval($deviceData['lat']) ||
-                        intval($device->longitude) != intval($deviceData['lng']))) {
-                    $change = $this->buildChange();
-                    $change->type = Change::TYPE_UPDATE;
-                    $change->domain = $domainName;
-                    $change->item_type = Change::ITEM_TYPE_DEVICE;
-                    $change->item_id = $device->id;
-
-                    $change->data = json_encode(['node'=>$deviceNode,
-                        'lat'=>$deviceData['lat'],
-                        'lng'=>$deviceData['lng'],
-                        'address'=>$deviceData['address']]);
-
-                    $change->save();
-                }
+                $validBiPorts[] = $port->id; 
             }
 
-            foreach ($deviceData["biports"] as $urnString => $portData) {
-                $port = Port::findByUrn($urnString)->one();
+            if ($this->parser instanceof NMWGParser) {
+                //PERFSONAR
+                $srcPort = Port::findByUrn($urnString)->one();
 
-                if(!$port) {
+                if (isset($portData['aliasUrn'])) {
+                    $dstPort = Port::findByUrn($portData['aliasUrn'])->one();
+
+                    if ((!$dstPort || !$srcPort) || ($srcPort->alias_id != $dstPort->id)) {
+                        $change = $this->buildChange();
+                        $change->domain = $domainName;
+                        $change->type = $srcPort ? $srcPort->alias_id ? Change::TYPE_UPDATE : Change::TYPE_CREATE : Change::TYPE_CREATE;
+                        $change->item_type = Change::ITEM_TYPE_LINK;
+
+                        $change->data = json_encode([
+                            'urn'=> $urnString,
+                            'dst_urn' =>$portData['aliasUrn'],
+                        ]);
+
+                        $change->save();
+                    }
+                } elseif($srcPort && $srcPort->alias_id) {
                     $change = $this->buildChange();
-                    $change->type = Change::TYPE_CREATE;
+                    $change->type = Change::TYPE_DELETE;
                     $change->domain = $domainName;
-                    $change->item_type = Change::ITEM_TYPE_BIPORT;
-
+                    $change->item_type = Change::ITEM_TYPE_LINK;
+                    $change->item_id = $srcPort->id;
                     $change->data = json_encode([
-                        'netUrn' => $netUrn,
-                        'node'=>$deviceNode,
-                        'urn'=>$urnString,
-                        'type'=>$type,
-                        'name' =>$portData["port"],
-                        'cap_max' =>isset($portData["capMax"]) ? $portData["capMax"] : null,
-                        'cap_min'=>isset($portData["capMin"]) ? $portData["capMin"] : null,
-                        'granu' =>isset($portData["granu"]) ? $portData["granu"] : null,
-                        'vlan'=> isset($portData["vlan"]) ? $portData["vlan"] : null,
+                        '' =>'',
                     ]);
-    
-                    $change->save();
 
-                } else {
-                    $validBiPorts[] = $port->id; 
+                    $change->save();
                 }
 
-                if ($this->parser instanceof NMWGParser) {
-                    //PERFSONAR
-                    $srcPort = Port::findByUrn($urnString)->one();
+            } else {
+                foreach ($portData["uniports"] as $uniPortUrn => $uniPortData) {
+                    $uniport = Port::findByUrn($uniPortUrn)->one();
+                    if (!$uniport) {
+                        $change = $this->buildChange();
+                        $change->type = Change::TYPE_CREATE;
+                        $change->domain = $domainName;
+                        $change->item_type = Change::ITEM_TYPE_UNIPORT;
 
-                    if (isset($portData['aliasUrn'])) {
-                        $dstPort = Port::findByUrn($portData['aliasUrn'])->one();
-
-                        if ((!$dstPort || !$srcPort) || ($srcPort->alias_id != $dstPort->id)) {
+                        $change->data = json_encode([
+                            'netUrn' => $netUrn,
+                            'type'=> Port::TYPE_NSI,
+                            'dir' =>  $uniPortData['type'],
+                            'urn'=>$uniPortUrn,
+                            'biPortUrn' => $urnString,
+                            'biPort'=> $portData["name"],
+                            'name' =>$uniPortData["name"],
+                            'cap_max' =>isset($uniPortData["capMax"]) ? $uniPortData["capMax"] : null,
+                            'cap_min'=>isset($uniPortData["capMin"]) ? $uniPortData["capMin"] : null,
+                            'granu' =>isset($uniPortData["granu"]) ? $uniPortData["granu"] : null,
+                            'vlan'=> isset($uniPortData["vlan"]) ? $uniPortData["vlan"] : null,
+                        ]);
+        
+                        $change->save();
+                    } else {
+                        //update port
+                        if(isset($uniPortData["vlan"]) && $uniport->vlan_range != $uniPortData['vlan']) {
                             $change = $this->buildChange();
+                            $change->type = Change::TYPE_UPDATE;
                             $change->domain = $domainName;
-                            $change->type = $srcPort ? $srcPort->alias_id ? Change::TYPE_UPDATE : Change::TYPE_CREATE : Change::TYPE_CREATE;
+                            $change->item_type = Change::ITEM_TYPE_UNIPORT;
+                            $change->item_id = $uniport->id;
+
+                            $change->data = json_encode([
+                                'vlan'=> $uniPortData["vlan"]
+                            ]);
+                            $change->save();
+                        }
+                    }
+
+                    if (isset($uniPortData['aliasUrn'])) {
+                        $dstPort = Port::findByUrn($uniPortData['aliasUrn'])->one();
+                        if ((!$dstPort || !$uniport) || ($uniport->alias_id != $dstPort->id)) {
+                            $change = $this->buildChange();
+                            $change->type = $uniport ? $uniport->alias_id ? Change::TYPE_UPDATE : Change::TYPE_CREATE : Change::TYPE_CREATE;
+                            $change->domain = $domainName;
                             $change->item_type = Change::ITEM_TYPE_LINK;
 
                             $change->data = json_encode([
-                                'node'=>$deviceNode,
-                                'port'=>$portData["port"],
-                                'urn'=> $urnString,
-                                'dst_urn' =>$portData['aliasUrn'],
+                                'urn'=> $uniPortUrn,
+                                'dst_urn' =>$uniPortData['aliasUrn'],
                             ]);
 
                             $change->save();
                         }
-                    } elseif($srcPort && $srcPort->alias_id) {
+
+                    } elseif($uniport && $uniport->alias_id) {
                         $change = $this->buildChange();
                         $change->type = Change::TYPE_DELETE;
                         $change->domain = $domainName;
                         $change->item_type = Change::ITEM_TYPE_LINK;
-                        $change->item_id = $srcPort->id;
+                        $change->item_id = $uniport->id;
                         $change->data = json_encode([
                             '' =>'',
                         ]);
 
                         $change->save();
-                    }
-
-                } else {
-                    foreach ($portData["uniports"] as $uniPortUrn => $uniPortData) {
-                        $uniport = Port::findByUrn($uniPortUrn)->one();
-                        if (!$uniport) {
-                            $change = $this->buildChange();
-                            $change->type = Change::TYPE_CREATE;
-                            $change->domain = $domainName;
-                            $change->item_type = Change::ITEM_TYPE_UNIPORT;
-
-                            $change->data = json_encode([
-                                'netUrn' => $netUrn,
-                                'node'=>$deviceNode,
-                                'type'=> Port::TYPE_NSI,
-                                'dir' =>  $uniPortData['type'],
-                                'urn'=>$uniPortUrn,
-                                'biPortUrn' => $urnString,
-                                'biPort'=> $portData["port"],
-                                'name' =>$uniPortData["port"],
-                                'cap_max' =>isset($uniPortData["capMax"]) ? $uniPortData["capMax"] : null,
-                                'cap_min'=>isset($uniPortData["capMin"]) ? $uniPortData["capMin"] : null,
-                                'granu' =>isset($uniPortData["granu"]) ? $uniPortData["granu"] : null,
-                                'vlan'=> isset($uniPortData["vlan"]) ? $uniPortData["vlan"] : null,
-                            ]);
-            
-                            $change->save();
-                        } else {
-                            //update port
-                            if(isset($uniPortData["vlan"]) && $uniport->vlan_range != $uniPortData['vlan']) {
-                                $change = $this->buildChange();
-                                $change->type = Change::TYPE_UPDATE;
-                                $change->domain = $domainName;
-                                $change->item_type = Change::ITEM_TYPE_UNIPORT;
-                                $change->item_id = $uniport->id;
-
-                                $change->data = json_encode([
-                                    'vlan'=> $uniPortData["vlan"]
-                                ]);
-                                $change->save();
-                            }
-                        }
-
-                        if (isset($uniPortData['aliasUrn'])) {
-                            $dstPort = Port::findByUrn($uniPortData['aliasUrn'])->one();
-                            if ((!$dstPort || !$uniport) || ($uniport->alias_id != $dstPort->id)) {
-                                $change = $this->buildChange();
-                                $change->type = $uniport ? $uniport->alias_id ? Change::TYPE_UPDATE : Change::TYPE_CREATE : Change::TYPE_CREATE;
-                                $change->domain = $domainName;
-                                $change->item_type = Change::ITEM_TYPE_LINK;
-
-                                $change->data = json_encode([
-                                    'node'=>$deviceNode,
-                                    'port'=>$uniPortData["port"],
-                                    'urn'=> $uniPortUrn,
-                                    'dst_urn' =>$uniPortData['aliasUrn'],
-                                ]);
-
-                                $change->save();
-                            }
-
-                        } elseif($uniport && $uniport->alias_id) {
-                            $change = $this->buildChange();
-                            $change->type = Change::TYPE_DELETE;
-                            $change->domain = $domainName;
-                            $change->item_type = Change::ITEM_TYPE_LINK;
-                            $change->item_id = $uniport->id;
-                            $change->data = json_encode([
-                                '' =>'',
-                            ]);
-
-                            $change->save();
-                        }
                     }
                 }
             }
@@ -495,10 +425,6 @@ class DiscoveryService {
 
                 $change->save();
             } 
-        }
-
-        if ($invalidDevices) {
-            $invalidDevices->andWhere(['not in', 'id', $validDevices]);
         }
     }
 }

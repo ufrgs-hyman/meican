@@ -38,7 +38,6 @@ class Change extends \yii\db\ActiveRecord
     const ITEM_TYPE_PEERING = 'PEERING';
     const ITEM_TYPE_SERVICE = 'SERVICE';
     const ITEM_TYPE_NETWORK = 'NETWORK';
-    const ITEM_TYPE_DEVICE = 'DEVICE';
     const ITEM_TYPE_BIPORT = 'BIPORT';
     const ITEM_TYPE_UNIPORT = 'UNIPORT';
     const ITEM_TYPE_LINK = 'LINK';
@@ -370,106 +369,33 @@ class Change extends \yii\db\ActiveRecord
                 }
 
                 break;
-            case self::ITEM_TYPE_DEVICE: 
-                switch ($this->type) {
-                    case self::TYPE_CREATE:
-                        //NECESSARIO pq o parser nao analisa esse caso VERIFICAR
-                       /* $dev = Device::findOneByDomainAndNode($this->domain, $data->node);
-                        if ($dev) {
-                            $dev->latitude = $data->lat;
-                            $dev->longitude = $data->lng;
-                            $dev->address = $data->address;
-                        } else {*/
-                             //}
-
-                        $dom = Domain::findOneByName($this->domain);
-
-                        if ($dom) {
-                            $dev = new Device;
-                            $dev->domain_id = $dom->id;
-                            $dev->latitude = $data->lat;
-                            $dev->longitude = $data->lng;
-                            $dev->node = $data->node;
-                            $dev->name = $dev->node;
-                            $dev->address = $data->address;
-
-                            if($dev->save()) {
-                                $this->setApplied();
-                                return $this->save();
-                            } else {
-                                Yii::trace($dev->getErrors());
-                                $this->error = "Unknown";
-                            }
-                        } else {
-                            $this->error = 'Domain not found';
-                        }
-
-                        break;
-
-                    case self::TYPE_UPDATE:
-                        $dev = Device::findOne($this->item_id);
-
-                        if ($dev) {
-                            $dev->latitude = $data->lat;
-                            $dev->longitude = $data->lng;
-                            $dev->address = $data->address;
-                            if($dev->save()) {
-                                $this->setApplied();
-                                return $this->save();
-                            } else {
-                                Yii::trace($dev->getErrors());
-                                $this->error = "Unknown";
-                            }
-
-                        } else {
-                            $this->error = 'Device not found';
-                        }
-
-                        break;
-                    case self::TYPE_DELETE:
-                        $dev = Device::findOne($this->item_id);
-                        if($dev) {
-                            if ($dev->delete()) {
-                                $this->setApplied();
-                                return $this->save();
-                            } else {
-                                $this->error = 'Fatal error. Contact the administrator.';
-                            }
-                        } else {
-                            $this->error = 'Device not found';
-                        }
-                }
-
-                break;
             case self::ITEM_TYPE_BIPORT:
                 switch ($this->type) {
                     case self::TYPE_CREATE:
-                        $dev = Device::findOneByDomainAndNode($this->domain, $data->node);
-                        if ($dev) {
-                            $port = new Port;
-                            $port->type = $data->type;
-                            $port->directionality = Port::DIR_BI;
-                            $port->urn = $data->urn;
-                            $port->name = $data->name;
-                            $port->max_capacity = $data->cap_max;
-                            $port->min_capacity = $data->cap_min;
-                            $port->granularity = $data->granu;
-                            $port->vlan_range = $data->vlan;
-                            $port->device_id = $dev->id;
+                        $port = new Port;
+                        $port->type = $data->type;
+                        $port->directionality = Port::DIR_BI;
+                        $port->urn = $data->urn;
+                        $port->name = $data->name;
+                        $port->max_capacity = $data->cap_max;
+                        $port->min_capacity = $data->cap_min;
+                        $port->granularity = $data->granu;
+                        $port->vlan_range = $data->vlan;
+                        $port->lat = $data->lat;
+                        $port->lng = $data->lng;
 
-                            if ($data->netUrn) {
-                                $net = Network::findByUrn($data->netUrn)->one();
-                                if ($net) $port->network_id = $net->id;
-                            }
+                        if ($data->netUrn) {
+                            $net = Network::findByUrn($data->netUrn)->one();
+                            if ($net) $port->network_id = $net->id;
+                        }
 
-                            if($port->save()) {
-                                $this->setApplied();
-                                return $this->save();
-                            } else {
-                                Yii::trace($port->getErrors());
-                                $this->error = "Unknown";
-                            }
-                        } 
+                        if($port->save()) {
+                            $this->setApplied();
+                            return $this->save();
+                        } else {
+                            Yii::trace($port->getErrors());
+                            $this->error = "Unknown";
+                        }
                         break;
                     case self::TYPE_UPDATE:
                         $port = Port::findOne($this->item_id);
@@ -479,6 +405,8 @@ class Change extends \yii\db\ActiveRecord
                             $port->min_capacity = $data->cap_min;
                             $port->granularity = $data->granu;
                             $port->vlan_range = $data->vlan;
+                            $port->lat = $data->lat;
+                            $port->lng = $data->lng;
 
                             if($port->save()) {
                                 $this->setApplied();
@@ -510,9 +438,8 @@ class Change extends \yii\db\ActiveRecord
             case self::ITEM_TYPE_UNIPORT:
                 switch ($this->type) {
                     case self::TYPE_CREATE:
-                        $dev = Device::findOneByDomainAndNode($this->domain, $data->node);
                         $biPortUrn = Port::findOne(['urn'=> $data->biPortUrn]);
-                        if ($dev && $biPortUrn) {
+                        if ($biPortUrn) {
                             $port = new Port;
                             $port->type = Port::TYPE_NSI;
                             if ($data->dir == "IN") {
@@ -528,7 +455,6 @@ class Change extends \yii\db\ActiveRecord
                             $port->granularity = $data->granu;
                             $port->biport_id = $biPortUrn->id;
                             $port->vlan_range = $data->vlan;
-                            $port->device_id = $dev->id;
 
                             if ($data->netUrn) {
                                 $net = Network::findByUrn($data->netUrn)->one();
@@ -658,7 +584,6 @@ class Change extends \yii\db\ActiveRecord
             case self::ITEM_TYPE_PEERING: return Yii::t('topology', 'Peering');
             case self::ITEM_TYPE_SERVICE: return Yii::t('topology', 'Service');
             case self::ITEM_TYPE_NETWORK: return Yii::t('topology', 'Network');
-            case self::ITEM_TYPE_DEVICE: return Yii::t('topology', 'Device');
             case self::ITEM_TYPE_BIPORT: return Yii::t('topology', 'Bidirectional Port');
             case self::ITEM_TYPE_UNIPORT: return Yii::t('topology', 'Unidirectional Port');
             case self::ITEM_TYPE_LINK: return Yii::t('topology', 'Link');
@@ -689,7 +614,6 @@ class Change extends \yii\db\ActiveRecord
             ['id' => self::ITEM_TYPE_PEERING, 'name' => Yii::t('topology', 'Peering')],
             ['id' => self::ITEM_TYPE_SERVICE, 'name' => Yii::t('topology', 'Service')],
             ['id' => self::ITEM_TYPE_NETWORK, 'name' => Yii::t('topology', 'Network')],
-            ['id' => self::ITEM_TYPE_DEVICE, 'name' => Yii::t('topology', 'Device')],
             ['id' => self::ITEM_TYPE_BIPORT, 'name' => Yii::t('topology', 'Bidirectional Port')],
             ['id' => self::ITEM_TYPE_UNIPORT, 'name' => Yii::t('topology', 'Unidirectional Port')],
             ['id' => self::ITEM_TYPE_LINK, 'name' => Yii::t('topology', 'Link')]];
@@ -708,7 +632,6 @@ class Change extends \yii\db\ActiveRecord
                     case self::ITEM_TYPE_PEERING: return "";
                     case self::ITEM_TYPE_SERVICE: return Yii::t('topology', 'Domain');
                     case self::ITEM_TYPE_NETWORK: return Yii::t('topology', 'Network');
-                    case self::ITEM_TYPE_DEVICE: return $data->node;
                     case self::ITEM_TYPE_BIPORT: 
                         $port = Port::findOne($this->item_id);
                         return $port ? $port->name : '';
@@ -726,11 +649,7 @@ class Change extends \yii\db\ActiveRecord
                             ['name' => $data->name, 'type'=>$data->type, 'lat'=> $data->lat, 'lng'=>$data->lng]);
                     case self::ITEM_TYPE_PEERING: return "";
                     case self::ITEM_TYPE_SERVICE: return Yii::t('topology', 'Domain');
-                    case self::ITEM_TYPE_NETWORK: return Yii::t('topology', 'Network');
-                    case self::ITEM_TYPE_DEVICE: 
-                        $dev = Device::findOne($this->item_id);
-                        return Yii::t('topology', '<b>Device</b>: {node}<br><b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
-                            ['node'=> $data->node, 'lat'=> $data->lat, 'lng'=>$data->lng]);
+                    case self::ITEM_TYPE_NETWORK: return Yii::t('topology', 'URN');
                     case self::ITEM_TYPE_BIPORT: return Yii::t('topology', 'Port');
                     case self::ITEM_TYPE_UNIPORT: 
                         $port = Port::findOneArraySelect($this->item_id, ['urn']);
@@ -756,23 +675,20 @@ class Change extends \yii\db\ActiveRecord
                         $location = $data->lat ? Yii::t('topology','<br><b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
                             ['lat'=> $data->lat, 
                             'lng'=> $data->lng]) : "";
-                        return Yii::t('topology', '<b>Network</b>: {urn}',['urn' => $data->urn]).$location;
-                    case self::ITEM_TYPE_DEVICE: 
-                        $location = $data->lat ? Yii::t('topology','<br><b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
+                        return Yii::t('topology', '<b>Name</b>: {name}<br><b>URN</b>: {urn}',
+                            ['name'=>$data->name,'urn' => $data->urn]).$location;
+                    case self::ITEM_TYPE_BIPORT:     
+                        $location = $data->lat ? Yii::t('topology',
+                            '<br><b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
                             ['lat'=> $data->lat, 
                             'lng'=> $data->lng]) : "";
-                        return Yii::t('topology', '<b>Device</b>: {node}', 
-                            ['node' => $data->node]).$location;
-                    case self::ITEM_TYPE_BIPORT:                         
                         $vlan = $data->vlan ? Yii::t('topology','<br><b>VLAN Range</b>: {vlan}', 
                             ['vlan'=> $data->vlan]) : "";
-                        return Yii::t('topology', '<b>Device</b>: {node}<br><b>Port</b>: {urn}',
-                            ['urn'=>$data->urn, 'node'=> $data->node]).$vlan;
+                        return Yii::t('topology', '<b>Name</b>: {name}<br><b>URN</b>: {urn}',
+                            ['urn'=>$data->urn, 'name'=>$data->name]).$vlan.$location;
                     case self::ITEM_TYPE_UNIPORT: 
-                        $vlan = $data->vlan ? Yii::t('topology','<br><b>VLAN Range</b>: {vlan}', 
-                            ['vlan'=> $data->vlan]) : "";
-                        return Yii::t('topology', '<b>Bidirectional Port</b>: {biPortUrn}<br><b>Port</b>: {urn}',
-                            ['urn'=>$data->urn, 'biPortUrn'=>$data->biPortUrn]).$vlan;
+                        return Yii::t('topology', '<b>Name</b>: {name}<br><b>URN</b>: {urn}<br><b>Parent Port URN</b>: {biPortUrn}',
+                            ['urn'=>$data->urn, 'biPortUrn'=>$data->biPortUrn, 'name'=>$data->name]);
                     case self::ITEM_TYPE_LINK: 
                         return Yii::t('topology', '<b>From</b>: {src}<br><b>To</b>: {dst}', 
                             ['dst'=> $data->dst_urn, 'src'=> $data->urn]);

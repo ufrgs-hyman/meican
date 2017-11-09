@@ -101,7 +101,7 @@ class DiscoveryTask extends \yii\db\ActiveRecord implements SchedulableTask {
         $this->applyChangesByType(Change::ITEM_TYPE_PEERING);
         $this->applyChangesByType(Change::ITEM_TYPE_SERVICE);
         $this->applyChangesByType(Change::ITEM_TYPE_NETWORK);
-        $this->applyChangesByType(Change::ITEM_TYPE_DEVICE);
+        //$this->applyChangesByType(Change::ITEM_TYPE_DEVICE);
         $this->applyChangesByType(Change::ITEM_TYPE_BIPORT);
         $this->applyChangesByType(Change::ITEM_TYPE_UNIPORT);
         $this->applyChangesByType(Change::ITEM_TYPE_LINK);

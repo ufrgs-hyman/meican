@@ -25,18 +25,15 @@ class DiscoveryController extends RbacController {
     public function actionIndex() {
         //deve ser feito um switch futuramente para carregamentos do pjax.
         $count = Yii::$app->db->createCommand('
-            SELECT COUNT(*) FROM (SELECT * 
-                FROM (SELECT * FROM `meican_topo_change` ORDER BY `applied_at` DESC) as t1 
-                GROUP BY `domain`) as t2
+            SELECT count(*) FROM (SELECT domain, max(applied_at)
+                FROM meican_topo_change
+                group by domain) as t1
         ')->queryScalar();
 
         $changeProvider = new SqlDataProvider([
-            'sql' => 'SELECT * 
-                FROM (SELECT * 
-                    FROM `meican_topo_change` 
-                    ORDER BY `applied_at` DESC) as t1 
-                GROUP BY `domain`
-                ORDER BY `applied_at` DESC',
+            'sql' => 'SELECT domain, max(applied_at) as applied_at
+                FROM meican_topo_change
+                group by domain',
             'totalCount' => $count,
             'pagination' => [
                 'pageSize' => 18,

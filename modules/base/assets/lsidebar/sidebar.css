@@ -79,7 +79,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       height: 40px;
       color: #333;
       font-size: 12pt;
-      overflow: hidden;
+      /*overflow: hidden;*/
       transition: all 80ms; }
       .lsidebar-tabs > li:hover, .lsidebar-tabs > ul > li:hover {
         color: #000;
