@@ -17,7 +17,7 @@ class Create extends AssetBundle
     
     public $js = [
         'create-i18n.js',
-    	'create2.js',
+    	'create.js',
     ];
 
     public $css = [

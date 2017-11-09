@@ -1,1139 +1,859 @@
+/**
+ * @copyright Copyright (c) 2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican#license
+ * @author Maurício Quatrin Guerreiro
+ */
+
+var meicanMap = new LMap('canvas');
+var meicanGraph = new VGraph("canvas");
+var meicanTopo = [];
+var mode = 'map';
+var path = [];
+var currentEvent = null;
+var lsidebar;
+
 $(document).ready(function() {
-    prepareConfirmDialog();
-    prepareBandwidthSpinner();
+    $(".sidebar-toggle").hide();
+    $(".sidebar-mini").addClass("sidebar-collapse");
+
+    initNodes();
     
-    $(".hourPicker").timepicker({
-		timeFormat: "H:i",
-        step: 30,
-	});
+    initScheduleTab();
+    initPathTab();
+    initConfirmTab();
+
+    $("#home").on("click",'.next-btn', function() {
+        lsidebar.open("path");
+    });
+
+    $("#path").on("click",'.next-btn', function() {
+        if(validatePath())
+            lsidebar.open("requirements");
+        return false;
+    });
+
+    $("#requirements").on("click",'.next-btn', function() {
+        if(validateRequirements()) {
+            lsidebar.open("schedule");
+            initCalendar();
+        }
+    });
+
+    $("#schedule").on("click",'.next-btn', function() {
+        if(validateSchedule())
+            lsidebar.open("confirm");
+    });
+    
+    lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap._map);
+    lsidebar.open("home");
+    
 });
 
-var meicanMap;
-var sourceMarker;
-var destinMarker;
-var wayPoints = [];
-var markerCluster;
-var circuit;
-var devicesLoaded = false;
+function validatePath() {
+    if (isValidPath()) return true;
+    else {
+        MAlert.show(
+            'Path invalid!', 
+            'Please, verify if your path is completelly filled. Two points are required.',
+            'danger');
+        return false;
+    }
+}
 
-var MARKER_OPTIONS_NET = '' +
-'<div><button style="font-size: 10px; height: 22px; width: 48.25%;" id="set-as-source">' + tt('From here') + '</button>' +
-'<button style="font-size: 10px; height: 22px; width: 48.25%;" id="set-as-dest">' + tt('To here') + '</button></div><div style="height: 2px;"></div>' +
-'<div><button style="font-size: 10px; height: 22px; width: 48.25%;" id="add-waypoint">' + tt('Add waypoint') + '</button>' +
-'<button style="font-size: 10px; height: 22px; width: 48.25%;" id="set-as-intra">' + tt('Intra-domain') + '</button></div>';
-var MARKER_OPTIONS_DEV = '' +
-'<div><button style="font-size: 10px; height: 22px; width: 48.25%;" id="set-as-source">' + tt('From here') + '</button>' +
-'<button style="font-size: 10px; height: 22px; width: 48.25%;" id="set-as-dest">' + tt('To here') + '</button></div><div style="height: 2px;"></div>' +
-'<div><button style="font-size: 10px; height: 22px; width: 98%;" id="add-waypoint">' + tt('Add waypoint') + '</button>' +
-'</div>';
-var MARKER_OPTIONS_END_POINT = '' +
-'<div><button style="font-size: 10px; height: 22px; width: 98%;" id="remove-endpoint">' + tt('Remove endpoint') + '</button></div><div style="height: 2px;"></div>' +
-'<div><button style="font-size: 10px; height: 22px; width: 98%;" id="add-waypoint">' + tt('Add waypoint') + '</button></div>';
-var MARKER_OPTIONS_INTRA = '' +
-'<button style="font-size: 10px; height: 22px; width: 98%;" id="remove-intra">' + tt('Remove intra-domain circuit') + '</button>';
+function isValidPath() {
+    for (var i = 0; i < $('.point').length; i++) {
+        if ($('.point').eq(i).find('.urn-input').val() == "") {
+            return false;
+        } else return true;
+    };
 
+    return false;
+}
 
-function prepareConfirmDialog() {
-	$("#confirm-dialog").dialog({
+function validateRequirements() {
+    if(($("#reservationform-bandwidth").val() == "") ||
+        $("#requirements").find(".field-reservationform-bandwidth").hasClass("has-error")) {
+        MAlert.show(
+            'Bandwidth invalid!', 
+            'The value must be must be no less than 1.',
+            'danger');
+        return false;
+    }
+    return true;
+}
+
+function validateSchedule() {
+    var events = $('#calendar').fullCalendar('clientEvents');
+    if(events.length < 1) {
+        MAlert.show(
+            'Circuit duration invalid!', 
+            'Please, check your start and end time.',
+            'danger');
+        return false;
+    }  
+    return true;
+}
+
+function validateName() {
+    if(($("#reservationform-name").val() == "") ||
+        $("#confirm").find(".field-reservationform-name").hasClass("has-error")) {
+        MAlert.show(
+            'Name invalid!', 
+            'Please, check your circuit name.',
+            'danger');
+        return false;
+    }
+    return true;
+}
+
+function initConfirmTab() {
+    $("#confirm").on("click",'.next-btn', function() {
+        if(validatePath() && validateRequirements() && validateSchedule() && validateName()) {
+            $(this).attr('disabled','disabled');
+            MAlert.show(
+                'Request received!', 
+                'Please, wait a moment while we process your request.',
+                'success');
+            var reservationForm = $( "#reservation-form" ).clone();
+            var events = $('#calendar').fullCalendar('clientEvents');
+            for (var i = 0; i < events.length; i++) {
+                $( '<input name="ReservationForm[events][start][]" value="' + events[i].start.toISOString() + '" hidden>' ).appendTo( reservationForm );
+                $( '<input name="ReservationForm[events][finish][]" value="' + events[i].end.toISOString() + '" hidden>' ).appendTo( reservationForm );
+            };
+            $.ajax({
+                type: "POST",
+                url: baseUrl + '/circuits/reservation/request',
+                data: reservationForm.serialize(),
+                success: function (resId) {
+                    if (resId>0) {
+                        $.ajax({
+                            type: "POST",
+                            url: baseUrl + '/circuits/reservation/confirm', 
+                            data: {
+                                id: resId,
+                            }
+                        });
+                        window.location.href = baseUrl + '/circuits/reservation/view?id=' + resId;
+                    } else if(resId==-1){
+                        //showError(tt("You are not allowed to create a reservation involving these selected domains."));
+                    } else {
+                        //showError(tt("Error proccessing your request. Contact your administrator."));
+                    }
+                },
+                error: function() {
+                    //showError(tt("Error proccessing your request. Contact your administrator."));
+                }
+            });
+        }
+    });
+}
+
+function showPointModal(pointElement, pointOrder, nodeId) {
+    $('#point-form').yiiActiveForm('resetForm');
+    $('#point-advanced-form').yiiActiveForm('resetForm');
+    disableSelect("pointform-network");
+    disableSelect("pointform-port");
+    disableSelect("pointform-vlan");
+    $("#pointform-vlan_text").val('');
+    $('#pointform-urn').val('');
+
+    setPointModalMode(pointElement ? $(pointElement).find(".mode-input").val() : 'normal');
+
+    if(pointOrder != null) {
+        pointElement = $(".point")[pointOrder];
+        console.log(pointOrder, pointElement);
+    }
+
+    if(nodeId) {
+        console.log(nodeId);
+        var node = meicanMap.getNode(nodeId);
+        console.log(node.options.domain);
+        $("#pointform-domain").val(node.options.domain.name);
+        fillNetworkSelect(node.options.domain.name);
+        fillPortSelect(node.options.domain.name);
+        $("#point-modal").find('.point-order').text(pointOrder); 
+    } else {
+        $("#pointform-domain").val($(pointElement).find('.dom-l').val());
+        fillNetworkSelect($(pointElement).find('.dom-l').val());
+        fillPortSelect($(pointElement).find('.dom-l').val(), $(pointElement).find('.net-l').val()); 
+        fillVlanSelect(
+            $(pointElement).find('.dom-l').val(), 
+            $(pointElement).find('.net-l').val(),
+            $(pointElement).find('.port-l').val(),
+        ); 
+
+        $("#pointform-vlan_text").val($(pointElement).find('.vlan-input').val());
+        $('#pointform-urn').val($(pointElement).find('.urn-input').val());
+
+        //subtrai um no index pois os elementos sao de mesmo tipo mas o primeiro e ultimo sao de classes diferentes
+        $("#point-modal").find('.point-order').text($(pointElement).index() - 1); 
+    }
+    
+    $("#point-modal").modal("show");
+}
+
+function setPointModalMode(mode) {
+    if (mode == 'advanced') {
+        $($('#point-modal').find("[data-toggle=tab]")[1]).tab('show');
+    } else {
+        $($('#point-modal').find("[data-toggle=tab]")[0]).tab('show');
+    }
+}
+
+function initPathTab() {
+    meicanMap.show('dev');
+
+    $("#add-point").click(function() {
+        addPoint();
+        return false;
+    });
+
+    $("#point-modal").on('click','.save-btn',function() {
+        if ($("#point-modal").find(".tab-pane.active").attr("id") == "normal") {
+            $("#point-form").yiiActiveForm("validateAttribute", 'pointform-domain');
+            //$("#point-form").yiiActiveForm("validateAttribute", 'pointform-device');
+            $("#point-form").yiiActiveForm("validateAttribute", 'pointform-port');
+            $("#point-form").yiiActiveForm("validateAttribute", 'pointform-vlan');
+
+        } else {
+            $("#point-advanced-form").yiiActiveForm("validateAttribute", 'pointform-urn');
+            $("#point-advanced-form").yiiActiveForm("validateAttribute", 'pointform-vlan_text');
+        }
+
+        setTimeout(function() {
+            if($("#point-modal").find(".tab-pane.active").find(".has-error").length > 0) {
+                console.log("tem erro")
+                return false;
+            }
+
+            setPoint(
+                null,
+                $("#point-modal").find('.point-order').text(),
+                $("#point-modal").find(".tab-pane.active").attr("id"),
+                $("#pointform-domain").val(),
+                $("#pointform-network").val(),
+                $("#pointform-port").val(),
+                $("#pointform-urn").val(),
+                $("#pointform-vlan").val(),
+                $("#pointform-vlan_text").val()
+            );                
+
+            $("#point-modal").modal('hide');
+
+        }, 200);
+        
+        return false;
+    });
+
+    $("#point-modal").on('click','.cancel-btn',function() {
+        $("#point-modal").modal('hide');
+        return false;
+    });
+
+    $('#canvas').on('lmap.nodeClick', function(e, node) {
+        console.log(node.options);
+        node.setPopupContent('Domain: <b>' + node.options.domain.name + 
+            '<div data-node="' + node.options.id + '">'+
+              '<button class="btn btn-sm btn-default set-source">From here</button>'+
+              ' <button class="btn btn-sm btn-default add-waypoint">Add waypoint</button>'+
+              ' <button class="btn btn-sm btn-default set-destination">To here</button>'+
+            '</div>');
+    });
+
+    $('#canvas').on('vgraph.nodeClick', function(e, nodeId) {
+        meicanGraph.showPopup(nodeId, 'Domain: cipo.rnp.br<br>Device: POA<br><br>'+
+            '<div data-node="' + nodeId + '">'+
+              '<button class="btn btn-sm btn-default set-source">From here</button>'+
+              ' <button class="btn btn-sm btn-default add-waypoint">Add waypoint</button>'+
+              ' <button class="btn btn-sm btn-default set-destination">To here</button>'+
+            '</div>');
+    });
+
+    $("#canvas").on("click",'.set-source', function() {
+        lsidebar.open("path");
+        closePopups();
+        showPointModal(null, 0, $(this).parent().attr('data-node'));
+        return false;
+    });
+
+    $("#canvas").on("click",'.set-destination', function() {
+        lsidebar.open("path");
+        closePopups();
+        showPointModal(null, $('.point').length - 1, $(this).parent().attr('data-node'));
+        return false;
+    });
+
+    $("#canvas").on("click",'.add-waypoint', function() {
+        lsidebar.open("path");
+        closePopups();
+        addWayPoint($(this).parent().attr('data-node'));
+        return false;
+    });
+
+    $("#path").on('click','.fa-arrow-up', function() {
+        var index = $(this).parent().parent().parent().parent().parent().index();
+        if(index > 1)
+            $($(".point")[index - 1]).insertBefore($($(".point")[index - 2]));
+        drawPath();
+        return false;
+    });
+
+    $("#path").on('click','.fa-arrow-down', function() {
+        var index = $(this).parent().parent().parent().parent().parent().index();
+        if(index < $(".point").length)
+            $($(".point")[index - 1]).insertAfter($($(".point")[index]));
+        drawPath();
+        return false;
+    });
+
+    $("#path").on('click','.fa-trash', function() {
+        if($(".point").length > 2) {
+            $(this).parent().parent().parent().parent().parent().remove();
+            drawPath();
+        } else MAlert.show(
+            'Invalid action!',
+            'Minimum two points are required for a valid circuit.',
+            'warning');
+        return false;
+    });
+
+    $("#path").on('click','.fa-pencil', function() {
+        showPointModal($(this).parent().parent().parent().parent().parent());
+        return false;
+    });
+
+    $("#path").on('click','.fa-minus', function() {
+        $(this).removeClass('fa-minus');
+        $(this).addClass('fa-plus');
+        $(this).parent().parent().parent().parent().find('.timeline-body').slideUp();
+        return false;
+    });
+
+    $("#path").on('click','.fa-plus',function() {
+        $(this).removeClass('fa-plus');
+        $(this).addClass('fa-minus');
+        $(this).parent().parent().parent().parent().find('.timeline-body').slideDown();
+        return false;
+    });
+    
+    $("#canvas").css("height", $(window).height() - 50);
+
+    if($(window).width() < 768) {
+        $("#canvas").css("width", $(window).width() - 40);
+    } else {
+        $("#canvas").css("width", $(window).width() - 51);
+    }
+
+    $( window ).resize(function() {
+        $("#canvas").css("height", $(window).height() - 50);
+        if($(window).width() < 768) {
+            $("#canvas").css("width", $(window).width() - 40);
+        } else {
+            $("#canvas").css("width", $(window).width() - 51);
+        }
+    })
+    
+    /*$( "#graph-canvas" ).on( "nodeClick", function(event, nodeId) {
+        meicanMap.showMarker(nodeId);
+    });
+    $( "#map-canvas" ).on( "markerClick", function(event, markerId) {
+        meicanGraph.showNode(markerId);
+    });*/
+}
+
+function initScheduleTab() {
+    $("#lsidebar").on("click",'.schedule-tab', function() {
+        initCalendar();
+    });
+
+    $("#schedule-modal").on('click', '.save-btn', function() {
+        if(currentEvent == null) {
+            var events = [];
+            events.push({
+                title: 'VC',
+                start: moment($('#datetime-range').val().split(' - ')[0], "DD/MM/YYYY HH:mm").toISOString(),
+                end: moment($('#datetime-range').val().split(' - ')[1], "DD/MM/YYYY HH:mm").toISOString()
+            });
+
+            $('#calendar').fullCalendar('addEventSource', events );
+        } else {
+            currentEvent.start = moment($('#datetime-range').val().split(' - ')[0], "DD/MM/YYYY HH:mm").toISOString()
+            currentEvent.end = moment($('#datetime-range').val().split(' - ')[1], "DD/MM/YYYY HH:mm").toISOString()
+            $('#calendar').fullCalendar('updateEvent', currentEvent );
+        }
+
+        $("#schedule-modal").modal("hide");
+    });
+
+    $("#schedule-modal").on('click', '.remove-btn', function() {
+        $('#calendar').fullCalendar('removeEvents', currentEvent._id);
+        $("#schedule-modal").modal("hide");
+    });
+
+    $("#schedule-modal").on('click', '.cancel-btn', function() {
+        $("#schedule-modal").modal("hide");
+    });
+
+    $('#datetime-range').daterangepicker({
+        timePicker: true,
+        timePickerIncrement: 1,
+        timePicker24Hour: true,
+        linkedCalendars: false,
+        startDate: moment().format("DD/MM/YYYY HH:mm"),
+        endDate: moment().add(1, 'hours').format("DD/MM/YYYY HH:mm"),
+        autoApply: "true",
+        "opens": "right",
+        "locale": {
+            "format": "DD/MM/YYYY HH:mm",
+            "separator": " - ",
+            "applyLabel": I18N.t("Apply"),
+            "cancelLabel": I18N.t("Cancel"),
+            "fromLabel": I18N.t("From"),
+            "toLabel": I18N.t("To"),
+            "customRangeLabel": I18N.t("Custom"),
+            "daysOfWeek": [
+                I18N.t("Su"),
+                I18N.t("Mo"),
+                I18N.t("Tu"),
+                I18N.t("We"),
+                I18N.t("Th"),
+                I18N.t("Fr"),
+                I18N.t("Sa")
+            ],
+            "monthNames": [
+                I18N.t("January"),
+                I18N.t("February"),
+                I18N.t("March"),
+                I18N.t("April"),
+                I18N.t("May"),
+                I18N.t("June"),
+                I18N.t("July"),
+                I18N.t("August"),
+                I18N.t("September"),
+                I18N.t("October"),
+                I18N.t("November"),
+                I18N.t("December")
+            ],
+        },
+    });
+
+    $(".daterangepicker").find('.ranges').remove();
+}
+
+function initCalendar() {
+    if($("#calendar").attr('loaded') === "false") {
+        $("#calendar").attr("loaded", 'true');
+        $('#calendar').fullCalendar({
+            defaultView: 'month',
+            height: 480,
+            timezone: 'local',
+            dayClick: function(date) {
+                currentEvent = null;
+                $("#schedule-modal").find(".remove-btn").hide();
+                $("#schedule-modal").modal("show");
+                $('#datetime-range').data('daterangepicker').setStartDate(date.format("DD/MM/YYYY HH:mm"));
+                if(date._ambigTime)
+                    $('#datetime-range').data('daterangepicker').setEndDate(date.add(24, 'hours').format("DD/MM/YYYY HH:mm"));
+                else
+                    $('#datetime-range').data('daterangepicker').setEndDate(date.add(1, 'hours').format("DD/MM/YYYY HH:mm"));
+            },
+            eventClick: function(event) {
+                currentEvent = event;
+                $("#schedule-modal").find(".remove-btn").show();
+                $("#schedule-modal").modal("show");
+                $('#datetime-range').data('daterangepicker').setStartDate(moment(event.start).format("DD/MM/YYYY HH:mm"));
+                if(event.allDay)
+                    $('#datetime-range').data('daterangepicker').setEndDate((moment(event.start).add(24, 'hours')).format("DD/MM/YYYY HH:mm"));
+                else
+                    $('#datetime-range').data('daterangepicker').setEndDate(moment(event.end).format("DD/MM/YYYY HH:mm"));
+            },
+            lang: 'en-us',
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            events: [],
+            editable: true,
+            eventLimit: true,
+        });
+    }
+}
+
+function closePopups() {
+    if(mode != 'map') {
+        meicanGraph.closePopups();
+    } else {
+        meicanMap.closePopups();
+    }
+}
+
+function prepareConfirmModal() {
+    $("#confirm-dialog").dialog({
         autoOpen: false,
         modal: true,
         resizable: false,
         appendTo: "#reservation-form",
         buttons: [{
-        	id:"confirm-button",
+            id:"confirm-button",
             text: tt('Yes'),
             click: function() {
-            	$("#confirm-button").attr("disabled", "disabled");
-            	if (validateForm()) {
-            		$.ajax({
-            	        type: "POST",
-            	        url: baseUrl + '/circuits/reservation/request',
-            	        data: $("#reservation-form").serialize(),
-            	        success: function (resId) {
-            	        	if (resId>0) {
-            	        		$.ajax({
-            	        			type: "POST",
-            	        			url: baseUrl + '/circuits/reservation/confirm', 
-            	        			data: {
-            	        				id: resId,
-            	        			}
-                        	    });
-                	        	window.location.href = baseUrl + '/circuits/reservation/view?id=' + resId;
-            	        	} else if(resId==-1){
-            	        		showError(tt("You are not allowed to create a reservation involving these selected domains."));
-            	        	} else {
-            	        		showError(tt("Error proccessing your request. Contact your administrator."));
-            	        	}
-            	        },
-            	        error: function() {
-            	        	showError(tt("Error proccessing your request. Contact your administrator."));
-            	        }
-            	    });
-            	}
-        	}
+                $("#confirm-button").attr("disabled", "disabled");
+                if (validateForm()) {
+                    $.ajax({
+                        type: "POST",
+                        url: baseUrl + '/circuits/reservation/request',
+                        data: $("#reservation-form").serialize(),
+                        success: function (resId) {
+                            if (resId>0) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: baseUrl + '/circuits/reservation/confirm', 
+                                    data: {
+                                        id: resId,
+                                    }
+                                });
+                                window.location.href = baseUrl + '/circuits/reservation/view-circuit?id=' + resId;
+                            } else if(resId==-1){
+                                showError(tt("You are not allowed to create a reservation involving these selected domains."));
+                            } else {
+                                showError(tt("Error proccessing your request. Contact your administrator."));
+                            }
+                        },
+                        error: function() {
+                            showError(tt("Error proccessing your request. Contact your administrator."));
+                        }
+                    });
+                }
+            }
         },{
-        	id:"cancel-button",
+            id:"cancel-button",
             text: tt('No'),
             click: function() {
-            	$("#confirm-dialog").dialog( "close" );
+                $("#confirm-dialog").dialog( "close" );
             }
         }],
         close: function() {
-        	$("#error-confirm-dialog").hide();
-        	$("#error-confirm-dialog").html("");
-        	$("#confirm-button").attr("disabled", false);
+            $("#error-confirm-dialog").hide();
+            $("#error-confirm-dialog").html("");
+            $("#confirm-button").attr("disabled", false);
         },
     });
     
     $("#request-button").click(function() {
-    	$("#confirm-dialog").dialog("open");
-    	return false;
+        $("#confirm-dialog").dialog("open");
+        return false;
     });
 }
 
-function validateForm() {
-	var isValid = true;
-	var errors = "";
-	if (!$("#src-vlan").val() || $("#src-vlan").val() == "null") {
-		errors += '<br>- ' + tt('Source end point is undefined or incomplete.');
-		isValid = false;
-	}
-    if (!$("#dst-vlan").val() || $("#dst-vlan").val() == "null") {
-		errors += '<br>- ' + tt('Destination end point is undefined or incomplete.');
-		isValid = false;
-    }
-    if ($("#waypoints_order").children('.ui-state-default').length > 0) {
-    	var wayPointsItems = $("#waypoints_order").children();
-    	for (var i = 0; i < wayPointsItems.length; i++) {
-    		var wayPoint = wayPointsItems.children(".vlan").val();
-    		if (wayPoint == '') {
-    			errors += '<br>- ' + tt('Waypoint information is required.');
-        		isValid = false;
-    		}
-        }
-    }
-	if (diffDate($("#start-time").val(),$("#finish-time").val(),$("#start-date").val(),$("#finish-date").val()) == false) {
-		errors += '<br>- ' + tt('The finish date must be after start date.');
-		isValid = false;
-	}
-	if (isNaN($("#start-time").val().split(":").toString().replace(",","")) || isNaN($("#finish-time").val().split(":").toString().replace(",",""))) {
-		errors += '<br>- ' + tt('The start time or the finish time are invalid.');
-		isValid = false;
-	}
-	if ($("#bandwidth").val().length < 1 || isNaN($("#bandwidth").val()) || parseInt($("#bandwidth").val()) < 1) {
-		errors += '<br>- ' + tt('The bandwidth is required.');
-		isValid = false;
-	}
-	if (!($("#name").val().trim())) {
-	    errors += '<br>- ' + tt('A reservation name is required.');
-	    isValid = false;
-	}
-	if ($("#gri").val() && $("#gri").val().length > 30) {
-		errors += '<br>- ' + tt('The GRI cannot be longer than 30 characters.');
-		isValid = false;
-    }
-	
-	if(!isValid) {
-		showError(tt('Error(s) found') + ":<br>"+errors);
-		$("#error-confirm-dialog").show();
-	}
-	
-	return isValid;
+function addWayPoint(nodeId) {
+    var position = $('.point').length - 1;
+    addPoint(position);
+    showPointModal(null, position, nodeId);
 }
 
-function showError(message) {
-	$("#error-confirm-dialog").html("<br>"+message);
-	$("#error-confirm-dialog").show();
-}
-
-///////// inicializa bandwith spinner /////////////
-
-function prepareBandwidthSpinner() {
-	if(max_bandwidth) document.getElementById('bandwidth_bar_inside').style.display = 'block';
-	
-	var f = function() {
-        var v = ($("#bandwidth").val() / $("#bandwidth").attr('aria-valuemax')) * 100;
-        if (v > 100 || v < 0)
-            return;
-        var k = 2 * (50 - v);
-        $('#bandwidth_bar_inside').width(v + '%');
-    };
-
-    $('#bandwidth').attr("min", 100).attr("max", max_bandwidth).attr("step", 100).
-    		spinner({
-    			spin: f,
-				stop: f
-    }).spinner("disable").bind('spin', f).change(f).keyup(f).click(f).scroll(f);
-    $("#bandwidth").val(100);
-    f();
-    disableBandwidthSpinner();
-}
-
-function disableBandwidthSpinner() {
-	$("#bandwidth_un").attr("disabled", "disabled");
-    $("#bandwidth").spinner('disable');
-}
-
-function enableBandwidthSpinner() {
-    $('#bandwidth').spinner({
-        min: 100,
-        max: max_bandwidth,
-        step: 100
-    }).spinner("enable").disabled(false).trigger('click');
-    $("#bandwidth").trigger("change");
-}
-
-/////////////// botoes superiores da tabela origem destino /////////
-
-function initEndPointButtons(endPointType) {
-    $('#' + endPointType + '-clear-endpoint').click(function() {
-		removeMarkerEndPoint(endPointType);
-        setNetworkSelected(endPointType);
-        $('#' + endPointType + '-domain').val("");
-    });
-	
-    $('#' + endPointType + '-select-current-host').click(function() {
-      	var currentHostMarker = findCurrentHostMarker();
-      	setEndPoint(endPointType, currentHostMarker);
-    });
-    
-    $('#' + endPointType + '-copy-urn').click(function() {
-    	openCopyUrnDialog(endPointType);
-    });
-    
-    $("#copy-urn-dialog").dialog({
-        autoOpen: false,
-        modal: true,
-        resizable: false,
-        width: "auto",
-        height: "110",
-        beforeClose: function() {
-            $("#copy-urn-field").val("");
-        }
-    });
-}
-
-function findCurrentHostMarker() {
-  	var currentHost = document.URL;
-  	currentHost = currentHost.split("/")[2].split(".");
-  	
-  	if (meicanMap.getCurrentMarkerType() == "net") {
-  		for (var i = 0; i < meicanMap.getMarkers().length; i++) {
-  	    	if (meicanMap.getMarkers()[i].type == "net") {
-  	    		var domain = meicanMap.getMarkers()[i].name; /////// ARRRUMA
-  	    		domain = domain.split(".");
-  	    		var equal = true;
-  	    		var j = domain.length - 1;
-      			var k = currentHost.length - 1;
-  	    		while (j > -1 && k > -1) {
-  	    			console.log(domain[j] + currentHost[k]);
-  	    			if (domain[j] == currentHost[k]) {
-  	    				j--;
-  	    				k--;
-  	    			} else {
-  	    				equal = false;
-  	    				break;
-  	    			}
-  	    		}
-  	    		if (equal) return meicanMap.getMarkers()[i];
-  	    	}
-  	    }
-  	}
-	
-  	alert(tt("Current host is not present in known topology"));
-  	
-  	return null;
-}
-
-function openCopyUrnDialog(endPointType) {
-	$.ajax({
-		url: baseUrl+'/topology/urn/get',
-		dataType: 'json',
-		data: {
-			id: $('#' + endPointType + '-port').val(),
-		},
-		success: function(response){
-			$("#copy-urn-field").val(response.value);
-		    $("#copy-urn-dialog").dialog("open");
-		}
-	});
-	
-}
-
-/////////////// LISTA INTERATIVA DE WAYPOINTS //////////////////////
-
-function enableWayPointsSortable() {
-	$("#waypoints_order").sortable({
-        update: function(event, ui) {
-            var sortableOrder = $(this).sortable('toArray');
-            var newWayPoints = [];
-        	for (var i = 0; i < sortableOrder.length; i++) {
-            	newWayPoints[i] = meicanMap.getMarker(meicanMap.getCurrentMarkerType(), parseInt(sortableOrder[i].replace("way","")));
-            }
-
-            wayPoints = newWayPoints;
-            
-            drawCircuit();
-        }
-
-    }).css("display", "block");
-}
-
-function prepareDialogDeviceSelect(wayObject) {
-    var object = meicanMap.getMarker(meicanMap.getCurrentMarkerType(), $(wayObject).attr("id").replace("way",""));
-	
-    $("#waypoint-domain").val($(wayObject).children(".domain-id").val());
-
-    if (meicanMap.getCurrentMarkerType() == "net") {
-        fillNetworkSelect('waypoint', $(wayObject).children(".domain-id").val(), $(wayObject).children(".network-id").val(), true);
-        fillDeviceSelect('waypoint', $(wayObject).children(".domain-id").val(), $(wayObject).children(".network-id").val(), 
-        $(wayObject).children(".device-id").val());
+function setPointByNode(position, nodeId) {
+    console.log(position, nodeId);
+    //var node = meicanMap.getMarker(nodeId);
+    //var node = meicanGraph.getNode(nodeId);
+    if(mode == 'map') {
+        var marker = meicanMap.getMarker(nodeId);
+        setPoint(
+            position, 
+            meicanMap.getDomain(marker.options.domainId).name,
+            'none',
+            marker.options.name,
+            marker.options.id.replace('dev',''),
+            'none',
+            null,
+            null,
+            'auto');
+        
     } else {
-        fillDeviceSelect('waypoint', $(wayObject).children(".domain-id").val(), $(wayObject).children(".network-id").val(), 
-        $(wayObject).children(".device-id").val(), true);
+        var node = meicanGraph.getNode(nodeId);
     }
 
-    fillPortSelect('waypoint', $(wayObject).children(".device-id").val(), $(wayObject).children(".port-id").val());
-    fillVlanSelect('waypoint', $(wayObject).children(".port-id").val(), $(wayObject).children(".vlan").val());
+    drawPath();
 }
 
-function setWayPointDevice(wayObject) {
-	var deviceId = $("#waypoint-device").val();
-	var domainName = $(wayObject).html().split("(")[0];
-	var rest = $(wayObject).html().split(")")[1];
-	var deviceName = $("#waypoint-device").children("[value=" + deviceId + "]").text();
-	if (deviceId != "null") {
-		$(wayObject).html(domainName + "(" + deviceName + " - " + 
-            $("#waypoint-port").children("[value=" + $("#waypoint-port").val() + "]").text() + " - " +
-            $("#waypoint-vlan").val() + 
-            ")" + rest);
-	} else {
-		$(wayObject).html(domainName + "(" + tt("click to fill waypoint") + ")" + rest);
-	}
+function setPoint(pointElement, pointOrder, pointMode, dom, net, port, urn, vlan, vlanAdvanced) {
+    if(pointOrder != null) {
+        pointElement = $(".point")[pointOrder];
+    }
 
-	$(wayObject).children(".domain-id").val($("#waypoint-domain").val());
-    $(wayObject).children(".network-id").val($("#waypoint-network").val());
-    $(wayObject).children(".device-id").val($("#waypoint-device").val());
-    $(wayObject).children(".port-id").val($("#waypoint-port").val());
-    $(wayObject).children(".vlan").val($("#waypoint-vlan").val());
-    console.log($(wayObject).children(".domain-id").val(),
-        $(wayObject).children(".network-id").val(),
-        $(wayObject).children(".device-id").val(),
-        $(wayObject).children(".port-id").val(),
-        $(wayObject).children(".vlan").val());
-}
+    $(pointElement).find('.mode-input').val(pointMode);
 
-function addWayPoint(marker) {
-    marker.circuitPoints++;
-	markerCluster.removeMarker(marker);
-	marker.setMap(meicanMap.getMap());
-	
-	wayPoints.push(marker);
-    $("#waypoints-size").text(wayPoints.length);
+    if(pointMode == 'normal') {
+        $(pointElement).find(".point-advanced").hide();
+        $(pointElement).find(".point-normal").show();
 
-    var inputData = '';
-    if (marker.type == "net") {
-        inputData = '<input value="' + marker.id + '" type="text" class="network-id" hidden></input>' + 
-             '<input type="text" class="device-id" hidden></input>';
+        $(pointElement).find('.dom-l').text(dom);
+        $(pointElement).find('.net-l').text(net);
+        $(pointElement).find('.port-l').text(lid);
+
+        $(pointElement).find('.urn-input').val(net + ':' + port);
+
+        $(pointElement).find('.vlan-l').text(vlan);
+        $(pointElement).find('.vlan-input').val(vlan);
     } else {
-        inputData = '<input type="text" class="network-id" hidden></input>' + 
-             '<input value="' + marker.id + '" type="text" class="device-id" hidden></input>';
+        $(pointElement).find(".point-normal").hide();
+        $(pointElement).find(".point-advanced").show();
+
+        var domLabel = urn.split(':')[3];
+        $(pointElement).find('.dom-l').text(domLabel ? domLabel : "unknown");
+        console.log(domLabel);
+
+        $(pointElement).find('.urn-input').val(urn);
+        $(pointElement).find('.urn-l').text(urn.split(':').slice(3).join(':'));
+
+        $(pointElement).find('.vlan-l').text(vlanAdvanced);
+        $(pointElement).find('.vlan-input').val(vlanAdvanced);
     }
-	
-	$("#waypoints_order").append("<li class='ui-state-default opener' id='way" + 
-    		 marker.id + "'>" + meicanMap.getDomain(marker.domainId).name + " (" + tt("click to fill waypoint") + ")" + 
-             '<input value="' + marker.domainId + '" type="text" class="domain-id" hidden></input>' + 
-             inputData + 
-             '<input name="ReservationForm[waypoints][port][]" type="text" class="port-id" hidden></input>' + 
-             '<input name="ReservationForm[waypoints][vlan][]" type="text" class="vlan" hidden></input>' + 
-             '</li>');
-	
-	$(".opener").click(function() {
-		var content = this;
-        $("#waypoint-dialog").dialog({
-        	autoOpen: false,
-            modal: true,
-            resizable: false,
-            width: "auto",
-            open: function(event, ui) {
-            	prepareDialogDeviceSelect(content);
-                disableTabSlide();
-            },
-            close: function(event, ui) {
-                enableTabSlide();
-            },
-            buttons: [{
-                text: tt('Remove'),
-                click: function() {
-                    deleteWayPoint(content);
-                    $("#waypoint-dialog").dialog( "close" );
-                }},{
-                text: tt('Save'),
-                click: function() {
-                    setWayPointDevice(content);
-                    $("#waypoint-dialog").dialog( "close" );
-                }},{
-                text: tt('Cancel'),
-                click: function() {
-                    $("#waypoint-dialog").dialog( "close" );
-                }
-            }],
-        });
-        $("#waypoint-dialog").dialog("open");
-    });
-	
-	drawCircuit();
+    
+    $(pointElement).find('.timeline-body').slideDown();
+    var element = $(pointElement).find('.fa-plus'); 
+    element.removeClass('fa-plus');
+    element.addClass('fa-minus');
+    drawPath();
 }
 
-function deleteWayPoint(wayObject) {
-	var marker = meicanMap.getMarker(meicanMap.getCurrentMarkerType(), $(wayObject).attr("id").replace("way",""));
-    marker.circuitPoints--;
-	
-	for (var i = 0; i < wayPoints.length; i++) {
-		if (wayPoints[i] == marker) {
-			wayPoints.splice(i, 1);
-			break;
-		}
-	}
-
-    $("#waypoints-size").text(wayPoints.length);
-	
-    if (marker.circuitPoints == 0) {
-        marker.setMap(null);
-        markerCluster.addMarker(marker);
+function addPoint(position) {
+    if(position) {
+        $($(".point")[position]).before(buildPoint());
+    } else {
+        $("#destination-client").before(buildPoint());
     }
-
-    $(wayObject).remove();
-	
-	drawCircuit();
 }
 
-function deleteWayPoints() {
-	$("#waypoints_order").empty();
-	
-	var marker = wayPoints.pop();
-	while(marker) {
-		marker.setMap(null);
-		markerCluster.addMarker(marker);
-		marker.circuitMode = "none";
-		
-		marker = wayPoints.pop();
-	}
-	
-    $("#waypoints-size").text(wayPoints.length);
-	
-	drawCircuit();
+function buildPoint() {
+    return '<li class="point">'+
+        '<i class="fa fa-map-marker bg-gray"></i>'+
+        '<div class="timeline-item">'+
+            '<h3 class="timeline-header">'+
+                '<label class="point-info dom-l">none</label>'+
+                '<div class="pull-right">'+
+                    '<a href="#" class="text-muted"><i class="fa fa-minus"></i></a>'+
+                    '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-arrow-up"></i></a>'+
+                    '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-arrow-down"></i></a>'+
+                '</div>'+
+          '</h3>'+
+        '<div class="timeline-body">'+
+            '<div class="point-normal">'+
+              'Network: <label class="point-info net-l">none</label><br>'+
+              'Port: <label class="point-info port-l">none</label><br>'+
+            '</div>'+
+            '<div class="point-advanced" hidden>'+
+              'URN: <label class="point-info urn-l">none</label><br>'+
+              '<input class="urn-input" type="hidden" name="ReservationForm[path][urn][]">'+
+            '</div>'+
+            'VLAN: <label class="point-info vlan-l">none</label>'+
+            '<input class="vlan-input" type="hidden" name="ReservationForm[path][vlan][]">'+
+            '<input class="mode-input" type="hidden" name="ReservationForm[path][mode][]" value="normal">'+
+            '<div class="pull-right">'+
+                '<a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>'+
+                '<a href="#" class="text-muted" style="margin-left: 3px;"><i class="fa fa-trash"></i></a>'+
+            '</div>'+
+        '</div>'+
+    '</li>';
 }
 
-///////// SELECTS DINAMICOS ////////////
+function drawPath() {
+    meicanMap.removeLinks();
 
-function fillDomainSelect(endPointType) {
-	clearSelect(endPointType, "domain");
-	$("#"+ endPointType + "-domain").append('<option value="">' + tt('loading') + '</option>');
-	$.ajax({
-		url: baseUrl+'/topology/domain/get-all',
-		data: {
-			cols: JSON.stringify(['id','name']),
-		},
-		dataType: 'json',
-		success: function(domains){
-			clearSelect(endPointType, "domain");
-			$("#"+ endPointType + "-domain").append('<option value="">' + tt('select') + '</option>');
-			for (var i = 0; i < domains.length; i++) {
-				$("#"+ endPointType + "-domain").append('<option value="' + domains[i].id + '">' + domains[i].name + '</option>');
-			}
-		},
-	});
-}
+    if ($(".point").length > 1) {
+        var path = [];
+        for (var i = 0; i < $(".point").length; i++) {
+            if($($(".point")[i]).find('.mode-input').val() == 'normal')
+                path.push($($(".point")[i]).find('.dev-l').attr('data'));
+        };
 
-function fillNetworkSelect(endPointType, domainId, networkId, initDisabled) {
-    disableSelect(endPointType, "network");
-	clearSelect(endPointType, "network");
-	if (domainId != "" && domainId != null) {
-		$("#"+ endPointType + "-network").append('<option value="">' + tt('loading') + '</option>');
-		$.ajax({
-			url: baseUrl+'/topology/network/get-by-domain',
-			data: {
-				id: domainId,
-			},
-			dataType: 'json',
-			success: function(response){
-				clearSelect(endPointType, "network");
-				$("#"+ endPointType + "-network").append('<option value="">' + tt('select') + '</option>');
-				if (!initDisabled) enableSelect(endPointType, "network");
-				for (var i = 0; i < response.length; i++) {
-					$("#"+ endPointType + "-network").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
-			    }
-				if (networkId != null) {
-					$("#"+ endPointType + "-network").val(networkId);
-				}
-			}
-		});
-	} 
-}
-
-function fillDeviceSelect(endPointType, domainId, networkId, deviceId, initDisabled) {
-    disableSelect(endPointType, "device");
-	clearSelect(endPointType, "device");
-    parent = null;
-	if (networkId != "" && networkId != null) {
-        parent = [];
-		parent[0] = "network";
-        parent[1] = networkId;
-	} else if (domainId != "" && domainId != null) {
-        parent = [];
-        parent[0] = "domain";
-        parent[1] = domainId;
-    } 
-
-    if (parent) {
-        $("#"+ endPointType + "-device").append('<option value="">' + tt('loading') + '</option>');
-        $.ajax({
-            url: baseUrl+'/topology/device/get-by-' + parent[0],
-            dataType: 'json',
-            data: {
-                id: parent[1],
-            },
-            success: function(response){
-                clearSelect(endPointType, "device");
-                $("#"+ endPointType + "-device").append('<option value="">' + tt('select') + '</option>');
-                if (!initDisabled) enableSelect(endPointType, "device");
-                for (var i = 0; i < response.length; i++) {
-                    if (response[i].name == "") response[i].name = "default";
-                    $("#"+ endPointType + "-device").append('<option value="' + response[i].id + '">' + response[i].name + '</option>');
-                }
-                if (deviceId != null && deviceId != "") {
-                    $("#"+ endPointType + "-device").val(deviceId);
-                }
-            }
-        });
-    } 
-}
-
-function fillPortSelect(endPointType, deviceId, portId) {
-    disableSelect(endPointType, "port");
-	clearSelect(endPointType, "port");
-	if (deviceId != "" && deviceId != null) {
-		$("#"+ endPointType + "-port").append('<option value="">' + tt('loading') + '</option>');
-		$.ajax({
-			url: baseUrl+'/circuits/reservation/get-port-by-device',
-			dataType: 'json',
-			data: {
-				id: deviceId,
-				cols: JSON.stringify(['id','name']),
-			},
-			success: function(response){
-				clearSelect(endPointType, "port");
-				$("#"+ endPointType + "-port").append('<option value="">' + tt('select') + '</option>');
-				enableSelect(endPointType, "port");
-				for (var i = 0; i < response.length; i++) {
-					var name = response[i].name;
-					if (response[i].port == "") {
-						name = tt("default");
-					}
-					$("#"+ endPointType + "-port").append('<option value="' + response[i].id + '">' + name + '</option>');
-			    }
-                if (portId != null && portId != "") $("#"+ endPointType + "-port").val(portId);
-			}
-		});
-	} 
-}
-
-function fillVlanSelect(endPointType, portId, vlan) {
-    disableSelect(endPointType, "vlan");
-	clearSelect(endPointType, "vlan");
-	if (portId != "" && portId != null) {
-		$("#"+ endPointType + "-vlan").append('<option value="">' + tt('loading') + '</option>');
-		$.ajax({
-			url: baseUrl+'/topology/port/get-vlan-range',
-			dataType: 'json',
-			data: {
-				id: portId,
-			},
-			success: function(response){
-				clearSelect(endPointType, "vlan");
-                if(response) {
-    				var ranges = response.split(",");
-    				for (var i = 0; i < ranges.length; i++) {
-                        var interval = ranges[i].split("-");
-                        if (interval.length > 1)
-                            $("#"+ endPointType + "-vlan").append('<option value="' + ranges[i] + '">' + ranges[i] + '</option>');
-    			    }
-
-                    for (var i = 0; i < ranges.length; i++) {
-                        var interval = ranges[i].split("-");
-                        var low = parseInt(interval[0]);
-                        var high = low;
-                        if (interval.length > 1) {
-                            high = parseInt(interval[1]);
-                            for (var j = low; j < high+1; j++) {
-	                        $("#"+ endPointType + "-vlan").append('<option value="' + j + '">' + j + '</option>');
-	                    }
-                        } else {
-                            $("#"+ endPointType + "-vlan").append('<option value="' + low + '">' + low + '</option>');
-                        }
-                        
-                        if (vlan != null && vlan != "") {
-                            $("#"+ endPointType + "-vlan").val(vlan);
-                        }
-                    }
-    				enableSelect(endPointType, "vlan");
-                }
-			}
-		});
-	}
-}
-
-function setNetworkSelected(endPointType, marker) {
-	if (marker) {
-		$("#"+ endPointType + "-domain").val(marker.domainId);
-		fillNetworkSelect(endPointType, marker.domainId, marker.id);
-		fillDeviceSelect(endPointType, null, marker.id);
-	} else {
-		fillNetworkSelect(endPointType);
-		fillDeviceSelect(endPointType);
-	}
-	
-	fillPortSelect(endPointType);
-	fillVlanSelect(endPointType);
-}
-
-function setDeviceSelected(endPointType, marker) {
-	if (marker) {
-		$("#"+ endPointType + "-domain").val(marker.domainId);
-		fillNetworkSelect(endPointType, marker.domainId);
-		fillDeviceSelect(endPointType, marker.domainId, null, marker.id);
-		fillPortSelect(endPointType, marker.id);
-	} else {
-		$("#"+ endPointType + "-domain").val("null");
-		fillNetworkSelect(endPointType);
-		fillDeviceSelect(endPointType);
-		fillPortSelect(endPointType);
-	}
-	
-	fillVlanSelect(endPointType);
-}
-
-///////////// DESENHAR CIRCUITO NO MAPA ///////////////
-
-function drawCircuit() {
-	var path = [];
-	
-	if (circuit != null) 
-		circuit.setMap(null);
-	
-	if (sourceMarker) {
-		path.push(sourceMarker.position);
-	} 
-	
-	for (var i = 0; i < wayPoints.length; i++) {
-		path.push(wayPoints[i].position);
-	}
-	
-	if (destinMarker) {
-		path.push(destinMarker.position);
-	}
-	
-	if (path.length > 1) {
-		circuit = new google.maps.Polyline({
-	        path: path,
-	        strokeColor: "#0000FF",
-	        strokeOpacity: 0.5,
-	        strokeWeight: 5,
-	        geodesic: false,
-	    });
-	    
-	    try {
-	    	circuit.setMap(meicanMap.getMap());
-	    	setMapBounds(path);
-	    	enableBandwidthSpinner();
-	    } catch (e) {
-	    }
-	} else {
-		disableBandwidthSpinner();
-	}
-}
-
-function setMarkerEndPoint(endPointType, marker) {
-	removeMarkerEndPoint(endPointType);
-	
-	if (endPointType == "src") {
-		if (marker) {
-			sourceMarker = marker;
-		} 
-		
-	} else if (marker) {
-			destinMarker = marker;
-	}
-	
-	if (marker && (sourceMarker == destinMarker)) {
-		marker.circuitMode = 'intra';
-	} else if (marker) {
-		marker.circuitMode = endPointType;
-		markerCluster.removeMarker(marker);
-		marker.setMap(meicanMap.getMap());
-	}
-	
-	drawCircuit();
-}
-
-function removeMarkerEndPoint(endPointType) {
-	if (endPointType == "src") {
-		if (sourceMarker) {
-            sourceMarker.circuitMode = "none";
-            if(sourceMarker.circuitPoints == 0) {
-                sourceMarker.setMap(null);
-                markerCluster.addMarker(sourceMarker);
-                sourceMarker = null;
-            }
-		} 
-		
-	} else if (destinMarker) {
-        destinMarker.circuitMode = "none";
-
-        if (destinMarker.circuitPoints == 0) {
-            destinMarker.setMap(null);
-            markerCluster.addMarker(destinMarker);
-            destinMarker = null;
-        }
+        for (var i = 0; i < path.length - 1; i++) {
+            meicanMap.addLink(null, 'dev' + path[i], 'dev' + path[i+1]);
+        };
     }
-	
-	drawCircuit();
 }
 
-function enableTabSlide() {
-    $('#reservation-tab').hoverIntent(openTab, closeTab);
+function initNodes() {
+    loadDomains();
 }
 
-function closeTab() {
-    $("#slide").slideUp(500, function(){
-        $(window).trigger('resize');
-    });
-    $("#waypoints_order").slideUp(500, function(){
-        $(window).trigger('resize');
-    });
-}
-
-function openTab() {
-    $("#slide").slideDown(500, function(){
-        $(window).trigger('resize');
-    });
-    $("#waypoints_order").slideDown(500, function(){
-        $(window).trigger('resize');
-    });
-}
-
-function disableTabSlide() {
-    $("#reservation-tab").unbind("mouseenter").unbind("mouseleave");
-    $("#reservation-tab").removeProp('hoverIntent_t');
-    $("#reservation-tab").removeProp('hoverIntent_s');
-}
-
-//////////// INICIALIZA MAPA /////////////////
-
-function initialize() {
-    meicanMap = new MeicanMap;
+function loadDomains() {
     $.ajax({
         url: baseUrl+'/topology/domain/get-all',
         dataType: 'json',
-        data: {
-            cols: JSON.stringify(['id','name','color']),
-        },
-        success: function(response){
-            meicanMap.setDomains(response);
-            initAll();
-        },
-        error: function (request, status, error) {
-            alert(error);
+        method: "GET",        
+        success: function(response) {
+            console.log(response);
+            meicanTopo['domains'] = response;
+            meicanMap.setTopology(meicanTopo);
+            // meicanGraph.setDomains(response);
+            loadNetworks();
         }
     });
 }
 
-function initAll() {
-    meicanMap.buildMap('map-canvas');
-
-    meicanMap.buildSearchBox("search-row", "search-box", 'search-button', function(marker) {
-        Manager.openWindow(marker);
-    });
-
-    meicanMap.buildMapTypeBox("map-type-box", 'map-type-select');
-    meicanMap.buildMarkerTypeBox("marker-type-box", 'marker-type-select', setMarkerType);
-
-    enableTabSlide();
-
-    $("#reservation-tab").on("focusin", function () {
-        openTab();
-        disableTabSlide();
-    });
-
-    $("#reservation-tab").on("focusout", function () {
-        enableTabSlide();
-    });
-
-    var markerClustererOptions = {
-            gridSize: 10, 
-            maxZoom: 10,
-            ignoreHidden: true
-        };
-    
-    markerCluster = new MarkerClusterer(
-            meicanMap.getMap(), 
-            null, 
-            markerClustererOptions
-    );
-    
-    google.maps.event.addListener(meicanMap.getMap(), 'click', function() {
-        meicanMap.closeWindows();
-        $("#src-domain").focus();
-
-        closeTab();
-    });
-
-    initSelect("src");
-    initSelect("dst");
-    initWaypointSelect();
-    
+function loadNetworks() {
     $.ajax({
         url: baseUrl+'/topology/network/get-all',
         dataType: 'json',
-        data: {
-            cols: JSON.stringify(['id','name','latitude','longitude','domain_id']),
-        },
-        success: function(response){
-            for(var index = 0; index < response.length; index++){
-                var network = response[index];
-                addNetworkMarker(network);
-            }
-            
-            markerCluster.addMarkers(meicanMap.getMarkers());
-            
-            setMarkerType("dev");
-        },
-        error: function (request, status, error) {
-            alert(request + error + status);
-        }
-    });
-    
-    enableWayPointsSortable();
-    initEndPointButtons("src");
-    initEndPointButtons('dst');
-}
-
-//////////// ADICIONA MARCADORES NO MAPA /////////////////
-
-function addNetworkMarker(network) {
-    if (network.latitude != null && network.longitude != null) {
-        var myLatlng = new google.maps.LatLng(network.latitude, network.longitude);
-        
-    } else {
-        var myLatlng = new google.maps.LatLng(0, 0);
-    }
-    
-    var marker = meicanMap.NetworkMarker({
-        position: meicanMap.getValidMarkerPosition("net", myLatlng),
-        type: "net",
-        circuitPoints: 0,
-        circuitMode: 'none',
-        id: network.id,
-        domainId: network.domain_id,
-        name: network.name,
-    });
-    
-    meicanMap.addMarker(marker);
-    
-    google.maps.event.addListener(marker, 'mouseover', function() {
-        Manager.openWindow(marker);
-    });
-}
-
-function addDeviceMarker(device) {
-    if (device.name == "") device.name = "default";
-  	
-    var network = meicanMap.getMarkerByDomain('net', device.domain_id);
-
-  	if (device.latitude != null && device.longitude != null) {
-  		  var myLatlng = new google.maps.LatLng(device.latitude, device.longitude);
-  	} else if (network) {
-        var myLatlng = network.position;
-    } else {
-  		  var myLatlng = new google.maps.LatLng(0, 0);
-  	}
-	
-  	var marker = meicanMap.DeviceMarker({
-		position: meicanMap.getValidMarkerPosition("dev", myLatlng),
-		type: "dev",
-		circuitPoints: 0,
-        circuitMode: "none",
-		id: device.id,
-		domainId: device.domain_id,
-        name: device.name
-  	});
-	
-  	meicanMap.addMarker(marker);
-  	
-    google.maps.event.addListener(marker, 'mouseover', function() {
-        Manager.openWindow(marker);
-    });
-}
-
-var Manager = new function() {
-    this.openWindow = function(marker) {
-        meicanMap.closeWindows();
-          
-        var contentWindow;
-        
-        switch(marker.type) {
-          case "net":
-            switch(marker.circuitMode) {
-              case "src":
-              case "dst":
-                  contentWindow = MARKER_OPTIONS_END_POINT;
-                  break;
-              case "intra":
-                  contentWindow = MARKER_OPTIONS_INTRA;
-                  break;
-              case "none":
-              default: 
-                  contentWindow = MARKER_OPTIONS_NET;
-            }
-            break;
-          case "dev":
-          default: 
-            switch(marker.circuitMode) {
-              case "src":
-              case "dst":
-                  contentWindow = MARKER_OPTIONS_END_POINT;
-                  break;
-              case "intra":
-                  contentWindow = MARKER_OPTIONS_INTRA;
-                  break;
-              case "none":
-              default: 
-                  contentWindow = MARKER_OPTIONS_DEV;
+        method: "GET",
+        success: function(response) {
+            console.log(response);
+            meicanTopo['networks'] = response;
+            loadPorts();
+            for (var i = meicanTopo['networks'].length - 1; i >= 0; i--) {
+                for (var k = meicanTopo['domains'].length - 1; k >= 0; k--) {
+                    if (meicanTopo['networks'][i]['domain_id'] == meicanTopo['domains'][k]['id']) {
+                        meicanTopo['networks'][i]['domain'] = meicanTopo['domains'][k];
+                    }
+                }
             }
         }
+    });
+}
 
-        var markerWindow = meicanMap.openWindow(marker, contentWindow);
-
-        google.maps.event.addListener(markerWindow, 'domready', function(){
-            $('#set-as-source').on('click', function() {
-                meicanMap.closeWindows();
-                
-                setMarkerEndPoint("src", marker);
-                if (marker && marker.type == "net") {
-                    setNetworkSelected("src", marker);
-                } else {
-                    setDeviceSelected("src", marker);
+function loadPorts(domains) {
+    $.ajax({
+        url: baseUrl+'/topology/port/json?dir=BI',
+        method: "GET",        
+        success: function(response) {
+            console.log(response);
+            meicanTopo['ports'] = response;
+            for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
+                for (var k = meicanTopo['networks'].length - 1; k >= 0; k--) {
+                    if (meicanTopo['ports'][i]['network_id'] == meicanTopo['networks'][k]['id']) {
+                        meicanTopo['ports'][i]['network'] = meicanTopo['networks'][k];
+                    }
                 }
-            });
-            
-            $('#add-waypoint').on('click', function() {
-                meicanMap.closeWindows();
-                
-                addWayPoint(marker);
-            });
-            
-            $('#set-as-dest').on('click', function() {
-                meicanMap.closeWindows();
-              
-                setMarkerEndPoint("dst", marker);
-                if (marker && marker.type == "net") {
-                    setNetworkSelected("dst", marker);
-                } else {
-                    setDeviceSelected("dst", marker);
-                }
-            });
-            
-            $('#set-as-intra').on('click', function() {
-                meicanMap.closeWindows();
-                
-                deleteWayPoints();              
-                
-                setMarkerEndPoint("src", marker);
-                if (marker && marker.type == "net") {
-                    setNetworkSelected("src", marker);
-                } else {
-                    setDeviceSelected("src", marker);
-                }
+            }
+            initEditPointSelects();
 
-                setMarkerEndPoint("dst", marker);
-                if (marker && marker.type == "net") {
-                    setNetworkSelected("dst", marker);
-                } else {
-                    setDeviceSelected("dst", marker);
+            counter = 0;
+            for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
+                counter++;
+                meicanMap.addNode(
+                    counter,
+                    meicanTopo['ports'][i].urn,
+                    meicanTopo['ports'][i]
+                );
+            }
+        }
+    });
+}
+
+function fillDomainSelect() {
+    var selectId = "pointform-domain";
+    clearSelect(selectId);
+    $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
+    for (var domain in meicanTopo['domains']) {
+        $("#" + selectId).append('<option value="' + domain + '">' + domain + '</option>');
+    }
+    enableSelect(selectId);
+}
+
+function fillNetworkSelect(domain, networkId, initDisabled) {
+    console.log(domain);
+    var selectId = "pointform-network";
+    disableSelect(selectId);
+    clearSelect(selectId);
+    $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
+    if (!initDisabled) enableSelect(selectId);
+    if (domain != "" && domain != null) {
+        for (var net in meicanTopo['domains'][domain]['nets']) {
+            $("#" + selectId).append('<option value="' + net + '">' + net + '</option>');
+        }
+        if (networkId != null) {
+            $("#" + selectId).val(networkId);
+        }
+    } 
+}
+
+function fillPortSelect(domain, network, port) {
+    //console.log(domain, network, localId);
+    var selectId = "pointform-port";
+    disableSelect(selectId);
+    clearSelect(selectId);
+    $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
+    enableSelect(selectId);
+    if (network != "" && network != null) {
+        for (var port in meicanTopo['domains'][domain]['nets'][network]['biports']) {
+            //console.log(port);
+            $("#" + selectId).append('<option value="' + port + '">' + port + '</option>');
+        }
+        if (port != null && port != "") 
+            $("#" + selectId).val(port);
+    } 
+}
+
+function fillVlanSelect(domain, network, port, vlan) {
+    var selectId = "pointform-vlan";
+    disableSelect(selectId);
+    if (port != "" && port != null) {
+        clearSelect(selectId);
+        for (var uniport in meicanTopo['domains'][domain]['nets'][network]['biports'][port]['uniports']) {
+            response = meicanTopo['domains'][domain]['nets'][network]['biports'][port]['uniports'][uniport]['vlan'];
+            var ranges = response.split(",");
+            for (var i = 0; i < ranges.length; i++) {
+                var interval = ranges[i].split("-");
+                if (interval.length > 1)
+                    $("#" + selectId).append('<option value="' + ranges[i] + '">' + ranges[i] + '</option>');
+            }
+
+            for (var i = 0; i < ranges.length; i++) {
+                var interval = ranges[i].split("-");
+                var low = parseInt(interval[0]);
+                var high = low;
+                if (interval.length > 1) {
+                    high = parseInt(interval[1]);
+                    for (var j = low; j < high+1; j++) {
+                    $("#" + selectId).append('<option value="' + j + '">' + j + '</option>');
                 }
-            });
-            
-            $('#remove-waypoint').on('click', function() {
-                meicanMap.closeWindows();
-              
-                deleteWayPoint(marker);
-            });
-            
-            $('#remove-endpoint').on('click', function() {
-                meicanMap.closeWindows();
-
-                setNetworkSelected(marker.circuitMode);
-                $('#' + marker.circuitMode + '-domain').val("");
-                removeMarkerEndPoint(marker.circuitMode);
-            });
-            
-            $('#remove-intra').on('click', function() {
-                meicanMap.closeWindows();
-              
-                removeMarkerEndPoint("src");
-
-                setNetworkSelected("src");
-                setNetworkSelected("dst");
-            });
-        });
+                } else {
+                    $("#" + selectId).append('<option value="' + low + '">' + low + '</option>');
+                }
+                
+                if (vlan != null && vlan != "") {
+                    $("#" + selectId).val(vlan);
+                }
+            }
+            enableSelect(selectId);
+        }
     }
 }
 
-/////////////// ALTERAR MARCADORES VISIVEIS /////////////////////
+function clearSelect(object) {
+    $('#' + object).children().remove();
+}
 
-function setMarkerType(markerType) {
-    meicanMap.closeWindows();
-    removeMarkerEndPoint("src");
-    setNetworkSelected("src");
-    setNetworkSelected("dst");
-    fillDomainSelect("src");
-    removeMarkerEndPoint("dst");
-    fillDomainSelect("dst");
-    meicanMap.setMarkerTypeVisible(markerType);
-    markerCluster.repaint();
-    if (markerType == "dev") {
-    	if (!devicesLoaded) {
-    		loadDeviceMarkers();
-    		devicesLoaded = true;
-    	} 
+function disableSelect(object) {
+    clearSelect(object);
+    $('#' + object).prop('disabled', true);
+}
+
+function enableSelect(object) {
+    if ($('#' + object).val() != null && $('#' + object) != "null") {
+        $('#' + object).prop('disabled', false);
     }
-    deleteWayPoints();
 }
 
-////////////// ADICIONA MARCADORES DE DISPOSITIVOS ////////////////
-
-function loadDeviceMarkers() {
-	$.ajax({
-		url: baseUrl+'/topology/device/get-all',
-		dataType: 'json',
-    data: {
-      cols: JSON.stringify(['id','name','latitude','longitude','domain_id']),
-    },
-		success: function(response){
-			var deviceMarkers = [];
-			
-			for(var index = 0; index < response.length; index++){
-				var device = response[index];
-				addDeviceMarker(device);
-			}
-			
-			markerCluster.clearMarkers();
-			markerCluster.addMarkers(meicanMap.getMarkers());
-		},
-		error: function (request, status, error) {
-		    alert(request + error + status);
-		}
-	});	
-}
-
-////////// INICIALIZA SELECT LISTENERS //////////////////
-
-function initSelect(endPointType) {
-  	fillDomainSelect(endPointType);
-  	
-  	$('#' + endPointType + '-domain').on('change', function() {
-		removeMarkerEndPoint(endPointType);
-		fillNetworkSelect(endPointType, this.value);
-		fillDeviceSelect(endPointType, this.value);
-		fillPortSelect(endPointType);
-		fillVlanSelect(endPointType);
-  	});
-  	
-  	$('#' + endPointType + '-network').on('change', function() {
-		if (meicanMap.getCurrentMarkerType() == "net") {
-			var marker = meicanMap.getMarker("net",this.value);
-			
-			setMarkerEndPoint(endPointType, marker);
-		}
-		
-		fillDeviceSelect(endPointType, $('#' + endPointType + '-domain').val(), this.value);
-		fillPortSelect(endPointType);
-		fillVlanSelect(endPointType);
-  	});
-  	
-  	$('#' + endPointType + '-device').on('change', function() {
-		if (meicanMap.getCurrentMarkerType() == "dev") {
-			var marker = meicanMap.getMarker('dev',this.value);
-
-			setMarkerEndPoint(endPointType, marker);
-		}
-		
-		fillPortSelect(endPointType, this.value);
-		fillVlanSelect(endPointType);
-  	});
-  	
-  	$('#' + endPointType + '-port').on('change', function() {
-		if (this.value != "null") {
-			$('#' + endPointType + "-copy-urn").removeClass("ui-state-disabled");
-		}
-		fillVlanSelect(endPointType, this.value);
-  	});
-}
-
-function initWaypointSelect() {
-    var endPointType = "waypoint"
-    fillDomainSelect(endPointType);
+function initEditPointSelects() {
+    fillDomainSelect();
     
-    $('#' + endPointType + '-domain').on('change', function() {
-        fillNetworkSelect(endPointType, this.value);
-        fillDeviceSelect(endPointType, this.value);
-        fillPortSelect(endPointType);
-        fillVlanSelect(endPointType);
+    $('#pointform-domain').on('change', function() {
+        fillNetworkSelect(this.value);
+        fillPortSelect();
+        fillVlanSelect();
     });
     
-    $('#' + endPointType + '-network').on('change', function() {
-        fillDeviceSelect(endPointType, $('#' + endPointType + '-domain').val(), this.value);
-        fillPortSelect(endPointType);
-        fillVlanSelect(endPointType);
+    $('#pointform-network').on('change', function() {
+        fillPortSelect($('#pointform-domain').val(), this.value);
+        fillVlanSelect();
     });
     
-    $('#' + endPointType + '-device').on('change', function() {
-        fillPortSelect(endPointType, this.value);
-        fillVlanSelect(endPointType);
-    });
-    
-    $('#' + endPointType + '-port').on('change', function() {
-        fillVlanSelect(endPointType, this.value);
+    $('#pointform-port').on('change', function() {
+        fillVlanSelect(
+            $('#pointform-domain').val(), 
+            $('#pointform-network').val(),
+            this.value);
     });
 }
-
-function clearSelect(endPointType, object) {
-	  $('#' + endPointType + '-' + object).children().remove();
-}
-
-function disableSelect(endPointType, object) {
-  $('#' + endPointType + '-' + object).prop('disabled', true);
-}
-
-function enableSelect(endPointType, object) {
-  	if ($('#' + endPointType + '-' + object).val() != null && $('#' + endPointType + '-' + object) != "null") {
-  		$('#' + endPointType + '-' + object).prop('disabled', false);
-  	}
-}
-
-////////// DEFINE ZOOM E LIMITES DO MAPA A PARTIR DE UM CAMINHO ////////
-
-function setMapBounds(path) {
-    if (path.length < 2) return;
-    polylineBounds = new google.maps.LatLngBounds();
-    for (var i = 0; i < path.length; i++) {
-    	polylineBounds.extend(path[i]);
-    }
-    meicanMap.getMap().fitBounds(polylineBounds);
-    meicanMap.getMap().setCenter(polylineBounds.getCenter());
-}
-
-////////// GERA COR A PARTIR DE ID /////////////////////////////////////
-
-google.maps.event.addDomListener(window, 'load', initialize);

@@ -196,7 +196,7 @@ class NSIParser {
     }
 
     function addPort($netId, $netName, $biPortId, $biportName, $portId, $portType, 
-            $vlan, $alias, $deviceName = null) {
+            $vlan, $alias, $lat=null, $lng=null) {
         $netUrn = str_replace("urn:ogf:network:","",$netId);
         $portUrn = str_replace("urn:ogf:network:","",$portId);
         $biPortUrn = str_replace("urn:ogf:network:","",$biPortId);
@@ -208,60 +208,45 @@ class NSIParser {
 
         $domainName = $id[3];
 
-        $devicePort = str_replace($netId.":", "", $biPortId);
-        if (strpos($devicePort,'urn') !== false) {
-            $this->errors["Unknown URN"][$devicePort] = null;
+        if (strpos('urn:ogf:network',$biPortId) !== false) {
+            $this->errors["Unknown URN"][$biPortId] = null;
             return;
         }
-        
-        $devicePortArray = explode(":", $devicePort);
-        if (count($devicePortArray) > 1) {
-            $deviceName = $deviceName ? $deviceName : $devicePortArray[0];
-            $devicePortArray[0] = "";
-            $devicePortArray = implode(":", $devicePortArray);
-            $portName = substr($devicePortArray, 1);
-        } else {
-            $deviceName = $domainName;
-            $portName = implode(":", $devicePortArray);
-        }
 
+        $localId = str_replace($netId.":", "", $portId);
+        
         if (!isset($this->topology["domains"][
-                $domainName]["nets"][$netUrn]["devices"][
-                $deviceName]["biports"][$biPortUrn])) {
+                $domainName]["nets"][$netUrn]["biports"][$biPortUrn])) {
             $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["name"] = $netName;
             $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["devices"][
-                $deviceName]["biports"][$biPortUrn] = array();
-            if (!$biportName) $biportName = $portName;
+                $domainName]["nets"][$netUrn]["biports"][$biPortUrn] = array();
             $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["devices"][
-                $deviceName]["biports"][$biPortUrn]["port"] = $biportName;
+                $domainName]["nets"][$netUrn]["biports"][$biPortUrn]["name"] = $biportName;
         } 
         
-        $devicePort = str_replace($netId.":", "", $portId);
-        $devicePortArray = explode(":", $devicePort);
-        if (count($devicePortArray) > 1) {
-            $devicePortArray[0] = "";
-            $devicePortArray = implode(":", $devicePortArray);
-            $portName = substr($devicePortArray, 1);
-        } else {
-            $portName = implode(":", $devicePortArray);
-        }
-        
         $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["devices"][$deviceName]["biports"][
-                        $biPortUrn]["uniports"][$portUrn]['port'] = $portName;
+                $domainName]["nets"][$netUrn]["biports"][
+                        $biPortUrn]["uniports"][$portUrn]['name'] = $localId;
         $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["devices"][$deviceName]["biports"][
+                $domainName]["nets"][$netUrn]["biports"][
                         $biPortUrn]["uniports"][$portUrn]['type'] = $portType;
         $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["devices"][$deviceName]["biports"][
-                        $biPortUrn]["uniports"][$portUrn]['vlan'] = $vlan;
-                if ($aliasUrn) 
-        $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["devices"][$deviceName]["biports"][
+                $domainName]["nets"][$netUrn]["biports"][
+                        $biPortUrn]['vlan'] = $vlan;
+        if ($aliasUrn) 
+            $this->topology["domains"][
+                $domainName]["nets"][$netUrn]["biports"][
                         $biPortUrn]["uniports"][$portUrn]['aliasUrn'] = $aliasUrn;
+
+        if ($lat) {
+            $this->topology["domains"][
+                $domainName]["nets"][$netUrn]["biports"][
+                        $biPortUrn]['lat'] = $lat;
+            $this->topology["domains"][
+                $domainName]["nets"][$netUrn]["biports"][
+                        $biPortUrn]['lng'] = $lng;
+        }
     }
 
     function parseDocuments() {
@@ -387,7 +372,7 @@ class NSIParser {
                 if ($biportNameNode->item(0)) {
                     $biportName = $biportNameNode->item(0)->nodeValue;
                 } else {
-                    $biportName = null;
+                    $biportName = str_replace($netId.":", "", $biPortId);
                 }
 
                 $this->parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName);
@@ -418,7 +403,10 @@ class NSIParser {
                         $this->parseUniPortType($netNode, $portId),
                         $vlanAndAlias[0],
                         $vlanAndAlias[1],
-                        $this->parseDevice($netNode, $portId));
+                        $vlanAndAlias[2],
+                        $vlanAndAlias[3]
+                );
+                #$this->parseDevice($netNode, $portId));
             }
         }
     }
@@ -481,12 +469,25 @@ class NSIParser {
                     }
 
                     if ($id === $portId) {
-                        
+                      
                         $vlanRangeNode = $this->xpath->query(".//x:LabelGroup", $portNode);
+                        $locationNode = $this->xpath->query(".//x:Location", $portNode);
+
+                        $lat = null;
+                        $lng = null;
+                        if ($locationNode->item(0)) {
+                            # cuidado com o xpath, ele aceita o node referencia nulo e nesse
+                            # caso ele procura por todo o documento.
+                            $latNode = $this->xpath->query(".//x:lat", $locationNode->item(0));
+                            $lat = $latNode->item(0)->nodeValue;
+                            $lngNode = $this->xpath->query(".//x:long", $locationNode->item(0));
+                            $lng = $lngNode->item(0)->nodeValue;
+                        }
 
                         if($vlanRangeNode->item(0)) {
                             return [$vlanRangeNode->item(0)->nodeValue, 
-                                    $this->parseAlias($portNode)];
+                                    $this->parseAlias($portNode),
+                                    $lat, $lng];
                         } else {
                             continue;
                         }

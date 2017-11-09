@@ -88,10 +88,10 @@ class Port extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'directionality', 'urn', 'name', 'device_id'], 'required'],
+            [['type', 'directionality', 'urn', 'name'], 'required'],
             [['type', 'directionality'], 'string'],
             [['vlan_range'], 'string'],
-            [['max_capacity', 'min_capacity', 'granularity', 'biport_id', 'alias_id', 'device_id', 'network_id'], 'integer'],
+            [['max_capacity', 'min_capacity', 'granularity', 'biport_id', 'alias_id', 'network_id'], 'integer'],
             [['urn'], 'string', 'max' => 250],
             [['name'], 'string', 'max' => 100],
             [['urn'], 'unique'],
@@ -132,7 +132,6 @@ class Port extends \yii\db\ActiveRecord
             'granularity' => Yii::t('topology', 'Granularity (Mbps)'),
             'biport_id' => Yii::t('topology', 'Biport ID'),
             'alias_id' => Yii::t('topology', 'Alias ID'),
-            'device_id' => Yii::t('topology', 'Device'),
             'network_id' => Yii::t('topology', 'Network'),
         	'vlan_range' => Yii::t('topology', 'VLANs'),
         ];
@@ -148,14 +147,6 @@ class Port extends \yii\db\ActiveRecord
 
     public function getUniPorts() {
         return $this->hasMany(Port::className(), ['biport_id'=> 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDevice()
-    {
-        return $this->hasOne(Device::className(), ['id' => 'device_id']);
     }
 
     /**
@@ -190,10 +181,6 @@ class Port extends \yii\db\ActiveRecord
         $this->alias_id = $port->id;
     }
     
-    public function setDevice($dev) {
-        $this->device_id = $dev->id;
-    }
-
     public function getFullUrn() {
         return "urn:ogf:network:".$this->urn;
     }

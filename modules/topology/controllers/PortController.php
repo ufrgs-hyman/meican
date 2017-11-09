@@ -107,6 +107,16 @@ class PortController extends RbacController {
         Yii::trace($temp);
         return $temp;
     }
+
+    public function actionJson($fields=null, $dir=null) {
+    	$query = Port::find()->asArray();
+        $dir ? $data = $query->where(['directionality'=> $dir]) : null;
+        $fields ? $data = $query->select(explode(',',$fields))->all() : $data = $query->all();
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        Yii::trace($data);
+        return $data;
+    }
+
     public function actionGetAllBidirectional($cols=null) {
         $query = Port::find()->where(['directionality'=> Port::DIR_BI])->asArray();
         

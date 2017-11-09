@@ -16,7 +16,6 @@ class PointForm extends Model {
     
     public $domain;
     public $network;
-    public $device;
     public $port;
     public $vlan;
     public $vlan_text;
@@ -24,8 +23,7 @@ class PointForm extends Model {
 
     public function rules() {
         return [
-            [['domain', 'device', 'port','vlan','urn','vlan_text'],'required'],
-            [['network'],'safe'],
+            [['domain','network','port','vlan','urn','vlan_text'],'required'],
             [['urn'], 'match', 'pattern' => '/^urn:ogf:network:/'],
             [['urn'], 'match', 'not'=>true ,'pattern' => '/\?/'],
             [['vlan_text'],'match','pattern'=> '/^[0-9]+$/'],
@@ -36,7 +34,6 @@ class PointForm extends Model {
         return [
             'domain' => Yii::t("circuits", 'Domain'),
             'network' =>  Yii::t("circuits", 'Network'),
-            'device' =>  Yii::t("circuits", 'Device'),
             'port' =>  Yii::t("circuits", 'Port'),
             'vlan' =>  Yii::t("circuits", 'VLAN'),
             'vlan_text' =>  Yii::t("circuits", 'VLAN'),

@@ -17,7 +17,6 @@ use meican\circuits\models\ConnectionEvent;
 use meican\circuits\forms\ConnectionForm;
 use meican\circuits\models\Reservation;
 use meican\topology\models\Port;
-use meican\topology\models\Device;
 use meican\topology\models\Domain;
 use meican\topology\models\Provider;
 use meican\aaa\RbacController;
@@ -111,27 +110,29 @@ class ConnectionController extends RbacController {
     }*/
 
     public function actionGetOrderedPath($id) {
-        $points = ConnectionPath::find()->where(['conn_id'=>$id])->orderBy(['path_order'=> "SORT_ASC"])->all();
+        $points = ConnectionPath::find()
+            ->where(['conn_id'=>$id])
+            ->orderBy(['path_order'=> "SORT_ASC"])
+            ->asArray()
+            ->all();
          
-        $data = [];
+        // foreach ($points as $point) {
+        //     $port = $point->getPort()->select(['id','urn','device_id', 'type', 'name'])->one();
+        //     $data[] = [
+        //         'path_order' => $point->path_order, 
+        //         'device_id'=> $port ? $port->device_id : null,
+        //         'port_id' => $port ? $port->id : null,
+        //         'port_name' => $port ? $port->name : null,
+        //         'port_type' => $port ? $port->type : null,
+        //         'port_urn' => $point->getFullPortUrn(),
+        //         'vlan' => $point->vlan,
+        //         'domain' => $point->domain,
+        //     ];
+        // }
          
-        foreach ($points as $point) {
-            $port = $point->getPort()->select(['id','urn','device_id', 'type', 'name'])->one();
-            $data[] = [
-                'path_order' => $point->path_order, 
-                'device_id'=> $port ? $port->device_id : null,
-                'port_id' => $port ? $port->id : null,
-                'port_name' => $port ? $port->name : null,
-                'port_type' => $port ? $port->type : null,
-                'port_urn' => $point->getFullPortUrn(),
-                'vlan' => $point->vlan,
-                'domain' => $point->domain,
-            ];
-        }
-         
-        $data = json_encode($data);
-        Yii::trace($data);
-        return $data;
+        $points = json_encode($points);
+        Yii::trace($points);
+        return $points;
     }
 
     public function actionGetEndPoints($id) {

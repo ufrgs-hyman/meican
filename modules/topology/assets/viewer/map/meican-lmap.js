@@ -1,5 +1,5 @@
 /**
- * Meican LMap 1.0
+ * Meican LMap 1.1
  *
  * A DCN topology viewer based on Leaflet Javascript library.
  *
@@ -14,7 +14,7 @@ function LMap(canvasDivId) {
     this._nodes = [];                   // markers/nodes container
     this._links = [];                   // polylines/links/edges container
     this._nodeType;                     // current node type visible
-    this._domainsList;                  // domains list reference;
+    this._topology;                     // topology
     this._lastShowedMarker; 
     this._cluster;
     this._portsSize = 0;
@@ -192,47 +192,96 @@ LMap.prototype.removeLinks = function() {
     }
 }
 
-LMap.prototype.addNode = function(id, name, type, domainId, lat, lng, color) {
-    if (!color) color = this.getDomain(domainId).color;
-    if (lat != null && lng != null) {
-        var pos = [lat,lng];
+LMap.prototype.getNodeByPosition = function(domain, lat, lng) {
+    size = this._nodes.length;
+
+    for(var i = 0; i < size; i++){
+        if (this._nodes[i].options.domain == domain && 
+                (this._nodes[i].getLatLng().lat === lat) && 
+                (this._nodes[i].getLatLng().lng === lng)) {
+            //this._nodes[i].unbindLabel();
+            //this._nodes[i].bindLabel(this._nodes[i].options.name, { noHide: true, direction: 'left' });
+            return this._nodes[i];
+        }
+    }
+
+    return null;
+}
+
+LMap.prototype.addNode = function(id, urn, port, color) {
+    if (!color) color = port.network.domain.color;
+    if (port.lat != null && port.lng != null) {
+        var pos = [port.lat,port.lng];
     } else {
         var pos = [0, 0];
     }
 
-    var icon = L.divIcon({
-        iconSize: [22,22],
-        iconAnchor: [11, 22],
-        popupAnchor: [0,-24],
-        labelAnchor: [4, -8],
-        html: '<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg">' + 
-        '<g>' +
-        '<path stroke="black" fill="' + color + '" d="m1,0.5l20,0l-10,20l-10,-20z"/>' + 
-        '</g>' + 
-        '</svg>',
-        className: 'marker-icon-svg',
-    });
+    var node = this.getNodeByPosition(port.network.domain, port.lat, port.lng);
 
-    var node = L.marker(
-        this.buildNodePosition(type, L.latLng(pos)), 
-        {
-            id: id, 
-            icon: icon,
-            type: type,
-            name: name,
-            domainId: domainId,
-            ports: {}
-        }
-    ).bindPopup("#").bindLabel(name, { noHide: true, direction: 'auto' });
+    if (node == null) {
+        var icon = L.divIcon({
+            iconSize: [22,22],
+            iconAnchor: [11, 22],
+            popupAnchor: [0,-24],
+            labelAnchor: [4, -8],
+            html: '<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg">' + 
+            '<g>' +
+            '<path stroke="black" fill="' + color + '" d="m1,0.5l20,0l-10,20l-10,-20z"/>' + 
+            '</g>' + 
+            '</svg>',
+            className: 'marker-icon-svg',
+        });
 
-    this._nodes.push(node);
-    this._cluster.addLayer(node);
+        node = L.marker(
+            //this.buildNodePosition('dev',
+            L.latLng(pos), 
+            {
+                id: id, 
+                icon: icon,
+                name: port.name,
+                ports: [port]
+            }
+        ).bindPopup("#");
 
-    var currentMap = this;
+        this._nodes.push(node);
+        this._cluster.addLayer(node);
 
-    node.on('click', function(e) {
-        $("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
-    });
+        var currentMap = this;
+
+        node.on('click', function(e) {
+            $("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
+        });
+        // node.on('contextmenu', function(e) {
+        //     console.log(e);
+        //     //$("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
+        // });
+    } else {
+        node.options.ports.push(port);
+        node.unbindLabel();
+        
+        node.setIcon(L.divIcon({
+            iconSize: [22,22],
+            iconAnchor: [11, 22],
+            popupAnchor: [0,-24],
+            labelAnchor: [4, -8],
+            html: '<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg">' + 
+            '<g>' +
+            //http://complexdan.com/svg-circleellipse-to-path-converter/
+            '<path stroke="black" fill="' + color + '" d="M1,11a10,10 0 1,0 20,0a10,10 0 1,0 -20,0"/>' + 
+            '</g>' + 
+            '</svg>',
+            className: 'marker-icon-svg',
+        }));
+    }
+    var label = port.urn;
+    if (node.options.ports.length > 1) {
+        label = sharedStart(node.options.ports);
+        if (label.length < 1) {
+            label = port.network.name;
+        } 
+    }
+    
+    node.bindLabel(label, { noHide: true, direction: 'auto' });
 }
 
 LMap.prototype.getDomain = function(id) {
@@ -242,13 +291,13 @@ LMap.prototype.getDomain = function(id) {
 }
 
 LMap.prototype.getDomainByName = function(name) {
-    for (var i = 0; i < this._domainsList.length; i++) {
-        if (this._domainsList[i].name == name) return this._domainsList[i];
+    for (var i = 0; i < this._clusters.length; i++) {
+        if (this._clusters[i].name == name) return this._clusters[i];
     }
 }
 
-LMap.prototype.setDomains = function(list) {
-    this._domainsList = list;
+LMap.prototype.setTopology = function(topology) {
+    this._topology = topology;
 }
 
 LMap.prototype.getDomains = function() {
@@ -266,7 +315,7 @@ LMap.prototype.buildNodePosition = function(type, position) {
                 (this._nodes[i].getLatLng().lng === lng)) {
             this._nodes[i].unbindLabel();
             this._nodes[i].bindLabel(this._nodes[i].options.name, { noHide: true, direction: 'left' });
-            return this.buildNodePosition(type, L.latLng(position.lat, position.lng + 0.01));
+            return this.buildNodePosition(type, L.latLng(position.lat, position.lng + 0.001));
         }
     }
     
@@ -388,13 +437,36 @@ LMap.prototype.build = function(mapDiv) {
 
     this._cluster = L.markerClusterGroup({
         showCoverageOnHover: false,
-        maxClusterRadius: 20,
+        maxClusterRadius: 1,
+        zoomToBoundsOnClick: true,
+        spiderfyOnMaxZoom: false,
     });
+
     this._map.addLayer(this._cluster);
 
     this.setType('rnp');
 
     $('#' + mapDiv).show();   
+}
+
+function sharedStart(array){
+    if (array.length < 1)
+        return removeInvalidChar(array[0]);
+
+    var a= array.concat().sort(), 
+    a1= a[0], a2= a[a.length-1], L= a1.length, i= 0;
+    while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
+    return removeInvalidChar(a1.substring(0, i));
+}
+
+function removeInvalidChar(str) {
+    if (str.length < 2)
+        return str;
+
+    if (str.slice(-1) == '-' || str.slice(-1) == ':' || str.slice(-1) == '+')
+        return removeInvalidChar(str.substring(0, str.length - 1));
+
+    return str;
 }
 
 LMap.prototype.getNodes = function() {
