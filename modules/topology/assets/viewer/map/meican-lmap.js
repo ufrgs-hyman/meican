@@ -1,5 +1,5 @@
 /**
- * Meican LMap 1.0
+ * Meican LMap 1.1
  *
  * A DCN topology viewer based on Leaflet Javascript library.
  *
@@ -14,7 +14,7 @@ function LMap(canvasDivId) {
     this._nodes = [];                   // markers/nodes container
     this._links = [];                   // polylines/links/edges container
     this._nodeType;                     // current node type visible
-    this._domainsList;                  // domains list reference;
+    this._topology;                     // topology
     this._lastShowedMarker; 
     this._cluster;
     this._portsSize = 0;
@@ -208,15 +208,15 @@ LMap.prototype.getNodeByPosition = function(domain, lat, lng) {
     return null;
 }
 
-LMap.prototype.addNode = function(id, lid, network, domain, lat, lng, color) {
-    if (!color) color = domain.color;
-    if (lat != null && lng != null) {
-        var pos = [lat,lng];
+LMap.prototype.addNode = function(id, urn, port, color) {
+    if (!color) color = port.network.domain.color;
+    if (port.lat != null && port.lng != null) {
+        var pos = [port.lat,port.lng];
     } else {
         var pos = [0, 0];
     }
 
-    var node = this.getNodeByPosition(domain, lat, lng);
+    var node = this.getNodeByPosition(port.network.domain, port.lat, port.lng);
 
     if (node == null) {
         var icon = L.divIcon({
@@ -234,13 +234,12 @@ LMap.prototype.addNode = function(id, lid, network, domain, lat, lng, color) {
 
         node = L.marker(
             //this.buildNodePosition('dev',
-             L.latLng(pos), 
+            L.latLng(pos), 
             {
                 id: id, 
                 icon: icon,
-                name: name,
-                domain: domain,
-                points: [network + ':' + lid]
+                name: port.name,
+                ports: [port]
             }
         ).bindPopup("#");
 
@@ -257,7 +256,7 @@ LMap.prototype.addNode = function(id, lid, network, domain, lat, lng, color) {
         //     //$("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
         // });
     } else {
-        node.options.points.push(network + ':' + lid);
+        node.options.ports.push(port);
         node.unbindLabel();
         
         node.setIcon(L.divIcon({
@@ -274,11 +273,11 @@ LMap.prototype.addNode = function(id, lid, network, domain, lat, lng, color) {
             className: 'marker-icon-svg',
         }));
     }
-    var label = lid;
-    if (node.options.points.length > 1) {
-        label = sharedStart(node.options.points);
+    var label = port.urn;
+    if (node.options.ports.length > 1) {
+        label = sharedStart(node.options.ports);
         if (label.length < 1) {
-            label = domain.name;
+            label = port.network.name;
         } 
     }
     
@@ -297,8 +296,8 @@ LMap.prototype.getDomainByName = function(name) {
     }
 }
 
-LMap.prototype.setDomains = function(list) {
-    this._domainsList = list;
+LMap.prototype.setTopology = function(topology) {
+    this._topology = topology;
 }
 
 LMap.prototype.getDomains = function() {

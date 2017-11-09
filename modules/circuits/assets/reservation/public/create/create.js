@@ -683,91 +683,63 @@ function loadDomains() {
         dataType: 'json',
         method: "GET",        
         success: function(response) {
-            meicanMap.setDomains(response);
+            console.log(response);
+            meicanTopo['domains'] = response;
+            meicanMap.setTopology(meicanTopo);
             // meicanGraph.setDomains(response);
-            loadPorts(response);
+            loadNetworks();
+        }
+    });
+}
+
+function loadNetworks() {
+    $.ajax({
+        url: baseUrl+'/topology/network/get-all',
+        dataType: 'json',
+        method: "GET",
+        success: function(response) {
+            console.log(response);
+            meicanTopo['networks'] = response;
+            loadPorts();
+            for (var i = meicanTopo['networks'].length - 1; i >= 0; i--) {
+                for (var k = meicanTopo['domains'].length - 1; k >= 0; k--) {
+                    if (meicanTopo['networks'][i]['domain_id'] == meicanTopo['domains'][k]['id']) {
+                        meicanTopo['networks'][i]['domain'] = meicanTopo['domains'][k];
+                    }
+                }
+            }
         }
     });
 }
 
 function loadPorts(domains) {
     $.ajax({
-        url: baseUrl+'/circuits/reservation/data',
-        dataType: 'json',
+        url: baseUrl+'/topology/port/json?dir=BI',
         method: "GET",        
         success: function(response) {
             console.log(response);
-            meicanTopo = response;
+            meicanTopo['ports'] = response;
+            for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
+                for (var k = meicanTopo['networks'].length - 1; k >= 0; k--) {
+                    if (meicanTopo['ports'][i]['network_id'] == meicanTopo['networks'][k]['id']) {
+                        meicanTopo['ports'][i]['network'] = meicanTopo['networks'][k];
+                    }
+                }
+            }
             initEditPointSelects();
 
             counter = 0;
-            for (var index in domains) {
-                console.log(domains[index]);
-                for (var network in response['domains'][domains[index].name]['nets']) {
-                    console.log(network);
-                    for (var lid in response['domains'][domains[index].name][
-                        'nets'][network]['biports']) {
-                        counter++;
-                        meicanMap.addNode(
-                            counter,
-                            lid,
-                            network,
-                            domains[index],
-                            response['domains'][domains[index].name][
-                        'nets'][network]['biports'][lid]['lat'],
-                            response['domains'][domains[index].name][
-                        'nets'][network]['biports'][lid]['lng']);
-                    }
-                }
-            };
+            for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
+                counter++;
+                meicanMap.addNode(
+                    counter,
+                    meicanTopo['ports'][i].urn,
+                    meicanTopo['ports'][i]
+                );
+            }
         }
     });
 }
-
-// function loadDevices() {
-//     if(meicanTopo['dev']) return;
-//     $.ajax({
-//         url: baseUrl+'/topology/device/get-all',
-//         dataType: 'json',
-//         method: "GET",
-//         data: {
-//             cols: JSON.stringify(['id','name','latitude','longitude','graph_x', 'graph_y', 'domain_id'])
-//         },
-//         success: function(response) {
-//             meicanTopo['dev'] = response;
-//             for (var i = 0; i < response.length; i++) {
-//                 meicanMap.addNode(
-//                     'dev' + response[i].id,
-//                     response[i].name,
-//                     'dev',
-//                     response[i].domain_id,
-//                     response[i].latitude,
-//                     response[i].longitude);
-//             };
-//             //loadDeviceLinks();
-//         }
-//     });
-// }
-
-// function loadNetworks() {
-//     if(meicanTopo['net']) return;
-//     $.ajax({
-//         url: baseUrl+'/topology/network/get-all',
-//         dataType: 'json',
-//         method: "GET",
-//         data: {
-//             cols: JSON.stringify(['id','name','latitude','longitude', 'domain_id'])
-//         },
-//         success: function(response) {
-//             meicanTopo['net'] = true;
-//             meicanGraph.addNodes(response, 'net');
-//             for (var i = 0; i < response.length; i++) {
-//                 meicanMap.addMarker(response[i], 'net');
-//             };
-//             loadNetworkLinks();
-//         }
-//     });
-// }
 
 function fillDomainSelect() {
     var selectId = "pointform-domain";

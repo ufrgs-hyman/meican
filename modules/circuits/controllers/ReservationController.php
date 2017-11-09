@@ -3163,8 +3163,6 @@ class ReservationController extends RbacController {
         $parser->parseTopology();
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return $parser->getData();
-
-
     }
     
     public function actionRequest() {
