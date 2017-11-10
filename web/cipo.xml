@@ -520,6 +520,10 @@
     <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
+            <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013::SC">
+                <ns2:lat>-13.901600</ns2:lat>
+                <ns2:long>-58.419800</ns2:long>
+            </ns2:Location>
         </ns2:PortGroup>
     </ns2:Relation>
     <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">

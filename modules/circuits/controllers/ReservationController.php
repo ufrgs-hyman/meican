@@ -39,7 +39,6 @@ class ReservationController extends RbacController {
     
     public function actionCreate() {
         return $this->render('create/create',[
-            'domains'=>Domain::find()->asArray()->all(),
             'reserveForm' => new ReservationForm]);
     }
 

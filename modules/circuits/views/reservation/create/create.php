@@ -106,7 +106,7 @@ $form = ActiveForm::begin([
                             </div>
                             VLAN: <label class="point-info vlan-l">none</label>
                             <input class="vlan-input" type="hidden" name="ReservationForm[path][vlan][]">
-                            <input class="mode-input" type="hidden" name="ReservationForm[path][mode][]" value="normal">
+                            <input class="mode-input" type="hidden" value="normal">
                             <div class="pull-right">
                                 <a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>
                                 <a href="#" class="text-muted"><i class="fa fa-trash"></i></a>
@@ -137,7 +137,7 @@ $form = ActiveForm::begin([
                                 </div>
                                 VLAN: <label class="point-info vlan-l">none</label>
                                 <input class="vlan-input" type="hidden" name="ReservationForm[path][vlan][]">
-                                <input class="mode-input" type="hidden" name="ReservationForm[path][mode][]" value="normal">
+                                <input class="mode-input" type="hidden" value="normal">
                                 <div class="pull-right">
                                     <a href="#" class="text-muted"><i class="fa fa-pencil"></i></a>
                                     <a href="#" class="text-muted"><i class="fa fa-trash"></i></a>
