@@ -16,7 +16,7 @@ class View extends AssetBundle
     public $sourcePath = '@meican/circuits/assets/connection/public';
     
     public $js = [
-        'view2.js'
+        'view.js'
     ];
 
     public $css = [

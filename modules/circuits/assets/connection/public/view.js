@@ -288,7 +288,7 @@ function initPathBox() {
     meicanMap.show('dev');
     loadDomains();
 
-    drawCircuit($("#circuit-id").attr('value'));
+    
 
     /*$("#path-map").on("linkClick", function(e, link) {
         var srcPoint;
@@ -307,9 +307,10 @@ function initPathBox() {
         }
     });
 
-    $('#path-map').on('lmap.nodeClick', function(e, marker) {
-        marker.setPopupContent('Domain: <b>' + meicanMap.getDomain(marker.options.domainId).name + 
-            '</b><br>Device: <b>' + marker.options.name + '</b><br>');
+    $('#path-map').on('lmap.nodeClick', function(e, node) {
+    	console.log(node);
+        // node.setPopupContent('Domain: <b>' + node.options.ports[0].network.domainname + 
+        //     '</b><br>Device: <b>' + marker.options.name + '</b><br>');
             //'In port: <b></b><br>' +
             //'Out port: <b></b><br>' +
             //'VLAN: <b></b><br>');
@@ -327,21 +328,49 @@ function loadDomains() {
         dataType: 'json',
         method: "GET",        
         success: function(response) {
-            meicanMap.setDomains(response);
+            meicanMap.getTopology()['domains'] = response;
+            loadNetworks();
+        }
+    });
+}
+
+function loadNetworks() {
+    $.ajax({
+        url: baseUrl+'/topology/network/get-all',
+        dataType: 'json',
+        method: "GET",
+        success: function(nets) {
+            for (var i = nets.length - 1; i >= 0; i--) {
+                for (var k = meicanMap.getTopology()['domains'].length - 1; k >= 0; k--) {
+                    if (nets[i]['domain_id'] == meicanMap.getTopology()['domains'][k]['id']) {
+                        nets[i]['domain'] = meicanMap.getTopology()['domains'][k];
+                    }
+                }
+            }
+            meicanMap.getTopology()['networks'] = nets;
+            drawCircuit($("#circuit-id").attr('value'));
         }
     });
 }
 
 function drawCircuit(connId, animate) {
     $.ajax({
-        url: baseUrl+'/circuits/connection/get-ordered-path',
+        url: baseUrl+'/circuits/connection/get-path',
         dataType: 'json',
         method: "GET",
         data: {
             id: connId,
         },
         success: function(response) {
-            path = response;
+        	path = response;
+        	var nets = meicanMap.getTopology()['networks'];
+        	for (var i = path.length - 1; i >= 0; i--) {
+                for (var k = nets.length - 1; k >= 0; k--) {
+                    if (path[i]['network_id'] == nets[k]['id']) {
+                        path[i]['network'] = nets[k];
+                    }
+                }
+            }
             var size = response.length;
 
             if (circuitApproved) {
@@ -435,70 +464,33 @@ function addWayPoint(pathItem) {
     //marker = meicanMap.getMarker('dev'+ devId);
     //if (marker) return;
 
-    $.ajax({
-        url: baseUrl+'/circuits/connection/get-stp',
-        dataType: 'json',
-        method: "GET",
-        data: {
-            id: pathItem.device_id,
-        },
-        success: function(response) {
-            addMarker(response, "#00FF00");
-        }
-    });
+    addMarker(pathItem, "#00FF00");
 }
 
-function addSource(pathItem) {
+function addSource(port) {
     //marker = meicanMap.getMarker('dev'+ devId);
     //if (marker) return meicanMap.changeDeviceMarkerColor(marker, "0000EE");
 
-    $.ajax({
-        url: baseUrl+'/circuits/connection/get-stp',
-        dataType: 'json',
-        method: "GET",
-        data: {
-            id: pathItem.device_id,
-        },
-        success: function(response) {
-            addMarker(response, "#0000EE");
-        }
-    });
+    addMarker(port, "#0000EE");
 }
 
-function addDestin(pathItem) {
+function addDestin(port) {
     //marker = meicanMap.getMarker('dev'+ devId);
     //if (marker) return meicanMap.changeDeviceMarkerColor(marker, "FF0000");
 
-    $.ajax({
-        url: baseUrl+'/circuits/connection/get-stp',
-        dataType: 'json',
-        method: "GET",
-        data: {
-            id: pathItem.device_id,
-        },
-        success: function(response) {
-            addMarker(response, "#FF0000");
-        }
-    });
+    addMarker(port, "#FF0000");
 }
 
-function addMarker(dev, color) {
-    marker = meicanMap.getNode('dev'+dev.id);
-    if (marker) return marker;
+function addMarker(port, color) {
+    // marker = meicanMap.getNodeByPortUrn('dev'+dev.id);
+    // if (marker) return marker;
 
-    meicanMap.addNode(
-        'dev'+dev.id,
-        dev.name,
-        'dev',
-        meicanMap.getDomainByName(dev.dom).id,
-        dev.lat,
-        dev.lng,
-        color);
+    meicanMap.addNode(port, color);
 }
 
 function areMarkersReady(path) {
     for (var i = 0; i < path.length; i++) {
-        var marker = meicanMap.getNode('dev'+path[i].device_id);
+        var marker = meicanMap.getNodeByPort(path.port_urn);
         if (marker === null) {
             return false;
         }

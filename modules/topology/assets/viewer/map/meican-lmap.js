@@ -14,10 +14,11 @@ function LMap(canvasDivId) {
     this._nodes = [];                   // markers/nodes container
     this._links = [];                   // polylines/links/edges container
     this._nodeType;                     // current node type visible
-    this._topology;                     // topology
+    this._topology = [];                     // topology
     this._lastShowedMarker; 
     this._cluster;
     this._portsSize = 0;
+    this._nodeAutoInc = 1;
 };
 
 LMap.prototype.show = function(nodeType, instantRefresh) {
@@ -37,8 +38,8 @@ LMap.prototype.show = function(nodeType, instantRefresh) {
             currentMap.invalidateSize(true);
         }, 200);
 
-    if(nodeType)
-        this.setNodeType(nodeType);
+    // if(nodeType)
+    //     this.setNodeType(nodeType);
 }
 
 LMap.prototype.hide = function() {
@@ -192,12 +193,11 @@ LMap.prototype.removeLinks = function() {
     }
 }
 
-LMap.prototype.getNodeByPosition = function(domain, lat, lng) {
+LMap.prototype.getNodeByPosition = function(lat, lng) {
     size = this._nodes.length;
 
     for(var i = 0; i < size; i++){
-        if (this._nodes[i].options.domain == domain && 
-                (this._nodes[i].getLatLng().lat === lat) && 
+        if ((this._nodes[i].getLatLng().lat === lat) && 
                 (this._nodes[i].getLatLng().lng === lng)) {
             //this._nodes[i].unbindLabel();
             //this._nodes[i].bindLabel(this._nodes[i].options.name, { noHide: true, direction: 'left' });
@@ -208,7 +208,7 @@ LMap.prototype.getNodeByPosition = function(domain, lat, lng) {
     return null;
 }
 
-LMap.prototype.addNode = function(id, urn, port, color) {
+LMap.prototype.addNode = function(port, color) {
     if (!color) color = port.network.domain.color;
     if (port.lat != null && port.lng != null) {
         var pos = [port.lat,port.lng];
@@ -216,7 +216,7 @@ LMap.prototype.addNode = function(id, urn, port, color) {
         var pos = [0, 0];
     }
 
-    var node = this.getNodeByPosition(port.network.domain, port.lat, port.lng);
+    var node = this.getNodeByPosition(port.lat, port.lng);
 
     if (node == null) {
         var icon = L.divIcon({
@@ -233,10 +233,9 @@ LMap.prototype.addNode = function(id, urn, port, color) {
         });
 
         node = L.marker(
-            //this.buildNodePosition('dev',
-            L.latLng(pos), 
+            this.buildNodePosition(L.latLng(pos)), 
             {
-                id: id, 
+                id: this._nodeAutoInc++, 
                 icon: icon,
                 name: port.name,
                 ports: [port]
@@ -300,22 +299,21 @@ LMap.prototype.setTopology = function(topology) {
     this._topology = topology;
 }
 
-LMap.prototype.getDomains = function() {
-    return this._domainsList;
+LMap.prototype.getTopology = function() {
+    return this._topology;
 }
 
-LMap.prototype.buildNodePosition = function(type, position) {
+LMap.prototype.buildNodePosition = function(position) {
     size = this._nodes.length;
     lat = position.lat;
     lng = position.lng;
 
     for(var i = 0; i < size; i++){
-        if ((this._nodes[i].options.type === type) &&
-                (this._nodes[i].getLatLng().lat === lat) && 
+        if ((this._nodes[i].getLatLng().lat === lat) && 
                 (this._nodes[i].getLatLng().lng === lng)) {
             this._nodes[i].unbindLabel();
             this._nodes[i].bindLabel(this._nodes[i].options.name, { noHide: true, direction: 'left' });
-            return this.buildNodePosition(type, L.latLng(position.lat, position.lng + 0.001));
+            return this.buildNodePosition(L.latLng(position.lat, position.lng + 0.001));
         }
     }
     
@@ -337,6 +335,17 @@ LMap.prototype.getNode = function(id) {
     for(var i = 0; i < size; i++){
         if ((this._nodes[i].options.id.toString()) == (id.toString())) {
             return this._nodes[i];
+        }
+    }
+    
+    return null;
+}
+
+LMap.prototype.getNodeByPort = function(urn) {
+    for (var i = this._nodes.length - 1; i >= 0; i--) {
+        for (var k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
+            if (this._nodes[i].options.ports[k].urn == urn)
+                return this._nodes[i];
         }
     }
     

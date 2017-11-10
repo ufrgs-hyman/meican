@@ -109,30 +109,18 @@ class ConnectionController extends RbacController {
         return $data;
     }*/
 
-    public function actionGetOrderedPath($id) {
-        $points = ConnectionPath::find()
-            ->where(['conn_id'=>$id])
-            ->orderBy(['path_order'=> "SORT_ASC"])
-            ->asArray()
-            ->all();
+    public function actionGetPath($id) {
+        $path = Yii::$app->db->createCommand(
+            "SELECT meican_connection_path.path_order, meican_connection_path.port_urn, meican_connection_path.vlan, meican_port.lat, meican_port.lng, meican_port.network_id, meican_connection_path.conn_id
+                FROM meican_connection_path 
+                LEFT JOIN meican_port 
+                ON meican_connection_path.port_urn = meican_port.urn
+                WHERE meican_connection_path.conn_id = $id"
+        )->queryAll();
          
-        // foreach ($points as $point) {
-        //     $port = $point->getPort()->select(['id','urn','device_id', 'type', 'name'])->one();
-        //     $data[] = [
-        //         'path_order' => $point->path_order, 
-        //         'device_id'=> $port ? $port->device_id : null,
-        //         'port_id' => $port ? $port->id : null,
-        //         'port_name' => $port ? $port->name : null,
-        //         'port_type' => $port ? $port->type : null,
-        //         'port_urn' => $point->getFullPortUrn(),
-        //         'vlan' => $point->vlan,
-        //         'domain' => $point->domain,
-        //     ];
-        // }
-         
-        $points = json_encode($points);
-        Yii::trace($points);
-        return $points;
+        $path = json_encode($path);
+        Yii::trace($path);
+        return $path;
     }
 
     public function actionGetEndPoints($id) {
