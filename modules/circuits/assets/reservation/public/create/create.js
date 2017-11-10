@@ -741,12 +741,8 @@ function loadPorts(domains) {
             }
             initEditPointSelects();
 
-            counter = 0;
             for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
-                counter++;
                 meicanMap.addNode(
-                    counter,
-                    meicanTopo['ports'][i].urn,
                     meicanTopo['ports'][i]
                 );
             }
