@@ -1,614 +1,650 @@
-var markerCluster;
+/**
+ * @copyright Copyright (c) 2016 RNP
+ * @license http://github.com/ufrgs-hyman/meican#license
+ * @author Mauricio Quatrin Guerreiro
+ */
+
+var meicanMap;
+var circuitApproved = false;
+var circuitDataPlane;
+var path;
+var statsCurrentPts;
+var statsGraphic;
+var refreshInterval;
 
 $(document).ready(function() {
-	prepareRefreshButton();
-	prepareCancelDialog();
-	
-	selectConn($("#connections-grid tbody").children().attr("data-key"));
-    loadEndPointDetails(selectedConn);
-	selectedConnIsApproved = isAuthorizationReceived();
-});
+    circuitApproved = isAuthorized();
+    circuitDataPlane = getDataPlaneStatus();
+    requestRefresh();
+    initPathBox();
+    initStats();
+    initHistoryModal();
+    initEditModal();
+    initCancelModal();
+    enableAutoRefresh();
 
-$("#viewer-type-select").selectmenu();
-$("#node-type-select").selectmenu();
+    $("#refresh-btn").on('click', function() {
+        requestRefresh();
+        MAlert.show("Refresh in progress.", "Please, wait a moment while we get updated information.", 'success');
+    });
+});
 
 $(document).on('ready pjax:success', function() {
-	selectConn(selectedConn);
-	
-	$('#connections-grid').on("click", '.cancel-button', function() {
-		
-        if ($(this).attr("disabled") != 'disabled') {
-            disableAutoRefresh();
-            $("#cancel-dialog").data('connId', $(this).parent().parent().parent().attr('data-key')).dialog("open");
-        }
-            
-        return false;
-	});
-	
-	$('#connections-grid tbody tr').on("click", function() {
-        if(selectedConn != $(this).attr("data-key")) {
-            selectConn($(this).attr("data-key"));
-            selectedConnIsApproved = isAuthorizationReceived();
-            showCircuit(selectedConn);
-        }
-	});
-	
-	if (!selectedConnIsApproved && isAuthorizationReceived()) {
-		selectedConnIsApproved = true;
-		console.log("connection approved");
-		drawReservation(selectedConn, true);
-	}
+    //se o circuito nao esta aprovado, verifica o ultimo status
+    //se ele for aprovado, entao deve ser recarregado 
+    if (!circuitApproved && isAuthorized()) {
+        circuitApproved = true;
+        console.log("connection approved");
+        drawCircuit($("#circuit-id").attr('value'), true);
+    }
 
-    for (var i = 0; i < circuits.length; i++) {
-        if (circuits[i].connId == selectedConn) {
-            circuits[i].setOptions(
-                {
-                    strokeColor: getSelectedConnCircuitColor()
-                });
-            break;
-        } 
+    //se mudou dataplane entao atualiza cor do circuito
+    if(circuitDataPlane != getDataPlaneStatus()) {
+        console.log('dataplane change');
+        circuitDataPlane = getDataPlaneStatus();
+        updateCircuitColor();
     }
 });
 
-var selectedConnIsApproved;
-var selectedConn;
-var meicanMap;
-var refresher;
-var circuits = [];
-
-function getSelectedConnCircuitColor() {
-    if (isActiveSelectedConn()) {
-        return "#1B8B1D"; 
-    } else {
-        return "#483D8B"; 
-    }
-} 
-
-function showCircuit(connId) {
-	var found = false;
-	for (var i = 0; i < circuits.length; i++) {
-		console.log(circuits[i].connId, connId)
-		if (circuits[i].connId != connId) {
-			circuits[i].setVisible(false);
-		} else {
-			found = true;
-			circuits[i].setVisible(true);
-			showMarkers(circuits[i].requiredMarkers);
-		}
-	}
-
-	if (!found) {
-		drawReservation(connId);
-	}
+function updateCircuitColor() {
+    var color = (circuitDataPlane == 'ACTIVE') ? "#35E834" : "#27567C";
+    for (var i = meicanMap.getLinks().length - 1; i >= 0; i--) {
+        meicanMap.getLinks()[i].setStyle({
+            color: color
+        });
+    };
 }
 
-function isAuthorizationReceived() {
-	return $("#connections-grid tbody").
-			children("tr[data-key=" + selectedConn + "]").find("td.authorized").length > 0;
+function getDataPlaneStatus() {
+    return $("#status-dataplane").attr("status");
 }
 
-function isActiveSelectedConn() {
-    return $("#connections-grid tbody").
-            children("tr[data-key=" + selectedConn + "]").find("td.active").length > 0;
+function isAuthorized() {
+    return $("#status-auth").attr('status') == 'AUTHORIZED';
 }
 
-function selectConn(id) {
-	$("#connections-grid tbody").children("tr[data-key=" + selectedConn + "]").removeClass("checked-line");
-	selectedConn = id;
-	$("#connections-grid tbody").children("tr[data-key=" + selectedConn + "]").addClass("checked-line");
-}
-
-function loadEndPointDetails(connId) {
-	$.ajax({
-		url: baseUrl+'/circuits/connection/get-end-points',
-		dataType: 'json',
-		method: "GET",
-		data: {
-			id: connId,
-		},
-		success: function(response) {
-			fillEndPointDetails("src", response["src"]);
-			fillEndPointDetails("dst", response["dst"]);
-		}
-	});
-}
-
-function fillEndPointDetails(endPointType, path) {
-	if (path.dom.length < 15) {
-		$("#" + endPointType + "-dom").text(path.dom);
-	} else {
-		$("#" + endPointType + "-dom").text(path.dom.substr(0, 13) + "...");
-		$("#" + endPointType + "-dom").prop("title", path.dom);
-	}
-    if (path.net.length < 15) {
-		$("#" + endPointType + "-net").text(path.net);
-	} else {
-		$("#" + endPointType + "-net").text(path.net.substr(0, 13) + "...");
-		$("#" + endPointType + "-net").prop("title", path.net);
-	}
-	if (path.dev.length < 15) {
-		$("#" + endPointType + "-dev").text(path.dev);
-	} else {
-		$("#" + endPointType + "-dev").text(path.dev.substr(0, 13) + "...");
-		$("#" + endPointType + "-dev").prop("title", path.dev);
-	}
-	if (path.port.length < 15) {
-		$("#" + endPointType + "-port").text(path.port);
-	} else {
-		$("#" + endPointType + "-port").text(path.port.substr(0, 13) + "...");
-		$("#" + endPointType + "-port").prop("title", path.port);
-	}
-	$("#" + endPointType + "-urn").text(path.urn);
-	if (path.vlan.length < 15) {
-		$("#" + endPointType + "-vlan").text(path.vlan);
-	} else $("#" + endPointType + "-vlan").text(path.vlan.substr(0, 13) + "...");
-}
-
-function prepareRefreshButton() {
-	refresher = setInterval(updateGridView, 10000);
-	
-	$("#refresh-button").click(function(){
-		if ($("#refresh-button").val() == "true") {
-			disableAutoRefresh();
-		} else {
-			enableAutoRefresh();
-		}
-	});
-}
-
-function prepareCancelDialog() {
-	$("#cancel-dialog").dialog({
-        autoOpen: false,
-        modal: true,
-        resizable: false,
-        width: "200",
-        buttons: [{
-        	id:"yes-button",
-            text: I18N.t("Yes"),
-            click: function() {
-                var connId = $("#cancel-dialog").data('connId');
-            	$("#cancel-dialog").dialog( "close" );
-            	
-            	$.ajax({
-            		url: baseUrl+'/circuits/connection/cancel',
-            		dataType: 'json',
-            		data: {
-            			id: connId,
-            		},
-            		success: function() {
-                        enableAutoRefresh();
-            		},
-            		error: function() {
-            			$("#dialog").dialog("open");
-						$("#message").html(I18N.t("You are not allowed for cancel connections in this domains."));
-						$("#dialog").dialog({
-							buttons: [
-								{
-									text: "Ok",
-								    click: function() {
-								  	  $(this).dialog( "close" );
-								    }
-								},
-							]
-						});
-            		}
-            	});
-        	}
-        },{
-            text: I18N.t("No") + " (ESC)",
-            click: function() {
-            	$("#cancel-dialog").dialog( "close" );
-            }
-        }],
-        close: function() {
-        	$("#yes-button").attr("disabled", false);
+function requestRefresh() {
+    $.ajax({
+        url: baseUrl+'/circuits/connection/refresh',
+        data: {
+            id: $("#circuit-id").attr('value'),
+        },
+        success: function() {
+            refreshPjax("details-pjax");
         }
     });
 }
 
 function disableAutoRefresh() {
-	$("#refresh-button").val('false');
-	clearInterval(refresher);
-	$("#refresh-button").text(I18N.t("Enable auto refresh"));
+    clearInterval(refreshInterval);
 }
 
 function enableAutoRefresh() {
-	updateGridView();
-	$("#refresh-button").val('true');
-	refresher = setInterval(updateGridView, 10000);
-	$("#refresh-button").text(I18N.t("Disable auto refresh"));
+    refreshInterval = setInterval(refreshAll, 30000);
 }
 
-function updateGridView() {
-	$.pjax.defaults.timeout = false;
-	$.pjax.reload({
-		container:'#connections-pjax'
-	});
+function refreshAll() {
+    console.log('refreshing...');
+    refreshPjax('status-pjax');
+    setTimeout(function() {
+        refreshPjax('details-pjax');
+    }, 2000);
+    setTimeout(function() {
+        refreshPjax('history-pjax');
+    }, 4000);
 }
 
-/////////////// botoes superiores da tabela origem destino /////////
-
-function initEndPointButtons(endPointType) {
-    $('#' + endPointType + '-copy-urn').click(function() {
-    	openCopyUrnDialog(endPointType);
+function refreshPjax(id) {
+    $.pjax.defaults.timeout = false;
+    $.pjax.reload({
+        container:'#' + id
     });
-    
-    $("#copy-urn-dialog").dialog({
-        autoOpen: false,
-        modal: true,
-        resizable: false,
-        width: "auto",
-        height: "auto",
-        buttons: [{
-            text: I18N.t("Close"),
-            click: function() {
-            	$("#copy-urn-dialog").dialog( "close" );
+}
+
+function initCancelModal() {
+    $("#cancel-btn").on("click", function() {
+        $('#cancel-modal').modal("show");
+        return false;
+    });
+
+    $("#cancel-modal").on("click", '.close-btn', function() {
+        $("#cancel-modal").modal("hide");
+    });
+
+    $("#cancel-modal").on("click", '.confirm-btn', function() {
+        $.ajax({
+            url: baseUrl+'/circuits/connection/cancel',
+            dataType: 'json',
+            data: {
+                id: $("#circuit-id").attr("value"),
+            },
+            success: function() {
+            },
+            error: function() {
+                MAlert.show(I18N.t("Error."), I18N.t("You are not allowed for cancel circuits in this domains."), 'danger');
             }
-        }],
+        });
+        $("#cancel-modal").modal("hide");
+        MAlert.show(I18N.t("Cancellation in progress."), I18N.t("Please, wait a moment while we process your request."), 'success');
     });
 }
 
-function openCopyUrnDialog(endPointType) {
-	$("#copy-urn-field").val($("#"+ endPointType+ "-urn").text());
-	$("#copy-urn-dialog").dialog("open");
+function initEditModal() {
+    $("#edit-modal").on("click", '.confirm-btn', function() {
+        validateEditForm();
+
+        setTimeout(function() {
+            if($("#edit-modal").find(".has-error").length > 0) {
+                console.log("tem erro")
+                MAlert.show(I18N.t("Request invalid."), I18N.t("Please, check your input and try again."), 'danger');
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: baseUrl + '/circuits/connection/update?submit=true',
+                data: $("#edit-form").serialize(),
+                success: function (response) {
+                    if(response) {
+                        MAlert.show(I18N.t("Modification in progress."), 
+                        I18N.t("Please, wait a moment while we process your request."), 'success');
+                        $.ajax({
+                            type: "POST",
+                            url: baseUrl + '/circuits/connection/update?id='+ $("#circuit-id").attr('value') + '&confirm=true',
+                            success: function () {
+                            },
+                            error: function() {
+                                MAlert.show(I18N.t("Error."), I18N.t("Sorry, contact your administrator."), 'danger');
+                            }
+                        });
+                        $("#edit-modal").modal('hide');
+                    }
+                    else MAlert.show(
+                        I18N.t("No changes."), 
+                        I18N.t("Please, check your input and try again."), 
+                        'warning');
+                },
+                error: function() {
+                    MAlert.show(I18N.t("Error."), I18N.t("Sorry, contact your administrator."), 'danger');
+                }
+            });
+
+        }, 200);
+
+        return false;
+    });
+
+    $("#connectionform-acceptrelease").on("switchChange.bootstrapSwitch", function(event, state) {
+        validateEditForm();
+    });
+
+    $("#edit-modal").on("click", '.close-btn', function() {
+        $("#edit-modal").modal("hide");
+        return false;
+    });
+
+    $("#edit-modal").on("click", '.undo-btn', function() {
+        $("#connectionform-start").val($("#info-start").attr('value'));
+        $("#connectionform-end").val($("#info-end").attr('value'));
+        $("#connectionform-bandwidth").val($("#info-bandwidth").attr('value'));
+        validateEditForm();
+        return false;
+    });
+
+    $("#edit-btn").on("click", function() {
+        $('#edit-form').yiiActiveForm('resetForm');
+        $("#connectionform-start").val($("#info-start").attr('value'));
+        $("#connectionform-end").val($("#info-end").attr('value'));
+        $("#connectionform-bandwidth").val($("#info-bandwidth").attr('value'));
+        $('#edit-modal').modal("show");
+        return false;
+    });
 }
 
-///////////// DESENHAR CIRCUITO NO MAPA ///////////////
-
-function drawCircuit(requiredMarkers) {
-    strokeColor = getSelectedConnCircuitColor();
-    
-	strokeOpacity = 0.775;
-	
-	var path = [];
-
-	for (var k = 0; k < requiredMarkers.length; k++) {
-		path.push(meicanMap.getMarker('dev',requiredMarkers[k]).position);
-	}
-	
-	if (path.length > 1) {
-		var circuit = new google.maps.Polyline({
-			connId: selectedConn,
-			requiredMarkers: requiredMarkers,
-	        path: path,
-	        strokeColor: strokeColor,
-	        strokeOpacity: strokeOpacity,
-	        strokeWeight: 5,
-	        geodesic: false,
-	    });
-		circuit.setMap(meicanMap.getMap());
-
-		circuits.push(circuit);
-	}
+function validateEditForm() {
+    $("#edit-form").yiiActiveForm("validateAttribute", 'connectionform-bandwidth');
+    $("#edit-form").yiiActiveForm("validateAttribute", 'connectionform-start');
+    $("#edit-form").yiiActiveForm("validateAttribute", 'connectionform-end');
 }
 
-function drawCircuitAnimated(requiredMarkers) {
-	if (requiredMarkers.length > 2) {
-		for (var i = 0; i < requiredMarkers.length - 1; i++) {
-			drawPath(requiredMarkers, getPathData(
-                meicanMap.getMarker('dev',requiredMarkers[i]), meicanMap.getMarker('dev',requiredMarkers[i + 1])), 1); 
-		}
-		
-	} else {
-		drawPath(requiredMarkers, getPathData(
-            meicanMap.getMarker('dev',requiredMarkers[0]), meicanMap.getMarker('dev',requiredMarkers[1])), 1); 
-	}
+function initHistoryModal() {
+    $("#history-pjax").on("click", '.event-message', function(e) {
+        $('#event-message-modal').modal('show');
+        $.ajax({
+            url: baseUrl+'/circuits/connection/get-event-message',
+            data: {
+                id: $(this).parent().parent().attr('data-key')
+            },
+            method: "GET",
+            success: function(response) {
+                $("#event-message-modal").find('.modal-body').html(response);
+            },
+        });
+        return false;
+    });
+
+    $('#event-message-modal').on('hidden.bs.modal', function () {
+        $("#event-message-modal").find('.modal-body').html('');
+    })
 }
 
-function getPathData(source,destin) {  
-    var path = [];
+function updateCircuitStatus() {
+    switch($("#info-status").attr("value")) {
+        case 'reservating'   : 
+            break;
+        case 'scheduled'     : 
+            if(moment().isAfter($("#info-start").attr("value"))) {
+                activatingCircuit();
+            } else {
+                $("#status-box").find(".tts").text(moment().to($("#circuit-info").find('.start-time').attr("value")));
+            }
+            break;
+        case 'activating'    : activeCircuit();
+            break;
+        case 'active'        : finishCircuit();
+            break;
+        case 'finished'      : 
+            break;
+    }
+}
 
-    path[0] = new google.maps.LatLng(source.position.lat(),source.position.lng()); 
-    
-    for(var i=1;i<=90;i++){  
-    	
-    	//sem geodesic
-    	var projection = meicanMap.getMap().getProjection();
-        var pointFrom = projection.fromLatLngToPoint( source.position );
-        var pointTo = projection.fromLatLngToPoint( destin.position );
-        
-        // se cruzar o 180 meridiano
-        if( Math.abs( pointTo.x - pointFrom.x ) > 128 ) {
-            if( pointTo.x > pointFrom.x )
-                pointTo.x -= 256;
-            else
-                pointTo.x += 256;
-        }
-        
-        var x = pointFrom.x + ( pointTo.x - pointFrom.x ) * i/90;
-        var y = pointFrom.y + ( pointTo.y - pointFrom.y ) * i/90;
-        var pointBetween = new google.maps.Point( x, y );
+function scheduleCircuit() {
+    $("#status-box").find(".info-box-text").text("Time to start");
+    $("#status-box").find(".info-box-number").html('<span class="tts">loading...</span><br><small>10/02/2016 at 20:00</small>');
+    $("#status-box").attr("data-value", 'scheduled');
+}
 
-        path[i] = projection.fromPointToLatLng( pointBetween );
-        
-        //com geodesic - precisa da lib geometry
-    	//path[i] = google.maps.geometry.spherical.interpolate(source.position, destin.position, i/90);
-    } 
-    
-    return path;
-}  
+function activatingCircuit() {
+    $("#status-box").find(".ion-clock").removeClass().addClass("ion ion-gear-a");
+    $("#status-box").find(".info-box-text").text("Status");
+    $("#status-box").find(".info-box-number").text("Activating");
+    $("#status-box").attr("data-value", 'activating');
+}
 
-function drawPath(requiredMarkers, path, index, polyline){  
-	if (polyline) {
-		polyline.setPath([path[0],path[index]]);
-	} else {
-		polyline = new google.maps.Polyline({  
-			 connId: selectedConn,
-			 requiredMarkers: requiredMarkers,
-             path: [path[0],path[index]],  
-             strokeColor: "#483D8B",
- 	         strokeOpacity: 0.775,
- 	         strokeWeight: 5,
- 	         geodesic: false,
-        });  
-		polyline.setMap(meicanMap.getMap());  
-		circuits.push(polyline);
-	}
-   
-	index++;  
-    if(index <= 90){  
-      setTimeout(function() {
-    	  drawPath(requiredMarkers, path, index, polyline);
-      },100);  
-    }                            
-}  
+function activeCircuit() {
+    $("#status-box").find(".ion-clock").removeClass().addClass("ion ion-arrow-up-a");
+    $("#status-box").find(".info-box-text").text("Status");
+    $("#status-box").find(".info-box-number").text("Active");
+    $("#status-box").attr("data-value", 'active');
+}
 
-//////////// INICIALIZA MAPA /////////////////
+function inactiveCircuit() {
+    $("#status-box").find(".ion-clock").removeClass().addClass("ion ion-close-circled");
+    $("#status-box").find(".info-box-text").text("Status");
+    $("#status-box").find(".info-box-number").text("Inactive");
+}
 
-function initialize() {
-	meicanMap = new MeicanMap;
-    meicanMap.buildMap("map-canvas");
+function finishCircuit() {
+    $("#status-box").find(".ion-clock").removeClass().addClass("ion ion-checkmark-circled");
+    $("#status-box").find(".info-box-text").text("Status");
+    $("#status-box").find(".info-box-number").text("Finished");
+}
 
-    var markerClustererOptions = {
-            gridSize: 10, 
-            maxZoom: 10,
-            ignoreHidden: true
+function initPathBox() {
+    $("#path-grid").css("margin", '10px');
+    $("#path-box").css("height", 445);
+    $("#path-map").css("height", 400);
+    meicanMap = new LMap('path-map');
+    meicanMap.show('dev');
+    loadDomains();
+
+    drawCircuit($("#circuit-id").attr('value'));
+
+    /*$("#path-map").on("linkClick", function(e, link) {
+        var srcPoint;
+        for (var i = 0; i < path.length; i++) {
+            if(('dev' + path[i].device_id) == link.options.from)
+                loadStats(path[i]);
         };
-    
-    markerCluster = new MarkerClusterer(
-            meicanMap.getMap(), 
-            null, 
-            markerClustererOptions
-    );
-	
-	drawReservation(selectedConn);
-	
-	initEndPointButtons("src");
-    initEndPointButtons('dst');
+    });*/
 
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href"); // activated tab
+        console.log(target);
+        if(target == '#path-map') {
+            meicanMap.show(null, true);
+            meicanMap.focusNodes();
+        }
+    });
+
+    $('#path-map').on('lmap.nodeClick', function(e, marker) {
+        marker.setPopupContent('Domain: <b>' + meicanMap.getDomain(marker.options.domainId).name + 
+            '</b><br>Device: <b>' + marker.options.name + '</b><br>');
+            //'In port: <b></b><br>' +
+            //'Out port: <b></b><br>' +
+            //'VLAN: <b></b><br>');
+    });
+
+    $("#path-box").on("click", '.show-stats', function() {
+        ///monitoramento de interfaces????????
+        loadStats($(this).parent().parent().attr("data-key"));
+    });
+}
+
+function loadDomains() {
     $.ajax({
-        url: baseUrl+'/circuits/reservation/request-update',
+        url: baseUrl+'/topology/domain/get-all',
         dataType: 'json',
-        data: {
-            id: $("#res-id").text(),
-        },
-        success: function() {
+        method: "GET",        
+        success: function(response) {
+            meicanMap.setDomains(response);
         }
     });
 }
 
-function drawReservation(connId, animate) {
-	$.ajax({
-		url: baseUrl+'/circuits/connection/get-ordered-paths',
-		dataType: 'json',
-		method: "GET",
-		data: {
-			id: connId,
-		},
-		success: function(response) {
-            if (selectedConnIsApproved) {
-                var size = response.length;
-                var requiredMarkers = [];
+function drawCircuit(connId, animate) {
+    $.ajax({
+        url: baseUrl+'/circuits/connection/get-ordered-path',
+        dataType: 'json',
+        method: "GET",
+        data: {
+            id: connId,
+        },
+        success: function(response) {
+            path = response;
+            var size = response.length;
 
+            if (circuitApproved) {
                 //a ordem dos marcadores aqui eh importante,
                 //pois eh a ordem do circuito
-                for (var i = 0; i < size; i++) {
-                    if (response[i].device_id != null) {
-                        requiredMarkers.push(response[i].device_id);
-                    }
-                }
-
-                showMarkers(requiredMarkers);
-
                 //console.log(requiredMarkers);
-
-                addSourceMarker(response[0].device_id);
-                addDestinMarker(response[size-1].device_id);
+                addSource(path[0]);
+                addDestin(path[size-1]);
                 
                 for (var i = 1; i < size-1; i++) {
-                    if (response[i].device_id != null) {
-                        addWayPointMarker(response[i].device_id);
-                    }
+                    addWayPoint(path[i]);
                 }
+
+                updatePathInfo(path);
                 
-                setMapBoundsMarkersWhenReady(requiredMarkers);
-                
-                drawCircuitWhenReady(requiredMarkers, animate);
+                drawCircuitWhenReady(path, false);
                 
             } else {
-                var size = response.length;
-            
-                var requiredMarkers = [];
-
                 //aqui nao importa a ordem dos marcadores, pois nao ha circuito criado
-                addSourceMarker(response[0].device_id);
-                requiredMarkers.push(response[0].device_id);
-                addDestinMarker(response[size-1].device_id);
-                requiredMarkers.push(response[size-1].device_id);
+
+                addSource(path[0]);
+                addDestin(path[size-1]);
                 
                 for (var i = 1; i < size-1; i++) {
-                    if (response[i].device_id != null) {
-                        addWayPointMarker(response[i].device_id);
-                        requiredMarkers.push(response[i].device_id);
-                    }
+                    addWayPoint(path[i]);
                 }
                 
-                setMapBoundsMarkersWhenReady(requiredMarkers);
+                setMapBoundsMarkersWhenReady(path);
             }
-		}
-	});
+        }
+    });
 }
 
-function drawCircuitWhenReady(requiredMarkers, animate) {
-	if (areMarkersReady(requiredMarkers)) {
-		//console.log("drew");
-		if (animate) {
-			drawCircuitAnimated(requiredMarkers);
-		} else {
-			drawCircuit(requiredMarkers);
-		}
-	} else {
-		setTimeout(function() {
-			drawCircuitWhenReady(requiredMarkers, animate);
-		} ,50);
-	}
+function updatePathInfo(path) {
+    $($("#path-grid").find('tbody').find("tr").children()[0]).text(0);
+    $($("#path-grid").find('tbody').find("tr").children()[1]).text(path[0].port_urn);
+    $($("#path-grid").find('tbody').find("tr").children()[2]).text(path[0].vlan);
+
+    for (var i = 1; i < path.length; i++) {
+        var pointRow = $($("#path-grid").find('tbody').find("tr")[0]).clone();
+
+        $(pointRow.children()[0]).text(i);
+        $(pointRow.children()[1]).text(path[i].port_urn);
+        $(pointRow.children()[2]).text(path[i].vlan);
+        $(pointRow).attr('data-key', i);
+        $($("#path-grid").find('tbody')).append(pointRow);
+    }
 }
 
-function setMapBoundsMarkersWhenReady(requiredMarkers) {
-	if (areMarkersReady(requiredMarkers)) {
-		//console.log("setbounds");
-		var path = [];
-        var size = requiredMarkers.length;
-		for(var i = 0; i < size; i++){
-			path.push(meicanMap.getMarker('dev',requiredMarkers[i]).position);
-		}
-		setMapBounds(path);
-	} else {
-		setTimeout(function() {
-			setMapBoundsMarkersWhenReady(requiredMarkers);
-		} ,50);
-	}
+function drawCircuitWhenReady(path, animate) {
+    if (areMarkersReady(path)) {
+        console.log("drew");
+        if (animate) {
+            drawCircuitAnimated();
+        } else {
+            for (var i = 0; i < path.length - 1; i++) {
+                meicanMap.addLink(
+                    null, 
+                    'dev' + path[i].device_id, 
+                    'dev' + path[i+1].device_id, 
+                    'dev', 
+                    false,
+                    null,
+                    (circuitDataPlane == 'ACTIVE') ? "#35E834" : "#27567C");
+            }
+            
+            meicanMap.focusNodes();
+            loadStats(path[0], path[1]);
+        }
+    } else {
+        console.log("try draw");
+        setTimeout(function() {
+            drawCircuitWhenReady(path, animate);
+        } ,50);
+    }
 }
 
-function addWayPointMarker(devId) {
-    marker = meicanMap.getMarker('dev', devId);
-    if (marker) return;
-
-	$.ajax({
-		url: baseUrl+'/circuits/connection/get-stp',
-		dataType: 'json',
-		method: "GET",
-		data: {
-			id: devId,
-		},
-		success: function(response) {
-			addMarker(response, "#00FF00");
-		}
-	});
+function setMapBoundsMarkersWhenReady(path) {
+    if (areMarkersReady(path)) {
+        console.log("setbounds");
+        meicanMap.focusNodes();
+    } else {
+        console.log("try bounds");
+        setTimeout(function() {
+            setMapBoundsMarkersWhenReady(path);
+        } ,50);
+    }
 }
 
-function addSourceMarker(devId) {
-    marker = meicanMap.getMarker('dev', devId);
-    if (marker) return meicanMap.changeDeviceMarkerColor(marker, "0000EE");
+function addWayPoint(pathItem) {
+    //marker = meicanMap.getMarker('dev'+ devId);
+    //if (marker) return;
 
-	$.ajax({
-		url: baseUrl+'/circuits/connection/get-stp',
-		dataType: 'json',
-		method: "GET",
-		data: {
-			id: devId,
-		},
-		success: function(response) {
-			addMarker(response, "#0000EE");
-		}
-	});
+    $.ajax({
+        url: baseUrl+'/circuits/connection/get-stp',
+        dataType: 'json',
+        method: "GET",
+        data: {
+            id: pathItem.device_id,
+        },
+        success: function(response) {
+            addMarker(response, "#00FF00");
+        }
+    });
 }
 
-function addDestinMarker(devId) {
-    marker = meicanMap.getMarker('dev', devId);
-    if (marker) return meicanMap.changeDeviceMarkerColor(marker, "FF0000");
+function addSource(pathItem) {
+    //marker = meicanMap.getMarker('dev'+ devId);
+    //if (marker) return meicanMap.changeDeviceMarkerColor(marker, "0000EE");
 
-	$.ajax({
-		url: baseUrl+'/circuits/connection/get-stp',
-		dataType: 'json',
-		method: "GET",
-		data: {
-			id: devId,
-		},
-		success: function(response) {
-			addMarker(response, "#FF0000");
-		}
-	});
+    $.ajax({
+        url: baseUrl+'/circuits/connection/get-stp',
+        dataType: 'json',
+        method: "GET",
+        data: {
+            id: pathItem.device_id,
+        },
+        success: function(response) {
+            addMarker(response, "#0000EE");
+        }
+    });
 }
 
-function showMarkers(connIds) {
-    var size = meicanMap.getMarkers().length;
-	for (var i = 0; i < size; i++) {
-		var found = false;
-		for (var k = 0; k < connIds.length; k++) {
-			console.log(meicanMap.getMarkers()[i].id, connIds[k]);
-			if (meicanMap.getMarkers()[i].id == connIds[k]) {
-				meicanMap.getMarkers()[i].setVisible(true);
-				found = true;
-				break;
-			} 
-		}
+function addDestin(pathItem) {
+    //marker = meicanMap.getMarker('dev'+ devId);
+    //if (marker) return meicanMap.changeDeviceMarkerColor(marker, "FF0000");
 
-		if (!found) 
-			meicanMap.getMarkers()[i].setVisible(false);
-	}
+    $.ajax({
+        url: baseUrl+'/circuits/connection/get-stp',
+        dataType: 'json',
+        method: "GET",
+        data: {
+            id: pathItem.device_id,
+        },
+        success: function(response) {
+            addMarker(response, "#FF0000");
+        }
+    });
 }
-
-//////////// ADICIONA MARCADORES NO MAPA /////////////////
 
 function addMarker(dev, color) {
-	marker = meicanMap.getMarker('dev', dev.id);
-	if (marker) return marker;
+    marker = meicanMap.getNode('dev'+dev.id);
+    if (marker) return marker;
 
-	if (dev.lat != null && dev.lng != null) {
-		var myLatlng = new google.maps.LatLng(dev.lat,dev.lng);
-	} else {
-		var myLatlng = new google.maps.LatLng(0, 0);
-	}
-	
-	var marker = meicanMap.DeviceMarker({
-		position: meicanMap.getValidMarkerPosition('dev', myLatlng),
-        type: 'dev',
-		id: dev.id,
-        domainName: dev.dom,
-        name: dev.name
-	}, color);
-	
-	meicanMap.addMarker(marker);
-    markerCluster.addMarker(marker);
-	
-	addMarkerListeners(marker);
-	
-	marker.setMap(meicanMap.getMap());
+    meicanMap.addNode(
+        'dev'+dev.id,
+        dev.name,
+        'dev',
+        meicanMap.getDomainByName(dev.dom).id,
+        dev.lat,
+        dev.lng,
+        color);
 }
 
-function areMarkersReady(ids) {
-	for (var i = 0; i < ids.length; i++) {
-        var marker = meicanMap.getMarker('dev',ids[i]);
-		if (marker === null) {
-			return false;
-		}
-	}
-	
-	return true;
-}
-
-//////////// LISTENERS DOS MARCADORES /////////////
-
-function addMarkerListeners(marker) {
-	google.maps.event.addListener(marker, 'mouseover', function() {
-		meicanMap.closeWindows();
-		meicanMap.openWindow(marker);
-	});
-}
-
-////////// DEFINE ZOOM E LIMITES DO MAPA A PARTIR DE UM CAMINHO ////////
-
-function setMapBounds(path) {
-    //console.log(path);
-    if (path.length < 2) return;
-    polylineBounds = new google.maps.LatLngBounds();
+function areMarkersReady(path) {
     for (var i = 0; i < path.length; i++) {
-    	polylineBounds.extend(path[i]);
+        var marker = meicanMap.getNode('dev'+path[i].device_id);
+        if (marker === null) {
+            return false;
+        }
     }
-    meicanMap.getMap().fitBounds(polylineBounds);
-    meicanMap.getMap().setCenter(polylineBounds.getCenter());
-    meicanMap.getMap().setZoom(meicanMap.getMap().getZoom() - 1);
+    
+    return true;
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+function initStats() {
+    $("#stats").css("height", 375);
+
+    $("#stats-box").on('click', '.refresh-btn', function() {
+        loadStats();
+    });
+
+    statsGraphic = $.plot("#stats", [], {
+      grid: {
+        hoverable: true,
+        borderColor: "#f3f3f3",
+        borderWidth: 1,
+        tickColor: "#f3f3f3"
+      },
+      series: {
+        shadowSize: 0,
+        lines: {
+          show: true
+        },
+        points: {
+          show: true
+        }
+      },
+      lines: {
+        fill: true,
+      },
+      yaxis: {
+        show: true,
+        tickFormatter: function(val, axis) {
+            return convertTrafficValue(val);
+        }
+      },
+      xaxis: {
+        mode: "time",
+        timezone: 'browser',
+        show: true,
+      },
+      legend: {
+        noColumns: 2,
+        container: $("#stats-legend"),
+        labelFormatter: function(label, series) {
+            return '<span style="margin-right: 10px; margin-left: 5px;">' + label + '</span>';
+        }
+      }
+    });
+
+    //Initialize tooltip on hover
+    $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
+      position: "absolute",
+      display: "none",
+      opacity: 0.8,
+      zIndex: 3,
+    }).appendTo("body");
+
+
+    $("#stats").bind("plothover", function (event, pos, item) {
+
+      if (item) {
+        var x = item.datapoint[0],
+            y = convertTrafficValue(item.datapoint[1], 2);
+
+        $("#line-chart-tooltip").html(moment.unix(x/1000).format("DD/MM/YYYY HH:mm:ss") + '<br>' + y)
+            .css({top: item.pageY + 5, left: item.pageX + 5})
+            .fadeIn(200);
+      } else {
+        $("#line-chart-tooltip").hide();
+      }
+
+    });
+}
+
+function convertTrafficValue(val, fixed) {
+    if (Math.abs(val) > 999999)
+        return (Math.abs(val)/1000000).toFixed(fixed ? fixed : 0) + " Mbps";
+    else if(Math.abs(val) > 999)
+        return (Math.abs(val)/1000).toFixed(fixed ? fixed : 0) + " Kbps";
+    else
+        return (Math.abs(val)).toFixed(fixed ? fixed : 0) + " bps";
+}
+
+function loadStats(srcPoint, dstPoint) {
+    if(srcPoint) {
+        statsCurrentLink = {src: srcPoint, dst: dstPoint};
+    }
+
+    //$("#stats-target").html("<b>" + statsCurrentPoint.port_urn + "</b> (VLAN <b>" + statsCurrentPoint.vlan + "</b>)");
+
+    $("#stats-loading").show();
+
+    //if(urnType == "NSI")....
+    var urn = statsCurrentLink.src.port_urn;
+    urn = urn.split(':');
+    var dom = urn[3];
+    var dstDev = statsCurrentLink.dst.port_urn.split(':')[statsCurrentLink.dst.port_urn.split(':').length - 3];
+    var dev = urn[urn.length - 3];
+    var port = urn[urn.length - 2];
+    var vlan = statsCurrentLink.src.vlan;
+    var statsData = [];
+
+    loadTrafficHistory(statsData, dom, dev, port, vlan, dstDev);
+}
+
+function loadTrafficHistory(statsData, dom, dev, port, vlan, dstDev) {
+    $.ajax({
+        url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=' + dom + '&dev=' + dev +
+            '&port=' + port + '&vlan=' + vlan + '&dir=out' + '&interval=' + 0,
+        dataType: 'json',
+        method: "GET",
+        success: function(data) {
+            var dataOut = [];
+            for (var i = 0; i < data.traffic.length; i++) {
+                dataOut.push([moment.unix(data.traffic[i].ts), 0-(data.traffic[i].val*8)]);
+            }
+            statsData.push({label: dstDev + ' to ' + dev, data: dataOut, color: "#f56954" });
+
+            statsGraphic.setData(statsData);
+            statsGraphic.setupGrid();
+            statsGraphic.draw();
+        }
+    });
+
+    $.ajax({
+        url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=' + dom + '&dev=' + dev +
+            '&port=' + port + '&vlan=' + vlan + '&dir=in' + '&interval=' + 0,
+        dataType: 'json',
+        method: "GET",
+        success: function(data) {
+            var dataIn = [];
+            for (var i = 0; i < data.traffic.length; i++) {
+                dataIn.push([moment.unix(data.traffic[i].ts), data.traffic[i].val*8]);
+            }
+            statsData.push({label: dev + ' to ' + dstDev, data: dataIn, color: "#3c8dbc" });
+
+            statsGraphic.setData(statsData);
+            statsGraphic.setupGrid();
+            statsGraphic.draw();
+            
+            $("#stats-loading").hide();
+        }
+    });
+}
