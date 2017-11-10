@@ -676,12 +676,11 @@ function drawPath() {
     if ($(".point").length > 1) {
         var path = [];
         for (var i = 0; i < $(".point").length; i++) {
-            if($($(".point")[i]).find('.mode-input').val() == 'normal')
-                path.push($($(".point")[i]).find('.dev-l').attr('data'));
+            path.push($($(".point")[i]).find('.urn-input').val());
         };
 
         for (var i = 0; i < path.length - 1; i++) {
-            meicanMap.addLink(null, 'dev' + path[i], 'dev' + path[i+1]);
+            meicanMap.addLink(path[i], path[i+1]);
         };
     }
 }
@@ -738,6 +737,8 @@ function loadPorts(domains) {
                         meicanTopo['ports'][i]['network'] = meicanTopo['networks'][k];
                     }
                 }
+                meicanTopo['ports'][i].lat = parseFloat(meicanTopo['ports'][i].lat);
+                meicanTopo['ports'][i].lng = parseFloat(meicanTopo['ports'][i].lng);
             }
             initEditPointSelects();
 

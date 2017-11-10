@@ -19,6 +19,7 @@ function LMap(canvasDivId) {
     this._cluster;
     this._portsSize = 0;
     this._nodeAutoInc = 1;
+    this._linkAutoInc = 1;
 };
 
 LMap.prototype.show = function(nodeType, instantRefresh) {
@@ -107,12 +108,12 @@ LMap.prototype.getLink = function(id) {
     return null;
 }
 
-LMap.prototype.addLink = function(id, from, to, type, partial, cap, color) {
+LMap.prototype.addLink = function(from, to, type, partial, cap, color) {
     if(!from || !to) return null;
     if(!color) color = '#cccccc';
     var latLngList = [];
 
-    var src = this.getNode(from);
+    var src = this.getNodeByPort(from);
     if(src != null)
         latLngList.push(src.getLatLng());
     else {
@@ -120,7 +121,7 @@ LMap.prototype.addLink = function(id, from, to, type, partial, cap, color) {
         return;
     }
 
-    var dst = this.getNode(to);
+    var dst = this.getNodeByPort(to);
     if(dst != null)
         latLngList.push(dst.getLatLng());
     else {
@@ -136,7 +137,7 @@ LMap.prototype.addLink = function(id, from, to, type, partial, cap, color) {
         var link = L.polyline(
             latLngList, 
             {
-                id: id ? id : new Date(),
+                id: this._linkAutoInc++,
                 from: from,
                 to: to,
                 traffic: 0,
@@ -147,9 +148,9 @@ LMap.prototype.addLink = function(id, from, to, type, partial, cap, color) {
                 type: type,
             }).addTo(this._map).bindPopup(
                         'Link between <b>' + 
-                        meicanMap.getNode(from).options.name +
+                        meicanMap.getNodeByPort(from).options.name +
                         '</b> and <b>' +
-                        meicanMap.getNode(to).options.name +
+                        meicanMap.getNodeByPort(to).options.name +
                         '</b><br>');
 
         this._links.push(link);
@@ -274,25 +275,17 @@ LMap.prototype.addNode = function(port, color) {
     }
     var label = port.urn;
     if (node.options.ports.length > 1) {
-        label = sharedStart(node.options.ports);
+        labels = [];
+        for (var i = node.options.ports.length - 1; i >= 0; i--) {
+            labels.push(node.options.ports[i].urn);
+        }
+        label = sharedStart(labels);
         if (label.length < 1) {
             label = port.network.name;
         } 
     }
     
     node.bindLabel(label, { noHide: true, direction: 'auto' });
-}
-
-LMap.prototype.getDomain = function(id) {
-    for (var i = 0; i < this._domainsList.length; i++) {
-        if (this._domainsList[i].id == id) return this._domainsList[i];
-    }
-}
-
-LMap.prototype.getDomainByName = function(name) {
-    for (var i = 0; i < this._clusters.length; i++) {
-        if (this._clusters[i].name == name) return this._clusters[i];
-    }
 }
 
 LMap.prototype.setTopology = function(topology) {
@@ -361,10 +354,6 @@ LMap.prototype.getNodeByName = function(name) {
     }
     
     return null;
-}
-
-LMap.prototype.getNodeType = function() {
-    return this._nodeType;
 }
 
 LMap.prototype.searchMarkerByNameOrDomain = function (type, name) {
