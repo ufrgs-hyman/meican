@@ -194,12 +194,12 @@ LMap.prototype.removeLinks = function() {
     }
 }
 
-LMap.prototype.getNodeByPosition = function(lat, lng) {
+LMap.prototype.getNodeByPosition = function(position) {
     size = this._nodes.length;
 
     for(var i = 0; i < size; i++){
-        if ((this._nodes[i].getLatLng().lat === lat) && 
-                (this._nodes[i].getLatLng().lng === lng)) {
+        if ((this._nodes[i].getLatLng().lat === position.lat) && 
+                (this._nodes[i].getLatLng().lng === position.lng)) {
             //this._nodes[i].unbindLabel();
             //this._nodes[i].bindLabel(this._nodes[i].options.name, { noHide: true, direction: 'left' });
             return this._nodes[i];
@@ -209,15 +209,27 @@ LMap.prototype.getNodeByPosition = function(lat, lng) {
     return null;
 }
 
+LMap.prototype.getParentPosition = function(port) {
+    for (var i = port.network.domain.providers.length - 1; i >= 0; i--) {
+        if (port.network.domain.providers[i].latitude != null)
+            return L.latLng([port.network.domain.providers[i].latitude, 
+                port.network.domain.providers[i].longitude]);
+    }
+    return L.latLng([0,0]);
+}
+
 LMap.prototype.addNode = function(port, color) {
+    console.log(port);
     if (!color) color = port.network.domain.color;
     if (port.lat != null && port.lng != null) {
-        var pos = [port.lat,port.lng];
+        var pos = L.latLng([port.lat,port.lng]);
+    } else if (typeof port.network !== 'undefined') {
+        var pos = this.getParentPosition(port);
     } else {
-        var pos = [0, 0];
+        var pos = L.latLng([0, 0]);
     }
 
-    var node = this.getNodeByPosition(port.lat, port.lng);
+    var node = this.getNodeByPosition(pos);
 
     if (node == null) {
         var icon = L.divIcon({
@@ -234,7 +246,7 @@ LMap.prototype.addNode = function(port, color) {
         });
 
         node = L.marker(
-            this.buildNodePosition(L.latLng(pos)), 
+            this.buildNodePosition(pos), 
             {
                 id: this._nodeAutoInc++, 
                 icon: icon,

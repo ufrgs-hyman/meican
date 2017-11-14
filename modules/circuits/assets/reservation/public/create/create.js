@@ -698,7 +698,32 @@ function loadDomains() {
             console.log(response);
             meicanTopo['domains'] = response;
             meicanMap.setTopology(meicanTopo);
-            // meicanGraph.setDomains(response);
+            for (var i = meicanTopo['domains'].length - 1; i >= 0; i--) {
+                meicanTopo['domains'][i]['providers'] = [];
+            }
+            loadProviders();
+        }
+    });
+}
+
+function loadProviders() {
+    $.ajax({
+        url: baseUrl+'/topology/provider/get-all',
+        dataType: 'json',
+        method: "GET",
+        data: {
+            cols: JSON.stringify(['id','name','latitude','longitude', 'domain_id'])
+        },
+        success: function(response) {
+            console.log(response);
+            meicanTopo['providers'] = response;
+            for (var i = meicanTopo['providers'].length - 1; i >= 0; i--) {
+                for (var k = meicanTopo['domains'].length - 1; k >= 0; k--) {
+                    if (meicanTopo['providers'][i]['domain_id'] == meicanTopo['domains'][k]['id']) {
+                        meicanTopo['domains'][k]['providers'].push(meicanTopo['providers'][i]);
+                    }
+                }
+            }
             loadNetworks();
         }
     });
@@ -737,8 +762,10 @@ function loadPorts(domains) {
                         meicanTopo['ports'][i]['network'] = meicanTopo['networks'][k];
                     }
                 }
-                meicanTopo['ports'][i].lat = parseFloat(meicanTopo['ports'][i].lat);
-                meicanTopo['ports'][i].lng = parseFloat(meicanTopo['ports'][i].lng);
+                if (meicanTopo['ports'][i].lat != null) {
+                    meicanTopo['ports'][i].lat = parseFloat(meicanTopo['ports'][i].lat);
+                    meicanTopo['ports'][i].lng = parseFloat(meicanTopo['ports'][i].lng);
+                }
             }
             initEditPointSelects();
 
