@@ -774,6 +774,7 @@ function loadPorts(domains) {
                     meicanTopo['ports'][i]
                 );
             }
+            meicanMap.prepareLabels();
         }
     });
 }

@@ -194,15 +194,14 @@ LMap.prototype.removeLinks = function() {
     }
 }
 
-LMap.prototype.getNodeByPosition = function(position) {
-    size = this._nodes.length;
-
-    for(var i = 0; i < size; i++){
+LMap.prototype.getNodeByPosition = function(position, domain) {
+    for (var i = this._nodes.length - 1; i >= 0; i--) {
         if ((this._nodes[i].getLatLng().lat === position.lat) && 
-                (this._nodes[i].getLatLng().lng === position.lng)) {
-            //this._nodes[i].unbindLabel();
-            //this._nodes[i].bindLabel(this._nodes[i].options.name, { noHide: true, direction: 'left' });
-            return this._nodes[i];
+            (this._nodes[i].getLatLng().lng === position.lng)) {
+            if (this._nodes[i].options.ports[0].network.domain == domain)
+                return this._nodes[i];
+            else
+                return this.getNodeByPosition(L.latLng(position.lat, position.lng + 0.001), domain);
         }
     }
 
@@ -219,7 +218,6 @@ LMap.prototype.getParentPosition = function(port) {
 }
 
 LMap.prototype.addNode = function(port, color) {
-    console.log(port);
     if (!color) color = port.network.domain.color;
     if (port.lat != null && port.lng != null) {
         var pos = L.latLng([port.lat,port.lng]);
@@ -229,7 +227,7 @@ LMap.prototype.addNode = function(port, color) {
         var pos = L.latLng([0, 0]);
     }
 
-    var node = this.getNodeByPosition(pos);
+    var node = this.getNodeByPosition(pos, port.network.domain);
 
     if (node == null) {
         var icon = L.divIcon({
@@ -250,7 +248,7 @@ LMap.prototype.addNode = function(port, color) {
             {
                 id: this._nodeAutoInc++, 
                 icon: icon,
-                name: port.name,
+                name: port.urn,
                 ports: [port]
             }
         ).bindPopup("#");
@@ -269,7 +267,7 @@ LMap.prototype.addNode = function(port, color) {
         // });
     } else {
         node.options.ports.push(port);
-        node.unbindLabel();
+        //node.unbindLabel();
         
         node.setIcon(L.divIcon({
             iconSize: [22,22],
@@ -285,19 +283,21 @@ LMap.prototype.addNode = function(port, color) {
             className: 'marker-icon-svg',
         }));
     }
-    var label = port.urn;
-    if (node.options.ports.length > 1) {
-        labels = [];
-        for (var i = node.options.ports.length - 1; i >= 0; i--) {
-            labels.push(node.options.ports[i].urn);
-        }
-        label = sharedStart(labels);
-        if (label.length < 1) {
-            label = port.network.name;
-        } 
-    }
     
-    node.bindLabel(label, { noHide: true, direction: 'auto' });
+}
+
+LMap.prototype.prepareLabels = function() {
+    for (var i = this._nodes.length - 1; i >= 0; i--) {
+        var label = 'error';
+        labels = [];
+        for (var k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
+            labels.push(this._nodes[i].options.ports[k].urn);
+        }
+        console.log(labels);
+        label = sharedStart(labels);
+    
+        this._nodes[i].bindLabel(label, { noHide: true, direction: 'auto' });
+    }
 }
 
 LMap.prototype.setTopology = function(topology) {
@@ -437,7 +437,7 @@ LMap.prototype.build = function(mapDiv) {
         center: [-13.8771429,-52.0998244],
         zoomControl: false,
         zoom: 4,
-        maxZoom: 15,
+        maxZoom: 19,
         minZoom: 2
     });
 
@@ -447,7 +447,7 @@ LMap.prototype.build = function(mapDiv) {
 
     this._cluster = L.markerClusterGroup({
         showCoverageOnHover: false,
-        maxClusterRadius: 1,
+        maxClusterRadius: 20,
         zoomToBoundsOnClick: true,
         spiderfyOnMaxZoom: false,
     });
@@ -473,7 +473,10 @@ function removeInvalidChar(str) {
     if (str.length < 2)
         return str;
 
-    if (str.slice(-1) == '-' || str.slice(-1) == ':' || str.slice(-1) == '+')
+    if (str.slice(-1) == '-' || 
+        str.slice(-1) == ':' || 
+        str.slice(-1) == '+' ||
+        str.slice(-1) == '_')
         return removeInvalidChar(str.substring(0, str.length - 1));
 
     return str;
@@ -524,7 +527,7 @@ LMap.prototype.setType = function(mapType) {
 }
 
 LMap.prototype.focusNode = function(id) {
-    var marker = this.getMarker(id);
+    var marker = this.getNode(id);
     if(marker) {
         var bounds = new google.maps.LatLngBounds();
 
