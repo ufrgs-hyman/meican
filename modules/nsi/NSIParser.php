@@ -198,9 +198,13 @@ class NSIParser {
     function addPort($netId, $netName, $biPortId, $biportName, $portId, $portType, 
             $vlan, $alias, $lat=null, $lng=null) {
         $netUrn = str_replace("urn:ogf:network:","",$netId);
+        $netUrn = strtolower($netUrn);
         $portUrn = str_replace("urn:ogf:network:","",$portId);
+        $portUrn = strtolower($portUrn);
         $biPortUrn = str_replace("urn:ogf:network:","",$biPortId);
+        $biPortUrn = strtolower($biPortUrn);
         $aliasUrn = str_replace("urn:ogf:network:","",$alias);
+        $aliasUrn = strtolower($aliasUrn);
         
         $id = explode(":", $netId);
         //         0   1     2         3        4    5
@@ -280,6 +284,7 @@ class NSIParser {
             if($netNode->prefix != "") $netNode->prefix .= ":";
             $netId = $netNode->getAttribute('id');
             $netUrn = str_replace("urn:ogf:network:","",$netId);
+            $netUrn = strtolower($netUrn);
             $this->xpath->registerNamespace('x', $xmlns);
             $netNameNode = $this->xpath->query(".//x:name", $netNode);
             if ($netNameNode->item(0)) {
