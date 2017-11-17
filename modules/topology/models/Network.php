@@ -52,7 +52,7 @@ class Network extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'urn', 'domain_id'], 'required'],
+            [['name', 'urn', 'domain_id', 'version'], 'required'],
             [['latitude', 'longitude'], 'number'],
             [['domain_id'], 'integer'],
             [['address'], 'string', 'max' => 200],

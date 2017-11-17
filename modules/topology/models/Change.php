@@ -330,6 +330,7 @@ class Change extends \yii\db\ActiveRecord
                             $net->longitude = $data->lng;
                             $net->name = $data->name;
                             $net->urn = $data->urn;
+                            $net->version = DateUtils::toUTCfromGMT($data->version);
                             $net->domain_id = $dom->id;
 
                             if($net->save()) {
@@ -675,8 +676,9 @@ class Change extends \yii\db\ActiveRecord
                         $location = $data->lat ? Yii::t('topology','<br><b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
                             ['lat'=> $data->lat, 
                             'lng'=> $data->lng]) : "";
-                        return Yii::t('topology', '<b>Name</b>: {name}<br><b>URN</b>: {urn}',
-                            ['name'=>$data->name,'urn' => $data->urn]).$location;
+                        return Yii::t('topology', '<b>Name</b>: {name}<br><b>URN</b>: {urn}<br><b>Version</b>: {version}',
+                            ['name'=>$data->name,'urn' => $data->urn,'version'=>$data->version]).
+                            $location;
                     case self::ITEM_TYPE_BIPORT:     
                         $location = $data->lat ? Yii::t('topology',
                             '<br><b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 

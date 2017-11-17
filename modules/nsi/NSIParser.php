@@ -200,17 +200,17 @@ class NSIParser {
         $netUrn = str_replace("urn:ogf:network:","",$netId);
         $netUrn = strtolower($netUrn);
         $portUrn = str_replace("urn:ogf:network:","",$portId);
-        $portUrn = strtolower($portUrn);
+        //$portUrn = strtolower($portUrn);
         $biPortUrn = str_replace("urn:ogf:network:","",$biPortId);
-        $biPortUrn = strtolower($biPortUrn);
+        //$biPortUrn = strtolower($biPortUrn);
         $aliasUrn = str_replace("urn:ogf:network:","",$alias);
-        $aliasUrn = strtolower($aliasUrn);
+        //$aliasUrn = strtolower($aliasUrn);
         
         $id = explode(":", $netId);
         //         0   1     2         3        4    5
         //        urn:ogf:network:cipo.rnp.br:2014::POA
 
-        $domainName = $id[3];
+        $domainName = strtolower($id[3]);
 
         if (strpos('urn:ogf:network',$biPortId) !== false) {
             $this->errors["Unknown URN"][$biPortId] = null;
@@ -297,7 +297,7 @@ class NSIParser {
             //         0   1     2         3        4    5
             //        urn:ogf:network:cipo.rnp.br:2014::POA
             
-            $domainName = $id[3];
+            $domainName = strtolower($id[3]);
             
             $longitudeNode = $this->xpath->query(".//longitude", $netNode);
             $latitudeNode = $this->xpath->query(".//latitude", $netNode);
@@ -312,10 +312,18 @@ class NSIParser {
                         $domainName]["nets"][$netUrn]["address"] = $addressNode->item(0)->nodeValue;
             }
             
-            $this->topology["domains"][
+            if (!isset($this->topology["domains"][
+                    $domainName]["nets"][$netUrn]["version"]) ||
+                ($this->topology["domains"][
+                        $domainName]["nets"][$netUrn]["version"] != $netNode->getAttribute('version'))) {
+
+                $this->topology["domains"][
                     $domainName]["nets"][$netUrn]["name"] = $netName;
-            
-            $this->parseBiPorts($netNode, $netId, $netName);
+                $this->topology["domains"][
+                        $domainName]["nets"][$netUrn]["version"] = $netNode->getAttribute('version');
+                
+                $this->parseBiPorts($netNode, $netId, $netName);
+            }
         }
     }
     

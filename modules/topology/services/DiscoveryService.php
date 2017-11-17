@@ -233,7 +233,10 @@ class DiscoveryService {
                 $change->type = Change::TYPE_CREATE;
                 $change->domain = $domainName;
                 $change->item_type = Change::ITEM_TYPE_NETWORK;
-                $change->data = json_encode(['name'=>$netData['name'],'urn'=>$netUrn,
+                $change->data = json_encode([
+                    'name'=>$netData['name'],
+                    'urn'=>$netUrn,
+                    'version'=>$netData['version'],
                     'lat'=>isset($netData["lat"]) ? $netData["lat"] : null,
                     'lng'=>isset($netData["lng"]) ? $netData["lng"] : null]);
 
@@ -247,7 +250,10 @@ class DiscoveryService {
                     $change->item_id = $network->id;
                     $change->domain = $domainName;
                     $change->item_type = Change::ITEM_TYPE_NETWORK;
-                    $change->data = json_encode(['name'=>$netData['name'],'urn'=>$netUrn,
+                    $change->data = json_encode([
+                        'name'=>$netData['name'],
+                        'urn'=>$netUrn,
+                        'version'=>$netData['version'],
                         'lat'=>$netData["lat"],
                         'lng'=>$netData["lng"]]);
 
