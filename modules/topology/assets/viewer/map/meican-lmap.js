@@ -3,7 +3,7 @@
  *
  * A DCN topology viewer based on Leaflet Javascript library.
  *
- * @copyright Copyright (c) 2016 RNP
+ * @copyright Copyright (c) 2017 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  * @author Mauricio Quatrin Guerreiro
  */
@@ -14,7 +14,7 @@ function LMap(canvasDivId) {
     this._nodes = [];                   // markers/nodes container
     this._links = [];                   // polylines/links/edges container
     this._nodeType;                     // current node type visible
-    this._topology = [];                     // topology
+    this._topology = [];                // topology
     this._lastShowedMarker; 
     this._cluster;
     this._portsSize = 0;
@@ -22,7 +22,7 @@ function LMap(canvasDivId) {
     this._linkAutoInc = 1;
 };
 
-LMap.prototype.show = function(nodeType, instantRefresh) {
+LMap.prototype.show = function(instantRefresh) {
     if($("#map-l").length == 1) {
         $("#map-l").show();
     } else {
@@ -38,9 +38,6 @@ LMap.prototype.show = function(nodeType, instantRefresh) {
         setTimeout(function() {
             currentMap.invalidateSize(true);
         }, 200);
-
-    // if(nodeType)
-    //     this.setNodeType(nodeType);
 }
 
 LMap.prototype.hide = function() {
@@ -108,7 +105,7 @@ LMap.prototype.getLink = function(id) {
     return null;
 }
 
-LMap.prototype.addLink = function(from, to, type, partial, cap, color) {
+LMap.prototype.addLink = function(from, to, partial, cap, color) {
     if(!from || !to) return null;
     if(!color) color = '#cccccc';
     var latLngList = [];
@@ -145,7 +142,6 @@ LMap.prototype.addLink = function(from, to, type, partial, cap, color) {
                 color: color,
                 opacity: 0.7,
                 weight: 6,
-                type: type,
             }).addTo(this._map).bindPopup(
                         'Link between <b>' + 
                         meicanMap.getNodeByPort(from).options.name +
@@ -293,7 +289,6 @@ LMap.prototype.prepareLabels = function() {
         for (var k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
             labels.push(this._nodes[i].options.ports[k].urn);
         }
-        console.log(labels);
         label = sharedStart(labels);
     
         this._nodes[i].bindLabel(label, { noHide: true, direction: 'auto' });

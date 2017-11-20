@@ -285,10 +285,8 @@ function initPathBox() {
     $("#path-box").css("height", 445);
     $("#path-map").css("height", 400);
     meicanMap = new LMap('path-map');
-    meicanMap.show('dev');
+    meicanMap.show();
     loadDomains();
-
-    
 
     /*$("#path-map").on("linkClick", function(e, link) {
         var srcPoint;
@@ -300,9 +298,8 @@ function initPathBox() {
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         var target = $(e.target).attr("href"); // activated tab
-        console.log(target);
         if(target == '#path-map') {
-            meicanMap.show(null, true);
+            meicanMap.show(true);
             meicanMap.focusNodes();
         }
     });
@@ -318,7 +315,7 @@ function initPathBox() {
 
     $("#path-box").on("click", '.show-stats', function() {
         ///monitoramento de interfaces????????
-        loadStats($(this).parent().parent().attr("data-key"));
+        //loadStats($(this).parent().parent().attr("data-key"));
     });
 }
 
@@ -406,14 +403,14 @@ function drawCircuit(connId, animate) {
 
 function updatePathInfo(path) {
     $($("#path-grid").find('tbody').find("tr").children()[0]).text(0);
-    $($("#path-grid").find('tbody').find("tr").children()[1]).text(path[0].port_urn);
+    $($("#path-grid").find('tbody').find("tr").children()[1]).text(path[0].urn);
     $($("#path-grid").find('tbody').find("tr").children()[2]).text(path[0].vlan);
 
     for (var i = 1; i < path.length; i++) {
         var pointRow = $($("#path-grid").find('tbody').find("tr")[0]).clone();
 
         $(pointRow.children()[0]).text(i);
-        $(pointRow.children()[1]).text(path[i].port_urn);
+        $(pointRow.children()[1]).text(path[i].urn);
         $(pointRow.children()[2]).text(path[i].vlan);
         $(pointRow).attr('data-key', i);
         $($("#path-grid").find('tbody')).append(pointRow);
@@ -428,17 +425,15 @@ function drawCircuitWhenReady(path, animate) {
         } else {
             for (var i = 0; i < path.length - 1; i++) {
                 meicanMap.addLink(
-                    null, 
-                    'dev' + path[i].device_id, 
-                    'dev' + path[i+1].device_id, 
-                    'dev', 
+                    path[i].urn, 
+                    path[i+1].urn, 
                     false,
                     null,
                     (circuitDataPlane == 'ACTIVE') ? "#35E834" : "#27567C");
             }
             
             meicanMap.focusNodes();
-            loadStats(path[0], path[1]);
+            loadStats(path);
         }
     } else {
         console.log("try draw");
@@ -460,38 +455,28 @@ function setMapBoundsMarkersWhenReady(path) {
     }
 }
 
-function addWayPoint(pathItem) {
-    //marker = meicanMap.getMarker('dev'+ devId);
-    //if (marker) return;
-
-    addMarker(pathItem, "#00FF00");
+function addWayPoint(port) {
+    addMarker(port, "#00FF00");
 }
 
 function addSource(port) {
-    //marker = meicanMap.getMarker('dev'+ devId);
-    //if (marker) return meicanMap.changeDeviceMarkerColor(marker, "0000EE");
-
     addMarker(port, "#0000EE");
 }
 
 function addDestin(port) {
-    //marker = meicanMap.getMarker('dev'+ devId);
-    //if (marker) return meicanMap.changeDeviceMarkerColor(marker, "FF0000");
-
     addMarker(port, "#FF0000");
 }
 
 function addMarker(port, color) {
-    // marker = meicanMap.getNodeByPortUrn('dev'+dev.id);
-    // if (marker) return marker;
+    marker = meicanMap.getNodeByPort(port.urn);
+    if (marker) return;
 
     meicanMap.addNode(port, color);
 }
 
 function areMarkersReady(path) {
-    for (var i = 0; i < path.length; i++) {
-        var marker = meicanMap.getNodeByPort(path.port_urn);
-        if (marker === null) {
+    for (var i = path.length - 1; i >= 0; i--) {
+        if (meicanMap.getNodeByPort(path[i].urn) === null) {
             return false;
         }
     }
@@ -579,32 +564,21 @@ function convertTrafficValue(val, fixed) {
         return (Math.abs(val)).toFixed(fixed ? fixed : 0) + " bps";
 }
 
-function loadStats(srcPoint, dstPoint) {
-    if(srcPoint) {
-        statsCurrentLink = {src: srcPoint, dst: dstPoint};
-    }
-
+function loadStats() {
     //$("#stats-target").html("<b>" + statsCurrentPoint.port_urn + "</b> (VLAN <b>" + statsCurrentPoint.vlan + "</b>)");
 
     $("#stats-loading").show();
 
     //if(urnType == "NSI")....
-    var urn = statsCurrentLink.src.port_urn;
-    urn = urn.split(':');
-    var dom = urn[3];
-    var dstDev = statsCurrentLink.dst.port_urn.split(':')[statsCurrentLink.dst.port_urn.split(':').length - 3];
-    var dev = urn[urn.length - 3];
-    var port = urn[urn.length - 2];
-    var vlan = statsCurrentLink.src.vlan;
     var statsData = [];
 
-    loadTrafficHistory(statsData, dom, dev, port, vlan, dstDev);
+    loadTrafficHistory(statsData, path[0].urn, path[0].vlan);
 }
 
-function loadTrafficHistory(statsData, dom, dev, port, vlan, dstDev) {
+function loadTrafficHistory(statsData, port, vlan) {
     $.ajax({
-        url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=' + dom + '&dev=' + dev +
-            '&port=' + port + '&vlan=' + vlan + '&dir=out' + '&interval=' + 0,
+        url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + port +
+            '&vlan=' + vlan + '&dir=out' + '&interval=' + 0,
         dataType: 'json',
         method: "GET",
         success: function(data) {
@@ -612,7 +586,7 @@ function loadTrafficHistory(statsData, dom, dev, port, vlan, dstDev) {
             for (var i = 0; i < data.traffic.length; i++) {
                 dataOut.push([moment.unix(data.traffic[i].ts), 0-(data.traffic[i].val*8)]);
             }
-            statsData.push({label: dstDev + ' to ' + dev, data: dataOut, color: "#f56954" });
+            statsData.push({label: 'To ' + port, data: dataOut, color: "#f56954" });
 
             statsGraphic.setData(statsData);
             statsGraphic.setupGrid();
@@ -621,8 +595,8 @@ function loadTrafficHistory(statsData, dom, dev, port, vlan, dstDev) {
     });
 
     $.ajax({
-        url: baseUrl+'/monitoring/traffic/get-vlan-history?dom=' + dom + '&dev=' + dev +
-            '&port=' + port + '&vlan=' + vlan + '&dir=in' + '&interval=' + 0,
+        url: baseUrl+'/monitoring/traffic/get-vlan-history?port=' + port + 
+            '&vlan=' + vlan + '&dir=in' + '&interval=' + 0,
         dataType: 'json',
         method: "GET",
         success: function(data) {
@@ -630,7 +604,7 @@ function loadTrafficHistory(statsData, dom, dev, port, vlan, dstDev) {
             for (var i = 0; i < data.traffic.length; i++) {
                 dataIn.push([moment.unix(data.traffic[i].ts), data.traffic[i].val*8]);
             }
-            statsData.push({label: dev + ' to ' + dstDev, data: dataIn, color: "#3c8dbc" });
+            statsData.push({label: 'From ' + port, data: dataIn, color: "#3c8dbc" });
 
             statsGraphic.setData(statsData);
             statsGraphic.setupGrid();

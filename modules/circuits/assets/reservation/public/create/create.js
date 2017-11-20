@@ -209,7 +209,7 @@ function setPointModalMode(mode) {
 }
 
 function initPathTab() {
-    meicanMap.show('dev');
+    meicanMap.show();
 
     $("#add-point").click(function() {
         addPoint();

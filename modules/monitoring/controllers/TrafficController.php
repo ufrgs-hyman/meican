@@ -26,7 +26,7 @@ class TrafficController extends RbacController {
      * Obtem o historico de trafego de determinada VLAN em determinada Porta e dada direção.
      * 
      * @param port
-     *      Port ID, inteiro.
+     *      Port URN, String.
      * @param vlan
      *      VLAN, inteiro.
      * @param dir
@@ -38,13 +38,19 @@ class TrafficController extends RbacController {
      *      ultima semana ou 604800s (dados a cada 1h10m ou 4200s agregados),
      *      ultimo mes ou 2592000s (dados a cada 5 horas ou 18000s agregados).
      */
-    public function actionGetVlanHistory($dom, $dev, $port, $vlan, $dir, $interval) {
+    public function actionGetVlanHistory($port, $vlan, $dir, $interval) {
         self::beginAsyncAction();
-        //return $this->buildDummyTrafficHistory();
+        //urn:ogf:network:cipo.rnp.br:2013::MXRJ:xe-3_0_0:+
+
+        $port = explode(":", $port);
+        $dom = $port[0];
+        $dev = $port[3];
+        $lid = $port[4];
 
         if ($dom != 'cipo.rnp.br') 
-            throw new \yii\web\HttpException(501, 'Currently only cipo.rnp.br ports are supported.');     
-        //urn:ogf:network:cipo.rnp.br:2013::MXRJ:xe-3_0_0:+
+            throw new \yii\web\HttpException(501, 'Currently only cipo.rnp.br ports are supported.');
+
+        return $this->buildDummyTrafficHistory();
 
         // NSI converte / para _
         $port = str_replace('/', '@2F', $port);
