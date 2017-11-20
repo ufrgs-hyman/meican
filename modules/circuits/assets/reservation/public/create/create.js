@@ -695,7 +695,6 @@ function loadDomains() {
         dataType: 'json',
         method: "GET",        
         success: function(response) {
-            console.log(response);
             meicanTopo['domains'] = response;
             meicanMap.setTopology(meicanTopo);
             for (var i = meicanTopo['domains'].length - 1; i >= 0; i--) {
@@ -715,7 +714,6 @@ function loadProviders() {
             cols: JSON.stringify(['id','name','latitude','longitude', 'domain_id'])
         },
         success: function(response) {
-            console.log(response);
             meicanTopo['providers'] = response;
             for (var i = meicanTopo['providers'].length - 1; i >= 0; i--) {
                 for (var k = meicanTopo['domains'].length - 1; k >= 0; k--) {
@@ -735,7 +733,6 @@ function loadNetworks() {
         dataType: 'json',
         method: "GET",
         success: function(response) {
-            console.log(response);
             meicanTopo['networks'] = response;
             loadPorts();
             for (var i = meicanTopo['networks'].length - 1; i >= 0; i--) {
@@ -754,7 +751,6 @@ function loadPorts(domains) {
         url: baseUrl+'/topology/port/json?dir=BI',
         method: "GET",        
         success: function(response) {
-            console.log(response);
             meicanTopo['ports'] = response;
             for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
                 for (var k = meicanTopo['networks'].length - 1; k >= 0; k--) {

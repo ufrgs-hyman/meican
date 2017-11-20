@@ -50,11 +50,11 @@ class TrafficController extends RbacController {
         if ($dom != 'cipo.rnp.br') 
             throw new \yii\web\HttpException(501, 'Currently only cipo.rnp.br ports are supported.');
 
-        return $this->buildDummyTrafficHistory();
+        //return $this->buildDummyTrafficHistory();
 
         // NSI converte / para _
-        $port = str_replace('/', '@2F', $port);
-        $port = str_replace('_', '@2F', $port);
+        $lid = str_replace('/', '@2F', $lid);
+        $lid = str_replace('_', '@2F', $lid);
         // NSI insere :+ no final das URNs
 
         $ch = curl_init();
@@ -65,7 +65,7 @@ class TrafficController extends RbacController {
             CURLOPT_SSL_VERIFYPEER => false,
 
             CURLOPT_USERAGENT => 'Meican',
-            CURLOPT_URL => Yii::$app->params['esmond.server.api.url'].'device/'.$dev.'/interface/'.$port.'.'.$vlan.'/'.$dir.
+            CURLOPT_URL => Yii::$app->params['esmond.server.api.url'].'device/'.$dev.'/interface/'.$lid.'.'.$vlan.'/'.$dir.
                 '?format=json&begin='.strtotime('-3600 seconds')
         );
         Yii::trace($options);
@@ -79,7 +79,7 @@ class TrafficController extends RbacController {
 
         $data = json_encode([
             'dev'=> $dev, 
-            'port'=> $port, 
+            'lid'=> $lid, 
             'traffic' => isset($output->data) ? $output->data : 0
         ]);
         
