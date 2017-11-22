@@ -197,7 +197,7 @@ LMap.prototype.getNodeByPosition = function(position, domain) {
             if (this._nodes[i].options.ports[0].network.domain == domain)
                 return this._nodes[i];
             else
-                return this.getNodeByPosition(L.latLng(position.lat, position.lng + 0.001), domain);
+                return this.getNodeByPosition(L.latLng(position.lat + 0.001, position.lng), domain);
         }
     }
 
@@ -313,7 +313,7 @@ LMap.prototype.buildNodePosition = function(position) {
                 (this._nodes[i].getLatLng().lng === lng)) {
             this._nodes[i].unbindLabel();
             this._nodes[i].bindLabel(this._nodes[i].options.name, { noHide: true, direction: 'left' });
-            return this.buildNodePosition(L.latLng(position.lat, position.lng + 0.001));
+            return this.buildNodePosition(L.latLng(position.lat + 0.001, position.lng));
         }
     }
     
