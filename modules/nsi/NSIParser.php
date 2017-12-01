@@ -162,6 +162,7 @@ class NSIParser {
     }
     
     function addProviderData($domainName, $nsa, $type, $name, $lat, $lng, $peerings) {
+        $nsa = strtolower($nsa);
         $nsa = str_replace("urn:ogf:network:","",$nsa);
         $this->topology["domains"][$domainName]["nsa"][$nsa]['name'] = $name;
         $this->topology["domains"][$domainName]["nsa"][$nsa]["type"] = $type;
@@ -178,7 +179,7 @@ class NSIParser {
         //         0   1     2         3        4    5
         //        urn:ogf:network:cipo.rnp.br:2014::POA
         
-        $domainName = $id[0];
+        $domainName = strtolower($id[0]);
         $this->topology["domains"][
             $domainName]["nets"][$netUrn]["devices"][
             $deviceName]['lat'] = $lat;
@@ -191,6 +192,7 @@ class NSIParser {
     }
     
     function addProviderService($domainName, $nsa, $service) {
+        $nsa = strtolower($nsa);
         $nsa = str_replace("urn:ogf:network:","",$nsa);
         $this->topology["domains"][$domainName]["nsa"][$nsa]["services"][$service['url']] = $service['type'];
     }
@@ -200,11 +202,11 @@ class NSIParser {
         $netUrn = str_replace("urn:ogf:network:","",$netId);
         $netUrn = strtolower($netUrn);
         $portUrn = str_replace("urn:ogf:network:","",$portId);
-        //$portUrn = strtolower($portUrn);
+        $portUrn = strtolower($portUrn);
         $biPortUrn = str_replace("urn:ogf:network:","",$biPortId);
-        //$biPortUrn = strtolower($biPortUrn);
+        $biPortUrn = strtolower($biPortUrn);
         $aliasUrn = str_replace("urn:ogf:network:","",$alias);
-        //$aliasUrn = strtolower($aliasUrn);
+        $aliasUrn = strtolower($aliasUrn);
         
         $id = explode(":", $netId);
         //         0   1     2         3        4    5
@@ -547,7 +549,7 @@ class NSIParser {
                 as $nsaNode) {
             $idString = $nsaNode->getAttribute('id');
             $id = explode(":", $idString);
-            $domainName = $id[3];
+            $domainName = strtolower($id[3]);
             $nameNode = $this->xpath->query(".//name", $nsaNode);
             $longitudeNode = $this->xpath->query(".//longitude", $nsaNode);
             $latitudeNode = $this->xpath->query(".//latitude", $nsaNode);
