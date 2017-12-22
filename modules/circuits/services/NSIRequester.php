@@ -67,7 +67,8 @@ class NSIRequester implements Requester {
             $this->conn->getReservation()->asArray()->select(['name'])->one()['name']
         );
         
-        $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE, $this->soapClient->__getLastRequest())->save();
+        $this->conn->buildEvent(ConnectionEvent::TYPE_NSI_RESERVE, $this->soapClient->__getLastRequest())
+            ->save();
 
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;

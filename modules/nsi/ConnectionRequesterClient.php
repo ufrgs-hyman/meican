@@ -50,20 +50,26 @@ class ConnectionRequesterClient extends \SoapClient {
         $dom->documentElement->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $dom->documentElement->setAttribute('xmlns:gns', 'http://nordu.net/namespaces/2013/12/gnsbod');
         $dom->documentElement->setAttribute('xmlns:saml', 'urn:oasis:names:tc:SAML:2.0:assertion');
-        $dom->documentElement->setAttribute('xmlns:type', 'http://schemas.ogf.org/nsi/2013/12/connection/types');
-        $dom->documentElement->setAttribute('xmlns:head', 'http://schemas.ogf.org/nsi/2013/12/framework/headers');
+        //$dom->documentElement->setAttribute('xmlns:type', 'http://schemas.ogf.org/nsi/2013/12/connection/types');
+        //$dom->documentElement->setAttribute('xmlns:head', 'http://schemas.ogf.org/nsi/2013/12/framework/headers');
         
         /** Generating Correlation ID */
         $dom->getElementsByTagName("correlationId")->item(0)->nodeValue = 'urn:uuid:'.$this->newGuid();
         
         /** Setting prefixes of the elements **/
-        $this->changeTag($dom,"ConnectionTrace", "gns:ConnectionTrace");
-        $this->changeTag($dom, "reserve", "type:reserve");
-        $this->changeTag($dom, "reserveCommit","type:reserveCommit");
-        $this->changeTag($dom, "provision", "type:provision");
+        $this->changeTag($dom, "ConnectionTrace", "gns:ConnectionTrace");
+        $this->changeTag($dom, "reserve", "ns1:reserve");
+        $this->changeTag($dom, "reserveCommit","ns1:reserveCommit");
+        $this->changeTag($dom, "provision", "ns1:provision");
         $this->changeTag($dom, "p2ps", "p2p:p2ps");
+        $this->changeTag($dom, "Attribute", "saml:Attribute");
+        $this->changeTag($dom, "AttributeValue", "saml:AttributeValue");
+        $this->changeTag($dom, "Attribute", "saml:Attribute");
+        $this->changeTag($dom, "AttributeValue", "saml:AttributeValue");
         
         /** Setting attributes **/
+        $this->setSecurityAttributes($dom, "saml:Attribute");
+        $this->setAttributeByTag($dom, "saml:AttributeValue", "xsi:type", "xsd:string");
         $this->setAttributeByTag($dom, "Connection", "index", "0");
         $this->setAttributeByTag($dom, "criteria", "version", $this->version);
         $this->setAttributeByTag($dom, "p2p:p2ps", "xmlns:p2p", "http://schemas.ogf.org/nsi/2013/12/services/point2point");
@@ -97,6 +103,15 @@ class ConnectionRequesterClient extends \SoapClient {
                 $node->setAttribute($attName, $attValue);
         }
     }
+
+    function setSecurityAttributes($dom, $tagName){
+        if($nodes = $dom->getElementsByTagName($tagName)){
+            foreach($nodes as $node) {
+                $node->setAttribute('Name', $node->nodeValue);
+                $node->nodeValue = Yii::$app->session->get('auth_'.$node->nodeValue);
+            }
+        }
+    }
     
     function setEro($dom){
         if($nodes = $dom->getElementsByTagName("orderedSTP")){
@@ -112,14 +127,33 @@ class ConnectionRequesterClient extends \SoapClient {
         $ns = "http://schemas.ogf.org/nsi/2013/12/framework/headers";
         $connection = new \SoapVar(array("Connection" => $this->requesterNSA), 
             SOAP_ENC_OBJECT, null, null, null, null);
+        $attributes = array();
+        $attributes[] = new \SoapVar(array("AttributeValue"=>"user"), 
+            SOAP_ENC_OBJECT, null, null, 'Attribute', null);
+        $attributes[] = new \SoapVar(array("AttributeValue"=>"token"), 
+            SOAP_ENC_OBJECT, null, null, 'Attribute', null);
+        $securityAttr = new \SoapVar($attributes,
+            SOAP_ENC_OBJECT, null, null, null, null);
+
+//         <sessionSecurityAttr>
+            //     <ns2:Attribute Name="user">
+            //         <ns2:AttributeValue xsi:type="xs:string">bar
+            //         </ns2:AttributeValue>
+            //     </ns2:Attribute>
+            //     <ns2:Attribute Name="token">
+            //         <ns2:AttributeValue xsi:type="xs:string">0000
+            //         </ns2:AttributeValue>
+            //     </ns2:Attribute>
+            // </sessionSecurityAttr>
 
         $headerBody = array(
-                "protocolVersion"=>"application/vnd.ogf.nsi.cs.v2.provider+soap",
-                "correlationId"  =>"", //Generated on request
-                "requesterNSA"   => $this->requesterNSA,
-                "providerNSA"    =>$this->providerNSA,
-                "replyTo"       => $this->requesterURL,
-                "ConnectionTrace" => $connection
+            "protocolVersion"=>"application/vnd.ogf.nsi.cs.v2.provider+soap",
+            "correlationId"  =>"", //Generated on request
+            "requesterNSA"   => $this->requesterNSA,
+            "providerNSA"    =>$this->providerNSA,
+            "replyTo"       => $this->requesterURL,
+            "ConnectionTrace" => $connection,
+            "sessionSecurityAttr" => $securityAttr
         );
 
         $headerBody = new \SoapVar($headerBody, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);

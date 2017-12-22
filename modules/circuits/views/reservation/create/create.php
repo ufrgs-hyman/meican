@@ -215,6 +215,8 @@ In this section you need to provide at least one interval, based in the start an
                 </p>
                 <br>
             <?php echo $form->field($reserveForm, 'name')->textInput(); ?>
+            <?php echo $form->field($reserveForm, 'auth_user')->textInput()->label('User (optional)'); ?>
+            <?php echo $form->field($reserveForm, 'auth_token')->textInput()->label('Access token (optional)'); ?>
             <br>
             <div class="pull-right margin">
                 <button type="button" class="next-btn btn btn-primary"><span class="fa fa-arrow-right"></span> Submit</button>

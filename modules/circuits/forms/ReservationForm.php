@@ -26,6 +26,8 @@ class ReservationForm extends Model {
     public $name;
     public $bandwidth;
     public $events;
+    public $auth_user;
+    public $auth_token;
     
     //reservation recurrence
     public $rec_enabled;
@@ -43,10 +45,14 @@ class ReservationForm extends Model {
         return [
             [['name', 'bandwidth', 'path', 'events'], 'required'],
             [['bandwidth'], 'integer', 'min'=> 1],
+            [['auth_user','auth_token'],'safe']
         ];
     }
     
     public function save() {
+        Yii::$app->session->set('auth_user', $this->auth_user);
+        Yii::$app->session->set('auth_token', $this->auth_token);
+
         $this->reservation = new Reservation;
         $this->reservation->type = Reservation::TYPE_NORMAL;
         $this->reservation->name = $this->name;
