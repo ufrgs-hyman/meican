@@ -7,6 +7,7 @@
 namespace meican\nsi;
 
 use Yii;
+use yii\helpers\Url;
 
 /**
  * Classe que implementa o módulo SoapClient do protocolo NSI Connection Service Requester 2.0
