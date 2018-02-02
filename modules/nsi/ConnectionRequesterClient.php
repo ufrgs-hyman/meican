@@ -24,7 +24,7 @@ class ConnectionRequesterClient extends \SoapClient {
 
     function __construct($requesterNSA, $requesterURL, $providerNSA, $providerURL, $certificatePath, 
             $certificatePass) {
-        $providerWSDL = 'http://meican-cipo.inf.ufrgs.br/mqg/wsdl/ogf_nsi_connection_provider_v2_0.wsdl';
+        $providerWSDL = Url::toRoute("/circuits/nsi/provider", "http");
         $this->requesterURL = $requesterURL;
         $this->providerNSA = $providerNSA;
         $this->requesterNSA = $requesterNSA;
