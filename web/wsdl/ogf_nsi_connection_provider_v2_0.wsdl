@@ -500,7 +500,7 @@
     
     <wsdl:service name="ConnectionServiceProvider">
         <wsdl:port name="ConnectionServiceProviderPort" binding="tns:ConnectionServiceProviderSoapBinding">
-            <soap:address location="https://localhost:8443/nsi-v2/ConnectionServiceProvider" />
+            <soap:address location="http://oscars-test.cipo.rnp.br:9080/NSI/services/CS2" />
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

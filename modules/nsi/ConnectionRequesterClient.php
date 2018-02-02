@@ -24,7 +24,7 @@ class ConnectionRequesterClient extends \SoapClient {
 
     function __construct($requesterNSA, $requesterURL, $providerNSA, $providerURL, $certificatePath, 
             $certificatePass) {
-        $providerWSDL = $providerURL."?wsdl";
+        $providerWSDL = 'http://meican-cipo.inf.ufrgs.br/mqg/wsdl/ogf_nsi_connection_provider_v2_0.wsdl';
         $this->requesterURL = $requesterURL;
         $this->providerNSA = $providerNSA;
         $this->requesterNSA = $requesterNSA;
@@ -153,7 +153,7 @@ class ConnectionRequesterClient extends \SoapClient {
             "providerNSA"    =>$this->providerNSA,
             "replyTo"       => $this->requesterURL,
             "ConnectionTrace" => $connection,
-            "sessionSecurityAttr" => $securityAttr
+            //"sessionSecurityAttr" => $securityAttr
         );
 
         $headerBody = new \SoapVar($headerBody, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
