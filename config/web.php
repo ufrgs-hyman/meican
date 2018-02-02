@@ -55,6 +55,9 @@ $config = [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'rules' => [
+                'circuits/nsi/wsdl/<file>' => 'circuits/nsi/wsdl/build'
+            ]
         ],
         'session' => [
             'class' => 'yii\web\Session',
@@ -72,7 +75,7 @@ $config = [
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'o903erpOjLSdPgDknNWCMCYoluUJU0FU',
+            'cookieValidationKey' => 'asdasdsadsa',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
