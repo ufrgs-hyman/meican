@@ -29,7 +29,7 @@ class WsdlController extends Controller {
 
         if ($file == 'ogf_nsi_connection_provider_v2_0.wsdl') {
             $dom = new \DOMDocument('1.0', 'utf-8');
-            $dom->load(Url::to('@web/wsdl/ogf_nsi_connection_provider_v2_0.wsdl', true));
+            $dom->load(Url::to("@web/wsdl/$file", true));
             $soapns = 'http://schemas.xmlsoap.org/wsdl/soap/';
             foreach ($dom->getElementsByTagNameNS($soapns, 'address') as $el) {
                 $el->setAttribute('location', CircuitsPreference::findOneValue(
