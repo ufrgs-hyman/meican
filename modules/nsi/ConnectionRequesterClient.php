@@ -70,7 +70,7 @@ class ConnectionRequesterClient extends \SoapClient {
 
         /** Setting attributes **/
         $this->setSecurityAttributes($dom);
-        $this->setAttributeByTag($dom, "saml:AttributeValue", "xsi:type", "xstring");
+        $this->setAttributeByTag($dom, "saml:AttributeValue", "xsi:type", "xs:string");
         $this->setAttributeByTag($dom, "Connection", "index", "0");
         $this->setAttributeByTag($dom, "criteria", "version", $this->version);
         $this->setAttributeByTag($dom, "p2p:p2ps", "xmlns:p2p", "http://schemas.ogf.org/nsi/2013/12/services/point2point");
