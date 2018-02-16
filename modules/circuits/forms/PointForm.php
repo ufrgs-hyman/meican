@@ -26,7 +26,7 @@ class PointForm extends Model {
             [['domain','network','port','vlan','urn','vlan_text'],'required'],
             [['urn'], 'match', 'pattern' => '/^urn:ogf:network:/'],
             [['urn'], 'match', 'not'=>true ,'pattern' => '/\?/'],
-            [['vlan_text'],'match','pattern'=> '/^[0-9]+$/'],
+            [['vlan_text'],'match','pattern'=> '/^[0-9]+[-,][0-9]+|^[0-9]+$/'],
         ];
     }
 
