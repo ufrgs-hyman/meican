@@ -67,10 +67,10 @@ class ConnectionRequesterClient extends \SoapClient {
         $this->changeTag($dom, "AttributeValue", "saml:AttributeValue");
         $this->changeTag($dom, "Attribute", "saml:Attribute");
         $this->changeTag($dom, "AttributeValue", "saml:AttributeValue");
-        
+
         /** Setting attributes **/
-        $this->setSecurityAttributes($dom, "saml:Attribute");
-        $this->setAttributeByTag($dom, "saml:AttributeValue", "xsi:type", "xsd:string");
+        $this->setSecurityAttributes($dom);
+        $this->setAttributeByTag($dom, "saml:AttributeValue", "xsi:type", "xstring");
         $this->setAttributeByTag($dom, "Connection", "index", "0");
         $this->setAttributeByTag($dom, "criteria", "version", $this->version);
         $this->setAttributeByTag($dom, "p2p:p2ps", "xmlns:p2p", "http://schemas.ogf.org/nsi/2013/12/services/point2point");
@@ -105,11 +105,13 @@ class ConnectionRequesterClient extends \SoapClient {
         }
     }
 
-    function setSecurityAttributes($dom, $tagName){
-        if($nodes = $dom->getElementsByTagName($tagName)){
+    function setSecurityAttributes($dom){
+        if($nodes = $dom->getElementsByTagName("saml:Attribute")){
             foreach($nodes as $node) {
                 $node->setAttribute('Name', $node->nodeValue);
-                $node->nodeValue = Yii::$app->session->get('auth_'.$node->nodeValue);
+                if ($node->firstChild) {
+                    $node->firstChild->nodeValue = Yii::$app->session->get('auth_'.$node->nodeValue);
+                }
             }
         }
     }
@@ -154,7 +156,7 @@ class ConnectionRequesterClient extends \SoapClient {
             "providerNSA"    =>$this->providerNSA,
             "replyTo"       => $this->requesterURL,
             "ConnectionTrace" => $connection,
-            //"sessionSecurityAttr" => $securityAttr
+            "sessionSecurityAttr" => $securityAttr
         );
 
         $headerBody = new \SoapVar($headerBody, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
