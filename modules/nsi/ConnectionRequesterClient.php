@@ -155,8 +155,8 @@ class ConnectionRequesterClient extends \SoapClient {
             "requesterNSA"   => $this->requesterNSA,
             "providerNSA"    =>$this->providerNSA,
             "replyTo"       => $this->requesterURL,
-            "ConnectionTrace" => $connection,
-            "sessionSecurityAttr" => $securityAttr
+            "sessionSecurityAttr" => $securityAttr,
+            "ConnectionTrace" => $connection
         );
 
         $headerBody = new \SoapVar($headerBody, SOAP_ENC_OBJECT, NULL, NULL, NULL, NULL);
