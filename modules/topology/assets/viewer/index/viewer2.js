@@ -6,11 +6,10 @@
 
 var meicanMap = new LMap('canvas');
 var meicanGraph = new VGraph("canvas");
-var meicanTopo = [];
 var lsidebar;
 
 $(document).ready(function() {
-    meicanMap.show('dev');
+    meicanMap.show();
     $(".sidebar-toggle").remove();
     $(".sidebar-mini").addClass("sidebar-collapse");
 
@@ -34,7 +33,7 @@ $(document).ready(function() {
     
     initCanvas(); 
     initMenu();   
-    loadDomains();
+    meicanMap.loadTopology(true);
 });
 
 function initMenu() {
@@ -259,18 +258,17 @@ function loadNetworkLinks() {
     });
 }
 
-function loadDeviceLinks() {
+function loadPortLinks() {
     $.ajax({
-        url: baseUrl+'/topology/viewer/get-device-links',
+        url: baseUrl+'/topology/viewer/get-port-links',
         dataType: 'json',
         method: "GET",
         success: function(response) {
-            meicanTopo['dev']['links'] = response;
-            meicanGraph.addLinks(response, 'dev');
+            //meicanGraph.addLinks(response, 'dev');
             for (var src in response) {
                 for (var i = 0; i < response[src].length; i++) {
                     //console.log(src, response[src][i]);
-                    meicanMap.addLink(null, 'dev'+src,'dev'+response[src][i], 'dev');
+                    meicanMap.addLink(src,response[src][i]);
                 }
             }           
         }

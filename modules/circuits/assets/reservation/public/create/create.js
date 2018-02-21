@@ -746,7 +746,7 @@ function loadNetworks() {
     });
 }
 
-function loadPorts(domains) {
+function loadPorts() {
     $.ajax({
         url: baseUrl+'/topology/port/json?dir=BI',
         method: "GET",        

@@ -152,14 +152,14 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
         this._links.push(link);
     } else return null;
 
-    var currentMap = this;
+    var current = this;
 
     link.on('click', function(e) {
-        $("#"+currentMap._canvasDivId).trigger("lmap.linkClick", link);
+        $("#"+current._canvasDivId).trigger("lmap.linkClick", link);
     });
 
     link.on('mouseover', function(e) {
-        $("#"+currentMap._canvasDivId).trigger("lmap.linkHover", link);
+        $("#"+current._canvasDivId).trigger("lmap.linkHover", link);
     })
 
     return link;
@@ -342,10 +342,19 @@ LMap.prototype.getNode = function(id) {
 }
 
 LMap.prototype.getNodeByPort = function(urn) {
-    for (var i = this._nodes.length - 1; i >= 0; i--) {
-        for (var k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
-            if (this._nodes[i].options.ports[k].urn == urn)
-                return this._nodes[i];
+    if (typeof urn == 'number') {
+        for (var i = this._nodes.length - 1; i >= 0; i--) {
+            for (var k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
+                if (this._nodes[i].options.ports[k].id == urn)
+                    return this._nodes[i];
+            }
+        }
+    } else {
+        for (var i = this._nodes.length - 1; i >= 0; i--) {
+            for (var k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
+                if (this._nodes[i].options.ports[k].urn == urn)
+                    return this._nodes[i];
+            }
         }
     }
     
@@ -547,5 +556,116 @@ LMap.prototype.focusNodes = function() {
     setTimeout(function () {
         currentMap._map.setZoom(currentMap._map.getZoom() - 1);
     }, 300);
+}
+
+LMap.prototype.loadTopology = function(withLinks) {
+    this._loadDomains(withLinks);
+}
+
+LMap.prototype._loadDomains = function(withLinks) {
+    var current = this;
+    $.ajax({
+        url: baseUrl+'/topology/domain/get-all',
+        dataType: 'json',
+        method: "GET",        
+        success: function(response) {
+            current._topology['domains'] = response;
+            for (var i = current._topology['domains'].length - 1; i >= 0; i--) {
+                current._topology['domains'][i]['providers'] = [];
+            }
+            current._loadProviders(withLinks);
+        }
+    });
+}
+
+LMap.prototype._loadProviders = function(withLinks) {
+    var current = this;
+    $.ajax({
+        url: baseUrl+'/topology/provider/get-all',
+        dataType: 'json',
+        method: "GET",
+        data: {
+            cols: JSON.stringify(['id','name','latitude','longitude', 'domain_id'])
+        },
+        success: function(response) {
+            current._topology['providers'] = response;
+            for (var i = current._topology['providers'].length - 1; i >= 0; i--) {
+                for (var k = current._topology['domains'].length - 1; k >= 0; k--) {
+                    if (current._topology['providers'][i]['domain_id'] == current._topology['domains'][k]['id']) {
+                        current._topology['domains'][k]['providers'].push(current._topology['providers'][i]);
+                    }
+                }
+            }
+            current._loadNetworks(withLinks);
+        }
+    });
+}
+
+LMap.prototype._loadNetworks = function(withLinks) {
+    var current = this;
+    $.ajax({
+        url: baseUrl+'/topology/network/get-all',
+        dataType: 'json',
+        method: "GET",
+        success: function(response) {
+            current._topology['networks'] = response;
+            current._loadPorts(withLinks);
+            for (var i = current._topology['networks'].length - 1; i >= 0; i--) {
+                for (var k = current._topology['domains'].length - 1; k >= 0; k--) {
+                    if (current._topology['networks'][i]['domain_id'] == current._topology['domains'][k]['id']) {
+                        current._topology['networks'][i]['domain'] = current._topology['domains'][k];
+                    }
+                }
+            }
+        }
+    });
+}
+
+LMap.prototype._loadPorts = function(withLinks) {
+    var current = this;
+    $.ajax({
+        url: baseUrl+'/topology/port/json?dir=BI',
+        method: "GET",        
+        success: function(response) {
+            current._topology['ports'] = response;
+            for (var i = current._topology['ports'].length - 1; i >= 0; i--) {
+                for (var k = current._topology['networks'].length - 1; k >= 0; k--) {
+                    if (current._topology['ports'][i]['network_id'] == current._topology['networks'][k]['id']) {
+                        current._topology['ports'][i]['network'] = current._topology['networks'][k];
+                    }
+                }
+                if (current._topology['ports'][i].lat != null) {
+                    current._topology['ports'][i].lat = parseFloat(current._topology['ports'][i].lat);
+                    current._topology['ports'][i].lng = parseFloat(current._topology['ports'][i].lng);
+                }
+            }
+
+            for (var i = current._topology['ports'].length - 1; i >= 0; i--) {
+                current.addNode(
+                    current._topology['ports'][i]
+                );
+            }
+            current.prepareLabels();
+            if(withLinks)
+                current._loadLinks();
+        }
+    });
+}
+
+LMap.prototype._loadLinks = function() {
+    var current = this;
+    $.ajax({
+        url: baseUrl+'/topology/viewer/get-port-links',
+        dataType: 'json',
+        method: "GET",
+        success: function(response) {
+            for (var src in response) {
+                for (var i = 0; i < response[src].length; i++) {
+                    //console.log(src, response[src][i]);
+                    current.addLink(parseInt(src),parseInt(response[src][i]));
+                }
+            }           
+        }
+    });
 }
 

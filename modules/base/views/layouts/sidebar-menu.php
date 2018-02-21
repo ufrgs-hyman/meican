@@ -45,7 +45,7 @@ echo Menu::widget([
             ],
         ],
         [
-            'label'=>Yii::t('topology','Topologies'),
+            'label'=>Yii::t('topology','Topology'),
             'url' => '#',
             'icon' => 'fa fa-globe',
             'items'=>[
@@ -77,18 +77,6 @@ echo Menu::widget([
                     ['label'=>Yii::t('aaa','Groups'), 'url'=>['/aaa/group'], 'visible'=>RbacController::can('group/read')],
                     ['label'=>Yii::t('aaa','Configuration'), 'url'=>['/aaa/config'], 'visible'=>RbacController::can('group/update')],
             ],
-        ],
-        [
-            'label'=>Yii::t('home','External Access'),
-            'url' => "#",
-            'icon' => 'fa fa-external-link',
-            'items'=>[
-                [
-                    'label'=>Yii::t('home','Console Central'), 
-                    'url'=>'http://monitora.cipo.rnp.br/console/',
-                    'target' => '_blank',
-                ],
-            ]
         ],
     ],
 ]);
