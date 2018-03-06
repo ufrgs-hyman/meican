@@ -56,14 +56,9 @@ function initMenu() {
 }
 
 function initCanvas() {
-    $('#canvas').on('lmap.nodeClick', function(e, marker) {
-        marker.setPopupContent(
-            buildPopupContent(
-                marker.options.type, 
-                marker.options.name, 
-                meicanMap.getDomain(marker.options.domainId).name
-            )
-        );
+    $('#canvas').on('lmap.nodeClick', function(e, node) {
+        console.log(node);
+        node.setPopupContent('Domain: <b>' + node.options.ports[0].network.domain.name + '</b>');
         /*marker.setPopupContent('Domain: cipo.rnp.br<br>Device: POA<br><br><div class="btn-group">'+
             '<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">'+
               'Options <span class="fa fa-caret"></span>'+
