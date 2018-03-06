@@ -103,13 +103,13 @@ class UserController extends RbacController {
 
     public function actionCreate() {
         if(!self::can("user/create")){
-          if(!self::can("userdomain/create")){
+          //if(!self::can("userdomain/create")){
             if(!self::can("user/read")) return $this->goHome();
             else{
                 Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create users'));
                 return $this->redirect(array('index'));
             }
-          }
+          //}
         }
 
         $userForm = new UserForm;

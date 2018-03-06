@@ -82,15 +82,15 @@ class UserSearch extends UserSearchForm{
                 }
             }
         }
-        if($empty){
-          //Get the users who do not be part of any domain
-          $domains = Domain::find()->all();
-          foreach($domains as $domain_row) $domains_name_all[] = $domain_row->name;
-          $users_all = UserDomainRole::find()->where(['in', 'domain', $domains_name_all])->all();
-          foreach($users_all as $user) $users_id_without[] = $user->user_id;
-          $users_without_domain = User::find()->where(['not in', 'id', $users_id_without])->all();
-          foreach($users_without_domain as $user) array_push($users_id, $user->id);                    
-        }
+        // if($empty){
+        //   //Get the users who do not be part of any domain
+        //   $domains = Domain::find()->all();
+        //   foreach($domains as $domain_row) $domains_name_all[] = $domain_row->name;
+        //   $users_all = UserDomainRole::find()->where(['in', 'domain', $domains_name_all])->all();
+        //   foreach($users_all as $user) $users_id_without[] = $user->user_id;
+        //   $users_without_domain = User::find()->where(['not in', 'id', $users_id_without])->all();
+        //   foreach($users_without_domain as $user) array_push($users_id, $user->id);                    
+        // }
 
         $users = User::find()->where(['in', 'id', $users_id])->all();
 
