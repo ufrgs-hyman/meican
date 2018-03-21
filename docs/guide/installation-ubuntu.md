@@ -1,17 +1,17 @@
-##INSTALLATION GUIDE - Ubuntu
+## INSTALLATION GUIDE - Ubuntu
 
 Follow the steps detailed below.
 
-This configuration was tested and performed on Ubuntu 14.04.
+This configuration was tested and performed on Ubuntu 16.04.
 
-####Prepare environment
+#### Prepare environment
 
 ```
 sudo apt-get update
-sudo apt-get install apache2 mysql-server php5 curl php5-mysql php5-curl php5-xml php5-mbstring
+sudo apt-get install apache2 mysql-server php7.0 curl php7.0-mysql php7.0-mbstring php7.0-curl libapache2-mod-php
 ```
 
-####Setup database
+#### Setup database
 
 Create a database via command line.
 
@@ -20,7 +20,7 @@ mysql -u #user# -p
 CREATE DATABASE IF NOT EXISTS `meican`;
 ```
 
-####Download and install MEICAN
+#### Download and install MEICAN
 
 [Get a stable version](https://github.com/ufrgs-hyman/meican/releases):
 
@@ -38,8 +38,8 @@ nano #meican-folder#/config/db.php
 On source code folder (#meican-folder#) install the [Composer](https://getcomposer.org)
 
 ```
-curl -O https://getcomposer.org/download/1.2.0/composer.phar
-php composer.phar global require "fxp/composer-asset-plugin:~1.2.1"
+curl -O https://getcomposer.org/composer.phar
+php composer.phar global require "fxp/composer-asset-plugin:~1.4.2"
 ```
 
 Install MEICAN and all dependencies. It is **possible** that before the installation you are prompted by a "access token" of GitHub. You must have an account on [GitHub](https://github.com/settings/tokens) to request a valid token. 
@@ -56,7 +56,7 @@ Create a simbolic link to app web folder on /var/www:
 sudo ln -s /path/to/#meican-folder#/web /var/www/meican
 ```
 
-####Apache configuration
+#### Apache configuration
 
 Enable the Rewrite mode:
 
