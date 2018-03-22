@@ -8,7 +8,7 @@ This configuration was tested and performed on Ubuntu 16.04.
 
 ```
 sudo apt-get update
-sudo apt-get install apache2 mysql-server php7.0 curl php7.0-mysql php7.0-mbstring php7.0-curl libapache2-mod-php
+sudo apt-get install apache2 mysql-server php7.0 curl php7.0-mysql php7.0-mbstring php7.0-curl libapache2-mod-php php7.0-soap php7.0-xml
 ```
 
 #### Setup database
