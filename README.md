@@ -56,8 +56,8 @@ web/                	web accessible files, e.g., assets cache, wsdl files and im
 
 ### Software
 
-- Ubuntu 14/CentOS 6/Any other OS with Crontab feature
-- Apache 2.2+ (2.4 recommended)
+- Ubuntu/CentOS/Any other OS with Crontab feature
+- Apache 2.2+
 - MySQL 5+ 
 - PHP 5.5+
 - cURL
