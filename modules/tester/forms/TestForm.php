@@ -25,12 +25,10 @@ class TestForm extends Model {
 	
     public $src_dom;
     public $src_net;
-    public $src_dev;
 	public $src_port;
 	public $src_vlan;
     public $dst_dom;
     public $dst_net;
-    public $dst_dev;
     public $dst_port;
 	public $dst_vlan;
 	public $cron_value;
@@ -39,8 +37,8 @@ class TestForm extends Model {
 	
 	public function rules()	{
 		return [
-			[['src_dom','src_dev','src_port','src_vlan',
-            'dst_dom','dst_dev','dst_port','dst_vlan','cron_value'], 'required'],
+			[['src_dom','src_port','src_vlan',
+            'dst_dom','dst_port','dst_vlan','cron_value'], 'required'],
             [['src_net', 'dst_net'], 'safe']
 		];
 	}
@@ -49,12 +47,10 @@ class TestForm extends Model {
         return [
             'src_dom' => "Domain",
             'src_net' => "Network",
-            'src_dev' => "Device",
             'src_port' => "Port",
             'src_vlan' => "VLAN",
             'dst_dom' => "Domain",
             'dst_net' => "Network",
-            'dst_dev' => "Device",
             'dst_port' => "Port",
             'dst_vlan' => "VLAN"
         ];
@@ -77,14 +73,14 @@ class TestForm extends Model {
  			$destination = Port::findOne(['id' => $this->dst_port]);
  			$permission = false;
  			if($source){
- 				$source = $source->getDevice()->one();
+ 				$source = $source->getNetwork()->one();
  				if($source){
  					$domain = $source->getDomain()->one();
  					if($domain && RbacController::can('test/create', $domain->name)) $permission = true;
  				}
  			}
  			if($destination){
- 				$destination = $destination->getDevice()->one();
+ 				$destination = $destination->getNetwork()->one();
  				if($destination){
  					$domain = $destination->getDomain()->one();
  					if($domain && RbacController::can('test/create', $domain->name)) $permission = true;

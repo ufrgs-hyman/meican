@@ -195,7 +195,9 @@ class Connection extends \yii\db\ActiveRecord
     
     public function requestCreate() {
         $event = $this->buildEvent(ConnectionEvent::TYPE_USER_CREATE);
-        $event->author_id = Yii::$app->user->getId();
+        if (Yii::$app instanceof \yii\web\Application) {
+            $event->author_id = Yii::$app->user->getId();
+        }
         $event->setData(json_encode([
             'bandwidth'=>$this->bandwidth,
             'start'=>$this->start,

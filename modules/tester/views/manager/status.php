@@ -56,16 +56,6 @@ $this->params['header'] = [Yii::t('tester', 'Automated Tests'), [Yii::t('tester'
 					'multiple'=>false,
 				),
 				[
-                    'class' => 'yii\grid\ActionColumn',
-                    'template'=>'{update}',
-                    'buttons' => [
-                            'update' => function ($url, $model) {
-                                return Html::a('<span class="fa fa-pencil"></span>', '#');
-                            }
-                    ],
-                    'headerOptions'=>['style'=>'width: 2%;'],
-                ],
-				[
 					'header' => Yii::t("tester", "Source"),
 					'value' => function($model){
 						return $model->getFirstPath()->one()->port_urn; 
@@ -159,7 +149,6 @@ $this->params['header'] = [Yii::t('tester', 'Automated Tests'), [Yii::t('tester'
 
             echo $form->field($test, 'src_dom')->dropDownList([],['disabled'=>true]); 
             echo $form->field($test, 'src_net')->dropDownList([],['disabled'=>true]); 
-            echo $form->field($test, 'src_dev')->dropDownList([],['disabled'=>true]); 
             echo $form->field($test, 'src_port')->dropDownList([],['disabled'=>true]); 
             echo $form->field($test, 'src_vlan')->dropDownList([],['disabled'=>true]); 
 
@@ -171,7 +160,6 @@ $this->params['header'] = [Yii::t('tester', 'Automated Tests'), [Yii::t('tester'
 
             echo $form->field($test, 'dst_dom')->dropDownList([],['disabled'=>true]); 
             echo $form->field($test, 'dst_net')->dropDownList([],['disabled'=>true]); 
-            echo $form->field($test, 'dst_dev')->dropDownList([],['disabled'=>true]); 
             echo $form->field($test, 'dst_port')->dropDownList([],['disabled'=>true]); 
             echo $form->field($test, 'dst_vlan')->dropDownList([],['disabled'=>true]); 
 

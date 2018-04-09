@@ -28,21 +28,29 @@ class Test extends Reservation implements SchedulableTask {
     }
 
     function getConnectionStatus() {
-        $conn = Connection::find()->where([
-                'id'=> Connection::find()->where([
-                        'reservation_id'=>$this->id])->max("id")])->select(['status'])->one();
+        $conn = Connection::find()
+            ->where([
+                'id'=> Connection::find()
+                    ->where(['reservation_id'=>$this->id])
+                    ->max("id")])
+            ->select(['status'])
+            ->one();
+        Yii::trace($conn);
         if ($conn) {
             switch ($conn->status) {
                 case Connection::STATUS_PENDING:
                 case Connection::STATUS_CREATED :
-                case Connection::STATUS_CONFIRMED :         return Yii::t("circuits","Testing"); 
-                case Connection::STATUS_SUBMITTED :         return Yii::t("circuits","Passed");
+                case Connection::STATUS_CONFIRMED :
+                case Connection::STATUS_SUBMITTED:         return Yii::t("circuits","Testing"); 
+                case Connection::STATUS_PROVISIONED :         return Yii::t("circuits","Passed");
                 case Connection::STATUS_FAILED_CREATE:      
                 case Connection::STATUS_FAILED_CONFIRM :    
+                case Connection::STATUS_FAILED_PROVISION:
                 case Connection::STATUS_FAILED_SUBMIT :     return Yii::t("circuits","Failed");
+                default: return Yii::t("circuits","Unknown");
             }
         } else {
-            return "Never tested";
+            return Yii::t("circuits","Never tested");
         }
     }
     
@@ -51,33 +59,27 @@ class Test extends Reservation implements SchedulableTask {
         if($test) {
             $date = new \DateTime();
             $date->modify('+10 minutes');
-            $this->start = $date->format('Y-m-d H:i:s');
+            $events = ['start' => [$date->format('Y-m-d\TH:i:s.000-00:00')]];
+            $test->start = $date->format('Y-m-d H:i:s');
             $date->modify('+10 minutes');
-            $this->finish =  $date->format('Y-m-d H:i:s');
-            $this->save();
-        
-            $this->createConnections();
+            $events['finish'] = [$date->format('Y-m-d\TH:i:s.000-00:00')];
+            $test->finish =  $date->format('Y-m-d H:i:s');
+            $test->save();
+
+            $test->createConnections($events);
                 
-            $this->confirm();
+            $test->confirm();
         }
     }
 
     function getSourceDomain() {
-        return $this->getSourceDevice()->select(['domain_id'])->one()->getDomain();
+        return $this->getSourcePort()->one()->getNetwork()->one()->getDomain();
     }
 
     function getDestinationDomain() {
-        return $this->getDestinationDevice()->select(['domain_id'])->one()->getDomain();
+        return $this->getDestinationPort()->one()->getNetwork()->one()->getDomain();
     }
     
-    function getSourceDevice() {
-        return $this->getSourcePort()->select(["device_id"])->one()->getDevice();
-    }
-    
-    function getDestinationDevice() {
-        return $this->getDestinationPort()->select(["device_id"])->one()->getDevice();
-    }
-
     function getSourcePort() {
         return $this->getFirstPath()->one()->getPort();
     }

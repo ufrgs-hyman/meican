@@ -12,7 +12,16 @@ $db = require(__DIR__ . '/db.php');
 return [
     'id' => 'meican-console',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log',
+        'notify',
+        'home',
+        'bpm',
+        'circuits',
+        'topology',
+        'aaa',
+        'tester',
+        'monitoring'
+    ],
     'aliases' => [
         '@meican' => '@app/modules',
     ],
@@ -21,7 +30,14 @@ return [
         'circuits' =>   'meican\circuits\Module',
         'scheduler' =>  'meican\scheduler\Module',
         'oscars'    =>  'meican\oscars\Module',
-        'nsi'       =>  'meican\nsi\Module'
+        'nsi'       =>  'meican\nsi\Module',
+        'base' =>           'meican\base\Module',
+        'home' =>           'meican\home\Module',
+        'tester' =>         'meican\tester\Module',
+        'monitoring' =>     'meican\monitoring\Module',
+        'topology' =>       'meican\topology\Module',
+        'bpm' =>            'meican\bpm\Module',
+        'notify' =>         'meican\notify\Module',
     ],
     'components' => [
         'cache' => [

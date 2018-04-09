@@ -10,7 +10,6 @@ use Yii;
 use yii\helpers\Json;
 use yii\data\ActiveDataProvider;
 
-use meican\topology\models\Device;
 use meican\topology\models\Network;
 use meican\topology\models\Domain;
 use meican\topology\models\Port;
@@ -99,8 +98,10 @@ class PortController extends RbacController {
 		return $port->getDevice()->one()->getDomain()->one()->id;
 	}
 
-    public function actionGetByDevice($id, $cols=null){
-        $query = Port::find()->orderBy(['name'=> "SORT ASC"])->where(['device_id'=>$id])->asArray();
+    public function actionGetByNetwork($id, $cols=null){
+        $query = Port::find()->orderBy(['name'=> "SORT ASC"])
+        	->where(['network_id'=>$id, 'directionality'=>'BI'])
+        	->asArray();
         
         $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
         $temp = Json::encode($data);
