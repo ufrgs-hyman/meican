@@ -40,9 +40,8 @@ class Test extends Reservation implements SchedulableTask {
             switch ($conn->status) {
                 case Connection::STATUS_PENDING:
                 case Connection::STATUS_CREATED :
-                case Connection::STATUS_CONFIRMED :
-                case Connection::STATUS_SUBMITTED:         return Yii::t("circuits","Testing"); 
-                case Connection::STATUS_PROVISIONED :         return Yii::t("circuits","Passed");
+                case Connection::STATUS_CONFIRMED :         return Yii::t("circuits","Testing"); 
+                case Connection::STATUS_SUBMITTED:          return Yii::t("circuits","Passed");
                 case Connection::STATUS_FAILED_CREATE:      
                 case Connection::STATUS_FAILED_CONFIRM :    
                 case Connection::STATUS_FAILED_PROVISION:
