@@ -39,7 +39,7 @@ On source code folder (#meican-folder#) install the [Composer](https://getcompos
 
 ```
 curl -O https://getcomposer.org/composer.phar
-php composer.phar global require "fxp/composer-asset-plugin:~1.4.2"
+php composer.phar global require "fxp/composer-asset-plugin:~1.4.4"
 ```
 
 Install MEICAN and all dependencies. It is **possible** that before the installation you are prompted by a "access token" of GitHub. You must have an account on [GitHub](https://github.com/settings/tokens) to request a valid token. 
