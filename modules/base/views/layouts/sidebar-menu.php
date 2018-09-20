@@ -36,14 +36,14 @@ echo Menu::widget([
             ],
             'visible'=> RbacController::can('workflow/read')
         ],
-        [
-            'label'=>Yii::t('monitoring','Monitoring'),
-            'url' => '#',
-            'icon' => 'fa fa-area-chart',
-            'items'=>[
-                ['label'=>Yii::t('bpm','Traffic'), 'url'=>['/monitoring']],
-            ],
-        ],
+        // [
+        //     'label'=>Yii::t('monitoring','Monitoring'),
+        //     'url' => '#',
+        //     'icon' => 'fa fa-area-chart',
+        //     'items'=>[
+        //         ['label'=>Yii::t('bpm','Traffic'), 'url'=>['/monitoring']],
+        //     ],
+        // ],
         [
             'label'=>Yii::t('topology','Topology'),
             'url' => '#',
