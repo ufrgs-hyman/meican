@@ -13,7 +13,7 @@ use yii\web\AssetBundle;
  */
 class Map extends AssetBundle {
     
-    public $sourcePath = '@bower/leaflet/dist';
+    public $sourcePath = '@npm/leaflet/dist';
     
     public $css = [
         'leaflet.css',

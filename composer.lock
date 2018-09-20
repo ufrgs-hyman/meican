@@ -1,44 +1,27 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "hash": "3a5839047e4d80cdb313d24590baf707",
-    "content-hash": "6131a0bbff4760ab4a08f3993e3fb42c",
+    "content-hash": "5464b283630feeaf6e87abb55f3a28ab",
     "packages": [
         {
-            "name": "bower-asset/Leaflet.label",
-            "version": "0.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Leaflet/Leaflet.label.git",
-                "reference": "90ed880773bd64723621a666e74a4f6730aea41c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Leaflet/Leaflet.label/zipball/90ed880773bd64723621a666e74a4f6730aea41c",
-                "reference": "90ed880773bd64723621a666e74a4f6730aea41c",
-                "shasum": ""
-            },
-            "type": "bower-asset-library"
-        },
-        {
             "name": "bower-asset/bootstrap",
-            "version": "v3.3.5",
+            "version": "v3.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "16b48259a62f576e52c903c476bd42b90ab22482"
+                "reference": "0b9c4a4007c44201dce9a6cc1a38407005c26c86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/16b48259a62f576e52c903c476bd42b90ab22482",
-                "reference": "16b48259a62f576e52c903c476bd42b90ab22482",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/0b9c4a4007c44201dce9a6cc1a38407005c26c86",
+                "reference": "0b9c4a4007c44201dce9a6cc1a38407005c26c86",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/jquery": ">=1.9.1"
+                "bower-asset/jquery": ">=1.9.1,<4.0"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -70,7 +53,8 @@
                 "mobile-first",
                 "responsive",
                 "web"
-            ]
+            ],
+            "time": "2016-07-25T15:51:55+00:00"
         },
         {
             "name": "bower-asset/bootstrap-daterangepicker",
@@ -148,41 +132,17 @@
             ]
         },
         {
-            "name": "bower-asset/d3",
-            "version": "v3.5.17",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mbostock-bower/d3-bower.git",
-                "reference": "7a826d211d5067867debf9ce24a9987e0cb02b6e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mbostock-bower/d3-bower/zipball/7a826d211d5067867debf9ce24a9987e0cb02b6e",
-                "reference": "7a826d211d5067867debf9ce24a9987e0cb02b6e",
-                "shasum": ""
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "d3.js",
-                "bower-asset-ignore": []
-            },
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "A JavaScript visualization library for HTML and SVG."
-        },
-        {
             "name": "bower-asset/ev-emitter",
-            "version": "v1.0.3",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/metafizzy/ev-emitter.git",
-                "reference": "1c67f55ea625b87857c2846e9505aee43f45bc6c"
+                "reference": "1baa3a03d8e07f665b0eb797661fcc2b0d2a5736"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/metafizzy/ev-emitter/zipball/1c67f55ea625b87857c2846e9505aee43f45bc6c",
-                "reference": "1c67f55ea625b87857c2846e9505aee43f45bc6c",
+                "url": "https://api.github.com/repos/metafizzy/ev-emitter/zipball/1baa3a03d8e07f665b0eb797661fcc2b0d2a5736",
+                "reference": "1baa3a03d8e07f665b0eb797661fcc2b0d2a5736",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -194,7 +154,8 @@
                     "bower_components",
                     "test",
                     "tests",
-                    "sandbox"
+                    "sandbox",
+                    "package.json"
                 ]
             },
             "license": [
@@ -205,7 +166,8 @@
                 "emitter",
                 "event",
                 "pubsub"
-            ]
+            ],
+            "time": "2017-07-06T13:46:14+00:00"
         },
         {
             "name": "bower-asset/fontawesome",
@@ -351,24 +313,20 @@
         },
         {
             "name": "bower-asset/imagesloaded",
-            "version": "v4.1.0",
+            "version": "v4.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/desandro/imagesloaded.git",
-                "reference": "eb483b9b5e1edcc06daa6bb980810b4accd406f0"
+                "reference": "67c4e57453120935180c45c6820e7d3fbd2ea1f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/desandro/imagesloaded/zipball/eb483b9b5e1edcc06daa6bb980810b4accd406f0",
-                "reference": "eb483b9b5e1edcc06daa6bb980810b4accd406f0",
+                "url": "https://api.github.com/repos/desandro/imagesloaded/zipball/67c4e57453120935180c45c6820e7d3fbd2ea1f9",
+                "reference": "67c4e57453120935180c45c6820e7d3fbd2ea1f9",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/ev-emitter": "~1.0.0"
-            },
-            "require-dev": {
-                "bower-asset/jquery": ">=1.9,<4.0",
-                "bower-asset/qunit": "~1.20.0"
+                "bower-asset/ev-emitter": ">=1.0.0,<2.0.0"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -377,10 +335,12 @@
                     "**/.*",
                     "test",
                     "package.json",
+                    "composer.json",
                     "node_modules",
                     "bower_components",
                     "tests",
                     "sandbox/",
+                    "gulpfile.js",
                     "contributing.md"
                 ]
             },
@@ -390,7 +350,8 @@
             "description": "JavaScript is all like _You images done yet or what?_",
             "keywords": [
                 "images"
-            ]
+            ],
+            "time": "2018-01-02T16:53:35+00:00"
         },
         {
             "name": "bower-asset/ionicons",
@@ -508,132 +469,6 @@
                 "jquery",
                 "mask",
                 "plugins"
-            ]
-        },
-        {
-            "name": "bower-asset/leaflet",
-            "version": "v0.7.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Leaflet/Leaflet.git",
-                "reference": "197f9d43b7bbc73c0492bf62cd666a5a98038098"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Leaflet/Leaflet/zipball/197f9d43b7bbc73c0492bf62cd666a5a98038098",
-                "reference": "197f9d43b7bbc73c0492bf62cd666a5a98038098",
-                "shasum": ""
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "dist/leaflet.css",
-                    "dist/leaflet-src.js",
-                    "dist/images/layers-2x.png",
-                    "dist/images/layers.png",
-                    "dist/images/marker-icon-2x.png",
-                    "dist/images/marker-icon.png",
-                    "dist/images/marker-shadow.png"
-                ],
-                "bower-asset-ignore": [
-                    ".*",
-                    "CHANGELOG.json",
-                    "FAQ.md",
-                    "debug",
-                    "spec",
-                    "src",
-                    "build"
-                ]
-            },
-            "description": "JavaScript library for mobile-friendly interactive maps"
-        },
-        {
-            "name": "bower-asset/leaflet.markercluster",
-            "version": "v0.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Leaflet/Leaflet.markercluster.git",
-                "reference": "232e93ccbe5b70241913f47a4d1a8ceec8c88c30"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Leaflet/Leaflet.markercluster/zipball/232e93ccbe5b70241913f47a4d1a8ceec8c88c30",
-                "reference": "232e93ccbe5b70241913f47a4d1a8ceec8c88c30",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/leaflet": ">=0.7.0"
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "dist/leaflet.markercluster-src.js",
-                    "dist/MarkerCluster.css",
-                    "dist/MarkerCluster.Default.css"
-                ],
-                "bower-asset-ignore": [
-                    "**/.*",
-                    "node_modules",
-                    "bower_components",
-                    "example",
-                    "spec",
-                    "test",
-                    "tests"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Marker Clustering plugin for Leaflet."
-        },
-        {
-            "name": "bower-asset/metrics-graphics",
-            "version": "v2.9.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mozilla/metrics-graphics.git",
-                "reference": "276b4cac1a344de97c3647838456419edcfbbeb0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mozilla/metrics-graphics/zipball/276b4cac1a344de97c3647838456419edcfbbeb0",
-                "reference": "276b4cac1a344de97c3647838456419edcfbbeb0",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/d3": ">=3.4.8",
-                "bower-asset/jquery": ">=1.11.1"
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "dist/metricsgraphics.js",
-                    "dist/metricsgraphics.css"
-                ],
-                "bower-asset-ignore": [
-                    ".DS_Store",
-                    ".git",
-                    ".gitignore",
-                    "examples",
-                    "gulp",
-                    "gulpfile.js",
-                    "index.js",
-                    "node_modules",
-                    "package.json",
-                    "src",
-                    "testem.json",
-                    "tests"
-                ]
-            },
-            "license": [
-                "MPL-2.0"
-            ],
-            "keywords": [
-                "d3 charts",
-                "metrics-graphics",
-                "metricsgraphics",
-                "metricsgraphics.js",
-                "metricsgraphicsjs"
             ]
         },
         {
@@ -762,16 +597,16 @@
         },
         {
             "name": "bower-asset/yii2-pjax",
-            "version": "v2.0.6",
+            "version": "2.0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/jquery-pjax.git",
-                "reference": "60728da6ade5879e807a49ce59ef9a72039b8978"
+                "reference": "aef7b953107264f00234902a3880eb50dafc48be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/60728da6ade5879e807a49ce59ef9a72039b8978",
-                "reference": "60728da6ade5879e807a49ce59ef9a72039b8978",
+                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/aef7b953107264f00234902a3880eb50dafc48be",
+                "reference": "aef7b953107264f00234902a3880eb50dafc48be",
                 "shasum": ""
             },
             "require": {
@@ -792,20 +627,21 @@
             },
             "license": [
                 "MIT"
-            ]
+            ],
+            "time": "2017-10-12T10:11:14+00:00"
         },
         {
             "name": "cebe/markdown",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cebe/markdown.git",
-                "reference": "f681fee8303310415b746f3758eeda0a7ad08bda"
+                "reference": "8efb4268c90add2eee0edacf503ae71f22ccc745"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cebe/markdown/zipball/f681fee8303310415b746f3758eeda0a7ad08bda",
-                "reference": "f681fee8303310415b746f3758eeda0a7ad08bda",
+                "url": "https://api.github.com/repos/cebe/markdown/zipball/8efb4268c90add2eee0edacf503ae71f22ccc745",
+                "reference": "8efb4268c90add2eee0edacf503ae71f22ccc745",
                 "shasum": ""
             },
             "require": {
@@ -852,24 +688,27 @@
                 "markdown",
                 "markdown-extra"
             ],
-            "time": "2015-03-06 05:21:16"
+            "time": "2018-03-26T11:15:02+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
-            "version": "v4.7.0",
+            "version": "v4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "ae1828d955112356f7677c465f94f7deb7d27a40"
+                "reference": "d85d39da4576a6934b72480be6978fb10c860021"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/ae1828d955112356f7677c465f94f7deb7d27a40",
-                "reference": "ae1828d955112356f7677c465f94f7deb7d27a40",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/d85d39da4576a6934b72480be6978fb10c860021",
+                "reference": "d85d39da4576a6934b72480be6978fb10c860021",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2"
+            },
+            "require-dev": {
+                "simpletest/simpletest": "^1.1"
             },
             "type": "library",
             "autoload": {
@@ -896,7 +735,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2015-08-05 01:03:42"
+            "time": "2018-02-23T01:58:20+00:00"
         },
         {
             "name": "kartik-v/yii2-date-range",
@@ -945,20 +784,20 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-01-11 06:28:58"
+            "time": "2016-01-11T06:28:58+00:00"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
-            "version": "1.8.5",
+            "version": "v1.9.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-krajee-base.git",
-                "reference": "7f7a45ffe193fe673f72b9effc01b08499f2a454"
+                "reference": "a5440e5ce26377e641acc708accf7b9b7d561162"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/7f7a45ffe193fe673f72b9effc01b08499f2a454",
-                "reference": "7f7a45ffe193fe673f72b9effc01b08499f2a454",
+                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/a5440e5ce26377e641acc708accf7b9b7d561162",
+                "reference": "a5440e5ce26377e641acc708accf7b9b7d561162",
                 "shasum": ""
             },
             "require": {
@@ -967,12 +806,12 @@
             "type": "yii2-extension",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.8.x-dev"
+                    "dev-master": "1.9.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "kartik\\base\\": ""
+                    "kartik\\base\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -996,7 +835,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-05-07 19:45:52"
+            "time": "2018-09-05T18:15:03+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-activeform",
@@ -1043,7 +882,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-12-11 19:07:50"
+            "time": "2015-12-11T19:07:50+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-colorinput",
@@ -1097,7 +936,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-01-14 11:15:49"
+            "time": "2016-01-14T11:15:49+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-datetimepicker",
@@ -1146,7 +985,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-01-10 12:18:38"
+            "time": "2016-01-10T12:18:38+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-growl",
@@ -1195,7 +1034,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-05-03 08:23:04"
+            "time": "2015-05-03T08:23:04+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-switchinput",
@@ -1245,7 +1084,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-01-10 16:47:35"
+            "time": "2016-01-10T16:47:35+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-touchspin",
@@ -1295,7 +1134,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-01-10 17:10:39"
+            "time": "2016-01-10T17:10:39+00:00"
         },
         {
             "name": "npm-asset/flot-charts",
@@ -1336,6 +1175,97 @@
             ],
             "description": "## About ##",
             "homepage": "https://github.com/magora-suchkov/flot#readme"
+        },
+        {
+            "name": "npm-asset/leaflet",
+            "version": "1.3.4",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/leaflet/-/leaflet-1.3.4.tgz",
+                "reference": null,
+                "shasum": "7f006ea5832603b53d7269ef5c595fd773060a40"
+            },
+            "type": "npm-asset-library",
+            "extra": {
+                "npm-asset-bugs": {
+                    "url": "https://github.com/Leaflet/Leaflet/issues"
+                },
+                "npm-asset-files": [
+                    "dist",
+                    "src",
+                    "!dist/leaflet.zip"
+                ],
+                "npm-asset-main": "dist/leaflet-src.js",
+                "npm-asset-directories": [],
+                "npm-asset-repository": {
+                    "type": "git",
+                    "url": "git://github.com/Leaflet/Leaflet.git"
+                },
+                "npm-asset-scripts": {
+                    "docs": "node ./build/docs.js",
+                    "pretest": "npm run lint && npm run lint-spec",
+                    "test": "npm run test-nolint",
+                    "test-nolint": "karma start ./spec/karma.conf.js",
+                    "build": "npm run rollup && npm run uglify",
+                    "release": "./build/publish.sh",
+                    "lint": "eslint src",
+                    "lint-spec": "eslint spec/suites",
+                    "lintfix": "eslint src --fix; eslint spec/suites --fix;",
+                    "rollup": "rollup -c build/rollup-config.js",
+                    "watch": "rollup -w -c build/rollup-watch-config.js",
+                    "uglify": "uglifyjs dist/leaflet-src.js -c -m -o dist/leaflet.js --source-map filename=dist/leaflet.js.map --in-source-map dist/leaflet-src.js.map --source-map-url leaflet.js.map --comments",
+                    "integrity": "node ./build/integrity.js"
+                }
+            },
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "description": "JavaScript library for mobile-friendly interactive maps",
+            "homepage": "https://github.com/Leaflet/Leaflet#readme",
+            "keywords": [
+                "gis",
+                "map"
+            ],
+            "time": "2018-08-21T17:05:11+00:00"
+        },
+        {
+            "name": "npm-asset/leaflet.markercluster",
+            "version": "1.4.1",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/leaflet.markercluster/-/leaflet.markercluster-1.4.1.tgz",
+                "reference": null,
+                "shasum": "b53f2c4f2ca7306ddab1dbb6f1861d5e8aa6c5e5"
+            },
+            "type": "npm-asset-library",
+            "extra": {
+                "npm-asset-bugs": {
+                    "url": "https://github.com/Leaflet/Leaflet.markercluster/issues"
+                },
+                "npm-asset-main": "dist/leaflet.markercluster-src.js",
+                "npm-asset-directories": [],
+                "npm-asset-repository": {
+                    "type": "git",
+                    "url": "git+https://github.com/Leaflet/Leaflet.markercluster.git"
+                },
+                "npm-asset-scripts": {
+                    "test": "karma start ./spec/karma.conf.js",
+                    "prepublish": "jake",
+                    "rollup": "rollup -c build/rollup-config.js",
+                    "uglify": "uglifyjs dist/leaflet.markercluster-src.js -c -m -o dist/leaflet.markercluster.js --source-map dist/leaflet.markercluster.js.map --in-source-map dist/leaflet.markercluster-src.js.map --source-map-url leaflet.markercluster.js.map"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Provides Beautiful Animated Marker Clustering functionality for Leaflet",
+            "homepage": "https://github.com/Leaflet/Leaflet.markercluster#readme",
+            "keywords": [
+                "cluster",
+                "gis",
+                "map"
+            ],
+            "time": "2018-09-13T22:27:17+00:00"
         },
         {
             "name": "npm-asset/vis",
@@ -1410,23 +1340,24 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.2",
+            "version": "v5.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "d8db871a54619458a805229a057ea2af33c753e8"
+                "reference": "181b89f18a90f8925ef805f950d47a7190e9b950"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/d8db871a54619458a805229a057ea2af33c753e8",
-                "reference": "d8db871a54619458a805229a057ea2af33c753e8",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/181b89f18a90f8925ef805f950d47a7190e9b950",
+                "reference": "181b89f18a90f8925ef805f950d47a7190e9b950",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "mockery/mockery": "~0.9.1,<0.9.4"
+                "mockery/mockery": "~0.9.1",
+                "symfony/phpunit-bridge": "~3.2"
             },
             "type": "library",
             "extra": {
@@ -1453,13 +1384,13 @@
                 }
             ],
             "description": "Swiftmailer, free feature-rich PHP mailer",
-            "homepage": "http://swiftmailer.org",
+            "homepage": "https://swiftmailer.symfony.com",
             "keywords": [
                 "email",
                 "mail",
                 "mailer"
             ],
-            "time": "2016-05-01 08:45:47"
+            "time": "2018-07-31T09:26:32+00:00"
         },
         {
             "name": "yiisoft/yii2",
@@ -1553,7 +1484,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2016-04-28 14:50:20"
+            "time": "2016-04-28T14:50:20+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -1603,24 +1534,27 @@
                 "bootstrap",
                 "yii2"
             ],
-            "time": "2016-03-17 03:29:28"
+            "time": "2016-03-17T03:29:28+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
-            "version": "2.0.4",
+            "version": "2.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-composer.git",
-                "reference": "7452fd908a5023b8bb5ea1b123a174ca080de464"
+                "reference": "1439e78be1218c492e6cde251ed87d3f128b9534"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/7452fd908a5023b8bb5ea1b123a174ca080de464",
-                "reference": "7452fd908a5023b8bb5ea1b123a174ca080de464",
+                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/1439e78be1218c492e6cde251ed87d3f128b9534",
+                "reference": "1439e78be1218c492e6cde251ed87d3f128b9534",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0"
+            },
+            "require-dev": {
+                "composer/composer": "^1.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -1642,6 +1576,10 @@
                 {
                     "name": "Qiang Xue",
                     "email": "qiang.xue@gmail.com"
+                },
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc"
                 }
             ],
             "description": "The composer plugin for Yii extension installer",
@@ -1650,7 +1588,7 @@
                 "extension installer",
                 "yii2"
             ],
-            "time": "2016-02-06 00:49:24"
+            "time": "2018-07-05T15:44:47+00:00"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
@@ -1700,7 +1638,7 @@
                 "swiftmailer",
                 "yii2"
             ],
-            "time": "2016-03-17 03:58:49"
+            "time": "2016-03-17T03:58:49+00:00"
         }
     ],
     "packages-dev": [
@@ -1733,16 +1671,16 @@
         },
         {
             "name": "cebe/js-search",
-            "version": "0.9.2",
+            "version": "0.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cebe/js-search.git",
-                "reference": "db807790032146beb2e5624fc38799d126720200"
+                "reference": "3756a8b3387f3f7e5c778b964ec681dcf110b098"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cebe/js-search/zipball/db807790032146beb2e5624fc38799d126720200",
-                "reference": "db807790032146beb2e5624fc38799d126720200",
+                "url": "https://api.github.com/repos/cebe/js-search/zipball/3756a8b3387f3f7e5c778b964ec681dcf110b098",
+                "reference": "3756a8b3387f3f7e5c778b964ec681dcf110b098",
                 "shasum": ""
             },
             "require": {
@@ -1768,7 +1706,7 @@
                 }
             ],
             "description": "A client side search engine for use on static pages.",
-            "time": "2015-05-06 22:41:18"
+            "time": "2016-11-22T12:11:39+00:00"
         },
         {
             "name": "cebe/markdown-latex",
@@ -1828,7 +1766,7 @@
                 "markdown",
                 "markdown-extra"
             ],
-            "time": "2014-10-20 23:24:21"
+            "time": "2014-10-20T23:24:21+00:00"
         },
         {
             "name": "mikevanriel/text-to-latex",
@@ -1867,7 +1805,7 @@
                 }
             ],
             "description": "A converter class that converts normal ASCII text to valid LaTeX",
-            "time": "2015-12-13 07:33:35"
+            "time": "2015-12-13T07:33:35+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -1912,7 +1850,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2014-07-23 18:24:17"
+            "time": "2014-07-23T18:24:17+00:00"
         },
         {
             "name": "phpdocumentor/reflection",
@@ -1966,20 +1904,20 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2014-11-14 11:43:04"
+            "time": "2014-11-14T11:43:04+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "2.0.4",
+            "version": "2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "d68dbdc53dc358a816f00b300704702b2eaff7b8"
+                "reference": "e6a969a640b00d8daa3c66518b0405fb41ae0c4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/d68dbdc53dc358a816f00b300704702b2eaff7b8",
-                "reference": "d68dbdc53dc358a816f00b300704702b2eaff7b8",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/e6a969a640b00d8daa3c66518b0405fb41ae0c4b",
+                "reference": "e6a969a640b00d8daa3c66518b0405fb41ae0c4b",
                 "shasum": ""
             },
             "require": {
@@ -2015,7 +1953,7 @@
                     "email": "mike.vanriel@naenius.com"
                 }
             ],
-            "time": "2015-02-03 12:10:50"
+            "time": "2016-01-25T08:17:30+00:00"
         },
         {
             "name": "phpspec/php-diff",
@@ -2053,26 +1991,34 @@
                 }
             ],
             "description": "A comprehensive library for generating differences between two hashable objects (strings or arrays).",
-            "time": "2016-04-07 12:29:16"
+            "time": "2016-04-07T12:29:16+00:00"
         },
         {
             "name": "psr/log",
-            "version": "1.0.0",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
                 "shasum": ""
             },
+            "require": {
+                "php": ">=5.3.0"
+            },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
-                "psr-0": {
-                    "Psr\\Log\\": ""
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2086,12 +2032,13 @@
                 }
             ],
             "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
             "keywords": [
                 "log",
                 "psr",
                 "psr-3"
             ],
-            "time": "2012-12-21 11:40:51"
+            "time": "2016-10-10T12:19:37+00:00"
         },
         {
             "name": "scrivo/highlight.php",
@@ -2125,7 +2072,7 @@
                 "highlight.php",
                 "syntax"
             ],
-            "time": "2015-12-31 20:33:22"
+            "time": "2015-12-31T20:33:22+00:00"
         },
         {
             "name": "yiisoft/yii2-apidoc",
@@ -2188,7 +2135,7 @@
                 "phpdoc",
                 "yii2"
             ],
-            "time": "2016-03-17 04:25:50"
+            "time": "2016-03-17T04:25:50+00:00"
         },
         {
             "name": "yiisoft/yii2-codeception",
@@ -2233,7 +2180,7 @@
                 "codeception",
                 "yii2"
             ],
-            "time": "2016-03-17 03:41:26"
+            "time": "2016-03-17T03:41:26+00:00"
         },
         {
             "name": "yiisoft/yii2-debug",
@@ -2280,7 +2227,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2016-03-17 03:50:19"
+            "time": "2016-03-17T03:50:19+00:00"
         },
         {
             "name": "yiisoft/yii2-gii",
@@ -2333,7 +2280,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2016-03-18 14:09:46"
+            "time": "2016-03-18T14:09:46+00:00"
         }
     ],
     "aliases": [],

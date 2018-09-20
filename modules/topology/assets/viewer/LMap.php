@@ -25,7 +25,6 @@ class LMap extends AssetBundle
 
     public $depends = [
         'meican\base\assets\leaflet\Cluster',
-        'meican\base\assets\leaflet\Label',
         'meican\base\assets\leaflet\TextPath'
     ];
 }

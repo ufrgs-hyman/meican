@@ -13,7 +13,7 @@ use yii\web\AssetBundle;
  */
 class Cluster extends AssetBundle
 {
-    public $sourcePath = '@bower/leaflet.markercluster/dist';
+    public $sourcePath = '@npm/leaflet.markercluster/dist';
     
     public $css = [
         'MarkerCluster.css',

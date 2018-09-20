@@ -214,7 +214,11 @@ LMap.prototype.getParentPosition = function(port) {
 }
 
 LMap.prototype.addNode = function(port, color) {
+    // try {
     if (!color) color = port.network.domain.color;
+    // } catch(err) {
+    //     console.log(port);
+    // } 
     if (port.lat != null && port.lng != null) {
         var pos = L.latLng([port.lat,port.lng]);
     } else if (typeof port.network !== 'undefined') {
@@ -230,7 +234,7 @@ LMap.prototype.addNode = function(port, color) {
             iconSize: [22,22],
             iconAnchor: [11, 22],
             popupAnchor: [0,-24],
-            labelAnchor: [4, -8],
+            tooltipAnchor: [12, -12],
             html: '<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg">' + 
             '<g>' +
             '<path stroke="black" fill="' + color + '" d="m1,0.5l20,0l-10,20l-10,-20z"/>' + 
@@ -269,7 +273,7 @@ LMap.prototype.addNode = function(port, color) {
             iconSize: [22,22],
             iconAnchor: [11, 22],
             popupAnchor: [0,-24],
-            labelAnchor: [4, -8],
+            tooltipAnchor: [14, -12],
             html: '<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg">' + 
             '<g>' +
             //http://complexdan.com/svg-circleellipse-to-path-converter/
@@ -291,7 +295,7 @@ LMap.prototype.prepareLabels = function() {
         }
         label = sharedStart(labels);
     
-        this._nodes[i].bindLabel(label, { noHide: true, direction: 'auto' });
+        this._nodes[i].bindTooltip(label, {permanent:true, direction: 'left'}).openTooltip();//, { noHide: true, direction: 'auto' });
     }
 }
 
@@ -311,8 +315,8 @@ LMap.prototype.buildNodePosition = function(position) {
     for(var i = 0; i < size; i++){
         if ((this._nodes[i].getLatLng().lat === lat) && 
                 (this._nodes[i].getLatLng().lng === lng)) {
-            this._nodes[i].unbindLabel();
-            this._nodes[i].bindLabel(this._nodes[i].options.name, { noHide: true, direction: 'left' });
+            // this._nodes[i].unbindTooltip();
+            // this._nodes[i].bindTooltip(this._nodes[i].options.name).openTooltip();//, { noHide: true, direction: 'left' });
             return this.buildNodePosition(L.latLng(position.lat + 0.001, position.lng));
         }
     }
