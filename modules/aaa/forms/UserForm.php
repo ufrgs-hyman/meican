@@ -36,7 +36,7 @@ class UserForm extends Model {
      */
     public function rules()    {
         return [
-            [['name', 'language', 'email', 'dateFormat', 'timeFormat', 'timeZone'], 'required'],
+            [['login', 'newPass', 'newPassConfirm', 'name', 'language', 'email', 'dateFormat', 'timeFormat', 'timeZone'], 'required'],
             ['newPassConfirm', 'compare', 'compareAttribute'=> 'newPass'],
             [['isChangedPass','currentPass','newPass', 'newPassConfirm'], 'validatePass'],
             [['login'], 'safe']
