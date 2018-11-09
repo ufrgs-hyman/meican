@@ -34,13 +34,39 @@ class UserForm extends Model {
 
     /**
      */
-    public function rules()    {
-        return [
+    public function rules() {
+
+        $rules = [
             [['name', 'language', 'email', 'dateFormat', 'timeFormat', 'timeZone'], 'required'],
             ['newPassConfirm', 'compare', 'compareAttribute'=> 'newPass'],
             [['isChangedPass','currentPass','newPass', 'newPassConfirm'], 'validatePass'],
-            [['login'], 'safe']
+            [['login'], 'safe'],
         ];
+
+        if($this->scenario == self::SCENARIO_CREATE){
+            $rules[] = [['newPass', 'newPassConfirm'], 'required'];
+        }elseif($this->scenario == self::SCENARIO_UPDATE_ACCOUNT){
+            $rules[] = [
+                ['currentPass', 'newPass', 'newPassConfirm'], 'required',
+                'when' => function($model){
+                    return false;
+                },
+                'whenClient' => "function (attribute, value) {
+                    return $('.icheckbox_minimal-blue').hasClass('checked');
+                }"
+            ];
+        }elseif ($this->scenario == self::SCENARIO_UPDATE) {
+            $rules[] = [
+                ['newPass', 'newPassConfirm'], 'required',
+                'when' => function($model){
+                    return false;
+                },
+                'whenClient' => "function (attribute, value) {
+                    return $('.icheckbox_minimal-blue').hasClass('checked');
+                }"
+            ];
+        }
+        return $rules;
     }
     
     public function attributeLabels() {
