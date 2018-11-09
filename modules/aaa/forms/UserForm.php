@@ -85,17 +85,22 @@ class UserForm extends Model {
         $this->dateFormat = $record->date_format;
         $this->timeZone = $record->time_zone;
     }
-    
+
     public function validatePass($attr, $params) {
         if ($this->isChangedPass) {
 
-            if (($this->currentPass == '' && $this->scenario == self::SCENARIO_USER) || 
-                    $this->newPass == '' || $this->newPassConfirm == '') {
-                $this->addError('', 'All password fields are required');
-                
+            if (($this->currentPass == '' && $this->scenario == self::SCENARIO_UPDATE_ACCOUNT) ||
+                $this->newPass == '' || $this->newPassConfirm == '') {
+                $this->addError('currentPass', 'All password fields are required');
+
             } else {
+
+                if($this->scenario == self::SCENARIO_UPDATE){
+                    return true;
+                }
+
                 $user = User::findOne(Yii::$app->user->id);
-                
+
                 if ($user->isValidPassword($this->currentPass)) {
                     return true;
                 } else {
