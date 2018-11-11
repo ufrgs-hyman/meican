@@ -34,13 +34,39 @@ class UserForm extends Model {
 
     /**
      */
-    public function rules()    {
-        return [
+    public function rules() {
+
+        $rules = [
             [['name', 'language', 'email', 'dateFormat', 'timeFormat', 'timeZone'], 'required'],
-            ['newPass', 'compare', 'compareAttribute'=> 'newPassConfirm'],
+            ['newPassConfirm', 'compare', 'compareAttribute'=> 'newPass'],
             [['isChangedPass','currentPass','newPass', 'newPassConfirm'], 'validatePass'],
-            [['login'], 'safe']
+            [['login'], 'safe'],
         ];
+
+        if($this->scenario == self::SCENARIO_CREATE){
+            $rules[] = [['newPass', 'newPassConfirm'], 'required'];
+        }elseif($this->scenario == self::SCENARIO_UPDATE_ACCOUNT){
+            $rules[] = [
+                ['currentPass', 'newPass', 'newPassConfirm'], 'required',
+                'when' => function($model){
+                    return false;
+                },
+                'whenClient' => "function (attribute, value) {
+                    return $('.icheckbox_minimal-blue').hasClass('checked');
+                }"
+            ];
+        }elseif ($this->scenario == self::SCENARIO_UPDATE) {
+            $rules[] = [
+                ['newPass', 'newPassConfirm'], 'required',
+                'when' => function($model){
+                    return false;
+                },
+                'whenClient' => "function (attribute, value) {
+                    return $('.icheckbox_minimal-blue').hasClass('checked');
+                }"
+            ];
+        }
+        return $rules;
     }
     
     public function attributeLabels() {
@@ -85,17 +111,22 @@ class UserForm extends Model {
         $this->dateFormat = $record->date_format;
         $this->timeZone = $record->time_zone;
     }
-    
+
     public function validatePass($attr, $params) {
         if ($this->isChangedPass) {
 
-            if (($this->currentPass == '' && $this->scenario == self::SCENARIO_USER) || 
-                    $this->newPass == '' || $this->newPassConfirm == '') {
-                $this->addError('', 'All password fields are required');
-                
+            if (($this->currentPass == '' && $this->scenario == self::SCENARIO_UPDATE_ACCOUNT) ||
+                $this->newPass == '' || $this->newPassConfirm == '') {
+                $this->addError('currentPass', 'All password fields are required');
+
             } else {
+
+                if($this->scenario == self::SCENARIO_UPDATE){
+                    return true;
+                }
+
                 $user = User::findOne(Yii::$app->user->id);
-                
+
                 if ($user->isValidPassword($this->currentPass)) {
                     return true;
                 } else {
