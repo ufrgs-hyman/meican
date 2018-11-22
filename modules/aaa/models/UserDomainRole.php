@@ -166,4 +166,9 @@ class UserDomainRole extends \yii\db\ActiveRecord
     static function getGlobalDomainGroupsNoArray() {
     	return Group::find()->where(['type' => Group::TYPE_DOMAIN, 'domain' => null])->orderBy(['name' => SORT_ASC])->all();
     }
+
+    public function getUserDomain(){
+        $userDomain = $this->domain;
+        return $userDomain;
+    }
 }
