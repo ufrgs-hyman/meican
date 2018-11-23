@@ -73,8 +73,8 @@ use meican\aaa\models\Group;
 	                'value' => function($model) {
 	                	$type = $model->getGroup()->type;
 	                	if($type == Group::TYPE_DOMAIN){
-	                		$dom = $model->getDomain();
-	                		if ($dom) return $dom->name;
+	                		$dom = $model->getUserDomain();
+	                		if ($dom) return $dom;
 	                		return Yii::t("aaa", "Any");
 	                	}
 	                	else {
