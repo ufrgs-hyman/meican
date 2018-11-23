@@ -1,8 +1,8 @@
-##CONFIGURATION GUIDE
+## CONFIGURATION GUIDE
 
 This step is set some parameters in order to configure the application.
 
-###General parameters
+### General parameters
 
 Location: config/params.php
 
@@ -42,7 +42,7 @@ Location: config/mailer.php
 'password' => '',
 ```
 
-###Application NSA ID
+### Application NSA ID
 
 We need set the MEICAN NSA ID to identify that application by other NSI providers. Access the application and enter to Reservations > Configuration and set the MEICAN NSA ID field with a valid id:
 
@@ -50,11 +50,11 @@ We need set the MEICAN NSA ID to identify that application by other NSI provider
 urn:ogf:network:#DOMAIN#:#YEAR#:nsa:meican
 ```
 
-###Default circuits provider
+### Default circuits provider
 
 If the fake provider has been disabled, we need to define a real provider to receive the MEICAN requests. On the same configuration page (Reservations > Configuration) you can set the Provider NSA ID and the URL of the Connection Service.
 
-###Monitoring
+### Monitoring
 
 The Monitoring module requires an instance of [OSCARS Bridge](https://github.com/ufrgs-hyman/oscars-bridge) and [ESnet Monitoring Daemon](https://github.com/esnet/esmond) for proper operation. 
 

@@ -1,16 +1,16 @@
-##MIGRATION GUIDE
+## MIGRATION GUIDE
 
 This guide covers the migration of the application to another machine.
 
 Two migration methods are presented. The first method is to copy the whole meican installation directory to the new sever (1) and second method is to copy only the necessary files to a new MEICAN installation (2).
 
-####1. Clone of existing installation
+#### 1. Clone of existing installation
 
-####1.1 Machine requirements
+#### 1.1 Machine requirements
 
 Make sure that the [software requirements](https://github.com/ufrgs-hyman/meican#software) are configured as defined in the installation guide for your operating system. After that, proceed to the next step.
 
-####1.2 Copy all files
+#### 1.2 Copy all files
 
 The quick backup method is copy all files from the current installation. Replace the #USER# and #HOST# with your user and old server address. After that, run the following command in your new server:
 
@@ -18,23 +18,23 @@ The quick backup method is copy all files from the current installation. Replace
 sudo rsync -a #USER#@#HOST#:/path/to/old/meican /path/to/new/meican
 ```
 
-####1.3 Database
+#### 1.3 Database
 
 Now that you already have the files you need the database from the old machine. Follow the step 2.3 to get the backup and 2.7 to import the database on the new server.
 
 Test your application accessing http://localhost and verify some pages. If you detect some wrong this method may not work in your system. In this case you should follow the method 2.
 
-####2. Move files to new installation
+#### 2. Move files to new installation
 
-####2.1 Backup of the certficate
+#### 2.1 Backup of the certficate
 
 Your new server will have the same domain? If yes, you need a backup of the all files from **certificates** folder. This folder is located in the project root.
 
-####2.2 Backup of the configurations
+#### 2.2 Backup of the configurations
 
 Backup the following files from **config** folder: "db.php", "mailer.php" and "params.php". This folder is located in the project root.
 
-####2.3 Backup of the database
+#### 2.3 Backup of the database
 
 Export the MEICAN database. By default the database name is **meican**. Overwrite #USER# and #PASS# with your credentials and execute this command:
 
@@ -42,19 +42,19 @@ Export the MEICAN database. By default the database name is **meican**. Overwrit
 mysqldump -u #USER# -p#PASS# --databases meican > backup.sql
 ```
 
-####2.4 Prepare the new environment
+#### 2.4 Prepare the new environment
 
 Following the [installation guide](https://github.com/ufrgs-hyman/meican#installation) respective, setup a complete new MEICAN instance on the new machine **skipping the configuration step**. IMPORTANT: if you are not doing an upgrade, make sure that the version of the new installation is **exactly** the same of the old server.
 
-####2.5 Copy the certificate
+#### 2.5 Copy the certificate
 
 From the backup, copy the certificate to the **certificates** folder on the new server.
 
-####2.6 Copy the configuration
+#### 2.6 Copy the configuration
 
 From the backup, copy the files: "db.php", "mailer.php" and "params.php" to the **config** folder on the new server.
 
-####2.7 Import the database
+#### 2.7 Import the database
 
 This is step is exclusive for a migration of the application. If you are doing an upgrade, look the next step on [Upgrade Guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/upgrade.md#2-install-oscars-bridge-following-this-guide).
 
