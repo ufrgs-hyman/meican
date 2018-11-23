@@ -21,6 +21,7 @@ $this->params['header'] = ["Users", ['Home', 'Users']];
 
 ?>
 
+
 <div class="box box-default">
     <div class="box-header with-border">
         <?= GridButtons::widget(); ?>
@@ -31,10 +32,12 @@ $this->params['header'] = ["Users", ['Home', 'Users']];
         $form = ActiveForm::begin([
             'method' => 'post',
             'action' => ['delete'],
+            'id' => 'user-grid-form',
             'enableClientScript'=>false,
             'enableClientValidation' => false,
         ]);
-    
+        
+
         echo Grid::widget([
             'dataProvider' => $users,
             'filterModel' => $searchModel,
@@ -66,12 +69,11 @@ $this->params['header'] = ["Users", ['Home', 'Users']];
                     'headerOptions'=>['style'=>'width: 47%;'],
                 ],
             ),
-        ]);
-            
-        ?>
+        ]);  
+        
+        ActiveForm::end();
 
-        <?php
-            ActiveForm::end();
         ?>
+         
     </div>
 </div>
