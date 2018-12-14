@@ -3,3 +3,6 @@
 /.settings/
 *.buildpath
 *.project
+config/db.php
+config/params.php
+config/mailer.php

@@ -11,7 +11,7 @@ $config = [
     'name'=>'MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks',
     'version' => '3.1.0',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log','debug','session',
+    'bootstrap' => ['log','session',
         'notify',
         'home',
         'bpm',
@@ -23,10 +23,6 @@ $config = [
     ],
     'defaultRoute' => 'home',
     'modules' => [
-        'debug' => [
-            'class' => 'yii\debug\Module',
-            'allowedIPs' => ['*']
-        ],
         'aaa' =>            'meican\aaa\Module',
         'base' =>           'meican\base\Module',
         'circuits' =>       'meican\circuits\Module',
