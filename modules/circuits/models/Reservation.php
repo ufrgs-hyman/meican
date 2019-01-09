@@ -164,7 +164,7 @@ class Reservation extends \yii\db\ActiveRecord
     }
     
     public function getSourceDomain() {
-		$connection = Connection::find()->where(['reservation_id' => $this->id])->one();
+		$connection = Connection::find()->where(['reservation_id' => '1'])->one();
 		if(!$connection) return null;
 		$path = $connection->getFirstPath()->one();
     	if(!$path) return null;

@@ -94,19 +94,19 @@ class ReservationSearch extends Reservation {
                 JOIN    `meican_connection_path` cp1
                 ON      cp1.conn_id = cp2.conn_id AND cp1.domain = '".$this->dst_domain."' AND cp1.path_order = cp2.last_path");
         } else {
-            $connPoints = ConnectionPath::find()
+            $connPoints = ConnectionPath::find()            //$connPoints tem uma tabela somente com as linhas que contem domínios que o usuário tem permissão
                 ->where(['in', 'domain', $validDomains])
                 ->select(["conn_id"])
                 ->distinct(true);
         }
 
-        $validConns = Connection::find()
+        $validConns = Connection::find()                    //$validConns tem uma tabela com as linhas que tem o "id" igual a "conn_id"(da tabela $connPoints ) 
             ->where(['in', 'id', 
                 ArrayHelper::getColumn(
                     $connPoints->all(),
                     'conn_id')]);
-
-        $reservations = Reservation::find()
+     
+        $reservations = Reservation::find()                 //$reservations tem uma tabela com as linhas que tem o "id" igual aos do "reservation_id"(da tabela $validConns)
             ->andWhere(['in', 'id', 
                 ArrayHelper::getColumn(
                     $validConns->select(['reservation_id'])->asArray()->all(),
@@ -114,13 +114,79 @@ class ReservationSearch extends Reservation {
             ->andWhere(['type'=>self::TYPE_NORMAL])
             ->orderBy(['date'=>SORT_DESC]);
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $reservations,
-            'sort' => false,
+//***** Organizar
+        $connsPast = Connection::find()
+                ->andwhere(['in', 'reservation_id', 
+                    ArrayHelper::getColumn(
+                        $reservations->all(),'id')])
+                ->andWhere(['<', 'finish', date("o-m-d H:i:s")])
+                ->orderBy(['start'=>SORT_DESC]);
+
+
+        $connsCurrent = Connection::find()
+                ->andwhere(['in', 'reservation_id', 
+                    ArrayHelper::getColumn(
+                        $reservations->all(),'id')])
+                ->andWhere(['<', 'start', date("o-m-d H:i:s")])
+                ->andWhere(['>', 'finish', date("o-m-d H:i:s")])
+                ->orderBy(['start'=>SORT_DESC]);
+
+
+        $connsFuture = Connection::find()
+                ->andwhere(['in', 'reservation_id', 
+                    ArrayHelper::getColumn(
+                        $reservations->all(),'id')])
+                ->andWhere(['>', 'start', date("o-m-d H:i:s")])
+                ->orderBy(['start'=>SORT_DESC]);
+//***** Organizar
+
+        Yii::warning(date("o-m-d H:i:s"));
+        $past = new ActiveDataProvider([
+            'query' => $connsPast,
+            'sort' =>[
+                'attributes' => [
+                    'start' => [
+                        'asc' => ['start' => SORT_ASC],
+                        'desc' => ['start' => SORT_DESC],
+                    ],
+                ],
+            ],
             'pagination' => [
                 'pageSize' => 15,
             ]
         ]);
+
+        $current = new ActiveDataProvider([
+            'query' => $connsCurrent,
+            'sort' =>[
+                'attributes' => [
+                    'start' => [
+                        'asc' => ['start' => SORT_ASC],
+                        'desc' => ['start' => SORT_DESC],
+                    ],
+                ],
+            ],
+            'pagination' => [
+                'pageSize' => 15,
+            ]
+        ]);
+
+        $future = new ActiveDataProvider([
+            'query' => $connsFuture,
+            'sort' =>[
+                'attributes' => [
+                    'start' => [
+                        'asc' => ['start' => SORT_ASC],
+                        'desc' => ['start' => SORT_DESC],
+                    ],
+                ],
+            ],
+            'pagination' => [
+                'pageSize' => 15,
+            ]
+        ]);
+
+        $dataProvider = ['past'=>$past, 'current'=>$current, 'future'=>$future];
         
         return $dataProvider;
     }

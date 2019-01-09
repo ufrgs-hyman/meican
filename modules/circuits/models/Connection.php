@@ -148,6 +148,20 @@ class Connection extends \yii\db\ActiveRecord
         return DateUtils::fromDB($this->finish);
     }
 
+    public function getSourceDomain() {
+        $path = $this->getFirstPath()->one();
+        if(!$path) 
+            return null;
+        return $path->domain;
+    }
+
+    public function getDestinationDomain() {
+        $path = $this->getLastPath()->one();
+        if(!$path) 
+            return null;
+        return $path->domain;
+    }
+
     public function getPath($order) {
         return ConnectionPath::find()->where(['conn_id'=>$this->id, 'path_order'=>$order]);
     }

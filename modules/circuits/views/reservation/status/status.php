@@ -20,7 +20,7 @@ $this->params['header'] = [Yii::t('circuits', 'Status'), ['Home', Yii::t('circui
         <div class="box-tools pull-right">
             <?= SwitchInput::widget(['id' => 'auto-refresh-switch', 'name'=>'auto-refresh', 'value'=>true, 
                 'pluginOptions' => [
-                    'size' => 'small',
+                    'size' => 'medium',
                     'labelText' => 'Auto update'
                 ]]); ?>
         </div>

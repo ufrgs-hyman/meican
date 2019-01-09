@@ -156,7 +156,7 @@ class ReservationController extends RbacController {
     public function actionStatus() {
         $searchModel = new ReservationSearch;
         $allowedDomains = self::whichDomainsCan('reservation/read', true);
-
+        
         $data = $searchModel
             ->searchByDomains(Yii::$app->request->get(), $allowedDomains);
 
