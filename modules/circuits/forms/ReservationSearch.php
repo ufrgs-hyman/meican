@@ -114,13 +114,11 @@ class ReservationSearch extends Reservation {
             ->andWhere(['type'=>self::TYPE_NORMAL])
             ->orderBy(['date'=>SORT_DESC]);
 
-//***** Organizar
         $connsPast = Connection::find()
                 ->andwhere(['in', 'reservation_id', 
                     ArrayHelper::getColumn(
                         $reservations->all(),'id')])
-                ->andWhere(['<', 'finish', date("o-m-d H:i:s")])
-                ->orderBy(['start'=>SORT_DESC]);
+                ->andWhere(['<', 'finish', date("o-m-d H:i:s")]);
 
 
         $connsCurrent = Connection::find()
@@ -128,19 +126,16 @@ class ReservationSearch extends Reservation {
                     ArrayHelper::getColumn(
                         $reservations->all(),'id')])
                 ->andWhere(['<', 'start', date("o-m-d H:i:s")])
-                ->andWhere(['>', 'finish', date("o-m-d H:i:s")])
-                ->orderBy(['start'=>SORT_DESC]);
+                ->andWhere(['>', 'finish', date("o-m-d H:i:s")]);
+                
 
 
         $connsFuture = Connection::find()
                 ->andwhere(['in', 'reservation_id', 
                     ArrayHelper::getColumn(
                         $reservations->all(),'id')])
-                ->andWhere(['>', 'start', date("o-m-d H:i:s")])
-                ->orderBy(['start'=>SORT_DESC]);
-//***** Organizar
+                ->andWhere(['>', 'start', date("o-m-d H:i:s")]);
 
-        Yii::warning(date("o-m-d H:i:s"));
         $past = new ActiveDataProvider([
             'query' => $connsPast,
             'sort' =>[
@@ -149,6 +144,15 @@ class ReservationSearch extends Reservation {
                         'asc' => ['start' => SORT_ASC],
                         'desc' => ['start' => SORT_DESC],
                     ],
+                    'finish' => [
+                        'asc' => ['finish' => SORT_ASC],
+                        'desc' => ['finish' => SORT_DESC],
+                    ],
+                    'bandwidth' => [
+                        'asc' => ['bandwidth' => SORT_ASC],
+                        'desc' => ['bandwidth' => SORT_DESC],
+                    ],
+
                 ],
             ],
             'pagination' => [
@@ -164,6 +168,14 @@ class ReservationSearch extends Reservation {
                         'asc' => ['start' => SORT_ASC],
                         'desc' => ['start' => SORT_DESC],
                     ],
+                    'finish' => [
+                        'asc' => ['finish' => SORT_ASC],
+                        'desc' => ['finish' => SORT_DESC],
+                    ],
+                    'bandwidth' => [
+                        'asc' => ['bandwidth' => SORT_ASC],
+                        'desc' => ['bandwidth' => SORT_DESC],
+                    ],
                 ],
             ],
             'pagination' => [
@@ -178,6 +190,14 @@ class ReservationSearch extends Reservation {
                     'start' => [
                         'asc' => ['start' => SORT_ASC],
                         'desc' => ['start' => SORT_DESC],
+                    ],
+                    'finish' => [
+                        'asc' => ['finish' => SORT_ASC],
+                        'desc' => ['finish' => SORT_DESC],
+                    ],
+                    'bandwidth' => [
+                        'asc' => ['bandwidth' => SORT_ASC],
+                        'desc' => ['bandwidth' => SORT_DESC],
                     ],
                 ],
             ],
