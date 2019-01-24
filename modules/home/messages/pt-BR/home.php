@@ -29,6 +29,7 @@ return array(
 		'Forgot your password?' => 'Esqueceu sua senha?',
 		'New account' => 'Nova conta',
 		'Sign in' => 'Entrar',
+		'Sign out' => 'Sair',
 		'or' => 'ou',
 		'MEICAN allows network end-users to request, in a more user-friendly way, dedicated circuits in ' => 'O MEICAN permite que usuários de redes requisitem, de uma maneira amigável, circuitos dedicados em', 
 		'MEICAN also enables network operators to evaluate and accept end-users circuit requests in environments with multiple domains. With MEICAN, you can:' => 'O MEICAN também permite que operadores de rede avaliem e aceitem requisições de circuitos de outros usuários em ambientes com 

@@ -132,19 +132,19 @@ $tab = (isset($_COOKIE['lastTab']))? $_COOKIE['lastTab']:'#tabCurrent';
 echo Tabs::widget([
     'items' => [
         [
-            'label' => 'Current',
+            'label' => Yii::t('circuits','Current'),
             'content' => generateGrid($gridId, $data['current'], $searchModel, $allowedDomains),
             'options' => ['id' => 'tabCurrent'],
             'active' => '#tabCurrent' == $tab
         ],
         [
-            'label' => 'Future',
+            'label' => Yii::t('circuits','Future'),
             'content' => generateGrid($gridId, $data['future'], $searchModel, $allowedDomains),
             'options' =>    ['id' => 'tabFuture'],
             'active' => '#tabFuture' == $tab 
         ],
         [
-            'label' => 'Past',
+            'label' => Yii::t('circuits','Past'),
             'content' => generateGrid($gridId, $data['past'], $searchModel, $allowedDomains),
             'options' => ['id' => 'tabPast'],
             'active' => '#tabPast' == $tab 

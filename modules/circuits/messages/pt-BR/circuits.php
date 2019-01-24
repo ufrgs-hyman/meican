@@ -243,6 +243,10 @@ return array(
 		
 		"Connectivity" => "Conectividade",
 		
+		"Current" => "Atual",
+		"Future" => "Futuro",
+		"Past" => "Passado",
+		
 		"Connectivity Status" => "Status de Conectividade",
 		"Authorization Status" => "Status da Autorização",
 		"Reservation Status" => "Status da Reserva",
