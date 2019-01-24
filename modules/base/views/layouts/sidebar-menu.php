@@ -20,7 +20,7 @@ echo Menu::widget([
             'url' => '#',
             'icon' => 'fa fa-calendar',
             'items' => [
-                ['label'=>Yii::t('circuits','New Reservation'), 'url'=>['/circuits/reservation/create']],
+                ['label'=>Yii::t('circuits','New Reservation'), 'url'=>['/circuits/reservation/create']], 
                 ['label'=>Yii::t('circuits','Status'),'url'=>['/circuits/reservation/status']],
                 ['label'=>Yii::t('circuits','Authorization'),'url'=>['/circuits/authorization']],
                 ['label'=>Yii::t('circuits','Configuration'),'url'=>['/circuits/config'], 'visible'=>RbacController::can('configuration/read')]
