@@ -72,7 +72,7 @@ function generateGrid($gridId, $data, $searchModel, $allowedDomains){
                     },      
                     'filter' => Html::activeDropDownList($searchModel, 'src_domain', 
                         ArrayHelper::map($allowedDomains, 'name', 'name'),
-                        ['id'=>'reservationsearch-src_domain-', 'class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
+                        ['id'=>'reservationsearch-src_domain', 'class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
                     ),
                     'headerOptions'=>['style'=>'width: 14%;'],
                 ],
@@ -83,7 +83,7 @@ function generateGrid($gridId, $data, $searchModel, $allowedDomains){
                     },
                     'filter' => Html::activeDropDownList($searchModel, 'dst_domain', 
                         ArrayHelper::map($allowedDomains, 'name', 'name'),
-                        ['id'=>'reservationsearch-dst_domain-','class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
+                        ['id'=>'reservationsearch-dst_domain','class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
                     ),
                     'headerOptions'=>['style'=>'width: 14%;'],
                 ],
