@@ -72,7 +72,7 @@ function generateGrid($gridId, $data, $searchModel, $allowedDomains){
                     },      
                     'filter' => Html::activeDropDownList($searchModel, 'src_domain', 
                         ArrayHelper::map($allowedDomains, 'name', 'name'),
-                        ['class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
+                        ['id'=>'reservationsearch-src_domain', 'class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
                     ),
                     'headerOptions'=>['style'=>'width: 14%;'],
                 ],
@@ -83,7 +83,7 @@ function generateGrid($gridId, $data, $searchModel, $allowedDomains){
                     },
                     'filter' => Html::activeDropDownList($searchModel, 'dst_domain', 
                         ArrayHelper::map($allowedDomains, 'name', 'name'),
-                        ['class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
+                        ['id'=>'reservationsearch-dst_domain','class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
                     ),
                     'headerOptions'=>['style'=>'width: 14%;'],
                 ],
@@ -133,19 +133,19 @@ echo Tabs::widget([
     'items' => [
         [
             'label' => Yii::t('circuits','Current'),
-            'content' => generateGrid($gridId, $data['current'], $searchModel, $allowedDomains),
+            'content' => generateGrid($gridId.'current', $data['current'], $searchModel, $allowedDomains),
             'options' => ['id' => 'tabCurrent'],
             'active' => '#tabCurrent' == $tab
         ],
         [
             'label' => Yii::t('circuits','Future'),
-            'content' => generateGrid($gridId, $data['future'], $searchModel, $allowedDomains),
+            'content' => generateGrid($gridId.'future', $data['future'], $searchModel, $allowedDomains),
             'options' =>    ['id' => 'tabFuture'],
             'active' => '#tabFuture' == $tab 
         ],
         [
             'label' => Yii::t('circuits','Past'),
-            'content' => generateGrid($gridId, $data['past'], $searchModel, $allowedDomains),
+            'content' => generateGrid($gridId.'past', $data['past'], $searchModel, $allowedDomains),
             'options' => ['id' => 'tabPast'],
             'active' => '#tabPast' == $tab 
         ],
