@@ -191,8 +191,8 @@ return array(
 		"Reservation Name" => "Nome da reserva",
 		"Date" => "Data",
 		"Time" => "Hora",
-		"Start" => "Início",
-		"End" => "Fim",
+		"Start Time" => "Início",
+		"End Time" => "Fim",
 		"Automated Tests" => "Testes Automatizados",
 		"Disable auto refresh" => "Desativar autoatualização",
 		"Enable auto refresh" => "Ativar autoatualização",
@@ -242,6 +242,10 @@ return array(
 		"Unsolicited" => "Não solicitada",
 		
 		"Connectivity" => "Conectividade",
+		
+		"Current" => "Atual",
+		"Future" => "Futuro",
+		"Past" => "Passado",
 		
 		"Connectivity Status" => "Status de Conectividade",
 		"Authorization Status" => "Status da Autorização",

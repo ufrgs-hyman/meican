@@ -167,7 +167,7 @@ class ReservationController extends RbacController {
                         'gridId' => 'circuits-grid',
                         'searchModel' => $searchModel, 
                         'data' => $data,
-                        'allowedDomains' => $allowedDomains
+                        'allowedDomains' => $allowedDomains,
                     ]);
             }
         }
@@ -182,6 +182,7 @@ class ReservationController extends RbacController {
             'allowedDomains' => $allowedDomains
         ]);
     }
+
     
     //////REST functions
 

@@ -119,7 +119,7 @@ use meican\home\forms\FeedbackForm;
           Version <b><?= Yii::$app->version; ?></b>
         </div>
         <!-- Default to the left -->
-        <strong>&copy; 2017 <a href="http://www.rnp.br" target="_blank">RNP</a></strong>
+        <strong>&copy; 2019 <a href="http://www.rnp.br" target="_blank">RNP</a></strong>
     </footer>
     <?php endif; ?>
 

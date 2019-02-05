@@ -15,7 +15,7 @@ $this->params['header'] = ['Dashboard'];
 
   <div class="row" style="text-align: center">
         <div class="col-xs-6 col-sm-3" style="min-width: 250px">
-            <h2><?= Yii::t('home', 'Reserve'); ?></h2>
+            <h2><?= Yii::t('home', 'New Reservation'); ?></h2>
             <a href="<?= Url::to(['/circuits/reservation/create']); ?>">
                 <img style="width: 128px; height:128px;" src="<?= Url::to('@web/images/dash_new_reservation.png'); ?>" alt="New Reservation"/>
             </a>
