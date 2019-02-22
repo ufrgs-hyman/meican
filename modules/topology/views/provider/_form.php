@@ -29,10 +29,10 @@ $form= ActiveForm::begin([
     <div class="box-body">
         <?= $form->field($model,'name')->textInput(['size'=>50]); ?>
         <?= $form->field($model,'nsa')->textInput(['size'=>50]); ?>
-       <?= $form->field($model,'type')->dropDownList(ArrayHelper::map(Provider::getTypes(), 'id', 'name')); ?>
-        <?= $form->field($model,'latitude')->textInput(['size'=>20]); ?>
+        <?= $form->field($model,'type')->dropDownList(ArrayHelper::map(Provider::getTypes(), 'id', 'name')); ?>
         <?= $form->field($model,'longitude')->textInput(['size'=>20]); ?>
-       <?= $form->field($model,'domain_id')->dropDownList(ArrayHelper::map(Domain::find()->select(['id','name'])->asArray()->all(), 'id', 'name')); ?>
+        <?= $form->field($model,'latitude')->textInput(['size'=>20]); ?>
+        <?= $form->field($model,'domain_id')->dropDownList(ArrayHelper::map(Domain::find()->select(['id','name'])->asArray()->all(), 'id', 'name')); ?>
     </div>
     <div class="box-footer">
         <div class="form-group">

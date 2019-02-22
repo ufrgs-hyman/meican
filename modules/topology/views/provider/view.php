@@ -36,8 +36,8 @@ $this->params['header'] = [$model->name, ['Home', 'Topology', 'Providers', $mode
                             'attribute'=> 'type',         
                             'value' => $model->getType(),
                         ], 
-                        'latitude',
                         'longitude',
+                        'latitude',
                         [            
                             'attribute'=> 'domain_id',         
                             'value' => $model->getDomainName(),
