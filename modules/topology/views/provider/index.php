@@ -66,8 +66,8 @@ $this->params['header'] = ["Providers", ['Home', 'Topology', 'Providers']];
                 },
             ],
             'nsa',
-            'longitude',
             'latitude',
+            'longitude',
         ),
     ]);
 
