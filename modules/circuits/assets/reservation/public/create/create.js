@@ -179,7 +179,6 @@ function showPointModal(pointElement, pointOrder, nodeId) {
         $("#point-modal").find('.point-order').text(pointOrder); 
     } else {
         urn = $(pointElement).find('.urn-input').val();
-        console.log(urn);
         for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
             if (meicanTopo['ports'][i]['urn'] == urn) {
                 port = meicanTopo['ports'][i];
@@ -779,7 +778,8 @@ function fillDomainSelect() {
     var selectId = "pointform-domain";
     clearSelect(selectId);
     $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
-    for (var i = meicanTopo['domains'].length - 1; i >= 0; i--) {
+    len = meicanTopo['domains'].length;
+    for (var i = 0; i < len; i++) {
         $("#" + selectId).append('<option value="' + meicanTopo['domains'][i].id + '">' + meicanTopo['domains'][i].name + '</option>');
     }
     enableSelect(selectId);
@@ -790,7 +790,8 @@ function fillNetworkSelect(domainId, networkId) {
     disableSelect(selectId);
     if (domainId != "" && domainId != null) {
         $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
-        for (var i = meicanTopo['networks'].length - 1; i >= 0; i--) {
+        len = meicanTopo['networks'].length;
+        for (var i = 0; i < len; i++) {
             if (meicanTopo['networks'][i].domain_id == domainId)
                 $("#" + selectId).append(
                 '<option value="' + 
@@ -811,7 +812,8 @@ function fillPortSelect(networkId, portId) {
     disableSelect(selectId);
     if (networkId != "" && networkId != null) {
         $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
-        for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
+        len = meicanTopo['ports'].length;
+        for (var i = 0; i < len; i++) {
             if (meicanTopo['ports'][i].network_id == networkId) {
                 lid = meicanTopo['ports'][i].urn.replace(meicanTopo['ports'][i].network.urn + ':', '');
                 $("#" + selectId).append('<option value="' + 
