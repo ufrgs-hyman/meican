@@ -71,13 +71,13 @@ $this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home
                     'headerOptions'=>['style'=>'width: 30%;'],
                 ],
                 [
-                    'label' => Yii::t("topology", 'Longitude'),
-                    'value' => 'longitude',
+                    'label' => Yii::t("topology", 'Latitude'),
+                    'value' => 'latitude',
                     'headerOptions'=>['style'=>'width: 8%;'],
                 ],
                 [
-                    'label' => Yii::t("topology", 'Latitude'),
-                    'value' => 'latitude',
+                    'label' => Yii::t("topology", 'Longitude'),
+                    'value' => 'longitude',
                     'headerOptions'=>['style'=>'width: 8%;'],
                 ],
                 [
