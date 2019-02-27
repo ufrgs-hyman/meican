@@ -807,6 +807,7 @@ function fillNetworkSelect(domainId, networkId) {
         var lenNetwork = ($("#" + selectId)[0].length - 1);
         if (lenNetwork == 1){
             $("#" + selectId)[0].selectedIndex = 1;
+            fillPortSelect($("#" + selectId).val());
         }
 
         enableSelect(selectId);
@@ -893,8 +894,8 @@ function initEditPointSelects() {
     fillDomainSelect();
     
     $('#pointform-domain').on('change', function() {
-        fillNetworkSelect(this.value);
         fillPortSelect();
+        fillNetworkSelect(this.value);
         fillVlanSelect();
     });
     
