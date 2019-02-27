@@ -803,6 +803,12 @@ function fillNetworkSelect(domainId, networkId) {
         if (networkId != null) {
             $("#" + selectId).val(networkId);
         }
+
+        var lenNetwork = ($("#" + selectId)[0].length - 1);
+        if (lenNetwork == 1){
+            $("#" + selectId)[0].selectedIndex = 1;
+        }
+
         enableSelect(selectId);
     } 
 }
