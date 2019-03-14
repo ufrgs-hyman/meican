@@ -291,7 +291,7 @@ LMap.prototype.prepareLabels = function() {
         var label = 'error';
         labels = [];
         for (var k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
-            labels.push(this._nodes[i].options.ports[k].urn);
+            labels.push(this._nodes[i].options.ports[k].name);
         }
         label = groupByDomain(labels);
        
