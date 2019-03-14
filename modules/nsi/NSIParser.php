@@ -382,13 +382,9 @@ class NSIParser {
                     $this->errors["Unknown URN"][$biPortId] = null;
                     continue;
                 }
-                
-                $biportNameNode = $this->xpath->query(".//x:name", $biPortNode);
-                if ($biportNameNode->item(0)) {
-                    $biportName = $biportNameNode->item(0)->nodeValue;
-                } else {
-                    $biportName = str_replace($netId.":", "", $biPortId);
-                }
+                      
+                $netkId = $netNode->getAttribute('id');
+                $biportName = str_replace("urn:ogf:network:","",$netId);
 
                 $locationNode = $this->xpath->query(".//x:Location", $biPortNode);
 
@@ -404,7 +400,7 @@ class NSIParser {
                     $lng = $lngNode->item(0)->nodeValue;
                     
                     $nameNode = $this->xpath->query(".//x:name", $locationNode->item(0));
-                    $name = $nameNode->item(0)->nodeValue;
+                    $biportName = $nameNode->item(0)->nodeValue;
 
                 }
 
