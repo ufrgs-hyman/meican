@@ -390,12 +390,30 @@ class NSIParser {
                     $biportName = str_replace($netId.":", "", $biPortId);
                 }
 
-                $this->parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName);
+                $locationNode = $this->xpath->query(".//x:Location", $biPortNode);
+
+                $lat = null;
+                $lng = null;
+
+                if ($locationNode->item(0)) {
+                    # cuidado com o xpath, ele aceita o node referencia nulo e nesse
+                    # caso ele procura por todo o documento.
+                    $latNode = $this->xpath->query(".//x:lat", $locationNode->item(0));
+                    $lat = $latNode->item(0)->nodeValue;
+                    $lngNode = $this->xpath->query(".//x:long", $locationNode->item(0));
+                    $lng = $lngNode->item(0)->nodeValue;
+                    
+                    $nameNode = $this->xpath->query(".//x:name", $locationNode->item(0));
+                    $name = $nameNode->item(0)->nodeValue;
+
+                }
+
+                $this->parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName, $lat, $lng);
             }
         }
     }
 
-    function parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName) {
+    function parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName, $lat, $lng) {
         $portNodes = $this->xpath->query(".//x:PortGroup", $biPortNode);
         if($portNodes) {
             foreach ($portNodes as $portNode) {
@@ -408,7 +426,7 @@ class NSIParser {
                 }
 
                 $vlanAndAlias = $this->parseVlanAndAlias($netNode, $portId);
-                
+
                 $this->addPort(
                         $netId,
                         $netName,
@@ -418,8 +436,8 @@ class NSIParser {
                         $this->parseUniPortType($netNode, $portId),
                         $vlanAndAlias[0],
                         $vlanAndAlias[1],
-                        $vlanAndAlias[2],
-                        $vlanAndAlias[3]
+                        $lat,
+                        $lng
                 );
                 #$this->parseDevice($netNode, $portId));
             }
