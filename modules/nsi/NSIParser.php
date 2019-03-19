@@ -383,12 +383,8 @@ class NSIParser {
                     continue;
                 }
                 
-                $biportNameNode = $this->xpath->query(".//x:name", $biPortNode);
-                if ($biportNameNode->item(0)) {
-                    $biportName = $biportNameNode->item(0)->nodeValue;
-                } else {
-                    $biportName = str_replace($netId.":", "", $biPortId);
-                }
+                $netkId = $netNode->getAttribute('id');
+                $biportName = str_replace("urn:ogf:network:","",$netId);
 
                 $this->parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName);
             }

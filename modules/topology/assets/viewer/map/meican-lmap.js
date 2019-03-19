@@ -205,6 +205,9 @@ LMap.prototype.getNodeByPosition = function(position, domain) {
 }
 
 LMap.prototype.getParentPosition = function(port) {
+    if (port.network.latitude != null)
+        return L.latLng([port.network.latitude, port.network.longitude]);
+
     for (var i = port.network.domain.providers.length - 1; i >= 0; i--) {
         if (port.network.domain.providers[i].latitude != null)
             return L.latLng([port.network.domain.providers[i].latitude, 
@@ -291,7 +294,7 @@ LMap.prototype.prepareLabels = function() {
         var label = 'error';
         labels = [];
         for (var k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
-            labels.push(this._nodes[i].options.ports[k].urn);
+            labels.push(this._nodes[i].options.ports[k].name);
         }
         label = groupByDomain(labels);
        

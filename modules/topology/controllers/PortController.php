@@ -110,7 +110,7 @@ class PortController extends RbacController {
     }
 
     public function actionJson($fields=null, $dir=null) {
-    	$query = Port::find()->asArray();
+    	$query = Port::find()->asArray()->orderBy(['name'=> "SORT ASC"]);
         $dir ? $data = $query->where(['directionality'=> $dir]) : null;
         $fields ? $data = $query->select(explode(',',$fields))->all() : $data = $query->all();
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
