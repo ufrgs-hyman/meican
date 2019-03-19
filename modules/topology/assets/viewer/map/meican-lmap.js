@@ -205,11 +205,15 @@ LMap.prototype.getNodeByPosition = function(position, domain) {
 }
 
 LMap.prototype.getParentPosition = function(port) {
+    if (port.network.latitude != null)
+        return L.latLng([port.network.latitude, port.network.longitude]);
+
     for (var i = port.network.domain.providers.length - 1; i >= 0; i--) {
         if (port.network.domain.providers[i].latitude != null)
             return L.latLng([port.network.domain.providers[i].latitude, 
                 port.network.domain.providers[i].longitude]);
     }
+
     return L.latLng([0,0]);
 }
 
