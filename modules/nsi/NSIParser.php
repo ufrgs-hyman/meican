@@ -162,7 +162,7 @@ class NSIParser {
     }
     
     function addProviderData($domainName, $nsa, $type, $name, $lat, $lng, $peerings) {
-        $nsa = strtolower($nsa);
+        $nsa = $nsa;
         $nsa = str_replace("urn:ogf:network:","",$nsa);
         $this->topology["domains"][$domainName]["nsa"][$nsa]['name'] = $name;
         $this->topology["domains"][$domainName]["nsa"][$nsa]["type"] = $type;
@@ -192,7 +192,7 @@ class NSIParser {
     }
     
     function addProviderService($domainName, $nsa, $service) {
-        $nsa = strtolower($nsa);
+        $nsa = $nsa;
         $nsa = str_replace("urn:ogf:network:","",$nsa);
         $this->topology["domains"][$domainName]["nsa"][$nsa]["services"][$service['url']] = $service['type'];
     }
@@ -200,11 +200,11 @@ class NSIParser {
     function addPort($netId, $netName, $biPortId, $biportName, $portId, $portType, 
             $vlan, $alias, $lat=null, $lng=null) {
         $netUrn = str_replace("urn:ogf:network:","",$netId);
-        $netUrn = strtolower($netUrn);
+        $netUrn = $netUrn;
         $portUrn = str_replace("urn:ogf:network:","",$portId);
-        $portUrn = strtolower($portUrn);
+        $portUrn = $portUrn;
         $biPortUrn = str_replace("urn:ogf:network:","",$biPortId);
-        $biPortUrn = strtolower($biPortUrn);
+        $biPortUrn = $biPortUrn;
         $aliasUrn = str_replace("urn:ogf:network:","",$alias);
         $aliasUrn = strtolower($aliasUrn);
         
@@ -286,7 +286,7 @@ class NSIParser {
             if($netNode->prefix != "") $netNode->prefix .= ":";
             $netId = $netNode->getAttribute('id');
             $netUrn = str_replace("urn:ogf:network:","",$netId);
-            $netUrn = strtolower($netUrn);
+            $netUrn = $netUrn;
             $this->xpath->registerNamespace('x', $xmlns);
             $netNameNode = $this->xpath->query(".//x:name", $netNode);
             if ($netNameNode->item(0)) {
