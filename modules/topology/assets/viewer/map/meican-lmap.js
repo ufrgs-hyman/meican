@@ -205,15 +205,11 @@ LMap.prototype.getNodeByPosition = function(position, domain) {
 }
 
 LMap.prototype.getParentPosition = function(port) {
-    if (port.network.latitude != null)
-        return L.latLng([port.network.latitude, port.network.longitude]);
-
     for (var i = port.network.domain.providers.length - 1; i >= 0; i--) {
         if (port.network.domain.providers[i].latitude != null)
             return L.latLng([port.network.domain.providers[i].latitude, 
                 port.network.domain.providers[i].longitude]);
     }
-
     return L.latLng([0,0]);
 }
 
@@ -229,6 +225,10 @@ LMap.prototype.addNode = function(port, color) {
         var pos = this.getParentPosition(port);
     } else {
         var pos = L.latLng([0, 0]);
+    }
+
+    if(pos.lat == 0 && pos.lng == 0){
+        return 0;
     }
 
     var node = this.getNodeByPosition(pos, port.network.domain);
@@ -295,10 +295,14 @@ LMap.prototype.prepareLabels = function() {
         var label = 'error';
         labels = [];
         for (var k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
-            labels.push(this._nodes[i].options.ports[k].name);
+            if(this._nodes[i].options.ports[k].lat == null && this._nodes[i].options.ports[k].lng == null){
+                labels.push(this._nodes[i].options.ports[k].urn);
+            }else{
+                labels.push(this._nodes[i].options.ports[k].name);
+            }
         }
         label = groupByDomain(labels);
-       
+    
         this._nodes[i].bindTooltip(label, {permanent:true, direction: 'left'}).openTooltip();//, { noHide: true, direction: 'auto' });
     }
 }
