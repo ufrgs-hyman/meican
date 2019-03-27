@@ -840,21 +840,20 @@ function fillPortSelect(networkId, portId) {
 }
 
 function fillVlanSelect(portId, vlan) {
-    console.log('fill');
     var selectId = "pointform-vlan";
     disableSelect(selectId);
     if (portId != "" && portId != null) {
         for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
             if (meicanTopo['ports'][i].id == portId) {
                 var ranges = meicanTopo['ports'][i].vlan_range.split(",");
-                for (var i = 0; i < ranges.length; i++) {
-                    var interval = ranges[i].split("-");
+                for (var r = 0; r < ranges.length; r++) {
+                    var interval = ranges[r].split("-");
                     if (interval.length > 1)
-                        $("#" + selectId).append('<option value="' + ranges[i] + '">' + ranges[i] + '</option>');
+                        $("#" + selectId).append('<option value="' + ranges[r] + '">' + ranges[r] + '</option>');
                 }
 
-                for (var i = 0; i < ranges.length; i++) {
-                    var interval = ranges[i].split("-");
+                for (var r = 0; r < ranges.length; r++) {
+                    var interval = ranges[r].split("-");
                     var low = parseInt(interval[0]);
                     var high = low;
                     if (interval.length > 1) {
