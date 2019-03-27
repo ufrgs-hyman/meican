@@ -383,12 +383,8 @@ class NSIParser {
                     continue;
                 }
                 
-                $biportNameNode = $this->xpath->query(".//x:name", $biPortNode);
-                if ($biportNameNode->item(0)) {
-                    $biportName = $biportNameNode->item(0)->nodeValue;
-                } else {
-                    $biportName = str_replace($netId.":", "", $biPortId);
-                }
+                $netkId = $netNode->getAttribute('id');
+                $biportName = str_replace("urn:ogf:network:","",$netId);
 
                 $this->parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName);
             }
@@ -484,20 +480,10 @@ class NSIParser {
                     }
 
                     if ($id === $portId) {
-                      
                         $vlanRangeNode = $this->xpath->query(".//x:LabelGroup", $portNode);
-                        $locationNode = $this->xpath->query(".//x:Location", $portNode);
 
                         $lat = null;
                         $lng = null;
-                        if ($locationNode->item(0)) {
-                            # cuidado com o xpath, ele aceita o node referencia nulo e nesse
-                            # caso ele procura por todo o documento.
-                            $latNode = $this->xpath->query(".//x:lat", $locationNode->item(0));
-                            $lat = $latNode->item(0)->nodeValue;
-                            $lngNode = $this->xpath->query(".//x:long", $locationNode->item(0));
-                            $lng = $lngNode->item(0)->nodeValue;
-                        }
 
                         if($vlanRangeNode->item(0)) {
                             return [$vlanRangeNode->item(0)->nodeValue, 

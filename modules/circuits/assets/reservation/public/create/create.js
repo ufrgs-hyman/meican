@@ -887,8 +887,8 @@ function initEditPointSelects() {
     fillDomainSelect();
     
     $('#pointform-domain').on('change', function() {
-        fillNetworkSelect(this.value);
         fillPortSelect();
+        fillNetworkSelect(this.value);
         fillVlanSelect();
     });
     

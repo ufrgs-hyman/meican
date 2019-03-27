@@ -205,6 +205,9 @@ LMap.prototype.getNodeByPosition = function(position, domain) {
 }
 
 LMap.prototype.getParentPosition = function(port) {
+    if (port.network.latitude != null)
+        return L.latLng([port.network.latitude, port.network.longitude]);
+
     for (var i = port.network.domain.providers.length - 1; i >= 0; i--) {
         if (port.network.domain.providers[i].latitude != null)
             return L.latLng([port.network.domain.providers[i].latitude, 
@@ -291,10 +294,10 @@ LMap.prototype.prepareLabels = function() {
         var label = 'error';
         labels = [];
         for (var k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
-            labels.push(this._nodes[i].options.ports[k].urn);
+            labels.push(this._nodes[i].options.ports[k].name);
         }
-        label = sharedStart(labels);
-    
+        label = groupByDomain(labels);
+       
         this._nodes[i].bindTooltip(label, {permanent:true, direction: 'left'}).openTooltip();//, { noHide: true, direction: 'auto' });
     }
 }
@@ -475,6 +478,11 @@ function sharedStart(array){
     a1= a[0], a2= a[a.length-1], L= a1.length, i= 0;
     while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;
     return removeInvalidChar(a1.substring(0, i));
+}
+
+function groupByDomain(array)   {
+    var a = array.concat().sort();
+    return a[0].split(':')[0];
 }
 
 function removeInvalidChar(str) {
