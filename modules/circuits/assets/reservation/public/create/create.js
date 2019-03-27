@@ -818,8 +818,7 @@ function fillPortSelect(networkId, portId) {
                 lid = meicanTopo['ports'][i].urn.replace(meicanTopo['ports'][i].network.urn + ':', '');
                 $("#" + selectId).append('<option value="' + 
                 meicanTopo['ports'][i].id + '">' + 
-                meicanTopo['ports'][i].name +
-                (lid == meicanTopo['ports'][i].name ? '' : ' (' + lid + ')') +
+                 lid +
                 '</option>');
             }
         }
