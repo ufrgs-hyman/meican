@@ -194,6 +194,9 @@ function showPointModal(pointElement, pointOrder, nodeId) {
 
         //subtrai um no index pois os elementos sao de mesmo tipo mas o primeiro e ultimo sao de classes diferentes
         $("#point-modal").find('.point-order').text($(pointElement).index() - 1); 
+        if($("#pointform-network").val() == null){
+            $("#pointform-domain")[0].selectedIndex = 0;
+        }
     }
     
     $("#point-modal").modal("show");
@@ -803,6 +806,13 @@ function fillNetworkSelect(domainId, networkId) {
         if (networkId != null) {
             $("#" + selectId).val(networkId);
         }
+
+        var lenNetwork = ($("#" + selectId)[0].length - 1);
+        if (lenNetwork == 1){
+            $("#" + selectId)[0].selectedIndex = 1;
+            fillPortSelect($("#" + selectId).val());
+        }
+
         enableSelect(selectId);
     } 
 }
