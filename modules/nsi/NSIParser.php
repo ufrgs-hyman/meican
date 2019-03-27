@@ -382,10 +382,14 @@ class NSIParser {
                     $this->errors["Unknown URN"][$biPortId] = null;
                     continue;
                 }
-                
-                $netkId = $netNode->getAttribute('id');
-                $biportName = str_replace("urn:ogf:network:","",$netId);
 
+                $biportNameNode = $this->xpath->query(".//x:name", $biPortNode);
+                if ($biportNameNode->item(0)) {
+                    $biportName = $biportNameNode->item(0)->nodeValue;
+                } else {
+                    $biportName = str_replace($netId.":", "", $biPortId);
+                }
+                
                 $this->parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName);
             }
         }
