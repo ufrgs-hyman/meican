@@ -268,7 +268,8 @@ Modal::begin([
         $pointForm = new \meican\circuits\forms\PointForm;
 
         echo $form->field($pointForm, 'domain')->dropDownList([],['disabled'=>true]); 
-        echo $form->field($pointForm, 'network')->dropDownList([],['disabled'=>true]); 
+        echo $form->field($pointForm, 'network')->dropDownList([],['disabled'=>true]);
+        echo $form->field($pointForm, 'location')->dropDownList([],['disabled'=>true]);  
         echo $form->field($pointForm, 'port')->dropDownList([],['disabled'=>true]); 
         echo $form->field($pointForm, 'vlan')->dropDownList([],['disabled'=>true]); 
 

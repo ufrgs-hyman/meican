@@ -29,6 +29,7 @@ return array(
 		"Edit" => "Editar",
 		"Source" => "Origem",
 		"Destination" => "Destino",
+		"Location" => "Localização",
 		"Port" => "Porta",
 		"Name" => "Nome",
 		"Initial Date" => "Data Inicial",
