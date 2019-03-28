@@ -59,7 +59,7 @@ class NSIRequester implements Requester {
 
         $this->soapClient->requestReserve(
             null,
-            '1',
+            $this->conn->version + 1,
             $this->conn->bandwidth,
             DateUtils::fromDB($this->conn->start),
             DateUtils::fromDB($this->conn->finish),

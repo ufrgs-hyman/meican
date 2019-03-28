@@ -173,86 +173,6 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         return "";
     }
 
-    private function updateAllConnections($response) {
-        /*$reservation = $response->reservation;
-        Yii::trace(print_r($reservation,true));
-        foreach ($reservation as $connection) {
-            $conn = Connection::find()->where(['external_id'=>$connection->connectionId])->one();
-            if (!$conn) {
-                $res = new Reservation;
-                $res->type = Reservation::TYPE_NORMAL;
-                $res->name = $connection->description;
-                $res->date = DateUtils::now();
-                $res->start = DateUtils::toUTCfromGMT($connection->criteria->schedule->startTime);
-                $res->finish = DateUtils::toUTCfromGMT($connection->criteria->schedule->endTime);
-                $res->bandwidth = 1;
-                $res->requester_nsa = str_replace("urn:ogf:network:", "", $connection->requesterNSA);
-                $res->provider_nsa = "1";
-                $res->save();
-
-                $conn = new Connection;
-        
-                $conn->start = DateUtils::toUTCfromGMT($connection->criteria->schedule->startTime);
-                $conn->finish = DateUtils::toUTCfromGMT($connection->criteria->schedule->endTime);
-                $conn->external_id = $connection->connectionId;
-                $conn->reservation_id = $res->id;
-                $conn->status = Connection::STATUS_PROVISIONED;
-                $conn->dataplane_status = Connection::DATA_STATUS_INACTIVE;
-                $conn->auth_status = Connection::AUTH_STATUS_APPROVED;
-                $conn->save();
-
-                $pathNodes = $connection->criteria->children->child;
-                if (count($pathNodes) < 2) {
-                    $pathNodes = [$pathNodes];
-                }
-                
-                Yii::trace(print_r($pathNodes,true));
-
-                $i = 0;
-                
-                foreach ($pathNodes as $pathNode) {
-                    Yii::trace(print_r($pathNode,true));
-                    
-                    $pathNodeXml = $pathNode->any;
-                    $pathNodeXml = str_replace("<nsi_p2p:p2ps>","<p2p>", $pathNodeXml);
-                    $pathNodeXml = str_replace("</nsi_p2p:p2ps>","</p2p>", $pathNodeXml);
-                    $pathNodeXml = '<?xml version="1.0" encoding="UTF-8"?>'.$pathNodeXml;
-                    $xml = new \DOMDocument();
-                    $xml->loadXML($pathNodeXml);
-                    $parser = new \DOMXpath($xml);
-                    $src = $parser->query("//sourceSTP");
-                    $dst = $parser->query("//destSTP");
-                        
-                    $path = new ConnectionPath;
-                    $path->conn_id = $conn->id;
-                    $path->path_order = $i;
-                    $i++;
-                        
-                    $path->setPortBySTP($src->item(0)->nodeValue);
-                    $path->setDomainBySTP($src->item(0)->nodeValue);
-
-                    if(!$path->save()) {
-                        Yii::trace($path);
-                        return false;
-                    }
-
-                    $path = new ConnectionPath;
-                    $path->conn_id = $conn->id;
-                    $path->path_order = $i;
-                    $i++;
-                        
-                    $path->setPortBySTP($dst->item(0)->nodeValue);
-                    $path->setDomainBySTP($dst->item(0)->nodeValue);
-
-                    if(!$path->save()) {
-                        Yii::trace($path);
-                        return false;
-                    }
-                }
-            }
-        }*/
-    }
-    
     public function querySummaryConfirmed($response) {
         $conn = Connection::find()->where(['external_id'=>$response->reservation->connectionId])->one();
         if(!$conn) return "";
@@ -262,22 +182,18 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         if($conn->version != $response->reservation->criteria->version) {
             $conn->start = (new \DateTime($response->reservation->criteria->schedule->startTime))->format("Y-m-d H:i:s");
             $conn->finish = (new \DateTime($response->reservation->criteria->schedule->endTime))->format("Y-m-d H:i:s");
-            $this->updateConnectionBandwidth($conn, $response);
 
-            if($conn->version == 0) {
-                if($this->updateConnectionPath($conn, $response)) {
-                    //Como eh a primeira versao deve ser verificado se ha autorizacao para este circuito.
-                    $conn->confirmRead();
-                } else {
-                    /////Path invalido
-                    /////Inconsistencias na topologia
-                    Yii::trace("path invalid?");
-                }
-            } 
+            try {
+                # TODO: atualizar NSI parser para auxiliar nesta etapa usando o xpath com namespaces
+                $this->updateConnectionBandwidth($conn, $response);
+                $this->updateConnectionPath($conn, $response);
+            } catch (\Exception $e) {
+                Yii::trace("schema invalid? path invalid?");
+            }
 
             $conn->version = $response->reservation->criteria->version;
         } 
-        
+
         if($response->reservation->connectionStates->lifecycleState == "Terminated") {
             $conn->status = "CANCELLED";
         } elseif($response->reservation->connectionStates->provisionState == "Provisioned") {
@@ -288,6 +204,7 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         
         $conn->setActiveDataStatus($response->reservation->connectionStates->dataPlaneStatus->active);
         $conn->save();
+        $conn->confirmRead();
         return "";
     }
     
@@ -314,8 +231,10 @@ class RequesterController extends Controller implements ConnectionRequesterServe
             Yii::trace(print_r($pathNode,true));
             
             $pathNodeXml = $pathNode->any;
-            $pathNodeXml = str_replace("<nsi_p2p:p2ps>","<p2p>", $pathNodeXml);
-            $pathNodeXml = str_replace("</nsi_p2p:p2ps>","</p2p>", $pathNodeXml);
+            $p2pXml = str_replace("<nsi_p2p:p2ps>","<p2p>", $p2pXml);
+            $p2pXml = str_replace("</nsi_p2p:p2ps>","</p2p>", $p2pXml);
+            $p2pXml = str_replace("<p2psrv:p2ps>","<p2p>", $p2pXml);
+            $p2pXml = str_replace("</p2psrv:p2pss>","</p2p>", $p2pXml);
             $pathNodeXml = '<?xml version="1.0" encoding="UTF-8"?>'.$pathNodeXml;
             $xml = new \DOMDocument();
             $xml->loadXML($pathNodeXml);
@@ -361,6 +280,8 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         $p2pXml = $criteria->any;
         $p2pXml = str_replace("<nsi_p2p:p2ps>","<p2p>", $p2pXml);
         $p2pXml = str_replace("</nsi_p2p:p2ps>","</p2p>", $p2pXml);
+        $p2pXml = str_replace("<p2psrv:p2ps>","<p2p>", $p2pXml);
+        $p2pXml = str_replace("</p2psrv:p2pss>","</p2p>", $p2pXml);
         $p2pXml = '<?xml version="1.0" encoding="UTF-8"?>'.$p2pXml;
         $xml = new \DOMDocument();
         $xml->loadXML($p2pXml);

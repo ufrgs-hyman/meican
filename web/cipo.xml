@@ -346,8 +346,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSE:ge-2_3_4:+:in">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
              <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013::SC">
-                <ns2:lat>   -11.001400 </ns2:lat>
-                <ns2:long>   -37.103500</ns2:long>
+                <ns2:lat>-11.001400 </ns2:lat>
+                <ns2:long>-37.103500</ns2:long>
             </ns2:Location>
         </ns2:PortGroup>
     </ns2:Relation>
@@ -360,8 +360,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:xe-3_0_0:+:in">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns2:LabelGroup>
              <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013::SC">
-                <ns2:lat>   -22.913900</ns2:lat>
-                <ns2:long>  -43.209400</ns2:long>
+                <ns2:lat>-22.913900</ns2:lat>
+                <ns2:long>-43.209400</ns2:long>
             </ns2:Location>
         </ns2:PortGroup>
     </ns2:Relation>
@@ -379,8 +379,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ae0:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns2:LabelGroup>
              <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013::SC">
-                <ns2:lat>   -22.913900</ns2:lat>
-                <ns2:long>  -43.209400</ns2:long>
+                <ns2:lat>-22.913900</ns2:lat>
+                <ns2:long>-43.209400</ns2:long>
             </ns2:Location>
         </ns2:PortGroup>
     </ns2:Relation>
@@ -393,8 +393,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_3:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1801-1821</ns2:LabelGroup>
              <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013::SC">
-                <ns2:lat>   -22.913900</ns2:lat>
-                <ns2:long>  -43.209400</ns2:long>
+                <ns2:lat>-22.913900</ns2:lat>
+                <ns2:long>-43.209400</ns2:long>
             </ns2:Location>
         </ns2:PortGroup>
     </ns2:Relation>
@@ -407,8 +407,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:xe-3_0_0:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">201-299</ns2:LabelGroup>
             <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013::SC">
-                <ns2:lat>   -23.543200 </ns2:lat>
-                <ns2:long> -46.629200</ns2:long>
+                <ns2:lat>-23.543200</ns2:lat>
+                <ns2:long>-46.629200</ns2:long>
             </ns2:Location>
         </ns2:PortGroup>
     </ns2:Relation>
@@ -416,8 +416,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_4:+:in">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
              <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013::SC">
-                <ns2:lat>   -23.543200 </ns2:lat>
-                <ns2:long> -46.629200</ns2:long>
+                <ns2:lat>-23.543200</ns2:lat>
+                <ns2:long>-46.629200</ns2:long>
             </ns2:Location>
         </ns2:PortGroup>
     </ns2:Relation>
@@ -435,8 +435,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_3_4:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
               <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013">
-                <ns2:lat> -15.826700   </ns2:lat>
-                <ns2:long>    -47.921799</ns2:long>
+                <ns2:lat>-15.826700</ns2:lat>
+                <ns2:long>-47.921799</ns2:long>
             </ns2:Location>
         </ns2:PortGroup>
     </ns2:Relation>
@@ -449,8 +449,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPE:ge-2_3_4:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
                <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013">
-                <ns2:lat>   -8.043310       </ns2:lat>
-                <ns2:long>   -34.936199</ns2:long>
+                <ns2:lat>-8.043310</ns2:lat>
+                <ns2:long>-34.936199</ns2:long>
             </ns2:Location>
         </ns2:PortGroup>
     </ns2:Relation>
@@ -463,8 +463,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_3_4:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
               <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013">
-                <ns2:lat>       -20.282200        </ns2:lat>
-                <ns2:long> -40.286201</ns2:long>
+                <ns2:lat>-20.282200</ns2:lat>
+                <ns2:long>-40.286201</ns2:long>
             </ns2:Location>
         </ns2:PortGroup>
     </ns2:Relation>
@@ -477,8 +477,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPR:ge-2_3_4:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
               <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013">
-                <ns2:lat>       -25.495100          </ns2:lat>
-                <ns2:long>  -49.289799</ns2:long>
+                <ns2:lat>-25.495100</ns2:lat>
+                <ns2:long>-49.289799</ns2:long>
             </ns2:Location>
         </ns2:PortGroup>
     </ns2:Relation>
@@ -491,8 +491,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPI:ge-2_3_4:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
              <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013">
-                <ns2:lat>   -5.135540          </ns2:lat>
-                <ns2:long>   -42.791500</ns2:long>
+                <ns2:lat>-5.135540</ns2:lat>
+                <ns2:long>-42.791500</ns2:long>
             </ns2:Location>
         </ns2:PortGroup>
     </ns2:Relation>
@@ -505,8 +505,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAL:ge-2_3_4:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
              <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013">
-                <ns2:lat>   -9.593440        </ns2:lat>
-                <ns2:long>   -35.686699</ns2:long>
+                <ns2:lat>-9.593440</ns2:lat>
+                <ns2:long>-35.686699</ns2:long>
             </ns2:Location>
         </ns2:PortGroup>
     </ns2:Relation>
@@ -519,8 +519,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAC:ge-2_3_4:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
              <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013">
-                <ns2:lat>   -9.986330      </ns2:lat>
-                <ns2:long>  -67.831100</ns2:long>
+                <ns2:lat>-9.986330</ns2:lat>
+                <ns2:long>-67.831100</ns2:long>
             </ns2:Location>
         </ns2:PortGroup>
     </ns2:Relation>
@@ -533,8 +533,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF2:ge-2_3_4:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
             <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013">
-                <ns2:lat>   -15.826700      </ns2:lat>
-                <ns2:long>   -47.921799</ns2:long>
+                <ns2:lat>-15.826700</ns2:lat>
+                <ns2:long>-47.921799</ns2:long>
             </ns2:Location>
         </ns2:PortGroup>
     </ns2:Relation>
@@ -547,8 +547,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_3_4:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
              <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013">
-                <ns2:lat>   -1.385800      </ns2:lat>
-                <ns2:long>  -48.483299</ns2:long>
+                <ns2:lat>-1.385800</ns2:lat>
+                <ns2:long>-48.483299</ns2:long>
             </ns2:Location> 
         </ns2:PortGroup>
     </ns2:Relation>
@@ -561,8 +561,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_4:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299,1801-1821</ns2:LabelGroup>
             <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013">
-                <ns2:lat>   -22.913900      </ns2:lat>
-                <ns2:long> -43.209400</ns2:long>
+                <ns2:lat>-22.913900</ns2:lat>
+                <ns2:long>-43.209400</ns2:long>
             </ns2:Location> 
         </ns2:PortGroup>
     </ns2:Relation>
@@ -575,8 +575,8 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMT:ge-2_3_4:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>
             <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013">
-                <ns2:lat> -15.614400    </ns2:lat>
-                <ns2:long> -56.041801</ns2:long>
+                <ns2:lat>-15.614400</ns2:lat>
+                <ns2:long>-56.041801</ns2:long>
             </ns2:Location>    
         </ns2:PortGroup>
     </ns2:Relation>
@@ -589,7 +589,7 @@
         <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+:out">
             <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns2:LabelGroup>   
             <ns2:Location id="urn:ogf:network:cipo.rnp.br:2013">
-                <ns2:lat>   -27.610300  </ns2:lat>
+                <ns2:lat>-27.610300</ns2:lat>
                 <ns2:long>-48.484600</ns2:long>
             </ns2:Location>         
         </ns2:PortGroup>
@@ -606,10 +606,6 @@
                 <ns2:lat>-12.901600</ns2:lat>
                 <ns2:long>-38.419800</ns2:long>
             </ns2:Location>
-            <ns4:maximumReservableCapacity>10000000000</ns4:maximumReservableCapacity>
-            <ns4:minimumReservableCapacity>1000000</ns4:minimumReservableCapacity>
-            <ns4:capacity>10000000000</ns4:capacity>
-            <ns4:granularity>1000000</ns4:granularity>
         </ns2:PortGroup>
     </ns2:Relation>
 </ns2:Topology>
