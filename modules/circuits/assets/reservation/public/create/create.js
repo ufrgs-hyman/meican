@@ -167,22 +167,22 @@ function showPointModal(pointElement, pointOrder, nodeId) {
 
     if(nodeId) {
         var node = meicanMap.getNode(nodeId);
-        console.log(node.options.ports);
-        console.log(node.options.ports[0].name);
-        console.log(node.options.ports[0].lat);
-        console.log(node.options.ports[0].lng);
+        var hasLocation = (node.options.ports[0].lat != null && node.options.ports[0].lng != null);
+
         if (node.options.ports.length > 1) {
             $("#pointform-domain").val(node.options.ports[0].network.domain.id);
             fillNetworkSelect(node.options.ports[0].network.domain.id);
+            if(hasLocation){
+                fillPortSelect(null, null, node.options.ports[0].name);
+            }
         } else {
             $("#pointform-domain").val(node.options.ports[0].network.domain.id);
             fillNetworkSelect(node.options.ports[0].network.domain.id, node.options.ports[0].network.id);
             fillPortSelect(node.options.ports[0].network.id, node.options.ports[0].id);
             fillVlanSelect(node.options.ports[0].id);
         }
-        if(node.options.ports[0].lat != null && node.options.ports[0].lng != null){
+        if(hasLocation){
             $("#pointform-location").val(node.options.ports[0].name);
-            fillPortSelect(null, null, node.options.ports[0].name);
         }
         
         $("#point-modal").find('.point-order').text(pointOrder); 
@@ -860,7 +860,7 @@ function fillLocationSelect(networkId, locationId) {
     if (networkId != "" && networkId != null) {
         $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
         len = meicanTopo['location'].length;
-        for (var i = 0; i < len; i++) {
+        for (var i = meicanTopo['location'].length - 1; i >= 0; i--) {
             if(meicanTopo['location'][i].network_id == networkId){
                 $("#" + selectId).append('<option value="' + meicanTopo['location'][i].name + '">' + meicanTopo['location'][i].name +'</option>');
             }    
