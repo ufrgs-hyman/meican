@@ -763,7 +763,7 @@ function loadNetworks() {
 //------------------------------------------------------------------------------------------------------
 function loadLocation(){
     $.ajax({
-        url: baseUrl+'/topology/port/get-location?dir=BI',
+        url: baseUrl+'/topology/port/get-location',
         method: "GET",        
         success: function(response) {
             temp = response;
