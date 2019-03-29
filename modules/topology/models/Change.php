@@ -384,6 +384,7 @@ class Change extends \yii\db\ActiveRecord
                         $port->vlan_range = $data->vlan;
                         $port->lat = $data->lat;
                         $port->lng = $data->lng;
+                        $port->location_name = $data->locationName;
 
                         if ($data->netUrn) {
                             $net = Network::findByUrn($data->netUrn)->one();
@@ -408,6 +409,7 @@ class Change extends \yii\db\ActiveRecord
                             $port->vlan_range = $data->vlan;
                             $port->lat = $data->lat;
                             $port->lng = $data->lng;
+                            $port->location_name = $data->locationName;
 
                             if($port->save()) {
                                 $this->setApplied();
@@ -681,9 +683,10 @@ class Change extends \yii\db\ActiveRecord
                             $location;
                     case self::ITEM_TYPE_BIPORT:     
                         $location = $data->lat ? Yii::t('topology',
-                            '<br><b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
-                            ['lat'=> $data->lat, 
-                            'lng'=> $data->lng]) : "";
+                            '<br><b>Location</b>: {lname}, <b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
+                            ['lname' => $data->locationName,
+                            'lat'=> $data->lat, 
+                            'lng'=> $data->lng,]) : "";
                         $vlan = $data->vlan ? Yii::t('topology','<br><b>VLAN Range</b>: {vlan}', 
                             ['vlan'=> $data->vlan]) : "";
                         return Yii::t('topology', '<b>Name</b>: {name}<br><b>URN</b>: {urn}',

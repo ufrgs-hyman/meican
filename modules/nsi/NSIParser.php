@@ -197,7 +197,7 @@ class NSIParser {
     }
 
     function addPort($netId, $netName, $biPortId, $biportName, $portId, $portType, 
-            $vlan, $alias, $lat=null, $lng=null) {
+            $vlan, $alias, $lat=null, $lng=null, $locationName=null) {
         $netUrn = str_replace("urn:ogf:network:","",$netId);
         $netUrn = $netUrn;
         $portUrn = str_replace("urn:ogf:network:","",$portId);
@@ -251,6 +251,7 @@ class NSIParser {
             $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["biports"][
                         $biPortUrn]['lng'] = $lng;
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]['locationName'] = $locationName;
         }
     }
 
@@ -395,6 +396,7 @@ class NSIParser {
                 $lat = null;
                 $lng = null;
 
+                $locationName = null;
                 if ($locationNode->item(0)) {
                     # cuidado com o xpath, ele aceita o node referencia nulo e nesse
                     # caso ele procura por todo o documento.
@@ -404,18 +406,18 @@ class NSIParser {
                     $lng = $lngNode->item(0)->nodeValue;
                     
                     $nameNode = $this->xpath->query(".//x:name", $locationNode->item(0));
-                    $name = $nameNode->item(0)->nodeValue;
+                    $locationName = $nameNode->item(0)->nodeValue;
 
                 }
                 //-------------------------------------------------------------
 
 
-                $this->parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName, $lat, $lng);
+                $this->parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName, $lat, $lng, $locationName);
             }
         }
     }
 
-    function parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName, $lat, $lng) {
+    function parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName, $lat, $lng, $locationName) {
         $portNodes = $this->xpath->query(".//x:PortGroup", $biPortNode);
         if($portNodes) {
             foreach ($portNodes as $portNode) {
@@ -440,9 +442,9 @@ class NSIParser {
                         $vlanAndAlias[0],
                         $vlanAndAlias[1],
                         $lat,
-                        $lng
+                        $lng,
+                        $locationName
                 );
-                #$this->parseDevice($netNode, $portId));
             }
         }
     }
