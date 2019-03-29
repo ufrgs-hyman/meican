@@ -190,14 +190,16 @@ LMap.prototype.removeLinks = function() {
     }
 }
 
-LMap.prototype.getNodeByPosition = function(position, domain) {
+LMap.prototype.getNodeByPosition = function(position, domain, location_name) {
     for (var i = this._nodes.length - 1; i >= 0; i--) {
         if ((this._nodes[i].getLatLng().lat === position.lat) && 
             (this._nodes[i].getLatLng().lng === position.lng)) {
-            if (this._nodes[i].options.ports[0].network.domain == domain)
+            if (this._nodes[i].options.ports[0].network.domain == domain && this._nodes[i].options.ports[0].location_name == undefined)
+                return this._nodes[i];
+            else if(this._nodes[i].options.ports[0].location_name == location_name)
                 return this._nodes[i];
             else
-                return this.getNodeByPosition(L.latLng(position.lat + 0.001, position.lng), domain);
+                return this.getNodeByPosition(L.latLng(position.lat + 0.001, position.lng), domain, location_name);
         }
     }
 
@@ -234,7 +236,7 @@ LMap.prototype.addNode = function(port, color) {
         return 0;
     }
 
-    var node = this.getNodeByPosition(pos, port.network.domain);
+    var node = this.getNodeByPosition(pos, port.network.domain, port.location_name);
 
     if (node == null) {
         var icon = L.divIcon({

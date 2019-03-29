@@ -173,7 +173,7 @@ function showPointModal(pointElement, pointOrder, nodeId) {
             $("#pointform-domain").val(node.options.ports[0].network.domain.id);
             fillNetworkSelect(node.options.ports[0].network.domain.id);
             if(hasLocation){
-                fillPortSelect(null, null, node.options.ports[0].name);
+                fillPortSelect(null, null, node.options.ports[0].location_name);
             }
         } else {
             $("#pointform-domain").val(node.options.ports[0].network.domain.id);
@@ -182,7 +182,7 @@ function showPointModal(pointElement, pointOrder, nodeId) {
             fillVlanSelect(node.options.ports[0].id);
         }
         if(hasLocation){
-            $("#pointform-location").val(node.options.ports[0].name);
+            $("#pointform-location").val(node.options.ports[0].location_name);
         }
         
         $("#point-modal").find('.point-order').text(pointOrder); 
@@ -766,13 +766,7 @@ function loadLocation(){
         url: baseUrl+'/topology/port/get-location',
         method: "GET",        
         success: function(response) {
-            temp = response;
-            meicanTopo['location'] = [];
-            for (var i = temp.length - 1; i >= 0; i--) {
-                if(temp[i].lat != null && temp[i].lng != null){
-                    meicanTopo['location'].push(temp[i]);
-                }
-            }
+            meicanTopo['location'] = response;
         }
     });
 }
@@ -862,12 +856,11 @@ function fillLocationSelect(networkId, locationId) {
         len = meicanTopo['location'].length;
         for (var i = meicanTopo['location'].length - 1; i >= 0; i--) {
             if(meicanTopo['location'][i].network_id == networkId){
-                $("#" + selectId).append('<option value="' + meicanTopo['location'][i].name + '">' + meicanTopo['location'][i].name +'</option>');
+                $("#" + selectId).append('<option value="' + meicanTopo['location'][i].location_name + '">' + meicanTopo['location'][i].location_name +'</option>');
             }    
         }
         if (locationId != null && locationId != "") 
             $("#" + selectId).val(locationId);
-
 
         enableSelect(selectId);
     } 
@@ -876,13 +869,13 @@ function fillLocationSelect(networkId, locationId) {
 function hasLocation(networkId){
     if (networkId != "" && networkId != null) {
         len = meicanTopo['location'].length;
-        for (var i = 0; i < len; i++) {
+        for (var i = meicanTopo['location'].length - 1; i >= 0; i--) {
             if(meicanTopo['location'][i].network_id == networkId){
-                return 1;
+                return true;
             }
         }
     }
-    return 0;
+    return false;
 }
 //------------------------------------------------------------------------------------------------------
 
