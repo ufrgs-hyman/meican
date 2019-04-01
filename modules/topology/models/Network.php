@@ -54,7 +54,6 @@ class Network extends \yii\db\ActiveRecord
         return [
             [['name', 'urn', 'domain_id', 'version'], 'required'],
             [['latitude', 'longitude'], 'number'],
-            [['latitude', 'longitude'], 'exist', 'targetAttribute' => ['latitude', 'longitude']],
             [['latitude'], 'compare', 'compareValue' => -90, 'operator' => '>='],
             [['latitude'], 'compare', 'compareValue' => 90, 'operator' => '<='],
             [['longitude'], 'compare', 'compareValue' => -180, 'operator' => '>='],
