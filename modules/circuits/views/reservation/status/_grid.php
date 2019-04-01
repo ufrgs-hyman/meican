@@ -100,7 +100,8 @@ function generateGrid($gridId, $data, $searchModel, $allowedDomains){
                     'label' => Yii::t('circuits', 'Requester'),
                     'value' => function($conn){
                         $reservation_id = $conn->reservation_id;
-                        $user_id = Reservation::findOne(['id' => $reservation_id]);
+                        $res = Reservation::findOne(['id' => $reservation_id]);
+                        $user_id = $res->request_user_id;
                         $user = User::findOne(['id' => $user_id]);
                         if($user)
                             return $user->name;
