@@ -168,7 +168,6 @@ function showPointModal(pointElement, pointOrder, nodeId) {
     if(nodeId) {
         var node = meicanMap.getNode(nodeId);
         var hasLocation = (node.options.ports[0].lat != null && node.options.ports[0].lng != null);
-
         if (node.options.ports.length > 1) {
             $("#pointform-domain").val(node.options.ports[0].network.domain.id);
             fillNetworkSelect(node.options.ports[0].network.domain.id);
@@ -178,9 +177,13 @@ function showPointModal(pointElement, pointOrder, nodeId) {
         } else {
             $("#pointform-domain").val(node.options.ports[0].network.domain.id);
             fillNetworkSelect(node.options.ports[0].network.domain.id, node.options.ports[0].network.id);
-            fillPortSelect(node.options.ports[0].network.id, node.options.ports[0].id);
-            fillVlanSelect(node.options.ports[0].id);
+            if(hasLocation){
+                fillPortSelect(null, null, node.options.ports[0].location_name);
+                fillVlanSelect(node.options.ports[0].id);
+                $("#pointform-port").val(node.options.ports[0].id);
+            }
         }
+
         if(hasLocation){
             $("#pointform-location").val(node.options.ports[0].location_name);
         }
