@@ -58,6 +58,7 @@ $('input[type=radio][name=node-type]').change(function(){
             break;
         case "port":
             flagPortLocation = true;
+            location.reload();
             break;
     }
     $("#map-l").remove();
