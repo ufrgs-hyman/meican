@@ -222,9 +222,7 @@ LMap.prototype.addNode = function(port, color) {
     // } catch(err) {
     //     console.log(port);
     // } 
-    if (port.lat != null && port.lng != null) {
-        var pos = L.latLng([port.lat,port.lng]);
-    } else if (typeof port.network !== 'undefined') {
+    if (typeof port.network !== 'undefined') {
         var pos = this.getParentPosition(port);
     } else {
         var pos = L.latLng([0, 0]);
