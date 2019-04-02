@@ -49,6 +49,22 @@ $(document).ready(function() {
     
 });
 
+$('input[type=radio][name=node-type]').change(function(){
+    let nodeType = $(this).val();
+
+    switch(nodeType)    {
+        case "net":
+            flagPortLocation = false;
+            break;
+        case "port":
+            flagPortLocation = true;
+            break;
+    }
+    $("#map-l").remove();
+    initNodes();
+    initPathTab();
+});
+
 function validatePath() {
     if (isValidPath()) return true;
     else {

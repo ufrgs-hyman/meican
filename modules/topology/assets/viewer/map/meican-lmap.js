@@ -8,6 +8,8 @@
  * @author Mauricio Quatrin Guerreiro
  */
 
+var flagPortLocation = true;
+
 function LMap(canvasDivId) {
     this._canvasDivId = canvasDivId;
     this._map;                          // Leaflet Map
@@ -114,7 +116,6 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
     if(src != null)
         latLngList.push(src.getLatLng());
     else {
-        console.log('fonte nao existe', from);
         return;
     }
 
@@ -122,7 +123,6 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
     if(dst != null)
         latLngList.push(dst.getLatLng());
     else {
-        console.log('destino nao existe', to);
         return;
     }
 
@@ -194,7 +194,7 @@ LMap.prototype.getNodeByPosition = function(position, domain, location_name) {
     for (var i = this._nodes.length - 1; i >= 0; i--) {
         if ((this._nodes[i].getLatLng().lat === position.lat) && 
             (this._nodes[i].getLatLng().lng === position.lng)) {
-            if (this._nodes[i].options.ports[0].network.domain == domain && this._nodes[i].options.ports[0].location_name == undefined)
+            if (this._nodes[i].options.ports[0].network.domain == domain && (this._nodes[i].options.ports[0].location_name == undefined || !flagPortLocation))
                 return this._nodes[i];
             else if(this._nodes[i].options.ports[0].location_name == location_name)
                 return this._nodes[i];
@@ -224,16 +224,17 @@ LMap.prototype.addNode = function(port, color) {
     // } catch(err) {
     //     console.log(port);
     // } 
-    if (port.lat != null && port.lng != null) {
+
+    if(flagPortLocation && port.lat != null && port.lng != null) {
         var pos = L.latLng([port.lat,port.lng]);
-    } else if (typeof port.network !== 'undefined') {
+    } else if (!flagPortLocation && typeof port.network !== 'undefined') {
         var pos = this.getParentPosition(port);
     } else {
         var pos = L.latLng([0, 0]);
     }
 
     if(pos.lat == 0 && pos.lng == 0){
-        return 0;
+        return;
     }
 
     var node = this.getNodeByPosition(pos, port.network.domain, port.location_name);
@@ -300,10 +301,14 @@ LMap.prototype.prepareLabels = function() {
         var label = 'error';
         labels = [];
         for (var k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
-            if(this._nodes[i].options.ports[k].lat == null && this._nodes[i].options.ports[k].lng == null){
-                labels.push(this._nodes[i].options.ports[k].urn);
-            }else{
-                labels.push(this._nodes[i].options.ports[k].name);
+            if(flagPortLocation)    {
+                if(this._nodes[i].options.ports[k].lat == null && this._nodes[i].options.ports[k].lng == null){
+                    labels.push(this._nodes[i].options.ports[k].urn);
+                }else{
+                    labels.push(this._nodes[i].options.ports[k].name);
+                }
+            } else  {
+                labels.push(this._nodes[i].options.ports[k].network.domain.name);
             }
         }
         label = groupByDomain(labels);
