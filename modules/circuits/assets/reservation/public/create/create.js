@@ -919,7 +919,7 @@ function fillPortSelect(networkId, portId, locationName) {
         $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
         len = meicanTopo['ports'].length;
         for (var i = 0; i < len; i++) {
-            if (meicanTopo['ports'][i].name == locationName) {
+            if (meicanTopo['ports'][i].location_name == locationName) {
                 lid = meicanTopo['ports'][i].urn.replace(meicanTopo['ports'][i].network.urn + ':', '');
                 $("#" + selectId).append('<option value="' +                //VERIFICAR FORMA CORRETA DE EXIBIÇÃO
                 meicanTopo['ports'][i].id + '">' + 

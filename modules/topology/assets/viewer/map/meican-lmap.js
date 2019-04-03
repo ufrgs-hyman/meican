@@ -305,7 +305,7 @@ LMap.prototype.prepareLabels = function() {
                 if(this._nodes[i].options.ports[k].lat == null && this._nodes[i].options.ports[k].lng == null){
                     labels.push(this._nodes[i].options.ports[k].urn);
                 }else{
-                    labels.push(this._nodes[i].options.ports[k].name);
+                    labels.push(this._nodes[i].options.ports[k].location_name);
                 }
             } else  {
                 labels.push(this._nodes[i].options.ports[k].network.domain.name);
