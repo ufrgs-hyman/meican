@@ -226,9 +226,9 @@ class NSIParser {
                 $domainName]["nets"][$netUrn]["name"] = $netName;
             $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["biports"][$biPortUrn] = array();
-            $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["biports"][$biPortUrn]["name"] = $biportName;
-        } 
+        }
+        $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["name"] = $biportName;
+
         
         $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["biports"][
@@ -383,11 +383,11 @@ class NSIParser {
                     continue;
                 }
 
-                $biportNameNode = $this->xpath->query(".//x:name", $biPortNode);
+                $biportName = str_replace($netId.":", "", $biPortId);
+
+                $biportNameNode = $this->xpath->query("./x:name", $biPortNode);
                 if ($biportNameNode->item(0)) {
                     $biportName = $biportNameNode->item(0)->nodeValue;
-                } else {
-                    $biportName = str_replace($netId.":", "", $biPortId);
                 }
 
                 //-------------------------------------------------------------
@@ -398,15 +398,13 @@ class NSIParser {
 
                 $locationName = null;
                 if ($locationNode->item(0)) {
-                    # cuidado com o xpath, ele aceita o node referencia nulo e nesse
-                    # caso ele procura por todo o documento.
                     $latNode = $this->xpath->query(".//x:lat", $locationNode->item(0));
                     $lat = $latNode->item(0)->nodeValue;
                     $lngNode = $this->xpath->query(".//x:long", $locationNode->item(0));
                     $lng = $lngNode->item(0)->nodeValue;
                     
-                    $nameNode = $this->xpath->query(".//x:name", $locationNode->item(0));
-                    $locationName = $nameNode->item(0)->nodeValue;
+                    $locationNameNode = $this->xpath->query(".//x:name", $locationNode->item(0));
+                    $locationName = $locationNameNode->item(0)->nodeValue;
 
                 }
                 //-------------------------------------------------------------
