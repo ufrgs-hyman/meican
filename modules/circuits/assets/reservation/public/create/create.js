@@ -780,7 +780,6 @@ function loadNetworks() {
     });
 }
 
-//------------------------------------------------------------------------------------------------------
 function loadLocation(){
     $.ajax({
         url: baseUrl+'/topology/port/get-location',
@@ -790,8 +789,6 @@ function loadLocation(){
         }
     });
 }
-
-//------------------------------------------------------------------------------------------------------
 
 function loadPorts() {
     $.ajax({
@@ -860,21 +857,20 @@ function fillNetworkSelect(domainId, networkId) {
             disableSelect("pointform-port");
             fillLocationSelect($("#" + selectId).val());
         }else{
-            disableSelect("pointform-location");            // Caso não tenha um Location
+            disableSelect("pointform-location");
             fillPortSelect($("#" + selectId).val()); 
         }
         enableSelect(selectId);
     } 
 }
 
-//------------------------------------------------------------------------------------------------------
 function fillLocationSelect(networkId, locationId) {
     var selectId = "pointform-location";
     disableSelect(selectId);
     if (networkId != "" && networkId != null) {
         $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
         len = meicanTopo['location'].length;
-        for (var i = meicanTopo['location'].length - 1; i >= 0; i--) {
+        for (var i = 0; i < len; i++) {
             if(meicanTopo['location'][i].network_id == networkId){
                 $("#" + selectId).append('<option value="' + meicanTopo['location'][i].location_name + '">' + meicanTopo['location'][i].location_name +'</option>');
             }    
@@ -897,7 +893,6 @@ function hasLocation(networkId){
     }
     return false;
 }
-//------------------------------------------------------------------------------------------------------
 
 function fillPortSelect(networkId, portId, locationName) {
     var selectId = "pointform-port";

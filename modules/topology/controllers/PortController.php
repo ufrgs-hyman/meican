@@ -109,7 +109,6 @@ class PortController extends RbacController {
         return $temp;
     }
 
-//------------------------------------------------------------------------------------------------------
 public function actionGetLocation($fields=null) {
     	$query = Port::find()->select(['location_name', 'lat', 'lng', 'network_id'])->distinct()->asArray()->orderBy(['location_name'=> "SORT ASC"]);
         $data = $query->where(['directionality'=> 'BI'])->andWhere(['not', ['location_name' => null]]);
@@ -118,7 +117,6 @@ public function actionGetLocation($fields=null) {
         Yii::trace($data);
         return $data;
     }
-//------------------------------------------------------------------------------------------------------
 
     public function actionJson($fields=null, $dir=null) {
     	$query = Port::find()->asArray()->orderBy(['name'=> "SORT ASC"]);

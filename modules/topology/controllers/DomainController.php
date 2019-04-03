@@ -144,7 +144,7 @@ class DomainController extends RbacController {
     }
 
     public function actionGetLocation($cols=null){
-        $cols ? $data = Domain::find()->orderBy(['id'=> "SORT ASC"])->asArray()->select(json_decode($cols))->all() : $data = Domain::find()->orderBy(['id'=> "SORT ASC"])->asArray()->all();
+        $cols ? $data = Domain::find()->orderBy(['id'=> "SORT ASC"])->asArray()->select(json_decode($cols))->all() : $data = Domain::find()->orderBy(['name'=> "SORT ASC"])->asArray()->all();
     
         $temp = Json::encode($data);
         Yii::trace($temp);
