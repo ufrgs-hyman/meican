@@ -1009,6 +1009,7 @@ function initEditPointSelects() {
 
     $('#pointform-location').on('change', function() {
         fillPortSelect(null, null, this.value);
+        fillVlanSelect();
     });
     
     $('#pointform-port').on('change', function() {
