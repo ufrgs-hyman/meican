@@ -188,7 +188,7 @@ function showPointModal(pointElement, pointOrder, nodeId) {
         if (node.options.ports.length > 1) {
             $("#pointform-domain").val(node.options.ports[0].network.domain.id);
             fillNetworkSelect(node.options.ports[0].network.domain.id);
-            if(hasLocation){
+            if(hasLocation && flagPortLocation){
                 fillPortSelect(null, null, node.options.ports[0].location_name);
             }
         } else {
@@ -201,7 +201,7 @@ function showPointModal(pointElement, pointOrder, nodeId) {
             }
         }
 
-        if(hasLocation){
+        if(hasLocation && flagPortLocation){
             $("#pointform-location").val(node.options.ports[0].location_name);
         }
         
