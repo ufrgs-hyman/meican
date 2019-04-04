@@ -118,7 +118,8 @@ class ReservationSearch extends Reservation {
                 ->andwhere(['in', 'reservation_id', 
                     ArrayHelper::getColumn(
                         $reservations->all(),'id')])
-                ->andWhere(['<', 'finish', date("o-m-d H:i:s")]);
+                ->andWhere(['<', 'finish', date("o-m-d H:i:s")])
+                ->orderBy(['start'=>SORT_DESC]);
 
 
         $connsCurrent = Connection::find()
@@ -126,7 +127,8 @@ class ReservationSearch extends Reservation {
                     ArrayHelper::getColumn(
                         $reservations->all(),'id')])
                 ->andWhere(['<', 'start', date("o-m-d H:i:s")])
-                ->andWhere(['>', 'finish', date("o-m-d H:i:s")]);
+                ->andWhere(['>', 'finish', date("o-m-d H:i:s")])
+                ->orderBy(['start'=>SORT_DESC]);
                 
 
 
@@ -134,7 +136,8 @@ class ReservationSearch extends Reservation {
                 ->andwhere(['in', 'reservation_id', 
                     ArrayHelper::getColumn(
                         $reservations->all(),'id')])
-                ->andWhere(['>', 'start', date("o-m-d H:i:s")]);
+                ->andWhere(['>', 'start', date("o-m-d H:i:s")])
+                ->orderBy(['start'=>SORT_DESC]);
 
         $past = new ActiveDataProvider([
             'query' => $connsPast,
