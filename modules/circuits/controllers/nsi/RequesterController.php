@@ -188,6 +188,7 @@ class RequesterController extends Controller implements ConnectionRequesterServe
                 $this->updateConnectionBandwidth($conn, $response);
                 $this->updateConnectionPath($conn, $response);
             } catch (\Exception $e) {
+                Yii::error($e);
                 Yii::trace("schema invalid? path invalid?");
             }
 
@@ -230,14 +231,14 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         foreach ($pathNodes as $pathNode) {
             Yii::trace(print_r($pathNode,true));
             
-            $pathNodeXml = $pathNode->any;
+            $p2pXml = $pathNode->any;
             $p2pXml = str_replace("<nsi_p2p:p2ps>","<p2p>", $p2pXml);
             $p2pXml = str_replace("</nsi_p2p:p2ps>","</p2p>", $p2pXml);
             $p2pXml = str_replace("<p2psrv:p2ps>","<p2p>", $p2pXml);
             $p2pXml = str_replace("</p2psrv:p2pss>","<p2p>", $p2pXml);
-            $pathNodeXml = '<?xml version="1.0" encoding="UTF-8"?>'.$pathNodeXml;
+            $p2pXml = '<?xml version="1.0" encoding="UTF-8"?>'.$p2pXml;
             $xml = new \DOMDocument();
-            $xml->loadXML($pathNodeXml);
+            $xml->loadXML($p2pXml);
             $parser = new \DOMXpath($xml);
             $src = $parser->query("//sourceSTP");
             $dst = $parser->query("//destSTP");
