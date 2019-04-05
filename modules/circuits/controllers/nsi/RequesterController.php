@@ -234,7 +234,7 @@ class RequesterController extends Controller implements ConnectionRequesterServe
             $p2pXml = str_replace("<nsi_p2p:p2ps>","<p2p>", $p2pXml);
             $p2pXml = str_replace("</nsi_p2p:p2ps>","</p2p>", $p2pXml);
             $p2pXml = str_replace("<p2psrv:p2ps>","<p2p>", $p2pXml);
-            $p2pXml = str_replace("</p2psrv:p2pss>","</p2p>", $p2pXml);
+            $p2pXml = str_replace("</p2psrv:p2pss>","<p2p>", $p2pXml);
             $pathNodeXml = '<?xml version="1.0" encoding="UTF-8"?>'.$pathNodeXml;
             $xml = new \DOMDocument();
             $xml->loadXML($pathNodeXml);
@@ -281,7 +281,7 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         $p2pXml = str_replace("<nsi_p2p:p2ps>","<p2p>", $p2pXml);
         $p2pXml = str_replace("</nsi_p2p:p2ps>","</p2p>", $p2pXml);
         $p2pXml = str_replace("<p2psrv:p2ps>","<p2p>", $p2pXml);
-        $p2pXml = str_replace("</p2psrv:p2pss>","</p2p>", $p2pXml);
+        $p2pXml = str_replace("</p2psrv:p2pss>","<p2p>", $p2pXml);
         $p2pXml = '<?xml version="1.0" encoding="UTF-8"?>'.$p2pXml;
         $xml = new \DOMDocument();
         $xml->loadXML($p2pXml);
