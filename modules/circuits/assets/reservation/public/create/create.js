@@ -799,8 +799,7 @@ function fillNetworkSelect(domainId, networkId) {
                 $("#" + selectId).append(
                 '<option value="' + 
                 meicanTopo['networks'][i].id + '">' + 
-                meicanTopo['networks'][i].name + 
-                ' (' + meicanTopo['networks'][i]['urn'] + ')' +
+                meicanTopo['networks'][i].urn.split(":")[2] + 
                 '</option>');
         }
         if (networkId != null) {
@@ -810,10 +809,11 @@ function fillNetworkSelect(domainId, networkId) {
         var lenNetwork = ($("#" + selectId)[0].length - 1);
         if (lenNetwork == 1){
             $("#" + selectId)[0].selectedIndex = 1;
+            $("#" + selectId).prop("disabled", true);
             fillPortSelect($("#" + selectId).val());
+        }else{
+            enableSelect(selectId);
         }
-
-        enableSelect(selectId);
     } 
 }
 
