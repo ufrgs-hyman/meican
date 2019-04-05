@@ -228,6 +228,10 @@ LMap.prototype.addNode = function(port, color) {
         var pos = L.latLng([0, 0]);
     }
 
+    if(pos.lat == 0 && pos.lng == 0){
+        return 0;
+    }
+
     var node = this.getNodeByPosition(pos, port.network.domain);
 
     if (node == null) {
