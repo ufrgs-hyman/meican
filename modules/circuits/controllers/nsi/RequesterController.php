@@ -182,13 +182,12 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         if($conn->version != $response->reservation->criteria->version) {
             $conn->start = (new \DateTime($response->reservation->criteria->schedule->startTime))->format("Y-m-d H:i:s");
             $conn->finish = (new \DateTime($response->reservation->criteria->schedule->endTime))->format("Y-m-d H:i:s");
+            $this->updateConnectionBandwidth($conn, $response);
 
             try {
-                # TODO: atualizar NSI parser para auxiliar nesta etapa usando o xpath com namespaces
-                $this->updateConnectionBandwidth($conn, $response);
                 $this->updateConnectionPath($conn, $response);
             } catch (\Exception $e) {
-                Yii::trace("schema invalid? path invalid?");
+                Yii::trace("path invalid?");
             }
 
             $conn->version = $response->reservation->criteria->version;
@@ -231,10 +230,8 @@ class RequesterController extends Controller implements ConnectionRequesterServe
             Yii::trace(print_r($pathNode,true));
             
             $pathNodeXml = $pathNode->any;
-            $p2pXml = str_replace("<nsi_p2p:p2ps>","<p2p>", $p2pXml);
-            $p2pXml = str_replace("</nsi_p2p:p2ps>","</p2p>", $p2pXml);
-            $p2pXml = str_replace("<p2psrv:p2ps>","<p2p>", $p2pXml);
-            $p2pXml = str_replace("</p2psrv:p2pss>","<p2p>", $p2pXml);
+            $pathNodeXml = str_replace("<nsi_p2p:p2ps>","<p2p>", $pathNodeXml);
+            $pathNodeXml = str_replace("</nsi_p2p:p2ps>","</p2p>", $pathNodeXml);
             $pathNodeXml = '<?xml version="1.0" encoding="UTF-8"?>'.$pathNodeXml;
             $xml = new \DOMDocument();
             $xml->loadXML($pathNodeXml);
@@ -280,8 +277,6 @@ class RequesterController extends Controller implements ConnectionRequesterServe
         $p2pXml = $criteria->any;
         $p2pXml = str_replace("<nsi_p2p:p2ps>","<p2p>", $p2pXml);
         $p2pXml = str_replace("</nsi_p2p:p2ps>","</p2p>", $p2pXml);
-        $p2pXml = str_replace("<p2psrv:p2ps>","<p2p>", $p2pXml);
-        $p2pXml = str_replace("</p2psrv:p2pss>","<p2p>", $p2pXml);
         $p2pXml = '<?xml version="1.0" encoding="UTF-8"?>'.$p2pXml;
         $xml = new \DOMDocument();
         $xml->loadXML($p2pXml);
