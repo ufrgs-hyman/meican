@@ -69,7 +69,13 @@ $this->params['header'] = ["About", ['Home', 'About']];
             <p>
             <table>
             <tr>
+                <td>Leonardo Lauryel Batista dos Santos (llbsantos at inf.ufrgs.br) <a target="_blank" href="https://github.com/leonardolauryel"><i class="fa fa-github"></i></a></td>
+            </tr>
+            <tr>
                 <td>Maurício Quatrin Guerreiro (mqguerreiro at inf.ufrgs.br) <a target="_blank" href="https://github.com/mqgmaster"><i class="fa fa-github"></i></a></td>
+            </tr>
+            <tr>
+                <td>Rafael Hengen Ribeiro (rhribeiro at inf.ufrgs.br) <a target="_blank" href="https://github.com/rafaelhribeiro"><i class="fa fa-github"></i></a></td>
             </tr>
             </table>
             </p>
@@ -81,9 +87,6 @@ $this->params['header'] = ["About", ['Home', 'About']];
             </tr>
             <tr>
                 <td>Luciano Paschoal Gaspary (paschoal at inf.ufrgs.br)</td>
-            </tr>
-            <tr>
-                <td>Juliano Araujo Wickboldt (jwickboldt at inf.ufrgs.br) <a target="_blank" href="https://github.com/julianowick"><i class="fa fa-github"></i></a></td>
             </tr>
             </table></p>
             <b><?= Yii::t("home", 'RNP Coordinators'); ?></b>
@@ -100,6 +103,10 @@ $this->params['header'] = ["About", ['Home', 'About']];
             <p><b><?= Yii::t("home", 'Previous developers');?></b></p>
             <p>
             <table>
+            <tr>
+              <td>Juliano Araujo Wickboldt <a target="_blank" href="https://github.com/julianowick"><i class="fa fa-github"></i></a></td>
+           </tr>
+
             <tr>
                 <td>Diego Pittol <a target="_blank" href="https://github.com/DiegoPittol"><i class="fa fa-github"></i></a></td>
             </tr>
