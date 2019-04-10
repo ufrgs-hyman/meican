@@ -25,11 +25,14 @@ function LMap(canvasDivId) {
 };
 
 LMap.prototype.show = function(instantRefresh) {
-    if($("#map-l").length == 1) {
-        $("#map-l").show();
+    let mapId = "map-l";
+    if(flagPortLocation)
+        mapId = "map-n"
+    if($('#'+mapId).length == 1) {
+        $('#'+mapId).show();
     } else {
-        $("#"+this._canvasDivId).append('<div id="map-l" style="width:100%; height:100%;"></div>');
-        this.build('map-l');
+        $("#"+this._canvasDivId).append('<div id="'+mapId+'" style="width:100%; height:100%;"></div>');
+        this.build(mapId);
     }
 
     var currentMap = this._map;
@@ -43,11 +46,14 @@ LMap.prototype.show = function(instantRefresh) {
 }
 
 LMap.prototype.hide = function() {
-    if($("#map-l").length == 1) {
-        $("#map-l").hide();
-        /*this._map.remove();
-        $("#map-l").remove();*/
-    }
+    let mapIds = ['#map-l', '#map-n'];
+    mapIds.forEach(function(mapId){
+        if($(mapId).length == 1) {
+            $(mapId).hide();
+            /*this._map.remove();
+            $("#map-l").remove();*/
+        }
+    });
 }
 
 LMap.prototype.getPortsSize = function() {
