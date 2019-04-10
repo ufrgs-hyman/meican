@@ -55,14 +55,13 @@ $('input[type=radio][name=node-type]').change(function(){
     switch(nodeType)    {
         case "net":
             flagPortLocation = false;
+            initNodes();
             break;
         case "port":
             flagPortLocation = true;
-            location.reload();
             break;
     }
-    $("#map-l").remove();
-    initNodes();
+    meicanMap.hide();
     initPathTab();
 });
 
@@ -88,14 +87,14 @@ function isValidPath() {
 }
 
 function validateRequirements() {
-    if(($("#reservationform-bandwidth").val() == "") ||
-        $("#requirements").find(".field-reservationform-bandwidth").hasClass("has-error")) {
-        MAlert.show(
-            'Bandwidth invalid!', 
-            'The value must be must be no less than 1.',
-            'danger');
-        return false;
-    }
+    // if(($("#reservationform-bandwidth").val() == "") ||
+    //     $("#requirements").find(".field-reservationform-bandwidth").hasClass("has-error")) {
+    //     MAlert.show(
+    //         'Bandwidth invalid!', 
+    //         'The value must be must be no less than 1.',
+    //         'danger');
+    //     return false;
+    // }
     return true;
 }
 
@@ -898,9 +897,9 @@ function hasLocation(networkId){
 function fillPortSelect(networkId, portId, locationName) {
     var selectId = "pointform-port";
     disableSelect(selectId);
+    $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
+    len = meicanTopo['ports'].length;
     if (networkId != "" && networkId != null) {
-        $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
-        len = meicanTopo['ports'].length;
         for (var i = 0; i < len; i++) {
             if (meicanTopo['ports'][i].network_id == networkId) {
                 lid = meicanTopo['ports'][i].urn.replace(meicanTopo['ports'][i].network.urn + ':', '');
@@ -929,11 +928,11 @@ function fillPortSelect(networkId, portId, locationName) {
                 '</option>');
             }
         }
-        if (portId != null && portId != "") 
-            $("#" + selectId).val(portId);
-
-        enableSelect(selectId);
     } 
+    if (portId != null && portId != "") 
+        $("#" + selectId).val(portId);
+
+    enableSelect(selectId);
 }
 
 function fillVlanSelect(portId, vlan) {
