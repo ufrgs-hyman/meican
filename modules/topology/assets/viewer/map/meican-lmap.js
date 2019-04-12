@@ -314,7 +314,8 @@ LMap.prototype.prepareLabels = function() {
                     labels.push(this._nodes[i].options.ports[k].location_name);
                 }
             } else  {
-                labels.push(this._nodes[i].options.ports[k].network.domain.name);
+                if(this._nodes[i].options.ports[k].lat == null && this._nodes[i].options.ports[k].lng == null)
+                    labels.push(this._nodes[i].options.ports[k].network.domain.name);
             }
         }
         label = groupByDomain(labels);

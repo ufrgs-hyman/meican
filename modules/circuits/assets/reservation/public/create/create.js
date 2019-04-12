@@ -12,6 +12,8 @@ var path = [];
 var currentEvent = null;
 var lsidebar;
 
+var flagNetworkWasClicked = false;
+
 $(document).ready(function() {
     $(".sidebar-toggle").hide();
     $(".sidebar-mini").addClass("sidebar-collapse");
@@ -55,7 +57,10 @@ $('input[type=radio][name=node-type]').change(function(){
     switch(nodeType)    {
         case "net":
             flagPortLocation = false;
-            initNodes();
+            if(!flagNetworkWasClicked){
+                flagNetworkWasClicked = true;
+                initNodes();
+            }
             break;
         case "port":
             flagPortLocation = true;
@@ -916,7 +921,6 @@ function fillPortSelect(networkId, portId, locationName) {
         enableSelect(selectId);
     }
     if(locationName != "" && locationName != null){
-        $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
         len = meicanTopo['ports'].length;
         for (var i = 0; i < len; i++) {
             if (meicanTopo['ports'][i].location_name == locationName) {
