@@ -324,6 +324,13 @@ LMap.prototype.prepareLabels = function() {
     }
 }
 
+LMap.prototype.removeLabels = function() {
+    for (var i = this._nodes.length - 1; i >= 0; i--) {
+        this._nodes[i].unbindTooltip();
+    }
+
+}
+
 LMap.prototype.setTopology = function(topology) {
     this._topology = topology;
 }
