@@ -12,8 +12,6 @@ var path = [];
 var currentEvent = null;
 var lsidebar;
 
-var flagNetworkWasClicked = false;
-
 $(document).ready(function() {
     $(".sidebar-toggle").hide();
     $(".sidebar-mini").addClass("sidebar-collapse");
@@ -74,7 +72,7 @@ $('input[type=radio][name=node-type]').change(function(){
             break;
     }
     meicanMap.hide();
-    initPathTab();
+    meicanMap.show();
 });
 
 function validatePath() {
