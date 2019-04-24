@@ -58,12 +58,19 @@ $('input[type=radio][name=node-type]').change(function(){
         case "net":
             flagPortLocation = false;
             if(!flagNetworkWasClicked){
+                meicanMap.saveNodesL();
                 flagNetworkWasClicked = true;
                 initNodes();
+            }else{
+                meicanMap.restoreNodesN();
+                meicanMap.prepareLabels();
             }
             break;
         case "port":
+            meicanMap.saveNodesN(); 
             flagPortLocation = true;
+            meicanMap.restoreNodesL();
+            meicanMap.prepareLabels();
             break;
     }
     meicanMap.hide();
