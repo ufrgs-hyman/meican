@@ -12,8 +12,6 @@ var path = [];
 var currentEvent = null;
 var lsidebar;
 
-var flagNetworkWasClicked = false;
-
 $(document).ready(function() {
     $(".sidebar-toggle").hide();
     $(".sidebar-mini").addClass("sidebar-collapse");
@@ -58,16 +56,23 @@ $('input[type=radio][name=node-type]').change(function(){
         case "net":
             flagPortLocation = false;
             if(!flagNetworkWasClicked){
+                meicanMap.saveNodesL();
                 flagNetworkWasClicked = true;
                 initNodes();
+            }else{
+                meicanMap.restoreNodesN();
+                meicanMap.prepareLabels();
             }
             break;
         case "port":
+            meicanMap.saveNodesN(); 
             flagPortLocation = true;
+            meicanMap.restoreNodesL();
+            meicanMap.prepareLabels();
             break;
     }
     meicanMap.hide();
-    initPathTab();
+    meicanMap.show();
 });
 
 function validatePath() {

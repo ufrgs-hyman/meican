@@ -9,11 +9,14 @@
  */
 
 var flagPortLocation = true;
+var flagNetworkWasClicked = false;
 
 function LMap(canvasDivId) {
     this._canvasDivId = canvasDivId;
     this._map;                          // Leaflet Map
     this._nodes = [];                   // markers/nodes container
+    this._nodesL = []; 
+    this._nodesN = []; 
     this._links = [];                   // polylines/links/edges container
     this._nodeType;                     // current node type visible
     this._topology = [];                // topology
@@ -25,9 +28,11 @@ function LMap(canvasDivId) {
 };
 
 LMap.prototype.show = function(instantRefresh) {
-    let mapId = "map-l";
+    let mapId = "map-n";
+
     if(flagPortLocation)
-        mapId = "map-n"
+        mapId = "map-l";
+
     if($('#'+mapId).length == 1) {
         $('#'+mapId).show();
     } else {
@@ -46,7 +51,7 @@ LMap.prototype.show = function(instantRefresh) {
 }
 
 LMap.prototype.hide = function() {
-    let mapIds = ['#map-l', '#map-n'];
+    let mapIds = ['#map-n', '#map-l'];
     mapIds.forEach(function(mapId){
         if($(mapId).length == 1) {
             $(mapId).hide();
@@ -385,25 +390,33 @@ LMap.prototype.addNode = function(port, color) {
 }
 
 LMap.prototype.prepareLabels = function() {
+    //this._nodes._tooltip = [];
+    this.removeLabels();
     for (var i = this._nodes.length - 1; i >= 0; i--) {
         var label = 'error';
         labels = [];
         for (var k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
-            if(flagPortLocation)    {
-                if(this._nodes[i].options.ports[k].lat == null && this._nodes[i].options.ports[k].lng == null){
-                    labels.push(this._nodes[i].options.ports[k].urn);
-                }else{
-                    labels.push(this._nodes[i].options.ports[k].location_name);
-                }
-            } else  {
-                if(this._nodes[i].options.ports[k].lat == null && this._nodes[i].options.ports[k].lng == null)
-                    labels.push(this._nodes[i].options.ports[k].network.domain.name);
+            if(flagPortLocation){
+                if(this._nodes[i].options.ports[k].lat != null && this._nodes[i].options.ports[k].lng != null)
+                    labels.push(this._nodes[i].options.ports[k].location_name);                  
+            }else{
+                labels.push(this._nodes[i].options.ports[k].network.domain.name);
             }
         }
         label = groupByDomain(labels);
-    
         this._nodes[i].bindTooltip(label, {permanent:true, direction: 'left'}).openTooltip();//, { noHide: true, direction: 'auto' });
+        
+        if(flagNetworkWasClicked){ 
+            this._nodes[i].setTooltipContent(label);
+        }
     }
+}
+
+LMap.prototype.removeLabels = function() {
+    for (var i = this._nodes.length - 1; i >= 0; i--) {
+        this._nodes[i].unbindTooltip();
+    }
+
 }
 
 LMap.prototype.setTopology = function(topology) {
@@ -610,6 +623,22 @@ function removeInvalidChar(str) {
 
 LMap.prototype.getNodes = function() {
     return this._nodes;
+}
+
+LMap.prototype.saveNodesL = function() {
+    this._nodesL = this._nodes.slice();
+}
+
+LMap.prototype.saveNodesN = function() {
+    this._nodesN = this._nodes.slice();
+}
+
+LMap.prototype.restoreNodesL = function() {
+    this._nodes = this._nodesL.slice();
+}
+
+LMap.prototype.restoreNodesN = function() {
+    this._nodes = this._nodesN.slice();
 }
 
 LMap.prototype.hideNode = function(node) {
