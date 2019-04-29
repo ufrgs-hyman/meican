@@ -173,6 +173,10 @@ class Port extends \yii\db\ActiveRecord
         return self::find()->where(['urn'=>$urn]);
     }
 
+    static function findByName($name) {
+        return self::find()->where(['name'=>$name]);
+    }
+
     static function findOneByUrn($urn) {
         return self::find()->where(['urn'=>$urn])->one();
     }

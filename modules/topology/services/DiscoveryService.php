@@ -209,17 +209,79 @@ class DiscoveryService {
                         }
                     }
                 }
+            }   
+            else if($this->parser instanceof NMWGParser)    {
+
             }
     
             //PERFSONAR
             if ($this->parser instanceof NMWGParser) {
-                if (isset($domainData['devices'])) {
-                    $this->importDevices($domainData["devices"], $domainName, $invalidDevices);
+                if (isset($domainData['biports'])) {
+                    $this->importLocation($domainData["biports"], $domainName);
                 }
             //NSI
             } else {
                 if (isset($domainData['nets'])) {
                     $this->importNetworks($domainData["nets"], $domainName);
+                }
+            }
+        }
+    }
+
+    private function nmwgPortToSuffix($str_nmwg)	{
+        $splitPort =  preg_split("/[a-z]+=/", $str_nmwg);
+        $node = $splitPort[2];
+        $port = str_replace("/", "_", $splitPort[3]);
+        $suffix = $node . $port . ':+';// . $link;
+        return $suffix;
+    }
+
+    private function importLocation($biPortsArray, $domainName) {
+        foreach ($biPortsArray as $biPortUrn => $biPortData) {
+            $suffix = $this->nmwgPortToSuffix($biPortUrn);
+            $biPort = Port::findByName($suffix)->one();
+            
+            if(!$biPort)    {
+                $change = $this->buildChange();
+                $change->type = Change::TYPE_CREATE;
+                $change->domain = $domainName;
+                $change->item_type = Change::ITEM_TYPE_BIPORT;
+                
+                $biPortId = explode("=", $biPortUrn);
+                $biPortName = $biPortData["locationName"] . ':' . $biPortId[count($biPortId)-1] . ':+';
+
+                $change->data = json_encode([
+                    'urn'=>$biPortUrn,
+                    'type'=> Port::TYPE_NMWG,
+                    'netUrn' => null,
+                    'name' => $suffix,
+                    'lat'=>isset($biPortData["lat"]) ? $biPortData["lat"] : null,
+                    'lng'=>isset($biPortData["lng"]) ? $biPortData["lng"] : null,
+                    'locationName'=>isset($biPortData["locationName"]) ? $biPortData["locationName"] : null,
+                    'cap_max' =>isset($biPortData["capMax"]) ? $biPortData["capMax"] : null,
+                    'cap_min'=>isset($biPortData["capMin"]) ? $biPortData["capMin"] : null,
+                    'granu' =>isset($biPortData["granu"]) ? $biPortData["granu"] : null,
+                    'vlan'=> isset($biPortData["vlan"]) ? $biPortData["vlan"] : null,
+                ]);
+
+                $change->save();
+            } 
+            if($biPortData['aliasUrn']) {
+                $dst_suffix = $this->nmwgPortToSuffix($biPortData['aliasUrn']);
+                $biPortDst = Port::findByName($dst_suffix)->one();
+
+                if($biPortDst)  {
+                    $change = $this->buildChange();
+                    $change->type = Change::TYPE_CREATE;
+                    $change->domain = $domainName;
+                    $change->item_type = Change::ITEM_TYPE_LINK;
+
+                    $change->data = json_encode([
+                        'urn'=> ($biPort)? $biPort->urn : $biPortUrn,
+                        'dst_urn' =>$biPortDst->urn//['aliasUrn'],
+                    ]);
+
+                    $change->save();
                 }
             }
         }

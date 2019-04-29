@@ -183,7 +183,6 @@ function showPointModal(pointElement, pointOrder, nodeId) {
 
     if(pointOrder != null) {
         pointElement = $(".point")[pointOrder];
-        console.log(pointOrder, pointElement);
     }
 
     if(nodeId) {
@@ -634,7 +633,7 @@ function setPoint(pointElement, pointOrder, pointMode, portId, urn, vlan, vlanAd
         $(pointElement).find(".point-normal").show();
 
         port = getPort(portId);
-        console.log(port);
+
         $(pointElement).find('.dom-l').text(port.network.domain.name);
         $(pointElement).find('.net-l').text(port.network.name);
         $(pointElement).find('.port-l').text(port.name);
@@ -923,9 +922,9 @@ function fillPortSelect(networkId, portId, locationName) {
     if(locationName != "" && locationName != null){
         len = meicanTopo['ports'].length;
         for (var i = 0; i < len; i++) {
-            if (meicanTopo['ports'][i].location_name == locationName) {
+            if (meicanTopo['ports'][i].location_name == locationName && meicanTopo['ports'][i].network != null) {
                 lid = meicanTopo['ports'][i].urn.replace(meicanTopo['ports'][i].network.urn + ':', '');
-                $("#" + selectId).append('<option value="' +                //VERIFICAR FORMA CORRETA DE EXIBIÇÃO
+                $("#" + selectId).append('<option value="' + 
                 meicanTopo['ports'][i].id + '">' + 
                 meicanTopo['ports'][i].name +
                 (lid == meicanTopo['ports'][i].name ? '' : ' (' + lid + ')') +
@@ -940,7 +939,6 @@ function fillPortSelect(networkId, portId, locationName) {
 }
 
 function fillVlanSelect(portId, vlan) {
-    console.log('fill');
     var selectId = "pointform-vlan";
     disableSelect(selectId);
     if (portId != "" && portId != null) {

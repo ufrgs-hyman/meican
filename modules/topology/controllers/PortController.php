@@ -111,7 +111,7 @@ class PortController extends RbacController {
 
 public function actionGetLocation($fields=null) {
     	$query = Port::find()->select(['location_name', 'lat', 'lng', 'network_id'])->distinct()->asArray()->orderBy(['location_name'=> "SORT ASC"]);
-        $data = $query->where(['directionality'=> 'BI'])->andWhere(['not', ['location_name' => null]]);
+        $data = $query->where(['directionality'=> 'BI'])->andWhere(['not', ['location_name' => null]])->andWhere(['not', ['lat' => null]])->andWhere(['not', ['lat' => 0]]);
         $fields ? $data = $query->select(explode(',',$fields))->all() : $data = $query->all();
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         Yii::trace($data);

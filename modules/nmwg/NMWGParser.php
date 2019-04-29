@@ -86,19 +86,24 @@ class NMWGParser {
         return $this->errors;
     }
 
-    function addBiPort($domainName, $deviceName, $urn,  $portName, $cap, $capMax, $capMin, $granu,
-            $vlanRange, $aliasUrn) {
+    function addBiPort($domainName, $locationName, $urn,  $portName, $cap, $capMax, $capMin, $granu,
+            $vlanRange, $aliasUrn, $lat, $lng) {
         $urn = str_replace("urn:ogf:network:","",$urn);
-        $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn] = array();
-        $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn]["port"] = $portName;
-        $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn]["cap"] = substr($cap, 0, -6);
-        $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn]["capMax"] = substr($capMax, 0, -6);
-        $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn]["capMin"] = intval($capMin)/1000000;
-        $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn]["granu"] = substr($granu, 0, -6);
-        $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn]["vlan"] = $vlanRange;
+        $this->topology["domains"][$domainName]["biports"][$urn] = array();
+        $this->topology["domains"][$domainName]["biports"][$urn]["port"] = $portName;
+        $this->topology["domains"][$domainName]["biports"][$urn]["cap"] = substr($cap, 0, -6);
+        $this->topology["domains"][$domainName]["biports"][$urn]["capMax"] = substr($capMax, 0, -6);
+        $this->topology["domains"][$domainName]["biports"][$urn]["capMin"] = intval($capMin)/1000000;
+        $this->topology["domains"][$domainName]["biports"][$urn]["granu"] = substr($granu, 0, -6);
+        $this->topology["domains"][$domainName]["biports"][$urn]["vlan"] = $vlanRange;
+        $this->topology["domains"][$domainName]["biports"][$urn]['locationName'] = $locationName;
+        $this->topology["domains"][$domainName]["biports"][$urn]["lat"] = $lat;
+        $this->topology["domains"][$domainName]["biports"][$urn]["lng"] = $lng;
+
         if ($aliasUrn)
-        $aliasUrn = str_replace("urn:ogf:network:","",$aliasUrn);
-        $this->topology['domains'][$domainName]["devices"][$deviceName]["biports"][$urn]["aliasUrn"] = $aliasUrn;
+            $aliasUrn = str_replace("urn:ogf:network:","",$aliasUrn);
+        
+        $this->topology["domains"][$domainName]["biports"][$urn]["aliasUrn"] = $aliasUrn;
     }
 
     function addLocation($domainName, $deviceName, $lat, $lng, $address) {
@@ -115,38 +120,41 @@ class NMWGParser {
                 $id = explode("=", $idString);
                 $domainName = $id[count($id)-1];
                     
-                $this->parseDevices($domainNode, $domainName);
+                $this->parseLocation($domainNode, $domainName);
             }
         }
     }
 
-    function parseDevices($domainNode, $domainName) {
-        $deviceNodes = $this->xpath->query(".//x:node", $domainNode);
-        if($deviceNodes) {
-            foreach ($deviceNodes as $deviceNode) {
-                $idString = $deviceNode->getAttribute('id');
+    function parseLocation($domainNode, $domainName) {
+        $LocationNodes = $this->xpath->query(".//x:node", $domainNode);
+        if($LocationNodes) {
+            foreach ($LocationNodes as $locationNode) {
+                $idString = $locationNode->getAttribute('id');
                 $id = explode("=", $idString);
-                $deviceName = $id[count($id)-1];
+                $locationName = $id[count($id)-1];
                 
-                $locationNodes = $this->xpath->query(".//x:location", $deviceNode);
-                foreach ($locationNodes as $locationNode) {
-                    $value = $this->xpath->query(".//x:latitude", $locationNode);
-                    $lat = $value->item(0) ? $value->item(0)->nodeValue : null;
-                    $value = $this->xpath->query(".//x:longitude", $locationNode);
-                    $lng = $value->item(0) ? $value->item(0)->nodeValue : null;
-                    $value = $this->xpath->query(".//x:address", $locationNode);
-                    $address = $value->item(0) ? $value->item(0)->nodeValue : null;
-                    
-                    $this->addLocation($domainName, $deviceName, $lat, $lng, $address);
+                $lat = null;
+                $lng = null;
+                $locationCoordNodes = $this->xpath->query(".//x:location", $locationNode);
+                if($locationCoordNodes) {
+                    foreach ($locationCoordNodes as $locationNode) {
+                        $value = $this->xpath->query(".//x:latitude", $locationNode);
+                        $lat = $value->item(0) ? $value->item(0)->nodeValue : null;
+                        $value = $this->xpath->query(".//x:longitude", $locationNode);
+                        $lng = $value->item(0) ? $value->item(0)->nodeValue : null;
+                        $value = $this->xpath->query(".//x:address", $locationNode);
+                        $address = $value->item(0) ? $value->item(0)->nodeValue : null;
+                        
+                    }
                 }
 
-                $this->parsePorts($domainName, $deviceNode, $deviceName);
+                $this->parsePorts($domainName, $locationNode, $locationName, $lat, $lng);
             }
         }
     }
 
-    function parsePorts($domainName, $deviceNode, $deviceName) {
-        $portNodes = $this->xpath->query(".//x:port", $deviceNode);
+    function parsePorts($domainName, $locationNode, $locationName, $lat, $lng) {
+        $portNodes = $this->xpath->query(".//x:port", $locationNode);
         if($portNodes) {
             foreach ($portNodes as $portNode) {
                 $idString = $portNode->getAttribute('id');
@@ -163,14 +171,15 @@ class NMWGParser {
                 $value = $this->xpath->query(".//x:granularity", $portNode);
                 $granu = $value->item(0) ? $value->item(0)->nodeValue : null;
 
-                $this->parseLinks($domainName, $deviceName, $portNode, $portName,
-                        $cap, $capMax, $capMin, $granu);
+                $this->parseLinks($domainName, $locationName, $portNode, $portName,
+                        $cap, $capMax, $capMin, $granu, $lat, $lng);
             }
         }
     }
 
-    function parseLinks($domainName, $deviceName, $portNode, $portName, $cap, $capMax, $capMin,
-            $granu) {
+    function parseLinks($domainName, $locationName, $portNode, $portName, $cap, $capMax, $capMin,
+            $granu, $lat, $lng) {
+
         $linkNodes = $this->xpath->query(".//x:link", $portNode);
         if($linkNodes) {
             foreach ($linkNodes as $linkNode) {
@@ -218,7 +227,7 @@ class NMWGParser {
 
                 $this->addBiPort(
                         $domainName,
-                        $deviceName,
+                        $locationName,
                         $urn,
                         $portName,
                         $cap,
@@ -226,7 +235,9 @@ class NMWGParser {
                         $capMin,
                         $granu,
                         $vlanRange,
-                        $aliasUrn);
+                        $aliasUrn,
+                        $lat, 
+                        $lng);
             }
         }
     }

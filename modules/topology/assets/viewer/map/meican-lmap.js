@@ -113,6 +113,90 @@ LMap.prototype.getLink = function(id) {
     return null;
 }
 
+LMap.prototype.addIntraLink = function(from, to, partial, color)    {
+    if(!from || !to) return null;
+    if(!color) color = '#cccccc';
+    var latLngList = [];
+
+    var src = this.getLocationByPort(from);
+    
+    if(src.location_name != null)   {
+        let location = this._topology['location'];
+        let latlng = null;
+        for(let i = location.length - 1; i >= 0; i--)  {
+            if(location[i].location_name == src.location_name) {
+                latlng = L.latLng(location[i].lat, location[i].lng);
+            }
+        }
+        if(latlng == null)
+            latlng = L.latLng(src.lat, src.lng);
+        if(!latlng)
+            return;
+        latLngList.push(latlng);
+    }
+    else
+        return;
+
+        var dst = this.getLocationByPort(to);
+    if(dst.location_name != null)    {
+        let location = this._topology['location'];
+        let latlng = null;
+        for(let i = location.length - 1; i >= 0; i--)  {
+            if(location[i].location_name == dst.location_name) {
+                latlng = L.latLng(location[i].lat, location[i].lng);
+            }
+        }
+        if(latlng == null)
+            latlng = L.latLng(dst.lat, dst.lng);
+        if(!latlng)
+            return;
+
+        latLngList.push(latlng);
+    }
+    else {
+        return;
+    }
+
+    if(partial) {
+        latLngList[1] = L.latLngBounds(latLngList[0], latLngList[1]).getCenter();
+    }
+
+    if (latLngList.length > 1) {
+        var link = L.polyline(
+            latLngList, 
+            {
+                id: this._linkAutoInc++,
+                from: from,
+                to: to,
+                traffic: 0,
+                directedCircuits: [],
+                color: color,
+                opacity: 0.7,
+                weight: 5,
+            }).addTo(this._map).bindPopup(
+                        'Link between <b>' + 
+                        src.location_name +
+                        '</b> and <b>' +
+                        dst.location_name +
+                        '</b><br>');
+
+        this._links.push(link);
+    } else return null;
+
+    var current = this;
+
+    link.on('click', function(e) {
+        $("#"+current._canvasDivId).trigger("lmap.linkClick", link);
+    });
+
+    link.on('mouseover', function(e) {
+        $("#"+current._canvasDivId).trigger("lmap.linkHover", link);
+    })
+
+    return link;
+
+}
+
 LMap.prototype.addLink = function(from, to, partial, cap, color) {
     if(!from || !to) return null;
     if(!color) color = '#cccccc';
@@ -152,7 +236,7 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
                         'Link between <b>' + 
                         meicanMap.getNodeByPort(from).options.name +
                         '</b> and <b>' +
-                        meicanMap.getNodeByPort(to).options.name +
+                        dst.location_name +
                         '</b><br>');
 
         this._links.push(link);
@@ -225,11 +309,9 @@ LMap.prototype.getParentPosition = function(port) {
 }
 
 LMap.prototype.addNode = function(port, color) {
-    // try {
+    if(!port.network)
+        return;
     if (!color) color = port.network.domain.color;
-    // } catch(err) {
-    //     console.log(port);
-    // } 
 
     if(flagPortLocation && port.lat != null && port.lng != null) {
         var pos = L.latLng([port.lat,port.lng]);
@@ -390,6 +472,13 @@ LMap.prototype.getNodeByPort = function(urn) {
     return null;
 }
 
+LMap.prototype.getLocationByPort = function(urn) {
+    for (var i = this._topology['ports'].length - 1; i >= 0; i--) {
+        if (this._topology['ports'][i].id == urn)
+            return this._topology['ports'][i];
+    }
+}
+
 LMap.prototype.getNodeByName = function(name) {
     var size = this._nodes.length;
     for(var i = 0; i < size; i++){
@@ -448,7 +537,6 @@ LMap.prototype.setNodeType = function(type) {
     var size = this._nodes.length;
     
     for(var i = 0; i < size; i++){ 
-        console.log(type, this._nodes[i].options.type);
         if (this._nodes[i].options.type == type) {
             this.showNode(this._nodes[i]);
         } else {
@@ -644,6 +732,7 @@ LMap.prototype._loadNetworks = function(withLinks) {
         success: function(response) {
             current._topology['networks'] = response;
             current._loadPorts(withLinks);
+            current._loadLocations();
             for (var i = current._topology['networks'].length - 1; i >= 0; i--) {
                 for (var k = current._topology['domains'].length - 1; k >= 0; k--) {
                     if (current._topology['networks'][i]['domain_id'] == current._topology['domains'][k]['id']) {
@@ -686,6 +775,17 @@ LMap.prototype._loadPorts = function(withLinks) {
     });
 }
 
+LMap.prototype._loadLocations = function()  {
+    let current = this;
+    $.ajax({
+        url: baseUrl + '/topology/port/get-location',
+        method: "GET",
+        success: function(response) {
+            current._topology['location'] = response;
+        }
+    });
+}
+
 LMap.prototype._loadLinks = function() {
     var current = this;
     $.ajax({
@@ -695,8 +795,10 @@ LMap.prototype._loadLinks = function() {
         success: function(response) {
             for (var src in response) {
                 for (var i = 0; i < response[src].length; i++) {
-                    //console.log(src, response[src][i]);
-                    current.addLink(parseInt(src),parseInt(response[src][i]));
+                    if(flagPortLocation)
+                        current.addIntraLink(parseInt(src),parseInt(response[src][i]));
+                    else
+                        current.addLink(parseInt(src),parseInt(response[src][i]));
                 }
             }           
         }
