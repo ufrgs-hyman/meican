@@ -172,14 +172,14 @@ class ViewerController extends RbacController {
 
     public function actionGetDomainLinks() {
         $portsWithAlias = Port::find()->where(['not', ['alias_id' => null]])
-            ->select(['id','directionality','device_id','alias_id'])->all();
+            ->select(['id','directionality','network_id','alias_id'])->all();
         $links = [];
         $passedPorts = [];
 
         foreach ($portsWithAlias as $port) {
-            $domId1 = $port->getDevice()->select(['domain_id'])->asArray()->one()['domain_id'];
-            $dstPort = $port->getAlias()->select(['id','device_id'])->one();
-            $domId2 = $dstPort->getDevice()->select(['domain_id'])->asArray()->one()['domain_id'];
+            $domId1 = $port->getNetwork()->select(['domain_id'])->asArray()->one()['domain_id'];
+            $dstPort = $port->getAlias()->select(['id','network_id'])->one();
+            $domId2 = $dstPort->getNetwork()->select(['domain_id'])->asArray()->one()['domain_id'];
 
             if($domId1 != $domId2) {
                 isset($links[$domId1]) ? null : $links[$domId1] = [];

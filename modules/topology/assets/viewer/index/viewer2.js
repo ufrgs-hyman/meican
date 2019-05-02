@@ -33,6 +33,7 @@ $(document).ready(function() {
     
     initCanvas(); 
     initMenu();   
+    meicanGraph.loadTopology(true);
     meicanMap.loadTopology(true);
 });
 
