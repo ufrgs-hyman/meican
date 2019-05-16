@@ -411,7 +411,6 @@ VGraph.prototype._loadLinks = function() {
         success: function(response) {
             for (var src in response) {
                 for (var i = 0; i < response[src].length; i++) {
-                    console.log(src, response[src][i]);
                     current.addLink(parseInt(src),parseInt(response[src][i]));
                 }
             }           

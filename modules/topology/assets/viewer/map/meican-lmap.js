@@ -114,7 +114,6 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
     if(src != null)
         latLngList.push(src.getLatLng());
     else {
-        console.log('fonte nao existe', from);
         return;
     }
 
@@ -122,7 +121,6 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
     if(dst != null)
         latLngList.push(dst.getLatLng());
     else {
-        console.log('destino nao existe', to);
         return;
     }
 

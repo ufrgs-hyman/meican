@@ -39,7 +39,6 @@ $(document).ready(function() {
 
 function initMenu() {
     $('input[name="mode"]').on('ifChecked', function(){
-        console.log('check');
         if(this.value == 'map') {
             //viewer = meicanMap;
             meicanGraph.hide();
