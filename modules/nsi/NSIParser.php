@@ -205,7 +205,7 @@ class NSIParser {
         $biPortUrn = str_replace("urn:ogf:network:","",$biPortId);
         $biPortUrn = $biPortUrn;
         $aliasUrn = str_replace("urn:ogf:network:","",$alias);
-        $aliasUrn = strtolower($aliasUrn);
+        // $aliasUrn = strtolower($aliasUrn);
         
         $id = explode(":", $netId);
         //         0   1     2         3        4    5

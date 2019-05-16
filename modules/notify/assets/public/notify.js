@@ -10,7 +10,8 @@ function timerAuths() {
 	    success: function(number) {
             if(number>0) $("#not_number").removeClass("label-primary").addClass("label-warning");
 	    	else $("#not_number").removeClass("label-warning").addClass("label-primary");
-	    	$("#not_number").html(number);
+	    	if(number != 0)
+	    		$("#not_number").html(number);
 	    	t = setTimeout(function() {
 	    		timerAuths()
 	    	}, 60000);
@@ -44,8 +45,8 @@ $(document).ready(function() {
 					    url: baseUrl + '/notify/service/get-count',
 					    success: function(number) {
 					    	if(number>0) $("#not_number").removeClass("label-primary").addClass("label-warning");
-					    	else $("#not_number").removeClass("label-warning").addClass("label-primary");
-					    	$("#not_number").html(number);
+					    	else $("#not_number").removeClass("label-warning");
+					    	$("#not_number").html("");
 					    }
 					});
 					

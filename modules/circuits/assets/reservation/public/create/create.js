@@ -97,14 +97,14 @@ function isValidPath() {
 }
 
 function validateRequirements() {
-    // if(($("#reservationform-bandwidth").val() == "") ||
-    //     $("#requirements").find(".field-reservationform-bandwidth").hasClass("has-error")) {
-    //     MAlert.show(
-    //         'Bandwidth invalid!', 
-    //         'The value must be must be no less than 1.',
-    //         'danger');
-    //     return false;
-    // }
+    if(($("#reservationform-bandwidth").val() == "") ||
+        $("#requirements").find(".field-reservationform-bandwidth").hasClass("has-error")) {
+        MAlert.show(
+            'Bandwidth invalid!', 
+            'Bandwidth cannot be blank.',
+            'danger');
+        return false;
+    }
     return true;
 }
 

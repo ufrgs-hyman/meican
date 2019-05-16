@@ -176,7 +176,7 @@ $form = ActiveForm::begin([
                                 'verticalupclass' => 'fa fa-plus',
                                 'verticaldownclass' => 'fa fa-minus',
                                 'max' => 100000,
-                                'min' => 1,
+                                'min' => 0,
                                 'step' => 10,
                             ]
                         ]); ?>

@@ -33,12 +33,12 @@ $(document).ready(function() {
     
     initCanvas(); 
     initMenu();   
+    meicanGraph.loadTopology(true);
     meicanMap.loadTopology(true);
 });
 
 function initMenu() {
     $('input[name="mode"]').on('ifChecked', function(){
-        console.log('check');
         if(this.value == 'map') {
             //viewer = meicanMap;
             meicanGraph.hide();
@@ -86,14 +86,16 @@ function initCanvas() {
 
 function buildPopupContent(type, name, domainName) {
     switch(type) {
-        case 'dom':
-            return 'Domain: <b>' + name + '</b>';
         case 'prov':
             return '';
         case 'net':
             return '';
         case 'dev':
             return 'Domain: <b>' + domainName + '</b><br>Device: <b>' + name + '</b>';
+        case 'dom':
+        default:
+            return 'Domain: <b>' + name + '</b>';
+
     }
 }
 
