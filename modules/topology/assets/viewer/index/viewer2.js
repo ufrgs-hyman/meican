@@ -87,14 +87,16 @@ function initCanvas() {
 
 function buildPopupContent(type, name, domainName) {
     switch(type) {
-        case 'dom':
-            return 'Domain: <b>' + name + '</b>';
         case 'prov':
             return '';
         case 'net':
             return '';
         case 'dev':
             return 'Domain: <b>' + domainName + '</b><br>Device: <b>' + name + '</b>';
+        case 'dom':
+        default:
+            return 'Domain: <b>' + name + '</b>';
+
     }
 }
 
