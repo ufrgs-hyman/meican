@@ -5,6 +5,7 @@
  */
 
 namespace meican\nsi;
+use Yii;
 /**
  * Parser de mensagens e topologias NSI.
  *
@@ -197,7 +198,7 @@ class NSIParser {
     }
 
     function addPort($netId, $netName, $biPortId, $biportName, $portId, $portType, 
-            $vlan, $alias, $lat=null, $lng=null, $locationName=null) {
+            $vlan, $alias, $lat=null, $lng=null, $locationName=null, $capMax=null, $capMin=null) {
         $netUrn = str_replace("urn:ogf:network:","",$netId);
         $netUrn = $netUrn;
         $portUrn = str_replace("urn:ogf:network:","",$portId);
@@ -228,8 +229,9 @@ class NSIParser {
                 $domainName]["nets"][$netUrn]["biports"][$biPortUrn] = array();
         }
         $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["name"] = $biportName;
+        $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["capMax"] = ($capMax/1000000.);
+        $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["capMin"] = ($capMin/1000000.);
 
-        
         $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["biports"][
                         $biPortUrn]["uniports"][$portUrn]['name'] = $localId;
@@ -441,7 +443,9 @@ class NSIParser {
                         $vlanAndAlias[1],
                         $lat,
                         $lng,
-                        $locationName
+                        $locationName,
+                        $vlanAndAlias[2],
+                        $vlanAndAlias[3]
                 );
             }
         }
@@ -505,25 +509,27 @@ class NSIParser {
                     }
 
                     if ($id === $portId) {
-                      
+                        $capMaxNode = $this->xpath->query(".//x:maximumReservableCapacity", $portNode);
+                        $capMinNode = $this->xpath->query(".//x:minimumReservableCapacity", $portNode);
+
                         $vlanRangeNode = $this->xpath->query(".//x:LabelGroup", $portNode);
                         $locationNode = $this->xpath->query(".//x:Location", $portNode);
 
-                        $lat = null;
-                        $lng = null;
-                        if ($locationNode->item(0)) {
-                            # cuidado com o xpath, ele aceita o node referencia nulo e nesse
-                            # caso ele procura por todo o documento.
-                            $latNode = $this->xpath->query(".//x:lat", $locationNode->item(0));
-                            $lat = $latNode->item(0)->nodeValue;
-                            $lngNode = $this->xpath->query(".//x:long", $locationNode->item(0));
-                            $lng = $lngNode->item(0)->nodeValue;
+                        $capMax = null;
+                        $capMin = null;
+
+                        if($capMaxNode->item(0))   {
+                            $capMax = $capMaxNode->item(0)->nodeValue;
+                        }
+
+                        if($capMinNode->item(0))   {
+                            $capMin = $capMinNode->item(0)->nodeValue;
                         }
 
                         if($vlanRangeNode->item(0)) {
                             return [$vlanRangeNode->item(0)->nodeValue, 
                                     $this->parseAlias($portNode),
-                                    $lat, $lng];
+                                    $capMax,$capMin];
                         } else {
                             continue;
                         }
