@@ -245,15 +245,18 @@ class DiscoveryService {
                 $change = $this->buildChange();
                 $change->type = Change::TYPE_CREATE;
                 $change->domain = $domainName;
+                $network = Network::findByName($domainName)->one();
                 $change->item_type = Change::ITEM_TYPE_BIPORT;
                 
                 $biPortId = explode("=", $biPortUrn);
                 $biPortName = $biPortData["locationName"] . ':' . $biPortId[count($biPortId)-1] . ':+';
 
+                $nsiUrn = $network->urn . ':' . $suffix;
+
                 $change->data = json_encode([
-                    'urn'=>$biPortUrn,
+                    'urn'=>$nsiUrn,
                     'type'=> Port::TYPE_NMWG,
-                    'netUrn' => null,
+                    'netUrn' => $network->urn,
                     'name' => $suffix,
                     'lat'=>isset($biPortData["lat"]) ? $biPortData["lat"] : null,
                     'lng'=>isset($biPortData["lng"]) ? $biPortData["lng"] : null,
@@ -277,7 +280,7 @@ class DiscoveryService {
                     $change->item_type = Change::ITEM_TYPE_LINK;
 
                     $change->data = json_encode([
-                        'urn'=> ($biPort)? $biPort->urn : $biPortUrn,
+                        'urn'=> ($biPort)? $biPort->urn : $nsiUrn,
                         'dst_urn' =>$biPortDst->urn//['aliasUrn'],
                     ]);
 

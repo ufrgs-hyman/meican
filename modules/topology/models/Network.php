@@ -100,4 +100,8 @@ class Network extends \yii\db\ActiveRecord
     static function findByUrn($urn) {
         return self::find()->where(['urn'=>$urn]);
     }
+
+    static function findByName($name) {
+        return self::find()->where(['name'=>$name]);
+    }
 }
