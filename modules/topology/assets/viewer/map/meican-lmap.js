@@ -118,61 +118,40 @@ LMap.prototype.getLink = function(id) {
     return null;
 }
 
-LMap.prototype.addIntraLink = function(from, to, partial, color)    {
-    if(!from || !to) return null;
-    if(!color) color = '#cccccc';
-    var latLngList = [];
+LMap.prototype.getPortsByLocation = function(location_name)  {
+    let locations = [];
 
-    var src = this.getLocationByPort(from);
+    for (let i = this._topology['ports'].length - 1; i >= 0; i--) {
+        if (this._topology['ports'][i].location_name == location_name)
+            locations.push(this._topology['ports'][i]);
+    }
+
+    return locations;
+}
+
+LMap.prototype.addIntraLink = function(location_link)    {
+    if(!location_link.source || !location_link.destination) 
+        return null;
+    let color = '#cccccc';
+    let latLngList = [];
+
+    if(!location_link.source_coords)
+        return;
+    latLngList.push(location_link.source_coords);
+
+    if(!location_link.destination_coords)
+        return;
+    latLngList.push(location_link.destination_coords);
+
+    let cap = (location_link.capacity >= 1000)? (location_link.capacity/1000.) + ' Gbps' : location_link.capacity + ' Mbps';
     
-    if(src.location_name != null)   {
-        let location = this._topology['location'];
-        let latlng = null;
-        for(let i = location.length - 1; i >= 0; i--)  {
-            if(location[i].location_name == src.location_name) {
-                latlng = L.latLng(location[i].lat, location[i].lng);
-            }
-        }
-        if(latlng == null)
-            latlng = L.latLng(src.lat, src.lng);
-        if(!latlng)
-            return;
-        latLngList.push(latlng);
-    }
-    else
-        return;
-
-        var dst = this.getLocationByPort(to);
-    if(dst.location_name != null)    {
-        let location = this._topology['location'];
-        let latlng = null;
-        for(let i = location.length - 1; i >= 0; i--)  {
-            if(location[i].location_name == dst.location_name) {
-                latlng = L.latLng(location[i].lat, location[i].lng);
-            }
-        }
-        if(latlng == null)
-            latlng = L.latLng(dst.lat, dst.lng);
-        if(!latlng)
-            return;
-
-        latLngList.push(latlng);
-    }
-    else {
-        return;
-    }
-
-    if(partial) {
-        latLngList[1] = L.latLngBounds(latLngList[0], latLngList[1]).getCenter();
-    }
-
     if (latLngList.length > 1) {
         var link = L.polyline(
             latLngList, 
             {
                 id: this._linkAutoInc++,
-                from: from,
-                to: to,
+                from: location_link.source,
+                to: location_link.destination,
                 traffic: 0,
                 directedCircuits: [],
                 color: color,
@@ -180,10 +159,10 @@ LMap.prototype.addIntraLink = function(from, to, partial, color)    {
                 weight: 5,
             }).addTo(this._map).bindPopup(
                         'Link between <b>' + 
-                        src.location_name +
+                        location_link.source_location +
                         '</b> and <b>' +
-                        dst.location_name +
-                        '</b><br>');
+                        location_link.destination_location +
+                        '</b><br><b>Capacity</b>: '+ cap);
 
         this._links.push(link);
     } else return null;
@@ -793,9 +772,8 @@ LMap.prototype._loadPorts = function(withLinks) {
             }
 
             for (var i = current._topology['ports'].length - 1; i >= 0; i--) {
-                current.addNode(
-                    current._topology['ports'][i]
-                );
+                if(current._topology['ports'][i].type == 'NSI')
+                    current.addNode(current._topology['ports'][i]);
             }
             current.prepareLabels();
             if(withLinks)
@@ -815,6 +793,59 @@ LMap.prototype._loadLocations = function()  {
     });
 }
 
+
+LMap.prototype._groupLinks = function(links, context)    {
+    let link_capacity = [];
+
+    links.forEach(function(x)   {
+        let src = context.getLocationByPort(x[0]);
+        let dst = context.getLocationByPort(x[1]);
+
+        let link = {
+            source: x[0],
+            destination: x[1],
+            source_location: src.location_name,
+            destination_location: dst.location_name,
+            source_coords: null,
+            destination_coords: null,
+            capacity: parseInt(src.max_capacity)
+        };
+
+        if(src.location_name != null && dst.location_name != null)  {
+            let src_ports = context.getPortsByLocation(src.location_name);
+            for(let i = src_ports.length-1; i >= 0; i--)  {
+                if(src_ports[i].lat != null)    {
+                    link.source_coords = L.latLng(src_ports[i].lat, src_ports[i].lng);
+                }
+            }
+
+            let dst_ports = context.getPortsByLocation(dst.location_name);
+            for(let i = dst_ports.length-1; i >= 0; i--)  {
+                if(dst_ports[i].lat != null)    {
+                    link.destination_coords = L.latLng(dst_ports[i].lat, dst_ports[i].lng);
+                }
+            }
+
+            if(src.capacity != dst.capacity)    {
+                console.log('Error'); // Show difference between capacities
+            }
+
+            let j = link_capacity.length -1;
+            for(; j >= 0; j--)  {
+                if(link_capacity[j].source_location == link.source_location && link_capacity[j].destination_location == link.destination_location)    {
+                    link_capacity[j].capacity += link.capacity;
+                    break;
+                }
+            }
+            if(j == -1) {
+                link_capacity.push(link);
+            }
+        }
+    });
+
+    return link_capacity;
+}
+
 LMap.prototype._loadLinks = function() {
     var current = this;
     $.ajax({
@@ -822,14 +853,20 @@ LMap.prototype._loadLinks = function() {
         dataType: 'json',
         method: "GET",
         success: function(response) {
+            let links = [];
             for (var src in response) {
                 for (var i = 0; i < response[src].length; i++) {
-                    if(flagPortLocation)
-                        current.addIntraLink(parseInt(src),parseInt(response[src][i]));
+                    if(flagPortLocation)    {
+                        links.push([parseInt(src),parseInt(response[src][i])]);
+                    }
                     else
                         current.addLink(parseInt(src),parseInt(response[src][i]));
                 }
-            }           
+            }
+            links = current._groupLinks(links, current);
+            links.forEach(function(x){
+                current.addIntraLink(x);
+            });
         }
     });
 }
