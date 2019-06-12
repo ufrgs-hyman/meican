@@ -507,24 +507,21 @@ class NSIParser {
                         $this->errors["Unknown URN"][$id] = null;
                         continue;
                     }
-
+                    
                     if ($id === $portId) {
-                        $capMaxNode = $this->xpath->query(".//x:maximumReservableCapacity", $portNode);
-                        $capMinNode = $this->xpath->query(".//x:minimumReservableCapacity", $portNode);
-
                         $vlanRangeNode = $this->xpath->query(".//x:LabelGroup", $portNode);
                         $locationNode = $this->xpath->query(".//x:Location", $portNode);
 
                         $capMax = null;
                         $capMin = null;
 
-                        if($capMaxNode->item(0))   {
-                            $capMax = $capMaxNode->item(0)->nodeValue;
+                        foreach($portNode->childNodes as $capNode)    {
+                            if($capNode->localName === "maximumReservableCapacity")
+                                $capMax = $capNode->nodeValue;
+                            else if($capNode->localName === "maximumReservableCapacity")
+                                $capMin = $capNode->nodeValue;
                         }
 
-                        if($capMinNode->item(0))   {
-                            $capMin = $capMinNode->item(0)->nodeValue;
-                        }
 
                         if($vlanRangeNode->item(0)) {
                             return [$vlanRangeNode->item(0)->nodeValue, 
