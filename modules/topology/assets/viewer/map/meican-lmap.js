@@ -755,7 +755,7 @@ LMap.prototype._loadNetworks = function(withLinks) {
 LMap.prototype._loadPorts = function(withLinks) {
     var current = this;
     $.ajax({
-        url: baseUrl+'/topology/port/json?dir=BI',
+        url: baseUrl+'/topology/port/json?dir=BI&type=ALL',
         method: "GET",        
         success: function(response) {
             current._topology['ports'] = response;

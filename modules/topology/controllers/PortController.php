@@ -105,7 +105,6 @@ class PortController extends RbacController {
         
         $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
         $temp = Json::encode($data);
-        Yii::trace($temp);
         return $temp;
     }
 
@@ -114,16 +113,14 @@ public function actionGetLocation($fields=null) {
         $data = $query->where(['directionality'=> 'BI'])->andWhere(['not', ['location_name' => null]])->andWhere(['not', ['lat' => null]])->andWhere(['not', ['lat' => 0]]);
         $fields ? $data = $query->select(explode(',',$fields))->all() : $data = $query->all();
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        Yii::trace($data);
         return $data;
     }
 
-    public function actionJson($fields=null, $dir=null) {
+    public function actionJson($fields=null, $dir=null, $type = 'NSI') {
     	$query = Port::find()->asArray()->orderBy(['name'=> "SORT ASC"]);
-        $dir ? $data = $query->where(['directionality'=> $dir]) : null;
+        $dir ? $data = ($type == 'ALL') ? $query->andWhere(['directionality'=> $dir]) : $query->andWhere(['directionality'=> $dir])->andWhere(['type'=> $type]) : null;
         $fields ? $data = $query->select(explode(',',$fields))->all() : $data = $query->all();
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        Yii::trace($data);
         return $data;
     }
 
@@ -132,7 +129,6 @@ public function actionGetLocation($fields=null) {
         
         $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
         $temp = Json::encode($data);
-        Yii::trace($temp);
         return $temp;
     }
     
@@ -141,7 +137,6 @@ public function actionGetLocation($fields=null) {
                 ['id'=>$id])->select($cols)->asArray()->one() : $port = Port::find()->where(['id'=>$id])->asArray()->one();
     
         $temp = Json::encode($port);
-        Yii::trace($temp);
         return $temp;
     }
     
@@ -150,7 +145,6 @@ public function actionGetLocation($fields=null) {
         $data = $port->vlan_range;
         if(!$data) $data = $port->getInboundPortVlanRange();
         $temp = Json::encode($data);
-        Yii::trace($temp);
         return $temp;
     }
     public function actionGetAllColor($cols=null) {
@@ -161,7 +155,6 @@ public function actionGetLocation($fields=null) {
         }
         
         $temp = Json::encode($data);
-        Yii::trace($temp);
         return $temp;
     }
 }
