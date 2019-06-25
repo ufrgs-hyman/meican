@@ -1,0 +1,1201 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:Topology xmlns:ns3="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns2="http://schemas.ogf.org/nsi/2013/09/topology#" xmlns:ns4="http://schemas.ogf.org/nsi/2013/12/services/definition" id="urn:ogf:network:cipo.rnp.br:2013:" version="2019-05-21T00:00:00.000Z">
+    <ns3:name>cipo.rnp.br</ns3:name>
+    <ns3:Lifetime>
+        <ns3:start>2019-05-21T00:00:00.000Z</ns3:start>
+        <ns3:end>2020-05-20T17:09:04.653-03:00</ns3:end>
+    </ns3:Lifetime>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXAC:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXAC">
+            <ns3:name>MXAC</ns3:name>
+            <ns3:long>-67.8311</ns3:long>
+            <ns3:lat>-9.98633</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAC:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAC:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXAL:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXAL">
+            <ns3:name>MXAL</ns3:name>
+            <ns3:long>-35.6867</ns3:long>
+            <ns3:lat>-9.59344</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAL:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAL:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXAM:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXAM">
+            <ns3:name>MXAM</ns3:name>
+            <ns3:long>-59.964867</ns3:long>
+            <ns3:lat>-3.0882041</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAM:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAM:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXAP:ae0:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXAP">
+            <ns3:name>MXAP</ns3:name>
+            <ns3:long>-51.082615</ns3:long>
+            <ns3:lat>-0.006343</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAP:ae0:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAP:ae0:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXAP:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXAP">
+            <ns3:name>MXAP</ns3:name>
+            <ns3:long>-51.082615</ns3:long>
+            <ns3:lat>-0.006343</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAP:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAP:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXBA:ge-3_3_0:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXBA">
+            <ns3:name>MXBA</ns3:name>
+            <ns3:long>-38.510506</ns3:long>
+            <ns3:lat>-13.002037</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXBA:ge-3_3_0:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXBA:ge-3_3_0:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXCE:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXCE">
+            <ns3:name>MXCE</ns3:name>
+            <ns3:long>-38.57569</ns3:long>
+            <ns3:lat>-3.745746</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXCE:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXCE:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_2_3:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXDF">
+            <ns3:name>MXDF</ns3:name>
+            <ns3:long>-47.88389</ns3:long>
+            <ns3:lat>-15.804469</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_2_3:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_2_3:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXDF">
+            <ns3:name>MXDF</ns3:name>
+            <ns3:long>-47.88389</ns3:long>
+            <ns3:lat>-15.804469</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXDF2:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXDF2">
+            <ns3:name>MXDF2</ns3:name>
+            <ns3:long>-47.88389</ns3:long>
+            <ns3:lat>-15.804469</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF2:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF2:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_2_3:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXES">
+            <ns3:name>MXES</ns3:name>
+            <ns3:long>-40.30428</ns3:long>
+            <ns3:lat>-20.273417</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_2_3:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_2_3:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXES">
+            <ns3:name>MXES</ns3:name>
+            <ns3:long>-40.30428</ns3:long>
+            <ns3:lat>-20.273417</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_2_3:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXGO">
+            <ns3:name>MXGO</ns3:name>
+            <ns3:long>-49.240875</ns3:long>
+            <ns3:lat>-16.67642</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_2_3:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_2_3:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXGO">
+            <ns3:name>MXGO</ns3:name>
+            <ns3:long>-49.240875</ns3:long>
+            <ns3:lat>-16.67642</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXJPA:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXJPA">
+            <ns3:name>MXJPA</ns3:name>
+            <ns3:long>-34.848225</ns3:long>
+            <ns3:lat>-7.1398726</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXJPA:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXJPA:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXMA:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXMA">
+            <ns3:name>MXMA</ns3:name>
+            <ns3:long>-44.30888</ns3:long>
+            <ns3:lat>-2.5558658</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMA:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMA:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ae3:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXMG">
+            <ns3:name>MXMG</ns3:name>
+            <ns3:long>-43.964615</ns3:long>
+            <ns3:lat>-19.86877</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ae3:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ae3:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_2_3:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXMG">
+            <ns3:name>MXMG</ns3:name>
+            <ns3:long>-43.964615</ns3:long>
+            <ns3:lat>-19.86877</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_2_3:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_2_3:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXMG">
+            <ns3:name>MXMG</ns3:name>
+            <ns3:long>-43.964615</ns3:long>
+            <ns3:lat>-19.86877</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXMG2:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXMG2">
+            <ns3:name>MXMG2</ns3:name>
+            <ns3:long>-43.964615</ns3:long>
+            <ns3:lat>-19.86877</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG2:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG2:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXMS:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXMS">
+            <ns3:name>MXMS</ns3:name>
+            <ns3:long>-54.61422</ns3:long>
+            <ns3:lat>-20.503069</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMS:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMS:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXMS:xe-2_0_0:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXMS">
+            <ns3:name>MXMS</ns3:name>
+            <ns3:long>-54.61422</ns3:long>
+            <ns3:lat>-20.503069</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMS:xe-2_0_0:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMS:xe-2_0_0:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXMT:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXMT">
+            <ns3:name>MXMT</ns3:name>
+            <ns3:long>-56.06441</ns3:long>
+            <ns3:lat>-15.609635</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMT:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMT:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_2_3:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXPA">
+            <ns3:name>MXPA</ns3:name>
+            <ns3:long>-48.458347</ns3:long>
+            <ns3:lat>-1.475092</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_2_3:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_2_3:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXPA">
+            <ns3:name>MXPA</ns3:name>
+            <ns3:long>-48.458347</ns3:long>
+            <ns3:lat>-1.475092</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXPA:xe-2_0_0:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXPA">
+            <ns3:name>MXPA</ns3:name>
+            <ns3:long>-48.458347</ns3:long>
+            <ns3:lat>-1.475092</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:xe-2_0_0:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:xe-2_0_0:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXPB:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXBA">
+            <ns3:name>MXBA</ns3:name>
+            <ns3:long>-35.907375</ns3:long>
+            <ns3:lat>-7.2134194</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPB:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPB:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXPE:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXPE">
+            <ns3:name>MXPE</ns3:name>
+            <ns3:long>-34.95516</ns3:long>
+            <ns3:lat>-8.058714</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPE:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPE:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXPI:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXPI">
+            <ns3:name>MXPI</ns3:name>
+            <ns3:long>-42.79889</ns3:long>
+            <ns3:lat>-5.096222</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPI:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPI:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXPR:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXPR">
+            <ns3:name>MXPR</ns3:name>
+            <ns3:long>-49.232372</ns3:long>
+            <ns3:lat>-25.450544</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPR:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPR:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ae0:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXRJ">
+            <ns3:name>MXRJ</ns3:name>
+            <ns3:long>-43.367054</ns3:long>
+            <ns3:lat>-22.886463</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ae0:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ae0:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_2_3:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXRJ">
+            <ns3:name>MXRJ</ns3:name>
+            <ns3:long>-43.367054</ns3:long>
+            <ns3:lat>-22.886463</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_2_3:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_2_3:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_3:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXRJ">
+            <ns3:name>MXRJ</ns3:name>
+            <ns3:long>-43.367054</ns3:long>
+            <ns3:lat>-22.886463</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_3:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_3:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXRJ">
+            <ns3:name>MXRJ</ns3:name>
+            <ns3:long>-43.367054</ns3:long>
+            <ns3:lat>-22.886463</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRN:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXRN">
+            <ns3:name>MXRN</ns3:name>
+            <ns3:long>-35.201954</ns3:long>
+            <ns3:lat>-5.839023</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRN:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRN:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRO:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXRO">
+            <ns3:name>MXRO</ns3:name>
+            <ns3:long>-63.908764</ns3:long>
+            <ns3:lat>-8.763488</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRO:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRO:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRR:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXRR">
+            <ns3:name>MXRR</ns3:name>
+            <ns3:long>-60.694633</ns3:long>
+            <ns3:lat>2.833854</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRR:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRR:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_2_3:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXRS">
+            <ns3:name>MXRS</ns3:name>
+            <ns3:long>-51.227146</ns3:long>
+            <ns3:lat>-30.034294</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_2_3:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_2_3:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXRS">
+            <ns3:name>MXRS</ns3:name>
+            <ns3:long>-51.227146</ns3:long>
+            <ns3:lat>-30.034294</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXSC">
+            <ns3:name>MXSC</ns3:name>
+            <ns3:long>-48.51791</ns3:long>
+            <ns3:lat>-27.601393</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXSE:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXSE">
+            <ns3:name>MXSE</ns3:name>
+            <ns3:long>-37.10267</ns3:long>
+            <ns3:lat>-10.92314</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSE:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSE:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight">
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_2_3:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXSP">
+            <ns3:name>MXSP</ns3:name>
+            <ns3:long>-46.73252</ns3:long>
+            <ns3:lat>-23.558073</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_2_3:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_2_3:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXSP">
+            <ns3:name>MXSP</ns3:name>
+            <ns3:long>-46.73252</ns3:long>
+            <ns3:lat>-23.558073</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXSP2">
+            <ns3:name>MXSP2</ns3:name>
+            <ns3:long>-46.73252</ns3:long>
+            <ns3:lat>-23.558073</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:xe-3_0_0:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXSP2">
+            <ns3:name>MXSP2</ns3:name>
+            <ns3:long>-46.73252</ns3:long>
+            <ns3:lat>-23.558073</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:xe-3_0_0:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:xe-3_0_0:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns3:BidirectionalPort id="urn:ogf:network:cipo.rnp.br:2013::MXTO:ge-2_3_4:+">
+        <ns3:Location id="urn:ogf:network:cipo.rnp.br:2013::MXTO">
+            <ns3:name>MXTO</ns3:name>
+            <ns3:long>-48.361168</ns3:long>
+            <ns3:lat>-10.179634</ns3:lat>
+        </ns3:Location>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXTO:ge-2_3_4:+:in"/>
+        <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXTO:ge-2_3_4:+:out"/>
+    </ns3:BidirectionalPort>
+    <ns4:serviceDefinition id="urn:ogf:network:cipo.rnp.br:2013::ServiceDefinition:EVTS.A-GOLE">
+        <name>GLIF Automated GOLE Ethernet VLAN Transfer Service</name>
+        <serviceType>http://services.ogf.org/nsi/2013/12/descriptions/EVTS.A-GOLE</serviceType>
+    </ns4:serviceDefinition>
+    <ns3:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasService">
+        <ns3:SwitchingService encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::ServiceDomain:EVTS.A-GOLE" labelSwapping="true" labelType="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">
+            <ns3:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAC:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAL:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAM:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAP:ae0:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAP:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXBA:ge-3_3_0:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXCE:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_2_3:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF2:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_2_3:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_2_3:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXJPA:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMA:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ae3:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_2_3:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG2:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMS:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMS:xe-2_0_0:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMT:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_2_3:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:xe-2_0_0:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPB:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPE:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPI:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPR:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ae0:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_2_3:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_3:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRN:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRO:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRR:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_2_3:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSE:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_2_3:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:ge-2_3_4:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:xe-3_0_0:+:in"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXTO:ge-2_3_4:+:in"/>
+            </ns3:Relation>
+            <ns3:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAC:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAL:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAM:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAP:ae0:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXAP:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXBA:ge-3_3_0:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXCE:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_2_3:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXDF2:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_2_3:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_2_3:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXJPA:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMA:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ae3:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_2_3:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMG2:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMS:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMS:xe-2_0_0:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXMT:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_2_3:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPA:xe-2_0_0:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPB:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPE:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPI:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXPR:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ae0:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_2_3:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_3:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRN:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRO:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRR:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_2_3:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSE:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_2_3:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:ge-2_3_4:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:xe-3_0_0:+:out"/>
+                <ns3:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXTO:ge-2_3_4:+:out"/>
+            </ns3:Relation>
+            <ns4:serviceDefinition id="urn:ogf:network:cipo.rnp.br:2013::ServiceDefinition:EVTS.A-GOLE"/>
+        </ns3:SwitchingService>
+    </ns3:Relation>
+    <ns3:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXAC:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns3:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns3:minimumReservableCapacity>
+            <ns3:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:capacity>
+            <ns3:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns3:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXAL:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-289</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns3:maximumReservableCapacity>
+            <ns3:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns3:minimumReservableCapacity>
+            <ns3:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns3:capacity>
+            <ns3:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns3:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXAM:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXAP:ae0:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXAP:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXBA:ge-3_3_0:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-289</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXCE:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_2_3:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1000-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXDF2:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_2_3:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1000-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_2_3:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1000-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXJPA:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMA:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ae3:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">20000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">20000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_2_3:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1000-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMG2:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMS:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMS:xe-2_0_0:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMT:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_2_3:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1000-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXPA:xe-2_0_0:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">211-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXPB:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXPE:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-289</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXPI:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXPR:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ae0:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_2_3:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">0-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_3:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRN:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRO:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRR:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_2_3:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1000-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXSE:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-289</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns3:LabelGroup>
+            <ns3:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                <ns3:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:bi-rnp-out"/>
+            </ns3:Relation>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">20000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">20000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_2_3:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">0-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:xe-3_0_0:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">201-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXTO:ge-2_3_4:+:in">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+    </ns3:Relation>
+    <ns3:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXAC:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXAL:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-289</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXAM:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXAP:ae0:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXAP:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXBA:ge-3_3_0:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-289</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXCE:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_2_3:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1000-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXDF:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXDF2:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_2_3:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1000-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXES:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_2_3:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1000-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXGO:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXJPA:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMA:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ae3:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">20000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">20000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_2_3:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1000-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMG:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMG2:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMS:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMS:xe-2_0_0:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXMT:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_2_3:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1000-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXPA:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXPA:xe-2_0_0:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">211-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXPB:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXPE:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-289</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXPI:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXPR:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ae0:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_2_3:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">0-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_3:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRJ:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRN:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRO:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRR:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_2_3:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1000-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXRS:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXSC:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXSE:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-289</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">800000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns3:LabelGroup>
+            <ns3:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                <ns3:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:bi-rnp-in"/>
+            </ns3:Relation>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">20000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">20000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_2_3:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">0-3199</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXSP2:xe-3_0_0:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">201-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">10000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+        <ns3:PortGroup encoding="http://schemas.ogf.org/nml/2012/10/ethernet" id="urn:ogf:network:cipo.rnp.br:2013::MXTO:ge-2_3_4:+:out">
+            <ns3:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">200-299</ns3:LabelGroup>
+            <ns3:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns3:maximumReservableCapacity>
+            <ns2:minimumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:minimumReservableCapacity>
+            <ns2:capacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000000</ns2:capacity>
+            <ns2:granularity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1000000</ns2:granularity>
+        </ns3:PortGroup>
+    </ns3:Relation>
+</ns3:Topology>
