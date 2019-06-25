@@ -5,7 +5,7 @@
  */
 
 namespace meican\nsi;
-
+use Yii;
 /**
  * Parser de mensagens e topologias NSI.
  *
@@ -246,9 +246,9 @@ class NSIParser {
                         $biPortUrn]["uniports"][$portUrn]['aliasUrn'] = $aliasUrn;
 
         if($capMax)
-           $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["capMax"] = ($capMax/1000000.);
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["uniports"][$portUrn]["capMax"] = ($capMax/1000000.);
         if($capMin)
-           $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["capMin"] = ($capMin/1000000.);
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["uniports"][$portUrn]["capMin"] = ($capMin/1000000.);
                 
     }
 
@@ -482,6 +482,7 @@ class NSIParser {
 
                     if ($id === $portId) {
                         $vlanRangeNode = $this->xpath->query(".//x:LabelGroup", $portNode);
+                        $alias = $this->parseAlias($portNode);
 
                         $capMax = null;
                         $capMin = null;
@@ -495,7 +496,7 @@ class NSIParser {
 
                         if($vlanRangeNode->item(0)) {
                             return [$vlanRangeNode->item(0)->nodeValue, 
-                                    $this->parseAlias($portNode),
+                                    $alias,
                                     $capMax, $capMin];
                         } else {
                             continue;

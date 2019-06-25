@@ -110,8 +110,8 @@ VGraph.prototype.addLinks = function(objects, type) {
     }
 }
 
-VGraph.prototype.addLink = function(srcId, dstId, type) {
-    this._links.add({
+VGraph.prototype.addLink = function(srcId, dstId, cap, type) {
+    let link = {
         type: type,
         from: srcId, 
         to: dstId,
@@ -120,7 +120,11 @@ VGraph.prototype.addLink = function(srcId, dstId, type) {
                 enabled: true
             },
         },
-    });
+    };
+    if(cap) 
+        link["title"] =  "Max capacity: " + cap + " Mbps";
+    
+    this._links.add(link);
 }
 
 VGraph.prototype.focusNode = function(nodeId) {
@@ -405,13 +409,13 @@ VGraph.prototype._loadPorts = function(withLinks) {
 VGraph.prototype._loadLinks = function() {
     var current = this;
     $.ajax({
-        url: baseUrl+'/topology/viewer/get-domain-links',
+        url: baseUrl+'/topology/viewer/get-cap-links',
         dataType: 'json',
         method: "GET",
         success: function(response) {
             for (var src in response) {
                 for (var i = 0; i < response[src].length; i++) {
-                    current.addLink(parseInt(src),parseInt(response[src][i]));
+                    current.addLink(parseInt(src), parseInt(response[src][i].port), response[src][i].max_capacity);
                 }
             }           
         }

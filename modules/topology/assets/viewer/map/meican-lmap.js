@@ -128,6 +128,8 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
         latLngList[1] = L.latLngBounds(latLngList[0], latLngList[1]).getCenter();
     }
 
+    capText = (cap)? 'Max capacity: <b>' + cap + '</b> Mbps' : '';
+
     if (latLngList.length > 1) {
         var link = L.polyline(
             latLngList, 
@@ -145,7 +147,8 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
                         meicanMap.getNodeByPort(from).options.name +
                         '</b> and <b>' +
                         meicanMap.getNodeByPort(to).options.name +
-                        '</b><br>');
+                        '</b><br>' +
+                        capText);
 
         this._links.push(link);
     } else return null;
@@ -667,14 +670,14 @@ LMap.prototype._loadPorts = function(withLinks) {
 LMap.prototype._loadLinks = function() {
     var current = this;
     $.ajax({
-        url: baseUrl+'/topology/viewer/get-port-links',
+        url: baseUrl+'/topology/viewer/get-port-cap-links',
         dataType: 'json',
         method: "GET",
         success: function(response) {
             for (var src in response) {
                 for (var i = 0; i < response[src].length; i++) {
                     //console.log(src, response[src][i]);
-                    current.addLink(parseInt(src),parseInt(response[src][i]));
+                    current.addLink(parseInt(src), parseInt(response[src][i].port), false, response[src][i].max_capacity);
                 }
             }           
         }
