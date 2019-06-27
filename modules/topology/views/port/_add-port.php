@@ -7,6 +7,5 @@
 echo $this->render('_form', array(
     'formId' => 'add-port-form',
     'networks' => $networks,
-	'devices' => $devices,
 	'port' => $port,
 )); ?>

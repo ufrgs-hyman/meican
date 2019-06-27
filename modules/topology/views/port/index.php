@@ -56,7 +56,7 @@ $this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'),
         <div class="box-body">
 		    <div>
             	<a id="add-port-grid-btn" value=<?= $dom->id;?> class="btn btn-primary btn-add"><?= Yii::t('topology', 'Add')?></a>
-            	<a id="delete-port-grid-btn" class="btn btn-warning btn-delete" value=<?= $dom->id;?>><?= Yii::t('topology', 'Delete')?></a>
+            	<a id="delete-port-grid-btn" class="btn btn-default btn-delete" value=<?= $dom->id;?>><?= Yii::t('topology', 'Delete')?></a>
         	</div><br>
 
 			<?php $form = ActiveForm::begin([
@@ -87,7 +87,7 @@ $this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'),
 						'class' => 'yii\grid\ActionColumn',
 						'template'=>'{edit}',
 						'contentOptions' => function($port){
-							return ['class'=>'btn-edit', 'id' => $port->id];
+							return ['class'=>'btn-edit', 'id' => $port->id, 'value' => $port->getNetwork()->one()->getDomain()->one()->id];
 						},
 						'buttons' => [
 							'edit' => function ($url, $model) {
@@ -101,20 +101,20 @@ $this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'),
 						'value' => function($port){
 							return $port->getNetwork()->one()->name;
 						},
-						'headerOptions'=>['style'=>'width: 9%;'],
+						'headerOptions'=>['style'=>'width: 13%;'],
 					],
-					[
-						'format' => 'raw',
-						'label' => Yii::t('topology', 'Device'),
-						'value' => function($port){
-							return $port->getDevice()->one()->name;
-						},
-						'headerOptions'=>['style'=>'width: 9%;'],
-					],
+					// [
+					// 	'format' => 'raw',
+					// 	'label' => Yii::t('topology', 'Device'),
+					// 	'value' => function($port){
+					// 		return $port->getDevice()->one()->name;
+					// 	},
+					// 	'headerOptions'=>['style'=>'width: 9%;'],
+					// ],
 					[
 						'label' => Yii::t('topology', 'Name'),
 						'value' => 'name',
-						'headerOptions'=>['style'=>'width: 10%;'],
+						'headerOptions'=>['style'=>'width: 15%;'],
 					],
 					[
 						'label' => Yii::t('topology', 'Urn'),

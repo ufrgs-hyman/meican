@@ -27,78 +27,79 @@ $this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'
     </div>
     <div class="box-body">
         <?php
+        echo("Em Andamento");
 
-        $form = ActiveForm::begin([
-            'method' => 'post',
-            'action' => ['delete'],
-            'id' => 'device-form',	
-            'enableClientScript'=>false,
-            'enableClientValidation' => false,
-        ]);
+        // $form = ActiveForm::begin([
+        //     'method' => 'post',
+        //     'action' => ['delete'],
+        //     'id' => 'device-form',	
+        //     'enableClientScript'=>false,
+        //     'enableClientValidation' => false,
+        // ]);
 
-        Pjax::begin();
+        // Pjax::begin();
 
-        echo Grid::widget([
-            'dataProvider' => $devices,
-            'filterModel' => $searchModel,
-            'id' => 'gridNetowrks',
-            'columns' => array(
-                [
-                    'class'=>IcheckboxColumn::className(),
-                    'name'=>'delete',         
-                    'multiple'=>false,
-                    'headerOptions'=>['style'=>'width: 2%;'],
-                ],
-            	[
-            		'class' => 'yii\grid\ActionColumn',
-            		'template'=>'{update}',
-            		'buttons' => [
-            				'update' => function ($url, $model) {
-            					return Html::a('<span class="fa fa-pencil"></span>', $url);
-            				}
-            		],
-            		'headerOptions'=>['style'=>'width: 2%;'],
-            	],
-                [
-                    'label' => Yii::t("topology", 'Name'),
-                    'value' => 'name',
-                    'headerOptions'=>['style'=>'width: 24%;'],
-                ],
-                [
-                    'label' => Yii::t("topology", 'Latitude'),
-                    'value' => 'latitude',
-                    'headerOptions'=>['style'=>'width: 8%;'],
-                ],
-                [
-                    'label' => Yii::t("topology", 'Longitude'),
-                    'value' => 'longitude',
-                    'headerOptions'=>['style'=>'width: 8%;'],
-                ],
-                [
-                    'label' => Yii::t("topology", 'Domain'),
-                    'value' => function($dev){
-                        return $dev->getDomain()->one()->name;
-                },
-                    'filter' => Html::activeDropDownList($searchModel, 'domain_name',
-                        ArrayHelper::map($allowedDomains, 'name', 'name'),
-                        ['class'=>'form-control','prompt' => Yii::t("topology", 'any')]	
-                    ),
-                    'headerOptions'=>['style'=>'width: 23%;'],
-                ],
-                [
-                    'format' => 'html',
-                    'label' => Yii::t('topology', '#EndPoints'),
-                    'value' => function($dev){
-                        return Html::a($dev->getPorts()->count(), ['/topology/port/index', 'id' => $dev->domain_id]);
-                    },
-                    'headerOptions'=>['style'=>'width: 4%;'],
-                ],
-            ),
-        ]);
+        // echo Grid::widget([
+        //     'dataProvider' => $devices,
+        //     'filterModel' => $searchModel,
+        //     'id' => 'gridNetowrks',
+        //     'columns' => array(
+        //         [
+        //             'class'=>IcheckboxColumn::className(),
+        //             'name'=>'delete',         
+        //             'multiple'=>false,
+        //             'headerOptions'=>['style'=>'width: 2%;'],
+        //         ],
+        //     	[
+        //     		'class' => 'yii\grid\ActionColumn',
+        //     		'template'=>'{update}',
+        //     		'buttons' => [
+        //     				'update' => function ($url, $model) {
+        //     					return Html::a('<span class="fa fa-pencil"></span>', $url);
+        //     				}
+        //     		],
+        //     		'headerOptions'=>['style'=>'width: 2%;'],
+        //     	],
+        //         [
+        //             'label' => Yii::t("topology", 'Name'),
+        //             'value' => 'name',
+        //             'headerOptions'=>['style'=>'width: 24%;'],
+        //         ],
+        //         [
+        //             'label' => Yii::t("topology", 'Latitude'),
+        //             'value' => 'latitude',
+        //             'headerOptions'=>['style'=>'width: 8%;'],
+        //         ],
+        //         [
+        //             'label' => Yii::t("topology", 'Longitude'),
+        //             'value' => 'longitude',
+        //             'headerOptions'=>['style'=>'width: 8%;'],
+        //         ],
+        //         [
+        //             'label' => Yii::t("topology", 'Domain'),
+        //             'value' => function($dev){
+        //                 return $dev->getDomain()->one()->name;
+        //         },
+        //             'filter' => Html::activeDropDownList($searchModel, 'domain_name',
+        //                 ArrayHelper::map($allowedDomains, 'name', 'name'),
+        //                 ['class'=>'form-control','prompt' => Yii::t("topology", 'any')]	
+        //             ),
+        //             'headerOptions'=>['style'=>'width: 23%;'],
+        //         ],
+        //         [
+        //             'format' => 'html',
+        //             'label' => Yii::t('topology', '#EndPoints'),
+        //             'value' => function($dev){
+        //                 return Html::a($dev->getPorts()->count(), ['/topology/port/index', 'id' => $dev->domain_id]);
+        //             },
+        //             'headerOptions'=>['style'=>'width: 4%;'],
+        //         ],
+        //     ),
+        // ]);
 
-        Pjax::end();
+        // Pjax::end();
 
-        ActiveForm::end();
+        // ActiveForm::end();
 
         ?>
     </div>

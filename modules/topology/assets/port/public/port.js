@@ -20,7 +20,7 @@ $(document).ready(function() {
         	          type: 'post',
         	          data: $("#port-grid-form-"+domainId).serialize(),
         	          success: function (data) {
-        	        	  if(data==true) window.location="../port/index?id="+domainId;
+        	        	  if(data==true) window.location="/topology/port/index?id="+domainId;
         	        	  else if(data!=null){
         	        		  $("#delete-port-modal").modal("hide");
         	        		  $("#message").html(data);
@@ -44,6 +44,7 @@ $(document).ready(function() {
 	
 	$(".btn-edit").click(function() {
 		var portId = $(this).attr("id");
+		var domainId = $(this).attr("value");
 	    $.ajax({
 	        url: baseUrl + "/topology/port/update?id=" + portId,
 	        success: function(response){
@@ -61,9 +62,9 @@ $(document).ready(function() {
 	        	        	  if(data) $('#edit-port-form-wrapper').html(data);
 	        	        	  else{
 	        	        		  $.ajax({
-	        	        			  url: baseUrl + "/topology/port/get-domain-id?id=" + portId,
+	        	        			  url: baseUrl + "/topology/port/index?id=" + domainId,
 	        	        			  success: function(response){
-	        	        				  window.location="../port/index?id="+response;
+	        	        				  window.location="/topology/port/index?id="+ domainId;
 	        	        			  }
 		        	        	  });
 	        	        	  }
@@ -98,7 +99,7 @@ $(document).ready(function() {
 	        	          success: function (data) {
 	        	        	  if(data) $('#add-port-form-wrapper').html(data);
 	        	        	  else {
-	        	        		  window.location="../port/index?id="+domainId;
+	        	        		  window.location="/topology/port/index?id="+domainId;
 	        	        	  }
 	        	          }
 	        	     });
