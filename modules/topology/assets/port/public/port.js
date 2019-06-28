@@ -20,7 +20,7 @@ $(document).ready(function() {
         	          type: 'post',
         	          data: $("#port-grid-form-"+domainId).serialize(),
         	          success: function (data) {
-        	        	  if(data==true) window.location="/topology/port/index?id="+domainId;
+        	        	  if(data==true) window.location= baseUrl + "/topology/port/index?id="+domainId;
         	        	  else if(data!=null){
         	        		  $("#delete-port-modal").modal("hide");
         	        		  $("#message").html(data);
@@ -64,7 +64,7 @@ $(document).ready(function() {
 	        	        		  $.ajax({
 	        	        			  url: baseUrl + "/topology/port/index?id=" + domainId,
 	        	        			  success: function(response){
-	        	        				  window.location="/topology/port/index?id="+ domainId;
+	        	        				  window.location= baseUrl + "/topology/port/index?id="+ domainId;
 	        	        			  }
 		        	        	  });
 	        	        	  }
@@ -99,7 +99,7 @@ $(document).ready(function() {
 	        	          success: function (data) {
 	        	        	  if(data) $('#add-port-form-wrapper').html(data);
 	        	        	  else {
-	        	        		  window.location="/topology/port/index?id="+domainId;
+	        	        		  window.location= baseUrl + "/topology/port/index?id=" + domainId;
 	        	        	  }
 	        	          }
 	        	     });
