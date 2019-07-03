@@ -185,6 +185,8 @@ class ViewerController extends RbacController {
                 isset($links[$domId1]) ? null : $links[$domId1] = [];
                 isset($links[$domId2]) ? null : $links[$domId2] = [];
 
+                Yii::warning($port->max_capacity);
+
                 switch ($port->directionality) {
                     case Port::DIR_UNI_OUT:
                         if(!in_array($domId2, $links[$domId1]))
@@ -203,8 +205,52 @@ class ViewerController extends RbacController {
             }
         }
 
-        Yii::trace($links);
         return json_encode($links);
+    }
+
+    public function actionGetCapLinks() {
+        $portsWithAlias = Port::find()->where(['not', ['alias_id' => null]])
+            ->select(['id','directionality','network_id','max_capacity', 'alias_id'])->all();
+        $links = [];
+        $capacity = [];
+        $passedPorts = [];
+
+        foreach ($portsWithAlias as $port) {
+            $domId1 = $port->getNetwork()->select(['domain_id'])->asArray()->one()['domain_id'];
+            $dstPort = $port->getAlias()->select(['id','network_id', 'max_capacity'])->one();
+            $domId2 = $dstPort->getNetwork()->select(['domain_id'])->asArray()->one()['domain_id'];
+
+            if($domId1 != $domId2) {
+                isset($links[$domId1]) ? null : $links[$domId1] = [];
+                isset($links[$domId2]) ? null : $links[$domId2] = [];
+
+                $cap = ($dstPort->max_capacity and $port->max_capacity)? min($dstPort->max_capacity, $port->max_capacity) : ($port->max_capacity) ? $port->max_capacity : $dstPort->max_capacity; 
+
+                switch ($port->directionality) {
+                    case Port::DIR_UNI_OUT:
+                        if(!in_array($domId2, $links[$domId1])) {
+                            $links[$domId1][] = $domId2; 
+                            $capacity[$domId1][] = ($cap)? ['port' => $domId2, 'max_capacity' => $cap] : ['port' => $domId2];
+                        }
+                        break;
+                    case Port::DIR_UNI_IN:
+                        if(!in_array($domId1, $links[$domId2])) {
+                            $links[$domId2][] = $domId1;
+                            $capacity[$domId2][] = ($cap)? ['port' => $domId1, 'max_capacity' => $cap] : ['port' => $domId1]; 
+                        }
+                        break;
+                    case Port::DIR_BI:
+                        if(!in_array($domId2, $links[$domId1]))
+                            $links[$domId1][] = $domId2; break;
+                        if(!in_array($domId1, $links[$domId2]))
+                            $links[$domId2][] = $domId1; break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        return json_encode($capacity);
     }
 
     public function actionGetPortLinks() {
@@ -238,8 +284,61 @@ class ViewerController extends RbacController {
             }
         }
 
-        Yii::trace($links);
         return json_encode($links);
+    }
+
+    public function actionGetPortCapLinks() {
+        $portsWithAlias = Port::find()->where(['not', ['alias_id' => null]])
+            ->select(['id', 'directionality','alias_id','biport_id', 'max_capacity'])->asArray()->all();
+        $links = [];
+        $link_capacity = [];
+        $passedPorts = [];
+
+        foreach ($portsWithAlias as $port) {
+            $srcBiPortId = $port['biport_id'] ? $port['biport_id'] : $port['id'];
+            $dstPort = Port::find()->where(['id'=> $port['alias_id']])->select(['id','biport_id', 'max_capacity'])->asArray()->one();
+            $dstBiPortId = $dstPort['biport_id'] ? $dstPort['biport_id'] : $dstPort['id'];
+
+            isset($links[$srcBiPortId]) ? null : $links[$srcBiPortId] = [];
+            isset($link_capacity[$srcBiPortId]) ? null : $link_capacity[$srcBiPortId] = [];
+
+            isset($links[$dstBiPortId]) ? null : $links[$dstBiPortId] = [];
+            isset($link_capacity[$dstBiPortId]) ? null : $link_capacity[$dstBiPortId] = [];
+
+
+            $cap = ($port['max_capacity'] and $dstPort['max_capacity']) ? min($port['max_capacity'], $dstPort['max_capacity']) : ($port['max_capacity'])? $port['max_capacity'] : $dstPort['max_capacity'];
+
+
+            switch ($port['directionality']) {
+                case Port::DIR_UNI_OUT:
+                    if(!in_array($dstBiPortId, $links[$srcBiPortId]))   {
+                        $links[$srcBiPortId][] = $dstBiPortId; 
+                        $link_capacity[$srcBiPortId][] = ($cap) ? ['port' => $dstBiPortId, 'max_capacity' => $cap] : ['port' => $dstBiPortId];
+                    }
+                    break;
+                case Port::DIR_UNI_IN:
+                    if(!in_array($srcBiPortId, $links[$dstBiPortId]))   {
+                        $links[$dstBiPortId][] = $srcBiPortId; 
+                        $link_capacity[$dstBiPortId][] = ($cap) ? ['port' => $srcBiPortId, 'max_capacity' => $cap] : ['port' => $srcBiPortId];
+                    }
+                    break;
+                case Port::DIR_BI:
+                    if(!in_array($dstBiPortId, $links[$srcBiPortId]))   {
+                        $links[$srcBiPortId][] = $dstBiPortId; 
+                        $link_capacity[$srcBiPortId][] = ($cap) ? ['port' => $dstBiPortId, 'max_capacity' => $cap] : ['port' => $dstBiPortId];
+                    }
+                    break;
+                    if(!in_array($srcBiPortId, $links[$dstBiPortId]))   {
+                        $links[$dstBiPortId][] = $srcBiPortId; 
+                        $link_capacity[$dstBiPortId][] = ($cap) ? ['port' => $srcBiPortId, 'max_capacity' => $cap] : ['port' => $srcBiPortId];
+                    }    
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return json_encode($link_capacity);
     }
 
     public function actionGetPeerings() {

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:Topology xmlns:ns2="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns3="http://schemas.ogf.org/nsi/2013/09/topology#" xmlns:ns4="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns5="http://schemas.ogf.org/nml/2014/01/ethernet" id="urn:ogf:network:southernlight.net.br:2013:topology" version="2018-08-14T16:42:30Z">
+    <ns2:name>southernlight.net.br:2013</ns2:name>
+    <ns2:Lifetime>
+        <ns2:start>2018-08-14T16:42:30Z</ns2:start>
+        <ns2:end>2019-08-14T19:08:43.219+02:00</ns2:end>
+    </ns2:Lifetime>
+    <ns2:BidirectionalPort id="urn:ogf:network:southernlight.net.br:2013:topology:ampath">
+        <ns2:name>ampath</ns2:name>
+        <ns2:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:ampath-in"/>
+        <ns2:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:ampath-out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:southernlight.net.br:2013:topology:bi-geant">
+        <ns2:name>bi-geant</ns2:name>
+        <ns2:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:bi-geant-in"/>
+        <ns2:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:bi-geant-out"/>
+    </ns2:BidirectionalPort>
+    <ns2:BidirectionalPort id="urn:ogf:network:southernlight.net.br:2013:topology:bi-rnp">
+        <ns2:name>bi-rnp</ns2:name>
+        <ns2:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:bi-rnp:in"/>
+        <ns2:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:bi-rnp:out"/>
+    </ns2:BidirectionalPort>
+    <ns4:serviceDefinition id="urn:ogf:network:southernlight.net.br:2013:topology:sd:EVTS.A-GOLE">
+        <name>GLIF Automated GOLE Ethernet VLAN Transfer Service</name>
+        <serviceType>http://services.ogf.org/nsi/2013/12/descriptions/EVTS.A-GOLE</serviceType>
+    </ns4:serviceDefinition>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasInboundPort">
+        <ns2:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:ampath-in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1779-1799</ns2:LabelGroup>
+            <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                <ns2:PortGroup id="urn:ogf:network:ampath.net:2013:topology:southernlight-out"/>
+            </ns2:Relation>
+        </ns2:PortGroup>
+        <ns2:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:bi-geant-in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1779-1799</ns2:LabelGroup>
+            <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                <ns2:PortGroup id="urn:ogf:network:geant.net:2013:topology:bi-southernlight-out"/>
+            </ns2:Relation>
+        </ns2:PortGroup>
+        <ns2:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:bi-rnp:in">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns2:LabelGroup>
+            <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight:out"/>
+            </ns2:Relation>
+            <ns2:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">4000000</ns2:maximumReservableCapacity>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasOutboundPort">
+        <ns2:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:ampath-out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1779-1799</ns2:LabelGroup>
+            <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                <ns2:PortGroup id="urn:ogf:network:ampath.net:2013:topology:southernlight-in"/>
+            </ns2:Relation>
+        </ns2:PortGroup>
+        <ns2:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:bi-geant-out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1779-1799</ns2:LabelGroup>
+            <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                <ns2:PortGroup id="urn:ogf:network:geant.net:2013:topology:bi-southernlight-in"/>
+            </ns2:Relation>
+        </ns2:PortGroup>
+        <ns2:PortGroup id="urn:ogf:network:southernlight.net.br:2013:topology:bi-rnp:out">
+            <ns2:LabelGroup labeltype="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">1700-1799</ns2:LabelGroup>
+            <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#isAlias">
+                <ns2:PortGroup id="urn:ogf:network:cipo.rnp.br:2013::MXSP:ae4:southernlight:in"/>
+            </ns2:Relation>
+            <ns2:maximumReservableCapacity xmlns:ns0="http://schemas.ogf.org/nml/2013/05/base#" xmlns:ns1="http://schemas.ogf.org/nsi/2013/12/services/definition" xmlns:ns2="http://schemas.ogf.org/nml/2012/10/ethernet">1500000000</ns2:maximumReservableCapacity>
+        </ns2:PortGroup>
+    </ns2:Relation>
+    <ns2:Relation type="http://schemas.ogf.org/nml/2013/05/base#hasService">
+        <ns2:SwitchingService id="urn:ogf:network:southernlight.net.br:2013:topology:switch:EVTS.A-GOLE" labelSwapping="false" labelType="http://schemas.ogf.org/nml/2012/10/ethernet#vlan">
+            <ns4:serviceDefinition id="urn:ogf:network:southernlight.net.br:2013:topology:sd:EVTS.A-GOLE"/>
+        </ns2:SwitchingService>
+    </ns2:Relation>
+</ns2:Topology>
