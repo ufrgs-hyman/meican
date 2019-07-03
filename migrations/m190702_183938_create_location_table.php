@@ -21,7 +21,6 @@ class m190702_183938_create_location_table extends Migration
 
         $this->execute("
             ALTER TABLE `meican_port` 
-                DROP COLUMN `location_name`,
                 ADD COLUMN `location_id` int(11) NULL DEFAULT NULL;
             ");
 
