@@ -739,8 +739,8 @@ LMap.prototype._loadNetworks = function(withLinks) {
         method: "GET",
         success: function(response) {
             current._topology['networks'] = response;
-            current._loadPorts(withLinks);
             current._loadLocations();
+            current._loadPorts(withLinks);
             for (var i = current._topology['networks'].length - 1; i >= 0; i--) {
                 for (var k = current._topology['domains'].length - 1; k >= 0; k--) {
                     if (current._topology['networks'][i]['domain_id'] == current._topology['domains'][k]['id']) {

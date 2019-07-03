@@ -12,6 +12,7 @@ use yii\data\ActiveDataProvider;
 
 use meican\topology\models\Network;
 use meican\topology\models\Domain;
+use meican\topology\models\Location;
 use meican\topology\models\Port;
 use meican\aaa\RbacController;
 
@@ -104,16 +105,33 @@ class PortController extends RbacController {
         return $temp;
     }
 
-public function actionGetLocation($fields=null) {
-    	$query = Port::find()->select(['location_name', 'lat', 'lng', 'network_id'])->distinct()->asArray()->orderBy(['location_name'=> "SORT ASC"]);
-        $data = $query->where(['directionality'=> 'BI'])->andWhere(['not', ['location_name' => null]])->andWhere(['not', ['lat' => null]])->andWhere(['not', ['lat' => 0]]);
+	public function actionGetLocation($fields=null) {
+		$query = Port::find()->innerJoin('meican_location', 'meican_location.id = meican_port.location_id')->select(['meican_location.name as location_name', 'meican_location.lat', 'meican_location.lng', 'network_id', 'location_id'])->asArray();
+
         $fields ? $data = $query->select(explode(',',$fields))->all() : $data = $query->all();
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return $data;
     }
 
     public function actionJson($fields=null, $dir=null, $type = 'NSI') {
-    	$query = Port::find()->asArray()->orderBy(['name'=> "SORT ASC"]);
+		$port_fields = array(
+			'meican_port.id',
+			'type',
+			'directionality',
+			'urn', 
+			'meican_port.name', 
+			'capacity', 
+			'max_capacity', 
+			'min_capacity', 
+			'vlan_range', 
+			'biport_id', 
+			'alias_id', 
+			'network_id',
+			'meican_location.name as location_name', 
+			'meican_location.lat', 
+			'meican_location.lng'
+		);
+    	$query = Port::find()->leftJoin('meican_location', 'meican_location.id = meican_port.location_id')->select($port_fields)->asArray()->orderBy(['name'=> "SORT ASC"]);
         $dir ? $data = ($type == 'ALL') ? $query->andWhere(['directionality'=> $dir]) : $query->andWhere(['directionality'=> $dir])->andWhere(['type'=> $type]) : null;
         $fields ? $data = $query->select(explode(',',$fields))->all() : $data = $query->all();
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
