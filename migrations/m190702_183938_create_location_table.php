@@ -16,7 +16,13 @@ class m190702_183938_create_location_table extends Migration
             ");
 
         $this->execute("
-            ALTER TABLE `meican_location` ADD PRIMARY KEY (`id`);
+            ALTER TABLE `meican_location` 
+                ADD PRIMARY KEY (`id`);
+            ");
+
+        $this->execute("
+            ALTER TABLE `meican_location`
+                MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
             ");
 
         $this->execute("
