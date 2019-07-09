@@ -145,7 +145,7 @@ class Change extends \yii\db\ActiveRecord
         return $dataProvider;
     }
 
-    private function updateLocation($name, $lat, $lng)  {
+    private function updateLocation($name, $lat, $lng, $domain_id)  {
         $location_id = null;
 
         $locationQuery = Location::findByName($name)->one();
@@ -156,6 +156,7 @@ class Change extends \yii\db\ActiveRecord
             $location->lat = $lat;
             $location->lng = $lng;
             $location->name = $name;
+            $location->domain_id = $domain_id;
 
             if($location->save()) {
                 // $location_id = $location->id;
@@ -408,11 +409,14 @@ class Change extends \yii\db\ActiveRecord
                         $port->vlan_range = $data->vlan;
 
                         if($data->locationName) {
+                            $dom = Domain::findOneByName($this->domain);
 
-                            $location_id = $this->updateLocation($data->locationName, $data->lat, $data->lng);
+                            if($dom)    {
+                                $location_id = $this->updateLocation($data->locationName, $data->lat, $data->lng, $dom->id);
 
-                            if($location_id)
-                                $port->location_id = $location_id;
+                                if($location_id)
+                                    $port->location_id = $location_id;
+                            }
                         }
 
                         if ($data->netUrn) {
@@ -438,10 +442,14 @@ class Change extends \yii\db\ActiveRecord
                             $port->vlan_range = $data->vlan;
 
                             if($data->locationName) {
-                                $location_id = $this->updateLocation($data->locationName, $data->lat, $data->lng);
+                                $dom = Domain::findOneByName($this->domain);
 
-                                if($location_id)
-                                    $port->location_id = $location_id;
+                                if($dom)    {
+                                    $location_id = $this->updateLocation($data->locationName, $data->lat, $data->lng, $dom->id);
+
+                                   if($location_id)
+                                        $port->location_id = $location_id;
+                                }
                             }
 
                             if($port->save()) {

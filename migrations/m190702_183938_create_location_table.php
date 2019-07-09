@@ -11,7 +11,8 @@ class m190702_183938_create_location_table extends Migration
                 `id` int(11) NOT NULL,
                 `name` varchar(100) NOT NULL,
                 `lat` float NOT NULL,
-                `lng` float NOT NULL
+                `lng` float NOT NULL,
+                `domain_id` int(11) NOT NULL
             ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
             ");
 
@@ -34,6 +35,11 @@ class m190702_183938_create_location_table extends Migration
             ALTER TABLE `meican_port` 
                 ADD CONSTRAINT `location_port` FOREIGN KEY (`location_id`) REFERENCES `meican_location` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
             ");
+
+        $this->execute("
+        ALTER TABLE `meican_location` 
+            ADD CONSTRAINT `location_domain` FOREIGN KEY (`domain_id`) REFERENCES `meican_domain` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+        ");
     }
 
     public function down()
