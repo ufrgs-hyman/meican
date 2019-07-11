@@ -91,7 +91,7 @@ class Port extends \yii\db\ActiveRecord
             [['type', 'directionality', 'urn', 'name'], 'required'],
             [['type', 'directionality'], 'string'],
             [['vlan_range'], 'string'],
-            [['max_capacity', 'min_capacity', 'granularity', 'biport_id', 'alias_id', 'network_id'], 'integer'],
+            [['max_capacity', 'min_capacity', 'granularity', 'biport_id', 'alias_id', 'network_id', 'location_id'], 'integer'],
             [['urn'], 'string', 'max' => 250],
             [['name'], 'string', 'max' => 100],
             [['urn'], 'unique'],
@@ -134,6 +134,7 @@ class Port extends \yii\db\ActiveRecord
             'alias_id' => Yii::t('topology', 'Alias ID'),
             'network_id' => Yii::t('topology', 'Network'),
         	'vlan_range' => Yii::t('topology', 'VLANs'),
+            'location_id' => Yii::t('topology', 'Location'),
         ];
     }
 
@@ -155,6 +156,14 @@ class Port extends \yii\db\ActiveRecord
     public function getNetwork()
     {
         return $this->hasOne(Network::className(), ['id' => 'network_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLocation()
+    {
+        return $this->hasMany(Location::className(), ['id' => 'location_id']);
     }
 
     /**

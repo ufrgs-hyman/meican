@@ -33,7 +33,7 @@ class m190702_183938_create_location_table extends Migration
 
         $this->execute("
             ALTER TABLE `meican_port` 
-                ADD CONSTRAINT `location_port` FOREIGN KEY (`location_id`) REFERENCES `meican_location` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+                ADD CONSTRAINT `location_port` FOREIGN KEY (`location_id`) REFERENCES `meican_location` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
             ");
 
         $this->execute("

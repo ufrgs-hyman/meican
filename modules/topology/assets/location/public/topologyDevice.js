@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2016 RNP
+ * @copyright Copyright (c) 2019 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -7,7 +7,7 @@ $(document).ready(function() {
 // ====================================================================================================
 // Get Network List
 // =================================================================================================
-	$('#deviceDomain').change(function() {
+	$('#locationDomain').change(function() {
 		domainId = (this).value;
 		
 		$.ajax({
@@ -24,9 +24,9 @@ $(document).ready(function() {
 	        	if(arraySize == 0) {
 	        		alert("This domain doesn't have any network");
 	        		
-	        		$('#Device_network_id').find('option').remove().end();
+	        		$('#Location_network_id').find('option').remove().end();
 	        		
-	        		$('#Device_network_id').attr('disabled', 'disabled');
+	        		$('#Location_network_id').attr('disabled', 'disabled');
 	        	}
 	        	else {
 		        	select = '';
@@ -35,8 +35,8 @@ $(document).ready(function() {
 		        		select += '<option value="'+index+'">'+name+'</option>';
 		        	});
 		        	
-		        	$('#Device_network_id').find('option').remove().end().append(select);
-		        	$('#Device_network_id').removeAttr('disabled');
+		        	$('#Location_network_id').find('option').remove().end().append(select);
+		        	$('#Location_network_id').removeAttr('disabled');
 	        	}	        	
 	        }
 	    });	

@@ -101,26 +101,18 @@ $this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'),
 						'value' => function($port){
 							return $port->getNetwork()->one()->name;
 						},
-						'headerOptions'=>['style'=>'width: 13%;'],
+						'headerOptions'=>['style'=>'width: 15%;'],
 					],
-					// [
-					// 	'format' => 'raw',
-					// 	'label' => Yii::t('topology', 'Device'),
-					// 	'value' => function($port){
-					// 		return $port->getDevice()->one()->name;
-					// 	},
-					// 	'headerOptions'=>['style'=>'width: 9%;'],
-					// ],
 					[
 						'label' => Yii::t('topology', 'Name'),
 						'value' => 'name',
 						'headerOptions'=>['style'=>'width: 15%;'],
 					],
-					[
-						'label' => Yii::t('topology', 'Urn'),
-						'value' => 'urn',
-						'headerOptions'=>['style'=>'width: 30%;'],
-					],
+					// [
+					// 	'label' => Yii::t('topology', 'Urn'),
+					// 	'value' => 'urn',
+					// 	'headerOptions'=>['style'=>'width: 30%;'],
+					// ],
 					[
 						'format' => 'raw',
 						'label' => Yii::t('topology', 'VLANs'),
@@ -128,22 +120,34 @@ $this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'),
 							if($port->vlan_range) return $port->vlan_range;
 							return $port->getInboundPortVlanRange();
 						},
-						'headerOptions'=>['style'=>'width: 8%;'],
+						// 'headerOptions'=>['style'=>'width: 8%;'],
 					],
 					[
 						'label' => Yii::t('topology', 'Max Capacity (Mbps)'),
 						'value' => 'max_capacity',
-						'headerOptions'=>['style'=>'width: 10%;'],
+						// 'headerOptions'=>['style'=>'width: 10%;'],
 					],
 					[
 						'label' => Yii::t('topology', 'Min Capacity (Mbps)'),
 						'value' => 'min_capacity',
-						'headerOptions'=>['style'=>'width: 10%;'],
+						// 'headerOptions'=>['style'=>'width: 10%;'],
 					],
 					[
 						'label' => Yii::t('topology', 'Granularity (Mbps)'),
 						'value' => 'granularity',
-						'headerOptions'=>['style'=>'width: 10%;'],
+						// 'headerOptions'=>['style'=>'width: 10%;'],
+					],
+					[
+						'format' => 'raw',
+						'label' => Yii::t('topology', 'Location'),
+						'value' => function($port){
+							$locationName = $port->getLocation()->one();
+							if ($locationName != NULL)
+								return $port->getLocation()->one()->name;
+							else
+								return NULL;
+						},
+						'headerOptions'=>['style'=>'width: 9%;'],
 					],
 	
 				),

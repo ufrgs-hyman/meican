@@ -32,7 +32,8 @@ class PortController extends RbacController {
 	public function actionCreate($id){
 		$port = new Port;
 		$domain = Domain::findOne($id);
-	
+		$locations = Location::find()->where(['domain_id' => $id])->orderBy(['name'=>SORT_ASC]);
+
 		if($port->load($_POST)) {
 			$port->type = 'NSI';
 			$port->directionality = 'BI';
@@ -40,6 +41,7 @@ class PortController extends RbacController {
 				return $this->renderPartial('_add-port',array(
 					'networks' => $domain->getNetworks(),
 					'port' => $port,
+					'locations' => $locations,
 				));
 			}
 			$port->save();
@@ -49,12 +51,14 @@ class PortController extends RbacController {
 		return $this->renderPartial('_add-port',array(
 				'networks' => $domain->getNetworks(),
 				'port' => $port,
+				'locations' => $locations,
 		));
 	}
 	
 	public function actionUpdate($id){
 		$port = Port::findOne($id);
 		$domain = $port->getNetwork()->one()->getDomain()->one();
+		$locations = Location::find()->where(['domain_id' => $domain])->orderBy(['name'=>SORT_ASC]);
 		
 		if($port->load($_POST)) {
 			$port->type = 'NSI';
@@ -63,6 +67,7 @@ class PortController extends RbacController {
 				return $this->renderPartial('_edit-port',array(
 						'networks' => $domain->getNetworks(),
 						'port' => $port,
+						'locations' => $locations,
 				));
 			}
 			$port->save();
@@ -72,6 +77,7 @@ class PortController extends RbacController {
 		return $this->renderPartial('_edit-port',array(
 				'networks' => $domain->getNetworks(),
 				'port' => $port,
+				'locations' => $locations,
 		));
 	}
 	
