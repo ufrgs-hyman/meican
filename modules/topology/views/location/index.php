@@ -31,7 +31,7 @@ $this->params['header'] = [Yii::t('topology', 'Locations'), [Yii::t('home', 'Hom
         $form = ActiveForm::begin([
             'method' => 'post',
             'action' => ['delete'],
-            'id' => 'device-form',	
+            'id' => 'location-form',	
             'enableClientScript'=>false,
             'enableClientValidation' => false,
         ]);
