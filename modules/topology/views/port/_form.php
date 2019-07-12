@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2012-2019 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -22,7 +22,5 @@ $form=ActiveForm::begin(array(
 <?= $form->field($port,'min_capacity')->textInput(['size'=>30,'maxlength'=>20]); ?>
 <?= $form->field($port,'granularity')->textInput(['size'=>30,'maxlength'=>30]); ?>
 <?= $form->field($port,'network_id')->dropDownList(ArrayHelper::map($networks->all(), 'id', 'name')); ?>
-<?= $form->field($port,'device_id')->dropDownList(ArrayHelper::map($devices->all(), 'id', 'name')); ?>
-
 
 <?php ActiveForm::end(); ?>

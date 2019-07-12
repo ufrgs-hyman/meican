@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2012-2019 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -122,10 +122,10 @@ class Domain extends \yii\db\ActiveRecord {
     public function getBiPorts(){
     	$portsArray = [];
     	
-    	$devices = Device::find()->where(['domain_id' => $this->id])->all();
+    	$networks = Network::find()->where(['domain_id' => $this->id])->all();
     	
-    	foreach($devices as $device){
-    		$ports = Port::find()->where(['device_id' => $device->id, 'type' => Port::TYPE_NSI, 'directionality' => Port::DIR_BI])->all();
+    	foreach($networks as $network){
+    		$ports = Port::find()->where(['network_id' => $network->id, 'type' => Port::TYPE_NSI, 'directionality' => Port::DIR_BI])->all();
     		foreach($ports as $port){
     			$portsArray[$port->id] = $port;
     		}
