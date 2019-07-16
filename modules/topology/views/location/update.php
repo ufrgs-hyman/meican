@@ -4,7 +4,7 @@
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-$this->params['box-title'] = Yii::t('topology', 'Update Device'); ?>
+$this->params['box-title'] = Yii::t('topology', 'Update Location'); ?>
 
 <?=
 	$this->render('_form', array(

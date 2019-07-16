@@ -84,7 +84,7 @@ return array(
 		'Location {name} updated successfully' => 'Localização {name} editada com sucesso',
 		'Error deleting Location {name}' => 'Houve um erro. Localização {name} não removida',
 		'Add Location' => 'Adicionar Localização',
-		'Update Device' => 'Editar Dispositivo',
+		'Update Location' => 'Editar Localização',
 		'Trademark' => 'Marca',
 		'Ports' => 'Portas',
 		'No Ports added to this domain' => 'Este domínio não possui portas',
