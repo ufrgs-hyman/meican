@@ -471,7 +471,7 @@ function addMarker(port, color) {
     marker = meicanMap.getNodeByPort(port.urn);
     if (marker) return;
 
-    meicanMap.addNode(port, color);
+    meicanMap.addNode(port, color, true);
 }
 
 function areMarkersReady(path) {

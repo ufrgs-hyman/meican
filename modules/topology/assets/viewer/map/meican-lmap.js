@@ -219,7 +219,7 @@ LMap.prototype.getParentPosition = function(port) {
     return L.latLng([0,0]);
 }
 
-LMap.prototype.addNode = function(port, color) {
+LMap.prototype.addNode = function(port, color, drawPortLocation) {
     // try {
     if (!color) color = port.network.domain.color;
     // } catch(err) {
@@ -232,7 +232,10 @@ LMap.prototype.addNode = function(port, color) {
     }
 
     if(pos.lat == 0 && pos.lng == 0){
-        return 0;
+        if(drawPortLocation && port.lat != undefined) 
+            pos = L.latLng([port.lat, port.lng]);
+        else
+            return 0;
     }
 
     var node = this.getNodeByPosition(pos, port.network.domain);
