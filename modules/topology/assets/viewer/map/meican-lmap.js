@@ -535,7 +535,7 @@ LMap.prototype.setInitialMapPosition = function(){
                 return (elem['lat'] != null && elem['lng'] != null);
             });
 
-            if(validAllowedDomains.length <= 5){
+            if(validAllowedDomains.length <= 5 && validAllowedDomains.length != 0){
                 if(validAllowedDomains.length == 1){
                     lat = validAllowedDomains[0].lat;
                     lng = validAllowedDomains[0].lng;
