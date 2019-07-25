@@ -520,6 +520,44 @@ LMap.prototype.getMarkerByDomain = function(type, domainId) {
     return null;
 }
 
+LMap.prototype.setInitialMapPosition = function(){
+    var current = this;
+    let lat = 0;
+    let lng = 0;
+    $.ajax({
+        url: baseUrl+'/aaa/role/get-allowed-domains',
+        dataType: 'json',
+        method: "GET",        
+        success: function(response) {
+            let allowedDomains = response;
+
+            let validAllowedDomains = allowedDomains.filter(function(elem){
+                return (elem['lat'] != null && elem['lng'] != null);
+            });
+
+            if(validAllowedDomains.length <= 5){
+                if(validAllowedDomains.length == 1){
+                    lat = validAllowedDomains[0].lat;
+                    lng = validAllowedDomains[0].lng;
+                    current._map.setView(L.latLng(lat,lng), 4);
+                }else{
+                    for(let i = validAllowedDomains.length-1; i >= 0; i--){
+                        lat += parseFloat(validAllowedDomains[i].lat);
+                        lng += parseFloat(validAllowedDomains[i].lng);
+                    }
+                    lat /= validAllowedDomains.length;
+                    lng /= validAllowedDomains.length;
+                    current._map.setView(L.latLng(lat,lng), 3);
+                } 
+            } else{
+                current._map.setView(L.latLng(lat,lng), 0);
+            }
+        }
+    });
+
+    
+}
+
 LMap.prototype.setNodeType = function(type) {
     if(this._nodeType == type)
         return;
@@ -547,12 +585,14 @@ LMap.prototype.setNodeType = function(type) {
 
 LMap.prototype.build = function(mapDiv) {
     this._map = L.map(mapDiv, {
-        center: [-13.8771429,-52.0998244],
+        center: [0,0],
         zoomControl: false,
         zoom: 4,
         maxZoom: 19,
         minZoom: 2
     });
+
+    this.setInitialMapPosition();
 
     new L.Control.Zoom({ position: 'topright' }).addTo(this._map);
 

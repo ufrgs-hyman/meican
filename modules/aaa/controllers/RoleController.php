@@ -14,10 +14,12 @@ use meican\aaa\models\User;
 use meican\aaa\models\UserSettings;
 use meican\aaa\models\UserDomainRole;
 use meican\topology\models\Domain;
+use meican\topology\models\Network;
+use meican\topology\models\Provider;
 use meican\aaa\models\Group;
 use meican\aaa\RbacController;
 use meican\aaa\models\AaaNotification;
-
+use yii\helpers\Json;
 /**
  * @author Maurício Quatrin Guerreiro
  */
@@ -365,5 +367,40 @@ class RoleController extends RbacController {
     	endforeach;
     
     	echo json_encode($array);
+    }
+
+    public function actionGetAllowedDomains(){ 
+        $allowedDomainIds = [];
+
+        $domains = Domain::find()->all();
+        $allowedDomains = self::whichDomainsCan('read');
+
+    
+        foreach ($allowedDomains as $allowedDomain) {
+            $allowedDomainIds[] = $allowedDomain->id;
+        }
+
+        $networks = Network::find()->where(['in', 'domain_id', $allowedDomainIds])->innerJoin('meican_domain', 'meican_domain.id = meican_network.domain_id')->select(['meican_domain.id', 'meican_domain.name', 'meican_network.latitude as lat', 'meican_network.longitude as lng'])->asArray()->all();
+        
+        $providers = Provider::find()->where(['in', 'domain_id', $allowedDomainIds])->innerJoin('meican_domain', 'meican_domain.id = meican_provider.domain_id')->select(['meican_domain.id', 'meican_domain.name', 'meican_provider.latitude as lat', 'meican_provider.longitude as lng'])->asArray()->all();
+
+        
+        foreach ($networks as $key=>$network) {
+            if($network['lat'] == null || $network['lng'] == null){
+                foreach ($providers as $provider) {
+                    if($network['id'] == $provider['id']){
+                        $networks[$key]['lat'] = $provider['lat'];
+                        $networks[$key]['lng'] = $provider['lng'];
+                    }
+                }
+            }
+        }
+
+        $allowedDomains = $networks;
+        
+        $temp = Json::encode($allowedDomains);
+        return $temp;
+
+
     }
 }
