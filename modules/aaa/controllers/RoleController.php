@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2012-2019 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -400,7 +400,5 @@ class RoleController extends RbacController {
         
         $temp = Json::encode($allowedDomains);
         return $temp;
-
-
     }
 }
