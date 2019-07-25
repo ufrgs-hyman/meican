@@ -584,13 +584,7 @@ LMap.prototype.setNodeType = function(type) {
 }
 
 LMap.prototype.build = function(mapDiv) {
-    this._map = L.map(mapDiv, {
-        center: [0,0],
-        zoomControl: false,
-        zoom: 0,
-        maxZoom: 19,
-        minZoom: 2
-    });
+    this._map = L.map(mapDiv);
 
     this.setInitialMapPosition();
 
