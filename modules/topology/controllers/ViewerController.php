@@ -185,8 +185,6 @@ class ViewerController extends RbacController {
                 isset($links[$domId1]) ? null : $links[$domId1] = [];
                 isset($links[$domId2]) ? null : $links[$domId2] = [];
 
-                Yii::warning($port->max_capacity);
-
                 switch ($port->directionality) {
                     case Port::DIR_UNI_OUT:
                         if(!in_array($domId2, $links[$domId1]))

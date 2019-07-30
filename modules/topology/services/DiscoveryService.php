@@ -372,16 +372,44 @@ class DiscoveryService {
                         $change->save();
                     } else {
                         //update port
-                        if(isset($uniPortData["vlan"]) && $uniport->vlan_range != $uniPortData['vlan']) {
+                        $uptatedProperties = [
+                            'capMax' => [
+                                'key' =>'cap_max',
+                                'value' => $uniport->max_capacity
+                            ],
+                            'capMin' => [
+                                'key' =>'cap_min',
+                                'value' => $uniport->min_capacity
+                            ],
+                            'granu' => [
+                                'key' => 'granu',
+                                'value' => $uniport->granularity
+                            ],
+                            'vlan' => [
+                                'key' => 'vlan',
+                                'value' => $uniport->vlan_range
+                            ]
+                        ];
+
+                        $dataChange = [];
+                        foreach($uptatedProperties as $key => $property)   {
+                            if(isset($uniPortData[$key]) && $uniPortData[$key] != $property['value'])    {
+                                $dataChange[$property['key']] = (isset($uniPortData[$key])) ? $uniPortData[$key] : null;
+                            }
+                        }
+
+                        if(!empty($dataChange)) {
                             $change = $this->buildChange();
                             $change->type = Change::TYPE_UPDATE;
                             $change->domain = $domainName;
                             $change->item_type = Change::ITEM_TYPE_UNIPORT;
                             $change->item_id = $uniport->id;
 
-                            $change->data = json_encode([
-                                'vlan'=> $uniPortData["vlan"]
-                            ]);
+                            if(!isset($dataChange['vlan']))  {
+                                $dataChange['vlan'] = $uniport->vlan_range;
+                            }
+
+                            $change->data = json_encode($dataChange);
                             $change->save();
                         }
                     }
