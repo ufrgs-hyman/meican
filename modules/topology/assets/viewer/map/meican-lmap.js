@@ -224,18 +224,16 @@ LMap.prototype.addNode = function(port, color, drawPortLocation) {
     if (!color) color = port.network.domain.color;
     // } catch(err) {
     //     console.log(port);
-    // } 
-    if (typeof port.network !== 'undefined') {
+    // }
+    if(drawPortLocation && port.lat != undefined) 
+        pos = L.latLng([port.lat, port.lng]);
+    else if (typeof port.network !== 'undefined') {
         var pos = this.getParentPosition(port);
     } else {
         var pos = L.latLng([0, 0]);
     }
-
     if(pos.lat == 0 && pos.lng == 0){
-        if(drawPortLocation && port.lat != undefined) 
-            pos = L.latLng([port.lat, port.lng]);
-        else
-            return 0;
+        return 0;
     }
 
     var node = this.getNodeByPosition(pos, port.network.domain);

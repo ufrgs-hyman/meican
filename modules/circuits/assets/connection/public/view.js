@@ -367,6 +367,10 @@ function drawCircuit(connId, animate) {
                         path[i]['network'] = nets[k];
                     }
                 }
+                if(path[i]['network']['latitude'] == null && path[i]['network']['longitude'] == null){
+                    path[i]['network']['latitude'] = path[i]['provider_lat'];
+                    path[i]['network']['longitude'] =  path[i]['provider_lng'];
+                }
             }
             var size = response.length;
 
