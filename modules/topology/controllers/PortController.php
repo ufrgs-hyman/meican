@@ -112,7 +112,7 @@ class PortController extends RbacController {
     }
 
 	public function actionGetLocation($fields=null) {
-		$query = Port::find()->innerJoin('meican_location', 'meican_location.id = meican_port.location_id')->select(['meican_location.name as location_name', 'meican_location.lat', 'meican_location.lng', 'network_id', 'location_id'])->asArray();
+		$query = Port::find()->innerJoin('meican_location', 'meican_location.id = meican_port.location_id')->select(['meican_location.name as location_name', 'meican_location.lat', 'meican_location.lng', 'network_id', 'location_id'])->asArray()->distinct(true);
 
         $fields ? $data = $query->select(explode(',',$fields))->all() : $data = $query->all();
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
