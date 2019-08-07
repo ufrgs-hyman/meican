@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2016 RNP
+ * @copyright Copyright (c) 2019 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  * @author Maurício Quatrin Guerreiro
  */
@@ -790,7 +790,7 @@ function loadNetworks() {
 
 function loadLocation(){
     $.ajax({
-        url: baseUrl+'/topology/port/get-location',
+        url: baseUrl+'/topology/location/get-location',
         method: "GET",        
         success: function(response) {
             meicanTopo['location'] = response;

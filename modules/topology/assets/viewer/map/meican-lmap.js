@@ -819,7 +819,7 @@ LMap.prototype._loadPorts = function(withLinks) {
 LMap.prototype._loadLocations = function()  {
     let current = this;
     $.ajax({
-        url: baseUrl + '/topology/port/get-location',
+        url: baseUrl + '/topology/location/get-location',
         method: "GET",
         success: function(response) {
             current._topology['location'] = response;

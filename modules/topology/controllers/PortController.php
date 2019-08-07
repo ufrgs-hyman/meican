@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2012-2019 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -109,14 +109,6 @@ class PortController extends RbacController {
         $cols ? $data = $query->select(json_decode($cols))->all() : $data = $query->all();
         $temp = Json::encode($data);
         return $temp;
-    }
-
-	public function actionGetLocation($fields=null) {
-		$query = Port::find()->innerJoin('meican_location', 'meican_location.id = meican_port.location_id')->select(['meican_location.name as location_name', 'meican_location.lat', 'meican_location.lng', 'network_id', 'location_id'])->asArray()->distinct(true);
-
-        $fields ? $data = $query->select(explode(',',$fields))->all() : $data = $query->all();
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        return $data;
     }
 
     public function actionJson($fields=null, $dir=null, $type = 'NSI') {
