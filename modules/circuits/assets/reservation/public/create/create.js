@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2016 RNP
+ * @copyright Copyright (c) 2019 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  * @author Maurício Quatrin Guerreiro
  */
@@ -825,12 +825,9 @@ function fillPortSelect(networkId, portId) {
         len = meicanTopo['ports'].length;
         for (var i = 0; i < len; i++) {
             if (meicanTopo['ports'][i].network_id == networkId) {
-                lid = meicanTopo['ports'][i].urn.replace(meicanTopo['ports'][i].network.urn + ':', '');
-                $("#" + selectId).append('<option value="' + 
-                meicanTopo['ports'][i].id + '">' + 
-                meicanTopo['ports'][i].name  +
-                (lid == meicanTopo['ports'][i].name ? '' : ' (' + lid + ')')
-                  +
+                $("#" + selectId).append('<option value="' +
+                meicanTopo['ports'][i].id + '">' +
+                meicanTopo['ports'][i].name +
                 '</option>');
             }
         }

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2016 RNP
+ * @copyright Copyright (c) 2019 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -387,11 +387,11 @@ class NSIParser {
                     continue;
                 }
 
-                $biportNameNode = $this->xpath->query(".//x:name", $biPortNode);
+                $biportName = str_replace($netId.":", "", $biPortId);
+
+                $biportNameNode = $this->xpath->query("./x:name", $biPortNode);
                 if ($biportNameNode->item(0)) {
                     $biportName = $biportNameNode->item(0)->nodeValue;
-                } else {
-                    $biportName = str_replace($netId.":", "", $biPortId);
                 }
 
                 $locationNode = $this->xpath->query(".//x:Location", $biPortNode);
@@ -403,7 +403,10 @@ class NSIParser {
                     $latNode = $this->xpath->query(".//x:lat", $locationNode->item(0));	
                     $lat = $latNode->item(0)->nodeValue;	
                     $lngNode = $this->xpath->query(".//x:long", $locationNode->item(0));	
-                    $lng = $lngNode->item(0)->nodeValue;	
+                    $lng = $lngNode->item(0)->nodeValue;
+
+                    $locationNameNode = $this->xpath->query(".//x:name", $locationNode->item(0));
+                    $locationName = $locationNameNode->item(0)->nodeValue;	
                 }
                 
                 $this->parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName, $lat, $lng);
