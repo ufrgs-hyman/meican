@@ -198,7 +198,7 @@ class NSIParser {
     }
 
     function addPort($netId, $netName, $biPortId, $biportName, $portId, $portType, 
-            $vlan, $alias, $capMax, $capMin, $cap, $lat, $lng) {
+            $vlan, $alias, $capMax, $capMin, $cap, $granu, $lat, $lng) {
         $netUrn = str_replace("urn:ogf:network:","",$netId);
         $netUrn = $netUrn;
         $portUrn = str_replace("urn:ogf:network:","",$portId);
@@ -263,6 +263,10 @@ class NSIParser {
         if($cap)    {
             $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["uniports"][$portUrn]["capacity"] = ($cap/1000000.);   
             $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]['capacity'] = ($cap/1000000.);
+        }
+        if($granu)  {
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["uniports"][$portUrn]["granu"] = ($granu/1000000.);   
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]['granu'] = ($granu/1000000.);
         }
     }
 
@@ -447,6 +451,7 @@ class NSIParser {
                         $vlanAndAlias[2],
                         $vlanAndAlias[3],
                         $vlanAndAlias[4],
+                        $vlanAndAlias[5],
                         $lat,
                         $lng
                 );
@@ -519,6 +524,7 @@ class NSIParser {
                         $capMax = null;
                         $capMin = null;
                         $cap = null;
+                        $granu = null;
 
                         foreach($portNode->childNodes as $capNode)    {
                             if($capNode->localName === "maximumReservableCapacity")
@@ -527,12 +533,15 @@ class NSIParser {
                                 $capMin = $capNode->nodeValue;
                             else if($capNode->localName === "capacity")
                                 $cap = $capNode->nodeValue;
+                            else if($capNode->localName === "granularity")
+                                $granu = $capNode->nodeValue;
+
                         }
 
                         if($vlanRangeNode->item(0)) {
                             return [$vlanRangeNode->item(0)->nodeValue, 
                                     $alias,
-                                    $capMax, $capMin, $cap];
+                                    $capMax, $capMin, $cap, $granu];
                         } else {
                             continue;
                         }
