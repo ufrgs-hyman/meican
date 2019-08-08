@@ -379,6 +379,7 @@ class Change extends \yii\db\ActiveRecord
                         $port->urn = $data->urn;
                         $port->name = $data->name;
                         $port->max_capacity = $data->cap_max;
+                        $port->capacity = $data->capacity;
                         $port->min_capacity = $data->cap_min;
                         $port->granularity = $data->granu;
                         $port->vlan_range = $data->vlan;

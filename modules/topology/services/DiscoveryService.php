@@ -303,6 +303,7 @@ class DiscoveryService {
                     'lng'=>isset($portData["lng"]) ? $portData["lng"] : null,
                     'cap_max' =>isset($portData["capMax"]) ? $portData["capMax"] : null,
                     'cap_min'=>isset($portData["capMin"]) ? $portData["capMin"] : null,
+                    'capacity'=>isset($portData["capacity"]) ? $portData["capacity"] : null,
                     'granu' =>isset($portData["granu"]) ? $portData["granu"] : null,
                     'vlan'=> isset($portData["vlan"]) ? $portData["vlan"] : null,
                 ]);

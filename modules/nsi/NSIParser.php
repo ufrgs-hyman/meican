@@ -251,12 +251,19 @@ class NSIParser {
             $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]['lng'] = $lng;
         }
 
-        if($capMax)
+        if($capMax) {
             $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["uniports"][$portUrn]["capMax"] = ($capMax/1000000.);
-        if($capMin)
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]['capMax'] = ($capMax/1000000.);
+        }
+        if($capMin) {
             $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["uniports"][$portUrn]["capMin"] = ($capMin/1000000.);
-        if($cap)
-            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["uniports"][$portUrn]["capacity"] = ($cap/1000000.);                
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]['capMin'] = ($capMin/1000000.);
+
+        }
+        if($cap)    {
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["uniports"][$portUrn]["capacity"] = ($cap/1000000.);   
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]['capacity'] = ($cap/1000000.);
+        }
     }
 
     function parseDocuments() {
