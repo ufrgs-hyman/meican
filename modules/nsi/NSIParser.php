@@ -198,7 +198,7 @@ class NSIParser {
     }
 
     function addPort($netId, $netName, $biPortId, $biportName, $portId, $portType, 
-            $vlan, $alias, $capMax, $capMin, $lat, $lng) {
+            $vlan, $alias, $capMax, $capMin, $cap, $lat, $lng) {
         $netUrn = str_replace("urn:ogf:network:","",$netId);
         $netUrn = $netUrn;
         $portUrn = str_replace("urn:ogf:network:","",$portId);
@@ -255,7 +255,8 @@ class NSIParser {
             $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["uniports"][$portUrn]["capMax"] = ($capMax/1000000.);
         if($capMin)
             $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["uniports"][$portUrn]["capMin"] = ($capMin/1000000.);
-                
+        if($cap)
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["uniports"][$portUrn]["capacity"] = ($cap/1000000.);                
     }
 
     function parseDocuments() {
@@ -435,6 +436,7 @@ class NSIParser {
                         $vlanAndAlias[1],
                         $vlanAndAlias[2],
                         $vlanAndAlias[3],
+                        $vlanAndAlias[4],
                         $lat,
                         $lng
                 );
@@ -506,18 +508,21 @@ class NSIParser {
 
                         $capMax = null;
                         $capMin = null;
+                        $cap = null;
 
                         foreach($portNode->childNodes as $capNode)    {
                             if($capNode->localName === "maximumReservableCapacity")
                                 $capMax = $capNode->nodeValue;
                             else if($capNode->localName === "minimumReservableCapacity")
                                 $capMin = $capNode->nodeValue;
+                            else if($capNode->localName === "capacity")
+                                $cap = $capNode->nodeValue;
                         }
 
                         if($vlanRangeNode->item(0)) {
                             return [$vlanRangeNode->item(0)->nodeValue, 
                                     $alias,
-                                    $capMax, $capMin];
+                                    $capMax, $capMin, $cap];
                         } else {
                             continue;
                         }

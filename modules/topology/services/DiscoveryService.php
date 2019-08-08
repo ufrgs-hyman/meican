@@ -365,6 +365,7 @@ class DiscoveryService {
                             'name' =>$uniPortData["name"],
                             'cap_max' =>isset($uniPortData["capMax"]) ? $uniPortData["capMax"] : null,
                             'cap_min'=>isset($uniPortData["capMin"]) ? $uniPortData["capMin"] : null,
+                            'capacity'=>isset($uniPortData["capacity"]) ? $uniPortData["capacity"] : null,
                             'granu' =>isset($uniPortData["granu"]) ? $uniPortData["granu"] : null,
                             'vlan'=> isset($uniPortData["vlan"]) ? $uniPortData["vlan"] : null,
                         ]);
