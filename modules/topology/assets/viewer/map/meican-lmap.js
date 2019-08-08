@@ -128,7 +128,9 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
         latLngList[1] = L.latLngBounds(latLngList[0], latLngList[1]).getCenter();
     }
 
-    capText = (cap)? 'Max capacity: <b>' + cap + '</b> Mbps' : '';
+
+    let capUnit = (cap > 1000) ? (cap/1000.) + '</b> Gbps' :  cap + '</b> Mbps';
+    capText = (cap)? 'Max reservable capacity: <b>' + capUnit : '';
 
     if (latLngList.length > 1) {
         var link = L.polyline(
@@ -144,9 +146,9 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
                 weight: 6,
             }).addTo(this._map).bindPopup(
                         'Link between <b>' + 
-                        meicanMap.getNodeByPort(from).options.name +
+                        meicanMap.getNodeByPort(from).options.ports[0].network.domain.name +
                         '</b> and <b>' +
-                        meicanMap.getNodeByPort(to).options.name +
+                        meicanMap.getNodeByPort(to).options.ports[0].network.domain.name +
                         '</b><br>' +
                         capText);
 
