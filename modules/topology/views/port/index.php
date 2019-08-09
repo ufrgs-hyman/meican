@@ -101,12 +101,12 @@ $this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'),
 						'value' => function($port){
 							return $port->getNetwork()->one()->name;
 						},
-						'headerOptions'=>['style'=>'width: 18%;'],
+						'headerOptions'=>['style'=>'width: 21%;'],
 					],
 					[
 						'label' => Yii::t('topology', 'Name'),
 						'value' => 'name',
-						'headerOptions'=>['style'=>'width: 20%;'],
+						'headerOptions'=>['style'=>'width: 23%;'],
 					],
 					[
 						'format' => 'raw',
@@ -115,23 +115,37 @@ $this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'),
 							if($port->vlan_range) return $port->vlan_range;
 							return $port->getInboundPortVlanRange();
 						},
-						'headerOptions'=>['style'=>'width: 13%;'],
+						'headerOptions'=>['style'=>'width: 16%;'],
 					],
 					[
-						'label' => Yii::t('topology', 'Capacity (Mbps)'),
-						'value' => 'capacity',
-						'headerOptions'=>['style'=>'width: 13%;'],
+						'label' => Yii::t('topology', 'Capacity'),
+						'value' => function($port){
+							if($port->capacity == null)
+								return null;
+							elseif($port->capacity >= 1000)
+								return (($port->capacity)/1000).' Gbps';
+							else
+								return $port->capacity.' Mbps';
+						},
+						'headerOptions'=>['style'=>'width: 16%;'],
 					],
 					[
-						'label' => Yii::t('topology', 'Reservable Capacity (Mbps)'),
-						'value' => 'max_capacity',
-						'headerOptions'=>['style'=>'width: 20%;'],
+						'label' => Yii::t('topology', 'Reservable Capacity'),
+						'value' => function($port){
+							if($port->max_capacity == null)
+								return null;
+							elseif($port->max_capacity >= 1000)
+								return (($port->max_capacity)/1000).' Gbps';
+							else
+								return $port->max_capacity.' Mbps';
+						},
+						'headerOptions'=>['style'=>'width: 23%;'],
 					],
-					[
-						'label' => Yii::t('topology', 'Granularity (Mbps)'),
-						'value' => 'granularity',
-						'headerOptions'=>['style'=>'width: 15%;'],
-					],
+					// [
+					// 	'label' => Yii::t('topology', 'Granularity (Mbps)'),
+					// 	'value' => 'granularity',
+					// 	'headerOptions'=>['style'=>'width: 15%;'],
+					// ],
 				),
 			]);
 			?>
