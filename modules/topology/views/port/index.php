@@ -141,11 +141,6 @@ $this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'),
 						},
 						'headerOptions'=>['style'=>'width: 23%;'],
 					],
-					// [
-					// 	'label' => Yii::t('topology', 'Granularity (Mbps)'),
-					// 	'value' => 'granularity',
-					// 	'headerOptions'=>['style'=>'width: 15%;'],
-					// ],
 				),
 			]);
 			?>
