@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2016 RNP
+ * @copyright Copyright (c) 2019 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  * @author Mauricio Quatrin Guerreiro
  */
@@ -305,12 +305,8 @@ function initPathBox() {
     });
 
     $('#path-map').on('lmap.nodeClick', function(e, node) {
-    	console.log(node);
-        // node.setPopupContent('Domain: <b>' + node.options.ports[0].network.domainname + 
-        //     '</b><br>Device: <b>' + marker.options.name + '</b><br>');
-            //'In port: <b></b><br>' +
-            //'Out port: <b></b><br>' +
-            //'VLAN: <b></b><br>');
+        let portName = node.options.name.split(":").slice(3,6).join(':');
+        node.setPopupContent('Port: <b>' + portName + '</b><br>');
     });
 
     $("#path-box").on("click", '.show-stats', function() {
