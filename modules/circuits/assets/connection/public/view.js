@@ -306,7 +306,8 @@ function initPathBox() {
 
     $('#path-map').on('lmap.nodeClick', function(e, node) {
         let portName = node.options.name.split(":").slice(3,6).join(':');
-        node.setPopupContent('Port: <b>' + portName + '</b><br>');
+        let domainName = node.options.name.split(":")[0];
+        node.setPopupContent('Domain: <b>' + domainName + '</b><br>Port: <b>' + portName + '</b><br>');
     });
 
     $("#path-box").on("click", '.show-stats', function() {
