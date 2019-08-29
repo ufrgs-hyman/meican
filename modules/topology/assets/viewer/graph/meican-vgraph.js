@@ -121,9 +121,14 @@ VGraph.prototype.addLink = function(srcId, dstId, cap, type) {
             },
         },
     };
-    if(cap) 
-        link["title"] =  "Max capacity: " + cap + " Mbps";
-    
+    if(cap) {
+        let unit = "Mbps";
+        if(cap >= 1000) {
+            unit = "Gbps";
+            cap /= 1000;
+        } 
+        link["title"] =  "Max reservable capacity: " + cap + unit;
+    }
     this._links.add(link);
 }
 
