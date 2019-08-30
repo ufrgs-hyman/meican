@@ -222,11 +222,11 @@ LMap.prototype.getParentPosition = function(port) {
 }
 
 LMap.prototype.addNode = function(port, color, drawPortLocation) {
-    // try {
-    if (!color) color = port.network.domain.color;
-    // } catch(err) {
-    //     console.log(port);
-    // }
+    if(!port.network)
+        return;
+    if (!color) 
+        color = port.network.domain.color;
+
     if(drawPortLocation && port.lat != undefined) 
         pos = L.latLng([port.lat, port.lng]);
     else if (typeof port.network !== 'undefined') {
