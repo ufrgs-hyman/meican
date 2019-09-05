@@ -8,7 +8,7 @@
  * @author Mauricio Quatrin Guerreiro
  */
 
-var flagPortLocation = true;
+var flagPortLocation = false;
 var flagNetworkWasClicked = false;
 
 function LMap(canvasDivId) {
@@ -25,6 +25,7 @@ function LMap(canvasDivId) {
     this._portsSize = 0;
     this._nodeAutoInc = 1;
     this._linkAutoInc = 1;
+    this._expandedDomainNodes = [];
 };
 
 LMap.prototype.show = function(instantRefresh) {
@@ -66,7 +67,7 @@ LMap.prototype.getPortsSize = function() {
 }
 
 LMap.prototype.addPort = function(id, name, dir, cap, nodeId, aliasNodeId, aliasPortId, type) {
-    //console.log(id, name, dir, nodeId, aliasNodeId, aliasPortId, type);
+
     var node = this.getNode(nodeId);
     this._portsSize++;
 
@@ -295,7 +296,8 @@ LMap.prototype.getParentPosition = function(port) {
 LMap.prototype.addNode = function(port, color) {
     if(!port.network)
         return;
-    if (!color) color = port.network.domain.color;
+    if (!color) 
+        color = port.network.domain.color;
 
     if(flagPortLocation && port.lat != null && port.lng != null) {
         var pos = L.latLng([port.lat,port.lng]);
@@ -325,15 +327,25 @@ LMap.prototype.addNode = function(port, color) {
             className: 'marker-icon-svg',
         });
 
+        let nodeType = "domain";
+        if(flagPortLocation)
+            nodeType = "location"
+        
         node = L.marker(
             this.buildNodePosition(pos), 
             {
                 id: this._nodeAutoInc++, 
                 icon: icon,
                 name: port.urn,
+                type: nodeType,
                 ports: [port]
             }
         ).bindPopup("#");
+
+        if(flagPortLocation)
+            node.bindTooltip(port.location_name, {permanent:true, direction: 'top'}).openTooltip();
+        else
+            node.bindTooltip(port.network.domain.name, {permanent:true, direction: 'left'}).openTooltip();
 
         this._nodes.push(node);
         this._cluster.addLayer(node);
@@ -370,16 +382,31 @@ LMap.prototype.addNode = function(port, color) {
 
 LMap.prototype.prepareLabels = function() {
     //this._nodes._tooltip = [];
+
+    let expandedDomainsNodes = this.getExpandedDomainNodes();
+
     this.removeLabels();
+
     for (var i = this._nodes.length - 1; i >= 0; i--) {
         var label = 'error';
         labels = [];
         for (var k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
-            if(flagPortLocation){
-                if(this._nodes[i].options.ports[k].lat != null && this._nodes[i].options.ports[k].lng != null)
-                    labels.push(this._nodes[i].options.ports[k].location_name);                  
+            if(expandedDomainsNodes.length == 0){
+                if(flagPortLocation){
+                    if(this._nodes[i].options.ports[k].lat != null && this._nodes[i].options.ports[k].lng != null)
+                        labels.push(this._nodes[i].options.ports[k].location_name);                  
+                }else{
+                    labels.push(this._nodes[i].options.ports[k].network.domain.name);
+                }
             }else{
-                labels.push(this._nodes[i].options.ports[k].network.domain.name);
+                for(var j = expandedDomainsNodes.length - 1; j >=0; j--) {
+                    if(flagPortLocation && this._nodes[i].options.ports[k].network.domain.name == expandedDomainsNodes[j].options.ports[0].network.domain.name){
+                        if(this._nodes[i].options.ports[k].lat != null && this._nodes[i].options.ports[k].lng != null)
+                            labels.push(this._nodes[i].options.ports[k].location_name);                  
+                    }else{
+                        labels.push(this._nodes[i].options.ports[k].network.domain.name);
+                    }
+                }
             }
         }
         label = groupByDomain(labels);
@@ -905,3 +932,33 @@ LMap.prototype._loadLinks = function() {
     });
 }
 
+
+
+
+LMap.prototype.getExpandedDomainNodes = function() {
+    return this._expandedDomainNodes;
+}
+
+LMap.prototype.addExpandedDomainNode = function(node) {
+    return this._expandedDomainNodes.push(node);
+}
+
+LMap.prototype.removeExpandedDomainNode = function(domainId) {
+    let indexToRemove = this._expandedDomainNodes.findIndex(function(element){
+        return element.options.ports[0].network.domain.id == domainId;
+    });
+
+    if (indexToRemove != -1)
+        this._expandedDomainNodes.splice(indexToRemove, 1);
+
+    return this._expandedDomainNodes.length;
+}
+
+LMap.prototype.getNodeIdByDomainId = function(domainId) {
+    let expandedDomainNodes = this.getExpandedDomainNodes();
+
+    for (var i = expandedDomainNodes.length - 1; i >=0; i--) {
+        if(expandedDomainNodes[i].options.ports[0].network.domain.id == domainId)
+            return expandedDomainNodes[i].options.id;
+    }
+}

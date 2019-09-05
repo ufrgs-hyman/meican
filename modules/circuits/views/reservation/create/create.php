@@ -243,8 +243,8 @@ In this section you need to provide at least one interval, based in the start an
             <br>
             <div class="form-group">
                 <label>Node type:</label><br>
-                <input type="radio" name="node-type" value="net"> Networks
-                <input type="radio" name="node-type" value="port" checked> Port Locations
+                <input type="radio" name="node-type" value="net" checked> Networks
+                <input type="radio" name="node-type" value="port"> Port Locations
             </div>
         </div>
     </div>
