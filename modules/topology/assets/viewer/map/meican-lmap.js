@@ -319,9 +319,9 @@ LMap.prototype.addNode = function(port, color) {
             iconAnchor: [11, 22],
             popupAnchor: [0,-24],
             tooltipAnchor: [12, -12],
-            html: '<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg">' + 
+            html: '<svg width="25" height="26" xmlns="http://www.w3.org/2000/svg">' + 
             '<g>' +
-            '<path stroke="black" fill="' + color + '" d="m1,0.5l20,0l-10,20l-10,-20z"/>' + 
+            '<path stroke="black" fill="' + color + '" d="m1,5l20,0l-10,20l-10,-20z"/>' + 
             '</g>' + 
             '</svg>',
             className: 'marker-icon-svg',
@@ -362,16 +362,20 @@ LMap.prototype.addNode = function(port, color) {
     } else {
         node.options.ports.push(port);
         //node.unbindLabel();
-        
+        let configIcon = '" d="M1,11a10,10 0 1,0 20,0a10,10 0 1,0 -20,0"/>';
+
+        if(node.options.type == "location")
+            configIcon = '" d="M1,15a10,10 0 1,0 20,0a10,10 0 1,0 -20,0"/>';
+
         node.setIcon(L.divIcon({
             iconSize: [22,22],
             iconAnchor: [11, 22],
             popupAnchor: [0,-24],
             tooltipAnchor: [14, -12],
-            html: '<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg">' + 
+            html: '<svg width="25" height="27" xmlns="http://www.w3.org/2000/svg">' + 
             '<g>' +
             //http://complexdan.com/svg-circleellipse-to-path-converter/
-            '<path stroke="black" fill="' + color + '" d="M1,11a10,10 0 1,0 20,0a10,10 0 1,0 -20,0"/>' + 
+            '<path stroke="black" fill="' + color + configIcon + 
             '</g>' + 
             '</svg>',
             className: 'marker-icon-svg',
