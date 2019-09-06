@@ -934,7 +934,6 @@ LMap.prototype._loadLinks = function() {
 
 
 
-
 LMap.prototype.getExpandedDomainNodes = function() {
     return this._expandedDomainNodes;
 }
@@ -960,5 +959,16 @@ LMap.prototype.getNodeIdByDomainId = function(domainId) {
     for (var i = expandedDomainNodes.length - 1; i >=0; i--) {
         if(expandedDomainNodes[i].options.ports[0].network.domain.id == domainId)
             return expandedDomainNodes[i].options.id;
+    }
+}
+
+LMap.prototype.removeNode = function(domainId, type) {
+    let nodes = meicanMap.getNodes();
+
+    for (var i = nodes.length - 1; i >= 0; i--) {
+        if( (nodes[i].options.ports[0].network.domain_id == domainId) && (nodes[i].options.type == type) ){
+            this._cluster.removeLayer(nodes[i]);
+            this._nodes.splice(i, 1);
+        }
     }
 }
