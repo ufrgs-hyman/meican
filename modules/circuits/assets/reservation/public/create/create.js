@@ -300,11 +300,11 @@ function initPathTab() {
 
         if (node.options.type == "domain")
             if(hasLocation(networkId))
-                expandGroupButton = ' <button style="visibility:visible" class="btn btn-sm btn-info expand-locations">Expand</button>';
+                expandGroupButton = ' <button style="visibility:visible" class="btn btn-sm btn-info expand-locations" title="Expand"><i class="fa fa-expand"></i></button>';
             else
                 expandGroupButton = '';
         else if(node.options.type == "location")
-            expandGroupButton = ' <button style="visibility:visible" class="btn btn-sm btn-info group-locations">Group</button>';
+            expandGroupButton = ' <button style="visibility:visible" class="btn btn-sm btn-info group-locations" title="Group"><i class="fa fa-compress"></i></button>';
 
         node.setPopupContent('Domain: <b>' + node.options.ports[0].network.domain.name + 
             '</b><br><br><div data-node="' + node.options.id + '">' +
