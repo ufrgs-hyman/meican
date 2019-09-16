@@ -996,3 +996,15 @@ LMap.prototype.removeNode = function(domainId, type) {
         }
     }
 }
+
+LMap.prototype.hasLocation = function(networkId) {
+    let locations = this.getTopology()['location'];
+    if (networkId != "" && networkId != null) {
+        for (var i = locations.length - 1; i >= 0; i--) {
+            if(locations[i].network_id == networkId){
+                return true;
+            }
+        }
+    }
+    return false;
+}

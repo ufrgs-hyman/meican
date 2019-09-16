@@ -299,7 +299,7 @@ function initPathTab() {
         let networkId = node.options.ports[0].network_id;
 
         if (node.options.type == "domain")
-            if(hasLocation(networkId))
+            if(meicanMap.hasLocation(networkId))
                 expandGroupButton = ' <button style="visibility:visible" class="btn btn-sm btn-info expand-locations" title="Expand"><i class="fa fa-expand"></i></button>';
             else
                 expandGroupButton = '';
@@ -922,7 +922,7 @@ function fillNetworkSelect(domainId, networkId) {
             enableSelect(selectId);
         }
 
-        if(hasLocation($("#" + selectId).val())){
+        if(meicanMap.hasLocation($("#" + selectId).val())){
             disableSelect("pointform-port");
             fillLocationSelect($("#" + selectId).val());
         }else{
@@ -948,17 +948,6 @@ function fillLocationSelect(networkId, locationId) {
 
         enableSelect(selectId);
     } 
-}
-
-function hasLocation(networkId){
-    if (networkId != "" && networkId != null) {
-        for (var i = meicanTopo['location'].length - 1; i >= 0; i--) {
-            if(meicanTopo['location'][i].network_id == networkId){
-                return true;
-            }
-        }
-    }
-    return false;
 }
 
 function fillPortSelect(networkId, portId, locationName) {
@@ -1062,7 +1051,7 @@ function initEditPointSelects() {
     });
     
     $('#pointform-network').on('change', function() {
-        if(hasLocation(this.value)){
+        if(meicanMap.hasLocation(this.value)){
             disableSelect("pointform-port");
             fillLocationSelect(this.value)
         }else{
