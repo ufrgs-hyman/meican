@@ -634,7 +634,7 @@ LMap.prototype.build = function(mapDiv) {
 
     this._map.addLayer(this._cluster);
 
-    this.setType('rnp');
+    this.setType('osm3');
 
     $('#' + mapDiv).show();   
 }
@@ -708,6 +708,7 @@ LMap.prototype.setType = function(mapType) {
         case "osm" : 
             L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
+                minZoom: 2,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                 subdomains: ['a','b','c']
             }).addTo( this._map );
@@ -721,9 +722,26 @@ LMap.prototype.setType = function(mapType) {
         case 'rnp': 
             L.tileLayer('http://viaipe.rnp.br/mapa/{z}/{x}/{y}.png',{
                 attribution: 'MEICAN Project | UFRGS | Map data &copy; 2019 <a href="http://www.rnp.br">RNP</a>',
-                maxZoom: 15,
+                maxZoom: 18,
                 minZoom: 2
             }).addTo(this._map);
+            break;
+        case "osm2" : 
+            L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                minZoom: 2,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                subdomains: ['a','b','c']
+            }).addTo( this._map );
+            break;
+        case "osm3" : 
+            L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                minZoom: 2,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                subdomains: ['a','b','c']
+            }).addTo( this._map );
+            break;
     }
 }
 
