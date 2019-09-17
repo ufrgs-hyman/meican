@@ -346,14 +346,14 @@ function initPathTab() {
     });
 
     $("#canvas").on("click",'.expand-locations', function() {
-        expandLocations($(this).parent().attr('data-node'));
+        meicanMap.expandLocations($(this).parent().attr('data-node'));
         drawPath();
         closePopups();
         return false;
     });
 
     $("#canvas").on("click",'.group-locations', function() {
-        groupLocations($(this).parent().attr('data-node'));
+        meicanMap.groupLocations($(this).parent().attr('data-node'));
         drawPath();
         closePopups();
         return false;
@@ -851,38 +851,6 @@ function loadPorts() {
             //meicanMap.prepareLabels();
         }
     });
-}
-
-function expandLocations(nodeId) {
-    flagPortLocation = true;
-    let node = meicanMap.getNode(nodeId);
-    let nodes = meicanMap.getNodes();
-    let domainId = node.options.ports[0].network.domain_id;
-
-    meicanMap.addExpandedDomainNode(node);
-
-    for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
-        if(meicanTopo['ports'][i].network.domain_id == domainId){
-            meicanMap.addNode(
-                meicanTopo['ports'][i]
-            );
-        }
-    }
-
-    meicanMap.hideNode(node);
-}
-
-function groupLocations(nodeId) {
-    flagPortLocation = false;
-    let node = meicanMap.getNode(nodeId);
-    let nodes = meicanMap.getNodes();
-    let domainId = node.options.ports[0].network.domain_id;
-
-    meicanMap.removeNode(domainId, "location");
-    
-    meicanMap.showNode(meicanMap.getNode(meicanMap.getNodeIdByDomainId(domainId)));
-    meicanMap.removeExpandedDomainNode(domainId);
-     
 }
 
 function fillDomainSelect() {

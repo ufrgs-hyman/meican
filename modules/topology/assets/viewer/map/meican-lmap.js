@@ -1008,3 +1008,33 @@ LMap.prototype.hasLocation = function(networkId) {
     }
     return false;
 }
+
+LMap.prototype.expandLocations = function(nodeId) {
+    flagPortLocation = true;
+    let node = this.getNode(nodeId);
+    let nodes = this.getNodes();
+    let ports = this.getTopology()['ports'];
+    let domainId = node.options.ports[0].network.domain_id;
+    
+    this.addExpandedDomainNode(node);
+
+    for (var i = ports.length - 1; i >= 0; i--) {
+        if(ports[i].network.domain_id == domainId){
+            this.addNode(
+                ports[i]
+            );
+        }
+    }
+    this.hideNode(node);
+}
+
+LMap.prototype.groupLocations = function(nodeId) {
+    flagPortLocation = false;
+    let node = this.getNode(nodeId);
+    let nodes = this.getNodes();
+    let domainId = node.options.ports[0].network.domain_id;
+
+    this.removeNode(domainId, "location");   
+    this.showNode(meicanMap.getNode(meicanMap.getNodeIdByDomainId(domainId)));
+    this.removeExpandedDomainNode(domainId);
+}
