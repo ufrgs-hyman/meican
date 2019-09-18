@@ -184,7 +184,7 @@ LMap.prototype.addIntraLink = function(location_link)    {
 
 LMap.prototype.addLink = function(from, to, partial, cap, color) {
     if(!from || !to) return null;
-    if(!color) color = '#cccccc';
+    if(!color) color = '#b1b1b1';
     var latLngList = [];
 
     var src = this.getNodeByPort(from);
@@ -206,6 +206,19 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
     }
 
     if (latLngList.length > 1) {
+        let srcName = null;
+        let dstName = null;
+
+        if(src.options.type == 'domain')
+            srcName = meicanMap.getNodeByPort(from).options.name.split(':')[0];   
+        else
+            srcName = meicanMap.getNodeByPort(from).options.name.split(":").slice(3,6).join(':');
+
+        if(dst.options.type == 'domain')
+            dstName = meicanMap.getNodeByPort(to).options.name.split(':')[0];
+        else
+            dstName = meicanMap.getNodeByPort(to).options.name.split(":").slice(3,6).join(':');
+
         var link = L.polyline(
             latLngList, 
             {
@@ -216,12 +229,12 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
                 directedCircuits: [],
                 color: color,
                 opacity: 0.7,
-                weight: 6,
+                weight: 4,
             }).addTo(this._map).bindPopup(
                         'Link between <b>' + 
-                        meicanMap.getNodeByPort(from).options.name +
+                        srcName +
                         '</b> and <b>' +
-                        dst.location_name +
+                        dstName +
                         '</b><br>');
 
         this._links.push(link);
@@ -942,7 +955,8 @@ LMap.prototype._loadLinks = function() {
             for (var src in response) {
                 for (var i = 0; i < response[src].length; i++) {
                     if(flagPortLocation)    {
-                        links.push([parseInt(src),parseInt(response[src][i])]);
+                        current.addLink(parseInt(src),parseInt(response[src][i]));
+                        //links.push([parseInt(src),parseInt(response[src][i])]);
                     }
                     else
                         current.addLink(parseInt(src),parseInt(response[src][i]));

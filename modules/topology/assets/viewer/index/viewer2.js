@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2016 RNP
+ * @copyright Copyright (c) 2019 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  * @author Mauricio Quatrin Guerreiro
  */
@@ -57,18 +57,34 @@ function initMenu() {
 
 function initCanvas() {
     $('#canvas').on('lmap.nodeClick', function(e, node) {
-        console.log(node);
-        node.setPopupContent('Domain: <b>' + node.options.ports[0].network.domain.name + '</b>');
-        /*marker.setPopupContent('Domain: cipo.rnp.br<br>Device: POA<br><br><div class="btn-group">'+
-            '<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">'+
-              'Options <span class="fa fa-caret"></span>'+
-            '</button>'+
-            '<ul data-marker="' + marker.options.id + '" class="dropdown-menu">'+
-              '<li><a class="set-source" href="#">From here</a></li>'+
-              '<li><a class="add-waypoint" href="#">Add waypoint</a></li>'+
-              '<li><a class="set-destination" href="#">To here</a></li>'+
-            '</ul>'+
-          '</div>');*/
+        let expandGroupButton;
+        let networkId = node.options.ports[0].network_id;
+
+        if (node.options.type == "domain")
+            if(meicanMap.hasLocation(networkId))
+                expandGroupButton = ' <button style="visibility:visible" class="btn btn-sm btn-info expand-locations" title="Expand"><i class="fa fa-expand"></i></button>';
+            else
+                expandGroupButton = '';
+        else if(node.options.type == "location")
+            expandGroupButton = ' <button style="visibility:visible" class="btn btn-sm btn-info group-locations" title="Group"><i class="fa fa-compress"></i></button>';
+
+        node.setPopupContent(
+            '<div data-node="' + node.options.id + '">' +
+                'Domain: <b>' + node.options.ports[0].network.domain.name + '</b>' + 
+                expandGroupButton +
+            '</div>');
+    });
+
+    $("#canvas").on("click",'.expand-locations', function() {
+        meicanMap.expandLocations($(this).parent().attr('data-node'));
+        meicanMap.removeLinks();
+        meicanMap._loadLinks();
+    });
+
+    $("#canvas").on("click",'.group-locations', function() {
+        meicanMap.groupLocations($(this).parent().attr('data-node'));
+        meicanMap.removeLinks();
+        meicanMap._loadLinks();
     });
 
     $('#canvas').on('vgraph.nodeClick', function(e, nodeId) {
