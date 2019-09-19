@@ -241,11 +241,6 @@ In this section you need to provide at least one interval, based in the start an
         <div class="lsidebar-pane" id="settings">
             <h1 class="lsidebar-header">Settings<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
             <br>
-            <div class="form-group">
-                <label>Node type:</label><br>
-                <input type="radio" name="node-type" value="net" checked> Networks
-                <input type="radio" name="node-type" value="port"> Port Locations
-            </div>
         </div>
     </div>
 </div>

@@ -49,32 +49,6 @@ $(document).ready(function() {
     
 });
 
-$('input[type=radio][name=node-type]').change(function(){
-    let nodeType = $(this).val();
-
-    switch(nodeType)    {
-        case "net":
-            flagPortLocation = false;
-            if(!flagNetworkWasClicked){
-                meicanMap.saveNodesL();
-                flagNetworkWasClicked = true;
-                initNodes();
-            }else{
-                meicanMap.restoreNodesN();
-                meicanMap.prepareLabels();
-            }
-            break;
-        case "port":
-            meicanMap.saveNodesN(); 
-            flagPortLocation = true;
-            meicanMap.restoreNodesL();
-            meicanMap.prepareLabels();
-            break;
-    }
-    meicanMap.hide();
-    meicanMap.show();
-});
-
 function validatePath() {
     if (isValidPath()) return true;
     else {
