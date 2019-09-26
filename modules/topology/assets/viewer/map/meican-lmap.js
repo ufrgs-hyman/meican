@@ -633,6 +633,7 @@ LMap.prototype.build = function(mapDiv) {
     });
 
     this.setInitialMapPosition();
+    this._map.setMaxBounds( [[-90,-180], [90, 180]] );
 
     new L.Control.Zoom({ position: 'topright' }).addTo(this._map);
 
