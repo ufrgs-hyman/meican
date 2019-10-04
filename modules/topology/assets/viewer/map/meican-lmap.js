@@ -184,7 +184,7 @@ LMap.prototype.addIntraLink = function(location_link)    {
 
 LMap.prototype.addLink = function(from, to, partial, cap, color) {
     if(!from || !to) return null;
-    if(!color) color = '#cccccc';
+    if(!color) color = '#b1b1b1';
     var latLngList = [];
 
     var src = this.getNodeByPort(from);
@@ -206,6 +206,19 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
     }
 
     if (latLngList.length > 1) {
+        let srcName = null;
+        let dstName = null;
+
+        if(src.options.type == 'domain')
+            srcName = meicanMap.getNodeByPort(from).options.name.split(':')[0];   
+        else
+            srcName = meicanMap.getNodeByPort(from).options.name.split(":").slice(3,6).join(':');
+
+        if(dst.options.type == 'domain')
+            dstName = meicanMap.getNodeByPort(to).options.name.split(':')[0];
+        else
+            dstName = meicanMap.getNodeByPort(to).options.name.split(":").slice(3,6).join(':');
+
         var link = L.polyline(
             latLngList, 
             {
@@ -216,12 +229,12 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
                 directedCircuits: [],
                 color: color,
                 opacity: 0.7,
-                weight: 6,
+                weight: 4,
             }).addTo(this._map).bindPopup(
                         'Link between <b>' + 
-                        meicanMap.getNodeByPort(from).options.name +
+                        srcName +
                         '</b> and <b>' +
-                        dst.location_name +
+                        dstName +
                         '</b><br>');
 
         this._links.push(link);
@@ -625,6 +638,7 @@ LMap.prototype.build = function(mapDiv) {
     });
 
     this.setInitialMapPosition();
+    this._map.setMaxBounds( [[-90,-180], [90, 180]] );
 
     new L.Control.Zoom({ position: 'topright' }).addTo(this._map);
 
@@ -639,7 +653,7 @@ LMap.prototype.build = function(mapDiv) {
 
     this._map.addLayer(this._cluster);
 
-    this.setType('rnp');
+    this.setType('osm3');
 
     $('#' + mapDiv).show();   
 }
@@ -713,6 +727,7 @@ LMap.prototype.setType = function(mapType) {
         case "osm" : 
             L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
+                minZoom: 2,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                 subdomains: ['a','b','c']
             }).addTo( this._map );
@@ -726,9 +741,26 @@ LMap.prototype.setType = function(mapType) {
         case 'rnp': 
             L.tileLayer('http://viaipe.rnp.br/mapa/{z}/{x}/{y}.png',{
                 attribution: 'MEICAN Project | UFRGS | Map data &copy; 2019 <a href="http://www.rnp.br">RNP</a>',
-                maxZoom: 15,
+                maxZoom: 18,
                 minZoom: 2
             }).addTo(this._map);
+            break;
+        case "osm2" : 
+            L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                minZoom: 2,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                subdomains: ['a','b','c']
+            }).addTo( this._map );
+            break;
+        case "osm3" : 
+            L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+                attribution: 'MEICAN Project | UFRGS | Map data &copy; 2019 <a href="http://www.rnp.br">RNP</a>',
+                maxZoom: 18,
+                minZoom: 2,
+                subdomains: ['a','b','c']
+            }).addTo( this._map );
+            break;
     }
 }
 
@@ -929,7 +961,8 @@ LMap.prototype._loadLinks = function() {
             for (var src in response) {
                 for (var i = 0; i < response[src].length; i++) {
                     if(flagPortLocation)    {
-                        links.push([parseInt(src),parseInt(response[src][i])]);
+                        current.addLink(parseInt(src),parseInt(response[src][i]));
+                        //links.push([parseInt(src),parseInt(response[src][i])]);
                     }
                     else
                         current.addLink(parseInt(src),parseInt(response[src][i]));
@@ -982,4 +1015,46 @@ LMap.prototype.removeNode = function(domainId, type) {
             this._nodes.splice(i, 1);
         }
     }
+}
+
+LMap.prototype.hasLocation = function(networkId) {
+    let locations = this.getTopology()['location'];
+    if (networkId != "" && networkId != null) {
+        for (var i = locations.length - 1; i >= 0; i--) {
+            if(locations[i].network_id == networkId){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+LMap.prototype.expandLocations = function(nodeId) {
+    flagPortLocation = true;
+    let node = this.getNode(nodeId);
+    let nodes = this.getNodes();
+    let ports = this.getTopology()['ports'];
+    let domainId = node.options.ports[0].network.domain_id;
+    
+    this.addExpandedDomainNode(node);
+
+    for (var i = ports.length - 1; i >= 0; i--) {
+        if(ports[i].network.domain_id == domainId){
+            this.addNode(
+                ports[i]
+            );
+        }
+    }
+    this.hideNode(node);
+}
+
+LMap.prototype.groupLocations = function(nodeId) {
+    flagPortLocation = false;
+    let node = this.getNode(nodeId);
+    let nodes = this.getNodes();
+    let domainId = node.options.ports[0].network.domain_id;
+
+    this.removeNode(domainId, "location");   
+    this.showNode(meicanMap.getNode(meicanMap.getNodeIdByDomainId(domainId)));
+    this.removeExpandedDomainNode(domainId);
 }

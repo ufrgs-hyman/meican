@@ -49,32 +49,6 @@ $(document).ready(function() {
     
 });
 
-$('input[type=radio][name=node-type]').change(function(){
-    let nodeType = $(this).val();
-
-    switch(nodeType)    {
-        case "net":
-            flagPortLocation = false;
-            if(!flagNetworkWasClicked){
-                meicanMap.saveNodesL();
-                flagNetworkWasClicked = true;
-                initNodes();
-            }else{
-                meicanMap.restoreNodesN();
-                meicanMap.prepareLabels();
-            }
-            break;
-        case "port":
-            meicanMap.saveNodesN(); 
-            flagPortLocation = true;
-            meicanMap.restoreNodesL();
-            meicanMap.prepareLabels();
-            break;
-    }
-    meicanMap.hide();
-    meicanMap.show();
-});
-
 function validatePath() {
     if (isValidPath()) return true;
     else {
@@ -299,7 +273,7 @@ function initPathTab() {
         let networkId = node.options.ports[0].network_id;
 
         if (node.options.type == "domain")
-            if(hasLocation(networkId))
+            if(meicanMap.hasLocation(networkId))
                 expandGroupButton = ' <button style="visibility:visible" class="btn btn-sm btn-info expand-locations" title="Expand"><i class="fa fa-expand"></i></button>';
             else
                 expandGroupButton = '';
@@ -346,14 +320,14 @@ function initPathTab() {
     });
 
     $("#canvas").on("click",'.expand-locations', function() {
-        expandLocations($(this).parent().attr('data-node'));
+        meicanMap.expandLocations($(this).parent().attr('data-node'));
         drawPath();
         closePopups();
         return false;
     });
 
     $("#canvas").on("click",'.group-locations', function() {
-        groupLocations($(this).parent().attr('data-node'));
+        meicanMap.groupLocations($(this).parent().attr('data-node'));
         drawPath();
         closePopups();
         return false;
@@ -853,38 +827,6 @@ function loadPorts() {
     });
 }
 
-function expandLocations(nodeId) {
-    flagPortLocation = true;
-    let node = meicanMap.getNode(nodeId);
-    let nodes = meicanMap.getNodes();
-    let domainId = node.options.ports[0].network.domain_id;
-
-    meicanMap.addExpandedDomainNode(node);
-
-    for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
-        if(meicanTopo['ports'][i].network.domain_id == domainId){
-            meicanMap.addNode(
-                meicanTopo['ports'][i]
-            );
-        }
-    }
-
-    meicanMap.hideNode(node);
-}
-
-function groupLocations(nodeId) {
-    flagPortLocation = false;
-    let node = meicanMap.getNode(nodeId);
-    let nodes = meicanMap.getNodes();
-    let domainId = node.options.ports[0].network.domain_id;
-
-    meicanMap.removeNode(domainId, "location");
-    
-    meicanMap.showNode(meicanMap.getNode(meicanMap.getNodeIdByDomainId(domainId)));
-    meicanMap.removeExpandedDomainNode(domainId);
-     
-}
-
 function fillDomainSelect() {
     var selectId = "pointform-domain";
     clearSelect(selectId);
@@ -922,7 +864,7 @@ function fillNetworkSelect(domainId, networkId) {
             enableSelect(selectId);
         }
 
-        if(hasLocation($("#" + selectId).val())){
+        if(meicanMap.hasLocation($("#" + selectId).val())){
             disableSelect("pointform-port");
             fillLocationSelect($("#" + selectId).val());
         }else{
@@ -948,17 +890,6 @@ function fillLocationSelect(networkId, locationId) {
 
         enableSelect(selectId);
     } 
-}
-
-function hasLocation(networkId){
-    if (networkId != "" && networkId != null) {
-        for (var i = meicanTopo['location'].length - 1; i >= 0; i--) {
-            if(meicanTopo['location'][i].network_id == networkId){
-                return true;
-            }
-        }
-    }
-    return false;
 }
 
 function fillPortSelect(networkId, portId, locationName) {
@@ -1062,7 +993,7 @@ function initEditPointSelects() {
     });
     
     $('#pointform-network').on('change', function() {
-        if(hasLocation(this.value)){
+        if(meicanMap.hasLocation(this.value)){
             disableSelect("pointform-port");
             fillLocationSelect(this.value)
         }else{

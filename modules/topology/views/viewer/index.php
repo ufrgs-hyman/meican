@@ -31,15 +31,6 @@ $this->params['hide-footer'] = true;
                 <input type="radio" name="mode" value="map" checked> <?= Yii::t("topology", "Map"); ?>
                 <input type="radio" name="mode" value="graph"> <?= Yii::t("topology", "Graph"); ?>
             </div>
-            <div class="form-group">
-                <label><?= Yii::t("topology", "Node type"); ?>:</label><br>
-                <input type="radio" name="node-type" value="net"> <?= Yii::t("topology", "Networks"); ?>
-                <input type="radio" name="node-type" value="port" checked> <?= Yii::t("topology", "Port Location"); ?>
-                <!-- <input type="radio" name="node-type" value="prov" disabled> Provider -->
-                <!-- <input type="radio" name="node-type" value="net" disabled> Network -->
-                <!-- <input type="radio" name="node-type" value="dev" checked> Device -->
-            </div>
-            <!--<button id="save-positions-btn" class="btn btn-default">Save graph positions</button>-->
         </div>
     </div>
 </div>
