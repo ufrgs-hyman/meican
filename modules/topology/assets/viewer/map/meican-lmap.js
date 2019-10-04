@@ -311,7 +311,11 @@ LMap.prototype.addNode = function(port, color) {
         return;
     }
 
-    var node = this.getNodeByPosition(pos, port.network.domain, port.location_name);
+    if(pos.lng > 120)   {
+        pos.lng -= 360;
+    }
+
+    var node = this.getNodeByPosition(pos, port.network.domain);
 
     if (node == null) {
         var icon = L.divIcon({
@@ -326,6 +330,7 @@ LMap.prototype.addNode = function(port, color) {
             '</svg>',
             className: 'marker-icon-svg',
         });
+
 
         let nodeType = "domain";
         if(flagPortLocation)
@@ -554,7 +559,7 @@ LMap.prototype.getMarkerByDomain = function(type, domainId) {
 LMap.prototype.setInitialMapPosition = function(){
     var current = this;
     let lat = 0;
-    let lng = 0;
+    let lng = -90;
     $.ajax({
         url: baseUrl+'/aaa/role/get-allowed-domains',
         dataType: 'json',
