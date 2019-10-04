@@ -56,8 +56,6 @@ LMap.prototype.hide = function() {
     mapIds.forEach(function(mapId){
         if($(mapId).length == 1) {
             $(mapId).hide();
-            /*this._map.remove();
-            $("#map-l").remove();*/
         }
     });
 }
@@ -373,13 +371,8 @@ LMap.prototype.addNode = function(port, color) {
         node.on('click', function(e) {
             $("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
         });
-        // node.on('contextmenu', function(e) {
-        //     console.log(e);
-        //     //$("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
-        // });
     } else {
         node.options.ports.push(port);
-        //node.unbindLabel();
         let configIcon = '" d="M1,11a10,10 0 1,0 20,0a10,10 0 1,0 -20,0"/>';
 
         if(node.options.type == "location")
@@ -403,8 +396,6 @@ LMap.prototype.addNode = function(port, color) {
 }
 
 LMap.prototype.prepareLabels = function() {
-    //this._nodes._tooltip = [];
-
     let expandedDomainsNodes = this.getExpandedDomainNodes();
 
     this.removeLabels();
@@ -432,7 +423,7 @@ LMap.prototype.prepareLabels = function() {
             }
         }
         label = groupByDomain(labels);
-        this._nodes[i].bindTooltip(label, {permanent:true, direction: 'left'}).openTooltip();//, { noHide: true, direction: 'auto' });
+        this._nodes[i].bindTooltip(label, {permanent:true, direction: 'left'}).openTooltip();
         
         if(flagNetworkWasClicked){ 
             this._nodes[i].setTooltipContent(label);
@@ -463,8 +454,6 @@ LMap.prototype.buildNodePosition = function(position) {
     for(var i = 0; i < size; i++){
         if ((this._nodes[i].getLatLng().lat === lat) && 
                 (this._nodes[i].getLatLng().lng === lng)) {
-            // this._nodes[i].unbindTooltip();
-            // this._nodes[i].bindTooltip(this._nodes[i].options.name).openTooltip();//, { noHide: true, direction: 'left' });
             return this.buildNodePosition(L.latLng(position.lat + 0.001, position.lng));
         }
     }
@@ -572,7 +561,7 @@ LMap.prototype.getMarkerByDomain = function(type, domainId) {
 LMap.prototype.setInitialMapPosition = function(){
     var current = this;
     let lat = 0;
-    let lng = -90;
+    let lng = -120;
     $.ajax({
         url: baseUrl+'/aaa/role/get-allowed-domains',
         dataType: 'json',
@@ -599,7 +588,7 @@ LMap.prototype.setInitialMapPosition = function(){
                     current._map.setView(L.latLng(lat,lng), 3);
                 } 
             } else{
-                current._map.setView(L.latLng(lat,lng), 0);
+                current._map.setView(L.latLng(lat,lng), 2);
             }
         }
     });
@@ -638,11 +627,10 @@ LMap.prototype.build = function(mapDiv) {
     });
 
     this.setInitialMapPosition();
-    this._map.setMaxBounds( [[-90,-180], [90, 180]] );
+    this._map.setMaxBounds( [[-90,-320], [90, 160]] );
 
     new L.Control.Zoom({ position: 'topright' }).addTo(this._map);
 
-    //$(".leaflet-top").css("margin-top","15%");
 
     this._cluster = L.markerClusterGroup({
         showCoverageOnHover: false,
