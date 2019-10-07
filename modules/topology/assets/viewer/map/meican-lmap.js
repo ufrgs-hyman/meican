@@ -322,11 +322,9 @@ LMap.prototype.addNode = function(port, color) {
         return;
     }
 
-    if(pos.lng > 120)   {
-        pos.lng -= 360;
-    }
+    pos.lng = this.getAdjustedLng(pos.lng);
 
-    var node = this.getNodeByPosition(pos, port.network.domain);
+    var node = this.getNodeByPosition(pos, port.network.domain, port.location_name);
 
     if (node == null) {
         var icon = L.divIcon({
@@ -577,23 +575,32 @@ LMap.prototype.setInitialMapPosition = function(){
                 if(validAllowedDomains.length == 1){
                     lat = validAllowedDomains[0].lat;
                     lng = validAllowedDomains[0].lng;
+                    lng = current.getAdjustedLng(lng);
                     current._map.setView(L.latLng(lat,lng), 4);
                 }else{
+                    lat = 0;
+                    lng = 0;
                     for(let i = validAllowedDomains.length-1; i >= 0; i--){
                         lat += parseFloat(validAllowedDomains[i].lat);
                         lng += parseFloat(validAllowedDomains[i].lng);
+                        lng = current.getAdjustedLng(lng);
                     }
                     lat /= validAllowedDomains.length;
                     lng /= validAllowedDomains.length;
                     current._map.setView(L.latLng(lat,lng), 3);
                 } 
             } else{
-                current._map.setView(L.latLng(lat,lng), 2);
+                current._map.setView(L.latLng(lat,lng), 3);
             }
         }
-    });
+    });   
+}
 
-    
+LMap.prototype.getAdjustedLng = function(lng){
+    if(lng > 120){
+        lng -= 360;
+    }
+    return lng;
 }
 
 LMap.prototype.setNodeType = function(type) {
