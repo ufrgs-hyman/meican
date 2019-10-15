@@ -33,10 +33,6 @@ $form = ActiveForm::begin([
             <li><a title="Choose the circuit duration" href="#schedule" role="tab" class="schedule-tab"><i class="fa fa-calendar"></i></a></li>
             <li><a title="Confirm and submit" href="#confirm" role="tab"><i class="fa fa-check danger"></i></a></li>
         </ul>
-
-        <ul role="tablist">
-            <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
-        </ul>
     </div>
 
     <!-- Tab panes -->
@@ -236,11 +232,6 @@ In this section you need to provide at least one interval, based in the start an
             <div class="pull-right margin">
                 <button type="button" class="next-btn btn btn-primary"><span class="fa fa-arrow-right"></span> Start</button>
             </div>
-        </div>
-
-        <div class="lsidebar-pane" id="settings">
-            <h1 class="lsidebar-header">Settings<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-            <br>
         </div>
     </div>
 </div>

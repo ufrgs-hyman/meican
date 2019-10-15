@@ -282,8 +282,8 @@ function finishCircuit() {
 
 function initPathBox() {
     $("#path-grid").css("margin", '10px');
-    $("#path-box").css("height", 445);
-    $("#path-map").css("height", 400);
+    $("#path-box").css("height", 745);
+    $("#path-map").css("height", 700);
     meicanMap = new LMap('path-map');
     meicanMap.show();
     loadDomains();

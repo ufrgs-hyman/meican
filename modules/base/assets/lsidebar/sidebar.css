@@ -30,7 +30,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   overflow: hidden;
   z-index: 1001; }
   .lsidebar.collapsed {
-    width: 40px; }
+    width: 40px; 
+    height: 204px;
+  }
   @media (min-width: 768px) {
     .lsidebar {
       top: 10px;
