@@ -563,8 +563,8 @@ LMap.prototype.getMarkerByDomain = function(type, domainId) {
 
 LMap.prototype.setInitialMapPosition = function(){
     var current = this;
-    let lat = 0;
-    let lng = -120;
+    let lat = 10;
+    let lng = -95;
     $.ajax({
         url: baseUrl+'/aaa/role/get-allowed-domains',
         dataType: 'json',
@@ -953,7 +953,7 @@ LMap.prototype._groupLinks = function(links, context)    {
 LMap.prototype._loadLinks = function() {
     var current = this;
     $.ajax({
-        url: baseUrl+'/topology/viewer/get-port-cap-links',
+        url: baseUrl+'/topology/viewer/get-port-links',
         dataType: 'json',
         method: "GET",
         success: function(response) {
