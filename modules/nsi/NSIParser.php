@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2016 RNP
+ * @copyright Copyright (c) 2019 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -161,7 +161,7 @@ class NSIParser {
         return $this->errors;
     }
     
-    function addProviderData($domainName, $nsa, $type, $name, $lat, $lng, $peerings) {
+    function addProviderData($domainName, $nsa, $type, $name, $lat, $lng, $peerings) {        
         $nsa = strtolower($nsa);
         $nsa = str_replace("urn:ogf:network:","",$nsa);
         $this->topology["domains"][$domainName]["nsa"][$nsa]['name'] = $name;
@@ -198,7 +198,7 @@ class NSIParser {
     }
 
     function addPort($netId, $netName, $biPortId, $biportName, $portId, $portType, 
-            $vlan, $alias, $lat=null, $lng=null, $locationName=null, $capMax=null, $capMin=null) {
+            $vlan, $alias, $capMax, $capMin, $cap, $granu, $lat, $lng, $locationName) {
         $netUrn = str_replace("urn:ogf:network:","",$netId);
         $netUrn = $netUrn;
         $portUrn = str_replace("urn:ogf:network:","",$portId);
@@ -221,16 +221,12 @@ class NSIParser {
 
         $localId = str_replace($netId.":", "", $portId);
         
-        if (!isset($this->topology["domains"][
-                $domainName]["nets"][$netUrn]["biports"][$biPortUrn])) {
-            $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["name"] = $netName;
-            $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["biports"][$biPortUrn] = array();
+        if (!isset($this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn])) {
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["name"] = $netName;
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn] = array();
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["name"] = $biportName;
+
         }
-        $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["name"] = $biportName;
-        $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["capMax"] = ($capMax/1000000.);
-        $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["capMin"] = ($capMin/1000000.);
 
         $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["biports"][
@@ -254,6 +250,24 @@ class NSIParser {
                 $domainName]["nets"][$netUrn]["biports"][
                         $biPortUrn]['lng'] = $lng;
             $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]['locationName'] = $locationName;
+        }
+
+        if($capMax) {
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["uniports"][$portUrn]["capMax"] = ($capMax/1000000.);
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]['capMax'] = ($capMax/1000000.);
+        }
+        if($capMin) {
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["uniports"][$portUrn]["capMin"] = ($capMin/1000000.);
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]['capMin'] = ($capMin/1000000.);
+
+        }
+        if($cap)    {
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["uniports"][$portUrn]["capacity"] = ($cap/1000000.);   
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]['capacity'] = ($cap/1000000.);
+        }
+        if($granu)  {
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["uniports"][$portUrn]["granu"] = ($granu/1000000.);   
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]['granu'] = ($granu/1000000.);
         }
     }
 
@@ -431,6 +445,7 @@ class NSIParser {
 
                 $vlanAndAlias = $this->parseVlanAndAlias($netNode, $portId);
                 
+                Yii::warning($vlanAndAlias);
 
                 $this->addPort(
                         $netId,
@@ -441,11 +456,13 @@ class NSIParser {
                         $this->parseUniPortType($netNode, $portId),
                         $vlanAndAlias[0],
                         $vlanAndAlias[1],
+                        $vlanAndAlias[2],
+                        $vlanAndAlias[3],
+                        $vlanAndAlias[4],
+                        $vlanAndAlias[5],
                         $lat,
                         $lng,
-                        $locationName,
-                        $vlanAndAlias[2],
-                        $vlanAndAlias[3]
+                        $locationName
                 );
             }
         }
@@ -514,19 +531,25 @@ class NSIParser {
 
                         $capMax = null;
                         $capMin = null;
+                        $cap = null;
+                        $granu = null;
 
                         foreach($portNode->childNodes as $capNode)    {
                             if($capNode->localName === "maximumReservableCapacity")
                                 $capMax = $capNode->nodeValue;
-                            else if($capNode->localName === "maximumReservableCapacity")
+                            else if($capNode->localName === "minimumReservableCapacity")
                                 $capMin = $capNode->nodeValue;
+                            else if($capNode->localName === "capacity")
+                                $cap = $capNode->nodeValue;
+                            else if($capNode->localName === "granularity")
+                                $granu = $capNode->nodeValue;
                         }
 
 
                         if($vlanRangeNode->item(0)) {
                             return [$vlanRangeNode->item(0)->nodeValue, 
                                     $this->parseAlias($portNode),
-                                    $capMax,$capMin];
+                                    $capMax,$capMin,$cap, $granu];
                         } else {
                             continue;
                         }
