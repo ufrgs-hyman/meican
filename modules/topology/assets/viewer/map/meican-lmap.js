@@ -3,15 +3,20 @@
  *
  * A DCN topology viewer based on Leaflet Javascript library.
  *
- * @copyright Copyright (c) 2017 RNP
+ * @copyright Copyright (c) 2019 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  * @author Mauricio Quatrin Guerreiro
  */
+
+var flagPortLocation = false;
+var flagNetworkWasClicked = false;
 
 function LMap(canvasDivId) {
     this._canvasDivId = canvasDivId;
     this._map;                          // Leaflet Map
     this._nodes = [];                   // markers/nodes container
+    this._nodesL = []; 
+    this._nodesN = []; 
     this._links = [];                   // polylines/links/edges container
     this._nodeType;                     // current node type visible
     this._topology = [];                // topology
@@ -20,14 +25,20 @@ function LMap(canvasDivId) {
     this._portsSize = 0;
     this._nodeAutoInc = 1;
     this._linkAutoInc = 1;
+    this._expandedDomainNodes = [];
 };
 
 LMap.prototype.show = function(instantRefresh) {
-    if($("#map-l").length == 1) {
-        $("#map-l").show();
+    let mapId = "map-n";
+
+    if(flagPortLocation)
+        mapId = "map-l";
+
+    if($('#'+mapId).length == 1) {
+        $('#'+mapId).show();
     } else {
-        $("#"+this._canvasDivId).append('<div id="map-l" style="width:100%; height:100%;"></div>');
-        this.build('map-l');
+        $("#"+this._canvasDivId).append('<div id="'+mapId+'" style="width:100%; height:100%;"></div>');
+        this.build(mapId);
     }
 
     var currentMap = this._map;
@@ -41,11 +52,12 @@ LMap.prototype.show = function(instantRefresh) {
 }
 
 LMap.prototype.hide = function() {
-    if($("#map-l").length == 1) {
-        $("#map-l").hide();
-        /*this._map.remove();
-        $("#map-l").remove();*/
-    }
+    let mapIds = ['#map-n', '#map-l'];
+    mapIds.forEach(function(mapId){
+        if($(mapId).length == 1) {
+            $(mapId).hide();
+        }
+    });
 }
 
 LMap.prototype.getPortsSize = function() {
@@ -53,7 +65,7 @@ LMap.prototype.getPortsSize = function() {
 }
 
 LMap.prototype.addPort = function(id, name, dir, cap, nodeId, aliasNodeId, aliasPortId, type) {
-    //console.log(id, name, dir, nodeId, aliasNodeId, aliasPortId, type);
+
     var node = this.getNode(nodeId);
     this._portsSize++;
 
@@ -105,9 +117,72 @@ LMap.prototype.getLink = function(id) {
     return null;
 }
 
+LMap.prototype.getPortsByLocation = function(location_name)  {
+    let locations = [];
+
+    for (let i = this._topology['ports'].length - 1; i >= 0; i--) {
+        if (this._topology['ports'][i].location_name == location_name)
+            locations.push(this._topology['ports'][i]);
+    }
+
+    return locations;
+}
+
+LMap.prototype.addIntraLink = function(location_link)    {
+    if(!location_link.source || !location_link.destination) 
+        return null;
+    let color = '#cccccc';
+    let latLngList = [];
+
+    if(!location_link.source_coords)
+        return;
+    latLngList.push(location_link.source_coords);
+
+    if(!location_link.destination_coords)
+        return;
+    latLngList.push(location_link.destination_coords);
+
+    let cap = (location_link.capacity >= 1000)? (location_link.capacity/1000.) + ' Gbps' : location_link.capacity + ' Mbps';
+    
+    if (latLngList.length > 1) {
+        var link = L.polyline(
+            latLngList, 
+            {
+                id: this._linkAutoInc++,
+                from: location_link.source,
+                to: location_link.destination,
+                traffic: 0,
+                directedCircuits: [],
+                color: color,
+                opacity: 0.7,
+                weight: 5,
+            }).addTo(this._map).bindPopup(
+                        'Link between <b>' + 
+                        location_link.source_location +
+                        '</b> and <b>' +
+                        location_link.destination_location +
+                        '</b><br><b>Capacity</b>: '+ cap);
+
+        this._links.push(link);
+    } else return null;
+
+    var current = this;
+
+    link.on('click', function(e) {
+        $("#"+current._canvasDivId).trigger("lmap.linkClick", link);
+    });
+
+    link.on('mouseover', function(e) {
+        $("#"+current._canvasDivId).trigger("lmap.linkHover", link);
+    })
+
+    return link;
+
+}
+
 LMap.prototype.addLink = function(from, to, partial, cap, color) {
     if(!from || !to) return null;
-    if(!color) color = '#cccccc';
+    if(!color) color = '#b1b1b1';
     var latLngList = [];
 
     var src = this.getNodeByPort(from);
@@ -133,6 +208,19 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
     capText = (cap)? 'Max reservable capacity: <b>' + capUnit : '';
 
     if (latLngList.length > 1) {
+        let srcName = null;
+        let dstName = null;
+
+        if(src.options.type == 'domain')
+            srcName = meicanMap.getNodeByPort(from).options.name.split(':')[0];   
+        else
+            srcName = meicanMap.getNodeByPort(from).options.name.split(":").slice(3,6).join(':');
+
+        if(dst.options.type == 'domain')
+            dstName = meicanMap.getNodeByPort(to).options.name.split(':')[0];
+        else
+            dstName = meicanMap.getNodeByPort(to).options.name.split(":").slice(3,6).join(':');
+
         var link = L.polyline(
             latLngList, 
             {
@@ -143,14 +231,13 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
                 directedCircuits: [],
                 color: color,
                 opacity: 0.7,
-                weight: 6,
+                weight: 4,
             }).addTo(this._map).bindPopup(
                         'Link between <b>' + 
-                        meicanMap.getNodeByPort(from).options.ports[0].network.domain.name +
+                        srcName +
                         '</b> and <b>' +
-                        meicanMap.getNodeByPort(to).options.ports[0].network.domain.name +
-                        '</b><br>' +
-                        capText);
+                        dstName +
+                        '</b><br>');
 
         this._links.push(link);
     } else return null;
@@ -193,14 +280,16 @@ LMap.prototype.removeLinks = function() {
     }
 }
 
-LMap.prototype.getNodeByPosition = function(position, domain) {
+LMap.prototype.getNodeByPosition = function(position, domain, location_name) {
     for (var i = this._nodes.length - 1; i >= 0; i--) {
         if ((this._nodes[i].getLatLng().lat === position.lat) && 
             (this._nodes[i].getLatLng().lng === position.lng)) {
-            if (this._nodes[i].options.ports[0].network.domain == domain)
+            if (this._nodes[i].options.ports[0].network.domain == domain && (this._nodes[i].options.ports[0].location_name == undefined || !flagPortLocation))
+                return this._nodes[i];
+            else if(this._nodes[i].options.ports[0].location_name == location_name)
                 return this._nodes[i];
             else
-                return this.getNodeByPosition(L.latLng(position.lat + 0.001, position.lng), domain);
+                return this.getNodeByPosition(L.latLng(position.lat + 0.001, position.lng), domain, location_name);
         }
     }
 
@@ -221,24 +310,26 @@ LMap.prototype.getParentPosition = function(port) {
     return L.latLng([0,0]);
 }
 
-LMap.prototype.addNode = function(port, color, drawPortLocation) {
+LMap.prototype.addNode = function(port, color) {
     if(!port.network)
         return;
     if (!color) 
         color = port.network.domain.color;
 
-    if(drawPortLocation && port.lat != undefined) 
-        pos = L.latLng([port.lat, port.lng]);
-    else if (typeof port.network !== 'undefined') {
+    if(flagPortLocation && port.lat != null && port.lng != null) {
+        var pos = L.latLng([port.lat,port.lng]);
+    } else if (!flagPortLocation && typeof port.network !== 'undefined') {
         var pos = this.getParentPosition(port);
     } else {
         var pos = L.latLng([0, 0]);
     }
     if(pos.lat == 0 && pos.lng == 0){
-        return 0;
+        return;
     }
 
-    var node = this.getNodeByPosition(pos, port.network.domain);
+    pos.lng = this.getAdjustedLng(pos.lng);
+
+    var node = this.getNodeByPosition(pos, port.network.domain, port.location_name);
 
     if (node == null) {
         var icon = L.divIcon({
@@ -246,23 +337,34 @@ LMap.prototype.addNode = function(port, color, drawPortLocation) {
             iconAnchor: [11, 22],
             popupAnchor: [0,-24],
             tooltipAnchor: [12, -12],
-            html: '<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg">' + 
+            html: '<svg width="25" height="26" xmlns="http://www.w3.org/2000/svg">' + 
             '<g>' +
-            '<path stroke="black" fill="' + color + '" d="m1,0.5l20,0l-10,20l-10,-20z"/>' + 
+            '<path stroke="black" fill="' + color + '" d="m1,5l20,0l-10,20l-10,-20z"/>' + 
             '</g>' + 
             '</svg>',
             className: 'marker-icon-svg',
         });
 
+
+        let nodeType = "domain";
+        if(flagPortLocation)
+            nodeType = "location"
+        
         node = L.marker(
             this.buildNodePosition(pos), 
             {
                 id: this._nodeAutoInc++, 
                 icon: icon,
                 name: port.urn,
+                type: nodeType,
                 ports: [port]
             }
         ).bindPopup("#");
+
+        if(flagPortLocation)
+            node.bindTooltip(port.location_name, {permanent:true, direction: 'top'}).openTooltip();
+        else
+            node.bindTooltip(port.network.domain.name, {permanent:true, direction: 'left'}).openTooltip();
 
         this._nodes.push(node);
         this._cluster.addLayer(node);
@@ -272,23 +374,22 @@ LMap.prototype.addNode = function(port, color, drawPortLocation) {
         node.on('click', function(e) {
             $("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
         });
-        // node.on('contextmenu', function(e) {
-        //     console.log(e);
-        //     //$("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
-        // });
     } else {
         node.options.ports.push(port);
-        //node.unbindLabel();
-        
+        let configIcon = '" d="M1,11a10,10 0 1,0 20,0a10,10 0 1,0 -20,0"/>';
+
+        if(node.options.type == "location")
+            configIcon = '" d="M1,15a10,10 0 1,0 20,0a10,10 0 1,0 -20,0"/>';
+
         node.setIcon(L.divIcon({
             iconSize: [22,22],
             iconAnchor: [11, 22],
             popupAnchor: [0,-24],
             tooltipAnchor: [14, -12],
-            html: '<svg width="22" height="22" xmlns="http://www.w3.org/2000/svg">' + 
+            html: '<svg width="25" height="27" xmlns="http://www.w3.org/2000/svg">' + 
             '<g>' +
             //http://complexdan.com/svg-circleellipse-to-path-converter/
-            '<path stroke="black" fill="' + color + '" d="M1,11a10,10 0 1,0 20,0a10,10 0 1,0 -20,0"/>' + 
+            '<path stroke="black" fill="' + color + configIcon + 
             '</g>' + 
             '</svg>',
             className: 'marker-icon-svg',
@@ -298,16 +399,46 @@ LMap.prototype.addNode = function(port, color, drawPortLocation) {
 }
 
 LMap.prototype.prepareLabels = function() {
+    let expandedDomainsNodes = this.getExpandedDomainNodes();
+
+    this.removeLabels();
+
     for (var i = this._nodes.length - 1; i >= 0; i--) {
         var label = 'error';
         labels = [];
         for (var k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
-            labels.push(this._nodes[i].options.ports[k].network.domain.name);
+            if(expandedDomainsNodes.length == 0){
+                if(flagPortLocation){
+                    if(this._nodes[i].options.ports[k].lat != null && this._nodes[i].options.ports[k].lng != null)
+                        labels.push(this._nodes[i].options.ports[k].location_name);                  
+                }else{
+                    labels.push(this._nodes[i].options.ports[k].network.domain.name);
+                }
+            }else{
+                for(var j = expandedDomainsNodes.length - 1; j >=0; j--) {
+                    if(flagPortLocation && this._nodes[i].options.ports[k].network.domain.name == expandedDomainsNodes[j].options.ports[0].network.domain.name){
+                        if(this._nodes[i].options.ports[k].lat != null && this._nodes[i].options.ports[k].lng != null)
+                            labels.push(this._nodes[i].options.ports[k].location_name);                  
+                    }else{
+                        labels.push(this._nodes[i].options.ports[k].network.domain.name);
+                    }
+                }
+            }
         }
         label = groupByDomain(labels);
-       
-        this._nodes[i].bindTooltip(label, {permanent:true, direction: 'left'}).openTooltip();//, { noHide: true, direction: 'auto' });
+        this._nodes[i].bindTooltip(label, {permanent:true, direction: 'left'}).openTooltip();
+        
+        if(flagNetworkWasClicked){ 
+            this._nodes[i].setTooltipContent(label);
+        }
     }
+}
+
+LMap.prototype.removeLabels = function() {
+    for (var i = this._nodes.length - 1; i >= 0; i--) {
+        this._nodes[i].unbindTooltip();
+    }
+
 }
 
 LMap.prototype.setTopology = function(topology) {
@@ -326,8 +457,6 @@ LMap.prototype.buildNodePosition = function(position) {
     for(var i = 0; i < size; i++){
         if ((this._nodes[i].getLatLng().lat === lat) && 
                 (this._nodes[i].getLatLng().lng === lng)) {
-            // this._nodes[i].unbindTooltip();
-            // this._nodes[i].bindTooltip(this._nodes[i].options.name).openTooltip();//, { noHide: true, direction: 'left' });
             return this.buildNodePosition(L.latLng(position.lat + 0.001, position.lng));
         }
     }
@@ -374,6 +503,13 @@ LMap.prototype.getNodeByPort = function(urn) {
     }
     
     return null;
+}
+
+LMap.prototype.getLocationByPort = function(urn) {
+    for (var i = this._topology['ports'].length - 1; i >= 0; i--) {
+        if (this._topology['ports'][i].id == urn)
+            return this._topology['ports'][i];
+    }
 }
 
 LMap.prototype.getNodeByName = function(name) {
@@ -428,7 +564,7 @@ LMap.prototype.getMarkerByDomain = function(type, domainId) {
 LMap.prototype.setInitialMapPosition = function(){
     var current = this;
     let lat = 0;
-    let lng = 0;
+    let lng = -120;
     $.ajax({
         url: baseUrl+'/aaa/role/get-allowed-domains',
         dataType: 'json',
@@ -444,21 +580,32 @@ LMap.prototype.setInitialMapPosition = function(){
                 if(validAllowedDomains.length == 1){
                     lat = validAllowedDomains[0].lat;
                     lng = validAllowedDomains[0].lng;
+                    lng = current.getAdjustedLng(lng);
                     current._map.setView(L.latLng(lat,lng), 4);
                 }else{
+                    lat = 0;
+                    lng = 0;
                     for(let i = validAllowedDomains.length-1; i >= 0; i--){
                         lat += parseFloat(validAllowedDomains[i].lat);
                         lng += parseFloat(validAllowedDomains[i].lng);
+                        lng = current.getAdjustedLng(lng);
                     }
                     lat /= validAllowedDomains.length;
                     lng /= validAllowedDomains.length;
                     current._map.setView(L.latLng(lat,lng), 3);
                 } 
             } else{
-                current._map.setView(L.latLng(lat,lng), 0);
+                current._map.setView(L.latLng(lat,lng), 3);
             }
         }
     });   
+}
+
+LMap.prototype.getAdjustedLng = function(lng){
+    if(lng > 120){
+        lng -= 360;
+    }
+    return lng;
 }
 
 LMap.prototype.setNodeType = function(type) {
@@ -470,7 +617,6 @@ LMap.prototype.setNodeType = function(type) {
     var size = this._nodes.length;
     
     for(var i = 0; i < size; i++){ 
-        console.log(type, this._nodes[i].options.type);
         if (this._nodes[i].options.type == type) {
             this.showNode(this._nodes[i]);
         } else {
@@ -493,10 +639,10 @@ LMap.prototype.build = function(mapDiv) {
     });
 
     this.setInitialMapPosition();
+    this._map.setMaxBounds( [[-90,-320], [90, 160]] );
 
     new L.Control.Zoom({ position: 'topright' }).addTo(this._map);
 
-    //$(".leaflet-top").css("margin-top","15%");
 
     this._cluster = L.markerClusterGroup({
         showCoverageOnHover: false,
@@ -507,7 +653,7 @@ LMap.prototype.build = function(mapDiv) {
 
     this._map.addLayer(this._cluster);
 
-    this.setType('rnp');
+    this.setType('osm3');
 
     $('#' + mapDiv).show();   
 }
@@ -544,6 +690,22 @@ LMap.prototype.getNodes = function() {
     return this._nodes;
 }
 
+LMap.prototype.saveNodesL = function() {
+    this._nodesL = this._nodes.slice();
+}
+
+LMap.prototype.saveNodesN = function() {
+    this._nodesN = this._nodes.slice();
+}
+
+LMap.prototype.restoreNodesL = function() {
+    this._nodes = this._nodesL.slice();
+}
+
+LMap.prototype.restoreNodesN = function() {
+    this._nodes = this._nodesN.slice();
+}
+
 LMap.prototype.hideNode = function(node) {
     this._cluster.removeLayer(node);
 }
@@ -565,6 +727,7 @@ LMap.prototype.setType = function(mapType) {
         case "osm" : 
             L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
+                minZoom: 2,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
                 subdomains: ['a','b','c']
             }).addTo( this._map );
@@ -578,9 +741,26 @@ LMap.prototype.setType = function(mapType) {
         case 'rnp': 
             L.tileLayer('http://viaipe.rnp.br/mapa/{z}/{x}/{y}.png',{
                 attribution: 'MEICAN Project | UFRGS | Map data &copy; 2019 <a href="http://www.rnp.br">RNP</a>',
-                maxZoom: 15,
+                maxZoom: 18,
                 minZoom: 2
             }).addTo(this._map);
+            break;
+        case "osm2" : 
+            L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                minZoom: 2,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                subdomains: ['a','b','c']
+            }).addTo( this._map );
+            break;
+        case "osm3" : 
+            L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+                attribution: 'MEICAN Project | UFRGS | Map data &copy; 2019 <a href="http://www.rnp.br">RNP</a>',
+                maxZoom: 18,
+                minZoom: 2,
+                subdomains: ['a','b','c']
+            }).addTo( this._map );
+            break;
     }
 }
 
@@ -663,6 +843,7 @@ LMap.prototype._loadNetworks = function(withLinks) {
         method: "GET",
         success: function(response) {
             current._topology['networks'] = response;
+            current._loadLocations();
             current._loadPorts(withLinks);
             for (var i = current._topology['networks'].length - 1; i >= 0; i--) {
                 for (var k = current._topology['domains'].length - 1; k >= 0; k--) {
@@ -678,7 +859,7 @@ LMap.prototype._loadNetworks = function(withLinks) {
 LMap.prototype._loadPorts = function(withLinks) {
     var current = this;
     $.ajax({
-        url: baseUrl+'/topology/port/json?dir=BI',
+        url: baseUrl+'/topology/port/json?dir=BI&type=ALL',
         method: "GET",        
         success: function(response) {
             current._topology['ports'] = response;
@@ -695,15 +876,78 @@ LMap.prototype._loadPorts = function(withLinks) {
             }
 
             for (var i = current._topology['ports'].length - 1; i >= 0; i--) {
-                current.addNode(
-                    current._topology['ports'][i]
-                );
+                if(current._topology['ports'][i].type == 'NSI')
+                    current.addNode(current._topology['ports'][i]);
             }
             current.prepareLabels();
             if(withLinks)
                 current._loadLinks();
         }
     });
+}
+
+LMap.prototype._loadLocations = function()  {
+    let current = this;
+    $.ajax({
+        url: baseUrl + '/topology/location/get-location',
+        method: "GET",
+        success: function(response) {
+            current._topology['location'] = response;
+        }
+    });
+}
+
+
+LMap.prototype._groupLinks = function(links, context)    {
+    let link_capacity = [];
+
+    links.forEach(function(x)   {
+        let src = context.getLocationByPort(x[0]);
+        let dst = context.getLocationByPort(x[1]);
+
+        let link = {
+            source: x[0],
+            destination: x[1],
+            source_location: src.location_name,
+            destination_location: dst.location_name,
+            source_coords: null,
+            destination_coords: null,
+            capacity: parseInt(src.max_capacity)
+        };
+
+        if(src.location_name != null && dst.location_name != null)  {
+            let src_ports = context.getPortsByLocation(src.location_name);
+            for(let i = src_ports.length-1; i >= 0; i--)  {
+                if(src_ports[i].lat != null)    {
+                    link.source_coords = L.latLng(src_ports[i].lat, src_ports[i].lng);
+                }
+            }
+
+            let dst_ports = context.getPortsByLocation(dst.location_name);
+            for(let i = dst_ports.length-1; i >= 0; i--)  {
+                if(dst_ports[i].lat != null)    {
+                    link.destination_coords = L.latLng(dst_ports[i].lat, dst_ports[i].lng);
+                }
+            }
+
+            if(src.capacity != dst.capacity)    {
+                console.log('Error'); // Show difference between capacities
+            }
+
+            let j = link_capacity.length -1;
+            for(; j >= 0; j--)  {
+                if(link_capacity[j].source_location == link.source_location && link_capacity[j].destination_location == link.destination_location)    {
+                    link_capacity[j].capacity += link.capacity;
+                    break;
+                }
+            }
+            if(j == -1) {
+                link_capacity.push(link);
+            }
+        }
+    });
+
+    return link_capacity;
 }
 
 LMap.prototype._loadLinks = function() {
@@ -713,13 +957,104 @@ LMap.prototype._loadLinks = function() {
         dataType: 'json',
         method: "GET",
         success: function(response) {
+            let links = [];
             for (var src in response) {
                 for (var i = 0; i < response[src].length; i++) {
-                    //console.log(src, response[src][i]);
-                    current.addLink(parseInt(src), parseInt(response[src][i].port), false, response[src][i].max_capacity);
+                    if(flagPortLocation)    {
+                        current.addLink(parseInt(src),parseInt(response[src][i]));
+                        //links.push([parseInt(src),parseInt(response[src][i])]);
+                    }
+                    else
+                        current.addLink(parseInt(src),parseInt(response[src][i]));
                 }
-            }           
+            }
+            links = current._groupLinks(links, current);
+            links.forEach(function(x){
+                current.addIntraLink(x);
+            });
         }
     });
 }
 
+
+
+LMap.prototype.getExpandedDomainNodes = function() {
+    return this._expandedDomainNodes;
+}
+
+LMap.prototype.addExpandedDomainNode = function(node) {
+    return this._expandedDomainNodes.push(node);
+}
+
+LMap.prototype.removeExpandedDomainNode = function(domainId) {
+    let indexToRemove = this._expandedDomainNodes.findIndex(function(element){
+        return element.options.ports[0].network.domain.id == domainId;
+    });
+
+    if (indexToRemove != -1)
+        this._expandedDomainNodes.splice(indexToRemove, 1);
+
+    return this._expandedDomainNodes.length;
+}
+
+LMap.prototype.getNodeIdByDomainId = function(domainId) {
+    let expandedDomainNodes = this.getExpandedDomainNodes();
+
+    for (var i = expandedDomainNodes.length - 1; i >=0; i--) {
+        if(expandedDomainNodes[i].options.ports[0].network.domain.id == domainId)
+            return expandedDomainNodes[i].options.id;
+    }
+}
+
+LMap.prototype.removeNode = function(domainId, type) {
+    let nodes = meicanMap.getNodes();
+
+    for (var i = nodes.length - 1; i >= 0; i--) {
+        if( (nodes[i].options.ports[0].network.domain_id == domainId) && (nodes[i].options.type == type) ){
+            this._cluster.removeLayer(nodes[i]);
+            this._nodes.splice(i, 1);
+        }
+    }
+}
+
+LMap.prototype.hasLocation = function(networkId) {
+    let locations = this.getTopology()['location'];
+    if (networkId != "" && networkId != null) {
+        for (var i = locations.length - 1; i >= 0; i--) {
+            if(locations[i].network_id == networkId){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+LMap.prototype.expandLocations = function(nodeId) {
+    flagPortLocation = true;
+    let node = this.getNode(nodeId);
+    let nodes = this.getNodes();
+    let ports = this.getTopology()['ports'];
+    let domainId = node.options.ports[0].network.domain_id;
+    
+    this.addExpandedDomainNode(node);
+
+    for (var i = ports.length - 1; i >= 0; i--) {
+        if(ports[i].network.domain_id == domainId){
+            this.addNode(
+                ports[i]
+            );
+        }
+    }
+    this.hideNode(node);
+}
+
+LMap.prototype.groupLocations = function(nodeId) {
+    flagPortLocation = false;
+    let node = this.getNode(nodeId);
+    let nodes = this.getNodes();
+    let domainId = node.options.ports[0].network.domain_id;
+
+    this.removeNode(domainId, "location");   
+    this.showNode(meicanMap.getNode(meicanMap.getNodeIdByDomainId(domainId)));
+    this.removeExpandedDomainNode(domainId);
+}

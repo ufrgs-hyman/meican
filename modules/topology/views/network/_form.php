@@ -26,10 +26,10 @@ $this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home
 	<div class="box-body">
 		<?= $form->field($network, 'id')->hiddenInput()->label('');?>
 		<?= $form->field($network,'name')->textInput(['size'=>30,'maxlength'=>50]); ?>
-		<?= $form->field($network,'urn')->textInput(['size'=>30,'maxlength'=>250]); ?>
+		<?= $form->field($network,'urn')->textInput(['size'=>30,'maxlength'=>250, 'disabled' => !$network->isNewRecord]); ?>
 		<?= $form->field($network,'latitude')->textInput(['size'=>30,'maxlength'=>30]); ?>
 		<?= $form->field($network,'longitude')->textInput(['size'=>30,'maxlength'=>30]); ?>
-		<?= $form->field($network,'domain_id')->dropDownList(ArrayHelper::map($domains, 'id', 'name')); ?>
+		<?= $form->field($network,'domain_id')->dropDownList(ArrayHelper::map($domains, 'id', 'name'), ['disabled' => !$network->isNewRecord]); ?>
 	</div>
 	<div class="box-footer">
 		<div class="form-group">

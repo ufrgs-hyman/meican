@@ -1,10 +1,10 @@
 <?php
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2012-2019 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
-namespace meican\topology\assets\device;
+namespace meican\topology\assets\location;
 
 use yii\web\AssetBundle;
 
@@ -13,10 +13,10 @@ use yii\web\AssetBundle;
  */
 class Index extends AssetBundle
 {
-    public $sourcePath = '@meican/topology/assets/device/public';
+    public $sourcePath = '@meican/topology/assets/location/public';
 
     public $js = [
-    	'device.js',
+    	'location.js',
     ];
     public $depends = [
     	'meican\base\assets\Theme',

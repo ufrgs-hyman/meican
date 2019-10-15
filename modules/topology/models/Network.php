@@ -54,6 +54,10 @@ class Network extends \yii\db\ActiveRecord
         return [
             [['name', 'urn', 'domain_id', 'version'], 'required'],
             [['latitude', 'longitude'], 'number'],
+            [['latitude'], 'compare', 'compareValue' => -90, 'operator' => '>='],
+            [['latitude'], 'compare', 'compareValue' => 90, 'operator' => '<='],
+            [['longitude'], 'compare', 'compareValue' => -180, 'operator' => '>='],
+            [['longitude'], 'compare', 'compareValue' => 180, 'operator' => '<='],
             [['domain_id'], 'integer'],
             [['address'], 'string', 'max' => 200],
             [['name'], 'string', 'max' => 60],
@@ -95,5 +99,9 @@ class Network extends \yii\db\ActiveRecord
 
     static function findByUrn($urn) {
         return self::find()->where(['urn'=>$urn]);
+    }
+
+    static function findByName($name) {
+        return self::find()->where(['name'=>$name]);
     }
 }

@@ -8,4 +8,5 @@ echo $this->render('_form', array(
     'formId' => 'edit-port-form',
     'networks' => $networks,
 	'port' => $port,
+	'locations' => $locations,
 )); ?>

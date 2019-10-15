@@ -63,7 +63,7 @@ class DomainController extends RbacController {
 					}
 				} else {
 					Yii::$app->getSession()->addFlash("success", Yii::t('topology', 'Domain {name} added successfully', ['name'=>$dom->name]));
-					return $this->redirect(array('index'));
+					return $this->redirect(array('create'));
 				}
 			}
     	}
@@ -141,6 +141,14 @@ class DomainController extends RbacController {
     	$temp = Json::encode($data);
     	Yii::trace($temp);
     	return $temp;
+    }
+
+    public function actionGetLocation($cols=null){
+        $cols ? $data = Domain::find()->orderBy(['id'=> "SORT ASC"])->asArray()->select(json_decode($cols))->all() : $data = Domain::find()->orderBy(['name'=> "SORT ASC"])->asArray()->all();
+    
+        $temp = Json::encode($data);
+        Yii::trace($temp);
+        return $temp;
     }
 
     public function actionGet($id, $cols=null){

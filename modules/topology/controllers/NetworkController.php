@@ -164,7 +164,7 @@ class NetworkController extends RbacController {
     }
     
     public function actionGetByPort($id) {
-    	$data = Port::find()->where(['id'=>$id])->select(['id', 'device_id'])->one()->getDevice()->select([
+    	$data = Port::find()->where(['id'=>$id])->select(['id', 'location_id'])->one()->getLocation()->select([
     			'id','network_id'])->one()->getNetwork()->one();
     	
     	$temp = Json::encode($data);

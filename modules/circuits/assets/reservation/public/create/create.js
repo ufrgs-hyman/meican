@@ -45,7 +45,7 @@ $(document).ready(function() {
     });
     
     lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap._map);
-    lsidebar.open("home");
+    //lsidebar.open("home");
     
 });
 
@@ -152,6 +152,7 @@ function showPointModal(pointElement, pointOrder, nodeId) {
     $('#point-form').yiiActiveForm('resetForm');
     $('#point-advanced-form').yiiActiveForm('resetForm');
     disableSelect("pointform-network");
+    disableSelect("pointform-location");
     disableSelect("pointform-port");
     disableSelect("pointform-vlan");
     $("#pointform-vlan_text").val('');
@@ -161,19 +162,29 @@ function showPointModal(pointElement, pointOrder, nodeId) {
 
     if(pointOrder != null) {
         pointElement = $(".point")[pointOrder];
-        console.log(pointOrder, pointElement);
     }
 
     if(nodeId) {
         var node = meicanMap.getNode(nodeId);
+        var hasLocation = (node.options.ports[0].lat != null && node.options.ports[0].lng != null);
         if (node.options.ports.length > 1) {
             $("#pointform-domain").val(node.options.ports[0].network.domain.id);
             fillNetworkSelect(node.options.ports[0].network.domain.id);
+            if(hasLocation && flagPortLocation){
+                fillPortSelect(null, null, node.options.ports[0].location_name);
+            }
         } else {
             $("#pointform-domain").val(node.options.ports[0].network.domain.id);
             fillNetworkSelect(node.options.ports[0].network.domain.id, node.options.ports[0].network.id);
-            fillPortSelect(node.options.ports[0].network.id, node.options.ports[0].id);
-            fillVlanSelect(node.options.ports[0].id);
+            if(hasLocation){
+                fillPortSelect(null, null, node.options.ports[0].location_name);
+                fillVlanSelect(node.options.ports[0].id);
+                $("#pointform-port").val(node.options.ports[0].id);
+            }
+        }
+
+        if(hasLocation && flagPortLocation){
+            $("#pointform-location").val(node.options.ports[0].location_name);
         }
         
         $("#point-modal").find('.point-order').text(pointOrder); 
@@ -258,11 +269,23 @@ function initPathTab() {
     });
 
     $('#canvas').on('lmap.nodeClick', function(e, node) {
+        let expandGroupButton;
+        let networkId = node.options.ports[0].network_id;
+
+        if (node.options.type == "domain")
+            if(meicanMap.hasLocation(networkId))
+                expandGroupButton = ' <button style="visibility:visible" class="btn btn-sm btn-info expand-locations" title="Expand"><i class="fa fa-expand"></i></button>';
+            else
+                expandGroupButton = '';
+        else if(node.options.type == "location")
+            expandGroupButton = ' <button style="visibility:visible" class="btn btn-sm btn-info group-locations" title="Group"><i class="fa fa-compress"></i></button>';
+
         node.setPopupContent('Domain: <b>' + node.options.ports[0].network.domain.name + 
-            '</b><br><br><div data-node="' + node.options.id + '">'+
-              '<button class="btn btn-sm btn-default set-source">From here</button>'+
+            '</b><br><br><div data-node="' + node.options.id + '">' +
+              ' <button class="btn btn-sm btn-default set-source">From here</button>'+
               ' <button class="btn btn-sm btn-default add-waypoint">Add waypoint</button>'+
               ' <button class="btn btn-sm btn-default set-destination">To here</button>'+
+              expandGroupButton+
             '</div>');
     });
 
@@ -293,6 +316,20 @@ function initPathTab() {
         lsidebar.open("path");
         closePopups();
         addWayPoint($(this).parent().attr('data-node'));
+        return false;
+    });
+
+    $("#canvas").on("click",'.expand-locations', function() {
+        meicanMap.expandLocations($(this).parent().attr('data-node'));
+        drawPath();
+        closePopups();
+        return false;
+    });
+
+    $("#canvas").on("click",'.group-locations', function() {
+        meicanMap.groupLocations($(this).parent().attr('data-node'));
+        drawPath();
+        closePopups();
         return false;
     });
 
@@ -601,7 +638,7 @@ function setPoint(pointElement, pointOrder, pointMode, portId, urn, vlan, vlanAd
         $(pointElement).find(".point-normal").show();
 
         port = getPort(portId);
-        console.log(port);
+
         $(pointElement).find('.dom-l').text(port.network.domain.name);
         $(pointElement).find('.net-l').text(port.network.name);
         $(pointElement).find('.port-l').text(port.name);
@@ -693,7 +730,7 @@ function initNodes() {
 
 function loadDomains() {
     $.ajax({
-        url: baseUrl+'/topology/domain/get-all',
+        url: baseUrl+'/topology/domain/get-location',
         dataType: 'json',
         method: "GET",        
         success: function(response) {
@@ -703,6 +740,7 @@ function loadDomains() {
                 meicanTopo['domains'][i]['providers'] = [];
             }
             loadProviders();
+
         }
     });
 }
@@ -736,7 +774,6 @@ function loadNetworks() {
         method: "GET",
         success: function(response) {
             meicanTopo['networks'] = response;
-            loadPorts();
             for (var i = meicanTopo['networks'].length - 1; i >= 0; i--) {
                 for (var k = meicanTopo['domains'].length - 1; k >= 0; k--) {
                     if (meicanTopo['networks'][i]['domain_id'] == meicanTopo['domains'][k]['id']) {
@@ -744,6 +781,18 @@ function loadNetworks() {
                     }
                 }
             }
+            loadLocation();
+            loadPorts();
+        }
+    });
+}
+
+function loadLocation(){
+    $.ajax({
+        url: baseUrl+'/topology/location/get-location',
+        method: "GET",        
+        success: function(response) {
+            meicanTopo['location'] = response;
         }
     });
 }
@@ -765,14 +814,15 @@ function loadPorts() {
                     meicanTopo['ports'][i].lng = parseFloat(meicanTopo['ports'][i].lng);
                 }
             }
+            //console.log(meicanTopo);
+            
             initEditPointSelects();
-
             for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
                 meicanMap.addNode(
                     meicanTopo['ports'][i]
                 );
             }
-            meicanMap.prepareLabels();
+            //meicanMap.prepareLabels();
         }
     });
 }
@@ -810,24 +860,51 @@ function fillNetworkSelect(domainId, networkId) {
         if (lenNetwork == 1){
             $("#" + selectId)[0].selectedIndex = 1;
             $("#" + selectId).prop("disabled", true);
-            fillPortSelect($("#" + selectId).val());
         }else{
             enableSelect(selectId);
         }
-    } 
+
+        if(meicanMap.hasLocation($("#" + selectId).val())){
+            disableSelect("pointform-port");
+            fillLocationSelect($("#" + selectId).val());
+        }else{
+            disableSelect("pointform-location");
+            fillPortSelect($("#" + selectId).val()); 
+        }
+    }
 }
 
-function fillPortSelect(networkId, portId) {
-    var selectId = "pointform-port";
+function fillLocationSelect(networkId, locationId) {
+    var selectId = "pointform-location";
     disableSelect(selectId);
     if (networkId != "" && networkId != null) {
         $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
-        len = meicanTopo['ports'].length;
+        len = meicanTopo['location'].length;
+        for (var i = 0; i < len; i++) {
+            if(meicanTopo['location'][i].network_id == networkId){
+                $("#" + selectId).append('<option value="' + meicanTopo['location'][i].location_name + '">' + meicanTopo['location'][i].location_name +'</option>');
+            }    
+        }
+        if (locationId != null && locationId != "") 
+            $("#" + selectId).val(locationId);
+
+        enableSelect(selectId);
+    } 
+}
+
+function fillPortSelect(networkId, portId, locationName) {
+    var selectId = "pointform-port";
+    disableSelect(selectId);
+    $("#" + selectId).append('<option value="">' + I18N.t('select') + '</option>');
+    len = meicanTopo['ports'].length;
+    if (networkId != "" && networkId != null) {
         for (var i = 0; i < len; i++) {
             if (meicanTopo['ports'][i].network_id == networkId) {
-                $("#" + selectId).append('<option value="' +
-                meicanTopo['ports'][i].id + '">' +
+                lid = meicanTopo['ports'][i].urn.replace(meicanTopo['ports'][i].network.urn + ':', '');
+                $("#" + selectId).append('<option value="' + 
+                meicanTopo['ports'][i].id + '">' + 
                 meicanTopo['ports'][i].name +
+                (lid == meicanTopo['ports'][i].name ? '' : ' (' + lid + ')') +
                 '</option>');
             }
         }
@@ -835,7 +912,24 @@ function fillPortSelect(networkId, portId) {
             $("#" + selectId).val(portId);
 
         enableSelect(selectId);
+    }
+    if(locationName != "" && locationName != null){
+        len = meicanTopo['ports'].length;
+        for (var i = 0; i < len; i++) {
+            if (meicanTopo['ports'][i].location_name == locationName && meicanTopo['ports'][i].network != null) {
+                lid = meicanTopo['ports'][i].urn.replace(meicanTopo['ports'][i].network.urn + ':', '');
+                $("#" + selectId).append('<option value="' + 
+                meicanTopo['ports'][i].id + '">' + 
+                meicanTopo['ports'][i].name +
+                (lid == meicanTopo['ports'][i].name ? '' : ' (' + lid + ')') +
+                '</option>');
+            }
+        }
     } 
+    if (portId != null && portId != "") 
+        $("#" + selectId).val(portId);
+
+    enableSelect(selectId);
 }
 
 function fillVlanSelect(portId, vlan) {
@@ -845,14 +939,14 @@ function fillVlanSelect(portId, vlan) {
         for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
             if (meicanTopo['ports'][i].id == portId) {
                 var ranges = meicanTopo['ports'][i].vlan_range.split(",");
-                for (var r = 0; r < ranges.length; r++) {
-                    var interval = ranges[r].split("-");
+                for (var i = 0; i < ranges.length; i++) {
+                    var interval = ranges[i].split("-");
                     if (interval.length > 1)
-                        $("#" + selectId).append('<option value="' + ranges[r] + '">' + ranges[r] + '</option>');
+                        $("#" + selectId).append('<option value="' + ranges[i] + '">' + ranges[i] + '</option>');
                 }
 
-                for (var r = 0; r < ranges.length; r++) {
-                    var interval = ranges[r].split("-");
+                for (var i = 0; i < ranges.length; i++) {
+                    var interval = ranges[i].split("-");
                     var low = parseInt(interval[0]);
                     var high = low;
                     if (interval.length > 1) {
@@ -894,13 +988,23 @@ function initEditPointSelects() {
     fillDomainSelect();
     
     $('#pointform-domain').on('change', function() {
-        fillPortSelect();
         fillNetworkSelect(this.value);
         fillVlanSelect();
     });
     
     $('#pointform-network').on('change', function() {
-        fillPortSelect(this.value);
+        if(meicanMap.hasLocation(this.value)){
+            disableSelect("pointform-port");
+            fillLocationSelect(this.value)
+        }else{
+            disableSelect("pointform-location");
+            fillPortSelect(this.value);
+        }
+        fillVlanSelect();
+    });
+
+    $('#pointform-location').on('change', function() {
+        fillPortSelect(null, null, this.value);
         fillVlanSelect();
     });
     

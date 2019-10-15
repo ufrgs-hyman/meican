@@ -1,6 +1,6 @@
 <?php 
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2012-2019 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -13,11 +13,11 @@ use yii\widgets\Pjax;
 use meican\base\grid\Grid;
 use meican\base\grid\IcheckboxColumn;
 use meican\base\grid\GridButtons;
-use meican\topology\models\Device;
+use meican\topology\models\Location;
 
-\meican\topology\assets\device\Index::register($this);
+\meican\topology\assets\location\Index::register($this);
 
-$this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology'), 'Devices']];
+$this->params['header'] = [Yii::t('topology', 'Locations'), [Yii::t('home', 'Home'), Yii::t('topology', 'Topology'), 'Locations']];
 
 ?>
 
@@ -31,7 +31,7 @@ $this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'
         $form = ActiveForm::begin([
             'method' => 'post',
             'action' => ['delete'],
-            'id' => 'device-form',	
+            'id' => 'location-form',	
             'enableClientScript'=>false,
             'enableClientValidation' => false,
         ]);
@@ -39,7 +39,7 @@ $this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'
         Pjax::begin();
 
         echo Grid::widget([
-            'dataProvider' => $devices,
+            'dataProvider' => $locations,
             'filterModel' => $searchModel,
             'id' => 'gridNetowrks',
             'columns' => array(
@@ -62,36 +62,28 @@ $this->params['header'] = [Yii::t('topology', 'Devices'), [Yii::t('home', 'Home'
                 [
                     'label' => Yii::t("topology", 'Name'),
                     'value' => 'name',
-                    'headerOptions'=>['style'=>'width: 24%;'],
+                    'headerOptions'=>['style'=>'width: 20%;'],
                 ],
                 [
                     'label' => Yii::t("topology", 'Latitude'),
-                    'value' => 'latitude',
-                    'headerOptions'=>['style'=>'width: 8%;'],
+                    'value' => 'lat',
+                    'headerOptions'=>['style'=>'width: 20%;'],
                 ],
                 [
                     'label' => Yii::t("topology", 'Longitude'),
-                    'value' => 'longitude',
-                    'headerOptions'=>['style'=>'width: 8%;'],
+                    'value' => 'lng',
+                    'headerOptions'=>['style'=>'width: 20%;'],
                 ],
                 [
                     'label' => Yii::t("topology", 'Domain'),
-                    'value' => function($dev){
-                        return $dev->getDomain()->one()->name;
+                    'value' => function($loc){
+                        return $loc->getDomain()->one()->name;
                 },
                     'filter' => Html::activeDropDownList($searchModel, 'domain_name',
-                        ArrayHelper::map($allowedDomains, 'name', 'name'),
+                        ArrayHelper::map($domainsWithLocation, 'name', 'name'),
                         ['class'=>'form-control','prompt' => Yii::t("topology", 'any')]	
                     ),
-                    'headerOptions'=>['style'=>'width: 23%;'],
-                ],
-                [
-                    'format' => 'html',
-                    'label' => Yii::t('topology', '#EndPoints'),
-                    'value' => function($dev){
-                        return Html::a($dev->getPorts()->count(), ['/topology/port/index', 'id' => $dev->domain_id]);
-                    },
-                    'headerOptions'=>['style'=>'width: 4%;'],
+                    'headerOptions'=>['style'=>'width: 20%;'],
                 ],
             ),
         ]);

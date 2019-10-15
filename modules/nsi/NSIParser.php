@@ -161,8 +161,8 @@ class NSIParser {
         return $this->errors;
     }
     
-    function addProviderData($domainName, $nsa, $type, $name, $lat, $lng, $peerings) {
-        $nsa = $nsa;
+    function addProviderData($domainName, $nsa, $type, $name, $lat, $lng, $peerings) {        
+        $nsa = strtolower($nsa);
         $nsa = str_replace("urn:ogf:network:","",$nsa);
         $this->topology["domains"][$domainName]["nsa"][$nsa]['name'] = $name;
         $this->topology["domains"][$domainName]["nsa"][$nsa]["type"] = $type;
@@ -198,7 +198,7 @@ class NSIParser {
     }
 
     function addPort($netId, $netName, $biPortId, $biportName, $portId, $portType, 
-            $vlan, $alias, $capMax, $capMin, $cap, $granu, $lat, $lng) {
+            $vlan, $alias, $capMax, $capMin, $cap, $granu, $lat, $lng, $locationName) {
         $netUrn = str_replace("urn:ogf:network:","",$netId);
         $netUrn = $netUrn;
         $portUrn = str_replace("urn:ogf:network:","",$portId);
@@ -221,16 +221,13 @@ class NSIParser {
 
         $localId = str_replace($netId.":", "", $portId);
         
-        if (!isset($this->topology["domains"][
-                $domainName]["nets"][$netUrn]["biports"][$biPortUrn])) {
-            $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["name"] = $netName;
-            $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["biports"][$biPortUrn] = array();
-            $this->topology["domains"][
-                $domainName]["nets"][$netUrn]["biports"][$biPortUrn]["name"] = $biportName;
-        } 
-        
+        if (!isset($this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn])) {
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["name"] = $netName;
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn] = array();
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]["name"] = $biportName;
+
+        }
+
         $this->topology["domains"][
                 $domainName]["nets"][$netUrn]["biports"][
                         $biPortUrn]["uniports"][$portUrn]['name'] = $localId;
@@ -247,8 +244,13 @@ class NSIParser {
 
 
         if ($lat) {
-            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]['lat'] = $lat;
-            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]['lng'] = $lng;
+            $this->topology["domains"][
+                $domainName]["nets"][$netUrn]["biports"][
+                        $biPortUrn]['lat'] = $lat;
+            $this->topology["domains"][
+                $domainName]["nets"][$netUrn]["biports"][
+                        $biPortUrn]['lng'] = $lng;
+            $this->topology["domains"][$domainName]["nets"][$netUrn]["biports"][$biPortUrn]['locationName'] = $locationName;
         }
 
         if($capMax) {
@@ -405,27 +407,32 @@ class NSIParser {
                     $biportName = $biportNameNode->item(0)->nodeValue;
                 }
 
+                //-------------------------------------------------------------
                 $locationNode = $this->xpath->query(".//x:Location", $biPortNode);
-                        
+
                 $lat = null;
                 $lng = null;
 
-                if ($locationNode->item(0)) {	
-                    $latNode = $this->xpath->query(".//x:lat", $locationNode->item(0));	
-                    $lat = $latNode->item(0)->nodeValue;	
-                    $lngNode = $this->xpath->query(".//x:long", $locationNode->item(0));	
+                $locationName = null;
+                if ($locationNode->item(0)) {
+                    $latNode = $this->xpath->query(".//x:lat", $locationNode->item(0));
+                    $lat = $latNode->item(0)->nodeValue;
+                    $lngNode = $this->xpath->query(".//x:long", $locationNode->item(0));
                     $lng = $lngNode->item(0)->nodeValue;
-
+                    
                     $locationNameNode = $this->xpath->query(".//x:name", $locationNode->item(0));
-                    $locationName = $locationNameNode->item(0)->nodeValue;	
+                    $locationName = $locationNameNode->item(0)->nodeValue;
+
                 }
-                
-                $this->parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName, $lat, $lng);
+                //-------------------------------------------------------------
+
+
+                $this->parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName, $lat, $lng, $locationName);
             }
         }
     }
 
-    function parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName, $lat, $lng) {
+    function parseUniPorts($netNode, $biPortNode, $netId, $netName, $biPortId, $biportName, $lat, $lng, $locationName) {
         $portNodes = $this->xpath->query(".//x:PortGroup", $biPortNode);
         if($portNodes) {
             foreach ($portNodes as $portNode) {
@@ -439,6 +446,8 @@ class NSIParser {
 
                 $vlanAndAlias = $this->parseVlanAndAlias($netNode, $portId);
                 
+                Yii::warning($vlanAndAlias);
+
                 $this->addPort(
                         $netId,
                         $netName,
@@ -453,9 +462,9 @@ class NSIParser {
                         $vlanAndAlias[4],
                         $vlanAndAlias[5],
                         $lat,
-                        $lng
+                        $lng,
+                        $locationName
                 );
-                #$this->parseDevice($netNode, $portId));
             }
         }
     }
@@ -516,10 +525,10 @@ class NSIParser {
                         $this->errors["Unknown URN"][$id] = null;
                         continue;
                     }
-
+                    
                     if ($id === $portId) {
                         $vlanRangeNode = $this->xpath->query(".//x:LabelGroup", $portNode);
-                        $alias = $this->parseAlias($portNode);
+                        $locationNode = $this->xpath->query(".//x:Location", $portNode);
 
                         $capMax = null;
                         $capMin = null;
@@ -535,13 +544,13 @@ class NSIParser {
                                 $cap = $capNode->nodeValue;
                             else if($capNode->localName === "granularity")
                                 $granu = $capNode->nodeValue;
-
                         }
+
 
                         if($vlanRangeNode->item(0)) {
                             return [$vlanRangeNode->item(0)->nodeValue, 
-                                    $alias,
-                                    $capMax, $capMin, $cap, $granu];
+                                    $this->parseAlias($portNode),
+                                    $capMax,$capMin,$cap, $granu];
                         } else {
                             continue;
                         }

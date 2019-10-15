@@ -145,6 +145,31 @@ class Change extends \yii\db\ActiveRecord
         return $dataProvider;
     }
 
+    private function updateLocation($name, $lat, $lng, $domain_id)  {
+        $location_id = null;
+
+        $locationQuery = Location::findByName($name)->one();
+        if($locationQuery)
+            $location_id = $locationQuery->id;
+        else    {
+            $location = new Location;
+            $location->lat = $lat;
+            $location->lng = $lng;
+            $location->name = $name;
+            $location->domain_id = $domain_id;
+
+            if($location->save()) {
+                // $location_id = $location->id;
+                $location_id = $location->getPrimaryKey();
+            }
+            else {
+                $this->error = "Unknown";
+            }
+        }
+
+        return $location_id;
+    }
+
     public function apply() {
         $data = json_decode($this->data);
 
@@ -383,8 +408,17 @@ class Change extends \yii\db\ActiveRecord
                         $port->min_capacity = $data->cap_min;
                         $port->granularity = $data->granu;
                         $port->vlan_range = $data->vlan;
-                        $port->lat = $data->lat;
-                        $port->lng = $data->lng;
+
+                        if($data->locationName) {
+                            $dom = Domain::findOneByName($this->domain);
+
+                            if($dom)    {
+                                $location_id = $this->updateLocation($data->locationName, $data->lat, $data->lng, $dom->id);
+
+                                if($location_id)
+                                    $port->location_id = $location_id;
+                            }
+                        }
 
                         if ($data->netUrn) {
                             $net = Network::findByUrn($data->netUrn)->one();
@@ -407,8 +441,17 @@ class Change extends \yii\db\ActiveRecord
                             $port->min_capacity = $data->cap_min;
                             $port->granularity = $data->granu;
                             $port->vlan_range = $data->vlan;
-                            $port->lat = $data->lat;
-                            $port->lng = $data->lng;
+
+                            if($data->locationName) {
+                                $dom = Domain::findOneByName($this->domain);
+
+                                if($dom)    {
+                                    $location_id = $this->updateLocation($data->locationName, $data->lat, $data->lng, $dom->id);
+
+                                   if($location_id)
+                                        $port->location_id = $location_id;
+                                }
+                            }
 
                             if($port->save()) {
                                 $this->setApplied();
@@ -682,9 +725,10 @@ class Change extends \yii\db\ActiveRecord
                             $location;
                     case self::ITEM_TYPE_BIPORT:     
                         $location = $data->lat ? Yii::t('topology',
-                            '<br><b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
-                            ['lat'=> $data->lat, 
-                            'lng'=> $data->lng]) : "";
+                            '<br><b>Location</b>: {lname}, <b>Latitude</b>: {lat}, <b>Longitude</b>: {lng}', 
+                            ['lname' => $data->locationName,
+                            'lat'=> $data->lat, 
+                            'lng'=> $data->lng,]) : "";
                         $vlan = $data->vlan ? Yii::t('topology','<br><b>VLAN Range</b>: {vlan}', 
                             ['vlan'=> $data->vlan]) : "";
                         return Yii::t('topology', '<b>Name</b>: {name}<br><b>URN</b>: {urn}',

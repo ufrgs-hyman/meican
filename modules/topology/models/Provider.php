@@ -52,6 +52,10 @@ class Provider extends \yii\db\ActiveRecord
             [['type'], 'string'],
             [['domain_id'], 'integer'],
             [['latitude', 'longitude'], 'number'],
+            [['latitude'], 'compare', 'compareValue' => -90, 'operator' => '>='],
+            [['latitude'], 'compare', 'compareValue' => 90, 'operator' => '<='],
+            [['longitude'], 'compare', 'compareValue' => -180, 'operator' => '>='],
+            [['longitude'], 'compare', 'compareValue' => 180, 'operator' => '<='],
             [['name'], 'string', 'max' => 100],
             [['nsa'], 'string', 'max' => 200],
             [['nsa'], 'unique']

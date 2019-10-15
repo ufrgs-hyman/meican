@@ -121,30 +121,7 @@ $this->params['header'] = [Yii::t('circuits',"Circuit").' #'.$conn->id, ['Home',
             </div>
         </div> 
     </div>
-</div> 
-<div class="row">
-    <div class="col-md-8">
-        <div id="stats-box" class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title"><?= Yii::t("topology", "Traffic monitoring"); ?></h3>
-                <div class="box-tools pull-right">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm active">Last hour</button>
-                        <button type="button" class="btn btn-success btn-sm refresh-btn">Refresh</button>
-                    </div>
-                </div>
-            </div>
-            <div class="box-body">
-                <!--<div class="pull-left">Target: <span id="stats-target"></span></div>-->
-                <div id="stats-legend" class="pull-right"></div>
-                <div id="stats" style="margin-top: 25px;"></div>
-            </div>
-            
-            <div id='stats-loading' class="overlay">
-              <i class="fa fa-refresh fa-spin"></i>
-            </div>
-        </div>    
-    </div>
+
     <div class="col-md-4">
         <div class="box box-default">
             <div class="box-header with-border">
