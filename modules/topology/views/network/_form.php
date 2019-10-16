@@ -24,12 +24,13 @@ $this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home
 		<h3 class="box-title"><?= $this->params['box-title']; ?></h3>
 	</div>
 	<div class="box-body">
-		<?= $form->field($network, 'id')->hiddenInput()->label('');?>
-		<?= $form->field($network,'name')->textInput(['size'=>30,'maxlength'=>50]); ?>
+		<?= $form->field($network, 'id')->hiddenInput()->label(''); ?>
 		<?= $form->field($network,'urn')->textInput(['size'=>30,'maxlength'=>250, 'disabled' => !$network->isNewRecord]); ?>
+		<?= $form->field($network,'domain_id')->dropDownList(ArrayHelper::map($domains, 'id', 'name'), ['disabled' => !$network->isNewRecord]); ?>
+		<?= $form->field($network,'name')->textInput(['size'=>30,'maxlength'=>50, 'disabled' => !$network->isNewRecord]); ?>
 		<?= $form->field($network,'latitude')->textInput(['size'=>30,'maxlength'=>30]); ?>
 		<?= $form->field($network,'longitude')->textInput(['size'=>30,'maxlength'=>30]); ?>
-		<?= $form->field($network,'domain_id')->dropDownList(ArrayHelper::map($domains, 'id', 'name'), ['disabled' => !$network->isNewRecord]); ?>
+		
 	</div>
 	<div class="box-footer">
 		<div class="form-group">

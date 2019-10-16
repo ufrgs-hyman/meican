@@ -63,22 +63,7 @@ $this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home
                 [
                     'label' => Yii::t("topology", 'Name'),
                     'value' => 'name',
-                    'headerOptions'=>['style'=>'width: 25%;'],
-                ],
-                [
-                    'label' => Yii::t("topology", 'Urn'),
-                    'value' => 'urn',
-                    'headerOptions'=>['style'=>'width: 30%;'],
-                ],
-                [
-                    'label' => Yii::t("topology", 'Latitude'),
-                    'value' => 'latitude',
-                    'headerOptions'=>['style'=>'width: 8%;'],
-                ],
-                [
-                    'label' => Yii::t("topology", 'Longitude'),
-                    'value' => 'longitude',
-                    'headerOptions'=>['style'=>'width: 8%;'],
+                    'headerOptions'=>['style'=>'width: 35%;'],
                 ],
                 [
                     'label' => Yii::t("topology", 'Domain'),
@@ -90,8 +75,18 @@ $this->params['header'] = [Yii::t('topology', 'Networks'), [Yii::t('home', 'Home
                             $allowedDomains, 'name', 'name'),
                         ['class'=>'form-control','prompt' => Yii::t("topology", 'any')]        
                     ),
-                    'headerOptions'=>['style'=>'width: 25%;'],
+                    'headerOptions'=>['style'=>'width: 30%;'],
                 ],
+                [
+                    'label' => Yii::t("topology", 'Latitude'),
+                    'value' => 'latitude',
+                    'headerOptions'=>['style'=>'width: 15%;'],
+                ],
+                [
+                    'label' => Yii::t("topology", 'Longitude'),
+                    'value' => 'longitude',
+                    'headerOptions'=>['style'=>'width: 15%;'],
+                ],       
         ),
     ]);
 
