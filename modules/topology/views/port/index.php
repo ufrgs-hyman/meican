@@ -87,6 +87,7 @@ $this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'),
 						'class' => 'yii\grid\ActionColumn',
 						'template'=>'{edit}',
 						'contentOptions' => function($port){
+							return ['class'=>'btn-edit', 'id' => $port->id, 'value' => $port->getNetwork()->one()->getDomain()->one()->id];
 						},
 						'buttons' => [
 							'edit' => function ($url, $model) {
