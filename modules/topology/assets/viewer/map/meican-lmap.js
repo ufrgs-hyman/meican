@@ -237,7 +237,8 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
                         srcName +
                         '</b> and <b>' +
                         dstName +
-                        '</b><br>');
+                        '</b><br>' +
+                        capText);
 
         this._links.push(link);
     } else return null;
@@ -953,20 +954,14 @@ LMap.prototype._groupLinks = function(links, context)    {
 LMap.prototype._loadLinks = function() {
     var current = this;
     $.ajax({
-        url: baseUrl+'/topology/viewer/get-port-links',
+        url: baseUrl+'/topology/viewer/get-port-cap-links',
         dataType: 'json',
         method: "GET",
         success: function(response) {
             let links = [];
             for (var src in response) {
-                for (var i = 0; i < response[src].length; i++) {
-                    if(flagPortLocation)    {
-                        current.addLink(parseInt(src),parseInt(response[src][i]));
-                        //links.push([parseInt(src),parseInt(response[src][i])]);
-                    }
-                    else
-                        current.addLink(parseInt(src),parseInt(response[src][i]));
-                }
+                for (let i = 0; i < response[src].length; i++)
+                    current.addLink(parseInt(src),parseInt(response[src][i].port), false, response[src][i].max_capacity);
             }
             links = current._groupLinks(links, current);
             links.forEach(function(x){
