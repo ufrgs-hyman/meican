@@ -17,7 +17,6 @@ $(document).ready(function() {
     circuitDataPlane = getDataPlaneStatus();
     requestRefresh();
     initPathBox();
-    initStats();
     initHistoryModal();
     initEditModal();
     initCancelModal();
@@ -34,13 +33,11 @@ $(document).on('ready pjax:success', function() {
     //se ele for aprovado, entao deve ser recarregado 
     if (!circuitApproved && isAuthorized()) {
         circuitApproved = true;
-        console.log("connection approved");
         drawCircuit($("#circuit-id").attr('value'), true);
     }
 
     //se mudou dataplane entao atualiza cor do circuito
     if(circuitDataPlane != getDataPlaneStatus()) {
-        console.log('dataplane change');
         circuitDataPlane = getDataPlaneStatus();
         updateCircuitColor();
     }
@@ -420,7 +417,6 @@ function updatePathInfo(path) {
 
 function drawCircuitWhenReady(path, animate) {
     if (areMarkersReady(path)) {
-        console.log("drew");
         if (animate) {
             drawCircuitAnimated();
         } else {
@@ -434,10 +430,8 @@ function drawCircuitWhenReady(path, animate) {
             }
             
             meicanMap.focusNodes();
-            //loadStats(path);
         }
     } else {
-        console.log("try draw");
         setTimeout(function() {
             drawCircuitWhenReady(path, animate);
         } ,50);
@@ -446,10 +440,8 @@ function drawCircuitWhenReady(path, animate) {
 
 function setMapBoundsMarkersWhenReady(path) {
     if (areMarkersReady(path)) {
-        console.log("setbounds");
         meicanMap.focusNodes();
     } else {
-        console.log("try bounds");
         setTimeout(function() {
             setMapBoundsMarkersWhenReady(path);
         } ,50);
