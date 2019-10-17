@@ -434,7 +434,7 @@ function drawCircuitWhenReady(path, animate) {
             }
             
             meicanMap.focusNodes();
-            loadStats(path);
+            //loadStats(path);
         }
     } else {
         console.log("try draw");
@@ -471,8 +471,12 @@ function addDestin(port) {
 function addMarker(port, color) {
     marker = meicanMap.getNodeByPort(port.urn);
     if (marker) return;
+    if(port.lat != undefined)
+        flagPortLocation = true;
+    else
+        flagPortLocation = false;
 
-    meicanMap.addNode(port, color, true);
+    meicanMap.addNode(port, color);
 }
 
 function areMarkersReady(path) {

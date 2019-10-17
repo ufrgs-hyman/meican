@@ -111,7 +111,7 @@ class ConnectionController extends RbacController {
 
     public function actionGetPath($id) {
         $path = Yii::$app->db->createCommand(
-            "SELECT meican_connection_path.path_order, meican_connection_path.port_urn as urn, meican_connection_path.vlan, meican_port.lat, meican_port.lng, meican_port.network_id, meican_connection_path.conn_id, meican_provider.latitude as provider_lat, meican_provider.longitude as provider_lng 
+            "SELECT meican_connection_path.path_order, meican_connection_path.port_urn as urn, meican_connection_path.vlan, meican_location.lat, meican_location.lng, meican_port.network_id, meican_connection_path.conn_id, meican_provider.latitude as provider_lat, meican_provider.longitude as provider_lng 
                 FROM meican_connection_path
                 LEFT JOIN meican_domain
                 ON meican_connection_path.domain = meican_domain.name
@@ -119,6 +119,8 @@ class ConnectionController extends RbacController {
                 ON meican_provider.domain_id = meican_domain.id
                 LEFT JOIN meican_port 
                 ON meican_connection_path.port_urn = meican_port.urn
+                LEFT JOIN meican_location 
+                ON meican_port.location_id = meican_location.id
                 WHERE meican_connection_path.conn_id = $id"
         )->queryAll();
          
