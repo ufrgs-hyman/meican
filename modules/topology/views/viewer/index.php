@@ -11,7 +11,7 @@ $this->params['hide-footer'] = true;
 
 ?>
 
-<div id="lsidebar" class="lsidebar collapsed">
+<div id="lsidebar" class="lsidebar collapsed view">
     <!-- Nav tabs -->
     <div class="lsidebar-tabs">
         <ul role="tablist">
