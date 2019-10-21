@@ -588,8 +588,7 @@ LMap.prototype.setInitialMapPosition = function(){
                     lng = 0;
                     for(let i = validAllowedDomains.length-1; i >= 0; i--){
                         lat += parseFloat(validAllowedDomains[i].lat);
-                        lng += parseFloat(validAllowedDomains[i].lng);
-                        lng = current.getAdjustedLng(lng);
+                        lng += current.getAdjustedLng(parseFloat(validAllowedDomains[i].lng));
                     }
                     lat /= validAllowedDomains.length;
                     lng /= validAllowedDomains.length;
