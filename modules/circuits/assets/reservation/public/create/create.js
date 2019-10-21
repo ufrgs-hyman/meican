@@ -274,18 +274,20 @@ function initPathTab() {
 
         if (node.options.type == "domain")
             if(meicanMap.hasLocation(networkId))
-                expandGroupButton = ' <button style="visibility:visible" class="btn btn-sm btn-info expand-locations" title="Expand"><i class="fa fa-expand"></i></button>';
+                expandGroupButton = ' <button style="visibility:visible" class="btn btn-xs btn-default expand-locations" title="Expand"><i class="fa fa-expand"></i></button>';
             else
                 expandGroupButton = '';
         else if(node.options.type == "location")
-            expandGroupButton = ' <button style="visibility:visible" class="btn btn-sm btn-info group-locations" title="Group"><i class="fa fa-compress"></i></button>';
+            expandGroupButton = ' <button style="visibility:visible" class="btn btn-xs btn-info group-locations" title="Group"><i class="fa fa-compress"></i></button>';
 
-        node.setPopupContent('Domain: <b>' + node.options.ports[0].network.domain.name + 
-            '</b><br><br><div data-node="' + node.options.id + '">' +
+        node.setPopupContent('Domain: <b>' + node.options.ports[0].network.domain.name + '</b>' + 
+              '<span data-node="' + node.options.id + '">' + 
+              expandGroupButton +  
+              '</span><br><br><div data-node="' + node.options.id + '">' +
               ' <button class="btn btn-sm btn-default set-source">From here</button>'+
               ' <button class="btn btn-sm btn-default add-waypoint">Add waypoint</button>'+
               ' <button class="btn btn-sm btn-default set-destination">To here</button>'+
-              expandGroupButton+
+              
             '</div>');
     });
 
