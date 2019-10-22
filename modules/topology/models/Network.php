@@ -74,7 +74,7 @@ class Network extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('topology', 'ID'),
             'name' => Yii::t('topology', 'Name'),
-            'urn' => Yii::t('topology', 'Urn'),
+            'urn' => Yii::t('topology', 'URN'),
             'latitude' => Yii::t('topology', 'Latitude'),
             'longitude' => Yii::t('topology', 'Longitude'),
             'domain_id' => Yii::t('topology', 'Domain'),

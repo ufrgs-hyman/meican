@@ -125,7 +125,7 @@ class Port extends \yii\db\ActiveRecord
             'id' => Yii::t('topology', 'ID'),
             'type' => Yii::t('topology', 'Type'),
             'directionality' => Yii::t('topology', 'Directionality'),
-            'urn' => Yii::t('topology', 'Urn'),
+            'urn' => Yii::t('topology', 'URN'),
             'name' => Yii::t('topology', 'Name'),
             'capacity' => Yii::t('topology', 'Capacity (Mbps)'),
             'max_capacity' => Yii::t('topology', 'Max Reservable Capacity (Mbps)'),

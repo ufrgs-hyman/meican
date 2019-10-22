@@ -104,6 +104,18 @@ $this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'),
 						'headerOptions'=>['style'=>'width: 15%;'],
 					],
 					[
+						'format' => 'raw',
+						'label' => Yii::t('topology', 'Location'),
+						'value' => function($port){
+							$locationName = $port->getLocation()->one();
+							if ($locationName != NULL)
+								return $port->getLocation()->one()->name;
+							else
+								return NULL;
+						},
+						'headerOptions'=>['style'=>'width: 9%;'],
+					],
+					[
 						'label' => Yii::t('topology', 'Name'),
 						'value' => 'name',
 						'headerOptions'=>['style'=>'width: 15%;'],
@@ -131,18 +143,6 @@ $this->params['header'] = [Yii::t('topology', 'Ports'), [Yii::t('home', 'Home'),
 						'label' => Yii::t('topology', 'Granularity (Mbps)'),
 						'value' => 'granularity',
 						// 'headerOptions'=>['style'=>'width: 10%;'],
-					],
-					[
-						'format' => 'raw',
-						'label' => Yii::t('topology', 'Location'),
-						'value' => function($port){
-							$locationName = $port->getLocation()->one();
-							if ($locationName != NULL)
-								return $port->getLocation()->one()->name;
-							else
-								return NULL;
-						},
-						'headerOptions'=>['style'=>'width: 9%;'],
 					],
 				),
 			]);
