@@ -62,11 +62,11 @@ function initCanvas() {
 
         if (node.options.type == "domain")
             if(meicanMap.hasLocation(networkId))
-                expandGroupButton = ' <button style="visibility:visible" class="btn btn-sm btn-info expand-locations" title="Expand"><i class="fa fa-expand"></i></button>';
+                expandGroupButton = ' <button style="visibility:visible" class="btn btn-xs btn-default expand-locations" title="Expand"><i class="fa fa-expand"></i></button>';
             else
                 expandGroupButton = '';
         else if(node.options.type == "location")
-            expandGroupButton = ' <button style="visibility:visible" class="btn btn-sm btn-info group-locations" title="Group"><i class="fa fa-compress"></i></button>';
+            expandGroupButton = ' <button style="visibility:visible" class="btn btn-xs btn-info group-locations" title="Group"><i class="fa fa-compress"></i></button>';
 
         node.setPopupContent(
             '<div data-node="' + node.options.id + '">' +
