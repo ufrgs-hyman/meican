@@ -39,7 +39,7 @@ class NSIRequester implements Requester {
         if (Yii::$app->id == "meican-console") {
             $meicanRequesterUrl = CircuitsPreference::findOneValue(CircuitsPreference::CIRCUITS_MEICAN_REQUESTER_URL);
         } else {
-            $meicanRequesterUrl = Url::toRoute("/circuits/nsi/requester", "http");
+            $meicanRequesterUrl = Url::toRoute("/circuits/nsi/requester", Yii::$app->params['requester.protocol']);
         }
 
         $this->soapClient = new ConnectionRequesterClient(

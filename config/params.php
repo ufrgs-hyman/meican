@@ -18,6 +18,8 @@ return [
 
     "provider.force.dummy" => true,
 
+    "requester.protocol" => "http",
+
     "oscars.bridge.provider.url" => 'http://meican-cipo.inf.ufrgs.br:8080/oscars-bridge/circuits',
     "esmond.server.api.url" => 'http://monitora.cipo.rnp.br/esmond/v2/',
 ];
