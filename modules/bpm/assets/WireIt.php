@@ -30,7 +30,7 @@ class WireIt extends AssetBundle
 
     public $js = [
         //jquery 171
-        'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+        'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
         'bpm-i18n.js',
         //<!-- YUI -->
         'lib/inputex/lib/yui/utilities/utilities.js',
