@@ -87,6 +87,19 @@ function initCanvas() {
         meicanMap._loadLinks();
     });
 
+    $("#canvas").on("click",'.show-link-details', function() {
+        let element = $("#detailedLinkInformation");
+        let wrapper = document.querySelector('.show-link-details');
+
+        if(element.is(":hidden")){
+            element.show();
+            wrapper.innerHTML = '<i class="fa fa-minus-circle"></i>'
+        }else{
+            element.hide();
+            wrapper.innerHTML = '<i class="fa fa-plus-circle"></i>'
+        }
+    });
+
     $('#canvas').on('vgraph.nodeClick', function(e, nodeId) {
         var node = meicanGraph.getNode(nodeId);
         meicanGraph.showPopup(

@@ -210,16 +210,30 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
     if (latLngList.length > 1) {
         let srcName = null;
         let dstName = null;
+        let srcPortName = null;
+        let dstPortName = null;
 
-        if(src.options.type == 'domain')
-            srcName = meicanMap.getNodeByPort(from).options.name.split(':')[0];   
-        else
-            srcName = meicanMap.getNodeByPort(from).options.name.split(":").slice(3,6).join(':');
+        srcName = meicanMap.getNodeByPort(from).options.name.split(':')[0];
+        dstName = meicanMap.getNodeByPort(to).options.name.split(':')[0];
 
-        if(dst.options.type == 'domain')
-            dstName = meicanMap.getNodeByPort(to).options.name.split(':')[0];
-        else
-            dstName = meicanMap.getNodeByPort(to).options.name.split(":").slice(3,6).join(':');
+        
+        let ports = meicanMap.getNodeByPort(from).options.ports
+
+        for (var i = ports.length - 1; i >= 0; i--) {
+            if(ports[i].id == from){
+                srcPortName = ports[i].name;
+                break;
+            }
+        }
+
+        ports = meicanMap.getNodeByPort(to).options.ports
+        
+        for (var i = ports.length - 1; i >= 0; i--) {
+            if(ports[i].id == to){
+                dstPortName = ports[i].name;
+                break;
+            }
+        }
 
         var link = L.polyline(
             latLngList, 
@@ -237,8 +251,16 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
                         srcName +
                         '</b> and <b>' +
                         dstName +
-                        '</b><br>' +
-                        capText);
+                        '</b><button style="visibility:visible" class="btn btn-xs btn-default show-link-details" title="Show Link Details"><i class="fa fa-plus-circle"></i></button>'+'<br>' +
+                        capText + 
+                        '<div id="detailedLinkInformation" style="display:none">' +
+                            '<br>Detailed Link Information<br>Link between <b>' + 
+                            srcPortName + 
+                            '</b> and <b>' + 
+                            dstPortName + 
+                            '</b>'+
+                        '</div>'
+                        );
 
         this._links.push(link);
     } else return null;
@@ -251,7 +273,7 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
 
     link.on('mouseover', function(e) {
         $("#"+current._canvasDivId).trigger("lmap.linkHover", link);
-    })
+    });
 
     return link;
 }
