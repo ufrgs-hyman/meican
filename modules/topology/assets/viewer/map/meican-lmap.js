@@ -252,13 +252,14 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
                         '</b> and <b>' +
                         dstName +
                         '</b><button style="visibility:visible" class="btn btn-xs btn-default show-link-details" title="Show Link Details"><i class="fa fa-plus-circle"></i></button>'+'<br>' +
-                        capText + 
                         '<div id="detailedLinkInformation" style="display:none">' +
                             '<br>Detailed Link Information<br>Link between <b>' + 
                             srcPortName + 
                             '</b> and <b>' + 
                             dstPortName + 
-                            '</b>'+
+                            '</b><br>'+                        
+                            capText + 
+
                         '</div>'
                         );
 
