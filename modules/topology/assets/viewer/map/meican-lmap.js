@@ -205,7 +205,7 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
 
 
     let capUnit = (cap > 1000) ? (cap/1000.) + '</b> Gbps' :  cap + '</b> Mbps';
-    capText = (cap)? 'Max reservable capacity: <b>' + capUnit : '';
+    capText = (cap)? '- Max reservable capacity: <b>' + capUnit : '';
 
     if (latLngList.length > 1) {
         let srcName = null;
@@ -247,19 +247,22 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
                 opacity: 0.7,
                 weight: 4,
             }).addTo(this._map).bindPopup(
-                        'Link between <b>' + 
-                        srcName +
-                        '</b> and <b>' +
-                        dstName +
-                        '</b><button style="visibility:visible" class="btn btn-xs btn-default show-link-details" title="Show Link Details"><i class="fa fa-plus-circle"></i></button>'+'<br>' +
-                        '<div id="detailedLinkInformation" style="display:none">' +
-                            '<br>Detailed Link Information<br>Link between <b>' + 
-                            srcPortName + 
-                            '</b> and <b>' + 
-                            dstPortName + 
-                            '</b><br>'+                        
-                            capText + 
-
+                        '<div style="width: 130%">' +
+                            'Link between <b>' + 
+                            srcName +
+                            '</b> and <b>' +
+                            dstName +
+                            '</b>&nbsp;&nbsp;<button style="visibility:visible" class="show-link-details" title="Show Link Details"><i class="fa fa-info"></i></button>'+'<br>' +
+                            '<div id="detailedLinkInformation" style="display:none">' +
+                                '<u>Detailed Link Information:</u>' +
+                                '<div style="padding-left: 10px">- '+
+                                    srcPortName + 
+                                    '&nbsp;<i class="fa fa-arrows-h" aria-hidden="true"></i>&nbsp;' + 
+                                    dstPortName + 
+                                    '<br>'+
+                                    capText +
+                                '</div>' +
+                            '</div>' +
                         '</div>'
                         );
 

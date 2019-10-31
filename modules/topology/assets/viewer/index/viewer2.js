@@ -93,10 +93,10 @@ function initCanvas() {
 
         if(element.is(":hidden")){
             element.show();
-            wrapper.innerHTML = '<i class="fa fa-minus-circle"></i>'
+            wrapper.innerHTML = '<i class="fa fa-minus"></i>'
         }else{
             element.hide();
-            wrapper.innerHTML = '<i class="fa fa-plus-circle"></i>'
+            wrapper.innerHTML = '<i class="fa fa-info"></i>'
         }
     });
 
