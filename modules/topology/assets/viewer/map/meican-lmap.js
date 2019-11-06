@@ -180,7 +180,7 @@ LMap.prototype.addIntraLink = function(location_link)    {
 
 }
 
-LMap.prototype.addLink = function(from, to, partial, cap, color) {
+LMap.prototype.addLink = function(from, to, partial, cap, color, type) {
     if(!from || !to) return null;
     if(!color) color = '#b1b1b1';
     var latLngList = [];
@@ -212,6 +212,7 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
         let dstName = null;
         let srcPortName = null;
         let dstPortName = null;
+        let showDetailedInfo = 'none';
 
         srcName = meicanMap.getNodeByPort(from).options.name.split(':')[0];
         dstName = meicanMap.getNodeByPort(to).options.name.split(':')[0];
@@ -235,6 +236,9 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
             }
         }
 
+        if(type == 'viewer')
+            showDetailedInfo = 'show';
+
         var link = L.polyline(
             latLngList, 
             {
@@ -252,7 +256,7 @@ LMap.prototype.addLink = function(from, to, partial, cap, color) {
                             srcName +
                             '</b> and <b>' +
                             dstName +
-                            '</b>&nbsp;&nbsp;<button style="visibility:visible" class="show-link-details" title="Show Link Details"><i class="fa fa-info"></i></button>'+'<br>' +
+                            '</b>&nbsp;&nbsp;<button style="display:' + showDetailedInfo + '" class="show-link-details" title="Show Link Details"><i class="fa fa-info"></i></button>'+'<br>' +
                             '<div id="detailedLinkInformation" style="display:none">' +
                                 '<u>Detailed Link Information:</u>' +
                                 '<div style="padding-left: 10px">- '+
@@ -986,7 +990,7 @@ LMap.prototype._loadLinks = function() {
             let links = [];
             for (var src in response) {
                 for (let i = 0; i < response[src].length; i++)
-                    current.addLink(parseInt(src),parseInt(response[src][i].port), false, response[src][i].max_capacity);
+                    current.addLink(parseInt(src),parseInt(response[src][i].port), false, response[src][i].max_capacity, null, 'viewer');
             }
             links = current._groupLinks(links, current);
             links.forEach(function(x){
