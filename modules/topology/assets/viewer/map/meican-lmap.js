@@ -250,25 +250,7 @@ LMap.prototype.addLink = function(from, to, partial, cap, color, type) {
                 color: color,
                 opacity: 0.7,
                 weight: 4,
-            }).addTo(this._map).bindPopup(
-                        '<div style="width: 130%">' +
-                            'Link between <b>' + 
-                            srcName +
-                            '</b> and <b>' +
-                            dstName +
-                            '</b>&nbsp;&nbsp;<button style="display:' + showDetailedInfo + '" class="show-link-details" title="Show Link Details"><i class="fa fa-info"></i></button>'+'<br>' +
-                            '<div id="detailedLinkInformation" style="display:none">' +
-                                '<u>Detailed Link Information:</u>' +
-                                '<div style="padding-left: 10px">- '+
-                                    srcPortName + 
-                                    '&nbsp;<i class="fa fa-arrows-h" aria-hidden="true"></i>&nbsp;' + 
-                                    dstPortName + 
-                                    '<br>'+
-                                    capText +
-                                '</div>' +
-                            '</div>' +
-                        '</div>'
-                        );
+            }).addTo(this._map).bindPopup( this._createPopupContent(srcName, dstName, srcPortName, dstPortName, capText, showDetailedInfo) );
 
         this._links.push(link);
     } else return null;
@@ -1081,4 +1063,24 @@ LMap.prototype.groupLocations = function(nodeId) {
     this.removeNode(domainId, "location");   
     this.showNode(meicanMap.getNode(meicanMap.getNodeIdByDomainId(domainId)));
     this.removeExpandedDomainNode(domainId);
+}
+
+LMap.prototype._createPopupContent = function(srcName, dstName, srcPortName, dstPortName, capText, showDetailedInfo) {
+    return '<div style="width: 130%">' +
+                'Link between <b>' + 
+                srcName +
+                '</b> and <b>' +
+                dstName +
+                '</b>&nbsp;&nbsp;<button style="display:' + showDetailedInfo + '" class="show-link-details" title="Show Link Details"><i class="fa fa-info"></i></button>'+'<br>' +
+                '<div id="detailedLinkInformation" style="display:none">' +
+                    '<u>Detailed Link Information:</u>' +
+                    '<div style="padding-left: 10px">- '+
+                        srcPortName + 
+                        '&nbsp;<i class="fa fa-arrows-h" aria-hidden="true"></i>&nbsp;' + 
+                        dstPortName + 
+                        '<br>'+
+                        capText +
+                    '</div>' +
+                '</div>' +
+            '</div>'
 }
