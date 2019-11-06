@@ -125,7 +125,7 @@ class Domain extends \yii\db\ActiveRecord {
     	$networks = Network::find()->where(['domain_id' => $this->id])->all();
     	
     	foreach($networks as $network){
-    		$ports = Port::find()->where(['network_id' => $network->id, 'type' => Port::TYPE_NSI, 'directionality' => Port::DIR_BI])->all();
+    		$ports = Port::find()->where(['network_id' => $network->id, 'type' => Port::TYPE_NSI, 'directionality' => Port::DIR_BI])->orderBy(['name' => SORT_ASC])->all();
     		foreach($ports as $port){
     			$portsArray[$port->id] = $port;
     		}
