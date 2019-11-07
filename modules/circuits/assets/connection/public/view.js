@@ -468,7 +468,7 @@ function addMarker(port, color) {
     else
         flagPortLocation = false;
 
-    meicanMap.addNode(port, color);
+    meicanMap.addNode(port, color, 'status');
 }
 
 function areMarkersReady(path) {

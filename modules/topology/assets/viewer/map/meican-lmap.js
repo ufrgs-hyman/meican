@@ -323,7 +323,7 @@ LMap.prototype.getParentPosition = function(port) {
     return L.latLng([0,0]);
 }
 
-LMap.prototype.addNode = function(port, color) {
+LMap.prototype.addNode = function(port, color, mode) {
     if(!port.network)
         return;
     if (!color) 
@@ -374,10 +374,12 @@ LMap.prototype.addNode = function(port, color) {
             }
         ).bindPopup("#");
 
-        if(flagPortLocation)
-            node.bindTooltip(port.location_name, {permanent:true, direction: 'top'}).openTooltip();
-        else
-            node.bindTooltip(port.network.domain.name, {permanent:true, direction: 'left'}).openTooltip();
+        if(mode != 'status'){
+            if(flagPortLocation)
+                node.bindTooltip(port.location_name, {permanent:true, direction: 'top'}).openTooltip();
+            else
+                node.bindTooltip(port.network.domain.name, {permanent:true, direction: 'left'}).openTooltip();
+        }
 
         this._nodes.push(node);
         this._cluster.addLayer(node);
