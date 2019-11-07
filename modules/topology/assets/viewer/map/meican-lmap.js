@@ -180,7 +180,7 @@ LMap.prototype.addIntraLink = function(location_link)    {
 
 }
 
-LMap.prototype.addLink = function(from, to, partial, cap, color, type) {
+LMap.prototype.addLink = function(from, to, partial, cap, color, mode) {
     if(!from || !to) return null;
     if(!color) color = '#b1b1b1';
     var latLngList = [];
@@ -236,7 +236,7 @@ LMap.prototype.addLink = function(from, to, partial, cap, color, type) {
             }
         }
 
-        if(type == 'viewer')
+        if(mode == 'viewer')
             showDetailedInfo = 'show';
 
         var link = L.polyline(
