@@ -580,6 +580,7 @@ LMap.prototype.setInitialMapPosition = function(){
     var current = this;
     let lat = 10;
     let lng = -95;
+    let viewport = {height: $(window).height(), width: $(window).width()};
     $.ajax({
         url: baseUrl+'/aaa/role/get-allowed-domains',
         dataType: 'json',
@@ -609,7 +610,10 @@ LMap.prototype.setInitialMapPosition = function(){
                     current._map.setView(L.latLng(lat,lng), 3);
                 } 
             } else{
-                current._map.setView(L.latLng(lat,lng), 3);
+                if(viewport.width < 1400)
+                    current._map.setView(L.latLng(lat,lng), 2);
+                else
+                    current._map.setView(L.latLng(lat,lng), 3);
             }
         }
     });   
