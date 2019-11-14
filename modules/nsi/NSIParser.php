@@ -446,8 +446,6 @@ class NSIParser {
 
                 $vlanAndAlias = $this->parseVlanAndAlias($netNode, $portId);
                 
-                Yii::warning($vlanAndAlias);
-
                 $this->addPort(
                         $netId,
                         $netName,

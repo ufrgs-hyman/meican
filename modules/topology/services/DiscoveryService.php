@@ -378,6 +378,20 @@ class DiscoveryService {
 
             } else {
                 $validBiPorts[] = $port->id; 
+
+                if(!empty($portData['vlan']) && ($portData['vlan'] != $port->vlan_range)) {
+                    $change = $this->buildChange();
+                    $change->type = Change::TYPE_UPDATE;
+                    $change->domain = $domainName;
+                    $change->item_type = Change::ITEM_TYPE_BIPORT;
+                    $change->item_id = $port->id;
+
+                    $change->data = json_encode([
+                        'vlan' => $portData['vlan']
+                    ]);
+
+                    $change->save();
+                }
             }
 
             if ($this->parser instanceof NMWGParser) {

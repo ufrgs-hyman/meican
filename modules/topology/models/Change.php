@@ -436,22 +436,22 @@ class Change extends \yii\db\ActiveRecord
                     case self::TYPE_UPDATE:
                         $port = Port::findOne($this->item_id);
                         if ($port) {
-                            $port->name = $data->name;
-                            $port->max_capacity = $data->cap_max;
-                            $port->min_capacity = $data->cap_min;
-                            $port->granularity = $data->granu;
+                            // $port->name = $data->name;
+                            // $port->max_capacity = $data->cap_max;
+                            // $port->min_capacity = $data->cap_min;
+                            // $port->granularity = $data->granu;
                             $port->vlan_range = $data->vlan;
 
-                            if($data->locationName) {
-                                $dom = Domain::findOneByName($this->domain);
+                            // if($data->locationName) {
+                            //     $dom = Domain::findOneByName($this->domain);
 
-                                if($dom)    {
-                                    $location_id = $this->updateLocation($data->locationName, $data->lat, $data->lng, $dom->id);
+                            //     if($dom)    {
+                            //         $location_id = $this->updateLocation($data->locationName, $data->lat, $data->lng, $dom->id);
 
-                                   if($location_id)
-                                        $port->location_id = $location_id;
-                                }
-                            }
+                            //        if($location_id)
+                            //             $port->location_id = $location_id;
+                            //     }
+                            // }
 
                             if($port->save()) {
                                 $this->setApplied();
