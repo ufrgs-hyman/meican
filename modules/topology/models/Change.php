@@ -695,7 +695,9 @@ class Change extends \yii\db\ActiveRecord
                     case self::ITEM_TYPE_PEERING: return "";
                     case self::ITEM_TYPE_SERVICE: return Yii::t('topology', 'Domain');
                     case self::ITEM_TYPE_NETWORK: return Yii::t('topology', 'URN');
-                    case self::ITEM_TYPE_BIPORT: return Yii::t('topology', 'Port');
+                    case self::ITEM_TYPE_BIPORT: 
+                        $port = Port::findOneArraySelect($this->item_id, ['urn']);
+                        return Yii::t('topology', '<b>Port</b>: {urn} - <b>VLAN Range</b>: {vlan}',['urn'=>$port['urn'], 'vlan'=> $data->vlan]); 
                     case self::ITEM_TYPE_UNIPORT: 
                         $port = Port::findOneArraySelect($this->item_id, ['urn']);
                         $vlan = $data->vlan ? Yii::t('topology',' - <b>VLAN Range</b>: {vlan}', 
