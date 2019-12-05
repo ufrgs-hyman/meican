@@ -381,20 +381,24 @@ class DiscoveryService {
                 $validBiPorts[] = $port->id; 
 
                 if((!empty($portData['vlan']) && ($portData['vlan'] != $port->vlan_range)) || (!empty($portData['locationName']) && $this->hasDifferentLocation($portData, $domainName))) {
-
-                // if($this->hasSameLocation($portData, $domainName)){
                     $change = $this->buildChange();
                     $change->type = Change::TYPE_UPDATE;
                     $change->domain = $domainName;
                     $change->item_type = Change::ITEM_TYPE_BIPORT;
                     $change->item_id = $port->id;
 
-                    $change->data = json_encode([
-                        'vlan' => $portData['vlan'],
-                        'locationName'=>isset($portData["locationName"]) ? $portData["locationName"] : null,
-                        'lat'=>isset($portData["lat"]) ? $portData["lat"] : null,
-                        'lng'=>isset($portData["lng"]) ? $portData["lng"] : null,
-                    ]);
+                    $itemsChanged = [];
+                    if($portData['vlan'] != $port->vlan_range)  {
+                        $itemsChanged['vlan'] = $portData['vlan'];
+                    }
+
+                    if(!empty($portData['locationName']) && $this->hasDifferentLocation($portData, $domainName))   {
+                        $itemsChanged['locationName'] = isset($portData["locationName"]) ? $portData["locationName"] : null;
+                        $itemsChanged['lat'] = isset($portData["lat"]) ? $portData["lat"] : null;
+                        $itemsChanged['lng'] = isset($portData["lng"]) ? $portData["lng"] : null;
+                    }
+                    
+                    $change->data = json_encode($itemsChanged);
 
                     $change->save();
                 }
@@ -550,15 +554,19 @@ class DiscoveryService {
         }
     }
 
+    private function compareLat($lat1, $lat2)   {
+        $epsilon = 0.01;
+        return abs(abs($lat1) - abs($lat2)) > $epsilon;
+    }
+
     private function hasDifferentLocation($portData, $domainName) {
         if($portData) {
             $dom = Domain::findOneByName($domainName);
 
             if($dom) {
                 $loc = Location::findByDomainIdAndName($portData['locationName'], $dom->id);
-                if($loc)
-                    if($loc->lng != $portData['lng'])
-                        return true; 
+                if(!$loc or $this->compareLat($loc->lat, $portData['lat']))    
+                    return true;
             }   
             
             return false;

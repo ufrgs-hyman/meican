@@ -168,7 +168,6 @@ class Change extends \yii\db\ActiveRecord
             $location->domain_id = $domain_id;
 
             if($location->save()) {
-                // $location_id = $location->id;
                 $location_id = $location->getPrimaryKey();
             }
             else {
@@ -445,9 +444,10 @@ class Change extends \yii\db\ActiveRecord
                     case self::TYPE_UPDATE:
                         $port = Port::findOne($this->item_id);
                         if ($port) {
-                            $port->vlan_range = $data->vlan;
+                            if(isset($data->vlan))
+                               $port->vlan_range = $data->vlan;
                             
-                            if($data->locationName) {
+                            if(isset($data->locationName)) {
                                 $dom = Domain::findOneByName($this->domain);
 
                                 if($dom) {
@@ -702,7 +702,12 @@ class Change extends \yii\db\ActiveRecord
                     case self::ITEM_TYPE_NETWORK: return Yii::t('topology', 'URN');
                     case self::ITEM_TYPE_BIPORT: 
                         $port = Port::findOneArraySelect($this->item_id, ['urn']);
-                        return Yii::t('topology', '<b>Port</b>: {urn} <br><b>VLAN Range</b>: {vlan} <br><b>Location Name</b>: {locationName}',['urn'=>$port['urn'], 'vlan'=> $data->vlan, 'locationName'=> $data->locationName]); 
+                        $biport_text = Yii::t('topology', '<b>Port</b>: {urn}',['urn'=>$port['urn']]);
+                        if(isset($data->vlan)) 
+                            $biport_text .=  Yii::t('topology', '<br><b>VLAN Range</b>: {vlan}',['vlan'=> $data->vlan]);
+                        if(isset($data->locationName))
+                            $biport_text .= Yii::t('topology', '<br><b>Location Name</b>: {locationName}<br><b>Lat:</b> {lat} <b>Long:</b> {lng}', ['locationName'=> $data->locationName, 'lat' => $data->lat, 'lng' => $data->lng]);
+                        return $biport_text; 
                     case self::ITEM_TYPE_UNIPORT: 
                         $port = Port::findOneArraySelect($this->item_id, ['urn']);
                         $vlan = $data->vlan ? Yii::t('topology',' - <b>VLAN Range</b>: {vlan}', 
