@@ -149,9 +149,18 @@ class Change extends \yii\db\ActiveRecord
         $location_id = null;
 
         $locationQuery = Location::findByName($name)->one();
-        if($locationQuery)
+        if($locationQuery){
+            if($locationQuery->lat != $lat || $locationQuery->lng != $lng){
+                $locationQuery->lat = $lat;
+                $locationQuery->lng = $lng;
+
+                if(!$locationQuery->save()) 
+                    $this->error = "Unknown";
+            }
+
             $location_id = $locationQuery->id;
-        else    {
+        }
+        else {
             $location = new Location;
             $location->lat = $lat;
             $location->lng = $lng;
@@ -436,22 +445,18 @@ class Change extends \yii\db\ActiveRecord
                     case self::TYPE_UPDATE:
                         $port = Port::findOne($this->item_id);
                         if ($port) {
-                            // $port->name = $data->name;
-                            // $port->max_capacity = $data->cap_max;
-                            // $port->min_capacity = $data->cap_min;
-                            // $port->granularity = $data->granu;
                             $port->vlan_range = $data->vlan;
+                            
+                            if($data->locationName) {
+                                $dom = Domain::findOneByName($this->domain);
 
-                            // if($data->locationName) {
-                            //     $dom = Domain::findOneByName($this->domain);
+                                if($dom) {
+                                    $location_id = $this->updateLocation($data->locationName, $data->lat, $data->lng, $dom->id);
 
-                            //     if($dom)    {
-                            //         $location_id = $this->updateLocation($data->locationName, $data->lat, $data->lng, $dom->id);
-
-                            //        if($location_id)
-                            //             $port->location_id = $location_id;
-                            //     }
-                            // }
+                                    if($location_id)
+                                        $port->location_id = $location_id;
+                                }
+                            }
 
                             if($port->save()) {
                                 $this->setApplied();
@@ -697,7 +702,7 @@ class Change extends \yii\db\ActiveRecord
                     case self::ITEM_TYPE_NETWORK: return Yii::t('topology', 'URN');
                     case self::ITEM_TYPE_BIPORT: 
                         $port = Port::findOneArraySelect($this->item_id, ['urn']);
-                        return Yii::t('topology', '<b>Port</b>: {urn} - <b>VLAN Range</b>: {vlan}',['urn'=>$port['urn'], 'vlan'=> $data->vlan]); 
+                        return Yii::t('topology', '<b>Port</b>: {urn} <br><b>VLAN Range</b>: {vlan} <br><b>Location Name</b>: {locationName}',['urn'=>$port['urn'], 'vlan'=> $data->vlan, 'locationName'=> $data->locationName]); 
                     case self::ITEM_TYPE_UNIPORT: 
                         $port = Port::findOneArraySelect($this->item_id, ['urn']);
                         $vlan = $data->vlan ? Yii::t('topology',' - <b>VLAN Range</b>: {vlan}', 

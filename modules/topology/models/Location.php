@@ -84,4 +84,8 @@ class Location extends \yii\db\ActiveRecord
     static function findByName($name) {
         return self::find()->where(['name'=>$name]);
     }
+
+    static function findByDomainIdAndName($name, $domain_id) {
+        return self::find()->andWhere(['name'=>$name])->andWhere(['domain_id'=>$domain_id])->one();
+    }
 }

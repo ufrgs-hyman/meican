@@ -17,6 +17,7 @@ use meican\topology\models\DiscoveryRule;
 use meican\topology\models\Domain;
 use meican\topology\models\Network;
 use meican\topology\models\Port;
+use meican\topology\models\Location;
 use meican\topology\models\Provider;
 use meican\topology\models\Service;
 use meican\topology\models\Peering;
@@ -379,7 +380,9 @@ class DiscoveryService {
             } else {
                 $validBiPorts[] = $port->id; 
 
-                if(!empty($portData['vlan']) && ($portData['vlan'] != $port->vlan_range)) {
+                if((!empty($portData['vlan']) && ($portData['vlan'] != $port->vlan_range)) || (!empty($portData['locationName']) && $this->hasDifferentLocation($portData, $domainName))) {
+
+                // if($this->hasSameLocation($portData, $domainName)){
                     $change = $this->buildChange();
                     $change->type = Change::TYPE_UPDATE;
                     $change->domain = $domainName;
@@ -387,7 +390,10 @@ class DiscoveryService {
                     $change->item_id = $port->id;
 
                     $change->data = json_encode([
-                        'vlan' => $portData['vlan']
+                        'vlan' => $portData['vlan'],
+                        'locationName'=>isset($portData["locationName"]) ? $portData["locationName"] : null,
+                        'lat'=>isset($portData["lat"]) ? $portData["lat"] : null,
+                        'lng'=>isset($portData["lng"]) ? $portData["lng"] : null,
                     ]);
 
                     $change->save();
@@ -541,6 +547,21 @@ class DiscoveryService {
 
                 $change->save();
             } 
+        }
+    }
+
+    private function hasDifferentLocation($portData, $domainName) {
+        if($portData) {
+            $dom = Domain::findOneByName($domainName);
+
+            if($dom) {
+                $loc = Location::findByDomainIdAndName($portData['locationName'], $dom->id);
+                if($loc)
+                    if($loc->lng != $portData['lng'])
+                        return true; 
+            }   
+            
+            return false;
         }
     }
 }
