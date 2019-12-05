@@ -59,8 +59,8 @@ class ReservationSearch extends Reservation {
         $validDomains = [];
         foreach($allowedDomains as $domain) $validDomains[] = $domain['name'];
 
-        $dp_status = ($this->dataplane_status) ? [$this->dataplane_status] : ['ACTIVE', 'INACTIVE'];
-        $terminated_status = ($this->dataplane_status == 'ACTIVE') ? ['CANCEL REQUESTED', 'CANCELLED'] : [];
+        $dataplane_status = ($this->dataplane_status) ? 'ACTIVE' : null;
+        $terminated_status = $dataplane_status ? ['CANCEL REQUESTED', 'CANCELLED'] : [];
 
         if ($this->src_domain && $this->dst_domain) {
             //foi usado um SQL direto no UNION ao inves do findBySQL pois este
@@ -118,34 +118,62 @@ class ReservationSearch extends Reservation {
             ->andWhere(['type'=>self::TYPE_NORMAL])
             ->orderBy(['date'=>SORT_DESC]);
 
-        $connsPast = Connection::find()
+        $connsPast = null;
+        $connsCurrent = null;
+        $connsFuture = null;
+
+        if($dataplane_status)   {
+            $connsPast = Connection::find()
                 ->andwhere(['in', 'reservation_id', 
                     ArrayHelper::getColumn(
                         $reservations->all(),'id')])
                 ->andWhere(['<', 'finish', date("o-m-d H:i:s")])
-                ->andWhere(['in', 'dataplane_status', $dp_status])
+                ->andWhere(['dataplane_status' => 'ACTIVE'])
                 ->andWhere(['not in', 'status', $terminated_status])    
                 ->orderBy(['start'=>SORT_DESC]);
 
-
-        $connsCurrent = Connection::find()
+            $connsCurrent = Connection::find()
                 ->andwhere(['in', 'reservation_id', 
                     ArrayHelper::getColumn(
                         $reservations->all(),'id')])
                 ->andWhere(['<', 'start', date("o-m-d H:i:s")])
                 ->andWhere(['>', 'finish', date("o-m-d H:i:s")])
-                ->andWhere(['in', 'dataplane_status', $dp_status])
+                ->andWhere(['dataplane_status' => 'ACTIVE'])
                 ->andWhere(['not in', 'status', $terminated_status])
                 ->orderBy(['start'=>SORT_DESC]);
-                
-        $connsFuture = Connection::find()
+
+            $connsFuture = Connection::find()
                 ->andwhere(['in', 'reservation_id', 
                     ArrayHelper::getColumn(
                         $reservations->all(),'id')])
                 ->andWhere(['>', 'start', date("o-m-d H:i:s")])
-                ->andWhere(['in', 'dataplane_status', $dp_status])
+                ->andWhere(['dataplane_status' => 'ACTIVE'])
                 ->andWhere(['not in', 'status', $terminated_status])    
                 ->orderBy(['start'=>SORT_DESC]);
+        }
+        else    {
+            $connsPast = Connection::find()
+                ->andwhere(['in', 'reservation_id', 
+                    ArrayHelper::getColumn(
+                        $reservations->all(),'id')])
+                ->andWhere(['<', 'finish', date("o-m-d H:i:s")])
+                ->orderBy(['start'=>SORT_DESC]);
+
+            $connsCurrent = Connection::find()
+                ->andwhere(['in', 'reservation_id', 
+                    ArrayHelper::getColumn(
+                        $reservations->all(),'id')])
+                ->andWhere(['<', 'start', date("o-m-d H:i:s")])
+                ->andWhere(['>', 'finish', date("o-m-d H:i:s")])
+                ->orderBy(['start'=>SORT_DESC]);
+
+            $connsFuture = Connection::find()
+                ->andwhere(['in', 'reservation_id', 
+                    ArrayHelper::getColumn(
+                        $reservations->all(),'id')])
+                ->andWhere(['>', 'start', date("o-m-d H:i:s")])
+                ->orderBy(['start'=>SORT_DESC]);
+        }
 
         $past = new ActiveDataProvider([
             'query' => $connsPast,
