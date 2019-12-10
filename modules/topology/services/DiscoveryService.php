@@ -17,6 +17,7 @@ use meican\topology\models\DiscoveryRule;
 use meican\topology\models\Domain;
 use meican\topology\models\Network;
 use meican\topology\models\Port;
+use meican\topology\models\Location;
 use meican\topology\models\Provider;
 use meican\topology\models\Service;
 use meican\topology\models\Peering;
@@ -379,16 +380,25 @@ class DiscoveryService {
             } else {
                 $validBiPorts[] = $port->id; 
 
-                if(!empty($portData['vlan']) && ($portData['vlan'] != $port->vlan_range)) {
+                if((!empty($portData['vlan']) && ($portData['vlan'] != $port->vlan_range)) || (!empty($portData['locationName']) && $this->hasDifferentLocation($portData, $domainName))) {
                     $change = $this->buildChange();
                     $change->type = Change::TYPE_UPDATE;
                     $change->domain = $domainName;
                     $change->item_type = Change::ITEM_TYPE_BIPORT;
                     $change->item_id = $port->id;
 
-                    $change->data = json_encode([
-                        'vlan' => $portData['vlan']
-                    ]);
+                    $itemsChanged = [];
+                    if($portData['vlan'] != $port->vlan_range)  {
+                        $itemsChanged['vlan'] = $portData['vlan'];
+                    }
+
+                    if(!empty($portData['locationName']) && $this->hasDifferentLocation($portData, $domainName))   {
+                        $itemsChanged['locationName'] = isset($portData["locationName"]) ? $portData["locationName"] : null;
+                        $itemsChanged['lat'] = isset($portData["lat"]) ? $portData["lat"] : null;
+                        $itemsChanged['lng'] = isset($portData["lng"]) ? $portData["lng"] : null;
+                    }
+                    
+                    $change->data = json_encode($itemsChanged);
 
                     $change->save();
                 }
@@ -541,6 +551,25 @@ class DiscoveryService {
 
                 $change->save();
             } 
+        }
+    }
+
+    private function compareCoordinates($lat1, $lat2, $lng1, $lng2)   {
+        $epsilon = 0.001;
+        return (abs(abs($lat1) - abs($lat2)) > $epsilon) || (abs(abs($lng1) - abs($lng2)) > $epsilon);
+    }
+
+    private function hasDifferentLocation($portData, $domainName) {
+        if($portData) {
+            $dom = Domain::findOneByName($domainName);
+
+            if($dom) {
+                $loc = Location::findByDomainIdAndName($portData['locationName'], $dom->id);
+                if(!$loc or $this->compareCoordinates($loc->lat, $portData['lat'], $loc->lng, $portData['lng']))    
+                    return true;
+            }   
+            
+            return false;
         }
     }
 }
