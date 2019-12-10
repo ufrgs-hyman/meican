@@ -60,7 +60,7 @@ class ReservationSearch extends Reservation {
         foreach($allowedDomains as $domain) $validDomains[] = $domain['name'];
 
         $dataplane_status = ($this->dataplane_status) ? 'ACTIVE' : null;
-        $terminated_status = $dataplane_status ? ['CANCEL REQUESTED', 'CANCELLED'] : [];
+        $active_status = $dataplane_status ? ['CONFIRMED', 'SUBMITTED', 'PROVISIONED'] : [];
 
         if ($this->src_domain && $this->dst_domain) {
             //foi usado um SQL direto no UNION ao inves do findBySQL pois este
@@ -129,7 +129,7 @@ class ReservationSearch extends Reservation {
                         $reservations->all(),'id')])
                 ->andWhere(['<', 'finish', date("o-m-d H:i:s")])
                 ->andWhere(['dataplane_status' => 'ACTIVE'])
-                ->andWhere(['not in', 'status', $terminated_status])    
+                ->andWhere(['in', 'status', $active_status])    
                 ->orderBy(['start'=>SORT_DESC]);
 
             $connsCurrent = Connection::find()
@@ -139,7 +139,7 @@ class ReservationSearch extends Reservation {
                 ->andWhere(['<', 'start', date("o-m-d H:i:s")])
                 ->andWhere(['>', 'finish', date("o-m-d H:i:s")])
                 ->andWhere(['dataplane_status' => 'ACTIVE'])
-                ->andWhere(['not in', 'status', $terminated_status])
+                ->andWhere(['in', 'status', $active_status])
                 ->orderBy(['start'=>SORT_DESC]);
 
             $connsFuture = Connection::find()
@@ -148,7 +148,7 @@ class ReservationSearch extends Reservation {
                         $reservations->all(),'id')])
                 ->andWhere(['>', 'start', date("o-m-d H:i:s")])
                 ->andWhere(['dataplane_status' => 'ACTIVE'])
-                ->andWhere(['not in', 'status', $terminated_status])    
+                ->andWhere(['in', 'status', $active_status])    
                 ->orderBy(['start'=>SORT_DESC]);
         }
         else    {
