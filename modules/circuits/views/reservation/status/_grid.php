@@ -129,15 +129,11 @@ function generateGrid($gridId, $data, $searchModel, $allowedDomains){
 
                         return $msg;
                     },
-                    // 'filter' => Html::activeDropDownList($searchModel, 'dataplane_status', 
-                    //     ArrayHelper::map([
-                    //         ['id' => 'ACTIVE', 'name' => 'Active'],
-                    //         ['id' => 'INACTIVE', 'name' => 'Inactive']
-                    //     ], 'id', 'name'),
-                    //     ['id'=>'reservationsearch-dataplane_status', 'class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
-                    // ),
-                    'filter' => Html::activeCheckbox($searchModel, 'dataplane_status', 
-                        ['id'=>'reservationsearch-dataplane_status', 'name' => 'Active']
+                    'filter' => Html::activeDropDownList($searchModel, 'dataplane_status', 
+                        ArrayHelper::map([
+                            ['id' => 'ACTIVE', 'name' => 'Active'],
+                        ], 'id', 'name'),
+                        ['id'=>'reservationsearch-dataplane_status', 'class'=>'form-control','prompt' => Yii::t("circuits", 'any')]
                     ),
                     'headerOptions'=>['style'=>'width: 28%;'],
                 ],
