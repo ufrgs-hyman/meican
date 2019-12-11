@@ -24,6 +24,7 @@ class ReservationSearch extends Reservation {
 
     public $src_domain;
     public $dst_domain;
+    public $dataplane_status;
 
     /**
      * @inheritdoc
@@ -31,7 +32,7 @@ class ReservationSearch extends Reservation {
     public function rules()
     {
         return [
-            [['src_domain', 'dst_domain'], 'safe'],
+            [['src_domain', 'dst_domain', 'dataplane_status'], 'safe'],
         ];
     }
 
@@ -54,6 +55,9 @@ class ReservationSearch extends Reservation {
 
     public function searchByDomains($params, $allowedDomains){
         $this->load($params);
+
+        $dataplane_status = ($this->dataplane_status) ? 'ACTIVE' : null;
+        $active_status = $dataplane_status ? ['CONFIRMED', 'SUBMITTED', 'PROVISIONED'] : [];
         
         $validDomains = [];
         foreach($allowedDomains as $domain) $validDomains[] = $domain['name'];
@@ -115,21 +119,43 @@ class ReservationSearch extends Reservation {
 
         $reservationHelper = ArrayHelper::getColumn($reservations->all(),'id');
        
-        $connsPast = Connection::find()
-            ->andwhere(['in', 'reservation_id', $reservationHelper])
-            ->andWhere(['<', 'finish', date("o-m-d H:i:s")])
-            ->orderBy(['start'=>SORT_DESC]);
+        if($dataplane_status)   {
+            $connsPast = Connection::find()
+               ->andwhere(['in', 'reservation_id', $reservationHelper])
+                ->andWhere(['<', 'finish', date("o-m-d H:i:s")])
+                ->andWhere(['dataplane_status' => 'ACTIVE'])
+                ->andWhere(['in', 'status', $active_status])    
+                ->orderBy(['start'=>SORT_DESC]);
+            $connsCurrent = Connection::find()
+                ->andwhere(['in', 'reservation_id', $reservationHelper])
+                ->andWhere(['<', 'start', date("o-m-d H:i:s")])
+                ->andWhere(['>', 'finish', date("o-m-d H:i:s")])
+                ->andWhere(['dataplane_status' => 'ACTIVE'])
+                ->andWhere(['in', 'status', $active_status])
+                ->orderBy(['start'=>SORT_DESC]);
+            $connsFuture = Connection::find()
+                ->andwhere(['in', 'reservation_id', $reservationHelper])
+                ->andWhere(['>', 'start', date("o-m-d H:i:s")])
+                ->andWhere(['dataplane_status' => 'ACTIVE'])
+                ->andWhere(['in', 'status', $active_status])    
+                ->orderBy(['start'=>SORT_DESC]);
+        } else  {
+            $connsPast = Connection::find()
+                ->andwhere(['in', 'reservation_id', $reservationHelper])
+                ->andWhere(['<', 'finish', date("o-m-d H:i:s")])
+                ->orderBy(['start'=>SORT_DESC]);
 
-        $connsCurrent = Connection::find()
-            ->andwhere(['in', 'reservation_id', $reservationHelper])
-            ->andWhere(['<', 'start', date("o-m-d H:i:s")])
-            ->andWhere(['>', 'finish', date("o-m-d H:i:s")])
-            ->orderBy(['start'=>SORT_DESC]);
+            $connsCurrent = Connection::find()
+                ->andwhere(['in', 'reservation_id', $reservationHelper])
+                ->andWhere(['<', 'start', date("o-m-d H:i:s")])
+                ->andWhere(['>', 'finish', date("o-m-d H:i:s")])
+                ->orderBy(['start'=>SORT_DESC]);
 
-        $connsFuture = Connection::find()
-            ->andwhere(['in', 'reservation_id', $reservationHelper])
-            ->andWhere(['>', 'start', date("o-m-d H:i:s")])
-            ->orderBy(['start'=>SORT_DESC]);
+            $connsFuture = Connection::find()
+                ->andwhere(['in', 'reservation_id', $reservationHelper])
+                ->andWhere(['>', 'start', date("o-m-d H:i:s")])
+                ->orderBy(['start'=>SORT_DESC]);
+        }
 
         $past = new ActiveDataProvider([
             'query' => $connsPast,
