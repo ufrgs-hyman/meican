@@ -116,17 +116,13 @@ function generateGrid($gridId, $data, $searchModel, $allowedDomains){
                         $status = $model->getStatus();
                         $dataStatus = $model->getDataStatus();
 
-                        $custom_status = [
-                            'Terminated' => $status == 'Cancelled' and $dataStatus == 'Active',
-                            'Terminating' => $status == 'Cancelling' and $dataStatus == 'Active'
-                        ];
                         $msg = '';
-                        foreach($custom_status as $name => $condition)
-                            if($condition)
-                                $msg = $name;
-
-                        if(empty($msg))
-                            $msg = $status .", ".$model->getAuthStatus().", ". $dataStatus;
+                        if($dataStatus == 'Active' and $status == 'Cancelled')
+                            $msg = 'Terminated';
+                        else if($dataStatus == 'Active' and $status == 'Cancelling')
+                            $msg = 'Terminating';
+                        else
+                            $msg = $status . ", " . $model->getAuthStatus() . ", " . $dataStatus;
 
                         return $msg;
                     },
