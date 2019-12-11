@@ -85,7 +85,7 @@ class ReservationSearch extends Reservation {
 
         } elseif ($this->dst_domain) {
             $connPoints = ConnectionPath::findBySql("
-                SELECT cp1.conn_id as conn_id
+                SELECT DISTINCT cp1.conn_id as conn_id
                 FROM (
                     SELECT conn_id, MAX(`path_order`) AS last_path
                     FROM `meican_connection_path`
@@ -111,28 +111,24 @@ class ReservationSearch extends Reservation {
                 ArrayHelper::getColumn(
                     $validConns->select(['reservation_id'])->asArray()->all(),
                     'reservation_id')])
-            ->andWhere(['type'=>self::TYPE_NORMAL])
-            ->orderBy(['date'=>SORT_DESC]);
+            ->distinct(true)
+            ->andWhere(['type'=>self::TYPE_NORMAL]);
+
+        $reservationHelper = ArrayHelper::getColumn($reservations->all(),'id');
        
         $connsPast = Connection::find()
-            ->andwhere(['in', 'reservation_id', 
-                ArrayHelper::getColumn(
-                    $reservations->all(),'id')])
+            ->andwhere(['in', 'reservation_id', $reservationHelper])
             ->andWhere(['<', 'finish', date("o-m-d H:i:s")])
             ->orderBy(['start'=>SORT_DESC]);
 
         $connsCurrent = Connection::find()
-            ->andwhere(['in', 'reservation_id', 
-                ArrayHelper::getColumn(
-                    $reservations->all(),'id')])
+            ->andwhere(['in', 'reservation_id', $reservationHelper])
             ->andWhere(['<', 'start', date("o-m-d H:i:s")])
             ->andWhere(['>', 'finish', date("o-m-d H:i:s")])
             ->orderBy(['start'=>SORT_DESC]);
 
         $connsFuture = Connection::find()
-            ->andwhere(['in', 'reservation_id', 
-                ArrayHelper::getColumn(
-                    $reservations->all(),'id')])
+            ->andwhere(['in', 'reservation_id', $reservationHelper])
             ->andWhere(['>', 'start', date("o-m-d H:i:s")])
             ->orderBy(['start'=>SORT_DESC]);
 
