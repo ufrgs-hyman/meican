@@ -554,9 +554,9 @@ class DiscoveryService {
         }
     }
 
-    private function compareCoordinates($lat1, $lat2, $lng1, $lng2)   {
-        $epsilon = 0.001;
-        return (abs(abs($lat1) - abs($lat2)) > $epsilon) || (abs(abs($lng1) - abs($lng2)) > $epsilon);
+    private function compareLat($lat1, $lat2)   {
+        $epsilon = 0.01;
+        return abs(abs($lat1) - abs($lat2)) > $epsilon;
     }
 
     private function hasDifferentLocation($portData, $domainName) {
@@ -565,7 +565,7 @@ class DiscoveryService {
 
             if($dom) {
                 $loc = Location::findByDomainIdAndName($portData['locationName'], $dom->id);
-                if(!$loc or $this->compareCoordinates($loc->lat, $portData['lat'], $loc->lng, $portData['lng']))    
+                if(!$loc or $this->compareLat($loc->lat, $portData['lat']))    
                     return true;
             }   
             
