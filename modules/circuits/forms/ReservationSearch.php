@@ -109,9 +109,8 @@ class ReservationSearch extends Reservation {
         $reservations = Reservation::find()                 //$reservations tem uma tabela com as linhas que tem o "id" igual aos do "reservation_id"(da tabela $validConns)
             ->andWhere(['in', 'id', 
                 ArrayHelper::getColumn(
-                    $validConns->select(['reservation_id'])->asArray()->all(),
+                    $validConns->select(['reservation_id'])->distinct(true)->asArray()->all(),
                     'reservation_id')])
-            ->distinct(true)
             ->andWhere(['type'=>self::TYPE_NORMAL]);
 
         $reservationHelper = ArrayHelper::getColumn($reservations->all(),'id');
