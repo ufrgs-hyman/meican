@@ -113,7 +113,17 @@ function generateGrid($gridId, $data, $searchModel, $allowedDomains){
                     'label' => Yii::t('circuits', "Status"),
                     'format' => 'html',
                     'value' => function($model) {
-                        $msg = $model->getStatus().", ".$model->getAuthStatus().", ".$model->getDataStatus();
+                        $custom_status = [
+                            'Terminated' => $model->getStatus() == 'Cancelled' and $model->getDataStatus() == 'Active',
+                            'Terminating' => $model->getStatus() == 'Cancelling' and $model->getDataStatus() == 'Active'
+                        ];
+                        $msg = '';
+                        foreach($custom_status as $name => $condition)
+                            if($condition)
+                                $msg = $name;
+
+                        if(empty($msg))
+                            $msg = $model->getStatus().", ".$model->getAuthStatus().", ".$model->getDataStatus();
 
                         return $msg;
                     },
