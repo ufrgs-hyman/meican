@@ -10,7 +10,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
-
+use yii\db\Query;
 use meican\base\utils\DateUtils;
 use meican\circuits\models\Reservation;
 use meican\circuits\models\ConnectionPath;
@@ -119,41 +119,45 @@ class ReservationSearch extends Reservation {
 
         $reservationHelper = ArrayHelper::getColumn($reservations->all(),'id');
        
+        $currentDate = date("o-m-d H:i:s");
+
         if($dataplane_status)   {
             $connsPast = Connection::find()
                ->andwhere(['in', 'reservation_id', $reservationHelper])
-                ->andWhere(['<', 'finish', date("o-m-d H:i:s")])
+                ->andWhere(['<', 'finish', $currentDate])
                 ->andWhere(['dataplane_status' => 'ACTIVE'])
                 ->andWhere(['in', 'status', $active_status])    
                 ->orderBy(['start'=>SORT_DESC]);
+
             $connsCurrent = Connection::find()
                 ->andwhere(['in', 'reservation_id', $reservationHelper])
-                ->andWhere(['<', 'start', date("o-m-d H:i:s")])
-                ->andWhere(['>', 'finish', date("o-m-d H:i:s")])
+                ->andWhere(['<', 'start', $currentDate])
+                ->andWhere(['>', 'finish', $currentDate])
                 ->andWhere(['dataplane_status' => 'ACTIVE'])
                 ->andWhere(['in', 'status', $active_status])
                 ->orderBy(['start'=>SORT_DESC]);
+
             $connsFuture = Connection::find()
                 ->andwhere(['in', 'reservation_id', $reservationHelper])
-                ->andWhere(['>', 'start', date("o-m-d H:i:s")])
+                ->andWhere(['>', 'start', $currentDate])
                 ->andWhere(['dataplane_status' => 'ACTIVE'])
                 ->andWhere(['in', 'status', $active_status])    
                 ->orderBy(['start'=>SORT_DESC]);
         } else  {
             $connsPast = Connection::find()
                 ->andwhere(['in', 'reservation_id', $reservationHelper])
-                ->andWhere(['<', 'finish', date("o-m-d H:i:s")])
+                ->andWhere(['<', 'finish', $currentDate])
                 ->orderBy(['start'=>SORT_DESC]);
 
             $connsCurrent = Connection::find()
                 ->andwhere(['in', 'reservation_id', $reservationHelper])
-                ->andWhere(['<', 'start', date("o-m-d H:i:s")])
-                ->andWhere(['>', 'finish', date("o-m-d H:i:s")])
+                ->andWhere(['<', 'start', $currentDate])
+                ->andWhere(['>', 'finish', $currentDate])
                 ->orderBy(['start'=>SORT_DESC]);
 
             $connsFuture = Connection::find()
                 ->andwhere(['in', 'reservation_id', $reservationHelper])
-                ->andWhere(['>', 'start', date("o-m-d H:i:s")])
+                ->andWhere(['>', 'start', $currentDate])
                 ->orderBy(['start'=>SORT_DESC]);
         }
 
