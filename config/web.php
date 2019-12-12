@@ -9,7 +9,7 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'meican',
     'name'=>'MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks',
-    'version' => '3.1.2',
+    'version' => '3.2.0',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log','session',
         'notify',
