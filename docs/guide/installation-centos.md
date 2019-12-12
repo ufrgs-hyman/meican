@@ -117,7 +117,7 @@ On source code folder (#meican-folder#) install the [Composer](https://getcompos
 
 ```
 curl -O https://getcomposer.org/download/1.2.0/composer.phar
-php composer.phar global require "fxp/composer-asset-plugin:~1.2.1"
+php composer.phar global require "fxp/composer-asset-plugin:~1.4.4"
 ```
 
 #### 3.4. Install MEICAN
