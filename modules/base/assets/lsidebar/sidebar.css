@@ -54,10 +54,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       width: 460px; } }
 
 .lsidebar-left {
-  left: 0; }
+  right: 0; }
   @media (min-width: 768px) {
     .lsidebar-left {
-      left: 10px; } }
+      right: 10px; } }
 
 .lsidebar-right {
   right: 0; }
