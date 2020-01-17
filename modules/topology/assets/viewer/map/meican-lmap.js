@@ -659,7 +659,7 @@ LMap.prototype.build = function(mapDiv) {
     this.setInitialMapPosition();
     this._map.setMaxBounds( [[-90,-320], [90, 160]] );
 
-    new L.Control.Zoom({ position: 'topright' }).addTo(this._map);
+    new L.Control.Zoom({ position: 'topleft' }).addTo(this._map);
 
 
     this._cluster = L.markerClusterGroup({
