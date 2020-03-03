@@ -19,6 +19,15 @@ By default the fake provider is enabled. Disable this feature setting the param 
 'provider.force.dummy' => false,
 ```
 
+The default protocol parameter is set as HTTP, as shown below:
+
+```
+'requester.protocol' => 'http',
+```
+
+To use MEICAN in HTTPS environments, just change the parameter from `http` to `https`.
+
+
 For the pass recovery form, the application uses the [Google reCAPTCHA API](https://www.google.com/recaptcha). The keys must be set:
 
 ```
