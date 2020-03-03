@@ -30,4 +30,12 @@
     docker-compose up
 
 
-3- After, MEICAN will be available at localhost in port previously configured.
+3- After, MEICAN will be available at localhost in port previously configured, with one user created:
+
+```
+user: master
+pass: master
+```
+
+If you are doing a upgrade, go back to [Upgrade Guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/upgrade.md). If this is not your case, next step is set parameters and configure the app. Look the [Configuration Guide](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/configuration.md).
+
