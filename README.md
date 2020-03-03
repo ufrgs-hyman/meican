@@ -17,6 +17,7 @@ Mobile friendly since version 3
 ```
 certificates/       	app certificates
 config/             	app configurations
+docker/			Docker files
 mail/               	layouts and templates for mail sender
 migrations/         	database version control
 modules/            	application modules
@@ -68,7 +69,7 @@ web/                	web accessible files, e.g., assets cache, wsdl files and im
 
 ### Installation
 
-There are two specific installation guides, one for [CentOS](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-centos.md) and another for [Ubuntu](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-ubuntu.md).
+Installation can be done using [Docker Compose](https://github.com/ufrgs-hyman/meican/blob/master/docker/README.md) or manually on [CentOS](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-centos.md) or [Ubuntu](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-ubuntu.md).
 
 ### Configuration
 
