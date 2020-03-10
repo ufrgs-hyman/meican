@@ -30,7 +30,7 @@
     docker-compose up
 
 
-3- After, MEICAN will be available at localhost in port previously configured, with one user created:
+3- After, MEICAN will be available at localhost in port configured using the `MEICAN_PORT` parameter, with one user created:
 
 ```
 user: master
