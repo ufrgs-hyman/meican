@@ -653,14 +653,11 @@ LMap.prototype.setNodeType = function(type) {
 
 LMap.prototype.build = function(mapDiv) {
     this._map = L.map(mapDiv, {
-        zoomControl: false
+        zoomControl: true
     });
 
     this.setInitialMapPosition();
     this._map.setMaxBounds( [[-90,-320], [90, 160]] );
-
-    new L.Control.Zoom({ position: 'topleft' }).addTo(this._map);
-
 
     this._cluster = L.markerClusterGroup({
         showCoverageOnHover: false,

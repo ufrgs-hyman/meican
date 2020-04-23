@@ -143,6 +143,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     .lsidebar-pane {
       min-width: 420px; } }
 
+.leaflet-left {
+  position: static;
+}
+
 .lsidebar-header {
   margin: -10px -20px 0;
   height: 40px;
