@@ -179,7 +179,7 @@ class RequesterController extends Controller implements ConnectionRequesterServe
 
         $conn->buildEvent(ConnectionEvent::TYPE_NSI_SUMMARY_CONFIRMED, Yii::$app->request->getRawBody())->save();
         
-        if($conn->version != $response->reservation->criteria->version) {
+        if(isset($response->reservation->criteria) and ($conn->version != $response->reservation->criteria->version)) {
             $conn->start = (new \DateTime($response->reservation->criteria->schedule->startTime))->format("Y-m-d H:i:s");
             $conn->finish = (new \DateTime($response->reservation->criteria->schedule->endTime))->format("Y-m-d H:i:s");
             $this->updateConnectionBandwidth($conn, $response);
