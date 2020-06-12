@@ -48,7 +48,7 @@ RUN sed -i "s/MYSQL_DATABASE/$MYSQL_DATABASE/" $MEICAN_DIR/config/db.php \
  && sed -i "s/MYSQL_USER/$MYSQL_USER/" $MEICAN_DIR/config/db.php \
  && sed -i "s/MYSQL_PASSWORD/$MYSQL_PASSWORD/" $MEICAN_DIR/config/db.php \
  && chown meican:meican $MEICAN_DIR/config/db.php \
- && su meican -c "curl -kO https://getcomposer.org/composer.phar" \
+ && su meican -c "curl -kO https://getcomposer.org/download/1.9.3/composer.phar" \
  && su meican -c "php composer.phar global require "fxp/composer-asset-plugin:~1.4.4"" \
  && ln -s $MEICAN_DIR/web /var/www/meican \
  && a2enmod rewrite
