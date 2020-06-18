@@ -2,7 +2,7 @@
 
 Follow the steps detailed below.
 
-This configuration was tested and performed on CentOS 6.7.
+This configuration was tested and performed on CentOS 6.10.
 
 #### 1. Prepare environment
 
@@ -21,16 +21,12 @@ yum install httpd
 yum install mysql-server
 ```
 
-#### 1.4. Install cURL
+#### 1.4. Install cURL and wget
 ```
-yum install curl
+yum install curl wget
 ```
 
 #### 1.5. Install PHP 5.5
-
-```
-yum install php55w php55w-mysql php55w-curl php55w-soap php55w-xml php55w-mbstring
-```
 
 There may be a conflict between the native PHP CentOS and the version that the Meican requires. To remove the native version, run:
 
@@ -38,7 +34,12 @@ There may be a conflict between the native PHP CentOS and the version that the M
 yum remove php-common
 ```
 
-After that, runs the install command again.
+After that, runs the following command to install PHP 5.5:
+
+```
+yum install php55w php55w-mysql php55w-curl php55w-soap php55w-xml php55w-mbstring
+```
+
 
 #### 1.6. Start Apache and MySQL
 
@@ -116,8 +117,8 @@ nano #meican-folder#/config/db.php
 On source code folder (#meican-folder#) install the [Composer](https://getcomposer.org)
 
 ```
-curl -O https://getcomposer.org/download/1.2.0/composer.phar
-php composer.phar global require "fxp/composer-asset-plugin:~1.4.4"
+curl -O https://getcomposer.org/download/1.9.3/composer.phar
+php composer.phar global require "fxp/composer-asset-plugin:~1.4.6"
 ```
 
 #### 3.4. Install MEICAN
