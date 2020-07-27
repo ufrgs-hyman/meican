@@ -44,5 +44,13 @@ $this->params['header'] = ['Dashboard'];
             </a>
         </div>
         <?php endif; ?>
+
+        <div class="col-xs-6 col-sm-3" style="min-width: 250px">
+            <h2><?= Yii::t('home', 'Resources'); ?></h2>
+            <a href="<?= Url::to(['/circuits/resources/index']); ?>">
+                <img style="width: 135px; height:135px;" src="<?= Url::to('@web/images/dash_resources.png'); ?>" alt="Resources"/>
+            </a>
+        </div>
+
     </div>
 

@@ -51,6 +51,7 @@ return array(
         'Reservations' => 'Reservas',
         'Users' => 'Usuários',
 		'Authorizations' => 'Autorizações',
+		'Resources' => 'Recursos',
 		'Alternatively, you can access MEICAN using the Federated Academic Community (CAFé)' => "Alternativamente, você pode entrar utilizando a Comunidade Acadêmica Federada (CAFé)",		
         'Requests' => 'Requisições',
 		'Feedback sent. Thank you!' => 'Feedback enviado com sucesso. Obrigado!',
