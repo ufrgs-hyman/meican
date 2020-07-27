@@ -10,17 +10,17 @@ use yii\helpers\Url;
 
 ?>
 
-<h1>Aggregator API</h1>
+<h1>Create container</h1>
 
 
 <div>
-    <a href="./create" id="request-container-btn" class="btn btn-primary">Instanciar novo container</a>    
+    <a href="./index" id="dget-containers-btn" class="btn btn-primary">Verificar containers ativos</a>
 </div><br>
 
 <?php
 
 // URL on which we have to post data
-$url = "http://blacksabbath.inf.ufrgs.br:15443/aggregator/index.php/aggregator/get_containers";
+$url = "http://blacksabbath.inf.ufrgs.br:15443/aggregator/index.php/aggregator/request_container";
 
 // Any other field you might want to post
 //$json_data = json_encode(array("name"=>"PHP Rockstart", "age"=>29));
