@@ -20,5 +20,3 @@ use yii\helpers\Url;
 <div>
     <a href="./create" id="request-container-btn" class="btn btn-primary">Instanciar novo container</a>    
 </div><br>
-
-<?php

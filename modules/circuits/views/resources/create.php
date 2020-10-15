@@ -20,12 +20,8 @@ use yii\helpers\Url;
 <?php
 
 // URL on which we have to post data
-$url = "http://blacksabbath.inf.ufrgs.br:15443/aggregator/index.php/aggregator/get_containers?container_name=$model->container_name&container_port=$model->container_port";
-
+$url = "http://blacksabbath.inf.ufrgs.br:15443/aggregator/index.php/aggregator/request_container?container_name=$model->container_name&container_port=$model->container_port";
 $ch = curl_init();
-
 curl_setopt($ch, CURLOPT_URL, $url);
-
 $response = curl_exec($ch);
-
 echo $response;

@@ -29,11 +29,7 @@ use yii\helpers\Url;
 <?php
 
 $url = "http://blacksabbath.inf.ufrgs.br:15443/aggregator/index.php/aggregator/get_containers";
-
 $ch = curl_init();
-
 curl_setopt($ch, CURLOPT_URL, $url);
-
 $response = curl_exec($ch);
-
 echo $response;
