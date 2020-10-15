@@ -21,7 +21,7 @@ class ResourcesController extends RbacController {
 
         $model = new ResourcesForm;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            return $this->render('confirm-create', ['model' => $model]);
+            return $this->render('create', ['model' => $model]);
         } else {
             return $this->render('index', ['model' => $model]);
         }
@@ -29,12 +29,6 @@ class ResourcesController extends RbacController {
     }
 
     public function actionCreate(){
-        $model = new ResourcesForm;
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            return $this->render('index', ['model' => $model]);
-        } else {
-            return $this->render('create', ['model' => $model]);
-        }
+        return $this->render('create'); 
     }
-
 }
