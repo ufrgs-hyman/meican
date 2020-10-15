@@ -9,6 +9,7 @@ namespace meican\circuits\controllers;
 use Yii;
 
 use meican\aaa\RbacController;
+use meican\circuits\forms\ResourcesForm;
 
 
 /**
@@ -17,11 +18,23 @@ use meican\aaa\RbacController;
 class ResourcesController extends RbacController {
     
     public function actionIndex(){
-        return $this->render('index');
+
+        $model = new ResourcesForm;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            return $this->render('confirm-create', ['model' => $model]);
+        } else {
+            return $this->render('index', ['model' => $model]);
+        }
+
     }
 
     public function actionCreate(){
-        return $this->render('create');
+        $model = new ResourcesForm;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            return $this->render('index', ['model' => $model]);
+        } else {
+            return $this->render('create', ['model' => $model]);
+        }
     }
 
 }

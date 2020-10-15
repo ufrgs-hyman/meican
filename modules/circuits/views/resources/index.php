@@ -5,6 +5,7 @@
  */
  
 
+use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -12,34 +13,27 @@ use yii\helpers\Url;
 
 <h1>Aggregator API</h1>
 
+<?php $form = ActiveForm::begin(); ?>
 
-<div>
-    <a href="./create" id="request-container-btn" class="btn btn-primary">Instanciar novo container</a>    
-</div><br>
+    <?= $form->field($model, 'container_name') ?>
+
+    <?= $form->field($model, 'container_port') ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Criar', ['class' => 'btn btn-primary']) ?>
+    </div>
+
+<?php ActiveForm::end(); ?>
+
 
 <?php
 
-// URL on which we have to post data
 $url = "http://blacksabbath.inf.ufrgs.br:15443/aggregator/index.php/aggregator/get_containers";
 
-// Any other field you might want to post
-//$json_data = json_encode(array("name"=>"PHP Rockstart", "age"=>29));
-//$post_data['json_data'] = $json_data;
-//$post_data['secure_hash'] = mktime();
-
-// Initialize cURL
 $ch = curl_init();
 
-// Set URL on which you want to post the Form and/or data
 curl_setopt($ch, CURLOPT_URL, $url);
-// Data+Files to be posted
-//curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-// Pass TRUE or 1 if you want to wait for and catch the response against the request made
-//curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-// For Debug mode; shows up any error encountered during the operation
-//curl_setopt($ch, CURLOPT_VERBOSE, 1);
-// Execute the request
+
 $response = curl_exec($ch);
 
-// Just for debug: to see response
 echo $response;
