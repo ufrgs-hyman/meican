@@ -7,13 +7,13 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+
 ?>
 
 <h1>Confirmar Criação do Container</h1>
 
 <p>Nome do Container: <b><?= Html::encode($model->container_name) ?></b>
 <p>Porta do Container: <b><?= Html::encode($model->container_port) ?></b>
-<p><?=Html::encode($url) ?>
 </ul>
 
 
@@ -22,4 +22,3 @@ use yii\helpers\Url;
 </div><br>
 
 <?php
-
