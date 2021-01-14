@@ -201,7 +201,7 @@ function showPointModal(pointElement, pointOrder, nodeId) {
         }
         
         $("#pointform-vlan_text").val($(pointElement).find('.vlan-input').val());
-        $('#pointform-urn').val($(pointElement).find('.urn-input').val());
+        $('#pointform-urn').val('urn:ogf:network:' + $(pointElement).find('.urn-input').val());
 
         //subtrai um no index pois os elementos sao de mesmo tipo mas o primeiro e ultimo sao de classes diferentes
         $("#point-modal").find('.point-order').text($(pointElement).index() - 1); 
