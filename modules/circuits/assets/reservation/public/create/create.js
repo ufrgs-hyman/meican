@@ -190,6 +190,8 @@ function showPointModal(pointElement, pointOrder, nodeId) {
         $("#point-modal").find('.point-order').text(pointOrder); 
     } else {
         urn = $(pointElement).find('.urn-input').val();
+        let urn_splitted = $($(pointElement).find('.urn-input').val().split(':'))
+
         for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
             if (meicanTopo['ports'][i]['urn'] == urn) {
                 port = meicanTopo['ports'][i];
@@ -204,7 +206,11 @@ function showPointModal(pointElement, pointOrder, nodeId) {
         }
         
         $("#pointform-vlan_text").val($(pointElement).find('.vlan-input').val());
-        $('#pointform-urn').val('urn:ogf:network:' + $(pointElement).find('.urn-input').val());
+
+        if(urn_splitted[0] + ':' + urn_splitted[1] + ':' + urn_splitted[2] != 'urn:ogf:network')
+            $('#pointform-urn').val('urn:ogf:network:' + $(pointElement).find('.urn-input').val());
+        else
+            $('#pointform-urn').val($(pointElement).find('.urn-input').val());
 
         //subtrai um no index pois os elementos sao de mesmo tipo mas o primeiro e ultimo sao de classes diferentes
         $("#point-modal").find('.point-order').text($(pointElement).index() - 1); 
