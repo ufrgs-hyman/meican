@@ -195,9 +195,11 @@ function showPointModal(pointElement, pointOrder, nodeId) {
                 port = meicanTopo['ports'][i];
                 $("#pointform-domain").val(port.network.domain.id);
                 fillNetworkSelect(port.network.domain.id, port.network.id);
-                fillLocationSelect(port.network_id, port.location_name);
-                fillPortSelect(port.network.id, port.id); 
-                fillVlanSelect(port.id, $(pointElement).find('.vlan-input').val()); 
+                fillPortSelect(port.network.id, port.id);
+                fillVlanSelect(port.id, $(pointElement).find('.vlan-input').val());
+
+                if(meicanMap.hasLocation(port.network_id))
+                    fillLocationSelect(port.network_id, port.location_name);
             }
         }
         
