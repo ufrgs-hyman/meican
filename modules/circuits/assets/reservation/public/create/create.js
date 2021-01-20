@@ -239,9 +239,14 @@ function initPathTab() {
     $("#point-modal").on('click','.save-btn',function() {
         if ($("#point-modal").find(".tab-pane.active").attr("id") == "normal") {
             $("#point-form").yiiActiveForm("validateAttribute", 'pointform-domain');
+            if(!($('#pointform-network').prop('disabled')) || !($('#pointform-location').prop('disabled')) || !($('#pointform-port').prop('disabled')) || !($('#pointform-vlan').prop('disabled')))
+                $("#point-form").yiiActiveForm("validateAttribute", 'pointform-network');
+            if(!($('#pointform-location').prop('disabled')) || !($('#pointform-port').prop('disabled')) || !($('#pointform-vlan').prop('disabled')))
+                $("#point-form").yiiActiveForm("validateAttribute", 'pointform-location');
+            if(!($('#pointform-port').prop('disabled')) || !($('#pointform-vlan').prop('disabled')))
             $("#point-form").yiiActiveForm("validateAttribute", 'pointform-port');
+            if(!($('#pointform-vlan').prop('disabled')))
             $("#point-form").yiiActiveForm("validateAttribute", 'pointform-vlan');
-
         } else {
             $("#point-advanced-form").yiiActiveForm("validateAttribute", 'pointform-urn');
             $("#point-advanced-form").yiiActiveForm("validateAttribute", 'pointform-vlan_text');
