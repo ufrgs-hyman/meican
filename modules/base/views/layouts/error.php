@@ -45,7 +45,7 @@ use meican\home\forms\FeedbackForm;
 
   <header class="main-header">
 
-    <a href="#" class="logo" title="MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks">
+    <a href="/home" class="logo" title="MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks">
       <span class="logo-lg"><?= Html::img(Url::base()."/images/meican_branco.png", ['title'=>'MEICAN - Management Environment of Inter-domain Circuits for Advanced Networks']); ?></span>
     </a>
 
