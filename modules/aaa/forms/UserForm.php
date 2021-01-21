@@ -74,7 +74,7 @@ class UserForm extends Model {
             'login'=>Yii::t('aaa', 'Login'),
             "password"=>Yii::t('aaa', 'Password'),
             "isChangedPass" => (
-                $this->scenario == self::SCENARIO_UPDATE ? Yii::t('aaa', 'I want change the password') : Yii::t('aaa', 'I want change my password')
+                $this->scenario == self::SCENARIO_UPDATE ? Yii::t('aaa', 'I want to change the password') : Yii::t('aaa', 'I want to change my password')
             ),
             "newPass" => (
                 $this->scenario == self::SCENARIO_CREATE ? Yii::t('aaa', 'Password') : Yii::t('aaa', 'New password')

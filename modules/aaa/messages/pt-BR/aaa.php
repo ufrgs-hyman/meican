@@ -39,7 +39,7 @@ return array(
         "Access Role" => "Perfil de Acesso",
         "Domain" => "Domínio",
         "Password" => "Senha",
-        'I want change my password' => "Quero alterar minha senha",
+        'I want to change my password' => "Quero alterar minha senha",
         "Current password" => "Senha atual",
         "New password" => "Nova senha",
         "Confirm new password" => "Confirme a nova senha",
