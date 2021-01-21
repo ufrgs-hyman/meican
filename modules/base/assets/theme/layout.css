@@ -4119,6 +4119,9 @@ table.text-center th {
   font-weight: 300;
   padding-right: 10px;
 }
+.fc-bg .fc-state-highlight{
+  background-color:#fff1ab !important;
+} 
 .fc-color-picker {
   list-style: none;
   margin: 0;
