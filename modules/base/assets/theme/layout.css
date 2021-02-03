@@ -578,6 +578,30 @@ a:focus {
   width: auto;
 }
 /*
+ * Table of Contents
+ */
+#toc_container {
+  background: #f9f9f9 none repeat scroll 0 0;
+  border: 1px solid rgb(148, 148, 148);
+  display: table;
+  font-size: 100%;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  padding: 10px;
+  line-height: 22px;
+}
+
+.toc_title {
+  font-size:large;
+  text-align: center;
+}
+
+#toc_container li, #toc_container ul, #toc_container ul li{
+  margin-bottom: 0px;
+  list-style: outside none none !important;
+}
+
+/*
  * Component: Sidebar Mini
  */
 @media (min-width: 768px) {
@@ -4841,10 +4865,15 @@ table.text-center th {
 .chart canvas {
   width: 100% !important;
 }
+
 /*
  * Misc: print
  * -----------
  */
+ .img-print{
+  max-width: 83vw;
+}
+
 @media print {
   .no-print,
   .main-sidebar,
@@ -4884,4 +4913,5 @@ table.text-center th {
   .table-responsive > .table tr td {
     white-space: normal !important;
   }
+  
 }
