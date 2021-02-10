@@ -9,7 +9,7 @@ use yii\helpers\Url;
 
 ?>
 	<div style="text-align: right;">
-	Last update on 03/02/2021.
+	Last update on 10/02/2021.
 	</div>
 	
 <div id="container_info">
@@ -50,9 +50,9 @@ use yii\helpers\Url;
 	    <div class="left_info">
 			<div class="info_div_text">
 				<div style="padding-right: 20%;">
-					<p>Management Environment of Inter-domain Circuits for Advanced Networks (MEICAN) <?= Yii::t("home", 'is a Web application that enables users to request VCs between well-defined end-points that, depending on operation policies and human authorisation located in the intermediate domains that connect source and destination end-points.'); ?></p>
-					<p><?= Yii::t("home", 'Our solution uses Business Process Management (BPM) concepts for managing the VCs establishment process, since VC requested by end-user to network devices configurations.'); ?></p>
-					<p><?= Yii::t("home", 'The main goal of the proposed solution is to provide dynamic authorization strategies composed for policies and human support.'); ?></p>
+					<p>Management Environment of Inter-domain Circuits for Advanced Networks (MEICAN) <?= Yii::t("home", 'is a Web application that enables users to request VCs between well-defined end-points that, depending on operation policies and human authorization located in the intermediate domains that connect the source and destination end-points.'); ?></p>
+					<p><?= Yii::t("home", 'Our solution uses Business Process Management (BPM) concepts to manage the process of establishing virtual circuits, from VC requested by end users to configurations of network devices.'); ?></p>
+					<p><?= Yii::t("home", 'The main goal of the proposed solution is to provide dynamic authorization strategies composed of policies and human support.'); ?></p>
 					</div>
 				</div>
 			</div>
@@ -65,8 +65,8 @@ use yii\helpers\Url;
 	    <div class="text_info" id="New Reservation"><h2><?=Yii::t("home", "New Reservation");?></h2></div>
 	    <div class="left_info">
 	  	  	<div class="info_div_text">
-				<p><?= Yii::t("home", 'MEICAN allows network end-users to request, in a more user-friendly way, dedicated virtual circuits in Dynamic Circuits Networks (DCN). With MEICAN, you can create a circuit reservation using a map that contains networks and devices.'); ?></p>
-	            <p><?= Yii::t("home", 'In addition to the points of origin and destination of the circuit, you can specify data such as the required bandwidth, waypoints and schedule a provisioning.'); ?></p>
+				<p><?= Yii::t("home", 'MEICAN allows network end-users to request, in a user-friendly way, dedicated virtual circuits in Dynamic Circuits Networks (DCN). With MEICAN, you can create a circuit reservation using a map that contains networks and devices.'); ?></p>
+	            <p><?= Yii::t("home", 'In addition to the points of origin and destination of the circuit, you can specify data such as the required bandwidth, waypoints and provisioning schedule.'); ?></p>
 				<p><?= Yii::t("home", 'To make this process easier, MEICAN has a guide found on the right side of the screen in the'); ?>
 				<a href="<?= Url::base(); ?>/circuits/reservation/create">  <span><?=Yii::t("home", 'New Reservation page.');?></span></a></p>
 				<p><?= Yii::t("home", 'This guide divides the creation of the reserve into four steps:'); ?></p>
@@ -74,13 +74,13 @@ use yii\helpers\Url;
 					<p><img src="https://maxcdn.icons8.com/Android_L/PNG/24/Maps/route-24.png" width="19"><b><?= Yii::t("home", '&ensp;Step 1: Path'); ?></b>
 					<br><?= Yii::t("home", 'In this step, you need to choose the source, destination and intermediate waypoints of the circuit. You can choose these points by clicking on the domain markers on the map, or by clicking "'); ?> 
 					<i class="fa fa-plus"></i>
-					<?= Yii::t("home", '" in the tab on the right. After that, you can choose to complete the circuit data in a standard way, or in an advanced way (using URN and VLAN).'); ?></p>
+					<?= Yii::t("home", '" in the tab on the right. After that, you can choose to complete the circuit data by default (choosing Domain, Network, Location, Port and VLAN), or in advanced (using URN and VLAN).'); ?></p>
 					<p><i class="fa fa-sliders"></i><b><?= Yii::t("home", '&emsp;Step 2: Requirements'); ?></b>
 				  	<br><?= Yii::t("home", 'In this step, you need to specify the bandwidth to be reserved for your circuit.'); ?></p>
 				  	<p><i class="fa fa-calendar"></i><b><?= Yii::t("home", '&emsp;Step 3: Schedule'); ?></b>
-				  	<br><?= Yii::t("home", 'In this step, you need to choose the start and end time for your provisioning. To do this, you must click on the desired start day for your circuit on the calendar, and fill in the duration needed.'); ?></p>
+				  	<br><?= Yii::t("home", 'In this step, you need to choose the start and end times for your provisioning. To do this, you must click on the desired start day for your circuit on the calendar, and fill in the duration needed.'); ?></p>
 					<p><i class="fa fa-check danger"></i><b><?= Yii::t("home", '&emsp;Step 4: Confirmation'); ?></b>
-					<br><?= Yii::t("home", 'Finally, you must name your reservation. Optionally, you can identify yourself by filling in the User and Access Token fields. Then just click on the Submit button to request your reservation.'); ?></p>
+					<br><?= Yii::t("home", 'Finally, you must name your reservation. Optionally, you can identify yourself by filling in the User and Access Token fields. After this, simply click on the Submit button to request your reservation.'); ?></p>
 				  	
 				</ul>
             </div>
@@ -96,20 +96,20 @@ use yii\helpers\Url;
 	    <div class="text_info"  id="Reservation Status"><h2><?=Yii::t("home", "Reservation Status");?></h2></div>
 	    <div class="right_info">
 	  	  	<div class="info_div_text">
-	  	  		<p><?= Yii::t("home", 'You can see the status of reservations to track the progress. When you created a reservation, you are automatically redirected to status page of the created reservation.'); ?></p>
-				<p><?= Yii::t("home", 'You can also find your reservation in the'); ?>
+	  	  		<p><?= Yii::t("home", 'You can see the status of reservations to track the progress. When you created a reservation, you are automatically redirected to the status page of the created reservation.'); ?></p>
+				<p><?= Yii::t("home", 'You can also find your reservation on the'); ?>
 				<a href="<?= Url::base(); ?>/circuits/reservation/status">  <span><?=Yii::t("home", "Status page.");?></span></a></p>
-				<p><?= Yii::t("home", 'In the status page, there are four boxes to inform the circuit provisioning status:'); ?></p>
+				<p><?= Yii::t("home", 'On the status page, there are four boxes to inform the circuit provisioning status:'); ?></p>
 				<ul>
-					<li><?= Yii::t("home", 'STATUS: Indicates whether the requested circuit is currently active or inactive.'); ?></li>
-					<li><?= Yii::t("home", 'RESERVATION: Displays information about the provisioning request steps. Below are the most common messages in this field and their meanings:'); ?></li>
+					<li><?= Yii::t("home", '<b>STATUS:</b> Indicates whether the requested circuit is currently active or inactive.'); ?></li>
+					<li><?= Yii::t("home", '<b>RESERVATION:</b> Displays information about the provisioning request steps. Below are the most common messages in this field and their meanings:'); ?></li>
 					<ul>
-						<li><?= Yii::t("home", 'Message 1: to be done'); ?></li>
-						<li><?= Yii::t("home", 'Message 2: to be done'); ?></li>
-						<li><?= Yii::t("home", 'Message 3: to be done'); ?></li>
+						<li><?= Yii::t("home", 'Checking resources: it is displayed during the process of verifying the resources required by the user to the covered domains.'); ?></li>
+						<li><?= Yii::t("home", 'Resources unavailable: it is displayed when any of the domains involved in the circuit was unable to reserve the requested resources.'); ?></li>
+						<li><?= Yii::t("home", 'Provisioned: it is displayed when your reservation has been successfully received and provisioned.'); ?></li>
 					</ul>
-				  	<li><?= Yii::t("home", 'AUTHORIZATION: Indicates whether the requested reservation has been approved in accordance with the previous rules established by the domain (see Workflows). If your reservation requires a manual request, it will be displayed in this field "WAITING FOR AUTHORIZATION".'); ?></li>
-				  	<li><?= Yii::t("home", 'UPDATED AT: Informs the time of the last reservation status update.'); ?></li>
+				  	<li><?= Yii::t("home", '<b>AUTHORIZATION:</b> Indicates whether the requested reservation has been approved in accordance with the previous rules established by the domain (see Workflows). If your reservation requires a manual request, the message "WAITING FOR AUTHORIZATION" will be displayed in the field.'); ?></li>
+				  	<li><?= Yii::t("home", '<b>UPDATED AT:</b> Informs the time of the last reservation status update.'); ?></li>
 				</ul>
 				<br>
             </div>
@@ -127,17 +127,17 @@ use yii\helpers\Url;
 	    <div class="text_info"  id="Workflows"><h2><?=Yii::t("home", "Workflows");?></h2></div> 
 	    <div class="right_info">
 	        <div class="info_div_text">
-                <p><?= Yii::t("home", 'Authorization workflows can be used to automate the decision-making process along the multiple domains where end-users circuits pass through.'); ?></p>
-	            <p><?= Yii::t("home", 'Editors users can design workflows to filter by bandwidth, involving domains, devices, duration, requester user and groups. Also, can request that a user or group to authorize manually.'); ?></p>
+                <p><?= Yii::t("home", 'Authorization workflows can be used to automate the decision-making process along with multiple domains where end-users circuits pass through.'); ?></p>
+	            <p><?= Yii::t("home", 'Editors users can design workflows to filter by bandwidth, domains covered, devices, duration, requester user and groups. Furthermore, a user or group can be requested to authorize manually.'); ?></p>
 	        	<p><?= Yii::t("home", 'Step-by-step to manage workflows:'); ?></p>
 	        	<ul>
 					<li><?= Yii::t("home", 'Click Workflows - Status.'); ?></li>
-				  	<li><?= Yii::t("home", 'You can Remove, Edit, Copy, Enable and Disable a workflow by clicking on the respective icons. (just remember that only one workflow can be active per domain at a time)'); ?></li>
+				  	<li><?= Yii::t("home", 'You can Remove, Edit, Copy, Enable and Disable a workflow by clicking on the respective icons (remember that only one workflow can be active per domain at a time).'); ?></li>
 				</ul>
-	        	<p><?= Yii::t("home", 'Step-by-step to create a new workflow:'); ?></p>
+	        	<p><?= Yii::t("home", 'Step-by-step to create a workflow:'); ?></p>
 	        	<ul>
 					<li><?= Yii::t("home", 'Click Workflows - New.'); ?></li>
-					<li><?= Yii::t("home", 'If you are allowed for create workflows in more of one domain, select the one you want to create the workflow.'); ?></li>
+					<li><?= Yii::t("home", 'If you are allowed for create workflows in more than one domain, select the one you want to create the workflow in.'); ?></li>
 				  	<li><?= Yii::t("home", 'Type a name for your workflow.'); ?></li>
 				  	<li><?= Yii::t("home", 'Drag units, drop and link the elements available on the right side of the screen.'); ?></li>
 				  	<li><?= Yii::t("home", 'Click Save. If your workflow has any problem, you will receive a warning message.'); ?></li>
@@ -157,14 +157,14 @@ use yii\helpers\Url;
 	    <div class="text_info"  id="Authorization"><h2><?=Yii::t("home", "Authorization");?></h2></div>
 	    <div class="left_info">
 	        <div class="info_div_text">
-	        	<p><?= Yii::t("home", 'In some cases, as pre-defined by Workflows, the reservations need to be authorized by administrators, and MEICAN enables them to accomplish these authorizations through the'); ?>
+	        	<p><?= Yii::t("home", 'In some cases, as predefined by Workflows, the reservations need to be authorized by administrators, and MEICAN enables them to accomplish these authorizations through the'); ?>
 				<a href="<?= Url::base(); ?>/circuits/authorization">  <span><?=Yii::t("home", "Authorization page.");?></span></a></p>
-                <p><?= Yii::t("home", 'Administrators can accept or reject users requests and leave an observation using a intelligent mechanism.'); ?></p>
+                <p><?= Yii::t("home", 'Administrators can accept or reject users requests and leave an observation using an intelligent mechanism.'); ?></p>
 	        	<p><?= Yii::t("home", 'Step-by-step to manage pending authorizations:'); ?></p>
 				<ul>
 					<li><?= Yii::t("home", 'Click Reservations - Authorization. Alternatively you can click the notifications button at the top of the screen, then click in See Authorizations.'); ?></li>
 					<li><?= Yii::t("home", 'Select a reservation by clicking Answer'); ?></li>
-				  	<li><?= Yii::t("home", 'Either accept or reject a reservation request by clicking the thumbs up or down icon and providing an appropriate message to the requester user, if you want. Alternatively you can Accept/Reject All requests at once (useful when many requests are performed through recurrence)'); ?></li>
+				  	<li><?= Yii::t("home", 'Either accept or reject a reservation request by clicking the thumbs up/down icon and providing an appropriate message to the requester user, if you want. Alternatively you can Accept/Reject All requests at once.'); ?></li>
 				  	<li><?= Yii::t("home", 'You should notice the status change to AUTHORIZED or DENIED in the right part of the list.'); ?></li>
 				</ul>
 				<br>
@@ -202,7 +202,7 @@ use yii\helpers\Url;
 	        <div class="info_div_text">
 				<p><?=Yii::t("home", "In the");?>
 				<a href="<?= Url::base(); ?>/topology/discovery">  <span><?=Yii::t("home", "Topology Discovery page");?></span></a><?= Yii::t("home", ', it is possible, from the communication with the specified topology providers, to update the application topology. This ensures that future reservations will not fail by inconsistencies in the identifier of a network element, for example.'); ?></p>
-				<p><?= Yii::t("home", 'Step-by-step to create a new Discovery Rule:'); ?></p>
+				<p><?= Yii::t("home", 'Step-by-step to create a Discovery Rule:'); ?></p>
 				<ul>
 					<li><?= Yii::t("home", 'Click Add instance.'); ?></li>
 					<li><?= Yii::t("home", 'Set a name.'); ?></li>
@@ -233,7 +233,7 @@ use yii\helpers\Url;
 	        <div class="info_div_text">
                 <p><?= Yii::t("home", 'This functionality perform tests on two endpoints to find errors, make logs, and report them to the administrators.'); ?></p>
                 <p><?= Yii::t("home", 'To verify the status of a network, MEICAN allows administrators to program automated tests in the network environment.'); ?></p>
-                <p><?= Yii::t("home", 'Step-by-step to create a Automated Test:'); ?></p>
+                <p><?= Yii::t("home", 'Step-by-step to create an Automated Test:'); ?></p>
 				<ul>
 					<li><?= Yii::t("home", 'Open Tests - Create.'); ?></li>
 					<li><?= Yii::t("home", 'Select a port and a VLAN as source.'); ?></li>
