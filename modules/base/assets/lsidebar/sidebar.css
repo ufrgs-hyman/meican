@@ -91,7 +91,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         background-color: #eee; }
       .lsidebar-tabs > li.active, .lsidebar-tabs > ul > li.active {
         color: #000;
-        background-color: #f6f6f6; }
+        background-color: #dedede; }
       .lsidebar-tabs > li.disabled, .lsidebar-tabs > ul > li.disabled {
         color: rgba(51, 51, 51, 0.4); }
         .lsidebar-tabs > li.disabled:hover, .lsidebar-tabs > ul > li.disabled:hover {
