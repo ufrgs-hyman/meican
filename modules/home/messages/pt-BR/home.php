@@ -85,7 +85,7 @@ return array(
 		'Automated Tests' => 'Testes Automatizados',
 
 		//INTRODUCTION
-		'is a Web application that enables users to request VCs between well-defined end-points that, depending on operation policies and human authorization located in the intermediate domains that connect the source and destination end-points.'=> 'é uma aplicação Web que permite aos usuários requisitar circuitos virtuais entre pontos bem definidos, sempre que estiver dentro das políticas e autorizações humanas dos domínios envolvidos na conexão entre origem e destino.',
+		'is a web application that enables users to request VCs between well-defined end-points that, depending on operation policies and human authorization located in the intermediate domains that connect the source and destination end-points.'=> 'é uma aplicação web que permite aos usuários requisitar circuitos virtuais entre pontos bem definidos, sempre que estiver dentro das políticas e autorizações humanas dos domínios envolvidos na conexão entre origem e destino.',
 		'Our solution uses Business Process Management (BPM) concepts to manage the process of establishing virtual circuits, from VC requested by end users to configurations of network devices.'=> 'Nossa solução usa conceitos de Business Process Management (BPM) para gerenciar o processo de estabelecimento dos circuitos virtuais, desde a requisição por parte do usuário até o provisionamento de recursos junto às entidades de rede relacionadas.',		
 		'The main goal of the proposed solution is to provide dynamic authorization strategies composed of policies and human support.'=> 'Nosso principal objetivo é prover estratégias dinâmicas de autorização compostas por políticas e suporte humano.',
 

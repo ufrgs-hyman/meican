@@ -159,7 +159,7 @@ $form = ActiveForm::begin([
             <h1 class="lsidebar-header">Step 2: Requirements<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
             <br>
             <p>
-                Define your circuit bandwidth requirement. That bandwidth will be reserved and granted only for your circuit.
+                Define your circuit bandwidth requirement. This bandwidth will be reserved and granted only for your circuit.
             </p>
             <br>
             <div class="row">
@@ -189,7 +189,7 @@ $form = ActiveForm::begin([
             <h1 class="lsidebar-header">Step 3: Schedule<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
                 <br>
                 <p>                   
-In this section you need to provide at least one interval, based in the start and end time of your circuit. To start, click over the start day of the circuit.
+In this section you need to provide an interval, based on the start and end time of your circuit. To start, click over the start day of the circuit.
                 </p>
                 <br>
                 <div class="box box-default">
@@ -207,7 +207,7 @@ In this section you need to provide at least one interval, based in the start an
             <h1 class="lsidebar-header">Step 4: Confirmation<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
             <br>
                 <p>
-                    To confirm your circuit reservation, type a description or a name for it. This name will be used to identify easily your circuit.
+                    To confirm your circuit reservation, type a description or a name for it. This name will be used to easily identify your circuit.
                 </p>
                 <br>
             <?php echo $form->field($reserveForm, 'name')->textInput(); ?>
@@ -222,7 +222,7 @@ In this section you need to provide at least one interval, based in the start an
         <div class="lsidebar-pane" id="home">
             <h1 class="lsidebar-header">Welcome to reservation page<span class="lsidebar-close"><i class="fa fa-caret-left"></i></span></h1>
             <br><p>
-                This is the reservation page. Here you can make a circuit reservation very quickly and easily.<br><br>Listed below you can see all steps involved in a circuit reservation:
+                This is the reservation page. Here you can make a circuit reservation very quickly and easily.<br><br>Below, you can see all the steps involved in the circuit reservation:
             </p><br>
             <p>1. Select your endpoints.</p>
             <p>2. Define the requirements, e.g., bandwidth.</p>

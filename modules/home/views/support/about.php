@@ -18,9 +18,9 @@ $this->params['header'] = ["About", ['Home', 'About']];
         </div>
         <div class="box-body">
             <p><?= Html::img("@web/images/meican_new.png", ['style'=>'width: 300px;','title' => 'MEICAN']); ?></p>
-            <p><b>Management Environment of Inter-domain Circuits for Advanced Networks</b> <?= Yii::t("home", 'is a Web application that enables users to request VCs between well-defined end-points that, depending on operation policies and human authorisation located in the intermediate domains that connect source and destination end-points.'); ?></p>
-            <p><?= Yii::t("home", 'Our solution uses Business Process Management (BPM) concepts for managing the VCs establishment process, since VC requested by end-user to network devices configurations.'); ?></p>
-            <p><?= Yii::t("home", 'The main contribution of the proposed solution is to provide dynamic authorization strategies composed for policies and human support.'); ?></p>
+            <p><b>Management Environment of Inter-domain Circuits for Advanced Networks</b> <?= Yii::t("home", 'is a web application that enables users to request VCs between well-defined end-points that, depending on operation policies and human authorization located in the intermediate domains that connect the source and destination end-points.'); ?></p>
+            <p><?= Yii::t("home", 'Our solution uses Business Process Management (BPM) concepts to manage the process of establishing virtual circuits, from VC requested by end users to configurations of network devices.'); ?></p>
+            <p><?= Yii::t("home", 'The main goal of the proposed solution is to provide dynamic authorization strategies composed of policies and human support.'); ?></p>
         </div>
       </div>
       <!-- /.box -->

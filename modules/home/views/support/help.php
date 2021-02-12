@@ -50,7 +50,7 @@ use yii\helpers\Url;
 	    <div class="left_info">
 			<div class="info_div_text">
 				<div style="padding-right: 20%;">
-					<p>Management Environment of Inter-domain Circuits for Advanced Networks (MEICAN) <?= Yii::t("home", 'is a Web application that enables users to request VCs between well-defined end-points that, depending on operation policies and human authorization located in the intermediate domains that connect the source and destination end-points.'); ?></p>
+					<p>Management Environment of Inter-domain Circuits for Advanced Networks (MEICAN) <?= Yii::t("home", 'is a web application that enables users to request VCs between well-defined end-points that, depending on operation policies and human authorization located in the intermediate domains that connect the source and destination end-points.'); ?></p>
 					<p><?= Yii::t("home", 'Our solution uses Business Process Management (BPM) concepts to manage the process of establishing virtual circuits, from VC requested by end users to configurations of network devices.'); ?></p>
 					<p><?= Yii::t("home", 'The main goal of the proposed solution is to provide dynamic authorization strategies composed of policies and human support.'); ?></p>
 					</div>
