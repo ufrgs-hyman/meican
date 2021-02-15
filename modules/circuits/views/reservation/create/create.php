@@ -242,15 +242,15 @@ In this section you need to provide an interval, based on the start and end time
 
 Modal::begin([
     'id' => 'point-modal',
-    'header' => 'Edit point',
-    'footer' => '<button class="save-btn btn btn-primary">Save</button> <button class="cancel-btn btn btn-default">Cancel</button>',
+    'header' => Yii::t('circuits', 'Edit point'),
+    'footer' => '<button class="save-btn btn btn-primary">'.Yii::t('circuits', 'Save').'</button> <button class="cancel-btn btn btn-default">'.Yii::t('circuits', 'Cancel').'</button>',
 ]); ?>
 
 <label class="point-order" hidden></label>
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#normal" data-toggle="tab">Normal</a></li>
-      <li><a href="#advanced" data-toggle="tab">Advanced</a></li>
+      <li class="active"><a href="#normal" data-toggle="tab"><?= Yii::t('circuits', 'Normal') ?></a></li>
+      <li><a href="#advanced" data-toggle="tab"><?= Yii::t('circuits', 'Manual') ?></a></li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="normal">
