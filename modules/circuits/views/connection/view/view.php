@@ -20,7 +20,7 @@ use meican\base\widgets\DetailView;
 
 \meican\circuits\assets\connection\View::register($this);
 
-$this->params['header'] = [Yii::t('circuits',"Circuit").' "'.$conn->getName().'" ', ['Home', 'Circuits']];
+$this->params['header'] = [Yii::t('circuits',"Circuit").': <i>'.$conn->getName().'</i>', ['Home', 'Circuits']];
 
 ?>
 
