@@ -78,6 +78,7 @@ echo Menu::widget([
                     ['label'=>Yii::t('aaa','Groups'), 'url'=>['/aaa/group'], 'visible'=>RbacController::can('group/read')],
                     ['label'=>Yii::t('aaa','Configuration'), 'url'=>['/aaa/config'], 'visible'=>RbacController::can('group/update')],
             ],
+            'visible'=>(RbacController::can('user/read') || RbacController::can('role/read'))
         ],
     ],
 ]);
