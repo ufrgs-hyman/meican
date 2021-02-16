@@ -187,7 +187,7 @@ echo $form->field($editForm, 'bandwidth')->widget(TouchSpin::classname(), [
         'verticalbuttons' => true,
         'verticalupclass' => 'fa fa-plus',
         'verticaldownclass' => 'fa fa-minus',
-        'min' => 10,
+        'min' => 0,
         'max' => 1000000,
         'step' => 10,
     ]
