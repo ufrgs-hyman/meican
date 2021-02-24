@@ -27,6 +27,10 @@ class ManagerController extends RbacController {
     public $enableCsrfValidation = false;
 
     public function actionIndex($mode = "read") {
+        if(!self::can('test/create')){	
+            return $this->goHome();
+        }
+
         $data = new ActiveDataProvider([
             'query' => Test::find()->where(['type'=> Reservation::TYPE_TEST]),
             'pagination' => [

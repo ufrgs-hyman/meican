@@ -23,6 +23,10 @@ use meican\topology\services\DiscoveryService;
 class DiscoveryController extends RbacController {
 
     public function actionIndex() {
+        if(!self::can('domainTopology/read/')){	
+            return $this->goHome();
+        }
+        
         //deve ser feito um switch futuramente para carregamentos do pjax.
         $count = Yii::$app->db->createCommand('
             SELECT count(*) FROM (SELECT domain, max(applied_at)
@@ -89,6 +93,9 @@ class DiscoveryController extends RbacController {
     }
 
     public function actionCreateRule() {
+        if(!self::can('discovery/read')){	
+            return $this->goHome();
+        }
         $form = new DiscoveryRuleForm;
         
         if($form->load($_POST)) {

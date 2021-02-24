@@ -22,10 +22,11 @@ echo Menu::widget([
             'items' => [
                 ['label'=>Yii::t('circuits','New Reservation'), 'url'=>['/circuits/reservation/create']], 
                 ['label'=>Yii::t('circuits','Status'),'url'=>['/circuits/reservation/status']],
-                ['label'=>Yii::t('circuits','Authorization'),'url'=>['/circuits/authorization']],
+                ['label'=>Yii::t('circuits','Authorization'),'url'=>['/circuits/authorization'], 'visible'=>((count(RbacController::whichDomainsCan('reservation/delete'))) > 0)],
                 ['label'=>Yii::t('circuits','Configuration'),'url'=>['/circuits/config'], 'visible'=>RbacController::can('configuration/read')]
             ]
         ],
+        
         [
             'label'=>Yii::t('bpm','Workflows'),
             'url' => '#',
@@ -78,6 +79,7 @@ echo Menu::widget([
                     ['label'=>Yii::t('aaa','Groups'), 'url'=>['/aaa/group'], 'visible'=>RbacController::can('group/read')],
                     ['label'=>Yii::t('aaa','Configuration'), 'url'=>['/aaa/config'], 'visible'=>RbacController::can('group/update')],
             ],
+            'visible'=>(RbacController::can('user/read') || RbacController::can('role/read'))
         ],
     ],
 ]);

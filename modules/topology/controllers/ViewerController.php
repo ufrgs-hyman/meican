@@ -22,6 +22,9 @@ use meican\topology\models\Peering;
 class ViewerController extends RbacController {
 
     public function actionIndex() {
+        if(!(self::can("domainTopology/read") || self::can("domain/read"))){	
+            return $this->goHome();
+        }
         return $this->render('index');
     }
 
