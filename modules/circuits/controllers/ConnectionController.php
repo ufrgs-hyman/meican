@@ -30,6 +30,28 @@ class ConnectionController extends RbacController {
     public $defaultAction = "view";
 
     public function actionView($id = null) {
+
+        $conn = Connection::findOne($id);
+        $permission = false;
+        $reservation = Reservation::findOne(['id' => $conn->reservation_id]);
+        if(Yii::$app->user->getId() == $reservation->request_user_id) 
+            $permission = true; 
+        else {
+            $domains_name = [];
+            foreach(RbacController::whichDomainsCan('reservation/read') as $domain) 
+                $domains_name[] = $domain->name;
+            
+            $conn_ids_allowed = ConnectionPath::find()
+                     ->where(['in', 'domain', $domains_name])
+                     ->andWhere(['conn_id' => $conn->id])
+                     ->select(["conn_id"])->distinct(true)->one();
+            
+            if(!empty($conn_ids_allowed)) $permission = true;
+        }
+        if(!($permission)){
+            return $this->goHome();
+        }
+
         if($id == null) 
             return $this->redirect(['reservation/status']);
 
