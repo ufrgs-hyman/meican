@@ -35,6 +35,11 @@ class AuthorizationController extends RbacController {
     public $enableCsrfValidation = false;
 
     public function actionIndex(){
+
+        if((count(RbacController::whichDomainsCan('reservation/delete'))) < 1)
+            return $this->goHome();
+
+
         Yii::trace("Authorization");
         
         $searchModel = new AuthorizationSearch;
