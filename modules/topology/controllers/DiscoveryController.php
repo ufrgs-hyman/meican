@@ -93,7 +93,7 @@ class DiscoveryController extends RbacController {
     }
 
     public function actionCreateRule() {
-        if(!self::can('discovery/read')){	
+        if(!self::can('synchronizer/create')){	
             return $this->goHome();
         }
         $form = new DiscoveryRuleForm;
