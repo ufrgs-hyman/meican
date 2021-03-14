@@ -24,6 +24,7 @@ class DomainController extends RbacController {
 	
     public function actionIndex() {
     	if(!self::can("domain/read")){
+			Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to access Topology Domains'));
 			return $this->goHome();
 		}
 		

@@ -24,6 +24,7 @@ class NetworkController extends RbacController {
 	
 	public function actionIndex() {
 		if(!self::can("domainTopology/read")){
+			Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to access Topology Networks'));
 			return $this->goHome();
 		}
 		

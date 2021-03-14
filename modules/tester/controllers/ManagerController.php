@@ -28,6 +28,7 @@ class ManagerController extends RbacController {
 
     public function actionIndex($mode = "read") {
         if(!self::can('test/create')){	
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to access Automated Tests'));
             return $this->goHome();
         }
 

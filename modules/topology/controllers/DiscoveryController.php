@@ -23,7 +23,8 @@ use meican\topology\services\DiscoveryService;
 class DiscoveryController extends RbacController {
 
     public function actionIndex() {
-        if(!self::can('domainTopology/read/')){	
+        if(!self::can('domainTopology/read')){
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to access Topology Discovery'));
             return $this->goHome();
         }
         
@@ -94,6 +95,7 @@ class DiscoveryController extends RbacController {
 
     public function actionCreateRule() {
         if(!self::can('synchronizer/create')){	
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to create rules on Topology Discovery'));
             return $this->goHome();
         }
         $form = new DiscoveryRuleForm;

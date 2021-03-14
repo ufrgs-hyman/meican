@@ -23,6 +23,7 @@ class LocationController extends RbacController {
 	
     public function actionIndex($id = null) {
       if(!self::can("domainTopology/read")){
+		Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to access Topology Locations'));
 		    return $this->goHome();
     }
     	

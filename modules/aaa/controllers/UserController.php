@@ -38,7 +38,10 @@ class UserController extends RbacController {
             $searchModel = new UserSearch;
             $data = $searchModel->searchByDomains(Yii::$app->request->get(), $allowedDomains, false, true);
         }
-        else return $this->goHome();
+        else{
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to edit Users'));
+            return $this->goHome();
+        } 
 
         return $this->render('index', array(
                 'searchModel' => $searchModel,

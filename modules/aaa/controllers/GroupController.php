@@ -19,6 +19,7 @@ class GroupController extends RbacController {
     
     public function actionIndex() {
         if(!self::can("group/read")){ //Se ele não tiver permissão
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to access Groups'));
             return $this->goHome();
         }
         

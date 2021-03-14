@@ -19,6 +19,7 @@ class ConfigController extends RbacController {
     
     public function actionIndex() {
         if(!self::can('configuration/read')){
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to configure Circuits.'));
             return $this->goHome();
         }
             

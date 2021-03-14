@@ -29,7 +29,11 @@ class WorkflowController extends RbacController {
     public function actionIndex() {
     	$allowedDomains = self::whichDomainsCan('workflow/read');
 
-    	if(count($allowedDomains) < 1) return $this->goHome();
+    	if(count($allowedDomains) < 1) {
+			Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to manage Workflows.'));
+			return $this->goHome();
+		}
+		
     	
     	$searchModel = new WorkflowSearch;
     	$data = $searchModel->searchByDomains(Yii::$app->request->get(), $allowedDomains);

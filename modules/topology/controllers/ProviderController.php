@@ -21,7 +21,10 @@ class ProviderController extends RbacController {
     
     public function actionCreate() {
     	if(!self::can("domain/create")){
-    		if(!self::can("domain/read")) return $this->goHome();
+    		if(!self::can("domain/read")) {
+                Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to access Topology Providers'));
+                return $this->goHome();
+            }
     		else{
     			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add providers'));
     			return $this->redirect(array('index'));
@@ -85,6 +88,7 @@ class ProviderController extends RbacController {
 
     public function actionIndex() {
     	if(!self::can("domain/read")){
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to access Topology Providers'));
     		return $this->goHome();
     	}
     	

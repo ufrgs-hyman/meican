@@ -49,6 +49,7 @@ class ConnectionController extends RbacController {
             if(!empty($conn_ids_allowed)) $permission = true;
         }
         if(!($permission)){
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to manage this reservation.'));
             return $this->goHome();
         }
 

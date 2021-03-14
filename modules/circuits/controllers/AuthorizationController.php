@@ -36,8 +36,10 @@ class AuthorizationController extends RbacController {
 
     public function actionIndex(){
 
-        if((count(RbacController::whichDomainsCan('reservation/delete'))) < 1)
+        if((count(RbacController::whichDomainsCan('reservation/delete'))) < 1){
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to access Authorizations'));
             return $this->goHome();
+        }
 
 
         Yii::trace("Authorization");
