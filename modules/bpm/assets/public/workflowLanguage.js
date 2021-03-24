@@ -30,10 +30,19 @@ for (k in admins) {
 }
 
 var groups = groups ? groups : [];
+
 var groups_keys = [], groups_values = [];
 for (k in groups) {
 	groups_keys.push(k);
 	groups_values.push(groups[k]);
+}
+
+var admgroups_keys = [], admgroups_values = [];
+for (k in groups) {
+	if(groups[k]=="Admin" || groups[k]=="Reservations Editor"){
+		admgroups_keys.push(k);
+		admgroups_values.push(groups[k]);
+	}
 }
 
 var owner_domains = owner_domains ? owner_domains : [];
@@ -904,7 +913,7 @@ modules: [
 			    }
 	        }
 	        ],
-	        
+
 	        fields: [
 	        {	type: "inplaceedit", 
 			    inputParams: {
@@ -914,8 +923,8 @@ modules: [
 			            inputParams: 
 			            {	label: "", 
 			                name: "title", 
-			                selectValues: groups_keys,
-	                        selectOptions: groups_values
+			                selectValues: admgroups_keys,
+	                        selectOptions: admgroups_values
 			            }
 			        },
 			        animColors:{
