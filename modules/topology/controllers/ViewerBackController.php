@@ -18,9 +18,6 @@ use meican\topology\models\Port;
 class ViewerController extends RbacController {
 	
     public function actionIndex() {
-    	if(!self::can("domainTopology/read") && !self::can("domain/read")){
-            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to access Topology Viewer'));
-    		return $this->goHome();
     	}
     	
         return $this->render('index', ['domains'=>Domain::find()->select(['id','name'])->asArray()->all()]);
