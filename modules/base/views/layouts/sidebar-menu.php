@@ -56,7 +56,7 @@ echo Menu::widget([
                 ['label'=>Yii::t('topology','Ports'), 'url'=>['/topology/port'], 'visible'=>RbacController::can('domainTopology/read')],
                 ['label'=>Yii::t('topology','Locations'), 'url'=>['/topology/location'], 'visible'=>RbacController::can('domainTopology/read')],
                 ['label'=>Yii::t('topology','Viewer'), 'url'=>['/topology/viewer'],],
-                ['label'=>Yii::t('topology','Discovery'), 'url'=>['/topology/discovery'], 'visible'=>RbacController::can('domainTopology/read')],
+                ['label'=>Yii::t('topology','Discovery'), 'url'=>['/topology/discovery'], 'visible'=>(RbacController::can('synchronizer/read') || RbacController::can('domainTopology/read'))],
             ],
         ],
         [

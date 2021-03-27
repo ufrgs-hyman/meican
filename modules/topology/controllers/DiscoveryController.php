@@ -23,8 +23,8 @@ use meican\topology\services\DiscoveryService;
 class DiscoveryController extends RbacController {
 
     public function actionIndex() {
-        if(!self::can('domainTopology/read')){
-            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to access Topology Discovery'));
+        if(!self::can('synchronizer/read') && !self::can('domainTopology/read')) {
+            Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to access Topology Discovery'));
             return $this->goHome();
         }
         
@@ -73,7 +73,12 @@ class DiscoveryController extends RbacController {
         ));
     }
 
-    public function actionExecute($rule) { 
+    public function actionExecute($rule) {
+        if(!self::can('synchronizer/read') && !self::can('domainTopology/read')) {
+            Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to perform Topology Discovery'));
+            return $this->goHome();
+        }
+
         self::beginAsyncAction();
         
         $ds = new DiscoveryService;
@@ -95,8 +100,8 @@ class DiscoveryController extends RbacController {
 
     public function actionCreateRule() {
         if(!self::can('synchronizer/create')){	
-            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to create rules on Topology Discovery'));
-            return $this->goHome();
+            Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create rules on Topology Discovery'));
+            return $this->redirect('index');
         }
         $form = new DiscoveryRuleForm;
         
@@ -114,6 +119,10 @@ class DiscoveryController extends RbacController {
     }
 
     public function actionUpdateRule($id) {
+        if(!self::can('synchronizer/update')) {
+            Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update rules on Topology Discovery'));
+            return $this->redirect('index');
+        }
         $form = DiscoveryRuleForm::loadFromDB($id);
 
         if($form->load($_POST)) {
@@ -130,20 +139,19 @@ class DiscoveryController extends RbacController {
     }
 
     public function actionDeleteRule() {
-        if(true){
-            if(isset($_POST['delete'])){
-                foreach ($_POST['delete'] as $id) {
-                    $rule = DiscoveryRule::findOne($id);
-                    if ($rule->delete()) {
-                        Yii::$app->getSession()->addFlash('success', Yii::t('topology', 'Rule {name} deleted', ['name'=>$rule->name]));
-                    } else {
-                        Yii::$app->getSession()->setFlash('error', Yii::t('topology', 'Error deleting rule {name}', ['name'=>$rule->name]));
-                    }
-                }
+        if(!self::can('synchronizer/delete')) {
+            Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to delete discovery rules'));
+            return $this->redirect('index');
+        }
+   
+        if(isset($_POST['delete'])){
+            foreach ($_POST['delete'] as $id) {
+                $rule = DiscoveryRule::findOne($id);
+                if ($rule->delete())
+                    Yii::$app->getSession()->addFlash('success', Yii::t('topology', 'Rule {name} deleted', ['name'=>$rule->name]));
+                else
+                    Yii::$app->getSession()->setFlash('error', Yii::t('topology', 'Error deleting rule {name}', ['name'=>$rule->name]));
             }
         }
-        else Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to delete rules'));
-    
-        return $this->redirect('index');
     }
 }
