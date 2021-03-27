@@ -153,5 +153,6 @@ class DiscoveryController extends RbacController {
                     Yii::$app->getSession()->setFlash('error', Yii::t('topology', 'Error deleting rule {name}', ['name'=>$rule->name]));
             }
         }
+        return $this->redirect('index');
     }
 }
