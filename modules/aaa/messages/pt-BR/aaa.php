@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2012-2021 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -95,6 +95,7 @@ return array(
         'Back' => 'Voltar',
         'Type' => 'Tipo',
         'You are not allowed to create users' => 'Você não tem permissão para criar usuários',
+        'You are not allowed to view users' => 'Você não tem permissão para ver usuários',
         'You are not allowed to update users' => 'Você não tem permissão para editar usuários',
         'You are not allowed to delete users' => 'Você não tem permissão para deletar usuários',
         'You are not allowed to create roles' => 'Você não tem permissão para criar perfis',

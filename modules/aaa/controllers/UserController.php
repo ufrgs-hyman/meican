@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2012-2021 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -39,7 +39,7 @@ class UserController extends RbacController {
             $data = $searchModel->searchByDomains(Yii::$app->request->get(), $allowedDomains, false, true);
         }
         else{
-            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to edit Users'));
+            Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to edit Users'));
             return $this->goHome();
         } 
 
@@ -48,7 +48,6 @@ class UserController extends RbacController {
                 'users' => $data,
                 'domains' => $allowedDomains,
         ));
-
     }
 
     public function actionView($id) {
@@ -72,6 +71,9 @@ class UserController extends RbacController {
             	if($role->getGroup()->type == Group::TYPE_DOMAIN) $filtered[] = $role->id;
             }
             $queryDomain = UserDomainRole::find()->where(['in', 'id', $filtered]);
+        } else {
+            Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to view users'));
+            return $this->goHome();
         }
         $domainProvider = new ActiveDataProvider([
                 'query' => $queryDomain,
@@ -106,13 +108,11 @@ class UserController extends RbacController {
 
     public function actionCreate() {
         if(!self::can("user/create")){
-          //if(!self::can("userdomain/create")){
-            if(!self::can("user/read")) return $this->goHome();
-            else{
-                Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create users'));
+            Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create users'));
+            if(self::can("user/read") || self::can("role/read"))
                 return $this->redirect(array('index'));
-            }
-          //}
+            else
+                return $this->goHome();
         }
 
         $userForm = new UserForm;
@@ -141,6 +141,18 @@ class UserController extends RbacController {
     }
 
     public function actionUpdate($id) {
+        $user_id = User::findOne(Yii::$app->user->id)->id;
+        
+        if($user_id != $id) {
+            if(!self::can('user/update')) {
+                Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update users'));
+                if(self::can('role/update') || self::can('role/read'))
+                    return $this->actionView($id);
+                else
+                    return $this->goHome();
+            }
+        }
+
         $user = User::findOne($id);
         $userForm = new UserForm;
         $userForm->scenario = UserForm::SCENARIO_UPDATE;
@@ -148,22 +160,6 @@ class UserController extends RbacController {
     }
 
     private function edit($user, $userForm) {
-        /*if(!self::can("user/update")){
-            if(!self::can("user/read")) return $this->goHome();
-            else{
-                Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update users'));
-                return $this->redirect(array('index'));
-            }
-        }
-
-        if(!$user){
-            if(!self::can("user/read")) return $this->goHome();
-            else{
-                Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'User not found'));
-                return $this->redirect(array('index'));
-            }
-        }*/
-
         if($userForm->load($_POST)) {
             if ($userForm->validate()) {
                 if ($userForm->updateUser($user)) {
@@ -190,11 +186,10 @@ class UserController extends RbacController {
         if(isset($_POST['delete'])){
             foreach ($_POST['delete'] as $userId) {
                 $user = User::findOne($userId);
-                if ($user->delete()) {
+                if ($user->delete())
                     Yii::$app->getSession()->addFlash('success', Yii::t('aaa', 'User {user} deleted successfully', ['user'=>$user->login]));
-                } else {
+                else
                     Yii::$app->getSession()->addFlash('error', Yii::t('aaa', 'Error deleting user').' '.$user->login);
-                }
             }
         }
 
