@@ -89,5 +89,5 @@ Look [this document](https://github.com/ufrgs-hyman/meican/blob/master/docs/guid
 
 ## LICENSE
 
-Copyright (c) 2012-2020 by [RNP](http://www.rnp.br).
+Copyright (c) 2012-2021 by [RNP](http://www.rnp.br).
 All rights reserved. MEICAN is released under of the BSD2 License. For more information see [LICENSE](https://github.com/ufrgs-hyman/meican/blob/master/LICENSE.md).
