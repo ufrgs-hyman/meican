@@ -825,8 +825,14 @@ function loadPorts() {
                     meicanTopo['ports'][i].lng = parseFloat(meicanTopo['ports'][i].lng);
                 }
             }
-            //console.log(meicanTopo);
-            
+
+            for (let j = meicanTopo['domains'].length - 1; j >= 0; j--) {
+                const networkDomains = meicanTopo['networks'].filter(n => n.domain.name == meicanTopo['domains'][j].name);
+
+                if(networkDomains.length == 0)
+                    meicanTopo['domains'].splice(j, 1);
+            }
+
             initEditPointSelects();
             for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
                 meicanMap.addNode(
