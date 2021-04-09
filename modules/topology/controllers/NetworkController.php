@@ -42,9 +42,12 @@ class NetworkController extends RbacController {
     
     public function actionCreate(){
     	if(!self::can('domainTopology/create')){
-    		if(!self::can("domainTopology/read")) return $this->goHome();
-    		else{
-    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add networks'));
+    		if(!self::can("domainTopology/read")) {
+				Yii::$app->getSession()->addFlash('danger', Yii::t('topology', 'You are not allowed to add networks'));
+				return $this->goHome();
+			}
+			else{
+    			Yii::$app->getSession()->addFlash('danger', Yii::t('topology', 'You are not allowed to add networks'));
     			return $this->redirect(array('index'));
     		}
     	}

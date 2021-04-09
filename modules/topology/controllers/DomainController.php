@@ -46,9 +46,12 @@ class DomainController extends RbacController {
 
     public function actionCreate(){
 		if(!self::can('domain/create')){
-			if(!self::can("domain/read")) return $this->goHome();
+			if(!self::can("domain/read")) {
+				Yii::$app->getSession()->addFlash('danger', Yii::t('topology', 'You are not allowed to create domains'));
+				return $this->goHome();
+			}
 			else{
-				Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add domains'));
+				Yii::$app->getSession()->addFlash('danger', Yii::t('topology', 'You are not allowed to add domains'));
 				return $this->redirect(array('index'));
 			}
 	    }
@@ -77,9 +80,12 @@ class DomainController extends RbacController {
     
     public function actionUpdate($id) {
     	if(!self::can("domain/update")){
-    		if(!self::can("domain/read")) return $this->goHome();
+    		if(!self::can("domain/read")) {
+				Yii::$app->getSession()->addFlash('danger', Yii::t('topology', 'You are not allowed to update domains'));
+				return $this->goHome();
+			}
 			else{
-				Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update domains'));
+				Yii::$app->getSession()->addFlash('danger', Yii::t('topology', 'You are not allowed to update domains'));
     			return $this->redirect(array('index'));
 			}
     	}
@@ -130,7 +136,7 @@ class DomainController extends RbacController {
 	    		}
 	    	}
     	}
-    	else Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to delete domains'));
+    	else Yii::$app->getSession()->addFlash('danger', Yii::t('topology', 'You are not allowed to delete domains'));
     
     	return $this->redirect(array('index'));
     }

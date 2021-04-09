@@ -45,7 +45,7 @@ class LocationController extends RbacController {
     	if(!self::can('domainTopology/create')){
     		if(!self::can("domainTopology/read")) return $this->goHome();
     		else{
-    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add locations'));
+    			Yii::$app->getSession()->addFlash('danger', Yii::t('topology', 'You are not allowed to add locations'));
     			return $this->redirect(array('index'));
     		}
     	}
@@ -82,7 +82,7 @@ class LocationController extends RbacController {
     	if(!self::can("domainTopology/update", $location->getDomain()->one()->name)){
     		if(!self::can("domainTopology/read")) return $this->goHome();
     		else{
-    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update on domain {domain}', ['domain' => $location->getDomain()->one()->name]));
+    			Yii::$app->getSession()->addFlash('danger', Yii::t('topology', 'You are not allowed to update on domain {domain}', ['domain' => $location->getDomain()->one()->name]));
     			return $this->redirect(array('index'));
     		}
     	}

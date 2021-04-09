@@ -39,7 +39,7 @@ class UserController extends RbacController {
             $data = $searchModel->searchByDomains(Yii::$app->request->get(), $allowedDomains, false, true);
         }
         else{
-            Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to edit Users'));
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to edit Users'));
             return $this->goHome();
         } 
 
@@ -72,7 +72,7 @@ class UserController extends RbacController {
             }
             $queryDomain = UserDomainRole::find()->where(['in', 'id', $filtered]);
         } else {
-            Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to view users'));
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to view users'));
             return $this->goHome();
         }
         $domainProvider = new ActiveDataProvider([
@@ -108,7 +108,7 @@ class UserController extends RbacController {
 
     public function actionCreate() {
         if(!self::can("user/create")){
-            Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create users'));
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to create users'));
             if(self::can("user/read") || self::can("role/read"))
                 return $this->redirect(array('index'));
             else
@@ -145,7 +145,7 @@ class UserController extends RbacController {
         
         if($user_id != $id) {
             if(!self::can('user/update')) {
-                Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update users'));
+                Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to update users'));
                 if(self::can('role/update') || self::can('role/read'))
                     return $this->actionView($id);
                 else
@@ -179,8 +179,8 @@ class UserController extends RbacController {
 
     public function actionDelete() {
         if(!self::can("user/delete")){
-            Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to delete users'));
-            return $this->redirect(array('index'));
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to delete users'));
+            return $this->goHome();
         }
 
         if(isset($_POST['delete'])){

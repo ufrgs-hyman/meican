@@ -30,7 +30,7 @@ class RoleController extends RbacController {
         if(!self::can("role/create") && !self::can("user/create")){
             if(!self::can("user/read") && !self::can("role/read")) return $this->goHome();
             else{
-                Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create domain roles'));
+                Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to create domain roles'));
                 return $this->redirect(array('/aaa/user/view', 'id'=>$id));
             }
         }
@@ -101,7 +101,7 @@ class RoleController extends RbacController {
     	if(!self::can("user/create")){
     		if(!self::can("user/read")) return $this->goHome();
     		else{
-    			Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create system roles'));
+    			Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to create system roles'));
     			return $this->redirect(array('/aaa/user/view', 'id'=>$id));
     		}
     	}
@@ -166,7 +166,7 @@ class RoleController extends RbacController {
         if(!self::can("role/update", $udr->domain) && !self::can("user/update")){
             if(!self::can("user/read") && !self::can("role/read")) return $this->goHome();
             else{
-                Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update roles'));
+                Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to update roles'));
                 return $this->redirect(array('/aaa/user/view','id'=>$udr->user_id));
             }
         }
@@ -255,7 +255,7 @@ class RoleController extends RbacController {
     	if(!self::can("user/update")){
     		if(!self::can("role/read")) return $this->goHome();
     		else{
-    			Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update roles'));
+    			Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to update roles'));
     			return $this->redirect(array('/aaa/user/view','id'=>$udr->user_id));
     		}
     	}

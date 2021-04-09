@@ -87,7 +87,7 @@ class TestForm extends Model {
  				}
  			}
  			if(!$permission){
- 				Yii::$app->getSession()->addFlash("warning", Yii::t("circuits", "You are not allowed to create a automated test involving these selected domains"));
+ 				Yii::$app->getSession()->addFlash('danger', Yii::t("circuits", "You are not allowed to create an automated test involving these selected domains"));
 				return false;
  			}
  			

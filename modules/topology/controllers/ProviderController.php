@@ -26,7 +26,7 @@ class ProviderController extends RbacController {
                 return $this->goHome();
             }
     		else{
-    			Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to add providers'));
+    			Yii::$app->getSession()->addFlash('danger', Yii::t('topology', 'You are not allowed to add providers'));
     			return $this->redirect(array('index'));
     		}
     	}
@@ -54,7 +54,7 @@ class ProviderController extends RbacController {
     	if(!self::can("domain/update")){
     		if(!self::can("domain/read")) return $this->goHome();
 			else{
-				Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to update providers'));
+				Yii::$app->getSession()->addFlash('danger', Yii::t('topology', 'You are not allowed to update providers'));
     			return $this->redirect(array('index'));
 			}
     	}
@@ -138,7 +138,7 @@ class ProviderController extends RbacController {
     	if(!self::can("domain/delete")){
     		if(!self::can("domain/read")) return $this->goHome();
 			else{
-				Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'You are not allowed to delete providers'));
+				Yii::$app->getSession()->addFlash('danger', Yii::t('topology', 'You are not allowed to delete providers'));
     			return $this->redirect(array('index'));
 			}
     	}
