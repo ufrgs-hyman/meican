@@ -22,6 +22,7 @@ use meican\topology\models\Peering;
 class ViewerController extends RbacController {
 
     public function actionIndex() {
+        return $this->render('index');
     }
 
     //REST functions

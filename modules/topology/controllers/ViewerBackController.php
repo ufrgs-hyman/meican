@@ -17,9 +17,7 @@ use meican\topology\models\Port;
  */
 class ViewerController extends RbacController {
 	
-    public function actionIndex() {
-    	}
-    	
+    public function actionIndex() {    	
         return $this->render('index', ['domains'=>Domain::find()->select(['id','name'])->asArray()->all()]);
     }
 
