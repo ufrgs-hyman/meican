@@ -81,6 +81,7 @@ class GroupController extends RbacController {
                     'domainTopology'=>Yii::t("aaa","Domain's Topology"),
                     'test'=>Yii::t("aaa", 'Automated Tests'),
                     'role'=>Yii::t("aaa", 'Roles'),
+                    'authorization'=>Yii::t("aaa", 'Authorization'),
                 ),
                 'root' => array(
                     'configuration'=>Yii::t("aaa", 'Reservations Configuration'),
@@ -148,6 +149,7 @@ class GroupController extends RbacController {
                     'domainTopology'=>Yii::t("aaa","Domain's Topology"),
                     'test'=>Yii::t("aaa", 'Automated Tests'),
                     'role'=>Yii::t("aaa", 'Roles'),
+                    'authorization'=>Yii::t("aaa", 'Authorization'),
                 ),
                 'root' => array(
                     'configuration'=>Yii::t("aaa", 'Reservations Configuration'),

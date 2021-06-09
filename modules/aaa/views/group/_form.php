@@ -55,14 +55,16 @@ $form=ActiveForm::begin(array(
                         //Capitalize first letter
                         $appValue = ucfirst($appValue);
                         
-                        
-                        if(isset($childsChecked) && in_array("create$appValue", $childsChecked)) {
-                            $table .= "<td><input name='Permissions[]' value='create$appValue' type='checkbox' checked></td>";
+                        if($appValue != 'Authorization'){
+                            if(isset($childsChecked) && in_array("create$appValue", $childsChecked)) {
+                                $table .= "<td><input name='Permissions[]' value='create$appValue' type='checkbox' checked></td>";
+                            }
+                            else {
+                                $table .= "<td><input name='Permissions[]' value='create$appValue' type='checkbox'></td>";
+                            }
+                        } else {
+                            $table .= "<td><input name='Permissions[]' value='read$appValue' type='checkbox' disabled></td>";
                         }
-                        else {
-                            $table .= "<td><input name='Permissions[]' value='create$appValue' type='checkbox'></td>";
-                        }
-                        
                         
                         if($appValue != 'Waypoint'){
                             if(isset($childsChecked) && in_array("read$appValue", $childsChecked)) {
@@ -86,7 +88,7 @@ $form=ActiveForm::begin(array(
                             $table .= "<td><input name='Permissions[]' value='update$appValue' type='checkbox' disabled></td>";
                         }
                         
-                        if($appValue != 'Waypoint'){
+                        if($appValue != 'Waypoint' && $appValue != 'Authorization'){
                             if(isset($childsChecked) && in_array("delete$appValue", $childsChecked)) {
                                 $table .= "<td><input name='Permissions[]' value='delete$appValue' type='checkbox' checked></td>";
                             }
