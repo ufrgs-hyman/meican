@@ -102,13 +102,14 @@ abstract class RbacController extends BaseController {
      *                      deve ser redirecionado para a página de erro padrão (403).
      *
      */
-    static function can($permissions = null, $domain = null, $redirect = false) {
+    static function can($permissions = null, $domain = null, $redirect = false, $userId = false ) {
         if (!is_array($permissions)) {
             if ($permissions)
             $permissions = [$permissions];
         }
 
-        $userId = Yii::$app->user->getId();
+        if(!$userId)
+            $userId = Yii::$app->user->getId();
 
         if($domain != null) {
             $roles = UserDomainRole::find()->where([
