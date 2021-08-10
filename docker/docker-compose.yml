@@ -2,21 +2,16 @@ version: '3'
 
 services:
   meican:
-    image: meican_image_$MEICAN_INSTANCE:$MEICAN_INSTANCE
+    image: meican_image:$MEICAN_VERSION
     build:
       context: .
       args:
-        - MEICAN_INSTANCE
-    environment:
       - MYSQL_ROOT_PASSWORD
       - MYSQL_DATABASE
       - MYSQL_USER
       - MYSQL_PASSWORD
-      - MEICAN_INSTANCE
-      - MEICAN_DIR=/home/meican/meican-$MEICAN_INSTANCE
-    container_name: meican-app_$MEICAN_INSTANCE
-    volumes:
-      - ../:/home/meican/meican-$MEICAN_INSTANCE
+      - MEICAN_VERSION
+    container_name: meican-app
     tty: true
     restart: always
     ports:
@@ -28,7 +23,7 @@ services:
 
   db:
     image: mysql:5.7
-    container_name: meican-db_$MEICAN_INSTANCE
+    container_name: meican-db
     volumes:
       - db-meican:/var/lib/mysql
     restart: always

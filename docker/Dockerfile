@@ -4,8 +4,12 @@ MAINTAINER Leonardo Lauryel Batista dos Santos
 
 LABEL Description="MEICAN Image"
 
-ARG MEICAN_INSTANCE
-ARG MEICAN_DIR=/home/meican/meican-$MEICAN_INSTANCE
+ARG MYSQL_ROOT_PASSWORD
+ARG MYSQL_DATABASE
+ARG MYSQL_USER
+ARG MYSQL_PASSWORD
+ARG MEICAN_VERSION
+ARG MEICAN_DIR=/home/meican/meican-$MEICAN_VERSION
 
 ## for apt to be noninteractive
 ENV DEBIAN_FRONTEND noninteractive
@@ -33,25 +37,26 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 RUN adduser --disabled-password --gecos '' meican \
- && usermod -aG sudo meican
+ && usermod -aG sudo meican \
+ && su meican -c "curl -kL https://github.com/ufrgs-hyman/meican/archive/$MEICAN_VERSION.tar.gz | tar xzC /home/meican"
+
+COPY db.php $MEICAN_DIR/config/
 
 WORKDIR $MEICAN_DIR
+
+RUN sed -i "s/MYSQL_DATABASE/$MYSQL_DATABASE/" $MEICAN_DIR/config/db.php \
+ && sed -i "s/MYSQL_USER/$MYSQL_USER/" $MEICAN_DIR/config/db.php \
+ && sed -i "s/MYSQL_PASSWORD/$MYSQL_PASSWORD/" $MEICAN_DIR/config/db.php \
+ && chown meican:meican $MEICAN_DIR/config/db.php \
+ && su meican -c "curl -kO https://getcomposer.org/download/1.9.3/composer.phar" \
+ && su meican -c "php composer.phar global require "fxp/composer-asset-plugin:~1.4.4"" \
+ && ln -s $MEICAN_DIR/web /var/www/meican \
+ && a2enmod rewrite
 
 COPY 000-default.conf /etc/apache2/sites-available/
 
 EXPOSE 80
 
-CMD cp $MEICAN_DIR/docker/db.php  $MEICAN_DIR/config \
- && sed -i "s/MEICAN_INSTANCE/$MEICAN_INSTANCE/" $MEICAN_DIR/config/db.php \
- && sed -i "s/MYSQL_DATABASE/$MYSQL_DATABASE/" $MEICAN_DIR/config/db.php \
- && sed -i "s/MYSQL_USER/$MYSQL_USER/" $MEICAN_DIR/config/db.php \
- && sed -i "s/MYSQL_PASSWORD/$MYSQL_PASSWORD/" $MEICAN_DIR/config/db.php \
- && chown meican:meican $MEICAN_DIR/config/db.php \
- && curl -kO https://getcomposer.org/download/1.9.3/composer.phar \
- && php composer.phar global require "fxp/composer-asset-plugin:~1.4.4" \ 
- && ln -s $MEICAN_DIR/web /var/www/meican \
- && a2enmod rewrite \
- && php composer.phar install \
+CMD su meican -c "php composer.phar install" \
  && service apache2 start \
- && echo "MEICAN-$MEICAN_INSTANCE container successfully created!" \
  && /bin/bash
