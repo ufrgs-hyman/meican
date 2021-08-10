@@ -22,7 +22,7 @@
      
      * MEICAN_PORT
      
-     * MEICAN_INSTANCE
+     * MEICAN_VERSION
         
         
 2- Run the following command:
