@@ -1,0 +1,22 @@
+name: Docker Image MEICAN
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+     - main
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker-compose -f "./docker/docker-compose.yml" up -d --build
+      
+    - name: Stop containers
+      if: always()
+      run: docker-compose -f "./docker/docker-compose.yml" down
