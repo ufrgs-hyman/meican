@@ -3,13 +3,13 @@ version: '3'
 services:
   meican:
     image: meican_image:$MEICAN_VERSION
-    build:
-      context: .
-      args:
-      - MYSQL_ROOT_PASSWORD
+    environment:
       - MYSQL_DATABASE
       - MYSQL_USER
       - MYSQL_PASSWORD
+    build:
+      context: .
+      args:
       - MEICAN_VERSION
     container_name: meican-app
     tty: true
