@@ -1,4 +1,4 @@
-name: Docker Image MEICAN
+name: Docker Compose only build
 
 on:
   workflow_dispatch:
@@ -13,22 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      
-    - uses: azure/docker-login@v1
-      with:
-        login-server: ghcr.io
-        username: ${{ secrets.GH_PACKAGES_USER }}
-        password: ${{ secrets.GH_PACKAGES_TOKEN }}
-    
+    - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker-compose -f "./docker/docker-compose.yml" up -d --build
-      
-    - name: Pushing to ghcr
-      run: |
-       docker tag meican_image:stable ghrc.io/ufrgs-hyman/meican/meican_image:stable
-       docker push ghrc.io/ufrgs-hyman/meican/meican_image:stable
-       docker push ghrc.io/ufrgs-hyman/meican/meican_image:${{ github.sha }}
-      
-      
