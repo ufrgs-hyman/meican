@@ -2,7 +2,7 @@ version: '3'
 
 services:
   meican:
-    image: ghcr.io/ufrgs-hyman/meican:${MEICAN_VERSION:-latest}
+    image:  ghcr.io/ufrgs-hyman/meican/meican-app:3.3.0-rc
     env_file:
       - ./env/.env
     container_name: meican-app
