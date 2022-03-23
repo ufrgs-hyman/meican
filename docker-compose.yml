@@ -2,9 +2,9 @@ version: '3'
 
 services:
   meican:
-    image:  ghcr.io/ufrgs-hyman/meican/meican-app:3.3.0-rc
+    image: ghcr.io/ufrgs-hyman/meican/meican-app:${MEICAN_VERSION}
     env_file:
-      - ./env/.env
+      - .env
     container_name: meican-app
     tty: true
     restart: always
@@ -22,7 +22,7 @@ services:
       - db-meican:/var/lib/mysql
     restart: always
     env_file:
-      - ./env/.env
+      - .env
   
 volumes:
   db-meican:

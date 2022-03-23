@@ -8,7 +8,7 @@
 ### Instructions to run:
 
 
-1- Enter the directory 'env' and open the file '.env' to configure your credentials;
+1- In the root directory, open the file'.env' to configure your credentials;
 
    - You must configure the following items:
    

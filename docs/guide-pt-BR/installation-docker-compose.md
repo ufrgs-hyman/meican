@@ -8,7 +8,7 @@
 ### Instruções para executar:
 
 
-1- Acesse o diretório 'env' e abra o arquivo '.env' para configurar suas credenciais;
+1- No diretorio raiz, abra o arquivo '.env' para configurar suas credenciais;
 
    - Você deve configurar os seguintes itens:
    
