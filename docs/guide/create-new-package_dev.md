@@ -1,4 +1,4 @@
-## MEICAN Build instructions :wrench:
+## Instructions for creating a new MEICAN package :package:
 
 ### 1- Choose the settings for the image that will be generated: :mag:
 
