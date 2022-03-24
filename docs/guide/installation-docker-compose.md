@@ -8,7 +8,7 @@
 ### Instructions to run:
 
 
-1- Enter the directory and open the file .env to configure your credentials;
+1- In the root directory, open the file'.env' to configure your credentials;
 
    - You must configure the following items:
    
@@ -25,7 +25,7 @@
      * MEICAN_VERSION
         
         
-2- Run the following command:
+2- Run the following command in the root directory:
 
     docker-compose up
 
