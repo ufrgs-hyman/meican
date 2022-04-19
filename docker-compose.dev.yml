@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  meican:
+    image: meican-app-dev
+    build:
+      context: ./docker_for_build
+      dockerfile: Dockerfile_dev
+      args:
+        - MEICAN_VERSION
+    container_name: meican-app-dev
+    volumes:
+      - ./:/home/meican/meican-$MEICAN_VERSION
