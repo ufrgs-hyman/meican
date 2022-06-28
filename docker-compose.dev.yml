@@ -11,6 +11,7 @@ services:
     container_name: meican-app-dev
     volumes:
       - ./:/home/meican/meican-$MEICAN_VERSION
+    restart: always
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
