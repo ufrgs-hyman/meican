@@ -11,3 +11,18 @@ services:
     container_name: meican-app-dev
     volumes:
       - ./:/home/meican/meican-$MEICAN_VERSION
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: meican-phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8081:80
+    depends_on:
+      - db
+    links:
+      - db
