@@ -4,7 +4,6 @@ services:
   meican:
     env_file:
       - .env
-    entrypoint: ["./docker_for_build/wait-for-mysql.sh", "db", "/docker-entrypoint.sh"]
     container_name: meican-app
     tty: true
     ports:
