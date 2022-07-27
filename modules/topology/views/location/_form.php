@@ -27,6 +27,7 @@ $form= ActiveForm::begin([
         <?= $form->field($location,'name')->textInput(['size'=>30,'maxlength'=>50]); ?>
         <?= $form->field($location,'lat')->textInput(['size'=>30,'maxlength'=>30]); ?>
         <?= $form->field($location,'lng')->textInput(['size'=>30,'maxlength'=>30]); ?>
+        <?= $form->field($location,'device_id')->dropDownList(ArrayHelper::map($devices, 'id', 'name'), ['prompt' => '']); ?>
         <?= $form->field($location,'domain_id')->dropDownList(ArrayHelper::map($domains, 'id', 'name')); ?>
     </div>
     <div class="box-footer">

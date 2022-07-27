@@ -12,6 +12,7 @@ use Yii;
 use meican\base\BaseController;
 use meican\aaa\models\UserDomainRole;
 use meican\topology\models\Domain;
+use meican\topology\models\Type;
 
 /**
  * RbacController
@@ -164,5 +165,12 @@ abstract class RbacController extends BaseController {
             }
             return $canDomains;
         }
+    }
+
+    static function findDevices() {
+
+        $deviceTypes = Type::find()->orderBy(['name'=> SORT_ASC]);
+        
+        return $deviceTypes->all();
     }
 }

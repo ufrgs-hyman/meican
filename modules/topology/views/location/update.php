@@ -11,5 +11,6 @@ $this->params['box-title'] = Yii::t('topology', 'Update Location'); ?>
 		'action' => 'update',
 		'location' => $location, 
 		'domains' => $domains,
+		'devices' => $devices,
 	)); 
 ?>

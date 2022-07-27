@@ -14,6 +14,7 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property integer $domain_id
+ * @property integer $device_id
  *
  * Coordenadas relativas a localização aproximada
  *
@@ -40,7 +41,7 @@ class Location extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'lat', 'lng', 'domain_id'], 'required'],
+            [['name', 'lat', 'lng', 'domain_id', 'device_id'], 'required'],
             [['lat', 'lng'], 'number'],
             [['name'], 'string', 'max' => 50],
         ];
@@ -57,6 +58,7 @@ class Location extends \yii\db\ActiveRecord
             'lat' => Yii::t('topology', 'Latitude'),
             'lng' => Yii::t('topology', 'Longitude'),
             'domain_id' => Yii::t('topology', 'Domain'),
+            'device_id' => Yii::t('topology', 'Device Type'),
         ];
     }
 
@@ -68,6 +70,14 @@ class Location extends \yii\db\ActiveRecord
         return $this->hasOne(Domain::className(), ['id' => 'domain_id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getType()
+    {
+        return $this->hasOne(Type::className(), ['id' => 'device_id']);
+    }
+    
     /**
      * @return \yii\db\ActiveQuery
      */

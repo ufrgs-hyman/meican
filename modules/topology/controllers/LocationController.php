@@ -15,6 +15,7 @@ use meican\topology\models\Location;
 use meican\topology\models\Port;
 use meican\topology\models\Domain;
 use meican\topology\forms\LocationSearch;
+use meican\topology\models\Type;
 
 /**
  * @author Leonardo Lauryel Batista dos Santos <@leonardolauryel>
@@ -66,6 +67,7 @@ class LocationController extends RbacController {
     	return $this->render('create',[
     			'location' => $location,
     			'domains' => self::whichDomainsCan('domainTopology/create'),
+				'devices' => self::findDevices(),
     	]);
     }
     
@@ -101,6 +103,7 @@ class LocationController extends RbacController {
     	return $this->render('update',[
     			'location' => $location,
     			'domains' => self::whichDomainsCan('domainTopology/update'),
+				'devices' => self::findDevices(),
     	]);
     }
 
