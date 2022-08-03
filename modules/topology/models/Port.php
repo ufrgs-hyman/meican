@@ -34,6 +34,7 @@ use Yii;
  * @property integer $min_capacity
  * @property integer $granularity
  * @property string $vlan_range
+ * @property integer $device_id
  *
  * Portas unidirecionais do tipo NSI devem ter associadas
  * portas bidirecionais.
@@ -88,7 +89,7 @@ class Port extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'directionality', 'urn', 'name'], 'required'],
+            [['type', 'directionality', 'urn', 'name', 'device_id'], 'required'],
             [['type', 'directionality'], 'string'],
             [['vlan_range'], 'string'],
             [['max_capacity', 'min_capacity', 'capacity', 'granularity', 'biport_id', 'alias_id', 'network_id', 'location_id'], 'integer'],
@@ -136,6 +137,7 @@ class Port extends \yii\db\ActiveRecord
             'network_id' => Yii::t('topology', 'Network'),
         	'vlan_range' => Yii::t('topology', 'VLANs'),
             'location_id' => Yii::t('topology', 'Location'),
+            'device_id' => Yii::t('topology', 'Device Type'),
         ];
     }
 
@@ -173,6 +175,15 @@ class Port extends \yii\db\ActiveRecord
     public function getAlias()
     {
         return $this->hasOne(Port::className(), ['id' => 'alias_id']);
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDeviceType()
+    {
+        return $this->hasOne(Type::className(), ['id' => 'device_id']);
     }
 
     static function findOneArraySelect($id, $array) {

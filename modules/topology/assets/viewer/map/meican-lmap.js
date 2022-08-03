@@ -877,11 +877,18 @@ LMap.prototype._loadPorts = function(withLinks) {
         url: baseUrl+'/topology/port/json?dir=BI&type=ALL',
         method: "GET",        
         success: function(response) {
+            var locations = current._topology['locations'];
             current._topology['ports'] = response;
+            locations = response;
+
+
+        
             for (var i = current._topology['ports'].length - 1; i >= 0; i--) {
+                console.log(current._topology['location'][i]);
                 for (var k = current._topology['networks'].length - 1; k >= 0; k--) {
                     if (current._topology['ports'][i]['network_id'] == current._topology['networks'][k]['id']) {
                         current._topology['ports'][i]['network'] = current._topology['networks'][k];
+                        //console.log(current._topology['ports'][i]['network']);
                     }
                 }
                 if (current._topology['ports'][i].lat != null) {
