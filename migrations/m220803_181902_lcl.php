@@ -15,18 +15,30 @@ class m220803_181902_lcl extends Migration
 
     $this->execute("
         CREATE TABLE IF NOT EXISTS `meican_device_type` (
-            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `id` int(11) NOT NULL,
             `name` varchar(100) NOT NULL,
             PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-        ");
+        ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+    ");
+
+    $this->execute("   
+        INSERT INTO `meican_device_type`(name) VALUES(`GenericDevice`);
+    ");
+
+    $this->execute("   
+        INSERT INTO `meican_device_type`(name) VALUES(`Device1`);
+    ");
+
+    $this->execute("   
+        INSERT INTO `meican_device_type`(name) VALUES(`Device2`);
+    ");
 
 
     
     $this->execute("
     
         ALTER TABLE `meican_port`
-        ADD COLUMN `device_id` int(11) DEFAULT 1 NOT NULL;
+        ADD COLUMN `device_id` int(11) DEFAULT 0 NOT NULL;
         
     ");
 
@@ -36,6 +48,8 @@ class m220803_181902_lcl extends Migration
             FOREIGN KEY (`device_id`) REFERENCES `meican_device_type`(`id`);
     
     ");
+
+
 
 
     $this->execute("

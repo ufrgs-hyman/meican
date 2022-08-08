@@ -343,17 +343,17 @@ LMap.prototype.addNode = function(port, color, mode) {
     pos.lng = this.getAdjustedLng(pos.lng);
 
     var node = this.getNodeByPosition(pos, port.network.domain, port.location_name);
-
+    
     if (node == null) {
+        // Has no port yet
+        let iconSize = 25
         var icon = L.divIcon({
-            iconSize: [22,22],
-            iconAnchor: [11, 22],
+            iconSize: [iconSize,iconSize],
+            iconAnchor: [11, iconSize],
             popupAnchor: [0,-24],
             tooltipAnchor: [12, -12],
-            html: '<svg width="25" height="26" xmlns="http://www.w3.org/2000/svg">' + 
-            '<g>' +
-            '<path stroke="black" fill="' + color + '" d="m1,5l20,0l-10,20l-10,-20z"/>' + 
-            '</g>' + 
+            html: `<svg width=${iconSize} height=${iconSize} xmlns="http://www.w3.org/2000/svg">' + 
+            '<image href="` + this.getIconByDeviceType(port.devicetype_id) + `"x="0" y="0" height=${iconSize} width=${iconSize}/>` + 
             '</svg>',
             className: 'marker-icon-svg',
         });
@@ -390,22 +390,21 @@ LMap.prototype.addNode = function(port, color, mode) {
             $("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
         });
     } else {
+        // Has more than one port 
         node.options.ports.push(port);
         let configIcon = '" d="M1,11a10,10 0 1,0 20,0a10,10 0 1,0 -20,0"/>';
 
         if(node.options.type == "location")
             configIcon = '" d="M1,15a10,10 0 1,0 20,0a10,10 0 1,0 -20,0"/>';
 
+        let iconSize = 25
         node.setIcon(L.divIcon({
-            iconSize: [22,22],
-            iconAnchor: [11, 22],
+            iconSize: [iconSize,iconSize],
+            iconAnchor: [11, iconSize],
             popupAnchor: [0,-24],
-            tooltipAnchor: [14, -12],
-            html: '<svg width="25" height="27" xmlns="http://www.w3.org/2000/svg">' + 
-            '<g>' +
-            //http://complexdan.com/svg-circleellipse-to-path-converter/
-            '<path stroke="black" fill="' + color + configIcon + 
-            '</g>' + 
+            tooltipAnchor: [12, -12],
+            html: `<svg width=${iconSize} height=${iconSize} xmlns="http://www.w3.org/2000/svg">' + 
+            '<image href="` + this.getIconByPortsList(node.options.ports) + `"x="0" y="0" height=${iconSize} width=${iconSize}/>` + 
             '</svg>',
             className: 'marker-icon-svg',
         }));
@@ -875,20 +874,20 @@ LMap.prototype._loadPorts = function(withLinks) {
     var current = this;
     $.ajax({
         url: baseUrl+'/topology/port/json?dir=BI&type=ALL',
-        method: "GET",        
+        method: "GET",
+
         success: function(response) {
-            var locations = current._topology['locations'];
+            
             current._topology['ports'] = response;
-            locations = response;
 
+            
 
-        
             for (var i = current._topology['ports'].length - 1; i >= 0; i--) {
-                console.log(current._topology['location'][i]);
+                console.log(current._topology['ports'][i].devicetype_id);
                 for (var k = current._topology['networks'].length - 1; k >= 0; k--) {
+
                     if (current._topology['ports'][i]['network_id'] == current._topology['networks'][k]['id']) {
                         current._topology['ports'][i]['network'] = current._topology['networks'][k];
-                        //console.log(current._topology['ports'][i]['network']);
                     }
                 }
                 if (current._topology['ports'][i].lat != null) {
@@ -1093,4 +1092,32 @@ LMap.prototype._createPopupContent = function(srcName, dstName, srcPortName, dst
                     '</div>' +
                 '</div>' +
             '</div>'
+}
+
+// Returns the icon for a specific port
+LMap.prototype.getIconByDeviceType = function(deviceType_id) {
+    let baseUrl = '/images/';
+
+ /*    return baseUrl + getDeviceTypeById(deviceType_id).iconName; */
+
+    switch (deviceType_id) {
+        case '1': return baseUrl + 'genericIcon.png';
+        case '2': return baseUrl + 'hub.png';
+        default: return baseUrl + 'genericIcon.png';
+    }
+}
+// Returns the path for a list of ports
+LMap.prototype.getIconByPortsList = function(portsArray) {
+    let deviceTypes = [];
+
+    portsArray.forEach(function(port) {
+        if (!deviceTypes.includes(port)) {
+            deviceTypes.push(port);
+        }
+        if (deviceTypes.length > 1) {
+            return LMap.prototype.getIconByDeviceType('1');  // Device type 1 = Generic
+        }
+    });
+
+    return LMap.prototype.getIconByDeviceType(deviceTypes[0]);
 }

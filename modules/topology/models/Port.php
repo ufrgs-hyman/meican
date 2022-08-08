@@ -34,7 +34,7 @@ use Yii;
  * @property integer $min_capacity
  * @property integer $granularity
  * @property string $vlan_range
- * @property integer $device_id
+ * @property integer $devicetype_id
  *
  * Portas unidirecionais do tipo NSI devem ter associadas
  * portas bidirecionais.
@@ -50,7 +50,7 @@ use Yii;
  * Esse device pode não ter nome representativo, mas
  * deve existir para a correta aglomeração no mapa.
  *
- * @property integer $device_id
+ * @property integer $devicetype_id
  *
  * Apenas portas do tipo NSI possuem redes associadas, 
  * uma vez que essas redes só existem na topologia NSI.
@@ -89,10 +89,10 @@ class Port extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'directionality', 'urn', 'name', 'device_id'], 'required'],
+            [['type', 'directionality', 'urn', 'name', 'devicetype_id'], 'required'],
             [['type', 'directionality'], 'string'],
             [['vlan_range'], 'string'],
-            [['max_capacity', 'min_capacity', 'capacity', 'granularity', 'biport_id', 'alias_id', 'network_id', 'location_id'], 'integer'],
+            [['max_capacity', 'min_capacity', 'capacity', 'granularity', 'biport_id', 'alias_id', 'network_id', 'location_id', 'devicetype_id'], 'integer'],
             [['urn'], 'string', 'max' => 250],
             [['name'], 'string', 'max' => 100],
             [['urn'], 'unique'],
@@ -137,7 +137,7 @@ class Port extends \yii\db\ActiveRecord
             'network_id' => Yii::t('topology', 'Network'),
         	'vlan_range' => Yii::t('topology', 'VLANs'),
             'location_id' => Yii::t('topology', 'Location'),
-            'device_id' => Yii::t('topology', 'Device Type'),
+            'devicetype_id' => Yii::t('topology', 'Device Type'),
         ];
     }
 
@@ -183,7 +183,7 @@ class Port extends \yii\db\ActiveRecord
      */
     public function getDeviceType()
     {
-        return $this->hasOne(Type::className(), ['id' => 'device_id']);
+        return $this->hasOne(Type::className(), ['id' => 'devicetype_id']);
     }
 
     static function findOneArraySelect($id, $array) {

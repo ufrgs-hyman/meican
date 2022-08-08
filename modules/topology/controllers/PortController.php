@@ -130,6 +130,7 @@ class PortController extends RbacController {
 			'biport_id', 
 			'alias_id', 
 			'network_id',
+			'devicetype_id',
 			'meican_location.name as location_name', 
 			'meican_location.lat', 
 			'meican_location.lng'
