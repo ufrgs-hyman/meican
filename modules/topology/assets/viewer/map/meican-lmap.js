@@ -1094,31 +1094,46 @@ LMap.prototype._createPopupContent = function(srcName, dstName, srcPortName, dst
             '</div>'
 }
 
-// // Returns the icon for a specific port
-// LMap.prototype.getIconByDeviceType = function(deviceType_id) {
-//     let baseUrl = '/images/';
+// Returns the icon for a specific port
+LMap.prototype.getIconByDeviceType = function(deviceType_id) {
+    let baseUrl = '/images/';
 
-//  /*    return baseUrl + getDeviceTypeById(deviceType_id).iconName; */
+ /*    return baseUrl + getDeviceTypeById(deviceType_id).iconName; */
 
-//     switch (deviceType_id) {
-//         case '0': return baseUrl + 'genericIcon.png';
-//         case '1': return baseUrl + 'hub.png';
-//         case '2': return baseUrl + 'switch.png';
-//         default: return baseUrl + 'genericIcon.png';
-//     }
-// }
-// // Returns the path for a list of ports
-// LMap.prototype.getIconByPortsList = function(portsArray) {
-//     let deviceTypes = [];
+    switch (deviceType_id) {
+        case '1': return baseUrl + 'generic_icon.png';
+        case '2': return baseUrl + 'hub.png';
+        case '3': return baseUrl + 'router.png';
+        default: return baseUrl + 'generic_icon.png';
+    }
+}
+// Returns the path for a list of ports
+LMap.prototype.getIconByPortsList = function(portsArray) {
+    let deviceTypes = [];
 
-//     portsArray.forEach(function(port) {
-//         if (!deviceTypes.includes(port)) {
-//             deviceTypes.push(port);
+    portsArray.forEach(function(port) {
+        if (!deviceTypes.includes(port)) {
+            deviceTypes.push(port);
+        }
+        if (deviceTypes.length > 1) {
+            return LMap.prototype.getIconByDeviceType('1');  // Device type 1 = Generic
+        }
+    });
+
+    return LMap.prototype.getIconByDeviceType(deviceTypes[0]);
+}
+
+// For this to work, iconName should be mapped alongside devicetype_id in Port, though i'm not sure if that makes sense.
+
+// LMap.prototype.getDeviceNameById = function(deviceType_id) {
+
+//     this._topology['ports'].forEach(function(port) {
+
+//         if(port.devicetype_id == deviceType_id) {
+
+//             return port.iconName;
 //         }
-//         if (deviceTypes.length > 1) {
-//             return LMap.prototype.getIconByDeviceType('0');  // Device type 1 = Generic
-//         }
+
 //     });
 
-//     return LMap.prototype.getIconByDeviceType(deviceTypes[0]);
 // }

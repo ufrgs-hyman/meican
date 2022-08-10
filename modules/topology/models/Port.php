@@ -89,10 +89,10 @@ class Port extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'directionality', 'urn', 'name'], 'required'], //'devicetype_id' add
+            [['type', 'directionality', 'urn', 'name', 'devicetype_id'], 'required'], //'devicetype_id' add
             [['type', 'directionality'], 'string'],
             [['vlan_range'], 'string'],
-            [['max_capacity', 'min_capacity', 'capacity', 'granularity', 'biport_id', 'alias_id', 'network_id', 'location_id'], 'integer'], // 'devicetype_id' add
+            [['max_capacity', 'min_capacity', 'capacity', 'granularity', 'biport_id', 'alias_id', 'network_id', 'location_id', 'devicetype_id'], 'integer'], // 'devicetype_id' add
             [['urn'], 'string', 'max' => 250],
             [['name'], 'string', 'max' => 100],
             [['urn'], 'unique'],
@@ -137,7 +137,7 @@ class Port extends \yii\db\ActiveRecord
             'network_id' => Yii::t('topology', 'Network'),
         	'vlan_range' => Yii::t('topology', 'VLANs'),
             'location_id' => Yii::t('topology', 'Location'),
-            // 'devicetype_id' => Yii::t('topology', 'Device Type'),
+            'devicetype_id' => Yii::t('topology', 'Device Type'),
         ];
     }
 
@@ -178,13 +178,13 @@ class Port extends \yii\db\ActiveRecord
     }
 
 
-    // /**
-    //  * @return \yii\db\ActiveQuery
-    //  */
-    // public function getDeviceType()
-    // {
-    //     return $this->hasOne(Type::className(), ['id' => 'devicetype_id']);
-    // }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDeviceType()
+    {
+        return $this->hasOne(Type::className(), ['id' => 'devicetype_id']);
+    }
 
     static function findOneArraySelect($id, $array) {
         return self::find()->where(['id'=>$id])->asArray()->select($array)->one();

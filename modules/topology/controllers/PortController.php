@@ -14,7 +14,7 @@ use meican\topology\models\Network;
 use meican\topology\models\Domain;
 use meican\topology\models\Location;
 use meican\topology\models\Port;
-// use meican\topology\models\Type;
+use meican\topology\models\Type;
 use meican\aaa\RbacController;
 
 class PortController extends RbacController {
@@ -43,7 +43,7 @@ class PortController extends RbacController {
 					'networks' => $domain->getNetworks(),
 					'port' => $port,
 					'locations' => $locations,
-					// 'devices' => self::findDevices(),
+					'devices' => self::findDevices(),
 				));
 			}
 			$port->save();
@@ -54,7 +54,7 @@ class PortController extends RbacController {
 				'networks' => $domain->getNetworks(),
 				'port' => $port,
 				'locations' => $locations,
-				// 'devices' => self::findDevices(),
+				'devices' => self::findDevices(),
 		));
 	}
 	
@@ -71,7 +71,7 @@ class PortController extends RbacController {
 						'networks' => $domain->getNetworks(),
 						'port' => $port,
 						'locations' => $locations,
-						// 'devices' => self::findDevices(),
+						'devices' => self::findDevices(),
 				));
 			}
 			$port->save();
@@ -82,7 +82,7 @@ class PortController extends RbacController {
 				'networks' => $domain->getNetworks(),
 				'port' => $port,
 				'locations' => $locations,
-				// 'devices' => self::findDevices(),
+				'devices' => self::findDevices(),
 		));
 	}
 	
@@ -130,7 +130,7 @@ class PortController extends RbacController {
 			'biport_id', 
 			'alias_id', 
 			'network_id',
-			// 'devicetype_id',
+			'devicetype_id',
 			'meican_location.name as location_name', 
 			'meican_location.lat', 
 			'meican_location.lng'
