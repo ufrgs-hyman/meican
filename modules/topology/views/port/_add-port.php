@@ -9,5 +9,5 @@ echo $this->render('_form', array(
     'networks' => $networks,
 	'port' => $port,
 	'locations' => $locations,
-    'devices' => $devices,
+    // 'devices' => $devices,
 )); ?>

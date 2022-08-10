@@ -24,7 +24,6 @@ $form=ActiveForm::begin(array(
 <?= $form->field($port,'min_capacity')->textInput(['size'=>30,'maxlength'=>20]); ?>
 <?= $form->field($port,'granularity')->textInput(['size'=>30,'maxlength'=>30]); ?>
 <?= $form->field($port,'location_id')->dropDownList(ArrayHelper::map($locations->all(), 'id', 'name'), ['prompt'=>'']); ?>
-<?= $form->field($port,'devicetype_id')->dropDownList(ArrayHelper::map($devices, 'id', 'name'), ['prompt'=>'']); ?>
 
 
 <?php ActiveForm::end(); ?>
