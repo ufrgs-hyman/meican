@@ -1122,18 +1122,3 @@ LMap.prototype.getIconByPortsList = function(portsArray) {
 
     return LMap.prototype.getIconByDeviceType(deviceTypes[0]);
 }
-
-// For this to work, iconName should be mapped alongside devicetype_id in Port, though i'm not sure if that makes sense.
-
-// LMap.prototype.getDeviceNameById = function(deviceType_id) {
-
-//     this._topology['ports'].forEach(function(port) {
-
-//         if(port.devicetype_id == deviceType_id) {
-
-//             return port.iconName;
-//         }
-
-//     });
-
-// }
