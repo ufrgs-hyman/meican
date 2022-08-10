@@ -21,17 +21,17 @@ class m220803_181902_lcl extends Migration
         ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
     ");
 
-    $this->execute("   
-        INSERT INTO `meican_device_type`(name) VALUES(`GenericDevice`);
-    ");
+    // $this->execute("   
+    //     INSERT INTO `meican_device_type`(name) VALUES(`GenericDevice`);
+    // ");
 
-    $this->execute("   
-        INSERT INTO `meican_device_type`(name) VALUES(`Device1`);
-    ");
+    // $this->execute("   
+    //     INSERT INTO `meican_device_type`(name) VALUES(`Device1`);
+    // ");
 
-    $this->execute("   
-        INSERT INTO `meican_device_type`(name) VALUES(`Device2`);
-    ");
+    // $this->execute("   
+    //     INSERT INTO `meican_device_type`(name) VALUES(`Device2`);
+    // ");
 
 
     
