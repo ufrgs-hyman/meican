@@ -131,6 +131,39 @@ LMap.prototype.getPortsByLocation = function(location_name)  {
     return locations;
 }
 
+LMap.prototype.getQtdPortsByDomain = function(domain_id)  {
+    let qtd_ports = 0;
+
+    for (let i = this._topology['ports'].length - 1; i >= 0; i--) 
+        if (this._topology['ports'][i].network.domain.id == domain_id)
+            qtd_ports ++;
+
+    return qtd_ports;
+}
+
+
+LMap.prototype.getQtdPortsWithLocationByDomain = function(domain_id)  {
+    let qtd_ports = 0;
+
+    for (let i = this._topology['ports'].length - 1; i >= 0; i--) 
+        if (this._topology['ports'][i].network.domain.id == domain_id)
+            if( this._topology['ports'][i].lat != null )
+                if( this._topology['ports'][i].lng != null )
+                    qtd_ports ++;
+
+    return qtd_ports;
+}
+
+LMap.prototype.getQtdLocationsByDomain = function(domain_id)  {
+    let qtd_ports = 0;
+
+    for (let i = this._topology['locations'].length - 1; i >= 0; i--) 
+        if (this._topology['locations'][i].network.domain.id == domain_id)
+            qtd_ports ++;
+
+    return qtd_ports;
+}
+
 LMap.prototype.addIntraLink = function(location_link)    {
     if(!location_link.source || !location_link.destination) 
         return null;
@@ -201,7 +234,7 @@ LMap.prototype.addLink = function(from, to, partial, cap, color, mode) {
     else {
         return;
     }
-
+meicanMap
     if(partial) {
         latLngList[1] = L.latLngBounds(latLngList[0], latLngList[1]).getCenter();
     }
@@ -389,6 +422,7 @@ LMap.prototype.addNode = function(port, color, mode) {
         this._cluster.addLayer(node);
         if( !flagPortLocation ){
             if (port.network.domain.grouped_nodes == 0){
+                // console.log("Domain Name: " + port.network.domain.name + "   Qtd Ports: " + this.getQtdPortsWithLocationByDomain(port.network.domain.id));
                 this._stackDomainsToBeExpanded.push(node.options.id);
             }
         }
@@ -398,17 +432,6 @@ LMap.prototype.addNode = function(port, color, mode) {
         node.on('click', function(e) {
             $("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
         });
-       
-
-        // if( !this._lockRoutine ){
-            // if (port.network.domain.grouped_nodes == false ){
-                //         this._lockRoutine = true;                
-                //         //this.expandLocations(node.options.id)
-                //         console.log("Expanded domain: " + node.options.id );
-                //         this._lockRoutine = false;                
-            // }            
-        // }                    
-        // return node.options.id;
     } else {        
         node.options.ports.push(port);
         let configIcon = '" d="M1,11a10,10 0 1,0 20,0a10,10 0 1,0 -20,0"/>';
@@ -1096,7 +1119,8 @@ LMap.prototype.expandLocations = function(nodeId) {
     let nodes = this.getNodes();
     let ports = this.getTopology()['ports'];
     let domainId = node.options.ports[0].network.domain_id;
-    
+    let qtd_ports = 0;
+
     this.addExpandedDomainNode(node);
     
     for (var i = ports.length - 1; i >= 0; i--) {
@@ -1104,9 +1128,11 @@ LMap.prototype.expandLocations = function(nodeId) {
             this.addNode(
                 ports[i]
                 );
+            qtd_ports++;
             }
         }
-    this.hideNode(node);
+    if( qtd_ports > 3 )
+        this.hideNode(node);
     
     flagPortLocation = false;
 }
