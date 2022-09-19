@@ -6,9 +6,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=meican-db;dbname=MEICAN_Data_Base',
-    'username' => 'admin',
-    'password' => 'admin',
+    'dsn' => 'mysql:host=meican-db;dbname=your_database_name',
+    'username' => 'your_user',
+    'password' => 'your_password',
     'charset' => 'utf8',
     'tablePrefix' => 'meican_',
 ];
