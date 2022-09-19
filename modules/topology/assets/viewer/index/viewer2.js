@@ -33,8 +33,11 @@ $(document).ready(function() {
     
     initCanvas(); 
     initMenu();   
+    
+    
     meicanGraph.loadTopology(true);
     meicanMap.loadTopology(true);
+
 });
 
 function initMenu() {
@@ -166,7 +169,7 @@ function loadDomains() {
             meicanTopo['dom'] = response;
             meicanMap.setDomains(response);
             meicanGraph.setDomains(response);
-            meicanGraph.addNodes(response, "dom", true);
+            //meicanGraph.addNodes(response, "dom", true);
             loadDomainLinks();
             loadDevices();
         }
@@ -214,7 +217,6 @@ function loadNetworks() {
 }
 
 function loadDevices() {
-    //console.log("load devs")
     if(meicanTopo['dev']) return;
     $.ajax({
         url: baseUrl+'/topology/device/get-all',

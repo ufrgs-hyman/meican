@@ -49,6 +49,7 @@ class Domain extends \yii\db\ActiveRecord {
             [['default_policy'], 'string'],
             [['name'], 'string', 'max' => 60],
             [['color'], 'string', 'max' => 10],
+            [['grouped_nodes'],'boolean'],
             [['graph_x', 'graph_y'], 'integer'],
             [['name'], 'unique']
         ];
@@ -63,6 +64,7 @@ class Domain extends \yii\db\ActiveRecord {
             'id' => 'ID',
             'name' => Yii::t('topology', 'Name'),
             'color' => Yii::t('topology', 'Color'),
+            'grouped_nodes' => Yii::t('topology', 'Grouped Nodes'),
             'default_policy' => Yii::t('topology', 'Default Policy'),
         ];
     }

@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  meican:
+    image: meican-app-dev
+    build:
+      context: ./docker_for_build
+      dockerfile: Dockerfile_dev
+      args:
+        - MEICAN_VERSION
+    container_name: meican-app-dev
+    volumes:
+      - ./:/home/meican/meican-$MEICAN_VERSION
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: meican-phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8081:80
+    depends_on:
+      - db
+    links:
+      - db

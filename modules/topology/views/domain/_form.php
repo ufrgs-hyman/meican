@@ -8,6 +8,8 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
+use meican\base\grid\Grid;
+use meican\base\grid\IcheckboxColumn;
 
 use kartik\color\ColorInput;
 
@@ -26,11 +28,17 @@ $form= ActiveForm::begin([
         <h3 class="box-title"><?= $this->params['box-title']; ?></h3>
     </div>
     <div class="box-body">
+        <center> <h4> <em>General Settings</em> </h4> </center>
         <?= $form->field($domain,'name')->textInput(['size'=>30,'maxlength'=>60]); ?>
         <?= $form->field($domain,'default_policy')->dropDownList($domain->getPolicyOptions()); ?>
         <?= $form->field($domain, 'color')->widget(ColorInput::classname(), [
             'options' => ['placeholder' => 'Select color ...', 'readonly' => true],
         ]); ?>
+        <hr>
+
+        <center> <h4> <em>Default View Settings</em> </h4> </center>
+        <?= $form->field($domain, 'grouped_nodes')->checkBox(['class'=>'icheck' , 'value' => true, 'label' => 'Group Nodes at Inicialization']); ?>  
+        <!-- <?= 123123123 ?>   -->
     </div>
     <div class="box-footer">
         <div class="form-group">
@@ -40,5 +48,6 @@ $form= ActiveForm::begin([
         </div>
     </div>
 </div>
+
 
 <?php ActiveForm::end(); ?>

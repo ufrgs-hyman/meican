@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  meican:
+    image: ghcr.io/ufrgs-hyman/meican/meican-app:${MEICAN_VERSION}
+    restart: always
+ 
+  db:
+    restart: always
