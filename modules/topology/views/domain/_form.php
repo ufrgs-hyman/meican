@@ -37,7 +37,7 @@ $form= ActiveForm::begin([
         <hr>
 
         <center> <h4> <em>Default View Settings</em> </h4> </center>
-        <?= $form->field($domain, 'grouped_nodes')->checkBox(['class'=>'icheck' , 'value' => true, 'label' => 'Group domain-members at initialization']); ?>  
+        <?= $form->field($domain, 'grouped_nodes')->checkBox(['class'=>'icheck' , 'value' => true, 'label' => 'Display domain locations grouped by default']); ?>  
         <!-- <?= 123123123 ?>   -->
     </div>
     <div class="box-footer">

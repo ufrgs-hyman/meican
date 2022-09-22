@@ -75,7 +75,7 @@ $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'
                 [
                     'attribute' => 'grouped_nodes',
  	 	
- 	 	    'label' => 'Group members by default',
+ 	 	    'label' => 'Group domain locations by default',
             
                     'format' => ['html'],
             
