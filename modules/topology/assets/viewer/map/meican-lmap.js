@@ -1114,26 +1114,25 @@ LMap.prototype.hasLocation = function(networkId) {
 
 LMap.prototype.expandLocations = function(nodeId) {
     flagPortLocation = true;
-    
+
     let node = this.getNode(nodeId);
     let nodes = this.getNodes();
     let ports = this.getTopology()['ports'];
     let domainId = node.options.ports[0].network.domain_id;
-    let qtd_ports = 0;
 
-    this.addExpandedDomainNode(node);
-    
-    for (var i = ports.length - 1; i >= 0; i--) {
-        if(ports[i].network.domain_id == domainId){
-            this.addNode(
-                ports[i]
+    if( this.getQtdPortsWithLocationByDomain(domainId) > 0 ){
+        this.addExpandedDomainNode(node);
+
+        for (var i = ports.length - 1; i >= 0; i--) {
+            if(ports[i].network.domain_id == domainId){
+                this.addNode(
+                    ports[i]
                 );
-            qtd_ports++;
             }
         }
-    if( qtd_ports > 3 )
         this.hideNode(node);
-    
+    }
+
     flagPortLocation = false;
 }
 
