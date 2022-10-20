@@ -59,11 +59,13 @@ $this->params['header'] = ["About", ['Home', 'About']];
           <div class="box-body">
             <p class="text-center">
             <a href="https://www.rnp.br" target="_blank"><?= Html::img("@web/images/rnp.png", 
-            ['style'=>'height: 60px;','title' => 'Rede Nacional de Ensino e Pesquisa']); ?></a>
+            ['style'=>'height: 70px;','title' => 'Rede Nacional de Ensino e Pesquisa']); ?></a>
             <a href="https://www.ufrgs.br" target="_blank"><?= Html::img("@web/images/support/ufrgs.png", 
-            ['style'=>'height: 60px;margin-left: 10%; margin-right: 10%;','title' => 'Federal University of Rio Grande do Sul']); ?></a>
-            <a href="https://networks.inf.ufrgs.br" target="_blank"><?= Html::img("@web/images/networks.jpg", 
-            ['style'=>'height: 60px;','title' => 'UFRGS Computer Networks Group']); ?></a></p>
+            ['style'=>'height: 70px; margin-left: 5%;','title' => 'Federal University of Rio Grande do Sul']); ?></a>
+            <a href="https://www.inf.ufrgs.br/" target="_blank"><?= Html::img("@web/images/support/logo_inf_ufrgs.png", 
+            ['style'=>'height: 70px; margin-left: 5%','title' => 'Institute of Informatics at UFRGS']); ?></a>
+            <a href="https://networks.inf.ufrgs.br" target="_blank"><?= Html::img("@web/images/support/networks.png", 
+            ['style'=>'height: 70px;margin-left: 5%','title' => 'UFRGS Computer Networks Group']); ?></a></p>
 
             <b><?= Yii::t("home", 'UFRGS Developers'); ?></b>
             <p>
