@@ -69,7 +69,7 @@ web/                	web accessible files, e.g., assets cache, wsdl files and im
 
 ### Installation
 
-Installation can be done using [Docker Compose](https://github.com/ufrgs-hyman/meican/blob/master/docker/README.md) or manually on [CentOS](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-centos.md) or [Ubuntu](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-ubuntu.md).
+Installation can be done using [Docker Compose](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-docker-compose.md) or manually on [CentOS](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-centos.md) or [Ubuntu](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-ubuntu.md).
 
 ### Configuration
 
