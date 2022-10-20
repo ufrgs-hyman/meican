@@ -6,14 +6,15 @@
 
   * A name for the image that will be created.
 
-<p>&nbsp&nbsp :warning: In the following commands, <b><em>3.3.0</em></b> will be used as the chosen version and <b><em>ghcr.io/ufrgs-hyman/meican/meican-app:3.3.0</em></b> will be used as the chosen image name. 
-When you go to create an image, don't forget to change these values to the ones of your choice.<p>
+<div>&nbsp&nbsp :warning: Support for this functionality exists as of version 3.4.0.</div>
+<div>&nbsp&nbsp :warning: In the following commands, <b><em>3.4.0</em></b> will be used as the chosen version and <b><em>ghcr.io/ufrgs-hyman/meican/meican-app:3.4.0</em></b> will be used as the chosen image name. 
+When you go to create an image, don't forget to change these values to the ones of your choice.<div>
 
 <br>
 
 ### 2- Build the MEICAN image: :gear:
   * Go to 'docker_for_build' directory.
-  * Run: ```docker build --build-arg MEICAN_VERSION=3.3.0 -t ghcr.io/ufrgs-hyman/meican/meican-app:3.3.0 .```
+  * Run: ```docker build --build-arg MEICAN_VERSION=3.4.0 -t ghcr.io/ufrgs-hyman/meican/meican-app:3.4.0 .```
 
 <div>&nbsp&nbsp :warning: Note that there is a dot at the end of the command.</div>
 <div>&nbsp&nbsp :triangular_flag_on_post:After running, the image will be created on your local machine.</div>
@@ -28,9 +29,9 @@ When you go to create an image, don't forget to change these values to the ones 
 
 ### 4- Submit the image to GitHub Container Registry: :arrow_heading_up:
 
-  * Run: ```docker push ghcr.io/ufrgs-hyman/meican/meican-app:3.3.0```
+  * Run: ```docker push ghcr.io/ufrgs-hyman/meican/meican-app:3.4.0```
    
-<div>&nbsp&nbsp :warning: Note that <b><em>ghcr.io/ufrgs-hyman/meican/meican-app:3.3.0</em></b> is the name you set for the image.</div>
+<div>&nbsp&nbsp :warning: Note that <b><em>ghcr.io/ufrgs-hyman/meican/meican-app:3.4.0</em></b> is the name you set for the image.</div>
 
 <br>
 <br>
