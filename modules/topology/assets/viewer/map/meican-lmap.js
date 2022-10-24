@@ -422,7 +422,6 @@ LMap.prototype.addNode = function(port, color, mode) {
         this._cluster.addLayer(node);
         if( !flagPortLocation ){
             if (port.network.domain.grouped_nodes == 0){
-                // console.log("Domain Name: " + port.network.domain.name + "   Qtd Ports: " + this.getQtdPortsWithLocationByDomain(port.network.domain.id));
                 this._stackDomainsToBeExpanded.push(node.options.id);
             }
         }
@@ -444,33 +443,12 @@ LMap.prototype.addNode = function(port, color, mode) {
             iconAnchor: [11, 22],
             popupAnchor: [0,-24],
             tooltipAnchor: [14, -12],
-            // html: '<img src="t.svg" alt="tyy">',
             html: '<svg width="250" height="270" xmlns="http://www.w3.org/2000/svg">' + 
-            //http://complexdan.com/svg-circleellipse-to-path-converter/
-            // '<image href="t2h.png" height="50px" width="60px"/>' +
-            // '<image xlink:href="t2h.png" type="image/png" height="50px" width="60px"></image>' +
-            // '<image href="/images/swt.png" height="50px" width="60px"></image>' +
-            // '<image xlink:href="/media/narciso/NarcisoHD/UFRGS/OpenRan/meican_development/meican/modules/topology/assets/viewer/map/t.svg" height="50px" width="60px"/>' +
-            // '<image xlink:href="/media/narciso/NarcisoHD/UFRGS/OpenRan/meican_development/meican/modules/topology/assets/viewer/map/t2h.png" type="image/png" height="50px" width="60px"/>' +
-            // '<image href="file:/media/narciso/NarcisoHD/UFRGS/OpenRan/meican_development/meican/modules/topology/assets/viewer/map/t2h.png" height="50px" width="60px"/>' +
-            // '<image href="file:t2h.png" height="50px" width="60px"/>' +
-            // '<image href="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Simple_icon_time.svg/2560px-Simple_icon_time.svg.png" height="50px" width="60px"></image>' +
-            // '<image href="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Simple_icon_time.svg/2560px-Simple_icon_time.svg.png" height="50px" width="60px"/>' +
-            // '<image href="https://www.shihoriobata.com/wp-content/uploads/2021/09/fox-drawing-easy-web.jpg" height="50px" width="60px"/>' +
-            // '<image href="t.svg" height="200px" width="200px"/>' +
             '<path stroke="black" fill="' + color + configIcon + 
             '</svg>',
-
-            // html: '<svg width="25" height="27" xmlns="http://www.w3.org/2000/svg">' + 
-            // '<g>' +
-            // //http://complexdan.com/svg-circleellipse-to-path-converter/
-            // '<path stroke="black" fill="' + color + configIcon + 
-            // '</g>' + 
-            // '</svg>',
             className: 'marker-icon-svg',
         }));
         
-        // return -1;
     }
 }
 

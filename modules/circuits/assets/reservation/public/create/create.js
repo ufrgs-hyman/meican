@@ -607,9 +607,6 @@ function addWayPoint(nodeId) {
 }
 
 function setPointByNode(position, nodeId) {
-    console.log(position, nodeId);
-    //var node = meicanMap.getMarker(nodeId);
-    //var node = meicanGraph.getNode(nodeId);
     if(mode == 'map') {
         var marker = meicanMap.getNode(nodeId);
         setPoint(
