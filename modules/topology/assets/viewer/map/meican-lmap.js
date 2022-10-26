@@ -50,7 +50,7 @@ LMap.prototype.show = function(instantRefresh) {
     else
         setTimeout(function() {
             currentMap.invalidateSize(true);
-        }, 200);    
+        }, 200);
 }
 
 LMap.prototype.hide = function() {
@@ -440,8 +440,11 @@ LMap.prototype.addNode = function(port, color, mode) {
             iconAnchor: [11, 22],
             popupAnchor: [0,-24],
             tooltipAnchor: [14, -12],
-            html: '<svg width="250" height="270" xmlns="http://www.w3.org/2000/svg">' + 
+            html: '<svg width="25" height="27" xmlns="http://www.w3.org/2000/svg">' + 
+            '<g>' +
+            //http://complexdan.com/svg-circleellipse-to-path-converter/
             '<path stroke="black" fill="' + color + configIcon + 
+            '</g>' + 
             '</svg>',
             className: 'marker-icon-svg',
         }));

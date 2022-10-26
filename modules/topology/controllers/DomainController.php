@@ -70,7 +70,7 @@ class DomainController extends RbacController {
     	
 		$dom->grouped_nodes = true;
     	return $this->render('create',[
-    			'domain' => $dom,
+			'domain' => $dom,
     	]);
     }
     

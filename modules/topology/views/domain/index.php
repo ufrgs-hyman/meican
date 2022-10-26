@@ -13,7 +13,6 @@ use meican\base\grid\GridButtons;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
-
 use yii\grid\checkboxCollumn;
 
 \meican\topology\assets\domain\Index::register($this);
@@ -37,7 +36,7 @@ $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'
             'enableClientValidation' => false,
         ]);
 
-        Pjax::begin();     
+        Pjax::begin(); 
         
         echo Grid::widget([
             'dataProvider' => $domains,

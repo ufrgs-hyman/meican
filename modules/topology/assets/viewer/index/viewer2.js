@@ -166,6 +166,7 @@ function loadDomains() {
             meicanTopo['dom'] = response;
             meicanMap.setDomains(response);
             meicanGraph.setDomains(response);
+            meicanGraph.addNodes(response, "dom", true);
             loadDomainLinks();
             loadDevices();
         }
