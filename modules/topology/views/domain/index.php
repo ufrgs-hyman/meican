@@ -37,7 +37,6 @@ $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'
             'enableClientValidation' => false,
         ]);
 
-        
         Pjax::begin();     
         
         echo Grid::widget([
@@ -97,6 +96,7 @@ $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'
         Pjax::end(); 
 
         ActiveForm::end();
+        
         ?>
     </div>
 </div>
