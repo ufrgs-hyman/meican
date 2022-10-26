@@ -6,7 +6,7 @@ Since version 2 the system meets the demands of users contacting a Connection Se
 
 Since version 3 the project has a better integration with monitoring systems. The circuits and networks can be monitored through of the same web application. Thus, it's unnecessary to access other systems to perform the monitoring of traffic in the circuits created by MEICAN.
 
-This software is result of a partnership between the Brazilian Research & Education Network ([RNP](http://www.rnp.br)) and the Brazilian Federal University of Rio Grande do Sul ([UFRGS](http://www.ufrgs.br)).
+This software is result of a partnership between the Brazilian Research & Education Network ([RNP](https://www.rnp.br)) and the Brazilian Federal University of Rio Grande do Sul ([UFRGS](http://www.ufrgs.br)).
 
 Mobile friendly since version 3
 
@@ -69,7 +69,7 @@ web/                	web accessible files, e.g., assets cache, wsdl files and im
 
 ### Installation
 
-Installation can be done using [Docker Compose](https://github.com/ufrgs-hyman/meican/blob/master/docker/README.md) or manually on [CentOS](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-centos.md) or [Ubuntu](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-ubuntu.md).
+Installation can be done using [Docker Compose](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-docker-compose.md) or manually on [CentOS](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-centos.md) or [Ubuntu](https://github.com/ufrgs-hyman/meican/blob/master/docs/guide/installation-ubuntu.md).
 
 ### Configuration
 
@@ -89,5 +89,5 @@ Look [this document](https://github.com/ufrgs-hyman/meican/blob/master/docs/guid
 
 ## LICENSE
 
-Copyright (c) 2012-2021 by [RNP](http://www.rnp.br).
+Copyright (c) 2012-2022 by [RNP](https://www.rnp.br).
 All rights reserved. MEICAN is released under of the BSD2 License. For more information see [LICENSE](https://github.com/ufrgs-hyman/meican/blob/master/LICENSE.md).

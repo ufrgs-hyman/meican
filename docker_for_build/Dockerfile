@@ -43,14 +43,9 @@ RUN su meican -c "curl -kO https://getcomposer.org/download/1.9.3/composer.phar"
  && a2enmod rewrite
 
 COPY 000-default.conf /etc/apache2/sites-available/
+COPY wait-for-mysql.sh $MEICAN_DIR/docker/
+COPY docker-entrypoint.sh $MEICAN_DIR/docker/
 
 EXPOSE 80
 
-CMD cp $MEICAN_DIR/docker_for_build/db.php $MEICAN_DIR/config/ \
- && sed -i "s/MYSQL_DATABASE/$MYSQL_DATABASE/" $MEICAN_DIR/config/db.php \
- && sed -i "s/MYSQL_USER/$MYSQL_USER/" $MEICAN_DIR/config/db.php \
- && sed -i "s/MYSQL_PASSWORD/$MYSQL_PASSWORD/" $MEICAN_DIR/config/db.php \
- && chown meican:meican $MEICAN_DIR/config/db.php  \
- && su meican -c "php composer.phar install" \
- && service apache2 start \
- && /bin/bash
+ENTRYPOINT $MEICAN_DIR/docker/wait-for-mysql.sh 'db' "$MEICAN_DIR/docker/docker-entrypoint.sh"

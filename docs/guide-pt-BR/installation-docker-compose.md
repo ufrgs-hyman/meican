@@ -25,9 +25,10 @@
      * MEICAN_VERSION
         
         
-2- Execute o seguinte comando no diretório raiz:
+2- Execute o seguinte comando no diretório raiz: (Escolha entre o modo de desenvolvimento ou produção)
 
-    docker-compose up
+   - Para o modo de desenvolvimento: ```docker-compose -f docker-compose.yml -f docker-compose.dev.yml -p meican up --build```
+   - Para modo de produção: ```docker-compose -f docker-compose.yml -f docker-compose.prod.yml -p meican up --build```
 
 
 3- Após, o MEICAN estará disponível no localhost na porta configurada no parâmetro `MEICAN_PORT`, com um usuário criado:

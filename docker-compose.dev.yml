@@ -9,6 +9,7 @@ services:
       args:
         - MEICAN_VERSION
     container_name: meican-app-dev
+    entrypoint: ["./docker_for_build/wait-for-mysql.sh", "db", "/docker-entrypoint.sh", "dev"]
     volumes:
       - ./:/home/meican/meican-$MEICAN_VERSION
     restart: always

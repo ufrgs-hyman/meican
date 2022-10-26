@@ -66,7 +66,7 @@ use meican\home\forms\FeedbackForm;
         <div class="pull-right hidden-xs">
           Version <b><?= Yii::$app->version; ?></b>
         </div>
-        <strong>&copy; 2019 <a href="http://www.rnp.br" target="_blank">RNP</a></strong>
+        <strong>&copy; 2022 <a href="https://www.rnp.br" target="_blank">RNP</a></strong>
     </footer>
 
 </div>

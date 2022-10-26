@@ -59,84 +59,96 @@ $this->params['header'] = ["About", ['Home', 'About']];
           <div class="box-body">
             <p class="text-center">
             <a href="https://www.rnp.br" target="_blank"><?= Html::img("@web/images/rnp.png", 
-            ['style'=>'height: 60px;','title' => 'Rede Nacional de Ensino e Pesquisa']); ?></a>
+            ['style'=>'height: 70px;','title' => 'Rede Nacional de Ensino e Pesquisa']); ?></a>
             <a href="https://www.ufrgs.br" target="_blank"><?= Html::img("@web/images/support/ufrgs.png", 
-            ['style'=>'height: 60px;margin-left: 10%; margin-right: 10%;','title' => 'Federal University of Rio Grande do Sul']); ?></a>
-            <a href="https://networks.inf.ufrgs.br" target="_blank"><?= Html::img("@web/images/networks.jpg", 
-            ['style'=>'height: 60px;','title' => 'UFRGS Computer Networks Group']); ?></a></p>
+            ['style'=>'height: 70px; margin-left: 5%;','title' => 'Federal University of Rio Grande do Sul']); ?></a>
+            <a href="https://www.inf.ufrgs.br/" target="_blank"><?= Html::img("@web/images/support/logo_inf_ufrgs.png", 
+            ['style'=>'height: 70px; margin-left: 5%','title' => 'Institute of Informatics at UFRGS']); ?></a>
+            <a href="https://networks.inf.ufrgs.br" target="_blank"><?= Html::img("@web/images/support/networks.png", 
+            ['style'=>'height: 70px;margin-left: 5%','title' => 'UFRGS Computer Networks Group']); ?></a></p>
 
             <b><?= Yii::t("home", 'UFRGS Developers'); ?></b>
             <p>
             <table>
-            <tr>
+              <tr>
+                <td>Eduardo Peretto (eduardo.peretto at ufrgs.br) <a target="_blank" href="https://github.com/eduardoperetto"><i class="fa fa-github"></i></a></td>
+              </tr>
+              <tr>
                 <td>Leonardo Lauryel Batista dos Santos (llbsantos at inf.ufrgs.br) <a target="_blank" href="https://github.com/leonardolauryel"><i class="fa fa-github"></i></a></td>
-            </tr>
-            <tr>
-                <td>Maurício Quatrin Guerreiro (mqguerreiro at inf.ufrgs.br) <a target="_blank" href="https://github.com/mqgmaster"><i class="fa fa-github"></i></a></td>
-            </tr>
-            <tr>
-                <td>Rafael Hengen Ribeiro (rhribeiro at inf.ufrgs.br) <a target="_blank" href="https://github.com/rafaelhribeiro"><i class="fa fa-github"></i></a></td>
-            </tr>
+              </tr>
+              <tr>
+                <td>Gabriel Vassoler (gabriel.vassoler at inf.ufrgs.br) <a target="_blank" href="https://github.com/gabrielvassoler"><i class="fa fa-github"></i></a></td>
+              </tr>
             </table>
             </p>
+
             <b><?= Yii::t("home", 'UFRGS Coordinators'); ?></b>
             <p>
             <table>
-            <tr>
+              <tr>
                 <td>Lisandro Zambenedetti Granville (granville at inf.ufrgs.br)</td>
-            </tr>
-            <tr>
+              </tr>
+              <tr>
                 <td>Luciano Paschoal Gaspary (paschoal at inf.ufrgs.br)</td>
-            </tr>
+              </tr>
             </table></p>
+
             <b><?= Yii::t("home", 'RNP Coordinators'); ?></b>
             <p>
             <table>               
-            <tr>
+              <tr>
                 <td>Alex Soares Moura</td>
-            </tr>
-            <tr>
+              </tr>
+              <tr>
+                <td>Fernando Farias</td>
+              </tr>
+              <tr>
                 <td>Marcos Felipe Schwarz</td>
-            </tr>
-            </table></p>
-            
-            <p><b><?= Yii::t("home", 'Previous developers');?></b></p>
-            <p>
+              </tr>
+              </table></p>
+              
+              <p><b><?= Yii::t("home", 'Previous developers');?></b></p>
+              <p>
             <table>
-            <tr>
-              <td>Juliano Araujo Wickboldt <a target="_blank" href="https://github.com/julianowick"><i class="fa fa-github"></i></a></td>
-           </tr>
-
-            <tr>
+              <tr>
+                <td>Rafael Hengen Ribeiro (rhribeiro at inf.ufrgs.br) <a target="_blank" href="https://github.com/rafaelhribeiro"><i class="fa fa-github"></i></a></td>
+              </tr>
+              <tr>
+                <td>Maurício Quatrin Guerreiro (mqguerreiro at inf.ufrgs.br) <a target="_blank" href="https://github.com/mqgmaster"><i class="fa fa-github"></i></a></td>
+              </tr>
+              <tr>
+                <td>Juliano Araujo Wickboldt <a target="_blank" href="https://github.com/julianowick"><i class="fa fa-github"></i></a></td>
+              </tr>
+              <tr>
                 <td>Diego Pittol <a target="_blank" href="https://github.com/DiegoPittol"><i class="fa fa-github"></i></a></td>
-            </tr>
-            <tr>
+              </tr>
+              <tr>
                 <td>Henrique Resende</td>
-            </tr>
-            <tr>
+              </tr>
+              <tr>
                 <td>Pedro Isolani <a target="_blank" href="https://github.com/phisolani"><i class="fa fa-github"></i></a></td>
-            </tr>
-            <tr>
+              </tr>
+              <tr>
                 <td>Luine Gallois</td>
-            </tr>
-            <tr>
+              </tr>
+              <tr>
                 <td>Augusto Ferreira</td>
-            </tr>
-            <tr>
+              </tr>
+              <tr>
                 <td>Leonardo Faganello <a target="_blank" href="https://github.com/lfaganello"><i class="fa fa-github"></i></a></td>
-            </tr>
-            <tr>
+              </tr>
+              <tr>
                 <td>Luís Armando Bianchin <a target="_blank" href="https://github.com/labianchin"><i class="fa fa-github"></i></a></td>
-            </tr>
-            <tr>
+              </tr>
+              <tr>
                 <td>Jair Santanna <a target="_blank" href="https://github.com/jjsantanna"><i class="fa fa-github"></i></a></td>
-            </tr>
-            <tr>
+              </tr>
+              <tr>
                 <td>Felipe Nesello <a target="_blank" href="https://github.com/fanesello"><i class="fa fa-github"></i></a></td>
-            </tr>
-            <tr>
+              </tr>
+              <tr>
                 <td>Pietro Biasuz</td>
-            </tr>
+              </tr>
             </table>
             </p>
           </div>
