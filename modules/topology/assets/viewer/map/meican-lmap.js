@@ -32,7 +32,7 @@ function LMap(canvasDivId) {
 
 LMap.prototype.show = function(instantRefresh) {
     let mapId = "map-n";
-   
+
     if(flagPortLocation)
         mapId = "map-l";
 
@@ -42,15 +42,15 @@ LMap.prototype.show = function(instantRefresh) {
         $("#"+this._canvasDivId).append('<div id="'+mapId+'" style="width:100%; height:100%;"></div>');
         this.build(mapId);
     }
-    
+
     var currentMap = this._map;
-    
+
     if(instantRefresh)
-    this._map.invalidateSize(true);
+        this._map.invalidateSize(true);
     else
-    setTimeout(function() {
-        currentMap.invalidateSize(true);
-    }, 200);
+        setTimeout(function() {
+            currentMap.invalidateSize(true);
+        }, 200);
         
 }
 
@@ -363,7 +363,7 @@ LMap.prototype.addNode = function(port, color, mode) {
     if(!port.network)
         return;
     if (!color) 
-    color = port.network.domain.color;
+        color = port.network.domain.color;
     
     if(flagPortLocation && port.lat != null && port.lng != null) {
         var pos = L.latLng([port.lat,port.lng]);
