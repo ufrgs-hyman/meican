@@ -32,10 +32,10 @@ function LMap(canvasDivId) {
 
 LMap.prototype.show = function(instantRefresh) {
     let mapId = "map-n";
-    
+   
     if(flagPortLocation)
-    mapId = "map-l";
-    
+        mapId = "map-l";
+
     if($('#'+mapId).length == 1) {
         $('#'+mapId).show();
     } else {
@@ -234,7 +234,7 @@ LMap.prototype.addLink = function(from, to, partial, cap, color, mode) {
     else {
         return;
     }
-meicanMap
+
     if(partial) {
         latLngList[1] = L.latLngBounds(latLngList[0], latLngList[1]).getCenter();
     }
@@ -296,7 +296,7 @@ meicanMap
     link.on('click', function(e) {
         $("#"+current._canvasDivId).trigger("lmap.linkClick", link);
     });
-    
+
     link.on('mouseover', function(e) {
         $("#"+current._canvasDivId).trigger("lmap.linkHover", link);
     });
@@ -362,7 +362,6 @@ LMap.prototype.getParentPosition = function(port) {
 LMap.prototype.addNode = function(port, color, mode) {
     if(!port.network)
         return;
-    
     if (!color) 
     color = port.network.domain.color;
     

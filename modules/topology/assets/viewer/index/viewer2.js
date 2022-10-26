@@ -33,11 +33,8 @@ $(document).ready(function() {
     
     initCanvas(); 
     initMenu();   
-    
-    
     meicanGraph.loadTopology(true);
     meicanMap.loadTopology(true);
-
 });
 
 function initMenu() {
@@ -169,7 +166,6 @@ function loadDomains() {
             meicanTopo['dom'] = response;
             meicanMap.setDomains(response);
             meicanGraph.setDomains(response);
-            //meicanGraph.addNodes(response, "dom", true);
             loadDomainLinks();
             loadDevices();
         }
@@ -187,10 +183,6 @@ function loadProviders() {
         },
         success: function(response) {
             meicanTopo['prov'] = response;
-            /*meicanGraph.addNodes(response, 'prov');
-            for (var i = 0; i < response.length; i++) {
-                meicanMap.addMarker(response[i], 'prov');
-            };*/
             loadProviderLinks();
         }
     });
@@ -295,7 +287,6 @@ function loadPortLinks() {
             //meicanGraph.addLinks(response, 'dev');
             for (var src in response) {
                 for (var i = 0; i < response[src].length; i++) {
-                    //console.log(src, response[src][i]);
                     meicanMap.addLink(src,response[src][i]);
                 }
             }           
