@@ -1,6 +1,6 @@
 <?php 
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2012-2022 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -96,7 +96,7 @@ $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'
         Pjax::end(); 
 
         ActiveForm::end();
-        
+
         ?>
     </div>
 </div>

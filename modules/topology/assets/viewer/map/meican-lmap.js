@@ -3,7 +3,7 @@
  *
  * A DCN topology viewer based on Leaflet Javascript library.
  *
- * @copyright Copyright (c) 2019 RNP
+ * @copyright Copyright (c) 2022 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  * @author Mauricio Quatrin Guerreiro
  */

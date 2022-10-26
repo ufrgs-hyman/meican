@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2019 RNP
+ * @copyright Copyright (c) 2022 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  * @author Maurício Quatrin Guerreiro
  */
@@ -45,8 +45,6 @@ $(document).ready(function() {
     });
     
     lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap._map);
-    //lsidebar.open("home");
-    
 });
 
 function validatePath() {
@@ -757,8 +755,6 @@ function loadDomains() {
     $( document ).ajaxStop(function() {
         while(current._stackDomainsToBeExpanded.length > 0){
             current.expandLocations( current._stackDomainsToBeExpanded.pop() );
-            // current.removeLinks();
-            // current._loadLinks();
         }
     });
 }
