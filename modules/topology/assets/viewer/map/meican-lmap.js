@@ -50,8 +50,7 @@ LMap.prototype.show = function(instantRefresh) {
     else
         setTimeout(function() {
             currentMap.invalidateSize(true);
-        }, 200);
-        
+        }, 200);    
 }
 
 LMap.prototype.hide = function() {
@@ -140,7 +139,6 @@ LMap.prototype.getQtdPortsByDomain = function(domain_id)  {
 
     return qtd_ports;
 }
-
 
 LMap.prototype.getQtdPortsWithLocationByDomain = function(domain_id)  {
     let qtd_ports = 0;
@@ -364,7 +362,7 @@ LMap.prototype.addNode = function(port, color, mode) {
         return;
     if (!color) 
         color = port.network.domain.color;
-    
+
     if(flagPortLocation && port.lat != null && port.lng != null) {
         var pos = L.latLng([port.lat,port.lng]);
     } else if (!flagPortLocation && typeof port.network !== 'undefined') {
@@ -430,7 +428,7 @@ LMap.prototype.addNode = function(port, color, mode) {
         node.on('click', function(e) {
             $("#"+currentMap._canvasDivId).trigger("lmap.nodeClick", node);
         });
-    } else {        
+    } else {
         node.options.ports.push(port);
         let configIcon = '" d="M1,11a10,10 0 1,0 20,0a10,10 0 1,0 -20,0"/>';
 
@@ -447,7 +445,6 @@ LMap.prototype.addNode = function(port, color, mode) {
             '</svg>',
             className: 'marker-icon-svg',
         }));
-        
     }
 }
 
@@ -871,9 +868,9 @@ LMap.prototype._loadDomains = function(withLinks) {
             for (var i = current._topology['domains'].length - 1; i >= 0; i--) {
                 current._topology['domains'][i]['providers'] = [];
             }
-            current._loadProviders(withLinks);           
+            current._loadProviders(withLinks);
         }
-    });    
+    });
 }
 
 LMap.prototype._loadProviders = function(withLinks) {
@@ -922,7 +919,6 @@ LMap.prototype._loadNetworks = function(withLinks) {
 
 LMap.prototype._loadPorts = function(withLinks) {
     var current = this;
-
     $.ajax({
         url: baseUrl+'/topology/port/json?dir=BI&type=ALL',
         method: "GET",        
@@ -1091,7 +1087,6 @@ LMap.prototype.hasLocation = function(networkId) {
 
 LMap.prototype.expandLocations = function(nodeId) {
     flagPortLocation = true;
-
     let node = this.getNode(nodeId);
     let nodes = this.getNodes();
     let ports = this.getTopology()['ports'];
