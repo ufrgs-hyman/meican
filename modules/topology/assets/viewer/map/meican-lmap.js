@@ -852,7 +852,7 @@ LMap.prototype.loadTopology = function(withLinks) {
 
     // Expansion of locations of domains with this property
     $( document ).ajaxStop(function() {
-        while(current._stackDomainsToBeExpanded.length > 0){
+        while( current._stackDomainsToBeExpanded.length > 0 ){
             current.expandLocations( current._stackDomainsToBeExpanded.pop() );
             current.removeLinks();
             current._loadLinks();

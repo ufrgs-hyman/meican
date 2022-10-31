@@ -753,7 +753,7 @@ function loadDomains() {
     // Expansion of locations of domains with this property
     var current = meicanMap;
     $( document ).ajaxStop(function() {
-        while(current._stackDomainsToBeExpanded.length > 0){
+        while( current._stackDomainsToBeExpanded.length > 0 ){
             current.expandLocations( current._stackDomainsToBeExpanded.pop() );
         }
     });
