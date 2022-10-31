@@ -940,7 +940,7 @@ LMap.prototype._loadPorts = function(withLinks) {
             }
 
             for (var i = current._topology['ports'].length - 1; i >= 0; i--) {
-                if(current._topology['ports'][i].type == 'NSI'){
+                if (current._topology['ports'][i].type == 'NSI') {
                     current.addNode(current._topology['ports'][i]);
                 }
             }
