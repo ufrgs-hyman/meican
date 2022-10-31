@@ -417,8 +417,8 @@ LMap.prototype.addNode = function(port, color, mode) {
 
         this._nodes.push(node);
         this._cluster.addLayer(node);
-        if( !flagPortLocation ){
-            if (port.network.domain.grouped_nodes == 0){
+        if (!flagPortLocation) {
+            if (port.network.domain.grouped_nodes == 0) {
                 this._stackDomainsToBeExpanded.push(node.options.id);
             }
         }
