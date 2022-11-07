@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2019 RNP
+ * @copyright Copyright (c) 2022 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  * @author Maurício Quatrin Guerreiro
  */
@@ -45,8 +45,6 @@ $(document).ready(function() {
     });
     
     lsidebar = L.control.lsidebar('lsidebar').addTo(meicanMap._map);
-    //lsidebar.open("home");
-    
 });
 
 function validatePath() {
@@ -607,9 +605,6 @@ function addWayPoint(nodeId) {
 }
 
 function setPointByNode(position, nodeId) {
-    console.log(position, nodeId);
-    //var node = meicanMap.getMarker(nodeId);
-    //var node = meicanGraph.getNode(nodeId);
     if(mode == 'map') {
         var marker = meicanMap.getNode(nodeId);
         setPoint(
@@ -752,6 +747,14 @@ function loadDomains() {
             }
             loadProviders();
 
+        }
+    });
+    
+    // Expansion of locations of domains with this property
+    var current = meicanMap;
+    $( document ).ajaxStop(function() {
+        while( current._stackDomainsToBeExpanded.length > 0 ){
+            current.expandLocations( current._stackDomainsToBeExpanded.pop() );
         }
     });
 }

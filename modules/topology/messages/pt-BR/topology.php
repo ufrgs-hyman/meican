@@ -49,6 +49,7 @@ return array(
 		'Description' => 'Descrição',
 		'Delete' => 'Remover',
 		'value' => 'valor',
+		'Grouped Nodes' => 'Nodos Agrupados',
 		'Map' => 'Mapa',
 		'Mode' => 'Modo',
 		'Node type' => 'Tipo de nodo',

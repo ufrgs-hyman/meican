@@ -184,10 +184,6 @@ function loadProviders() {
         },
         success: function(response) {
             meicanTopo['prov'] = response;
-            /*meicanGraph.addNodes(response, 'prov');
-            for (var i = 0; i < response.length; i++) {
-                meicanMap.addMarker(response[i], 'prov');
-            };*/
             loadProviderLinks();
         }
     });
@@ -214,7 +210,6 @@ function loadNetworks() {
 }
 
 function loadDevices() {
-    //console.log("load devs")
     if(meicanTopo['dev']) return;
     $.ajax({
         url: baseUrl+'/topology/device/get-all',
@@ -293,7 +288,6 @@ function loadPortLinks() {
             //meicanGraph.addLinks(response, 'dev');
             for (var src in response) {
                 for (var i = 0; i < response[src].length; i++) {
-                    //console.log(src, response[src][i]);
                     meicanMap.addLink(src,response[src][i]);
                 }
             }           

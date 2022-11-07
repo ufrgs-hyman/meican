@@ -3,7 +3,7 @@
  *
  * A DCN topology viewer based on Leaflet Javascript library.
  *
- * @copyright Copyright (c) 2019 RNP
+ * @copyright Copyright (c) 2022 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  * @author Mauricio Quatrin Guerreiro
  */
@@ -15,6 +15,7 @@ function LMap(canvasDivId) {
     this._canvasDivId = canvasDivId;
     this._map;                          // Leaflet Map
     this._nodes = [];                   // markers/nodes container
+    this._stackDomainsToBeExpanded = [];
     this._nodesL = []; 
     this._nodesN = []; 
     this._links = [];                   // polylines/links/edges container
@@ -26,6 +27,7 @@ function LMap(canvasDivId) {
     this._nodeAutoInc = 1;
     this._linkAutoInc = 1;
     this._expandedDomainNodes = [];
+    this._lockRoutine = false;
 };
 
 LMap.prototype.show = function(instantRefresh) {
@@ -126,6 +128,38 @@ LMap.prototype.getPortsByLocation = function(location_name)  {
     }
 
     return locations;
+}
+
+LMap.prototype.getQtdPortsByDomain = function(domain_id)  {
+    let qtd_ports = 0;
+
+    for (let i = this._topology['ports'].length - 1; i >= 0; i--) 
+        if (this._topology['ports'][i].network.domain.id == domain_id)
+            qtd_ports ++;
+
+    return qtd_ports;
+}
+
+LMap.prototype.getQtdPortsWithLocationByDomain = function(domain_id)  {
+    let qtd_ports = 0;
+
+    for (let i = this._topology['ports'].length - 1; i >= 0; i--) 
+        if (this._topology['ports'][i].network.domain.id == domain_id)
+            if( this._topology['ports'][i].lat != null )
+                if( this._topology['ports'][i].lng != null )
+                    qtd_ports ++;
+
+    return qtd_ports;
+}
+
+LMap.prototype.getQtdLocationsByDomain = function(domain_id)  {
+    let qtd_ports = 0;
+
+    for (let i = this._topology['locations'].length - 1; i >= 0; i--) 
+        if (this._topology['locations'][i].network.domain.id == domain_id)
+            qtd_ports ++;
+
+    return qtd_ports;
 }
 
 LMap.prototype.addIntraLink = function(location_link)    {
@@ -383,6 +417,11 @@ LMap.prototype.addNode = function(port, color, mode) {
 
         this._nodes.push(node);
         this._cluster.addLayer(node);
+        if (!flagPortLocation) {
+            if (port.network.domain.grouped_nodes == 0) {
+                this._stackDomainsToBeExpanded.push(node.options.id);
+            }
+        }
 
         var currentMap = this;
 
@@ -410,7 +449,6 @@ LMap.prototype.addNode = function(port, color, mode) {
             className: 'marker-icon-svg',
         }));
     }
-    
 }
 
 LMap.prototype.prepareLabels = function() {
@@ -808,7 +846,18 @@ LMap.prototype.focusNodes = function() {
 }
 
 LMap.prototype.loadTopology = function(withLinks) {
+    var current = this;
+    
     this._loadDomains(withLinks);
+
+    // Expansion of locations of domains with this property
+    $( document ).ajaxStop(function() {
+        while( current._stackDomainsToBeExpanded.length > 0 ){
+            current.expandLocations( current._stackDomainsToBeExpanded.pop() );
+            current.removeLinks();
+            current._loadLinks();
+        }
+    });
 }
 
 LMap.prototype._loadDomains = function(withLinks) {
@@ -891,8 +940,9 @@ LMap.prototype._loadPorts = function(withLinks) {
             }
 
             for (var i = current._topology['ports'].length - 1; i >= 0; i--) {
-                if(current._topology['ports'][i].type == 'NSI')
+                if (current._topology['ports'][i].type == 'NSI') {
                     current.addNode(current._topology['ports'][i]);
+                }
             }
             current.prepareLabels();
             if(withLinks)
@@ -1044,17 +1094,21 @@ LMap.prototype.expandLocations = function(nodeId) {
     let nodes = this.getNodes();
     let ports = this.getTopology()['ports'];
     let domainId = node.options.ports[0].network.domain_id;
-    
-    this.addExpandedDomainNode(node);
 
-    for (var i = ports.length - 1; i >= 0; i--) {
-        if(ports[i].network.domain_id == domainId){
-            this.addNode(
-                ports[i]
-            );
+    if( this.getQtdPortsWithLocationByDomain(domainId) > 0 ){
+        this.addExpandedDomainNode(node);
+
+        for (var i = ports.length - 1; i >= 0; i--) {
+            if(ports[i].network.domain_id == domainId){
+                this.addNode(
+                    ports[i]
+                );
+            }
         }
+        this.hideNode(node);
     }
-    this.hideNode(node);
+
+    flagPortLocation = false;
 }
 
 LMap.prototype.groupLocations = function(nodeId) {

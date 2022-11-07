@@ -234,11 +234,9 @@ VGraph.prototype.build = function(divId) {
     this._popup.set('visible', false);
     this._graph.on("click", function (params) {
         if(params['nodes'].length > 0) {
-            //console.log(' click node:', params);
             $( "#"+currentGraph._canvasDivId ).trigger( "vgraph.nodeClick",  currentGraph._nodes.get(params.nodes[0]).id);
         } else {
             currentGraph._popup.hide();
-            //console.log('click fora');
         }
     });
     this._graph.on("zoom", function () {

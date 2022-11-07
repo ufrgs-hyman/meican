@@ -1,6 +1,6 @@
 <?php 
 /**
- * @copyright Copyright (c) 2012-2016 RNP
+ * @copyright Copyright (c) 2012-2022 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
@@ -13,6 +13,7 @@ use meican\base\grid\GridButtons;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
+use yii\grid\checkboxCollumn;
 
 \meican\topology\assets\domain\Index::register($this);
 
@@ -35,7 +36,7 @@ $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'
             'enableClientValidation' => false,
         ]);
 
-        Pjax::begin();
+        Pjax::begin(); 
         
         echo Grid::widget([
             'dataProvider' => $domains,
@@ -67,7 +68,26 @@ $this->params['header'] = [Yii::t('topology', 'Domains'), [Yii::t('home', 'Home'
                     'value' => function($dom){
                         return $dom->getPolicy();
                     },
-                    'headerOptions'=>['style'=>'width: 46%;'],
+                    'headerOptions'=>['style'=>'width: 30%;'],
+                ],
+                [
+                    'attribute' => 'grouped_nodes',
+ 	 	
+ 	 	    'label' => 'Group domain locations by default',
+            
+                    'format' => ['html'],
+            
+                    'filter' => false,
+            
+                    'value' => function ($data) {
+            
+                        if ($data['grouped_nodes'])           
+                            return Html::img('@web/images/green_checked2.png', ['width' => '25px']);            
+                                    
+                        return Html::img('@web/images/red_unchecked.png', ['width' => '25px']);
+            
+                    },
+            
                 ],
             ),
         ]);
