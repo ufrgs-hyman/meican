@@ -461,14 +461,16 @@ function addDestin(port) {
 }
 
 function addMarker(port, color) {
-    marker = meicanMap.getNodeByPort(port.urn);
-    if (marker) return;
-    if(port.lat != undefined)
-        flagPortLocation = true;
-    else
-        flagPortLocation = false;
+    let isLocation = false;
 
-    meicanMap.addNode(port, color, 'status');
+    marker = meicanMap.getNodeByPort(port.urn);
+
+    if (marker) return;
+
+    if(port.lat != undefined)
+        isLocation = true;
+
+    meicanMap.addNode(port, isLocation, color, 'status');
 }
 
 function areMarkersReady(path) {

@@ -8,7 +8,6 @@
  * @author Mauricio Quatrin Guerreiro
  */
 
-var flagPortLocation = false;
 var flagNetworkWasClicked = false;
 
 function LMap(canvasDivId) {
@@ -32,9 +31,6 @@ function LMap(canvasDivId) {
 
 LMap.prototype.show = function(instantRefresh) {
     let mapId = "map-n";
-
-    if(flagPortLocation)
-        mapId = "map-l";
 
     if($('#'+mapId).length == 1) {
         $('#'+mapId).show();
@@ -327,16 +323,19 @@ LMap.prototype.removeLinks = function() {
     }
 }
 
-LMap.prototype.getNodeByPosition = function(position, domain, location_name) {
-    for (var i = this._nodes.length - 1; i >= 0; i--) {
+LMap.prototype.getNodeByPosition = function(position, domain, locationName) {
+    for (let i = this._nodes.length - 1; i >= 0; i--) {
         if ((this._nodes[i].getLatLng().lat === position.lat) && 
             (this._nodes[i].getLatLng().lng === position.lng)) {
-            if (this._nodes[i].options.ports[0].network.domain == domain && (this._nodes[i].options.ports[0].location_name == undefined || !flagPortLocation))
+            let nodeLocationName = this._nodes[i].options.ports[0].location_name;
+            let nodeIsExpanded = this._nodes[i].options.isExpanded;
+        
+            if (this._nodes[i].options.ports[0].network.domain == domain && (nodeLocationName == undefined || !nodeIsExpanded))
                 return this._nodes[i];
-            else if(this._nodes[i].options.ports[0].location_name == location_name)
+            else if(nodeLocationName == locationName)
                 return this._nodes[i];
             else
-                return this.getNodeByPosition(L.latLng(position.lat + 0.001, position.lng), domain, location_name);
+                return this.getNodeByPosition(L.latLng(position.lat + 0.001, position.lng), domain, locationName);
         }
     }
 
@@ -357,15 +356,23 @@ LMap.prototype.getParentPosition = function(port) {
     return L.latLng([0,0]);
 }
 
-LMap.prototype.addNode = function(port, color, mode) {
+LMap.prototype.addNode = function(port, parentNodeId, color, mode) {
+    let nodeType = "domain";
+    let isExpanded = false;
+
+    if (parentNodeId) {
+        nodeType = "location";
+        isExpanded = true;
+    }
+
     if(!port.network)
         return;
     if (!color) 
         color = port.network.domain.color;
 
-    if(flagPortLocation && port.lat != null && port.lng != null) {
+    if (isExpanded && port.lat != null && port.lng != null) {
         var pos = L.latLng([port.lat,port.lng]);
-    } else if (!flagPortLocation && typeof port.network !== 'undefined') {
+    } else if (!isExpanded && typeof port.network !== 'undefined') {
         var pos = this.getParentPosition(port);
     } else {
         var pos = L.latLng([0, 0]);
@@ -392,11 +399,6 @@ LMap.prototype.addNode = function(port, color, mode) {
             className: 'marker-icon-svg',
         });
 
-
-        let nodeType = "domain";
-        if(flagPortLocation)
-            nodeType = "location"
-        
         node = L.marker(
             this.buildNodePosition(pos), 
             {
@@ -404,12 +406,14 @@ LMap.prototype.addNode = function(port, color, mode) {
                 icon: icon,
                 name: port.urn,
                 type: nodeType,
+                isExpanded: isExpanded,
+                parentNodeId: parentNodeId,
                 ports: [port]
             }
         ).bindPopup("#");
 
         if(mode != 'status'){
-            if(flagPortLocation)
+            if (isExpanded)
                 node.bindTooltip(port.location_name, {permanent:true, direction: 'top'}).openTooltip();
             else
                 node.bindTooltip(port.network.domain.name, {permanent:true, direction: 'left'}).openTooltip();
@@ -417,7 +421,7 @@ LMap.prototype.addNode = function(port, color, mode) {
 
         this._nodes.push(node);
         this._cluster.addLayer(node);
-        if (!flagPortLocation) {
+        if (!isExpanded) {
             if (port.network.domain.grouped_nodes == 0) {
                 this._stackDomainsToBeExpanded.push(node.options.id);
             }
@@ -456,20 +460,22 @@ LMap.prototype.prepareLabels = function() {
 
     this.removeLabels();
 
-    for (var i = this._nodes.length - 1; i >= 0; i--) {
-        var label = 'error';
+    for (let i = this._nodes.length - 1; i >= 0; i--) {
+        let label = 'error';
         labels = [];
-        for (var k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
+        for (let k = this._nodes[i].options.ports.length - 1; k >= 0; k--) {
+            let nodeIsExpanded = this._nodes[i].options.isExpanded;
+
             if(expandedDomainsNodes.length == 0){
-                if(flagPortLocation){
+                if (nodeIsExpanded) {
                     if(this._nodes[i].options.ports[k].lat != null && this._nodes[i].options.ports[k].lng != null)
                         labels.push(this._nodes[i].options.ports[k].location_name);                  
                 }else{
                     labels.push(this._nodes[i].options.ports[k].network.domain.name);
                 }
             }else{
-                for(var j = expandedDomainsNodes.length - 1; j >=0; j--) {
-                    if(flagPortLocation && this._nodes[i].options.ports[k].network.domain.name == expandedDomainsNodes[j].options.ports[0].network.domain.name){
+                for(let j = expandedDomainsNodes.length - 1; j >=0; j--) {
+                    if(nodeIsExpanded && this._nodes[i].options.ports[k].network.domain.name == expandedDomainsNodes[j].options.ports[0].network.domain.name){
                         if(this._nodes[i].options.ports[k].lat != null && this._nodes[i].options.ports[k].lng != null)
                             labels.push(this._nodes[i].options.ports[k].location_name);                  
                     }else{
@@ -1089,34 +1095,33 @@ LMap.prototype.hasLocation = function(networkId) {
 }
 
 LMap.prototype.expandLocations = function(nodeId) {
-    flagPortLocation = true;
     let node = this.getNode(nodeId);
-    let nodes = this.getNodes();
     let ports = this.getTopology()['ports'];
     let domainId = node.options.ports[0].network.domain_id;
 
-    if( this.getQtdPortsWithLocationByDomain(domainId) > 0 ){
+    node.options.isExpanded = true;
+
+    if (this.getQtdPortsWithLocationByDomain(domainId) > 0) {
         this.addExpandedDomainNode(node);
 
         for (var i = ports.length - 1; i >= 0; i--) {
             if(ports[i].network.domain_id == domainId){
                 this.addNode(
-                    ports[i]
+                    ports[i],
+                    nodeId
                 );
             }
         }
         this.hideNode(node);
     }
-
-    flagPortLocation = false;
 }
 
 LMap.prototype.groupLocations = function(nodeId) {
-    flagPortLocation = false;
     let node = this.getNode(nodeId);
-    let nodes = this.getNodes();
+    let parentNode = this.getNode(node.options.parentNodeId);
     let domainId = node.options.ports[0].network.domain_id;
 
+    parentNode.options.isExpanded = false;
     this.removeNode(domainId, "location");   
     this.showNode(meicanMap.getNode(meicanMap.getNodeIdByDomainId(domainId)));
     this.removeExpandedDomainNode(domainId);
