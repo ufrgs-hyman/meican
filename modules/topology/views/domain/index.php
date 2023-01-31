@@ -1,6 +1,6 @@
 <?php 
 /**
- * @copyright Copyright (c) 2012-2022 RNP
+ * @copyright Copyright (c) 2012-2023 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  */
 
