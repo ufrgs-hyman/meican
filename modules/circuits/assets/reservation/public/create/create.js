@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2022 RNP
+ * @copyright Copyright (c) 2023 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  * @author Maurício Quatrin Guerreiro
  */

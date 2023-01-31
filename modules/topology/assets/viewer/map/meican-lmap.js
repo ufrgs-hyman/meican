@@ -3,7 +3,7 @@
  *
  * A DCN topology viewer based on Leaflet Javascript library.
  *
- * @copyright Copyright (c) 2022 RNP
+ * @copyright Copyright (c) 2023 RNP
  * @license http://github.com/ufrgs-hyman/meican#license
  * @author Mauricio Quatrin Guerreiro
  */
@@ -814,7 +814,7 @@ LMap.prototype.setType = function(mapType) {
             break;
         case "osm3" : 
             L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-                attribution: 'MEICAN Project | UFRGS | Map data &copy; 2022 <a href="http://www.rnp.br">RNP</a>',
+                attribution: 'MEICAN Project | UFRGS | Map data &copy; 2023 <a href="http://www.rnp.br">RNP</a>',
                 maxZoom: 18,
                 minZoom: 2,
                 subdomains: ['a','b','c']
