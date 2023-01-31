@@ -163,12 +163,14 @@ function showPointModal(pointElement, pointOrder, nodeId) {
     }
 
     if(nodeId) {
-        var node = meicanMap.getNode(nodeId);
-        var hasLocation = (node.options.ports[0].lat != null && node.options.ports[0].lng != null);
+        let node = meicanMap.getNode(nodeId);
+        let isExpanded = node.options.isExpanded;
+        let hasLocation = (node.options.ports[0].lat != null && node.options.ports[0].lng != null);
+
         if (node.options.ports.length > 1) {
             $("#pointform-domain").val(node.options.ports[0].network.domain.id);
             fillNetworkSelect(node.options.ports[0].network.domain.id);
-            if(hasLocation && flagPortLocation){
+            if (hasLocation && isExpanded) {
                 fillPortSelect(null, null, node.options.ports[0].location_name);
             }
         } else {
@@ -181,7 +183,7 @@ function showPointModal(pointElement, pointOrder, nodeId) {
             }
         }
 
-        if(hasLocation && flagPortLocation){
+        if (hasLocation && isExpanded) {
             $("#pointform-location").val(node.options.ports[0].location_name);
         }
         
@@ -190,7 +192,7 @@ function showPointModal(pointElement, pointOrder, nodeId) {
         urn = $(pointElement).find('.urn-input').val();
         let urn_splitted = $($(pointElement).find('.urn-input').val().split(':'))
 
-        for (var i = meicanTopo['ports'].length - 1; i >= 0; i--) {
+        for (let i = meicanTopo['ports'].length - 1; i >= 0; i--) {
             if (meicanTopo['ports'][i]['urn'] == urn) {
                 port = meicanTopo['ports'][i];
                 $("#pointform-domain").val(port.network.domain.id);
