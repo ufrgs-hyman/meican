@@ -55,7 +55,7 @@ class ConnectionForm extends Model {
 
     public function validateBandwidth($attr, $params) {
         $oldBand = Connection::find()->where(['id'=>$this->id])->asArray()->select(['bandwidth'])->one()['bandwidth'];
-        if (!is_numeric($this->bandwidth) || !is_integer(intval($this->bandwidth)) || $this->bandwidth < 1) {
+        if (!is_numeric($this->bandwidth) || !is_integer(intval($this->bandwidth)) || $this->bandwidth < 0) {
             $this->addError('bandwidth', "Invalid bandwidth value");
         } elseif($oldBand != $this->bandwidth && !$this->acceptRelease)
             $this->addError('bandwidth', "A circuit interruption is required to change the bandwidth.");

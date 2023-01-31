@@ -132,7 +132,6 @@ function initEditModal() {
 
         setTimeout(function() {
             if($("#edit-modal").find(".has-error").length > 0) {
-                console.log("tem erro")
                 MAlert.show(I18N.t("Request invalid."), I18N.t("Please, check your input and try again."), 'danger');
                 return;
             }

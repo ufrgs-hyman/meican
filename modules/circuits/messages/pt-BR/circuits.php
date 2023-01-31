@@ -114,7 +114,6 @@ return array(
 		"The end time occurs before the start time" => "O tempo final ocorre antes do tempo inicial",
 		"Invalid duration" => "Duração inválida",
 		"Domains" => "Domínios",
-		"From here" => "A partir daqui",
 		"Set as waypoint" => "Definir como intermediário",
 		"Configure waypoint" => "Configurar ponto intermediário",
 		"Remove waypoint" => "Remover ponto intermediário",
@@ -313,5 +312,11 @@ return array(
 		
 		
 		'Informations' => 'Informações',
+
+		'Edit point' => 'Editar ponto',
+		'Save' => 'Salvar',
+		'Cancel' => 'Cancelar',
+		'Manual' => 'Manual',
+		'Normal' => 'Normal',
 );
 ?>

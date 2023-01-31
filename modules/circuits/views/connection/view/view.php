@@ -20,7 +20,7 @@ use meican\base\widgets\DetailView;
 
 \meican\circuits\assets\connection\View::register($this);
 
-$this->params['header'] = [Yii::t('circuits',"Circuit").' #'.$conn->id, ['Home', 'Circuits']];
+$this->params['header'] = [Yii::t('circuits',"Circuit").': <i>'.$conn->getName().'</i>', ['Home', 'Circuits']];
 
 ?>
 
@@ -187,7 +187,7 @@ echo $form->field($editForm, 'bandwidth')->widget(TouchSpin::classname(), [
         'verticalbuttons' => true,
         'verticalupclass' => 'fa fa-plus',
         'verticaldownclass' => 'fa fa-minus',
-        'min' => 10,
+        'min' => 0,
         'max' => 1000000,
         'step' => 10,
     ]
