@@ -27,6 +27,11 @@ class ManagerController extends RbacController {
     public $enableCsrfValidation = false;
 
     public function actionIndex($mode = "read") {
+        if(!self::can('test/create')){	
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to access Automated Tests'));
+            return $this->goHome();
+        }
+
         $data = new ActiveDataProvider([
             'query' => Test::find()->where(['type'=> Reservation::TYPE_TEST]),
             'pagination' => [
@@ -82,7 +87,7 @@ class ManagerController extends RbacController {
              if($source && RbacController::can('test/delete', $source->name)) $permission = true;
              if($destination && RbacController::can('test/delete', $destination->name)) $permission = true;
             if(!$permission){
-                Yii::$app->getSession()->addFlash("warning", Yii::t("circuits", "You are not allowed to update a automated test involving these selected domains"));
+                Yii::$app->getSession()->addFlash('danger', Yii::t("circuits", "You are not allowed to update a automated test involving these selected domains"));
                 return false;
             }
             
@@ -111,7 +116,7 @@ class ManagerController extends RbacController {
                  if($destination && RbacController::can('test/delete', $destination->name)) $permission = true;
                  
                  if(!$permission){
-                     Yii::$app->getSession()->addFlash("warning", Yii::t("circuits", "You are not allowed to delete automated tests involving these selected domains"));
+                     Yii::$app->getSession()->addFlash('danger', Yii::t("circuits", "You are not allowed to delete automated tests involving these selected domains"));
                  }
                  
                 if(!$test->delete()) {

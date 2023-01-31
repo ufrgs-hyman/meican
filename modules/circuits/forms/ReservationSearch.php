@@ -103,20 +103,29 @@ class ReservationSearch extends Reservation {
                 ->select(["conn_id"])
                 ->distinct(true);
         }
-
+        
         $validConns = Connection::find()                    //$validConns tem uma tabela com as linhas que tem o "id" igual a "conn_id"(da tabela $connPoints ) 
             ->where(['in', 'id', 
                 ArrayHelper::getColumn(
                     $connPoints->all(),
                     'conn_id')]);
      
+        $userOwned = Reservation::find()                    //$userOwned seleciona os ID's de reservas criadas pelo usuário atual
+            ->where(['in', 'request_user_id', [Yii::$app->user->getId()]])
+            ->select(["id"])
+            ->distinct(true);
+                    
         $reservations = Reservation::find()                 //$reservations tem uma tabela com as linhas que tem o "id" igual aos do "reservation_id"(da tabela $validConns)
             ->andWhere(['in', 'id', 
                 ArrayHelper::getColumn(
                     $validConns->select(['reservation_id'])->distinct(true)->asArray()->all(),
                     'reservation_id')])
+            ->orWhere(['in', 'id', 
+                ArrayHelper::getColumn(
+                    $userOwned->select(['id'])->distinct(true)->asArray()->all(),
+                    'id')])
             ->andWhere(['type'=>self::TYPE_NORMAL]);
-
+            
         $reservationHelper = ArrayHelper::getColumn($reservations->all(),'id');
        
         $currentDate = date("o-m-d H:i:s");

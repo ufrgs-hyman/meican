@@ -29,7 +29,11 @@ class WorkflowController extends RbacController {
     public function actionIndex() {
     	$allowedDomains = self::whichDomainsCan('workflow/read');
 
-    	if(count($allowedDomains) < 1) return $this->goHome();
+    	if(count($allowedDomains) < 1) {
+			Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to manage Workflows.'));
+			return $this->goHome();
+		}
+		
     	
     	$searchModel = new WorkflowSearch;
     	$data = $searchModel->searchByDomains(Yii::$app->request->get(), $allowedDomains);
@@ -42,9 +46,11 @@ class WorkflowController extends RbacController {
     
     public function actionNew() {
 		if(!self::can('workflow/create')){
-			if(!self::can("workflow/read"))	return $this->goHome();
+			Yii::$app->getSession()->setFlash('danger', Yii::t("bpm", 'You are not allowed to create workflows'));
+			if(!self::can("workflow/read")) {
+				return $this->goHome();
+			}
 			else{
-				Yii::$app->getSession()->setFlash('warning', Yii::t("bpm", 'You are not allowed to create workflows'));
 				return $this->redirect(array('/bpm/workflow'));
 			}	    
 		}
@@ -68,8 +74,14 @@ class WorkflowController extends RbacController {
 		    	));
     		};
     	};
-    	if(!self::can("workflow/read")) return $this->goHome();
-    	else return $this->redirect(array('/bpm/workflow/index'));
+    	if(!self::can("workflow/read")) {
+			Yii::$app->getSession()->setFlash('danger', Yii::t("bpm", 'You are not allowed to read workflows'));
+			return $this->goHome();
+		}
+    	else {
+			Yii::$app->getSession()->setFlash('danger', Yii::t("bpm", 'You are not allowed to create workflows'));
+			return $this->redirect(array('/bpm/workflow/index'));
+		}
     }
     
     public function actionUpdate($id = null){
@@ -121,30 +133,36 @@ class WorkflowController extends RbacController {
 
 		    	$roles = $domain->getUserDomainsRoles()->all();
 		    	
-		    	$adminsNames = [];
-		    	foreach($roles as $role):
-		    		$adminsNames[$role->getUser()->id] = $role->getUser()->name;
-		    	endforeach;
-		    	
-		    	foreach(User::find()->all() as $user):
-		    		$usersNames[$user->id] = $user->name;
-		    	endforeach;
-		    	
-		    	$groupsNames = [];
-		    	foreach(Group::find()->where(['type' => Group::TYPE_DOMAIN, 'domain' => $domainTop])->orWhere(['type' => Group::TYPE_DOMAIN, 'domain' => null])->all() as $group):
+		    	$queryGroup = Group::find()->where(['type' => Group::TYPE_DOMAIN, 'domain' => $domainTop])->orWhere(['type' => Group::TYPE_DOMAIN, 'domain' => null]);
+				
+				$groupsNames = [];
+		    	foreach($queryGroup->all()  as $group):
 			    	$groupsNames[$group->id] = $group->name;
 		    	endforeach;
-		    	
-		    	Yii::trace($roles);
-		    	Yii::trace($usersNames);
-		    	Yii::trace($groupsNames);
-		    	 
+
+				$authGroupsNames = [];
+				foreach($queryGroup	->innerJoin('meican_auth_item_child', 'meican_group.role_name = meican_auth_item_child.parent')
+									->where(['meican_auth_item_child.child' => "updateAuthorization"])
+									->select(['meican_group.id', 'meican_group.name'])
+									->all() as $authGroup):
+					$authGroupsNames[$authGroup->id] = $authGroup->name;
+				endforeach;
+
+				$authUsersNames = [];
+		    	foreach(User::find()->all() as $user) {
+		    		$usersNames[$user->id] = $user->name;
+					if(RbacController::can("authorization/update", $domainTop, false, $user->id)) {
+						$authUsersNames[$user->id] = $user->name;
+					}
+				}
+
 		    	return $this->render('editor', array(
 		    			'owner_domain' => $ownerDomain,
 		    			'domains' => $allDomains,
 		    			'groups' => $groupsNames,
 		    			'users' => $usersNames,
-		    			'admins' => $adminsNames,
+						'authGroups' => $authGroupsNames,
+						'authUsers' => $authUsersNames,         	
 		    	));
     		};
     	};
@@ -177,31 +195,37 @@ class WorkflowController extends RbacController {
 			    	}
 			    	
 			    	$roles = $domain->getUserDomainsRoles()->all();
-			    	 
-			    	$adminsNames = [];
-			    	foreach($roles as $role):
-			    		$adminsNames[$role->getUser()->id] = $role->getUser()->name;
-			    	endforeach;
-			    	
-			    	foreach(User::find()->all() as $user):
-			    		$usersNames[$user->id] = $user->name;
-			    	endforeach;
-			    	
+
+					$queryGroup = Group::find()->where(['type' => Group::TYPE_DOMAIN, 'domain' => $domain->name])->orWhere(['type' => Group::TYPE_DOMAIN, 'domain' => null]);
+
 			    	$groupsNames = [];
-			    	foreach(Group::find()->where(['type' => Group::TYPE_DOMAIN, 'domain' => $domain->name])->orWhere(['type' => Group::TYPE_DOMAIN, 'domain' => null])->all() as $group):
-				    	$groupsNames[$group->id] = $group->name;
-			    	endforeach;
-			    	
-			    	Yii::trace($roles);
-			    	Yii::trace($usersNames);
-			    	Yii::trace($groupsNames);
-			    	 
+					foreach($queryGroup->all()  as $group):
+						$groupsNames[$group->id] = $group->name;
+					endforeach;
+
+					$authGroupsNames = [];
+					foreach($queryGroup	->innerJoin('meican_auth_item_child', 'meican_group.role_name = meican_auth_item_child.parent')
+										->where(['meican_auth_item_child.child' => "updateAuthorization"])
+										->select(['meican_group.id', 'meican_group.name'])
+										->all() as $authGroup):
+						$authGroupsNames[$authGroup->id] = $authGroup->name;
+					endforeach;
+
+					$authUsersNames = [];
+					foreach(User::find()->all() as $user) {
+						$usersNames[$user->id] = $user->name;
+						if(RbacController::can("authorization/update", $domain->name, false, $user->id)) {
+							$authUsersNames[$user->id] = $user->name;
+						}
+					}
+ 
 			    	return $this->render('editor', array(
 		    			'owner_domain' => $ownerDomain,
 		    			'domains' => $allDomains,
 		    			'groups' => $groupsNames,
 		    			'users' => $usersNames,
-		    			'admins' => $adminsNames,
+						'authGroups' => $authGroupsNames,
+						'authUsers' => $authUsersNames,
 			    		'id' => $_GET['id'],
 			    	));
 		    	};

@@ -22,18 +22,27 @@ for (k in users) {
 	users_values.push(users[k]);
 }
 
-var admins = admins ? admins : [];
-var admins_keys = [], admins_values = [];
-for (k in admins) {
-	admins_keys.push(k);
-	admins_values.push(admins[k]);
+var authUsers = authUsers ? authUsers : [];
+var authUsers_keys = [], authUsers_values = [];
+for (k in authUsers) {
+	authUsers_keys.push(k);
+	authUsers_values.push(authUsers[k]);
 }
 
 var groups = groups ? groups : [];
+
 var groups_keys = [], groups_values = [];
 for (k in groups) {
 	groups_keys.push(k);
 	groups_values.push(groups[k]);
+}
+
+var authGroups = authGroups ? authGroups : [];
+
+var authGroups_keys = [], authGroups_values = [];
+for (k in authGroups) {
+	authGroups_keys.push(k);
+	authGroups_values.push(authGroups[k]);
 }
 
 var owner_domains = owner_domains ? owner_domains : [];
@@ -840,8 +849,8 @@ modules: [
 			            inputParams: 
 			            {	label: "", 
 			                name: "title", 
-			                selectValues: admins_keys,
-	                        selectOptions: admins_values
+			                selectValues: authUsers_keys,
+	                        selectOptions: authUsers_values
 			            }
 			        },
 					animColors:{
@@ -904,7 +913,7 @@ modules: [
 			    }
 	        }
 	        ],
-	        
+
 	        fields: [
 	        {	type: "inplaceedit", 
 			    inputParams: {
@@ -914,8 +923,8 @@ modules: [
 			            inputParams: 
 			            {	label: "", 
 			                name: "title", 
-			                selectValues: groups_keys,
-	                        selectOptions: groups_values
+			                selectValues: authGroups_keys,
+	                        selectOptions: authGroups_values
 			            }
 			        },
 			        animColors:{

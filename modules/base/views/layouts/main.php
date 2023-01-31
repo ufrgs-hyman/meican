@@ -131,12 +131,25 @@ use meican\home\forms\FeedbackForm;
 <?php 
 
 foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
+    switch($key){
+      case 'success':
+        $icon='glyphicon glyphicon-ok-sign';
+        break;
+      case 'warning':
+        $icon='glyphicon glyphicon-exclamation-sign';
+        break;
+      case 'danger':
+        $icon='glyphicon glyphicon-ban-circle';
+        break;
+      default:
+        $icon='glyphicon glyphicon-ok-sign';
+    }
     echo Growl::widget([
         'type' => $key,
-        'icon' => 'glyphicon glyphicon-ok-sign',
+        'icon' => $icon,
         'body' => $message,
         'pluginOptions' => [
-            'delay' => 20000,
+            'delay' => 10000,
             'newest_on_top' => true,
             'placement' => [
                 'from' => 'top',

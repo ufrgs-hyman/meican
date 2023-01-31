@@ -19,6 +19,7 @@ class GroupController extends RbacController {
     
     public function actionIndex() {
         if(!self::can("group/read")){ //Se ele não tiver permissão
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to access Groups'));
             return $this->goHome();
         }
         
@@ -33,9 +34,12 @@ class GroupController extends RbacController {
     
     public function actionCreate() {
         if(!self::can("group/create")){
-            if(!self::can("group/read")) return $this->goHome();
+            if(!self::can("group/read")) {
+                Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to create groups'));
+                return $this->goHome();
+            }
             else{
-                Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to create groups'));
+                Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to create groups'));
                 return $this->redirect(array('index'));
             }
         }
@@ -77,6 +81,7 @@ class GroupController extends RbacController {
                     'domainTopology'=>Yii::t("aaa","Domain's Topology"),
                     'test'=>Yii::t("aaa", 'Automated Tests'),
                     'role'=>Yii::t("aaa", 'Roles'),
+                    'authorization'=>Yii::t("aaa", 'Authorization'),
                 ),
                 'root' => array(
                     'configuration'=>Yii::t("aaa", 'Reservations Configuration'),
@@ -92,7 +97,7 @@ class GroupController extends RbacController {
         if(!self::can("group/update")){
             if(!self::can("group/read")) return $this->goHome();
             else{
-                Yii::$app->getSession()->addFlash('warning', Yii::t('aaa', 'You are not allowed to update groups'));
+                Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to update groups'));
                 return $this->redirect(array('index'));
             }
         }
@@ -102,7 +107,7 @@ class GroupController extends RbacController {
         if(!$group){
             if(!self::can("group/read")) return $this->goHome();
             else{
-                Yii::$app->getSession()->addFlash('warning', Yii::t('topology', 'Group not found'));
+                Yii::$app->getSession()->addFlash('danger', Yii::t('topology', 'Group not found'));
                 return $this->redirect(array('index'));
             }
         }
@@ -144,6 +149,7 @@ class GroupController extends RbacController {
                     'domainTopology'=>Yii::t("aaa","Domain's Topology"),
                     'test'=>Yii::t("aaa", 'Automated Tests'),
                     'role'=>Yii::t("aaa", 'Roles'),
+                    'authorization'=>Yii::t("aaa", 'Authorization'),
                 ),
                 'root' => array(
                     'configuration'=>Yii::t("aaa", 'Reservations Configuration'),

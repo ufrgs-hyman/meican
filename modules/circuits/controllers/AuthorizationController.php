@@ -35,7 +35,11 @@ class AuthorizationController extends RbacController {
     public $enableCsrfValidation = false;
 
     public function actionIndex(){
-        Yii::trace("Authorization");
+
+        if(!self::can("authorization/read")){
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to access authorizations'));
+            return $this->goHome();
+        }
         
         $searchModel = new AuthorizationSearch;
         $data = $searchModel->searchByDomains(Yii::$app->request->get());
@@ -48,6 +52,12 @@ class AuthorizationController extends RbacController {
     }
     
     public function actionAnswer($id = null, $domain = null){
+
+        if(!self::can("authorization/update")){
+            Yii::$app->getSession()->addFlash('danger', Yii::t('aaa', 'You are not allowed to answer authorizations'));
+            return $this->goHome();
+        }
+
         if($id == null || $domain == null) $this->actionAuthorization();
         else{
             if(!Domain::findOne(['name' => $domain])) $this->actionAuthorization();

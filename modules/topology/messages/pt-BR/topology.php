@@ -103,9 +103,13 @@ return array(
 		'Network {net} not deleted. You are not allowed to delete on domain {domain}' => 'Rede {net} não foi removida. Você não tem permissão para remover no domínio {domain}',
 		'You are not allowed to delete on domain {domain}' => 'Você não tem permissão para remover no domínio {domain}',
 		'You are not allowed to update on domain {domain}' => 'Você não tem permissão para editar no domínio {domain}',
-		'You are not allowed to add synchronizers' => 'Você não tem permissão para adicionar sincronizadores',
-		'You are not allowed to update synchronizers' => 'Você não tem permissão para editar sincronizadores',
-		'You are not allowed to delete synchronizers' => 'Você não tem permissão para remover sincronizadores',
+
+		'You are not allowed to access Topology Discovery' => 'Você não tem permissão para acessar a Descoberta de Topologia',
+		'You are not allowed to create rules on Topology Discovery' => 'Você não tem permissão para criar regras de Descoberta de Topologia',
+		'You are not allowed to update rules on Topology Discovery' => 'Você não tem permissão para editar regras de Descoberta de Topologia',
+		'You are not allowed to delete rules on Topology Discovery' => 'Você não tem permissão para remover regras de Descoberta de Topologia',
+		'You are not allowed to perform Topology Discovery' => 'Você não tem permissão para executar a Descoberta de Topologia',
+		
 		'Delete Ports' => 'Deletar Portas',
 		'Add Port' => 'Adicionar Porta',
 		'Add' => 'Adicionar',
