@@ -6,11 +6,16 @@ This step is set some parameters in order to configure the application.
 
 Location: config/params.php
 
-Located on certificates folder on project root, the application certificate must be defined:
+To properly configure the certificates for the application, you need to specify the certificate filename, certificate key, and optionally enable client certificate authentication for mutual TLS. Additionally, you can provide a certificate password for encrypted certificates.
+
+The certificates must be located in the certificates folder in the project root. Example in `config.params.php`: 
 
 ```
-'certificate.filename' => 'meican.pem',
-'certificate.pass' => '#CERTIFICATE-PASSWORD#',    
+'certificate.filename' => 'meican_cert.pem',       // Certificate file (PEM format)
+'certificate.keyfile' => 'meican_key.pem',         // Certificate key file (PEM format)
+'certificate.pass' => '#CERTIFICATE-PASSWORD#',    // Password for the certificate
+'certificate.ca_file' => 'meican_ca.pem',          // CA certificate file for validating server (PEM format)
+'certificate.use_client_cert' => true,             // Enable mutual TLS (true/false)
 ```
 
 By default the fake provider is enabled. Disable this feature setting the param below:

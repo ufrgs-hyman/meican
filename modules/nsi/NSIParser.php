@@ -144,21 +144,26 @@ class NSIParser {
             CURLOPT_URL => $this->url,
         );
 
-        $use_client_cert = Yii::$app->params['certificate.use_client_cert'];
+        $use_client_cert = isset(Yii::$app->params['certificate.use_client_cert']) && Yii::$app->params['certificate.use_client_cert'];
 
         if ($use_client_cert) {
             $cert_path = realpath(__DIR__."/../../certificates/".\Yii::$app->params['certificate.filename']);
             $certkey_path = realpath(__DIR__."/../../certificates/".\Yii::$app->params['certificate.keyfile']);
-            $cert_pass = Yii::$app->params['certificate.pass'];
             $cert_ca = realpath(__DIR__."/../../certificates/".\Yii::$app->params['certificate.ca_file']);
 
             $options = $options + array(
                 CURLOPT_SSLCERTTYPE      => 'PEM',
                 CURLOPT_SSLCERT          => $cert_path,
                 CURLOPT_SSLKEY           => $certkey_path,
-                CURLOPT_SSLCERTPASSWD    => 'meicantest', 
                 CURLOPT_CAINFO           => $cert_ca,
             );
+
+            if (isset(Yii::$app->params['certificate.pass'])) {
+                $options = $options + array(
+                    CURLOPT_SSLCERTPASSWD => Yii::$app->params['certificate.pass'], 
+                );
+            }
+
             Yii::trace("[NSI Parser] Using cert files: $cert_path | $certkey_path | $cert_ca");
         }
 
@@ -179,7 +184,7 @@ class NSIParser {
             return true;
         } else {
             Yii::trace("[NSI Parser] output is null");
-            Yii::trace("[NSI Parser] curl response error = $output_error");
+            Yii::error("[NSI Parser] curl response error = $output_error");
             return false;
         };
     }
