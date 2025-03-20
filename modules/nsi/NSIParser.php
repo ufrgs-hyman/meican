@@ -94,7 +94,9 @@ class NSIParser {
             if($docContentNode->item(0)->getAttribute("contentType") == "application/x-gzip" && 
                     $docContentNode->item(0)->getAttribute('contentTransferEncoding') == "base64") {
                 $contentDOM = new \DOMDocument();
-                $contentDOM->loadXML(gzdecode(base64_decode($docContentNode->item(0)->nodeValue)));
+                $decoded_data = gzdecode(base64_decode($docContentNode->item(0)->nodeValue));
+                Yii::trace("Decoded base64|Gzip:\n $decoded_data");
+                $contentDOM->loadXML($decoded_data);
                 switch ($docTypeNode->item(0)->nodeValue) {
                     case "vnd.ogf.nsi.topology.v2+xml":
                         $xmlns = "http://schemas.ogf.org/nml/2013/05/base#";
@@ -127,30 +129,64 @@ class NSIParser {
     }
 
     function loadFile($url) {
+        Yii::trace("[NSI Parser] Loading file in URL: $url");
         $this->url = $url;
         
         $ch = curl_init();
 
         $options = array(
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_SSL_VERIFYHOST => false,
-                CURLOPT_SSL_VERIFYPEER => false,
-                CURLOPT_CONNECTTIMEOUT => 5,
-                CURLOPT_USERAGENT => 'Meican',
-                CURLOPT_URL => $this->url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_USERAGENT => 'Meican',
+            CURLOPT_URL => $this->url,
         );
+
+        $use_client_cert = isset(Yii::$app->params['certificate.use_client_cert']) && Yii::$app->params['certificate.use_client_cert'];
+
+        if ($use_client_cert) {
+            $cert_path = realpath(__DIR__."/../../certificates/".\Yii::$app->params['certificate.filename']);
+            $certkey_path = realpath(__DIR__."/../../certificates/".\Yii::$app->params['certificate.keyfile']);
+            $cert_ca = realpath(__DIR__."/../../certificates/".\Yii::$app->params['certificate.ca_file']);
+
+            $options = $options + array(
+                CURLOPT_SSLCERTTYPE      => 'PEM',
+                CURLOPT_SSLCERT          => $cert_path,
+                CURLOPT_SSLKEY           => $certkey_path,
+                CURLOPT_CAINFO           => $cert_ca,
+            );
+
+            if (isset(Yii::$app->params['certificate.pass'])) {
+                $options = $options + array(
+                    CURLOPT_SSLCERTPASSWD => Yii::$app->params['certificate.pass'], 
+                );
+            }
+
+            Yii::trace("[NSI Parser] Using cert files: $cert_path | $certkey_path | $cert_ca");
+        }
+
+        $arr_str = print_r($options, true);
+        Yii::trace("[NSI Parser] options array : $arr_str");
 
         curl_setopt_array($ch , $options);
 
         $output = curl_exec($ch);
+        $output_info = curl_getinfo($ch);
+        $output_error = curl_error($ch);
+        $output_info_str = print_r($output_info, true);
+        Yii::trace("[NSI Parser] curl response info = $output_info_str");
         curl_close($ch);
-
         if($output != null) {
             //  echo $output;
             $this->loadXml($output);
             return true;
-        } else return false;
+        } else {
+            Yii::trace("[NSI Parser] output is null");
+            Yii::error("[NSI Parser] curl response error = $output_error");
+            return false;
+        };
     }
     
     function getData() {
